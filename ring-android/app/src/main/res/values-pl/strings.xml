@@ -8,7 +8,7 @@
   <string name="copyright_section">Prawa autorskie</string>
   <string name="contribute_section">Współpracuj</string>
   <string name="version_section">Wersja</string>
-  <string name="no_email_app_installed">Nie znaleziono aplikacji e-mail. Zainstaluj jakąś aby wysłać nam raport.</string>
+  <string name="no_email_app_installed">Nie znaleziono aplikacji e-mail. Zainstaluj jakąś aby wysłać nam zgłoszenie.</string>
   <string name="no_browser_app_installed">Nie znaleziono przeglądarki internetowej, zainstaluj jakąś aby zobaczyć tę stronę</string>
   <string name="email_chooser_title">Wyślij e-mail używając...</string>
   <string name="website_chooser_title">Zobacz stronę używając..</string>
@@ -63,7 +63,19 @@
   <string name="notif_current_call_title">Aktualna rozmowa z %1$s</string>
   <string name="notif_current_call">Aktualna rozmowa</string>
   <string name="notif_channel_calls">Rozmowy</string>
+  <string name="notif_channel_missed_calls">Nieodebrane rozmowy</string>
   <string name="notif_channel_messages">Wiadomości</string>
+  <string name="notif_channel_requests">Prośby dodania</string>
+  <string name="notif_channel_file_transfer">Transfer pliku</string>
+  <string name="notif_mark_as_read">Zaznacz jako przeczytane</string>
+  <string name="notif_dismiss">Odrzuć</string>
+  <string name="notif_reply">Odpowiedz</string>
+  <string name="notif_incoming_file_transfer_title">Przychodzący plik od %1$s</string>
+  <string name="notif_incoming_file_transfer">Ktoś chce wysłać Ci plik</string>
+  <string name="notif_outgoing_file_transfer_title">Wysyłanie pliku do %1$s</string>
+  <string name="notif_outgoing_file_transfer">Ktoś chce wysłać Ci plik</string>
+  <string name="notif_incoming_picture">Obrazek od %1$s</string>
+  <string name="action_open">Otwórz</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ty:</string>
   <string name="action_call_hangup">Rozłącz się</string>
@@ -77,6 +89,8 @@
   <string name="ab_action_speakerphone">Włącz głośnik</string>
   <string name="ab_action_contact_add">Dodaj do kontaków</string>
   <string name="ab_action_contact_add_question">Czy dodać do kontaktów?</string>
+  <string name="hist_contact_added">Kontakt dodany</string>
+  <string name="hist_invitation_received">Otrzymano zaproszenie</string>
   <string name="ab_action_audio_call">Połączenie głosowe</string>
   <string name="ab_action_video_call">Połączenie wideo</string>
   <string name="ab_action_change_screen_orientation">Obróć ekran</string>
@@ -89,11 +103,15 @@
   <string name="message_sending">Trwa wysyłanie wiadomości...</string>
   <string name="message_failed">Nie powiodła się</string>
   <string name="time_just_now">W tej chwili</string>
+  <string name="send_file">Wyślij plik</string>
+  <string name="hist_file_sent">Plik wysłany</string>
+  <string name="hist_file_received">Otrzymano plik</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Uprawnienia do aparatu</string>
   <string name="permission_dialog_camera_message">Rozmowy wideo wymagają przyznania uprawnień dla aparatu. Proszę rozważyć udzielenie ich.</string>
   <string name="ringtone_error_title">Błąd</string>
   <string name="ringtone_error_format_not_supported">Ten format nie jest obsługiwany.</string>
+  <string name="ringtone_error_size_too_big">Ten plik jest zbyt duży! Maksymalny rozmiar to %1$d kB.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring potrzebuje pozwolenia \"Kontakty\" żeby odblokować tą funkcję. Proszę udzielić go.</string>
   <!--Write call log permission-->
@@ -112,6 +130,7 @@
   <string name="conversation_action_copied_peer_number_clipboard">%1$s skopiowany do schowka</string>
   <string name="conversation_action_select_peer_number">Wybierz numer</string>
   <string name="conversation_action_block_this">Zablokuj kontakt</string>
+  <string name="conversation_action_go_to_call">Powróć do trwającej rozmowy</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Dodać %1$s ?</string>
   <string name="prompt_new_password">Nowe hasło</string>
@@ -144,9 +163,12 @@
   <string name="contact_request_msg">Masz %1$s zaproszeń do dodania kontaktu</string>
   <string name="contact_request_account">Dla %1$s</string>
   <string name="no_requests">Brak zaproszeń</string>
+  <string name="message_contact_not_trusted_yet">%s nie jest jeszcze w kontaktach. Chcesz zaakceptować, czy odrzucić prośbę zaproszenia?</string>
+  <string name="message_contact_not_trusted">%s nie jest jeszcze w kontaktach.\nDodać do kontaktów?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Wyślij</string>
   <string name="send_request_title">Wyślij zaproszenie</string>
+  <string name="send_request_msg">Musisz wysłać zaproszenie do kontaktów, by móc komunikować się z tym użytkownikiem. Dopóki użytkownik nie zaakceptuje zaproszenia, możesz wysyłać wiadomości, ale użytkownik nie będzie mógł odpowiadać.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 zablokowanych kontaktów</string>
   <!--Smartlist-->
@@ -154,6 +176,26 @@
   <string name="contact_request_sent">Wysłano zaproszenie</string>
   <string name="search_results">Wyniki wyszukiwania</string>
   <string name="tv_contact_row_header">Kontakty</string>
+  <string name="gallery_error_title">Nie znaleziono aplikacji Galeria</string>
+  <string name="gallery_error_message">Nie znaleziono aplikacji do otworzenia Galerii</string>
+  <string name="generic_error">Nastąpił nieoczekiwany błąd</string>
   <!--File Transfer-->
+  <string name="invalid_file">Niepoprawny plik</string>
+  <string name="not_able_to_write_file">Nie da się zapisać pliku</string>
+  <string name="file_transfer_status_created">Rozpoczynanie transferu</string>
+  <string name="file_transfer_status_unsupported">niewspierane</string>
+  <string name="file_transfer_status_wait_peer_acceptance">czekanie na zaakceptowanie</string>
+  <string name="file_transfer_status_wait_host_acceptance">czekanie na zaakceptowanie</string>
+  <string name="file_transfer_status_ongoing">trwa połączenie</string>
+  <string name="file_transfer_status_finished">zakończono</string>
+  <string name="file_transfer_status_closed_by_host">zakończono przez hosta</string>
+  <string name="file_transfer_status_closed_by_peer">zakończono przez peera</string>
+  <string name="file_transfer_status_invalid_pathname">nieprawidłowa ścieżka</string>
+  <string name="file_transfer_status_unjoinable_peer">nieosiągalny klient</string>
+  <string name="file_saved_in">Plik zapisano w  %s</string>
+  <string name="no_space_left_on_device">Brak wolnego miejsca</string>
+  <string name="title_media_viewer">Przeglądarka mediów</string>
+  <string name="menu_file_download">Pobierz plik</string>
+  <string name="menu_file_delete">Usuń plik</string>
   <string name="menu_file_share">Podziel się plikiem</string>
 </resources>

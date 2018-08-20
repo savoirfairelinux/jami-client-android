@@ -68,6 +68,7 @@
   <string name="notif_channel_requests">Запросы</string>
   <string name="notif_channel_file_transfer">Передача файла</string>
   <string name="notif_mark_as_read">Отметить как прочитанное</string>
+  <string name="notif_dismiss">Отклонить</string>
   <string name="notif_reply">Ответить</string>
   <string name="notif_incoming_file_transfer_title">Входящий файл от %1$s</string>
   <string name="notif_incoming_file_transfer">Кто-то хочет отправить вам файл</string>

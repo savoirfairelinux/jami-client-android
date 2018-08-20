@@ -81,6 +81,9 @@ Możesz edytować swoje konto później</string>
   <string name="account_published_same_as_local_label">Opublikowano tak samo jak lokalny</string>
   <string name="account_published_port_label">Opublikowany Port</string>
   <string name="account_published_address_label">Opublikowany Adres</string>
+  <string name="account_proxy_label">Proxy DHT</string>
+  <string name="account_proxy_enable_label">Używaj proxy DHT</string>
+  <string name="account_proxy_server_label">Adres proxy DHT</string>
   <!--Security Details-->
   <string name="account_credentials_label">Detale</string>
   <string name="account_credentials_edit">Edytuj detale</string>

@@ -66,6 +66,8 @@
   <string name="notif_channel_requests">Solicitudes</string>
   <string name="notif_channel_file_transfer">Transferencia de archivos</string>
   <string name="notif_mark_as_read">Marcar como leído</string>
+  <string name="notif_dismiss">Descartar</string>
+  <string name="notif_reply">Responder</string>
   <string name="notif_incoming_file_transfer_title">Archivo entrante de %1$s</string>
   <string name="notif_incoming_file_transfer">Alguien quiere enviarle un archivo</string>
   <string name="notif_outgoing_file_transfer_title">Enviando archivo a %1$s</string>

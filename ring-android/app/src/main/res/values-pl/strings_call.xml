@@ -20,6 +20,10 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
+    <!-- Call error -->
+    <string name="call_error_no_microphone">Rozmowa anulowana. Nie wykryto mikrofonu.</string>
+    <string name="call_error_no_camera_no_microphone">Rozmowa anulowana. Nie wykryto kamery lub mikrofonu.</string>
+
     <!-- SipCalls -->
     <string name="call_human_state_searching">Wyszukiwanie</string>
     <string name="call_human_state_incoming">Przychodzące</string>
