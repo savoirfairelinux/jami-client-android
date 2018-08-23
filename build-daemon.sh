@@ -114,19 +114,7 @@ if [ ! -d "$DAEMON_DIR" ]; then
     exit 1
 fi
 
-EXTRA_CFLAGS="${EXTRA_CFLAGS} -fno-integrated-as -O3"
-
-# Setup LDFLAGS
-if [ ${ANDROID_ABI} = "armeabi-v7a-hard" ] ; then
-    EXTRA_CFLAGS="${EXTRA_CFLAGS} -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16"
-    EXTRA_LDFLAGS="-march=armv7-a -mfpu=vfpv3-d16 -mcpu=cortex-a8 -lm_hard -D_NDK_MATH_NO_SOFTFP=1"
-elif [ ${ANDROID_ABI} = "armeabi-v7a" ] ; then
-    EXTRA_CFLAGS="${EXTRA_CFLAGS} -march=armv7-a -mthumb -mfloat-abi=softfp -mfpu=vfpv3-d16"
-    EXTRA_LDFLAGS="-march=armv7-a -mthumb -mfloat-abi=softfp -mfpu=vfpv3-d16"
-elif [ ${ANDROID_ABI} = "arm64-v8a" ] ; then
-    EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${ANDROID_TOOLCHAIN}/sysroot/usr/lib -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/lib"
-fi
-EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/${LIBDIR}/${ANDROID_ABI} -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/${LIBDIR} -lm -latomic"
+EXTRA_CFLAGS="${EXTRA_CFLAGS} -fno-integrated-as"
 
 # Make in //
 UNAMES=$(uname -s)
@@ -170,26 +158,22 @@ mkdir -p contrib/${TARGET_TUPLE}/lib/pkgconfig
 cd $DAEMON_DIR/contrib/native-${TARGET_TUPLE}
 ../bootstrap --host=${TARGET_TUPLE} --disable-libav --enable-ffmpeg --disable-speexdsp
 
-# Some libraries have arm assembly which won't build in thumb mode
-# We append -marm to the CFLAGS of these libs to disable thumb mode
-[ ${ANDROID_ABI} = "armeabi-v7a" ] && echo "NOTHUMB := -marm" >> config.mak
-[ ${ANDROID_ABI} = "armeabi-v7a-hard" ] && echo "NOTHUMB := -marm" >> config.mak
-
 # Always strip symbols for libring.so remove it if you want to debug the daemon
 STRIP_ARG="-s "
 
-EXTRA_CFLAGS="${EXTRA_CFLAGS} -DNDEBUG "
-if [ "${RELEASE}" -eq 1 ]; then
-    echo "Contribs in release mode."
+#EXTRA_CFLAGS="${EXTRA_CFLAGS} -DNDEBUG "
+#EXTRA_CXXFLAGS="${EXTRA_CXXFLAGS} -DNDEBUG "
+#if [ "${RELEASE}" -eq 1 ]; then
+    echo "Daemon in release mode."
     OPTS=""
-else
-    echo "Contribs in debug mode."
-    OPTS="--enable-debug"
-fi
+#else
+#    echo "Daemon in debug mode."
+#    OPTS="--enable-debug"
+#fi
 
 export SYSROOT=$ANDROID_TOOLCHAIN/sysroot
-echo "EXTRA_CFLAGS= -g -fpic ${EXTRA_CFLAGS}" >> config.mak
-echo "EXTRA_CXXFLAGS= -g -fpic ${EXTRA_CXXFLAGS}" >> config.mak
+echo "EXTRA_CFLAGS= -fPIC ${EXTRA_CFLAGS}" >> config.mak
+echo "EXTRA_CXXFLAGS= -fPIC ${EXTRA_CXXFLAGS}" >> config.mak
 echo "EXTRA_LDFLAGS= ${EXTRA_LDFLAGS} -L${SYSROOT}/usr/${LIBDIR}" >> config.mak
 export RING_EXTRA_CFLAGS="${EXTRA_CFLAGS}"
 export RING_EXTRA_CXXFLAGS="${EXTRA_CXXFLAGS}"
@@ -282,5 +266,5 @@ ${NDK_TOOLCHAIN_PATH}/clang++ \
                 -I${RING_SRC_DIR}/src \
                 -L${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/lib \
                 ${STATIC_LIBS_ALL} \
-                ${STRIP_ARG} --std=c++14 -O3 \
+                ${STRIP_ARG} --std=c++14 -O3 -fPIC \
                 -o ${LIBRING_JNI_DIR}/libring.so
