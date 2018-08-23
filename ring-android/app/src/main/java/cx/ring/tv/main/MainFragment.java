@@ -37,6 +37,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -244,42 +246,17 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     }
 
     @Override
-    public void displayAccountInfos(final String address, final RingNavigationViewModel viewModel) {
+    public void displayAccountInfos(final RingNavigationViewModel viewModel) {
         if (getActivity() == null) {
             Log.e(TAG, "displayAccountInfos: Not able to get activity");
             return;
         }
 
         VCard vcard = viewModel.getVcard();
-        if (vcard == null) {
-            Log.e(TAG, "displayAccountInfos: Not able to get vcard");
-            return;
-        }
-
-        FormattedName fn = vcard.getFormattedName();
-        String formattedName = fn == null ? null : fn.getValue();
-        if (formattedName != null && !formattedName.isEmpty()) {
-            titleView.setAlias(formattedName);
-            if (address != null) {
-                setTitle(address);
-            } else {
-                setTitle("");
-            }
-        } else {
-            titleView.setAlias(address);
-        }
-
-        byte[] data = null;
-        List<Photo> photos = vcard.getPhotos();
-        if (!photos.isEmpty() && photos.get(0) != null) {
-            data = photos.get(0).getData();
-        }
-        Drawable contactPicture = AvatarFactory.getAvatar(getActivity(),
-                data,
-                viewModel.getAccount().getDisplayUsername(),
-                address);
-
-        titleView.setCurrentAccountPhoto(contactPicture);
+        String registeredName = viewModel.getAccount().getRegisteredName();
+        String uri = viewModel.getAccount().getUri();
+        titleView.getLogoView().setVisibility(View.VISIBLE);
+        AvatarFactory.getGlideAvatar(getActivity(), Glide.with(this), vcard, registeredName, uri).into(titleView.getLogoView());
     }
 
     @Override

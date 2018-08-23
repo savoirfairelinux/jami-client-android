@@ -2,6 +2,7 @@
  * Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  * Author: Pierre Duchemin <pierre.duchemin@savoirfairelinux.com>
+ * Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,42 +21,40 @@
 
 package cx.ring.contacts;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.support.v7.content.res.AppCompatResources;
-import android.util.Log;
-import android.util.LruCache;
 
+import android.text.TextUtils;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
+import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 
 import cx.ring.R;
-import cx.ring.model.Uri;
+import cx.ring.model.Account;
+import cx.ring.model.CallContact;
 import cx.ring.utils.CircleTransform;
-import cx.ring.utils.HashUtils;
+import cx.ring.views.AvatarDrawable;
 import ezvcard.VCard;
+import ezvcard.property.FormattedName;
+import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 
 public class AvatarFactory {
 
-    private static final String TAG = AvatarFactory.class.getSimpleName();
+    public static final int SIZE_AB = 36;
+    public static final int SIZE_NOTIF = 48;
 
-    // ordered to have the same colors on all clients
-    private static final int[] contactColors = {
-            R.color.red_500, R.color.pink_500,
-            R.color.purple_500, R.color.deep_purple_500,
-            R.color.indigo_500, R.color.blue_500,
-            R.color.cyan_500, R.color.teal_500,
-            R.color.green_500, R.color.light_green_500,
-            R.color.grey_500, R.color.lime_500,
-            R.color.amber_500, R.color.deep_orange_500,
-            R.color.brown_500, R.color.blue_grey_500
-    };
-    private static final int DEFAULT_AVATAR_SIZE = 128;
+    private static final String TAG = AvatarFactory.class.getSimpleName();
 
     private static final RequestOptions GLIDE_OPTIONS = new RequestOptions()
             .centerCrop()
@@ -67,148 +66,116 @@ public class AvatarFactory {
             .transform(new CircleTransform());
 
     private static final Paint AVATAR_TEXT_PAINT = new Paint();
+
     static {
         AVATAR_TEXT_PAINT.setTextAlign(Paint.Align.CENTER);
         AVATAR_TEXT_PAINT.setColor(Color.WHITE);
         AVATAR_TEXT_PAINT.setAntiAlias(true);
     }
 
-    private static final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
-
-    // Use 1/8th of the available memory for this memory cache.
-    private static final LruCache<String, BitmapDrawable> mMemoryCache = new LruCache<String, BitmapDrawable>(maxMemory / 8) {
-        @Override
-        protected int sizeOf(String key, BitmapDrawable bitmap) {
-            return bitmap.getBitmap() == null ? 0 : bitmap.getBitmap().getByteCount() / 1024;
-        }
-    };
-
     private AvatarFactory() {
     }
 
-    public static Drawable getAvatar(Context context, VCard vcard, String username, String ringId) {
-        return getAvatar(context, vcard, username, ringId, Float.valueOf(context.getResources().getDisplayMetrics().density * 128).intValue());
+    private static Drawable getDrawable(Context context, byte[] photo, String profileName, String username, String id) {
+        return new AvatarDrawable(context, photo, TextUtils.isEmpty(profileName) ? username : profileName, id);
     }
 
-    public static Drawable getAvatar(Context context, VCard vcard, String username, String ringId, int pictureSize) {
-        if (vcard == null || pictureSize <= 0) {
-            throw new IllegalArgumentException();
-        }
-
-        byte[] contactPhoto = null;
-        if (vcard.getPhotos() != null && !vcard.getPhotos().isEmpty()) {
-            contactPhoto = vcard.getPhotos().get(0).getData();
-        }
-
-        return getAvatar(context, contactPhoto, username, ringId, pictureSize, false);
+    private static <T> RequestBuilder<T> getGlideRequest(Context context, RequestBuilder<T> request, byte[] photo, String profileName, String username, String id) {
+        return request.load(getDrawable(context, photo, profileName, username, id))/*.apply(RequestOptions.circleCropTransform())*/;
     }
 
-    public static BitmapDrawable getAvatar(Context context, byte[] photo, String username, String ringId, boolean noCache) {
-        return getAvatar(context, photo, username, ringId, Float.valueOf(context.getResources().getDisplayMetrics().density * DEFAULT_AVATAR_SIZE).intValue(), noCache);
+    public static RequestBuilder<Drawable> getGlideAvatar(Context context, RequestManager manager, CallContact contact) {
+        return getGlideRequest(context, manager.asDrawable(), contact.getPhoto(), contact.getProfileName(), contact.getUsername(), contact.getPrimaryNumber());
     }
 
-    public static BitmapDrawable getAvatar(Context context, byte[] photo, String username, String ringId) {
-        return getAvatar(context, photo, username, ringId, Float.valueOf(context.getResources().getDisplayMetrics().density * DEFAULT_AVATAR_SIZE).intValue(), false);
+    public static Single<Drawable> getAvatar(Context context, CallContact contact) {
+        return Single.just(getDrawable(context, contact.getPhoto(), contact.getProfileName(), contact.getUsername(), contact.getPrimaryNumber()));
+    }
+    public static Single<Drawable> getAvatar(Context context, Account account) {
+        VCard vcard = account.getProfile();
+        return AvatarFactory.getAvatar(context, vcard, account.getRegisteredName(), account.getUri());
     }
 
-    public static BitmapDrawable getAvatar(Context context, byte[] photo, String username, String ringId, int pictureSize, boolean noCache) {
-        if (context == null || pictureSize <= 0) {
-            throw new IllegalArgumentException();
+    public static Single<Drawable> getAvatar(Context context, VCard vcard, String registeredName, String uri) {
+        byte[] photo = null;
+        String profile = null;
+        if (vcard != null) {
+            if (vcard.getPhotos() != null && !vcard.getPhotos().isEmpty()) {
+                photo = vcard.getPhotos().get(0).getData();
+            }
+            FormattedName name = vcard.getFormattedName();
+            if (name != null) {
+                String n = name.getValue();
+                if (!TextUtils.isEmpty(n))
+                    profile = n;
+            }
         }
-        String key = ringId + pictureSize + username;
-        BitmapDrawable bmp = noCache ? null : mMemoryCache.get(key);
-        if (bmp != null)
-            return bmp;
-
-        Log.d(TAG, "getAvatar: username=" + username + ", ringid=" + ringId + ", pictureSize=" + pictureSize);
-
-        if (photo != null && photo.length > 0) {
-            bmp = new BitmapDrawable(context.getResources(), BitmapFactory.decodeByteArray(photo, 0, photo.length));
-            mMemoryCache.put(key, bmp);
-            return bmp;
-        }
-
-        Uri uriUsername = new Uri(username);
-        Uri uri = new Uri(ringId);
-        Character firstCharacter = getFirstCharacter(uriUsername.getRawRingId());
-        if (uri.isEmpty() || uriUsername.isRingId() || firstCharacter == null) {
-            bmp = createDefaultAvatar(context, generateAvatarColor(uri.getRawUriString()), pictureSize);
-            mMemoryCache.put(key, bmp);
-            return bmp;
-        }
-
-        bmp = createLetterAvatar(context, firstCharacter, generateAvatarColor(uri.getRawUriString()), pictureSize);
-        mMemoryCache.put(key, bmp);
-        return bmp;
+        return Single.just(getDrawable(context, photo, profile, registeredName, uri));
     }
 
-    private static BitmapDrawable createDefaultAvatar(Context context, int backgroundColor, int pictureSize) {
-        if (context == null || pictureSize <= 0) {
-            throw new IllegalArgumentException();
+    private static Bitmap drawableToBitmap(Drawable drawable, int size) {
+        if (drawable instanceof BitmapDrawable) {
+            return ((BitmapDrawable)drawable).getBitmap();
         }
 
-        Bitmap canvasBitmap = Bitmap.createBitmap(pictureSize, pictureSize, Bitmap.Config.ARGB_8888);
+        int width = drawable.getIntrinsicWidth();
+        width = width > 0 ? width : size;
+        int height = drawable.getIntrinsicHeight();
+        height = height > 0 ? height : size;
 
-        Canvas canvas = new Canvas(canvasBitmap);
-        canvas.drawColor(context.getResources().getColor(backgroundColor));
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
 
-        Drawable drawable = AppCompatResources.getDrawable(context, R.drawable.ic_contact_picture_box_default);
-        if (drawable == null) {
-            Log.e(TAG, "Not able to get default drawable");
-        } else {
-            drawable.setBounds(0, 0, pictureSize, pictureSize);
-            drawable.draw(canvas);
-        }
-
-        return new BitmapDrawable(context.getResources(), canvasBitmap);
+        return bitmap;
     }
 
-    private static BitmapDrawable createLetterAvatar(Context context, char firstCharacter, int backgroundColor, int pictureSize) {
-        if (context == null || pictureSize <= 0) {
-            throw new IllegalArgumentException();
-        }
-
-        Bitmap canvasBitmap = Bitmap.createBitmap(pictureSize, pictureSize, Bitmap.Config.ARGB_8888);
-
-        Canvas canvas = new Canvas(canvasBitmap);
-        canvas.drawColor(context.getResources().getColor(backgroundColor));
-
-        AVATAR_TEXT_PAINT.setTextSize(pictureSize / 2);
-        canvas.drawText(Character.toString(firstCharacter), pictureSize * 0.51f, pictureSize * 0.7f, AVATAR_TEXT_PAINT);
-
-        return new BitmapDrawable(context.getResources(), canvasBitmap);
+    public static Single<Bitmap> getBitmapAvatar(Context context, CallContact contact, int size) {
+        return getAvatar(context, contact)
+                .map(d -> drawableToBitmap(d, size))
+                .subscribeOn(Schedulers.computation());
     }
 
-    private static int generateAvatarColor(String ringId) {
-        if (ringId == null) {
-            return R.color.grey_500;
+    public static RequestBuilder<Drawable> getGlideAvatar(Context context, RequestManager manager, VCard vcard, String username, String ringId) {
+        byte[] photo = null;
+        String profile = null;
+        if (vcard != null) {
+            if (vcard.getPhotos() != null && !vcard.getPhotos().isEmpty()) {
+                photo = vcard.getPhotos().get(0).getData();
+            }
+            FormattedName name = vcard.getFormattedName();
+            if (name != null) {
+                String n = name.getValue();
+                if (!TextUtils.isEmpty(n))
+                    profile = n;
+            }
         }
 
-        String md5 = HashUtils.md5(ringId);
-        if (md5 == null) {
-            return R.color.grey_500;
-        }
-        int colorIndex = Integer.parseInt(md5.charAt(0) + "", 16);
-        Log.d(TAG, "generateAvatarColor: ringid=" + ringId + ", index=" + colorIndex + ", md5=" + md5);
-        return contactColors[colorIndex % contactColors.length];
+        return getGlideRequest(context, manager.asDrawable(), photo, profile, username, ringId)
+                .transition(DrawableTransitionOptions.withCrossFade(100));
     }
 
-    private static Character getFirstCharacter(String name) {
-        if (name == null) {
-            return null;
-        }
-        String filteredName = name.replaceAll("\\W+", "");
-        if (filteredName.isEmpty()) {
-            return null;
-        }
-        return Character.toUpperCase(name.charAt(0));
+    public static RequestBuilder<Drawable> getGlideAvatar(Fragment fragment, CallContact contact) {
+        return getGlideAvatar(fragment.getActivity(), Glide.with(fragment), contact);
     }
 
-    public static RequestOptions getGlideOptions(boolean circle, boolean withPlaceholder) {
+    public static RequestBuilder<Drawable> getGlideAvatar(Context context, CallContact contact) {
+        return getGlideAvatar(context, Glide.with(context), contact);
+    }
+
+    public static void loadGlideAvatar(ImageView view, CallContact contact) {
+        getGlideAvatar(view.getContext(), contact).into(view);
+    }
+
+    public static RequestBuilder<Bitmap> getBitmapGlideAvatar(Context context, CallContact contact) {
+        return getGlideRequest(context, Glide.with(context).asBitmap(), contact.getPhoto(), contact.getProfileName(), contact.getUsername(), contact.getPrimaryNumber());
+    }
+
+    public static RequestOptions getGlideOptions(boolean circle) {
         return circle ? GLIDE_OPTIONS_CIRCLE : GLIDE_OPTIONS;
     }
 
     public static void clearCache() {
-        mMemoryCache.evictAll();
     }
 }

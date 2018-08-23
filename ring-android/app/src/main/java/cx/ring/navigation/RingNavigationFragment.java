@@ -236,12 +236,11 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
             return;
         }
 
-        String username = account.getRegisteredName();
+        /*String username = account.getRegisteredName();
         String ringId = account.getUri();
-        Glide.with(getActivity())
-                .load(AvatarFactory.getAvatar(getActivity(), vcard, username, ringId))
-                .apply(AvatarFactory.getGlideOptions(true, true))
-                .into(mUserImage);
+        AvatarFactory.getGlideAvatar(getActivity(), Glide.with(this), vcard, username, ringId)
+                .into(mUserImage);*/
+        mUserImage.setImageDrawable(AvatarFactory.getAvatar(getActivity(), vcard, account.getRegisteredName(), account.getUri()).blockingGet());
     }
 
     public void updatePhoto(Uri uriImage) {
@@ -293,7 +292,7 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
         final EditText editText = view.findViewById(R.id.user_name);
         editText.setText(presenter.getAlias(mSelectedAccount));
         mProfilePhoto = view.findViewById(R.id.profile_photo);
-        mProfilePhoto.setImageDrawable(mUserImage.getDrawable());
+        mProfilePhoto.setImageDrawable(AvatarFactory.getAvatar(inflater.getContext(), mSelectedAccount).blockingGet());
 
         ImageButton cameraView = view.findViewById(R.id.camera);
         cameraView.setOnClickListener(v -> presenter.cameraClicked());

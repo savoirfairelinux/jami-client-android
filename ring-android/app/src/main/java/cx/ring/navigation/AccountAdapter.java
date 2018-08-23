@@ -183,17 +183,7 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public void update(final Account account) {
             final Context context = itemView.getContext();
-            VCard vcard = account.getProfile();
-
-            Drawable accountPicture = AvatarFactory.getAvatar(context, vcard,
-                    account.getRegisteredName(),
-                    account.getUri());
-
-            Glide.with(context)
-                    .load(accountPicture)
-                    .apply(AvatarFactory.getGlideOptions(true, true))
-                    //.transition(DrawableTransitionOptions.withCrossFade())
-                    .into(photo);
+            photo.setImageDrawable(AvatarFactory.getAvatar(context, account).blockingGet());
 
             alias.setText(mRingNavigationPresenter.getAccountAlias(account));
             host.setText(mRingNavigationPresenter.getUri(account, context.getText(R.string.account_type_ip2ip)));

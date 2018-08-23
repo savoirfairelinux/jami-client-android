@@ -186,6 +186,10 @@ public class CallContact {
         return !StringUtils.isEmpty(mDisplayName) ? mDisplayName : getRingUsername();
     }
 
+    public String getProfileName() {
+        return mDisplayName;
+    }
+
     public long getPhotoId() {
         return mPhotoId;
     }

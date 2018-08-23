@@ -98,22 +98,9 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
             holder.convStatus.setTypeface(null, Typeface.NORMAL);
         }
 
-        final Drawable contactPicture = AvatarFactory.getAvatar(
-                holder.itemView.getContext(),
-                contact.getPhoto(),
-                smartListViewModel.getContactName(),
-                smartListViewModel.getUuid());
-        if (contactPicture != holder.picture) {
-            holder.picture = contactPicture;
-            holder.photo.setImageDrawable(null);
-            Glide.with(holder.itemView.getContext())
-                    .load(contactPicture)
-                    .apply(AvatarFactory.getGlideOptions(true, true))
-                    .into(holder.photo);
-        }
-
+        holder.photo.setImageDrawable(AvatarFactory.getAvatar(holder.photo.getContext(), contact).blockingGet());
+        //AvatarFactory.loadGlideAvatar(holder.photo, contact);
         holder.online.setVisibility(smartListViewModel.isOnline() ? View.VISIBLE : View.GONE);
-
         holder.bind(listener, smartListViewModel);
     }
 

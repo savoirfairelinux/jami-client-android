@@ -195,13 +195,13 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
 
         Drawable contactPicture = AvatarFactory.getAvatar(
                 getActivity(),
-                vcard.getPhotos().get(0).getData(),
+                vcard,
                 account.getDisplayUsername(),
-                account.getUri());
+                account.getUri()).blockingGet();
 
         Glide.with(getActivity())
                 .load(contactPicture)
-                .apply(AvatarFactory.getGlideOptions(true, false))
+                .apply(AvatarFactory.getGlideOptions(true))
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(getGuidanceStylist().getIconView());
     }

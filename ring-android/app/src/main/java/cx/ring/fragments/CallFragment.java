@@ -53,7 +53,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.rodolfonavalon.shaperipplelibrary.ShapeRipple;
 import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 
@@ -83,10 +82,7 @@ import cx.ring.utils.KeyboardVisibilityManager;
 import cx.ring.utils.Log;
 import cx.ring.utils.MediaButtonsHelper;
 import cx.ring.views.CheckableImageButton;
-import io.reactivex.Single;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
 
 public class CallFragment extends BaseFragment<CallPresenter> implements CallView, MediaButtonsHelper.MediaButtonsHelperCallback {
 
@@ -509,7 +505,9 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
             contactBubbleTxt.setText(username);
         }
 
-        mCompositeDisposable.add(Single.fromCallable(() -> Glide.with(getActivity())
+        AvatarFactory.loadGlideAvatar(contactBubbleView, contact);
+
+        /*mCompositeDisposable.add(Single.fromCallable(() -> Glide.with(getActivity())
                 .load(AvatarFactory.getAvatar(
                         getActivity(),
                         contact.getPhoto(),
@@ -520,7 +518,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
                 .get())
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(d -> contactBubbleView.setImageDrawable(d)));
+                .subscribe(d -> contactBubbleView.setImageDrawable(d)));*/
     }
 
     @Override

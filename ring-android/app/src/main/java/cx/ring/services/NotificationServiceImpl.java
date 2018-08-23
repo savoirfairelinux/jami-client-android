@@ -53,6 +53,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
 
@@ -371,12 +372,12 @@ public class NotificationServiceImpl extends NotificationService {
                                     PendingIntent.FLAG_ONE_SHOT));
 
 
-            List<Photo> photos = contact.vcard == null ? null : contact.vcard.getPhotos();
+            /*List<Photo> photos = contact.vcard == null ? null : contact.vcard.getPhotos();
             byte[] data = null;
             if (photos != null && !photos.isEmpty()) {
                 data = photos.get(0).getData();
-            }
-            setContactPicture(data, contact.getRingUsername(), contact.getPrimaryNumber(), messageNotificationBuilder);
+            }*/
+            setContactPicture(contact, messageNotificationBuilder);
         } else {
             messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_REQUEST);
             boolean newRequest = false;
@@ -612,11 +613,16 @@ public class NotificationServiceImpl extends NotificationService {
     }
 
     private void setContactPicture(CallContact contact, NotificationCompat.Builder messageNotificationBuilder) {
-        setContactPicture(contact.getPhoto(), contact.getUsername(),
-                contact.getPhones().get(0).getNumber().getHost(), messageNotificationBuilder);
+        int size = (int) (mContext.getResources().getDisplayMetrics().density * AvatarFactory.SIZE_NOTIF);
+        try {
+            messageNotificationBuilder.setLargeIcon(AvatarFactory.getBitmapGlideAvatar(mContext, contact)
+                    .submit(size, size)
+                    .get());
+        } catch (Exception e) {
+        }
     }
 
-    private void setContactPicture(byte[] photo, String username, String ringId, NotificationCompat.Builder messageNotificationBuilder) {
+    /*private void setContactPicture(byte[] photo, String username, String ringId, NotificationCompat.Builder messageNotificationBuilder) {
         Drawable contactPicture = AvatarFactory.getAvatar(mContext, photo, username, ringId);
 
         Bitmap contactBitmap = BitmapUtils.drawableToBitmap(contactPicture);
@@ -630,5 +636,5 @@ public class NotificationServiceImpl extends NotificationService {
             return;
         }
         messageNotificationBuilder.setLargeIcon(circleBitmap);
-    }
+    }*/
 }
