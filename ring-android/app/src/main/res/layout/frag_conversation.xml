@@ -181,7 +181,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:visibility="visible"
-                tools:listitem="@layout/item_number_selected" />
+                tools:listitem="@layout/item_number_selected"
+                tools:visibility="gone" />
 
             <ImageButton
                 android:id="@+id/send_data"
@@ -224,6 +225,16 @@
                 android:indeterminate="true"
                 android:visibility="gone" />
 
+            <TextView
+                android:id="@+id/emoji_send"
+                style="?attr/borderlessButtonStyle"
+                android:background="?selectableItemBackgroundBorderless"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:padding="0dp"
+                android:text="👍"
+                android:textSize="18sp" />
+
             <ImageButton
                 android:id="@+id/msg_send"
                 android:layout_width="wrap_content"
@@ -232,7 +243,8 @@
                 android:contentDescription="@string/send_message"
                 android:padding="8dp"
                 android:tint="@android:color/darker_gray"
-                app:srcCompat="@drawable/ic_send_black" />
+                app:srcCompat="@drawable/ic_send_black"
+                android:visibility="gone"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>
