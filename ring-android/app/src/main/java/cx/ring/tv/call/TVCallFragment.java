@@ -353,7 +353,7 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     }
 
     @Override
-    public void initNormalStateDisplay(final boolean audioOnly) {
+    public void initNormalStateDisplay(final boolean audioOnly, boolean isSpeakerphoneOn) {
         shapeRipple.stopRipple();
 
         acceptButton.setVisibility(View.GONE);
