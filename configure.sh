@@ -27,7 +27,7 @@ if [ -n "$HAVE_ARM" ]; then
     fi
 fi
 
-CPPFLAGS="-I${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/include "
+CPPFLAGS="-I${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/include -fPIC"
 LDFLAGS="$LDFLAGS -L${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/lib "
 
 SYSROOT=$NDK_TOOLCHAIN_PATH/sysroot
