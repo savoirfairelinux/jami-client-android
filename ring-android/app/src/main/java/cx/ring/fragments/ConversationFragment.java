@@ -41,6 +41,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
@@ -117,6 +118,12 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
     @BindView(R.id.msg_input_txt)
     protected MessageEditText mMsgEditTxt;
+
+    @BindView(R.id.emoji_send)
+    protected TextView mEmojiSend;
+
+    @BindView(R.id.msg_send)
+    protected View mMsgSend;
 
     @BindView(R.id.ongoingcall_pane)
     protected ViewGroup mTopPane;
@@ -250,8 +257,11 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         });
         if (mPreferences != null) {
             String pendingMessage = mPreferences.getString(KEY_PREFERENCE_PENDING_MESSAGE, null);
-            if (pendingMessage != null)
+            if (!TextUtils.isEmpty(pendingMessage)) {
                 mMsgEditTxt.setText(pendingMessage);
+                mMsgSend.setVisibility(View.VISIBLE);
+                mEmojiSend.setVisibility(View.GONE);
+            }
         }
         mMsgEditTxt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -262,8 +272,16 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
             @Override
             public void afterTextChanged(Editable s) {
+                String message = s.toString();
+                if (TextUtils.isEmpty(message)) {
+                    mMsgSend.setVisibility(View.GONE);
+                    mEmojiSend.setVisibility(View.VISIBLE);
+                } else {
+                    mMsgSend.setVisibility(View.VISIBLE);
+                    mEmojiSend.setVisibility(View.GONE);
+                }
                 if (mPreferences != null) {
-                    mPreferences.edit().putString(KEY_PREFERENCE_PENDING_MESSAGE, s.toString()).apply();
+                    mPreferences.edit().putString(KEY_PREFERENCE_PENDING_MESSAGE, message).apply();
                 }
             }
         });
@@ -296,6 +314,11 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         String message = mMsgEditTxt.getText().toString();
         clearMsgEdit();
         presenter.sendTextMessage(message);
+    }
+
+    @OnClick(R.id.emoji_send)
+    public void sendEmoji() {
+        presenter.sendTextMessage(mEmojiSend.getText().toString());
     }
 
     @OnClick(R.id.send_data)
