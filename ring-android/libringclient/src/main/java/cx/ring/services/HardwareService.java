@@ -71,7 +71,7 @@ public abstract class HardwareService {
 
     public abstract boolean isSpeakerPhoneOn();
 
-    public abstract void toggleSpeakerphone();
+    public abstract void toggleSpeakerphone(boolean checked);
 
     public abstract void startRinging();
 
