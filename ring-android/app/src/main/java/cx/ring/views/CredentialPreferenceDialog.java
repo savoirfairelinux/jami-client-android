@@ -20,9 +20,9 @@ package cx.ring.views;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v14.preference.PreferenceDialogFragment;
-import android.support.v7.app.AlertDialog;
+import androidx.annotation.NonNull;
+import androidx.preference.PreferenceDialogFragment;
+import androidx.appcompat.app.AlertDialog;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;

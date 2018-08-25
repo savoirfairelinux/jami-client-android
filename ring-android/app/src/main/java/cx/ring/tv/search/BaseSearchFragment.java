@@ -30,7 +30,7 @@ import cx.ring.model.RingError;
 import cx.ring.mvp.BaseView;
 import cx.ring.mvp.RootPresenter;
 
-public class BaseSearchFragment<T extends RootPresenter> extends android.support.v17.leanback.app.SearchFragment
+public class BaseSearchFragment<T extends RootPresenter> extends androidx.leanback.app.SearchFragment
         implements BaseView {
 
     protected static final String TAG = BaseSearchFragment.class.getSimpleName();

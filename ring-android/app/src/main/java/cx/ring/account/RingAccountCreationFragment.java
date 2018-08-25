@@ -21,7 +21,7 @@ package cx.ring.account;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
+import com.google.android.material.textfield.TextInputLayout;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.view.View;
@@ -40,10 +40,11 @@ import butterknife.OnTextChanged;
 import cx.ring.R;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.mvp.BaseFragment;
+import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.mvp.RingAccountViewModel;
 import cx.ring.utils.RegisteredNameFilter;
 
-public class RingAccountCreationFragment extends BaseFragment<RingAccountCreationPresenter> implements RingAccountCreationView {
+public class RingAccountCreationFragment extends BaseSupportFragment<RingAccountCreationPresenter> implements RingAccountCreationView {
 
     public static final String KEY_RING_ACCOUNT = "RING_ACCOUNT";
 

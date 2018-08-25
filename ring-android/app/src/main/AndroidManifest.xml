@@ -334,7 +334,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:theme="@style/LeanbackPreferences" />
 
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="cx.ring.file_provider"
             android:exported="false"
             android:grantUriPermissions="true">

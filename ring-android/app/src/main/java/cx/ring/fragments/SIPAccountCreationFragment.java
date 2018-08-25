@@ -24,7 +24,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.support.v7.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -38,10 +38,11 @@ import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.mvp.BaseFragment;
+import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.mvp.SIPCreationView;
 import cx.ring.wizard.SIPCreationPresenter;
 
-public class SIPAccountCreationFragment extends BaseFragment<SIPCreationPresenter> implements SIPCreationView {
+public class SIPAccountCreationFragment extends BaseSupportFragment<SIPCreationPresenter> implements SIPCreationView {
 
     public static final String TAG = SIPAccountCreationFragment.class.getSimpleName();
 

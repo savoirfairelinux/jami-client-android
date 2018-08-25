@@ -45,7 +45,7 @@
             android:textSize="14sp"
             android:textColor="@color/text_color_primary_dark" />
 
-        <android.support.v7.widget.AppCompatButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/ring_add_account"
             android:theme="@style/ButtonColored"
             android:layout_width="300dp"
@@ -55,7 +55,7 @@
             android:text="@string/account_link_button" />
 
 
-        <android.support.v7.widget.AppCompatButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/ring_create_btn"
             android:theme="@style/ButtonColored"
             android:layout_width="300dp"

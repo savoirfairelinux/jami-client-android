@@ -33,6 +33,9 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+
+import androidx.annotation.NonNull;
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import cx.ring.R;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
@@ -41,8 +44,6 @@ import cx.ring.utils.Tuple;
 import cx.ring.utils.VCardUtils;
 
 import android.media.ThumbnailUtils;
-import android.support.annotation.NonNull;
-import android.support.graphics.drawable.VectorDrawableCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
