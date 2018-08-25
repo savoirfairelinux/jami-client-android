@@ -133,15 +133,7 @@ public class TVContactRequestFragment extends BaseDetailFragment<TVContactReques
     public void showRequest(TVListViewModel model) {
         final DetailsOverviewRow row = new DetailsOverviewRow(model);
 
-        Drawable contactPicture = AvatarFactory.getAvatar(getActivity(),
-                model.getContact().getPhoto(),
-                model.getContact().getDisplayName(),
-                model.getContact().getPrimaryNumber());
-
-        Glide.with(this)
-                .load(contactPicture)
-                .apply(AvatarFactory.getGlideOptions(false, true))
-                .into(new DetailsOverviewRowTarget(row, contactPicture));
+        AvatarFactory.getGlideAvatar(this, model.getContact()).into(new DetailsOverviewRowTarget(row));
 
         SparseArrayObjectAdapter adapter = new SparseArrayObjectAdapter();
         adapter.set(ACTION_ACCEPT, new Action(ACTION_ACCEPT, getResources()

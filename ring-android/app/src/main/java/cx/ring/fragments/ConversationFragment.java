@@ -25,9 +25,12 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
@@ -68,6 +71,7 @@ import cx.ring.adapters.NumberAdapter;
 import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
+import cx.ring.contacts.AvatarFactory;
 import cx.ring.conversation.ConversationPresenter;
 import cx.ring.conversation.ConversationView;
 import cx.ring.dependencyinjection.RingInjectionComponent;
@@ -86,6 +90,8 @@ import cx.ring.utils.ClipboardHelper;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.MediaButtonsHelper;
 import cx.ring.views.MessageEditText;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -160,6 +166,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     private SharedPreferences mPreferences;
 
     private File mCurrentPhoto = null;
+    private Disposable actionbarTarget = null;
 
     private Handler mHandler = new Handler();
     private static final int REFRESH_INTERVAL = 10000;
@@ -455,11 +462,19 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
+    public void onDetach() {
+        if (actionbarTarget != null) {
+            actionbarTarget.dispose();
+            actionbarTarget = null;
+        }
+        super.onDetach();
+    }
+
+    @Override
     public void onDestroy() {
         if (mDeleteConversation) {
             mDeleteDialog.dismiss();
         }
-
         super.onDestroy();
     }
 
@@ -536,27 +551,35 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
-    public void displayContactName(final CallContact contact) {
+    public void displayContact(final CallContact contact) {
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionBar == null) {
             return;
         }
+        Context context = actionBar.getThemedContext();
         String displayName = contact.getDisplayName();
         actionBar.setTitle(displayName);
+
+        if (actionbarTarget != null) {
+            actionbarTarget.dispose();
+            actionbarTarget = null;
+        }
+        int targetSize = (int) (AvatarFactory.SIZE_AB * context.getResources().getDisplayMetrics().density);
+        actionbarTarget = AvatarFactory.getBitmapAvatar(context, contact, targetSize)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(b -> actionBar.setLogo(new BitmapDrawable(context.getResources(), b)));
+
         String identity = contact.getRingUsername();
         if (identity != null && !identity.equals(displayName)) {
             actionBar.setSubtitle(identity);
         }
+
+        mAdapter.setPhoto();
     }
 
     @Override
     public void displayOnGoingCallPane(final boolean display) {
         mTopPane.setVisibility(display ? View.VISIBLE : View.GONE);
-    }
-
-    @Override
-    public void displayContactPhoto(final byte[] photo) {
-        mAdapter.setPhoto(photo);
     }
 
     @Override

@@ -321,7 +321,9 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
             contactBubbleTxt.setText(username);
         }
 
-        mCompositeDisposable.add(Single.fromCallable(() -> Glide.with(getActivity())
+        AvatarFactory.loadGlideAvatar(contactBubbleView, contact);
+
+        /*mCompositeDisposable.add(Single.fromCallable(() -> Glide.with(getActivity())
                 .load(AvatarFactory.getAvatar(
                         getActivity(),
                         contact.getPhoto(),
@@ -332,7 +334,7 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
                 .get())
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(d -> contactBubbleView.setImageDrawable(d)));
+                .subscribe(d -> contactBubbleView.setImageDrawable(d)));*/
     }
 
     @Override

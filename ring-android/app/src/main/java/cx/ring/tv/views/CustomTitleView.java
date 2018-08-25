@@ -110,13 +110,8 @@ public class CustomTitleView extends RelativeLayout implements TitleViewAdapter.
         mLogoView.setVisibility(View.VISIBLE);
     }
 
-    public void setCurrentAccountPhoto(Drawable photo) {
-        Glide.with(getContext())
-                .load(photo)
-                .apply(AvatarFactory.getGlideOptions(true, true))
-                .into(mLogoView);
-
-        mLogoView.setVisibility(View.VISIBLE);
+    public ImageView getLogoView() {
+        return mLogoView;
     }
 
     @Override
