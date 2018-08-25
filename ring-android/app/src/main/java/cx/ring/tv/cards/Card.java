@@ -17,7 +17,7 @@
 package cx.ring.tv.cards;
 
 import android.graphics.Color;
-import android.support.annotation.DrawableRes;
+import androidx.annotation.DrawableRes;
 
 /**
  * This is a generic example of a custom data object, containing info we might want to keep with

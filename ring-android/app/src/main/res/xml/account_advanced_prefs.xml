@@ -17,9 +17,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <android.support.v14.preference.SwitchPreference
+    <SwitchPreference
         android:defaultValue="false"
         android:key="DHT.PublicInCalls"
         android:persistent="false"
@@ -42,33 +42,33 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:persistent="false"
         android:title="@string/account_local_port_label" />
 
-    <android.support.v7.preference.PreferenceCategory android:title="@string/account_proxy_label">
-        <android.support.v14.preference.SwitchPreference
+    <PreferenceCategory android:title="@string/account_proxy_label">
+        <SwitchPreference
             android:key="Account.proxyEnabled"
             android:persistent="false"
             android:summaryOff="Disabled"
             android:summaryOn="Enabled"
             android:title="@string/account_proxy_enable_label" />
 
-        <android.support.v7.preference.EditTextPreference
+        <EditTextPreference
             android:defaultValue=""
             android:dependency="Account.proxyEnabled"
             android:key="Account.proxyServer"
             android:persistent="false"
             android:summary=""
             android:title="@string/account_proxy_server_label" />
-    </android.support.v7.preference.PreferenceCategory>
+    </PreferenceCategory>
 
-    <android.support.v7.preference.PreferenceCategory android:title="@string/account_published_address_label">
+    <PreferenceCategory android:title="@string/account_published_address_label">
 
-        <android.support.v14.preference.SwitchPreference
+        <SwitchPreference
             android:key="STUN.enable"
             android:persistent="false"
             android:summaryOff="Disabled"
             android:summaryOn="Enabled"
             android:title="@string/account_stun_enable_label" />
 
-        <android.support.v7.preference.EditTextPreference
+        <EditTextPreference
             android:defaultValue=""
             android:dependency="STUN.enable"
             android:key="STUN.server"
@@ -76,14 +76,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:summary=""
             android:title="@string/account_stun_server_label" />
 
-        <android.support.v14.preference.SwitchPreference
+        <SwitchPreference
             android:key="TURN.enable"
             android:persistent="false"
             android:summaryOff="Disabled"
             android:summaryOn="Enabled"
             android:title="@string/account_turn_enable_label" />
 
-        <android.support.v7.preference.EditTextPreference
+        <EditTextPreference
             android:defaultValue=""
             android:dependency="TURN.enable"
             android:key="TURN.server"
@@ -91,7 +91,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:summary=""
             android:title="@string/account_turn_server_label" />
 
-        <android.support.v7.preference.EditTextPreference
+        <EditTextPreference
             android:defaultValue=""
             android:dependency="TURN.enable"
             android:key="TURN.username"
@@ -107,7 +107,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:summary=""
             android:title="@string/account_turn_password_label" />
 
-        <android.support.v7.preference.CheckBoxPreference
+        <CheckBoxPreference
             android:disableDependentsState="true"
             android:key="Account.publishedSameAsLocal"
             android:persistent="false"
@@ -120,14 +120,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:persistent="false"
             android:title="@string/account_published_port_label" />
 
-        <android.support.v7.preference.EditTextPreference
+        <EditTextPreference
             android:dependency="Account.publishedSameAsLocal"
             android:key="Account.publishedAddress"
             android:persistent="false"
             android:title="@string/account_published_address_label" />
-    </android.support.v7.preference.PreferenceCategory>
+    </PreferenceCategory>
 
-    <android.support.v7.preference.PreferenceCategory android:title="@string/account_rtp_port_range">
+    <PreferenceCategory android:title="@string/account_rtp_port_range">
 
         <cx.ring.views.EditTextIntegerPreference
             android:defaultValue="0"
@@ -140,6 +140,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:key="Account.audioPortMax"
             android:persistent="false"
             android:title="@string/account_rtp_max_port" />
-    </android.support.v7.preference.PreferenceCategory>
+    </PreferenceCategory>
 
-</android.support.v7.preference.PreferenceScreen>
+</PreferenceScreen>

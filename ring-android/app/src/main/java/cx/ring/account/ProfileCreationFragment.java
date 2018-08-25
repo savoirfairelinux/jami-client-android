@@ -21,7 +21,6 @@ package cx.ring.account;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -29,8 +28,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
+import androidx.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -42,18 +40,19 @@ import android.widget.ImageView;
 
 import java.io.ByteArrayOutputStream;
 
+import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import cx.ring.R;
 import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.dependencyinjection.RingInjectionComponent;
-import cx.ring.mvp.BaseFragment;
+import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.mvp.RingAccountViewModel;
 import cx.ring.utils.BitmapUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-public class ProfileCreationFragment extends BaseFragment<ProfileCreationPresenter> implements ProfileCreationView, TextWatcher {
+public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreationPresenter> implements ProfileCreationView, TextWatcher {
     public static final String TAG = ProfileCreationFragment.class.getSimpleName();
     public static final String KEY_IS_LINK = "IS_LINK";
 
@@ -215,16 +214,12 @@ public class ProfileCreationFragment extends BaseFragment<ProfileCreationPresent
 
     @Override
     public void askStoragePermission() {
-        ActivityCompat.requestPermissions(getActivity(),
-                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                REQUEST_PERMISSION_READ_STORAGE);
+        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSION_READ_STORAGE);
     }
 
     @Override
     public void askPhotoPermission() {
-        ActivityCompat.requestPermissions(getActivity(),
-                new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                REQUEST_PERMISSION_CAMERA);
+        requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSION_CAMERA);
     }
 
     @Override

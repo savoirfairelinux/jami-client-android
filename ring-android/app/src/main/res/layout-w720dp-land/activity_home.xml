@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v4.widget.DrawerLayout
+    <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:saveEnabled="false"
         tools:context=".client.HomeActivity">
 
-        <android.support.design.widget.NavigationView
+        <com.google.android.material.navigation.NavigationView
             android:id="@+id/left_drawer"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -26,9 +26,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-        </android.support.design.widget.NavigationView>
+        </com.google.android.material.navigation.NavigationView>
 
-    </android.support.v4.widget.DrawerLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>
 
     <RelativeLayout
         android:id="@+id/content_frame"
@@ -37,7 +37,7 @@
         android:paddingEnd="0dp"
         android:paddingStart="@dimen/drawer_content_padding">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/main_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
             android:layout_below="@+id/toolbar_spacer"
             android:orientation="vertical" />
 
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/action_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

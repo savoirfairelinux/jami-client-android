@@ -60,7 +60,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     tools:text="Registered" />
 
 
-                <android.support.v7.widget.SwitchCompat
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/account_switch"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
@@ -118,9 +118,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:text="@string/no_registered_name_for_account"
                         android:textAlignment="center" />
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/register_name_btn"
-                        style="@style/Widget.AppCompat.Button.Colored"
+                        style="@style/Widget.MaterialComponents.Button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingEnd="16dp"

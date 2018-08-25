@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -40,7 +40,7 @@
                     android:layout_alignBottom="@+id/user_photo"
                     android:layout_centerHorizontal="true" />
 
-                <android.support.design.widget.FloatingActionButton
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/anchor"
@@ -68,7 +68,7 @@
 
             </RelativeLayout>
 
-            <android.support.v7.widget.AppCompatButton
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/addaccount_btn"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
@@ -88,14 +88,14 @@
             android:layout_height="wrap_content"
             android:paddingTop="8dp">
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/drawer_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"
                 tools:targetApi="lollipop" />
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/drawer_accounts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -105,6 +105,6 @@
         </FrameLayout>
 
     </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+</androidx.core.widget.NestedScrollView>
 
 
