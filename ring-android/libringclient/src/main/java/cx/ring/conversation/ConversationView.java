@@ -41,6 +41,8 @@ public interface ConversationView extends BaseView {
 
     void displayNumberSpinner(Conversation conversation, Uri number);
 
+    void displayClearDialog(Conversation conversation);
+
     void displayDeleteDialog(Conversation conversation);
 
     void displayCopyToClipboard(CallContact callContact);
