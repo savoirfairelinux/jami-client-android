@@ -29,6 +29,7 @@ import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import ezvcard.VCardVersion;
 import ezvcard.io.text.VCardWriter;
+import ezvcard.property.FormattedName;
 import ezvcard.property.Uid;
 import io.reactivex.Single;
 
@@ -42,6 +43,28 @@ public final class VCardUtils {
 
     private VCardUtils() {
         // Hidden default constructor
+    }
+
+    public static Tuple<String, byte[]> readData(VCard vcard) {
+        String contactName = null;
+        byte[] photo = null;
+        if (vcard != null) {
+            if (!vcard.getPhotos().isEmpty()) {
+                try {
+                    photo = vcard.getPhotos().get(0).getData();
+                } catch (Exception e) {
+                    Log.w(TAG, "Can't read photo from VCard", e);
+                    photo = null;
+                }
+            }
+            FormattedName fname = vcard.getFormattedName();
+            if (fname != null) {
+                if (!StringUtils.isEmpty(fname.getValue())) {
+                    contactName = fname.getValue();
+                }
+            }
+        }
+        return new Tuple<>(contactName, photo);
     }
 
     /**

@@ -102,7 +102,7 @@ public class TVRingAccountCreationFragment
 
         Glide.with(getActivity())
                 .load(ringAccountViewModel.getPhoto())
-                .apply(AvatarFactory.getGlideOptions(true, false))
+                .apply(AvatarFactory.getGlideOptions(true))
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(getGuidanceStylist().getIconView());
     }

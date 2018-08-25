@@ -42,6 +42,7 @@ import cx.ring.R;
 import cx.ring.contacts.AvatarFactory;
 import cx.ring.model.Account;
 import cx.ring.utils.VCardUtils;
+import cx.ring.views.AvatarDrawable;
 import ezvcard.VCard;
 
 class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -183,17 +184,7 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public void update(final Account account) {
             final Context context = itemView.getContext();
-            VCard vcard = account.getProfile();
-
-            Drawable accountPicture = AvatarFactory.getAvatar(context, vcard,
-                    account.getRegisteredName(),
-                    account.getUri());
-
-            Glide.with(context)
-                    .load(accountPicture)
-                    .apply(AvatarFactory.getGlideOptions(true, true))
-                    //.transition(DrawableTransitionOptions.withCrossFade())
-                    .into(photo);
+            photo.setImageDrawable(new AvatarDrawable(context, account));
 
             alias.setText(mRingNavigationPresenter.getAccountAlias(account));
             host.setText(mRingNavigationPresenter.getUri(account, context.getText(R.string.account_type_ip2ip)));

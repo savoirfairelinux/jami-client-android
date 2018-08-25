@@ -38,7 +38,7 @@ public interface MainView {
 
     void displayErrorToast(int error);
 
-    void displayAccountInfos(String address, RingNavigationViewModel viewModel);
+    void displayAccountInfos(RingNavigationViewModel viewModel);
 
     void showExportDialog(String pAccountID);
 

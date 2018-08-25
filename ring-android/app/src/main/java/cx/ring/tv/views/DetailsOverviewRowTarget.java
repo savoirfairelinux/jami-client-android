@@ -27,36 +27,25 @@ import android.support.v17.leanback.widget.DetailsOverviewRow;
 import android.util.Log;
 
 import com.bumptech.glide.request.target.BaseTarget;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.bumptech.glide.request.transition.Transition;
 
-public class DetailsOverviewRowTarget extends BaseTarget<Drawable> {
+public class DetailsOverviewRowTarget extends SimpleTarget<Drawable> {
 
     private static final String TAG = DetailsOverviewRowTarget.class.getSimpleName();
     private DetailsOverviewRow detailsOverviewRow;
-    private Drawable drawable;
 
-    public DetailsOverviewRowTarget(DetailsOverviewRow detailsOverviewRow, Drawable drawable) {
-        if (detailsOverviewRow == null || drawable == null) {
+    public DetailsOverviewRowTarget(DetailsOverviewRow detailsOverviewRow) {
+        if (detailsOverviewRow == null) {
             Log.d(TAG, "DetailsOverviewRowTarget: invalid parameter");
             return;
         }
         this.detailsOverviewRow = detailsOverviewRow;
-        this.drawable = drawable;
     }
 
     @Override
     public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
         this.detailsOverviewRow.setImageDrawable(resource);
-    }
-
-    @Override
-    public void getSize(@NonNull SizeReadyCallback cb) {
-        cb.onSizeReady(drawable.getMinimumWidth(), drawable.getMinimumHeight());
-    }
-
-    @Override
-    public void removeCallback(@NonNull SizeReadyCallback cb) {
-        // Do nothing, we never retain a reference to the callback
     }
 }

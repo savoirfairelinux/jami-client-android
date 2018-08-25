@@ -170,8 +170,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
             contact = mContactService.findContact(account, uri);
             view.switchToConversationView();
         }
-        view.displayContactPhoto(contact.getPhoto());
-        view.displayContactName(contact);
+        view.displayContact(contact);
         return contact;
     }
 

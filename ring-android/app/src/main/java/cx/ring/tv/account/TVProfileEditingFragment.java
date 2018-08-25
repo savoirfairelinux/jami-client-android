@@ -52,6 +52,8 @@ import cx.ring.navigation.RingNavigationPresenter;
 import cx.ring.navigation.RingNavigationView;
 import cx.ring.navigation.RingNavigationViewModel;
 import cx.ring.tv.camera.CustomCameraActivity;
+import cx.ring.utils.VCardUtils;
+import cx.ring.views.AvatarDrawable;
 import ezvcard.VCard;
 import ezvcard.parameter.ImageType;
 import ezvcard.property.Photo;
@@ -65,6 +67,7 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
     private static final int CAMERA = 3;
 
     private List<GuidedAction> actions;
+    private int iconSize = -1;
 
     public static GuidedStepSupportFragment newInstance() {
         return new TVProfileEditingFragment();
@@ -113,6 +116,7 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
     public void onViewCreated(View view, Bundle savedInstanceState) {
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
         super.onViewCreated(view, savedInstanceState);
+        iconSize = (int) getResources().getDimension(R.dimen.tv_avatar_size);
     }
 
     @Override
@@ -188,22 +192,9 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
         else
             getGuidanceStylist().getTitleView().setText(alias);
 
-        if (vcard == null || vcard.getPhotos().isEmpty()) {
-            getGuidanceStylist().getIconView().setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_contact_picture_fallback));
-            return;
-        }
-
-        Drawable contactPicture = AvatarFactory.getAvatar(
-                getActivity(),
-                vcard.getPhotos().get(0).getData(),
-                account.getDisplayUsername(),
-                account.getUri());
-
-        Glide.with(getActivity())
-                .load(contactPicture)
-                .apply(AvatarFactory.getGlideOptions(true, false))
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(getGuidanceStylist().getIconView());
+        AvatarDrawable avatar = new AvatarDrawable(getContext(), VCardUtils.readData(vcard), account.getUsername(), account == null ? null : account.getUsername(), true);
+        avatar.setInSize(iconSize);
+        getGuidanceStylist().getIconView().setImageDrawable(avatar);
     }
 
     @Override
