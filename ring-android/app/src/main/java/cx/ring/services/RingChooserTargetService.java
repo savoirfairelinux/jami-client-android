@@ -20,6 +20,7 @@ package cx.ring.services;
 
 import android.content.ComponentName;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
@@ -28,8 +29,7 @@ import android.os.Bundle;
 import android.service.chooser.ChooserTarget;
 import android.service.chooser.ChooserTargetService;
 import android.support.annotation.RequiresApi;
-
-import com.bumptech.glide.Glide;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,15 +47,19 @@ import cx.ring.model.Conversation;
 
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class RingChooserTargetService extends ChooserTargetService {
+
     @Inject
     @Singleton
     ConversationFacade conversationFacade;
+
+    private int targetSize;
 
     @Override
     public void onCreate() {
         super.onCreate();
         RingApplication.getInstance().startDaemon();
         RingApplication.getInstance().getRingInjectionComponent().inject(this);
+        targetSize = (int) (AvatarFactory.SIZE_NOTIF * getResources().getDisplayMetrics().density);
     }
 
     @Override
@@ -67,18 +71,10 @@ public class RingChooserTargetService extends ChooserTargetService {
                         .getConversationsSubject()
                         .firstOrError()
                         .map(conversations -> {
-                            List<Future<Drawable>> futureIcons = new ArrayList<>(conversations.size());
+                            List<Future<Bitmap>> futureIcons = new ArrayList<>(conversations.size());
                             for (Conversation conversation : conversations) {
                                 CallContact contact = conversation.getContact();
-                                final BitmapDrawable contactPicture = AvatarFactory.getAvatar(
-                                        this,
-                                        contact.getPhoto(),
-                                        contact.getDisplayName(),
-                                        contact.getPrimaryNumber());
-                                futureIcons.add(Glide.with(this)
-                                        .load(contactPicture)
-                                        .apply(AvatarFactory.getGlideOptions(true, true))
-                                        .submit());
+                                futureIcons.add(AvatarFactory.getBitmapAvatar(this, contact, targetSize).toFuture());
                             }
                             int i=0;
                             List<ChooserTarget> choosers = new ArrayList<>(conversations.size());
@@ -87,8 +83,12 @@ public class RingChooserTargetService extends ChooserTargetService {
                                 Bundle bundle = new Bundle();
                                 bundle.putString(ConversationFragment.KEY_ACCOUNT_ID, a.getAccountID());
                                 bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, contact.getPrimaryNumber());
-                                BitmapDrawable d = (BitmapDrawable) futureIcons.get(i).get();
-                                Icon icon = Icon.createWithBitmap(d.getBitmap());
+                                Icon icon = null;
+                                try {
+                                    icon = Icon.createWithBitmap(futureIcons.get(i).get());
+                                } catch (Exception e) {
+                                    Log.w("RingChooserService", "Failed to load icon", e);
+                                }
                                 ChooserTarget target = new ChooserTarget(contact.getDisplayName(), icon, 1.f-(i/(float)conversations.size()), componentName, bundle);
                                 choosers.add(target);
                                 i++;

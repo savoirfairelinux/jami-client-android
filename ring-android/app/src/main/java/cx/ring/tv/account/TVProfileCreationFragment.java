@@ -214,7 +214,7 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
 
         Glide.with(getActivity())
                 .load(model.getPhoto())
-                .apply(AvatarFactory.getGlideOptions(true, false))
+                .apply(AvatarFactory.getGlideOptions(true))
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(getGuidanceStylist().getIconView());
     }

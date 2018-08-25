@@ -60,6 +60,8 @@ import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.Account;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.utils.BitmapUtils;
+import cx.ring.utils.VCardUtils;
+import cx.ring.views.AvatarDrawable;
 import ezvcard.VCard;
 import ezvcard.parameter.ImageType;
 import ezvcard.property.Photo;
@@ -236,12 +238,11 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
             return;
         }
 
-        String username = account.getRegisteredName();
+        /*String username = account.getRegisteredName();
         String ringId = account.getUri();
-        Glide.with(getActivity())
-                .load(AvatarFactory.getAvatar(getActivity(), vcard, username, ringId))
-                .apply(AvatarFactory.getGlideOptions(true, true))
-                .into(mUserImage);
+        AvatarFactory.getGlideAvatar(getActivity(), Glide.with(this), vcard, username, ringId)
+                .into(mUserImage);*/
+        mUserImage.setImageDrawable(new AvatarDrawable(getActivity(), VCardUtils.readData(vcard), account.getRegisteredName(), account.getUri()));
     }
 
     public void updatePhoto(Uri uriImage) {
@@ -293,7 +294,7 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
         final EditText editText = view.findViewById(R.id.user_name);
         editText.setText(presenter.getAlias(mSelectedAccount));
         mProfilePhoto = view.findViewById(R.id.profile_photo);
-        mProfilePhoto.setImageDrawable(mUserImage.getDrawable());
+        mProfilePhoto.setImageDrawable(new AvatarDrawable(inflater.getContext(), mSelectedAccount));
 
         ImageButton cameraView = view.findViewById(R.id.camera);
         cameraView.setOnClickListener(v -> presenter.cameraClicked());

@@ -189,7 +189,7 @@ public class MainPresenter extends RootPresenter<MainView> {
                 .subscribe(accounts -> {
                     Account account = accounts.isEmpty() ? null : accounts.get(0);
                     RingNavigationViewModel viewModel = new RingNavigationViewModel(account, accounts);
-                    getView().displayAccountInfos(account == null ? null : account.getDisplayUri(), viewModel);
+                    getView().displayAccountInfos(viewModel);
                 }));
     }
 
