@@ -19,7 +19,10 @@
  */
 package cx.ring.account;
 
-import cx.ring.mvp.RingAccountViewModel;
+import cx.ring.model.Account;
+import cx.ring.mvp.AccountCreationModel;
+import ezvcard.VCard;
+import io.reactivex.Single;
 
 public interface AccountWizardView {
 
@@ -35,7 +38,7 @@ public interface AccountWizardView {
 
     void finish(boolean affinity);
 
-    void saveProfile(String accountId, RingAccountViewModel ringAccountViewModel);
+    Single<VCard> saveProfile(Account account, AccountCreationModel accountCreationModel);
 
     void displayGenericError();
 
@@ -45,4 +48,5 @@ public interface AccountWizardView {
 
     void displayCannotBeFoundError();
 
+    void goToProfileCreation(AccountCreationModel accountCreationModel);
 }

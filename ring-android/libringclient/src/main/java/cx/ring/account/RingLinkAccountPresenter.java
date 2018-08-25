@@ -21,34 +21,34 @@ package cx.ring.account;
 
 import javax.inject.Inject;
 
-import cx.ring.mvp.RingAccountViewModel;
+import cx.ring.mvp.AccountCreationModel;
 import cx.ring.mvp.RootPresenter;
 
 public class RingLinkAccountPresenter extends RootPresenter<RingLinkAccountView> {
 
-    private RingAccountViewModel mRingAccountViewModel;
+    private AccountCreationModel mAccountCreationModel;
 
     @Inject
     public RingLinkAccountPresenter() {
     }
 
-    public void init(RingAccountViewModel ringAccountViewModel) {
-        mRingAccountViewModel = ringAccountViewModel;
+    public void init(AccountCreationModel accountCreationModel) {
+        mAccountCreationModel = accountCreationModel;
     }
 
     public void passwordChanged(String password) {
-        mRingAccountViewModel.setPassword(password);
+        mAccountCreationModel.setPassword(password);
         showHideLinkButton();
     }
 
     public void pinChanged(String pin) {
-        mRingAccountViewModel.setPin(pin);
+        mAccountCreationModel.setPin(pin);
         showHideLinkButton();
     }
 
     public void linkClicked() {
         if (isFormValid()) {
-            getView().createAccount(mRingAccountViewModel);
+            getView().createAccount(mAccountCreationModel);
         }
     }
 
@@ -57,6 +57,6 @@ public class RingLinkAccountPresenter extends RootPresenter<RingLinkAccountView>
     }
 
     private boolean isFormValid() {
-        return !mRingAccountViewModel.getPin().isEmpty();
+        return !mAccountCreationModel.getPin().isEmpty();
     }
 }

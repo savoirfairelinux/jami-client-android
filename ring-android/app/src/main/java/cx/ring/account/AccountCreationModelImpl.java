@@ -23,27 +23,55 @@ import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import cx.ring.mvp.RingAccountViewModel;
+import java.io.ByteArrayOutputStream;
 
-public class RingAccountViewModelImpl extends RingAccountViewModel implements Parcelable {
+import cx.ring.mvp.AccountCreationModel;
+import ezvcard.VCard;
+import ezvcard.parameter.ImageType;
+import ezvcard.property.FormattedName;
+import ezvcard.property.Photo;
+import ezvcard.property.RawProperty;
+import ezvcard.property.Uid;
+import io.reactivex.Single;
 
-    public static final Creator<RingAccountViewModelImpl> CREATOR = new Creator<RingAccountViewModelImpl>() {
+public class AccountCreationModelImpl extends AccountCreationModel implements Parcelable {
+
+    public static final Creator<AccountCreationModelImpl> CREATOR = new Creator<AccountCreationModelImpl>() {
         @Override
-        public RingAccountViewModelImpl createFromParcel(Parcel source) {
-            return new RingAccountViewModelImpl(source);
+        public AccountCreationModelImpl createFromParcel(Parcel source) {
+            return new AccountCreationModelImpl(source);
         }
 
         @Override
-        public RingAccountViewModelImpl[] newArray(int size) {
-            return new RingAccountViewModelImpl[size];
+        public AccountCreationModelImpl[] newArray(int size) {
+            return new AccountCreationModelImpl[size];
         }
     };
     private Bitmap photo;
 
-    public RingAccountViewModelImpl() {
+    public AccountCreationModelImpl() {
     }
 
-    protected RingAccountViewModelImpl(Parcel in) {
+    @Override
+    public Single<VCard> toVCard() {
+        return Single
+                .fromCallable(() -> {
+                    VCard vcard = new VCard();
+                    vcard.setFormattedName(new FormattedName(getFullName()));
+                    vcard.setUid(new Uid(getUsername()));
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    if (getPhoto() != null) {
+                        getPhoto().compress(Bitmap.CompressFormat.PNG, 100, stream);
+                        Photo photoVCard = new Photo(stream.toByteArray(), ImageType.PNG);
+                        vcard.removeProperties(Photo.class);
+                        vcard.addPhoto(photoVCard);
+                    }
+                    vcard.removeProperties(RawProperty.class);
+                    return vcard;
+                });
+    }
+
+    protected AccountCreationModelImpl(Parcel in) {
         this.photo = in.readParcelable(Bitmap.class.getClassLoader());
         this.mFullName = in.readString();
         this.mUsername = in.readString();
@@ -58,6 +86,7 @@ public class RingAccountViewModelImpl extends RingAccountViewModel implements Pa
 
     public void setPhoto(Bitmap photo) {
         this.photo = photo;
+        profile.onNext(this);
     }
 
     @Override

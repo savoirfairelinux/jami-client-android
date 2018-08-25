@@ -28,9 +28,9 @@ import android.view.View;
 import java.util.List;
 
 import cx.ring.R;
+import cx.ring.account.AccountCreationModelImpl;
 import cx.ring.account.HomeAccountCreationPresenter;
 import cx.ring.account.HomeAccountCreationView;
-import cx.ring.account.RingAccountViewModelImpl;
 import cx.ring.application.RingApplication;
 
 public class TVHomeAccountCreationFragment
@@ -49,16 +49,16 @@ public class TVHomeAccountCreationFragment
 
     @Override
     public void goToAccountCreation() {
-        RingAccountViewModelImpl ringAccountViewModel = new RingAccountViewModelImpl();
+        AccountCreationModelImpl ringAccountViewModel = new AccountCreationModelImpl();
         ringAccountViewModel.setLink(false);
-        GuidedStepSupportFragment.add(getFragmentManager(), TVProfileCreationFragment.newInstance(ringAccountViewModel));
+        GuidedStepSupportFragment.add(getFragmentManager(), TVRingAccountCreationFragment.newInstance(ringAccountViewModel));
     }
 
     @Override
     public void goToAccountLink() {
-        RingAccountViewModelImpl ringAccountViewModel = new RingAccountViewModelImpl();
+        AccountCreationModelImpl ringAccountViewModel = new AccountCreationModelImpl();
         ringAccountViewModel.setLink(true);
-        GuidedStepSupportFragment.add(getFragmentManager(), TVProfileCreationFragment.newInstance(ringAccountViewModel));
+        GuidedStepSupportFragment.add(getFragmentManager(), TVRingLinkAccountFragment.newInstance(ringAccountViewModel));
     }
 
     @Override
