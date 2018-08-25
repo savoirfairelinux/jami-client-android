@@ -28,10 +28,13 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AlertDialog;
+
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -41,9 +44,10 @@ import cx.ring.application.RingApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.fragments.AccountMigrationFragment;
 import cx.ring.fragments.SIPAccountCreationFragment;
+import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.mvp.BaseActivity;
-import cx.ring.mvp.RingAccountViewModel;
+import cx.ring.mvp.AccountCreationModel;
 import cx.ring.utils.Log;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
@@ -52,6 +56,8 @@ import ezvcard.property.FormattedName;
 import ezvcard.property.Photo;
 import ezvcard.property.RawProperty;
 import ezvcard.property.Uid;
+import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
 public class AccountWizardActivity extends BaseActivity<AccountWizardPresenter> implements AccountWizardView {
@@ -66,6 +72,8 @@ public class AccountWizardActivity extends BaseActivity<AccountWizardPresenter> 
         // dependency injection
         RingApplication.getInstance().getRingInjectionComponent().inject(this);
         super.onCreate(savedInstanceState);
+
+        RingApplication.getInstance().startDaemon();
 
         setContentView(R.layout.activity_wizard);
         ButterKnife.bind(this);
@@ -120,32 +128,22 @@ public class AccountWizardActivity extends BaseActivity<AccountWizardPresenter> 
     }
 
     @Override
-    public void saveProfile(final String accountID, final RingAccountViewModel ringAccountViewModel) {
-        runOnUiThread(() -> {
-            RingAccountViewModelImpl ringAccountViewModelImpl = (RingAccountViewModelImpl) ringAccountViewModel;
-            VCard vcard = new VCard();
-            vcard.setFormattedName(new FormattedName(ringAccountViewModelImpl.getFullName()));
-            vcard.setUid(new Uid(ringAccountViewModelImpl.getUsername()));
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            if (ringAccountViewModelImpl.getPhoto() != null) {
-                ringAccountViewModelImpl.getPhoto().compress(Bitmap.CompressFormat.PNG, 100, stream);
-                Photo photoVCard = new Photo(stream.toByteArray(), ImageType.PNG);
-                vcard.removeProperties(Photo.class);
-                vcard.addPhoto(photoVCard);
-            }
-            vcard.removeProperties(RawProperty.class);
-            VCardUtils.saveLocalProfileToDisk(vcard, accountID, getFilesDir())
-                    .subscribeOn(Schedulers.io())
-                    .subscribe();
-        });
+    public Single<VCard> saveProfile(final Account account, final AccountCreationModel accountCreationModel) {
+        File filedir = getFilesDir();
+        return accountCreationModel.toVCard()
+                .flatMap(vcard -> {
+                    account.setProfile(vcard);
+                    return VCardUtils.saveLocalProfileToDisk(vcard, account.getAccountID(), filedir);
+                })
+                .subscribeOn(Schedulers.io());
     }
 
-    public void createAccount(RingAccountViewModel ringAccountViewModel) {
-        if (ringAccountViewModel.isLink()) {
-            presenter.initRingAccountLink(ringAccountViewModel,
+    public void createAccount(AccountCreationModel accountCreationModel) {
+        if (accountCreationModel.isLink()) {
+            presenter.initRingAccountLink(accountCreationModel,
                     getText(R.string.ring_account_default_name).toString());
         } else {
-            presenter.initRingAccountCreation(ringAccountViewModel,
+            presenter.initRingAccountCreation(accountCreationModel,
                     getText(R.string.ring_account_default_name).toString());
         }
     }
@@ -169,108 +167,114 @@ public class AccountWizardActivity extends BaseActivity<AccountWizardPresenter> 
     }
 
     @Override
+    public void goToProfileCreation(AccountCreationModel model) {
+        Fragment fragment = ProfileCreationFragment.newInstance((AccountCreationModelImpl) model);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.wizard_container, fragment, ProfileCreationFragment.TAG)
+                .commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.wizard_container);
+        if (fragment instanceof ProfileCreationFragment)
+            finish();
+        else
+            super.onBackPressed();
+    }
+
+    @Override
     public void displayProgress(final boolean display) {
-        runOnUiThread(() -> {
-            if (display) {
-                mProgress = new ProgressDialog(AccountWizardActivity.this);
-                mProgress.setTitle(R.string.dialog_wait_create);
-                mProgress.setMessage(getString(R.string.dialog_wait_create_details));
-                mProgress.setCancelable(false);
-                mProgress.setCanceledOnTouchOutside(false);
-                mProgress.show();
-            } else {
-                if (mProgress != null) {
-                    if (mProgress.isShowing()) {
-                        mProgress.dismiss();
-                    }
-                    mProgress = null;
+        if (display) {
+            mProgress = new ProgressDialog(AccountWizardActivity.this);
+            mProgress.setTitle(R.string.dialog_wait_create);
+            mProgress.setMessage(getString(R.string.dialog_wait_create_details));
+            mProgress.setCancelable(false);
+            mProgress.setCanceledOnTouchOutside(false);
+            mProgress.show();
+        } else {
+            if (mProgress != null) {
+                if (mProgress.isShowing()) {
+                    mProgress.dismiss();
                 }
+                mProgress = null;
             }
-        });
+        }
     }
 
     @Override
     public void displayCreationError() {
-        runOnUiThread(() -> Toast.makeText(AccountWizardActivity.this, "Error creating account", Toast.LENGTH_SHORT).show());
+        Toast.makeText(AccountWizardActivity.this, "Error creating account", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void blockOrientation() {
         //orientation is locked during the create of account to avoid the destruction of the thread
-        runOnUiThread(() -> setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED));
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
     }
 
     @Override
     public void finish(final boolean affinity) {
-        runOnUiThread(() -> {
-            if (affinity) {
-                startActivity(new Intent(AccountWizardActivity.this, HomeActivity.class));
-                finish();
-            } else {
-                finishAffinity();
-            }
-        });
+        if (affinity) {
+            startActivity(new Intent(AccountWizardActivity.this, HomeActivity.class));
+            finish();
+        } else {
+            finishAffinity();
+        }
     }
 
     @Override
     public void displayGenericError() {
-        runOnUiThread(() -> {
-            if (mAlertDialog != null && mAlertDialog.isShowing()) {
-                return;
-            }
-            mAlertDialog = new AlertDialog.Builder(AccountWizardActivity.this)
-                    .setPositiveButton(android.R.string.ok, null)
-                    .setTitle(R.string.account_cannot_be_found_title)
-                    .setMessage(R.string.account_cannot_be_found_message)
-                    .show();
-        });
+        if (mAlertDialog != null && mAlertDialog.isShowing()) {
+            return;
+        }
+        mAlertDialog = new AlertDialog.Builder(AccountWizardActivity.this)
+                .setPositiveButton(android.R.string.ok, null)
+                .setTitle(R.string.account_cannot_be_found_title)
+                .setMessage(R.string.account_cannot_be_found_message)
+                .show();
     }
 
     @Override
     public void displayNetworkError() {
-        runOnUiThread(() -> {
-            if (mAlertDialog != null && mAlertDialog.isShowing()) {
-                return;
-            }
-            mAlertDialog = new AlertDialog.Builder(AccountWizardActivity.this)
-                    .setPositiveButton(android.R.string.ok, null)
-                    .setTitle(R.string.account_no_network_title)
-                    .setMessage(R.string.account_no_network_message)
-                    .show();
-        });
+        if (mAlertDialog != null && mAlertDialog.isShowing()) {
+            return;
+        }
+        mAlertDialog = new AlertDialog.Builder(AccountWizardActivity.this)
+                .setPositiveButton(android.R.string.ok, null)
+                .setTitle(R.string.account_no_network_title)
+                .setMessage(R.string.account_no_network_message)
+                .show();
     }
 
     @Override
     public void displayCannotBeFoundError() {
-        runOnUiThread(() -> {
-            if (mAlertDialog != null && mAlertDialog.isShowing()) {
-                return;
-            }
-            mAlertDialog = new AlertDialog.Builder(AccountWizardActivity.this)
-                    .setPositiveButton(android.R.string.ok, null)
-                    .setTitle(R.string.account_cannot_be_found_title)
-                    .setMessage(R.string.account_cannot_be_found_message)
-                    .show();
-        });
+        if (mAlertDialog != null && mAlertDialog.isShowing()) {
+            return;
+        }
+        mAlertDialog = new AlertDialog.Builder(AccountWizardActivity.this)
+                .setPositiveButton(android.R.string.ok, null)
+                .setTitle(R.string.account_cannot_be_found_title)
+                .setMessage(R.string.account_cannot_be_found_message)
+                .setOnDismissListener(dialogInterface -> {
+                    getSupportFragmentManager().popBackStack();
+                })
+                .show();
     }
 
     @Override
     public void displaySuccessDialog() {
-        runOnUiThread(() -> {
-            if (mAlertDialog != null && mAlertDialog.isShowing()) {
-                return;
-            }
-            mAlertDialog = new AlertDialog.Builder(AccountWizardActivity.this)
-                    .setPositiveButton(android.R.string.ok, null)
-                    .setTitle(R.string.account_device_added_title)
-                    .setMessage(R.string.account_device_added_message)
-                    .setOnDismissListener(dialogInterface -> {
-                        setResult(Activity.RESULT_OK, new Intent());
-                        //unlock the screen orientation
-                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-                        presenter.successDialogClosed();
-                    })
-                    .show();
-        });
+        if (mAlertDialog != null && mAlertDialog.isShowing()) {
+            return;
+        }
+        setResult(Activity.RESULT_OK, new Intent());
+        //unlock the screen orientation
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        presenter.successDialogClosed();
+    }
+
+    public void profileCreated(AccountCreationModel accountCreationModel, boolean saveProfile) {
+        presenter.profileCreated(accountCreationModel, saveProfile);
     }
 }

@@ -192,6 +192,7 @@ along with this program; if not, write to the Free Software
     <string name="help_pin_enter">Enter the PIN from another configured Ring account. Use the \"export account on Ring\" feature to obtain a PIN.</string>
     <string name="wizard_next">Next</string>
     <string name="wizard_back">Back</string>
+    <string name="wizard_skip">Skip</string>
 
     <!-- MenuHeaderView -->
     <string name="profile">My profile</string>

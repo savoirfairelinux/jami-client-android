@@ -27,6 +27,7 @@ import java.util.Date;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
 import cx.ring.utils.Tuple;
+import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
@@ -336,27 +337,6 @@ public class CallContact {
         return usernameLoaded;
     }
 
-    private static Tuple<String, byte[]> readVCardContactData(VCard vcard) {
-        String contactName = null;
-        byte[] photo = null;
-        if (vcard != null) {
-            if (!vcard.getPhotos().isEmpty()) {
-                try {
-                    photo = vcard.getPhotos().get(0).getData();
-                } catch (Exception e) {
-                    Log.w(TAG, "Can't read photo from VCard", e);
-                    photo = null;
-                }
-            }
-            if (vcard.getFormattedName() != null) {
-                if (!StringUtils.isEmpty(vcard.getFormattedName().getValue())) {
-                    contactName = vcard.getFormattedName().getValue();
-                }
-            }
-        }
-        return new Tuple<>(contactName, photo);
-    }
-
     public void setProfile(String name, byte[] photo) {
         if (!StringUtils.isEmpty(name) && !name.startsWith(Uri.RING_URI_SCHEME)) {
             setDisplayName(name);
@@ -370,7 +350,7 @@ public class CallContact {
 
     public void setVCardProfile(VCard vcard) {
         this.vcard = vcard;
-        Tuple<String, byte[]> info = readVCardContactData(vcard);
+        Tuple<String, byte[]> info = VCardUtils.readData(vcard);
         setProfile(info.first, info.second);
     }
 

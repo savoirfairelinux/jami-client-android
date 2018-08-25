@@ -19,7 +19,7 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -29,25 +29,26 @@ along with this program; if not, write to the Free Software
     tools:background="@color/color_primary_dark">
 
     <cx.ring.views.BoundedScrollView
+        android:id="@+id/scrollview"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
         app:bounded_width="500dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:orientation="vertical"
+            android:paddingStart="@dimen/activity_horizontal_margin"
             android:paddingLeft="16dp"
+            android:paddingEnd="@dimen/activity_horizontal_margin"
             android:paddingRight="16dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="24dp"
                 android:gravity="center"
-                android:paddingTop="24dp"
                 android:text="@string/help_sip_title"
                 android:textSize="24sp" />
 
@@ -129,12 +130,18 @@ along with this program; if not, write to the Free Software
         </LinearLayout>
     </cx.ring.views.BoundedScrollView>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/create_sip_button"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/scrollview"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="end"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="24dp"
         android:background="@color/color_primary_light"
         android:text="@string/create_sip_account"
         android:theme="@style/ButtonColoredInverse" />
 
-</LinearLayout>
+</RelativeLayout>

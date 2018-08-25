@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  *  Author: Aline Bonnet <aline.bonnet@savoirfairelinux.com>
+ *  Author: Adrien Beraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -39,18 +40,31 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 
-import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import cx.ring.R;
 import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.dependencyinjection.RingInjectionComponent;
+import cx.ring.model.Account;
+import cx.ring.mvp.AccountCreationModel;
 import cx.ring.mvp.BaseSupportFragment;
-import cx.ring.mvp.RingAccountViewModel;
-import cx.ring.utils.BitmapUtils;
+import cx.ring.utils.VCardUtils;
+import cx.ring.views.AvatarDrawable;
+import ezvcard.VCard;
+import ezvcard.parameter.ImageType;
+import ezvcard.property.FormattedName;
+import ezvcard.property.Photo;
+import ezvcard.property.RawProperty;
+import ezvcard.property.Uid;
+import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
+import static cx.ring.account.RingAccountCreationFragment.KEY_RING_ACCOUNT;
 
 public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreationPresenter> implements ProfileCreationView, TextWatcher {
     public static final String TAG = ProfileCreationFragment.class.getSimpleName();
@@ -80,10 +94,13 @@ public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreation
 
     private Bitmap mSourcePhoto;
 
-    public static ProfileCreationFragment newInstance(boolean isLink) {
+    private Observable<Account> accountObservable = null;
+
+    public static ProfileCreationFragment newInstance(AccountCreationModelImpl model) {
         Bundle bundle = new Bundle();
-        bundle.putBoolean(KEY_IS_LINK, isLink);
+        bundle.putParcelable(KEY_RING_ACCOUNT, model);
         ProfileCreationFragment fragment = new ProfileCreationFragment();
+        fragment.accountObservable = model.getAccountObservable();
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -101,7 +118,6 @@ public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreation
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         setRetainInstance(true);
 
         if (savedInstanceState != null) {
@@ -110,23 +126,20 @@ public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreation
                 mSourcePhoto = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
             }
         }
-
-        if (mPhotoView.getDrawable() == null) {
-            if (mSourcePhoto == null) {
-                mSourcePhoto = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.ic_contact_picture_fallback);
-            }
-            mPhotoView.setImageBitmap(BitmapUtils.cropImageToCircle(mSourcePhoto));
+        if (accountObservable == null) {
+            getActivity().finish();
+            return;
         }
-
-        RingAccountViewModelImpl ringAccountViewModel = new RingAccountViewModelImpl();
-        boolean isLink = getArguments().getBoolean(KEY_IS_LINK, false);
-        ringAccountViewModel.setLink(isLink);
-
+        AccountCreationModelImpl ringAccountViewModel = getArguments().getParcelable(KEY_RING_ACCOUNT);
+        ringAccountViewModel.setAccountObservable(accountObservable);
+        if (mPhotoView.getDrawable() == null) {
+            mPhotoView.setImageDrawable(new AvatarDrawable(view.getContext(), (Bitmap) null, ringAccountViewModel.getFullName(), ringAccountViewModel.getUsername(), null, true));
+        }
         presenter.initPresenter(ringAccountViewModel);
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         if (mSourcePhoto != null) {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -181,18 +194,23 @@ public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreation
     }
 
     @OnClick(R.id.gallery)
-    public void galleryClicked() {
+    void galleryClicked() {
         presenter.galleryClick();
     }
 
     @OnClick(R.id.camera)
-    public void cameraClicked() {
+    void cameraClicked() {
         presenter.cameraClick();
     }
 
     @OnClick(R.id.next_create_account)
-    public void nextClicked() {
+    void nextClicked() {
         presenter.nextClick();
+    }
+
+    @OnClick(R.id.skip_create_account)
+    void skipClicked() {
+        presenter.skipClick();
     }
 
     @Override
@@ -223,20 +241,24 @@ public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreation
     }
 
     @Override
-    public void goToNext(RingAccountViewModel ringAccountViewModel) {
-        if (ringAccountViewModel.isLink()) {
-            Fragment fragment = RingLinkAccountFragment.newInstance((RingAccountViewModelImpl) ringAccountViewModel);
-            replaceFragmentWithSlide(fragment, R.id.wizard_container);
-        } else {
-            Fragment fragment = RingAccountCreationFragment.newInstance((RingAccountViewModelImpl) ringAccountViewModel);
-            replaceFragmentWithSlide(fragment, R.id.wizard_container);
+    public void goToNext(AccountCreationModel accountCreationModel, boolean saveProfile) {
+        Activity wizardActivity = getActivity();
+        if (wizardActivity instanceof AccountWizardActivity) {
+            AccountWizardActivity wizard = (AccountWizardActivity) wizardActivity;
+            wizard.profileCreated(accountCreationModel, saveProfile);
         }
     }
 
     @Override
-    public void photoUpdate(RingAccountViewModel ringAccountViewModel) {
-        ((RingAccountViewModelImpl) ringAccountViewModel).setPhoto(mSourcePhoto);
-        mPhotoView.setImageBitmap(mSourcePhoto != null ? BitmapUtils.cropImageToCircle(mSourcePhoto) : null);
+    public void photoUpdate(AccountCreationModel accountCreationModel) {
+        ((AccountCreationModelImpl)accountCreationModel).setPhoto(mSourcePhoto);
+    }
+
+    @Override
+    public void setProfile(AccountCreationModel accountCreationModel) {
+        AccountCreationModelImpl model = ((AccountCreationModelImpl) accountCreationModel);
+        Account newAccount = model.getNewAccount();
+        mPhotoView.setImageDrawable(new AvatarDrawable(getContext(), model.getPhoto(), accountCreationModel.getFullName(), accountCreationModel.getUsername(), newAccount == null ? null : newAccount.getUsername(), true));
     }
 
     @Override

@@ -50,15 +50,6 @@ public class AvatarFactory {
 
     public static final int SIZE_AB = 36;
     public static final int SIZE_NOTIF = 48;
-    
-    private static final RequestOptions GLIDE_OPTIONS = new RequestOptions()
-            .centerCrop()
-            .error(R.drawable.ic_contact_picture_fallback);
-
-    private static final RequestOptions GLIDE_OPTIONS_CIRCLE = new RequestOptions()
-            .centerCrop()
-            .error(R.drawable.ic_contact_picture_fallback)
-            .transform(new CircleTransform());
 
     private AvatarFactory() {}
 
@@ -135,10 +126,6 @@ public class AvatarFactory {
 
     public static RequestBuilder<Bitmap> getBitmapGlideAvatar(Context context, CallContact contact) {
         return getGlideRequest(context, Glide.with(context).asBitmap(), contact.getPhoto(), contact.getProfileName(), contact.getUsername(), contact.getPrimaryNumber());
-    }
-
-    public static RequestOptions getGlideOptions(boolean circle, boolean withPlaceholder) {
-        return circle ? GLIDE_OPTIONS_CIRCLE : GLIDE_OPTIONS;
     }
 
     public static void clearCache() {

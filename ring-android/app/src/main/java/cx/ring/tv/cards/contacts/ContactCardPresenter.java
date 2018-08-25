@@ -34,6 +34,7 @@ import cx.ring.contacts.AvatarFactory;
 import cx.ring.model.CallContact;
 import cx.ring.tv.cards.AbstractCardPresenter;
 import cx.ring.tv.cards.Card;
+import cx.ring.views.AvatarDrawable;
 
 public class ContactCardPresenter extends AbstractCardPresenter<ImageCardView> {
 
@@ -68,11 +69,6 @@ public class ContactCardPresenter extends AbstractCardPresenter<ImageCardView> {
         }
 
         cardView.setBackgroundColor(cardView.getResources().getColor(R.color.color_primary_dark));
-        AvatarFactory.getGlideAvatar(getContext(), model).into(new ViewTarget<ImageCardView, Drawable>(cardView){
-            @Override
-            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                cardView.setMainImage(resource);
-            }
-        }.waitForLayout());
+        cardView.setMainImage(new AvatarDrawable(getContext(), model, false));
     }
 }

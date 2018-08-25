@@ -19,7 +19,7 @@
  */
 package cx.ring.account;
 
-import cx.ring.mvp.RingAccountViewModel;
+import cx.ring.mvp.AccountCreationModel;
 
 public interface RingAccountCreationView {
 
@@ -39,6 +39,6 @@ public interface RingAccountCreationView {
 
     void enableNextButton(boolean enabled);
 
-    void goToAccountCreation(RingAccountViewModel ringAccountViewModel);
+    void goToAccountCreation(AccountCreationModel accountCreationModel);
 
 }
