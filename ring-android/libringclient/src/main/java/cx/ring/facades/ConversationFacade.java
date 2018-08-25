@@ -442,4 +442,14 @@ public class ConversationFacade {
         if (transfer != null)
             deleteFile(transfer);
     }
+
+    public Completable removeConversation(String accountId, Uri contact) {
+        return mHistoryService
+                .clearHistory(contact.getRawUriString(), accountId)
+                .doOnSubscribe(s -> {
+                    Account account = mAccountService.getAccount(accountId);
+                    account.clearHistory(contact);
+                    mAccountService.removeContact(accountId, contact.getRawRingId(), false);
+                });
+    }
 }
