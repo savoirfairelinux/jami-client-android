@@ -37,7 +37,7 @@
                     android:id="@+id/anchor"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_alignBottom="@+id/user_photo"
+                    android:layout_alignBottom="@id/user_photo"
                     android:layout_centerHorizontal="true" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton

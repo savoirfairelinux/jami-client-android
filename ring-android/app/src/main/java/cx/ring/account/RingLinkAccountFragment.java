@@ -32,9 +32,8 @@ import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 import cx.ring.R;
 import cx.ring.dependencyinjection.RingInjectionComponent;
-import cx.ring.mvp.BaseFragment;
 import cx.ring.mvp.BaseSupportFragment;
-import cx.ring.mvp.RingAccountViewModel;
+import cx.ring.mvp.AccountCreationModel;
 
 public class RingLinkAccountFragment extends BaseSupportFragment<RingLinkAccountPresenter> implements RingLinkAccountView {
 
@@ -49,7 +48,7 @@ public class RingLinkAccountFragment extends BaseSupportFragment<RingLinkAccount
     @BindView(R.id.link_button)
     protected Button mLinkAccountBtn;
 
-    public static RingLinkAccountFragment newInstance(RingAccountViewModelImpl ringAccountViewModel) {
+    public static RingLinkAccountFragment newInstance(AccountCreationModelImpl ringAccountViewModel) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(RingAccountCreationFragment.KEY_RING_ACCOUNT, ringAccountViewModel);
         RingLinkAccountFragment fragment = new RingLinkAccountFragment();
@@ -70,7 +69,7 @@ public class RingLinkAccountFragment extends BaseSupportFragment<RingLinkAccount
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        RingAccountViewModelImpl ringAccountViewModel = getArguments().getParcelable(RingAccountCreationFragment.KEY_RING_ACCOUNT);
+        AccountCreationModelImpl ringAccountViewModel = getArguments().getParcelable(RingAccountCreationFragment.KEY_RING_ACCOUNT);
         presenter.init(ringAccountViewModel);
     }
 
@@ -103,7 +102,7 @@ public class RingLinkAccountFragment extends BaseSupportFragment<RingLinkAccount
     }
 
     @Override
-    public void createAccount(RingAccountViewModel ringAccountViewModel) {
-        ((AccountWizardActivity) getActivity()).createAccount(ringAccountViewModel);
+    public void createAccount(AccountCreationModel accountCreationModel) {
+        ((AccountWizardActivity) getActivity()).createAccount(accountCreationModel);
     }
 }

@@ -20,7 +20,6 @@
 package cx.ring.tv.main;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import androidx.leanback.app.BackgroundManager;
 import androidx.leanback.app.GuidedStepSupportFragment;
@@ -32,19 +31,19 @@ import androidx.leanback.widget.Presenter;
 import androidx.leanback.widget.Row;
 import androidx.leanback.widget.RowPresenter;
 import androidx.core.app.ActivityOptionsCompat;
+
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cx.ring.R;
 import cx.ring.application.RingApplication;
-import cx.ring.contacts.AvatarFactory;
+import cx.ring.model.Account;
 import cx.ring.navigation.RingNavigationViewModel;
 import cx.ring.tv.about.AboutActivity;
 import cx.ring.tv.account.TVAccountExport;
@@ -63,8 +62,10 @@ import cx.ring.tv.contactrequest.TVContactRequestActivity;
 import cx.ring.tv.model.TVListViewModel;
 import cx.ring.tv.search.SearchActivity;
 import cx.ring.tv.views.CustomTitleView;
+import cx.ring.utils.Tuple;
+import cx.ring.utils.VCardUtils;
+import cx.ring.views.AvatarDrawable;
 import ezvcard.VCard;
-import ezvcard.property.FormattedName;
 
 public class MainFragment extends BaseBrowseFragment<MainPresenter> implements MainView {
 
@@ -252,10 +253,24 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         }
 
         VCard vcard = viewModel.getVcard();
-        String registeredName = viewModel.getAccount().getRegisteredName();
-        String uri = viewModel.getAccount().getUri();
+        Account account = viewModel.getAccount();
+        String registeredName = account.getRegisteredName();
+        String address = account.getDisplayUsername();
+        Tuple<String, byte[]> profile = VCardUtils.readData(vcard);
+
+        if (profile.first != null && !profile.first.isEmpty()) {
+            titleView.setAlias(profile.first);
+            if (address != null) {
+                setTitle(address);
+            } else {
+                setTitle("");
+            }
+        } else {
+            titleView.setAlias(address);
+        }
+
         titleView.getLogoView().setVisibility(View.VISIBLE);
-        AvatarFactory.getGlideAvatar(getActivity(), Glide.with(this), vcard, registeredName, uri).into(titleView.getLogoView());
+        titleView.getLogoView().setImageDrawable(new AvatarDrawable(getActivity(), profile, registeredName, account.getUsername()));
     }
 
     @Override

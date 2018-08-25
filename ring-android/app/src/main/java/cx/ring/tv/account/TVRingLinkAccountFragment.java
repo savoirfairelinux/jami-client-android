@@ -28,11 +28,11 @@ import java.util.List;
 
 import cx.ring.R;
 import cx.ring.account.RingAccountCreationFragment;
-import cx.ring.account.RingAccountViewModelImpl;
+import cx.ring.account.AccountCreationModelImpl;
 import cx.ring.account.RingLinkAccountPresenter;
 import cx.ring.account.RingLinkAccountView;
 import cx.ring.application.RingApplication;
-import cx.ring.mvp.RingAccountViewModel;
+import cx.ring.mvp.AccountCreationModel;
 import cx.ring.utils.StringUtils;
 
 public class TVRingLinkAccountFragment extends RingGuidedStepFragment<RingLinkAccountPresenter>
@@ -44,7 +44,7 @@ public class TVRingLinkAccountFragment extends RingGuidedStepFragment<RingLinkAc
     public TVRingLinkAccountFragment() {
     }
 
-    public static TVRingLinkAccountFragment newInstance(RingAccountViewModelImpl ringAccountViewModel) {
+    public static TVRingLinkAccountFragment newInstance(AccountCreationModelImpl ringAccountViewModel) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(RingAccountCreationFragment.KEY_RING_ACCOUNT, ringAccountViewModel);
         TVRingLinkAccountFragment fragment = new TVRingLinkAccountFragment();
@@ -57,7 +57,7 @@ public class TVRingLinkAccountFragment extends RingGuidedStepFragment<RingLinkAc
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
         super.onViewCreated(view, savedInstanceState);
 
-        RingAccountViewModelImpl ringAccountViewModel = getArguments().getParcelable(RingAccountCreationFragment.KEY_RING_ACCOUNT);
+        AccountCreationModelImpl ringAccountViewModel = getArguments().getParcelable(RingAccountCreationFragment.KEY_RING_ACCOUNT);
         presenter.init(ringAccountViewModel);
         if (ringAccountViewModel.getPhoto() != null) {
             getGuidanceStylist().getIconView().setImageBitmap(ringAccountViewModel.getPhoto());
@@ -101,8 +101,8 @@ public class TVRingLinkAccountFragment extends RingGuidedStepFragment<RingLinkAc
     }
 
     @Override
-    public void createAccount(RingAccountViewModel ringAccountViewModel) {
-        ((TVAccountWizard) getActivity()).createAccount(ringAccountViewModel);
+    public void createAccount(AccountCreationModel accountCreationModel) {
+        ((TVAccountWizard) getActivity()).createAccount(accountCreationModel);
     }
 
     @Override

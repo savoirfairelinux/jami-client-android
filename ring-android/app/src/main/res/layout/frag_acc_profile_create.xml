@@ -8,6 +8,7 @@
     tools:background="@color/color_primary_dark">
 
     <cx.ring.views.BoundedScrollView
+        android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/next_create_account"
@@ -113,14 +114,29 @@
 
     </cx.ring.views.BoundedScrollView>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/next_create_account"
-        style="@style/WizardNavButton"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/scrollview"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@color/color_primary_light"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="16dp"
         android:text="@string/wizard_next" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/skip_create_account"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@id/next_create_account"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/wizard_skip" />
 
 </RelativeLayout>
