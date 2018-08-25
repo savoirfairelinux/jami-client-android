@@ -21,8 +21,15 @@ package cx.ring.tv.cards.contacts;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v17.leanback.widget.ImageCardView;
 import android.view.ContextThemeWrapper;
+import android.widget.ImageView;
+
+import com.bumptech.glide.request.target.ImageViewTarget;
+import com.bumptech.glide.request.target.ViewTarget;
+import com.bumptech.glide.request.transition.Transition;
 
 import cx.ring.R;
 import cx.ring.contacts.AvatarFactory;
@@ -63,18 +70,11 @@ public class ContactCardPresenter extends AbstractCardPresenter<ImageCardView> {
         }
 
         cardView.setBackgroundColor(cardView.getResources().getColor(R.color.color_primary_dark));
-        cardView.setMainImage(getCardImage(contact));
-    }
-
-    private Drawable getCardImage(ContactCard contact) {
-        String username = contact.getModel().getContact().getDisplayName();
-        if (username == null || username.isEmpty()) {
-            username = contact.getModel().getContact().getUsername();
-        }
-
-        return AvatarFactory.getAvatar(getContext(),
-                contact.getPhoto(),
-                username,
-                contact.getModel().getContact().getIds().get(0));
+        AvatarFactory.getGlideAvatar(getContext(), model).into(new ViewTarget<ImageCardView, Drawable>(cardView){
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                cardView.setMainImage(resource);
+            }
+        }.waitForLayout());
     }
 }

@@ -35,11 +35,9 @@ public interface ConversationView extends BaseView {
 
     void scrollToEnd();
 
-    void displayContactName(CallContact contact);
+    void displayContact(CallContact contact);
 
     void displayOnGoingCallPane(boolean display);
-
-    void displayContactPhoto(byte[] photo);
 
     void displayNumberSpinner(Conversation conversation, Uri number);
 

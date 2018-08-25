@@ -48,6 +48,7 @@ import android.widget.LinearLayout;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterInside;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.target.DrawableImageViewTarget;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -86,7 +87,6 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     private final ArrayList<ConversationElement> mConversationElements = new ArrayList<>();
     private final ConversationPresenter presenter;
     private final ConversationFragment conversationFragment;
-    private byte[] mPhoto;
     private final ColorStateList mErrorColor;
     private final int hPadding;
     private final int vPadding;
@@ -161,11 +161,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
     /**
      * Updates the contact photo to use for this conversation
-     *
-     * @param photo contact photo to display.
      */
-    public void setPhoto(byte[] photo) {
-        mPhoto = photo;
+    public void setPhoto() {
         notifyDataSetChanged();
     }
 
@@ -352,7 +349,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             GlideApp.with(context)
                     .load(path)
                     .apply(PICTURE_OPTIONS)
-                    .into(conversationViewHolder.mPhoto);
+                    .into(new DrawableImageViewTarget(conversationViewHolder.mPhoto).waitForLayout());
 
             ((LinearLayout)conversationViewHolder.mAnswerLayout).setGravity(file.isOutgoing() ? Gravity.END : Gravity.START);
             conversationViewHolder.mPhoto.setOnClickListener(v -> {
@@ -444,17 +441,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         final Context context = convViewHolder.itemView.getContext();
 
         if (textMessage.isIncoming() && !sameAsPreviousMsg) {
-            Drawable contactPicture = AvatarFactory.getAvatar(
-                    context,
-                    mPhoto,
-                    contact.getUsername(),
-                    textMessage.getNumberUri().getHost());
-
-            Glide.with(context)
-                    .load(contactPicture)
-                    .apply(AvatarFactory.getGlideOptions(true, true))
-                    //.transition(DrawableTransitionOptions.withCrossFade())
-                    .into(convViewHolder.mPhoto);
+            AvatarFactory.loadGlideAvatar(convViewHolder.mPhoto, contact);
         }
 
         switch (textMessage.getStatus()) {
