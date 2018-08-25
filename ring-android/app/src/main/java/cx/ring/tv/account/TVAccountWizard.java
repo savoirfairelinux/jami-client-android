@@ -23,53 +23,48 @@ import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.Bitmap;
 import android.os.Bundle;
+
 import androidx.leanback.app.GuidedStepSupportFragment;
 import androidx.appcompat.app.AlertDialog;
+
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
+import java.io.File;
 
 import butterknife.ButterKnife;
 import cx.ring.R;
+import cx.ring.account.AccountCreationModelImpl;
 import cx.ring.account.AccountWizardPresenter;
 import cx.ring.account.AccountWizardView;
-import cx.ring.account.RingAccountViewModelImpl;
 import cx.ring.application.RingApplication;
+import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
+import cx.ring.mvp.AccountCreationModel;
 import cx.ring.mvp.BaseActivity;
-import cx.ring.mvp.RingAccountViewModel;
 import cx.ring.tv.main.HomeActivity;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
-import ezvcard.parameter.ImageType;
-import ezvcard.property.FormattedName;
-import ezvcard.property.Photo;
-import ezvcard.property.RawProperty;
-import ezvcard.property.Uid;
+import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
 public class TVAccountWizard
         extends BaseActivity<AccountWizardPresenter>
         implements AccountWizardView {
-    public static final String PROFILE_TAG = "Profile";
     static final String TAG = TVAccountWizard.class.getName();
-    private TVProfileCreationFragment mProfileFragment = new TVProfileCreationFragment();
     private TVHomeAccountCreationFragment mHomeFragment = new TVHomeAccountCreationFragment();
 
     private ProgressDialog mProgress = null;
     private boolean mLinkAccount = false;
-    private String mFullname;
     private String mAccountType;
     private AlertDialog mAlertDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        // dependency injection
         RingApplication.getInstance().getRingInjectionComponent().inject(this);
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        RingApplication.getInstance().startDaemon();
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -82,8 +77,6 @@ public class TVAccountWizard
         if (savedInstanceState == null) {
             GuidedStepSupportFragment.addAsRoot(this, mHomeFragment, android.R.id.content);
         } else {
-            mProfileFragment = (TVProfileCreationFragment) getSupportFragmentManager().getFragment(savedInstanceState, PROFILE_TAG);
-            mFullname = savedInstanceState.getString("mFullname");
             mLinkAccount = savedInstanceState.getBoolean("mLinkAccount");
         }
 
@@ -93,10 +86,6 @@ public class TVAccountWizard
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (mProfileFragment.isAdded()) {
-            getSupportFragmentManager().putFragment(outState, PROFILE_TAG, mProfileFragment);
-        }
-        outState.putString("mFullname", mFullname);
         outState.putBoolean("mLinkAccount", mLinkAccount);
     }
 
@@ -109,15 +98,12 @@ public class TVAccountWizard
         super.onDestroy();
     }
 
-    public void createAccount(RingAccountViewModel ringAccountViewModel) {
-        if (ringAccountViewModel.getFullName() == null || ringAccountViewModel.getFullName().isEmpty()) {
-            ringAccountViewModel.setFullName(ringAccountViewModel.getUsername());
-        }
-        if (ringAccountViewModel.isLink()) {
-            presenter.initRingAccountLink(ringAccountViewModel,
+    public void createAccount(AccountCreationModel accountCreationModel) {
+        if (accountCreationModel.isLink()) {
+            presenter.initRingAccountLink(accountCreationModel,
                     getText(R.string.ring_account_default_name).toString());
         } else {
-            presenter.initRingAccountCreation(ringAccountViewModel,
+            presenter.initRingAccountCreation(accountCreationModel,
                     getText(R.string.ring_account_default_name).toString());
         }
     }
@@ -130,6 +116,20 @@ public class TVAccountWizard
     @Override
     public void goToSipCreation() {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        GuidedStepSupportFragment fragment = GuidedStepSupportFragment.getCurrentGuidedStepSupportFragment(getSupportFragmentManager());
+        if (fragment instanceof TVProfileCreationFragment)
+            finish();
+        else
+            super.onBackPressed();
+    }
+
+    @Override
+    public void goToProfileCreation(AccountCreationModel accountCreationModel) {
+        GuidedStepSupportFragment.add(getSupportFragmentManager(), TVProfileCreationFragment.newInstance((AccountCreationModelImpl) accountCreationModel));
     }
 
     @Override
@@ -154,7 +154,7 @@ public class TVAccountWizard
 
     @Override
     public void displayCreationError() {
-        runOnUiThread(() -> Toast.makeText(TVAccountWizard.this, "Error creating account", Toast.LENGTH_SHORT).show());
+        Toast.makeText(TVAccountWizard.this, "Error creating account", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -162,108 +162,87 @@ public class TVAccountWizard
         //Noop on TV
     }
 
-
     @Override
     public void finish(final boolean affinity) {
-        runOnUiThread(() -> {
-            if (affinity) {
-                FragmentManager fm = getFragmentManager();
-                if (fm.getBackStackEntryCount() >= 1) {
-                    fm.popBackStack();
-                } else {
-                    finish();
-                }
+        if (affinity) {
+            FragmentManager fm = getFragmentManager();
+            if (fm.getBackStackEntryCount() >= 1) {
+                fm.popBackStack();
             } else {
-                finishAffinity();
+                finish();
             }
-        });
+        } else {
+            finishAffinity();
+        }
     }
 
     @Override
-    public void saveProfile(final String accountID, final RingAccountViewModel ringAccountViewModel) {
-        runOnUiThread(() -> {
-            RingAccountViewModelImpl viewModel = (RingAccountViewModelImpl) ringAccountViewModel;
-
-            VCard vcard = new VCard();
-            vcard.setFormattedName(new FormattedName(viewModel.getFullName()));
-            vcard.setUid(new Uid(viewModel.getUsername()));
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            Bitmap photo = viewModel.getPhoto();
-            if (photo != null) {
-                photo.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                Photo photoVCard = new Photo(stream.toByteArray(), ImageType.PNG);
-                vcard.removeProperties(Photo.class);
-                vcard.addPhoto(photoVCard);
-            }
-            vcard.removeProperties(RawProperty.class);
-            VCardUtils.saveLocalProfileToDisk(vcard, accountID, getFilesDir())
-                    .subscribeOn(Schedulers.io())
-                    .subscribe();
-        });
+    public Single<VCard> saveProfile(final Account account, final AccountCreationModel accountCreationModel) {
+        File filedir = getFilesDir();
+        return accountCreationModel.toVCard()
+                .flatMap(vcard -> {
+                    account.setProfile(vcard);
+                    return VCardUtils.saveLocalProfileToDisk(vcard, account.getAccountID(), filedir);
+                })
+                .subscribeOn(Schedulers.io());
     }
 
     @Override
     public void displayGenericError() {
-        runOnUiThread(() -> {
-
-            if (mAlertDialog != null && mAlertDialog.isShowing()) {
-                return;
-            }
-            mAlertDialog = new AlertDialog.Builder(TVAccountWizard.this)
-                    .setPositiveButton(android.R.string.ok, null)
-                    .setTitle(R.string.account_cannot_be_found_title)
-                    .setMessage(R.string.account_cannot_be_found_message)
-                    .show();
-        });
+        if (mAlertDialog != null && mAlertDialog.isShowing()) {
+            return;
+        }
+        mAlertDialog = new AlertDialog.Builder(TVAccountWizard.this)
+                .setPositiveButton(android.R.string.ok, null)
+                .setTitle(R.string.account_cannot_be_found_title)
+                .setMessage(R.string.account_cannot_be_found_message)
+                .show();
     }
 
     @Override
     public void displayNetworkError() {
-        runOnUiThread(() -> {
-
-            if (mAlertDialog != null && mAlertDialog.isShowing()) {
-                return;
-            }
-            mAlertDialog = new AlertDialog.Builder(TVAccountWizard.this)
-                    .setPositiveButton(android.R.string.ok, null)
-                    .setTitle(R.string.account_no_network_title)
-                    .setMessage(R.string.account_no_network_message)
-                    .show();
-        });
+        if (mAlertDialog != null && mAlertDialog.isShowing()) {
+            return;
+        }
+        mAlertDialog = new AlertDialog.Builder(TVAccountWizard.this)
+                .setPositiveButton(android.R.string.ok, null)
+                .setTitle(R.string.account_no_network_title)
+                .setMessage(R.string.account_no_network_message)
+                .show();
     }
 
     @Override
     public void displayCannotBeFoundError() {
-        runOnUiThread(() -> {
-            if (mAlertDialog != null && mAlertDialog.isShowing()) {
-                return;
-            }
-            mAlertDialog = new AlertDialog.Builder(TVAccountWizard.this)
-                    .setPositiveButton(android.R.string.ok, null)
-                    .setTitle(R.string.account_cannot_be_found_title)
-                    .setMessage(R.string.account_cannot_be_found_message)
-                    .show();
-        });
+        if (mAlertDialog != null && mAlertDialog.isShowing()) {
+            return;
+        }
+        mAlertDialog = new AlertDialog.Builder(TVAccountWizard.this)
+                .setPositiveButton(android.R.string.ok, null)
+                .setTitle(R.string.account_cannot_be_found_title)
+                .setMessage(R.string.account_cannot_be_found_message)
+                .show();
     }
 
     @Override
     public void displaySuccessDialog() {
-        runOnUiThread(() -> {
-            if (mAlertDialog != null && mAlertDialog.isShowing()) {
-                return;
-            }
-            mAlertDialog = new AlertDialog.Builder(TVAccountWizard.this)
-                    .setPositiveButton(android.R.string.ok, null)
-                    .setTitle(R.string.account_device_added_title)
-                    .setMessage(R.string.account_device_added_message)
-                    .setOnDismissListener(dialogInterface -> {
-                        setResult(Activity.RESULT_OK, new Intent());
-                        //unlock the screen orientation
-                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-                        startActivity(new Intent(TVAccountWizard.this, HomeActivity.class));
-                        finish();
-                    })
-                    .show();
-        });
+        if (mAlertDialog != null && mAlertDialog.isShowing()) {
+            return;
+        }
+        mAlertDialog = new AlertDialog.Builder(TVAccountWizard.this)
+                .setPositiveButton(android.R.string.ok, null)
+                .setTitle(R.string.account_device_added_title)
+                .setMessage(R.string.account_device_added_message)
+                .setOnDismissListener(dialogInterface -> {
+                    setResult(Activity.RESULT_OK, new Intent());
+                    //unlock the screen orientation
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+                    startActivity(new Intent(TVAccountWizard.this, HomeActivity.class));
+                    finish();
+                })
+                .show();
+    }
+
+    public void profileCreated(AccountCreationModel accountCreationModel, boolean saveProfile) {
+        presenter.profileCreated(accountCreationModel, saveProfile);
     }
 }
