@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import cx.ring.mvp.RingAccountViewModel;
+import cx.ring.mvp.AccountCreationModel;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import io.reactivex.Scheduler;
@@ -42,7 +42,7 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
     @Named("UiScheduler")
     protected Scheduler mUiScheduler;
 
-    private RingAccountViewModel mRingAccountViewModel;
+    private AccountCreationModel mAccountCreationModel;
 
     private boolean isRingUserNameCorrect = false;
     private boolean isPasswordCorrect = true;
@@ -68,18 +68,18 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
 
     }
 
-    public void init(RingAccountViewModel ringAccountViewModel) {
-        mRingAccountViewModel = ringAccountViewModel;
+    public void init(AccountCreationModel accountCreationModel) {
+        mAccountCreationModel = accountCreationModel;
     }
 
     public void userNameChanged(String userName) {
         if (!userName.isEmpty()) {
-            mRingAccountViewModel.setUsername(userName);
+            mAccountCreationModel.setUsername(userName);
             contactQuery.onNext(userName);
             isRingUserNameCorrect = false;
             getView().enableTextError();
         } else {
-            mRingAccountViewModel.setUsername("");
+            mAccountCreationModel.setUsername("");
             getView().disableTextError();
         }
         checkForms();
@@ -89,13 +89,13 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
         getView().displayUsernameBox(isChecked);
         isRegisterUsernameChecked = isChecked;
         if (!isChecked) {
-            mRingAccountViewModel.setUsername("");
+            mAccountCreationModel.setUsername("");
         }
         checkForms();
     }
 
     public void passwordChanged(String password) {
-        mRingAccountViewModel.setPassword(password);
+        mAccountCreationModel.setPassword(password);
         if (!password.equals(mPasswordConfirm)) {
             getView().showNonMatchingPasswordError(true);
             isConfirmCorrect = false;
@@ -114,7 +114,7 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
     }
 
     public void passwordConfirmChanged(String passwordConfirm) {
-        if (!passwordConfirm.equals(mRingAccountViewModel.getPassword())) {
+        if (!passwordConfirm.equals(mAccountCreationModel.getPassword())) {
             getView().showNonMatchingPasswordError(true);
             isConfirmCorrect = false;
         } else {
@@ -129,7 +129,7 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
         if (isInputValid()) {
             RingAccountCreationView view = getView();
             view.enableNextButton(false);
-            view.goToAccountCreation(mRingAccountViewModel);
+            view.goToAccountCreation(mAccountCreationModel);
         }
     }
 
@@ -166,7 +166,7 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
                 case 2:
                     // available
                     view.disableTextError();
-                    mRingAccountViewModel.setUsername(name);
+                    mAccountCreationModel.setUsername(name);
                     isRingUserNameCorrect = true;
                     break;
                 default:
