@@ -33,9 +33,10 @@ import butterknife.OnTextChanged;
 import cx.ring.R;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.mvp.BaseFragment;
+import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.mvp.RingAccountViewModel;
 
-public class RingLinkAccountFragment extends BaseFragment<RingLinkAccountPresenter> implements RingLinkAccountView {
+public class RingLinkAccountFragment extends BaseSupportFragment<RingLinkAccountPresenter> implements RingLinkAccountView {
 
     public static final String TAG = RingLinkAccountFragment.class.getSimpleName();
 

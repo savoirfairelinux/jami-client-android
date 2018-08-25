@@ -19,7 +19,7 @@
  */
 package cx.ring.tv.cards.iconcards;
 
-import android.support.annotation.DrawableRes;
+import androidx.annotation.DrawableRes;
 
 import cx.ring.tv.cards.Card;
 

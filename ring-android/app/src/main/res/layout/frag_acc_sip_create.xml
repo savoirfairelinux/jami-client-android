@@ -60,11 +60,11 @@ along with this program; if not, write to the Free Software
                 android:text="@string/help_sip"
                 android:textSize="14sp" />
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/alias"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -73,13 +73,13 @@ along with this program; if not, write to the Free Software
                     android:imeOptions="flagNoExtractUi"
                     android:maxLines="1"
                     android:singleLine="true" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/hostname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -89,13 +89,13 @@ along with this program; if not, write to the Free Software
                     android:maxLines="1"
                     android:singleLine="true"
                     android:typeface="monospace" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -105,14 +105,14 @@ along with this program; if not, write to the Free Software
                     android:maxLines="1"
                     android:singleLine="true"
                     android:typeface="monospace" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:passwordToggleEnabled="true">
 
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -124,7 +124,7 @@ along with this program; if not, write to the Free Software
                     android:maxLines="1"
                     android:singleLine="true"
                     android:typeface="monospace" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
     </cx.ring.views.BoundedScrollView>

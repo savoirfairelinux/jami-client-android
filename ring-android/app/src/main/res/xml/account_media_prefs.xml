@@ -18,34 +18,34 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.          
 -->
-<android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <android.support.v7.preference.PreferenceCategory android:title="@string/account_ringtone_label">
-        <android.support.v14.preference.SwitchPreference
+    <PreferenceCategory android:title="@string/account_ringtone_label">
+        <SwitchPreference
             android:key="Account.ringtoneEnabled"
             android:persistent="false"
             android:title="@string/account_ringtone_enabled_label" />
 
-        <android.support.v14.preference.SwitchPreference
+        <SwitchPreference
             android:key="Account.ringtoneCustom"
             android:persistent="true"
             android:title="@string/account_ringtone_custom_label" />
 
-        <android.support.v7.preference.Preference
+        <Preference
             android:key="Account.ringtonePath"
             android:persistent="false"
             android:title="@string/account_ringtone_path_label" />
-    </android.support.v7.preference.PreferenceCategory>
+    </PreferenceCategory>
 
-    <android.support.v7.preference.PreferenceCategory android:title="@string/account_audio_label">
+    <PreferenceCategory android:title="@string/account_audio_label">
         <cx.ring.fragments.CodecPreference
             android:key="Account.audioCodecs"
             android:layout="@layout/frag_audio_mgmt"
             android:persistent="false" />
-    </android.support.v7.preference.PreferenceCategory>
+    </PreferenceCategory>
 
-    <android.support.v7.preference.PreferenceCategory android:title="@string/account_video_label">
-        <android.support.v14.preference.SwitchPreference
+    <PreferenceCategory android:title="@string/account_video_label">
+        <SwitchPreference
             android:key="Account.videoEnabled"
             android:persistent="false"
             android:title="@string/account_video_enable" />
@@ -54,7 +54,7 @@ along with this program; if not, write to the Free Software
             android:layout="@layout/frag_audio_mgmt"
             android:persistent="false"
             android:dependency="Account.videoEnabled"/>
-    </android.support.v7.preference.PreferenceCategory>
+    </PreferenceCategory>
 
 
-</android.support.v7.preference.PreferenceScreen>
+</PreferenceScreen>

@@ -17,22 +17,22 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <android.support.v7.preference.PreferenceCategory
+    <androidx.preference.PreferenceCategory
         android:key="Account.credentials"
         android:title="@string/account_credentials_label">
         <cx.ring.views.CredentialsPreference
             android:icon="@drawable/ic_action_new_dark"
             android:key="Add.credentials"
             android:title="@string/account_credentials_add" />
-    </android.support.v7.preference.PreferenceCategory>
+    </androidx.preference.PreferenceCategory>
 
-    <android.support.v7.preference.PreferenceCategory
+    <androidx.preference.PreferenceCategory
         android:key="TLS.category"
         android:title="@string/account_preferences_security_tab">
 
-        <android.support.v14.preference.SwitchPreference
+        <SwitchPreference
             android:key="TLS.enable"
             android:persistent="false"
             android:title="@string/account_tls_transport_switch_label" />
@@ -43,44 +43,44 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:persistent="false"
             android:title="@string/account_tls_port_label" />
 
-        <android.support.v7.preference.Preference
+        <Preference
             android:dependency="TLS.enable"
             android:key="TLS.certificateListFile"
             android:persistent="false"
             android:title="@string/account_tls_certificate_list_label" />
 
-        <android.support.v7.preference.Preference
+        <Preference
             android:dependency="TLS.enable"
             android:key="TLS.certificateFile"
             android:persistent="false"
             android:title="@string/account_tls_certificate_file_label" />
 
-        <android.support.v7.preference.Preference
+        <Preference
             android:dependency="TLS.enable"
             android:key="TLS.privateKeyFile"
             android:persistent="false"
             android:title="@string/account_tls_private_key_file_label" />
 
-        <android.support.v7.preference.EditTextPreference
+        <EditTextPreference
             android:dependency="TLS.enable"
             android:key="TLS.password"
             android:persistent="false"
             android:singleLine="true"
             android:title="@string/account_tls_password_label" />
 
-        <android.support.v7.preference.ListPreference
+        <ListPreference
             android:dependency="TLS.enable"
             android:key="TLS.method"
             android:persistent="false"
             android:title="@string/account_tls_method_label" />
 
-        <android.support.v7.preference.EditTextPreference
+        <EditTextPreference
             android:dependency="TLS.enable"
             android:key="TLS.ciphers"
             android:persistent="false"
             android:title="@string/account_tls_ciphers_label" />
 
-        <android.support.v7.preference.EditTextPreference
+        <EditTextPreference
             android:dependency="TLS.enable"
             android:key="TLS.serverName"
             android:persistent="false"
@@ -93,23 +93,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:persistent="false"
             android:title="@string/account_tls_negotiation_timeout_sec" />
 
-        <android.support.v7.preference.CheckBoxPreference
+        <CheckBoxPreference
             android:dependency="TLS.enable"
             android:key="TLS.verifyServer"
             android:persistent="false"
             android:title="@string/account_tls_verify_server_label" />
 
-        <android.support.v7.preference.CheckBoxPreference
+        <CheckBoxPreference
             android:dependency="TLS.enable"
             android:key="TLS.verifyClient"
             android:persistent="false"
             android:title="@string/account_tls_verify_client_label" />
 
-        <android.support.v7.preference.CheckBoxPreference
+        <CheckBoxPreference
             android:dependency="TLS.enable"
             android:key="TLS.requireClientCertificate"
             android:persistent="false"
             android:title="TLS Require Client Certificate" />
-    </android.support.v7.preference.PreferenceCategory>
+    </androidx.preference.PreferenceCategory>
 
-</android.support.v7.preference.PreferenceScreen>
+</androidx.preference.PreferenceScreen>

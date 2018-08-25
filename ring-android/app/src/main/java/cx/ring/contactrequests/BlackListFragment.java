@@ -19,9 +19,9 @@
 package cx.ring.contactrequests;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,7 +30,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.Collection;
-import java.util.List;
 
 import butterknife.BindView;
 import cx.ring.R;

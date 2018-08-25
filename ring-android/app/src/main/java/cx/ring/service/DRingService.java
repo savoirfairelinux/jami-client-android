@@ -38,9 +38,9 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
-import android.support.annotation.NonNull;
-import android.support.v4.app.RemoteInput;
-import android.support.v4.content.WakefulBroadcastReceiver;
+import androidx.annotation.NonNull;
+import androidx.core.app.RemoteInput;
+import androidx.legacy.content.WakefulBroadcastReceiver;
 import android.text.TextUtils;
 import android.util.Log;
 

@@ -1,6 +1,6 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="AppTheme.ActionBar.Transparent" parent="@style/Theme.AppCompat">
+    <style name="AppTheme.ActionBar.Transparent" parent="@style/Theme.MaterialComponents">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -10,19 +10,17 @@
         <item name="actionBarStyle">@style/ActionBar.Transparent</item>
     </style>
 
-    <style name="AppThemeBase.Dark" parent="@style/Theme.AppCompat.NoActionBar">
+    <style name="AppThemeBase.Dark" parent="@style/Theme.MaterialComponents.NoActionBar">
         <item name="colorAccent">@color/color_primary_dark</item>
         <item name="colorPrimary">@color/color_primary_light</item>
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="android:windowContentTransitions">true</item>
     </style>
 
-    <style name="AppThemeBase" parent="@style/Theme.AppCompat.Light.NoActionBar">
+    <style name="AppThemeBase" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorAccent">@color/color_primary_dark</item>
         <item name="colorPrimary">@color/color_primary_light</item>
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="android:windowContentTransitions">true</item>
     </style>
 

@@ -19,7 +19,7 @@
  */
 package cx.ring.tv.contactrequest;
 
-import android.support.v17.leanback.widget.AbstractDetailsDescriptionPresenter;
+import androidx.leanback.widget.AbstractDetailsDescriptionPresenter;
 
 import cx.ring.tv.model.TVListViewModel;
 

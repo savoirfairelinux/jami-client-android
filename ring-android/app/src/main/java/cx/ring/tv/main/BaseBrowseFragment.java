@@ -20,7 +20,7 @@
 package cx.ring.tv.main;
 
 import android.os.Bundle;
-import android.support.v17.leanback.app.BrowseSupportFragment;
+import androidx.leanback.app.BrowseSupportFragment;
 import android.view.View;
 import android.widget.Toast;
 

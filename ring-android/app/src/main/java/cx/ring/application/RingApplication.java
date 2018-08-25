@@ -27,10 +27,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.media.AudioManager;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
-import android.support.v7.app.AppCompatDelegate;
+import androidx.appcompat.app.AppCompatDelegate;
+import android.util.Log;
 
 import com.bumptech.glide.Glide;
 
@@ -59,7 +61,6 @@ import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.PreferencesService;
 import cx.ring.services.PresenceService;
-import cx.ring.utils.Log;
 
 public abstract class RingApplication extends Application {
 
@@ -214,7 +215,7 @@ public abstract class RingApplication extends Application {
 
         sInstance = this;
 
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
             AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
         setDefaultUncaughtExceptionHandler();
