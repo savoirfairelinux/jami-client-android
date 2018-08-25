@@ -21,14 +21,12 @@
 package cx.ring.tv.views;
 
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v17.leanback.widget.DetailsOverviewRow;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.leanback.widget.DetailsOverviewRow;
 import android.util.Log;
 
-import com.bumptech.glide.request.target.BaseTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.bumptech.glide.request.transition.Transition;
 
 public class DetailsOverviewRowTarget extends SimpleTarget<Drawable> {

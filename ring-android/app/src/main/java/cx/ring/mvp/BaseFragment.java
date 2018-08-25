@@ -21,9 +21,9 @@ package cx.ring.mvp;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.Nullable;
+import androidx.annotation.IdRes;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -105,23 +105,5 @@ public abstract class BaseFragment<T extends RootPresenter> extends Fragment imp
     }
 
     protected void initPresenter(T presenter) {
-    }
-
-    protected void replaceFragmentWithSlide(Fragment fragment, @IdRes int content) {
-        getFragmentManager()
-                .beginTransaction()
-                .setCustomAnimations(R.animator.slide_in_left,
-                        R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
-                .replace(content, fragment, RingAccountCreationFragment.TAG)
-                .addToBackStack(RingAccountCreationFragment.TAG)
-                .commit();
-    }
-
-    protected void replaceFragment(Fragment fragment, @IdRes int content) {
-        getFragmentManager()
-                .beginTransaction()
-                .replace(content, fragment, RingAccountCreationFragment.TAG)
-                .addToBackStack(RingAccountCreationFragment.TAG)
-                .commit();
     }
 }

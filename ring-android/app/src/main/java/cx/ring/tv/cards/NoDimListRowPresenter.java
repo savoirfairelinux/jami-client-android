@@ -19,8 +19,8 @@
  */
 package cx.ring.tv.cards;
 
-import android.support.v17.leanback.widget.ListRowPresenter;
-import android.support.v17.leanback.widget.RowPresenter;
+import androidx.leanback.widget.ListRowPresenter;
+import androidx.leanback.widget.RowPresenter;
 
 public class NoDimListRowPresenter extends ListRowPresenter {
     @Override

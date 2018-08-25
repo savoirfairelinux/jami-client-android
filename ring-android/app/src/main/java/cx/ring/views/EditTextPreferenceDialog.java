@@ -18,7 +18,7 @@
 package cx.ring.views;
 
 import android.os.Bundle;
-import android.support.v14.preference.EditTextPreferenceDialogFragment;
+import androidx.preference.EditTextPreferenceDialogFragment;
 import android.view.View;
 import android.widget.EditText;
 

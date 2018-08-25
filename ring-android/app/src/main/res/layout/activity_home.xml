@@ -19,7 +19,7 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.          
 -->
 
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
@@ -36,7 +36,7 @@ along with this program; if not, write to the Free Software
         android:paddingEnd="0dp"
         android:paddingStart="@dimen/drawer_content_padding">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/main_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,8 +45,8 @@ along with this program; if not, write to the Free Software
             android:background="@color/color_primary_light"
             android:elevation="@dimen/toolbar_elevation"
             android:minHeight="?attr/actionBarSize"
-            android:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:popupTheme="@style/Theme.MaterialComponents.Light.NoActionBar"
+            android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
             android:titleTextAppearance="@style/ToolbarTitle"
             app:contentInsetStart="@dimen/toolbar_content_inset"
             app:elevation="@dimen/toolbar_elevation"
@@ -83,7 +83,7 @@ along with this program; if not, write to the Free Software
             android:layout_below="@+id/toolbar_spacer"
             android:orientation="vertical" />
 
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/action_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -102,7 +102,7 @@ along with this program; if not, write to the Free Software
 
     </RelativeLayout>
 
-    <android.support.design.widget.NavigationView
+    <com.google.android.material.navigation.NavigationView
         android:id="@+id/left_drawer"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -117,6 +117,6 @@ along with this program; if not, write to the Free Software
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-    </android.support.design.widget.NavigationView>
+    </com.google.android.material.navigation.NavigationView>
 
-</android.support.v4.widget.DrawerLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

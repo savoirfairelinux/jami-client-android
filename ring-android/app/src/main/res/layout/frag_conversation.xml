@@ -37,7 +37,7 @@
 
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/hist_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -73,7 +73,7 @@
             android:textColor="@color/text_color_primary" />
     </LinearLayout>
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/unknownContactPrompt"
         style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
@@ -89,7 +89,7 @@
 
         <Button
             android:id="@+id/btnAddContact"
-            style="?attr/buttonBarButtonStyle"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="0dp"
@@ -98,9 +98,9 @@
             android:padding="0dp"
             android:text="@string/ab_action_contact_add"
             android:textColor="@color/white" />
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/trustRequestPrompt"
         style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
@@ -124,7 +124,7 @@
 
             <Button
                 android:id="@+id/btnBlock"
-                style="?android:attr/buttonBarButtonStyle"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -135,7 +135,7 @@
 
             <Button
                 android:id="@+id/btnRefuse"
-                style="?android:attr/buttonBarButtonStyle"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -146,7 +146,7 @@
 
             <Button
                 android:id="@+id/btnAccept"
-                style="?android:attr/buttonBarButtonStyle"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -155,9 +155,9 @@
                 android:text="@string/accept"
                 android:textColor="#4CAF50" />
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/cvMessageInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -234,5 +234,5 @@
                 android:tint="@android:color/darker_gray"
                 app:srcCompat="@drawable/ic_send_black" />
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 </RelativeLayout>
