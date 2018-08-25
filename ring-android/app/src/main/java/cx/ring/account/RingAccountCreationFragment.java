@@ -20,6 +20,7 @@
 package cx.ring.account;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import com.google.android.material.textfield.TextInputLayout;
 import android.text.Editable;
@@ -27,10 +28,12 @@ import android.text.InputFilter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 
+import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
@@ -39,10 +42,11 @@ import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 import cx.ring.R;
 import cx.ring.dependencyinjection.RingInjectionComponent;
-import cx.ring.mvp.BaseFragment;
+import cx.ring.model.Account;
 import cx.ring.mvp.BaseSupportFragment;
-import cx.ring.mvp.RingAccountViewModel;
+import cx.ring.mvp.AccountCreationModel;
 import cx.ring.utils.RegisteredNameFilter;
+import io.reactivex.Observable;
 
 public class RingAccountCreationFragment extends BaseSupportFragment<RingAccountCreationPresenter> implements RingAccountCreationView {
 
@@ -57,6 +61,12 @@ public class RingAccountCreationFragment extends BaseSupportFragment<RingAccount
     @BindView(R.id.ring_username)
     protected EditText mUsernameTxt;
 
+    @BindView(R.id.ring_password_switch)
+    protected Switch mPasswordSwitch;
+
+    @BindView(R.id.ring_password_box)
+    protected ViewGroup mPasswordBox;
+
     @BindView(R.id.ring_password_txt_box)
     protected TextInputLayout mPasswordTxtBox;
 
@@ -69,7 +79,7 @@ public class RingAccountCreationFragment extends BaseSupportFragment<RingAccount
     @BindView(R.id.create_account)
     protected Button mCreateAccountButton;
 
-    public static RingAccountCreationFragment newInstance(RingAccountViewModelImpl ringAccountViewModel) {
+    public static RingAccountCreationFragment newInstance(AccountCreationModelImpl ringAccountViewModel) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(KEY_RING_ACCOUNT, ringAccountViewModel);
         RingAccountCreationFragment fragment = new RingAccountCreationFragment();
@@ -96,8 +106,23 @@ public class RingAccountCreationFragment extends BaseSupportFragment<RingAccount
         ButterKnife.bind(this, view);
         mUsernameTxt.setFilters(new InputFilter[]{new RegisteredNameFilter()});
 
-        RingAccountViewModelImpl ringAccountViewModel = getArguments().getParcelable(KEY_RING_ACCOUNT);
+        AccountCreationModelImpl ringAccountViewModel = getArguments().getParcelable(KEY_RING_ACCOUNT);
         presenter.init(ringAccountViewModel);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mUsernameBox.getVisibility() == View.VISIBLE) {
+            mUsernameTxt.requestFocus();
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(mUsernameTxt, InputMethodManager.SHOW_IMPLICIT);
+        }
+    }
+
+    @OnCheckedChanged(R.id.ring_password_switch)
+    public void onPasswordCheckedChanged(boolean isChecked) {
+        mPasswordBox.setVisibility(isChecked ? View.VISIBLE : View.GONE);
     }
 
     @OnCheckedChanged(R.id.switch_ring_username)
@@ -204,11 +229,11 @@ public class RingAccountCreationFragment extends BaseSupportFragment<RingAccount
     }
 
     @Override
-    public void goToAccountCreation(RingAccountViewModel ringAccountViewModel) {
+    public void goToAccountCreation(AccountCreationModel accountCreationModel) {
         Activity wizardActivity = getActivity();
-        if (wizardActivity != null && wizardActivity instanceof AccountWizardActivity) {
+        if (wizardActivity instanceof AccountWizardActivity) {
             AccountWizardActivity wizard = (AccountWizardActivity) wizardActivity;
-            wizard.createAccount(ringAccountViewModel);
+            wizard.createAccount(accountCreationModel);
         }
     }
 }

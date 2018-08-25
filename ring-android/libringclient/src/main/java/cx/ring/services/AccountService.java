@@ -571,9 +571,10 @@ public class AccountService {
     /**
      * @return the default template (account details) for a type of account
      */
-    public Map<String, String> getAccountTemplate(final String accountType) {
+    public Single<HashMap<String, String>> getAccountTemplate(final String accountType) {
         Log.i(TAG, "getAccountTemplate() " + accountType);
-        return Ringservice.getAccountTemplate(accountType).toNative();
+        return Single.fromCallable(() -> Ringservice.getAccountTemplate(accountType).toNative())
+                .subscribeOn(Schedulers.from(mExecutor));
     }
 
     /**
@@ -825,6 +826,7 @@ public class AccountService {
             return;
         }
 
+        account.registeringUsername = true;
         registerName(account.getAccountID(), password, name);
     }
 
