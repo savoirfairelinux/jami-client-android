@@ -9,27 +9,27 @@
     tools:context="cx.ring.account.AccountWizardActivity">
 
     <cx.ring.views.BoundedScrollView
+        android:id="@+id/scrollview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/create_account"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         app:bounded_width="500dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:animateLayoutChanges="true"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin">
+            android:paddingStart="@dimen/activity_horizontal_margin"
+            android:paddingEnd="@dimen/activity_horizontal_margin">
 
             <TextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="24dp"
-                android:gravity="center"
                 android:text="@string/account_creation_ring"
                 android:textColor="@color/text_color_primary_dark"
                 android:textSize="24sp" />
@@ -39,7 +39,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:padding="16dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
                 android:text="@string/register_username"
                 android:textColor="@color/text_color_primary_dark" />
 
@@ -53,82 +54,112 @@
                     android:id="@+id/ring_username_txt_box"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp">
+                    android:layout_marginBottom="16dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/ring_username"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:autofillHints="username"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:focusedByDefault="true"
                         android:hint="@string/prompt_new_username"
                         android:imeOptions="actionNext"
                         android:inputType="text"
                         android:lines="1"
-                        android:maxLines="1" />
+                        android:maxLines="1">
+
+                        <requestFocus />
+                    </com.google.android.material.textfield.TextInputEditText>
                 </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
 
-            <TextView
+            <Switch
+                android:id="@+id/ring_password_switch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="8dp"
-                android:paddingEnd="16dp"
-                android:paddingStart="16dp"
                 android:paddingTop="16dp"
-                android:text="@string/help_password_choose"
+                android:paddingBottom="16dp"
+                android:text="Choose a password for enhanced security"
                 android:textColor="@color/text_color_primary_dark" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ring_password_txt_box"
+            <LinearLayout
+                android:id="@+id/ring_password_box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                app:passwordToggleEnabled="true">
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ring_password"
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_new_password"
-                    android:imeOptions="actionNext"
-                    android:inputType="textPassword" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/help_password_choose"
+                    android:textColor="@color/text_color_primary_dark" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ring_password_repeat_txt_box"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ring_password_txt_box"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:passwordToggleEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/ring_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_new_password"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPassword" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ring_password_repeat_txt_box"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:passwordToggleEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/ring_password_repeat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:hint="@string/prompt_new_password_repeat"
+                        android:imeActionLabel="@string/action_create_short"
+                        android:imeOptions="actionDone"
+                        android:inputType="textPassword" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <Switch
+                android:id="@+id/switch_ring_push"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                app:passwordToggleEnabled="true">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ring_password_repeat"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_new_password_repeat"
-                    android:imeActionLabel="@string/action_create_short"
-                    android:imeOptions="actionDone"
-                    android:inputType="textPassword" />
-            </com.google.android.material.textfield.TextInputLayout>
+                android:checked="true"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:text="Use push notifications"
+                android:textColor="@color/text_color_primary_dark" />
 
         </LinearLayout>
 
     </cx.ring.views.BoundedScrollView>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/create_account"
-        android:theme="@style/ButtonColoredInverse"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/scrollview"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="24dp"
         android:background="@color/color_primary_light"
         android:enabled="false"
-        android:text="@string/account_new_button" />
+        android:text="@string/account_new_button"
+        android:theme="@style/ButtonColoredInverse" />
 
 </RelativeLayout>

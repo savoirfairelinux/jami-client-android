@@ -19,15 +19,33 @@
  */
 package cx.ring.mvp;
 
-public abstract class RingAccountViewModel {
+import java.io.ByteArrayOutputStream;
+
+import cx.ring.model.Account;
+import ezvcard.VCard;
+import ezvcard.parameter.ImageType;
+import ezvcard.property.FormattedName;
+import ezvcard.property.Photo;
+import ezvcard.property.RawProperty;
+import ezvcard.property.Uid;
+import io.reactivex.Observable;
+import io.reactivex.Single;
+import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.Subject;
+
+public abstract class AccountCreationModel {
 
     protected String mFullName = "";
     protected String mUsername = "";
     protected String mPassword = "";
     protected String mPin = "";
     protected boolean link = false;
+    private Account newAccount = null;
 
-    public RingAccountViewModel() {
+    private Observable<Account> account;
+    protected final Subject<AccountCreationModel> profile = BehaviorSubject.createDefault(this);
+
+    public AccountCreationModel() {
     }
 
     public String getFullName() {
@@ -36,6 +54,7 @@ public abstract class RingAccountViewModel {
 
     public void setFullName(String mFullName) {
         this.mFullName = mFullName;
+        profile.onNext(this);
     }
 
     public String getUsername() {
@@ -68,5 +87,28 @@ public abstract class RingAccountViewModel {
 
     public void setLink(boolean link) {
         this.link = link;
+    }
+
+    public void setNewAccount(Account account) {
+        newAccount = account;
+        profile.onNext(this);
+    }
+
+    public Account getNewAccount() {
+        return newAccount;
+    }
+
+    public void setAccountObservable(Observable<Account> account) {
+        this.account = account;
+    }
+
+    public Observable<Account> getAccountObservable() {
+        return account;
+    }
+
+    public abstract Single<VCard> toVCard();
+
+    public Observable<AccountCreationModel> getProfileUpdates() {
+        return profile;
     }
 }

@@ -217,7 +217,7 @@ public class DRingService extends Service {
 
         @Override
         public Map<String, String> getAccountTemplate(final String accountType) throws RemoteException {
-            return mAccountService.getAccountTemplate(accountType);
+            return mAccountService.getAccountTemplate(accountType).blockingGet();
         }
 
         @SuppressWarnings("unchecked")

@@ -180,7 +180,7 @@ public class SIPCreationPresenter extends RootPresenter<SIPCreationView> {
     private HashMap<String, String> initAccountDetails() {
 
         try {
-            HashMap<String, String> accountDetails = (HashMap<String, String>) mAccountService.getAccountTemplate(AccountConfig.ACCOUNT_TYPE_SIP);
+            HashMap<String, String> accountDetails = (HashMap<String, String>) mAccountService.getAccountTemplate(AccountConfig.ACCOUNT_TYPE_SIP).blockingGet();
             for (Map.Entry<String, String> e : accountDetails.entrySet()) {
                 Log.d(TAG, "Default account detail: " + e.getKey() + " -> " + e.getValue());
             }

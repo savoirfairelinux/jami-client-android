@@ -29,19 +29,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-
 import java.util.List;
 
 import cx.ring.R;
+import cx.ring.account.AccountCreationModelImpl;
 import cx.ring.account.RingAccountCreationFragment;
 import cx.ring.account.RingAccountCreationPresenter;
 import cx.ring.account.RingAccountCreationView;
-import cx.ring.account.RingAccountViewModelImpl;
 import cx.ring.application.RingApplication;
-import cx.ring.contacts.AvatarFactory;
-import cx.ring.mvp.RingAccountViewModel;
+import cx.ring.mvp.AccountCreationModel;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
 
@@ -76,7 +72,7 @@ public class TVRingAccountCreationFragment
     public TVRingAccountCreationFragment() {
     }
 
-    public static TVRingAccountCreationFragment newInstance(RingAccountViewModelImpl ringAccountViewModel) {
+    public static TVRingAccountCreationFragment newInstance(AccountCreationModelImpl ringAccountViewModel) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(RingAccountCreationFragment.KEY_RING_ACCOUNT, ringAccountViewModel);
         TVRingAccountCreationFragment fragment = new TVRingAccountCreationFragment();
@@ -91,7 +87,7 @@ public class TVRingAccountCreationFragment
         // Bind the presenter to the view
         super.onViewCreated(view, savedInstanceState);
 
-        RingAccountViewModelImpl ringAccountViewModel = getArguments().getParcelable(RingAccountCreationFragment.KEY_RING_ACCOUNT);
+        AccountCreationModelImpl ringAccountViewModel = getArguments().getParcelable(RingAccountCreationFragment.KEY_RING_ACCOUNT);
         if (ringAccountViewModel == null) {
             Log.e(TAG, "Not able to get model");
             return;
@@ -99,12 +95,7 @@ public class TVRingAccountCreationFragment
 
         presenter.init(ringAccountViewModel);
         presenter.ringCheckChanged(false);
-
-        Glide.with(getActivity())
-                .load(ringAccountViewModel.getPhoto())
-                .apply(AvatarFactory.getGlideOptions(true))
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(getGuidanceStylist().getIconView());
+        getGuidanceStylist().getIconView().setImageResource(R.drawable.logo_ring);
     }
 
     @Override
@@ -268,11 +259,11 @@ public class TVRingAccountCreationFragment
     }
 
     @Override
-    public void goToAccountCreation(RingAccountViewModel ringAccountViewModel) {
+    public void goToAccountCreation(AccountCreationModel accountCreationModel) {
         Activity wizardActivity = getActivity();
         if (wizardActivity instanceof TVAccountWizard) {
             TVAccountWizard wizard = (TVAccountWizard) wizardActivity;
-            wizard.createAccount(ringAccountViewModel);
+            wizard.createAccount(accountCreationModel);
         }
     }
 

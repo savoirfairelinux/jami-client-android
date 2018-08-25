@@ -23,17 +23,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.ConfigKey;
-import cx.ring.mvp.RingAccountViewModel;
+import cx.ring.mvp.AccountCreationModel;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
-import io.reactivex.observers.DisposableObserver;
+import io.reactivex.Observable;
+import io.reactivex.Scheduler;
+import io.reactivex.Single;
+import io.reactivex.subjects.BehaviorSubject;
 
 public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
 
@@ -41,16 +45,20 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
 
     private final AccountService mAccountService;
     private final DeviceRuntimeService mDeviceRuntimeService;
+    private final Scheduler mUiScheduler;
 
-    private boolean mCreationError = false;
+    //private boolean mCreationError = false;
     private boolean mCreatingAccount = false;
     private String mAccountType;
-    private RingAccountViewModel mRingAccountViewModel;
+    private AccountCreationModel mAccountCreationModel;
+
+    private Observable<Account> newAccount;
 
     @Inject
-    public AccountWizardPresenter(AccountService accountService, DeviceRuntimeService deviceRuntimeService) {
-        this.mAccountService = accountService;
-        this.mDeviceRuntimeService = deviceRuntimeService;
+    public AccountWizardPresenter(AccountService accountService, DeviceRuntimeService deviceRuntimeService, @Named("UiScheduler") Scheduler uiScheduler) {
+        mAccountService = accountService;
+        mDeviceRuntimeService = deviceRuntimeService;
+        mUiScheduler = uiScheduler;
     }
 
     public void init(String accountType) {
@@ -62,32 +70,68 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
         }
     }
 
-    public void initRingAccountCreation(RingAccountViewModel ringAccountViewModel, String defaultAccountName) {
-        mRingAccountViewModel = ringAccountViewModel;
-        HashMap<String, String> accountDetails = initRingAccountDetails(defaultAccountName);
-        if (accountDetails != null) {
-            if (!ringAccountViewModel.getUsername().isEmpty()) {
-                accountDetails.put(ConfigKey.ACCOUNT_REGISTERED_NAME.key(), ringAccountViewModel.getUsername());
-            }
-            if (!ringAccountViewModel.getPassword().isEmpty()) {
-                accountDetails.put(ConfigKey.ARCHIVE_PASSWORD.key(), ringAccountViewModel.getPassword());
-            }
-            createNewAccount(accountDetails);
-        }
+    public void initRingAccountCreation(AccountCreationModel accountCreationModel, String defaultAccountName) {
+        mAccountCreationModel = accountCreationModel;
+        Observable<Account> newAccount = initRingAccountDetails(defaultAccountName)
+                .map(accountDetails -> {
+                    if (!accountCreationModel.getUsername().isEmpty()) {
+                        accountDetails.put(ConfigKey.ACCOUNT_REGISTERED_NAME.key(), accountCreationModel.getUsername());
+                    }
+                    if (!accountCreationModel.getPassword().isEmpty()) {
+                        accountDetails.put(ConfigKey.ARCHIVE_PASSWORD.key(), accountCreationModel.getPassword());
+                    }
+                    return accountDetails;
+                })
+                .flatMapObservable(accountDetails -> createNewAccount(accountCreationModel, accountDetails));
+        mCompositeDisposable.add(newAccount
+                .observeOn(mUiScheduler)
+                .subscribe(accountCreationModel::setNewAccount));
+        accountCreationModel.setAccountObservable(newAccount);
+        getView().goToProfileCreation(accountCreationModel);
     }
 
-    public void initRingAccountLink(RingAccountViewModel ringAccountViewModel, String defaultAccountName) {
-        mRingAccountViewModel = ringAccountViewModel;
-        HashMap<String, String> accountDetails = initRingAccountDetails(defaultAccountName);
-        if (accountDetails != null) {
-            if (!ringAccountViewModel.getPassword().isEmpty()) {
-                accountDetails.put(ConfigKey.ARCHIVE_PASSWORD.key(), ringAccountViewModel.getPassword());
-            }
-            if (!ringAccountViewModel.getPin().isEmpty()) {
-                accountDetails.put(ConfigKey.ARCHIVE_PIN.key(), ringAccountViewModel.getPin());
-            }
-            createNewAccount(accountDetails);
-        }
+    public void initRingAccountLink(AccountCreationModel accountCreationModel, String defaultAccountName) {
+        mAccountCreationModel = accountCreationModel;
+        getView().displayProgress(true);
+
+        Observable<Account> newAccount = initRingAccountDetails(defaultAccountName)
+                .map(accountDetails -> {
+                    if (!accountCreationModel.getPassword().isEmpty()) {
+                        accountDetails.put(ConfigKey.ARCHIVE_PASSWORD.key(), accountCreationModel.getPassword());
+                    }
+                    if (!accountCreationModel.getPin().isEmpty()) {
+                        accountDetails.put(ConfigKey.ARCHIVE_PIN.key(), accountCreationModel.getPin());
+                    }
+                    return accountDetails;
+                })
+                .flatMapObservable(accountDetails -> createNewAccount(accountCreationModel, accountDetails));
+        accountCreationModel.setAccountObservable(newAccount);
+        mCompositeDisposable.add(newAccount
+                .filter(a -> {
+                    String newState = a.getRegistrationState();
+                    return !(newState.isEmpty() || newState.contentEquals(AccountConfig.STATE_INITIALIZING));
+                })
+                .firstOrError()
+                .observeOn(mUiScheduler)
+                .subscribe(acc -> {
+                    Log.w(TAG, "newState " + acc.getRegistrationState());
+                    accountCreationModel.setNewAccount(acc);
+                    AccountWizardView view = getView();
+                    if (view != null) {
+                        view.displayProgress(false);
+                        String newState = acc.getRegistrationState();
+                        if (newState.contentEquals(AccountConfig.STATE_ERROR_GENERIC)) {
+                            mCreatingAccount = false;
+                            view.displayCannotBeFoundError();
+                        } else {
+                            view.goToProfileCreation(accountCreationModel);
+                        }
+                    }
+                }, e -> {
+                    mCreatingAccount = false;
+                    getView().displayProgress(false);
+                    getView().displayCannotBeFoundError();
+                }));
     }
 
     public void successDialogClosed() {
@@ -97,109 +141,114 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
         }
     }
 
-    private HashMap<String, String> initRingAccountDetails(String defaultAccountName) {
-        HashMap<String, String> accountDetails = initAccountDetails();
-        if (accountDetails != null) {
+    private Single<HashMap<String, String>> initRingAccountDetails(String defaultAccountName) {
+        return initAccountDetails().map(accountDetails -> {
             accountDetails.put(ConfigKey.ACCOUNT_ALIAS.key(), mAccountService.getNewAccountName(defaultAccountName));
             accountDetails.put(ConfigKey.ACCOUNT_HOSTNAME.key(), "bootstrap.ring.cx");
             accountDetails.put(ConfigKey.ACCOUNT_UPNP_ENABLE.key(), AccountConfig.TRUE_STR);
-        }
-        return accountDetails;
-    }
-
-    private HashMap<String, String> initAccountDetails() {
-        try {
-            HashMap<String, String> accountDetails = (HashMap<String, String>) mAccountService.getAccountTemplate(mAccountType);
-            for (Map.Entry<String, String> e: accountDetails.entrySet()) {
-                Log.d(TAG, "Default account detail: " + e.getKey() + " -> " + e.getValue());
-            }
-
-            boolean hasCameraPermission = mDeviceRuntimeService.hasVideoPermission();
-            accountDetails.put(ConfigKey.VIDEO_ENABLED.key(), Boolean.toString(hasCameraPermission));
-            accountDetails.put(ConfigKey.ACCOUNT_DTMF_TYPE.key(), "sipinfo");
             return accountDetails;
-        } catch (Exception e) {
-            getView().displayCreationError();
-            Log.e(TAG, "Error creating account", e);
-            return null;
-        }
+        });
     }
 
-    private void createNewAccount(HashMap<String, String> accountDetails) {
+    private Single<HashMap<String, String>> initAccountDetails() {
+        return mAccountService.getAccountTemplate(mAccountType)
+                .map(accountDetails -> {
+                    for (Map.Entry<String, String> e : accountDetails.entrySet()) {
+                        Log.d(TAG, "Default account detail: " + e.getKey() + " -> " + e.getValue());
+                    }
+
+                    boolean hasCameraPermission = mDeviceRuntimeService.hasVideoPermission();
+                    accountDetails.put(ConfigKey.VIDEO_ENABLED.key(), Boolean.toString(hasCameraPermission));
+                    accountDetails.put(ConfigKey.ACCOUNT_DTMF_TYPE.key(), "sipinfo");
+                    return accountDetails;
+                });
+    }
+
+    private Observable<Account> createNewAccount(AccountCreationModel model, HashMap<String, String> accountDetails) {
         if (mCreatingAccount) {
-            return;
+            return newAccount;
         }
 
         mCreatingAccount = true;
-        mCreationError = false;
+        //mCreationError = false;
 
+        BehaviorSubject<Account> account = BehaviorSubject.create();
+        account.filter(a -> {
+                    String newState = a.getRegistrationState();
+                    return !(newState.isEmpty() || newState.contentEquals(AccountConfig.STATE_INITIALIZING));
+                })
+                .firstElement()
+                .subscribe(a -> {
+                    if (!model.isLink() && a.isRing() && !StringUtils.isEmpty(model.getUsername()))
+                        mAccountService.registerName(a, model.getPassword(), model.getUsername());
+                    mAccountService.setCurrentAccount(a);
+                });
+
+        mAccountService
+                .addAccount(accountDetails)
+                .subscribe(account);
+
+        newAccount = account;
+        return account;
+    }
+
+    public void profileCreated(AccountCreationModel accountCreationModel, boolean saveProfile) {
         getView().blockOrientation();
         getView().displayProgress(true);
 
-        mCompositeDisposable.add(mAccountService.addAccount(accountDetails)
-                .subscribeWith(new DisposableObserver<Account>() {
-                    @Override
-                    public void onNext(Account account) {
-                        if (!handleCreationState(account)) {
-                            mCreatingAccount = false;
-                            dispose();
+        Single<Account> newAccount = mAccountCreationModel
+                .getAccountObservable()
+                .filter(a -> {
+                    String newState = a.getRegistrationState();
+                    return !(newState.isEmpty() || newState.contentEquals(AccountConfig.STATE_INITIALIZING));
+                })
+                .firstOrError();
+
+        if (saveProfile) {
+            newAccount = newAccount.flatMap(a -> getView()
+                    .saveProfile(a, accountCreationModel)
+                    .map(vcard -> a));
+        }
+
+        mCompositeDisposable.add(newAccount
+                .observeOn(mUiScheduler)
+                .subscribe(account -> {
+                    mCreatingAccount = false;
+                    AccountWizardView view = getView();
+                    if (view != null) {
+                        view.displayProgress(false);
+                        String newState = account.getRegistrationState();
+                        Log.w(TAG, "newState " + newState);
+                        switch (newState) {
+                            case AccountConfig.STATE_ERROR_GENERIC:
+                                view.displayGenericError();
+                                //mCreationError = true;
+                                break;
+                            case AccountConfig.STATE_UNREGISTERED:
+                                //mCreationError = false;
+                                break;
+                            case AccountConfig.STATE_ERROR_NETWORK:
+                                view.displayNetworkError();
+                                //mCreationError = true;
+                                break;
+                            default:
+                                //mCreationError = false;
+                                break;
                         }
+                        view.displaySuccessDialog();
                     }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        handleCreationState(null);
-                        mCreatingAccount = false;
-                        dispose();
-                    }
-
-                    @Override
-                    public void onComplete() {
+                }, e -> {
+                    mCreatingAccount = false;
+                    //mCreationError = true;
+                    AccountWizardView view = getView();
+                    if (view != null) {
+                        view.displayGenericError();
+                        getView().finish(true);
                     }
                 }));
     }
 
-    private boolean handleCreationState(final Account account) {
-        AccountWizardView view = getView();
-        if (account == null) {
-            view.displayProgress(false);
-            view.displayCannotBeFoundError();
-            return false;
-        }
-        String newState = account.getRegistrationState();
-        if (account.isRing() && (newState.isEmpty() || newState.contentEquals(AccountConfig.STATE_INITIALIZING))) {
-            return true;
-        }
-        view.displayProgress(false);
-
-        if (!mCreationError) {
-            switch (newState) {
-                case AccountConfig.STATE_ERROR_GENERIC:
-                    view.displayGenericError();
-                    mCreationError = true;
-                    break;
-                case AccountConfig.STATE_UNREGISTERED:
-                    view.displaySuccessDialog();
-                    view.saveProfile(account.getAccountID(), mRingAccountViewModel);
-                    mCreationError = false;
-                    break;
-                case AccountConfig.STATE_ERROR_NETWORK:
-                    view.displayNetworkError();
-                    mCreationError = true;
-                    break;
-                default:
-                    view.displaySuccessDialog();
-                    view.saveProfile(account.getAccountID(), mRingAccountViewModel);
-                    mCreationError = false;
-                    break;
-            }
-
-            if (account.isRing() && !StringUtils.isEmpty(mRingAccountViewModel.getUsername())) {
-                Log.i(TAG, "Account created, registering " + mRingAccountViewModel.getUsername());
-                mAccountService.registerName(account, mRingAccountViewModel.getPassword(), mRingAccountViewModel.getUsername());
-            }
-            mAccountService.setCurrentAccount(account);
-        }
-        return false;
+    public void errorDialogClosed() {
+        getView().goToHomeCreation();
     }
 }

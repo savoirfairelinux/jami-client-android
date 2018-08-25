@@ -21,25 +21,30 @@ package cx.ring.account;
 
 import javax.inject.Inject;
 
-import cx.ring.mvp.RingAccountViewModel;
+import cx.ring.model.Account;
+import cx.ring.mvp.AccountCreationModel;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.utils.Log;
+import cx.ring.utils.StringUtils;
+import io.reactivex.Observable;
 
 public class ProfileCreationPresenter extends RootPresenter<ProfileCreationView> {
 
     public static final String TAG = ProfileCreationPresenter.class.getSimpleName();
 
     protected DeviceRuntimeService mDeviceRuntimeService;
-    private RingAccountViewModel mRingAccountViewModel;
+    private AccountCreationModel mAccountCreationModel;
+    private Account account = null;
 
     @Inject
     public ProfileCreationPresenter(DeviceRuntimeService deviceRuntimeService) {
         mDeviceRuntimeService = deviceRuntimeService;
     }
 
-    public void initPresenter(RingAccountViewModel ringAccountViewModel) {
-        mRingAccountViewModel = ringAccountViewModel;
+    public void initPresenter(AccountCreationModel accountCreationModel) {
+        Log.w(TAG, "initPresenter");
+        mAccountCreationModel = accountCreationModel;
         if (mDeviceRuntimeService.hasContactPermission()) {
             String profileName = mDeviceRuntimeService.getProfileName();
             if (profileName != null) {
@@ -48,16 +53,27 @@ public class ProfileCreationPresenter extends RootPresenter<ProfileCreationView>
         } else {
             Log.d(TAG, "READ_CONTACTS permission is not granted.");
         }
+        Observable<Account> accountObservable = accountCreationModel.getAccountObservable();
+        if (accountObservable != null) {
+            mCompositeDisposable.add(accountCreationModel
+                    .getProfileUpdates()
+                    .subscribe(model -> {
+                        Log.w(TAG, "setProfile");
+                        getView().setProfile(model);
+                    }));
+        } else {
+            Log.w(TAG, "no account observable !");
+        }
     }
 
     public void fullNameUpdated(String fullName) {
-        mRingAccountViewModel.setFullName(fullName);
+        mAccountCreationModel.setFullName(fullName);
     }
 
     public void photoUpdated() {
         ProfileCreationView view = getView();
         if (view != null)
-            view.photoUpdate(mRingAccountViewModel);
+            view.photoUpdate(mAccountCreationModel);
     }
 
     public void galleryClick() {
@@ -80,6 +96,10 @@ public class ProfileCreationPresenter extends RootPresenter<ProfileCreationView>
     }
 
     public void nextClick() {
-        getView().goToNext(mRingAccountViewModel);
+        getView().goToNext(mAccountCreationModel, true);
+    }
+
+    public void skipClick() {
+        getView().goToNext(mAccountCreationModel, false);
     }
 }
