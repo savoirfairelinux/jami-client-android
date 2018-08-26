@@ -28,10 +28,12 @@ import javax.inject.Named;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.ConfigKey;
+import cx.ring.model.Settings;
 import cx.ring.mvp.AccountCreationModel;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
+import cx.ring.services.PreferencesService;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
 import io.reactivex.Observable;
@@ -45,6 +47,7 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
 
     private final AccountService mAccountService;
     private final DeviceRuntimeService mDeviceRuntimeService;
+    private final PreferencesService mPreferences;
     private final Scheduler mUiScheduler;
 
     //private boolean mCreationError = false;
@@ -55,9 +58,10 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
     private Observable<Account> newAccount;
 
     @Inject
-    public AccountWizardPresenter(AccountService accountService, DeviceRuntimeService deviceRuntimeService, @Named("UiScheduler") Scheduler uiScheduler) {
+    public AccountWizardPresenter(AccountService accountService, DeviceRuntimeService deviceRuntimeService, PreferencesService preferences, @Named("UiScheduler") Scheduler uiScheduler) {
         mAccountService = accountService;
         mDeviceRuntimeService = deviceRuntimeService;
+        mPreferences = preferences;
         mUiScheduler = uiScheduler;
     }
 
@@ -79,6 +83,9 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
                     }
                     if (!accountCreationModel.getPassword().isEmpty()) {
                         accountDetails.put(ConfigKey.ARCHIVE_PASSWORD.key(), accountCreationModel.getPassword());
+                    }
+                    if (accountCreationModel.isPush()) {
+                        accountDetails.put(ConfigKey.PROXY_ENABLED.key(), AccountConfig.TRUE_STR);
                     }
                     return accountDetails;
                 })
@@ -182,6 +189,11 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
                     if (!model.isLink() && a.isRing() && !StringUtils.isEmpty(model.getUsername()))
                         mAccountService.registerName(a, model.getPassword(), model.getUsername());
                     mAccountService.setCurrentAccount(a);
+                    if (model.isPush()) {
+                        Settings settings = mPreferences.getSettings();
+                        settings.setAllowPushNotifications(true);
+                        mPreferences.setSettings(settings);
+                    }
                 });
 
         mAccountService

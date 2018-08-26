@@ -40,6 +40,7 @@ public abstract class AccountCreationModel {
     protected String mPassword = "";
     protected String mPin = "";
     protected boolean link = false;
+    protected boolean mPush = false;
     private Account newAccount = null;
 
     private Observable<Account> account;
@@ -52,8 +53,8 @@ public abstract class AccountCreationModel {
         return mFullName;
     }
 
-    public void setFullName(String mFullName) {
-        this.mFullName = mFullName;
+    public void setFullName(String fullName) {
+        this.mFullName = fullName;
         profile.onNext(this);
     }
 
@@ -61,24 +62,32 @@ public abstract class AccountCreationModel {
         return mUsername;
     }
 
-    public void setUsername(String mUsername) {
-        this.mUsername = mUsername;
+    public void setUsername(String username) {
+        this.mUsername = username;
     }
 
     public String getPassword() {
         return mPassword;
     }
 
-    public void setPassword(String mPassword) {
-        this.mPassword = mPassword;
+    public void setPassword(String password) {
+        this.mPassword = password;
     }
 
     public String getPin() {
         return mPin;
     }
 
-    public void setPin(String mPin) {
-        this.mPin = mPin.toUpperCase();
+    public void setPin(String pin) {
+        this.mPin = pin.toUpperCase();
+    }
+
+    public boolean isPush() {
+        return mPush;
+    }
+
+    public void setPush(boolean push) {
+        mPush = push;
     }
 
     public boolean isLink() {

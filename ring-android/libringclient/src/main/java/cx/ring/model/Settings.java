@@ -20,13 +20,23 @@
 package cx.ring.model;
 
 public class Settings {
-
     private boolean mAllowMobileData;
     private boolean mAllowPushNotifications;
     private boolean mAllowSystemContacts;
     private boolean mAllowPlaceSystemCalls;
     private boolean mAllowRingOnStartup;
     private boolean mHdUpload;
+
+    public Settings() {
+    }
+    public Settings(Settings s) {
+        mAllowMobileData = s.mAllowMobileData;
+        mAllowPushNotifications = s.mAllowPushNotifications;
+        mAllowSystemContacts = s.mAllowSystemContacts;
+        mAllowPlaceSystemCalls = s.mAllowPlaceSystemCalls;
+        mAllowRingOnStartup = s.mAllowRingOnStartup;
+        mHdUpload = s.mHdUpload;
+    }
 
     public boolean isAllowMobileData() {
         return mAllowMobileData;

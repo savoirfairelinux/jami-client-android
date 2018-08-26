@@ -76,6 +76,9 @@ public class RingAccountCreationFragment extends BaseSupportFragment<RingAccount
     @BindView(R.id.ring_username_box)
     protected ViewGroup mUsernameBox;
 
+    @BindView(R.id.switch_ring_push)
+    protected Switch mPushSwitch;
+
     @BindView(R.id.create_account)
     protected Button mCreateAccountButton;
 
@@ -123,6 +126,11 @@ public class RingAccountCreationFragment extends BaseSupportFragment<RingAccount
     @OnCheckedChanged(R.id.ring_password_switch)
     public void onPasswordCheckedChanged(boolean isChecked) {
         mPasswordBox.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+    }
+
+    @OnCheckedChanged(R.id.switch_ring_push)
+    public void onPushCheckedChanged(boolean isChecked) {
+        presenter.setPush(isChecked);
     }
 
     @OnCheckedChanged(R.id.switch_ring_username)

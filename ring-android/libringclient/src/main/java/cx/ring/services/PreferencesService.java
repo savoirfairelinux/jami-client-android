@@ -48,7 +48,7 @@ public abstract class PreferencesService {
             mUserSettings = loadSettings();
             mSettingsSubject.onNext(mUserSettings);
         }
-        return mUserSettings;
+        return new Settings(mUserSettings);
     }
 
     public void setSettings(Settings settings) {

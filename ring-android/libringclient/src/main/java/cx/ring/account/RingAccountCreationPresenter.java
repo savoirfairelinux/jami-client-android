@@ -178,4 +178,8 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
         }
         checkForms();
     }
+
+    public void setPush(boolean push) {
+        mAccountCreationModel.setPush(push);
+    }
 }
