@@ -21,7 +21,9 @@
 package cx.ring.services;
 
 import java.util.Map;
+import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -34,6 +36,7 @@ import cx.ring.daemon.UintVect;
 import cx.ring.model.SipCall;
 import cx.ring.utils.Log;
 import io.reactivex.Observable;
+import io.reactivex.Scheduler;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
@@ -45,11 +48,17 @@ public abstract class HardwareService {
     @Named("DaemonExecutor")
     ScheduledExecutorService mExecutor;
 
+    protected final ScheduledExecutorService mVideoExecutor = Executors.newSingleThreadScheduledExecutor(r -> new Thread(r, "VideoThread"));
+
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
 
     @Inject
     PreferencesService mPreferenceService;
+
+    @Inject
+    @Named("UiScheduler")
+    protected Scheduler mUiScheduler;
 
     public class VideoEvent {
         public boolean start = false;
@@ -95,6 +104,7 @@ public abstract class HardwareService {
     public abstract boolean hasMicrophone();
 
     public abstract void stopCapture();
+    public abstract void endCapture();
 
     public abstract void addVideoSurface(String id, Object holder);
 
@@ -157,7 +167,7 @@ public abstract class HardwareService {
     }
 
     public void setVideoFrame(final byte[] data, final int width, final int height, final int rotation) {
-        mExecutor.execute(() -> {
+        mVideoExecutor.execute(() -> {
             long frame = RingserviceJNI.obtainFrame(data.length);
             if (frame != 0) {
                 RingserviceJNI.setVideoFrame(data, data.length, frame, width, height, rotation);

@@ -317,7 +317,6 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
             presenter.uiVisibilityChanged(ui);
         });
 
-        mVideoPreview.getHolder().setFormat(PixelFormat.RGBA_8888);
         mVideoPreview.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
@@ -609,7 +608,25 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
             mVideoSurface.setLayoutParams(params);
         }
 
-        final int mPreviewWidth;
+        if (previewWidth == -1 && previewHeight == -1)
+            return;
+        Log.w(TAG, "resetVideoSize preview: " + previewWidth + "x" + previewHeight);
+        ViewGroup.LayoutParams paramsPreview = mVideoPreview.getLayoutParams();
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+
+        oldW = paramsPreview.width;
+        oldH = paramsPreview.height;
+        double previewMaxDim = Math.max(previewWidth, previewHeight);
+        double previewRatio = metrics.density * 160. / previewMaxDim;
+        paramsPreview.width = (int) (previewWidth * previewRatio);
+        paramsPreview.height = (int) (previewHeight * previewRatio);
+
+        if (oldW != paramsPreview.width || oldH != paramsPreview.height) {
+            Log.w(TAG, "mVideoPreview.setLayoutParams: " + paramsPreview.width + "x" + paramsPreview.height + " was: " + oldW + "x"+oldH);
+            mVideoPreview.setLayoutParams(paramsPreview);
+        }
+
+        /*final int mPreviewWidth;
         final int mPreviewHeight;
 
         if (mCurrentOrientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -631,7 +648,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
         if (oldW != paramsPreview.width || oldH != paramsPreview.height) {
             mVideoPreview.setLayoutParams(paramsPreview);
-        }
+        }*/
     }
 
     @Override
