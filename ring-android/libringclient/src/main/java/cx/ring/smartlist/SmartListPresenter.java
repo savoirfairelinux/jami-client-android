@@ -227,13 +227,23 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
         getView().copyNumber(smartListViewModel.getContact());
     }
 
-    public void deleteConversation(SmartListViewModel smartListViewModel) {
+    public void clearConversation(SmartListViewModel smartListViewModel) {
+        getView().displayClearDialog(smartListViewModel.getContact());
+    }
+
+    public void clearConversation(final CallContact callContact) {
+        mConversationDisposable.add(mConversationFacade
+                .clearHistory(mAccount.getAccountID(), callContact.getPrimaryUri())
+                .subscribeOn(Schedulers.computation()).subscribe());
+    }
+
+    public void removeConversation(SmartListViewModel smartListViewModel) {
         getView().displayDeleteDialog(smartListViewModel.getContact());
     }
 
-    public void deleteConversation(final CallContact callContact) {
+    public void removeConversation(CallContact callContact) {
         mConversationDisposable.add(mConversationFacade
-                .clearHistory(mAccount.getAccountID(), callContact.getPrimaryUri())
+                .removeConversation(mAccount.getAccountID(), callContact.getPrimaryUri())
                 .subscribeOn(Schedulers.computation()).subscribe());
     }
 
@@ -325,7 +335,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
         getView().setLoading(false);
     }
 
-    public void removeContact(SmartListViewModel smartListViewModel) {
+    public void banContact(SmartListViewModel smartListViewModel) {
         CallContact contact = smartListViewModel.getContact();
         mAccountService.removeContact(mAccount.getAccountID(), contact.getPrimaryNumber(), true);
         mSmartListViewModels.remove(smartListViewModel);
