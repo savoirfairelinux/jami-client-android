@@ -26,6 +26,7 @@ public class Settings {
     private boolean mAllowSystemContacts;
     private boolean mAllowPlaceSystemCalls;
     private boolean mAllowRingOnStartup;
+    private boolean mHdUpload;
 
     public boolean isAllowMobileData() {
         return mAllowMobileData;
@@ -64,5 +65,13 @@ public class Settings {
 
     public void setAllowRingOnStartup(boolean allowRingOnStartup) {
         this.mAllowRingOnStartup = allowRingOnStartup;
+    }
+
+    public boolean isHD() {
+        return mHdUpload;
+    }
+
+    public void setHD(boolean hd) {
+        mHdUpload = hd;
     }
 }

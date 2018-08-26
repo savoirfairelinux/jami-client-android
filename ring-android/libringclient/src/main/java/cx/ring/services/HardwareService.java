@@ -48,6 +48,9 @@ public abstract class HardwareService {
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
 
+    @Inject
+    PreferencesService mPreferenceService;
+
     public class VideoEvent {
         public boolean start = false;
         public boolean started = false;

@@ -66,6 +66,8 @@ public class SettingsFragment extends BaseFragment<SettingsPresenter> implements
     @BindView(R.id.settings_startup)
     Switch mViewStartup;
     private boolean mIsRefreshingViewFromPresenter;
+    @BindView(R.id.settings_hd)
+    Switch mViewHD;
 
     @Override
     public int getLayout() {
@@ -105,7 +107,7 @@ public class SettingsFragment extends BaseFragment<SettingsPresenter> implements
         menu.clear();
     }
 
-    @OnCheckedChanged({R.id.settings_mobile_data, R.id.settings_push_notifications, R.id.settings_contacts, R.id.settings_place_call, R.id.settings_startup})
+    @OnCheckedChanged({R.id.settings_mobile_data, R.id.settings_push_notifications, R.id.settings_hd, R.id.settings_contacts, R.id.settings_place_call, R.id.settings_startup})
     public void onSettingsCheckedChanged(CompoundButton button, boolean isChecked) {
 
         String neededPermission = null;
@@ -154,6 +156,7 @@ public class SettingsFragment extends BaseFragment<SettingsPresenter> implements
         newSettings.setAllowPlaceSystemCalls(mViewPlaceCall.isChecked());
         newSettings.setAllowRingOnStartup(mViewStartup.isChecked());
         newSettings.setAllowPushNotifications(mViewPushNotifications.isChecked());
+        newSettings.setHD(mViewHD.isChecked());
 
         // save settings according to UI inputs
         presenter.saveSettings(newSettings);
@@ -228,7 +231,6 @@ public class SettingsFragment extends BaseFragment<SettingsPresenter> implements
         }
     }
 
-    //region View Methods Implementation
     @Override
     public void showViewModel(Settings viewModel) {
         mIsRefreshingViewFromPresenter = true;
@@ -237,7 +239,7 @@ public class SettingsFragment extends BaseFragment<SettingsPresenter> implements
         mViewContacts.setChecked(viewModel.isAllowSystemContacts());
         mViewPlaceCall.setChecked(viewModel.isAllowPlaceSystemCalls());
         mViewStartup.setChecked(viewModel.isAllowRingOnStartup());
+        mViewHD.setChecked(viewModel.isHD());
         mIsRefreshingViewFromPresenter = false;
     }
-    //endregion
 }
