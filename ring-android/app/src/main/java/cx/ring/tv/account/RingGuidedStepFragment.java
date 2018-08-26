@@ -20,8 +20,8 @@ package cx.ring.tv.account;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v17.leanback.app.GuidedStepSupportFragment;
-import android.support.v17.leanback.widget.GuidedAction;
+import androidx.leanback.app.GuidedStepSupportFragment;
+import androidx.leanback.widget.GuidedAction;
 import android.text.InputType;
 import android.view.View;
 

@@ -19,18 +19,18 @@
  */
 package cx.ring.account;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cx.ring.R;
 import cx.ring.dependencyinjection.RingInjectionComponent;
-import cx.ring.mvp.BaseFragment;
+import cx.ring.mvp.BaseSupportFragment;
 
-public class HomeAccountCreationFragment extends BaseFragment<HomeAccountCreationPresenter> implements HomeAccountCreationView {
+public class HomeAccountCreationFragment extends BaseSupportFragment<HomeAccountCreationPresenter> implements HomeAccountCreationView {
 
     public static final String TAG = HomeAccountCreationFragment.class.getSimpleName();
 

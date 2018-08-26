@@ -19,14 +19,13 @@
  */
 package cx.ring.contactrequests;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import cx.ring.R;
 import cx.ring.model.CallContact;

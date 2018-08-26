@@ -20,26 +20,26 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software         
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.          
 -->
-<android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <android.support.v7.preference.SwitchPreferenceCompat
+    <SwitchPreference
         android:id="@+id/account_status"
         android:key="Account.status"
         android:persistent="false" />
 
-    <android.support.v7.preference.PreferenceCategory android:title="@string/account_basic_category" >
-        <android.support.v7.preference.EditTextPreference
+    <PreferenceCategory android:title="@string/account_basic_category" >
+        <EditTextPreference
             android:id="@+id/account_alias"
             android:key="Account.alias"
             android:persistent="false"
             android:summary=""
             android:title="@string/account_alias_label" />
-        <android.support.v7.preference.EditTextPreference
+        <EditTextPreference
             android:key="Account.hostname"
             android:persistent="false"
             android:summary=""
             android:title="@string/account_hostname_label" />
-        <android.support.v7.preference.EditTextPreference
+        <EditTextPreference
             android:key="Account.username"
             android:persistent="false"
             android:summary=""
@@ -49,24 +49,24 @@ along with this program; if not, write to the Free Software
             android:persistent="false"
             android:summary=""
             android:title="@string/account_password_label" />
-    </android.support.v7.preference.PreferenceCategory>
-    <android.support.v7.preference.PreferenceCategory android:title="@string/account_optionnal_category" >
-        <android.support.v7.preference.EditTextPreference
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/account_optionnal_category" >
+        <EditTextPreference
             android:defaultValue=""
             android:key="Account.routeset"
             android:persistent="false"
             android:title="@string/account_proxy_field" />
-        <android.support.v7.preference.EditTextPreference
+        <EditTextPreference
             android:defaultValue=""
             android:key="Account.useragent"
             android:persistent="false"
             android:title="@string/account_useragent_label" />
 
-        <android.support.v14.preference.SwitchPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="Account.autoAnswer"
             android:persistent="false"
             android:title="@string/account_autoanswer_label" />
-    </android.support.v7.preference.PreferenceCategory>
+    </PreferenceCategory>
 
-</android.support.v7.preference.PreferenceScreen>
+</PreferenceScreen>

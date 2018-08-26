@@ -20,7 +20,7 @@ package cx.ring.services;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.WakefulBroadcastReceiver;
+import androidx.legacy.content.WakefulBroadcastReceiver;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;

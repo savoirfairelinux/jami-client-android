@@ -14,9 +14,9 @@
  */
 package cx.ring.tv.cards;
 
-import android.support.v17.leanback.widget.ListRowPresenter;
-import android.support.v17.leanback.widget.Presenter;
-import android.support.v17.leanback.widget.PresenterSelector;
+import androidx.leanback.widget.ListRowPresenter;
+import androidx.leanback.widget.Presenter;
+import androidx.leanback.widget.PresenterSelector;
 
 /**
  * This {@link PresenterSelector} will return a {@link ListRowPresenter} which has shadow support
