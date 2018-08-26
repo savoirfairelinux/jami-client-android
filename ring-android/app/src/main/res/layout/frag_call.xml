@@ -134,7 +134,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:orientation="horizontal"
             tools:visibility="gone">
 
-            <android.support.design.widget.FloatingActionButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/call_refuse_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -148,7 +148,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 app:srcCompat="@drawable/ic_call_end_white"
                 app:useCompatPadding="true" />
 
-            <android.support.design.widget.FloatingActionButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/call_accept_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -221,7 +221,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:inputType="phone"
             android:visibility="visible" />
 
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/call_hangup_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

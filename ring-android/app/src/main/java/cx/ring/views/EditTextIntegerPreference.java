@@ -19,7 +19,7 @@
 package cx.ring.views;
 
 import android.content.Context;
-import android.support.v7.preference.EditTextPreference;
+import androidx.preference.EditTextPreference;
 import android.util.AttributeSet;
 
 public class EditTextIntegerPreference extends EditTextPreference {

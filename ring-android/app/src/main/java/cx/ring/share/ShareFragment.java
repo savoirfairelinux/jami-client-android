@@ -22,7 +22,7 @@ package cx.ring.share;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatButton;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
