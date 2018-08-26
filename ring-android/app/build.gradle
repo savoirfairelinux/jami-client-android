@@ -67,7 +67,7 @@ android {
 dependencies {
     def android_support_version = '1.0.0-rc01'
     def butterknife_version = "9.0.0-SNAPSHOT"
-    def dagger_version = "2.16"
+    def dagger_version = "2.17"
 
     implementation fileTree(include: '*.jar', dir: 'libs')
     implementation project(':libringclient')
@@ -98,8 +98,8 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
 
     // Glide
-    implementation 'com.github.bumptech.glide:glide:4.8.0-SNAPSHOT'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0-SNAPSHOT'
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
 
     // RxAndroid
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
