@@ -35,7 +35,6 @@
   <!--Write call log permission-->
   <!--QRCode Scan-->
   <!--Settings-->
-  <string name="clear_history_dialog_message">Deze actie kan niet ongedaan worden</string>
   <!--Conversation-->
   <string name="conversation_action_delete_this_title">Dit gesprek verwijderen?</string>
   <string name="conversation_action_delete_this_message">Deze actie kan niet ongedaan worden</string>

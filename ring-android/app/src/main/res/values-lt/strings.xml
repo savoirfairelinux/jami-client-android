@@ -82,7 +82,6 @@
   <string name="action_call_decline">Atmesti</string>
   <string name="ab_action_speakerphone">Įjungti garsiakalbį</string>
   <string name="ab_action_contact_add">Pridėti prie kontaktų</string>
-  <string name="ab_action_contact_add_question">Pridėti prie kontaktų ?</string>
   <string name="hist_contact_added">Kontaktas pridėtas</string>
   <string name="ab_action_audio_call">Garso skambutis</string>
   <string name="ab_action_video_call">Vaizdo skambutis</string>
@@ -108,18 +107,16 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Nuskenuokite paskyros, kurią norite pridėti, QR kodą.</string>
   <!--Settings-->
-  <string name="clear_history_dialog_title">Išvalyti istoriją ?</string>
-  <string name="clear_history_dialog_message">Šio veiksmo negalima bus atšaukti.</string>
   <string name="clear_history_completed">Istorija išvalyta.</string>
   <!--Conversation-->
   <string name="conversation_action_delete_this">Ištrinti šį pokalbį</string>
   <string name="conversation_action_delete_this_title">Ištrinti šį pokalbį ?</string>
   <string name="conversation_action_delete_this_message">Šio veiksmo negalima bus atšaukti.</string>
+  <string name="conversation_action_history_clear">Išvalyti istoriją</string>
+  <string name="conversation_action_remove_this">Ištrinti kontaktą</string>
   <string name="conversation_action_copy_peer_number">Kopijuoti numerį</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s nukopijuota į iškarpinę</string>
-  <string name="conversation_action_block_this">Užblokuoti šį kontaktą</string>
   <!--Contacts-->
-  <string name="add_call_contact_number_to_contacts">Pridėti %1$s ?</string>
   <string name="prompt_new_password">Naujas slaptažodis</string>
   <string name="prompt_new_password_optional">Naujas slaptažodis (nebūtina)</string>
   <string name="prompt_new_password_repeat">Pakartokite naują slaptažodį</string>
@@ -130,6 +127,7 @@
   <string name="help_pin_enter">Įveskite PIN iš kitos sukonfigūruotos Ring paskyros. Norėdami gauti PIN, naudokite ypatybę \"eksportuoti paskyrą Ring sistemoje\".</string>
   <string name="wizard_next">Kitas</string>
   <string name="wizard_back">Atgal</string>
+  <string name="wizard_skip">Praleisti</string>
   <!--MenuHeaderView-->
   <string name="profile">Mano profilis</string>
   <string name="profile_message_warning">Jūsų profilis yra bendrinamas tik su jūsų kontaktais</string>

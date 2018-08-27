@@ -51,7 +51,6 @@
   <string name="action_call_decline">Recusar</string>
   <string name="ab_action_speakerphone">Ligar altifalante</string>
   <string name="ab_action_contact_add">Adicionar aos contactos</string>
-  <string name="ab_action_contact_add_question">Adicionar aos contactos ?</string>
   <string name="ab_action_audio_call">Chamada de áudio</string>
   <string name="ab_action_video_call">Chamada de vídeo</string>
   <string name="share_via">Partilhar via</string>
@@ -74,8 +73,6 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Digitalize o código QR da conta que pretende adicionar.</string>
   <!--Settings-->
-  <string name="clear_history_dialog_title">Limpar histórico?</string>
-  <string name="clear_history_dialog_message">Esta ação não pode ser reposta.</string>
   <string name="clear_history_completed">Histórico limpo.</string>
   <!--Conversation-->
   <string name="conversation_action_delete_this">Eliminar conversa</string>
@@ -85,7 +82,6 @@
   <string name="conversation_action_copied_peer_number_clipboard">%1$s copiado para a área de transferência</string>
   <string name="conversation_action_select_peer_number">Selecione um número</string>
   <!--Contacts-->
-  <string name="add_call_contact_number_to_contacts">Adicionar %1$s ?</string>
   <string name="prompt_new_password">Nova password</string>
   <string name="prompt_new_password_repeat">Repetir nova password</string>
   <string name="account_create_title">Criar uma conta Ring</string>

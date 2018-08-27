@@ -86,7 +86,6 @@
   <string name="action_call_decline">رد کردن</string>
   <string name="ab_action_speakerphone">فعال کردن بلندگو</string>
   <string name="ab_action_contact_add">افزودن به مخاطبان</string>
-  <string name="ab_action_contact_add_question">افزودن به مخاطبان؟</string>
   <string name="hist_contact_added">مخاطب افزوده شد</string>
   <string name="hist_invitation_received">دعوت نامه دریافت شد</string>
   <string name="ab_action_audio_call">تماس صوتی</string>
@@ -117,20 +116,18 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">رمز QR حسابی که می‌خواهید بیفزایید را بپویید.</string>
   <!--Settings-->
-  <string name="clear_history_dialog_title">پاک‌سازی تاریخچه؟</string>
-  <string name="clear_history_dialog_message">این کار قابل بازگشت نیست.</string>
   <string name="clear_history_completed">تاریخچه پاک‌سازی شد.</string>
   <!--Conversation-->
   <string name="conversation_action_delete_this">حذف این گفت‌وگو</string>
   <string name="conversation_action_delete_this_title">حذف این گفت‌وگو؟</string>
   <string name="conversation_action_delete_this_message">این کار قابل بازگشت نیست.</string>
+  <string name="conversation_action_history_clear">پاکسازی تاریخچه</string>
+  <string name="conversation_action_remove_this">مخاطب را حذف کنید</string>
   <string name="conversation_action_copy_peer_number">رونوشت از شماره</string>
   <string name="conversation_action_copied_peer_number_clipboard">‫%1$s در حافظه رونویسی شد</string>
   <string name="conversation_action_select_peer_number">گزینش یک شماره</string>
-  <string name="conversation_action_block_this">مسدود کردن این مخاطب</string>
   <string name="conversation_action_go_to_call">بازگشت به تماس در حال جريان</string>
   <!--Contacts-->
-  <string name="add_call_contact_number_to_contacts">افزودن%1$s؟</string>
   <string name="prompt_new_password">گذرواژه جدید</string>
   <string name="prompt_new_password_optional">گذرواژه جدید (اختیاری)</string>
   <string name="prompt_new_password_repeat">گذرواژه جدید را تکرار کنید</string>

@@ -76,7 +76,6 @@
   <string name="action_call_decline">Refuser</string>
   <string name="ab_action_speakerphone">Activer le haut-parleur</string>
   <string name="ab_action_contact_add">Ajouter aux contacts</string>
-  <string name="ab_action_contact_add_question">Ajouter aux contacts ?</string>
   <string name="ab_action_audio_call">Appel audio</string>
   <string name="ab_action_video_call">Appel vidéo</string>
   <string name="ab_action_change_screen_orientation">Modifier l\'orientation de l\'écran</string>
@@ -101,19 +100,17 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Numériser le code QR du compte que vous désirez ajouter.</string>
   <!--Settings-->
-  <string name="clear_history_dialog_title">Effacer l\'historique?</string>
-  <string name="clear_history_dialog_message">Cette action ne peut pas être annulée.</string>
   <string name="clear_history_completed">L\'historique a été effacé.</string>
   <!--Conversation-->
   <string name="conversation_action_delete_this">Supprimer cette conversation</string>
   <string name="conversation_action_delete_this_title">Supprimer cette conversation ?</string>
   <string name="conversation_action_delete_this_message">Cette action ne peut être annulée.</string>
+  <string name="conversation_action_history_clear">Effacer l\'historique</string>
+  <string name="conversation_action_remove_this">Supprimer le contact</string>
   <string name="conversation_action_copy_peer_number">Copier le numéro</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s copié dans le presse papiers</string>
   <string name="conversation_action_select_peer_number">Sélectionner un numéro de téléphone</string>
-  <string name="conversation_action_block_this">Bloquer ce contact</string>
   <!--Contacts-->
-  <string name="add_call_contact_number_to_contacts">Ajouter %1$s ?</string>
   <string name="prompt_new_password">Nouveau mot de passe</string>
   <string name="prompt_new_password_optional">Nouveau mot de passe (optionnel)</string>
   <string name="prompt_new_password_repeat">Répéter le nouveau mot de passe</string>

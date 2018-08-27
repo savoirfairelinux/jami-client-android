@@ -57,7 +57,6 @@
   <string name="action_call_decline">Kieltäydy</string>
   <string name="ab_action_speakerphone">Kaiutin päälle</string>
   <string name="ab_action_contact_add">Lisää yhteystietoihin</string>
-  <string name="ab_action_contact_add_question">Lisätäänkö yhteystietoihin?</string>
   <string name="ab_action_audio_call">Äänipuhelu</string>
   <string name="ab_action_video_call">Videopuhelu</string>
   <string name="share_via">Jaa</string>
@@ -80,18 +79,17 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skannaa lisättävän tunnuksen QR-koodi.</string>
   <!--Settings-->
-  <string name="clear_history_dialog_title">Tyhjennä historia?</string>
-  <string name="clear_history_dialog_message">Tätä toimintoa ei voi perua.</string>
   <string name="clear_history_completed">Historia on tyhjennetty.</string>
   <!--Conversation-->
   <string name="conversation_action_delete_this">Poista tämä keskustelu</string>
   <string name="conversation_action_delete_this_title">Poistetaanko tämä keskustelu?</string>
   <string name="conversation_action_delete_this_message">Tätä toimintoa ei voi perua.</string>
+  <string name="conversation_action_history_clear">Tyhjennä historia</string>
+  <string name="conversation_action_remove_this">Poista yhteystieto</string>
   <string name="conversation_action_copy_peer_number">Kopioi numero</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s kopioitu leikepöydälle</string>
   <string name="conversation_action_select_peer_number">Valitse numero</string>
   <!--Contacts-->
-  <string name="add_call_contact_number_to_contacts">Lisätäänkö %1$s?</string>
   <string name="prompt_new_password">Uusi salasana</string>
   <string name="account_create_title">Luo Ring tunnus</string>
   <string name="wizard_next">Seuraava</string>

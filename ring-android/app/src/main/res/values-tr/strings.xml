@@ -72,7 +72,6 @@
   <string name="action_call_decline">Reddet</string>
   <string name="ab_action_speakerphone">Hoparlörü etkinleştir</string>
   <string name="ab_action_contact_add">Kişilere ekle</string>
-  <string name="ab_action_contact_add_question">Kişilere eklensin mi?</string>
   <string name="ab_action_audio_call">Sesli arama</string>
   <string name="ab_action_video_call">Görüntülü arama</string>
   <string name="ab_action_change_screen_orientation">Ekran Yönünü değiştir</string>
@@ -97,19 +96,17 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Eklemek istediğiniz hesabın QR kodunu tarayın.</string>
   <!--Settings-->
-  <string name="clear_history_dialog_title">Geçmişi temizle ?</string>
-  <string name="clear_history_dialog_message">Bu eylem geri alınamaz.</string>
   <string name="clear_history_completed">Geçmiş temizlenmiş.</string>
   <!--Conversation-->
   <string name="conversation_action_delete_this">Bu konuşmayı sil</string>
   <string name="conversation_action_delete_this_title">Bu konuşmayı sil ?</string>
   <string name="conversation_action_delete_this_message">Bu eylem geri alınamaz.</string>
+  <string name="conversation_action_history_clear">Geçmişi temizle</string>
+  <string name="conversation_action_remove_this">Kişiyi sil</string>
   <string name="conversation_action_copy_peer_number">Numarayı kopyala</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s panoya kopyalandı</string>
   <string name="conversation_action_select_peer_number">Bir numara seçin</string>
-  <string name="conversation_action_block_this">Bu kişiyi engelle</string>
   <!--Contacts-->
-  <string name="add_call_contact_number_to_contacts">%1$s eklensin mi ?</string>
   <string name="prompt_new_password">Yeni parola</string>
   <string name="prompt_new_password_repeat">Yeni parola tekrar</string>
   <string name="account_create_title">Bir Ring hesabı oluştur</string>

@@ -71,6 +71,8 @@
   <!--QRCode Scan-->
   <!--Settings-->
   <!--Conversation-->
+  <string name="conversation_action_history_clear">مسح السجل</string>
+  <string name="conversation_action_remove_this">احذف الإتصال</string>
   <string name="conversation_action_copy_peer_number">نسخ الرقم</string>
   <!--Contacts-->
   <string name="wizard_next">التالي</string>

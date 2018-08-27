@@ -86,7 +86,6 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="action_call_decline">Rejeitar</string>
   <string name="ab_action_speakerphone">Habilitar viva-voz</string>
   <string name="ab_action_contact_add">Adicionar aos contatos</string>
-  <string name="ab_action_contact_add_question">Adicionar aos contatos?</string>
   <string name="hist_contact_added">Contato adicionado</string>
   <string name="hist_invitation_received">Convite recebido</string>
   <string name="ab_action_audio_call">Voz da chamada</string>
@@ -117,20 +116,18 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Escanear o QR Code da conta que deseja adicionar.</string>
   <!--Settings-->
-  <string name="clear_history_dialog_title">Limpar histórico?</string>
-  <string name="clear_history_dialog_message">Esta ação não pode ser revista.</string>
   <string name="clear_history_completed">O histórico foi apagado.</string>
   <!--Conversation-->
   <string name="conversation_action_delete_this">Deletar conversa</string>
   <string name="conversation_action_delete_this_title">Deletar esta conversa ?</string>
   <string name="conversation_action_delete_this_message">Esta ação não pode ser revista.</string>
+  <string name="conversation_action_history_clear">Limpar histórico</string>
+  <string name="conversation_action_remove_this">Deletar contato</string>
   <string name="conversation_action_copy_peer_number">Copiar número</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s copiado para área de transferência</string>
   <string name="conversation_action_select_peer_number">Selecione um numero</string>
-  <string name="conversation_action_block_this">Bloquear este contato</string>
   <string name="conversation_action_go_to_call">Voltar à chamada em andamento</string>
   <!--Contacts-->
-  <string name="add_call_contact_number_to_contacts">Adicionar %1$s ?</string>
   <string name="prompt_new_password">Nova senha</string>
   <string name="prompt_new_password_optional">Nova senha (opcional)</string>
   <string name="prompt_new_password_repeat">Repita a nova senha</string>
@@ -141,6 +138,7 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="help_pin_enter">Entre com o PIN de uma outra conta Ring já configurada. Utilize a opção \"exportar conta no Ring\" para obter um novo PIN.</string>
   <string name="wizard_next">Próximo</string>
   <string name="wizard_back">Voltar</string>
+  <string name="wizard_skip">Pular</string>
   <!--MenuHeaderView-->
   <string name="profile">Meu perfil</string>
   <string name="profile_message_warning">Seu perfil é compartilhado apenas com seus contatos</string>

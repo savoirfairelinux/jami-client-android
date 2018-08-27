@@ -61,7 +61,6 @@
   <string name="start_error_title">Ring nu a putut porni!</string>
   <string name="action_call_decline">Refuză</string>
   <string name="ab_action_contact_add">Adaugă la contacte</string>
-  <string name="ab_action_contact_add_question">Adaugi la contacte ?</string>
   <string name="ab_action_audio_call">Apel audio</string>
   <string name="ab_action_video_call">Apel video</string>
   <string name="share_via">Distribuie prin</string>
@@ -78,7 +77,6 @@
   <!--Write call log permission-->
   <!--QRCode Scan-->
   <!--Settings-->
-  <string name="clear_history_dialog_title">Ștergi istoria ?</string>
   <string name="clear_history_completed">Istoria a fost ștearsă</string>
   <!--Conversation-->
   <string name="conversation_action_delete_this">Șterge aceasta istorie</string>
