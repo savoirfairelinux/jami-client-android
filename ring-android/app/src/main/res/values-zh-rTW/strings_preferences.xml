@@ -8,6 +8,7 @@
   <string name="pref_mobileData_summary">除了 Wi-Fi 之外，允許 Ring 在 3G/LTE 網路上使用</string>
   <string name="pref_pushNotifications_title">推播通知</string>
   <string name="pref_pushNotifications_summary">使用 Google 的伺服器以讓您可以在背景收到通話／訊息</string>
+  <string name="pref_hd_summary">啟用傳送高畫質視訊</string>
   <string name="pref_systemContacts_title">使用系統聯絡人</string>
   <string name="pref_systemContacts_summary">使用系統聯絡人顯示呼叫方的詳細資料</string>
   <string name="pref_systemDialer_title">使用Ring撥打系統的電話功能</string>
