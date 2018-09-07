@@ -306,11 +306,7 @@ public class RingAccountSummaryFragment extends BaseFragment<RingAccountSummaryP
     public void onClickStart() {
         mPasswordLayout.setError(null);
         String password = mRingPassword.getText().toString();
-        if (!password.isEmpty() && password.length() < 6) {
-            mPasswordLayout.setError(getString(R.string.error_password_char_count));
-        } else {
-            presenter.startAccountExport(password);
-        }
+        presenter.startAccountExport(password);
     }
 
     @OnClick(R.id.account_switch)
