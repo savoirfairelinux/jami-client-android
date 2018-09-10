@@ -88,6 +88,7 @@
   <string name="action_call_decline">Отклонить</string>
   <string name="ab_action_speakerphone">Включить громкоговоритель</string>
   <string name="ab_action_contact_add">Добавить в контакты</string>
+  <string name="ab_action_contact_add_question">Добавить к контактам?</string>
   <string name="hist_contact_added">Контакт добавлен</string>
   <string name="hist_invitation_received">Получено приглашение</string>
   <string name="ab_action_audio_call">Голосовой вызов</string>
@@ -118,18 +119,25 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Отсканируйте QR-код аккаунта, который вы хотите добавить.</string>
   <!--Settings-->
+  <string name="clear_history_dialog_title">Очистить историю?</string>
+  <string name="clear_history_dialog_message">Это действие невозможно отменить.</string>
   <string name="clear_history_completed">История была очищена.</string>
   <!--Conversation-->
   <string name="conversation_action_delete_this">Удалить этот разговор</string>
   <string name="conversation_action_delete_this_title">Удалить этот разговор?</string>
   <string name="conversation_action_delete_this_message">Это действие нельзя отменить.</string>
   <string name="conversation_action_history_clear">Очистить историю</string>
+  <string name="conversation_action_history_clear_title">Очистить историю разговоров?</string>
   <string name="conversation_action_remove_this">Удалить контакт</string>
+  <string name="conversation_action_remove_this_title">Удалить этот контакт?</string>
+  <string name="conversation_action_remove_this_message">Это удалит контакт и очистит историю разговоров.</string>
   <string name="conversation_action_copy_peer_number">Копировать номер</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s скопировано в буфер обмена</string>
   <string name="conversation_action_select_peer_number">Выбрать номер</string>
+  <string name="conversation_action_block_this">Заблокировать контакт</string>
   <string name="conversation_action_go_to_call">Вернуться к текущему вызову</string>
   <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">Добавить %1$s?</string>
   <string name="prompt_new_password">Новый пароль</string>
   <string name="prompt_new_password_optional">Новый пароль (необязательно)</string>
   <string name="prompt_new_password_repeat">Повторите новый пароль</string>
