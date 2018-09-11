@@ -21,9 +21,6 @@
  */
 package cx.ring.account;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,7 +28,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import com.google.android.material.tabs.TabLayout;
-import androidx.legacy.app.FragmentPagerAdapter;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
@@ -108,7 +109,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
     @Override
     public void initViewPager(String accountId, boolean isRing) {
         mViewPager.setOffscreenPageLimit(4);
-        mViewPager.setAdapter(new PreferencesPagerAdapter(getFragmentManager(), AccountEditionActivity.this, accountId, isRing));
+        mViewPager.setAdapter(new PreferencesPagerAdapter(getSupportFragmentManager(), AccountEditionActivity.this, accountId, isRing));
 
         mSlidingTabLayout.setupWithViewPager(mViewPager);
     }
@@ -133,7 +134,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         Bundle args = new Bundle();
         args.putString(ACCOUNT_ID_KEY, accountId);
         blackListFragment.setArguments(args);
-        getFragmentManager().beginTransaction()
+        getSupportFragmentManager().beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .addToBackStack(BlackListFragment.TAG)
                 .replace(R.id.fragment_container, blackListFragment, BlackListFragment.TAG)

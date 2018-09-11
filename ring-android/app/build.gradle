@@ -65,21 +65,24 @@ android {
 }
 
 dependencies {
-    def android_support_version = '1.0.0-rc01'
+    def android_support_version = '1.0.0-rc02'
+    def material_version = '1.0.0-rc02'
     def butterknife_version = "9.0.0-SNAPSHOT"
     def dagger_version = "2.17"
 
     implementation fileTree(include: '*.jar', dir: 'libs')
     implementation project(':libringclient')
 
-    implementation "androidx.legacy:legacy-support-v13:$android_support_version"
-    implementation "com.google.android.material:material:$android_support_version"
+    implementation "androidx.core:core:$android_support_version"
+    implementation "androidx.legacy:legacy-support-core-utils:$android_support_version"
+
     implementation "androidx.cardview:cardview:$android_support_version"
-    implementation "androidx.legacy:legacy-preference-v14:$android_support_version"
+    implementation "androidx.preference:preference:$android_support_version"
     implementation "androidx.recyclerview:recyclerview:$android_support_version"
     implementation "androidx.appcompat:appcompat:$android_support_version"
     implementation "androidx.leanback:leanback:$android_support_version"
     implementation "androidx.leanback:leanback-preference:$android_support_version"
+    implementation "com.google.android.material:material:$material_version"
 
     // ORM
     implementation 'com.j256.ormlite:ormlite-android:4.48'

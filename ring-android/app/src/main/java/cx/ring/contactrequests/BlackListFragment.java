@@ -36,9 +36,9 @@ import cx.ring.R;
 import cx.ring.account.AccountEditionActivity;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.CallContact;
-import cx.ring.mvp.BaseFragment;
+import cx.ring.mvp.BaseSupportFragment;
 
-public class BlackListFragment extends BaseFragment<BlackListPresenter> implements BlackListView,
+public class BlackListFragment extends BaseSupportFragment<BlackListPresenter> implements BlackListView,
         BlackListViewHolder.BlackListListeners {
 
     public static final String TAG = BlackListFragment.class.getSimpleName();

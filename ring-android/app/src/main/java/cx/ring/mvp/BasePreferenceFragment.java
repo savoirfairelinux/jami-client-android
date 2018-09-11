@@ -20,12 +20,13 @@
 package cx.ring.mvp;
 
 import android.os.Bundle;
-import androidx.preference.PreferenceFragment;
+import androidx.preference.PreferenceFragmentCompat;
+
 import android.view.View;
 
 import javax.inject.Inject;
 
-public abstract class BasePreferenceFragment<T extends RootPresenter> extends PreferenceFragment {
+public abstract class BasePreferenceFragment<T extends RootPresenter> extends PreferenceFragmentCompat {
 
     protected static final String TAG = BaseFragment.class.getSimpleName();
 
