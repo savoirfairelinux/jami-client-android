@@ -76,7 +76,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     public void unbindView() {
         super.unbindView();
         if (!mAudioOnly) {
-            mHardwareService.stopCapture();
+            mHardwareService.endCapture();
         }
     }
 
@@ -207,7 +207,7 @@ public class CallPresenter extends RootPresenter<CallView> {
 
     public void previewVideoSurfaceCreated(Object holder) {
         mHardwareService.addPreviewVideoSurface(holder);
-        mHardwareService.startCapture(null);
+        //mHardwareService.startCapture(null);
     }
 
     public void videoSurfaceDestroyed() {
@@ -219,7 +219,7 @@ public class CallPresenter extends RootPresenter<CallView> {
 
     public void previewVideoSurfaceDestroyed() {
         mHardwareService.removePreviewVideoSurface();
-        mHardwareService.stopCapture();
+        mHardwareService.endCapture();
     }
 
     public void displayChanged() {
@@ -304,8 +304,6 @@ public class CallPresenter extends RootPresenter<CallView> {
 
     private void onVideoEvent(HardwareService.VideoEvent event) {
         Log.d(TAG, "VIDEO_EVENT: " + event.start + " " + event.callId);
-        previewHeight = event.w;
-        previewWidth = event.h;
 
         if (event.start) {
             getView().displayVideoSurface(true);
@@ -314,6 +312,11 @@ public class CallPresenter extends RootPresenter<CallView> {
             if (event.started) {
                 videoWidth = event.w;
                 videoHeight = event.h;
+            }
+        } else if (event.callId == null) {
+            if (event.started) {
+                previewWidth = event.w;
+                previewHeight = event.h;
             }
         }
         getView().resetVideoSize(videoWidth, videoHeight, previewWidth, previewHeight);

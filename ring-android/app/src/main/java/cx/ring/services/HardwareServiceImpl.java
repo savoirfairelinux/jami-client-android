@@ -27,15 +27,32 @@ import android.graphics.ImageFormat;
 import android.graphics.Point;
 import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraCharacteristics;
+import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
+import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.AudioDeviceInfo;
 import android.media.AudioManager;
+import android.media.Image;
+import android.media.ImageReader;
+import android.media.MediaCodec;
+import android.media.MediaCodecInfo;
+import android.media.MediaCodecList;
+import android.media.MediaFormat;
 import android.media.MediaRecorder;
 import android.os.Build;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.text.TextUtils;
+import android.util.Pair;
+import android.util.Range;
 import android.util.Size;
 import android.view.Surface;
 import android.view.SurfaceHolder;
@@ -44,12 +61,16 @@ import android.view.WindowManager;
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.RequiresApi;
 import cx.ring.daemon.IntVect;
+import cx.ring.daemon.RingserviceJNI;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.UintVect;
 import cx.ring.utils.BluetoothWrapper;
@@ -61,11 +82,16 @@ import static cx.ring.model.SipCall.State;
 
 public class HardwareServiceImpl extends HardwareService implements AudioManager.OnAudioFocusChangeListener, BluetoothWrapper.BluetoothChangeListener {
 
-    private static final int VIDEO_WIDTH_HD = 1280;
+    private static final Point VIDEO_SIZE_LOW = new Point(320, 240);
+    private static final Point VIDEO_SIZE_DEFAULT = new Point(720, 480);
+    private static final Point VIDEO_SIZE_HD = new Point(1280, 720);
+    private static final Point VIDEO_SIZE_FULL_HD = new Point(1920, 1080);
+
+    //private static final int VIDEO_WIDTH_HD = 1280;
     public static final int VIDEO_WIDTH = 640;
-    private static final int VIDEO_WIDTH_MIN = 320;
+    //private static final int VIDEO_WIDTH_MIN = 320;
     public static final int VIDEO_HEIGHT = 480;
-    private static final int MIN_VIDEO_HEIGHT = 240;
+    //private static final int MIN_VIDEO_HEIGHT = 240;
 
     public static final String TAG = HardwareServiceImpl.class.getName();
     private static WeakReference<SurfaceHolder> mCameraPreviewSurface = new WeakReference<>(null);
@@ -76,13 +102,21 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     private Context mContext;
     private String cameraFront = null;
     private String cameraBack = null;
+    private String cameraExternal = null;
+
     private String currentCamera = null;
     private VideoParams previewParams = null;
-    private Camera previewCamera = null;
+
+    private Object previewCamera = null;
 
     private Ringer mRinger;
     private AudioManager mAudioManager;
     private BluetoothWrapper mBluetoothWrapper;
+    private final HandlerThread t = new HandlerThread("videoHandler");
+
+    private String mCapturingId = null;
+    private boolean mIsCapturing = false;
+    private boolean mShouldCapture = false;
 
     public HardwareServiceImpl(Context mContext) {
         this.mContext = mContext;
@@ -93,7 +127,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     public void initVideo() {
         Log.i(TAG, "initVideo()");
         mNativeParams.clear();
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             CameraManager manager = (CameraManager) mContext.getSystemService(Context.CAMERA_SERVICE);
             if (manager == null)
                 return;
@@ -107,6 +141,8 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                         cameraFront = id;
                     } else if (facing == CameraCharacteristics.LENS_FACING_BACK) {
                         cameraBack = id;
+                    } else if (facing == CameraCharacteristics.LENS_FACING_EXTERNAL) {
+                        cameraExternal = id;
                     }
                 }
                 if (!TextUtils.isEmpty(cameraFront))
@@ -115,8 +151,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
             } catch (Exception e) {
                 Log.w(TAG, "initVideo: can't enumerate devices", e);
             }
-        }
-        else {
+        } else {
             int numberCameras = Camera.getNumberOfCameras();
             if (numberCameras > 0) {
                 Camera.CameraInfo camInfo = new Camera.CameraInfo();
@@ -140,7 +175,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     }
 
     private String[] getCameraIds() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             CameraManager manager = (CameraManager) mContext.getSystemService(Context.CAMERA_SERVICE);
             try {
                 return manager.getCameraIdList();
@@ -167,10 +202,11 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
 
         if (!hasMicrophone) {
             MediaRecorder recorder = new MediaRecorder();
+            File testFile = new File(mContext.getCacheDir(), "MediaUtil#micAvailTestFile");
             recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
             recorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
             recorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
-            recorder.setOutputFile(new File(mContext.getCacheDir(), "MediaUtil#micAvailTestFile").getAbsolutePath());
+            recorder.setOutputFile(testFile.getAbsolutePath());
             try {
                 recorder.prepare();
                 recorder.start();
@@ -182,6 +218,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                 hasMicrophone = false;
             } finally {
                 recorder.release();
+                testFile.delete();
             }
         }
 
@@ -336,6 +373,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
 
                     VideoEvent event = new VideoEvent();
                     event.start = true;
+                    event.callId = shm.id;
                     videoEvents.onNext(event);
                     return;
                 }
@@ -369,35 +407,38 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
 
     @Override
     public void getCameraInfo(String camId, IntVect formats, UintVect sizes, UintVect rates) {
-        Log.d(TAG, "getCameraInfo: " + camId);
-
         // Use a larger resolution for Android 6.0+, 64 bits devices
         final boolean useLargerSize = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.SUPPORTED_64_BIT_ABIS.length > 0;
         final boolean useHD = DeviceUtils.isTv(mContext) || mPreferenceService.getSettings().isHD();
-        int MIN_WIDTH = useLargerSize ? (useHD ? VIDEO_WIDTH_HD : VIDEO_WIDTH) : VIDEO_WIDTH_MIN;
+        //int MIN_WIDTH = useLargerSize ? (useHD ? VIDEO_WIDTH_HD : VIDEO_WIDTH) : VIDEO_WIDTH_MIN;
+        final Point minVideoSize = useLargerSize ? (useHD ? VIDEO_SIZE_HD : VIDEO_SIZE_DEFAULT) : VIDEO_SIZE_LOW;
+
+        Log.d(TAG, "getCameraInfo: " + camId + " largerSize:" + useLargerSize + " HD: " + useHD + " min. size: " + minVideoSize);
 
         DeviceParams p = new DeviceParams();
         p.size = new Point(0, 0);
         p.infos = new Camera.CameraInfo();
 
         rates.clear();
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             CameraManager manager = (CameraManager) mContext.getSystemService(Context.CAMERA_SERVICE);
             if (manager == null)
                 return;
             try {
                 CameraCharacteristics cc = manager.getCameraCharacteristics(camId);
                 StreamConfigurationMap streamConfigs = cc.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+                if (streamConfigs == null)
+                    return;
                 Size[] rawSizes = streamConfigs.getOutputSizes(ImageFormat.YUV_420_888);
                 Size newSize = rawSizes[0];
                 for (Size s : rawSizes) {
                     if (s.getWidth() < s.getHeight()) {
                         continue;
                     }
-                    if (newSize.getWidth() < MIN_WIDTH
+                    if ((s.getWidth() == minVideoSize.x && s.getHeight() == minVideoSize.y) ||
+                            (newSize.getWidth() < minVideoSize.x
                             ? s.getWidth() > newSize.getWidth()
-                            : (s.getWidth() >= MIN_WIDTH && s.getWidth() < newSize.getWidth()))
-                    {
+                            : (s.getWidth() >= minVideoSize.x && s.getWidth() < newSize.getWidth()))) {
                         newSize = s;
                     }
                 }
@@ -411,10 +452,10 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                 p.rate = fps;
 
                 int facing = cc.get(CameraCharacteristics.LENS_FACING);
-                p.infos.orientation =  cc.get(CameraCharacteristics.SENSOR_ORIENTATION);
+                p.infos.orientation = cc.get(CameraCharacteristics.SENSOR_ORIENTATION);
                 p.infos.facing = facing == CameraCharacteristics.LENS_FACING_FRONT ? Camera.CameraInfo.CAMERA_FACING_FRONT : Camera.CameraInfo.CAMERA_FACING_BACK;
-            } catch (CameraAccessException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                Log.e(TAG, "An error occurred getting camera info", e);
             }
         } else {
             int id = Integer.valueOf(camId);
@@ -441,7 +482,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                 if (s.width < s.height) {
                     continue;
                 }
-                if (p.size.x < MIN_WIDTH ? s.width > p.size.x : (s.width >= MIN_WIDTH && s.width < p.size.x)) {
+                if (p.size.x < minVideoSize.x ? s.width > p.size.x : (s.width >= minVideoSize.x && s.width < p.size.x)) {
                     p.size.x = s.width;
                     p.size.y = s.height;
                 }
@@ -484,43 +525,223 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         mParams.put(camId, newParams);
     }
 
-    @Override
-    public void startCapture(@Nullable String camId) {
-        VideoParams videoParams;
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void listSupportedCodecs() {
+        int numCodecs = MediaCodecList.getCodecCount();
+        for (int i = 0; i < numCodecs; i++) {
+            try {
+                MediaCodecInfo codecInfo = MediaCodecList.getCodecInfoAt(i);
+                for (String type : codecInfo.getSupportedTypes()) {
+                    MediaCodecInfo.CodecCapabilities codecCaps = codecInfo.getCapabilitiesForType(type);
+                    MediaCodecInfo.EncoderCapabilities caps = codecCaps.getEncoderCapabilities();
+                    if (caps == null)
+                        continue;
+                    MediaCodecInfo.VideoCapabilities video_caps = codecCaps.getVideoCapabilities();
+                    if (video_caps == null)
+                        continue;
+                    Log.w(TAG, "Codec info:" + codecInfo.getName() + " type: " + type);
+                    Log.w(TAG, "Encoder capabilities: complexityRange: " + caps.getComplexityRange());
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                        Log.w(TAG, "Encoder capabilities: qualityRange: " + caps.getQualityRange());
+                    }
+                    Log.w(TAG, "Encoder capabilities: VBR: " + caps.isBitrateModeSupported(MediaCodecInfo.EncoderCapabilities.BITRATE_MODE_VBR));
+                    Log.w(TAG, "Encoder capabilities: CBR: " + caps.isBitrateModeSupported(MediaCodecInfo.EncoderCapabilities.BITRATE_MODE_CBR));
+                    Log.w(TAG, "Encoder capabilities: CQ: " + caps.isBitrateModeSupported(MediaCodecInfo.EncoderCapabilities.BITRATE_MODE_CQ));
+                    Log.w(TAG, "Bitrate range: " + video_caps.getBitrateRange());
 
-        if (camId == null && previewParams != null) {
-            videoParams = previewParams;
-        } else if (camId != null) {
-            videoParams = mParams.get(camId);
-        } else if (mParams.size() == 2) {
-            currentCamera = cameraFront;
-            videoParams = mParams.get(cameraFront);
+                    Range<Integer> widths = video_caps.getSupportedWidths();
+                    Range<Integer> heights = video_caps.getSupportedHeights();
+                    Log.w(TAG, "Supported sizes: " + widths.getLower() + "x" + heights.getLower() + " -> " + widths.getUpper() + "x" + heights.getUpper());
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        Log.w(TAG, "AchievableFrameRates: " + video_caps.getAchievableFrameRatesFor(widths.getUpper(), heights.getUpper()));
+                    }
+                    Log.w(TAG, "SupportedFrameRates: " + video_caps.getSupportedFrameRatesFor(widths.getUpper(), heights.getUpper()));
+
+                    for (MediaCodecInfo.CodecProfileLevel profileLevel : codecCaps.profileLevels)
+                        Log.w(TAG, "profileLevels: " + profileLevel);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        Log.w(TAG, "FEATURE_IntraRefresh: " + codecCaps.isFeatureSupported(MediaCodecInfo.CodecCapabilities.FEATURE_IntraRefresh));
+                    }
+                }
+            } catch (Exception e) {
+                Log.w(TAG, "Can't query codec info", e);
+            }
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private Pair<MediaCodec, Surface> openCameraWithEncoder(VideoParams videoParams, String mimeType) {
+        final int BITRATE = 1600 * 1024;
+        MediaFormat format = MediaFormat.createVideoFormat(mimeType, videoParams.width, videoParams.height);
+        format.setInteger(MediaFormat.KEY_MAX_INPUT_SIZE, 0);
+        format.setInteger(MediaFormat.KEY_BIT_RATE, BITRATE);
+        format.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface);
+        format.setInteger(MediaFormat.KEY_FRAME_RATE, 30);
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            format.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, -1);
+            format.setInteger(MediaFormat.KEY_INTRA_REFRESH_PERIOD, 5);
         } else {
-            currentCamera = cameraBack;
-            videoParams = mParams.get(cameraBack);
+            format.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, 5);
+        }*/
+        format.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, 5);
+        //format.setInteger(MediaFormat.KEY_BITRATE_MODE, MediaCodecInfo.CodecCapabilities.BITRATE_MODE_VBR);
+
+        String codecName = new MediaCodecList(MediaCodecList.REGULAR_CODECS).findEncoderForFormat(format);
+        Surface encoderInput = null;
+        MediaCodec codec = null;
+        if (codecName != null) {
+            try {
+                codec = MediaCodec.createByCodecName(codecName);
+                Bundle params = new Bundle();
+                params.putInt(MediaCodec.PARAMETER_KEY_VIDEO_BITRATE, BITRATE);
+                codec.setParameters(params);
+                codec.configure(format, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
+                encoderInput = codec.createInputSurface();
+                codec.setCallback(new MediaCodec.Callback() {
+                    @Override
+                    public void onInputBufferAvailable(@NonNull MediaCodec codec, int index) {
+                    }
+
+                    @Override
+                    public void onOutputBufferAvailable(@NonNull MediaCodec codec, int index, @NonNull MediaCodec.BufferInfo info) {
+                        ByteBuffer buffer = codec.getOutputBuffer(index);
+                        RingserviceJNI.captureVideoPacket(buffer, info.size, info.offset, (info.flags & MediaCodec.BUFFER_FLAG_KEY_FRAME) != 0, info.presentationTimeUs);
+                        codec.releaseOutputBuffer(index, false);
+                    }
+
+                    @Override
+                    public void onError(@NonNull MediaCodec codec, @NonNull MediaCodec.CodecException e) {
+                        Log.e(TAG, "MediaCodec onError", e);
+                    }
+
+                    @Override
+                    public void onOutputFormatChanged(@NonNull MediaCodec codec, @NonNull MediaFormat format) {
+                        Log.e(TAG, "MediaCodec onOutputFormatChanged " + format);
+                    }
+                });
+            } catch (Exception e) {
+                Log.e(TAG, "Can't open codec", e);
+                codec = null;
+                encoderInput = null;
+            }
+        }
+        return new Pair<>(codec, encoderInput);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void openCamera(VideoParams videoParams, SurfaceHolder surface) {
+        Log.e(TAG, "openCamera " + videoParams.width + "x" + videoParams.height);
+
+        CameraDevice camera = (CameraDevice) previewCamera;
+        if (camera != null) {
+            camera.close();
         }
 
-        SurfaceHolder surface = mCameraPreviewSurface.get();
-        if (surface == null) {
-            Log.w(TAG, "Can't start capture: no surface registered.");
-            previewParams = videoParams;
-
-            VideoEvent event = new VideoEvent();
-            event.start = true;
-            videoEvents.onNext(event);
+        CameraManager manager = (CameraManager) mContext.getSystemService(Context.CAMERA_SERVICE);
+        if (manager == null)
             return;
-        }
+        if (t.getState() == Thread.State.NEW)
+            t.start();
+        Handler handler = new Handler(t.getLooper());
+        try {
+            surface.setFixedSize(videoParams.width, videoParams.height);
+            Surface s = surface.getSurface();
 
-        if (videoParams == null) {
-            Log.w(TAG, "startCapture: no video parameters ");
-            return;
-        }
-        Log.d(TAG, "startCapture: startCapture " + videoParams.id + " " + videoParams.width + "x" + videoParams.height + " rot" + videoParams.rotation);
+            ImageReader reader = ImageReader.newInstance(videoParams.width, videoParams.height, ImageFormat.YUV_420_888, 8);
+            reader.setOnImageAvailableListener(r -> {
+                Image image = r.acquireLatestImage();
+                if (image != null)
+                    RingserviceJNI.captureVideoFrame(image, videoParams.rotation);
+            }, handler);
 
+            List<Surface> targets = new ArrayList<>(2);
+            targets.add(s);
+            targets.add(reader.getSurface());
+            /*if (encoderInput != null)
+                targets.add(encoderInput);*/
+
+            manager.openCamera(videoParams.id, new CameraDevice.StateCallback() {
+                @Override
+                public void onOpened(@NonNull CameraDevice camera) {
+                    try {
+                        Log.w(TAG, "onOpened");
+                        previewCamera = camera;
+                        CaptureRequest.Builder builder = camera.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
+                        builder.addTarget(s);
+                        builder.addTarget(reader.getSurface());
+                        /*if (encoderInput != null)
+                            builder.addTarget(encoderInput);*/
+                        builder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_VIDEO);
+                        builder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON);
+                        builder.set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_AUTO);
+                        final CaptureRequest request = builder.build();
+
+                        camera.createCaptureSession(targets, new CameraCaptureSession.StateCallback() {
+                            @Override
+                            public void onConfigured(@NonNull CameraCaptureSession session) {
+                                Log.w(TAG, "onConfigured");
+                                try {
+                                    session.setRepeatingRequest(request, /*new CameraCaptureSession.CaptureCallback() {
+                                        @Override
+                                        public void onCaptureStarted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, long timestamp, long frameNumber) {
+                                            super.onCaptureStarted(session, request, timestamp, frameNumber);
+                                            if (codec != null && frameNumber == 1) {
+                                                codec.start();
+                                            }
+                                        }
+                                    }*/null, handler);
+                                } catch (CameraAccessException e) {
+                                    Log.w(TAG, "onConfigured error:", e);
+                                }
+                            }
+
+                            @Override
+                            public void onConfigureFailed(@NonNull CameraCaptureSession session) {
+                                Log.w(TAG, "onConfigureFailed");
+                            }
+                        }, handler);
+                    } catch (CameraAccessException e) {
+                        Log.w(TAG, "onOpened error:", e);
+                    }
+                }
+
+                @Override
+                public void onDisconnected(@NonNull CameraDevice camera) {
+                    Log.w(TAG, "onDisconnected");
+                    if (previewCamera == camera) {
+                        previewCamera = null;
+                    }
+                    camera.close();
+                    /*if (codec != null) {
+                        codec.signalEndOfInputStream();
+                        codec.release();
+                    }*/
+                }
+
+                @Override
+                public void onError(@NonNull CameraDevice camera, int error) {
+                    Log.w(TAG, "onError: " + error);
+                    if (previewCamera == camera)
+                        previewCamera = null;
+                    /*if (codec != null) {
+                        codec.release();
+                    }*/
+                }
+            }, handler);
+        } catch (CameraAccessException e) {
+            Log.e(TAG, "Error while settings preview parameters", e);
+        } catch (SecurityException e) {
+            Log.e(TAG, "Error while settings preview parameters", e);
+        } catch (RuntimeException e) {
+            Log.e(TAG, "Error while settings preview parameters", e);
+        }
+    }
+
+    private void openCameraKitkat(VideoParams videoParams, SurfaceHolder surface) {
         final Camera preview;
         try {
             if (previewCamera != null) {
-                previewCamera.release();
+                ((Camera) previewCamera).release();
                 previewCamera = null;
             }
             int id = Integer.parseInt(videoParams.id);
@@ -573,7 +794,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         preview.setErrorCallback((error, cam) -> {
             Log.w(TAG, "Camera onError " + error);
             if (preview == cam) {
-                stopCapture();
+                endCapture();
             }
         });
         try {
@@ -582,31 +803,99 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
             Log.e(TAG, "startPreview: " + e.getMessage());
             return;
         }
-
         previewCamera = preview;
-        previewParams = videoParams;
+    }
 
-        VideoEvent event = new VideoEvent();
-        event.started = true;
-        event.w = videoParams.rotWidth;
-        event.h = videoParams.rotHeight;
-        videoEvents.onNext(event);
+    @Override
+    public void startCapture(@Nullable String camId) {
+        Log.w(TAG, "startCapture: call " + camId);
+        mShouldCapture = true;
+        if (mIsCapturing && mCapturingId != null && mCapturingId.equals(camId)) {
+            return;
+        }
+        VideoParams videoParams;
+        if (camId != null) {
+            videoParams = mParams.get(camId);
+        } else if (previewParams != null) {
+            videoParams = previewParams;
+        } else if (mParams.size() == 2) {
+            currentCamera = cameraFront;
+            videoParams = mParams.get(cameraFront);
+        } else {
+            currentCamera = cameraBack;
+            videoParams = mParams.get(cameraBack);
+        }
+        if (videoParams == null) {
+            Log.w(TAG, "startCapture: no video parameters ");
+            return;
+        }
+        final SurfaceHolder surface = mCameraPreviewSurface.get();
+        if (surface == null) {
+            Log.w(TAG, "Can't start capture: no surface registered.");
+            previewParams = videoParams;
+            VideoEvent event = new VideoEvent();
+            event.start = true;
+            videoEvents.onNext(event);
+            return;
+        }
+
+        mIsCapturing = true;
+        mCapturingId = videoParams.id;
+        Log.d(TAG, "startCapture: startCapture " + videoParams.id + " " + videoParams.width + "x" + videoParams.height + " rot" + videoParams.rotation);
+
+        mUiScheduler.scheduleDirect(() -> {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                openCamera(videoParams, surface);
+            } else {
+                openCameraKitkat(videoParams, surface);
+            }
+
+            previewParams = videoParams;
+
+            VideoEvent event = new VideoEvent();
+            event.started = true;
+            boolean s = videoParams.rotation % 180 != 0;
+            event.w = s ? videoParams.height : videoParams.width;
+            event.h = s ? videoParams.width : videoParams.height;
+            videoEvents.onNext(event);
+        });
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void closeCamera() {
+        CameraDevice camera = (CameraDevice) previewCamera;
+        previewCamera = null;
+        camera.close();
+    }
+
+    private void closeCameraKitkat() {
+        final Camera preview = (Camera) previewCamera;
+        previewCamera = null;
+        try {
+            preview.setPreviewCallback(null);
+            preview.setErrorCallback(null);
+            preview.stopPreview();
+            preview.release();
+        } catch (Exception e) {
+            Log.e(TAG, "stopCapture error" + e);
+        }
     }
 
     @Override
     public void stopCapture() {
         Log.d(TAG, "stopCapture: " + previewCamera);
+        mShouldCapture = false;
+        endCapture();
+    }
+
+    public void endCapture() {
         if (previewCamera != null) {
-            final Camera preview = previewCamera;
             final VideoParams params = previewParams;
-            previewCamera = null;
-            try {
-                preview.setPreviewCallback(null);
-                preview.setErrorCallback(null);
-                preview.stopPreview();
-                preview.release();
-            } catch (Exception e) {
-                Log.e(TAG, "stopCapture error" + e);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                closeCamera();
+            } else {
+                closeCameraKitkat();
             }
 
             VideoEvent event = new VideoEvent();
@@ -615,6 +904,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
             event.h = params.height;
             videoEvents.onNext(event);
         }
+        mIsCapturing = false;
     }
 
     @Override
@@ -651,14 +941,18 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     }
 
     @Override
-    public void addPreviewVideoSurface(Object holder) {
-        if (!(holder instanceof SurfaceHolder)) {
+    public void addPreviewVideoSurface(Object oholder) {
+        if (!(oholder instanceof SurfaceHolder)) {
             return;
         }
-
-        Log.w(TAG, "addPreviewVideoSurface " + holder.hashCode());
-
-        mCameraPreviewSurface = new WeakReference<>((SurfaceHolder) holder);
+        SurfaceHolder holder = (SurfaceHolder)oholder;
+        Log.w(TAG, "addPreviewVideoSurface " + holder.hashCode() + " mCapturingId " + mCapturingId);
+        if (mCameraPreviewSurface.get() == holder)
+            return;
+        mCameraPreviewSurface = new WeakReference<>(holder);
+        if (mShouldCapture && !mIsCapturing) {
+            startCapture(mCapturingId);
+        }
     }
 
     @Override
@@ -696,9 +990,11 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
 
         String camId;
         if (currentCamera.equals(cameraBack)) {
-            camId = cameraFront;
-        } else {
+            camId = cameraExternal;
+        } else if (currentCamera.equals(cameraFront)) {
             camId = cameraBack;
+        } else {
+            camId = cameraFront;
         }
         currentCamera = camId;
 
@@ -709,7 +1005,8 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
 
     @Override
     public void restartCamera(String id) {
-        stopCapture();
+        Log.w(TAG, "restartCamera " + id);
+        endCapture();
         setPreviewSettings();
         final String uri = "camera://" + currentCamera;
         final StringMap map = mNativeParams.get(currentCamera).toMap(mContext.getResources().getConfiguration().orientation);
