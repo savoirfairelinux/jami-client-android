@@ -69,7 +69,6 @@ import cx.ring.service.DRingService;
 import cx.ring.utils.FileUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.ResourceMapper;
-import io.reactivex.disposables.CompositeDisposable;
 
 public class NotificationServiceImpl extends NotificationService {
 
@@ -99,8 +98,6 @@ public class NotificationServiceImpl extends NotificationService {
     protected DeviceRuntimeService mDeviceRuntimeService;
     private NotificationManagerCompat notificationManager;
     private final Random random = new Random();
-
-    private final CompositeDisposable mDisposable = new CompositeDisposable();
 
     @SuppressLint("CheckResult")
     public void initHelper() {
@@ -531,11 +528,10 @@ public class NotificationServiceImpl extends NotificationService {
                 .putExtra(ConversationFragment.KEY_ACCOUNT_ID, mAccountService.getCurrentAccount().getAccountID())
                 .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactUri);
 
-        String titleMessage = mContext.getString(R.string.notif_missed_incoming_call);
-        messageNotificationBuilder.setContentTitle(titleMessage)
+        messageNotificationBuilder.setContentTitle(mContext.getText(R.string.notif_missed_incoming_call))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .setSmallIcon(R.drawable.ic_call_missed_incoming_black)
+                .setSmallIcon(R.drawable.baseline_call_missed_white_24)
                 .setCategory(NotificationCompat.CATEGORY_CALL)
                 .setOnlyAlertOnce(true)
                 .setAutoCancel(true)
