@@ -525,7 +525,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         mParams.put(camId, newParams);
     }
 
-    /*@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void listSupportedCodecs() {
         int numCodecs = MediaCodecList.getCodecCount();
         for (int i = 0; i < numCodecs; i++) {
@@ -567,11 +567,11 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                 Log.w(TAG, "Can't query codec info", e);
             }
         }
-    }*/
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private Pair<MediaCodec, Surface> openCameraWithEncoder(VideoParams videoParams, String mimeType) {
-        final int BITRATE = 1600 * 1024;
+        final int BITRATE = 5000 * 1024;
         MediaFormat format = MediaFormat.createVideoFormat(mimeType, videoParams.width, videoParams.height);
         format.setInteger(MediaFormat.KEY_MAX_INPUT_SIZE, 0);
         format.setInteger(MediaFormat.KEY_BIT_RATE, BITRATE);
@@ -604,8 +604,8 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
 
                     @Override
                     public void onOutputBufferAvailable(@NonNull MediaCodec codec, int index, @NonNull MediaCodec.BufferInfo info) {
-                        /*ByteBuffer buffer = codec.getOutputBuffer(index);
-                        RingserviceJNI.captureVideoPacket(buffer, info.size, info.offset, (info.flags & MediaCodec.BUFFER_FLAG_KEY_FRAME) != 0, info.presentationTimeUs);*/
+                        ByteBuffer buffer = codec.getOutputBuffer(index);
+                        RingserviceJNI.captureVideoPacket(buffer, info.size, info.offset, (info.flags & MediaCodec.BUFFER_FLAG_KEY_FRAME) != 0, info.presentationTimeUs);
                         codec.releaseOutputBuffer(index, false);
                     }
 
@@ -628,6 +628,8 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         return new Pair<>(codec, encoderInput);
     }
 
+    private static final boolean hardwareCodec = false;
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void openCamera(VideoParams videoParams, SurfaceHolder surface) {
         Log.e(TAG, "openCamera " + videoParams.width + "x" + videoParams.height);
@@ -647,18 +649,23 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
             surface.setFixedSize(videoParams.width, videoParams.height);
             Surface s = surface.getSurface();
 
-            ImageReader reader = ImageReader.newInstance(videoParams.width, videoParams.height, ImageFormat.YUV_420_888, 8);
-            reader.setOnImageAvailableListener(r -> {
-                Image image = r.acquireLatestImage();
-                if (image != null)
-                    RingserviceJNI.captureVideoFrame(image, videoParams.rotation);
-            }, handler);
+            Pair<MediaCodec, Surface> codec = hardwareCodec ? openCameraWithEncoder(videoParams, MediaFormat.MIMETYPE_VIDEO_VP8) : null;
 
             List<Surface> targets = new ArrayList<>(2);
             targets.add(s);
-            targets.add(reader.getSurface());
-            /*if (encoderInput != null)
-                targets.add(encoderInput);*/
+            ImageReader tmpReader = null;
+            if (codec != null && codec.second != null) {
+                targets.add(codec.second);
+            } else {
+                tmpReader = ImageReader.newInstance(videoParams.width, videoParams.height, ImageFormat.YUV_420_888, 8);
+                tmpReader.setOnImageAvailableListener(r -> {
+                    Image image = r.acquireLatestImage();
+                    if (image != null)
+                        RingserviceJNI.captureVideoFrame(image, videoParams.rotation);
+                }, handler);
+                targets.add(tmpReader.getSurface());
+            }
+            final ImageReader reader = tmpReader;
 
             manager.openCamera(videoParams.id, new CameraDevice.StateCallback() {
                 @Override
@@ -668,9 +675,11 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                         previewCamera = camera;
                         CaptureRequest.Builder builder = camera.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
                         builder.addTarget(s);
-                        builder.addTarget(reader.getSurface());
-                        /*if (encoderInput != null)
-                            builder.addTarget(encoderInput);*/
+                        if (codec != null && codec.second != null) {
+                            builder.addTarget(codec.second);
+                        } else {
+                            builder.addTarget(reader.getSurface());
+                        }
                         builder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_VIDEO);
                         builder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON);
                         builder.set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_AUTO);
@@ -681,15 +690,14 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                             public void onConfigured(@NonNull CameraCaptureSession session) {
                                 Log.w(TAG, "onConfigured");
                                 try {
-                                    session.setRepeatingRequest(request, /*new CameraCaptureSession.CaptureCallback() {
+                                    session.setRepeatingRequest(request, (codec != null && codec.second != null) ? new CameraCaptureSession.CaptureCallback() {
                                         @Override
                                         public void onCaptureStarted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, long timestamp, long frameNumber) {
-                                            super.onCaptureStarted(session, request, timestamp, frameNumber);
-                                            if (codec != null && frameNumber == 1) {
-                                                codec.start();
+                                            if (frameNumber == 1) {
+                                                codec.first.start();
                                             }
                                         }
-                                    }*/null, handler);
+                                    } : null, handler);
                                 } catch (CameraAccessException e) {
                                     Log.w(TAG, "onConfigured error:", e);
                                 }
@@ -712,10 +720,10 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                         previewCamera = null;
                     }
                     camera.close();
-                    /*if (codec != null) {
-                        codec.signalEndOfInputStream();
-                        codec.release();
-                    }*/
+                    if (codec != null && codec.first != null) {
+                        codec.first.signalEndOfInputStream();
+                        codec.first.release();
+                    }
                 }
 
                 @Override
@@ -723,9 +731,9 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                     Log.w(TAG, "onError: " + error);
                     if (previewCamera == camera)
                         previewCamera = null;
-                    /*if (codec != null) {
-                        codec.release();
-                    }*/
+                    if (codec != null && codec.first != null) {
+                        codec.first.release();
+                    }
                 }
             }, handler);
         } catch (CameraAccessException e) {
