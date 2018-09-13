@@ -167,10 +167,10 @@ public class AvatarDrawable extends Drawable {
             canvas.drawColor(color);
             canvas.drawText(avatarText, textStartXPoint, textStartYPoint, textPaint);
         } else {
-            canvas.drawColor(0xffffffff);
+            canvas.drawColor(color);
             canvas.save();
             canvas.scale(1.2f, 1.2f, getBounds().centerX(), getBounds().centerY());
-            placeholder.setTint(color);
+            placeholder.setTint(Color.WHITE);
             placeholder.draw(canvas);
             canvas.restore();
         }
