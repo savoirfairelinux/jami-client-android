@@ -18,11 +18,12 @@
 package cx.ring.views;
 
 import android.os.Bundle;
-import androidx.preference.EditTextPreferenceDialogFragment;
+import androidx.preference.EditTextPreferenceDialogFragmentCompat;
+
 import android.view.View;
 import android.widget.EditText;
 
-public class EditTextPreferenceDialog extends EditTextPreferenceDialogFragment {
+public class EditTextPreferenceDialog extends EditTextPreferenceDialogFragmentCompat {
     private static final String ARG_TYPE = "inputType";
 
     public static EditTextPreferenceDialog newInstance(String key, int type) {

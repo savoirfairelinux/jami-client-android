@@ -58,10 +58,11 @@ import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.model.Account;
 import cx.ring.model.ConfigKey;
 import cx.ring.mvp.BaseFragment;
+import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.utils.KeyboardVisibilityManager;
 import cx.ring.views.LinkNewDeviceLayout;
 
-public class RingAccountSummaryFragment extends BaseFragment<RingAccountSummaryPresenter> implements BackHandlerInterface,
+public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountSummaryPresenter> implements BackHandlerInterface,
         RegisterNameDialog.RegisterNameDialogListener,
         RenameDeviceDialog.RenameDeviceListener,
         DeviceAdapter.DeviceRevocationListener,

@@ -28,7 +28,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
-import androidx.legacy.app.FragmentCompat;
 import androidx.preference.SwitchPreference;
 import androidx.appcompat.app.AlertDialog;
 import androidx.preference.Preference;
@@ -47,8 +46,7 @@ import cx.ring.model.ConfigKey;
 import cx.ring.mvp.BasePreferenceFragment;
 import cx.ring.utils.AndroidFileUtils;
 
-public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPreferencePresenter>
-        implements FragmentCompat.OnRequestPermissionsResultCallback, MediaPreferenceView {
+public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPreferencePresenter> implements MediaPreferenceView {
 
     public static final String TAG = MediaPreferenceFragment.class.getSimpleName();
     private static final int SELECT_RINGTONE_PATH = 40;
