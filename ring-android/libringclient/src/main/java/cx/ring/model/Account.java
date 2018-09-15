@@ -152,7 +152,7 @@ public class Account {
     private void conversationChanged() {
         conversationsChanged = true;
         if (historyLoaded)
-            conversationsSubject.onNext(getSortedConversations());
+            conversationsSubject.onNext(new ArrayList<>(getSortedConversations()));
     }
     public void conversationUpdated(Conversation conversation) {
         if (!historyLoaded)
@@ -165,7 +165,7 @@ public class Account {
                     conversation.sortHistory();
                 Collections.sort(sortedConversations, (a, b) -> Long.compare(b.getLastEvent().getDate(), a.getLastEvent().getDate()));
             }
-            conversationsSubject.onNext(sortedConversations);
+            conversationsSubject.onNext(new ArrayList<>(sortedConversations));
         }
     }
 
