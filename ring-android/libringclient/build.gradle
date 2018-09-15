@@ -20,7 +20,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     // RxJava
-    compile "io.reactivex.rxjava2:rxjava:2.2.1"
+    compile "io.reactivex.rxjava2:rxjava:2.2.2"
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
