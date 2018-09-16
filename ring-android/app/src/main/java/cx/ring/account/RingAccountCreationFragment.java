@@ -111,6 +111,7 @@ public class RingAccountCreationFragment extends BaseSupportFragment<RingAccount
 
         AccountCreationModelImpl ringAccountViewModel = getArguments().getParcelable(KEY_RING_ACCOUNT);
         presenter.init(ringAccountViewModel);
+        presenter.setPush(mPushSwitch.isChecked());
     }
 
     @Override

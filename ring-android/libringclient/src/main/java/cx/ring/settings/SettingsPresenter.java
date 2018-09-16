@@ -21,28 +21,33 @@
 package cx.ring.settings;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.model.Settings;
 import cx.ring.mvp.GenericView;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.HistoryService;
 import cx.ring.services.PreferencesService;
+import io.reactivex.Scheduler;
 
 public class SettingsPresenter extends RootPresenter<GenericView<Settings>>  {
 
-    private PreferencesService mPreferencesService;
-    private HistoryService mHistoryService;
+    private final PreferencesService mPreferencesService;
+    private final HistoryService mHistoryService;
+    private final Scheduler mUiScheduler;
 
     @Inject
-    public SettingsPresenter(PreferencesService preferencesService, HistoryService historyService) {
-        this.mPreferencesService = preferencesService;
-        this.mHistoryService = historyService;
+    public SettingsPresenter(PreferencesService preferencesService, HistoryService historyService, @Named("UiScheduler") Scheduler uiScheduler) {
+        mPreferencesService = preferencesService;
+        mHistoryService = historyService;
+        mUiScheduler = uiScheduler;
     }
 
     @Override
     public void bindView(GenericView<Settings> view) {
         super.bindView(view);
         mCompositeDisposable.add(mPreferencesService.getSettingsSubject()
+                .observeOn(mUiScheduler)
                 .subscribe(settings -> getView().showViewModel(settings)));
     }
 
