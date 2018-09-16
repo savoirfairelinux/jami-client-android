@@ -60,5 +60,12 @@ RUN (while sleep 1; do echo "y"; done) | sdkmanager $ANDROID_DEPS
 ENV ANDROID_SDK=/opt/android-sdk
 ENV ANDROID_NDK=/opt/android-sdk/ndk-bundle
 
+# Gradle
+RUN wget -O /tmp/gradle.zip https://services.gradle.org/distributions/gradle-4.10.1-bin.zip && \
+	mkdir -p /opt/gradle && \
+	unzip -q -d /opt/gradle /tmp/gradle.zip && \
+	rm -f /tmp/gradle.zip
+ENV PATH="${PATH}:/opt/gradle/gradle-4.10.1/bin"
+
 WORKDIR /home/builder/src
 VOLUME /home/builder/src
