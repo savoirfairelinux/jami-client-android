@@ -21,6 +21,7 @@
 package cx.ring.tv.call;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.Bundle;
@@ -51,13 +52,13 @@ import butterknife.OnClick;
 import cx.ring.R;
 import cx.ring.call.CallPresenter;
 import cx.ring.call.CallView;
-import cx.ring.contacts.AvatarFactory;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.fragments.CallFragment;
 import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.services.HardwareServiceImpl;
+import cx.ring.views.AvatarDrawable;
 import io.reactivex.disposables.CompositeDisposable;
 
 public class TVCallFragment extends BaseFragment<CallPresenter> implements CallView {
@@ -228,6 +229,11 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     }
 
     @Override
+    public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode, Configuration newConfig) {
+        presenter.pipModeChanged(isInPictureInPictureMode);
+    }
+
+    @Override
     public void blockScreenRotation() {
 
     }
@@ -248,11 +254,13 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     @Override
     public void displayPreviewSurface(boolean display) {
         if (display) {
+            mVideoSurface.setZOrderOnTop(false);
             mVideoPreview.setZOrderMediaOverlay(true);
             mVideoSurface.setZOrderMediaOverlay(false);
         } else {
             mVideoPreview.setZOrderMediaOverlay(false);
             mVideoSurface.setZOrderMediaOverlay(true);
+            mVideoSurface.setZOrderOnTop(true);
         }
     }
 
@@ -317,20 +325,7 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
             contactBubbleTxt.setText(username);
         }
 
-        AvatarFactory.loadGlideAvatar(contactBubbleView, contact);
-
-        /*mCompositeDisposable.add(Single.fromCallable(() -> Glide.with(getActivity())
-                .load(AvatarFactory.getAvatar(
-                        getActivity(),
-                        contact.getPhoto(),
-                        username,
-                        ringId, true))
-                .apply(AvatarFactory.getGlideOptions(true, false))
-                .submit()
-                .get())
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(d -> contactBubbleView.setImageDrawable(d)));*/
+        contactBubbleView.setImageDrawable(new AvatarDrawable(getActivity(), contact));
     }
 
     @Override

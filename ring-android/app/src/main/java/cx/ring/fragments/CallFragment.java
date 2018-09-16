@@ -81,6 +81,7 @@ import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.KeyboardVisibilityManager;
 import cx.ring.utils.Log;
 import cx.ring.utils.MediaButtonsHelper;
+import cx.ring.views.AvatarDrawable;
 import cx.ring.views.CheckableImageButton;
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -411,7 +412,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
     @Override
     public void displayContactBubble(final boolean display) {
-        getActivity().runOnUiThread(() -> contactBubbleLayout.setVisibility(display ? View.VISIBLE : View.GONE));
+        contactBubbleLayout.getHandler().post(() -> contactBubbleLayout.setVisibility(display ? View.VISIBLE : View.GONE));
     }
 
     @Override
@@ -424,11 +425,13 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     @Override
     public void displayPreviewSurface(final boolean display) {
         if (display) {
+            mVideoSurface.setZOrderOnTop(false);
             mVideoPreview.setZOrderMediaOverlay(true);
             mVideoSurface.setZOrderMediaOverlay(false);
         } else {
             mVideoPreview.setZOrderMediaOverlay(false);
             mVideoSurface.setZOrderMediaOverlay(true);
+            mVideoSurface.setZOrderOnTop(true);
         }
     }
 
@@ -504,20 +507,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
             contactBubbleTxt.setText(username);
         }
 
-        AvatarFactory.loadGlideAvatar(contactBubbleView, contact);
-
-        /*mCompositeDisposable.add(Single.fromCallable(() -> Glide.with(getActivity())
-                .load(AvatarFactory.getAvatar(
-                        getActivity(),
-                        contact.getPhoto(),
-                        username,
-                        ringId, true))
-                .apply(AvatarFactory.getGlideOptions(true, false))
-                .submit()
-                .get())
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(d -> contactBubbleView.setImageDrawable(d)));*/
+        contactBubbleView.setImageDrawable(new AvatarDrawable(getActivity(), contact));
     }
 
     @Override
