@@ -52,9 +52,9 @@ if [[ $NO_GRADLE -eq 0 ]]; then
     fi
     if [[ $DAEMON_ONLY -eq 0 ]]; then
         if [[ $RELEASE -eq 1 ]]; then
-            cd $TOP && ./gradlew $GRADLE_PROPERTIES assembleRelease
+            cd $TOP && gradle $GRADLE_PROPERTIES assembleRelease
         else
-            cd $TOP && ./gradlew $GRADLE_PROPERTIES assembleDebug
+            cd $TOP && gradle $GRADLE_PROPERTIES assembleDebug
         fi
     fi
 else

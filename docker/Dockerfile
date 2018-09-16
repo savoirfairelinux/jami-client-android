@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM gradle:jdk8
 
 ENV LANG en_US.utf8
 ENV LC_ALL en_US.utf8
@@ -20,13 +20,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	bzip2 \
 	doxygen \
 	git \
-	gradle \
 	lib32stdc++6 \
 	lib32z1 \
 	libtool \
 	locales \
 	m4 \
-	openjdk-8-jdk \
 	pkg-config \
 	software-properties-common \
 	ssh \
@@ -37,8 +35,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	yasm \
 	nasm \
 	zip \
-	&& locale-gen $LANG $LC_ALL && update-locale $LANG $LC_ALL \
-	&& update-java-alternatives --set java-1.8.0-openjdk
+	&& locale-gen $LANG $LC_ALL && update-locale $LANG $LC_ALL
 
 # Android SDK tools
 RUN wget -O /tmp/android-tools.zip https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip && \
