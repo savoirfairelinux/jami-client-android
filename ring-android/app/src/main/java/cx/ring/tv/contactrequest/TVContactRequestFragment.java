@@ -50,6 +50,8 @@ import cx.ring.model.Uri;
 import cx.ring.tv.main.BaseDetailFragment;
 import cx.ring.tv.model.TVListViewModel;
 import cx.ring.tv.views.DetailsOverviewRowTarget;
+import cx.ring.utils.VCardUtils;
+import cx.ring.views.AvatarDrawable;
 
 public class TVContactRequestFragment extends BaseDetailFragment<TVContactRequestPresenter> implements TVContactRequestView {
 
@@ -59,6 +61,7 @@ public class TVContactRequestFragment extends BaseDetailFragment<TVContactReques
 
     private Uri mSelectedContactRequest;
     private ArrayObjectAdapter mAdapter;
+    private int iconSize = -1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,6 +85,7 @@ public class TVContactRequestFragment extends BaseDetailFragment<TVContactReques
         if (mSelectedContactRequest != null) {
             setupAdapter();
         }
+        iconSize = (int) getResources().getDimension(R.dimen.tv_avatar_size);
         presenter.setContact(mSelectedContactRequest);
     }
 
@@ -129,8 +133,9 @@ public class TVContactRequestFragment extends BaseDetailFragment<TVContactReques
 
     public void showRequest(TVListViewModel model) {
         final DetailsOverviewRow row = new DetailsOverviewRow(model);
-
-        AvatarFactory.getGlideAvatar(this, model.getContact()).into(new DetailsOverviewRowTarget(row));
+        AvatarDrawable avatar = new AvatarDrawable(getActivity(), model.getContact(), false);
+        avatar.setInSize(iconSize);
+        row.setImageDrawable(avatar);
 
         SparseArrayObjectAdapter adapter = new SparseArrayObjectAdapter();
         adapter.set(ACTION_ACCEPT, new Action(ACTION_ACCEPT, getResources()

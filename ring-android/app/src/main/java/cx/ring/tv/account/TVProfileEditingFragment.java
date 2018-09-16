@@ -192,7 +192,7 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
         else
             getGuidanceStylist().getTitleView().setText(alias);
 
-        AvatarDrawable avatar = new AvatarDrawable(getContext(), VCardUtils.readData(vcard), account.getUsername(), account == null ? null : account.getUsername(), true);
+        AvatarDrawable avatar = new AvatarDrawable(getContext(), VCardUtils.readData(vcard), account.getUsername(), account.getUsername(), true);
         avatar.setInSize(iconSize);
         getGuidanceStylist().getIconView().setImageDrawable(avatar);
     }
