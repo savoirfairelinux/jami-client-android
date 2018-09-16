@@ -1,0 +1,4 @@
+• Improved performance
+• Improved video quality
+• Reduced idle battery usage
+• Fixed bug on Android 4.4 (KitKat)
