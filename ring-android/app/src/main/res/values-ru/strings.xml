@@ -128,6 +128,7 @@
   <string name="conversation_action_delete_this_message">Это действие нельзя отменить.</string>
   <string name="conversation_action_history_clear">Очистить историю</string>
   <string name="conversation_action_history_clear_title">Очистить историю разговоров?</string>
+  <string name="conversation_action_history_clear_message">Это очистит историю разговоров.</string>
   <string name="conversation_action_remove_this">Удалить контакт</string>
   <string name="conversation_action_remove_this_title">Удалить этот контакт?</string>
   <string name="conversation_action_remove_this_message">Это удалит контакт и очистит историю разговоров.</string>
