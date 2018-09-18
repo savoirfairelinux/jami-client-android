@@ -116,6 +116,8 @@ public class AvatarDrawable extends Drawable {
 
     private static Bitmap getBitmap(byte[] photo) {
         Bitmap source = BitmapFactory.decodeByteArray(photo, 0, photo.length);
+        if (source == null)
+            return null;
         int d = Math.min(source.getWidth(), source.getHeight());
         return ThumbnailUtils.extractThumbnail(source, d, d);
     }
