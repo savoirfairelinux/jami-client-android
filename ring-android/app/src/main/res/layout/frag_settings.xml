@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?><!-- Copyright (c) 2016 Savoir-faire Linux Inc.
 
 Author: Thibault Wittemberg <thibault.wittemberg@savoirfairelinux.com>
+Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -69,8 +70,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toEndOf="@+id/network_image"
                         android:layout_toStartOf="@+id/settings_mobile_data"
+                        android:layout_toEndOf="@+id/network_image"
                         android:orientation="vertical"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp">
@@ -100,11 +101,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
                 <RelativeLayout
+                    android:id="@+id/settings_push_notifications_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="8dp"
-                    android:id="@+id/settings_push_notifications_layout">
+                    android:padding="8dp">
 
                     <ImageView
                         android:id="@+id/push_image"
@@ -120,8 +121,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toEndOf="@+id/push_image"
                         android:layout_toStartOf="@+id/settings_push_notifications"
+                        android:layout_toEndOf="@+id/push_image"
                         android:orientation="vertical"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp">
@@ -151,11 +152,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
                 <RelativeLayout
+                    android:id="@+id/settings_hd_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="8dp"
-                    android:id="@+id/settings_hd_layout">
+                    android:padding="8dp">
 
                     <ImageView
                         android:id="@+id/hd_image"
@@ -165,16 +166,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:layout_centerVertical="true"
                         android:layout_gravity="start"
                         android:contentDescription="@string/pref_hd_summary"
-                        app:srcCompat="@drawable/ic_videocam_white"
-                        android:tint="@color/black"/>
+                        android:tint="@color/black"
+                        app:srcCompat="@drawable/ic_videocam_white" />
 
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toEndOf="@+id/hd_image"
                         android:layout_toStartOf="@+id/settings_hd"
+                        android:layout_toEndOf="@+id/hd_image"
                         android:orientation="horizontal"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp">
@@ -192,16 +193,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
+                            android:layout_margin="4dp"
                             android:background="@drawable/hd_button_background"
-                            android:text="@string/label_hd_720p"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
+                            android:paddingStart="8dp"
                             android:paddingTop="3dp"
+                            android:paddingEnd="8dp"
                             android:paddingBottom="4dp"
-                            android:paddingStart="10dp"
-                            android:paddingEnd="10dp"
+                            android:text="@string/label_hd_720p"
                             android:textColor="@color/amber_A400"
-                            android:layout_margin="4dp"/>
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <Switch
@@ -250,8 +251,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toEndOf="@+id/contacts_image"
                         android:layout_toStartOf="@+id/settings_contacts"
+                        android:layout_toEndOf="@+id/contacts_image"
                         android:orientation="vertical"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp">
@@ -316,8 +317,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toEndOf="@+id/system_dialer_image"
                         android:layout_toStartOf="@+id/settings_place_call"
+                        android:layout_toEndOf="@+id/system_dialer_image"
                         android:orientation="vertical"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp">
@@ -374,8 +375,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toEndOf="@+id/system_startOnBoot_image"
                         android:layout_toStartOf="@+id/settings_startup"
+                        android:layout_toEndOf="@+id/system_startOnBoot_image"
                         android:orientation="vertical"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp">
