@@ -8,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 132
-        versionName "20180916"
+        versionCode 133
+        versionName "20180920"
         vectorDrawables.useSupportLibrary = true
     }
 
@@ -110,7 +110,7 @@ dependencies {
     implementation 'com.jsibbold:zoomage:1.1.0'
 
     withFirebaseImplementation 'com.google.firebase:firebase-core:16.0.3'
-    withFirebaseImplementation 'com.google.firebase:firebase-messaging:17.3.1'
+    withFirebaseImplementation 'com.google.firebase:firebase-messaging:17.3.2'
 }
 
 if (buildFirebase) {
