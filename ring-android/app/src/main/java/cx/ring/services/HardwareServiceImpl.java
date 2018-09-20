@@ -33,7 +33,6 @@ import android.os.Build;
 
 import androidx.annotation.Nullable;
 
-import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.WindowManager;
 
