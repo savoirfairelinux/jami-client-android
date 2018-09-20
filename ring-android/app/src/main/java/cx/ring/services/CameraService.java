@@ -48,7 +48,7 @@ abstract public class CameraService {
 
     public String switchInput() {
         String camId;
-        if (currentCamera.equals(cameraBack)) {
+        if (cameraExternal != null && currentCamera.equals(cameraBack)) {
             camId = cameraExternal;
         } else if (currentCamera.equals(cameraFront)) {
             camId = cameraBack;
