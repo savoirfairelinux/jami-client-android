@@ -596,7 +596,7 @@ public class NotificationServiceImpl extends NotificationService {
         return (NOTIF_MSG + contact.toString()).hashCode();
     }
 
-    private int getFileTransferNotificationId(Long dataTransferId) {
+    private int getFileTransferNotificationId(long dataTransferId) {
         return (NOTIF_FILE_TRANSFER + dataTransferId).hashCode();
     }
 

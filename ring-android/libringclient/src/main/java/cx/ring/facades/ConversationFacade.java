@@ -438,6 +438,7 @@ public class ConversationFacade {
 
     public void cancelFileTransfer(long id) {
         mAccountService.cancelDataTransfer(id);
+        mNotificationService.cancelFileNotification(id);
         DataTransfer transfer = mAccountService.getDataTransfer(id);
         if (transfer != null)
             deleteFile(transfer);
