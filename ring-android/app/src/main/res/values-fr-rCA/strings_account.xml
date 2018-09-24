@@ -17,9 +17,9 @@
   <string name="action_register">Inscription</string>
   <string name="error_field_required">Ce champ est requis</string>
   <string name="dialog_wait_create">Ajouter un compte</string>
-  <string name="dialog_wait_create_details">S\'il vous plaît, patienter pendant la création de votre nouveau compte</string>
+  <string name="dialog_wait_create_details">S\'il vous plaît, patientez pendant la création de votre nouveau compte</string>
   <string name="dialog_wait_update">Mise à jour du compte</string>
-  <string name="dialog_wait_update_details">S\'il vous plaît, patienter pendant la mise à jour de votre nouveau compte.</string>
+  <string name="dialog_wait_update_details">S\'il vous plaît, patientez pendant la mise à jour de votre nouveau compte.</string>
   <string name="dialog_warn_ip2ip_account_title">Créer un compte SIP vide?</string>
   <string name="dialog_warn_ip2ip_account_message">Vous êtes sur le point de créer un compte SIP sans un nom de domaine valide.
 Vous ne pourrez qu\'émettre et recevoir des appels ip directs.
@@ -107,7 +107,7 @@ Vous pourrez modifier votre compte plus tard.</string>
   <string name="account_new_device_password">Entrer le mot de passe principal pour déverrouiller le compte</string>
   <string name="error_password_char_count">Minimum de 6 caractères</string>
   <string name="error_passwords_not_equals">Les mots de passe ne concordent pas</string>
-  <string name="export_account_wait_title">Patienter s\'il vous plaît</string>
+  <string name="export_account_wait_title">Patientez s\'il vous plaît</string>
   <string name="export_account_wait_message">Publication des informations du nouveau compte</string>
   <string name="account_export_end_decryption_message">Votre compte n\'a pu être déverrouillé avec le mot de passe fourni.</string>
   <string name="account_export_end_network_title">Erreur de réseau</string>
@@ -176,7 +176,7 @@ Vous pourrez modifier votre compte plus tard.</string>
   <string name="enter_password">Entrer le mot de passe</string>
   <string name="revoke_device_title">Révoquer l\'appareil</string>
   <string name="revoke_device_message">Êtes-vous sûr de révoquer %1$s ?</string>
-  <string name="revoke_device_wait_title">Patienter s\'il vous plaît</string>
+  <string name="revoke_device_wait_title">Patientez s\'il vous plaît</string>
   <string name="revoke_device_wait_message">Révocation de l\'appareil en cours</string>
   <string name="rename_device_title">Renommer cet appareil</string>
   <string name="rename_device_message">Choisir un nouveau nom pour identifier cet appareil dans votre compte Ring</string>
