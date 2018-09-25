@@ -184,4 +184,27 @@
   <string name="menu_file_download">Last ned fil</string>
   <string name="menu_file_delete">Slett fil</string>
   <string name="menu_file_share">Del fil</string>
-</resources>
+<string name="notif_channel_missed_calls">Tapte anrop</string>
+    <string name="notif_dismiss">Avslå</string>
+    <string name="notif_reply">Svar</string>
+    <string name="notif_incoming_picture">Bilde fra %1$s</string>
+    <string name="ab_action_contact_add_question">Legg til i kontakter?</string>
+    <string name="hist_file_sent">Fil sendt</string>
+    <string name="hist_file_received">Fil mottatt</string>
+
+    <string name="ringtone_error_size_too_big">Filen er for stor. Maksimal filstørrelse er %1$dkB.</string>
+
+    <string name="clear_history_dialog_title">Tøm historikk?</string>
+    <string name="clear_history_dialog_message">Denne handlingen kan ikke angres.</string>
+    <string name="conversation_action_history_clear_title">Tøm samtalehistorikk?</string>
+    <string name="conversation_action_history_clear_message">Dette vil tømme samtalehistorikken for godt.</string>
+    <string name="conversation_action_remove_this_title">Slette denne kontakten?</string>
+    <string name="conversation_action_remove_this_message">Dette vil slette kontakten og vil tømme samtalehistorikken for godt.</string>
+    <string name="conversation_action_block_this">Blokker kontakt</string>
+    <string name="conversation_action_go_to_call">Gjenoppta pågående samtale</string>
+
+    <string name="add_call_contact_number_to_contacts">Legg til %1$s?</string>
+    <string name="message_contact_not_trusted">%s er ikke i kontaktene dine.
+\nLegg til ny kontakt?</string>
+
+    </resources>
