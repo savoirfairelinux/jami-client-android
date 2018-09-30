@@ -370,7 +370,7 @@ public class ConversationFacade {
         }
         SipCall.State newState = call.getCallState();
         boolean incomingCall = newState == SipCall.State.RINGING && call.isIncoming();
-        mHardwareService.updateAudioState(newState, !call.isAudioOnly());
+        mHardwareService.updateAudioState(newState, incomingCall, !call.isAudioOnly());
 
         Account account = mAccountService.getAccount(call.getAccount());
         Conversation conversation = account.getByUri(call.getContact().getPrimaryUri());

@@ -93,6 +93,13 @@ public class CallPresenter extends RootPresenter<CallView> {
         mCompositeDisposable.add(mHardwareService.getVideoEvents()
                 .observeOn(mUiScheduler)
                 .subscribe(this::onVideoEvent));
+        mCompositeDisposable.add(mHardwareService
+                .getBluetoothEvents()
+                .subscribe(event -> {
+                    if (!event.connected && mSipCall != null) {
+                        hangupCall();
+                    }
+                }));
     }
 
     public void initOutGoing(String accountId, String contactRingId, boolean audioOnly) {
