@@ -40,7 +40,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	&& update-java-alternatives --set java-1.8.0-openjdk
 
 # Android SDK tools
-RUN wget -O /tmp/android-tools.zip https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip && \
+RUN wget -O /tmp/android-tools.zip https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip && \
 	mkdir -p /opt/android-sdk && \
 	unzip -q -d /opt/android-sdk /tmp/android-tools.zip && \
 	rm -f /tmp/android-tools.zip && \
@@ -51,7 +51,7 @@ RUN (while sleep 1; do echo "y"; done) | sdkmanager --update
 
 # Android SDK libraries, NDK
 ENV ANDROID_DEPS=\
-'build-tools;28.0.2 \
+'build-tools;28.0.3 \
  platforms;android-28 \
  extras;android;m2repository \
  extras;google;m2repository \
