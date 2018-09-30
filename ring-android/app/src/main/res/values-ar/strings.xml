@@ -89,4 +89,84 @@
   <string name="tv_contact_row_header">الاتصالات</string>
   <!--File Transfer-->
   <string name="menu_file_share">تقاسم الوثيقة</string>
-</resources>
+<string name="feedback_section">الصدى</string>
+    <string name="report"><u>راسلنا عبر البريد الإلكتروني</u></string>
+    <string name="section_license">الرخصة</string>
+    <string name="no_email_app_installed">لم يتم العثور على أي تطبيق للبريد الإلكتروني، قم بتنصيب واحد قصد إرسال التقرير</string>
+    <string name="no_browser_app_installed">لم يتم العثور على أي تطبيق متصفح للويب، قم بتنصيب واحد لاستعراض هذه الصفحة</string>
+    <string name="website_chooser_title">عرض موقع الويب باستخدام…</string>
+    <string name="description">رينغ أو Ring هو برنامج حر للإتصالات الشاملة يحمي حريات و خصوصية مستخدِميه.</string>
+    <string name="developed_by">طَوّرَه</string>
+    <string name="designed_by">صمّمه</string>
+    <string name="error_mobile_network_available_but_disabled">يرجى منح حق الوصول إلى الشبكة الخلوية في شاشة الإعدادات.</string>
+
+    <string name="menu_item_contact_request">طلبات التراسل</string>
+    <string name="menu_item_account">إدارة الحساب</string>
+    <string name="notif_missed_incoming_call">مكالمة فائتة</string>
+    <string name="notif_incoming_call_title">مكالمة واردة مِن %1$s</string>
+    <string name="notif_outgoing_call_title">مكالماة صادرة إلى %1$s</string>
+    <string name="notif_outgoing_call">مكالمات صادرة</string>
+    <string name="notif_current_call_title">المكالمة الحالية مع %1$s</string>
+    <string name="notif_channel_missed_calls">المكالمات الفائتة</string>
+    <string name="notif_channel_messages">الرسائل</string>
+    <string name="notif_channel_requests">الطلبات</string>
+    <string name="notif_channel_file_transfer">نقل ملف</string>
+    <string name="notif_mark_as_read">وضع إشارة كمقروء</string>
+    <string name="notif_dismiss">إلغاء</string>
+    <string name="notif_reply">ردّ</string>
+    <string name="notif_incoming_file_transfer_title">ملف وارد مِن %1$s</string>
+    <string name="notif_incoming_file_transfer">ثمّة أحد يودّ إرسال ملف إليك</string>
+    <string name="notif_outgoing_file_transfer_title">جارٍ ارسال ملف إلى %1$s</string>
+    <string name="notif_outgoing_file_transfer">ثمّة أحد يودّ إرسال ملف إليك</string>
+    <string name="notif_incoming_picture">صورة مِن %1$s</string>
+    <string name="action_open">فتح</string>
+
+    <string name="ab_action_contact_add_question">إضافة إلى قائمة المراسلين؟</string>
+    <string name="hist_contact_added">"تمت إضافة المُراسِل "</string>
+    <string name="hist_invitation_received">تلقيت دعوة</string>
+    <string name="ab_action_change_screen_orientation">تغيير اتجاه الشاشة</string>
+    <string name="write_a_message">اكتب رسالة</string>
+    <string name="scan_qr">امسح رمز الاستجابة السريعة</string>
+    <string name="message_sending">جارٍ ارسال الرسالة…</string>
+    <string name="send_file">إرسال ملف</string>
+    <string name="hist_file_sent">تم إرسال الملف</string>
+    <string name="hist_file_received">استلمت ملفا</string>
+
+    <string name="permission_dialog_camera_title">تسريح لاستخدام آلة التصوير</string>
+    <string name="ringtone_error_format_not_supported">هذه الصيغة غير معتمَدة.</string>
+    <string name="clear_history_dialog_title">هل تريد محو التأريخ؟</string>
+    <string name="clear_history_dialog_message">لا يمكن التراجع عن هذا الإجراء.</string>
+    <string name="clear_history_completed">تم مسح التأريخ.</string>
+
+    <string name="conversation_action_delete_this">حذف هذه المحادثة</string>
+    <string name="conversation_action_delete_this_title">هل تريد حذف هذه المحادثة؟</string>
+    <string name="conversation_action_delete_this_message">لا يمكن التراجع عن هذا الإجراء.</string>
+    <string name="conversation_action_history_clear_title">"هل تريد محو سجل المحادثة؟ "</string>
+    <string name="conversation_action_remove_this_title">هل تريد حذف هذا المُراسِل؟</string>
+    <string name="conversation_action_copied_peer_number_clipboard">نُسخ %1$s إلى الحافظة</string>
+    <string name="conversation_action_select_peer_number">يُرجى اختيار رقم</string>
+    <string name="conversation_action_block_this">حجب المُراسِل</string>
+    <string name="conversation_action_go_to_call">العودة إلى المكالمة الجارية</string>
+
+    <string name="add_call_contact_number_to_contacts">هل تريد إضافة %1$s؟</string>
+    <string name="prompt_new_password">كلمة سر جديدة</string>
+    <string name="prompt_new_password_optional">كلمة سر جديدة (اختياري)</string>
+    <string name="prompt_new_password_repeat">إعادة كتابة الكلمة السرية الجديدة</string>
+    <string name="account_create_title">إنشاء حساب على رينغ</string>
+    <string name="prompt_new_username">أدخل اسم المستخدم الجديد</string>
+    <string name="help_password_choose">اختر كلمة مرور قوية يمكنك تذكرها لحماية حسابك على رينغ.</string>
+    <string name="help_password_enter">أدخل الكلمة السرية الرئيسية لحساب رينغ</string>
+    <string name="wizard_back">العودة</string>
+    <string name="wizard_skip">تخطّي</string>
+
+    <string name="profile">ملفي الشخصي</string>
+    <string name="open_the_gallery">قم بفتح المعرض</string>
+    <string name="take_a_photo">التقط صورة</string>
+    <string name="profile_name_hint">أدخل اسمك (اختياري)</string>
+
+    <string name="share_message_no_account">الرجاء تحديد حساب للمشاركة.</string>
+    <string name="share_your_account_information">مشاركة معلومات الإتصال الخاصة بي</string>
+    <string name="generic_error_migration_message">حدث خطأ أثناء التهجير</string>
+
+    <string name="block">حظر</string>
+    </resources>
