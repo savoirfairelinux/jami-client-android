@@ -20,10 +20,13 @@
  */
 package cx.ring.services;
 
+import android.bluetooth.BluetoothHeadset;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
+import android.media.AudioAttributes;
 import android.media.AudioDeviceInfo;
+import android.media.AudioFocusRequest;
 import android.media.AudioManager;
 import android.media.MediaRecorder;
 import android.os.Build;
@@ -40,6 +43,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import androidx.media.AudioAttributesCompat;
 import cx.ring.daemon.IntVect;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.UintVect;
@@ -73,16 +77,19 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     private String mCapturingId = null;
     private boolean mIsCapturing = false;
     private boolean mShouldCapture = false;
+    private boolean mShouldSpeakerphone = false;
+    private final boolean mHasSpeakerPhone;
 
     public HardwareServiceImpl(Context context) {
         mContext = context;
+        mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+        mHasSpeakerPhone = hasSpeakerphone();
+        mRinger = new Ringer(mContext);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             cameraService = new CameraServiceCamera2(mContext);
         } else {
             cameraService = new CameraServiceKitKat();
         }
-        mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
-        mRinger = new Ringer(mContext);
     }
 
     public void initVideo() {
@@ -128,23 +135,51 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         return mAudioManager.isSpeakerphoneOn();
     }
 
+    private static final AudioAttributesCompat RINGTONE_ATTRIBUTES = new AudioAttributesCompat.Builder()
+            .setContentType(AudioAttributesCompat.CONTENT_TYPE_MUSIC)
+            .setUsage(AudioAttributesCompat.USAGE_NOTIFICATION_RINGTONE)
+            .setLegacyStreamType(AudioManager.STREAM_RING)
+            .build();
+
+    private static final AudioAttributesCompat CALL_ATTRIBUTES = new AudioAttributesCompat.Builder()
+            .setContentType(AudioAttributesCompat.CONTENT_TYPE_SPEECH)
+            .setUsage(AudioAttributesCompat.USAGE_VOICE_COMMUNICATION)
+            .setLegacyStreamType(AudioManager.STREAM_VOICE_CALL)
+            .build();
+
     @Override
-    public void updateAudioState(final State state, final boolean isOngoingVideo) {
+    public void updateAudioState(final State state, final boolean incomingCall, final boolean isOngoingVideo) {
         if (mBluetoothWrapper == null) {
             mBluetoothWrapper = new BluetoothWrapper(mContext);
+            mBluetoothWrapper.setBluetoothChangeListener(this);
             mBluetoothWrapper.registerScoUpdate();
             mBluetoothWrapper.registerBtConnection();
-            mBluetoothWrapper.setBluetoothChangeListener(this);
         }
         switch (state) {
             case RINGING:
-                startRinging();
-                mAudioManager.requestAudioFocus(this, AudioManager.STREAM_VOICE_CALL, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
-                setAudioRouting(true);
+                if (incomingCall)
+                    startRinging();
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    AudioFocusRequest req = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT)
+                            .setAudioAttributes((AudioAttributes) RINGTONE_ATTRIBUTES.unwrap())
+                            .build();
+                    mAudioManager.requestAudioFocus(req);
+                } else {
+                    mAudioManager.requestAudioFocus(this, RINGTONE_ATTRIBUTES.getLegacyStreamType(), AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+                }
                 mAudioManager.setMode(AudioManager.MODE_RINGTONE);
+                setAudioRouting(true);
                 break;
             case CURRENT:
                 stopRinging();
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    AudioFocusRequest req = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT)
+                            .setAudioAttributes((AudioAttributes) CALL_ATTRIBUTES.unwrap())
+                            .build();
+                    mAudioManager.requestAudioFocus(req);
+                } else {
+                    mAudioManager.requestAudioFocus(this, CALL_ATTRIBUTES.getLegacyStreamType(), AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+                }
                 mAudioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
                 setAudioRouting(isOngoingVideo);
                 break;
@@ -195,10 +230,13 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     }
 
     private void setAudioRouting(boolean requestSpeakerOn) {
+        mShouldSpeakerphone = requestSpeakerOn;
         if (mBluetoothWrapper != null && mBluetoothWrapper.canBluetooth()) {
             Log.d(TAG, "setAudioRouting: Try to enable bluetooth");
             mBluetoothWrapper.setBluetoothOn(true);
-        } else if (!mAudioManager.isWiredHeadsetOn() && hasSpeakerphone() && !DeviceUtils.isTv(mContext)) {
+        } else if (!mAudioManager.isWiredHeadsetOn()
+                && !DeviceUtils.isTv(mContext)
+                && mHasSpeakerPhone) {
             mAudioManager.setSpeakerphoneOn(requestSpeakerOn);
         }
     }
@@ -232,15 +270,15 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
 
     @Override
     public void toggleSpeakerphone(boolean checked) {
-        if (!hasSpeakerphone() || checked == mAudioManager.isSpeakerphoneOn()) {
+        if (!mHasSpeakerPhone || checked == mAudioManager.isSpeakerphoneOn()) {
             return;
         }
         if (checked) {
             mAudioManager.setSpeakerphoneOn(true);
         } else {
             mAudioManager.setSpeakerphoneOn(false);
-            if (mBluetoothWrapper != null && mBluetoothWrapper.canBluetooth()) {
-                routeToBTHeadset();
+            if (mBluetoothWrapper != null && mBluetoothWrapper.isBTHeadsetConnected()) {
+                mBluetoothWrapper.setBluetoothOn(true);
             }
         }
     }
@@ -248,9 +286,18 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     @Override
     public void onBluetoothStateChanged(int status) {
         Log.d(TAG, "bluetoothStateChanged to: " + status);
-        if (mAudioManager.getMode() == AudioManager.MODE_IN_COMMUNICATION) {
-            routeToBTHeadset();
+        BluetoothEvent event = new BluetoothEvent();
+        if (status == BluetoothHeadset.STATE_AUDIO_CONNECTED) {
+            Log.d(TAG, "BluetoothHeadset Connected");
+            event.connected = true;
+        } else if (status == BluetoothHeadset.STATE_AUDIO_DISCONNECTED) {
+            Log.d(TAG, "BluetoothHeadset Disconnected");
+            event.connected = false;
+            if (mShouldSpeakerphone) {
+                mAudioManager.setSpeakerphoneOn(true);
+            }
         }
+        bluetoothEvents.onNext(event);
     }
 
     public void decodingStarted(String id, String shmPath, int width, int height, boolean isMixer) {

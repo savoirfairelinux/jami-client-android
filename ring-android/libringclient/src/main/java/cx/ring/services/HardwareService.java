@@ -66,18 +66,25 @@ public abstract class HardwareService {
         public int w = 0, h = 0;
         public String callId = null;
     }
+    public class BluetoothEvent {
+        public boolean connected;
+    }
 
     protected final Subject<VideoEvent> videoEvents = PublishSubject.create();
+    protected final Subject<BluetoothEvent> bluetoothEvents = PublishSubject.create();
 
     public Observable<VideoEvent> getVideoEvents() {
         return videoEvents;
+    }
+    public Observable<BluetoothEvent> getBluetoothEvents() {
+        return bluetoothEvents;
     }
 
     public abstract void initVideo();
 
     public abstract boolean isVideoAvailable();
 
-    public abstract void updateAudioState(SipCall.State state, boolean isOngoingVideo);
+    public abstract void updateAudioState(SipCall.State state, boolean incomingCall, boolean isOngoingVideo);
 
     public abstract void closeAudioState();
 
