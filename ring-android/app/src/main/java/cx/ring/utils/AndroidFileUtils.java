@@ -88,7 +88,7 @@ public class AndroidFileUtils {
 
     public static String getRealPathFromURI(Context context, Uri uri) {
         String path = null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && DocumentsContract.isDocumentUri(context, uri)) {
+        if (DocumentsContract.isDocumentUri(context, uri)) {
             if (isExternalStorageDocument(uri)) {
                 final String docId = DocumentsContract.getDocumentId(uri);
                 final String[] split = docId.split(":");
@@ -264,21 +264,16 @@ public class AndroidFileUtils {
     }
 
     private static String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs) {
-        Cursor cursor = null;
         String path = null;
         final String column = "_data";
         final String[] projection = {column};
-        try {
-            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs, null);
+        try (Cursor cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs, null)) {
             if (cursor != null && cursor.moveToFirst()) {
                 final int column_index = cursor.getColumnIndexOrThrow(column);
                 path = cursor.getString(column_index);
             }
         } catch (Exception e) {
             Log.e(TAG, "Error while saving the ringtone", e);
-        } finally {
-            if (cursor != null)
-                cursor.close();
         }
         return path;
     }
