@@ -23,10 +23,15 @@ package cx.ring.fragments;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.preference.SwitchPreference;
 import androidx.appcompat.app.AlertDialog;
@@ -45,6 +50,7 @@ import cx.ring.model.Codec;
 import cx.ring.model.ConfigKey;
 import cx.ring.mvp.BasePreferenceFragment;
 import cx.ring.utils.AndroidFileUtils;
+import cx.ring.utils.FileUtils;
 
 public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPreferencePresenter> implements MediaPreferenceView {
 
@@ -197,14 +203,29 @@ public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPrefere
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_CANCELED) {
+        Uri uri = data.getData();
+        Context c = getContext();
+        if (resultCode == Activity.RESULT_CANCELED || uri == null || c == null) {
             return;
         }
 
         if (requestCode == SELECT_RINGTONE_PATH) {
-            String path = AndroidFileUtils.getRealPathFromURI(getActivity(), data.getData());
-            String type = getActivity().getContentResolver().getType(data.getData());
-            presenter.onFileFound(type, path);
+            try {
+                String path = AndroidFileUtils.getRealPathFromURI(getActivity(), uri);
+                if (path == null)
+                    throw new IllegalArgumentException();
+                String type = c.getContentResolver().getType(uri);
+                presenter.onFileFound(type, path);
+            } catch (Exception e) {
+                try {
+                    File file = AndroidFileUtils.getCacheFile(getContext(), uri);
+                    String path = file.getAbsolutePath();
+                    String type = c.getContentResolver().getType(uri);
+                    presenter.onFileFound(type, path);
+                } catch (Exception e2) {
+                    Toast.makeText(getContext(), "Can't load ringtone !", Toast.LENGTH_SHORT).show();
+                }
+            }
         }
     }
 
