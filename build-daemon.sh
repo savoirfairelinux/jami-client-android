@@ -178,7 +178,6 @@ cd $DAEMON_DIR/contrib/native-${TARGET_TUPLE}
 # Always strip symbols for libring.so remove it if you want to debug the daemon
 STRIP_ARG="-s "
 
-EXTRA_CFLAGS="${EXTRA_CFLAGS} -DNDEBUG "
 if [ "${RELEASE}" -eq 1 ]; then
     echo "Contribs in release mode."
     OPTS=""
@@ -188,8 +187,8 @@ else
 fi
 
 export SYSROOT=$ANDROID_TOOLCHAIN/sysroot
-echo "EXTRA_CFLAGS= -g -fpic ${EXTRA_CFLAGS}" >> config.mak
-echo "EXTRA_CXXFLAGS= -g -fpic ${EXTRA_CXXFLAGS}" >> config.mak
+echo "EXTRA_CFLAGS= -fPIC ${EXTRA_CFLAGS}" >> config.mak
+echo "EXTRA_CXXFLAGS= -fPIC ${EXTRA_CXXFLAGS}" >> config.mak
 echo "EXTRA_LDFLAGS= ${EXTRA_LDFLAGS} -L${SYSROOT}/usr/${LIBDIR}" >> config.mak
 export RING_EXTRA_CFLAGS="${EXTRA_CFLAGS}"
 export RING_EXTRA_CXXFLAGS="${EXTRA_CXXFLAGS}"
@@ -282,5 +281,5 @@ ${NDK_TOOLCHAIN_PATH}/clang++ \
                 -I${RING_SRC_DIR}/src \
                 -L${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/lib \
                 ${STATIC_LIBS_ALL} \
-                ${STRIP_ARG} --std=c++14 -O3 \
+                ${STRIP_ARG} --std=c++14 -O3 -fPIC \
                 -o ${LIBRING_JNI_DIR}/libring.so
