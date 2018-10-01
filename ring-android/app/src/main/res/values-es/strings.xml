@@ -10,8 +10,8 @@
   <string name="version_section">Versión</string>
   <string name="no_email_app_installed">No se ha encontrado ninguna aplicación de correo. Instala una para enviarnos el informe</string>
   <string name="no_browser_app_installed">No se ha encontrado un navegador, instale uno para poder ver esta página</string>
-  <string name="email_chooser_title">Enviar correo usando...</string>
-  <string name="website_chooser_title">Ver página web usando...</string>
+  <string name="email_chooser_title">Enviar correo usando…</string>
+  <string name="website_chooser_title">Ver página web usando…</string>
   <string name="license">Este software se proporciona \"tal cual\", sin garantía de ningún tipo. Para más detalles, vea 
 &lt;u&gt;Licencia Pública General GNU versión 3 o posterior&lt;/u&gt;</string>
   <string name="description">Ring es software libre de comunicaciones que respeta las libertades y privacidad de sus usuarios.</string>
@@ -47,7 +47,7 @@
     <item quantity="other">Conversaciones: %d</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Introduce nombre o número de teléfono...</string>
+  <string name="searchbar_hint">Introduce nombre o número de teléfono…</string>
   <string name="choose_number">Escoge un número</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -80,7 +80,7 @@
   <string name="ongoing_call">Llamada en curso</string>
   <string name="hist_in_call">Llamada entrante de %1$s</string>
   <string name="hist_out_call">Llamada saliente a %1$s</string>
-  <string name="start_error_title">Ring no puede iniciarse</string>
+  <string name="start_error_title">¡Ring no puede iniciarse!</string>
   <string name="start_error_mic_required">Ring necesita permiso de acceso al micro para funcionar.</string>
   <string name="action_call_accept">Contestar a la llamada</string>
   <string name="action_call_decline">Rechazar</string>
@@ -97,7 +97,7 @@
   <string name="ab_action_flipcamera">Cambiar de cámara</string>
   <!--Text messages-->
   <string name="send_message">Enviar mensaje</string>
-  <string name="message_sending">Enviando mensaje...</string>
+  <string name="message_sending">Enviando mensaje…</string>
   <string name="message_failed">Falló</string>
   <string name="time_just_now">En este momento</string>
   <string name="send_file">Enviar archivo</string>
@@ -193,4 +193,13 @@
   <string name="menu_file_download">Descargar el archivo</string>
   <string name="menu_file_delete">Borrar el archivo</string>
   <string name="menu_file_share">Compartir el archivo</string>
-</resources>
+<string name="ab_action_contact_add_question">¿Agregar a contactos?</string>
+    <string name="clear_history_dialog_title">¿Limpiar historial?</string>
+    <string name="clear_history_dialog_message">Esta acción no se puede deshacer.</string>
+    <string name="conversation_action_history_clear_title">¿Limpiar el historial de conversación?</string>
+    <string name="conversation_action_history_clear_message">Esto eliminará definitivamente el historial de conversación.</string>
+    <string name="conversation_action_remove_this_title">¿Eliminar este contacto?</string>
+    <string name="conversation_action_remove_this_message">Esto eliminará el contacto y limpiará definitivamente el historial de conversación.</string>
+    <string name="conversation_action_block_this">Bloquear contacto</string>
+    <string name="add_call_contact_number_to_contacts">¿Agregar %1$s?</string>
+    </resources>
