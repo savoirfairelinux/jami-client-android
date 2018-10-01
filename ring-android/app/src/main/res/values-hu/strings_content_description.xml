@@ -2,7 +2,7 @@
 <resources>
   <!--Strings for xml content description of images-->
   <string name="contact_quick_call_description">Gyors hívás</string>
-  <string name="contact_picture_description">Fénykép</string>
+  <string name="contact_picture_description">Partnerkép</string>
   <string name="dial_numeric_pad">Tárcsázó</string>
   <string name="contact_unblock">Blokkolás visszavonása</string>
 </resources>

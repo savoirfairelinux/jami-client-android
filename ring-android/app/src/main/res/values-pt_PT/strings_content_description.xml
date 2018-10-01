@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<resources>
-  <!--Strings for xml content description of images-->
-  <string name="contact_quick_call_description">Chamada Rápida</string>
-  <string name="contact_picture_description">Imagem do Contacto</string>
-  <string name="dial_numeric_pad">Teclado numérico</string>
-  <string name="contact_unblock">Desbloquear</string>
-</resources>
