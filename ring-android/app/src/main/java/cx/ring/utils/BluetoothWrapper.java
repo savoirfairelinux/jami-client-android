@@ -54,9 +54,6 @@ public class BluetoothWrapper {
             if (BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED.equals(action)) {
                 int status = intent.getIntExtra(BluetoothHeadset.EXTRA_STATE, BluetoothHeadset.STATE_DISCONNECTED);
                 Log.d(TAG, "BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED " + status);
-                if (btChangesListener != null) {
-                    btChangesListener.onBluetoothStateChanged(status);
-                }
             } if (BluetoothHeadset.ACTION_AUDIO_STATE_CHANGED.equals(action)) {
                 int status = intent.getIntExtra(BluetoothHeadset.EXTRA_STATE, BluetoothHeadset.STATE_AUDIO_DISCONNECTED);
                 Log.d(TAG, "BluetoothHeadset.ACTION_AUDIO_STATE_CHANGED " + status);
@@ -66,9 +63,6 @@ public class BluetoothWrapper {
                     for (BluetoothDevice device : devices) {
                         Log.d(TAG, "BluetoothDevice " + device.getName() + " " + device + " " + device.getBondState() + " connected: " + headsetAdapter.isAudioConnected(device));
                     }
-                }
-                if (btChangesListener != null) {
-                    btChangesListener.onBluetoothStateChanged(status);
                 }
             } else if (BluetoothHeadset.ACTION_VENDOR_SPECIFIC_HEADSET_EVENT.equals(action)) {
                 int cmdType = intent.getIntExtra(BluetoothHeadset.EXTRA_VENDOR_SPECIFIC_HEADSET_EVENT_CMD_TYPE, -1);
@@ -90,11 +84,15 @@ public class BluetoothWrapper {
                     Log.d(TAG, "BT SCO state changed : CONNECTED");
                     isBluetoothConnecting = false;
                     isBluetoothConnected = true;
+                    if (btChangesListener != null) {
+                        btChangesListener.onBluetoothStateChanged(BluetoothHeadset.STATE_AUDIO_CONNECTED);
+                    }
                 } else if (status == AudioManager.SCO_AUDIO_STATE_DISCONNECTED) {
                     Log.d(TAG, "BT SCO state changed : DISCONNECTED");
+                    boolean wasConnected = isBluetoothConnected;
                     isBluetoothConnecting = false;
                     isBluetoothConnected = false;
-                    if (btChangesListener != null) {
+                    if (btChangesListener != null && wasConnected) {
                         btChangesListener.onBluetoothStateChanged(BluetoothHeadset.STATE_AUDIO_DISCONNECTED);
                     }
                 } else {
@@ -191,30 +189,32 @@ public class BluetoothWrapper {
         mContext.registerReceiver(mHeadsetProfileReceiver, new IntentFilter(BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED));
         mContext.registerReceiver(mHeadsetProfileReceiver, new IntentFilter(BluetoothHeadset.ACTION_AUDIO_STATE_CHANGED));
 
-        bluetoothAdapter.getProfileProxy(mContext, new BluetoothProfile.ServiceListener() {
-            @Override
-            public void onServiceConnected(int profile, BluetoothProfile proxy) {
-                Log.d(TAG, "onServiceConnected " + profile + " " + proxy);
-                if (profile == BluetoothProfile.HEADSET) {
-                    headsetAdapter = (BluetoothHeadset) proxy;
-                    if (DBG) {
-                        List<BluetoothDevice> devices = headsetAdapter.getConnectedDevices();
-                        Log.d(TAG, "Bluetooth Headset profile connected: " + devices.size() + " devices.");
-                        for (BluetoothDevice device : devices)  {
-                            Log.d(TAG, "BluetoothDevice " + device.getName() + " " + device + " " + device.getBondState() + " connected: " + headsetAdapter.isAudioConnected(device));
+        if (bluetoothAdapter != null) {
+            bluetoothAdapter.getProfileProxy(mContext, new BluetoothProfile.ServiceListener() {
+                @Override
+                public void onServiceConnected(int profile, BluetoothProfile proxy) {
+                    Log.d(TAG, "onServiceConnected " + profile + " " + proxy);
+                    if (profile == BluetoothProfile.HEADSET) {
+                        headsetAdapter = (BluetoothHeadset) proxy;
+                        if (DBG) {
+                            List<BluetoothDevice> devices = headsetAdapter.getConnectedDevices();
+                            Log.d(TAG, "Bluetooth Headset profile connected: " + devices.size() + " devices.");
+                            for (BluetoothDevice device : devices) {
+                                Log.d(TAG, "BluetoothDevice " + device.getName() + " " + device + " " + device.getBondState() + " connected: " + headsetAdapter.isAudioConnected(device));
+                            }
                         }
                     }
                 }
-            }
 
-            @Override
-            public void onServiceDisconnected(int profile) {
-                Log.d(TAG, "onServiceDisconnected " + profile);
-                if (profile == BluetoothProfile.HEADSET) {
-                    headsetAdapter = null;
+                @Override
+                public void onServiceDisconnected(int profile) {
+                    Log.d(TAG, "onServiceDisconnected " + profile);
+                    if (profile == BluetoothProfile.HEADSET) {
+                        headsetAdapter = null;
+                    }
                 }
-            }
-        }, BluetoothProfile.HEADSET);
+            }, BluetoothProfile.HEADSET);
+        }
     }
 
     public void unregister() {
