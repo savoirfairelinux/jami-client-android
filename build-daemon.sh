@@ -114,19 +114,17 @@ if [ ! -d "$DAEMON_DIR" ]; then
     exit 1
 fi
 
-EXTRA_CFLAGS="${EXTRA_CFLAGS} -fno-integrated-as -O3"
-
 # Setup LDFLAGS
 if [ ${ANDROID_ABI} = "armeabi-v7a-hard" ] ; then
     EXTRA_CFLAGS="${EXTRA_CFLAGS} -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16"
     EXTRA_LDFLAGS="-march=armv7-a -mfpu=vfpv3-d16 -mcpu=cortex-a8 -lm_hard -D_NDK_MATH_NO_SOFTFP=1"
 elif [ ${ANDROID_ABI} = "armeabi-v7a" ] ; then
     EXTRA_CFLAGS="${EXTRA_CFLAGS} -march=armv7-a -mthumb -mfloat-abi=softfp -mfpu=vfpv3-d16"
-    EXTRA_LDFLAGS="-march=armv7-a -mthumb -mfloat-abi=softfp -mfpu=vfpv3-d16"
+    EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -march=armv7-a -mthumb -mfloat-abi=softfp -mfpu=vfpv3-d16"
 elif [ ${ANDROID_ABI} = "arm64-v8a" ] ; then
     EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${ANDROID_TOOLCHAIN}/sysroot/usr/lib -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/lib"
 fi
-EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/${LIBDIR}/${ANDROID_ABI} -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/${LIBDIR} -lm -latomic"
+EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/${LIBDIR}/${ANDROID_ABI} -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/${LIBDIR}"
 
 # Make in //
 UNAMES=$(uname -s)
@@ -178,21 +176,25 @@ cd $DAEMON_DIR/contrib/native-${TARGET_TUPLE}
 # Always strip symbols for libring.so remove it if you want to debug the daemon
 STRIP_ARG="-s "
 
+EXTRA_CFLAGS="${EXTRA_CFLAGS} -DNDEBUG -fPIC -fno-integrated-as"
+EXTRA_CXXFLAGS="${EXTRA_CXXFLAGS} -DNDEBUG -fPIC"
+EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${SYSROOT}/usr/${LIBDIR}"
+
 if [ "${RELEASE}" -eq 1 ]; then
-    echo "Contribs in release mode."
+    echo "Daemon in release mode."
     OPTS=""
 else
-    echo "Contribs in debug mode."
+    echo "Daemon in debug mode."
     OPTS="--enable-debug"
 fi
 
 export SYSROOT=$ANDROID_TOOLCHAIN/sysroot
-echo "EXTRA_CFLAGS= -fPIC ${EXTRA_CFLAGS}" >> config.mak
-echo "EXTRA_CXXFLAGS= -fPIC ${EXTRA_CXXFLAGS}" >> config.mak
-echo "EXTRA_LDFLAGS= ${EXTRA_LDFLAGS} -L${SYSROOT}/usr/${LIBDIR}" >> config.mak
+echo "EXTRA_CFLAGS= ${EXTRA_CFLAGS}" >> config.mak
+echo "EXTRA_CXXFLAGS= ${EXTRA_CXXFLAGS}" >> config.mak
+echo "EXTRA_LDFLAGS= ${EXTRA_LDFLAGS}" >> config.mak
 export RING_EXTRA_CFLAGS="${EXTRA_CFLAGS}"
 export RING_EXTRA_CXXFLAGS="${EXTRA_CXXFLAGS}"
-export RING_EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${SYSROOT}/usr/${LIBDIR}"
+export RING_EXTRA_LDFLAGS="${EXTRA_LDFLAGS}"
 
 make list
 make fetch
@@ -217,6 +219,9 @@ if [ ! -f config.h ]; then
     ./autogen.sh
     cd "${DAEMON_DIR}/build-android-${TARGET_TUPLE}"
     echo "Configuring with ${OPTS}"
+    CFLAGS="${EXTRA_CFLAGS}" \
+    CXXFLAGS="${EXTRA_CXXFLAGS}" \
+    LDFLAGS="${EXTRA_LDFLAGS}" \
     ${ANDROID_TOPLEVEL_DIR}/configure.sh ${OPTS}
 fi
 
