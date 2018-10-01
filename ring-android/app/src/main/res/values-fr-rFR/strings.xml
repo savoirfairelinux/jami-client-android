@@ -114,4 +114,7 @@
   <!--Blacklist-->
   <!--Smartlist-->
   <!--File Transfer-->
-</resources>
+<string name="report"><u>Envoyez-nous un courriel</u></string>
+    <string name="section_license">Licence</string>
+    <string name="no_browser_app_installed">Aucune application de navigateur Web trouvée, installez-en une pour voir cette page</string>
+    </resources>
