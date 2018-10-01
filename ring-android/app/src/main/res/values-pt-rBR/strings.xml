@@ -5,7 +5,7 @@
   <string name="report">&lt;u&gt;Envie-nos um email&lt;/u&gt;</string>
   <string name="section_license">Licença</string>
   <string name="sponsor_section">Ring é um software livre desenvolvido e mantido por</string>
-  <string name="copyright_section">Copyright</string>
+  <string name="copyright_section">Direitos de Autor</string>
   <string name="contribute_section">Contribua</string>
   <string name="version_section">Versão</string>
   <string name="no_email_app_installed">Aplicação de e-mail não encontrada. Instale uma para nos enviar um relatório de erros.</string>
@@ -22,7 +22,7 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Sem conectividade</string>
-  <string name="error_mobile_network_available_but_disabled">Por favor, conceda acesso a rede do celular na tela de configurações .</string>
+  <string name="error_mobile_network_available_but_disabled">Por favor, conceda acesso a rede do celular na tela de configurações.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Mensagens de texto</string>
   <!--Left Drawer-->
@@ -47,7 +47,7 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
     <item quantity="other">%d Conversas</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Digite nome ou número de telefone</string>
+  <string name="searchbar_hint">Digite nome ou número de telefone…</string>
   <string name="choose_number">Escolhe um número</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -81,19 +81,20 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="hist_in_call">Recebimento de chamada %1$s</string>
   <string name="hist_out_call">Chamada de saída %1$s</string>
   <string name="start_error_title">Não é possível iniciar o Ring!</string>
-  <string name="start_error_mic_required">Ring requer permissão para uso do microfone para funcionar</string>
+  <string name="start_error_mic_required">Ring requer permissão para uso do microfone para funcionar.</string>
   <string name="action_call_accept">Atender chamada</string>
   <string name="action_call_decline">Rejeitar</string>
   <string name="ab_action_speakerphone">Habilitar viva-voz</string>
   <string name="ab_action_contact_add">Adicionar aos contatos</string>
+  <string name="ab_action_contact_add_question">Adicionar aos contatos?</string>
   <string name="hist_contact_added">Contato adicionado</string>
   <string name="hist_invitation_received">Convite recebido</string>
-  <string name="ab_action_audio_call">Voz da chamada</string>
-  <string name="ab_action_video_call">Chamada de Vídeo</string>
+  <string name="ab_action_audio_call">Chamada de áudio</string>
+  <string name="ab_action_video_call">Chamada de vídeo</string>
   <string name="ab_action_change_screen_orientation">Mudar orientação de tela</string>
   <string name="share_via">Compartilhar via</string>
   <string name="write_a_message">Escrever uma mensagem</string>
-  <string name="scan_qr">Escanear QR Code</string>
+  <string name="scan_qr">Escanear Código QR</string>
   <string name="ab_action_flipcamera">Virar câmera</string>
   <!--Text messages-->
   <string name="send_message">Enviar mensagem</string>
@@ -114,26 +115,34 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Ring precisa de permissão para \'Escrever registro de chamadas\' para ativar esse recurso. Por favor, conceda-o.</string>
   <!--QRCode Scan-->
-  <string name="scan_qr_account_message">Escanear o QR Code da conta que deseja adicionar.</string>
+  <string name="scan_qr_account_message">Escanear o Código QR da conta que deseja adicionar.</string>
   <!--Settings-->
+  <string name="clear_history_dialog_title">Limpar histórico?</string>
+  <string name="clear_history_dialog_message">Esta ação não pode ser desfeita.</string>
   <string name="clear_history_completed">O histórico foi apagado.</string>
   <!--Conversation-->
   <string name="conversation_action_delete_this">Deletar conversa</string>
   <string name="conversation_action_delete_this_title">Deletar esta conversa ?</string>
-  <string name="conversation_action_delete_this_message">Esta ação não pode ser revista.</string>
+  <string name="conversation_action_delete_this_message">Esta ação não pode ser desfeita.</string>
   <string name="conversation_action_history_clear">Limpar histórico</string>
+  <string name="conversation_action_history_clear_title">Limpar o histórico da conversação?</string>
+  <string name="conversation_action_history_clear_message">Isto irá apagar o histórico da conversação.</string>
   <string name="conversation_action_remove_this">Deletar contato</string>
+  <string name="conversation_action_remove_this_title">Deletar este contato?</string>
+  <string name="conversation_action_remove_this_message">Isto irá deletar o contato e limpar o histórico de conversação definitivamente.</string>
   <string name="conversation_action_copy_peer_number">Copiar número</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s copiado para área de transferência</string>
-  <string name="conversation_action_select_peer_number">Selecione um numero</string>
+  <string name="conversation_action_select_peer_number">Selecione um número</string>
+  <string name="conversation_action_block_this">Bloquear contato</string>
   <string name="conversation_action_go_to_call">Voltar à chamada em andamento</string>
   <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">Adicionar %1$s?</string>
   <string name="prompt_new_password">Nova senha</string>
   <string name="prompt_new_password_optional">Nova senha (opcional)</string>
   <string name="prompt_new_password_repeat">Repita a nova senha</string>
   <string name="account_create_title">Criar uma conta no Ring</string>
   <string name="prompt_new_username">Entre novo nome de usuário</string>
-  <string name="help_password_choose">Utilize uma senha segura de sua preferência para proteger sua conta Ring</string>
+  <string name="help_password_choose">Utilize uma senha segura de sua preferência para proteger sua conta Ring.</string>
   <string name="help_password_enter">Entre com a senha da sua conta Ring principal</string>
   <string name="help_pin_enter">Entre com o PIN de uma outra conta Ring já configurada. Utilize a opção \"exportar conta no Ring\" para obter um novo PIN.</string>
   <string name="wizard_next">Próximo</string>
@@ -146,7 +155,7 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="take_a_photo">Tirar uma foto</string>
   <string name="profile_name_hint">Insira o seu nome (opcional)</string>
   <!--Share fragment-->
-  <string name="share_message">Escaneie o QRCode com o escaner embutido da aplicação Ring que deseja se comunicar com você.</string>
+  <string name="share_message">Escaneie o Código QR com o escaner embutido da aplicação Ring que deseja se comunicar com você.</string>
   <string name="share_message_no_account">Por favor selecione uma conta para compartilhar.</string>
   <string name="share_your_account_information">Compartilhar meus dados de contato</string>
   <string name="generic_error_migration">Erro</string>
@@ -157,7 +166,7 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="block">Bloquear</string>
   <string name="contact_request_title">Nova requisição de contato</string>
   <string name="contact_request_msg">Você tem %1$s requisição de contato</string>
-  <string name="contact_request_account">para %1$s</string>
+  <string name="contact_request_account">Para %1$s</string>
   <string name="no_requests">0 solicitações de contato</string>
   <string name="message_contact_not_trusted_yet">%s não está em seus contatos ainda.\nVocê aceita ou recusa esta solicitação de contato?</string>
   <string name="message_contact_not_trusted">%s não está em seus contatos.\nDeseja adicionar novo contato?</string>
@@ -181,10 +190,10 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="file_transfer_status_created">iniciando transferência</string>
   <string name="file_transfer_status_unsupported">não suportado</string>
   <string name="file_transfer_status_wait_peer_acceptance">aguardando aprovação do destinatário</string>
-  <string name="file_transfer_status_wait_host_acceptance">aguardando aprovação do host</string>
+  <string name="file_transfer_status_wait_host_acceptance">aguardando aprovação do servidor</string>
   <string name="file_transfer_status_ongoing">em andamento</string>
   <string name="file_transfer_status_finished">concluído</string>
-  <string name="file_transfer_status_closed_by_host">encerrada pelo host</string>
+  <string name="file_transfer_status_closed_by_host">encerrada pelo servidor</string>
   <string name="file_transfer_status_closed_by_peer">encerrada pelo destinatário</string>
   <string name="file_transfer_status_invalid_pathname">diretório inválido</string>
   <string name="file_transfer_status_unjoinable_peer">contato indisponível</string>

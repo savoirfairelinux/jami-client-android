@@ -61,6 +61,7 @@
   <string name="notif_current_call_title">Aktueller Anruf mit %1$s</string>
   <string name="notif_current_call">Aktueller Anruf</string>
   <string name="notif_channel_calls">Anrufe</string>
+  <string name="notif_channel_missed_calls">Entgangene Anrufe</string>
   <string name="notif_channel_messages">Nachrichten</string>
   <string name="notif_channel_requests">Anfragen</string>
   <string name="notif_channel_file_transfer">Dateitransfer</string>
