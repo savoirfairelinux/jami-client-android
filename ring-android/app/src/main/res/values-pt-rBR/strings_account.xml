@@ -21,9 +21,9 @@
   <string name="dialog_wait_update">Atualizando conta</string>
   <string name="dialog_wait_update_details">Por favor, aguarde enquanto sua nova conta é atualizada...</string>
   <string name="dialog_warn_ip2ip_account_title">Criar uma conta SIP vazia?</string>
-  <string name="dialog_warn_ip2ip_account_message">Você está prestes a criar uma conta SIP com nenhum nome de host válido.
-Você só será capaz de fazer e receber chamadas IP diretos.
-Você pode editar sua conta depois.</string>
+  <string name="dialog_warn_ip2ip_account_message">Você está prestes a criar uma conta SIP com nenhum nome de servidor válido.
+        Você só poderá fazer e receber chamadas diretas de IP.
+        Pode editar a sua conta mais tarde</string>
   <string name="account_type_ip2ip">IP da conta</string>
   <string name="help_ring">Uma conta do Ring permite que você entre em contato com pessoas de forma segura em uma rede peer-to-peer totalmente distribuída.</string>
   <string name="help_sip_title">Adicionar sua conta SIP</string>
@@ -31,11 +31,11 @@ Você pode editar sua conta depois.</string>
   <string name="create_sip_account">Adicionar conta SIP</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Deletar conta?</string>
-  <string name="account_delete_dialog_message">Esta ação não pode ser revista.</string>
+  <string name="account_delete_dialog_message">Esta ação não pode ser desfeita.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nenhuma conta registrada</string>
   <string name="normal_accounts_titles">Contas</string>
-  <string name="normal_devices_titles">Dispositivos conhecidos conectados à esta conta Ring</string>
+  <string name="normal_devices_titles">Dispositivos conhecidos associados à esta conta Ring</string>
   <string name="account_device_revoke">Revogar dispositivo</string>
   <string name="account_device_revocation_success_title">Sucesso</string>
   <string name="account_device_revocation_success">Dispositivo foi revogado!</string>
@@ -71,9 +71,9 @@ Você pode editar sua conta depois.</string>
   <string name="account_dht_public_in_calls_label">Permitir todas as chamadas/mensagens</string>
   <string name="account_registration_exp_label">Registro expirou</string>
   <string name="account_local_interface_label">Interface local</string>
-  <string name="account_local_port_label">Portal Local</string>
+  <string name="account_local_port_label">Porta Local</string>
   <string name="account_stun_enable_label">Usar Stun</string>
-  <string name="account_stun_server_label">Server Stun</string>
+  <string name="account_stun_server_label">Servidor Stun</string>
   <string name="account_turn_enable_label">Usar TURN</string>
   <string name="account_turn_server_label">Servidor TURN</string>
   <string name="account_turn_username_label">Nome de usuário TURN</string>
@@ -103,10 +103,10 @@ Você pode editar sua conta depois.</string>
   <string name="account_tls_server_name_label">Nome do servidor</string>
   <string name="account_tls_verify_server_label">Verificar Servidor</string>
   <string name="account_tls_verify_client_label">Verificar Cliente</string>
-  <string name="account_tls_negotiation_timeout_sec">Tempo espera negociação(sec)</string>
+  <string name="account_tls_negotiation_timeout_sec">Tempo espera negociação (seg)</string>
   <string name="account_rtp_max_port">Máximo</string>
   <string name="account_rtp_min_port">Mínimo</string>
-  <string name="account_rtp_port_range">Variação de portas de audio RTP</string>
+  <string name="account_rtp_port_range">Variação de portas de áudio RTP</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Entre com a senha principal para desbloquear conta</string>
   <string name="error_password_char_count">Pelo menos 6 caracteres</string>
@@ -145,7 +145,7 @@ Você pode editar sua conta depois.</string>
   <string name="account_link_button">Associar este dispositivo a uma conta</string>
   <string name="account_link_prompt_pin">Entre o PIN</string>
   <string name="account_new_button">Criar uma conta no Ring</string>
-  <string name="account_link_export_button">Associar outro dispositivo à esta conta.</string>
+  <string name="account_link_export_button">Associar outro dispositivo à esta conta</string>
   <string name="account_link_export_info">Para usar esta conta em outros dispositivos, você precisa primeiro expo-lo ao Ring. Isto irá gerar um código PIN que você precisa introduzir no novo dispositivo para configurar sua conta. o PIN é válido por apenas 10 minutos.</string>
   <string name="account_start_export_button">Gerar código PIN</string>
   <string name="account_end_export_button">fechar</string>
