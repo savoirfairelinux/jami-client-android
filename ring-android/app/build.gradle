@@ -65,8 +65,8 @@ android {
 }
 
 dependencies {
-    def android_support_version = '1.0.0-rc02'
-    def material_version = '1.0.0-rc02'
+    def android_support_version = '1.0.0'
+    def material_version = '1.0.0'
     def butterknife_version = "9.0.0-SNAPSHOT"
     def dagger_version = "2.17"
 
