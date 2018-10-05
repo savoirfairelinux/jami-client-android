@@ -8,13 +8,13 @@
   <string name="copyright_section">Prawa autorskie</string>
   <string name="contribute_section">Współpracuj</string>
   <string name="version_section">Wersja</string>
-  <string name="no_email_app_installed">Nie znaleziono aplikacji e-mail. Zainstaluj jakąś aby wysłać nam zgłoszenie.</string>
+  <string name="no_email_app_installed">Nie znaleziono aplikacji e-mail. Zainstaluj jakąś aby wysłać nam zgłoszenie</string>
   <string name="no_browser_app_installed">Nie znaleziono przeglądarki internetowej, zainstaluj jakąś aby zobaczyć tę stronę</string>
-  <string name="email_chooser_title">Wyślij e-mail używając...</string>
-  <string name="website_chooser_title">Zobacz stronę używając..</string>
+  <string name="email_chooser_title">Wyślij e-mail używając…</string>
+  <string name="website_chooser_title">Zobacz stronę używając…</string>
   <string name="license">To oprogramowanie jest dostarczane \"tak jak jest\", bez jakiejkolwiek gwarancji. Aby uzyskać szczegółowe informacje, zobacz
 &lt;u&gt;GNU General Public License wersja 3 lub późniejsza&lt;/u&gt;</string>
-  <string name="description">Ring jest wolnym oprogramowaniem do uniwersalnej komunikacji, respektującym wolności i prywatność swoich użytkowników</string>
+  <string name="description">Ring jest wolnym oprogramowaniem do uniwersalnej komunikacji, respektującym wolność i prywatność swoich użytkowników.</string>
   <string name="credits">Podziękowania</string>
   <!--About dialog-->
   <string name="developed_by">Rozwijany przez</string>
@@ -43,13 +43,12 @@
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
-    <item quantity="one">%d Rozmowa</item>
-    <item quantity="few">%d Rozmowy</item>
-    <item quantity="many">%d Rozmowy</item>
-    <item quantity="other">%d Rozmowy</item>
-  </plurals>
+	<item quantity="one">%d Rozmowa</item>
+	<item quantity="few">%d Rozmowy</item>
+	<item quantity="many">%d Rozmów</item>
+</plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Wpisz nazwisko albo numer telefonu...</string>
+  <string name="searchbar_hint">Wpisz nazwisko albo numer telefonu…</string>
   <string name="choose_number">Wybierz numer</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -100,7 +99,7 @@
   <string name="ab_action_flipcamera">Zamień kamerę</string>
   <!--Text messages-->
   <string name="send_message">Wyślij wiadomość</string>
-  <string name="message_sending">Trwa wysyłanie wiadomości...</string>
+  <string name="message_sending">Trwa wysyłanie wiadomości…</string>
   <string name="message_failed">Nie powiodła się</string>
   <string name="time_just_now">W tej chwili</string>
   <string name="send_file">Wyślij plik</string>
@@ -146,7 +145,7 @@
   <string name="prompt_new_username">Wprowadź nową nazwę użytkownika</string>
   <string name="help_password_choose">Wybierz silne hasło, które będziesz pamiętać, aby chronić swoje konto Ring.</string>
   <string name="help_password_enter">Wprowadź hasło do swojego głównego konta Ring</string>
-  <string name="help_pin_enter">Wprowadź PIN z innego skonfigurowanego konta Ring. Użyj opcji \"eksportuj konto w Ring\" aby uzyskać PIN</string>
+  <string name="help_pin_enter">Wprowadź PIN z innego skonfigurowanego konta Ring. Użyj opcji \"eksportuj konto w Ring\" aby uzyskać PIN.</string>
   <string name="wizard_next">Następne</string>
   <string name="wizard_back">Wstecz</string>
   <string name="wizard_skip">Pomiń</string>
