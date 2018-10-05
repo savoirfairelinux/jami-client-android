@@ -17,9 +17,9 @@
   <string name="action_register">Zarejestruj</string>
   <string name="error_field_required">To pole jest wymagane</string>
   <string name="dialog_wait_create">Dodawanie konta</string>
-  <string name="dialog_wait_create_details">Poczekaj, proszę, aż twoje nowe konto zostanie dodane...</string>
+  <string name="dialog_wait_create_details">Poczekaj, proszę, aż twoje nowe konto zostanie dodane…</string>
   <string name="dialog_wait_update">Aktualizowanie konta</string>
-  <string name="dialog_wait_update_details">Poczeka, proszę, aż twoje nowe konto zostanie zaktualizowane</string>
+  <string name="dialog_wait_update_details">Poczekaj, proszę, aż Twoje nowe konto zostanie zaktualizowane…</string>
   <string name="dialog_warn_ip2ip_account_title">Utworzyć puste konto SIP?</string>
   <string name="dialog_warn_ip2ip_account_message">Zamierzasz założyć konto SIP bez prawidłowego hosta.
 Będziesz mógł nawiązywać i odbierać połączenia wyłącznie od bezpośrednich adresów IP.
@@ -48,7 +48,7 @@ Możesz edytować swoje konto później</string>
   <string name="account_basic_category">Ustawienia Podstawowe</string>
   <string name="account_alias_label">Nazwa Konta</string>
   <string name="account_hostname_label">Nazwa hosta</string>
-  <string name="account_bootstrap_label">Bootstrap</string>
+  <string name="account_bootstrap_label">Pasek startowy</string>
   <string name="account_username_label">Nazwa użytkownika</string>
   <string name="account_password_label">Hasło</string>
   <string name="account_optionnal_category">Ustawienia Opcjonalne</string>
@@ -123,7 +123,8 @@ Możesz edytować swoje konto później</string>
   <string name="account_share_body_with_username">Skontaktuj się ze mną przez %1$s lub przez moją publiczną nazwę: %2$s na rozproszonej platformie komunikacyjnej Ring: https://ring.cx</string>
   <string name="account_contact_me">Skontaktuj się ze mną na Ring !</string>
   <string name="update_account">Zaktualizuj konto</string>
-  <string name="account_migration">Twoje konto Ring może zostać zaktualizowane.\nWprowadź swoje hasło</string>
+  <string name="account_migration">Twoje konto Ring może zostać zaktualizowane.
+\nWprowadź swoje hasło.</string>
   <string name="ring_account">konto Ring</string>
   <string name="ring_account_identity">Tożsamość</string>
   <string name="account_migration_title_dialog">Przenoszenie konta</string>
@@ -161,7 +162,7 @@ Możesz edytować swoje konto później</string>
   <string name="register_username">Zarejestruj publiczny login (zalecane)</string>
   <string name="username_already_taken">Nazwa użytkownika zajęta</string>
   <string name="invalid_username">Nieprawidłowa nazwa użytkownika</string>
-  <string name="looking_for_username_availability">Sprawdzanie dostępności nazwy użytkownika...</string>
+  <string name="looking_for_username_availability">Sprawdzanie dostępności nazwy użytkownika…</string>
   <string name="account_status_connecting">Łączenie</string>
   <string name="account_status_connection_error">Błąd połączenia</string>
   <string name="account_status_online">Online</string>
