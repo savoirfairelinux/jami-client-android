@@ -10,9 +10,9 @@
   <string name="pref_pushNotifications_summary">Używaj serwerów Google, by umożliwić odbieranie wiadomości i rozmów w tle</string>
   <string name="pref_hd_summary">Zezwól na wysyłane wideo w jakości HD</string>
   <string name="pref_systemContacts_title">Użyj kontakty z systemu</string>
-  <string name="pref_systemContacts_summary">Użyj kontakty z systemu aby pokazać detale tego który dzwoni</string>
+  <string name="pref_systemContacts_summary">Użyj kontaktów systemowych, aby wyświetlić szczegóły dzwoniącego.</string>
   <string name="pref_systemDialer_title">Użyj Ring jako zastępstwo dla rozmow które zazwyczaj idą przez system </string>
-  <string name="pref_systemDialer_summary">Użyj Ring żeby zastąpić rozmowy które zazwyczaj idą przez system kiedy mozliwe</string>
+  <string name="pref_systemDialer_summary">Użyj Ring żeby zastąpić rozmowy które zazwyczaj idą przez system kiedy mozliwe.</string>
   <string name="pref_startOnBoot_title">Uruchom Ring przy Starcie</string>
   <string name="pref_startOnBoot_summary">Uruchom Ring w tle podczas uruchomienia systemu.</string>
   <string name="pref_clearHistory_title">Wyczyść historię</string>
