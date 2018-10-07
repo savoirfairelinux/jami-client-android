@@ -32,4 +32,21 @@
   <!--Blacklist-->
   <!--Smartlist-->
   <!--File Transfer-->
-</resources>
+<string name="feedback_section">"Réactions "</string>
+    <string name="report"><u>Envoyez-nous un email</u></string>
+    <string name="section_license">License</string>
+    <string name="sponsor_section">"Ring est un logiciel libre développé et soutenu par "</string>
+    <string name="copyright_section">Copyright</string>
+    <string name="contribute_section">Contribuez</string>
+    <string name="version_section">Version</string>
+    <string name="no_browser_app_installed">Aucun navigateur Web trouvée, installez-en un pour voir cette page</string>
+    <string name="email_chooser_title">Envoyez un courrier en utilisant…</string>
+    <string name="website_chooser_title">Voir le site en utilisant…</string>
+    <string name="description">Ring est un logiciel libre de communication qui respecte les libertés et la vie privée de ses utilisateurs.</string>
+    <string name="credits">Crédits</string>
+
+    <string name="designed_by">Conçu par</string>
+    <string name="error_no_network">Pas de connexion réseau</string>
+    <string name="error_mobile_network_available_but_disabled">Veuillez autoriser l\'accès au réseau mobile dans les paramètres.</string>
+
+    </resources>
