@@ -189,14 +189,14 @@
   <string name="not_able_to_write_file">Nem lehet írni a fájlt</string>
   <string name="file_transfer_status_created">az átvitel szignálása</string>
   <string name="file_transfer_status_unsupported">nem támogatott</string>
-  <string name="file_transfer_status_wait_peer_acceptance">várakozó egyenrangú (peer) elfogadás</string>
+  <string name="file_transfer_status_wait_peer_acceptance">várakozó partner elfogadás</string>
   <string name="file_transfer_status_wait_host_acceptance">várakozás a fogadó elfogadásra</string>
   <string name="file_transfer_status_ongoing">folyamatban lévő</string>
   <string name="file_transfer_status_finished">befejezett</string>
   <string name="file_transfer_status_closed_by_host">bezárva a fogadóval</string>
-  <string name="file_transfer_status_closed_by_peer">bezárva a peer-el</string>
+  <string name="file_transfer_status_closed_by_peer">bezárva a partnerel</string>
   <string name="file_transfer_status_invalid_pathname">érvénytelen elérési útvonala</string>
-  <string name="file_transfer_status_unjoinable_peer">nem csatlakoztatható peer</string>
+  <string name="file_transfer_status_unjoinable_peer">nem csatlakoztatható partner</string>
   <string name="file_saved_in">A fájl mentve%s</string>
   <string name="no_space_left_on_device">Nincs hely az eszközön</string>
   <string name="title_media_viewer">Média lejátszó</string>

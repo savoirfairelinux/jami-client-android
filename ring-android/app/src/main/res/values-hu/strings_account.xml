@@ -25,7 +25,7 @@
         Csak közvetlen IP hívásokat tud majd indítani és fogadni.
         A fiókját később is módosíthatja</string>
   <string name="account_type_ip2ip">IP fiók</string>
-  <string name="help_ring">A Ring-fiók lehetővé teszi az emberek biztonságos elérését egyenrangúan egy teljesen elosztott hálózaton keresztül.</string>
+  <string name="help_ring">A Ring-fiók lehetővé teszi az emberek biztonságos elérését partneren egy teljesen elosztott hálózaton keresztül.</string>
   <string name="help_sip_title">SIP fiók hozzáadása</string>
   <string name="help_sip">Meglévő SIP-fiók konfigurálása.</string>
   <string name="create_sip_account">SIP fiók hozzáadása</string>
