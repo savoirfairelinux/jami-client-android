@@ -77,4 +77,14 @@
   <string name="account_creation_home">مرحبا بك في Ring</string>
   <!--Edit profile-->
   <!--Devices-->
-</resources>
+<string name="ic_advanced_menu">الإعدادات المتقدمة</string>
+    <string name="ic_blacklist_menu">المراسلون المحظورون</string>
+
+    <string name="add_ring_account_title">إضافة حساب رينغ</string>
+    <string name="add_sip_account_title">إضافة حساب SIP</string>
+    <string name="ring_account_default_name">حساب رينغ %1$s</string>
+
+    <string name="action_create">إنشاء حساب</string>
+    <string name="dialog_wait_update_details">الرجاء الانتظار بينما يتم تحديث حسابك الجديد…</string>
+
+    </resources>
