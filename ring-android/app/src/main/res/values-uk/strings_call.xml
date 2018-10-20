@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
 Copyright (C) 2004-2016 Savoir-faire Linux Inc.
 
 Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
@@ -31,4 +32,9 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_over">Понад</string>
     <string name="call_human_state_none">Нічого</string>
     <!-- Conferences -->
-</resources>
+<string name="call_error_no_microphone">Виклик відхилено. Не виявлено мікрофону.</string>
+    <string name="call_error_no_camera_no_microphone">Виклик відхилено. Не виявлено камери чи мікрофону.</string>
+
+    <string name="call_human_state_searching">Пошук</string>
+    <string name="call_human_state_incoming">Вхідний</string>
+    </resources>
