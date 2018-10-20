@@ -99,4 +99,28 @@
   <!--Edit profile-->
   <!--Devices-->
   <string name="revoke_device_wait_title">Будь ласка зачекайте</string>
-</resources>
+<string name="ic_advanced_menu">Додаткові налаштування</string>
+    <string name="ic_blacklist_menu">Заблоковані контакти</string>
+
+    <string name="add_ring_account_title">Додати обліковий запис Ring</string>
+    <string name="add_sip_account_title">Додати обліковий запис SIP</string>
+    <string name="ring_account_default_name">Обліковий запис Ring %1$s</string>
+
+    <string name="action_create">Створити обліковий запис</string>
+    <string name="dialog_wait_update">Оновлення облікового запису</string>
+    <string name="dialog_wait_update_details">Будь ласка, зачекайте доки обліковий запис оновлюється…</string>
+
+    <string name="account_type_ip2ip">IP обліковий запис</string>
+    <string name="create_sip_account">Додати обліковий запис SIP</string>
+
+    <string name="normal_devices_titles">Відомі пристрої, які прив\'язані до даного облікового запису Ring</string>
+    <string name="account_device_revoke">Відкликати пристрій</string>
+    <string name="account_device_revocation_success_title">Вдалося</string>
+    <string name="account_device_revocation_success">Доступ пристрою відхилено!</string>
+    <string name="account_device_revocation_error_title">Не вдалося відхилити пристрій</string>
+    <string name="account_device_revocation_wrong_password">Неправильний пароль.</string>
+    <string name="account_device_revocation_unknown_device">Невідомий пристрій.</string>
+    <string name="account_device_revocation_error_unknown">Невідома помилка.</string>
+
+    <string name="account_export_end_network_title">Помилка мережі</string>
+    </resources>
