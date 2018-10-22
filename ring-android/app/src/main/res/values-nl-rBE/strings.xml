@@ -2,19 +2,19 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Feedback</string>
-  <string name="report">&lt;u&gt;Stuurd ons nen e-mail&lt;/u&gt;</string>
+  <string name="report">&lt;u&gt;Stuur ons een e-mail&lt;/u&gt;</string>
   <string name="section_license">Licentie</string>
   <string name="sponsor_section">Ring is vrije software ontwikkeld en ondersteund door</string>
   <string name="copyright_section">Auteursrecht</string>
   <string name="contribute_section">Bijdragen</string>
   <string name="version_section">Versie</string>
-  <string name="no_email_app_installed">Genen e-mailapp gevonden, installeerd der enen voor ons een rapport te kunnen sturen</string>
-  <string name="no_browser_app_installed">Gene webbrowserapp gevonden, installeerd der ene voor deze pagina te bekijken</string>
+  <string name="no_email_app_installed">Geen e-mailapp gevonden, installeer er een om ons een rapport te kunnen sturen</string>
+  <string name="no_browser_app_installed">Gee webbrowserapp gevonden, installeer er een om deze pagina te bekijken</string>
   <string name="email_chooser_title">E-mail versturen met…</string>
   <string name="website_chooser_title">Website bekijken met…</string>
-  <string name="license">Deze software word ‘als zodanig’ aangeboden zonder enige garantie. Bekijkt voor meer informatie
+  <string name="license">Deze software word \"als zodanig\" aangeboden zonder enige garantie. Bekijk voor meer informatie
 &lt;u&gt;GNU General Public License versie 3 of later&lt;/u&gt;</string>
-  <string name="description">Ring is vrije software voor universele communicatie, die de vrijheden en privacy van haar gebruikers eerbiedigd.</string>
+  <string name="description">Ring is vrije software voor universele communicatie, die de vrijheden en privacy van haar gebruikers eerbiedigt.</string>
   <string name="credits">Met dank aan</string>
   <!--About dialog-->
   <string name="developed_by">Ontwikkeld door</string>
@@ -22,7 +22,7 @@
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Geen netwerkverbinding</string>
-  <string name="error_mobile_network_available_but_disabled">Geefd toegang tot mobiel netwerk in d’instellingen.</string>
+  <string name="error_mobile_network_available_but_disabled">Gelieve toegang te geven tot het mobiel netwerk in het instellingenscherm.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Tekstberichten</string>
   <!--Left Drawer-->
@@ -38,124 +38,142 @@
   <string name="menu_item_share">Mijn contact delen</string>
   <string name="menu_item_about">Over Ring</string>
   <!--Dialing Fragment-->
-  <string name="dial_number">Kiesd een nummer</string>
+  <string name="dial_number">Kies een nummer</string>
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d gesprek</item>
-    <item quantity="other">%d gesprekken</item>
+    <item quantity="other">%d Gesprekken</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Voerd een naam of telefoonnummer in…</string>
-  <string name="choose_number">Kiesd een nummer</string>
+  <string name="searchbar_hint">Voer een naam of telefoonnummer in…</string>
+  <string name="choose_number">Kies een nummer</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">Gemisten inkomenden oproep</string>
-  <string name="notif_missed_outgoing_call">Gemisten uitgaanden oproep</string>
-  <string name="notif_incoming_call_title">Inkomenden oproep van %1$s</string>
-  <string name="notif_incoming_call">Inkomenden oproep</string>
-  <string name="notif_outgoing_call_title">Uitgaanden oproep naar %1$s</string>
+  <string name="notif_missed_incoming_call">Gemiste inkomende oproep</string>
+  <string name="notif_missed_outgoing_call">Gemiste uitgaande oproep</string>
+  <string name="notif_incoming_call_title">Inkomende oproep van %1$s</string>
+  <string name="notif_incoming_call">Inkomende oproep</string>
+  <string name="notif_outgoing_call_title">Uitgaande oproep naar %1$s</string>
   <string name="notif_outgoing_call">Uitgaanden oproep</string>
   <string name="notif_current_call_title">Huidigen oproep met %1$s</string>
-  <string name="notif_current_call">Huidigen oproep</string>
+  <string name="notif_current_call">Huidige oproep</string>
   <string name="notif_channel_calls">Oproepen</string>
+  <string name="notif_channel_missed_calls">Gemiste oproepen</string>
   <string name="notif_channel_messages">Berichten</string>
   <string name="notif_channel_requests">Verzoeken</string>
   <string name="notif_channel_file_transfer">Bestandsoverdracht</string>
   <string name="notif_mark_as_read">Markeren als gelezen</string>
+  <string name="notif_dismiss">Afwijzen</string>
+  <string name="notif_reply">Antwoord</string>
   <string name="notif_incoming_file_transfer_title">Inkomend bestand van %1$s</string>
-  <string name="notif_incoming_file_transfer">Iemand wild u een bestand sturen</string>
-  <string name="notif_outgoing_file_transfer_title">Bestand word verstuurd naar %1$s</string>
-  <string name="notif_outgoing_file_transfer">Iemand wild u een bestand sturen</string>
+  <string name="notif_incoming_file_transfer">Iemand wil u een bestand sturen</string>
+  <string name="notif_outgoing_file_transfer_title">Bestand wordt verstuurd naar %1$s</string>
+  <string name="notif_outgoing_file_transfer">Iemand wil u een bestand sturen</string>
+  <string name="notif_incoming_picture">Afbeelding van %1$s</string>
   <string name="action_open">Openen</string>
   <!--Call Fragment-->
-  <string name="you_txt_prefix">Gij:</string>
+  <string name="you_txt_prefix">Jij:</string>
   <string name="action_call_hangup">Ophangen</string>
-  <string name="ongoing_call">Lopenden oproep</string>
-  <string name="hist_in_call">Inkomenden oproep van %1$s</string>
-  <string name="hist_out_call">Uitgaanden oproep van %1$s</string>
-  <string name="start_error_title">Ring kan nie worden opgestart!</string>
+  <string name="ongoing_call">Actuele oproep</string>
+  <string name="hist_in_call">Inkomende oproep van %1$s</string>
+  <string name="hist_out_call">Uitgaande oproep van %1$s</string>
+  <string name="start_error_title">Ring kan niet worden gestart!</string>
   <string name="start_error_mic_required">Ring vereist toelating voor de microfoon te kunnen gebruiken.</string>
-  <string name="action_call_accept">Oproep oppakken</string>
+  <string name="action_call_accept">Oproep aannemen</string>
   <string name="action_call_decline">Weigeren</string>
   <string name="ab_action_speakerphone">Luidspreker inschakelen</string>
   <string name="ab_action_contact_add">Aan contacten toevoegen</string>
+  <string name="ab_action_contact_add_question">Toevoegen aan contacten?</string>
   <string name="hist_contact_added">Contact toegevoegd</string>
   <string name="hist_invitation_received">Uitnodiging ontvangen</string>
   <string name="ab_action_audio_call">Audio-oproep</string>
   <string name="ab_action_video_call">Video-oproep</string>
   <string name="ab_action_change_screen_orientation">Schermoriëntatie aanpassen</string>
   <string name="share_via">Delen via</string>
-  <string name="write_a_message">Schrijfd een bericht</string>
+  <string name="write_a_message">Schrijf een bericht</string>
   <string name="scan_qr">QR-code scannen</string>
   <string name="ab_action_flipcamera">Camera draaien</string>
   <!--Text messages-->
   <string name="send_message">Bericht versturen</string>
-  <string name="message_sending">Bericht word verstuurd…</string>
+  <string name="message_sending">Bericht wordt verstuurd…</string>
   <string name="message_failed">Mislukt</string>
   <string name="time_just_now">Zojuist</string>
   <string name="send_file">Bestand versturen</string>
+  <string name="hist_file_sent">Bestand verstuurd</string>
+  <string name="hist_file_received">Bestand ontvangen</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Cameratoelating</string>
-  <string name="permission_dialog_camera_message">Videogesprekken vereisen toelating voor gebruik van de camera. Gelieve t’overwegen deze toelating alsnog toe te kennen.</string>
+  <string name="permission_dialog_camera_message">Videogesprekken vereisen toelating voor gebruik van de camera. Gelieve te overwegen deze toelating alsnog te geven.</string>
   <string name="ringtone_error_title">Fout</string>
-  <string name="ringtone_error_format_not_supported">Dit formaat word nie ondersteund.</string>
+  <string name="ringtone_error_format_not_supported">Dit formaat wordt niet ondersteund.</string>
+  <string name="ringtone_error_size_too_big">Dit bestand is te groot. De maximum grootte is %1$dkB.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring vereist de ‘Contacten lezen’-toelating voor deze functie. Gelieve deze toelating toe te kennen.</string>
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Ring vereist de ‘Oproepgeschiedenis’-toelating voor deze functie. Gelieve deze toelating toe te kennen.</string>
   <!--QRCode Scan-->
-  <string name="scan_qr_account_message">Scand de QR-code van den toe te voegen account.</string>
+  <string name="scan_qr_account_message">Scan de QR-code van het account dat je wil toevoegen.</string>
   <!--Settings-->
+  <string name="clear_history_dialog_title">Geschiedenis wissen?</string>
+  <string name="clear_history_dialog_message">Deze handeling kan niet ongedaan gemaakt worden.</string>
   <string name="clear_history_completed">Geschiedenis is gewist.</string>
   <!--Conversation-->
-  <string name="conversation_action_delete_this">Dit gesprek verwijderen</string>
+  <string name="conversation_action_delete_this">Verwijder dit gesprek</string>
   <string name="conversation_action_delete_this_title">Dit gesprek verwijderen?</string>
-  <string name="conversation_action_delete_this_message">Handeling kan nie ongedaan worden gemaakt.</string>
+  <string name="conversation_action_delete_this_message">Deze handeling kan niet ongedaan gemaakt worden.</string>
   <string name="conversation_action_history_clear">Geschiedenis wissen</string>
+  <string name="conversation_action_history_clear_title">Wis de gespreksgeschiedenis?</string>
+  <string name="conversation_action_history_clear_message">Dit zal de gespreksgeschiedenis permanent wissen.</string>
   <string name="conversation_action_remove_this">Contact verwijderen</string>
+  <string name="conversation_action_remove_this_title">Verwijder dit contact?</string>
+  <string name="conversation_action_remove_this_message">Dit zal het contact verwijderen en de gespreksgeschiedenis permanent wissen.</string>
   <string name="conversation_action_copy_peer_number">Nummer kopiëren</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s gekopieerd naar klembord</string>
-  <string name="conversation_action_select_peer_number">Kiesd een nummer</string>
+  <string name="conversation_action_select_peer_number">Kies een nummer</string>
+  <string name="conversation_action_block_this">Blokkeer contact</string>
+  <string name="conversation_action_go_to_call">Keer terug naar het lopende gesprek</string>
   <!--Contacts-->
-  <string name="prompt_new_password">Nieuw paswoord</string>
-  <string name="prompt_new_password_optional">Nieuw paswoord (optioneel)</string>
-  <string name="prompt_new_password_repeat">Herhaal nieuw paswoord</string>
-  <string name="account_create_title">Ne Ring-account aanmaken</string>
-  <string name="prompt_new_username">Voerd ne nieuwe gebruikersnaam in</string>
-  <string name="help_password_choose">Kiesd een sterk paswoord voor uwe Ring-account te beschermen.</string>
-  <string name="help_password_enter">Voerd het hoofdpaswoord van uwe Ring-account in</string>
-  <string name="help_pin_enter">Voerd de pincode in vanuit uwe Ring-account die al is geconfigureerd op een ander apparaat. Gebruikt de functie ‘account exporteren naar de Ring’ voor een pincode te verkrijgen.</string>
+  <string name="add_call_contact_number_to_contacts">Voeg %1$stoe?</string>
+  <string name="prompt_new_password">Nieuw wachtwoord</string>
+  <string name="prompt_new_password_optional">Nieuw wachtwoord (optioneel)</string>
+  <string name="prompt_new_password_repeat">Herhaal nieuw wachtwoord</string>
+  <string name="account_create_title">Maak een Ring-account aan</string>
+  <string name="prompt_new_username">Voer een nieuwe gebruikersnaam in</string>
+  <string name="help_password_choose">Kies een sterk wachtwoord om uw Ring-account te beschermen.</string>
+  <string name="help_password_enter">Voer het hoofdwachtwoord in van uw Ring-account</string>
+  <string name="help_pin_enter">Voer de pincode in van een ander geconfigeerd Ring-account. Gebruik de functie \"account exporteren naar Ring\" om een pincode te verkrijgen.</string>
   <string name="wizard_next">Volgende</string>
   <string name="wizard_back">Terug</string>
   <string name="wizard_skip">Overslaan</string>
   <!--MenuHeaderView-->
   <string name="profile">Mijn profiel</string>
-  <string name="profile_message_warning">Uw profiel word enkel gedeeld met uw contacten</string>
+  <string name="profile_message_warning">Uw profiel wordt enkel gedeeld met uw contacten</string>
   <string name="open_the_gallery">Galerij openen</string>
   <string name="take_a_photo">Foto nemen</string>
-  <string name="profile_name_hint">Voerd uwe naam in (optioneel)</string>
+  <string name="profile_name_hint">Voer uw naam in (optioneel)</string>
   <!--Share fragment-->
-  <string name="share_message">Scand deze QR-code met den ingebouwde scanner van de Ring-toepassing die met u wild communiceren.</string>
-  <string name="share_message_no_account">Selecteerd nen account voor te delen.</string>
-  <string name="share_your_account_information">Mijn contactinformatie delen</string>
+  <string name="share_message">Scan deze QR-code met de ingebouwde scanner van de Ring-toepassing die met u wil communiceren.</string>
+  <string name="share_message_no_account">Selecteer een account om te delen.</string>
+  <string name="share_your_account_information">Deel mijn contactinformatie</string>
   <string name="generic_error_migration">Fout</string>
-  <string name="generic_error_migration_message">Der is een fout opgetreden tijdens het migratieproces</string>
+  <string name="generic_error_migration_message">Er is een fout opgetreden tijdens het migratieproces</string>
   <!--Pending contact requests-->
   <string name="accept">Aanvaarden</string>
   <string name="refuse">Afwijzen</string>
   <string name="block">Blokkeren</string>
   <string name="contact_request_title">Nieuw contactverzoek</string>
-  <string name="contact_request_msg">G’hebt %1$s contactverzoeken</string>
+  <string name="contact_request_msg">Je hebt %1$s contactverzoeken</string>
   <string name="contact_request_account">Voor %1$s</string>
   <string name="no_requests">0 contactverzoeken</string>
-  <string name="message_contact_not_trusted_yet">%s staat nog nie in uw contacten.\nWilde dit contactverzoek aanvaarden of weigeren?</string>
+  <string name="message_contact_not_trusted_yet">%s staat nog niet in uw contacten.\nWil je dit contactverzoek aanvaarden of weigeren?</string>
+  <string name="message_contact_not_trusted">%sis niet in jouw contacten.\nNieuw contact aanmaken?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Versturen</string>
   <string name="send_request_title">Contactverzoek versturen</string>
-  <string name="send_request_msg">Ge moet een contactverzoek versturen voor met deze gebruiker te communiceren. Ge kund berichten versturen, maar zolang dat uw contact het verzoek nie aanvaard zal hij/zij deze nie kunnen beantwoorden.</string>
+  <string name="send_request_msg">Je moet een contactverzoek versturen om met deze gebruiker te communiceren. Je kan berichten versturen, maar zolang jouw contact het verzoek niet aanvaardt zal hij/zij deze niet kunnen beantwoorden.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 geblokkeerde contacten</string>
   <!--Smartlist-->
@@ -163,22 +181,22 @@
   <string name="contact_request_sent">Contactverzoek verstuurd</string>
   <string name="search_results">Zoekresultaten</string>
   <string name="tv_contact_row_header">Contacten</string>
-  <string name="gallery_error_title">Gene Galerij-app gevonden</string>
-  <string name="gallery_error_message">Genen app gevonden op dit apparaat voor Galerij t’openen</string>
-  <string name="generic_error">Der is een onbekende fout opgetreden</string>
+  <string name="gallery_error_title">Geen Galerij-app gevonden</string>
+  <string name="gallery_error_message">Geen app gevonden op dit apparaat om de Galerij te openen</string>
+  <string name="generic_error">Er is een onbekende fout opgetreden</string>
   <!--File Transfer-->
   <string name="invalid_file">Ongeldig bestand</string>
-  <string name="not_able_to_write_file">Kan bestand nie schrijven</string>
+  <string name="not_able_to_write_file">Kan bestand niet schrijven</string>
   <string name="file_transfer_status_created">overdracht initialiseren</string>
-  <string name="file_transfer_status_unsupported">nie ondersteund</string>
-  <string name="file_transfer_status_wait_peer_acceptance">wachten op aanvaarding door peer</string>
+  <string name="file_transfer_status_unsupported">niet ondersteund</string>
+  <string name="file_transfer_status_wait_peer_acceptance">wachten op aanvaarding door gesprekspartner</string>
   <string name="file_transfer_status_wait_host_acceptance">wachten op aanvaarding door host</string>
   <string name="file_transfer_status_ongoing">bezig</string>
   <string name="file_transfer_status_finished">voltooid</string>
   <string name="file_transfer_status_closed_by_host">gesloten door host</string>
-  <string name="file_transfer_status_closed_by_peer">gesloten door peer</string>
+  <string name="file_transfer_status_closed_by_peer">gesloten door gesprekspartner</string>
   <string name="file_transfer_status_invalid_pathname">ongeldige padnaam</string>
-  <string name="file_transfer_status_unjoinable_peer">peer kan nie’ deelnemen</string>
+  <string name="file_transfer_status_unjoinable_peer">gesprekspartner kan niet deelnemen</string>
   <string name="file_saved_in">Bestand opgeslagen in %s</string>
   <string name="no_space_left_on_device">Geen vrije ruimte resterend op apparaat</string>
   <string name="title_media_viewer">Mediaweergave</string>

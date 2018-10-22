@@ -7,13 +7,14 @@
   <string name="pref_mobileData_title">Mobiele gegevens</string>
   <string name="pref_mobileData_summary">Ring toelaten van 3G/LTE-netwerken te gebruiken naast wifi</string>
   <string name="pref_pushNotifications_title">Pushmeldingen</string>
-  <string name="pref_pushNotifications_summary">Gebruikt de servers van Google voor oproepen/berichten in de achtergrond te kunnen ontvangen</string>
+  <string name="pref_pushNotifications_summary">Gebruik de servers van Google voor oproepen/berichten in de achtergrond te kunnen ontvangen</string>
+  <string name="pref_hd_summary">Activeer het verzenden van HD video</string>
   <string name="pref_systemContacts_title">Systeemcontacten gebruiken</string>
   <string name="pref_systemContacts_summary">Systeemcontacten gebruiken voor gegevens van beller te tonen</string>
   <string name="pref_systemDialer_title">Systeemoproepen plaatsen met Ring</string>
-  <string name="pref_systemDialer_summary">Ring gebruiken voor systeemoproepen wanneer mogelijk</string>
+  <string name="pref_systemDialer_summary">Gebruik Ring voor systeemoproepen indien mogelijk.</string>
   <string name="pref_startOnBoot_title">Ring automatisch starten</string>
-  <string name="pref_startOnBoot_summary">Ring in achtergrond uitvoeren wanneer apparaat ingeschakeld word.</string>
+  <string name="pref_startOnBoot_summary">Ring op de achtergrond uitvoeren zodra het apparaat opstart.</string>
   <string name="pref_clearHistory_title">Geschiedenis wissen</string>
-  <string name="pref_clearHistory_summary">Geschiedenis van alle gesprekken wissen. Deze handeling kan nie ongedaan worden gemaakt.</string>
+  <string name="pref_clearHistory_summary">Wis de volledige gespreksgeschiedenis. Deze handeling kan niet ongedaan gemaakt worden.</string>
 </resources>
