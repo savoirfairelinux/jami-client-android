@@ -190,7 +190,6 @@ public class AccountService {
         mExecutor.execute(() -> {
             refreshAccountsCacheFromDaemon();
             setAccountsActive(isConnected);
-            Ringservice.connectivityChanged();
         });
     }
 
