@@ -138,6 +138,7 @@
   <string name="take_a_photo">Ta et bilde</string>
   <string name="profile_name_hint">Skriv inn ditt navn (valgfritt)</string>
   <!--Share fragment-->
+  <string name="share_message">Skann denne koden med Ring</string>
   <string name="share_message_no_account">Velg en konto å dele.</string>
   <string name="share_your_account_information">Del min kontaktinformasjon</string>
   <string name="generic_error_migration">Feil</string>
