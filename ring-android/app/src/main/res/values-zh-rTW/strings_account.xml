@@ -17,9 +17,9 @@
   <string name="action_register">註冊</string>
   <string name="error_field_required">這是必填欄位</string>
   <string name="dialog_wait_create">正在加入帳號</string>
-  <string name="dialog_wait_create_details">正在加入你的新帳號，請稍等...</string>
+  <string name="dialog_wait_create_details">正在加入你的新帳號，請稍等…</string>
   <string name="dialog_wait_update">正在更新帳號</string>
-  <string name="dialog_wait_update_details">正在更新你的新帳號，請稍等...</string>
+  <string name="dialog_wait_update_details">正在更新你的新帳號，請稍等…</string>
   <string name="dialog_warn_ip2ip_account_title">建立空的 SIP 帳號嗎？</string>
   <string name="dialog_warn_ip2ip_account_message">您將要建立一個沒有有效主機名稱的 SIP 帳號。
         您將僅能撥出與接收直接 IP 通話。
@@ -111,7 +111,7 @@
   <string name="account_new_device_password">輸入主密碼以解鎖帳號</string>
   <string name="error_password_char_count">最小6個字元</string>
   <string name="error_passwords_not_equals">密碼不相符</string>
-  <string name="export_account_wait_title">請等待...</string>
+  <string name="export_account_wait_title">請等待…</string>
   <string name="export_account_wait_message">公開新帳號資訊</string>
   <string name="account_export_end_decryption_message">無法使用您提供的密碼來解鎖您的帳號。</string>
   <string name="account_export_end_network_title">網路錯誤</string>
@@ -180,7 +180,7 @@
   <string name="enter_password">輸入密碼</string>
   <string name="revoke_device_title">撤銷裝置</string>
   <string name="revoke_device_message">您確定您想要撤銷 %1$s 嗎？</string>
-  <string name="revoke_device_wait_title">請等待...</string>
+  <string name="revoke_device_wait_title">請等待…</string>
   <string name="revoke_device_wait_message">正在撤銷裝置</string>
   <string name="rename_device_title">重新命名此裝置</string>
   <string name="rename_device_message">選擇新名稱來在您的 Ring 帳號上辨識此裝置</string>
