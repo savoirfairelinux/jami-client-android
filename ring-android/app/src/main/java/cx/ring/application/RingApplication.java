@@ -80,12 +80,6 @@ public abstract class RingApplication extends Application {
     AccountService mAccountService;
     @Inject
     CallService mCallService;
-    private final BroadcastReceiver ringerModeListener = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            ringerModeChanged(intent.getIntExtra(AudioManager.EXTRA_RINGER_MODE, AudioManager.RINGER_MODE_NORMAL));
-        }
-    };
     @Inject
     ConferenceService mConferenceService;
     @Inject
@@ -98,14 +92,20 @@ public abstract class RingApplication extends Application {
     ContactService mContactService;
     @Inject
     PresenceService mPresenceService;
+
     private RingInjectionComponent mRingInjectionComponent;
-    private Map<String, Boolean> mPermissionsBeingAsked;
+    private final Map<String, Boolean> mPermissionsBeingAsked = new HashMap<>();;
+    private final BroadcastReceiver ringerModeListener = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ringerModeChanged(intent.getIntExtra(AudioManager.EXTRA_RINGER_MODE, AudioManager.RINGER_MODE_NORMAL));
+        }
+    };
 
     public abstract String getPushToken();
 
     private boolean mBound = false;
     private final ServiceConnection mConnection = new ServiceConnection() {
-
         @Override
         public void onServiceConnected(ComponentName className, IBinder s) {
             Log.d(TAG, "onServiceConnected: " + className.getClassName());
@@ -131,18 +131,6 @@ public abstract class RingApplication extends Application {
         super.onLowMemory();
         AvatarFactory.clearCache();
         Glide.get(this).clearMemory();
-    }
-
-    private void setDefaultUncaughtExceptionHandler() {
-        try {
-            Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
-                Log.e(TAG, "Uncaught Exception detected in thread ", e);
-                android.os.Process.killProcess(android.os.Process.myPid());
-                System.exit(2);
-            });
-        } catch (SecurityException e) {
-            Log.e(TAG, "Could not set the Default Uncaught Exception Handler", e);
-        }
     }
 
     public void bootstrapDaemon() {
@@ -237,10 +225,6 @@ public abstract class RingApplication extends Application {
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
             AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
-
-        setDefaultUncaughtExceptionHandler();
-
-        mPermissionsBeingAsked = new HashMap<>();
 
         // building injection dependency tree
         mRingInjectionComponent = DaggerRingInjectionComponent.builder()
