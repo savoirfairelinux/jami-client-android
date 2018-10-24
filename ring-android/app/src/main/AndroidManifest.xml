@@ -358,6 +358,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </intent-filter>
         </service>
 
+        <activity
+            android:name=".client.ContactDetailsActivity"
+            android:label="@string/title_activity_contact_details"
+            android:theme="@style/AppThemeBase"></activity>
     </application>
 
 </manifest>

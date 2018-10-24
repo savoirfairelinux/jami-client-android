@@ -37,6 +37,7 @@ import cx.ring.model.Settings;
 import cx.ring.model.Uri;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
+import ezvcard.VCard;
 
 /**
  * This service handles the contacts
@@ -70,7 +71,7 @@ public abstract class ContactService {
 
     public abstract void loadContactData(CallContact callContact);
 
-    public abstract void saveVCardContactData(CallContact contact);
+    public abstract void saveVCardContactData(CallContact contact, VCard vcard);
     public abstract void loadVCardContactData(CallContact contact);
 
     public ContactService() {

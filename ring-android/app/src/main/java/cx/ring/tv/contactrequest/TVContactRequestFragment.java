@@ -36,7 +36,7 @@ import androidx.leanback.widget.ListRowPresenter;
 import androidx.leanback.widget.Presenter;
 import androidx.leanback.widget.SparseArrayObjectAdapter;
 import androidx.core.content.ContextCompat;
-import android.util.DisplayMetrics;
+
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,12 +45,9 @@ import android.widget.ImageView;
 
 import cx.ring.R;
 import cx.ring.application.RingApplication;
-import cx.ring.contacts.AvatarFactory;
 import cx.ring.model.Uri;
 import cx.ring.tv.main.BaseDetailFragment;
 import cx.ring.tv.model.TVListViewModel;
-import cx.ring.tv.views.DetailsOverviewRowTarget;
-import cx.ring.utils.VCardUtils;
 import cx.ring.views.AvatarDrawable;
 
 public class TVContactRequestFragment extends BaseDetailFragment<TVContactRequestPresenter> implements TVContactRequestView {
@@ -62,6 +59,8 @@ public class TVContactRequestFragment extends BaseDetailFragment<TVContactReques
     private Uri mSelectedContactRequest;
     private ArrayObjectAdapter mAdapter;
     private int iconSize = -1;
+    private int imageCardWidth = -1;
+    private int imageCardHeight = -1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,22 +84,23 @@ public class TVContactRequestFragment extends BaseDetailFragment<TVContactReques
         if (mSelectedContactRequest != null) {
             setupAdapter();
         }
-        iconSize = (int) getResources().getDimension(R.dimen.tv_avatar_size);
+        Resources res = getResources();
+        iconSize = res.getDimensionPixelSize(R.dimen.tv_avatar_size);
+        imageCardWidth = res.getDimensionPixelSize(R.dimen.default_image_card_width);
+        imageCardHeight = res.getDimensionPixelSize(R.dimen.default_image_card_height);
         presenter.setContact(mSelectedContactRequest);
     }
 
     private void prepareBackgroundManager() {
         BackgroundManager mBackgroundManager = BackgroundManager.getInstance(getActivity());
         mBackgroundManager.attach(getActivity().getWindow());
-        DisplayMetrics mMetrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(mMetrics);
     }
 
     private void setupAdapter() {
         // Set detail background and style.
         FullWidthDetailsOverviewRowPresenter detailsPresenter =
                 new FullWidthDetailsOverviewRowPresenter(new TVContactRequestDetailPresenter(),
-                        new TVContactRequestDetailsOverviewLogoPresenter());
+                        new LogoPresenter(imageCardWidth, imageCardHeight));
 
         detailsPresenter.setBackgroundColor(
                 ContextCompat.getColor(getActivity(), R.color.color_primary_dark));
@@ -152,33 +152,19 @@ public class TVContactRequestFragment extends BaseDetailFragment<TVContactReques
         getActivity().finish();
     }
 
-    static class TVContactRequestDetailsOverviewLogoPresenter extends DetailsOverviewLogoPresenter {
-
-        static class ViewHolder extends DetailsOverviewLogoPresenter.ViewHolder {
-            public ViewHolder(View view) {
-                super(view);
-            }
-
-            public FullWidthDetailsOverviewRowPresenter getParentPresenter() {
-                return mParentPresenter;
-            }
-
-            public FullWidthDetailsOverviewRowPresenter.ViewHolder getParentViewHolder() {
-                return mParentViewHolder;
-            }
+    static class LogoPresenter extends DetailsOverviewLogoPresenter {
+        private final int lw, lh;
+        LogoPresenter(int w, int h) {
+            lw = w;
+            lh = h;
         }
 
         @Override
         public Presenter.ViewHolder onCreateViewHolder(ViewGroup parent) {
             ImageView imageView = (ImageView) LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.lb_fullwidth_details_overview_logo, parent, false);
-
-            Resources res = parent.getResources();
-            int width = res.getDimensionPixelSize(R.dimen.default_image_card_width);
-            int height = res.getDimensionPixelSize(R.dimen.default_image_card_height);
-            imageView.setLayoutParams(new ViewGroup.MarginLayoutParams(width, height));
+            imageView.setLayoutParams(new ViewGroup.MarginLayoutParams(lw, lh));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
             return new ViewHolder(imageView);
         }
 
@@ -188,8 +174,7 @@ public class TVContactRequestFragment extends BaseDetailFragment<TVContactReques
             ImageView imageView = ((ImageView) viewHolder.view);
             imageView.setImageDrawable(row.getImageDrawable());
             if (isBoundToImage((ViewHolder) viewHolder, row)) {
-                TVContactRequestDetailsOverviewLogoPresenter.ViewHolder vh =
-                        (TVContactRequestDetailsOverviewLogoPresenter.ViewHolder) viewHolder;
+                LogoPresenter.ViewHolder vh = (LogoPresenter.ViewHolder) viewHolder;
                 vh.getParentPresenter().notifyOnBindLogo(vh.getParentViewHolder());
             }
         }

@@ -573,10 +573,6 @@ public class Account {
     public void addRequest(TrustRequest request) {
         synchronized (pending) {
             mRequests.put(request.getContactId(), request);
-            CallContact contact = getContactFromCache(request.getContactId());
-            if (!contact.detailsLoaded) {
-                contact.setVCardProfile(request.getVCard());
-            }
             //trustRequestSubject.onNext(new RequestEvent(request, true));
             trustRequestsSubject.onNext(mRequests.values());
 
