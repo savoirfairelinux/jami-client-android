@@ -18,11 +18,9 @@
  */
 package cx.ring.account;
 
-import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
-import com.google.android.material.textfield.TextInputLayout;
-import androidx.appcompat.app.AlertDialog;
 import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.View;
@@ -32,8 +30,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 import javax.inject.Inject;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import butterknife.BindString;
 import butterknife.BindView;
@@ -44,6 +45,7 @@ import cx.ring.application.RingApplication;
 import cx.ring.services.AccountService;
 import cx.ring.utils.RegisteredNameFilter;
 import cx.ring.utils.RegisteredNameTextWatcher;
+import io.reactivex.Scheduler;
 import io.reactivex.disposables.Disposable;
 
 public class RegisterNameDialog extends DialogFragment {
@@ -70,6 +72,9 @@ public class RegisterNameDialog extends DialogFragment {
     String mUserNameAlreadyTaken;
     @BindString(R.string.invalid_username)
     String mInvalidUsername;
+    @Inject
+    Scheduler mUiScheduler;
+
     private TextWatcher mUsernameTextWatcher;
     private RegisterNameDialogListener mListener = null;
 
@@ -80,40 +85,37 @@ public class RegisterNameDialog extends DialogFragment {
     }
 
     private void handleBlockchainResult(final int state, final String name) {
-        RingApplication.uiHandler.post(() -> {
-            String actualName = mUsernameTxt.getText().toString();
-            if (actualName.isEmpty()) {
-                mUsernameTxtBox.setErrorEnabled(false);
-                mUsernameTxtBox.setError(null);
-                return;
-            }
+        String actualName = mUsernameTxt.getText().toString();
+        if (actualName.isEmpty()) {
+            mUsernameTxtBox.setErrorEnabled(false);
+            mUsernameTxtBox.setError(null);
+            return;
+        }
 
-            if (actualName.equals(name)) {
-                switch (state) {
-                    case 0:
-                        // on found
-                        mUsernameTxtBox.setErrorEnabled(true);
-                        mUsernameTxtBox.setError(mUserNameAlreadyTaken);
-                        break;
-                    case 1:
-                        // invalid name
-                        mUsernameTxtBox.setErrorEnabled(true);
-                        mUsernameTxtBox.setError(mInvalidUsername);
-                        break;
-                    default:
-                        // on error
-                        mUsernameTxtBox.setErrorEnabled(false);
-                        mUsernameTxtBox.setError(null);
-                        break;
-                }
+        if (actualName.equals(name)) {
+            switch (state) {
+                case 0:
+                    // on found
+                    mUsernameTxtBox.setErrorEnabled(true);
+                    mUsernameTxtBox.setError(mUserNameAlreadyTaken);
+                    break;
+                case 1:
+                    // invalid name
+                    mUsernameTxtBox.setErrorEnabled(true);
+                    mUsernameTxtBox.setError(mInvalidUsername);
+                    break;
+                default:
+                    // on error
+                    mUsernameTxtBox.setErrorEnabled(false);
+                    mUsernameTxtBox.setError(null);
+                    break;
             }
-        });
+        }
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         View view = getActivity().getLayoutInflater().inflate(R.layout.frag_register_name, null);
 
@@ -163,8 +165,8 @@ public class RegisterNameDialog extends DialogFragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
         if (mUsernameTxt != null) {
             mUsernameTxt.addTextChangedListener(mUsernameTextWatcher);
         }
@@ -173,7 +175,10 @@ public class RegisterNameDialog extends DialogFragment {
     @Override
     public void onResume() {
         super.onResume();
-        mDisposableListener = mAccountService.getRegisteredNames().subscribe(r -> handleBlockchainResult(r.state, r.name));
+        mDisposableListener = mAccountService
+                .getRegisteredNames()
+                .observeOn(mUiScheduler)
+                .subscribe(r -> handleBlockchainResult(r.state, r.name));
     }
 
     @Override

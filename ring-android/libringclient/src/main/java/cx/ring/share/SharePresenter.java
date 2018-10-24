@@ -22,38 +22,40 @@ package cx.ring.share;
 
 import javax.inject.Inject;
 
-import cx.ring.model.Account;
 import cx.ring.mvp.GenericView;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
+import io.reactivex.Scheduler;
+import io.reactivex.schedulers.Schedulers;
 
 public class SharePresenter extends RootPresenter<GenericView<ShareViewModel>> {
-    private AccountService mAccountService;
+    private final AccountService mAccountService;
+    private final Scheduler mUiScheduler;
 
     @Inject
-    public SharePresenter(AccountService accountService) {
+    public SharePresenter(AccountService accountService, Scheduler uiScheduler) {
         mAccountService = accountService;
+        mUiScheduler = uiScheduler;
     }
 
     @Override
     public void bindView(GenericView<ShareViewModel> view) {
         super.bindView(view);
-        mCompositeDisposable.add(mAccountService.getCurrentAccountSubject().subscribe(this::loadContactInformation));
-    }
-
-    @Override
-    public void unbindView() {
-        super.unbindView();
+        mCompositeDisposable.add(mAccountService
+                .getCurrentAccountSubject()
+                .map(ShareViewModel::new)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(mUiScheduler)
+                .subscribe(this::loadContactInformation));
     }
 
     public void loadContactInformation() {
-        loadContactInformation(mAccountService.getCurrentAccount());
+        loadContactInformation(new ShareViewModel(mAccountService.getCurrentAccount()));
     }
-    public void loadContactInformation(Account a) {
-        if (getView() == null) {
-            return;
+    private void loadContactInformation(ShareViewModel model) {
+        GenericView<ShareViewModel> view = getView();
+        if (view != null) {
+            view.showViewModel(model);
         }
-        // let the view display the ViewModel
-        getView().showViewModel(new ShareViewModel(a));
     }
 }
