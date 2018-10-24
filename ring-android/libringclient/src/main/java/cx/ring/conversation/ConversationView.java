@@ -63,6 +63,8 @@ public interface ConversationView extends BaseView {
 
     void goToCallActivityWithResult(String accountId, String contactRingId, boolean audioOnly);
 
+    void goToContactActivity(String accountId, String contactRingId);
+
     void switchToUnknownView(String name);
 
     void switchToIncomingTrustRequestView(String message);

@@ -39,6 +39,7 @@ import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import cx.ring.R;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
+import cx.ring.services.VCardServiceImpl;
 import cx.ring.utils.HashUtils;
 import cx.ring.utils.Tuple;
 import cx.ring.utils.VCardUtils;
@@ -87,30 +88,30 @@ public class AvatarDrawable extends Drawable {
     }
 
     public AvatarDrawable(Context context, CallContact contact) {
-        this(context, contact.getPhoto(), contact.getProfileName(), contact.getUsername(), contact.getPrimaryNumber(), true);
+        this(context, (Bitmap)contact.getPhoto(), contact.getProfileName(), contact.getUsername(), contact.getPrimaryNumber(), true);
     }
     public AvatarDrawable(Context context, CallContact contact, boolean crop) {
-        this(context, contact.getPhoto(), contact.getProfileName(), contact.getUsername(), contact.getPrimaryNumber(), crop);
+        this(context, (Bitmap)contact.getPhoto(), contact.getProfileName(), contact.getUsername(), contact.getPrimaryNumber(), crop);
     }
     public AvatarDrawable(Context context, Account account, boolean crop) {
-        this(context, VCardUtils.readData(account.getProfile()), account.getRegisteredName(), account.getUri(), crop);
+        this(context, VCardServiceImpl.readData(account.getProfile()), account.getRegisteredName(), account.getUri(), crop);
     }
     public AvatarDrawable(Context context, Account account) {
-        this(context, VCardUtils.readData(account.getProfile()), account.getRegisteredName(), account.getUri(), true);
+        this(context, VCardServiceImpl.readData(account.getProfile()), account.getRegisteredName(), account.getUri(), true);
     }
-    public AvatarDrawable(Context context, byte[] photo, String profileName, String username, String id, boolean crop) {
+    /*public AvatarDrawable(Context context, byte[] photo, String profileName, String username, String id, boolean crop) {
         this(context, photo, TextUtils.isEmpty(profileName) ? username : profileName, id, crop);
-    }
+    }*/
     public AvatarDrawable(Context context, Bitmap photo, String profileName, String username, String id, boolean crop) {
         this(context, photo, TextUtils.isEmpty(profileName) ? username : profileName, id, crop);
     }
-    public AvatarDrawable(Context context, Tuple<String, byte[]> data, String registeredName, String uri, boolean crop) {
-        this(context, data.second, data.first, registeredName, uri, crop);
+    public AvatarDrawable(Context context, Tuple<String, Object> data, String registeredName, String uri, boolean crop) {
+        this(context, (Bitmap)data.second, data.first, registeredName, uri, crop);
     }
-    public AvatarDrawable(Context context, Tuple<String, byte[]> data, String registeredName, String uri) {
-        this(context, data.second, data.first, registeredName, uri, true);
+    public AvatarDrawable(Context context, Tuple<String, Object> data, String registeredName, String uri) {
+        this(context, (Bitmap)data.second, data.first, registeredName, uri, true);
     }
-    public AvatarDrawable(Context context, byte[] photo, String name, String id, boolean crop) {
+    /*public AvatarDrawable(Context context, byte[] photo, String name, String id, boolean crop) {
         this(context, photo == null ? null : getBitmap(photo), name, id, crop);
     }
 
@@ -120,7 +121,7 @@ public class AvatarDrawable extends Drawable {
             return null;
         int d = Math.min(source.getWidth(), source.getHeight());
         return ThumbnailUtils.extractThumbnail(source, d, d);
-    }
+    }*/
 
     public AvatarDrawable(Context context, Bitmap photo, String name, String id, boolean crop) {
         Log.w("AvatarDrawable", photo + " " + name + " " + id);
@@ -170,11 +171,8 @@ public class AvatarDrawable extends Drawable {
             canvas.drawText(avatarText, textStartXPoint, textStartYPoint, textPaint);
         } else {
             canvas.drawColor(color);
-            canvas.save();
-            canvas.scale(1.2f, 1.2f, getBounds().centerX(), getBounds().centerY());
             placeholder.setTint(Color.WHITE);
             placeholder.draw(canvas);
-            canvas.restore();
         }
     }
 
@@ -216,7 +214,9 @@ public class AvatarDrawable extends Drawable {
                     h = Math.max(bitmap.getHeight(), getBounds().height());
                     w  = (h * bitmap.getWidth())/bitmap.getHeight();
                 }
-                backgroundBounds.set(0, 0, w, h);
+                int cx = (getBounds().width() - w)/2;
+                int cy = (getBounds().height() - h)/2;
+                backgroundBounds.set(cx, cy, cx + w, h + cy);
             } else {
                 backgroundBounds.set(getBounds());
             }

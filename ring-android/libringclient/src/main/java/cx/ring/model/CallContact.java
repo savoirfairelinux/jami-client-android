@@ -45,22 +45,25 @@ public class CallContact {
 
     private long mId;
     private String mKey;
-    private String mDisplayName;
     private String mUsername = null;
     private long mPhotoId;
     private final ArrayList<Phone> mPhones;
     private boolean isUser;
-    private WeakReference<byte[]> mContactPhoto = new WeakReference<>(null);
     private boolean stared = false;
     private boolean isFromSystem = false;
     private Status mStatus = Status.NO_REQUEST;
     private Date mAddedDate = null;
     private boolean mOnline = false;
 
-    public boolean subscribed = false;
-    public boolean usernameLoaded = false;
+    private boolean subscribed = false;
+    private boolean usernameLoaded = false;
     public boolean detailsLoaded = false;
-    public VCard vcard = null;
+
+    // Profile
+    private VCard vcard = null;
+    private String mDisplayName;
+    //private WeakReference<byte[]> mContactPhoto = new WeakReference<>(null);
+    private Object mContactPhoto = null;
 
     private Subject<CallContact> mContactUpdates = BehaviorSubject.create();
 
@@ -260,15 +263,15 @@ public class CallContact {
     }
 
     public boolean hasPhoto() {
-        return mContactPhoto.get() != null;
+        return mContactPhoto != null;
     }
 
-    public byte[] getPhoto() {
-        return mContactPhoto.get();
+    public Object getPhoto() {
+        return mContactPhoto;
     }
 
-    public void setPhoto(byte[] externalArray) {
-        mContactPhoto = new WeakReference<>(externalArray);
+    public void setPhoto(Object externalArray) {
+        mContactPhoto = externalArray;
     }
 
     public boolean isFromSystem() {
@@ -337,24 +340,32 @@ public class CallContact {
         return usernameLoaded;
     }
 
-    public void setProfile(String name, byte[] photo) {
+    public void setProfile(String name, Object photo) {
         if (!StringUtils.isEmpty(name) && !name.startsWith(Uri.RING_URI_SCHEME)) {
             setDisplayName(name);
         }
-        if (photo != null && photo.length > 0) {
+        if (photo != null) {
             setPhoto(photo);
         }
         detailsLoaded = true;
         mContactUpdates.onNext(this);
     }
 
-    public void setVCardProfile(VCard vcard) {
+    public void setVCard(VCard vcard) {
+        this.vcard = vcard;
+    }
+
+    /*public void setVCardProfile(VCard vcard) {
         this.vcard = vcard;
         Tuple<String, byte[]> info = VCardUtils.readData(vcard);
         setProfile(info.first, info.second);
+    }*/
+
+    public VCard getVCard() {
+        return vcard;
     }
 
-    @Override
+    /*@Override
     public boolean equals(Object o) {
         if (o == this) {
             return true;
@@ -364,6 +375,6 @@ public class CallContact {
         }
         CallContact contact = (CallContact) o;
         return contact.getId() == this.getId() && contact.getDisplayName().equals(this.getDisplayName());
-    }
+    }*/
 
 }
