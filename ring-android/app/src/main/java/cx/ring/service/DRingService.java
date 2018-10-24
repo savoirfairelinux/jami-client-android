@@ -517,15 +517,7 @@ public class DRingService extends Service {
     private final Runnable mConnectivityChecker = new Runnable() {
         @Override
         public void run() {
-            mAccountService.setAccountsActive(mPreferencesService.hasNetworkConnected());
-
-            for (Account account : mAccountService.getAccounts()) {
-                if (account.isActive() && !account.isRegistered()) {
-                    // Account is active, but still not connected. Execute connectivityChanged
-                    mHardwareService.connectivityChanged();
-                    break;
-                }
-            }
+            updateConnectivityState();
         }
     };
 
@@ -640,9 +632,17 @@ public class DRingService extends Service {
      */
 
     private void updateConnectivityState() {
+        Log.w(TAG, "updateConnectivityState");
         if (mDaemonService.isStarted()) {
             mAccountService.setAccountsActive(mPreferencesService.hasNetworkConnected());
-            mHardwareService.connectivityChanged();
+
+            for (Account account : mAccountService.getAccounts()) {
+                if (account.isActive() && !account.isRegistered()) {
+                    // Account is active, but still not connected. Execute connectivityChanged
+                    mHardwareService.connectivityChanged();
+                    break;
+                }
+            }
         }
     }
 
