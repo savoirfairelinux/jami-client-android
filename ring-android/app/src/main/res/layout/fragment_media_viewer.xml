@@ -19,5 +19,6 @@
         app:zoomage_restrictBounds="true"
         app:zoomage_translatable="true"
         app:zoomage_zoomable="true"
+        app:zoomage_doubleTapToZoom="true"
         tools:src="@drawable/banner" />
 </RelativeLayout>
