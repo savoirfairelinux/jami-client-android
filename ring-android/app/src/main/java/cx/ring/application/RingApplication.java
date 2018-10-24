@@ -63,16 +63,12 @@ import cx.ring.services.PreferencesService;
 import cx.ring.services.PresenceService;
 
 public abstract class RingApplication extends Application {
-
-    public final static String DRING_CONNECTION_CHANGED = BuildConfig.APPLICATION_ID + ".event.DRING_CONNECTION_CHANGE";
+    private static final String TAG = RingApplication.class.getSimpleName();
+    public static final String DRING_CONNECTION_CHANGED = BuildConfig.APPLICATION_ID + ".event.DRING_CONNECTION_CHANGE";
     public static final int PERMISSIONS_REQUEST = 57;
-    /**
-     * Handler to run tasks that needs to be on main thread (UI updates)
-     */
-    public static final Handler uiHandler = new Handler(Looper.getMainLooper());
-    private final static String TAG = RingApplication.class.getSimpleName();
-    static private final IntentFilter RINGER_FILTER = new IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION);
+    private static final IntentFilter RINGER_FILTER = new IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION);
     private static RingApplication sInstance = null;
+
     @Inject
     @Named("DaemonExecutor")
     ScheduledExecutorService mExecutor;
