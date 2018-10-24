@@ -22,11 +22,11 @@ package cx.ring.share;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import androidx.appcompat.widget.AppCompatButton;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,7 +34,6 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cx.ring.R;
-import cx.ring.application.RingApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.mvp.BaseFragment;
@@ -62,7 +61,7 @@ public class ShareFragment extends BaseFragment<SharePresenter> implements Gener
     protected String mShareVia;
 
     @BindView(R.id.share_button)
-    protected AppCompatButton mShareButton;
+    protected Button mShareButton;
 
     private String mUriToShow;
     private int mQRCodeSize = 0;
@@ -118,7 +117,6 @@ public class ShareFragment extends BaseFragment<SharePresenter> implements Gener
         }
     }
 
-    //region View Methods Implementation
     @Override
     public void showViewModel(final ShareViewModel viewModel) {
         final QRCodeUtils.QRCodeData qrCodeData = viewModel.getAccountQRCodeData();
@@ -127,25 +125,22 @@ public class ShareFragment extends BaseFragment<SharePresenter> implements Gener
             return;
         }
 
-        RingApplication.uiHandler.post(() -> {
-            if (qrCodeData == null || mQRCodeSize <= 0) {
-                mQrImage.setVisibility(View.INVISIBLE);
-                mShareInstruction.setText(mShareMessageNoAccount);
-            } else {
-                Bitmap bitmap = Bitmap.createBitmap(qrCodeData.getWidth(), qrCodeData.getHeight(), Bitmap.Config.ARGB_8888);
-                bitmap.setPixels(qrCodeData.getData(), 0, qrCodeData.getWidth(), 0, 0, qrCodeData.getWidth(), qrCodeData.getHeight());
-                mQrImage.setImageBitmap(bitmap);
-                mShareInstruction.setText(mShareMessage);
-                mQrImage.setVisibility(View.VISIBLE);
-            }
+        if (qrCodeData == null || mQRCodeSize <= 0) {
+            mQrImage.setVisibility(View.INVISIBLE);
+            mShareInstruction.setText(mShareMessageNoAccount);
+        } else {
+            Bitmap bitmap = Bitmap.createBitmap(qrCodeData.getWidth(), qrCodeData.getHeight(), Bitmap.Config.ARGB_8888);
+            bitmap.setPixels(qrCodeData.getData(), 0, qrCodeData.getWidth(), 0, 0, qrCodeData.getWidth(), qrCodeData.getHeight());
+            mQrImage.setImageBitmap(bitmap);
+            mShareInstruction.setText(mShareMessage);
+            mQrImage.setVisibility(View.VISIBLE);
+        }
 
-            mUriToShow = viewModel.getAccountShareUri();
-            if (TextUtils.isEmpty(mUriToShow)) {
-                mShareButton.setEnabled(false);
-            } else {
-                mShareButton.setEnabled(true);
-            }
-        });
+        mUriToShow = viewModel.getAccountShareUri();
+        if (TextUtils.isEmpty(mUriToShow)) {
+            mShareButton.setEnabled(false);
+        } else {
+            mShareButton.setEnabled(true);
+        }
     }
-    //endregion
 }

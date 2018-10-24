@@ -19,41 +19,24 @@
  */
 package cx.ring.share;
 
-import java.lang.ref.WeakReference;
-
 import cx.ring.model.Account;
 import cx.ring.utils.QRCodeUtils;
 
 public class ShareViewModel {
 
-    private final WeakReference<Account> mAccount;
+    private final String shareUri;
+    private final QRCodeUtils.QRCodeData data;
 
     public ShareViewModel(Account account) {
-        mAccount = new WeakReference<>(account);
-    }
-
-    private Account getAccount() {
-        Account account = mAccount.get();
-        if (account == null  || !account.isEnabled())
-            return null;
-        return account;
+        shareUri = account.getDisplayUri();
+        data = QRCodeUtils.encodeStringAsQRCodeData(account.getUri());
     }
 
     public QRCodeUtils.QRCodeData getAccountQRCodeData() {
-        Account account = getAccount();
-        if (account == null) {
-            return null;
-        }
-
-        return QRCodeUtils.encodeStringAsQRCodeData(account.getUri());
+        return data;
     }
 
     public String getAccountShareUri() {
-        Account account = getAccount();
-        if (account == null) {
-            return null;
-        }
-
-        return account.getDisplayUri();
+        return shareUri;
     }
 }

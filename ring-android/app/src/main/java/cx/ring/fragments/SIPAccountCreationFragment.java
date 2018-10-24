@@ -24,7 +24,9 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+
 import androidx.appcompat.app.AlertDialog;
+
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -197,25 +199,21 @@ public class SIPAccountCreationFragment extends BaseSupportFragment<SIPCreationP
                            final String negative,
                            final DialogInterface.OnClickListener listenerPositive,
                            final DialogInterface.OnClickListener listenerNegative) {
+        if (mProgress != null && mProgress.isShowing()) {
+            mProgress.dismiss();
+        }
 
-        RingApplication.uiHandler.post(() -> {
-            if (mProgress != null && mProgress.isShowing()) {
-                mProgress.dismiss();
-            }
+        //orientation is locked during the create of account to avoid the destruction of the thread
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
-            //orientation is locked during the create of account to avoid the destruction of the thread
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
-
-            new AlertDialog.Builder(getActivity())
-                    .setPositiveButton(positive, listenerPositive)
-                    .setNegativeButton(negative, listenerNegative)
-                    .setTitle(title).setMessage(message)
-                    .setOnDismissListener(dialog -> {
-                        //unlock the screen orientation
-                        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-                    })
-                    .show();
-        });
-
+        new AlertDialog.Builder(getActivity())
+                .setPositiveButton(positive, listenerPositive)
+                .setNegativeButton(negative, listenerNegative)
+                .setTitle(title).setMessage(message)
+                .setOnDismissListener(dialog -> {
+                    //unlock the screen orientation
+                    getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+                })
+                .show();
     }
 }
