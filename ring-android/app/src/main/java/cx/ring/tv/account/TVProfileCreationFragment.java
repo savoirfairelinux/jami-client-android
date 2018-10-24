@@ -44,11 +44,11 @@ import cx.ring.account.AccountCreationModelImpl;
 import cx.ring.account.ProfileCreationFragment;
 import cx.ring.account.ProfileCreationPresenter;
 import cx.ring.account.ProfileCreationView;
-import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.application.RingApplication;
 import cx.ring.model.Account;
 import cx.ring.mvp.AccountCreationModel;
 import cx.ring.tv.camera.CustomCameraActivity;
+import cx.ring.utils.AndroidFileUtils;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
@@ -230,7 +230,7 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
     }
 
     public void updatePhoto(Uri uriImage) {
-        ContactDetailsTask.loadProfilePhotoFromUri(getActivity(), uriImage)
+        AndroidFileUtils.loadBitmap(getActivity(), uriImage)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::updatePhoto, e -> Log.e(TAG, "Error loading image", e));
     }

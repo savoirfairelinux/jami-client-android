@@ -40,29 +40,19 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import cx.ring.R;
-import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.Account;
 import cx.ring.mvp.AccountCreationModel;
 import cx.ring.mvp.BaseSupportFragment;
-import cx.ring.utils.VCardUtils;
+import cx.ring.utils.AndroidFileUtils;
 import cx.ring.views.AvatarDrawable;
-import ezvcard.VCard;
-import ezvcard.parameter.ImageType;
-import ezvcard.property.FormattedName;
-import ezvcard.property.Photo;
-import ezvcard.property.RawProperty;
-import ezvcard.property.Uid;
 import io.reactivex.Observable;
-import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 import static cx.ring.account.RingAccountCreationFragment.KEY_RING_ACCOUNT;
 
@@ -183,7 +173,7 @@ public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreation
     }
 
     public void updatePhoto(Uri uriImage) {
-        ContactDetailsTask.loadProfilePhotoFromUri(getActivity(), uriImage)
+        AndroidFileUtils.loadBitmap(getActivity(), uriImage)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::updatePhoto, e -> Log.e(TAG, "Error loading image", e));
     }

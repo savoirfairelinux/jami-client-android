@@ -223,6 +223,10 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         getView().displayCopyToClipboard(mConversation.getContact());
     }
 
+    public void openContact() {
+        getView().goToContactActivity(mAccountId, mConversation.getContact().getPrimaryNumber());
+    }
+
     public void sendTextMessage(String message) {
         if (StringUtils.isEmpty(message)) {
             return;
