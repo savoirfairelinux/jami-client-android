@@ -602,27 +602,6 @@ public class NotificationServiceImpl extends NotificationService {
 
     private void setContactPicture(CallContact contact, NotificationCompat.Builder messageNotificationBuilder) {
         int size = (int) (mContext.getResources().getDisplayMetrics().density * AvatarFactory.SIZE_NOTIF);
-        try {
-            messageNotificationBuilder.setLargeIcon(AvatarFactory.getBitmapGlideAvatar(mContext, contact)
-                    .submit(size, size)
-                    .get());
-        } catch (Exception e) {
-        }
+        messageNotificationBuilder.setLargeIcon(AvatarFactory.getBitmapAvatar(mContext, contact, size).blockingGet());
     }
-
-    /*private void setContactPicture(byte[] photo, String username, String ringId, NotificationCompat.Builder messageNotificationBuilder) {
-        Drawable contactPicture = AvatarFactory.getAvatar(mContext, photo, username, ringId);
-
-        Bitmap contactBitmap = BitmapUtils.drawableToBitmap(contactPicture);
-        if (contactBitmap == null) {
-            Log.d(TAG, "showCallNotification: not able to generate contactBitmap");
-            return;
-        }
-        Bitmap circleBitmap = BitmapUtils.cropImageToCircle(contactBitmap);
-        if (circleBitmap == null) {
-            Log.d(TAG, "showCallNotification: not able to generate circleBitmap");
-            return;
-        }
-        messageNotificationBuilder.setLargeIcon(circleBitmap);
-    }*/
 }

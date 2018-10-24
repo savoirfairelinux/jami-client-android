@@ -70,6 +70,7 @@ import cx.ring.R;
 import cx.ring.adapters.ConversationAdapter;
 import cx.ring.adapters.NumberAdapter;
 import cx.ring.client.CallActivity;
+import cx.ring.client.ContactDetailsActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.contacts.AvatarFactory;
@@ -109,6 +110,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     public static final String KEY_CONTACT_RING_ID = BuildConfig.APPLICATION_ID + "CONTACT_RING_ID";
     public static final String KEY_ACCOUNT_ID = BuildConfig.APPLICATION_ID + "ACCOUNT_ID";
     public static final String KEY_PREFERENCE_PENDING_MESSAGE = "pendingMessage";
+    public static final String KEY_PREFERENCE_CONVERSATION_COLOR = "color";
 
     private static final String CONVERSATION_CLEAR = "CONVERSATION_CLEAR";
     private static final String CONVERSATION_DELETE = "CONVERSATION_DELETE";
@@ -159,13 +161,11 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     @BindView(R.id.tvTrustRequestMessage)
     protected TextView mTvTrustRequestMessage;
 
-
     @BindView(R.id.pb_loading)
     protected ProgressBar mLoadingIndicator;
 
     private AlertDialog mClearDialog;
     private boolean mClearConversation = false;
-
 
     private AlertDialog mDeleteDialog;
     private boolean mDeleteConversation = false;
@@ -548,7 +548,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
                 presenter.clearAction();
                 return true;
             case R.id.menuitem_copy_content:
-                presenter.copyToClipboard();
+                presenter.openContact();
                 return true;
             case R.id.menuitem_delete:
                 presenter.removeAction();
@@ -690,6 +690,13 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         startActivity(new Intent(Intent.ACTION_VIEW)
                 .setClass(getActivity().getApplicationContext(), CallActivity.class)
                 .putExtra(NotificationService.KEY_CALL_ID, conferenceId));
+    }
+
+    @Override
+    public void goToContactActivity(String accountId, String contactRingId)
+    {
+        startActivity(new Intent(Intent.ACTION_VIEW, android.net.Uri.withAppendedPath(android.net.Uri.withAppendedPath(ContentUriHandler.CONTACT_CONTENT_URI, accountId), contactRingId))
+                .setClass(getActivity().getApplicationContext(), ContactDetailsActivity.class));
     }
 
     @Override

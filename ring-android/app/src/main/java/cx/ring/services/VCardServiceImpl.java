@@ -24,7 +24,9 @@ import android.graphics.Bitmap;
 
 import java.io.ByteArrayOutputStream;
 
+import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.BitmapUtils;
+import cx.ring.utils.Tuple;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import ezvcard.parameter.ImageType;
@@ -47,8 +49,8 @@ public class VCardServiceImpl extends VCardService {
                 .map(vcard -> {
                     if (!vcard.getPhotos().isEmpty()) {
                         // Reduce photo size to fit in one DHT packet
-                        Bitmap photo = BitmapUtils.bytesToBitmap(vcard.getPhotos().get(0).getData());
-                        photo = BitmapUtils.reduceBitmap(photo, maxSize);
+                        Bitmap photo = BitmapUtils.bytesToBitmap(vcard.getPhotos().get(0).getData(), maxSize);
+                        //photo = BitmapUtils.reduceBitmap(photo, maxSize);
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
                         photo.compress(Bitmap.CompressFormat.JPEG, 92, stream);
                         vcard.removeProperties(Photo.class);
@@ -58,4 +60,17 @@ public class VCardServiceImpl extends VCardService {
                     return vcard;
                 });
     }
+
+    @Override
+    public Single<Tuple<String, Object>> loadVCardProfile(VCard vcard) {
+        return Single.fromCallable(() -> readData(vcard));
+    }
+
+    public static Tuple<String, Object> readData(VCard vcard) {
+        return readData(VCardUtils.readData(vcard));
+    }
+    public static Tuple<String, Object> readData(Tuple<String, byte[]> profile) {
+        return new Tuple<>(profile.first, BitmapUtils.bytesToBitmap(profile.second));
+    }
+
 }
