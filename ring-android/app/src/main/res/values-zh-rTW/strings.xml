@@ -4,13 +4,13 @@
   <string name="feedback_section">回饋</string>
   <string name="report">&lt;u&gt;寄一封email給我們&lt;/u&gt;</string>
   <string name="section_license">授權條款</string>
-  <string name="sponsor_section">Ring 是由此團隊開發與支援的自由軟體：</string>
+  <string name="sponsor_section">Ring 是一個自由軟體開發團隊與支援由</string>
   <string name="copyright_section">版權</string>
   <string name="contribute_section">貢獻</string>
   <string name="version_section">版本</string>
   <string name="no_email_app_installed">沒有找到電子郵件應用程式，請安裝一個來傳送報告給我們</string>
   <string name="no_browser_app_installed">沒有網頁瀏覽程式，請安裝一個以便觀看這網頁</string>
-  <string name="email_chooser_title">傳送郵件藉由...</string>
+  <string name="email_chooser_title">傳送郵件藉由…</string>
   <string name="website_chooser_title">檢視網頁使用…</string>
   <string name="license">本軟體以現狀（\"as is\"）提供，不負任何明示或暗示之擔保責任。詳細資訊請見
 &lt;u&gt;GNU通用公共授權條款第三版或更新&lt;/u&gt;</string>
@@ -46,7 +46,7 @@
     <item quantity="other">%d 個對話</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">輸入名稱或電話號碼</string>
+  <string name="searchbar_hint">輸入名稱或電話號碼…</string>
   <string name="choose_number">選擇號碼</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -97,7 +97,7 @@
   <string name="ab_action_flipcamera">翻轉攝影機</string>
   <!--Text messages-->
   <string name="send_message">傳送訊息</string>
-  <string name="message_sending">正在傳送訊息...</string>
+  <string name="message_sending">正在傳送訊息…</string>
   <string name="message_failed">失敗</string>
   <string name="time_just_now">剛剛</string>
   <string name="send_file">傳送檔案</string>
