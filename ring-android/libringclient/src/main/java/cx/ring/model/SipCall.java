@@ -28,6 +28,7 @@ import cx.ring.daemon.StringVect;
 import cx.ring.utils.ProfileChunk;
 import cx.ring.utils.VCardUtils;
 import ezvcard.Ezvcard;
+import ezvcard.VCard;
 
 public class SipCall {
 
@@ -274,7 +275,7 @@ public class SipCall {
         return mCallState == State.CURRENT;
     }
 
-    public boolean appendToVCard(StringMap messages) {
+    public VCard appendToVCard(StringMap messages) {
         StringVect keys = messages.keys();
         for (int i = 0, n = keys.size(); i < n; i++) {
             String key = keys.get(i);
@@ -291,14 +292,15 @@ public class SipCall {
             String content = messages.getRaw(keys.get(i)).toJavaString();
             mProfileChunk.addPartAtIndex(content, part);
             if (mProfileChunk.isProfileComplete()) {
-                if (mContact != null) {
-                    mContact.setVCardProfile(Ezvcard.parse(mProfileChunk.getCompleteProfile()).first());
-                }
+                /*if (mContact != null) {
+                    mContact.setVCard(Ezvcard.parse(mProfileChunk.getCompleteProfile()).first());
+                }*/
+                VCard ret = Ezvcard.parse(mProfileChunk.getCompleteProfile()).first();
                 mProfileChunk = null;
-                return true;
+                return ret;
             }
         }
-        return false;
+        return null;
     }
 
 }

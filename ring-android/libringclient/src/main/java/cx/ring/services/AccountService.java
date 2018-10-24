@@ -232,6 +232,14 @@ public class AccountService {
                 for (Map<String, String> requestInfo : requests) {
                     TrustRequest request = new TrustRequest(accountId, requestInfo);
                     account.addRequest(request);
+                    CallContact contact = account.getContactFromCache(request.getContactId());
+                    if (!contact.detailsLoaded) {
+                        final VCard vcard = request.getVCard();
+                        contact.setVCard(vcard);
+                        mVCardService.loadVCardProfile(vcard)
+                                .subscribeOn(Schedulers.computation())
+                                .subscribe(profile -> contact.setProfile(profile.first, profile.second));
+                    }
                     // If name is in cache this can be synchronous
                     if (enabled)
                         Ringservice.lookupAddress(accountId, "", request.getContactId());
@@ -1086,7 +1094,13 @@ public class AccountService {
             TrustRequest request = new TrustRequest(accountId, from, received * 1000L, message);
             VCard vcard = request.getVCard();
             if (vcard != null) {
-                VCardUtils.savePeerProfileToDisk(vcard, from + ".vcf", mDeviceRuntimeService.provideFilesDir());
+                CallContact contact = account.getContactFromCache(request.getContactId());
+                if (!contact.detailsLoaded) {
+                    VCardUtils.savePeerProfileToDisk(vcard, from + ".vcf", mDeviceRuntimeService.provideFilesDir());
+                    mVCardService.loadVCardProfile(vcard)
+                            .subscribeOn(Schedulers.computation())
+                            .subscribe(profile -> contact.setProfile(profile.first, profile.second));
+                }
             }
             account.addRequest(request);
             if (account.isEnabled())
