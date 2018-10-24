@@ -36,22 +36,21 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import cx.ring.R;
 import cx.ring.account.ProfileCreationFragment;
-import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.application.RingApplication;
 import cx.ring.contacts.AvatarFactory;
 import cx.ring.model.Account;
 import cx.ring.navigation.RingNavigationPresenter;
 import cx.ring.navigation.RingNavigationView;
 import cx.ring.navigation.RingNavigationViewModel;
+import cx.ring.services.VCardServiceImpl;
 import cx.ring.tv.camera.CustomCameraActivity;
+import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.VCardUtils;
 import cx.ring.views.AvatarDrawable;
 import ezvcard.VCard;
@@ -192,7 +191,7 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
         else
             getGuidanceStylist().getTitleView().setText(alias);
 
-        AvatarDrawable avatar = new AvatarDrawable(getContext(), VCardUtils.readData(vcard), account.getUsername(), account.getUsername(), true);
+        AvatarDrawable avatar = new AvatarDrawable(getContext(), VCardServiceImpl.readData(vcard), account.getUsername(), account.getUsername(), true);
         avatar.setInSize(iconSize);
         getGuidanceStylist().getIconView().setImageDrawable(avatar);
     }
@@ -234,7 +233,7 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
     }
 
     public void updatePhoto(Uri uriImage) {
-        ContactDetailsTask.loadProfilePhotoFromUri(getActivity(), uriImage)
+        AndroidFileUtils.loadBitmap(getActivity(), uriImage)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::updatePhoto, e -> Log.e(TAG, "Error loading image", e));
     }

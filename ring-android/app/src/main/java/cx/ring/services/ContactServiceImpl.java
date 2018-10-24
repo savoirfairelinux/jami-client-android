@@ -23,6 +23,7 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.provider.ContactsContract;
 import androidx.annotation.NonNull;
 import android.util.Log;
@@ -39,6 +40,9 @@ import javax.inject.Inject;
 import cx.ring.contacts.AvatarFactory;
 import cx.ring.model.CallContact;
 import cx.ring.model.Uri;
+import cx.ring.utils.AndroidFileUtils;
+import cx.ring.utils.BitmapUtils;
+import cx.ring.utils.FileUtils;
 import cx.ring.utils.Tuple;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
@@ -394,7 +398,7 @@ public class ContactServiceImpl extends ContactService {
     public void loadContactData(CallContact callContact) {
         if (!callContact.detailsLoaded) {
             if (callContact.isFromSystem()) {
-                Tuple<String, byte[]> profileData = loadSystemContactData(callContact);
+                Tuple<String, Object> profileData = loadSystemContactData(callContact);
                 callContact.setProfile(profileData.first, profileData.second);
             } else {
                 loadVCardContactData(callContact);
@@ -403,41 +407,37 @@ public class ContactServiceImpl extends ContactService {
     }
 
     @Override
-    public void saveVCardContactData(CallContact contact) {
-        if (contact.vcard != null) {
-            String filename = contact.getPrimaryUri().getRawRingId() + ".vcf";
-            VCardUtils.savePeerProfileToDisk(contact.vcard, filename, mContext.getFilesDir());
+    public void saveVCardContactData(CallContact contact, VCard vcard) {
+        if (vcard != null) {
+            Tuple<String, Object> profileData = VCardServiceImpl.readData(vcard);
+            contact.setVCard(vcard);
+            contact.setProfile(profileData.first, profileData.second);
+            String filename = contact.getPrimaryNumber() + ".vcf";
+            VCardUtils.savePeerProfileToDisk(vcard, filename, mContext.getFilesDir());
             AvatarFactory.clearCache();
         }
     }
 
     @Override
     public void loadVCardContactData(CallContact callContact) {
-        if (!callContact.getPhones().isEmpty()) {
-            String username = callContact.getPhones().get(0).getNumber().getRawRingId();
-            VCard vcard = VCardUtils.loadPeerProfileFromDisk(mContext.getFilesDir(), username + ".vcf");
-            callContact.setVCardProfile(vcard);
+        String id = callContact.getPrimaryNumber();
+        if (id != null) {
+            VCard vcard = VCardUtils.loadPeerProfileFromDisk(mContext.getFilesDir(), id + ".vcf");
+            Tuple<String, Object> profileData = VCardServiceImpl.readData(vcard);
+            callContact.setVCard(vcard);
+            callContact.setProfile(profileData.first, profileData.second);
         }
     }
 
-    private Tuple<String, byte[]> loadSystemContactData(CallContact callContact) {
+    private Tuple<String, Object> loadSystemContactData(CallContact callContact) {
         String contactName = callContact.getDisplayName();
         android.net.Uri photoURI = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, callContact.getId());
-        InputStream is;
         try {
-            is = mContext.getContentResolver()
-                    .openInputStream(android.net.Uri.withAppendedPath(photoURI,
-                            ContactsContract.Contacts.Photo.DISPLAY_PHOTO));
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            int nRead;
-            byte[] data = new byte[1024];
-            while ((nRead = is.read(data, 0, data.length)) != -1) {
-                buffer.write(data, 0, nRead);
-            }
-            buffer.flush();
-            byte[] byteArray = buffer.toByteArray();
-            return new Tuple<>(contactName, byteArray);
-        } catch (IOException e) {
+            Bitmap bitmap = AndroidFileUtils
+                    .loadBitmap(mContext, android.net.Uri.withAppendedPath(photoURI, ContactsContract.Contacts.Photo.DISPLAY_PHOTO))
+                    .blockingGet();
+            return new Tuple<>(contactName, bitmap);
+        } catch (Exception e) {
             Log.w(TAG, "Error loading photo for system contact");
             return new Tuple<>(contactName, null);
         }

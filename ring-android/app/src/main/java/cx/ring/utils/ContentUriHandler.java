@@ -35,6 +35,7 @@ public class ContentUriHandler {
 
     public static final Uri CONVERSATION_CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "conversations");
     public static final Uri ACCOUNTS_CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "accounts");
+    public static final Uri CONTACT_CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "contact");
 
     private ContentUriHandler() {
         // hidden constructor
