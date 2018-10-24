@@ -552,7 +552,6 @@ public class Account {
     }
 
     public void setContacts(List<Map<String, String>> contacts) {
-        Log.w(TAG, "setContacts " + accountID);
         for (Map<String, String> contact : contacts) {
             addContact(contact);
         }
@@ -625,11 +624,9 @@ public class Account {
     }
 
     public void registeredNameFound(int state, String address, String name) {
-        Log.w(TAG, "registeredNameFound " + address + " " + name);
         Uri uri = new Uri(address);
         CallContact contact = getContactFromCache(uri);
         if (contact.setUsername(state == 0 ? name : null)) {
-            Log.w(TAG, "username set " + name);
             String key = uri.getRawUriString();
             synchronized (conversations) {
                 Conversation conversation = conversations.get(key);
