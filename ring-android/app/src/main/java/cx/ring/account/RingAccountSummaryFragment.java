@@ -24,12 +24,15 @@ import android.app.ProgressDialog;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+
 import com.google.android.material.textfield.TextInputLayout;
+
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.SwitchCompat;
+
 import android.text.Layout;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -52,12 +55,10 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import cx.ring.R;
-import cx.ring.application.RingApplication;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.model.Account;
 import cx.ring.model.ConfigKey;
-import cx.ring.mvp.BaseFragment;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.utils.KeyboardVisibilityManager;
 import cx.ring.views.LinkNewDeviceLayout;
@@ -253,35 +254,29 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
 
     @Override
     public void showNetworkError() {
-        RingApplication.uiHandler.post(() -> {
-            mWaitDialog.dismiss();
-            new AlertDialog.Builder(getActivity())
-                    .setTitle(R.string.account_export_end_network_title)
-                    .setMessage(R.string.account_export_end_network_message)
-                    .setPositiveButton(android.R.string.ok, null)
-                    .show();
-        });
+        mWaitDialog.dismiss();
+        new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.account_export_end_network_title)
+                .setMessage(R.string.account_export_end_network_message)
+                .setPositiveButton(android.R.string.ok, null)
+                .show();
     }
 
     @Override
     public void showPasswordError() {
-        RingApplication.uiHandler.post(() -> {
-            mWaitDialog.dismiss();
-            mPasswordLayout.setError(getString(R.string.account_export_end_decryption_message));
-            mRingPassword.setText("");
-        });
+        mWaitDialog.dismiss();
+        mPasswordLayout.setError(getString(R.string.account_export_end_decryption_message));
+        mRingPassword.setText("");
     }
 
     @Override
     public void showGenericError() {
-        RingApplication.uiHandler.post(() -> {
-            mWaitDialog.dismiss();
-            new AlertDialog.Builder(getActivity())
-                    .setTitle(R.string.account_export_end_error_title)
-                    .setMessage(R.string.account_export_end_error_message)
-                    .setPositiveButton(android.R.string.ok, null)
-                    .show();
-        });
+        mWaitDialog.dismiss();
+        new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.account_export_end_error_title)
+                .setMessage(R.string.account_export_end_error_message)
+                .setPositiveButton(android.R.string.ok, null)
+                .show();
     }
 
     public boolean isDisplayingWizard() {
@@ -357,25 +352,23 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
 
     @Override
     public void showPIN(final String pin) {
-        RingApplication.uiHandler.post(() -> {
-            hideWizard();
-            mWaitDialog.dismiss();
-            mLinkAccountView.setVisibility(View.VISIBLE);
-            mPasswordLayout.setVisibility(View.GONE);
-            mEndBtn.setVisibility(View.VISIBLE);
-            mStartBtn.setVisibility(View.GONE);
+        hideWizard();
+        mWaitDialog.dismiss();
+        mLinkAccountView.setVisibility(View.VISIBLE);
+        mPasswordLayout.setVisibility(View.GONE);
+        mEndBtn.setVisibility(View.VISIBLE);
+        mStartBtn.setVisibility(View.GONE);
 
-            String pined = getString(R.string.account_end_export_infos).replace("%%", pin);
-            final SpannableString styledResultText = new SpannableString(pined);
-            int pos = pined.lastIndexOf(pin);
-            styledResultText.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), pos, (pos + pin.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            styledResultText.setSpan(new StyleSpan(Typeface.BOLD), pos, (pos + pin.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            styledResultText.setSpan(new RelativeSizeSpan(2.8f), pos, (pos + pin.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            mExportInfos.setText(styledResultText);
-            mExportInfos.requestFocus();
+        String pined = getString(R.string.account_end_export_infos).replace("%%", pin);
+        final SpannableString styledResultText = new SpannableString(pined);
+        int pos = pined.lastIndexOf(pin);
+        styledResultText.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), pos, (pos + pin.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        styledResultText.setSpan(new StyleSpan(Typeface.BOLD), pos, (pos + pin.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        styledResultText.setSpan(new RelativeSizeSpan(2.8f), pos, (pos + pin.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mExportInfos.setText(styledResultText);
+        mExportInfos.requestFocus();
 
-            KeyboardVisibilityManager.hideKeyboard(getActivity(), 0);
-        });
+        KeyboardVisibilityManager.hideKeyboard(getActivity(), 0);
     }
 
     @Override
@@ -383,39 +376,37 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
         if (mDeviceAdapter == null) {
             return;
         }
-        RingApplication.uiHandler.post(() -> mDeviceAdapter.setData(devices, currentDeviceId));
+        mDeviceAdapter.setData(devices, currentDeviceId);
     }
 
     @Override
     public void deviceRevocationEnded(final String device, final int status) {
-        RingApplication.uiHandler.post(() -> {
-            mWaitDialog.dismiss();
-            int message, title = R.string.account_device_revocation_error_title;
-            switch (status) {
-                case 0:
-                    title = R.string.account_device_revocation_success_title;
-                    message = R.string.account_device_revocation_success;
-                    break;
-                case 1:
-                    message = R.string.account_device_revocation_wrong_password;
-                    break;
-                case 2:
-                    message = R.string.account_device_revocation_unknown_device;
-                    break;
-                default:
-                    message = R.string.account_device_revocation_error_unknown;
-            }
-            new AlertDialog.Builder(getActivity())
-                    .setTitle(title)
-                    .setMessage(message)
-                    .setPositiveButton(android.R.string.ok, (dialog, which) -> {
-                        dialog.dismiss();
-                        if (status == 1) {
-                            onDeviceRevocationAsked(device);
-                        }
-                    })
-                    .show();
-        });
+        mWaitDialog.dismiss();
+        int message, title = R.string.account_device_revocation_error_title;
+        switch (status) {
+            case 0:
+                title = R.string.account_device_revocation_success_title;
+                message = R.string.account_device_revocation_success;
+                break;
+            case 1:
+                message = R.string.account_device_revocation_wrong_password;
+                break;
+            case 2:
+                message = R.string.account_device_revocation_unknown_device;
+                break;
+            default:
+                message = R.string.account_device_revocation_error_unknown;
+        }
+        new AlertDialog.Builder(getActivity())
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                    dialog.dismiss();
+                    if (status == 1) {
+                        onDeviceRevocationAsked(device);
+                    }
+                })
+                .show();
     }
 
     @Override
