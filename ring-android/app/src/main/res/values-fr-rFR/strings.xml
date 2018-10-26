@@ -117,4 +117,38 @@
 <string name="report"><u>Envoyez-nous un courriel</u></string>
     <string name="section_license">Licence</string>
     <string name="no_browser_app_installed">Aucune application de navigateur Web trouvée, installez-en une pour voir cette page</string>
+    <string name="feedback_section">Retours</string>
+    <string name="website_chooser_title">Voir le site en utilisant …</string>
+    <string name="description">Ring est un logiciel libre de communication universelle qui respecte les libertés et la vie privée de ses utilisateurs.</string>
+    <string name="developed_by">Développé par</string>
+    <string name="designed_by">Conçu par</string>
+    <string name="menu_item_account">Gérer un compte</string>
+    <string name="notif_missed_incoming_call">Appel entrant manqué</string>
+    <string name="notif_channel_calls">Appels</string>
+    <string name="notif_channel_missed_calls">Appels manqués</string>
+    <string name="notif_channel_messages">Messages</string>
+    <string name="notif_channel_requests">Demandes</string>
+    <string name="notif_channel_file_transfer">Transfert de fichiers</string>
+    <string name="notif_mark_as_read">Marquer comme lu</string>
+    <string name="notif_dismiss">Ignorer</string>
+    <string name="notif_reply">Répondre</string>
+    <string name="notif_incoming_file_transfer">Quelqu\'un veut vous envoyer un fichier</string>
+    <string name="notif_outgoing_file_transfer_title">Envoi de fichier à %1$s</string>
+    <string name="notif_outgoing_file_transfer">Quelqu\'un veut vous envoyer un fichier</string>
+    <string name="action_open">Ouvrir</string>
+
+    <string name="ab_action_contact_add_question">Ajouter aux contacts \?</string>
+    <string name="hist_contact_added">Contact ajouté</string>
+    <string name="hist_invitation_received">Invitation reçue</string>
+    <string name="ab_action_change_screen_orientation">Changer l\'orientation de l\'écran</string>
+    <string name="hist_file_sent">Fichier envoyé</string>
+    <string name="hist_file_received">Fichier reçu</string>
+
+    <string name="clear_history_dialog_title">Effacer l\'historique \?</string>
+    <string name="clear_history_dialog_message">Cette action ne peut pas être annulée.</string>
+    <string name="conversation_action_history_clear">Nettoyer l\'historique</string>
+    <string name="conversation_action_history_clear_message">Cela effacera définitivement l\'historique des conversations.</string>
+    <string name="conversation_action_remove_this_title">Supprimer ce contact \?</string>
+    <string name="conversation_action_go_to_call">Retour à l\'appel en cours</string>
+
     </resources>
