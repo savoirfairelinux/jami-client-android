@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
 Copyright (C) 2004-2016 Savoir-faire Linux Inc.
 
 Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
@@ -24,4 +25,15 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_hold">Patientez</string>
     <string name="call_human_state_over">Terminé</string>
     <!-- Conferences -->
-</resources>
+<string name="call_error_no_microphone">Appel annulé. Aucun microphone détecté.</string>
+    <string name="call_error_no_camera_no_microphone">Appel annulé. Aucune caméra ou microphone détecté.</string>
+
+    <string name="call_human_state_searching">Recherche en cours</string>
+    <string name="call_human_state_incoming">Entrant</string>
+    <string name="call_human_state_connecting">Connexion en cours</string>
+    <string name="call_human_state_ringing">Sonnerie</string>
+    <string name="call_human_state_current">Entrain de parler</string>
+    <string name="call_human_state_busy">Occupé</string>
+    <string name="call_human_state_failure">À échoué</string>
+    <string name="call_human_state_none">Aucun</string>
+    </resources>
