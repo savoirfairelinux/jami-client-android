@@ -117,7 +117,6 @@
   <string name="take_a_photo">Λήψη φωτογραφίας</string>
   <string name="profile_name_hint">Εισάγετε το όνομα σας (προαιρετικό)</string>
   <!--Share fragment-->
-  <string name="share_message">Σκανάρετε τον κωδικό QR με το ενσωματωμένο σκάνερ της εφαρμογής Ring που επιθυμεί να επικοινωνήσει μαζί σας.</string>
   <string name="share_message_no_account">Επιλέξτε έναν λογαριασμό για διαμοιρασμό.</string>
   <string name="share_your_account_information">Μοίρασε τις πληροφορίες των επαφών μου</string>
   <string name="generic_error_migration">Σφάλμα</string>

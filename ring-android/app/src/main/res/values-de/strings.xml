@@ -142,7 +142,6 @@
   <string name="take_a_photo">Foto machen</string>
   <string name="profile_name_hint">Name eingeben (optional)</string>
   <!--Share fragment-->
-  <string name="share_message">Scannen Sie diesen QR-Code mit dem eingebauten Scanner der Ringanwendung, die mit Ihnen kommunizieren will.</string>
   <string name="share_message_no_account">Bitte wählen Sie ein Konto aus.</string>
   <string name="share_your_account_information">Teile meine Kontaktinformationen</string>
   <string name="generic_error_migration">Fehler</string>

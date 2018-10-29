@@ -8,6 +8,7 @@
   <string name="pref_mobileData_summary">اجاز به رینگ برای کار کردن روی شبکه‌های نسل سوم و LTE، علاوه بر وای‌فای</string>
   <string name="pref_pushNotifications_title">پیام های اگاه سازی</string>
   <string name="pref_pushNotifications_summary">از سرورهای Google برای دریافت تماس ها / پیام ها در پسزمینه استفاده کنید</string>
+  <string name="pref_hd_summary">فعال سازی ارسال ویدیو HD</string>
   <string name="pref_systemContacts_title">استفاده از مخاطبین  سیستم</string>
   <string name="pref_systemContacts_summary">استفاده از مخاطبین  سیستم برای نمایش جزییات تماس گیرنده.</string>
   <string name="pref_systemDialer_title">انجام تماس‌های سیستم با استفاده از رینگ</string>

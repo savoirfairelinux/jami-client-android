@@ -123,7 +123,6 @@
   <string name="take_a_photo">Scatta una foto</string>
   <string name="profile_name_hint">Inserisci il tuo nome (facoltativo)</string>
   <!--Share fragment-->
-  <string name="share_message">Leggi questo codice QR con lo scanner integrato dell\'applicazione Ring che vuole comunicare con te.</string>
   <string name="share_message_no_account">Seleziona un account per la condivisione.</string>
   <string name="share_your_account_information">Condividi le mie informazioni di contatto</string>
   <string name="generic_error_migration">Errore</string>

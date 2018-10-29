@@ -133,7 +133,6 @@
   <string name="take_a_photo">Mache ein Foto</string>
   <string name="profile_name_hint">Name eingeben (optional)</string>
   <!--Share fragment-->
-  <string name="share_message">Scanne diesen QR-Code mit dem Ring-QR-Code-Scanner des neuen Kommunikationspartners.</string>
   <string name="share_message_no_account">Bitte wählen Sie ein Konto, das Sie teilen wollen.</string>
   <string name="share_your_account_information">Teile meine RING-ID</string>
   <string name="generic_error_migration">Fehler</string>

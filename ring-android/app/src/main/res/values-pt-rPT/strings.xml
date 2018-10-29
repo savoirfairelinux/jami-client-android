@@ -155,7 +155,6 @@
   <string name="take_a_photo">Tirar uma foto</string>
   <string name="profile_name_hint">Introduza o seu nome (opcional)</string>
   <!--Share fragment-->
-  <string name="share_message">Digitalize o Código QR com o digitalizador embutido na aplicação Ring que quer comunicar consigo.</string>
   <string name="share_message_no_account">Por favor selecione uma conta para partilhar.</string>
   <string name="share_your_account_information">Partilhar os meus dados de contacto</string>
   <string name="generic_error_migration">Erro</string>

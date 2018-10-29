@@ -61,19 +61,23 @@
   <string name="notif_current_call_title">Aktivt opkald med %1$s</string>
   <string name="notif_current_call">Nuværende opkald</string>
   <string name="notif_channel_calls">Opkald</string>
+  <string name="notif_channel_missed_calls">Ubesvarede opkald</string>
   <string name="notif_channel_messages">Beskeder</string>
   <string name="notif_channel_requests">Forespørgsler</string>
   <string name="notif_channel_file_transfer">Filoverførsler</string>
   <string name="notif_mark_as_read">Marker som læst</string>
+  <string name="notif_dismiss">Afvis</string>
+  <string name="notif_reply">Svar</string>
   <string name="notif_incoming_file_transfer_title">Indgående fil fra %1$s</string>
   <string name="notif_incoming_file_transfer">Nogen vil sende dig en fil</string>
   <string name="notif_outgoing_file_transfer_title">Sender fil til %1$s</string>
   <string name="notif_outgoing_file_transfer">Nogen vil sende dig en fil</string>
+  <string name="notif_incoming_picture">Billede fra %1$s</string>
   <string name="action_open">Åbn</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Dig:</string>
   <string name="action_call_hangup">Læg på</string>
-  <string name="ongoing_call">Aktivt opkald</string>
+  <string name="ongoing_call">Igangværende opkald</string>
   <string name="hist_in_call">Indgående opkald af %1$s</string>
   <string name="hist_out_call">Udgående opkald af %1$s</string>
   <string name="start_error_title">Kan ikke starte Ring!</string>
@@ -82,6 +86,7 @@
   <string name="action_call_decline">Afvis</string>
   <string name="ab_action_speakerphone">Aktiver højtaler</string>
   <string name="ab_action_contact_add">Tilføj til kontakt</string>
+  <string name="ab_action_contact_add_question">Tilføj til kontakter?</string>
   <string name="hist_contact_added">Kontakt tilføjet</string>
   <string name="hist_invitation_received">Invitation modtaget</string>
   <string name="ab_action_audio_call">Lydopkald</string>
@@ -97,11 +102,14 @@
   <string name="message_failed">Fejlede</string>
   <string name="time_just_now">Lige nu</string>
   <string name="send_file">Send fil</string>
+  <string name="hist_file_sent">Fil sendt</string>
+  <string name="hist_file_received">Fil modtaget</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera-tilladelse</string>
   <string name="permission_dialog_camera_message">Video-samtaler kræver kamera-tilladelse for at fungere. Overvej venligst at give denne tilladelse.</string>
   <string name="ringtone_error_title">Fejl</string>
   <string name="ringtone_error_format_not_supported">Dette format understøttes ikke.</string>
+  <string name="ringtone_error_size_too_big">Filen er for stor. Maksimumstørrelsen er %1$dkB.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring har brug for \"Læs kontakter\"-tilladelse for at kunne udføre denne funktion. Vær venlig at tillade den.</string>
   <!--Write call log permission-->
@@ -110,16 +118,23 @@
   <string name="scan_qr_account_message">Skan QR-koden for kontoen du vil tilføje.</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Ryd historik?</string>
+  <string name="clear_history_dialog_message">Handlingen kan ikke fortrydes.</string>
   <string name="clear_history_completed">Historikken er blevet ryddet.</string>
   <!--Conversation-->
   <string name="conversation_action_delete_this">Slet denne samtale</string>
   <string name="conversation_action_delete_this_title">Slet denne samtale?</string>
   <string name="conversation_action_delete_this_message">Denne handling kan ikke fortrydes.</string>
   <string name="conversation_action_history_clear">Ryd historiken</string>
+  <string name="conversation_action_history_clear_title">Ryd samtalehistorikken?</string>
+  <string name="conversation_action_history_clear_message">Det vil helt sikkert rydde samtalehistorikken.</string>
   <string name="conversation_action_remove_this">Slet kontakt</string>
+  <string name="conversation_action_remove_this_title">Slet kontakten?</string>
+  <string name="conversation_action_remove_this_message">Det vil slette kontakten og helt sikkert rydde samtalehistorikken.</string>
   <string name="conversation_action_copy_peer_number">Kopiér nummer</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s kopieret til udklipsholder</string>
   <string name="conversation_action_select_peer_number">Vælg et nummer</string>
+  <string name="conversation_action_block_this">Bloker kontakt</string>
+  <string name="conversation_action_go_to_call">Tilbage til igangeværende opkald</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Tilføj %1$s?</string>
   <string name="prompt_new_password">Ny adgangskode</string>
@@ -132,6 +147,7 @@
   <string name="help_pin_enter">Indtast PIN-koden fra en anden konfigureret Ring-konto. Brug eksporter-konto-funktionaliteten for at få adgang til en PIN-kode. </string>
   <string name="wizard_next">Næste</string>
   <string name="wizard_back">Tilbage</string>
+  <string name="wizard_skip">Spring over</string>
   <!--MenuHeaderView-->
   <string name="profile">Min profil</string>
   <string name="profile_message_warning">Din profil vil kun blive delt med dine kontakter</string>
@@ -139,7 +155,6 @@
   <string name="take_a_photo">Tag et billede</string>
   <string name="profile_name_hint">Indtast dit navn (valgfrit)</string>
   <!--Share fragment-->
-  <string name="share_message">Skan denne QRCode med den indbyggede scanner i Ring-applikationen.</string>
   <string name="share_message_no_account">Vælg en konto at dele.</string>
   <string name="share_your_account_information">Del min kontaktinformation</string>
   <string name="generic_error_migration">Fejl</string>
@@ -153,6 +168,7 @@
   <string name="contact_request_account">For %1$s</string>
   <string name="no_requests">0 kontaktforespørgsler</string>
   <string name="message_contact_not_trusted_yet">%s er ikke blandt dine kontakter endnu.\nVil du acceptere eller afvise denne kontaktforespørgsel?</string>
+  <string name="message_contact_not_trusted">%s er ikke i dine kontakter.\nTilføj en ny kontakt?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Send</string>
   <string name="send_request_title">Send en kontaktforespørgsel</string>

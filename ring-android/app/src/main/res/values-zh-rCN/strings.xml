@@ -121,7 +121,6 @@
   <string name="take_a_photo">拍照</string>
   <string name="profile_name_hint">输入您的名字（可选）</string>
   <!--Share fragment-->
-  <string name="share_message">使用Ring扫描此二维码以建立连接。</string>
   <string name="share_message_no_account">请选择要共享的帐户。</string>
   <string name="share_your_account_information">共享我的通讯信息</string>
   <string name="generic_error_migration">错误</string>

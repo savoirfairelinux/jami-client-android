@@ -139,7 +139,6 @@
   <string name="take_a_photo">Foto nemen</string>
   <string name="profile_name_hint">Voer je naam in (optioneel)</string>
   <!--Share fragment-->
-  <string name="share_message">Scan deze QR-code met de ingebouwde scanner van de Ring-toepassing die met je wil communiceren.</string>
   <string name="share_message_no_account">Selecteer een account om te delen.</string>
   <string name="share_your_account_information">Deel mijn contactinformatie</string>
   <string name="generic_error_migration">Fout</string>

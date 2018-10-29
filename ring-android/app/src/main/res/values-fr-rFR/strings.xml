@@ -103,7 +103,6 @@
   <string name="open_the_gallery">Ouvrir la galerie</string>
   <string name="take_a_photo">Prendre une photo</string>
   <!--Share fragment-->
-  <string name="share_message">Scanner le code QR avec le scanner intégré du logiciel Ring pour pouvoir communiquer</string>
   <string name="share_message_no_account">Sélectionnez un compte à partager.</string>
   <string name="share_your_account_information">Partager mes coordonnées</string>
   <string name="generic_error_migration">Erreur</string>

@@ -157,7 +157,6 @@
   <string name="take_a_photo">Сфотографировать</string>
   <string name="profile_name_hint">Введите ваше имя (опционально)</string>
   <!--Share fragment-->
-  <string name="share_message">Отсканируйте этот QR-код встроенным сканером приложения Ring, которое хочет с вами связаться.</string>
   <string name="share_message_no_account">Выберите аккаунт, которым хотите поделиться.</string>
   <string name="share_your_account_information">Поделиться моей контактной информацией</string>
   <string name="generic_error_migration">Ошибка</string>

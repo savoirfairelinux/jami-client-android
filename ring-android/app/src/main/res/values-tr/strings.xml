@@ -123,7 +123,6 @@
   <string name="take_a_photo">Fotoğraf çek</string>
   <string name="profile_name_hint">Adınızı girin (isteğe bağlı)</string>
   <!--Share fragment-->
-  <string name="share_message">Sizinle iletişime geçmek isteyenin Ring uygulamasının gömülü tarayıcısıyla bu QR kodu tarayın.</string>
   <string name="share_message_no_account">Lütfen paylaşmak için bir hesap seçin.</string>
   <string name="share_your_account_information">İletişim bilgimi paylaş</string>
   <string name="generic_error_migration">Hata</string>

@@ -8,9 +8,9 @@
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Contribuez</string>
   <string name="version_section">Version</string>
-  <string name="no_email_app_installed">Application d\'envoi de courriel non-trouvée, installez-en un et renvoyez-nous votre rapport</string>
+  <string name="no_email_app_installed">Application d\'envoi de courriel non-trouvée, installez-en une pour envoyer votre rapport</string>
   <string name="no_browser_app_installed">Aucun navigateur internet trouvé. Vous devez en installer un afin de voir cette page</string>
-  <string name="email_chooser_title">Envoi du courriel en utilisant ...</string>
+  <string name="email_chooser_title">Envoi du courriel en utilisant…</string>
   <string name="website_chooser_title">Voir le site web avec...</string>
   <string name="license">Ce logiciel est offert \"tel quel\", sans aucune garantie. Pour plus d\'informations, 
 &lt;u&gt;GNU General Public License version 3 or later&lt;/u&gt;</string>
@@ -155,7 +155,6 @@
   <string name="take_a_photo">Prendre une photo</string>
   <string name="profile_name_hint">Entrez votre nom (facultatif)</string>
   <!--Share fragment-->
-  <string name="share_message">Scannez ce QRCode avec le scanner intégré de l\'application Ring qui souhaite communiquer avec vous.</string>
   <string name="share_message_no_account">Veuillez sélectionner le compte à partager.</string>
   <string name="share_your_account_information">Partagez mes coordonnées</string>
   <string name="generic_error_migration">Erreur</string>

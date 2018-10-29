@@ -122,7 +122,6 @@
   <string name="take_a_photo">写真を撮る</string>
   <string name="profile_name_hint">名前を入力してください (オプション)</string>
   <!--Share fragment-->
-  <string name="share_message">あなたと通信したいRingアプリケーションの組み込みスキャナで、このQRコードをスキャンします。</string>
   <string name="share_message_no_account">共有するアカウントを選択してください。</string>
   <string name="share_your_account_information">連絡先情報を共有</string>
   <string name="generic_error_migration">エラー</string>

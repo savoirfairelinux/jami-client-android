@@ -8,6 +8,7 @@
   <string name="pref_mobileData_summary">Tillad Ring på 3G/LTE netværk i tilllæg til Wi-Fi</string>
   <string name="pref_pushNotifications_title">Push-notifikationer</string>
   <string name="pref_pushNotifications_summary">Brug Google-servere for at tillade modtagelse af opkald/beskeder i baggrunden</string>
+  <string name="pref_hd_summary">Aktivér afsendelse af HD-video</string>
   <string name="pref_systemContacts_title">Brug systemkontakter</string>
   <string name="pref_systemContacts_summary">Brug systemkontakter til at vise opkaldsdetaljer</string>
   <string name="pref_systemDialer_title">Foretag systemopkald med Ring</string>

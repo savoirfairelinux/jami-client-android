@@ -130,7 +130,6 @@
   <string name="take_a_photo">Fes una foto</string>
   <string name="profile_name_hint">Introduïu el vostre nom (opcional)</string>
   <!--Share fragment-->
-  <string name="share_message">Escanegeu aquest codi QR de qui es vol comunicar mitjançant l\'escàner del Ring.</string>
   <string name="share_message_no_account">Seleccioneu un compte per compartir</string>
   <string name="share_your_account_information">Comparteix la meva informació de contacte</string>
   <string name="generic_error_migration">Error</string>

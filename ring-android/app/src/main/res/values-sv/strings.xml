@@ -155,7 +155,6 @@
   <string name="take_a_photo">Ta ett foto</string>
   <string name="profile_name_hint">Ange ditt namn (frivilligt)</string>
   <!--Share fragment-->
-  <string name="share_message">Skanna denna QR-kod med den inbyggda skanner som finns i det Ring-program som vill kommunicera med dig.</string>
   <string name="share_message_no_account">Välj ett konto att dela.</string>
   <string name="share_your_account_information">Dela min kontaktinformation</string>
   <string name="generic_error_migration">Fel</string>

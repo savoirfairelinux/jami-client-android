@@ -154,7 +154,6 @@
   <string name="take_a_photo">Bëni një foto</string>
   <string name="profile_name_hint">Jepni emrin tuaj (opsionale)</string>
   <!--Share fragment-->
-  <string name="share_message">Skanojeni këtë QRCode me skanerin e brendshëm të aplikacionit Ring që dëshiron të komunikojë me ju.</string>
   <string name="share_message_no_account">Ju lutemi, përzgjidhni një llogari për ndarje me të.</string>
   <string name="share_your_account_information">Ndaji me të tjerët të dhënat e mia të kontaktit</string>
   <string name="generic_error_migration">Gabim</string>

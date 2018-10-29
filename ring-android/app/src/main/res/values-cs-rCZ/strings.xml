@@ -125,7 +125,6 @@
   <string name="take_a_photo">Pořídit fotku</string>
   <string name="profile_name_hint">Zadejte své jméno (volitelné)</string>
   <!--Share fragment-->
-  <string name="share_message">Naskenujte QR kód zabudovaným skenerem aplikace Ring, která s vámi chce komunikovat.</string>
   <string name="share_message_no_account">Vyberte, prosím, účet ke sdílení.</string>
   <string name="share_your_account_information">Sdílet mé kontaktní informace</string>
   <string name="generic_error_migration">Chyba</string>

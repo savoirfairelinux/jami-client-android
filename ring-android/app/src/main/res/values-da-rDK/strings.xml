@@ -137,7 +137,6 @@
   <string name="take_a_photo">Tag et billede</string>
   <string name="profile_name_hint">Indtast dit navn (valgfrit)</string>
   <!--Share fragment-->
-  <string name="share_message">Skan denne QRCode med den indbyggede scanner i Ring-applikationen.</string>
   <string name="share_message_no_account">Vælg en konto at dele.</string>
   <string name="share_your_account_information">Del min kontaktinformation</string>
   <string name="generic_error_migration">Fejl</string>

@@ -84,7 +84,6 @@
   <string name="take_a_photo">Ambil foto</string>
   <string name="profile_name_hint">Masukkan nama Anda (opsional)</string>
   <!--Share fragment-->
-  <string name="share_message">Pindai QRCode ini menggunakan pemindai yang tersedia pada aplikasi Ring.</string>
   <string name="share_message_no_account">Silakan pilih akun untuk dibagikan.</string>
   <string name="share_your_account_information">Bagikan informasi kontak saya</string>
   <string name="generic_error_migration">Galat</string>

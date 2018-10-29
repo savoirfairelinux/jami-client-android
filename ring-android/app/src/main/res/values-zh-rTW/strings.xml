@@ -154,7 +154,6 @@
   <string name="take_a_photo">照相</string>
   <string name="profile_name_hint">輸入您的名稱（選擇性）</string>
   <!--Share fragment-->
-  <string name="share_message">以想要與您通話的 Ring 應用程式中的嵌入式掃描器掃描這個 QRCode。</string>
   <string name="share_message_no_account">請選取要分享的帳號。</string>
   <string name="share_your_account_information">分享我的聯絡人資訊</string>
   <string name="generic_error_migration">錯誤</string>

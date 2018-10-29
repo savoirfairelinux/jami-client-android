@@ -135,7 +135,6 @@
   <string name="take_a_photo">Padaryti nuotrauką</string>
   <string name="profile_name_hint">Įveskite savo vardą (nebūtina)</string>
   <!--Share fragment-->
-  <string name="share_message">Nuskenuokite šį QR kodą įtaisytu Ring programos, norinčios su jumis susisiekti, skeneriu.</string>
   <string name="share_your_account_information">Bendrinti mano kontaktinę informaciją</string>
   <string name="generic_error_migration">Klaida</string>
   <string name="generic_error_migration_message">Perkėlimo metu įvyko klaida</string>
