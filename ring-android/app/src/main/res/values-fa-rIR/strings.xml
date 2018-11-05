@@ -155,6 +155,7 @@
   <string name="take_a_photo">گرفتن عکس</string>
   <string name="profile_name_hint">نامتان را وارد کنید (اختیاری)</string>
   <!--Share fragment-->
+  <string name="share_message">اسکن این کد با رینگ</string>
   <string name="share_message_no_account">لطفاً برای هم‌رسانی، حسابی را برگزینید.</string>
   <string name="share_your_account_information">هم‌رسانی اطّلاعات تماس من</string>
   <string name="generic_error_migration">خطا</string>

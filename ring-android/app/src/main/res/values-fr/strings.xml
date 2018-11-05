@@ -155,6 +155,7 @@
   <string name="take_a_photo">Prendre une photo</string>
   <string name="profile_name_hint">Entrez votre nom (facultatif)</string>
   <!--Share fragment-->
+  <string name="share_message">Scanner ce code avec Ring</string>
   <string name="share_message_no_account">Veuillez sélectionner le compte à partager.</string>
   <string name="share_your_account_information">Partagez mes coordonnées</string>
   <string name="generic_error_migration">Erreur</string>

@@ -2,7 +2,7 @@
 <resources>
   <!--Strings related to account edition screen-->
   <string name="ic_delete_menu">Törlés</string>
-  <string name="ic_advanced_menu">Speciális beállítások</string>
+  <string name="ic_advanced_menu">Haladó beállítások</string>
   <string name="ic_blacklist_menu">Blokkolt partnerek</string>
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Ring fiók hozzáadása</string>
@@ -103,7 +103,7 @@
   <string name="account_tls_server_name_label">Kiszolgáló név</string>
   <string name="account_tls_verify_server_label">A kiszolgáló ellenőrizése </string>
   <string name="account_tls_verify_client_label">Ügyfél ellenőrzése</string>
-  <string name="account_tls_negotiation_timeout_sec">Tárgyalási időtartam (mp)</string>
+  <string name="account_tls_negotiation_timeout_sec">Tárgyalási időtartam (másodperc)</string>
   <string name="account_rtp_max_port">Maximum</string>
   <string name="account_rtp_min_port">Minimum</string>
   <string name="account_rtp_port_range">Hang RTP port korlát</string>
@@ -124,7 +124,7 @@
   <string name="account_contact_me">Lépjen kapcsolatba velem a Ring-en!</string>
   <string name="update_account">Fiók frissítése</string>
   <string name="account_migration">Ring fiókja frissíthető.\ nKérjük hogy, adja meg a jelszavát.</string>
-  <string name="ring_account">RING fiók</string>
+  <string name="ring_account">Ring fiók</string>
   <string name="ring_account_identity">Személyazonosság</string>
   <string name="account_migration_title_dialog">Fiókátvitel</string>
   <string name="account_migration_message_dialog">A fiókjait frissíteni kell. Szeretne a fiók kezelési lapra menni a művelet elvégzéséhez?</string>
@@ -144,7 +144,7 @@
   <string name="account_sip_register_anyway">Regisztráció egyébként</string>
   <string name="account_link_button">Ezen eszköz fiókhoz kapcsolása</string>
   <string name="account_link_prompt_pin">PIN-kód megadása</string>
-  <string name="account_new_button">Egy Ringfiók létrehozása</string>
+  <string name="account_new_button">Ringfiók létrehozása</string>
   <string name="account_link_export_button">Másik eszköz hozzárendelése ehhez a fiókhoz</string>
   <string name="account_link_export_info">Ha ezt a fiókot más eszközökön szeretné használni, először meg kell jeleníteni a Ring-en. Ez létrehoz egy PIN-kódot, amelyet meg kell adnia az új eszközön a fiók beállításához. A PIN-kód 10 percig érvényes.</string>
   <string name="account_start_export_button">PIN-kód létrehozása</string>
@@ -168,7 +168,7 @@
   <string name="account_status_unknown">Ismeretlen</string>
   <string name="account_status_offline">Nem elérhető</string>
   <!--Create account-->
-  <string name="account_creation_home">Üdvözöljük a Ringben</string>
+  <string name="account_creation_home">Isten hozott a Ringben</string>
   <string name="account_creation_profile">Saját profil létrehozása</string>
   <string name="account_creation_ring"> Ring-fiókjának létrehozása </string>
   <string name="account_link_title">Eszköz összekapcsolása</string>

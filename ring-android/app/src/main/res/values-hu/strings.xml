@@ -155,6 +155,7 @@
   <string name="take_a_photo">Fotó készítése</string>
   <string name="profile_name_hint">Adja meg a nevét (nem kötelező)</string>
   <!--Share fragment-->
+  <string name="share_message">Olvassa be a kódot a Ring programmal</string>
   <string name="share_message_no_account">Válassza ki a megosztandó fiókot.</string>
   <string name="share_your_account_information">Kapcsolati adatok megosztása</string>
   <string name="generic_error_migration">Hiba</string>
