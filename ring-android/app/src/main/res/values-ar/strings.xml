@@ -169,4 +169,18 @@
     <string name="generic_error_migration_message">حدث خطأ أثناء التهجير</string>
 
     <string name="block">حظر</string>
+    <string name="menu_item_share">مشاركة جهات الاتصال الخاصة بي</string>
+    <string name="notif_missed_outgoing_call">مكالمة صادرة فائتة</string>
+    <string name="ringtone_error_size_too_big">حجم هذا الملف كبير جدا. الحد الأقصى للحجم هو %1$dkB.</string>
+
+    <string name="permission_dialog_read_contacts_message">يحتاج رينغ إلى إذن \"قراءة جهات الاتصال\" لتمكين هذه الميزة. أرجوك امنحها.</string>
+
+    <string name="scan_qr_account_message">امسح رمز QR الخاص بالحساب الذي تريد اضافته.</string>
+
+    <string name="conversation_action_history_clear_message">سيؤدي ذلك إلى حذف سجل المحادثة كاملا.</string>
+    <string name="profile_message_warning">يتم مقاسمة ملف التعريف الخاص مع مُراسليك فقط</string>
+    <string name="share_message">قم بمسح هذا الرمز باستخدام رينغ</string>
+    <string name="contact_request_title">طلب مراسَلة جديد</string>
+    <string name="contact_request_account">لـ %1$s</string>
+    <string name="no_requests">0 طلبات للتراسل</string>
     </resources>
