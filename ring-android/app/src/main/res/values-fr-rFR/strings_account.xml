@@ -35,4 +35,37 @@
   <string name="account_creation_home">Bienvenue sur ring</string>
   <!--Edit profile-->
   <!--Devices-->
-</resources>
+<string name="ic_advanced_menu">Paramètres avancés</string>
+    <string name="ic_blacklist_menu">Contacts bloqués</string>
+
+    <string name="add_ring_account_title">Ajouter un compte Ring</string>
+    <string name="add_sip_account_title">Ajouter un compte SIP</string>
+    <string name="prompt_alias">Alias</string>
+    <string name="action_create">Créer un compte</string>
+    <string name="action_create_short">Créer</string>
+    <string name="action_register">Inscription</string>
+    <string name="error_field_required">Ce champ est requis</string>
+    <string name="dialog_wait_create">Ajouter un compte</string>
+    <string name="dialog_wait_create_details">Veuillez pendant pendant que votre nouveau compte s\'ajoute…</string>
+    <string name="account_type_ip2ip">IP du compte</string>
+    <string name="account_delete_dialog_title">Supprime le compte \?</string>
+    <string name="empty_account_list">Aucun compte enregistré</string>
+    <string name="normal_accounts_titles">Comptes</string>
+    <string name="account_device_revoke">Révoquer l\'appareil</string>
+    <string name="account_device_revocation_success_title">Succès</string>
+    <string name="account_device_revocation_success">L\'appareil a été révoqué !</string>
+    <string name="account_device_revocation_error_title">Impossible de révoquer l\'appareil</string>
+    <string name="account_device_revocation_wrong_password">Mauvais mot de passe.</string>
+    <string name="account_device_revocation_unknown_device">Appareil inconnu.</string>
+    <string name="account_device_revocation_error_unknown">Erreur inconnue.</string>
+
+    <string name="account_preferences_basic_tab">Général</string>
+    <string name="account_basic_category">Paramètres basiques</string>
+    <string name="account_alias_label">Nom du compte</string>
+    <string name="account_optionnal_category">Paramètres optionnels</string>
+    <string name="account_preferences_media_tab">Média</string>
+    <string name="account_video_enable">Activer la vidéo</string>
+
+    <string name="account_dht_public_in_calls_label">Autoriser les appels/messages</string>
+    <string name="account_local_port_label">Port local</string>
+    </resources>
