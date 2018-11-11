@@ -32,8 +32,9 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_incoming">Entrant</string>
     <string name="call_human_state_connecting">Connexion en cours</string>
     <string name="call_human_state_ringing">Sonnerie</string>
-    <string name="call_human_state_current">Entrain de parler</string>
+    <string name="call_human_state_current">Conversation en cours</string>
     <string name="call_human_state_busy">Occupé</string>
     <string name="call_human_state_failure">À échoué</string>
     <string name="call_human_state_none">Aucun</string>
+    <string name="call_human_state_unhold">Reprendre</string>
     </resources>
