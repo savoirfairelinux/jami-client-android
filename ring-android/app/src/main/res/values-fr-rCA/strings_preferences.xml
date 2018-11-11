@@ -13,4 +13,10 @@
   <string name="pref_startOnBoot_summary">Lancer Ring quand le système démarre.</string>
   <string name="pref_clearHistory_title">Effacer l\'historique</string>
   <string name="pref_clearHistory_summary">Effacer l\'historique des conversations. L\'action est irréversible.</string>
-</resources>
+<string name="pref_pushNotifications_title">Notifications push</string>
+    <string name="pref_pushNotifications_summary">Utiliser les serveurs Google pour permettre la réception des appels/messages en arrière-plan</string>
+
+    <string name="pref_hd_summary">Activer l\'envoi de vidéo HD</string>
+    <string name="pref_systemContacts_summary">Utilisez les contacts système pour afficher les détails de l\'appelant.</string>
+
+    </resources>
