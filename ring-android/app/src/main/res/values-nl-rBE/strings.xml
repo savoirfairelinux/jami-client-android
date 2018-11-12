@@ -9,10 +9,10 @@
   <string name="contribute_section">Bijdragen</string>
   <string name="version_section">Versie</string>
   <string name="no_email_app_installed">Geen e-mailapp gevonden, installeer er een om ons een rapport te kunnen sturen</string>
-  <string name="no_browser_app_installed">Gee webbrowserapp gevonden, installeer er een om deze pagina te bekijken</string>
+  <string name="no_browser_app_installed">Geen webbrowserapp gevonden, installeer er een om deze pagina te bekijken</string>
   <string name="email_chooser_title">E-mail versturen met…</string>
   <string name="website_chooser_title">Website bekijken met…</string>
-  <string name="license">Deze software word \"als zodanig\" aangeboden zonder enige garantie. Bekijk voor meer informatie
+  <string name="license">Deze software wordt \"als zodanig\" aangeboden zonder enige garantie. Bekijk voor meer informatie
 &lt;u&gt;GNU General Public License versie 3 of later&lt;/u&gt;</string>
   <string name="description">Ring is vrije software voor universele communicatie, die de vrijheden en privacy van haar gebruikers eerbiedigt.</string>
   <string name="credits">Met dank aan</string>
@@ -57,7 +57,7 @@
   <string name="notif_incoming_call_title">Inkomende oproep van %1$s</string>
   <string name="notif_incoming_call">Inkomende oproep</string>
   <string name="notif_outgoing_call_title">Uitgaande oproep naar %1$s</string>
-  <string name="notif_outgoing_call">Uitgaanden oproep</string>
+  <string name="notif_outgoing_call">Uitgaande oproep</string>
   <string name="notif_current_call_title">Huidigen oproep met %1$s</string>
   <string name="notif_current_call">Huidige oproep</string>
   <string name="notif_channel_calls">Oproepen</string>
@@ -75,7 +75,7 @@
   <string name="notif_incoming_picture">Afbeelding van %1$s</string>
   <string name="action_open">Openen</string>
   <!--Call Fragment-->
-  <string name="you_txt_prefix">Jij:</string>
+  <string name="you_txt_prefix">U:</string>
   <string name="action_call_hangup">Ophangen</string>
   <string name="ongoing_call">Actuele oproep</string>
   <string name="hist_in_call">Inkomende oproep van %1$s</string>
@@ -155,6 +155,7 @@
   <string name="take_a_photo">Foto nemen</string>
   <string name="profile_name_hint">Voer uw naam in (optioneel)</string>
   <!--Share fragment-->
+  <string name="share_message">Scan deze code met Ring</string>
   <string name="share_message_no_account">Selecteer een account om te delen.</string>
   <string name="share_your_account_information">Deel mijn contactinformatie</string>
   <string name="generic_error_migration">Fout</string>
