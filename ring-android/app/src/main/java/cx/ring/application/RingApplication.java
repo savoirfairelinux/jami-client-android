@@ -31,6 +31,8 @@ import android.content.ServiceConnection;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.IBinder;
+import android.system.ErrnoException;
+import android.system.Os;
 import android.util.Log;
 
 import com.bumptech.glide.Glide;
@@ -220,6 +222,13 @@ public abstract class RingApplication extends Application {
     public void onCreate() {
         super.onCreate();
         sInstance = this;
+
+        try {
+            Os.setenv("SIPLOGLEVEL", "6", true);
+            Os.setenv("DHTLOGLEVEL", "3", true);
+        } catch (ErrnoException e) {
+            e.printStackTrace();
+        }
 
         // building injection dependency tree
         mRingInjectionComponent = DaggerRingInjectionComponent.builder()
