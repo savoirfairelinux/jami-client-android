@@ -6,7 +6,7 @@
   <string name="prompt_alias">Pseudônimo</string>
   <string name="prompt_hostname">Nome do host</string>
   <string name="prompt_username">Usuário</string>
-  <string name="prompt_password">Senha</string>
+  <string name="prompt_password">Palvra-passe</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">Esta ação não pode ser reposta.</string>
   <!--AccountManagementFragment-->
@@ -16,7 +16,7 @@
   <string name="account_hostname_label">Nome do host</string>
   <string name="account_bootstrap_label">Bootstrap</string>
   <string name="account_username_label">Usuário</string>
-  <string name="account_password_label">Senha</string>
+  <string name="account_password_label">Palavra-passe</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Audio Details-->
   <string name="account_audio_label">Áudio</string>
