@@ -7,6 +7,7 @@
   <string name="version_section">Versio</string>
   <string name="no_email_app_installed">Sähköpostiohjelmaa ei löydetty, asenna sellainen lähettääksesi meille raportin</string>
   <string name="email_chooser_title">Lähetä sähköpostia käyttäen...</string>
+  <string name="credits">Tekijät</string>
   <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>

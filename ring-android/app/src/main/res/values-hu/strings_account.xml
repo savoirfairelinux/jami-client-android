@@ -27,7 +27,7 @@
   <string name="account_type_ip2ip">IP fiók</string>
   <string name="help_ring">A Ring-fiók lehetővé teszi az emberek biztonságos elérését partneren egy teljesen elosztott hálózaton keresztül.</string>
   <string name="help_sip_title">SIP fiók hozzáadása</string>
-  <string name="help_sip">Meglévő SIP-fiók konfigurálása.</string>
+  <string name="help_sip">Meglévő SIP fiók beállítása.</string>
   <string name="create_sip_account">SIP fiók hozzáadása</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Fiók törlése?</string>
@@ -96,8 +96,8 @@
   <string name="account_tls_port_label">TLS hallgató port</string>
   <string name="account_tls_certificate_list_label">Tanúsítványkibocsátó</string>
   <string name="account_tls_certificate_file_label">Tanúsítvány fájl</string>
-  <string name="account_tls_private_key_file_label">Titkos kulcs fájl</string>
-  <string name="account_tls_password_label">Titkos kulcs jelszava</string>
+  <string name="account_tls_private_key_file_label">Személyes kulcs fájl</string>
+  <string name="account_tls_password_label">Személyes kulcs jelszava</string>
   <string name="account_tls_method_label">TLS metódus</string>
   <string name="account_tls_ciphers_label">TLS kódolások</string>
   <string name="account_tls_server_name_label">Kiszolgáló név</string>
