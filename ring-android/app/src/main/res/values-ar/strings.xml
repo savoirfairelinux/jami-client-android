@@ -5,7 +5,7 @@
   <string name="copyright_section">الحقوق محفوظة</string>
   <string name="contribute_section">مساهمة</string>
   <string name="version_section">الإصدار</string>
-  <string name="email_chooser_title">إرسال بريد إلكتروني باستخدام...</string>
+  <string name="email_chooser_title">إرسال بريد باستخدام…</string>
   <string name="credits">الأطراف المصممة</string>
   <!--About dialog-->
   <!--RingActivity-->
@@ -28,15 +28,15 @@
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
-    <item quantity="zero">%d مكالمة</item>
-    <item quantity="one">%d مكالمة</item>
-    <item quantity="two">%d مكالمة</item>
-    <item quantity="few">%d مكالمة</item>
-    <item quantity="many">%d مكالمة</item>
-    <item quantity="other">%d مكالمة</item>
-  </plurals>
+	<item quantity="zero">%d مكالمة</item>
+	<item quantity="one">%d مكالمة</item>
+	<item quantity="two">%d مكالمة</item>
+	<item quantity="few">%d مكالمة</item>
+	<item quantity="many">%d مكالمة</item>
+	<item quantity="other">%d مكالمة</item>
+</plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">ادخل اسم أو رقم هاتف</string>
+  <string name="searchbar_hint">ادخل اسما أو رقم هاتف…</string>
   <string name="choose_number">إختار رقم</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
