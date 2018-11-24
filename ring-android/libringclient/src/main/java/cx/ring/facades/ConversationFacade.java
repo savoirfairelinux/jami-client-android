@@ -352,8 +352,8 @@ public class ConversationFacade {
 
     private void handleDataTransferEvent(DataTransfer transfer) {
         Conversation conversation = mAccountService.getAccount(transfer.getAccountId()).onDataTransferEvent(transfer);
-        if (transfer.getEventCode() == DataTransferEventCode.CREATED) {
-            if (transfer.isPicture() && !transfer.isOutgoing()) {
+        if (transfer.getEventCode() == DataTransferEventCode.CREATED && !transfer.isOutgoing()) {
+            if (transfer.canAutoAccept()) {
                 mAccountService.acceptFileTransfer(transfer);
             }
         }
