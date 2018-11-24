@@ -23,7 +23,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
-import androidx.preference.SwitchPreferenceCompat;
+import androidx.preference.SwitchPreference;
 import androidx.preference.TwoStatePreference;
 import android.view.inputmethod.EditorInfo;
 
@@ -86,7 +86,7 @@ public class GeneralAccountFragment extends BasePreferenceFragment<GeneralAccoun
 
         setPreferenceDetails(account.getConfig());
 
-        SwitchPreferenceCompat pref = (SwitchPreferenceCompat) findPreference("Account.status");
+        SwitchPreference pref = (SwitchPreference) findPreference("Account.status");
         if (account.isSip() && pref != null) {
             String status;
             pref.setTitle(account.getAlias());

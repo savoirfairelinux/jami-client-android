@@ -142,11 +142,12 @@ public class SIPCreationPresenter extends RootPresenter<SIPCreationView> {
                 .subscribeWith(new DisposableObserver<Account>() {
                     @Override
                     public void onNext(Account account) {
+                        mAccount = account;
                         switch (account.getRegistrationState()) {
                             case AccountConfig.STATE_REGISTERED:
                             case AccountConfig.STATE_SUCCESS:
                             case AccountConfig.STATE_READY:
-                                saveProfile(mAccount.getAccountID());
+                                saveProfile(account.getAccountID());
                                 getView().showRegistrationSuccess();
                                 dispose();
                                 break;
