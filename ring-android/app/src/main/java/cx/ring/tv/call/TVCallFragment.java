@@ -101,10 +101,10 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     @BindView(R.id.shape_ripple)
     protected ShapeRipple shapeRipple = null;
 
-    @BindView(R.id.video_preview_surface)
+    @BindView(R.id.video_surface)
     protected SurfaceView mVideoSurface = null;
 
-    @BindView(R.id.camera_preview_surface)
+    @BindView(R.id.preview_surface)
     protected SurfaceView mVideoPreview = null;
 
     // Screen wake lock for incoming call

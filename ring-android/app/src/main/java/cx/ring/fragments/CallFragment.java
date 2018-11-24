@@ -37,21 +37,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.util.DisplayMetrics;
 import android.util.Rational;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.rodolfonavalon.shaperipplelibrary.ShapeRipple;
 import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 
 import java.util.ArrayList;
@@ -60,21 +55,20 @@ import java.util.Random;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import butterknife.BindView;
-import butterknife.OnClick;
+import androidx.databinding.DataBindingUtil;
 import cx.ring.R;
+import cx.ring.application.RingApplication;
 import cx.ring.call.CallPresenter;
 import cx.ring.call.CallView;
 import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
-import cx.ring.contacts.AvatarFactory;
+import cx.ring.databinding.FragCallBinding;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.service.DRingService;
-import cx.ring.services.HardwareServiceImpl;
 import cx.ring.services.NotificationService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.DeviceUtils;
@@ -82,7 +76,6 @@ import cx.ring.utils.KeyboardVisibilityManager;
 import cx.ring.utils.Log;
 import cx.ring.utils.MediaButtonsHelper;
 import cx.ring.views.AvatarDrawable;
-import cx.ring.views.CheckableImageButton;
 import io.reactivex.disposables.CompositeDisposable;
 
 public class CallFragment extends BaseFragment<CallPresenter> implements CallView, MediaButtonsHelper.MediaButtonsHelperCallback {
@@ -97,53 +90,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     public static final String KEY_CONF_ID = "confId";
     public static final String KEY_AUDIO_ONLY = "AUDIO_ONLY";
 
-    @BindView(R.id.contact_bubble_layout)
-    protected ViewGroup contactBubbleLayout;
-
-    @BindView(R.id.contact_bubble)
-    protected ImageView contactBubbleView;
-
-    @BindView(R.id.contact_bubble_txt)
-    protected TextView contactBubbleTxt;
-
-    @BindView(R.id.contact_bubble_num_txt)
-    protected TextView contactBubbleNumTxt;
-
-    @BindView(R.id.call_accept_btn)
-    protected View acceptButton;
-
-    @BindView(R.id.call_refuse_btn)
-    protected View refuseButton;
-
-    @BindView(R.id.call_hangup_btn)
-    protected View hangupButton;
-
-    @BindView(R.id.call_speaker_btn)
-    protected CheckableImageButton speakerButton;
-
-    @BindView(R.id.call_mic_btn)
-    protected CheckableImageButton micButton;
-
-    @BindView(R.id.call_camera_flip_btn)
-    protected ImageButton flipCameraBtn = null;
-
-    @BindView(R.id.call_status_txt)
-    protected TextView mCallStatusTxt;
-
-    @BindView(R.id.dialpad_edit_text)
-    protected EditText mNumeralDialEditText;
-
-    @BindView(R.id.shape_ripple)
-    protected ShapeRipple shapeRipple = null;
-
-    @BindView(R.id.video_preview_surface)
-    protected SurfaceView mVideoSurface = null;
-
-    @BindView(R.id.camera_preview_surface)
-    protected SurfaceView mVideoPreview = null;
-
-    @BindView(R.id.call_control_group)
-    protected ViewGroup controlLayout;
+    private FragCallBinding binding;
 
     private MenuItem dialPadBtn = null;
     private MenuItem changeScreenOrientationBtn = null;
@@ -228,13 +175,13 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             PictureInPictureParams.Builder paramBuilder = new PictureInPictureParams.Builder();
-            if (mVideoSurface.getVisibility() == View.VISIBLE) {
+            if (binding.videoSurface.getVisibility() == View.VISIBLE) {
                 int[] l = new int[2];
-                mVideoSurface.getLocationInWindow(l);
+                binding.videoSurface.getLocationInWindow(l);
                 int x = l[0];
                 int y = l[1];
-                int w = mVideoSurface.getWidth();
-                int h = mVideoSurface.getHeight();
+                int w = binding.videoSurface.getWidth();
+                int h = binding.videoSurface.getHeight();
                 Rect videoBounds = new Rect(x, y, x + w, y + h);
                 paramBuilder.setAspectRatio(new Rational(w, h));
                 paramBuilder.setSourceRectHint(videoBounds);
@@ -277,9 +224,18 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     @Override
     public void onStop() {
         super.onStop();
-        if (mVideoSurface.getVisibility() == View.VISIBLE) {
+        if (binding.videoSurface.getVisibility() == View.VISIBLE) {
             restartVideo = true;
         }
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        injectFragment(((RingApplication) getActivity().getApplication()).getRingInjectionComponent());
+        binding = DataBindingUtil.inflate(inflater, R.layout.frag_call, container, false);
+        binding.setPresenter(this);
+        return binding.getRoot();
     }
 
     @Override
@@ -295,8 +251,8 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
             mScreenWakeLock.acquire();
         }
 
-        mVideoSurface.getHolder().setFormat(PixelFormat.RGBA_8888);
-        mVideoSurface.getHolder().addCallback(new SurfaceHolder.Callback() {
+        binding.videoSurface.getHolder().setFormat(PixelFormat.RGBA_8888);
+        binding.videoSurface.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
                 presenter.videoSurfaceCreated(holder);
@@ -318,7 +274,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
             presenter.uiVisibilityChanged(ui);
         });
 
-        mVideoPreview.getHolder().addCallback(new SurfaceHolder.Callback() {
+        binding.previewSurface.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
                 presenter.previewVideoSurfaceCreated(holder);
@@ -334,9 +290,9 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
                 presenter.previewVideoSurfaceDestroyed();
             }
         });
-        mVideoPreview.setZOrderMediaOverlay(true);
-        shapeRipple.setRippleShape(new Circle());
-        speakerButton.setChecked(presenter.isSpeakerphoneOn());
+        binding.previewSurface.setZOrderMediaOverlay(true);
+        binding.shapeRipple.setRippleShape(new Circle());
+        binding.callSpeakerBtn.setChecked(presenter.isSpeakerphoneOn());
     }
 
     @Override
@@ -412,45 +368,45 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
     @Override
     public void displayContactBubble(final boolean display) {
-        contactBubbleLayout.getHandler().post(() -> contactBubbleLayout.setVisibility(display ? View.VISIBLE : View.GONE));
+        binding.contactBubbleLayout.getHandler().post(() -> binding.contactBubbleLayout.setVisibility(display ? View.VISIBLE : View.GONE));
     }
 
     @Override
     public void displayVideoSurface(final boolean display) {
-        mVideoSurface.setVisibility(display ? View.VISIBLE : View.GONE);
-        mVideoPreview.setVisibility(display ? View.VISIBLE : View.GONE);
+        binding.videoSurface.setVisibility(display ? View.VISIBLE : View.GONE);
+        binding.previewSurface.setVisibility(display ? View.VISIBLE : View.GONE);
         updateMenu();
     }
 
     @Override
     public void displayPreviewSurface(final boolean display) {
         if (display) {
-            mVideoSurface.setZOrderOnTop(false);
-            mVideoPreview.setZOrderMediaOverlay(true);
-            mVideoSurface.setZOrderMediaOverlay(false);
+            binding.videoSurface.setZOrderOnTop(false);
+            binding.previewSurface.setZOrderMediaOverlay(true);
+            binding.videoSurface.setZOrderMediaOverlay(false);
         } else {
-            mVideoPreview.setZOrderMediaOverlay(false);
-            mVideoSurface.setZOrderMediaOverlay(true);
-            mVideoSurface.setZOrderOnTop(true);
+            binding.previewSurface.setZOrderMediaOverlay(false);
+            binding.videoSurface.setZOrderMediaOverlay(true);
+            binding.videoSurface.setZOrderOnTop(true);
         }
     }
 
     @Override
     public void displayHangupButton(boolean display) {
-        controlLayout.setVisibility(display ? View.VISIBLE : View.GONE);
-        hangupButton.setVisibility(display ? View.VISIBLE : View.GONE);
+        binding.callControlGroup.setVisibility(display ? View.VISIBLE : View.GONE);
+        binding.callHangupBtn.setVisibility(display ? View.VISIBLE : View.GONE);
     }
 
     @Override
     public void displayDialPadKeyboard() {
         KeyboardVisibilityManager.showKeyboard(getActivity(),
-                mNumeralDialEditText,
+                binding.dialpadEditText,
                 InputMethodManager.SHOW_IMPLICIT);
     }
 
     @Override
     public void switchCameraIcon(boolean isFront) {
-        flipCameraBtn.setImageResource(isFront ? R.drawable.ic_camera_front_white : R.drawable.ic_camera_rear_white);
+        binding.callCameraFlipBtn.setImageResource(isFront ? R.drawable.ic_camera_front_white : R.drawable.ic_camera_rear_white);
     }
 
     @Override
@@ -469,8 +425,8 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
     @Override
     public void updateTime(final long duration) {
-        if (mCallStatusTxt != null)
-            mCallStatusTxt.setText(String.format(Locale.getDefault(), "%d:%02d:%02d", duration / 3600, duration % 3600 / 60, duration % 60));
+        if (binding.callStatusTxt != null)
+            binding.callStatusTxt.setText(String.format(Locale.getDefault(), "%d:%02d:%02d", duration / 3600, duration % 3600 / 60, duration % 60));
     }
 
     @Override
@@ -499,15 +455,15 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
         }
 
         if (hasProfileName) {
-            contactBubbleNumTxt.setVisibility(View.VISIBLE);
-            contactBubbleTxt.setText(displayName);
-            contactBubbleNumTxt.setText(username);
+            binding.contactBubbleNumTxt.setVisibility(View.VISIBLE);
+            binding.contactBubbleTxt.setText(displayName);
+            binding.contactBubbleNumTxt.setText(username);
         } else {
-            contactBubbleNumTxt.setVisibility(View.GONE);
-            contactBubbleTxt.setText(username);
+            binding.contactBubbleNumTxt.setVisibility(View.GONE);
+            binding.contactBubbleTxt.setText(username);
         }
 
-        contactBubbleView.setImageDrawable(new AvatarDrawable(getActivity(), contact));
+        binding.contactBubble.setImageDrawable(new AvatarDrawable(getActivity(), contact));
     }
 
     @Override
@@ -515,10 +471,10 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
         getActivity().runOnUiThread(() -> {
             switch (callState) {
                 case NONE:
-                    mCallStatusTxt.setText("");
+                    binding.callStatusTxt.setText("");
                     break;
                 default:
-                    mCallStatusTxt.setText(callStateToHumanState(callState));
+                    binding.callStatusTxt.setText(callStateToHumanState(callState));
                     break;
             }
         });
@@ -526,51 +482,51 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
     @Override
     public void initMenu(boolean isSpeakerOn, boolean hasContact, boolean displayFlip, boolean canDial, boolean onGoingCall) {
-        if (flipCameraBtn != null) {
-            flipCameraBtn.setVisibility(displayFlip ? View.VISIBLE : View.GONE);
+        if (binding.callCameraFlipBtn != null) {
+            binding.callCameraFlipBtn.setVisibility(displayFlip ? View.VISIBLE : View.GONE);
         }
         if (dialPadBtn != null) {
             dialPadBtn.setVisible(canDial);
         }
         if (changeScreenOrientationBtn != null) {
-            changeScreenOrientationBtn.setVisible(mVideoSurface.getVisibility() == View.VISIBLE);
+            changeScreenOrientationBtn.setVisible(binding.videoSurface.getVisibility() == View.VISIBLE);
         }
     }
 
     @Override
     public void initNormalStateDisplay(final boolean audioOnly, boolean isSpeakerphoneOn) {
-        shapeRipple.stopRipple();
+        binding.shapeRipple.stopRipple();
 
-        acceptButton.setVisibility(View.GONE);
-        refuseButton.setVisibility(View.GONE);
-        controlLayout.setVisibility(View.VISIBLE);
-        hangupButton.setVisibility(View.VISIBLE);
+        binding.callAcceptBtn.setVisibility(View.GONE);
+        binding.callRefuseBtn.setVisibility(View.GONE);
+        binding.callControlGroup.setVisibility(View.VISIBLE);
+        binding.callHangupBtn.setVisibility(View.VISIBLE);
 
-        contactBubbleLayout.setVisibility(audioOnly ? View.VISIBLE : View.GONE);
-        speakerButton.setChecked(isSpeakerphoneOn);
+        binding.contactBubbleLayout.setVisibility(audioOnly ? View.VISIBLE : View.GONE);
+        binding.callSpeakerBtn.setChecked(isSpeakerphoneOn);
 
         getActivity().invalidateOptionsMenu();
     }
 
     @Override
     public void initIncomingCallDisplay() {
-        acceptButton.setVisibility(View.VISIBLE);
-        refuseButton.setVisibility(View.VISIBLE);
-        controlLayout.setVisibility(View.GONE);
-        hangupButton.setVisibility(View.GONE);
+        binding.callAcceptBtn.setVisibility(View.VISIBLE);
+        binding.callRefuseBtn.setVisibility(View.VISIBLE);
+        binding.callControlGroup.setVisibility(View.GONE);
+        binding.callHangupBtn.setVisibility(View.GONE);
 
-        contactBubbleLayout.setVisibility(View.VISIBLE);
+        binding.contactBubbleLayout.setVisibility(View.VISIBLE);
         getActivity().invalidateOptionsMenu();
     }
 
     @Override
     public void initOutGoingCallDisplay() {
-        acceptButton.setVisibility(View.GONE);
-        refuseButton.setVisibility(View.VISIBLE);
-        controlLayout.setVisibility(View.GONE);
-        hangupButton.setVisibility(View.GONE);
+        binding.callAcceptBtn.setVisibility(View.GONE);
+        binding.callRefuseBtn.setVisibility(View.VISIBLE);
+        binding.callControlGroup.setVisibility(View.GONE);
+        binding.callHangupBtn.setVisibility(View.GONE);
 
-        contactBubbleLayout.setVisibility(View.VISIBLE);
+        binding.contactBubbleLayout.setVisibility(View.VISIBLE);
         getActivity().invalidateOptionsMenu();
     }
 
@@ -583,7 +539,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
         double videoRatio = videoWidth / (double) videoHeight;
         double screenRatio = getView().getWidth() / (double) getView().getHeight();
 
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mVideoSurface.getLayoutParams();
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.videoSurface.getLayoutParams();
         int oldW = params.width;
         int oldH = params.height;
         if (videoRatio >= screenRatio) {
@@ -595,13 +551,13 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
         }
 
         if (oldW != params.width || oldH != params.height) {
-            mVideoSurface.setLayoutParams(params);
+            binding.videoSurface.setLayoutParams(params);
         }
 
         if (previewWidth == -1 && previewHeight == -1)
             return;
         Log.w(TAG, "resetVideoSize preview: " + previewWidth + "x" + previewHeight);
-        ViewGroup.LayoutParams paramsPreview = mVideoPreview.getLayoutParams();
+        ViewGroup.LayoutParams paramsPreview = binding.previewSurface.getLayoutParams();
         DisplayMetrics metrics = getResources().getDisplayMetrics();
 
         oldW = paramsPreview.width;
@@ -613,7 +569,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
         if (oldW != paramsPreview.width || oldH != paramsPreview.height) {
             Log.w(TAG, "mVideoPreview.setLayoutParams: " + paramsPreview.width + "x" + paramsPreview.height + " was: " + oldW + "x"+oldH);
-            mVideoPreview.setLayoutParams(paramsPreview);
+            binding.previewSurface.setLayoutParams(paramsPreview);
         }
 
         /*final int mPreviewWidth;
@@ -670,32 +626,26 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
         getActivity().finish();
     }
 
-    @OnClick({R.id.call_speaker_btn})
     public void speakerClicked() {
-        presenter.speakerClick(speakerButton.isChecked());
+        presenter.speakerClick(binding.callSpeakerBtn.isChecked());
     }
 
-    @OnClick({R.id.call_mic_btn})
     public void micClicked() {
-        presenter.muteMicrophoneToggled(micButton.isChecked());
+        presenter.muteMicrophoneToggled(binding.callMicBtn.isChecked());
     }
 
-    @OnClick({R.id.call_hangup_btn})
     public void hangUpClicked() {
         presenter.hangupCall();
     }
 
-    @OnClick(R.id.call_refuse_btn)
     public void refuseClicked() {
         presenter.refuseCall();
     }
 
-    @OnClick(R.id.call_accept_btn)
     public void acceptClicked() {
         presenter.acceptCall();
     }
 
-    @OnClick(R.id.call_camera_flip_btn)
     public void cameraFlip() {
         presenter.switchVideoInputClick();
     }
