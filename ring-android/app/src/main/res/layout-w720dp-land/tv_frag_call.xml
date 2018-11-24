@@ -27,7 +27,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     tools:context=".tv.call.TVCallActivity">
 
     <SurfaceView
-        android:id="@+id/video_preview_surface"
+        android:id="@+id/video_surface"
         android:layout_width="match_parent"
         android:layout_height="32dp"
         android:layout_centerInParent="true"
@@ -36,7 +36,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         tools:visibility="visible" />
 
     <SurfaceView
-        android:id="@+id/camera_preview_surface"
+        android:id="@+id/preview_surface"
         android:layout_width="160dp"
         android:layout_height="120dp"
         android:layout_alignParentBottom="true"
