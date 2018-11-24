@@ -230,7 +230,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
 
     private void setAudioRouting(boolean requestSpeakerOn) {
         mShouldSpeakerphone = requestSpeakerOn;
-        if (mBluetoothWrapper != null && mBluetoothWrapper.canBluetooth()) {
+        if (mBluetoothWrapper != null && mBluetoothWrapper.canBluetooth() && mBluetoothWrapper.isBTHeadsetConnected()) {
             Log.d(TAG, "setAudioRouting: Try to enable bluetooth");
             mBluetoothWrapper.setBluetoothOn(true);
         } else if (!mAudioManager.isWiredHeadsetOn()
@@ -272,6 +272,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         if (!mHasSpeakerPhone || checked == mAudioManager.isSpeakerphoneOn()) {
             return;
         }
+        Log.w(TAG, "toggleSpeakerphone setSpeakerphoneOn " + checked);
         if (checked) {
             mAudioManager.setSpeakerphoneOn(true);
         } else {
