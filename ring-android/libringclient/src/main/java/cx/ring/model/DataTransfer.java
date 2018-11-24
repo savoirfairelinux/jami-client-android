@@ -44,7 +44,7 @@ public class DataTransfer implements ConversationElement {
     public static final String COLUMN_DATA_TRANSFER_EVENT_CODE_NAME = "dataTransferEventCode";
 
     private static final Set<String> IMAGE_EXTENSIONS = new HashSet<>(Arrays.asList("jpg", "jpeg", "png", "gif"));
-    private static final int MAX_IMG_SIZE = 16 * 1024 * 1024;
+    private static final int MAX_SIZE = 32 * 1024 * 1024;
 
     @DatabaseField(index = true, generatedId = true, columnName = COLUMN_ID_NAME)
     long id;
@@ -86,7 +86,7 @@ public class DataTransfer implements ConversationElement {
 
     public boolean isPicture() {
         String extension = StringUtils.getFileExtension(getDisplayName()).toLowerCase();
-        return IMAGE_EXTENSIONS.contains(extension) && getTotalSize() <= MAX_IMG_SIZE;
+        return IMAGE_EXTENSIONS.contains(extension) && getTotalSize() <= MAX_SIZE;
     }
     public boolean isComplete() {
         return isOutgoing() || DataTransferEventCode.FINISHED.name().equals(eventCode);
@@ -174,5 +174,9 @@ public class DataTransfer implements ConversationElement {
 
     public boolean isError() {
         return getEventCode().isError();
+    }
+
+    public boolean canAutoAccept() {
+        return getTotalSize() <= MAX_SIZE;
     }
 }
