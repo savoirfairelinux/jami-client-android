@@ -185,6 +185,7 @@ along with this program; if not, write to the Free Software
     <string name="conversation_action_select_peer_number">Select a number</string>
     <string name="conversation_action_block_this">Block contact</string>
     <string name="conversation_action_go_to_call">Return to ongoing call</string>
+    <string name="conversation_default_emoji" translatable="false">👍</string>
 
     <!-- Contacts -->
     <string name="add_call_contact_number_to_contacts">Add %1$s?</string>
@@ -265,7 +266,7 @@ along with this program; if not, write to the Free Software
     <string name="menu_file_delete">Delete file</string>
     <string name="menu_file_share">Share file</string>
     <string name="title_activity_contact_details">ContactDetailsActivity</string>
-    <string name="large_text">
+    <string name="large_text" translatable="false">
         "Material is the metaphor.\n\n"
 
         "A material metaphor is the unifying theory of a rationalized space and a system of motion."
