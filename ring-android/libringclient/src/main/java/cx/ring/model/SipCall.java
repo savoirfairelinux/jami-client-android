@@ -275,11 +275,9 @@ public class SipCall {
         return mCallState == State.CURRENT;
     }
 
-    public VCard appendToVCard(StringMap messages) {
-        StringVect keys = messages.keys();
-        for (int i = 0, n = keys.size(); i < n; i++) {
-            String key = keys.get(i);
-            HashMap<String, String> messageKeyValue = VCardUtils.parseMimeAttributes(key);
+    public VCard appendToVCard(Map<String, String> messages) {
+        for (Map.Entry<String, String> message : messages.entrySet()) {
+            HashMap<String, String> messageKeyValue = VCardUtils.parseMimeAttributes(message.getKey());
             String mimeType = messageKeyValue.get(VCardUtils.VCARD_KEY_MIME_TYPE);
             if (!VCardUtils.MIME_RING_PROFILE_VCARD.equals(mimeType)) {
                 continue;
@@ -289,12 +287,8 @@ public class SipCall {
             if (null == mProfileChunk) {
                 mProfileChunk = new ProfileChunk(nbPart);
             }
-            String content = messages.getRaw(keys.get(i)).toJavaString();
-            mProfileChunk.addPartAtIndex(content, part);
+            mProfileChunk.addPartAtIndex(message.getValue(), part);
             if (mProfileChunk.isProfileComplete()) {
-                /*if (mContact != null) {
-                    mContact.setVCard(Ezvcard.parse(mProfileChunk.getCompleteProfile()).first());
-                }*/
                 VCard ret = Ezvcard.parse(mProfileChunk.getCompleteProfile()).first();
                 mProfileChunk = null;
                 return ret;
