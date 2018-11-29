@@ -46,10 +46,22 @@ public class Phone {
         mNumber = new Uri(number);
         mLabel = label;
     }
+    public Phone(Uri number, int category, String label) {
+        mNumberType = NumberType.UNKNOWN;
+        mCategory = category;
+        mNumber = number;
+        mLabel = label;
+    }
 
     public Phone(String number, int category, String label, NumberType numberType) {
         mNumberType = numberType;
         mNumber = new Uri(number);
+        mLabel = label;
+        mCategory = category;
+    }
+    public Phone(Uri number, int category, String label, NumberType numberType) {
+        mNumberType = numberType;
+        mNumber = number;
         mLabel = label;
         mCategory = category;
     }
