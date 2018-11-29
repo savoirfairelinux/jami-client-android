@@ -39,7 +39,9 @@ import javax.inject.Named;
 import cx.ring.daemon.Blob;
 import cx.ring.daemon.DataTransferInfo;
 import cx.ring.daemon.Message;
+import cx.ring.daemon.MessageVect;
 import cx.ring.daemon.Ringservice;
+import cx.ring.daemon.RingserviceJNI;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.StringVect;
 import cx.ring.daemon.UintVect;
@@ -992,30 +994,29 @@ public class AccountService {
         }
     }
 
-    void volatileAccountDetailsChanged(String accountId, StringMap details) {
+    void volatileAccountDetailsChanged(String accountId, Map<String, String> details) {
         Account account = getAccount(accountId);
         if (account == null) {
             return;
         }
         Log.d(TAG, "volatileAccountDetailsChanged: " + accountId + " " + details.size());
-        account.setVolatileDetails(details.toNative());
+        account.setVolatileDetails(details);
     }
 
-    void incomingAccountMessage(String accountId, String callId, String from, StringMap messages) {
-        String message = null;
-        final String textPlainMime = "text/plain";
-        if (null != messages && messages.has_key(textPlainMime)) {
-            message = messages.getRaw(textPlainMime).toJavaString();
-        }
+    void incomingAccountMessage(String accountId, String callId, String from, Map<String, String> messages) {
+        Log.d(TAG, "incomingAccountMessage: " + accountId + " " + messages.size());
+        String message = messages.get(CallService.MIME_TEXT_PLAIN);
         if (message != null) {
-            mHistoryService.incomingMessage(accountId, callId, from, message)
+            mHistoryService
+                    .incomingMessage(accountId, callId, from, message)
                     .subscribe(incomingMessageSubject::onNext);
         }
     }
 
     void accountMessageStatusChanged(String accountId, long messageId, String to, int status) {
         Log.d(TAG, "accountMessageStatusChanged: " + accountId + ", " + messageId + ", " + to + ", " + status);
-        mHistoryService.accountMessageStatusChanged(accountId, messageId, to, status)
+        mHistoryService
+                .accountMessageStatusChanged(accountId, messageId, to, status)
                 .subscribe(messageSubject::onNext, e -> Log.e(TAG, "Error updating message",e));
     }
 
@@ -1023,12 +1024,12 @@ public class AccountService {
         Log.d(TAG, "errorAlert : " + alert);
     }
 
-    void knownDevicesChanged(String accountId, StringMap devices) {
+    void knownDevicesChanged(String accountId, Map<String, String> devices) {
         Log.d(TAG, "knownDevicesChanged: " + accountId + ", " + devices);
 
         Account accountChanged = getAccount(accountId);
         if (accountChanged != null) {
-            accountChanged.setDevices(devices.toNative());
+            accountChanged.setDevices(devices);
             accountSubject.onNext(accountChanged);
         }
     }
