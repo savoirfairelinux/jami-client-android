@@ -19,6 +19,7 @@
  */
 package cx.ring.services;
 
+import java.util.Map;
 import java.util.concurrent.ScheduledExecutorService;
 
 import javax.inject.Inject;
@@ -41,8 +42,6 @@ import cx.ring.utils.Log;
 public class DaemonService {
 
     private static final String TAG = DaemonService.class.getSimpleName();
-
-    private static final int POLLING_TIMEOUT = 50;
 
     @Inject
     @Named("DaemonExecutor")
@@ -126,7 +125,7 @@ public class DaemonService {
 
         @Override
         public void accountsChanged() {
-            mAccountService.accountsChanged();
+            mExecutor.submit(() -> mAccountService.accountsChanged());
         }
 
         @Override
@@ -136,27 +135,31 @@ public class DaemonService {
 
         @Override
         public void registrationStateChanged(String accountId, String newState, int code, String detailString) {
-            mAccountService.registrationStateChanged(accountId, newState, code, detailString);
+            mExecutor.submit(() -> mAccountService.registrationStateChanged(accountId, newState, code, detailString));
         }
 
         @Override
         public void volatileAccountDetailsChanged(String account_id, StringMap details) {
-            mAccountService.volatileAccountDetailsChanged(account_id, details);
+            Map<String, String> jdetails = details.toNative();
+            mExecutor.submit(() -> mAccountService.volatileAccountDetailsChanged(account_id, jdetails));
         }
 
         @Override
         public void incomingAccountMessage(String accountId, String from, StringMap messages) {
-            mAccountService.incomingAccountMessage(accountId, null, from, messages);
+            if (messages == null || messages.empty())
+                return;
+            Map<String, String> jmessages = messages.toNativeFromUtf8();
+            mExecutor.submit(() -> mAccountService.incomingAccountMessage(accountId, null, from, jmessages));
         }
 
         @Override
         public void accountMessageStatusChanged(String accountId, long messageId, String to, int status) {
-            mAccountService.accountMessageStatusChanged(accountId, messageId, to, status);
+            mExecutor.submit(() -> mAccountService.accountMessageStatusChanged(accountId, messageId, to, status));
         }
 
         @Override
         public void errorAlert(int alert) {
-            mAccountService.errorAlert(alert);
+            mExecutor.submit(() -> mAccountService.errorAlert(alert));
         }
 
         @Override
@@ -176,7 +179,8 @@ public class DaemonService {
 
         @Override
         public void knownDevicesChanged(String accountId, StringMap devices) {
-            mAccountService.knownDevicesChanged(accountId, devices);
+            Map<String, String> jdevices = devices.toNativeFromUtf8();
+            mExecutor.submit(() -> mAccountService.knownDevicesChanged(accountId, jdevices));
         }
 
         @Override
@@ -206,17 +210,18 @@ public class DaemonService {
 
         @Override
         public void incomingTrustRequest(String accountId, String from, Blob message, long received) {
-            mAccountService.incomingTrustRequest(accountId, from, message.toJavaString(), received);
+            String jmessage = message.toJavaString();
+            mExecutor.submit(() -> mAccountService.incomingTrustRequest(accountId, from, jmessage, received));
         }
 
         @Override
         public void contactAdded(String accountId, String uri, boolean confirmed) {
-            mAccountService.contactAdded(accountId, uri, confirmed);
+            mExecutor.submit(() -> mAccountService.contactAdded(accountId, uri, confirmed));
         }
 
         @Override
         public void contactRemoved(String accountId, String uri, boolean banned) {
-            mAccountService.contactRemoved(accountId, uri, banned);
+            mExecutor.submit(() -> mAccountService.contactRemoved(accountId, uri, banned));
         }
     }
 
@@ -224,17 +229,20 @@ public class DaemonService {
 
         @Override
         public void callStateChanged(String callId, String newState, int detailCode) {
-            mCallService.callStateChanged(callId, newState, detailCode);
+            mExecutor.submit(() -> mCallService.callStateChanged(callId, newState, detailCode));
         }
 
         @Override
         public void incomingCall(String accountId, String callId, String from) {
-            mCallService.incomingCall(accountId, callId, from);
+            mExecutor.submit(() -> mCallService.incomingCall(accountId, callId, from));
         }
 
         @Override
         public void incomingMessage(String callId, String from, StringMap messages) {
-            mCallService.incomingMessage(callId, from, messages);
+            if (messages == null || messages.empty())
+                return;
+            Map<String, String> jmessages = messages.toNativeFromUtf8();
+            mExecutor.submit(() -> mCallService.incomingMessage(callId, from, jmessages));
         }
 
         @Override
