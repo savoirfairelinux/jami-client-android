@@ -91,6 +91,7 @@ public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> {
 
     void userNameChanged(ConfigKey configKey, Object newValue) {
         if (mAccount.isSip()) {
+            mAccount.setDetail(configKey, newValue.toString());
             mAccount.getCredentials().get(0).setDetail(configKey, newValue.toString());
         }
         updateAccount();
