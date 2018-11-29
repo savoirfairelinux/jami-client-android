@@ -76,10 +76,10 @@ public class CallContact {
     }
 
     public CallContact(long cID, String k, String displayName, long photoID) {
-        this(cID, k, displayName, photoID, new ArrayList<Phone>(), null, false);
+        this(cID, k, displayName, photoID, new ArrayList<>(), false);
     }
 
-    public CallContact(long cID, String k, String displayName, long photoID, ArrayList<Phone> p, String mail, boolean user) {
+    private CallContact(long cID, String k, String displayName, long photoID, ArrayList<Phone> p, boolean user) {
         mId = cID;
         mKey = k;
         mDisplayName = displayName;
@@ -91,40 +91,18 @@ public class CallContact {
         }
     }
 
-    public static CallContact buildUnknown(Uri to) {
+    public static CallContact buildSIP(Uri to) {
         ArrayList<Phone> phones = new ArrayList<>();
         phones.add(new Phone(to, 0));
-        return new CallContact(UNKNOWN_ID, null, null, 0, phones, "", false);
-    }
-
-    public static CallContact buildUnknown(String to) {
-        ArrayList<Phone> phones = new ArrayList<>();
-        phones.add(new Phone(to, 0));
-
-        return new CallContact(UNKNOWN_ID, null, null, 0, phones, "", false);
-    }
-
-    public static CallContact buildUnknown(String to, String address) {
-        ArrayList<Phone> phones = new ArrayList<>();
-        if (address != null) {
-            phones.add(new Phone(address, 0));
-        } else {
-            phones.add(new Phone(to, 0));
-        }
-
-        return new CallContact(UNKNOWN_ID, null, to, 0, phones, "", false);
-    }
-
-    public static CallContact buildUnknown(String to, int type) {
-        ArrayList<Phone> phones = new ArrayList<>();
-        phones.add(new Phone(to, type));
-        return new CallContact(UNKNOWN_ID, null, to, 0, phones, "", false);
-    }
-
-    public static CallContact buildRingContact(Uri ringId, String username) {
-        CallContact contact = buildUnknown(ringId);
-        contact.setUsername(username);
+        CallContact contact = new CallContact(UNKNOWN_ID, null, null, 0, phones, false);
+        contact.usernameLoaded = true;
         return contact;
+    }
+
+    public static CallContact build(String to) {
+        ArrayList<Phone> phones = new ArrayList<>();
+        phones.add(new Phone(to, 0));
+        return new CallContact(UNKNOWN_ID, null, null, 0, phones, false);
     }
 
     public boolean subscribe() {
@@ -243,17 +221,17 @@ public class CallContact {
         return stared;
     }
 
-    public void addPhoneNumber(Uri uri) {
-        if (!hasNumber(uri))
-            mPhones.add(new Phone(uri, 0));
-    }
-
-    public void addPhoneNumber(String tel, int cat, String label) {
+    public void addPhoneNumber(Uri tel, int cat, String label) {
         if (!hasNumber(tel))
             mPhones.add(new Phone(tel, cat, label));
     }
 
     public void addNumber(String tel, int cat, String label, Phone.NumberType type) {
+        if (!hasNumber(tel))
+            mPhones.add(new Phone(tel, cat, label, type));
+    }
+
+    public void addNumber(Uri tel, int cat, String label, Phone.NumberType type) {
         if (!hasNumber(tel))
             mPhones.add(new Phone(tel, cat, label, type));
     }
@@ -355,26 +333,7 @@ public class CallContact {
         this.vcard = vcard;
     }
 
-    /*public void setVCardProfile(VCard vcard) {
-        this.vcard = vcard;
-        Tuple<String, byte[]> info = VCardUtils.readData(vcard);
-        setProfile(info.first, info.second);
-    }*/
-
     public VCard getVCard() {
         return vcard;
     }
-
-    /*@Override
-    public boolean equals(Object o) {
-        if (o == this) {
-            return true;
-        }
-        if (!(o instanceof CallContact)) {
-            return false;
-        }
-        CallContact contact = (CallContact) o;
-        return contact.getId() == this.getId() && contact.getDisplayName().equals(this.getDisplayName());
-    }*/
-
 }

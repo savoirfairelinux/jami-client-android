@@ -29,9 +29,6 @@ import androidx.annotation.NonNull;
 import android.util.Log;
 import android.util.LongSparseArray;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,8 +38,6 @@ import cx.ring.contacts.AvatarFactory;
 import cx.ring.model.CallContact;
 import cx.ring.model.Uri;
 import cx.ring.utils.AndroidFileUtils;
-import cx.ring.utils.BitmapUtils;
-import cx.ring.utils.FileUtils;
 import cx.ring.utils.Tuple;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
@@ -153,14 +148,14 @@ public class ContactServiceImpl extends ContactService {
                 if (uri.isSingleIp() || (uri.isRingId() && loadRingContacts) || loadSipContacts) {
                     switch (contactCursor.getString(indexMime)) {
                         case ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE:
-                            contact.addPhoneNumber(contactNumber, contactType, contactLabel);
+                            contact.addPhoneNumber(uri, contactType, contactLabel);
                             break;
                         case ContactsContract.CommonDataKinds.SipAddress.CONTENT_ITEM_TYPE:
-                            contact.addNumber(contactNumber, contactType, contactLabel, cx.ring.model.Phone.NumberType.SIP);
+                            contact.addNumber(uri, contactType, contactLabel, cx.ring.model.Phone.NumberType.SIP);
                             break;
                         case ContactsContract.CommonDataKinds.Im.CONTENT_ITEM_TYPE:
                             if (uri.isRingId()) {
-                                contact.addNumber(contactNumber, contactType, contactLabel, cx.ring.model.Phone.NumberType.UNKNOWN);
+                                contact.addNumber(uri, contactType, contactLabel, cx.ring.model.Phone.NumberType.UNKNOWN);
                             }
                             break;
                     }
@@ -328,7 +323,7 @@ public class ContactServiceImpl extends ContactService {
 
             if (result == null) {
                 Log.d(TAG, "findContactBySipNumberFromSystem: " + number + " can't find contact.");
-                return CallContact.buildUnknown(number);
+                return CallContact.buildSIP(new Uri(number));
             }
 
             int indexId = result.getColumnIndex(ContactsContract.RawContacts.CONTACT_ID);
