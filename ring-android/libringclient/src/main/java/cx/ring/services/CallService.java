@@ -45,7 +45,7 @@ import io.reactivex.subjects.Subject;
 public class CallService {
 
     private final static String TAG = CallService.class.getSimpleName();
-    private final static String MIME_TEXT_PLAIN = "text/plain";
+    public final static String MIME_TEXT_PLAIN = "text/plain";
 
     @Inject
     @Named("DaemonExecutor")
@@ -346,7 +346,7 @@ public class CallService {
         callSubject.onNext(call);
     }
 
-    public void incomingMessage(String callId, String from, StringMap messages) {
+    public void incomingMessage(String callId, String from, Map<String, String> messages) {
         SipCall sipCall = currentCalls.get(callId);
         if (sipCall == null || messages == null) {
             Log.w(TAG, "incomingMessage: unknown call or no message: " + callId + " " + from);
@@ -356,7 +356,7 @@ public class CallService {
         if (vcard != null) {
             mContactService.saveVCardContactData(sipCall.getContact(), vcard);
         }
-        if (messages.has_key(MIME_TEXT_PLAIN)) {
+        if (messages.containsKey(MIME_TEXT_PLAIN)) {
             mAccountService.incomingAccountMessage(sipCall.getAccount(), callId, from, messages);
         }
     }
