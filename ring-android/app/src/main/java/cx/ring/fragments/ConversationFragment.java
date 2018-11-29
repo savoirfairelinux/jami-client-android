@@ -591,8 +591,12 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         super.initPresenter(presenter);
         String contactRingID = getArguments().getString(KEY_CONTACT_RING_ID);
         String accountId = getArguments().getString(KEY_ACCOUNT_ID);
+        try {
+            mPreferences = getActivity().getSharedPreferences(accountId + "_" + contactRingID, Context.MODE_PRIVATE);
+        } catch (Exception e) {
+            Log.e(TAG, "Can't load conversation preferences");
+        }
         mAdapter = new ConversationAdapter(this, presenter);
-        mPreferences = getActivity().getSharedPreferences(accountId + "_" + contactRingID, Context.MODE_PRIVATE);
         presenter.init(contactRingID, accountId);
     }
 
