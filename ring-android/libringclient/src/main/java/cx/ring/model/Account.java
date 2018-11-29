@@ -225,7 +225,10 @@ public class Account {
     public CallContact getContactFromCache(String key) {
         CallContact contact = mContactCache.get(key);
         if (contact == null) {
-            contact = CallContact.buildUnknown(key);
+            if (isSip())
+                contact = CallContact.buildSIP(new Uri(key));
+            else
+                contact = CallContact.build(key);
             mContactCache.put(key, contact);
         }
         return contact;
