@@ -269,6 +269,11 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         getView().shareFile(path);
     }
 
+    public void openFile(DataTransfer file) {
+        File path = getDeviceRuntimeService().getConversationPath(file.getPeerId(), file.getStoragePath());
+        getView().openFile(path);
+    }
+
     public void deleteFile(DataTransfer transfer) {
         mConversationFacade.deleteFile(transfer);
     }

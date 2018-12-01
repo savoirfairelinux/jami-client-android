@@ -421,14 +421,9 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     public void shareFile(File path) {
         android.net.Uri fileUri = null;
         try {
-            fileUri = FileProvider.getUriForFile(
-                    getActivity(),
-                    ContentUriHandler.AUTHORITY_FILES,
-                    path);
+            fileUri = FileProvider.getUriForFile(getActivity(), ContentUriHandler.AUTHORITY_FILES, path);
         } catch (IllegalArgumentException e) {
-            Log.e("File Selector",
-                    "The selected file can't be shared: " +
-                            path.getName());
+            Log.e("File Selector", "The selected file can't be shared: " + path.getName());
         }
         if (fileUri != null) {
             Intent sendIntent = new Intent();
@@ -438,6 +433,26 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
             sendIntent.setDataAndType(fileUri, type);
             sendIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
             startActivity(Intent.createChooser(sendIntent, null));
+        }
+    }
+
+    @Override
+    public void openFile(File path) {
+        android.net.Uri fileUri = null;
+        try {
+            fileUri = FileProvider.getUriForFile(getActivity(), ContentUriHandler.AUTHORITY_FILES, path);
+        } catch (IllegalArgumentException e) {
+            Log.e("File Selector", "The selected file can't be shared: " + path.getName());
+        }
+        if (fileUri != null) {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_VIEW);
+            sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            String type = getActivity().getContentResolver().getType(fileUri);
+            sendIntent.setDataAndType(fileUri, type);
+            sendIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
+            //startActivity(Intent.createChooser(sendIntent, null));
+            startActivity(sendIntent);
         }
     }
 
