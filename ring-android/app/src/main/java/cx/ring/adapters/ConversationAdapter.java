@@ -313,6 +313,10 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                 presenter.shareFile(file);
                 break;
             }
+            case R.id.conv_action_open: {
+                presenter.openFile(file);
+                break;
+            }
             case R.id.conv_action_delete:
                 presenter.deleteFile(file);
                 break;
