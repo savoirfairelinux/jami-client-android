@@ -75,6 +75,8 @@ public interface ConversationView extends BaseView {
 
     void shareFile(File path);
 
+    void openFile(File path);
+
     void addElement(ConversationElement e);
     void updateElement(ConversationElement e);
     void removeElement(ConversationElement e);
