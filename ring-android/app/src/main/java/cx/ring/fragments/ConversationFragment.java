@@ -313,6 +313,12 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
+    public void onDestroyView() {
+        mHistList.setAdapter(null);
+        super.onDestroyView();
+    }
+
+    @Override
     public boolean onContextItemSelected(MenuItem item) {
         if (mAdapter.onContextItemSelected(item))
             return true;
