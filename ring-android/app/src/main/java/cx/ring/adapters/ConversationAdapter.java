@@ -572,6 +572,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         }
 
         boolean separateByDetails = shouldSeparateByDetails(textMessage, position);
+        boolean isLast = position == mConversationElements.size() - 1;
         boolean sameAsPreviousMsg = isMessageConfigSameAsPrevious(textMessage, position);
         final Context context = convViewHolder.itemView.getContext();
 
@@ -581,25 +582,38 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
         switch (textMessage.getStatus()) {
             case SENDING:
-                convViewHolder.mMsgDetailTxt.setVisibility(View.VISIBLE);
-                convViewHolder.mMsgDetailTxt.setText(R.string.message_sending);
-                ViewCompat.setBackgroundTintList(convViewHolder.mMsgTxt, null);
+                if (!textMessage.isIncoming()) {
+                    convViewHolder.mPhoto.setVisibility(View.VISIBLE);
+                    convViewHolder.mPhoto.setImageResource(R.drawable.baseline_circle_24);
+                    convViewHolder.mMsgDetailTxt.setVisibility(View.GONE);
+                }
                 break;
             case FAILURE:
-                convViewHolder.mMsgDetailTxt.setVisibility(View.VISIBLE);
-                ViewCompat.setBackgroundTintList(convViewHolder.mMsgTxt, mErrorColor);
-                convViewHolder.mMsgDetailTxt.setText(R.string.message_failed);
+                if (!textMessage.isIncoming()) {
+                    convViewHolder.mPhoto.setVisibility(View.VISIBLE);
+                    convViewHolder.mPhoto.setImageResource(R.drawable.round_highlight_off_24);
+                    convViewHolder.mMsgDetailTxt.setVisibility(View.GONE);
+                }
                 break;
             default:
-                ViewCompat.setBackgroundTintList(convViewHolder.mMsgTxt, null);
                 if (separateByDetails) {
-                    convViewHolder.mMsgDetailTxt.setVisibility(View.VISIBLE);
-                    convViewHolder.updater = new UiUpdater(() -> {
-                        String timeSeparationString = timestampToDetailString(context, textMessage.getDate());
-                        convViewHolder.mMsgDetailTxt.setText(timeSeparationString);
-                    }, 10000);
-                    convViewHolder.updater.start();
+                    if (!textMessage.isIncoming()) {
+                        convViewHolder.mPhoto.setVisibility(View.VISIBLE);
+                        convViewHolder.mPhoto.setImageResource(R.drawable.baseline_check_circle_24);
+                    }
+                    if (!isLast) {
+                        convViewHolder.updater = new UiUpdater(() -> {
+                            convViewHolder.mMsgDetailTxt.setText(timestampToDetailString(context, textMessage.getDate()));
+                        }, 10000);
+                        convViewHolder.updater.start();
+                        convViewHolder.mMsgDetailTxt.setVisibility(View.VISIBLE);
+                    } else {
+                        convViewHolder.mMsgDetailTxt.setVisibility(View.GONE);
+                    }
                 } else {
+                    if (!textMessage.isIncoming()) {
+                        convViewHolder.mPhoto.setVisibility(View.GONE);
+                    }
                     convViewHolder.mMsgDetailTxt.setVisibility(View.GONE);
                 }
         }

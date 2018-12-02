@@ -55,7 +55,15 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
 
     public ConversationViewHolder(ViewGroup v, ConversationAdapter.MessageType type) {
         super(v);
-        if (type == ConversationAdapter.MessageType.CALL_INFORMATION) {
+        if (type == ConversationAdapter.MessageType.INCOMING_TEXT_MESSAGE) {
+            mMsgTxt = v.findViewById(R.id.msg_txt);
+            mMsgDetailTxt = v.findViewById(R.id.msg_details_txt);
+            mPhoto = v.findViewById(R.id.photo);
+        } else if (type == ConversationAdapter.MessageType.OUTGOING_TEXT_MESSAGE) {
+            mMsgTxt = v.findViewById(R.id.msg_txt);
+            mMsgDetailTxt = v.findViewById(R.id.msg_details_txt);
+            mPhoto = v.findViewById(R.id.status_icon);
+        } else if (type == ConversationAdapter.MessageType.CALL_INFORMATION) {
             mHistTxt = v.findViewById(R.id.call_hist_txt);
             mHistDetailTxt = v.findViewById(R.id.call_details_txt);
             mPhoto = v.findViewById(R.id.call_icon);
@@ -85,12 +93,6 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
         } else if (type == ConversationAdapter.MessageType.CONTACT_EVENT) {
             mMsgTxt = v.findViewById(R.id.contact_event_txt);
             mMsgDetailTxt = v.findViewById(R.id.contact_event_details_txt);
-        } else {
-            mMsgTxt = v.findViewById(R.id.msg_txt);
-            mMsgDetailTxt = v.findViewById(R.id.msg_details_txt);
-            if (type == ConversationAdapter.MessageType.INCOMING_TEXT_MESSAGE) {
-                mPhoto = v.findViewById(R.id.photo);
-            }
         }
     }
 }
