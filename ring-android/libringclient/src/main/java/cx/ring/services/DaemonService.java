@@ -92,7 +92,7 @@ public class DaemonService {
         return mDaemonStarted;
     }
 
-    public void startDaemon() {
+    synchronized public void startDaemon() {
         if (!mDaemonStarted) {
             mDaemonStarted = true;
             Log.i(TAG, "Starting daemon ...");
@@ -106,7 +106,7 @@ public class DaemonService {
         }
     }
 
-    public void stopDaemon() {
+    synchronized public void stopDaemon() {
         mExecutor.shutdown();
         if (mDaemonStarted) {
             Log.i(TAG, "stopping daemon ...");
