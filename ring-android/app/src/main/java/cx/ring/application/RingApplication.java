@@ -20,6 +20,8 @@
 package cx.ring.application;
 
 import android.app.Application;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -28,10 +30,7 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.media.AudioManager;
 import android.os.Build;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
-import androidx.appcompat.app.AppCompatDelegate;
 import android.util.Log;
 
 import com.bumptech.glide.Glide;
@@ -44,6 +43,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatDelegate;
 import cx.ring.BuildConfig;
 import cx.ring.contacts.AvatarFactory;
 import cx.ring.daemon.Ringservice;
@@ -52,6 +53,7 @@ import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.dependencyinjection.RingInjectionModule;
 import cx.ring.dependencyinjection.ServiceInjectionModule;
 import cx.ring.service.DRingService;
+import cx.ring.service.RingJobService;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ConferenceService;
@@ -181,10 +183,32 @@ public abstract class RingApplication extends Application {
                 Intent intent = new Intent(DRING_CONNECTION_CHANGED);
                 intent.putExtra("connected", mDaemonService.isStarted());
                 sendBroadcast(intent);
+
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                    scheduleRefreshJob();
+                }
             } catch (Exception e) {
                 Log.e(TAG, "DRingService start failed", e);
             }
         });
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void scheduleRefreshJob() {
+        JobScheduler scheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        if (scheduler == null) {
+            Log.e(TAG, "JobScheduler: can't retrieve service");
+            return;
+        }
+        JobInfo.Builder jobBuilder = new JobInfo.Builder(RingJobService.JOB_ID, new ComponentName(this, RingJobService.class))
+                .setPersisted(true)
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            jobBuilder.setPeriodic(RingJobService.JOB_INTERVAL, RingJobService.JOB_FLEX);
+        else
+            jobBuilder.setPeriodic(RingJobService.JOB_INTERVAL);
+        Log.w(TAG, "JobScheduler: scheduling job");
+        scheduler.schedule(jobBuilder.build());
     }
 
     public void terminateDaemon() {
@@ -281,5 +305,13 @@ public abstract class RingApplication extends Application {
 
     public void permissionHasBeenAsked(String permission) {
         mPermissionsBeingAsked.remove(permission);
+    }
+
+    public DaemonService getDaemon() {
+        return mDaemonService;
+    }
+
+    public HardwareService getHardwareService() {
+        return mHardwareService;
     }
 }

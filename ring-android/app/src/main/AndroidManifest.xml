@@ -358,6 +358,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </intent-filter>
         </service>
 
+        <service android:name=".service.RingJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 
 </manifest>
