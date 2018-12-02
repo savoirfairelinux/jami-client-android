@@ -51,6 +51,7 @@ import cx.ring.launch.LaunchActivity;
 import cx.ring.navigation.RingNavigationFragment;
 import cx.ring.service.BootReceiver;
 import cx.ring.service.DRingService;
+import cx.ring.service.RingJobService;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ConferenceService;
@@ -201,4 +202,6 @@ public interface RingInjectionComponent {
     void inject(ShareWithFragment fragment);
 
     void inject(ContactDetailsActivity fragment);
+
+    void inject(RingJobService fragment);
 }
