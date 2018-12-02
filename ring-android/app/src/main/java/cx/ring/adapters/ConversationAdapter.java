@@ -24,12 +24,18 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.SurfaceTexture;
+import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Environment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityOptionsCompat;
-import androidx.core.content.FileProvider;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import android.text.format.DateUtils;
@@ -40,8 +46,12 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.Surface;
+import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.load.resource.bitmap.CenterInside;
@@ -74,7 +84,10 @@ import cx.ring.utils.GlideApp;
 import cx.ring.utils.GlideOptions;
 import cx.ring.utils.ResourceMapper;
 import cx.ring.utils.StringUtils;
+import cx.ring.utils.UiUpdater;
 import cx.ring.views.ConversationViewHolder;
+
+import static androidx.core.content.FileProvider.getUriForFile;
 
 public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHolder> {
     private final static String TAG = ConversationAdapter.class.getSimpleName();
@@ -182,46 +195,41 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                 case TEXT: {
                     TextMessage ht = (TextMessage) conversationElement;
                     if (ht.isIncoming()) {
-                        return ConversationMessageType.INCOMING_TEXT_MESSAGE.getType();
+                        return MessageType.INCOMING_TEXT_MESSAGE.ordinal();
                     } else {
-                        return ConversationMessageType.OUTGOING_TEXT_MESSAGE.getType();
+                        return MessageType.OUTGOING_TEXT_MESSAGE.ordinal();
                     }
                 }
                 case FILE: {
                     DataTransfer file = (DataTransfer) conversationElement;
-                    if (file.showPicture()) {
-                        return ConversationMessageType.IMAGE.getType();
+                    if (file.isComplete()) {
+                        if (file.isPicture()) {
+                            return MessageType.IMAGE.ordinal();
+                        } else if (file.isAudio()) {
+                            return MessageType.AUDIO.ordinal();
+                        } else if (file.isVideo()) {
+                            return MessageType.VIDEO.ordinal();
+                        } else {
+                            return MessageType.FILE_TRANSFER.ordinal();
+                        }
                     } else
-                        return ConversationMessageType.FILE_TRANSFER.getType();
+                        return MessageType.FILE_TRANSFER.ordinal();
                 }
                 case CALL:
-                    return ConversationMessageType.CALL_INFORMATION_TEXT_MESSAGE.getType();
+                    return MessageType.CALL_INFORMATION.ordinal();
                 case CONTACT:
-                    return ConversationMessageType.CONTACT_EVENT.getType();
+                    return MessageType.CONTACT_EVENT.ordinal();
             }
         }
-        return ConversationMessageType.CALL_INFORMATION_TEXT_MESSAGE.getType();
+        return MessageType.CALL_INFORMATION.ordinal();
     }
 
     @NonNull
     @Override
     public ConversationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        int res;
-        if (viewType == ConversationMessageType.INCOMING_TEXT_MESSAGE.getType()) {
-            res = R.layout.item_conv_msg_peer;
-        } else if (viewType == ConversationMessageType.OUTGOING_TEXT_MESSAGE.getType()) {
-            res = R.layout.item_conv_msg_me;
-        } else if (viewType == ConversationMessageType.FILE_TRANSFER.getType()) {
-            res = R.layout.item_conv_file;
-        } else if (viewType == ConversationMessageType.IMAGE.getType()) {
-            res = R.layout.item_conv_image;
-        } else if (viewType == ConversationMessageType.CONTACT_EVENT.getType()) {
-            res = R.layout.item_conv_contact;
-        } else {
-            res = R.layout.item_conv_call;
-        }
-        ViewGroup v = (ViewGroup) LayoutInflater.from(parent.getContext()).inflate(res, parent, false);
-        return new ConversationViewHolder(v, viewType);
+        MessageType type = MessageType.values()[viewType];
+        ViewGroup v = (ViewGroup) LayoutInflater.from(parent.getContext()).inflate(type.layout, parent, false);
+        return new ConversationViewHolder(v, type);
     }
 
     @Override
@@ -245,6 +253,25 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         holder.itemView.setOnLongClickListener(null);
         if (holder.mPhoto != null)
             holder.mPhoto.setOnLongClickListener(null);
+        if (holder.updater != null) {
+            holder.updater.stop();
+            holder.updater = null;
+        }
+        if (holder.video != null) {
+            holder.video.setOnClickListener(null);
+            holder.video.setSurfaceTextureListener(null);
+        }
+        if (holder.surface != null) {
+            holder.surface.release();
+            holder.surface = null;
+        }
+        if (holder.player != null) {
+            if(holder.player.isPlaying())
+                holder.player.stop();
+            holder.player.reset();
+            holder.player.release();
+            holder.player = null;
+        }
         super.onViewRecycled(holder);
     }
 
@@ -293,30 +320,39 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         return true;
     }
 
-    private void configureForFileInfoTextMessage(@NonNull final ConversationViewHolder conversationViewHolder,
+    private void configureForFileInfoTextMessage(@NonNull final ConversationViewHolder viewHolder,
                                                  @NonNull final ConversationElement conversationElement, int position) {
         DataTransfer file = (DataTransfer) conversationElement;
 
-        String timeSeparationString = computeTimeSeparationStringFromMsgTimeStamp(
-                conversationViewHolder.itemView.getContext(),
-                file.getDate());
+        String timeSeparationString = timestampToDetailString(viewHolder.itemView.getContext(), file.getDate());
         if (file.getEventCode() == DataTransferEventCode.FINISHED) {
             boolean separateByDetails = shouldSeparateByDetails(conversationElement, position);
             if (separateByDetails) {
-                conversationViewHolder.mMsgDetailTxt.setVisibility(View.VISIBLE);
-                conversationViewHolder.mMsgDetailTxt.setText(String.format("%s - %s",
+                viewHolder.mMsgDetailTxt.setVisibility(View.VISIBLE);
+                viewHolder.mMsgDetailTxt.setText(String.format("%s - %s",
                         timeSeparationString, FileUtils.readableFileSize(file.getTotalSize())));
             } else
-                conversationViewHolder.mMsgDetailTxt.setVisibility(View.GONE);
+                viewHolder.mMsgDetailTxt.setVisibility(View.GONE);
         } else {
-            conversationViewHolder.mMsgDetailTxt.setVisibility(View.VISIBLE);
-            conversationViewHolder.mMsgDetailTxt.setText(String.format("%s - %s - %s",
+            viewHolder.mMsgDetailTxt.setVisibility(View.VISIBLE);
+            viewHolder.mMsgDetailTxt.setText(String.format("%s - %s - %s",
                     timeSeparationString, FileUtils.readableFileSize(file.getTotalSize()),
                     ResourceMapper.getReadableFileTransferStatus(conversationFragment.getActivity(), file.getEventCode())));
         }
 
-        boolean showPicture = file.showPicture();
-        View longPressView = showPicture ? conversationViewHolder.mPhoto : conversationViewHolder.itemView;
+        MessageType type;
+        if (!file.isComplete()) {
+            type = MessageType.FILE_TRANSFER;
+        } else if (file.isPicture()) {
+            type = MessageType.IMAGE;
+        } else if (file.isAudio()) {
+            type = MessageType.AUDIO;
+        } else if (file.isVideo()) {
+            type = MessageType.VIDEO;
+        } else {
+            type = MessageType.FILE_TRANSFER;
+        }
+        View longPressView = type == MessageType.IMAGE ? viewHolder.mPhoto : viewHolder.itemView;
         longPressView.setOnCreateContextMenuListener((menu, v, menuInfo) -> {
             menu.setHeaderTitle(file.getDisplayName());
             conversationFragment.onCreateContextMenu(menu, v, menuInfo);
@@ -328,52 +364,146 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             }
         });
         longPressView.setOnLongClickListener(v -> {
-            mCurrentLongItem = new RecyclerViewContextMenuInfo(conversationViewHolder.getLayoutPosition(), v.getId());
+            mCurrentLongItem = new RecyclerViewContextMenuInfo(viewHolder.getLayoutPosition(), v.getId());
             return false;
         });
 
-        if (showPicture) {
-            Context context = conversationViewHolder.mPhoto.getContext();
+        if (type == MessageType.IMAGE) {
+            Context context = viewHolder.mPhoto.getContext();
             File path = presenter.getDeviceRuntimeService().getConversationPath(file.getPeerId(), file.getStoragePath());
 
-            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) conversationViewHolder.mAnswerLayout.getLayoutParams();
+            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) viewHolder.mAnswerLayout.getLayoutParams();
             params.gravity = (file.isOutgoing() ? Gravity.END : Gravity.START) | Gravity.BOTTOM;
-            conversationViewHolder.mAnswerLayout.setLayoutParams(params);
+            viewHolder.mAnswerLayout.setLayoutParams(params);
 
-            LinearLayout.LayoutParams imageParams = (LinearLayout.LayoutParams) conversationViewHolder.mPhoto.getLayoutParams();
+            LinearLayout.LayoutParams imageParams = (LinearLayout.LayoutParams) viewHolder.mPhoto.getLayoutParams();
             imageParams.height = mPictureMaxSize;
-            conversationViewHolder.mPhoto.setLayoutParams(imageParams);
+            viewHolder.mPhoto.setLayoutParams(imageParams);
 
             GlideApp.with(context)
                     .load(path)
                     .apply(PICTURE_OPTIONS)
-                    .into(new DrawableImageViewTarget(conversationViewHolder.mPhoto).waitForLayout());
+                    .into(new DrawableImageViewTarget(viewHolder.mPhoto).waitForLayout());
 
-            ((LinearLayout)conversationViewHolder.mAnswerLayout).setGravity(file.isOutgoing() ? Gravity.END : Gravity.START);
-            conversationViewHolder.mPhoto.setOnClickListener(v -> {
-                Uri contentUri = FileProvider.getUriForFile(v.getContext(), ContentUriHandler.AUTHORITY_FILES, path);
+            ((LinearLayout)viewHolder.mAnswerLayout).setGravity(file.isOutgoing() ? Gravity.END : Gravity.START);
+            viewHolder.mPhoto.setOnClickListener(v -> {
+                Uri contentUri = getUriForFile(v.getContext(), ContentUriHandler.AUTHORITY_FILES, path);
                 Intent i = new Intent(context, MediaViewerActivity.class);
                 i.setAction(Intent.ACTION_VIEW).setDataAndType(contentUri, "image/*").setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 ActivityOptionsCompat options = ActivityOptionsCompat.
-                        makeSceneTransitionAnimation(conversationFragment.getActivity(), conversationViewHolder.mPhoto, "picture");
+                        makeSceneTransitionAnimation(conversationFragment.getActivity(), viewHolder.mPhoto, "picture");
                 conversationFragment.startActivityForResult(i, 3006, options.toBundle());
             });
+            return;
+        } else if (type == MessageType.VIDEO) {
+            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) viewHolder.mAnswerLayout.getLayoutParams();
+            params.gravity = file.isOutgoing() ? Gravity.END : Gravity.START;
+            viewHolder.mAnswerLayout.setLayoutParams(params);
+
+            Context context = viewHolder.itemView.getContext();
+            File path = presenter.getDeviceRuntimeService().getConversationPath(file.getPeerId(), file.getStoragePath());
+            final MediaPlayer player =  MediaPlayer.create(context, getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path));
+            viewHolder.player = player;
+            final Drawable playBtn = ContextCompat.getDrawable(viewHolder.mLayout.getContext(), R.drawable.baseline_play_arrow_24).mutate();
+            DrawableCompat.setTint(playBtn, Color.WHITE);
+            ((CardView)viewHolder.mLayout).setForeground(playBtn);
+            player.setOnCompletionListener(mp -> {
+                if (player.isPlaying())
+                    player.pause();
+                player.seekTo(1);
+                ((CardView)viewHolder.mLayout).setForeground(playBtn);
+            });
+            player.setOnVideoSizeChangedListener((mp, width, height) -> {
+                Log.w(TAG, "OnVideoSizeChanged " + width + "x" + height);
+                FrameLayout.LayoutParams p = (FrameLayout.LayoutParams) viewHolder.video.getLayoutParams();
+                int maxDim = Math.max(width, height);
+                p.width = width * mPictureMaxSize / maxDim;
+                p.height = height * mPictureMaxSize / maxDim;
+                viewHolder.video.setLayoutParams(p);
+            });
+            if (viewHolder.video.isAvailable()) {
+                if (viewHolder.surface != null)
+                    viewHolder.surface.release();
+                viewHolder.surface = new Surface(viewHolder.video.getSurfaceTexture());
+                player.setSurface(viewHolder.surface);
+            }
+            viewHolder.video.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
+                @Override
+                public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+                    if (viewHolder.surface == null) {
+                        viewHolder.surface = new Surface(viewHolder.video.getSurfaceTexture());
+                        player.setSurface(viewHolder.surface);
+                    }
+                }
+                @Override
+                public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {}
+                @Override
+                public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
+                    player.setSurface(null);
+                    viewHolder.surface = null;
+                    return true;
+                }
+                @Override
+                public void onSurfaceTextureUpdated(SurfaceTexture surface) {}
+            });
+            viewHolder.video.setOnClickListener(v -> {
+                if (player.isPlaying()) {
+                    player.pause();
+                    ((CardView)viewHolder.mLayout).setForeground(playBtn);
+                } else {
+                    player.start();
+                    ((CardView)viewHolder.mLayout).setForeground(null);
+                }
+            });
+            player.seekTo(1);
+            return;
+        } else if (type == MessageType.AUDIO) {
+            Context context = viewHolder.itemView.getContext();
+            File path = presenter.getDeviceRuntimeService().getConversationPath(file.getPeerId(), file.getStoragePath());
+            final MediaPlayer player =  MediaPlayer.create(context, getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path));
+            viewHolder.player = player;
+            player.setOnCompletionListener(mp -> {
+                player.seekTo(0);
+                ((ImageView)viewHolder.btnAccept).setImageResource(R.drawable.baseline_play_arrow_24);
+            });
+            ((ImageView)viewHolder.btnAccept).setImageResource(R.drawable.baseline_play_arrow_24);
+            viewHolder.btnAccept.setOnClickListener((b) -> {
+                if (player.isPlaying()) {
+                    player.pause();
+                    ((ImageView)viewHolder.btnAccept).setImageResource(R.drawable.baseline_play_arrow_24);
+                } else {
+                    player.start();
+                    ((ImageView)viewHolder.btnAccept).setImageResource(R.drawable.baseline_pause_24);
+                }
+            });
+            viewHolder.btnRefuse.setOnClickListener((b) -> {
+                if (player.isPlaying())
+                    player.pause();
+                player.seekTo(0);
+                ((ImageView)viewHolder.btnAccept).setImageResource(R.drawable.baseline_play_arrow_24);
+            });
+            viewHolder.updater = new UiUpdater(() -> {
+                int pS = player.getCurrentPosition() / 1000;
+                int dS = player.getDuration() / 1000;
+                viewHolder.mMsgTxt.setText(String.format("%02d:%02d / %02d:%02d", pS / 60, pS % 60, dS / 60, dS % 60));
+            });
+            viewHolder.updater.start();
             return;
         }
 
         if (file.getEventCode().isError()) {
-            conversationViewHolder.icon.setImageResource(R.drawable.ic_warning);
+            viewHolder.icon.setImageResource(R.drawable.ic_warning);
         } else {
-            conversationViewHolder.icon.setImageResource(R.drawable.ic_clip_black);
+            viewHolder.icon.setImageResource(R.drawable.ic_clip_black);
         }
 
-        conversationViewHolder.mMsgTxt.setText(file.getDisplayName());
+        viewHolder.mMsgTxt.setText(file.getDisplayName());
 
-        ((LinearLayout)conversationViewHolder.mLayout).setGravity(file.isOutgoing() ? Gravity.END : Gravity.START);
+        ((LinearLayout)viewHolder.mLayout).setGravity(file.isOutgoing() ? Gravity.END : Gravity.START);
 
         if (file.getEventCode() == DataTransferEventCode.WAIT_HOST_ACCEPTANCE) {
-            conversationViewHolder.mAnswerLayout.setVisibility(View.VISIBLE);
-            conversationViewHolder.btnAccept.setOnClickListener(v -> {
+            viewHolder.mAnswerLayout.setVisibility(View.VISIBLE);
+            viewHolder.btnAccept.setOnClickListener(v -> {
                 if (!presenter.getDeviceRuntimeService().hasWriteExternalStoragePermission()) {
                     conversationFragment.askWriteExternalStoragePermission();
                     return;
@@ -389,14 +519,14 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                         .setClass(context.getApplicationContext(), DRingService.class)
                         .putExtra(DRingService.KEY_TRANSFER_ID, file.getDataTransferId()));
             });
-            conversationViewHolder.btnRefuse.setOnClickListener(v -> {
+            viewHolder.btnRefuse.setOnClickListener(v -> {
                 Context context = v.getContext();
                 context.startService(new Intent(DRingService.ACTION_FILE_CANCEL)
                         .setClass(context.getApplicationContext(), DRingService.class)
                         .putExtra(DRingService.KEY_TRANSFER_ID, file.getDataTransferId()));
             });
         } else {
-            conversationViewHolder.mAnswerLayout.setVisibility(View.GONE);
+            viewHolder.mAnswerLayout.setVisibility(View.GONE);
         }
     }
 
@@ -457,10 +587,11 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                 ViewCompat.setBackgroundTintList(convViewHolder.mMsgTxt, null);
                 if (separateByDetails) {
                     convViewHolder.mMsgDetailTxt.setVisibility(View.VISIBLE);
-                    String timeSeparationString = computeTimeSeparationStringFromMsgTimeStamp(
-                            context,
-                            textMessage.getDate());
-                    convViewHolder.mMsgDetailTxt.setText(timeSeparationString);
+                    convViewHolder.updater = new UiUpdater(() -> {
+                        String timeSeparationString = timestampToDetailString(context, textMessage.getDate());
+                        convViewHolder.mMsgDetailTxt.setText(timeSeparationString);
+                    }, 10000);
+                    convViewHolder.updater.start();
                 } else {
                     convViewHolder.mMsgDetailTxt.setVisibility(View.GONE);
                 }
@@ -474,9 +605,11 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         } else if (event.event == ContactEvent.Event.INCOMING_REQUEST) {
             viewHolder.mMsgTxt.setText(R.string.hist_invitation_received);
         }
-        final Context context = viewHolder.itemView.getContext();
-        String timeSeparationString = computeTimeSeparationStringFromMsgTimeStamp(context, conversationElement.getDate());
-        viewHolder.mMsgDetailTxt.setText(timeSeparationString);
+        viewHolder.updater = new UiUpdater(() -> {
+            String timeSeparationString = timestampToDetailString(viewHolder.itemView.getContext(), conversationElement.getDate());
+            viewHolder.mMsgDetailTxt.setText(timeSeparationString);
+        }, 10000);
+        viewHolder.updater.start();
     }
 
     /**
@@ -528,7 +661,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
      *                  Can be the last received message timestamp for example.
      * @return The string to display in the text details between messages.
      */
-    private String computeTimeSeparationStringFromMsgTimeStamp(Context context, long timestamp) {
+    private String timestampToDetailString(Context context, long timestamp) {
         long now = new Date().getTime();
         if (now - timestamp < MINUTE) {
             return context.getString(R.string.time_just_now);
@@ -620,22 +753,17 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         return sameConfig;
     }
 
-    public enum ConversationMessageType {
-        INCOMING_TEXT_MESSAGE(0),
-        OUTGOING_TEXT_MESSAGE(1),
-        CALL_INFORMATION_TEXT_MESSAGE(2),
-        FILE_TRANSFER(3),
-        IMAGE(4),
-        CONTACT_EVENT(5);
+    public enum MessageType {
+        INCOMING_TEXT_MESSAGE(R.layout.item_conv_msg_peer),
+        OUTGOING_TEXT_MESSAGE(R.layout.item_conv_msg_me),
+        CALL_INFORMATION(R.layout.item_conv_call),
+        FILE_TRANSFER(R.layout.item_conv_file),
+        IMAGE(R.layout.item_conv_image),
+        AUDIO(R.layout.item_conv_audio),
+        VIDEO(R.layout.item_conv_video),
+        CONTACT_EVENT(R.layout.item_conv_contact);
 
-        int type;
-
-        ConversationMessageType(int p) {
-            type = p;
-        }
-
-        public int getType() {
-            return type;
-        }
+        private final int layout;
+        MessageType(int l) { layout = l; }
     }
 }

@@ -23,6 +23,8 @@ package cx.ring.utils;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashSet;
+import java.util.Set;
 
 public class HashUtils {
 
@@ -49,5 +51,13 @@ public class HashUtils {
             Log.e(TAG, "Not able to find MD5 algorithm", e);
         }
         return result;
+    }
+
+    @SafeVarargs
+    public static <T> Set<T> asSet(T... items) {
+        HashSet<T> s = new HashSet<>(items.length);
+        for (T t : items)
+            s.add(t);
+        return s;
     }
 }

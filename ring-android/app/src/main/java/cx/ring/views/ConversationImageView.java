@@ -21,13 +21,8 @@ package cx.ring.views;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.ImageView;
-import android.widget.ScrollView;
-
-import cx.ring.R;
 
 @SuppressLint("AppCompatCustomView")
 public class ConversationImageView extends ImageView {
