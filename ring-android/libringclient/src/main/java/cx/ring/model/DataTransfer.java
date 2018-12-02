@@ -24,8 +24,6 @@ package cx.ring.model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
 
 import cx.ring.utils.HashUtils;
@@ -43,7 +41,10 @@ public class DataTransfer implements ConversationElement {
     public static final String COLUMN_ACCOUNT_ID_NAME = "accountId";
     public static final String COLUMN_DATA_TRANSFER_EVENT_CODE_NAME = "dataTransferEventCode";
 
-    private static final Set<String> IMAGE_EXTENSIONS = new HashSet<>(Arrays.asList("jpg", "jpeg", "png", "gif"));
+    private static final Set<String> IMAGE_EXTENSIONS = HashUtils.asSet("jpg", "jpeg", "png", "gif");
+    private static final Set<String> AUDIO_EXTENSIONS = HashUtils.asSet("ogg", "mp3", "aac", "flac");
+    private static final Set<String> VIDEO_EXTENSIONS = HashUtils.asSet("webm", "mp4", "mkv");
+
     private static final int MAX_SIZE = 32 * 1024 * 1024;
 
     @DatabaseField(index = true, generatedId = true, columnName = COLUMN_ID_NAME)
@@ -62,6 +63,8 @@ public class DataTransfer implements ConversationElement {
     String accountId;
     @DatabaseField(columnName = COLUMN_DATA_TRANSFER_EVENT_CODE_NAME)
     String eventCode;
+
+    private String extension;
 
     private long dataTransferId;
     private long bytesProgress;
@@ -84,10 +87,22 @@ public class DataTransfer implements ConversationElement {
         this.accountId = accountId;
     }
 
-    public boolean isPicture() {
-        String extension = StringUtils.getFileExtension(getDisplayName()).toLowerCase();
-        return IMAGE_EXTENSIONS.contains(extension) && getTotalSize() <= MAX_SIZE;
+    public String getExtension() {
+        if (extension == null)
+            extension = StringUtils.getFileExtension(getDisplayName()).toLowerCase();
+        return extension;
     }
+
+    public boolean isPicture() {
+        return IMAGE_EXTENSIONS.contains(getExtension());
+    }
+    public boolean isAudio() {
+        return AUDIO_EXTENSIONS.contains(getExtension());
+    }
+    public boolean isVideo() {
+        return VIDEO_EXTENSIONS.contains(getExtension());
+    }
+
     public boolean isComplete() {
         return isOutgoing() || DataTransferEventCode.FINISHED.name().equals(eventCode);
     }
