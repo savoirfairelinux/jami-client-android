@@ -1,0 +1,3 @@
+• Added audio & video file preview in conversations
+• UI improvements
+• Connectivity improvements
