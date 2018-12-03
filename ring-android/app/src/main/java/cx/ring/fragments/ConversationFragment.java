@@ -181,9 +181,6 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     private File mCurrentPhoto = null;
     private Disposable actionbarTarget = null;
 
-    private Handler mHandler = new Handler();
-    private static final int REFRESH_INTERVAL = 10000;
-
     private static int getIndex(Spinner spinner, Uri myString) {
         for (int i = 0, n = spinner.getCount(); i < n; i++)
             if (((Phone) spinner.getItemAtPosition(i)).getNumber().equals(myString)) {
@@ -204,33 +201,6 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         }
         getActivity().invalidateOptionsMenu();
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        restartTimer();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        mHandler.removeCallbacks(mRefreshTask);
-
-    }
-
-    private void restartTimer() {
-        mHandler.removeCallbacks(mRefreshTask);
-        mHandler.postDelayed(mRefreshTask, REFRESH_INTERVAL);
-    }
-
-    private final Runnable mRefreshTask = new Runnable() {
-        @Override
-        public void run() {
-            if (mAdapter != null)
-                mAdapter.notifyDataSetChanged();
-            mHandler.postDelayed(mRefreshTask, REFRESH_INTERVAL);
-        }
-    };
 
     @Override
     public void scrollToEnd() {
@@ -313,6 +283,12 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
+    public void onDestroyView() {
+        mHistList.setAdapter(null);
+        super.onDestroyView();
+    }
+
+    @Override
     public boolean onContextItemSelected(MenuItem item) {
         if (mAdapter.onContextItemSelected(item))
             return true;
@@ -349,7 +325,6 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     public void takePicture() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-
             // Create the File where the photo should go
             File photoFile = null;
             try {
@@ -431,7 +406,6 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     public void addElement(ConversationElement element) {
         mAdapter.add(element);
         scrollToEnd();
-        restartTimer();
     }
 
     @Override
