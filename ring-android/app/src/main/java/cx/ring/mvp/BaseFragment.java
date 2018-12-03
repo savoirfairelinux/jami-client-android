@@ -78,7 +78,10 @@ public abstract class BaseFragment<T extends RootPresenter> extends Fragment imp
         super.onDestroyView();
         presenter.unbindView();
         // Butterknife unbinding
-        mUnbinder.unbind();
+        if (mUnbinder != null) {
+            mUnbinder.unbind();
+            mUnbinder = null;
+        }
     }
 
     public void displayErrorToast(int error) {
