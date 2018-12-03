@@ -28,7 +28,6 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
-
 import androidx.annotation.Nullable;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -38,21 +37,21 @@ import androidx.core.content.FileProvider;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -62,13 +61,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.adapters.ConversationAdapter;
 import cx.ring.adapters.NumberAdapter;
+import cx.ring.application.RingApplication;
 import cx.ring.client.CallActivity;
 import cx.ring.client.ContactDetailsActivity;
 import cx.ring.client.ConversationActivity;
@@ -76,6 +74,7 @@ import cx.ring.client.HomeActivity;
 import cx.ring.contacts.AvatarFactory;
 import cx.ring.conversation.ConversationPresenter;
 import cx.ring.conversation.ConversationView;
+import cx.ring.databinding.FragConversationBinding;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
@@ -139,8 +138,8 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         if (conversation == null) {
             return;
         }
-        if (mLoadingIndicator != null)
-            mLoadingIndicator.setVisibility(View.GONE);
+        if (binding != null)
+            binding.pbLoading.setVisibility(View.GONE);
         if (mAdapter != null) {
             mAdapter.updateDataset(conversation);
         }
@@ -150,7 +149,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     @Override
     public void scrollToEnd() {
         if (mAdapter.getItemCount() > 0) {
-            mHistList.scrollToPosition(mAdapter.getItemCount() - 1);
+            binding.histList.scrollToPosition(mAdapter.getItemCount() - 1);
         }
     }
 
@@ -164,11 +163,20 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         component.inject(this);
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        injectFragment(((RingApplication) getActivity().getApplication()).getRingInjectionComponent());
+        binding = DataBindingUtil.inflate(inflater, R.layout.frag_conversation, container, false);
+        binding.setPresenter(this);
+        return binding.getRoot();
+    }
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mMsgEditTxt.setMediaListener(contentInfo -> {
+        binding.msgInputTxt.setMediaListener(contentInfo -> {
             try {
                 presenter.sendFile(AndroidFileUtils.getCacheFile(getActivity(), contentInfo.getContentUri()));
                 contentInfo.releasePermission();
@@ -179,12 +187,13 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         if (mPreferences != null) {
             String pendingMessage = mPreferences.getString(KEY_PREFERENCE_PENDING_MESSAGE, null);
             if (!TextUtils.isEmpty(pendingMessage)) {
-                mMsgEditTxt.setText(pendingMessage);
-                mMsgSend.setVisibility(View.VISIBLE);
-                mEmojiSend.setVisibility(View.GONE);
+                binding.msgInputTxt.setText(pendingMessage);
+                binding.msgSend.setVisibility(View.VISIBLE);
+                binding.emojiSend.setVisibility(View.GONE);
             }
         }
-        mMsgEditTxt.addTextChangedListener(new TextWatcher() {
+        binding.msgInputTxt.setOnEditorActionListener((v, actionId, event) -> actionSendMsgText(actionId));
+        binding.msgInputTxt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -197,11 +206,11 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
             public void afterTextChanged(Editable s) {
                 String message = s.toString();
                 if (TextUtils.isEmpty(message)) {
-                    mMsgSend.setVisibility(View.GONE);
-                    mEmojiSend.setVisibility(View.VISIBLE);
+                    binding.msgSend.setVisibility(View.GONE);
+                    binding.emojiSend.setVisibility(View.VISIBLE);
                 } else {
-                    mMsgSend.setVisibility(View.VISIBLE);
-                    mEmojiSend.setVisibility(View.GONE);
+                    binding.msgSend.setVisibility(View.VISIBLE);
+                    binding.emojiSend.setVisibility(View.GONE);
                 }
                 if (mPreferences != null) {
                     mPreferences.edit().putString(KEY_PREFERENCE_PENDING_MESSAGE, message).apply();
@@ -209,13 +218,13 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
             }
         });
 
-        if (mTopPane != null) {
-            mTopPane.setVisibility(View.GONE);
+        if (binding != null) {
+            binding.ongoingcallPane.setVisibility(View.GONE);
         }
 
-        DefaultItemAnimator animator = (DefaultItemAnimator) mHistList.getItemAnimator();
+        DefaultItemAnimator animator = (DefaultItemAnimator) binding.histList.getItemAnimator();
         animator.setSupportsChangeAnimations(false);
-        mHistList.setAdapter(mAdapter);
+        binding.histList.setAdapter(mAdapter);
         setHasOptionsMenu(true);
     }
 
@@ -240,19 +249,16 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         return super.onContextItemSelected(item);
     }
 
-    @OnClick(R.id.msg_send)
     public void sendMessageText() {
-        String message = mMsgEditTxt.getText().toString();
+        String message = binding.msgInputTxt.getText().toString();
         clearMsgEdit();
         presenter.sendTextMessage(message);
     }
 
-    @OnClick(R.id.emoji_send)
     public void sendEmoji() {
-        presenter.sendTextMessage(mEmojiSend.getText().toString());
+        presenter.sendTextMessage(binding.emojiSend.getText().toString());
     }
 
-    @OnClick(R.id.send_data)
     public void selectFile() {
         presenter.selectFile();
     }
@@ -266,7 +272,6 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         return File.createTempFile(imageFileName, ".jpg", getActivity().getExternalCacheDir());
     }
 
-    @OnClick(R.id.btn_take_picture)
     public void takePicture() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
@@ -412,7 +417,6 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         return false;
     }
 
-    @OnClick(R.id.ongoingcall_pane)
     public void onClick() {
         presenter.clickOnGoingPane();
     }
@@ -530,27 +534,27 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
     @Override
     public void displayOnGoingCallPane(final boolean display) {
-        mTopPane.setVisibility(display ? View.VISIBLE : View.GONE);
+        binding.ongoingcallPane.setVisibility(display ? View.VISIBLE : View.GONE);
     }
 
     @Override
     public void displayNumberSpinner(final Conversation conversation, final Uri number) {
-        mNumberSpinner.setVisibility(View.VISIBLE);
+        binding.numberSelector.setVisibility(View.VISIBLE);
         mNumberAdapter = new NumberAdapter(getActivity(),
                 conversation.getContact(),
                 false);
-        mNumberSpinner.setAdapter(mNumberAdapter);
-        mNumberSpinner.setSelection(getIndex(mNumberSpinner, number));
+        binding.numberSelector.setAdapter(mNumberAdapter);
+        binding.numberSelector.setSelection(getIndex(binding.numberSelector, number));
     }
 
     @Override
     public void hideNumberSpinner() {
-        mNumberSpinner.setVisibility(View.GONE);
+        binding.numberSelector.setVisibility(View.GONE);
     }
 
     @Override
     public void clearMsgEdit() {
-        mMsgEditTxt.setText("");
+        binding.msgInputTxt.setText("");
     }
 
     @Override
@@ -588,22 +592,18 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
     }
 
-    @OnClick(R.id.btnBlock)
     public void blockContactRequest() {
         presenter.onBlockIncomingContactRequest();
     }
 
-    @OnClick(R.id.btnRefuse)
     public void refuseContactRequest() {
         presenter.onRefuseIncomingContactRequest();
     }
 
-    @OnClick(R.id.btnAccept)
     public void acceptContactRequest() {
         presenter.onAcceptIncomingContactRequest();
     }
 
-    @OnClick(R.id.btnAddContact)
     public void addContact() {
         presenter.onAddContact();
     }
@@ -611,7 +611,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        boolean visible = mMessageInput.getVisibility() == View.VISIBLE;
+        boolean visible = binding.cvMessageInput.getVisibility() == View.VISIBLE;
         if (mAudioCallBtn != null)
             mAudioCallBtn.setVisible(visible);
         if (mVideoCallBtn != null)
@@ -620,30 +620,30 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
     @Override
     public void switchToUnknownView(String contactDisplayName) {
-        mMessageInput.setVisibility(View.GONE);
-        mUnknownPrompt.setVisibility(View.VISIBLE);
-        mTrustRequestPrompt.setVisibility(View.GONE);
-        mTvTrustRequestMessage.setText(String.format(getString(R.string.message_contact_not_trusted), contactDisplayName));
-        mTrustRequestMessageLayout.setVisibility(View.VISIBLE);
+        binding.cvMessageInput.setVisibility(View.GONE);
+        binding.unknownContactPrompt.setVisibility(View.VISIBLE);
+        binding.trustRequestPrompt.setVisibility(View.GONE);
+        binding.tvTrustRequestMessage.setText(String.format(getString(R.string.message_contact_not_trusted), contactDisplayName));
+        binding.trustRequestMessageLayout.setVisibility(View.VISIBLE);
         getActivity().invalidateOptionsMenu();
     }
 
     @Override
     public void switchToIncomingTrustRequestView(String contactDisplayName) {
-        mMessageInput.setVisibility(View.GONE);
-        mUnknownPrompt.setVisibility(View.GONE);
-        mTrustRequestPrompt.setVisibility(View.VISIBLE);
-        mTvTrustRequestMessage.setText(String.format(getString(R.string.message_contact_not_trusted_yet), contactDisplayName));
-        mTrustRequestMessageLayout.setVisibility(View.VISIBLE);
+        binding.cvMessageInput.setVisibility(View.GONE);
+        binding.unknownContactPrompt.setVisibility(View.GONE);
+        binding.trustRequestPrompt.setVisibility(View.VISIBLE);
+        binding.tvTrustRequestMessage.setText(String.format(getString(R.string.message_contact_not_trusted_yet), contactDisplayName));
+        binding.trustRequestMessageLayout.setVisibility(View.VISIBLE);
         getActivity().invalidateOptionsMenu();
     }
 
     @Override
     public void switchToConversationView() {
-        mMessageInput.setVisibility(View.VISIBLE);
-        mUnknownPrompt.setVisibility(View.GONE);
-        mTrustRequestPrompt.setVisibility(View.GONE);
-        mTrustRequestMessageLayout.setVisibility(View.GONE);
+        binding.cvMessageInput.setVisibility(View.VISIBLE);
+        binding.unknownContactPrompt.setVisibility(View.GONE);
+        binding.trustRequestPrompt.setVisibility(View.GONE);
+        binding.trustRequestMessageLayout.setVisibility(View.GONE);
         getActivity().invalidateOptionsMenu();
     }
 
@@ -663,16 +663,16 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     private void setLoading(boolean isLoading) {
-        if (takePicture == null || sendData == null || pbDataTransfer == null)
+        if (binding == null)
             return;
         if (isLoading) {
-            takePicture.setVisibility(View.GONE);
-            sendData.setVisibility(View.GONE);
-            pbDataTransfer.setVisibility(View.VISIBLE);
+            binding.btnTakePicture.setVisibility(View.GONE);
+            binding.sendData.setVisibility(View.GONE);
+            binding.pbDataTransfer.setVisibility(View.VISIBLE);
         } else {
-            takePicture.setVisibility(View.VISIBLE);
-            sendData.setVisibility(View.VISIBLE);
-            pbDataTransfer.setVisibility(View.GONE);
+            binding.btnTakePicture.setVisibility(View.VISIBLE);
+            binding.sendData.setVisibility(View.VISIBLE);
+            binding.pbDataTransfer.setVisibility(View.GONE);
         }
     }
 
@@ -697,7 +697,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
             return;
         }
         if (type.startsWith("text/")) {
-            mMsgEditTxt.setText(intent.getStringExtra(Intent.EXTRA_TEXT));
+            binding.msgInputTxt.setText(intent.getStringExtra(Intent.EXTRA_TEXT));
         } else if (type.startsWith("image/") || type.startsWith("video/") || type.startsWith("application/")) {
             android.net.Uri uri = intent.getData();
             ClipData clip = intent.getClipData();
