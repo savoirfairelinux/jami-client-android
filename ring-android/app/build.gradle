@@ -62,6 +62,9 @@ android {
             universalApk true
         }
     }
+    dataBinding {
+        enabled true
+    }
 }
 
 dependencies {
