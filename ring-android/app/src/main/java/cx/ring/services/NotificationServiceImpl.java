@@ -322,7 +322,7 @@ public class NotificationServiceImpl implements NotificationService {
                 .setClass(mContext, DRingService.class)
                 .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
                 .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
-        messageNotificationBuilder.addAction(0, mContext.getString(R.string.notif_dismiss), PendingIntent.getService(mContext, Long.valueOf(System.currentTimeMillis()).intValue(), intentRead, 0));
+        messageNotificationBuilder.addAction(0, mContext.getString(R.string.notif_mark_as_read), PendingIntent.getService(mContext, Long.valueOf(System.currentTimeMillis()).intValue(), intentRead, 0));
 
         int notificationId = getTextNotificationId(contactUri);
         notificationManager.notify(notificationId, messageNotificationBuilder.build());
