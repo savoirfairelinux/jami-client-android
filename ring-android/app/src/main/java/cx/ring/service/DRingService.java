@@ -23,6 +23,7 @@
  */
 package cx.ring.service;
 
+import android.app.Notification;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -54,6 +55,7 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.inject.Singleton;
 
 import cx.ring.BuildConfig;
 import cx.ring.application.RingApplication;
@@ -63,6 +65,7 @@ import cx.ring.facades.ConversationFacade;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.Account;
 import cx.ring.model.Codec;
+import cx.ring.model.Settings;
 import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
 import cx.ring.services.AccountService;
@@ -74,13 +77,13 @@ import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.HistoryService;
 import cx.ring.services.NotificationService;
-import cx.ring.services.NotificationServiceImpl;
 import cx.ring.services.PreferencesService;
 import cx.ring.tv.call.TVCallActivity;
 import cx.ring.utils.DeviceUtils;
 import io.reactivex.disposables.CompositeDisposable;
 
 public class DRingService extends Service {
+    private static final String TAG = DRingService.class.getSimpleName();
 
     public static final String ACTION_TRUST_REQUEST_ACCEPT = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST_ACCEPT";
     public static final String ACTION_TRUST_REQUEST_REFUSE = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST_REFUSE";
@@ -107,20 +110,40 @@ public class DRingService extends Service {
     public static final String PUSH_RECEIVED_FIELD_DATA = "data";
     public static final String PUSH_TOKEN_FIELD_TOKEN = "token";
 
-    private static final String TAG = DRingService.class.getSimpleName();
+    private static final int NOTIFICATION_ID = 1;
+
     private final ContactsContentObserver contactContentObserver = new ContactsContentObserver();
-    @Inject
+    @Inject @Singleton
     protected DaemonService mDaemonService;
-    @Inject
+    @Inject @Singleton
     protected CallService mCallService;
-    @Inject
+    @Inject @Singleton
     protected ConferenceService mConferenceService;
-    @Inject
+    @Inject @Singleton
     protected AccountService mAccountService;
-    @Inject
+    @Inject @Singleton
     protected HardwareService mHardwareService;
-    @Inject
+    @Inject @Singleton
     protected HistoryService mHistoryService;
+    @Inject @Singleton
+    protected DeviceRuntimeService mDeviceRuntimeService;
+    @Inject @Singleton
+    protected NotificationService mNotificationService;
+    @Inject @Singleton
+    protected ContactService mContactService;
+    @Inject @Singleton
+    protected PreferencesService mPreferencesService;
+    @Inject @Singleton
+    protected ConversationFacade mConversationFacade;
+    @Inject @Singleton
+    @Named("DaemonExecutor")
+    protected ScheduledExecutorService mExecutor;
+
+    private final Handler mHandler = new Handler();
+    private final CompositeDisposable mDisposableBag = new CompositeDisposable();
+    private final Runnable mConnectivityChecker = this::updateConnectivityState;
+    public static boolean isRunning = false;
+
     protected final IDRingService.Stub mBinder = new IDRingService.Stub() {
 
         @Override
@@ -499,29 +522,6 @@ public class DRingService extends Service {
             mAccountService.registerName(account, password, name);
         }
     };
-    @Inject
-    protected DeviceRuntimeService mDeviceRuntimeService;
-    @Inject
-    protected NotificationService mNotificationService;
-    @Inject
-    protected ContactService mContactService;
-    @Inject
-    protected PreferencesService mPreferencesService;
-    @Inject
-    protected ConversationFacade mConversationFacade;
-    @Inject
-    @Named("DaemonExecutor")
-    protected ScheduledExecutorService mExecutor;
-
-    private final Handler mHandler = new Handler();
-    private final Runnable mConnectivityChecker = new Runnable() {
-        @Override
-        public void run() {
-            updateConnectivityState();
-        }
-    };
-
-    public static boolean isRunning = false;
 
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -550,8 +550,6 @@ public class DRingService extends Service {
         }
     };
 
-    private final CompositeDisposable mDisposableBag = new CompositeDisposable();
-
     @Override
     public void onCreate() {
         Log.i(TAG, "onCreated");
@@ -578,6 +576,7 @@ public class DRingService extends Service {
         mDisposableBag.add(mPreferencesService.getSettingsSubject().subscribe(s -> {
             refreshContacts();
             updateConnectivityState();
+            showSystemNotification(s);
         }));
         mDisposableBag.add(mCallService.getCallSubject().subscribe(call -> {
             SipCall.State newState = call.getCallState();
@@ -606,6 +605,14 @@ public class DRingService extends Service {
 
         mDisposableBag.clear();
         isRunning = false;
+    }
+
+    private void showSystemNotification(Settings settings) {
+        if (settings.isAllowPersistentNotification()) {
+            startForeground(NOTIFICATION_ID, (Notification) mNotificationService.getServiceNotification());
+        } else {
+            stopForeground(true);
+        }
     }
 
     @Override
@@ -732,8 +739,8 @@ public class DRingService extends Service {
     }
 
     private void handleTrustRequestAction(String action, Bundle extras) {
-        String account = extras.getString(NotificationServiceImpl.TRUST_REQUEST_NOTIFICATION_ACCOUNT_ID);
-        Uri from = new Uri(extras.getString(NotificationServiceImpl.TRUST_REQUEST_NOTIFICATION_FROM));
+        String account = extras.getString(NotificationService.TRUST_REQUEST_NOTIFICATION_ACCOUNT_ID);
+        Uri from = new Uri(extras.getString(NotificationService.TRUST_REQUEST_NOTIFICATION_FROM));
         if (account != null) {
             mNotificationService.cancelTrustRequestNotification(account);
             switch (action) {
@@ -752,7 +759,7 @@ public class DRingService extends Service {
     }
 
     private void handleCallAction(String action, Bundle extras) {
-        String callId = extras.getString(NotificationServiceImpl.KEY_CALL_ID);
+        String callId = extras.getString(NotificationService.KEY_CALL_ID);
 
         if (callId == null || callId.isEmpty()) {
             return;

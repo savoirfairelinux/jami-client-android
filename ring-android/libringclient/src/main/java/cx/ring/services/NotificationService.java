@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  *  Author: Aline Bonnet <aline.bonnet@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,47 +18,42 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
 package cx.ring.services;
-
-import java.util.TreeMap;
 
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.DataTransfer;
-import cx.ring.model.DataTransferEventCode;
 import cx.ring.model.SipCall;
-import cx.ring.model.TextMessage;
 import cx.ring.model.Uri;
 
-public abstract class NotificationService {
+public interface NotificationService {
+    String TRUST_REQUEST_NOTIFICATION_ACCOUNT_ID = "trustRequestNotificationAccountId";
+    String TRUST_REQUEST_NOTIFICATION_FROM = "trustRequestNotificationFrom";
+    String KEY_CALL_ID = "callId";
 
-    public static final String TRUST_REQUEST_NOTIFICATION_ACCOUNT_ID = "trustRequestNotificationAccountId";
-    public static final String TRUST_REQUEST_NOTIFICATION_FROM = "trustRequestNotificationFrom";
+    void showCallNotification(Conference conference);
 
-    public static final String KEY_CALL_ID = "callId";
+    void showTextNotification(String accountId, Conversation conversation);
 
-    public abstract void showCallNotification(Conference conference);
+    void cancelCallNotification(int notificationId);
 
-    public abstract void showTextNotification(String accountId, Conversation conversation);
+    void cancelTextNotification(Uri contact);
 
-    public abstract void cancelCallNotification(int notificationId);
+    void cancelTextNotification(String ringId);
 
-    public abstract void cancelTextNotification(Uri contact);
+    void cancelAll();
 
-    public abstract void cancelTextNotification(String ringId);
+    void showIncomingTrustRequestNotification(Account account);
 
-    public abstract void cancelAll();
+    void cancelTrustRequestNotification(String accountID);
 
-    public abstract void showIncomingTrustRequestNotification(Account account);
+    void showFileTransferNotification(DataTransfer info, CallContact contact);
 
-    public abstract void cancelTrustRequestNotification(String accountID);
+    void showMissedCallNotification(SipCall call);
 
-    public abstract void showFileTransferNotification(DataTransfer info, CallContact contact);
+    void cancelFileNotification(long id);
 
-    public abstract void showMissedCallNotification(SipCall call);
-
-    public abstract void cancelFileNotification(long id);
+    Object getServiceNotification();
 }

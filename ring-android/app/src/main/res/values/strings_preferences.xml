@@ -30,4 +30,7 @@
     <string name="pref_clearHistory_title">Clear history</string>
     <string name="pref_clearHistory_summary">Clear all the conversations history. This action can not be undone.</string>
 
+    <string name="pref_persistNotification_title">Run in background</string>
+    <string name="pref_persistNotification_summary">Allow running in background to receive calls and messages.</string>
+
 </resources>

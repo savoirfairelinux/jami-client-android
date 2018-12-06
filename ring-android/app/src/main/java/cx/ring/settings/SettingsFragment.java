@@ -65,6 +65,8 @@ public class SettingsFragment extends BaseFragment<SettingsPresenter> implements
     Switch mViewPlaceCall;
     @BindView(R.id.settings_startup)
     Switch mViewStartup;
+    @BindView(R.id.settings_persistNotification)
+    Switch mViewPersistNotif;
     private boolean mIsRefreshingViewFromPresenter;
     @BindView(R.id.settings_hd)
     Switch mViewHD;
@@ -107,7 +109,7 @@ public class SettingsFragment extends BaseFragment<SettingsPresenter> implements
         menu.clear();
     }
 
-    @OnCheckedChanged({R.id.settings_mobile_data, R.id.settings_push_notifications, R.id.settings_hd, R.id.settings_contacts, R.id.settings_place_call, R.id.settings_startup})
+    @OnCheckedChanged({R.id.settings_mobile_data, R.id.settings_push_notifications, R.id.settings_hd, R.id.settings_contacts, R.id.settings_place_call, R.id.settings_startup, R.id.settings_persistNotification})
     public void onSettingsCheckedChanged(CompoundButton button, boolean isChecked) {
 
         String neededPermission = null;
@@ -156,6 +158,7 @@ public class SettingsFragment extends BaseFragment<SettingsPresenter> implements
         newSettings.setAllowPlaceSystemCalls(mViewPlaceCall.isChecked());
         newSettings.setAllowRingOnStartup(mViewStartup.isChecked());
         newSettings.setAllowPushNotifications(mViewPushNotifications.isChecked());
+        newSettings.setAllowPersistentNotification(mViewPersistNotif.isChecked());
         newSettings.setHD(mViewHD.isChecked());
 
         // save settings according to UI inputs
@@ -236,6 +239,7 @@ public class SettingsFragment extends BaseFragment<SettingsPresenter> implements
         mIsRefreshingViewFromPresenter = true;
         mViewMobileData.setChecked(viewModel.isAllowMobileData());
         mViewPushNotifications.setChecked(viewModel.isAllowPushNotifications());
+        mViewPersistNotif.setChecked(viewModel.isAllowPersistentNotification());
         mViewContacts.setChecked(viewModel.isAllowSystemContacts());
         mViewPlaceCall.setChecked(viewModel.isAllowPlaceSystemCalls());
         mViewStartup.setChecked(viewModel.isAllowRingOnStartup());

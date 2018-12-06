@@ -44,7 +44,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatDelegate;
 import cx.ring.BuildConfig;
 import cx.ring.contacts.AvatarFactory;
 import cx.ring.daemon.Ringservice;
@@ -235,7 +234,12 @@ public abstract class RingApplication extends Application {
     public void startDaemon() {
         if (!DRingService.isRunning) {
             try {
-                startService(new Intent(this, DRingService.class));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+                        && mPreferencesService.getSettings().isAllowPersistentNotification()) {
+                    startForegroundService(new Intent(this, DRingService.class));
+                } else {
+                    startService(new Intent(this, DRingService.class));
+                }
             } catch (Exception e) {
                 Log.w(TAG, "Error starting daemon service");
             }

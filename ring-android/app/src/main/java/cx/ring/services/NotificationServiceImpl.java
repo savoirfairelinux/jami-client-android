@@ -70,7 +70,7 @@ import cx.ring.utils.FileUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.ResourceMapper;
 
-public class NotificationServiceImpl extends NotificationService {
+public class NotificationServiceImpl implements NotificationService {
 
     private static final String TAG = NotificationServiceImpl.class.getSimpleName();
 
@@ -84,6 +84,7 @@ public class NotificationServiceImpl extends NotificationService {
     private static final String NOTIF_CHANNEL_REQUEST = "requests";
     private static final String NOTIF_CHANNEL_FILE_TRANSFER = "file_transfer";
     private static final String NOTIF_CHANNEL_MISSED_CALL = "missed_call";
+    private static final String NOTIF_CHANNEL_SERVICE = "service";
 
     private final SparseArray<NotificationCompat.Builder> mNotificationBuilders = new SparseArray<>();
     @Inject
@@ -152,6 +153,15 @@ public class NotificationServiceImpl extends NotificationService {
         missedCallsChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
         missedCallsChannel.setSound(null, null);
         notificationManager.createNotificationChannel(missedCallsChannel);
+
+        // Background service channel
+        NotificationChannel backgroundChannel = new NotificationChannel(NOTIF_CHANNEL_SERVICE, mContext.getString(R.string.notif_channel_background_service), NotificationManager.IMPORTANCE_LOW);
+        backgroundChannel.setDescription(mContext.getString(R.string.notif_channel_background_service_descr));
+        backgroundChannel.setLockscreenVisibility(Notification.VISIBILITY_SECRET);
+        backgroundChannel.enableLights(false);
+        backgroundChannel.enableVibration(false);
+        backgroundChannel.setShowBadge(false);
+        notificationManager.createNotificationChannel(backgroundChannel);
     }
 
     @Override
@@ -541,6 +551,23 @@ public class NotificationServiceImpl extends NotificationService {
 
         setContactPicture(call.getContact(), messageNotificationBuilder);
         notificationManager.notify(notificationId, messageNotificationBuilder.build());
+    }
+
+    @Override
+    public Object getServiceNotification() {
+        Intent intentHome = new Intent(Intent.ACTION_VIEW)
+                .setClass(mContext, HomeActivity.class)
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        PendingIntent pendIntent = PendingIntent.getActivity(mContext, 0, intentHome, PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationCompat.Builder messageNotificationBuilder = new NotificationCompat.Builder(mContext, NotificationServiceImpl.NOTIF_CHANNEL_SERVICE);
+        messageNotificationBuilder
+                .setContentTitle(mContext.getText(R.string.app_name))
+                .setContentText(mContext.getText(R.string.notif_background_service))
+                .setSmallIcon(R.drawable.ic_ring_logo_white)
+                .setContentIntent(pendIntent)
+                .setOngoing(true)
+                .setCategory(NotificationCompat.CATEGORY_SERVICE);
+        return messageNotificationBuilder.build();
     }
 
     @Override
