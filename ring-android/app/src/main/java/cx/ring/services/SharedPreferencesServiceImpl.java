@@ -42,6 +42,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
     private static final String RING_REQUESTS = "ring_requests";
     private static final String RING_MOBILE_DATA = "mobile_data";
     private static final String RING_PUSH_NOTIFICATIONS = "push_notifs";
+    private static final String RING_PERSISTENT_NOTIFICATION = "persistent_notif";
     private static final String RING_HD = "hd_upload";
     private static final String RING_SYSTEM_CONTACTS = "system_contacts";
     private static final String RING_PLACE_CALLS = "place_calls";
@@ -61,6 +62,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         edit.putBoolean(RING_PLACE_CALLS, settings.isAllowPlaceSystemCalls());
         edit.putBoolean(RING_ON_STARTUP, settings.isAllowRingOnStartup());
         edit.putBoolean(RING_PUSH_NOTIFICATIONS, settings.isAllowPushNotifications());
+        edit.putBoolean(RING_PERSISTENT_NOTIFICATION, settings.isAllowPersistentNotification());
         edit.putBoolean(RING_HD, settings.isHD());
         edit.apply();
     }
@@ -77,6 +79,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         settings.setAllowPlaceSystemCalls(appPrefs.getBoolean(RING_PLACE_CALLS, false));
         settings.setAllowRingOnStartup(appPrefs.getBoolean(RING_ON_STARTUP, true));
         settings.setAllowPushNotifications(appPrefs.getBoolean(RING_PUSH_NOTIFICATIONS, false));
+        settings.setAllowPersistentNotification(appPrefs.getBoolean(RING_PERSISTENT_NOTIFICATION, false));
         settings.setHD(appPrefs.getBoolean(RING_HD, false));
         return settings;
     }

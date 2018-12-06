@@ -23,6 +23,10 @@
  */
 package cx.ring.service;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -39,6 +43,8 @@ import android.os.PowerManager;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
 import androidx.core.app.RemoteInput;
 import androidx.legacy.content.WakefulBroadcastReceiver;
 import android.text.TextUtils;
@@ -56,6 +62,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import cx.ring.BuildConfig;
+import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
@@ -63,6 +70,7 @@ import cx.ring.facades.ConversationFacade;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.Account;
 import cx.ring.model.Codec;
+import cx.ring.model.Settings;
 import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
 import cx.ring.services.AccountService;
@@ -121,6 +129,10 @@ public class DRingService extends Service {
     protected HardwareService mHardwareService;
     @Inject
     protected HistoryService mHistoryService;
+
+    private NotificationManager mNotificationManager = null;
+    private static final int NOTIFY_ID = 1;
+
     protected final IDRingService.Stub mBinder = new IDRingService.Stub() {
 
         @Override
@@ -603,15 +615,70 @@ public class DRingService extends Service {
         Log.i(TAG, "onDestroy()");
         unregisterReceiver(receiver);
         getContentResolver().unregisterContentObserver(contactContentObserver);
-
+        if (mNotificationManager != null)
+            mNotificationManager.cancelAll();
         mDisposableBag.clear();
         isRunning = false;
+    }
+
+    private final static String NOTIFICATION_CHANNEL_ID = "jami_channel_service";
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void createNotificationChannel ()
+    {
+        NotificationManager mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        // The id of the channel.
+
+        // The user-visible name of the channel.
+        CharSequence name = getString(R.string.app_name);
+        // The user-visible description of the channel.
+        String description = getString(R.string.description);
+        int importance = NotificationManager.IMPORTANCE_LOW;
+        NotificationChannel mChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, name, importance);
+        // Configure the notification channel.
+        mChannel.setDescription(description);
+        mChannel.enableLights(false);
+        mChannel.enableVibration(false);
+        mChannel.setShowBadge(false);
+        mChannel.setLockscreenVisibility(Notification.VISIBILITY_SECRET);
+        mNotificationManager.createNotificationChannel(mChannel);
+    }
+
+    private void showSystemNotification(Intent intent) {
+
+        PendingIntent pendIntent = PendingIntent.getActivity(DRingService.this, 0, intent, 0);
+        NotificationCompat.Builder messageNotificationBuilder = new NotificationCompat.Builder(this, "jami_notif");
+        messageNotificationBuilder
+                .setContentTitle("Jami")
+                .setContentText("Jami is currently running in background")
+                .setSmallIcon(R.drawable.ic_ring_logo_white)
+                .setContentIntent(pendIntent)
+                .setOngoing(true)
+                .setCategory(NotificationCompat.CATEGORY_SERVICE);
+        if (mNotificationManager == null) {
+            mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        }
+        Notification mNotification = messageNotificationBuilder.build();
+
+        Settings settings = mPreferencesService.getSettings();
+
+        if (settings.isAllowPersistentNotification()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForeground(NOTIFY_ID, mNotification);
+            } else {
+                startForeground(NOTIFY_ID, mNotification);
+                Log.i(TAG, "Set background service to FOREGROUND");
+            }
+        }
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(TAG, "onStartCommand " + (intent == null ? "null" : intent.getAction()) + " " + flags + " " + startId);
+
         if (intent != null) {
+            showSystemNotification(intent);
             parseIntent(intent);
             WakefulBroadcastReceiver.completeWakefulIntent(intent);
         }
