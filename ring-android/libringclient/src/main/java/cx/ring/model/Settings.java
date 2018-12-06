@@ -22,6 +22,7 @@ package cx.ring.model;
 public class Settings {
     private boolean mAllowMobileData;
     private boolean mAllowPushNotifications;
+    private boolean mAllowPersistentNotification;
     private boolean mAllowSystemContacts;
     private boolean mAllowPlaceSystemCalls;
     private boolean mAllowRingOnStartup;
@@ -32,6 +33,7 @@ public class Settings {
     public Settings(Settings s) {
         mAllowMobileData = s.mAllowMobileData;
         mAllowPushNotifications = s.mAllowPushNotifications;
+        mAllowPersistentNotification = s.mAllowPersistentNotification;
         mAllowSystemContacts = s.mAllowSystemContacts;
         mAllowPlaceSystemCalls = s.mAllowPlaceSystemCalls;
         mAllowRingOnStartup = s.mAllowRingOnStartup;
@@ -83,5 +85,13 @@ public class Settings {
 
     public void setHD(boolean hd) {
         mHdUpload = hd;
+    }
+
+    public void setAllowPersistentNotification(boolean checked) {
+        this.mAllowPersistentNotification = checked;
+    }
+
+    public boolean isAllowPersistentNotification() {
+        return mAllowPersistentNotification;
     }
 }
