@@ -151,7 +151,7 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
             return;
         }
         mDeviceAdapter = new DeviceAdapter(getActivity(), account.getDevices(), account.getDeviceId(),
-                RingAccountSummaryFragment.this);
+                RingAccountSummaryFragment.this, account.getDetailBoolean(ConfigKey.ARCHIVE_HAS_PASSWORD));
         mDeviceList.setAdapter(mDeviceAdapter);
 
         int totalHeight = 0;
@@ -376,7 +376,7 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
         if (mDeviceAdapter == null) {
             return;
         }
-        mDeviceAdapter.setData(devices, currentDeviceId);
+        mDeviceAdapter.setData(devices, currentDeviceId, mAccountHasPassword);
     }
 
     @Override
@@ -403,7 +403,7 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
                 .setPositiveButton(android.R.string.ok, (dialog, which) -> {
                     dialog.dismiss();
                     if (status == 1) {
-                        onDeviceRevocationAsked(device);
+                        onDeviceRevocationAsked(device, mAccountHasPassword);
                     }
                 })
                 .show();
@@ -415,10 +415,11 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     }
 
     @Override
-    public void onDeviceRevocationAsked(String deviceId) {
+    public void onDeviceRevocationAsked(String deviceId, boolean accountHasPassword) {
         ConfirmRevocationDialog dialog = new ConfirmRevocationDialog();
         Bundle args = new Bundle();
         args.putString(ConfirmRevocationDialog.DEVICEID_KEY, deviceId);
+        args.putBoolean(ConfirmRevocationDialog.HASPASSWORD_KEY, accountHasPassword);
         dialog.setArguments(args);
         dialog.setListener(this);
         dialog.show(getFragmentManager(), FRAGMENT_DIALOG_REVOCATION);
