@@ -39,6 +39,7 @@ import cx.ring.R;
 
 public class ConfirmRevocationDialog extends DialogFragment {
     public static final String DEVICEID_KEY = "deviceid_key";
+    public static final String HASPASSWORD_KEY = "haspassword_key";
     static final String TAG = ConfirmRevocationDialog.class.getSimpleName();
     @BindView(R.id.ring_password_txt_box)
     protected TextInputLayout mPasswordTxtBox;
@@ -49,6 +50,7 @@ public class ConfirmRevocationDialog extends DialogFragment {
     @BindString(R.string.revoke_device_title)
     protected String mRegisterTitle;
     private String mDeviceId;
+    private boolean mAccountHasPassword = false;
     private ConfirmRevocationListener mListener = null;
 
     public void setListener(ConfirmRevocationListener listener) {
@@ -61,6 +63,7 @@ public class ConfirmRevocationDialog extends DialogFragment {
         ButterKnife.bind(this, view);
 
         mDeviceId = getArguments().getString(DEVICEID_KEY);
+        mAccountHasPassword = getArguments().getBoolean(HASPASSWORD_KEY);
 
         final AlertDialog result = new AlertDialog.Builder(getActivity())
                 .setView(view)
@@ -71,6 +74,11 @@ public class ConfirmRevocationDialog extends DialogFragment {
                         (dialog, whichButton) -> dismiss()
                 )
                 .create();
+        if (mAccountHasPassword) {
+            mPasswordTxtBox.setVisibility(View.VISIBLE);
+        } else {
+            mPasswordTxtBox.setVisibility(View.GONE);
+        }
         result.setOnShowListener(dialog -> {
             Button positiveButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
             positiveButton.setOnClickListener(view1 -> {
@@ -83,20 +91,8 @@ public class ConfirmRevocationDialog extends DialogFragment {
         return result;
     }
 
-    public boolean checkInput() {
-        if (mPasswordTxt.getText().toString().isEmpty()) {
-            mPasswordTxtBox.setErrorEnabled(true);
-            mPasswordTxtBox.setError(mPromptPassword);
-            return false;
-        } else {
-            mPasswordTxtBox.setErrorEnabled(false);
-            mPasswordTxtBox.setError(null);
-        }
-        return true;
-    }
-
     boolean validate() {
-        if (checkInput() && mListener != null) {
+        if (mListener != null) {
             final String password = mPasswordTxt.getText().toString();
             mListener.onConfirmRevocation(mDeviceId, password);
             return true;
