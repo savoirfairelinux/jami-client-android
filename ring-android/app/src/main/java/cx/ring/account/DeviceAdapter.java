@@ -37,17 +37,19 @@ public class DeviceAdapter extends BaseAdapter {
 
     private String mCurrentDeviceId;
     private DeviceRevocationListener mListener;
+    private boolean mAccountHasPassword;
 
     public DeviceAdapter(Context c, Map<String, String> devices, String currentDeviceId,
-                         DeviceRevocationListener listener) {
+                         DeviceRevocationListener listener, boolean accountHasPassword) {
         mContext = c;
-        setData(devices, currentDeviceId);
+        setData(devices, currentDeviceId, accountHasPassword);
         mListener = listener;
     }
 
-    public void setData(Map<String, String> devices, String currentDeviceId) {
+    public void setData(Map<String, String> devices, String currentDeviceId, boolean accountHasPassword) {
         mDevices.clear();
         mCurrentDeviceId = currentDeviceId;
+        mAccountHasPassword = accountHasPassword;
         if (devices != null && !devices.isEmpty()) {
             mDevices.ensureCapacity(devices.size());
             mDevices.addAll(devices.entrySet());
@@ -98,7 +100,7 @@ public class DeviceAdapter extends BaseAdapter {
 
         revokeButton.setOnClickListener(view12 -> {
             if (mListener != null) {
-                mListener.onDeviceRevocationAsked(mDevices.get(i).getKey());
+                mListener.onDeviceRevocationAsked(mDevices.get(i).getKey(), mAccountHasPassword);
             }
         });
 
@@ -106,7 +108,7 @@ public class DeviceAdapter extends BaseAdapter {
     }
 
     public interface DeviceRevocationListener {
-        void onDeviceRevocationAsked(String deviceId);
+        void onDeviceRevocationAsked(String deviceId, boolean accountHasPassword);
 
         void onDeviceRename();
     }
