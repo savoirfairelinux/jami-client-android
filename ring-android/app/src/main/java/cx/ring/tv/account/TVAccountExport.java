@@ -19,7 +19,9 @@
 package cx.ring.tv.account;
 
 import android.app.AlertDialog;
+import android.app.DownloadManager;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -36,6 +38,7 @@ import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 import android.view.View;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -44,6 +47,7 @@ import cx.ring.account.RingAccountSummaryPresenter;
 import cx.ring.account.RingAccountSummaryView;
 import cx.ring.application.RingApplication;
 import cx.ring.model.Account;
+import cx.ring.utils.AndroidFileUtils;
 
 public class TVAccountExport
         extends RingGuidedStepFragment<RingAccountSummaryPresenter>
@@ -164,5 +168,19 @@ public class TVAccountExport
     @Override
     public void deviceRevocationEnded(String device, int status) {
 
+    }
+
+    @Override
+    public void displayCompleteArchive(File dest)  {
+        DownloadManager downloadManager = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+        if (downloadManager != null) {
+            downloadManager.addCompletedDownload(dest.getName(),
+                    dest.getName(),
+                    true,
+                    AndroidFileUtils.getMimeType(dest.getAbsolutePath()),
+                    dest.getAbsolutePath(),
+                    dest.length(),
+                    true);
+        }
     }
 }
