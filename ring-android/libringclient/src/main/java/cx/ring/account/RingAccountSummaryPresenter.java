@@ -20,6 +20,8 @@
 
 package cx.ring.account;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.SocketException;
 
 import javax.inject.Inject;
@@ -28,8 +30,11 @@ import javax.inject.Named;
 import cx.ring.model.Account;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
+import cx.ring.utils.FileUtils;
 import cx.ring.utils.Log;
 import io.reactivex.Scheduler;
+import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 
 public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummaryView> {
 
@@ -136,5 +141,13 @@ public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummar
             return null;
         }
         return account.getDeviceName();
+    }
+
+    public void downloadAccountsArchive(File dest, String password) {
+        mCompositeDisposable.add(
+            mAccountService.exportToFile(mAccountID, dest.getAbsolutePath(), password)
+            .observeOn(mUiScheduler)
+            .subscribe(() -> getView().displayCompleteArchive(dest),
+                    error -> getView().passwordChangeEnded(false)));
     }
 }

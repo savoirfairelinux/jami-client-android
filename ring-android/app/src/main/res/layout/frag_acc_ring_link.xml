@@ -46,7 +46,7 @@
                 android:textSize="14sp" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ring_password_txt_box"
+                android:id="@+id/password_txt_box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:passwordToggleEnabled="true">

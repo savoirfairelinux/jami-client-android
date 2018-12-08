@@ -672,6 +672,13 @@ public class AccountService {
         });
     }
 
+    public Completable exportToFile(String accountId, String absolutePath, String password) {
+        return Completable.fromAction(() -> {
+            if (!Ringservice.exportToFile(accountId, absolutePath, password))
+                throw new IllegalArgumentException("Can't export archive");
+        }).subscribeOn(Schedulers.from(mExecutor));
+    }
+
     /**
      * @param accountId id of the account
      * @param oldPassword   old account password

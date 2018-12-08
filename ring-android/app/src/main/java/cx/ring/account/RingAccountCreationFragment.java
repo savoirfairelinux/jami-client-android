@@ -63,7 +63,7 @@ public class RingAccountCreationFragment extends BaseSupportFragment<RingAccount
     @BindView(R.id.ring_password_box)
     protected ViewGroup mPasswordBox;
 
-    @BindView(R.id.ring_password_txt_box)
+    @BindView(R.id.password_txt_box)
     protected TextInputLayout mPasswordTxtBox;
 
     @BindView(R.id.ring_password_repeat_txt_box)
