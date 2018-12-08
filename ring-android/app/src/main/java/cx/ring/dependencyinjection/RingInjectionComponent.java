@@ -76,6 +76,7 @@ import cx.ring.tv.account.TVRingLinkAccountFragment;
 import cx.ring.tv.account.TVSettingsFragment;
 import cx.ring.tv.call.TVCallActivity;
 import cx.ring.tv.call.TVCallFragment;
+import cx.ring.tv.contact.TVContactFragment;
 import cx.ring.tv.contactrequest.TVContactRequestFragment;
 import cx.ring.tv.main.MainFragment;
 import cx.ring.tv.search.RingSearchFragment;
@@ -192,6 +193,8 @@ public interface RingInjectionComponent {
     void inject(TVProfileEditingFragment activity);
 
     void inject(TVContactRequestFragment fragment);
+
+    void inject(TVContactFragment fragment);
 
     void inject(TVSettingsFragment tvSettingsFragment);
 

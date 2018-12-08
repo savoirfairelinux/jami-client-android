@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -32,6 +33,7 @@ import android.view.WindowManager;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.call.CallView;
+import cx.ring.fragments.ConversationFragment;
 import cx.ring.services.NotificationService;
 import cx.ring.utils.Log;
 
@@ -54,14 +56,15 @@ public class TVCallActivity extends Activity {
                     WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         }
         setContentView(R.layout.tv_activity_call);
+        setVolumeControlStream(AudioManager.STREAM_VOICE_CALL);
 
         // dependency injection
         RingApplication.getInstance().getRingInjectionComponent().inject(this);
         RingApplication.getInstance().startDaemon();
 
         boolean audioOnly = false;
-        String accountId = getIntent().getStringExtra("account");
-        String ringId = getIntent().getStringExtra("ringId");
+        String accountId = getIntent().getStringExtra(ConversationFragment.KEY_ACCOUNT_ID);
+        String ringId = getIntent().getStringExtra(ConversationFragment.KEY_CONTACT_RING_ID);
 
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
