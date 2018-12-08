@@ -41,6 +41,7 @@ import cx.ring.call.CallView;
 import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.services.NotificationService;
+import cx.ring.utils.KeyboardVisibilityManager;
 import cx.ring.utils.MediaButtonsHelper;
 
 public class CallActivity extends AppCompatActivity {
@@ -135,11 +136,8 @@ public class CallActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
     }
 
-    // This snippet hides the system bars.
     private void hideSystemUI() {
-        // Set the IMMERSIVE flag.
-        // Set the content to appear under the system bars so that the content
-        // doesn't resize when the system bars hide and show.
+        KeyboardVisibilityManager.hideKeyboard(this, 0);
         if (mMainView != null) {
             mMainView.setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LOW_PROFILE
@@ -151,8 +149,6 @@ public class CallActivity extends AppCompatActivity {
         }
     }
 
-    // This snippet shows the system bars. It does this by removing all the flags
-    // except for the ones that make the content appear under the system bars.
     private void showSystemUI() {
         if (mMainView != null) {
             mMainView.setSystemUiVisibility(

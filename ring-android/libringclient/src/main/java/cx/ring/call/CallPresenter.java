@@ -369,4 +369,8 @@ public class CallPresenter extends RootPresenter<CallView> {
     public boolean isSpeakerphoneOn() {
         return mHardwareService.isSpeakerPhoneOn();
     }
+
+    public void sendDtmf(CharSequence s) {
+        mCallService.playDtmf(s.toString());
+    }
 }
