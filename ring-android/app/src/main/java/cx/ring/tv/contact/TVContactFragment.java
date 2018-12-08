@@ -18,10 +18,15 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.tv.contactrequest;
+package cx.ring.tv.contact;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.View;
+
+import androidx.core.content.ContextCompat;
 import androidx.leanback.app.BackgroundManager;
 import androidx.leanback.widget.Action;
 import androidx.leanback.widget.ArrayObjectAdapter;
@@ -33,26 +38,21 @@ import androidx.leanback.widget.FullWidthDetailsOverviewRowPresenter;
 import androidx.leanback.widget.FullWidthDetailsOverviewSharedElementHelper;
 import androidx.leanback.widget.ListRow;
 import androidx.leanback.widget.ListRowPresenter;
-import androidx.leanback.widget.SparseArrayObjectAdapter;
-import androidx.core.content.ContextCompat;
-
-import android.view.KeyEvent;
-import android.view.View;
-
 import cx.ring.R;
 import cx.ring.application.RingApplication;
+import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.Uri;
+import cx.ring.tv.call.TVCallActivity;
 import cx.ring.tv.main.BaseDetailFragment;
 import cx.ring.tv.model.TVListViewModel;
 import cx.ring.views.AvatarDrawable;
 
-public class TVContactRequestFragment extends BaseDetailFragment<TVContactRequestPresenter> implements TVContactRequestView {
+public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> implements TVContactView {
 
-    private static final int ACTION_ACCEPT = 0;
-    private static final int ACTION_REFUSE = 1;
-    private static final int ACTION_BLOCK = 2;
+    private static final int ACTION_CALL = 0;
+    private static final int ACTION_DELETE = 1;
 
-    private Uri mSelectedContactRequest;
+    private Uri mContactUri;
     private ArrayObjectAdapter mAdapter;
     private int iconSize = -1;
 
@@ -60,9 +60,7 @@ public class TVContactRequestFragment extends BaseDetailFragment<TVContactReques
     public void onCreate(Bundle savedInstanceState) {
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
         super.onCreate(savedInstanceState);
-        mSelectedContactRequest = (Uri) getActivity().getIntent()
-                .getSerializableExtra(TVContactRequestActivity.CONTACT_REQUEST);
-
+        mContactUri = (Uri) getActivity().getIntent().getSerializableExtra(TVContactActivity.CONTACT_REQUEST);
     }
 
     @Override
@@ -75,12 +73,12 @@ public class TVContactRequestFragment extends BaseDetailFragment<TVContactReques
         // Only the detailPresenter will be displayed
         layout.setOnDispatchKeyListener((v, keyCode, event) -> event.getKeyCode() == KeyEvent.KEYCODE_DPAD_DOWN);
         prepareBackgroundManager();
-        if (mSelectedContactRequest != null) {
+        if (mContactUri != null) {
             setupAdapter();
         }
         Resources res = getResources();
         iconSize = res.getDimensionPixelSize(R.dimen.tv_avatar_size);
-        presenter.setContact(mSelectedContactRequest);
+        presenter.setContact(mContactUri);
     }
 
     private void prepareBackgroundManager() {
@@ -90,28 +88,26 @@ public class TVContactRequestFragment extends BaseDetailFragment<TVContactReques
 
     private void setupAdapter() {
         // Set detail background and style.
-        FullWidthDetailsOverviewRowPresenter detailsPresenter = new FullWidthDetailsOverviewRowPresenter(
-                new TVContactRequestDetailPresenter(),
-                new DetailsOverviewLogoPresenter());
+        FullWidthDetailsOverviewRowPresenter detailsPresenter =
+                new FullWidthDetailsOverviewRowPresenter(
+                        new TVContactDetailPresenter(),
+                        new DetailsOverviewLogoPresenter());
 
-        detailsPresenter.setBackgroundColor(
-                ContextCompat.getColor(getActivity(), R.color.color_primary_dark));
+        detailsPresenter.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_primary_dark));
         detailsPresenter.setInitialState(FullWidthDetailsOverviewRowPresenter.STATE_HALF);
 
         // Hook up transition element.
         FullWidthDetailsOverviewSharedElementHelper mHelper = new FullWidthDetailsOverviewSharedElementHelper();
-        mHelper.setSharedElementEnterTransition(getActivity(), TVContactRequestActivity.SHARED_ELEMENT_NAME);
+        mHelper.setSharedElementEnterTransition(getActivity(), TVContactActivity.SHARED_ELEMENT_NAME);
         detailsPresenter.setListener(mHelper);
         detailsPresenter.setParticipatingEntranceTransition(false);
         prepareEntranceTransition();
 
         detailsPresenter.setOnActionClickedListener(action -> {
-            if (action.getId() == ACTION_ACCEPT) {
-                presenter.acceptTrustRequest(mSelectedContactRequest);
-            } else if (action.getId() == ACTION_REFUSE) {
-                presenter.refuseTrustRequest(mSelectedContactRequest);
-            } else if (action.getId() == ACTION_BLOCK) {
-                presenter.blockTrustRequest(mSelectedContactRequest);
+            if (action.getId() == ACTION_CALL) {
+                presenter.contactClicked(mContactUri);
+            } else if (action.getId() == ACTION_DELETE) {
+                presenter.removeContact(mContactUri);
             }
         });
 
@@ -122,21 +118,26 @@ public class TVContactRequestFragment extends BaseDetailFragment<TVContactReques
         setAdapter(mAdapter);
     }
 
-    public void showRequest(TVListViewModel model) {
+    public void showContact(TVListViewModel model) {
         final DetailsOverviewRow row = new DetailsOverviewRow(model);
         AvatarDrawable avatar = new AvatarDrawable(getActivity(), model.getContact(), false);
         avatar.setInSize(iconSize);
         row.setImageDrawable(avatar);
-        row.setImageScaleUpAllowed(false);
 
-        SparseArrayObjectAdapter adapter = new SparseArrayObjectAdapter();
-        adapter.set(ACTION_ACCEPT, new Action(ACTION_ACCEPT, getResources()
-                .getString(R.string.accept)));
-        adapter.set(ACTION_REFUSE, new Action(ACTION_REFUSE, getResources().getString(R.string.refuse)));
-        adapter.set(ACTION_BLOCK, new Action(ACTION_BLOCK, getResources().getString(R.string.block)));
+        ArrayObjectAdapter adapter = new ArrayObjectAdapter();
+        adapter.add(ACTION_CALL, new Action(ACTION_CALL, getResources().getString(R.string.ab_action_video_call)));
+        adapter.add(ACTION_DELETE, new Action(ACTION_DELETE, getResources().getString(R.string.conversation_action_remove_this)));
         row.setActionsAdapter(adapter);
 
         mAdapter.add(row);
+    }
+
+    @Override
+    public void callContact(String accountID, Uri uri) {
+        Intent intent = new Intent(getActivity(), TVCallActivity.class);
+        intent.putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountID);
+        intent.putExtra(ConversationFragment.KEY_CONTACT_RING_ID, uri.getRawUriString());
+        getActivity().startActivity(intent, null);
     }
 
     @Override

@@ -40,6 +40,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
+import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.CallContact;
 import cx.ring.tv.call.TVCallActivity;
 import cx.ring.tv.cards.Card;
@@ -128,8 +129,8 @@ public class RingSearchFragment extends BaseSearchFragment<RingSearchPresenter>
     @Override
     public void startCall(String accountID, String number) {
         Intent intent = new Intent(getActivity(), TVCallActivity.class);
-        intent.putExtra("account", accountID);
-        intent.putExtra("ringId", number);
+        intent.putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountID);
+        intent.putExtra(ConversationFragment.KEY_CONTACT_RING_ID, number);
         getActivity().startActivity(intent, null);
         getActivity().finish();
     }
