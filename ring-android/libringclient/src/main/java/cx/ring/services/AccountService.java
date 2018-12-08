@@ -124,6 +124,18 @@ public class AccountService {
         accountsSubject.onNext(mAccountList);
     }
 
+    public boolean exportToFile(String mAccountId, String absolutePath) {
+        try {
+            return mExecutor.submit(() -> {
+                Log.i(TAG, "exportToFile() running...");
+                return Ringservice.exportToFile(mAccountId, absolutePath);
+            }).get();
+        } catch (Exception e) {
+            Log.e(TAG, "Error running getAccountList()", e);
+        }
+        return false;
+    }
+
     public class RegisteredName {
         public String accountId;
         public String name;

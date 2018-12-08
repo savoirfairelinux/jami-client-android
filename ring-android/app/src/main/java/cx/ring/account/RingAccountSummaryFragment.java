@@ -33,6 +33,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.SwitchCompat;
 
+import android.os.Environment;
 import android.text.Layout;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -49,7 +50,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.Map;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -60,6 +64,8 @@ import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.model.Account;
 import cx.ring.model.ConfigKey;
 import cx.ring.mvp.BaseSupportFragment;
+import cx.ring.services.AccountService;
+import cx.ring.utils.FileUtils;
 import cx.ring.utils.KeyboardVisibilityManager;
 import cx.ring.views.LinkNewDeviceLayout;
 
@@ -87,6 +93,9 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
 
     @BindView(R.id.btn_start_export)
     Button mStartBtn;
+
+    @BindView(R.id.btn_export_account)
+    Button mExportToFile;
 
     @BindView(R.id.account_link_info)
     TextView mExportInfos;
@@ -130,6 +139,12 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     private DeviceAdapter mDeviceAdapter;
     private ProgressDialog mWaitDialog;
     private boolean mAccountHasPassword = true;
+    private String mBestName = "";
+    private String mAccountId = "";
+
+
+    @Inject
+    AccountService mAccountService;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -169,6 +184,14 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
         mAccountSwitch.setChecked(account.isEnabled());
         mAccountNameTxt.setText(account.getAlias());
         mAccountIdTxt.setText(account.getUsername());
+        mAccountId = account.getAccountID();
+        mBestName = account.getAlias();
+        if (mBestName.isEmpty()) {
+            mBestName = account.getRegisteredName();
+            if (mBestName.isEmpty()) {
+                mBestName = account.getUsername();
+            }
+        }
         String username = account.getRegisteredName();
         boolean currentRegisteredName = account.registeringUsername;
         boolean hasRegisteredName = !currentRegisteredName && username != null && !username.isEmpty();
@@ -303,6 +326,21 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
         mPasswordLayout.setError(null);
         String password = mRingPassword.getText().toString();
         presenter.startAccountExport(password);
+    }
+
+    @OnClick(R.id.btn_export_account)
+    public void onClickExport() {
+        Log.e(TAG, "##########");
+        File downloadDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "Ring");
+        downloadDir.mkdirs();
+        File temp = new File(downloadDir, "export.gz");
+        File dest = new File(downloadDir, mBestName + ".gz");
+        if (dest.exists())
+            dest.delete();
+        boolean x = mAccountService.exportToFile(mAccountId, temp.getAbsolutePath());
+        Log.e(TAG, "Download in " + dest.getAbsolutePath());
+        Log.e(TAG, "Result: " + x);
+
     }
 
     @OnClick(R.id.account_switch)

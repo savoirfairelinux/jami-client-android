@@ -264,5 +264,11 @@ along with this program; if not, write to the Free Software
     <string name="menu_file_download">Download file</string>
     <string name="menu_file_delete">Delete file</string>
     <string name="menu_file_share">Share file</string>
+<<<<<<< Updated upstream
+=======
+    <string name="account_export_file">Download archive</string>
+    <string name="pref_persistNotification_title">Run Jami in background</string>
+    <string name="pref_persistNotification_summary">Add a permanent notification to let Jami run in background</string>
+>>>>>>> Stashed changes
 
 </resources>
