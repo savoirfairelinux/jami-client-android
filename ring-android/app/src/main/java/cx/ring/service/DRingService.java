@@ -584,7 +584,7 @@ public class DRingService extends Service {
             boolean incomingCall = newState == SipCall.State.RINGING && call.isIncoming();
             if (incomingCall) {
                 Bundle extras = new Bundle();
-                extras.putString("account", mAccountService.getCurrentAccount().getAccountID());
+                extras.putString(ConversationFragment.KEY_ACCOUNT_ID, mAccountService.getCurrentAccount().getAccountID());
                 extras.putString(NotificationService.KEY_CALL_ID, call.getCallId());
                 startActivity(new Intent(Intent.ACTION_VIEW)
                         .putExtras(extras)
