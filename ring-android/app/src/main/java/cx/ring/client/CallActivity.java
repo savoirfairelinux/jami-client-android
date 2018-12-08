@@ -26,6 +26,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -69,6 +70,7 @@ public class CallActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_call_layout);
+        setVolumeControlStream(AudioManager.STREAM_VOICE_CALL);
 
         mMainView = findViewById(R.id.main_call_layout);
         mMainView.setOnClickListener(v -> {
