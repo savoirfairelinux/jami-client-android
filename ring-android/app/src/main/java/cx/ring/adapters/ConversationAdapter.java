@@ -414,6 +414,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                 viewHolder.player.release();
             }
             final MediaPlayer player =  MediaPlayer.create(context, getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path));
+            if (player == null)
+                return;
             viewHolder.player = player;
             final Drawable playBtn = ContextCompat.getDrawable(viewHolder.mLayout.getContext(), R.drawable.baseline_play_arrow_24).mutate();
             DrawableCompat.setTint(playBtn, Color.WHITE);
