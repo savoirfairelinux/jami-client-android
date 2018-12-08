@@ -164,13 +164,22 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
         String action = getArguments().getString(KEY_ACTION);
         if (action != null) {
-            if (action.equals(ACTION_PLACE_CALL)) {
-                presenter.initOutGoing(getArguments().getString(KEY_ACCOUNT_ID),
-                        getArguments().getString(ConversationFragment.KEY_CONTACT_RING_ID),
-                        getArguments().getBoolean(KEY_AUDIO_ONLY));
-            } else if (action.equals(ACTION_GET_CALL)) {
-                presenter.initIncoming(getArguments().getString(KEY_CONF_ID));
+            switch (action) {
+                case ACTION_PLACE_CALL:
+                    presenter.initOutGoing(getArguments().getString(KEY_ACCOUNT_ID),
+                            getArguments().getString(ConversationFragment.KEY_CONTACT_RING_ID),
+                            getArguments().getBoolean(KEY_AUDIO_ONLY));
+                    break;
+                case ACTION_GET_CALL:
+                    presenter.initIncoming(getArguments().getString(KEY_CONF_ID));
+                    break;
+                default:
+                    Log.e(TAG, "Unsupported action " + action);
+                    finish();
+                    break;
             }
+        } else {
+            finish();
         }
     }
 
