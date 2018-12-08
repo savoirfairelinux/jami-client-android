@@ -43,9 +43,8 @@ public class KeyboardVisibilityManager {
 
         Log.d(TAG, "showKeyboard: showing keyboard");
         viewToFocus.requestFocus();
-        InputMethodManager imm = (InputMethodManager)
-                activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(viewToFocus, tag);
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
     }
 
     @SuppressWarnings("unused")
@@ -60,12 +59,8 @@ public class KeyboardVisibilityManager {
         if (currentFocus != null) {
             Log.d(TAG, "hideKeyboard: hiding keyboard");
             currentFocus.clearFocus();
-            InputMethodManager inputManager =
-                    (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputManager.hideSoftInputFromWindow(
-                    currentFocus.getWindowToken(),
-                    tag
-            );
+            InputMethodManager inputManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.hideSoftInputFromWindow(currentFocus.getWindowToken(), tag);
         }
     }
 }
