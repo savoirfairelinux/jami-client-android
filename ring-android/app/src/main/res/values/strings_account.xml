@@ -154,11 +154,11 @@ along with this program; if not, write to the Free Software
 
     <!-- restore/backup -->
     <string name="account_new_device_password">Enter main password to unlock account</string>
-
     <string name="error_password_char_count">6 characters minimum</string>
     <string name="error_passwords_not_equals">Passwords do not match</string>
     <string name="export_account_wait_title">Please wait…</string>
     <string name="export_account_wait_message">Publishing new account information</string>
+    <string name="account_export_file">Backup account</string>
     <string name="account_export_end_decryption_message">Couldn\'t unlock your account using the provided password.</string>
     <string name="account_export_end_network_title">Network error</string>
     <string name="account_export_end_network_message">Couldn\'t export account on the network. Check your connectivity.</string>

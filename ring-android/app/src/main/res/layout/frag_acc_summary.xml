@@ -35,10 +35,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:id="@+id/ring_account_status_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="8dp"
-                android:paddingEnd="16dp"
                 android:paddingStart="16dp"
-                android:paddingTop="24dp">
+                android:paddingTop="24dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp">
 
                 <TextView
                     android:id="@+id/account_alias_txt"
@@ -78,8 +78,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
-                    android:layout_marginVertical="16dp"
-                    android:background="?android:attr/listDivider"/>
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="?android:attr/listDivider" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -93,25 +94,42 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_height="wrap_content"
                     android:ellipsize="middle"
                     android:singleLine="true"
-                    android:textIsSelectable="true"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:textIsSelectable="true"
                     tools:text="ring:8F29045378ACA68F2ACA2346078ACA68F2ACA290" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/change_password_btn"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:text="@string/account_password_change" />
+                    android:orientation="horizontal">
 
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/export_account_btn"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:text="@string/account_export_file" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/change_password_btn"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:text="@string/account_password_change" />
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
-                    android:layout_marginVertical="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
                     android:background="?android:attr/listDivider" />
 
                 <TextView
@@ -171,11 +189,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                     <TextView
                         android:id="@+id/registered_name_txt"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:textAlignment="viewStart"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
                         android:textIsSelectable="true"
                         tools:text="blockchain_name" />
 
@@ -185,7 +203,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
-                    android:layout_marginVertical="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
                     android:background="?android:attr/listDivider" />
 
                 <TextView
@@ -206,7 +225,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:divider="#DDDDDD"
                         android:dividerHeight="1dp"
                         android:footerDividersEnabled="true"
-                        android:headerDividersEnabled="true" />
+                        android:headerDividersEnabled="true"
+                        android:nestedScrollingEnabled="true" />
 
                     <TextView
                         android:id="@+id/empty_account_list"

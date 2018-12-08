@@ -21,10 +21,6 @@ package cx.ring.account;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import com.google.android.material.textfield.TextInputLayout;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
@@ -32,6 +28,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.material.textfield.TextInputLayout;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import butterknife.BindString;
 import butterknife.BindView;
@@ -39,21 +39,23 @@ import butterknife.ButterKnife;
 import butterknife.OnEditorAction;
 import cx.ring.R;
 
-public class ConfirmRevocationDialog extends DialogFragment {
-    public static final String DEVICEID_KEY = "deviceid_key";
-    static final String TAG = ConfirmRevocationDialog.class.getSimpleName();
+public class BackupAccountDialog extends DialogFragment {
+    static final String TAG = BackupAccountDialog.class.getSimpleName();
+
     @BindView(R.id.password_txt_box)
     protected TextInputLayout mPasswordTxtBox;
+
     @BindView(R.id.password_txt)
     protected EditText mPasswordTxt;
+
     @BindString(R.string.enter_password)
     protected String mPromptPassword;
-    @BindString(R.string.revoke_device_title)
-    protected String mRegisterTitle;
-    private String mDeviceId;
-    private ConfirmRevocationListener mListener = null;
 
-    public void setListener(ConfirmRevocationListener listener) {
+    private String mAccountId;
+
+    private UnlockAccountListener mListener = null;
+
+    public void setListener(UnlockAccountListener listener) {
         mListener = listener;
     }
 
@@ -63,13 +65,16 @@ public class ConfirmRevocationDialog extends DialogFragment {
         View view = requireActivity().getLayoutInflater().inflate(R.layout.dialog_confirm_revocation, null);
         ButterKnife.bind(this, view);
 
-        mDeviceId = getArguments().getString(DEVICEID_KEY);
+        Bundle args = getArguments();
+        if (args != null) {
+            mAccountId = args.getString(AccountEditionActivity.ACCOUNT_ID_KEY);
+        }
 
         final AlertDialog result = new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.account_enter_password)
+                .setMessage(R.string.account_new_device_password)
                 .setView(view)
-                .setMessage(getString(R.string.revoke_device_message, mDeviceId))
-                .setTitle(mRegisterTitle)
-                .setPositiveButton(R.string.revoke_device_title, null) //Set to null. We override the onclick
+                .setPositiveButton(android.R.string.ok, null) //Set to null. We override the onclick
                 .setNegativeButton(android.R.string.cancel,
                         (dialog, whichButton) -> dismiss()
                 )
@@ -86,22 +91,9 @@ public class ConfirmRevocationDialog extends DialogFragment {
         return result;
     }
 
-    private boolean checkInput() {
-        if (mPasswordTxt.getText().toString().isEmpty()) {
-            mPasswordTxtBox.setErrorEnabled(true);
-            mPasswordTxtBox.setError(mPromptPassword);
-            return false;
-        } else {
-            mPasswordTxtBox.setErrorEnabled(false);
-            mPasswordTxtBox.setError(null);
-        }
-        return true;
-    }
-
     private boolean validate() {
-        if (checkInput() && mListener != null) {
-            final String password = mPasswordTxt.getText().toString();
-            mListener.onConfirmRevocation(mDeviceId, password);
+        if (mListener != null) {
+            mListener.onUnlockAccount(mAccountId, mPasswordTxt.getText().toString());
             return true;
         }
         return false;
@@ -122,7 +114,7 @@ public class ConfirmRevocationDialog extends DialogFragment {
         return false;
     }
 
-    public interface ConfirmRevocationListener {
-        void onConfirmRevocation(String deviceId, String password);
+    public interface UnlockAccountListener {
+        void onUnlockAccount(String accountId, String password);
     }
 }

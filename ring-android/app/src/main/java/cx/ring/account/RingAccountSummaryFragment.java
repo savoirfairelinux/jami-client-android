@@ -20,7 +20,9 @@
  */
 package cx.ring.account;
 
+import android.app.DownloadManager;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
@@ -31,6 +33,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SwitchCompat;
 
+import android.os.Environment;
 import android.text.Layout;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -47,7 +50,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.Map;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -57,6 +63,8 @@ import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.model.Account;
 import cx.ring.mvp.BaseSupportFragment;
+import cx.ring.services.AccountService;
+import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.KeyboardVisibilityManager;
 import cx.ring.views.LinkNewDeviceLayout;
 
@@ -65,12 +73,13 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
         RenameDeviceDialog.RenameDeviceListener,
         DeviceAdapter.DeviceRevocationListener,
         ConfirmRevocationDialog.ConfirmRevocationListener,
-        RingAccountSummaryView, ChangePasswordDialog.PasswordChangedListener {
+        RingAccountSummaryView, ChangePasswordDialog.PasswordChangedListener, BackupAccountDialog.UnlockAccountListener {
 
     public static final String TAG = RingAccountSummaryFragment.class.getSimpleName();
     private static final String FRAGMENT_DIALOG_REVOCATION = TAG + ".dialog.deviceRevocation";
     private static final String FRAGMENT_DIALOG_RENAME = TAG + ".dialog.deviceRename";
     private static final String FRAGMENT_DIALOG_PASSWORD = TAG + ".dialog.changePassword";
+    private static final String FRAGMENT_DIALOG_BACKUP = TAG + ".dialog.backup";
 
     /*
     UI Bindings
@@ -86,6 +95,9 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
 
     @BindView(R.id.btn_start_export)
     Button mStartBtn;
+
+    //@BindView(R.id.export_account_btn)
+    //Button mExportToFile;
 
     @BindView(R.id.account_link_info)
     TextView mExportInfos;
@@ -132,6 +144,12 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     private DeviceAdapter mDeviceAdapter;
     private ProgressDialog mWaitDialog;
     private boolean mAccountHasPassword = true;
+    private String mBestName = "";
+    private String mAccountId = "";
+
+
+    @Inject
+    AccountService mAccountService;
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -167,12 +185,21 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
         par.height = totalHeight + (mDeviceList.getDividerHeight() * (mDeviceAdapter.getCount() - 1));
         mDeviceList.setLayoutParams(par);
         mDeviceList.requestLayout();
+        mAccountHasPassword = account.hasPassword();
 
-        mChangePasswordBtn.setText(account.hasPassword() ? R.string.account_password_change : R.string.account_password_set);
+        mChangePasswordBtn.setText(mAccountHasPassword ? R.string.account_password_change : R.string.account_password_set);
 
         mAccountSwitch.setChecked(account.isEnabled());
         mAccountNameTxt.setText(account.getAlias());
         mAccountIdTxt.setText(account.getUsername());
+        mAccountId = account.getAccountID();
+        mBestName = account.getAlias();
+        if (mBestName.isEmpty()) {
+            mBestName = account.getRegisteredName();
+            if (mBestName.isEmpty()) {
+                mBestName = account.getUsername();
+            }
+        }
         String username = account.getRegisteredName();
         boolean currentRegisteredName = account.registeringUsername;
         boolean hasRegisteredName = !currentRegisteredName && username != null && !username.isEmpty();
@@ -208,7 +235,6 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
         mAccountStatus.setText(status);
         mAccountStatus.setChipBackgroundColorResource(color);
 
-        mAccountHasPassword = account.hasPassword();
         mPasswordLayout.setVisibility(mAccountHasPassword ? View.VISIBLE : View.GONE);
     }
 
@@ -305,6 +331,15 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
         mPasswordLayout.setError(null);
         String password = mRingPassword.getText().toString();
         presenter.startAccountExport(password);
+    }
+
+    @OnClick(R.id.export_account_btn)
+    void onClickExport() {
+        if (mAccountHasPassword) {
+            onBackupAccount();
+        } else {
+            onUnlockAccount(mAccountId, "");
+        }
     }
 
     @OnClick(R.id.account_switch)
@@ -438,8 +473,32 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     }
 
     @Override
+    public void displayCompleteArchive(File dest)  {
+        DownloadManager downloadManager = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+        if (downloadManager != null) {
+            downloadManager.addCompletedDownload(dest.getName(),
+                    dest.getName(),
+                    true,
+                    AndroidFileUtils.getMimeType(dest.getAbsolutePath()),
+                    dest.getAbsolutePath(),
+                    dest.length(),
+                    true);
+        }
+    }
+
+
+    @Override
     public void onConfirmRevocation(String deviceId, String password) {
         presenter.revokeDevice(deviceId, password);
+    }
+
+    public void onBackupAccount() {
+        BackupAccountDialog dialog = new BackupAccountDialog();
+        Bundle args = new Bundle();
+        args.putString(AccountEditionActivity.ACCOUNT_ID_KEY, getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY));
+        dialog.setArguments(args);
+        dialog.setListener(this);
+        dialog.show(requireFragmentManager(), FRAGMENT_DIALOG_BACKUP);
     }
 
     @Override
@@ -483,5 +542,15 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     @Override
     public void onPasswordChanged(String oldPassword, String newPassword) {
         presenter.changePassword(oldPassword, newPassword);
+    }
+
+    @Override
+    public void onUnlockAccount(String accountId, String password) {
+        File downloadDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "Ring");
+        downloadDir.mkdirs();
+        File dest = new File(downloadDir, mBestName + ".gz");
+        if (dest.exists())
+            dest.delete();
+        presenter.downloadAccountsArchive(dest, password);
     }
 }

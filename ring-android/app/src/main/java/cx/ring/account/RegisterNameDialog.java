@@ -55,9 +55,9 @@ public class RegisterNameDialog extends DialogFragment {
     public TextInputLayout mUsernameTxtBox;
     @BindView(R.id.ring_username)
     public EditText mUsernameTxt;
-    @BindView(R.id.ring_password_txt_box)
+    @BindView(R.id.password_txt_box)
     public TextInputLayout mPasswordTxtBox;
-    @BindView(R.id.ring_password_txt)
+    @BindView(R.id.password_txt)
     public EditText mPasswordTxt;
     @BindString(R.string.register_name)
     public String mRegisterTitle;
@@ -239,7 +239,7 @@ public class RegisterNameDialog extends DialogFragment {
         return false;
     }
 
-    @OnEditorAction({R.id.ring_username, R.id.ring_password_txt})
+    @OnEditorAction({R.id.ring_username, R.id.password_txt})
     public boolean onEditorAction(TextView v, int actionId) {
         if (v == mPasswordTxt) {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
