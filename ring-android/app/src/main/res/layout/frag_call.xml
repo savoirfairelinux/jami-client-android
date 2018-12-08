@@ -229,8 +229,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
             <EditText
                 android:id="@+id/dialpad_edit_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="1dp"
+                android:layout_height="1dp"
                 android:ems="10"
                 android:inputType="phone"
                 android:visibility="visible" />
