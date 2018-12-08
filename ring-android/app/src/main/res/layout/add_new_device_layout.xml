@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?><!-- Copyright (c) 2017 Savoir-faire Linux Inc.
-
 Authors: Aline Bonnet <aline.bonnet@savoirfairelinux.com>
          Adrien Beraud <adrien.beraud@savoirfairelinux.com>
-
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 3 of the License, or
 (at your option) any later version.
-
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
-
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
@@ -26,14 +22,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
     android:paddingTop="20dp"
     android:theme="@style/Wizard"
     tools:showIn="@layout/frag_device_list">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_primary_dark"
         android:elevation="4dp"
         android:orientation="vertical">
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_add_device"
             style="@style/Widget.MaterialComponents.Button.TextButton"
@@ -42,22 +36,18 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
             android:layout_gravity="center_horizontal"
             android:text="@string/account_link_export_button"
             android:textColor="@color/white" />
-
         <cx.ring.views.LinkNewDeviceLayout
             android:id="@+id/linkaccount_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-
                     <TextView
                         android:id="@+id/account_link_info"
                         android:layout_width="match_parent"
@@ -71,7 +61,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                         android:textColor="@color/text_color_primary_dark"
                         android:textIsSelectable="true"
                         android:textSize="14sp" />
-
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/password_layout"
                         android:layout_width="match_parent"
@@ -79,7 +68,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
                         app:passwordToggleEnabled="true">
-
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/ring_password"
                             android:layout_width="match_parent"
@@ -89,27 +77,41 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                             android:inputType="textPassword" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_start_export"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:text="@string/account_start_export_button"
-                        android:textColor="@color/white" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_end_export"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:text="@string/account_end_export_button"
-                        android:textColor="@color/white"
-                        android:visibility="gone" />
-
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_end_export"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/account_end_export_button"
+                            android:textColor="@color/white"
+                            android:visibility="gone" />
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_start_export"
+                            android:layout_width="142dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp"
+                            android:text="@string/account_start_export_button"
+                            android:textColor="@color/white" />
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_export_account"
+                            android:layout_width="138dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp"
+                            android:text="@string/account_export_file"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
                 </LinearLayout>
             </ScrollView>
-
         </cx.ring.views.LinkNewDeviceLayout>
     </LinearLayout>
 </FrameLayout>

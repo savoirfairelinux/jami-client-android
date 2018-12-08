@@ -19,6 +19,7 @@
 
 package cx.ring.account;
 
+import java.io.File;
 import java.util.Map;
 
 import cx.ring.model.Account;
@@ -43,4 +44,5 @@ public interface RingAccountSummaryView {
 
     void deviceRevocationEnded(String device, int status);
 
+    void displayCompleteArchive(File dest);
 }

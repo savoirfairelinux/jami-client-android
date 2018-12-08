@@ -20,6 +20,8 @@
 
 package cx.ring.account;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.SocketException;
 
 import javax.inject.Inject;
@@ -28,8 +30,11 @@ import javax.inject.Named;
 import cx.ring.model.Account;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
+import cx.ring.utils.FileUtils;
 import cx.ring.utils.Log;
 import io.reactivex.Scheduler;
+import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 
 public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummaryView> {
 
@@ -126,5 +131,23 @@ public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummar
             return null;
         }
         return account.getDeviceName();
+    }
+
+    public void downloadAccountsArchive(File dest) {
+        mCompositeDisposable.add(
+            Single.fromCallable(() -> {
+                if (mAccountService.exportToFile(mAccountID, dest.getAbsolutePath())) {
+                    Log.w(TAG, "Copied file to " + dest.getAbsolutePath() + " (" + FileUtils.readableFileSize(dest.length()) + ")");
+                    return dest;
+                }
+                throw new IOException();
+            })
+            .subscribeOn(Schedulers.io())
+            .observeOn(mUiScheduler)
+            .subscribe(file -> {
+                getView().displayCompleteArchive(dest);
+            }, error -> {
+                Log.e(TAG, "Can't download file " + dest, error);
+            }));
     }
 }
