@@ -1,0 +1,8 @@
+• Allow to set conversation color
+• Added contact details view
+• Allow to keep Ring running in background
+• Call: fix controlling ringtone volume
+• SIP: fix profile display
+• SIP: fix sending DTMF
+• Android TV: allow to remove contacts
+• Performance improvements
