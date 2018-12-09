@@ -20,18 +20,18 @@
 package cx.ring.tv.main;
 
 import android.os.Bundle;
-import androidx.leanback.app.DetailsFragment;
 import android.view.View;
 import android.widget.Toast;
 
 import javax.inject.Inject;
 
+import androidx.leanback.app.DetailsSupportFragment;
 import cx.ring.R;
 import cx.ring.model.RingError;
 import cx.ring.mvp.BaseView;
 import cx.ring.mvp.RootPresenter;
 
-public class BaseDetailFragment<T extends RootPresenter> extends DetailsFragment implements BaseView {
+public class BaseDetailFragment<T extends RootPresenter> extends DetailsSupportFragment implements BaseView {
 
     protected static final String TAG = BaseBrowseFragment.class.getSimpleName();
 
