@@ -19,6 +19,8 @@
  */
 package cx.ring.tv.cards.contacts;
 
+import android.graphics.Bitmap;
+
 import java.util.Arrays;
 
 import cx.ring.model.CallContact;
@@ -27,7 +29,7 @@ import cx.ring.tv.model.TVListViewModel;
 
 public class ContactCard extends Card {
     private TVListViewModel mModel;
-    private byte[] mPhoto = null;
+    private Bitmap mPhoto = null;
 
     public ContactCard(CallContact pCallContact, Type type) {
         mModel =  new TVListViewModel(pCallContact);
@@ -35,7 +37,7 @@ public class ContactCard extends Card {
         setTitle(pCallContact.getDisplayName());
         setDescription(pCallContact.getRingUsername());
         if (pCallContact.getPhoto() != null) {
-            mPhoto = pCallContact.getPhoto();
+            mPhoto = (Bitmap) pCallContact.getPhoto();
         }
         setType(type);
     }
@@ -45,7 +47,7 @@ public class ContactCard extends Card {
         setTitle(mModel.getContact().getDisplayName());
         setDescription(mModel.getContact().getRingUsername());
         if (mModel.getContact().getPhoto() != null) {
-            mPhoto = mModel.getContact().getPhoto();
+            mPhoto = (Bitmap) mModel.getContact().getPhoto();
         }
         if (mModel.getContact().getDisplayName().equals(mModel.getContact().getRingUsername())) {
             if (model.isOnline()) {
@@ -74,8 +76,8 @@ public class ContactCard extends Card {
             setType(Type.CONTACT_WITH_USERNAME);
         }
 
-        if (model.getContact().getPhoto() != null && !Arrays.equals(mPhoto, model.getContact().getPhoto())) {
-            mPhoto = model.getContact().getPhoto();
+        if (model.getContact().getPhoto() != null) {
+            mPhoto = (Bitmap) model.getContact().getPhoto();
         }
     }
 
@@ -84,7 +86,7 @@ public class ContactCard extends Card {
     }
 
 
-    public byte[] getPhoto() {
+    public Bitmap getPhoto() {
         return mPhoto;
     }
 

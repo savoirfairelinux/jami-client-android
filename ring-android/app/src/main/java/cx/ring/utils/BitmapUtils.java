@@ -19,19 +19,28 @@
  */
 package cx.ring.utils;
 
+import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.provider.MediaStore;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 
+import java.io.InputStream;
 import java.nio.ByteBuffer;
 
 /**
@@ -43,6 +52,8 @@ public final class BitmapUtils {
 
     private BitmapUtils() {
     }
+
+
 
     @Nullable
     public static Bitmap cropImageToCircle(@NonNull byte[] bArray) {
@@ -91,6 +102,16 @@ public final class BitmapUtils {
             return BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
         }
         return null;
+    }
+
+    public static Bitmap bytesToBitmap(byte[] data, int maxSize) {
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeByteArray(data, 0, data.length, options);
+        options.inSampleSize = calculateInSampleSize(options, maxSize, maxSize);
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeByteArray(data, 0, data.length, options);
     }
 
     public static Bitmap reduceBitmap(Bitmap bmp, int size) {
@@ -157,4 +178,28 @@ public final class BitmapUtils {
         drawable.draw(canvas);
         return bitmap;
     }
+
+    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) >= reqHeight
+                    && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
+
+
 }

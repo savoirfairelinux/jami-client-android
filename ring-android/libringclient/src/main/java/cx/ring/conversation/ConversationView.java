@@ -41,12 +41,6 @@ public interface ConversationView extends BaseView {
 
     void displayNumberSpinner(Conversation conversation, Uri number);
 
-    void displayClearDialog(Conversation conversation);
-
-    void displayDeleteDialog(Conversation conversation);
-
-    void displayCopyToClipboard(CallContact callContact);
-
     void displayErrorToast(int error);
 
     void displayCompletedDownload(DataTransfer transfer, File destination);
@@ -62,6 +56,8 @@ public interface ConversationView extends BaseView {
     void goToCallActivity(String conferenceId);
 
     void goToCallActivityWithResult(String accountId, String contactRingId, boolean audioOnly);
+
+    void goToContactActivity(String accountId, String contactRingId);
 
     void switchToUnknownView(String name);
 
@@ -80,4 +76,6 @@ public interface ConversationView extends BaseView {
     void addElement(ConversationElement e);
     void updateElement(ConversationElement e);
     void removeElement(ConversationElement e);
+
+    void setConversationColor(int integer);
 }

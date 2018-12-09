@@ -29,8 +29,7 @@ import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.tv.cards.iconcards.IconCard;
 
-public class AboutDetailsPresenter
-        extends Presenter {
+public class AboutDetailsPresenter extends Presenter {
     @BindView(R.id.primary_text)
     TextView mPrimaryText;
     @BindView(R.id.extra_text)

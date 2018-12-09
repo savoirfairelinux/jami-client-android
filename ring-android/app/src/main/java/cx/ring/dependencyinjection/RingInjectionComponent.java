@@ -31,6 +31,7 @@ import cx.ring.account.RingAccountCreationFragment;
 import cx.ring.account.RingAccountSummaryFragment;
 import cx.ring.account.RingLinkAccountFragment;
 import cx.ring.application.RingApplication;
+import cx.ring.client.ContactDetailsActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.contactrequests.BlackListFragment;
 import cx.ring.contactrequests.ContactRequestsFragment;
@@ -201,4 +202,6 @@ public interface RingInjectionComponent {
     void inject(ShareWithFragment fragment);
 
     void inject(RingJobService fragment);
+
+    void inject(ContactDetailsActivity fragment);
 }

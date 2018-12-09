@@ -92,7 +92,7 @@ along with this program; if not, write to the Free Software
             android:layout_alignParentEnd="true"
             android:textColor="@color/text_color_secondary"
             android:textSize="12sp"
-            tools:text="2days ago" />
+            tools:text="2 days ago" />
 
     </RelativeLayout>
 
