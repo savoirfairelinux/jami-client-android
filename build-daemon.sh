@@ -63,12 +63,11 @@ else
 fi
 
 if [ "${HAVE_64}" = 1 ];then
-    ANDROID_API_VERS=21
     LIBDIR=lib64
 else
-    ANDROID_API_VERS=19
     LIBDIR=lib
 fi
+ANDROID_API_VERS=21
 ANDROID_API=android-$ANDROID_API_VERS
 
 export ANDROID_TOOLCHAIN="`pwd`/android-toolchain-$ANDROID_API_VERS-$PLATFORM_SHORT_ARCH"
@@ -115,12 +114,9 @@ if [ ! -d "$DAEMON_DIR" ]; then
 fi
 
 # Setup LDFLAGS
-if [ ${ANDROID_ABI} = "armeabi-v7a-hard" ] ; then
-    EXTRA_CFLAGS="${EXTRA_CFLAGS} -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16"
-    EXTRA_LDFLAGS="-march=armv7-a -mfpu=vfpv3-d16 -mcpu=cortex-a8 -lm_hard -D_NDK_MATH_NO_SOFTFP=1"
-elif [ ${ANDROID_ABI} = "armeabi-v7a" ] ; then
-    EXTRA_CFLAGS="${EXTRA_CFLAGS} -march=armv7-a -mthumb -mfloat-abi=softfp -mfpu=vfpv3-d16"
-    EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -march=armv7-a -mthumb -mfloat-abi=softfp -mfpu=vfpv3-d16"
+if [ ${ANDROID_ABI} = "armeabi-v7a" ] ; then
+    EXTRA_CFLAGS="${EXTRA_CFLAGS} -march=armv7-a -mthumb"
+    EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -march=armv7-a -mthumb"
 elif [ ${ANDROID_ABI} = "arm64-v8a" ] ; then
     EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${ANDROID_TOOLCHAIN}/sysroot/usr/lib -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/lib"
 fi
@@ -167,11 +163,6 @@ mkdir -p contrib/${TARGET_TUPLE}/lib/pkgconfig
 
 cd $DAEMON_DIR/contrib/native-${TARGET_TUPLE}
 ../bootstrap --host=${TARGET_TUPLE} --disable-libav --enable-ffmpeg --disable-speexdsp
-
-# Some libraries have arm assembly which won't build in thumb mode
-# We append -marm to the CFLAGS of these libs to disable thumb mode
-[ ${ANDROID_ABI} = "armeabi-v7a" ] && echo "NOTHUMB := -marm" >> config.mak
-[ ${ANDROID_ABI} = "armeabi-v7a-hard" ] && echo "NOTHUMB := -marm" >> config.mak
 
 # Always strip symbols for libring.so remove it if you want to debug the daemon
 STRIP_ARG="-s "
@@ -263,10 +254,6 @@ STATIC_LIBS_ALL="-llog -lOpenSLES -landroid \
                 -lvpx -lopus -lspeex \
                 -largon2 \
                 -liconv"
-
-if [ ! "${HAVE_64}" = 1 ];then
-    STATIC_LIBS_ALL="${STATIC_LIBS_ALL} -landroid_support"
-fi
 
 LIBRING_JNI_DIR=${ANDROID_APP_DIR}/app/src/main/libs/${ANDROID_ABI}
 
