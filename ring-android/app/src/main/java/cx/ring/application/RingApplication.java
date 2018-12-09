@@ -220,11 +220,7 @@ public abstract class RingApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
         sInstance = this;
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
-            AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
         // building injection dependency tree
         mRingInjectionComponent = DaggerRingInjectionComponent.builder()
