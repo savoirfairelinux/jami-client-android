@@ -35,6 +35,7 @@ import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
 import cx.ring.utils.Log;
+import ezvcard.VCard;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
@@ -351,8 +352,9 @@ public class CallService {
             Log.w(TAG, "incomingMessage: unknown call or no message: " + callId + " " + from);
             return;
         }
-        if (sipCall.appendToVCard(messages)) {
-            mContactService.saveVCardContactData(sipCall.getContact());
+        VCard vcard = sipCall.appendToVCard(messages);
+        if (vcard != null) {
+            mContactService.saveVCardContactData(sipCall.getContact(), vcard);
         }
         if (messages.has_key(MIME_TEXT_PLAIN)) {
             mAccountService.incomingAccountMessage(sipCall.getAccount(), callId, from, messages);

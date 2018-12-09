@@ -45,6 +45,7 @@ import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.model.Account;
 import cx.ring.navigation.RingNavigationViewModel;
+import cx.ring.services.VCardServiceImpl;
 import cx.ring.tv.about.AboutActivity;
 import cx.ring.tv.account.TVAccountExport;
 import cx.ring.tv.account.TVProfileEditingActivity;
@@ -256,7 +257,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         Account account = viewModel.getAccount();
         String registeredName = account.getRegisteredName();
         String address = account.getDisplayUsername();
-        Tuple<String, byte[]> profile = VCardUtils.readData(vcard);
+        Tuple<String, Object> profile = VCardServiceImpl.readData(vcard);
 
         if (profile.first != null && !profile.first.isEmpty()) {
             titleView.setAlias(profile.first);

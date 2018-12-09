@@ -101,10 +101,6 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
             initView(mConversation, view);
     }
 
-    public void init(String contactRingId, String accountId) {
-        init(new Uri(contactRingId), accountId);
-    }
-
     public void init(Uri contactRingId, String accountId) {
         Log.w(TAG, "init " + contactRingId + " " + accountId);
         mContactRingId = contactRingId;
@@ -202,25 +198,13 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         mConversationDisposable.add(c.getCalls()
                 .observeOn(mUiScheduler)
                 .subscribe(calls -> updateOngoingCallView()));
+        mConversationDisposable.add(c.getColor()
+                .observeOn(mUiScheduler)
+                .subscribe(view::setConversationColor));
     }
 
-    public void prepareMenu() {
-    }
-
-    public void addContact() {
-        getView().goToAddContact(mConversation.getContact());
-    }
-
-    public void clearAction() {
-        getView().displayClearDialog(mConversation);
-    }
-
-    public void removeAction() {
-        getView().displayDeleteDialog(mConversation);
-    }
-
-    public void copyToClipboard() {
-        getView().displayCopyToClipboard(mConversation.getContact());
+    public void openContact() {
+        getView().goToContactActivity(mAccountId, mConversation.getContact().getPrimaryNumber());
     }
 
     public void sendTextMessage(String message) {
@@ -292,16 +276,6 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         });
     }
 
-    public void blockContact() {
-        mAccountService.removeContact(mAccountId, mContactRingId.getHost(), true);
-        getView().goToHome();
-    }
-
-    public void removeConversation() {
-        mConversationFacade.removeConversation(mAccountId, mContactRingId).subscribe();
-        getView().goToHome();
-    }
-
     public void clickOnGoingPane() {
         Conference conf = mConversation.getCurrentCall();
         if (conf != null) {
@@ -331,11 +305,6 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         } else {
             getView().goToCallActivityWithResult(mAccountId, mContactRingId.getRawUriString(), audioOnly);
         }
-    }
-
-    public void clearConversation() {
-        mConversationFacade.clearHistory(mAccountId, mContactRingId).subscribe();
-        getView().goToHome();
     }
 
     private void updateOngoingCallView() {
@@ -380,5 +349,11 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     public void noSpaceLeft() {
         Log.e(TAG, "configureForFileInfoTextMessage: no space left on device");
         getView().displayErrorToast(RingError.NO_SPACE_LEFT);
+    }
+
+    public void setConversationColor(int color) {
+        mCompositeDisposable.add(mConversationSubject
+                .firstElement()
+                .subscribe(conversation -> conversation.setColor(color)));
     }
 }

@@ -61,6 +61,8 @@ public class Conversation {
     // indicate the list needs sorting
     private boolean mDirty = false;
 
+    private Subject<Integer> color = BehaviorSubject.create();
+
     public Conversation(CallContact contact) {
         mContact = contact;
     }
@@ -356,6 +358,14 @@ public class Conversation {
         mCurrentCalls.clear();
         mHistory.clear();
         mDirty = true;
+    }
+
+    public void setColor(int c) {
+        color.onNext(c);
+    }
+
+    public Observable<Integer> getColor() {
+        return color;
     }
 
     public interface ConversationActionCallback {

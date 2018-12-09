@@ -27,11 +27,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.MediaStore;
-import androidx.annotation.NonNull;
+
 import androidx.annotation.Nullable;
+
 import com.google.android.material.snackbar.Snackbar;
+
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.appcompat.app.ActionBar;
@@ -53,7 +54,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -70,6 +70,7 @@ import cx.ring.R;
 import cx.ring.adapters.ConversationAdapter;
 import cx.ring.adapters.NumberAdapter;
 import cx.ring.client.CallActivity;
+import cx.ring.client.ContactDetailsActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.contacts.AvatarFactory;
@@ -90,17 +91,15 @@ import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ClipboardHelper;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.MediaButtonsHelper;
-import cx.ring.views.MessageEditText;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
 import static android.app.Activity.RESULT_OK;
 
 public class ConversationFragment extends BaseFragment<ConversationPresenter> implements
-        Conversation.ConversationActionCallback,
         ClipboardHelper.ClipboardHelperCallback,
         MediaButtonsHelper.MediaButtonsHelperCallback,
-        ConversationView {
+        ConversationView, SharedPreferences.OnSharedPreferenceChangeListener {
 
     protected static final String TAG = ConversationFragment.class.getSimpleName();
 
@@ -109,67 +108,13 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     public static final String KEY_CONTACT_RING_ID = BuildConfig.APPLICATION_ID + "CONTACT_RING_ID";
     public static final String KEY_ACCOUNT_ID = BuildConfig.APPLICATION_ID + "ACCOUNT_ID";
     public static final String KEY_PREFERENCE_PENDING_MESSAGE = "pendingMessage";
-
-    private static final String CONVERSATION_CLEAR = "CONVERSATION_CLEAR";
-    private static final String CONVERSATION_DELETE = "CONVERSATION_DELETE";
+    public static final String KEY_PREFERENCE_CONVERSATION_COLOR = "color";
 
     private static final int REQUEST_CODE_FILE_PICKER = 1000;
     private static final int REQUEST_PERMISSION_CAMERA = 1001;
     private static final int REQUEST_CODE_TAKE_PICTURE = 1002;
 
-    @BindView(R.id.msg_input_txt)
-    protected MessageEditText mMsgEditTxt;
-
-    @BindView(R.id.emoji_send)
-    protected TextView mEmojiSend;
-
-    @BindView(R.id.msg_send)
-    protected View mMsgSend;
-
-    @BindView(R.id.ongoingcall_pane)
-    protected ViewGroup mTopPane;
-
-    @BindView(R.id.hist_list)
-    protected RecyclerView mHistList;
-
-    @BindView(R.id.number_selector)
-    protected Spinner mNumberSpinner;
-
-    @BindView(R.id.pb_data_transfer)
-    protected ProgressBar pbDataTransfer;
-
-    @BindView(R.id.send_data)
-    protected ImageButton sendData;
-
-    @BindView(R.id.btn_take_picture)
-    protected ImageButton takePicture;
-
-    @BindView(R.id.cvMessageInput)
-    protected View mMessageInput;
-
-    @BindView(R.id.unknownContactPrompt)
-    protected View mUnknownPrompt;
-
-    @BindView(R.id.trustRequestPrompt)
-    protected View mTrustRequestPrompt;
-
-    @BindView(R.id.trustRequestMessageLayout)
-    protected View mTrustRequestMessageLayout;
-
-    @BindView(R.id.tvTrustRequestMessage)
-    protected TextView mTvTrustRequestMessage;
-
-
-    @BindView(R.id.pb_loading)
-    protected ProgressBar mLoadingIndicator;
-
-    private AlertDialog mClearDialog;
-    private boolean mClearConversation = false;
-
-
-    private AlertDialog mDeleteDialog;
-    private boolean mDeleteConversation = false;
-
+    private FragConversationBinding binding;
     private MenuItem mAudioCallBtn = null;
     private MenuItem mVideoCallBtn = null;
 
@@ -241,10 +186,12 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         }
         mMsgEditTxt.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -270,21 +217,19 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         animator.setSupportsChangeAnimations(false);
         mHistList.setAdapter(mAdapter);
         setHasOptionsMenu(true);
+    }
 
-        // reload delete conversation state (before rotation)
-        mClearConversation = savedInstanceState != null && savedInstanceState.getBoolean(CONVERSATION_CLEAR);
-        if (mClearConversation) {
-            presenter.clearAction();
-        }
-        mDeleteConversation = savedInstanceState != null && savedInstanceState.getBoolean(CONVERSATION_DELETE);
-        if (mDeleteConversation) {
-            presenter.removeAction();
-        }
+    @Override
+    public void setConversationColor(int color) {
+        ((ConversationActivity)getActivity()).setConversationColor(color);
+        mAdapter.setPrimaryColor(color);
     }
 
     @Override
     public void onDestroyView() {
-        mHistList.setAdapter(null);
+        if (mPreferences != null)
+            mPreferences.unregisterOnSharedPreferenceChangeListener(this);
+        binding.histList.setAdapter(null);
         super.onDestroyView();
     }
 
@@ -336,8 +281,8 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
             Log.i(TAG, "takePicture: trying to save to " + photoFile);
             mCurrentPhoto = photoFile;
             android.net.Uri photoURI = FileProvider.getUriForFile(getActivity(),
-                        ContentUriHandler.AUTHORITY_FILES,
-                        photoFile);
+                    ContentUriHandler.AUTHORITY_FILES,
+                    photoFile);
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
             startActivityForResult(takePictureIntent, REQUEST_CODE_TAKE_PICTURE);
         }
@@ -388,7 +333,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
                 mCurrentPhoto = null;
                 return;
             }
-            Log.w(TAG, "onActivityResult: mCurrentPhoto "+mCurrentPhoto.getAbsolutePath() + " " + mCurrentPhoto.exists() + " " + mCurrentPhoto.length());
+            Log.w(TAG, "onActivityResult: mCurrentPhoto " + mCurrentPhoto.getAbsolutePath() + " " + mCurrentPhoto.exists() + " " + mCurrentPhoto.length());
             if (mCurrentPhoto == null || !mCurrentPhoto.exists() || mCurrentPhoto.length() == 0) {
                 Toast.makeText(getActivity(), "Can't find picture", Toast.LENGTH_SHORT).show();
             }
@@ -412,6 +357,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     public void updateElement(ConversationElement element) {
         mAdapter.update(element);
     }
+
     @Override
     public void removeElement(ConversationElement element) {
         mAdapter.remove(element);
@@ -493,28 +439,6 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
-    public void onDestroy() {
-        if (mClearConversation) {
-            mClearDialog.dismiss();
-        }
-        if (mDeleteConversation) {
-            mDeleteDialog.dismiss();
-        }
-        super.onDestroy();
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        // persist the delete popup state in case of Activity rotation
-        mClearConversation = mClearDialog != null && mClearDialog.isShowing();
-        outState.putBoolean(CONVERSATION_CLEAR, mClearConversation);
-        mDeleteConversation = mDeleteDialog != null && mDeleteDialog.isShowing();
-        outState.putBoolean(CONVERSATION_DELETE, mDeleteConversation);
-    }
-
-    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.conversation_actions, menu);
         mAudioCallBtn = menu.findItem(R.id.conv_action_audiocall);
@@ -533,36 +457,12 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
             case R.id.conv_action_videocall:
                 presenter.callWithAudioOnly(false);
                 return true;
-            case R.id.menuitem_clean:
-                presenter.clearAction();
-                return true;
-            case R.id.menuitem_copy_content:
-                presenter.copyToClipboard();
-                return true;
-            case R.id.menuitem_delete:
-                presenter.removeAction();
-                return true;
-            case R.id.menuitem_block:
-                presenter.blockContact();
+            case R.id.conv_contact_details:
+                presenter.openContact();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    @Override
-    public void removeConversation(CallContact callContact) {
-        presenter.removeConversation();
-    }
-
-    @Override
-    public void clearConversation(CallContact callContact) {
-        presenter.clearConversation();
-    }
-
-    @Override
-    public void copyContactNumberToClipboard(String contactNumber) {
-        ClipboardHelper.copyNumberToClipboard(getActivity(), contactNumber, this);
     }
 
     @Override
@@ -578,15 +478,27 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     @Override
     protected void initPresenter(ConversationPresenter presenter) {
         super.initPresenter(presenter);
-        String contactRingID = getArguments().getString(KEY_CONTACT_RING_ID);
+        Uri contactUri = new Uri(getArguments().getString(KEY_CONTACT_RING_ID));
         String accountId = getArguments().getString(KEY_ACCOUNT_ID);
         try {
-            mPreferences = getActivity().getSharedPreferences(accountId + "_" + contactRingID, Context.MODE_PRIVATE);
+            mPreferences = getActivity().getSharedPreferences(accountId + "_" + contactUri.getRawRingId(), Context.MODE_PRIVATE);
         } catch (Exception e) {
             Log.e(TAG, "Can't load conversation preferences");
         }
+
         mAdapter = new ConversationAdapter(this, presenter);
-        presenter.init(contactRingID, accountId);
+        presenter.init(contactUri, accountId);
+        presenter.setConversationColor(mPreferences.getInt(KEY_PREFERENCE_CONVERSATION_COLOR, getResources().getColor(R.color.color_primary_light)));
+        mPreferences.registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+        switch (key) {
+            case KEY_PREFERENCE_CONVERSATION_COLOR:
+                presenter.setConversationColor(prefs.getInt(KEY_PREFERENCE_CONVERSATION_COLOR, getResources().getColor(R.color.color_primary_light)));
+                break;
+        }
     }
 
     @Override
@@ -632,27 +544,6 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
-    public void displayClearDialog(final Conversation conversation) {
-        mClearDialog = ActionHelper.launchClearAction(getActivity(),
-                conversation.getContact(),
-                ConversationFragment.this);
-    }
-
-    @Override
-    public void displayDeleteDialog(final Conversation conversation) {
-        mDeleteDialog = ActionHelper.launchDeleteAction(getActivity(),
-                conversation.getContact(),
-                ConversationFragment.this);
-    }
-
-    @Override
-    public void displayCopyToClipboard(CallContact callContact) {
-        ActionHelper.launchCopyNumberToClipboardFromContact(getActivity(),
-                callContact,
-                this);
-    }
-
-    @Override
     public void hideNumberSpinner() {
         mNumberSpinner.setVisibility(View.GONE);
     }
@@ -679,6 +570,12 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         startActivity(new Intent(Intent.ACTION_VIEW)
                 .setClass(getActivity().getApplicationContext(), CallActivity.class)
                 .putExtra(NotificationService.KEY_CALL_ID, conferenceId));
+    }
+
+    @Override
+    public void goToContactActivity(String accountId, String contactRingId) {
+        startActivity(new Intent(Intent.ACTION_VIEW, android.net.Uri.withAppendedPath(android.net.Uri.withAppendedPath(ContentUriHandler.CONTACT_CONTENT_URI, accountId), contactRingId))
+                .setClass(getActivity().getApplicationContext(), ContactDetailsActivity.class));
     }
 
     @Override
