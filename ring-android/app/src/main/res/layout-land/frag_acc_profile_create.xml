@@ -7,22 +7,23 @@
     android:theme="@style/Wizard"
     tools:background="@color/color_primary_dark">
 
-    <ScrollView
+    <cx.ring.views.BoundedScrollView
+        android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/next_create_account"
-        android:theme="@style/Wizard"
-        tools:background="@color/color_primary_dark">
+        android:layout_centerHorizontal="true"
+        app:bounded_width="560dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:gravity="center"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/title"
@@ -37,8 +38,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:gravity="center_horizontal"
                 android:text="@string/profile_message_warning" />
 
@@ -123,19 +124,32 @@
 
             </LinearLayout>
 
-
         </LinearLayout>
 
-    </ScrollView>
+    </cx.ring.views.BoundedScrollView>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/next_create_account"
-        style="@style/WizardNavButton"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/scrollview"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@color/color_primary_light"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="16dp"
         android:text="@string/wizard_next" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/skip_create_account"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:layout_toStartOf="@id/next_create_account"
+        android:text="@string/wizard_skip" />
 </RelativeLayout>
