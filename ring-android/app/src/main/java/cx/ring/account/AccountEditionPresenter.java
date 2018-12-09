@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,8 +19,6 @@
  */
 package cx.ring.account;
 
-import android.view.View;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -29,29 +28,25 @@ import cx.ring.services.AccountService;
 import io.reactivex.Scheduler;
 
 public class AccountEditionPresenter extends RootPresenter<AccountEditionView> {
-
-    private static final String TAG = RingAccountSummaryPresenter.class.getSimpleName();
-
-    protected AccountService mAccountService;
+    private final AccountService mAccountService;
+    private final Scheduler mUiScheduler;
 
     private Account mAccount;
-    @Inject
-    @Named("UiScheduler")
-    protected Scheduler mUiScheduler;
 
     @Inject
-    public AccountEditionPresenter(AccountService accountService) {
+    public AccountEditionPresenter(AccountService accountService, @Named("UiScheduler") Scheduler uiScheduler) {
         mAccountService = accountService;
+        mUiScheduler = uiScheduler;
     }
 
     public void init(String accountId) {
         final AccountEditionView view = getView();
-        if (accountId == null) {
+        mAccount = accountId == null ? null : mAccountService.getAccount(accountId);
+        if (mAccount == null) {
             if (view != null)
                 view.exit();
             return;
         }
-        mAccount = mAccountService.getAccount(accountId);
         view.displayAccountName(mAccount.getAlias());
         if (mAccount.isRing()) {
             view.displaySummary(mAccount.getAccountID());
