@@ -19,6 +19,7 @@
  */
 package cx.ring.services;
 
+import cx.ring.utils.Tuple;
 import ezvcard.VCard;
 import io.reactivex.Single;
 
@@ -28,5 +29,6 @@ public abstract class VCardService {
     public static final int MAX_SIZE_REQUEST = 64 * 1024;
 
     public abstract Single<VCard> loadSmallVCard(String accountId, int maxSize);
+    public abstract Single<Tuple<String, Object>> loadVCardProfile(VCard vcard);
 
 }

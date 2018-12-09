@@ -21,7 +21,10 @@
 package cx.ring.client;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+
+import androidx.annotation.ColorInt;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -116,5 +119,9 @@ public class ConversationActivity extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         return MediaButtonsHelper.handleMediaKeyCode(keyCode, mConversationFragment)
                 || super.onKeyDown(keyCode, event);
+    }
+
+    public void setConversationColor(@ColorInt int color) {
+        mToolbar.setBackground(new ColorDrawable(color));
     }
 }

@@ -360,6 +360,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <service android:name=".service.RingJobService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <activity
+            android:name=".client.ContactDetailsActivity"
+            android:label="@string/conversation_details"
+            android:theme="@style/AppThemeBase"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize" />
     </application>
 
 </manifest>

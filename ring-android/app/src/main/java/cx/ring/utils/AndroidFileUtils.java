@@ -23,6 +23,9 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -40,9 +43,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
+
 public class AndroidFileUtils {
 
     private static final String TAG = AndroidFileUtils.class.getSimpleName();
+    private final static int ORIENTATION_LEFT = 270;
+    private final static int ORIENTATION_RIGHT = 90;
+    private final static int MAX_IMAGE_DIMENSION = 1024;
 
     public static boolean copyAssetFolder(AssetManager assetManager, String fromAssetPath, String toPath) {
         try {
@@ -296,4 +305,63 @@ public class AndroidFileUtils {
             return -1L;
         }
     }
+
+    public static Single<Bitmap> loadBitmap(Context context, Uri uriImage) {
+        return Single.fromCallable(() -> {
+            InputStream is = context.getContentResolver().openInputStream(uriImage);
+            BitmapFactory.Options dbo = new BitmapFactory.Options();
+            dbo.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(is, null, dbo);
+            is.close();
+
+            int rotatedWidth, rotatedHeight;
+            int orientation = getOrientation(context, uriImage);
+
+            if (orientation == ORIENTATION_LEFT || orientation == ORIENTATION_RIGHT) {
+                rotatedWidth = dbo.outHeight;
+                rotatedHeight = dbo.outWidth;
+            } else {
+                rotatedWidth = dbo.outWidth;
+                rotatedHeight = dbo.outHeight;
+            }
+
+            Bitmap srcBitmap;
+            is = context.getContentResolver().openInputStream(uriImage);
+            if (rotatedWidth > MAX_IMAGE_DIMENSION || rotatedHeight > MAX_IMAGE_DIMENSION) {
+                float widthRatio = ((float) rotatedWidth) / ((float) MAX_IMAGE_DIMENSION);
+                float heightRatio = ((float) rotatedHeight) / ((float) MAX_IMAGE_DIMENSION);
+                float maxRatio = Math.max(widthRatio, heightRatio);
+
+                // Create the bitmap from file
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = (int) maxRatio;
+                srcBitmap = BitmapFactory.decodeStream(is, null, options);
+            } else {
+                srcBitmap = BitmapFactory.decodeStream(is);
+            }
+            is.close();
+
+            if (orientation > 0) {
+                Matrix matrix = new Matrix();
+                matrix.postRotate(orientation);
+
+                srcBitmap = Bitmap.createBitmap(srcBitmap, 0, 0, srcBitmap.getWidth(),
+                        srcBitmap.getHeight(), matrix, true);
+            }
+            return srcBitmap;
+        }).subscribeOn(Schedulers.io());
+    }
+
+    public static int getOrientation(Context context, Uri photoUri) {
+        Cursor cursor = context.getContentResolver().query(photoUri,
+                new String[]{MediaStore.Images.ImageColumns.ORIENTATION}, null, null, null);
+
+        if (cursor.getCount() != 1) {
+            return -1;
+        }
+
+        cursor.moveToFirst();
+        return cursor.getInt(0);
+    }
+
 }

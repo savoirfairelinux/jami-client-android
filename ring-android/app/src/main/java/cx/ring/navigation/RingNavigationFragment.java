@@ -53,12 +53,13 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cx.ring.R;
 import cx.ring.account.AccountWizardActivity;
-import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.client.HomeActivity;
 import cx.ring.contacts.AvatarFactory;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.Account;
 import cx.ring.mvp.BaseFragment;
+import cx.ring.services.VCardServiceImpl;
+import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.VCardUtils;
 import cx.ring.views.AvatarDrawable;
@@ -242,11 +243,11 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
         String ringId = account.getUri();
         AvatarFactory.getGlideAvatar(getActivity(), Glide.with(this), vcard, username, ringId)
                 .into(mUserImage);*/
-        mUserImage.setImageDrawable(new AvatarDrawable(getActivity(), VCardUtils.readData(vcard), account.getRegisteredName(), account.getUri()));
+        mUserImage.setImageDrawable(new AvatarDrawable(getActivity(), VCardServiceImpl.readData(vcard), account.getRegisteredName(), account.getUri()));
     }
 
     public void updatePhoto(Uri uriImage) {
-        ContactDetailsTask.loadProfilePhotoFromUri(getActivity(), uriImage)
+        AndroidFileUtils.loadBitmap(getActivity(), uriImage)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::updatePhoto, e -> Log.e(TAG, "Error loading image", e));
     }

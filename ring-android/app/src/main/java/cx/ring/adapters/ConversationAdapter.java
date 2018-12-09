@@ -98,20 +98,19 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     private final ArrayList<ConversationElement> mConversationElements = new ArrayList<>();
     private final ConversationPresenter presenter;
     private final ConversationFragment conversationFragment;
-    private final ColorStateList mErrorColor;
     private final int hPadding;
     private final int vPadding;
     private final int vPaddingEmoticon;
     private final int mPictureMaxSize;
     private final GlideOptions PICTURE_OPTIONS;
     private RecyclerViewContextMenuInfo mCurrentLongItem = null;
+    private int convColor = 0;
 
     public ConversationAdapter(ConversationFragment conversationFragment, ConversationPresenter presenter) {
         this.conversationFragment = conversationFragment;
         this.presenter = presenter;
         Context context = conversationFragment.getActivity();
         Resources res = context.getResources();
-        mErrorColor = ColorStateList.valueOf(res.getColor(R.color.red_200));
         hPadding = res.getDimensionPixelSize(R.dimen.padding_medium);
         vPadding = res.getDimensionPixelSize(R.dimen.padding_small);
         vPaddingEmoticon = res.getDimensionPixelSize(R.dimen.padding_xsmall);
@@ -273,6 +272,11 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             holder.player = null;
         }
         super.onViewRecycled(holder);
+    }
+
+    public void setPrimaryColor(int color) {
+        convColor = color;
+        notifyDataSetChanged();
     }
 
     public static class RecyclerViewContextMenuInfo implements ContextMenu.ContextMenuInfo {
@@ -561,6 +565,9 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             convViewHolder.mMsgTxt.setTextSize(24.f);
             convViewHolder.mMsgTxt.setPadding(hPadding, vPaddingEmoticon, hPadding, vPaddingEmoticon);
         } else {
+            if (convColor != 0 && !textMessage.isIncoming()) {
+                convViewHolder.mMsgTxt.getBackground().setTint(convColor);
+            }
             convViewHolder.mMsgTxt.getBackground().setAlpha(255);
             convViewHolder.mMsgTxt.setTextSize(16.f);
             convViewHolder.mMsgTxt.setPadding(hPadding, vPadding, hPadding, vPadding);

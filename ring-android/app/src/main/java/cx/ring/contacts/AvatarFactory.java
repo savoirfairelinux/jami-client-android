@@ -50,16 +50,16 @@ public class AvatarFactory {
 
     private AvatarFactory() {}
 
-    private static Drawable getDrawable(Context context, byte[] photo, String profileName, String username, String id) {
+    private static Drawable getDrawable(Context context, Bitmap photo, String profileName, String username, String id) {
         return new AvatarDrawable(context, photo, TextUtils.isEmpty(profileName) ? username : profileName, id, true);
     }
 
-    private static <T> RequestBuilder<T> getGlideRequest(Context context, RequestBuilder<T> request, byte[] photo, String profileName, String username, String id) {
+    private static <T> RequestBuilder<T> getGlideRequest(Context context, RequestBuilder<T> request, Bitmap photo, String profileName, String username, String id) {
         return request.load(getDrawable(context, photo, profileName, username, id));
     }
 
     public static RequestBuilder<Drawable> getGlideAvatar(Context context, RequestManager manager, CallContact contact) {
-        return getGlideRequest(context, manager.asDrawable(), contact.getPhoto(), contact.getProfileName(), contact.getUsername(), contact.getPrimaryNumber());
+        return getGlideRequest(context, manager.asDrawable(), (Bitmap)contact.getPhoto(), contact.getProfileName(), contact.getUsername(), contact.getPrimaryNumber());
     }
 
     public static Single<Drawable> getAvatar(Context context, CallContact contact) {
@@ -90,25 +90,6 @@ public class AvatarFactory {
                 .subscribeOn(Schedulers.computation());
     }
 
-    public static RequestBuilder<Drawable> getGlideAvatar(Context context, RequestManager manager, VCard vcard, String username, String ringId) {
-        byte[] photo = null;
-        String profile = null;
-        if (vcard != null) {
-            if (vcard.getPhotos() != null && !vcard.getPhotos().isEmpty()) {
-                photo = vcard.getPhotos().get(0).getData();
-            }
-            FormattedName name = vcard.getFormattedName();
-            if (name != null) {
-                String n = name.getValue();
-                if (!TextUtils.isEmpty(n))
-                    profile = n;
-            }
-        }
-
-        return getGlideRequest(context, manager.asDrawable(), photo, profile, username, ringId)
-                .transition(DrawableTransitionOptions.withCrossFade(100));
-    }
-
     public static RequestBuilder<Drawable> getGlideAvatar(Fragment fragment, CallContact contact) {
         return getGlideAvatar(fragment.getActivity(), Glide.with(fragment), contact);
     }
@@ -122,7 +103,7 @@ public class AvatarFactory {
     }
 
     public static RequestBuilder<Bitmap> getBitmapGlideAvatar(Context context, CallContact contact) {
-        return getGlideRequest(context, Glide.with(context).asBitmap(), contact.getPhoto(), contact.getProfileName(), contact.getUsername(), contact.getPrimaryNumber());
+        return getGlideRequest(context, Glide.with(context).asBitmap(), (Bitmap)contact.getPhoto(), contact.getProfileName(), contact.getUsername(), contact.getPrimaryNumber());
     }
 
     public static void clearCache() {
