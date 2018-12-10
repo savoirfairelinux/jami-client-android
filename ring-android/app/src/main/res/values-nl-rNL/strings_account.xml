@@ -6,6 +6,7 @@
   <string name="prompt_username">Gebruikersnaam</string>
   <string name="prompt_password">Wachtwoord</string>
   <string name="action_register">Registreren</string>
+  <string name="action_settings">Instellingen</string>
   <string name="error_field_required">Dit invulveld is vereist</string>
   <string name="dialog_wait_create">Account aan het toevoegen</string>
   <string name="help_sip_title">Voeg je SIP account toe</string>

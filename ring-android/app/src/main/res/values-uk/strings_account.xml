@@ -9,6 +9,7 @@
   <string name="prompt_password">Пароль</string>
   <string name="action_create_short">Створити</string>
   <string name="action_register">Зареєструватися</string>
+  <string name="action_settings">Налаштування</string>
   <string name="error_field_required">Це поле обов’язкове</string>
   <string name="dialog_wait_create">Додання аккаунту</string>
   <string name="dialog_wait_create_details">Почекайте поки ваш обліковий запис створюється.</string>

@@ -17,6 +17,7 @@
   <!--Accessibility-->
   <!--Sections-->
   <string name="menu_item_home">Início</string>
+  <string name="menu_item_contact_request">Pedidos de contacto</string>
   <string name="menu_item_accounts">Gerir contas</string>
   <string name="menu_item_settings">Configurações</string>
   <string name="menu_item_share">Partilhar o meu contacto</string>
@@ -97,6 +98,8 @@
   <string name="share_your_account_information">Partilhar a minha informação de contacto</string>
   <string name="generic_error_migration">Erro</string>
   <!--Pending contact requests-->
+  <string name="accept">Aceitar</string>
+  <string name="refuse">Recusar</string>
   <!--Send contact requests-->
   <string name="send_request_button">Enviar</string>
   <!--Blacklist-->

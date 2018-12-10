@@ -9,6 +9,7 @@
   <string name="prompt_password">Kara laluan</string>
   <string name="action_create">Cipta akaun</string>
   <string name="action_register">Daftar</string>
+  <string name="action_settings">Tetapan</string>
   <string name="error_field_required">Maklumat ini diperlukan</string>
   <string name="dialog_wait_create">Mencipta akaun</string>
   <string name="dialog_wait_create_details">Sila tunggu ketika akaun anda sedang dicipta…</string>

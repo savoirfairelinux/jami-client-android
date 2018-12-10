@@ -9,6 +9,7 @@
   <string name="prompt_password">סיסמה</string>
   <string name="action_create_short">צור</string>
   <string name="action_register">הירשם</string>
+  <string name="action_settings">הגדרות</string>
   <string name="error_field_required">שדה זה הינו חובה</string>
   <string name="dialog_wait_create">הוספת חשבון</string>
   <string name="dialog_wait_create_details">אנא המתן בעוד שחשבונך החדש מתווסף...</string>

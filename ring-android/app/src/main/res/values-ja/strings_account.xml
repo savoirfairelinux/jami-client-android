@@ -14,6 +14,7 @@
   <string name="prompt_password">パスワード</string>
   <string name="action_create">アカウント作成</string>
   <string name="action_register">登録</string>
+  <string name="action_settings">設定</string>
   <string name="error_field_required">このフィールドは入力必須です</string>
   <string name="dialog_wait_create">アカウントを追加</string>
   <string name="dialog_wait_create_details">新しいアカウントを追加しています。しばらくお待ちください...</string>

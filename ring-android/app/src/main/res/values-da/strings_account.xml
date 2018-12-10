@@ -15,6 +15,7 @@
   <string name="action_create">Opret konto</string>
   <string name="action_create_short">Opret</string>
   <string name="action_register">Registrer</string>
+  <string name="action_settings">Indstillinger</string>
   <string name="error_field_required">Dette felt er obligatorisk</string>
   <string name="dialog_wait_create">Tilføjer konto</string>
   <string name="dialog_wait_create_details">Vent venligst mens din nye konto tilføjes...</string>

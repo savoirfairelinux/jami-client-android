@@ -200,6 +200,7 @@
   <string name="file_saved_in">Ficheiro gravado em %s</string>
   <string name="no_space_left_on_device">Sem espaço disponível no dispositivo</string>
   <string name="title_media_viewer">Visualizador de média</string>
+  <string name="menu_file_open">Abrir ficheiro</string>
   <string name="menu_file_download">Descarregar ficheiro</string>
   <string name="menu_file_delete">Eliminar ficheiro</string>
   <string name="menu_file_share">Partilhar ficheiro</string>

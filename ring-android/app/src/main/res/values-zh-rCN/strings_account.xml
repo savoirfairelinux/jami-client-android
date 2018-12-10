@@ -15,6 +15,7 @@
   <string name="action_create">创建帐户</string>
   <string name="action_create_short">创建</string>
   <string name="action_register">注册</string>
+  <string name="action_settings">设置</string>
   <string name="error_field_required">该字段必填</string>
   <string name="dialog_wait_create">添加帐户</string>
   <string name="dialog_wait_create_details">正在创建您的帐户，请稍等…</string>

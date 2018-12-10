@@ -199,6 +199,7 @@
   <string name="file_saved_in">檔案儲存在 %s</string>
   <string name="no_space_left_on_device">裝置上沒有剩餘空間</string>
   <string name="title_media_viewer">媒體檢視器</string>
+  <string name="menu_file_open">開啟檔案</string>
   <string name="menu_file_download">下載檔案</string>
   <string name="menu_file_delete">刪除檔案</string>
   <string name="menu_file_share">分享檔案</string>

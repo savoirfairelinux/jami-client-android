@@ -14,6 +14,7 @@
   <string name="prompt_password">Parola</string>
   <string name="action_create">Creează cont</string>
   <string name="action_register">Registrare</string>
+  <string name="action_settings">Setari</string>
   <string name="error_field_required">Acest câmp este obligatoriu</string>
   <string name="dialog_wait_create">Adaugare cont</string>
   <string name="dialog_wait_create_details">Vă rugăm așteptați în timp ce contul dumneavoastră este adăugat...</string>

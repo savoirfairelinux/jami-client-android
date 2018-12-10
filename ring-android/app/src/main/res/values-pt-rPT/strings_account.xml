@@ -15,6 +15,7 @@
   <string name="action_create">Criar conta</string>
   <string name="action_create_short">Criar</string>
   <string name="action_register">Registar</string>
+  <string name="action_settings">Configurações</string>
   <string name="error_field_required">Este campo é obrigatório</string>
   <string name="dialog_wait_create">Adicionar conta</string>
   <string name="dialog_wait_create_details">Por favor aguarde enquanto a sua nova conta é adicionada...</string>

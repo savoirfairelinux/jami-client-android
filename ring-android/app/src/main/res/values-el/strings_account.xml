@@ -15,6 +15,7 @@
   <string name="action_create">Δημιουργία λογαριασμού</string>
   <string name="action_create_short">Δημιουργία</string>
   <string name="action_register">Εγγραφή</string>
+  <string name="action_settings">Ρυθμίσεις</string>
   <string name="error_field_required">Υποχρεωτικό πεδίο</string>
   <string name="dialog_wait_create">Εισαγωγή λογαριασμού</string>
   <string name="dialog_wait_create_details">Παρακαλώ περιμένετε για την εισαγωγή του νέου λογαριασμού</string>
