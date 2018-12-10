@@ -14,6 +14,7 @@
   <string name="action_create">Napravi račun</string>
   <string name="action_create_short">Stvori</string>
   <string name="action_register">Registriraj</string>
+  <string name="action_settings">Postavke</string>
   <string name="error_field_required">Potrebno je ovo polje</string>
   <string name="dialog_wait_create">Dodajem račun</string>
   <string name="dialog_wait_create_details">Molim pričekajte dok se vaš novi račun ne doda...</string>

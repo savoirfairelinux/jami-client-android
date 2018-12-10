@@ -9,6 +9,7 @@
   <string name="prompt_password">Salasana</string>
   <string name="action_create_short">Luo</string>
   <string name="action_register">Rekistöröi</string>
+  <string name="action_settings">Asetukset</string>
   <string name="error_field_required">Tämä kenttä on vaadittu</string>
   <string name="dialog_wait_create">Lisätään tunnusta</string>
   <string name="dialog_wait_create_details">Odota kunnes tunnuksesi on lisätty...</string>

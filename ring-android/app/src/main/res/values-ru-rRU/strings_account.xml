@@ -9,6 +9,7 @@
   <string name="prompt_password">Пароль</string>
   <string name="action_create_short">Создать</string>
   <string name="action_register">Зарегистрировать</string>
+  <string name="action_settings">Настройки</string>
   <string name="error_field_required">Это обязательное поле</string>
   <string name="dialog_wait_create">Добавление аккаунта</string>
   <string name="dialog_wait_create_details">Пожалуйста, подождите, пока Ваш новый аккаунт будет добавлен...</string>

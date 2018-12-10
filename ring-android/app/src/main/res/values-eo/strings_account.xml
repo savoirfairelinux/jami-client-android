@@ -9,6 +9,7 @@
   <string name="prompt_password">Pasvorto</string>
   <string name="action_create_short">Krei</string>
   <string name="action_register">Registri</string>
+  <string name="action_settings">Agordoj</string>
   <string name="error_field_required">Tiu ĉi kampo bezonatas.</string>
   <string name="dialog_wait_create">Aldonanta konton</string>
   <string name="dialog_wait_create_details">Bonvole atendu dum via konto aldonatas…</string>

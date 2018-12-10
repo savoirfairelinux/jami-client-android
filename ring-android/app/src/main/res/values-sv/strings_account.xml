@@ -15,6 +15,7 @@
   <string name="action_create">Skapa konto</string>
   <string name="action_create_short">Skapa</string>
   <string name="action_register">Registrera</string>
+  <string name="action_settings">Inställningar</string>
   <string name="error_field_required">Det här fältet är obligatoriskt</string>
   <string name="dialog_wait_create">Lägger till konto</string>
   <string name="dialog_wait_create_details">Vänta medan ditt nya konto läggs till...</string>

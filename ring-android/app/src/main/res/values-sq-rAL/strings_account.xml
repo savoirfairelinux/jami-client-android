@@ -15,6 +15,7 @@
   <string name="action_create">Krijoni llogari</string>
   <string name="action_create_short">Krijoje</string>
   <string name="action_register">Regjistrohuni</string>
+  <string name="action_settings">Rregullime</string>
   <string name="error_field_required">Kjo fushë është e domosdoshme</string>
   <string name="dialog_wait_create">Po shtohet llogaria</string>
   <string name="dialog_wait_create_details">Ju lutemi, pritni teksa shtohet llogaria juaj e re…</string>

@@ -15,6 +15,7 @@
   <string name="action_create">Account aanmaken</string>
   <string name="action_create_short">Aanmaken</string>
   <string name="action_register">Registreren</string>
+  <string name="action_settings">Instellingen</string>
   <string name="error_field_required">Dit veld is vereist</string>
   <string name="dialog_wait_create">Account word toegevoegd</string>
   <string name="dialog_wait_create_details">Uwe nieuwen account word toegevoegd, efkens geduld…</string>

@@ -3,6 +3,7 @@
   <!--Strings related to account edition screen-->
   <string name="ic_delete_menu">ਮਿਟਾਓ</string>
   <!--Strings related to account creation-->
+  <string name="action_settings">ਸੈਟਿੰਗ</string>
   <!--Strings related to account deletion-->
   <!--AccountManagementFragment-->
   <!--Basic Details-->

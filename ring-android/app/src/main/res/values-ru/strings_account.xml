@@ -15,6 +15,7 @@
   <string name="action_create">Создать аккаунт</string>
   <string name="action_create_short">Создать</string>
   <string name="action_register">Регистрация</string>
+  <string name="action_settings">Настройки</string>
   <string name="error_field_required">Это поле обязательно для заполнения</string>
   <string name="dialog_wait_create">Добавление аккаунта</string>
   <string name="dialog_wait_create_details">Пожалуйста, подождите, пока ваш новый аккаунт добавляется…</string>

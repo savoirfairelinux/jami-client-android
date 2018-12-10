@@ -2,15 +2,18 @@
 <resources>
   <!--Strings related to account edition screen-->
   <string name="ic_delete_menu">Eliminar</string>
+  <string name="ic_advanced_menu">Configurações avançadas</string>
   <!--Strings related to account creation-->
   <string name="prompt_alias">Pseudônimo</string>
   <string name="prompt_hostname">Nome do host</string>
   <string name="prompt_username">Usuário</string>
   <string name="prompt_password">Senha</string>
+  <string name="action_settings">Configurações</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">Esta ação não pode ser reposta.</string>
   <!--AccountManagementFragment-->
   <string name="normal_accounts_titles">Contas</string>
+  <string name="account_device_revoke">Cancelar dispositivo</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Geral</string>
   <string name="account_hostname_label">Nome do host</string>
@@ -35,10 +38,16 @@
   <!--restore/backup-->
   <string name="account_export_end_error_title">Erro</string>
   <string name="account_device_updated_message">Conta Ring atualizada com sucesso.</string>
+  <string name="account_link_button">Ligar este dispositivo a uma conta</string>
   <string name="account_new_button">Criar uma conta Ring</string>
   <!--Name registration-->
+  <string name="username_already_taken">O nome de utilizador já foi registado por outra pessoa</string>
+  <string name="invalid_username">Nome de utilizador inválido</string>
+  <string name="account_status_online">Ligado</string>
   <string name="account_status_unknown">Desconhecido</string>
+  <string name="account_status_offline">Desligado</string>
   <!--Create account-->
   <!--Edit profile-->
   <!--Devices-->
+  <string name="revoke_device_title">Cancelar dispositivo</string>
 </resources>

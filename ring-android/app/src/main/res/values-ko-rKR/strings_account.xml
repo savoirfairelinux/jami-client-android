@@ -7,6 +7,7 @@
   <string name="prompt_username">사용자명</string>
   <string name="prompt_password">암호</string>
   <string name="action_create_short">생성하기</string>
+  <string name="action_settings">설정</string>
   <!--Strings related to account deletion-->
   <!--AccountManagementFragment-->
   <string name="account_device_revocation_wrong_password">잘못된 암호입니다.</string>

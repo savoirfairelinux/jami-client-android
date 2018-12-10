@@ -6,6 +6,7 @@
   <string name="prompt_hostname">nom d\'hôte</string>
   <string name="prompt_username">nom d\'utilisateur</string>
   <string name="prompt_password">mot de passe</string>
+  <string name="action_settings">Réglages</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">Cette action ne peut pas être annulée</string>
   <!--AccountManagementFragment-->

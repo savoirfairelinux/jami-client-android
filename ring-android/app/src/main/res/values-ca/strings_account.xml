@@ -15,6 +15,7 @@
   <string name="action_create">Crea compte</string>
   <string name="action_create_short">Crear</string>
   <string name="action_register">Registra</string>
+  <string name="action_settings">Opcions</string>
   <string name="error_field_required">Es requereix aquest camp</string>
   <string name="dialog_wait_create">S\'està afegint el compte</string>
   <string name="dialog_wait_create_details">Si us plau, espereu mentre s\'afegeix el vostre nou compte</string>

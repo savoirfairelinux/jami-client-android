@@ -15,6 +15,7 @@
   <string name="action_create">Hesap oluştur</string>
   <string name="action_create_short">Oluştur</string>
   <string name="action_register">Kaydol</string>
+  <string name="action_settings">Ayarlar</string>
   <string name="error_field_required">Bu alan gerekli</string>
   <string name="dialog_wait_create">Hesap ekleniyor</string>
   <string name="dialog_wait_create_details">Yeni hesabınız eklenirken lütfen bekleyin...</string>

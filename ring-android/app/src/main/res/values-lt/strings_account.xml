@@ -15,6 +15,7 @@
   <string name="action_create">Sukurti paskyrą</string>
   <string name="action_create_short">Sukurti</string>
   <string name="action_register">Registruoti</string>
+  <string name="action_settings">Nustatymai</string>
   <string name="error_field_required">Šis laukas yra būtinas</string>
   <string name="dialog_wait_create">Pridedama paskyra</string>
   <string name="dialog_wait_create_details">Prašome palaukti, kol jūsų nauja paskyra yra pridedama</string>

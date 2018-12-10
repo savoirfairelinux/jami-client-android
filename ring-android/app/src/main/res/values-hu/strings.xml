@@ -4,7 +4,7 @@
   <string name="feedback_section">Visszajelzés</string>
   <string name="report">&lt;u&gt;Küldjön nekünk e-mailt&lt;/u&gt;</string>
   <string name="section_license">Licenc</string>
-  <string name="sponsor_section">A Ring egy szabad szoftver, amelynek fejlesztője és támogatója:</string>
+  <string name="sponsor_section">A Jami egy szabad szoftver, amelynek fejlesztője és támogatója:</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Közreműködés</string>
   <string name="version_section">Verzió</string>
@@ -14,13 +14,13 @@
   <string name="website_chooser_title">Weboldal megtekintése a következővel…</string>
   <string name="license">Ez a szoftver a „jelen állapotában” kerül kiadásra, mindenféle garanciavállalás nélkül. A részletekért lásd a
 &lt;u&gt;GNU General Public License 3-as vagy későbbi verzióját&lt;/u&gt;</string>
-  <string name="description">A Ring szabad szoftver az univerzális kommunikációhoz, amely tiszteletben tartja a felhasználók szabadságát és magánszféráját.</string>
+  <string name="description">A Jami szabad szoftver az egyetemes közléshez, amely tiszteletben tartja a felhasználók szabadságát és magánszféráját.</string>
   <string name="credits">Készítők</string>
   <!--About dialog-->
   <string name="developed_by">Fejlesztők</string>
   <string name="designed_by">Tervezők</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Ring</string>
+  <string name="title_activity_sflphone_home">Jami</string>
   <string name="error_no_network">Nincs hálózati csatlakozás</string>
   <string name="error_mobile_network_available_but_disabled">Engedélyezze a mobilhálózat-elérést a beállítások képernyőn.</string>
   <!--AB menus-->
@@ -36,7 +36,7 @@
   <string name="menu_item_account">Fiók kezelése</string>
   <string name="menu_item_settings">Beállítások</string>
   <string name="menu_item_share">Kapcsolati adatok megosztása</string>
-  <string name="menu_item_about">A Ring névjegye</string>
+  <string name="menu_item_about">A Jami névjegye</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Szám tárcsázása</string>
   <!--History Fragment-->
@@ -80,8 +80,8 @@
   <string name="ongoing_call">Folyamatban lévő hívás</string>
   <string name="hist_in_call">Bejövő hívás ennyi ideje: %1$s</string>
   <string name="hist_out_call">Kimenő hívás ennyi ideje: %1$s</string>
-  <string name="start_error_title">Nem lehet elindítani a Ringet!</string>
-  <string name="start_error_mic_required">A Ring működéséhez szükséges a mikrofont elérés engedélyezése.</string>
+  <string name="start_error_title">Nem lehet elindítani Jami-t!</string>
+  <string name="start_error_mic_required">A Jami működéséhez szükséges a mikrofont elérés engedélyezése.</string>
   <string name="action_call_accept">Hívás fogadása</string>
   <string name="action_call_decline">Elutasítás</string>
   <string name="ab_action_speakerphone">Hangszóró engedélyezése</string>
@@ -111,9 +111,9 @@
   <string name="ringtone_error_format_not_supported">Ez a formátum nem támogatott</string>
   <string name="ringtone_error_size_too_big">Ez a fájl túl nagy. A maximum méret %1$d kB.</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">A Ringnek szüksége van a „Névjegyek olvasása” engedélyre. Kérjük, engedélyezze.</string>
+  <string name="permission_dialog_read_contacts_message">A Jaminak szüksége van a „Névjegyek olvasása” engedélyre. Kérjük, engedélyezze.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">A Ringnek szüksége van a „Hívásnapló írása” engedélyre. Kérjük, engedélyezze.</string>
+  <string name="permission_dialog_write_call_log_message">A Jaminak szüksége van a „Hívásnapló írása” engedélyre. Kérjük, engedélyezze.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Olvassa be a hozzáadandó fiók QR-kódját.</string>
   <!--Settings-->
@@ -140,11 +140,11 @@
   <string name="prompt_new_password">Új jelszó</string>
   <string name="prompt_new_password_optional">Új jelszó (választható)</string>
   <string name="prompt_new_password_repeat">Új jelszó még egyszer</string>
-  <string name="account_create_title">Ring fiók létrehozása</string>
+  <string name="account_create_title">Jami fiók létrehozása</string>
   <string name="prompt_new_username">Új felhasználónév megadása</string>
-  <string name="help_password_choose">Válasszon egy erős jelszót, amelyre emlékezni fog a Ring fiókja védelme érdekében.</string>
-  <string name="help_password_enter">Adja meg a Ring fiókja jelszavát</string>
-  <string name="help_pin_enter">Adja meg egy másik beállított Ring fiók PIN-jét! Használja a „fiók exportálása a Ringen” funkciót a PIN eléréséhez!</string>
+  <string name="help_password_choose">Válasszon egy erős jelszót, amelyre emlékezni fog a Jami fiókja védelme érdekében.</string>
+  <string name="help_password_enter">Adja meg a Jami fiókja jelszavát</string>
+  <string name="help_pin_enter">Adja meg egy másik beállított Jami fiók PIN-jét! Használja a „fiók exportálása a Jami-n” működést a PIN eléréséhez!</string>
   <string name="wizard_next">Tovább</string>
   <string name="wizard_back">Vissza</string>
   <string name="wizard_skip">Átugrani</string>
@@ -155,7 +155,7 @@
   <string name="take_a_photo">Fotó készítése</string>
   <string name="profile_name_hint">Adja meg a nevét (nem kötelező)</string>
   <!--Share fragment-->
-  <string name="share_message">Olvassa be a kódot a Ring programmal</string>
+  <string name="share_message">Olvassa be a kódot a Jami programmal</string>
   <string name="share_message_no_account">Válassza ki a megosztandó fiókot.</string>
   <string name="share_your_account_information">Kapcsolati adatok megosztása</string>
   <string name="generic_error_migration">Hiba</string>
@@ -173,7 +173,7 @@
   <!--Send contact requests-->
   <string name="send_request_button">Elküld</string>
   <string name="send_request_title">Parnerkérelem küldése</string>
-  <string name="send_request_msg">Küldenie kell egy felkérést, hogy kommunikálhasson ezzel a felhasználóval. Mindaddig, amíg a leendő partner nem fogadta el a felkérést, üzeneteket küldhet Neki, de nem tud vissza válaszolni.</string>
+  <string name="send_request_msg">Küldenie kell egy felkérést, hogy közléshasson ezzel a felhasználóval. Mindaddig, amíg a leendő partner nem fogadta el a felkérést, üzeneteket küldhet Neki, de nem tud vissza válaszolni.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 blokkolt partner</string>
   <!--Smartlist-->
@@ -200,6 +200,7 @@
   <string name="file_saved_in">A fájl mentve%s</string>
   <string name="no_space_left_on_device">Nincs hely az eszközön</string>
   <string name="title_media_viewer">Média lejátszó</string>
+  <string name="menu_file_open">Fájl megnyitása</string>
   <string name="menu_file_download">Fájl letöltése</string>
   <string name="menu_file_delete">Fájl törlése</string>
   <string name="menu_file_share">Fájl megosztása</string>
