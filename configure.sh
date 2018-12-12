@@ -21,12 +21,6 @@ if [ -z "$ANDROID_API" ];then
     exit 1
 fi
 
-if [ -n "$HAVE_ARM" ]; then
-    if [ ${ANDROID_ABI} = "armeabi-v7a" ]; then
-        LDFLAGS="$LDFLAGS -Wl,--fix-cortex-a8"
-    fi
-fi
-
 CPPFLAGS="-I${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/include "
 LDFLAGS="$LDFLAGS -L${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/lib "
 
