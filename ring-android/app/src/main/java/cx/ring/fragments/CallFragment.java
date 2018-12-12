@@ -42,7 +42,6 @@ import androidx.annotation.Nullable;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.DisplayMetrics;
 import android.util.Rational;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -54,7 +53,6 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import com.rodolfonavalon.shaperipplelibrary.model.Circle;
@@ -77,7 +75,7 @@ import cx.ring.databinding.FragCallBinding;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
-import cx.ring.mvp.BaseFragment;
+import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.service.DRingService;
 import cx.ring.services.NotificationService;
 import cx.ring.utils.ActionHelper;
@@ -88,7 +86,7 @@ import cx.ring.utils.MediaButtonsHelper;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class CallFragment extends BaseFragment<CallPresenter> implements CallView, MediaButtonsHelper.MediaButtonsHelperCallback {
+public class CallFragment extends BaseSupportFragment<CallPresenter> implements CallView, MediaButtonsHelper.MediaButtonsHelperCallback {
 
     public static final String TAG = CallFragment.class.getSimpleName();
 
@@ -390,9 +388,8 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
         return true;
     }
 
-
     @Override
-    public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode, Configuration newConfig) {
+    public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode) {
         if (isInPictureInPictureMode)
             ((CallActivity) getActivity()).getSupportActionBar().hide();
         else

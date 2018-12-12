@@ -25,9 +25,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import javax.inject.Inject;
 
 public abstract class BaseActivity<T extends RootPresenter> extends AppCompatActivity {
-
-    protected static final String TAG = BaseFragment.class.getSimpleName();
-
     @Inject
     protected T presenter;
 

@@ -63,7 +63,7 @@ import cx.ring.contacts.AvatarFactory;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
-import cx.ring.mvp.BaseFragment;
+import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.smartlist.SmartListPresenter;
 import cx.ring.smartlist.SmartListView;
 import cx.ring.smartlist.SmartListViewModel;
@@ -72,7 +72,7 @@ import cx.ring.utils.ClipboardHelper;
 import cx.ring.utils.DeviceUtils;
 import cx.ring.viewholders.SmartListViewHolder;
 
-public class SmartListFragment extends BaseFragment<SmartListPresenter> implements SearchView.OnQueryTextListener,
+public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> implements SearchView.OnQueryTextListener,
         SmartListViewHolder.SmartListListeners,
         Conversation.ConversationActionCallback,
         ClipboardHelper.ClipboardHelperCallback,

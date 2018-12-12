@@ -79,7 +79,7 @@ public class ConversationActivity extends AppCompatActivity {
 
             mConversationFragment = new ConversationFragment();
             mConversationFragment.setArguments(bundle);
-            getFragmentManager().beginTransaction()
+            getSupportFragmentManager().beginTransaction()
                     .replace(R.id.main_frame, mConversationFragment, null)
                     .commit();
         }

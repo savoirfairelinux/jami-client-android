@@ -20,7 +20,6 @@
 package cx.ring.navigation;
 
 import android.Manifest;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -30,6 +29,7 @@ import android.provider.MediaStore;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
@@ -44,8 +44,6 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
@@ -57,18 +55,17 @@ import cx.ring.client.HomeActivity;
 import cx.ring.contacts.AvatarFactory;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.Account;
-import cx.ring.mvp.BaseFragment;
+import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.services.VCardServiceImpl;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.BitmapUtils;
-import cx.ring.utils.VCardUtils;
 import cx.ring.views.AvatarDrawable;
 import ezvcard.VCard;
 import ezvcard.parameter.ImageType;
 import ezvcard.property.Photo;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter> implements NavigationAdapter.OnNavigationItemClicked,
+public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPresenter> implements NavigationAdapter.OnNavigationItemClicked,
         AccountAdapter.OnAccountActionClicked, RingNavigationView {
 
     public static final String TAG = RingNavigationFragment.class.getSimpleName();

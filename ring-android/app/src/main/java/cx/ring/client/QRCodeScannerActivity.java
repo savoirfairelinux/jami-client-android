@@ -19,11 +19,10 @@
  */
 package cx.ring.client;
 
-import android.app.Fragment;
-
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.journeyapps.barcodescanner.CaptureActivity;
 
+import androidx.fragment.app.Fragment;
 import cx.ring.R;
 
 public class QRCodeScannerActivity extends CaptureActivity {
@@ -35,7 +34,7 @@ public class QRCodeScannerActivity extends CaptureActivity {
      */
     public static void startQRCodeScanWithFragmentReceiver(Fragment receiver) {
         if (null != receiver) {
-            IntentIntegrator integrator = IntentIntegrator.forFragment(receiver);
+            IntentIntegrator integrator = IntentIntegrator.forSupportFragment(receiver);
             configureIntentIntegrator(integrator,
                     receiver.getString(R.string.scan_qr_account_message));
         }

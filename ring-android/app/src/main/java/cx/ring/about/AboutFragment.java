@@ -42,9 +42,9 @@ import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.client.HomeActivity;
 import cx.ring.dependencyinjection.RingInjectionComponent;
-import cx.ring.mvp.BaseFragment;
+import cx.ring.mvp.BaseSupportFragment;
 
-public class AboutFragment extends BaseFragment<AboutPresenter> implements AboutView {
+public class AboutFragment extends BaseSupportFragment<AboutPresenter> implements AboutView {
 
     @BindView(R.id.logo_ring_beta2)
     ImageView mImageViewLogo;
