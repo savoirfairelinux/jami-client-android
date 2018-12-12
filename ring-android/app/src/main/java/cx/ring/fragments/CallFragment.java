@@ -37,6 +37,7 @@ import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -249,7 +250,6 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
         return binding.getRoot();
     }
 
-
     private TextureView.SurfaceTextureListener listener = new TextureView.SurfaceTextureListener() {
         @Override
         public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
@@ -403,9 +403,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
     @Override
     public void displayVideoSurface(final boolean display) {
-        Log.w(TAG, "displayVideoSurface " + display);
         binding.videoSurface.setVisibility(display ? View.VISIBLE : View.GONE);
-        //binding.previewSurface.setVisibility(display ? View.VISIBLE : View.GONE);
         updateMenu();
     }
 
@@ -497,16 +495,14 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
     @Override
     public void updateCallStatus(final SipCall.State callState) {
-        getActivity().runOnUiThread(() -> {
-            switch (callState) {
-                case NONE:
-                    binding.callStatusTxt.setText("");
-                    break;
-                default:
-                    binding.callStatusTxt.setText(callStateToHumanState(callState));
-                    break;
-            }
-        });
+        switch (callState) {
+            case NONE:
+                binding.callStatusTxt.setText("");
+                break;
+            default:
+                binding.callStatusTxt.setText(callStateToHumanState(callState));
+                break;
+        }
     }
 
     @Override
@@ -592,12 +588,12 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
     private void configureTransform(int viewWidth, int viewHeight) {
         Activity activity = getActivity();
-        if (null == binding.previewSurface|| null == activity) {
+        if (null == binding.previewSurface || null == activity) {
             return;
         }
         int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
         boolean rot = Surface.ROTATION_90 == rotation || Surface.ROTATION_270 == rotation;
-        Log.w(TAG, "configureTransform " + viewWidth + "x" + viewHeight + " rot="+rot + " mPreviewWidth="+mPreviewWidth + " mPreviewHeight="+mPreviewHeight);
+        Log.w(TAG, "configureTransform " + viewWidth + "x" + viewHeight + " rot=" + rot + " mPreviewWidth=" + mPreviewWidth + " mPreviewHeight=" + mPreviewHeight);
         Matrix matrix = new Matrix();
         RectF viewRect = new RectF(0, 0, viewWidth, viewHeight);
         float centerX = viewRect.centerX();
