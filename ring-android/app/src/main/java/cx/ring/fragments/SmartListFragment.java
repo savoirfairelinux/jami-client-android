@@ -473,14 +473,15 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     }
 
     @Override
-    public void updateList(final List<SmartListViewModel> smartListViewModels) {
-        Log.w(TAG, "updateList " + smartListViewModels.size());
+    public void updateList(@Nullable final List<SmartListViewModel> smartListViewModels) {
+        if (mRecyclerView == null)
+            return;
         if (mRecyclerView.getAdapter() == null) {
             mSmartListAdapter = new SmartListAdapter(smartListViewModels, SmartListFragment.this);
             mRecyclerView.setAdapter(mSmartListAdapter);
             mRecyclerView.setHasFixedSize(true);
             LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-            llm.setOrientation(LinearLayoutManager.VERTICAL);
+            llm.setOrientation(RecyclerView.VERTICAL);
             mRecyclerView.setLayoutManager(llm);
         } else {
             mSmartListAdapter.update(smartListViewModels);
