@@ -81,7 +81,7 @@ import cx.ring.model.DataTransfer;
 import cx.ring.model.Phone;
 import cx.ring.model.RingError;
 import cx.ring.model.Uri;
-import cx.ring.mvp.BaseFragment;
+import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.services.NotificationService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.AndroidFileUtils;
@@ -93,10 +93,11 @@ import io.reactivex.disposables.Disposable;
 
 import static android.app.Activity.RESULT_OK;
 
-public class ConversationFragment extends BaseFragment<ConversationPresenter> implements
+public class ConversationFragment extends BaseSupportFragment<ConversationPresenter> implements
         ClipboardHelper.ClipboardHelperCallback,
         MediaButtonsHelper.MediaButtonsHelperCallback,
-        ConversationView, SharedPreferences.OnSharedPreferenceChangeListener {
+        ConversationView, SharedPreferences.OnSharedPreferenceChangeListener
+{
 
     protected static final String TAG = ConversationFragment.class.getSimpleName();
 

@@ -21,9 +21,6 @@
  */
 package cx.ring.client;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.media.AudioManager;
@@ -34,6 +31,9 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
@@ -92,7 +92,7 @@ public class CallActivity extends AppCompatActivity {
             String contactRingId = getIntent().getStringExtra(ConversationFragment.KEY_CONTACT_RING_ID);
 
             // Reload a new view
-            FragmentManager fragmentManager = getFragmentManager();
+            FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             callFragment = CallFragment.newInstance(CallFragment.ACTION_PLACE_CALL,
                     accountId,
@@ -103,7 +103,7 @@ public class CallActivity extends AppCompatActivity {
         } else if (Intent.ACTION_VIEW.equals(action)) {
             String confId = getIntent().getStringExtra(NotificationService.KEY_CALL_ID);
             // Reload a new view
-            FragmentManager fragmentManager = getFragmentManager();
+            FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             callFragment = CallFragment.newInstance(CallFragment.ACTION_GET_CALL, confId);
             fragmentTransaction.replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit();
@@ -112,7 +112,7 @@ public class CallActivity extends AppCompatActivity {
 
     @Override
     public void onUserLeaveHint () {
-        Fragment fragment = getFragmentManager().findFragmentByTag(CALL_FRAGMENT_TAG);
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(CALL_FRAGMENT_TAG);
         if (fragment instanceof CallView) {
             CallView callFragment = (CallView) fragment;
             callFragment.onUserLeave();
@@ -171,7 +171,7 @@ public class CallActivity extends AppCompatActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        Fragment fragment = getFragmentManager().findFragmentByTag(CALL_FRAGMENT_TAG);
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(CALL_FRAGMENT_TAG);
         if (fragment instanceof CallFragment) {
             CallFragment callFragment = (CallFragment) fragment;
 

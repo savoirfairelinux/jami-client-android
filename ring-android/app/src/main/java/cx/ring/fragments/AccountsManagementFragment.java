@@ -46,10 +46,10 @@ import cx.ring.application.RingApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.Account;
-import cx.ring.mvp.BaseFragment;
+import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.utils.ContentUriHandler;
 
-public class AccountsManagementFragment extends BaseFragment<AccountsManagementPresenter> implements AccountsManagementView,
+public class AccountsManagementFragment extends BaseSupportFragment<AccountsManagementPresenter> implements AccountsManagementView,
         AccountsAdapter.AccountListeners {
     public static final int ACCOUNT_CREATE_REQUEST = 1;
     public static final int ACCOUNT_EDIT_REQUEST = 2;

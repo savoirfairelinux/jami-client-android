@@ -27,9 +27,6 @@ import android.view.View;
 import javax.inject.Inject;
 
 public abstract class BasePreferenceFragment<T extends RootPresenter> extends PreferenceFragmentCompat {
-
-    protected static final String TAG = BaseFragment.class.getSimpleName();
-
     @Inject
     protected T presenter;
 

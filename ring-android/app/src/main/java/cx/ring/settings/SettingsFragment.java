@@ -45,13 +45,13 @@ import cx.ring.application.RingApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.Settings;
-import cx.ring.mvp.BaseFragment;
+import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.mvp.GenericView;
 
 /**
  * TODO: improvements : handle multiples permissions for feature.
  */
-public class SettingsFragment extends BaseFragment<SettingsPresenter> implements GenericView<Settings> {
+public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> implements GenericView<Settings> {
 
     @BindView(R.id.settings_mobile_data)
     Switch mViewMobileData;
