@@ -20,44 +20,47 @@
  */
 package cx.ring.tv.call;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Matrix;
 import android.graphics.PixelFormat;
+import android.graphics.RectF;
+import android.graphics.SurfaceTexture;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import android.util.DisplayMetrics;
+
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Surface;
 import android.view.SurfaceHolder;
-import android.view.SurfaceView;
+import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.AnimationSet;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.rodolfonavalon.shaperipplelibrary.ShapeRipple;
 import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 
 import java.util.Locale;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import cx.ring.R;
+import cx.ring.application.RingApplication;
 import cx.ring.call.CallPresenter;
 import cx.ring.call.CallView;
+import cx.ring.databinding.TvFragCallBinding;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.fragments.CallFragment;
 import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
 import cx.ring.mvp.BaseFragment;
-import cx.ring.services.HardwareServiceImpl;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -74,43 +77,13 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     public static final String KEY_CONTACT_RING_ID = "CONTACT_RING_ID";
     public static final String KEY_AUDIO_ONLY = "AUDIO_ONLY";
 
-    @BindView(R.id.contact_bubble_layout)
-    protected View contactBubbleLayout;
-
-    @BindView(R.id.contact_bubble)
-    protected ImageView contactBubbleView;
-
-    @BindView(R.id.contact_bubble_txt)
-    protected TextView contactBubbleTxt;
-
-    @BindView(R.id.contact_bubble_num_txt)
-    protected TextView contactBubbleNumTxt;
-
-    @BindView(R.id.call_accept_btn)
-    protected View acceptButton;
-
-    @BindView(R.id.call_refuse_btn)
-    protected View refuseButton;
-
-    @BindView(R.id.call_hangup_btn)
-    protected View hangupButton;
-
-    @BindView(R.id.call_status_txt)
-    protected TextView mCallStatusTxt;
-
-    @BindView(R.id.shape_ripple)
-    protected ShapeRipple shapeRipple = null;
-
-    @BindView(R.id.video_surface)
-    protected SurfaceView mVideoSurface = null;
-
-    @BindView(R.id.preview_surface)
-    protected SurfaceView mVideoPreview = null;
+    private TvFragCallBinding binding;
 
     // Screen wake lock for incoming call
     private PowerManager.WakeLock mScreenWakeLock;
     private Runnable runnable;
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
+    private int mPreviewWidth = 720, mPreviewHeight = 1280;
 
     public static TVCallFragment newInstance(@NonNull String action, @Nullable String accountID, @Nullable String contactRingId, boolean audioOnly) {
         Bundle bundle = new Bundle();
@@ -158,6 +131,38 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
         component.inject(this);
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        injectFragment(((RingApplication) getActivity().getApplication()).getRingInjectionComponent());
+        binding = TvFragCallBinding.inflate(inflater, container, false);
+        binding.setPresenter(this);
+        return binding.getRoot();
+    }
+
+    private TextureView.SurfaceTextureListener listener = new TextureView.SurfaceTextureListener() {
+        @Override
+        public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+            configureTransform(width, height);
+            presenter.previewVideoSurfaceCreated(binding.previewSurface);
+        }
+
+        @Override
+        public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+            configureTransform(width, height);
+        }
+
+        @Override
+        public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
+            presenter.previewVideoSurfaceDestroyed();
+            return true;
+        }
+
+        @Override
+        public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+        }
+    };
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -170,8 +175,8 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
             mScreenWakeLock.acquire();
         }
 
-        mVideoSurface.getHolder().setFormat(PixelFormat.RGBA_8888);
-        mVideoSurface.getHolder().addCallback(new SurfaceHolder.Callback() {
+        binding.videoSurface.getHolder().setFormat(PixelFormat.RGBA_8888);
+        binding.videoSurface.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
                 presenter.videoSurfaceCreated(holder);
@@ -188,27 +193,8 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
             }
         });
 
-        mVideoPreview.getHolder().setFormat(PixelFormat.RGBA_8888);
-        mVideoPreview.getHolder().addCallback(new SurfaceHolder.Callback() {
-            @Override
-            public void surfaceCreated(SurfaceHolder holder) {
-                presenter.previewVideoSurfaceCreated(holder);
-            }
-
-            @Override
-            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
-            }
-
-            @Override
-            public void surfaceDestroyed(SurfaceHolder holder) {
-                presenter.previewVideoSurfaceDestroyed();
-            }
-        });
-        mVideoPreview.setZOrderMediaOverlay(true);
-
-        shapeRipple.setRippleShape(new Circle());
-
+        binding.previewSurface.setSurfaceTextureListener(listener);
+        binding.shapeRipple.setRippleShape(new Circle());
         runnable = () -> presenter.uiVisibilityChanged(false);
     }
 
@@ -240,34 +226,32 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
 
     @Override
     public void displayContactBubble(final boolean display) {
-        contactBubbleLayout.setVisibility(display ? View.VISIBLE : View.GONE);
+        binding.contactBubbleLayout.setVisibility(display ? View.VISIBLE : View.GONE);
     }
 
     @Override
     public void displayVideoSurface(final boolean display) {
-        getActivity().runOnUiThread(() -> {
-            mVideoSurface.setVisibility(display ? View.VISIBLE : View.GONE);
-            mVideoPreview.setVisibility(display ? View.VISIBLE : View.GONE);
-        });
+        binding.videoSurface.setVisibility(display ? View.VISIBLE : View.GONE);
+        //mVideoPreview.setVisibility(display ? View.VISIBLE : View.GONE);
     }
 
     @Override
     public void displayPreviewSurface(boolean display) {
         if (display) {
-            mVideoSurface.setZOrderOnTop(false);
-            mVideoPreview.setZOrderMediaOverlay(true);
-            mVideoSurface.setZOrderMediaOverlay(false);
+            binding.videoSurface.setZOrderOnTop(false);
+            //mVideoPreview.setZOrderMediaOverlay(true);
+            binding.videoSurface.setZOrderMediaOverlay(false);
         } else {
-            mVideoPreview.setZOrderMediaOverlay(false);
-            mVideoSurface.setZOrderMediaOverlay(true);
-            mVideoSurface.setZOrderOnTop(true);
+            binding.videoSurface.setZOrderMediaOverlay(false);
+            //mVideoSurface.setZOrderMediaOverlay(true);
+            //mVideoSurface.setZOrderOnTop(true);
         }
     }
 
     @Override
     public void displayHangupButton(boolean display) {
         if (display) {
-            hangupButton.setVisibility(View.VISIBLE);
+            binding.callHangupBtn.setVisibility(View.VISIBLE);
         } else {
             AlphaAnimation fadeOutAnimation = new AlphaAnimation(1, 0);
             fadeOutAnimation.setInterpolator(new AccelerateInterpolator());
@@ -276,9 +260,8 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
 
             AnimationSet animationSet = new AnimationSet(false);
             animationSet.addAnimation(fadeOutAnimation);
-            hangupButton.setAnimation(animationSet);
-
-            hangupButton.setVisibility(View.GONE);
+            binding.callHangupBtn.setAnimation(animationSet);
+            binding.callHangupBtn.setVisibility(View.GONE);
         }
     }
 
@@ -303,8 +286,8 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
 
     @Override
     public void updateTime(final long duration) {
-        if (mCallStatusTxt != null)
-            mCallStatusTxt.setText(String.format(Locale.getDefault(), "%d:%02d:%02d", duration / 3600, duration % 3600 / 60, duration % 60));
+        if (binding.callStatusTxt != null)
+            binding.callStatusTxt.setText(String.format(Locale.getDefault(), "%d:%02d:%02d", duration / 3600, duration % 3600 / 60, duration % 60));
     }
 
     @Override
@@ -317,27 +300,26 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
         boolean hasProfileName = displayName != null && !displayName.contentEquals(username);
 
         if (hasProfileName) {
-            contactBubbleNumTxt.setVisibility(View.VISIBLE);
-            contactBubbleTxt.setText(displayName);
-            contactBubbleNumTxt.setText(username);
+            binding.contactBubbleNumTxt.setVisibility(View.VISIBLE);
+            binding.contactBubbleTxt.setText(displayName);
+            binding.contactBubbleNumTxt.setText(username);
         } else {
-            contactBubbleNumTxt.setVisibility(View.GONE);
-            contactBubbleTxt.setText(username);
+            binding.contactBubbleNumTxt.setVisibility(View.GONE);
+            binding.contactBubbleTxt.setText(username);
         }
-
-        contactBubbleView.setImageDrawable(new AvatarDrawable(getActivity(), contact));
+        binding.contactBubble.setImageDrawable(new AvatarDrawable(getActivity(), contact));
     }
 
     @Override
     public void updateCallStatus(final SipCall.State callState) {
-            switch (callState) {
-                case NONE:
-                    mCallStatusTxt.setText("");
-                    break;
-                default:
-                    mCallStatusTxt.setText(CallFragment.callStateToHumanState(callState));
-                    break;
-            }
+        switch (callState) {
+            case NONE:
+                binding.callStatusTxt.setText("");
+                break;
+            default:
+                binding.callStatusTxt.setText(CallFragment.callStateToHumanState(callState));
+                break;
+        }
     }
 
     @Override
@@ -347,13 +329,13 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
 
     @Override
     public void initNormalStateDisplay(final boolean audioOnly, boolean isSpeakerphoneOn) {
-        shapeRipple.stopRipple();
+        binding.shapeRipple.stopRipple();
 
-        acceptButton.setVisibility(View.GONE);
-        refuseButton.setVisibility(View.GONE);
-        hangupButton.setVisibility(View.VISIBLE);
+        binding.callAcceptBtn.setVisibility(View.GONE);
+        binding.callRefuseBtn.setVisibility(View.GONE);
+        binding.callHangupBtn.setVisibility(View.VISIBLE);
 
-        contactBubbleLayout.setVisibility(audioOnly ? View.INVISIBLE : View.VISIBLE);
+        binding.contactBubbleLayout.setVisibility(audioOnly ? View.INVISIBLE : View.VISIBLE);
 
         getActivity().invalidateOptionsMenu();
 
@@ -362,44 +344,49 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
 
     @Override
     public void initIncomingCallDisplay() {
-        acceptButton.setVisibility(View.VISIBLE);
-        refuseButton.setVisibility(View.VISIBLE);
-        hangupButton.setVisibility(View.GONE);
+        binding.callAcceptBtn.setVisibility(View.VISIBLE);
+        binding.callRefuseBtn.setVisibility(View.VISIBLE);
+        binding.callHangupBtn.setVisibility(View.GONE);
     }
 
     @Override
     public void initOutGoingCallDisplay() {
-        acceptButton.setVisibility(View.GONE);
-        refuseButton.setVisibility(View.VISIBLE);
-        hangupButton.setVisibility(View.GONE);
+        binding.callAcceptBtn.setVisibility(View.GONE);
+        binding.callRefuseBtn.setVisibility(View.VISIBLE);
+        binding.callHangupBtn.setVisibility(View.GONE);
     }
 
     @Override
     public void resetVideoSize(final int videoWidth, final int videoHeight, final int previewWidth, final int previewHeight) {
-        getActivity().runOnUiThread(() -> {
-            ViewGroup rootView = (ViewGroup) getView();
-            if (rootView == null)
-                return;
+        ViewGroup rootView = (ViewGroup) getView();
+        if (rootView == null)
+            return;
 
-            double videoRatio = videoWidth / (double) videoHeight;
-            double screenRatio = getView().getWidth() / (double) getView().getHeight();
+        double videoRatio = videoWidth / (double) videoHeight;
+        double screenRatio = getView().getWidth() / (double) getView().getHeight();
 
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mVideoSurface.getLayoutParams();
-            int oldW = params.width;
-            int oldH = params.height;
-            if (videoRatio >= screenRatio) {
-                params.width = RelativeLayout.LayoutParams.MATCH_PARENT;
-                params.height = (int) (videoHeight * (double) rootView.getWidth() / (double) videoWidth);
-            } else {
-                params.height = RelativeLayout.LayoutParams.MATCH_PARENT;
-                params.width = (int) (videoWidth * (double) rootView.getHeight() / (double) videoHeight);
-            }
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.videoSurface.getLayoutParams();
+        int oldW = params.width;
+        int oldH = params.height;
+        if (videoRatio >= screenRatio) {
+            params.width = RelativeLayout.LayoutParams.MATCH_PARENT;
+            params.height = (int) (videoHeight * (double) rootView.getWidth() / (double) videoWidth);
+        } else {
+            params.height = RelativeLayout.LayoutParams.MATCH_PARENT;
+            params.width = (int) (videoWidth * (double) rootView.getHeight() / (double) videoHeight);
+        }
 
-            if (oldW != params.width || oldH != params.height) {
-                mVideoSurface.setLayoutParams(params);
-            }
+        if (oldW != params.width || oldH != params.height) {
+            binding.videoSurface.setLayoutParams(params);
+        }
 
-            final int mPreviewWidth = HardwareServiceImpl.VIDEO_WIDTH;
+        if (previewWidth == -1 && previewHeight == -1)
+            return;
+        mPreviewWidth = previewWidth;
+        mPreviewHeight = previewHeight;
+
+/*
+        final int mPreviewWidth = HardwareServiceImpl.VIDEO_WIDTH;
             final int mPreviewHeight = HardwareServiceImpl.VIDEO_HEIGHT;
 
             DisplayMetrics metrics = getResources().getDisplayMetrics();
@@ -412,8 +399,34 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
             paramsPreview.height = (int) (mPreviewHeight * previewRatio);
             if (oldW != paramsPreview.width || oldH != paramsPreview.height) {
                 mVideoPreview.setLayoutParams(paramsPreview);
-            }
-        });
+            }*/
+    }
+
+    private void configureTransform(int viewWidth, int viewHeight) {
+        Activity activity = getActivity();
+        if (null == binding.previewSurface || null == activity) {
+            return;
+        }
+        int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+        boolean rot = Surface.ROTATION_90 == rotation || Surface.ROTATION_270 == rotation;
+        cx.ring.utils.Log.w(TAG, "configureTransform " + viewWidth + "x" + viewHeight + " rot=" + rot + " mPreviewWidth=" + mPreviewWidth + " mPreviewHeight=" + mPreviewHeight);
+        Matrix matrix = new Matrix();
+        RectF viewRect = new RectF(0, 0, viewWidth, viewHeight);
+        float centerX = viewRect.centerX();
+        float centerY = viewRect.centerY();
+        if (rot) {
+            RectF bufferRect = new RectF(0, 0, mPreviewHeight, mPreviewWidth);
+            bufferRect.offset(centerX - bufferRect.centerX(), centerY - bufferRect.centerY());
+            matrix.setRectToRect(viewRect, bufferRect, Matrix.ScaleToFit.FILL);
+            float scale = Math.max(
+                    (float) viewHeight / mPreviewHeight,
+                    (float) viewWidth / mPreviewWidth);
+            matrix.postScale(scale, scale, centerX, centerY);
+            matrix.postRotate(90 * (rotation - 2), centerX, centerY);
+        } else if (Surface.ROTATION_180 == rotation) {
+            matrix.postRotate(180, centerX, centerY);
+        }
+        binding.previewSurface.setTransform(matrix);
     }
 
     @Override
@@ -424,6 +437,18 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     @Override
     public void goToAddContact(CallContact callContact) {
 
+    }
+
+    public void hangUpClicked() {
+        presenter.hangupCall();
+    }
+
+    public void refuseClicked() {
+        presenter.refuseCall();
+    }
+
+    public void acceptClicked() {
+        presenter.acceptCall();
     }
 
     @Override
@@ -441,21 +466,6 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             getActivity().enterPictureInPictureMode();
         }
-    }
-
-    @OnClick({R.id.call_hangup_btn})
-    public void hangUpClicked() {
-        presenter.hangupCall();
-    }
-
-    @OnClick(R.id.call_refuse_btn)
-    public void refuseClicked() {
-        presenter.refuseCall();
-    }
-
-    @OnClick(R.id.call_accept_btn)
-    public void acceptClicked() {
-        presenter.acceptCall();
     }
 
     public void onKeyDown() {
