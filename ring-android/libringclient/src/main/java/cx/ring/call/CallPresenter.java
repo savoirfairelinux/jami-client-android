@@ -163,6 +163,9 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void screenRotationClick() {
+        //getView().resetVideoSize(videoWidth, videoHeight, previewHeight, previewWidth);
+        mHardwareService.stopCapture();
+
         getView().changeScreenRotation();
     }
 
@@ -229,7 +232,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void layoutChanged() {
-        getView().resetVideoSize(videoWidth, videoHeight, previewWidth, previewHeight);
+        //getView().resetVideoSize(videoWidth, videoHeight, previewWidth, previewHeight);
     }
 
     public void uiVisibilityChanged(boolean displayed) {
@@ -321,7 +324,9 @@ public class CallPresenter extends RootPresenter<CallView> {
                 previewHeight = event.h;
             }
         }
-        getView().resetVideoSize(videoWidth, videoHeight, previewWidth, previewHeight);
+        if (event.started || event.start) {
+            getView().resetVideoSize(videoWidth, videoHeight, previewWidth, previewHeight);
+        }
     }
 
     public void positiveButtonClicked() {

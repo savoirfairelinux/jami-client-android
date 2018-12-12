@@ -66,7 +66,7 @@ class CameraServiceKitKat extends CameraService {
     }
 
     @Override
-    public void openCamera(Context c, VideoParams videoParams, SurfaceHolder surface, CameraListener listener) {
+    public void openCamera(Context c, VideoParams videoParams, Object surface, CameraListener listener) {
         final Camera preview;
         try {
             if (previewCamera != null) {
@@ -82,7 +82,7 @@ class CameraServiceKitKat extends CameraService {
         }
 
         try {
-            preview.setPreviewDisplay(surface);
+            preview.setPreviewDisplay((SurfaceHolder) surface);
         } catch (IOException e) {
             Log.e(TAG, "setPreviewDisplay: " + e.getMessage());
             return;
