@@ -16,165 +16,177 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clipChildren="false"
-    android:clipToPadding="false"
-    android:keepScreenOn="true"
-    tools:context=".tv.call.TVCallActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <SurfaceView
-        android:id="@+id/video_surface"
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        tools:visibility="visible" />
+    <data>
+        <variable
+            name="presenter"
+            type="cx.ring.tv.call.TVCallFragment" />
+    </data>
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="12dp"
-        app:cardCornerRadius="16dp"
-        app:cardPreventCornerOverlap="false">
-
-        <cx.ring.views.AutoFitTextureView
-            android:id="@+id/preview_surface"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="visible"
-            tools:visibility="visible" />
-    </androidx.cardview.widget.CardView>
-
-    <LinearLayout
-        android:id="@+id/contact_bubble_layout"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="16dp"
-        android:orientation="horizontal"
-        android:weightSum="100">
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:keepScreenOn="true"
+        tools:context=".tv.call.TVCallActivity">
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="50">
+        <SurfaceView
+            android:id="@+id/video_surface"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
-            <com.rodolfonavalon.shaperipplelibrary.ShapeRipple
-                android:id="@+id/shape_ripple"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="40dp"
-                app:enable_color_transition="true"
-                app:ripple_color="@color/white"
-                app:ripple_count="3"
-                app:ripple_duration="5000"
-                app:ripple_stroke_width="15dp" />
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="12dp"
+            app:cardCornerRadius="16dp"
+            app:cardPreventCornerOverlap="false">
 
-            <ImageView
-                android:id="@+id/contact_bubble"
-                android:layout_width="160dp"
-                android:layout_height="160dp"
-                android:layout_centerInParent="true"
-                tools:src="@drawable/ic_contact_picture_fallback" />
-        </RelativeLayout>
+            <cx.ring.views.AutoFitTextureView
+                android:id="@+id/preview_surface"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                tools:visibility="visible" />
+        </androidx.cardview.widget.CardView>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:id="@+id/contact_bubble_layout"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:layout_weight="50"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal"
+            android:weightSum="100">
 
-            <TextView
-                android:id="@+id/contact_bubble_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:ellipsize="middle"
-                android:singleLine="true"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/text_color_primary_dark"
-                android:transitionName="shared_element"
-                tools:text="Contact Name" />
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="50">
 
-            <TextView
-                android:id="@+id/contact_bubble_num_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:ellipsize="middle"
-                android:paddingEnd="32dp"
-                android:paddingStart="32dp"
-                android:singleLine="true"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/text_color_secondary_dark"
-                tools:text="ring:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
+                <com.rodolfonavalon.shaperipplelibrary.ShapeRipple
+                    android:id="@+id/shape_ripple"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="40dp"
+                    app:enable_color_transition="true"
+                    app:ripple_color="@color/white"
+                    app:ripple_count="3"
+                    app:ripple_duration="5000"
+                    app:ripple_stroke_width="15dp" />
 
-            <TextView
-                android:id="@+id/call_status_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/text_color_primary_dark"
-                android:textSize="16sp"
-                tools:text="Connecting" />
+                <ImageView
+                    android:id="@+id/contact_bubble"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_centerInParent="true"
+                    tools:src="@drawable/ic_contact_picture_fallback" />
+            </RelativeLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="12dp"
-                android:orientation="horizontal">
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="50"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:gravity="center"
+                android:orientation="vertical">
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/call_refuse_btn"
+                <TextView
+                    android:id="@+id/contact_bubble_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:contentDescription="@string/action_call_decline"
-                    app:backgroundTint="@color/error_red"
-                    app:elevation="6dp"
-                    app:pressedTranslationZ="12dp"
-                    app:rippleColor="@android:color/white"
-                    app:srcCompat="@drawable/ic_call_end_white"
-                    app:useCompatPadding="true" />
+                    android:layout_gravity="center_horizontal"
+                    android:ellipsize="middle"
+                    android:singleLine="true"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/text_color_primary_dark"
+                    android:transitionName="shared_element"
+                    tools:text="Contact Name" />
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/call_accept_btn"
+                <TextView
+                    android:id="@+id/contact_bubble_num_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:contentDescription="@string/action_call_accept"
-                    app:backgroundTint="#4caf50"
-                    app:elevation="6dp"
-                    app:pressedTranslationZ="12dp"
-                    app:rippleColor="@android:color/white"
-                    app:srcCompat="@drawable/ic_call_white"
-                    app:useCompatPadding="true" />
+                    android:layout_gravity="center_horizontal"
+                    android:ellipsize="middle"
+                    android:paddingStart="32dp"
+                    android:paddingEnd="32dp"
+                    android:singleLine="true"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/text_color_secondary_dark"
+                    tools:text="ring:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
 
+                <TextView
+                    android:id="@+id/call_status_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/text_color_primary_dark"
+                    android:textSize="16sp"
+                    tools:text="Connecting" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/call_refuse_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:contentDescription="@string/action_call_decline"
+                        android:onClick="@{() -> presenter.refuseClicked()}"
+                        app:backgroundTint="@color/error_red"
+                        app:elevation="6dp"
+                        app:pressedTranslationZ="12dp"
+                        app:rippleColor="@android:color/white"
+                        app:srcCompat="@drawable/ic_call_end_white"
+                        app:useCompatPadding="true" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/call_accept_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:contentDescription="@string/action_call_accept"
+                        android:onClick="@{() -> presenter.acceptClicked()}"
+                        app:backgroundTint="#4caf50"
+                        app:elevation="6dp"
+                        app:pressedTranslationZ="12dp"
+                        app:rippleColor="@android:color/white"
+                        app:srcCompat="@drawable/ic_call_white"
+                        app:useCompatPadding="true" />
+
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/call_hangup_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="16dp"
-        android:layout_marginBottom="48dp"
-        app:backgroundTint="@color/error_red"
-        app:rippleColor="@android:color/white"
-        app:srcCompat="@drawable/ic_call_end_white"
-        app:useCompatPadding="true" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/call_hangup_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="16dp"
+            android:layout_marginBottom="48dp"
+            android:onClick="@{() -> presenter.hangUpClicked()}"
+            app:backgroundTint="@color/error_red"
+            app:rippleColor="@android:color/white"
+            app:srcCompat="@drawable/ic_call_end_white"
+            app:useCompatPadding="true" />
 
-</RelativeLayout>
+    </RelativeLayout>
+</layout>

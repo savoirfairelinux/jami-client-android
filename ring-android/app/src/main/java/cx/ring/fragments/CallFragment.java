@@ -37,6 +37,7 @@ import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -249,34 +250,26 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
         return binding.getRoot();
     }
 
-
     private TextureView.SurfaceTextureListener listener = new TextureView.SurfaceTextureListener() {
         @Override
         public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-            //Log.w(TAG, "onSurfaceTextureAvailable " + width + "x" + height);
-            //mPreviewWidth = 720;
-            //mPreviewHeight = 1280;
-            //binding.previewSurface.setAspectRatio(720, 1280);
             configureTransform(width, height);
             presenter.previewVideoSurfaceCreated(binding.previewSurface);
         }
 
         @Override
         public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
-            //Log.w(TAG, "onSurfaceTextureSizeChanged " + width + "x" + height);
             configureTransform(width, height);
         }
 
         @Override
         public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
-            //Log.w(TAG, "onSurfaceTextureDestroyed");
             presenter.previewVideoSurfaceDestroyed();
             return true;
         }
 
         @Override
         public void onSurfaceTextureUpdated(SurfaceTexture surface) {
-            //Log.w(TAG, "onSurfaceTextureUpdated");
         }
     };
 
@@ -310,7 +303,6 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
                 presenter.videoSurfaceDestroyed();
             }
         });
-        //view.addOnLayoutChangeListener((parent, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> presenter.layoutChanged());
         view.setOnSystemUiVisibilityChangeListener(visibility -> {
             boolean ui = (visibility & (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN)) == 0;
             presenter.uiVisibilityChanged(ui);
@@ -322,7 +314,8 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
         binding.dialpadEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -330,7 +323,8 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
     }
 
@@ -412,9 +406,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
     @Override
     public void displayVideoSurface(final boolean display) {
-        Log.w(TAG, "displayVideoSurface " + display);
         binding.videoSurface.setVisibility(display ? View.VISIBLE : View.GONE);
-        //binding.previewSurface.setVisibility(display ? View.VISIBLE : View.GONE);
         updateMenu();
     }
 
@@ -454,7 +446,6 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
     @Override
     public void changeScreenRotation() {
-        //binding.previewSurface.setAspectRatio(0, 0);
         if (mCurrentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
             getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         } else {
@@ -507,16 +498,14 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
     @Override
     public void updateCallStatus(final SipCall.State callState) {
-        getActivity().runOnUiThread(() -> {
-            switch (callState) {
-                case NONE:
-                    binding.callStatusTxt.setText("");
-                    break;
-                default:
-                    binding.callStatusTxt.setText(callStateToHumanState(callState));
-                    break;
-            }
-        });
+        switch (callState) {
+            case NONE:
+                binding.callStatusTxt.setText("");
+                break;
+            default:
+                binding.callStatusTxt.setText(callStateToHumanState(callState));
+                break;
+        }
     }
 
     @Override
@@ -597,62 +586,16 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
             return;
         mPreviewWidth = previewWidth;
         mPreviewHeight = previewHeight;
-
-        /*
-        ViewGroup.LayoutParams paramsPreview = binding.previewSurface.getLayoutParams();
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
-
-        oldW = paramsPreview.width;
-        oldH = paramsPreview.height;
-        double previewMaxDim = Math.max(previewWidth, previewHeight);
-        double previewRatio = metrics.density * 160. / previewMaxDim;
-        paramsPreview.width = (int) (previewWidth * previewRatio);
-        paramsPreview.height = (int) (previewHeight * previewRatio);
-
-        if (oldW != paramsPreview.width || oldH != paramsPreview.height) {
-            Log.w(TAG, "mVideoPreview.setLayoutParams: " + paramsPreview.width + "x" + paramsPreview.height + " was: " + oldW + "x"+oldH);
-            binding.previewSurface.setLayoutParams(paramsPreview);
-        }*/
-        Log.w(TAG, "resetVideoSize preview: " + previewWidth + "x" + previewHeight);
-        //binding.previewSurface.setAspectRatio(previewWidth, previewHeight);
-        //configureTransform(binding.previewSurface.getWidth(),  binding.previewSurface.getHeight());
-
-        //binding.previewSurface.se
-        //binding.previewSurface.setLayoutParams(new FrameLayout.LayoutParams(viewWidth, viewHeight));
-
-        /*final int mPreviewWidth;
-        final int mPreviewHeight;
-
-        if (mCurrentOrientation == Configuration.ORIENTATION_PORTRAIT) {
-            mPreviewWidth = HardwareServiceImpl.VIDEO_HEIGHT;
-            mPreviewHeight = HardwareServiceImpl.VIDEO_WIDTH;
-        } else {
-            mPreviewWidth = HardwareServiceImpl.VIDEO_WIDTH;
-            mPreviewHeight = HardwareServiceImpl.VIDEO_HEIGHT;
-        }
-
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
-        RelativeLayout.LayoutParams paramsPreview = (RelativeLayout.LayoutParams) mVideoPreview.getLayoutParams();
-        oldW = paramsPreview.width;
-        oldH = paramsPreview.height;
-        double previewMaxDim = Math.max(mPreviewWidth, mPreviewHeight);
-        double previewRatio = metrics.density * 160. / previewMaxDim;
-        paramsPreview.width = (int) (mPreviewWidth * previewRatio);
-        paramsPreview.height = (int) (mPreviewHeight * previewRatio);
-
-        if (oldW != paramsPreview.width || oldH != paramsPreview.height) {
-            mVideoPreview.setLayoutParams(paramsPreview);
-        }*/
     }
 
     private void configureTransform(int viewWidth, int viewHeight) {
         Activity activity = getActivity();
-        if (null == binding.previewSurface|| null == activity) {
+        if (null == binding.previewSurface || null == activity) {
             return;
         }
         int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
         boolean rot = Surface.ROTATION_90 == rotation || Surface.ROTATION_270 == rotation;
-        Log.w(TAG, "configureTransform " + viewWidth + "x" + viewHeight + " rot="+rot + " mPreviewWidth="+mPreviewWidth + " mPreviewHeight="+mPreviewHeight);
+        Log.w(TAG, "configureTransform " + viewWidth + "x" + viewHeight + " rot=" + rot + " mPreviewWidth=" + mPreviewWidth + " mPreviewHeight=" + mPreviewHeight);
         Matrix matrix = new Matrix();
         RectF viewRect = new RectF(0, 0, viewWidth, viewHeight);
         float centerX = viewRect.centerX();
