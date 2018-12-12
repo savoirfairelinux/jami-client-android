@@ -29,25 +29,20 @@ public final class NetworkUtils {
      * Get the network info
      */
     public static NetworkInfo getNetworkInfo(Context context) {
+        if (context == null)
+            return null;
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (cm == null)
             return null;
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         if (activeNetwork != null && activeNetwork.isConnected())
             return activeNetwork;
-        else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+        else {
             for (Network n: cm.getAllNetworks()) {
                 NetworkInfo nInfo = cm.getNetworkInfo(n);
-                if(nInfo.isConnected())
+                if(nInfo != null && nInfo.isConnected())
                     return nInfo;
             }
-        } else {
-            NetworkInfo[] info = cm.getAllNetworkInfo();
-            if (info != null)
-                for (NetworkInfo anInfo : info)
-                    if (anInfo.getState() == NetworkInfo.State.CONNECTED) {
-                        return anInfo;
-                    }
         }
         return activeNetwork;
     }
