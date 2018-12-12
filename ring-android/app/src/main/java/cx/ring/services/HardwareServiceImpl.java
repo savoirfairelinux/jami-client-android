@@ -33,6 +33,7 @@ import android.os.Build;
 
 import androidx.annotation.Nullable;
 
+import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.WindowManager;
 
@@ -64,7 +65,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     public static final int VIDEO_HEIGHT = 480;
 
     private static final String TAG = HardwareServiceImpl.class.getName();
-    private static WeakReference<SurfaceHolder> mCameraPreviewSurface = new WeakReference<>(null);
+    private static WeakReference<Object> mCameraPreviewSurface = new WeakReference<>(null);
     private static final Map<String, WeakReference<SurfaceHolder>> videoSurfaces = Collections.synchronizedMap(new HashMap<String, WeakReference<SurfaceHolder>>());
     private final Map<String, Shm> videoInputs = new HashMap<>();
     private final Context mContext;
@@ -380,7 +381,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
             Log.w(TAG, "startCapture: no video parameters ");
             return;
         }
-        final SurfaceHolder surface = mCameraPreviewSurface.get();
+        final Object surface = mCameraPreviewSurface.get();
         if (surface == null) {
             Log.w(TAG, "Can't start capture: no surface registered.");
             cameraService.setPreviewParams(videoParams);
@@ -413,7 +414,6 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         event.w = s ? videoParams.height : videoParams.width;
         event.h = s ? videoParams.width : videoParams.height;
         videoEvents.onNext(event);
-
     }
 
     @Override
@@ -471,14 +471,15 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
 
     @Override
     public void addPreviewVideoSurface(Object oholder) {
-        if (!(oholder instanceof SurfaceHolder)) {
+        /*if (!(oholder instanceof SurfaceHolder)) {
             return;
         }
-        SurfaceHolder holder = (SurfaceHolder)oholder;
-        Log.w(TAG, "addPreviewVideoSurface " + holder.hashCode() + " mCapturingId " + mCapturingId);
-        if (mCameraPreviewSurface.get() == holder)
+        SurfaceHolder holder = (SurfaceHolder)oholder;*/
+        //Surface holder = (Surface) oholder;
+        Log.w(TAG, "addPreviewVideoSurface " + oholder.hashCode() + " mCapturingId " + mCapturingId);
+        if (mCameraPreviewSurface.get() == oholder)
             return;
-        mCameraPreviewSurface = new WeakReference<>(holder);
+        mCameraPreviewSurface = new WeakReference<>(oholder);
         if (mShouldCapture && !mIsCapturing) {
             startCapture(mCapturingId);
         }

@@ -20,8 +20,10 @@
 package cx.ring.services;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.ImageFormat;
 import android.graphics.Point;
+import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
@@ -48,6 +50,8 @@ import android.view.Surface;
 import android.view.SurfaceHolder;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -56,6 +60,7 @@ import cx.ring.daemon.IntVect;
 import cx.ring.daemon.RingserviceJNI;
 import cx.ring.daemon.UintVect;
 import cx.ring.utils.Log;
+import cx.ring.views.AutoFitTextureView;
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 class CameraServiceCamera2 extends CameraService {
@@ -200,10 +205,55 @@ class CameraServiceCamera2 extends CameraService {
         return new Pair<>(codec, encoderInput);
     }
 
-    @Override
-    public void openCamera(Context context, VideoParams videoParams, SurfaceHolder surface, CameraListener listener) {
-        Log.e(TAG, "openCamera " + videoParams.width + "x" + videoParams.height);
+    /**
+     * Compares two {@code Size}s based on their areas.
+     */
+    static class CompareSizesByArea implements Comparator<Size> {
 
+        @Override
+        public int compare(Size lhs, Size rhs) {
+            // We cast here to ensure the multiplications won't overflow
+            return Long.signum((long) lhs.getWidth() * lhs.getHeight() -
+                    (long) rhs.getWidth() * rhs.getHeight());
+        }
+
+    }
+
+    private static Size chooseOptimalSize(Size[] choices, int textureViewWidth,
+                                          int textureViewHeight, int maxWidth, int maxHeight, Size aspectRatio) {
+
+        // Collect the supported resolutions that are at least as big as the preview Surface
+        List<Size> bigEnough = new ArrayList<>();
+        // Collect the supported resolutions that are smaller than the preview Surface
+        List<Size> notBigEnough = new ArrayList<>();
+        int w = aspectRatio.getWidth();
+        int h = aspectRatio.getHeight();
+        for (Size option : choices) {
+            if (option.getWidth() <= maxWidth && option.getHeight() <= maxHeight &&
+                    option.getHeight() == option.getWidth() * h / w) {
+                if (option.getWidth() >= textureViewWidth &&
+                        option.getHeight() >= textureViewHeight) {
+                    bigEnough.add(option);
+                } else {
+                    notBigEnough.add(option);
+                }
+            }
+        }
+
+        // Pick the smallest of those big enough. If there is no one big enough, pick the
+        // largest of those not big enough.
+        if (bigEnough.size() > 0) {
+            return Collections.min(bigEnough, new CompareSizesByArea());
+        } else if (notBigEnough.size() > 0) {
+            return Collections.max(notBigEnough, new CompareSizesByArea());
+        } else {
+            android.util.Log.e(TAG, "Couldn't find any suitable preview size");
+            return choices[0];
+        }
+    }
+
+    @Override
+    public void openCamera(Context context, VideoParams videoParams, Object surface, CameraListener listener) {
         CameraDevice camera = previewCamera;
         if (camera != null) {
             camera.close();
@@ -220,14 +270,41 @@ class CameraServiceCamera2 extends CameraService {
             Size[] sizes = streamConfigs.getOutputSizes(SurfaceHolder.class);
             for (Size s : sizes)
                 Log.w(TAG, "supportedSize: " + s);
-
+            AutoFitTextureView view = (AutoFitTextureView) surface;
+            //view.getSurfaceTexture().
             boolean flip = videoParams.rotation % 180 != 0;
-            surface.setFixedSize(flip ? videoParams.height : videoParams.width, flip ? videoParams.width : videoParams.height);
-            Surface s = surface.getSurface();
+
+            Size previewSize = chooseOptimalSize(sizes,
+                    flip ? view.getHeight() : view.getWidth(), flip ? view.getWidth() : view.getHeight(),
+                    videoParams.width, videoParams.height,
+                    new Size(videoParams.width, videoParams.height));
+
+            //videoParams.
+            Log.e(TAG, "openCamera " + videoParams.width + "x" + videoParams.height + " flip:" + flip);
+            Log.e(TAG, "openCamera " + videoParams.rotWidth + "x" + videoParams.rotHeight);
+            Log.e(TAG, "openCamera view " + view.getWidth() + "x" + view.getHeight());
+            Log.e(TAG, "openCamera previewSize " + previewSize.getWidth() + "x" + previewSize.getHeight());
+
+            //view.setAspectRatio(flip ? videoParams.height : videoParams.width, flip ? videoParams.width : videoParams.height);
+            //view.setAspectRatio(videoParams.height, videoParams.width);
+            int orientation = context.getResources().getConfiguration().orientation;
+            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                view.setAspectRatio(
+                        previewSize.getWidth(), previewSize.getHeight());
+            } else {
+                view.setAspectRatio(
+                        previewSize.getHeight(), previewSize.getWidth());
+            }
+
+            SurfaceTexture texture = view.getSurfaceTexture();
+            //texture.setDefaultBufferSize(flip ? previewSize.getHeight() : previewSize.getWidth(), flip ? previewSize.getWidth() : previewSize.getHeight());
+
+            Surface s = new Surface(texture);
+            //s.setFixedSize(flip ? videoParams.height : videoParams.width, flip ? videoParams.width : videoParams.height);
 
             Pair<MediaCodec, Surface> codec = USE_HARDWARE_ENCODER ? openCameraWithEncoder(videoParams, MediaFormat.MIMETYPE_VIDEO_VP8) : null;
 
-            List<Surface> targets = new ArrayList<>(2);
+            final List<Surface> targets = new ArrayList<>(2);
             targets.add(s);
             ImageReader tmpReader = null;
             if (codec != null && codec.second != null) {
@@ -249,6 +326,7 @@ class CameraServiceCamera2 extends CameraService {
                     try {
                         Log.w(TAG, "onOpened");
                         previewCamera = camera;
+                        texture.setDefaultBufferSize(previewSize.getWidth(), previewSize.getHeight());
                         CaptureRequest.Builder builder = camera.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
                         builder.addTarget(s);
                         if (codec != null && codec.second != null) {
@@ -259,6 +337,7 @@ class CameraServiceCamera2 extends CameraService {
                         builder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_VIDEO);
                         builder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON);
                         builder.set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_AUTO);
+                        //builder.set(CaptureRequest.);
                         final CaptureRequest request = builder.build();
 
                         camera.createCaptureSession(targets, new CameraCaptureSession.StateCallback() {

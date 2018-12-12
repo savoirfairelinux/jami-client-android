@@ -46,15 +46,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:visibility="gone"
                 tools:visibility="visible" />
 
-            <SurfaceView
-                android:id="@+id/preview_surface"
-                android:layout_width="160dp"
-                android:layout_height="120dp"
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_margin="12dp"
-                android:visibility="gone"
-                tools:visibility="visible" />
+                app:cardCornerRadius="16dp"
+                app:cardPreventCornerOverlap="false">
+
+                <cx.ring.views.AutoFitTextureView
+                    android:id="@+id/preview_surface"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    tools:visibility="visible" />
+            </androidx.cardview.widget.CardView>
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -216,7 +224,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_height="wrap_content"
                     android:layout_margin="12dp"
                     android:background="@drawable/call_button_background"
-                    android:contentDescription="Mute microphone"
+                    android:contentDescription="@string/action_call_mic_mute"
                     android:onClick="@{() -> presenter.micClicked()}"
                     android:padding="16dp"
                     android:tint="@color/white"

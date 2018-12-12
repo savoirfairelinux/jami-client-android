@@ -20,6 +20,7 @@
  */
 package cx.ring.fragments;
 
+import android.app.Activity;
 import android.app.PendingIntent;
 import android.app.PictureInPictureParams;
 import android.app.RemoteAction;
@@ -27,8 +28,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.graphics.Matrix;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.SurfaceTexture;
 import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.os.Bundle;
@@ -44,10 +48,13 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.Surface;
 import android.view.SurfaceHolder;
+import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import com.rodolfonavalon.shaperipplelibrary.model.Circle;
@@ -100,6 +107,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     private boolean restartVideo = false;
     private PowerManager.WakeLock mScreenWakeLock;
     private int mCurrentOrientation = Configuration.ORIENTATION_UNDEFINED;
+    private int mPreviewWidth = 720, mPreviewHeight = 1280;
 
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
@@ -241,6 +249,37 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
         return binding.getRoot();
     }
 
+
+    private TextureView.SurfaceTextureListener listener = new TextureView.SurfaceTextureListener() {
+        @Override
+        public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+            //Log.w(TAG, "onSurfaceTextureAvailable " + width + "x" + height);
+            //mPreviewWidth = 720;
+            //mPreviewHeight = 1280;
+            //binding.previewSurface.setAspectRatio(720, 1280);
+            configureTransform(width, height);
+            presenter.previewVideoSurfaceCreated(binding.previewSurface);
+        }
+
+        @Override
+        public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+            //Log.w(TAG, "onSurfaceTextureSizeChanged " + width + "x" + height);
+            configureTransform(width, height);
+        }
+
+        @Override
+        public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
+            //Log.w(TAG, "onSurfaceTextureDestroyed");
+            presenter.previewVideoSurfaceDestroyed();
+            return true;
+        }
+
+        @Override
+        public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+            //Log.w(TAG, "onSurfaceTextureUpdated");
+        }
+    };
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
@@ -271,31 +310,15 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
                 presenter.videoSurfaceDestroyed();
             }
         });
-        view.addOnLayoutChangeListener((parent, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> presenter.layoutChanged());
+        //view.addOnLayoutChangeListener((parent, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> presenter.layoutChanged());
         view.setOnSystemUiVisibilityChangeListener(visibility -> {
             boolean ui = (visibility & (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN)) == 0;
             presenter.uiVisibilityChanged(ui);
         });
 
-        binding.previewSurface.getHolder().addCallback(new SurfaceHolder.Callback() {
-            @Override
-            public void surfaceCreated(SurfaceHolder holder) {
-                presenter.previewVideoSurfaceCreated(holder);
-            }
-
-            @Override
-            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
-            }
-
-            @Override
-            public void surfaceDestroyed(SurfaceHolder holder) {
-                presenter.previewVideoSurfaceDestroyed();
-            }
-        });
-        binding.previewSurface.setZOrderMediaOverlay(true);
         binding.shapeRipple.setRippleShape(new Circle());
         binding.callSpeakerBtn.setChecked(presenter.isSpeakerphoneOn());
+        binding.previewSurface.setSurfaceTextureListener(listener);
 
         binding.dialpadEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -389,8 +412,9 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
     @Override
     public void displayVideoSurface(final boolean display) {
+        Log.w(TAG, "displayVideoSurface " + display);
         binding.videoSurface.setVisibility(display ? View.VISIBLE : View.GONE);
-        binding.previewSurface.setVisibility(display ? View.VISIBLE : View.GONE);
+        //binding.previewSurface.setVisibility(display ? View.VISIBLE : View.GONE);
         updateMenu();
     }
 
@@ -398,10 +422,10 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     public void displayPreviewSurface(final boolean display) {
         if (display) {
             binding.videoSurface.setZOrderOnTop(false);
-            binding.previewSurface.setZOrderMediaOverlay(true);
+            //binding.previewSurface.setZOrderMediaOverlay(true);
             binding.videoSurface.setZOrderMediaOverlay(false);
         } else {
-            binding.previewSurface.setZOrderMediaOverlay(false);
+            //binding.previewSurface.setZOrderMediaOverlay(false);
             binding.videoSurface.setZOrderMediaOverlay(true);
             binding.videoSurface.setZOrderOnTop(true);
         }
@@ -430,6 +454,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
     @Override
     public void changeScreenRotation() {
+        //binding.previewSurface.setAspectRatio(0, 0);
         if (mCurrentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
             getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         } else {
@@ -570,7 +595,10 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
         if (previewWidth == -1 && previewHeight == -1)
             return;
-        Log.w(TAG, "resetVideoSize preview: " + previewWidth + "x" + previewHeight);
+        mPreviewWidth = previewWidth;
+        mPreviewHeight = previewHeight;
+
+        /*
         ViewGroup.LayoutParams paramsPreview = binding.previewSurface.getLayoutParams();
         DisplayMetrics metrics = getResources().getDisplayMetrics();
 
@@ -584,7 +612,13 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
         if (oldW != paramsPreview.width || oldH != paramsPreview.height) {
             Log.w(TAG, "mVideoPreview.setLayoutParams: " + paramsPreview.width + "x" + paramsPreview.height + " was: " + oldW + "x"+oldH);
             binding.previewSurface.setLayoutParams(paramsPreview);
-        }
+        }*/
+        Log.w(TAG, "resetVideoSize preview: " + previewWidth + "x" + previewHeight);
+        //binding.previewSurface.setAspectRatio(previewWidth, previewHeight);
+        //configureTransform(binding.previewSurface.getWidth(),  binding.previewSurface.getHeight());
+
+        //binding.previewSurface.se
+        //binding.previewSurface.setLayoutParams(new FrameLayout.LayoutParams(viewWidth, viewHeight));
 
         /*final int mPreviewWidth;
         final int mPreviewHeight;
@@ -609,6 +643,33 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
         if (oldW != paramsPreview.width || oldH != paramsPreview.height) {
             mVideoPreview.setLayoutParams(paramsPreview);
         }*/
+    }
+
+    private void configureTransform(int viewWidth, int viewHeight) {
+        Activity activity = getActivity();
+        if (null == binding.previewSurface|| null == activity) {
+            return;
+        }
+        int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+        boolean rot = Surface.ROTATION_90 == rotation || Surface.ROTATION_270 == rotation;
+        Log.w(TAG, "configureTransform " + viewWidth + "x" + viewHeight + " rot="+rot + " mPreviewWidth="+mPreviewWidth + " mPreviewHeight="+mPreviewHeight);
+        Matrix matrix = new Matrix();
+        RectF viewRect = new RectF(0, 0, viewWidth, viewHeight);
+        float centerX = viewRect.centerX();
+        float centerY = viewRect.centerY();
+        if (rot) {
+            RectF bufferRect = new RectF(0, 0, mPreviewHeight, mPreviewWidth);
+            bufferRect.offset(centerX - bufferRect.centerX(), centerY - bufferRect.centerY());
+            matrix.setRectToRect(viewRect, bufferRect, Matrix.ScaleToFit.FILL);
+            float scale = Math.max(
+                    (float) viewHeight / mPreviewHeight,
+                    (float) viewWidth / mPreviewWidth);
+            matrix.postScale(scale, scale, centerX, centerY);
+            matrix.postRotate(90 * (rotation - 2), centerX, centerY);
+        } else if (Surface.ROTATION_180 == rotation) {
+            matrix.postRotate(180, centerX, centerY);
+        }
+        binding.previewSurface.setTransform(matrix);
     }
 
     @Override
