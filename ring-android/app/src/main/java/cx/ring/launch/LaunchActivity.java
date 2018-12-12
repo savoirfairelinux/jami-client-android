@@ -26,7 +26,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AlertDialog;
-import android.util.Log;
 
 import cx.ring.R;
 import cx.ring.account.AccountWizardActivity;
@@ -69,7 +68,6 @@ public class LaunchActivity extends BaseActivity<LaunchPresenter> implements Lau
 
     @Override
     public void displayAudioPermissionDialog() {
-        Log.e(TAG, "Missing required permission RECORD_AUDIO");
         new AlertDialog.Builder(this)
                 .setTitle(R.string.start_error_title)
                 .setMessage(R.string.start_error_mic_required)

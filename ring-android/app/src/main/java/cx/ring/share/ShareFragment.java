@@ -36,11 +36,11 @@ import butterknife.OnClick;
 import cx.ring.R;
 import cx.ring.client.HomeActivity;
 import cx.ring.dependencyinjection.RingInjectionComponent;
-import cx.ring.mvp.BaseFragment;
+import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.mvp.GenericView;
 import cx.ring.utils.QRCodeUtils;
 
-public class ShareFragment extends BaseFragment<SharePresenter> implements GenericView<ShareViewModel> {
+public class ShareFragment extends BaseSupportFragment<SharePresenter> implements GenericView<ShareViewModel> {
 
     @BindView(R.id.share_instruction)
     protected TextView mShareInstruction;

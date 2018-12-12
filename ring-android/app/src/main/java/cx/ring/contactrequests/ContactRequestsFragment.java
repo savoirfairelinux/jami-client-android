@@ -38,12 +38,12 @@ import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.fragments.ConversationFragment;
-import cx.ring.mvp.BaseFragment;
+import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.DeviceUtils;
 import cx.ring.viewholders.SmartListViewHolder;
 
-public class ContactRequestsFragment extends BaseFragment<ContactRequestsPresenter> implements ContactRequestsView,
+public class ContactRequestsFragment extends BaseSupportFragment<ContactRequestsPresenter> implements ContactRequestsView,
         SmartListViewHolder.SmartListListeners {
 
     static final String TAG = ContactRequestsFragment.class.getSimpleName();
