@@ -40,6 +40,7 @@ import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.util.Log;
+import android.util.LruCache;
 import android.util.TypedValue;
 import android.view.ContextMenu;
 import android.view.Gravity;
@@ -63,6 +64,7 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import cx.ring.R;
 import cx.ring.client.MediaViewerActivity;
@@ -92,8 +94,8 @@ import static androidx.core.content.FileProvider.getUriForFile;
 public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHolder> {
     private final static String TAG = ConversationAdapter.class.getSimpleName();
 
-    private static final double MINUTE = 60L * 1000L;
-    private static final double HOUR = 3600L * 1000L;
+    private static final long MINUTE = 60L * 1000L;
+    private static final long HOUR = 60 * MINUTE;
 
     private final ArrayList<ConversationElement> mConversationElements = new ArrayList<>();
     private final ConversationPresenter presenter;
@@ -106,9 +108,12 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     private RecyclerViewContextMenuInfo mCurrentLongItem = null;
     private int convColor = 0;
 
-    public ConversationAdapter(ConversationFragment conversationFragment, ConversationPresenter presenter) {
+    private final Map<File, MediaPlayer> mediaCache;
+
+    public ConversationAdapter(ConversationFragment conversationFragment, ConversationPresenter presenter, Map<File, MediaPlayer> media) {
         this.conversationFragment = conversationFragment;
         this.presenter = presenter;
+        mediaCache = media;
         Context context = conversationFragment.getActivity();
         Resources res = context.getResources();
         hPadding = res.getDimensionPixelSize(R.dimen.padding_medium);
@@ -270,6 +275,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             holder.player.reset();
             holder.player.release();
             holder.player = null;
+            mediaCache.remove(holder.playerFile);
+            holder.playerFile = null;
         }
         super.onViewRecycled(holder);
     }
@@ -376,8 +383,20 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             return false;
         });
 
+        Context context = viewHolder.itemView.getContext();
+        if (type == MessageType.AUDIO || type == MessageType.VIDEO) {
+            File path = presenter.getDeviceRuntimeService().getConversationPath(file.getPeerId(), file.getStoragePath());
+            MediaPlayer player = mediaCache.get(path);
+            if (player == null) {
+                player = MediaPlayer.create(context, getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path));
+                mediaCache.put(path, player);
+            }
+            viewHolder.playerFile = path;
+            viewHolder.player = player;
+        }
+        final MediaPlayer player = viewHolder.player;
+
         if (type == MessageType.IMAGE) {
-            Context context = viewHolder.mPhoto.getContext();
             File path = presenter.getDeviceRuntimeService().getConversationPath(file.getPeerId(), file.getStoragePath());
 
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) viewHolder.mAnswerLayout.getLayoutParams();
@@ -398,8 +417,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                 Uri contentUri = getUriForFile(v.getContext(), ContentUriHandler.AUTHORITY_FILES, path);
                 Intent i = new Intent(context, MediaViewerActivity.class);
                 i.setAction(Intent.ACTION_VIEW).setDataAndType(contentUri, "image/*").setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                ActivityOptionsCompat options = ActivityOptionsCompat.
-                        makeSceneTransitionAnimation(conversationFragment.getActivity(), viewHolder.mPhoto, "picture");
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(conversationFragment.getActivity(), viewHolder.mPhoto, "picture");
                 conversationFragment.startActivityForResult(i, 3006, options.toBundle());
             });
             return;
@@ -408,16 +426,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             params.gravity = file.isOutgoing() ? Gravity.END : Gravity.START;
             viewHolder.mAnswerLayout.setLayoutParams(params);
 
-            Context context = viewHolder.itemView.getContext();
-            File path = presenter.getDeviceRuntimeService().getConversationPath(file.getPeerId(), file.getStoragePath());
-            if (viewHolder.player != null) {
-                viewHolder.player.release();
-            }
-            final MediaPlayer player =  MediaPlayer.create(context, getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path));
-            if (player == null)
-                return;
-            viewHolder.player = player;
-            final Drawable playBtn = ContextCompat.getDrawable(viewHolder.mLayout.getContext(), R.drawable.baseline_play_arrow_24).mutate();
+            final Drawable playBtn = ContextCompat.getDrawable(context, R.drawable.baseline_play_arrow_24).mutate();
             DrawableCompat.setTint(playBtn, Color.WHITE);
             ((CardView)viewHolder.mLayout).setForeground(playBtn);
             player.setOnCompletionListener(mp -> {
@@ -471,9 +480,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             player.seekTo(1);
             return;
         } else if (type == MessageType.AUDIO) {
-            Context context = viewHolder.itemView.getContext();
-            File path = presenter.getDeviceRuntimeService().getConversationPath(file.getPeerId(), file.getStoragePath());
-            final MediaPlayer player =  MediaPlayer.create(context, getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path));
+            //File path = presenter.getDeviceRuntimeService().getConversationPath(file.getPeerId(), file.getStoragePath());
+            //final MediaPlayer player =  MediaPlayer.create(context, getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path));
             viewHolder.player = player;
             player.setOnCompletionListener(mp -> {
                 player.seekTo(0);
@@ -521,21 +529,21 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                     conversationFragment.askWriteExternalStoragePermission();
                     return;
                 }
-                Context context = v.getContext();
+                Context c = v.getContext();
                 File cacheDir = context.getCacheDir();
                 long spaceLeft = AndroidFileUtils.getSpaceLeft(cacheDir.toString());
                 if (spaceLeft == -1L || file.getTotalSize() > spaceLeft) {
                     presenter.noSpaceLeft();
                     return;
                 }
-                context.startService(new Intent(DRingService.ACTION_FILE_ACCEPT)
-                        .setClass(context.getApplicationContext(), DRingService.class)
+                c.startService(new Intent(DRingService.ACTION_FILE_ACCEPT)
+                        .setClass(c.getApplicationContext(), DRingService.class)
                         .putExtra(DRingService.KEY_TRANSFER_ID, file.getDataTransferId()));
             });
             viewHolder.btnRefuse.setOnClickListener(v -> {
-                Context context = v.getContext();
-                context.startService(new Intent(DRingService.ACTION_FILE_CANCEL)
-                        .setClass(context.getApplicationContext(), DRingService.class)
+                Context c = v.getContext();
+                c.startService(new Intent(DRingService.ACTION_FILE_CANCEL)
+                        .setClass(c.getApplicationContext(), DRingService.class)
                         .putExtra(DRingService.KEY_TRANSFER_ID, file.getDataTransferId()));
             });
         } else {
@@ -693,13 +701,13 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
      */
     private String timestampToDetailString(Context context, long timestamp) {
         long now = new Date().getTime();
-        if (now - timestamp < MINUTE) {
+        long elapsed = now - timestamp;
+        if (elapsed < MINUTE) {
             return context.getString(R.string.time_just_now);
-        } else if (now - timestamp < HOUR) {
+        } else if (elapsed < HOUR) {
             return DateUtils.getRelativeTimeSpanString(timestamp, now, 0, 0).toString();
         } else {
-            return DateUtils.formatSameDayTime(timestamp, now, DateFormat.SHORT, DateFormat.SHORT)
-                    .toString();
+            return DateUtils.formatSameDayTime(timestamp, now, DateFormat.SHORT, DateFormat.SHORT).toString();
         }
     }
 

@@ -31,6 +31,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.io.File;
+
 import cx.ring.R;
 import cx.ring.adapters.ConversationAdapter;
 import cx.ring.utils.UiUpdater;
@@ -48,6 +50,7 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
     public ImageView icon;
     public ProgressBar progress;
     public MediaPlayer player;
+    public File playerFile;
     public TextureView video;
     public Surface surface = null;
     public long mCid = -1;

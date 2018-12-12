@@ -28,6 +28,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.provider.MediaStore;
 
@@ -43,6 +44,8 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.LruCache;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -55,7 +58,11 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.OnEditorAction;
 import cx.ring.BuildConfig;
@@ -124,6 +131,8 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
 
     private File mCurrentPhoto = null;
     private Disposable actionbarTarget = null;
+
+    private final Map<File, MediaPlayer> mediaCache = new HashMap<>();
 
     private static int getIndex(Spinner spinner, Uri myString) {
         for (int i = 0, n = spinner.getCount(); i < n; i++)
@@ -255,6 +264,13 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             mPreferences.unregisterOnSharedPreferenceChangeListener(this);
         animation.removeAllUpdateListeners();
         binding.histList.setAdapter(null);
+        for (MediaPlayer player : mediaCache.values()) {
+            if (player.isPlaying()) {
+                player.stop();
+            }
+            player.release();
+        }
+        mediaCache.clear();
         super.onDestroyView();
     }
 
@@ -512,7 +528,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             return;
         Uri contactUri = new Uri(args.getString(KEY_CONTACT_RING_ID));
         String accountId = args.getString(KEY_ACCOUNT_ID);
-        mAdapter = new ConversationAdapter(this, presenter);
+        mAdapter = new ConversationAdapter(this, presenter, mediaCache);
         presenter.init(contactUri, accountId);
         try {
             mPreferences = requireActivity().getSharedPreferences(accountId + "_" + contactUri.getRawRingId(), Context.MODE_PRIVATE);
