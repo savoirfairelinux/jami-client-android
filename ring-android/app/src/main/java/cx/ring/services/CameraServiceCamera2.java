@@ -267,11 +267,11 @@ class CameraServiceCamera2 extends CameraService {
         try {
             CameraCharacteristics cc = manager.getCameraCharacteristics(videoParams.id);
             StreamConfigurationMap streamConfigs = cc.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+            cc.get(CameraCharacteristics.CONTROL_AE_AVAILABLE_TARGET_FPS_RANGES);
             Size[] sizes = streamConfigs.getOutputSizes(SurfaceHolder.class);
             for (Size s : sizes)
                 Log.w(TAG, "supportedSize: " + s);
             AutoFitTextureView view = (AutoFitTextureView) surface;
-            //view.getSurfaceTexture().
             boolean flip = videoParams.rotation % 180 != 0;
 
             Size previewSize = chooseOptimalSize(sizes,
@@ -336,8 +336,8 @@ class CameraServiceCamera2 extends CameraService {
                         }
                         builder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_VIDEO);
                         builder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON);
+                        builder.set(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, new Range<>(0, 24));
                         builder.set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_AUTO);
-                        //builder.set(CaptureRequest.);
                         final CaptureRequest request = builder.build();
 
                         camera.createCaptureSession(targets, new CameraCaptureSession.StateCallback() {
