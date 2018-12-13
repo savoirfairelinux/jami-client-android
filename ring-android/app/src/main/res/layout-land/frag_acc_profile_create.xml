@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/Wizard"
-    tools:background="@color/color_primary_dark">
+    android:theme="@style/Wizard">
 
     <cx.ring.views.BoundedScrollView
         android:id="@+id/scrollview"
@@ -32,7 +31,7 @@
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:gravity="center"
                 android:text="@string/account_creation_profile"
-                android:textColor="@color/text_color_primary_dark"
+                android:textColor="@color/text_color_primary"
                 android:textSize="24sp" />
 
             <TextView
@@ -117,8 +116,7 @@
                         android:inputType="textCapWords"
                         android:maxLines="1"
                         android:textAlignment="center"
-                        android:textColor="@color/text_color_primary_dark"
-                        android:textColorHint="@color/text_color_secondary_dark" />
+                        android:textColor="@color/text_color_primary" />
 
                 </cx.ring.views.BoundedRelativeLayout>
 

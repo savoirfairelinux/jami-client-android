@@ -26,7 +26,7 @@ along with this program; if not, write to the Free Software
     <string name="ic_blacklist_menu">Blocked contacts</string>
 
     <!-- Strings related to account creation -->
-    <string name="add_ring_account_title">Add Ring account</string>
+    <string name="add_ring_account_title">Add Jami account</string>
     <string name="add_sip_account_title">Add SIP account</string>
     <string name="ring_account_default_name">Ring account %1$s</string>
 
@@ -51,7 +51,7 @@ along with this program; if not, write to the Free Software
         You can edit your account later</string>
 
     <string name="account_type_ip2ip">IP account</string>
-    <string name="help_ring">A Ring account allows you to reach people securely in peer to peer through a fully distributed network.</string>
+    <string name="help_ring">A Jami account allows you to reach people securely in peer to peer through a fully distributed network.</string>
 
     <string name="help_sip_title">Add your SIP account</string>
     <string name="help_sip">Configure an existing SIP account.</string>
@@ -64,7 +64,7 @@ along with this program; if not, write to the Free Software
     <!-- AccountManagementFragment -->
     <string name="empty_account_list">No account registered</string>
     <string name="normal_accounts_titles">Accounts</string>
-    <string name="normal_devices_titles">Known devices linked to this Ring account</string>
+    <string name="normal_devices_titles">Known devices linked to this Jami account</string>
     <string name="account_device_revoke">Revoke device</string>
     <string name="account_device_revocation_success_title">Success</string>
     <string name="account_device_revocation_success">Device is now revoked!</string>
@@ -162,25 +162,25 @@ along with this program; if not, write to the Free Software
     <string name="account_export_end_error_title">Error</string>
     <string name="account_export_end_error_message">Couldn\'t export account. An unknown error occurred.</string>
     <string name="account_enter_password">Enter password</string>
-    <string name="account_share_body">Contact me using \'%1$s\' on the Ring distributed communication platform: https://ring.cx</string>
-    <string name="account_share_body_with_username">Contact me using \'%1$s\' or my public username \'%2$s\' on the Ring distributed communication platform: https://ring.cx</string>
-    <string name="account_contact_me">Contact me on Ring !</string>
+    <string name="account_share_body">Contact me using \'%1$s\' on the Jami distributed communication platform: https://ring.cx</string>
+    <string name="account_share_body_with_username">Contact me using \'%1$s\' or my public username \'%2$s\' on the Jami distributed communication platform: https://ring.cx</string>
+    <string name="account_contact_me">Contact me on Jami !</string>
     <string name="update_account">Update account</string>
-    <string name="account_migration">Your Ring account can be updated.\nPlease enter your password.</string>
+    <string name="account_migration">Your Jami account can be updated.\nPlease enter your password.</string>
     <string name="ring_account">Ring account</string>
     <string name="ring_account_identity">Identity</string>
     <string name="account_migration_title_dialog">Account migration</string>
     <string name="account_migration_message_dialog">Your accounts need to be updated. Do you want to go the Account management screen to perform this operation ?</string>
     <string name="account_update_needed">Update needed</string>
     <string name="account_cannot_be_found_title">Can\'t find account</string>
-    <string name="account_cannot_be_found_message">Account couldn\'t be found on the Ring network.\nMake sure it was exported on Ring from an existing device, and that provided credentials are correct.</string>
+    <string name="account_cannot_be_found_message">Account couldn\'t be found on the Jami network.\nMake sure it was exported on Jami from an existing device, and that provided credentials are correct.</string>
     <string name="account_sip_cannot_be_registered_message">You can continue with the account creation process or edit your information here. Edition is still possible later in the account settings.</string>
     <string name="account_no_network_title">Can\'t connect to the network</string>
-    <string name="account_no_network_message">Could not add account because Ring coudn\'t connect to the distributed network. Check your device connectivity.</string>
+    <string name="account_no_network_message">Could not add account because Jami coudn\'t connect to the distributed network. Check your device connectivity.</string>
     <string name="account_device_added_title">Account device added</string>
-    <string name="account_device_added_message">You have successfully setup your Ring account on this device.</string>
+    <string name="account_device_added_message">You have successfully setup your Jami account on this device.</string>
     <string name="account_device_updated_title">Account device updated</string>
-    <string name="account_device_updated_message">You have successfully updated your Ring account.</string>
+    <string name="account_device_updated_message">You have successfully updated your Jami account.</string>
     <string name="account_cannot_be_updated_message">Account device couldn\'t be update. Please check your password.</string>
     <string name="account_sip_success_title">Sip account registered</string>
     <string name="account_sip_success_message">You have successfully registered your Sip account.</string>
@@ -188,13 +188,13 @@ along with this program; if not, write to the Free Software
 
     <string name="account_link_button">Link this device to an account</string>
     <string name="account_link_prompt_pin">Enter PIN</string>
-    <string name="account_new_button">Create a Ring account</string>
+    <string name="account_new_button">Create a Jami account</string>
     <string name="account_link_export_button">Link another device to this account</string>
-    <string name="account_link_export_info">To use this account on other devices, you must first expose it on Ring. This will generate a PIN code that you must enter on the new device to set up the account. The PIN is valid for 10 minutes.</string>
+    <string name="account_link_export_info">To use this account on other devices, you must first expose it on Jami. This will generate a PIN code that you must enter on the new device to set up the account. The PIN is valid for 10 minutes.</string>
     <string name="account_start_export_button">Generate PIN</string>
     <string name="account_end_export_button">close</string>
-    <string name="account_end_export_infos">Your PIN is:\n\n%%\n\nTo complete the process, you need to open Ring on the new device. Create a new account with \"Link this device to an account\". Your PIN is valid for 10 minutes.</string>
-    <string name="account_link_export_info_light">To use this account on other devices, you must first expose it on Ring. This will generate a PIN code that you must enter on the new device to set up the account. The PIN is valid for 10 minutes.</string>
+    <string name="account_end_export_infos">Your PIN is:\n\n%%\n\nTo complete the process, you need to open Jami on the new device. Create a new account with \"Link this device to an account\". Your PIN is valid for 10 minutes.</string>
+    <string name="account_link_export_info_light">To use this account on other devices, you must first expose it on Jami. This will generate a PIN code that you must enter on the new device to set up the account. The PIN is valid for 10 minutes.</string>
     <string name="account_export_title">Add devices</string>
 
     <!-- Name registration -->
@@ -214,9 +214,9 @@ along with this program; if not, write to the Free Software
     <string name="account_status_offline">Offline</string>
 
     <!-- Create account -->
-    <string name="account_creation_home">Welcome to Ring</string>
+    <string name="account_creation_home">Welcome to Jami</string>
     <string name="account_creation_profile">Create your profile</string>
-    <string name="account_creation_ring">Create your Ring account</string>
+    <string name="account_creation_ring">Create your Jami account</string>
     <string name="account_link_title">Link this device</string>
     <string name="account_sip_cannot_be_registered">Can\'t register account</string>
 
@@ -231,7 +231,7 @@ along with this program; if not, write to the Free Software
     <string name="revoke_device_wait_title">Please wait…</string>
     <string name="revoke_device_wait_message">Revoking device</string>
     <string name="rename_device_title">Rename this device</string>
-    <string name="rename_device_message">Choose a new name to identify this device in your Ring account</string>
+    <string name="rename_device_message">Choose a new name to identify this device in your Jami account</string>
     <string name="rename_device_button">Rename device</string>
     <string name="account_rename_device_hint">Choose new device name</string>
     <string name="account_device_name_empty">Device name can\'t be empty</string>
