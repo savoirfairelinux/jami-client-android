@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76a6a634_675f985a",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/call/CallPresenter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2018-12-13T18:38:26Z",
+      "side": 1,
+      "message": "second question about RX, getCallUpdates can return an IllegalException, how subscribe deals with it?",
+      "range": {
+        "startLine": 126,
+        "startChar": 46,
+        "endLine": 126,
+        "endChar": 60
+      },
+      "revId": "99fd42042537893225f104d073e626b4b233dc84",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a1f00ce_0d24f06c",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/call/CallPresenter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2018-12-13T18:38:26Z",
+      "side": 1,
+      "message": "Question about rx I think.\n\nWith\nsubscribe(call -\u003e  {\n                    contactUpdate(call);\n                    confUpdate(call);\n}));\n\nI suppose that the call cannot be null?\n\nIf it can be null, can you check that call is not null before mAudioOnly \u003d call.isAudioOnly(); ?",
+      "revId": "99fd42042537893225f104d073e626b4b233dc84",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
