@@ -54,7 +54,6 @@ public class CallPresenter extends RootPresenter<CallView> {
     private int previewWidth = -1;
     private int previewHeight = -1;
 
-    private Runnable timeRunnable = this::updateTime;
     private Disposable timeUpdateTask = null;
 
     @Inject
@@ -74,10 +73,10 @@ public class CallPresenter extends RootPresenter<CallView> {
 
     @Override
     public void unbindView() {
-        super.unbindView();
         if (!mAudioOnly) {
             mHardwareService.endCapture();
         }
+        super.unbindView();
     }
 
     @Override
@@ -118,9 +117,7 @@ public class CallPresenter extends RootPresenter<CallView> {
                 .observeOn(mUiScheduler)
                 .subscribe(call ->  {
                     contactUpdate(call);
-                    mAudioOnly = call.isAudioOnly();
-                    getView().updateMenu();
-                    confUpdate();
+                    confUpdate(call);
                 }));
     }
 
@@ -130,10 +127,8 @@ public class CallPresenter extends RootPresenter<CallView> {
                 .observeOn(mUiScheduler)
                 .subscribe(call -> {
                     contactUpdate(call);
-                    mAudioOnly = call.isAudioOnly();
-                    getView().updateMenu();
-                    confUpdate();
-                }));
+                    confUpdate(call);
+                }, e -> finish()));
     }
 
     public void prepareOptionMenu() {
@@ -264,13 +259,13 @@ public class CallPresenter extends RootPresenter<CallView> {
         }
     }
 
-    private void confUpdate() {
-        if (mSipCall == null) {
-            return;
-        }
+    private void confUpdate(SipCall call) {
+        mAudioOnly = call.isAudioOnly();
         CallView view = getView();
-        mAudioOnly = mSipCall.isAudioOnly();
-        if (mSipCall.isOnGoing()) {
+        if (view == null)
+            return;
+        view.updateMenu();
+        if (call.isOnGoing()) {
             mOnGoingCall = true;
             view.initNormalStateDisplay(mAudioOnly, mHardwareService.isSpeakerPhoneOn());
             view.updateMenu();
@@ -280,17 +275,17 @@ public class CallPresenter extends RootPresenter<CallView> {
             }
             if (timeUpdateTask != null)
                 timeUpdateTask.dispose();
-            timeUpdateTask = mUiScheduler.schedulePeriodicallyDirect(timeRunnable, 0, 1, TimeUnit.SECONDS);
-        } else if (mSipCall.isRinging()) {
-            if (mSipCall.isIncoming()) {
-                if (mAccountService.getAccount(mSipCall.getAccount()).isAutoanswerEnabled()) {
-                    mCallService.accept(mSipCall.getCallId());
+            timeUpdateTask = mUiScheduler.schedulePeriodicallyDirect(this::updateTime, 0, 1, TimeUnit.SECONDS);
+        } else if (call.isRinging()) {
+            if (call.isIncoming()) {
+                if (mAccountService.getAccount(call.getAccount()).isAutoanswerEnabled()) {
+                    mCallService.accept(call.getCallId());
                 } else {
                     view.initIncomingCallDisplay();
                 }
             } else {
                 mOnGoingCall = false;
-                view.updateCallStatus(mSipCall.getCallState());
+                view.updateCallStatus(call.getCallState());
                 view.initOutGoingCallDisplay();
             }
         } else {
