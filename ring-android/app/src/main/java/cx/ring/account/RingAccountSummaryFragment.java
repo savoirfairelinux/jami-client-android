@@ -30,7 +30,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.SwitchCompat;
 
 import android.text.Layout;
@@ -179,7 +178,7 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
             mAccountUsernameTxt.setText(username);
         }
 
-        int color = ContextCompat.getColor(getActivity(), R.color.holo_red_light);
+        int color = ContextCompat.getColor(getContext(), R.color.holo_red_light);
         String status;
 
         if (account.isEnabled()) {
@@ -191,17 +190,17 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
                 status = getString(R.string.account_status_connection_error);
             } else if (account.isRegistered()) {
                 status = getString(R.string.account_status_online);
-                color = ContextCompat.getColor(getActivity(), R.color.holo_green_dark);
+                color = ContextCompat.getColor(getContext(), R.color.holo_green_dark);
             } else {
                 status = getString(R.string.account_status_unknown);
             }
         } else {
-            color = ContextCompat.getColor(getActivity(), R.color.darker_gray);
+            color = ContextCompat.getColor(getContext(), R.color.darker_gray);
             status = getString(R.string.account_status_offline);
         }
 
         mAccountStatus.setText(status);
-        Drawable wrapped = DrawableCompat.wrap(AppCompatResources.getDrawable(getActivity(), R.drawable.static_rounded_background));
+        Drawable wrapped = DrawableCompat.wrap(getContext().getDrawable(R.drawable.static_rounded_background));
         DrawableCompat.setTint(wrapped, color);
         mAccountStatus.setBackground(wrapped);
 

@@ -22,7 +22,6 @@ package cx.ring.views;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -35,16 +34,14 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 
 import androidx.annotation.NonNull;
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import cx.ring.R;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.services.VCardServiceImpl;
 import cx.ring.utils.HashUtils;
 import cx.ring.utils.Tuple;
-import cx.ring.utils.VCardUtils;
 
-import android.media.ThumbnailUtils;
+import android.graphics.drawable.VectorDrawable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
@@ -72,7 +69,7 @@ public class AvatarDrawable extends Drawable {
     private final int minSize;
     private Bitmap workspace;
     private final Bitmap bitmap;
-    private VectorDrawableCompat placeholder;
+    private VectorDrawable placeholder;
     private final RectF backgroundBounds = new RectF();
     private final String avatarText;
     private float textStartXPoint;
@@ -135,9 +132,9 @@ public class AvatarDrawable extends Drawable {
         } else {
             bitmap = null;
             avatarText = convertNameToAvatarText(name);
-            color = res.getColor(generateAvatarColor(id));
+            color = res.getColor(getAvatarColor(id));
             if (avatarText == null) {
-                placeholder = VectorDrawableCompat.create(context.getResources(), PLACEHOLDER_ICON, context.getTheme());
+                placeholder = (VectorDrawable) context.getDrawable(PLACEHOLDER_ICON);
             } else {
                 textPaint.setColor(Color.WHITE);
                 textPaint.setTypeface(Typeface.SANS_SERIF);
@@ -293,7 +290,7 @@ public class AvatarDrawable extends Drawable {
         return TextUtils.isEmpty(name) ? null : name.substring(0, 1).toUpperCase();
     }
 
-    private static int generateAvatarColor(String id) {
+    private static int getAvatarColor(String id) {
         if (id == null) {
             return R.color.grey_500;
         }

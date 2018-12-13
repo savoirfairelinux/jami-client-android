@@ -303,7 +303,7 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
         builder.setView(view);
         builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> dialog.cancel());
         builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {
-            if (mSourcePhoto != null && mProfilePhoto.getDrawable() != ResourcesCompat.getDrawable(getResources(), R.drawable.ic_contact_picture_fallback, null)) {
+            if (mSourcePhoto != null) {
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 mSourcePhoto.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 Photo photo = new Photo(stream.toByteArray(), ImageType.PNG);
