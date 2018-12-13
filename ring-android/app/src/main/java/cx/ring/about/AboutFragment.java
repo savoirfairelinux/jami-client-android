@@ -25,15 +25,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.snackbar.Snackbar;
-import androidx.appcompat.app.AppCompatActivity;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -43,35 +39,12 @@ import cx.ring.R;
 import cx.ring.client.HomeActivity;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.mvp.BaseSupportFragment;
+import cx.ring.mvp.RootPresenter;
 
-public class AboutFragment extends BaseSupportFragment<AboutPresenter> implements AboutView {
-
-    @BindView(R.id.logo_ring_beta2)
-    ImageView mImageViewLogo;
+public class AboutFragment extends BaseSupportFragment<RootPresenter> {
 
     @BindView(R.id.release)
     TextView mTextViewRelease;
-
-    @BindView(R.id.web_site)
-    TextView mTextViewWebSite;
-
-    @BindView(R.id.copyright)
-    TextView mTextViewCopyright;
-
-    @BindView(R.id.license)
-    TextView mTextViewLicense;
-
-    @BindView(R.id.email_report)
-    TextView mTextViewEmailReport;
-
-    @BindView(R.id.developped_by)
-    TextView mTextViewDeveloppedBy;
-
-    @BindView(R.id.logo)
-    ImageView mImageViewSFLLogo;
-
-    @BindView(R.id.credits)
-    Button mCredits;
 
     @Override
     public int getLayout() {
@@ -80,22 +53,23 @@ public class AboutFragment extends BaseSupportFragment<AboutPresenter> implement
 
     @Override
     public void injectFragment(RingInjectionComponent component) {
-        component.inject(this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
         return super.onCreateView(inflater, parent, savedInstanceState);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        mTextViewRelease.setText(getString(R.string.app_release, BuildConfig.VERSION_NAME));
     }
 
     @Override
     public void onResume() {
         super.onResume();
         ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_about);
-
-        // fonctional stuff
-        presenter.loadAbout();
     }
 
     @Override
@@ -134,14 +108,14 @@ public class AboutFragment extends BaseSupportFragment<AboutPresenter> implement
     @OnClick(R.id.email_report_container)
     public void sendFeedbackEmail() {
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + "ring@gnu.org"));
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "[Ring Android - " + BuildConfig.VERSION_NAME + "]");
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "[" + getText(R.string.app_name) + " Android - " + BuildConfig.VERSION_NAME + "]");
         launchSystemIntent(emailIntent, getString(R.string.email_chooser_title), getString(R.string.no_email_app_installed));
     }
 
     @OnClick(R.id.credits)
     public void creditsClicked() {
         BottomSheetDialogFragment dialog = new AboutBottomSheetDialogFragment();
-        dialog.show(((AppCompatActivity) getActivity()).getSupportFragmentManager(), dialog.getTag());
+        dialog.show(getActivity().getSupportFragmentManager(), dialog.getTag());
     }
 
     private void launchSystemIntent(Intent intentToLaunch,
@@ -160,46 +134,4 @@ public class AboutFragment extends BaseSupportFragment<AboutPresenter> implement
             }
         }
     }
-
-    //region View Methods Implementation
-    @Override
-    public void showRingLogo(byte[] image) {
-        mImageViewLogo.setImageResource(R.drawable.logo_ring);
-    }
-
-    @Override
-    public void showSavoirFaireLinuxLogo(byte[] image) {
-        mImageViewSFLLogo.setImageResource(R.drawable.logo_sfl_coul_rgb);
-    }
-
-    @Override
-    public void showRelease(String release) {
-        mTextViewRelease.setText(getString(R.string.app_release, BuildConfig.VERSION_NAME));
-    }
-
-    @Override
-    public void showContribute(String contribute) {
-        mTextViewWebSite.setText(Html.fromHtml(getString(R.string.app_website_contribute)));
-    }
-
-    @Override
-    public void showCopyright(String copyright) {
-        mTextViewCopyright.setText(getString(R.string.copyright));
-    }
-
-    @Override
-    public void showLicense(String license) {
-        mTextViewLicense.setText(Html.fromHtml(getString(R.string.license)));
-    }
-
-    @Override
-    public void showFeedback(String feedback) {
-        mTextViewEmailReport.setText(Html.fromHtml(getString(R.string.report)));
-    }
-
-    @Override
-    public void showSupport(String support) {
-        mTextViewDeveloppedBy.setText(getString(R.string.sponsor_section));
-    }
-    //endregion
 }

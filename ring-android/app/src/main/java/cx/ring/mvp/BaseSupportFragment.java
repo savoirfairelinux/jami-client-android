@@ -69,14 +69,16 @@ public abstract class BaseSupportFragment<T extends RootPresenter> extends Fragm
         super.onViewCreated(view, savedInstanceState);
 
         //Be sure to do the injection in onCreateView method
-        presenter.bindView(this);
+        if (presenter != null)
+            presenter.bindView(this);
         initPresenter(presenter);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        presenter.unbindView();
+        if (presenter != null)
+            presenter.unbindView();
         // Butterknife unbinding
         if (mUnbinder != null) {
             mUnbinder.unbind();
