@@ -221,6 +221,14 @@ public abstract class RingApplication extends Application {
         super.onCreate();
         sInstance = this;
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            try {
+                Os.setenv("AVLOGLEVEL", "40", true);
+            } catch (ErrnoException e) {
+                e.printStackTrace();
+            }
+        }
+
         // building injection dependency tree
         mRingInjectionComponent = DaggerRingInjectionComponent.builder()
                 .ringInjectionModule(new RingInjectionModule(this))
