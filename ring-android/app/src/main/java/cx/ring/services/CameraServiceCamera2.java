@@ -286,7 +286,7 @@ class CameraServiceCamera2 extends CameraService {
                                 Log.w(TAG, "onConfigureFailed");
                             }
                         }, handler);
-                    } catch (CameraAccessException e) {
+                    } catch (Exception e) {
                         Log.w(TAG, "onOpened error:", e);
                     }
                 }
