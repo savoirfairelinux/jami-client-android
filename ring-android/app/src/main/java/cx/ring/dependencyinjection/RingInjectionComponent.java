@@ -105,8 +105,6 @@ public interface RingInjectionComponent {
 
     void inject(CallFragment fragment);
 
-    void inject(AboutFragment fragment);
-
     void inject(SmartListFragment fragment);
 
     void inject(RingAccountCreationFragment fragment);

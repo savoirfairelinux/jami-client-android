@@ -6,7 +6,7 @@
     <string name="pref_category_privacy">Privacy</string>
 
     <string name="pref_mobileData_title">Mobile data</string>
-    <string name="pref_mobileData_summary">Allow Ring on 3G/LTE networks additionally to Wi-Fi</string>
+    <string name="pref_mobileData_summary">Allow Jami on 3G/LTE networks additionally to Wi-Fi</string>
 
     <string name="pref_pushNotifications_title">Push notifications</string>
     <string name="pref_pushNotifications_summary">Use Google servers to allow receiving calls/messages in the background</string>
@@ -21,11 +21,11 @@
     <string name="pref_systemCamera_key" translatable="false">pref_systemCamera</string>
 
     <string name="pref_systemDialer_key" translatable="false">pref_systemDialer</string>
-    <string name="pref_systemDialer_title">Place system calls using Ring</string>
-    <string name="pref_systemDialer_summary">Use Ring to place system calls when possible.</string>
+    <string name="pref_systemDialer_title">Place system calls using Jami</string>
+    <string name="pref_systemDialer_summary">Use Jami to place system calls when possible.</string>
 
-    <string name="pref_startOnBoot_title">Start Ring on startup</string>
-    <string name="pref_startOnBoot_summary">Run Ring in the background when the system starts.</string>
+    <string name="pref_startOnBoot_title">Start Jami on startup</string>
+    <string name="pref_startOnBoot_summary">Run Jami in the background when the system starts.</string>
 
     <string name="pref_clearHistory_title">Clear history</string>
     <string name="pref_clearHistory_summary">Clear all the conversations history. This action can not be undone.</string>

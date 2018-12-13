@@ -71,10 +71,10 @@
         <item name="android:textColor">@color/text_color_secondary</item>
     </style>
 
-    <style name="Wizard" parent="Theme.MaterialComponents">
+    <style name="Wizard" parent="Theme.MaterialComponents.Light">
         <item name="colorAccent">@color/color_primary_light</item>
-        <item name="colorPrimary">@color/color_primary_dark</item>
-        <item name="colorPrimaryDark">@color/color_primary_light</item>
+        <item name="colorPrimary">@color/color_primary_light</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
     </style>
 
     <style name="WizardNavButton" parent="Widget.AppCompat.Button.Borderless.Colored">
@@ -96,7 +96,7 @@
     </style>
 
     <style name="ButtonColored" parent="Widget.AppCompat.Button.Colored">
-        <item name="colorButtonNormal">@color/color_primary_dark</item>
+        <item name="colorButtonNormal">@color/color_primary_light</item>
         <item name="android:textColor">@color/text_color_primary_dark</item>
     </style>
 
