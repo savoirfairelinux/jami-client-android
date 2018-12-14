@@ -232,7 +232,7 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     @Override
     public void displayVideoSurface(final boolean display) {
         binding.videoSurface.setVisibility(display ? View.VISIBLE : View.GONE);
-        //mVideoPreview.setVisibility(display ? View.VISIBLE : View.GONE);
+        binding.previewContainer.setVisibility(display ? View.VISIBLE : View.GONE);
     }
 
     @Override

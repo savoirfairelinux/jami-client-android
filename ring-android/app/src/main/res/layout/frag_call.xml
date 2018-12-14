@@ -47,13 +47,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 tools:visibility="visible" />
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/preview_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_margin="12dp"
                 app:cardCornerRadius="16dp"
-                app:cardPreventCornerOverlap="false">
+                app:cardPreventCornerOverlap="false"
+                android:visibility="gone">
 
                 <cx.ring.views.AutoFitTextureView
                     android:id="@+id/preview_surface"

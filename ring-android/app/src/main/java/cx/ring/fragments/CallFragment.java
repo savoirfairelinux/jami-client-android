@@ -401,6 +401,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     @Override
     public void displayVideoSurface(final boolean display) {
         binding.videoSurface.setVisibility(display ? View.VISIBLE : View.GONE);
+        binding.previewContainer.setVisibility(display ? View.VISIBLE : View.GONE);
         updateMenu();
     }
 
@@ -408,10 +409,8 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     public void displayPreviewSurface(final boolean display) {
         if (display) {
             binding.videoSurface.setZOrderOnTop(false);
-            //binding.previewSurface.setZOrderMediaOverlay(true);
             binding.videoSurface.setZOrderMediaOverlay(false);
         } else {
-            //binding.previewSurface.setZOrderMediaOverlay(false);
             binding.videoSurface.setZOrderMediaOverlay(true);
             binding.videoSurface.setZOrderOnTop(true);
         }
