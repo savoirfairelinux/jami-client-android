@@ -74,6 +74,7 @@ import cx.ring.conversation.ConversationPresenter;
 import cx.ring.conversation.ConversationView;
 import cx.ring.databinding.FragConversationBinding;
 import cx.ring.dependencyinjection.RingInjectionComponent;
+import cx.ring.interfaces.Colorable;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.model.ConversationElement;
@@ -229,7 +230,9 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
 
     @Override
     public void setConversationColor(int color) {
-        ((ConversationActivity)getActivity()).setConversationColor(color);
+        Colorable activity = (Colorable) getActivity();
+        if (activity != null)
+            activity.setColor(color);
         mAdapter.setPrimaryColor(color);
     }
 

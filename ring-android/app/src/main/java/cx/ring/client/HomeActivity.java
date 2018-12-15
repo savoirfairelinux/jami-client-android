@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -62,6 +63,7 @@ import cx.ring.contactrequests.ContactRequestsFragment;
 import cx.ring.fragments.AccountsManagementFragment;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.fragments.SmartListFragment;
+import cx.ring.interfaces.Colorable;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.navigation.RingNavigationFragment;
@@ -78,9 +80,8 @@ import cx.ring.utils.DeviceUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class HomeActivity extends AppCompatActivity implements RingNavigationFragment.OnNavigationSectionSelected {
+public class HomeActivity extends AppCompatActivity implements RingNavigationFragment.OnNavigationSectionSelected, Colorable {
 
-    public static final int REQUEST_CODE_CREATE_ACCOUNT = 7;
     public static final int REQUEST_CODE_CALL = 3;
     public static final int REQUEST_CODE_CONVERSATION = 4;
     public static final int REQUEST_CODE_PHOTO = 5;
@@ -587,6 +588,11 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         if (!mDeviceRuntimeService.hasVideoPermission()) {
             mAccountService.setAccountsVideoEnabled(false);
         }
+    }
+
+    @Override
+    public void setColor(int color) {
+        mToolbar.setBackground(new ColorDrawable(color));
     }
 
     public interface Refreshable {

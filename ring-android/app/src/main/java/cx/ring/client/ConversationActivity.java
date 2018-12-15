@@ -35,9 +35,10 @@ import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.fragments.ConversationFragment;
+import cx.ring.interfaces.Colorable;
 import cx.ring.utils.MediaButtonsHelper;
 
-public class ConversationActivity extends AppCompatActivity {
+public class ConversationActivity extends AppCompatActivity implements Colorable {
 
     @BindView(R.id.main_toolbar)
     Toolbar mToolbar;
@@ -121,7 +122,7 @@ public class ConversationActivity extends AppCompatActivity {
                 || super.onKeyDown(keyCode, event);
     }
 
-    public void setConversationColor(@ColorInt int color) {
+    public void setColor(@ColorInt int color) {
         mToolbar.setBackground(new ColorDrawable(color));
     }
 }
