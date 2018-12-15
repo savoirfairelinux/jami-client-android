@@ -70,22 +70,6 @@ public class SipCall {
         this(id, account, new Uri(number), direction);
     }
 
-    public SipCall(SipCall call) {
-        mCallID = call.mCallID;
-        mAccount = call.mAccount;
-        mContact = call.mContact;
-        mNumber = call.mNumber;
-        isPeerHolding = call.isPeerHolding;
-        isAudioMuted = call.isAudioMuted;
-        isVideoMuted = call.isVideoMuted;
-        isRecording = call.isRecording;
-        missed = call.missed;
-        timestampStart = call.timestampStart;
-        timestampEnd = call.timestampEnd;
-        mCallType = call.mCallType;
-        mCallState = call.mCallState;
-    }
-
     /**
      * *********************
      * Constructors
