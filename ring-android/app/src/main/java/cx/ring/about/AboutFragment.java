@@ -82,6 +82,16 @@ public class AboutFragment extends BaseSupportFragment<RootPresenter> {
         menu.clear();
     }
 
+    @OnClick({R.id.logo})
+    public void onLogoClicked() {
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.app_website))));
+    }
+
+    @OnClick({R.id.sfl_logo})
+    public void onSflClicked() {
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.savoirfairelinux_website))));
+    }
+
     @OnClick({R.id.contribute_container, R.id.license_container})
     public void webSiteToView(View view) {
 
