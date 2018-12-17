@@ -2,9 +2,7 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Geri bildirim</string>
-  <string name="report">&lt;u&gt;Bize e-posta gönder&lt;/u&gt;</string>
   <string name="section_license">Lisans</string>
-  <string name="sponsor_section">Ring bir özgür yazılımdır ve şunun tarafından desteklenir</string>
   <string name="copyright_section">Telif Hakkı</string>
   <string name="contribute_section">Katkı Yap</string>
   <string name="version_section">Sürüm</string>
@@ -12,9 +10,6 @@
   <string name="no_browser_app_installed">Web tarayıcı uygulaması bulunmadı, bu sayfayı görmek için bir tane yükleyin</string>
   <string name="email_chooser_title">Şunu kullanarak posta gönder...</string>
   <string name="website_chooser_title">Şunu kullanarak web sitesini gör...</string>
-  <string name="license">Bu program HERHANGİ BİR TEMİNAT OLMADAN sağlanmıştır. Ayrıntılar için şuna bakın
-&lt;u&gt;GNU Genel Kamu Lisansı sürüm 3 ya da sonrası&lt;/u&gt;</string>
-  <string name="description">Ring; kullanıcılarının özgürlüklerine ve gizliliğine önem veren, evrensel iletişim için özgür yazılımdır.</string>
   <string name="credits">Emeği geçenler</string>
   <!--About dialog-->
   <string name="developed_by">Geliştiren</string>
@@ -35,7 +30,6 @@
   <string name="menu_item_accounts">Hesapları yönet</string>
   <string name="menu_item_settings">Ayarlar</string>
   <string name="menu_item_share">Bilgimi paylaş</string>
-  <string name="menu_item_about">Ring Hakkında</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Bir numara çevir</string>
   <!--History Fragment-->
@@ -66,8 +60,6 @@
   <string name="ongoing_call">Giden arama</string>
   <string name="hist_in_call">%1$s gelen arama</string>
   <string name="hist_out_call">%1$s giden arama</string>
-  <string name="start_error_title">Ring başlatılamıyor !</string>
-  <string name="start_error_mic_required">Ring çalışmak için mikrofon iznine ihtiyaç duyuyor.</string>
   <string name="action_call_accept">Aramayı yanıtla</string>
   <string name="action_call_decline">Reddet</string>
   <string name="ab_action_speakerphone">Hoparlörü etkinleştir</string>
@@ -90,9 +82,7 @@
   <string name="ringtone_error_title">Hata</string>
   <string name="ringtone_error_format_not_supported">Bu biçim desteklenmiyor.</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Ring bu özelliği etkinleştirmek için \"Kişileri okuma\" iznine gereksiniyor. Lütfen verin.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Ring bu özelliği etkinleştirmek için \"Çağrı kaydına yazma\" iznine gereksiniyor. Lütfen verin.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Eklemek istediğiniz hesabın QR kodunu tarayın.</string>
   <!--Settings-->
@@ -109,11 +99,7 @@
   <!--Contacts-->
   <string name="prompt_new_password">Yeni parola</string>
   <string name="prompt_new_password_repeat">Yeni parola tekrar</string>
-  <string name="account_create_title">Bir Ring hesabı oluştur</string>
   <string name="prompt_new_username">Yeni kullanıcı adı gir</string>
-  <string name="help_password_choose">Ring hesabınızı korumak için anımsayacağınız güçlü bir parola seçin.</string>
-  <string name="help_password_enter">Ana Ring hesap parolanızı girin</string>
-  <string name="help_pin_enter">Başka yapılandırılmış Ring hesabından PIN\'i gir. PIN edinmek için \"Ring\'de hesabı dışa aktarma\" özelliğini kullan.</string>
   <string name="wizard_next">İleri</string>
   <string name="wizard_back">Geri</string>
   <!--MenuHeaderView-->

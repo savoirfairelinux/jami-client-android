@@ -19,7 +19,6 @@
   <string name="dialog_warn_ip2ip_account_message">Anda sedang mencuba untuk mencipta akaun SIP tanpa alamat server yang sah.
 Anda hanya akan dapat menerima panggilan masuk secara terus sahaja.
 Anda masih akan dapat mengubah maklumat akaun anda pada masa hadapan</string>
-  <string name="help_ring">Akaun Ring membolehkan anda untuk menghubungi orang lain secara selamat dan sembunyi, melalui rangkaian teragih.</string>
   <string name="help_sip_title">Tambah akaun SIP anda</string>
   <string name="help_sip">Tetapkan maklumat akaun SIP yang telah sedia ada.</string>
   <!--Strings related to account deletion-->
@@ -28,7 +27,6 @@ Anda masih akan dapat mengubah maklumat akaun anda pada masa hadapan</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Tiada akaun didaftarkan</string>
   <string name="normal_accounts_titles">Akaun</string>
-  <string name="normal_devices_titles">Perangkat dikenali yang telah disambungkan dengan akaun Ring ini</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Utama</string>
   <string name="account_basic_category">Aturan Asas</string>
@@ -101,22 +99,16 @@ Anda masih akan dapat mengubah maklumat akaun anda pada masa hadapan</string>
   <string name="account_export_end_error_title">Gagal</string>
   <string name="account_export_end_error_message">Tidak dapat mengeksport akaun. Kegagalan yang tidak diketahui telah berlaku.</string>
   <string name="account_enter_password">Masukkan kata laluan</string>
-  <string name="account_contact_me">Hubungi saya di Ring !</string>
   <string name="update_account">Kemaskini akaun</string>
   <string name="ring_account">Akaun Ring</string>
   <string name="account_migration_title_dialog">Permindahan akaun</string>
   <string name="account_update_needed">Kemaskini diperlukan</string>
   <string name="account_cannot_be_found_title">Akaun tidak ditemui</string>
-  <string name="account_cannot_be_found_message">Akaun tidak ditemui pada rangkaian Ring.\nPastikan anda telah mengeksport akaun Ring daripada perangkat anda yang sedia ada, dan maklumat yang diberikan adalah tepat.</string>
   <string name="account_no_network_title">Tidak dapat berhubung dengan rangkaian</string>
-  <string name="account_no_network_message">Tidak dapat menambah akaun kerana tidak dapat berhubung dengan rangkaian agihan. Sila periksa kesambungan rangkaian perangkat anda.</string>
   <string name="account_device_added_title">Berjaya menambah perangkat akaun</string>
-  <string name="account_device_added_message">Anda telah berjaya menyambungkan akaun Ring anda dengan perangkat ini.</string>
   <string name="account_device_updated_title">Akaun perangkat telah dikemaskinikan</string>
-  <string name="account_device_updated_message">Anda telah berjaya mengemaskini akaun Ring anda.</string>
   <string name="account_link_button">Sambungkan perangkat ini dengan akaun</string>
   <string name="account_link_prompt_pin">Masukkan PIN</string>
-  <string name="account_new_button">Cipta akaun Ring</string>
   <string name="account_link_export_button">Sambungkan perangkat lain dengan akaun ini</string>
   <string name="account_end_export_button">tutup</string>
   <!--Name registration-->

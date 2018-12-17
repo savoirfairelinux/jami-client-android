@@ -1,7 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="sponsor_section">Ring является свободным ПО, которое разрабатывается и поддерживается</string>
   <string name="copyright_section">Авторское право</string>
   <string name="contribute_section">Помочь проекту</string>
   <string name="version_section">Версия</string>
@@ -23,7 +22,6 @@
   <string name="menu_item_home">Домой</string>
   <string name="menu_item_accounts">Управление учетными записями</string>
   <string name="menu_item_settings">Настройки</string>
-  <string name="menu_item_about">О Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Набрать номер</string>
   <!--History Fragment-->
@@ -54,8 +52,6 @@
   <string name="ongoing_call">Текущий вызов</string>
   <string name="hist_in_call">Входящий вызов от %1$s</string>
   <string name="hist_out_call">Исходящий вызов от %1$s</string>
-  <string name="start_error_title">Невозможно запустить \"Ring\"</string>
-  <string name="start_error_mic_required">Приложению необходим доступ у микрофону для работы</string>
   <string name="action_call_accept">Совершить звонок</string>
   <string name="action_call_decline">Отказаться</string>
   <string name="ab_action_speakerphone">Включить звук</string>
@@ -76,9 +72,7 @@
   <string name="permission_dialog_camera_message">Необходимо доступ к камере для работы с видеозвонками. Пожалуйста, предоставьте их.</string>
   <string name="ringtone_error_title">Ошибка</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Приложению необходимы права на чтение контактов для включения данной опции</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Приложению необходимы права на запись истории звонков для включения данной функции</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Сканировать QR код аккаунта, который хотите добавить</string>
   <!--Settings-->
@@ -93,7 +87,6 @@
   <string name="conversation_action_select_peer_number">Выберите номер</string>
   <!--Contacts-->
   <string name="prompt_new_password">Новый пароль</string>
-  <string name="account_create_title">Создать Ring аккаунт</string>
   <string name="wizard_next">Далее</string>
   <!--MenuHeaderView-->
   <!--Share fragment-->

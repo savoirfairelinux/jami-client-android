@@ -2,9 +2,7 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Comentaris</string>
-  <string name="report">&lt;u&gt;Envieu-nos un correu&lt;/u&gt;</string>
   <string name="section_license">Llicència</string>
-  <string name="sponsor_section">Ring és programari lliure desenvolupat i mantingut per</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Contribueix</string>
   <string name="version_section">Versió</string>
@@ -12,8 +10,6 @@
   <string name="no_browser_app_installed">No s\'ha trobat cap navegador web, instal·leu-ne un per a visualitzar aquesta pàgina</string>
   <string name="email_chooser_title">Envia correu mitjançant...</string>
   <string name="website_chooser_title">Visualitza el lloc web amb...</string>
-  <string name="license">Aquest programari es proporciona \"tal qual\", sense cap tipus de garantia. Per a més detalls, mireu la &lt;u&gt;Llicència GNU General Public versió 3 o posterior&lt;/u&gt;</string>
-  <string name="description">El Ring és un programari per a comunicacions universals que respecta la llibertat i privacitat dels seus usuaris</string>
   <string name="credits">Crèdits</string>
   <!--About dialog-->
   <string name="developed_by">Desenvolupat per</string>
@@ -35,7 +31,6 @@
   <string name="menu_item_account">Administració del compte</string>
   <string name="menu_item_settings">Opcions</string>
   <string name="menu_item_share">Comparteix el meu contacte</string>
-  <string name="menu_item_about">Quant al Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Marca un número</string>
   <!--History Fragment-->
@@ -73,8 +68,6 @@
   <string name="ongoing_call">Trucada sortint</string>
   <string name="hist_in_call">Trucada entrant de %1$s</string>
   <string name="hist_out_call">Trucada sortint a %1$s</string>
-  <string name="start_error_title">No es pot iniciar el Ring !</string>
-  <string name="start_error_mic_required">El Ring necessita el permís del micròfon per funcionar.</string>
   <string name="action_call_accept">Despenja</string>
   <string name="action_call_decline">Rebutja</string>
   <string name="ab_action_speakerphone">Activa l\'altaveu</string>
@@ -97,9 +90,7 @@
   <string name="ringtone_error_title">Error</string>
   <string name="ringtone_error_format_not_supported">Aquest format no és compatible.</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Habiliteu l\'accés als contactes perquè funcioni aquesta característica del Ring.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Habiliteu l\'escriptura al registre de trucades perquè funcioni aquesta característica del Ring.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Escanegeu el codi QR del compte que vulgueu afegir.</string>
   <!--Settings-->
@@ -116,11 +107,7 @@
   <string name="prompt_new_password">Contrasenya nova</string>
   <string name="prompt_new_password_optional">Contrasenya nova (opcional)</string>
   <string name="prompt_new_password_repeat">Torneu a inserir la contrasenya nova</string>
-  <string name="account_create_title">Crea un compte al Ring</string>
   <string name="prompt_new_username">Escriviu un nom d\'usuari</string>
-  <string name="help_password_choose">Trieu una contrasenya forta que recordeu per protegir el compte de Ring.</string>
-  <string name="help_password_enter">Escriviu la contrasenya del vostre compte principal de Ring</string>
-  <string name="help_pin_enter">Inseriu el PIN d\'altre compte configurat de Ring. Feu servir la funció «Exportar un compte al Ring» per obtenir el PIN.</string>
   <string name="wizard_next">Endavant</string>
   <string name="wizard_back">Enrere</string>
   <!--MenuHeaderView-->

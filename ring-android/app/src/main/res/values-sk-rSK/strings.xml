@@ -2,9 +2,7 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Spätná väzba</string>
-  <string name="report">Pošlite nám email</string>
   <string name="section_license">Licencia</string>
-  <string name="sponsor_section">Ring je voľný software vyvinutý a podporovaný</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Prispejte</string>
   <string name="version_section">Verzia</string>
@@ -12,8 +10,6 @@
   <string name="no_browser_app_installed">Nebol nájdený žiaden webový prehliadač, na zobrazenie tejto stránky si nejaký nainštalujte</string>
   <string name="email_chooser_title">Email </string>
   <string name="website_chooser_title">Zobraziť stránku cez...</string>
-  <string name="license">Tento software je distribuovaný \"taký aký je\", bez záruky akéhokoľvek druhu. Pre detaily pozri
-GNU General Public Licence verziu 3 alebo neskoršie</string>
   <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
@@ -27,7 +23,6 @@ GNU General Public Licence verziu 3 alebo neskoršie</string>
   <string name="menu_item_accounts">Nastavenie účtov</string>
   <string name="menu_item_settings">Nastavenie</string>
   <string name="menu_item_share">Zdieľaj moje kontakty</string>
-  <string name="menu_item_about">O programe Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Vytoč číslo</string>
   <!--History Fragment-->

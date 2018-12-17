@@ -1,7 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="sponsor_section">Ring is vrije software ontwikkeld en ondersteund door</string>
   <string name="contribute_section">Bijdragen</string>
   <string name="version_section">Versie</string>
   <string name="no_email_app_installed">Geen emailapplicatie gevonden. Installeer deze om ons een rapportage toe te zenden</string>
@@ -15,7 +14,6 @@
   <!--Sections-->
   <string name="menu_item_accounts">Accounts beheren</string>
   <string name="menu_item_settings">Instellingen</string>
-  <string name="menu_item_about">Over Ring</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->

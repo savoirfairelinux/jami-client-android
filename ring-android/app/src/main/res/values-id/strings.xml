@@ -2,9 +2,7 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Umpan balik</string>
-  <string name="report">&lt;u&gt;Kirim email kepada kami&lt;/u&gt;</string>
   <string name="section_license">Lisensi</string>
-  <string name="sponsor_section">Ring adalah perangkat lunak bebas yang dikembangkan dan didukung oleh</string>
   <string name="copyright_section">Hak cipta</string>
   <string name="contribute_section">Berkontribusi</string>
   <string name="version_section">Versi</string>
@@ -28,8 +26,6 @@
   <!--TransferDFragment-->
   <!--Notifications-->
   <!--Call Fragment-->
-  <string name="start_error_title">Tidak dapat menjalankan Ring !</string>
-  <string name="start_error_mic_required">Ring memerlukan izin mikropon agar dapat bekerja.</string>
   <string name="action_call_accept">Terima panggilan</string>
   <string name="action_call_decline">Tolak</string>
   <string name="ab_action_speakerphone">Aktifkan pengeras suara</string>
@@ -52,9 +48,7 @@
   <string name="ringtone_error_title">Galat</string>
   <string name="ringtone_error_format_not_supported">Format tidak didukung.</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Ring memerlukan izin \"Baca kontak\" untuk mengaktifkan fitur ini.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Ring memerlukan izin \"Tulis log panggilan\" untuk mengaktifkan fitur ini.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Pindai QR Code dari akun yang ingin Anda tambahkan.</string>
   <!--Settings-->
@@ -70,11 +64,7 @@
   <!--Contacts-->
   <string name="prompt_new_password">Kata sandi baru</string>
   <string name="prompt_new_password_repeat">Ulangi kata sandi baru</string>
-  <string name="account_create_title">Buat akun Ring</string>
   <string name="prompt_new_username">Masukkan username baru</string>
-  <string name="help_password_choose">Pilih kata sandi kuat yang akan Anda ingat untuk melindungi akun Ring Anda.</string>
-  <string name="help_password_enter">Masukkan kata sandi akun Ring Anda</string>
-  <string name="help_pin_enter">Masukkan PIN dari akun Ring lainnya. Gunakan fitur \"ekspor akun Ring\" untuk mendapatkan PIN.</string>
   <string name="wizard_next">Selanjutnya</string>
   <string name="wizard_back">Kembali</string>
   <!--MenuHeaderView-->

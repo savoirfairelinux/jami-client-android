@@ -14,7 +14,6 @@
   <string name="menu_item_home">בית</string>
   <string name="menu_item_accounts">נהל חשבונות</string>
   <string name="menu_item_settings">הגדרות</string>
-  <string name="menu_item_about">אודות Ring</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->

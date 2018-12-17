@@ -2,15 +2,12 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Povratna informacija</string>
-  <string name="report">&lt;u&gt;Pošlji nam e-pošto&lt;/u&gt;</string>
   <string name="section_license">Licenca</string>
-  <string name="sponsor_section">Ring je prosto programje, ki ga razvija in podpira</string>
   <string name="copyright_section">Avtorske pravice</string>
   <string name="contribute_section">Prispevaj</string>
   <string name="version_section">Različica</string>
   <string name="email_chooser_title">Pošlji e-pošto z ...</string>
   <string name="website_chooser_title">Poglej spletno stran z ...</string>
-  <string name="description">Ring je zastonj programska oprema za univerzalno komunikacijo, ki spoštuje svoboščine in zasebnost uporabnikov.</string>
   <string name="credits">Zasluge</string>
   <!--About dialog-->
   <string name="developed_by">Razvoj</string>
@@ -28,7 +25,6 @@
   <string name="menu_item_accounts">Urejanje stikov</string>
   <string name="menu_item_settings">Nastavitve</string>
   <string name="menu_item_share">Deli moje kontakte</string>
-  <string name="menu_item_about">O Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Kliči številko</string>
   <!--History Fragment-->
@@ -61,8 +57,6 @@
   <string name="ongoing_call">Aktivni klic</string>
   <string name="hist_in_call">Dohodni klic od %1$s</string>
   <string name="hist_out_call">Odhodni klic do %1$s</string>
-  <string name="start_error_title">Ne morem zagnati Ring !</string>
-  <string name="start_error_mic_required">Ring potrebuje pravico do uporabe mikrofona.</string>
   <string name="action_call_accept">Prevzami klic</string>
   <string name="action_call_decline">Zavrni</string>
   <string name="ab_action_speakerphone">Omogoči zvočnik</string>
@@ -101,10 +95,7 @@
   <!--Contacts-->
   <string name="prompt_new_password">Novo geslo</string>
   <string name="prompt_new_password_repeat">Ponovi novo geslo</string>
-  <string name="account_create_title">Ustvari Ring račun</string>
   <string name="prompt_new_username">Vpiši novo uporabniško ime</string>
-  <string name="help_password_choose">Izberi močno geslo, ki si ga lahko zapomniš in bo zaščitilo tvoj Ring račun.</string>
-  <string name="help_password_enter">Vpiši geslo tvojega glavnega Ring računa</string>
   <string name="wizard_next">Naprej</string>
   <string name="wizard_back">Nazaj</string>
   <!--MenuHeaderView-->

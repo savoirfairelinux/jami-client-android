@@ -27,13 +27,10 @@
   <!--TLS Details-->
   <!--restore/backup-->
   <string name="account_export_end_error_title">Erreur</string>
-  <string name="account_device_updated_message">Votre profil Ring a bien été mis à jour.</string>
-  <string name="account_new_button">Créer un compte Ring</string>
   <string name="account_link_export_button">Connecter un autre appareil à ce compte</string>
   <!--Name registration-->
   <string name="account_status_unknown">Inconnu</string>
   <!--Create account-->
-  <string name="account_creation_home">Bienvenue sur ring</string>
   <!--Edit profile-->
   <!--Devices-->
 </resources>

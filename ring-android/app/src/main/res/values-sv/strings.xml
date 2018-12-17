@@ -2,9 +2,7 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Återkoppling</string>
-  <string name="report">&lt;u&gt;Skicka e-post till oss&lt;/u&gt;</string>
   <string name="section_license">Licens</string>
-  <string name="sponsor_section">Ring är fri mjukvara, utvecklad och understödd av</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Bidra</string>
   <string name="version_section">Version</string>
@@ -12,9 +10,7 @@
   <string name="no_browser_app_installed">Ingen webbläsare hittades, installera en för att visa den här sidan</string>
   <string name="email_chooser_title">Skicka e-post med...</string>
   <string name="website_chooser_title">Visa webbsidan med...</string>
-  <string name="license">Denna app tillhandahålles i \"befintligt skick\", utan några som helst garantier. För detaljerad info, se
-&lt;u&gt;GNU General Public License version 3 eller senare&lt;/u&gt;</string>
-  <string name="description">Ring är fri mjukvara för universell kommunikation, med respekt för användarens frihet och integritet.</string>
+  <string name="description">Jami är fri mjukvara för universell kommunikation, med respekt för användarens frihet och integritet.</string>
   <string name="credits">Tack till</string>
   <!--About dialog-->
   <string name="developed_by">Utvecklad av</string>
@@ -36,7 +32,6 @@
   <string name="menu_item_account">Hantera konto</string>
   <string name="menu_item_settings">Inställningar</string>
   <string name="menu_item_share">Dela min kontakt</string>
-  <string name="menu_item_about">Om Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Slå ett nummer</string>
   <!--History Fragment-->
@@ -65,6 +60,8 @@
   <string name="notif_channel_messages">Meddelanden</string>
   <string name="notif_channel_requests">Förfrågningar</string>
   <string name="notif_channel_file_transfer">Filöverföring</string>
+  <string name="notif_channel_background_service">Bakgrundstjänst</string>
+  <string name="notif_channel_background_service_descr">Tillåt alltid inkommande samtal och meddelanden.</string>
   <string name="notif_mark_as_read">Markera som läst</string>
   <string name="notif_dismiss">Avfärda</string>
   <string name="notif_reply">Svara</string>
@@ -80,8 +77,6 @@
   <string name="ongoing_call">Pågående samtal</string>
   <string name="hist_in_call">Inkommande samtal av %1$s</string>
   <string name="hist_out_call">Utgående samtal av %1$s</string>
-  <string name="start_error_title">Kan inte starta Ring!</string>
-  <string name="start_error_mic_required">Ring behöver mikrofonbehörighet för att fungera.</string>
   <string name="action_call_accept">Svara</string>
   <string name="action_call_decline">Avslå</string>
   <string name="ab_action_speakerphone">Aktivera högtalare</string>
@@ -111,9 +106,7 @@
   <string name="ringtone_error_format_not_supported">Detta format saknar stöd.</string>
   <string name="ringtone_error_size_too_big">Denna fil är för stor. Maximal storlek är %1$dkB.</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Ring behöver rättighet att läsa kontakter för att aktivera den här funktionen. Överväg att tilldela rättigheter.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Ring behöver rättighet att skriva till samtalskoggen för att aktivera den här funktionen. Överväg att tilldela rättigheter.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Scanna in QR-koden för det konto du vill lägga till.</string>
   <!--Settings-->
@@ -121,6 +114,7 @@
   <string name="clear_history_dialog_message">Denna åtgärd kan inte ångras.</string>
   <string name="clear_history_completed">Historiken har rensats bort.</string>
   <!--Conversation-->
+  <string name="conversation_details">Kontaktdetaljer</string>
   <string name="conversation_action_delete_this">Ta bort den här konversationen</string>
   <string name="conversation_action_delete_this_title">Vill du ta bort den här konversationen?</string>
   <string name="conversation_action_delete_this_message">Denna åtgärd kan inte ångras.</string>
@@ -135,16 +129,14 @@
   <string name="conversation_action_select_peer_number">Välj ett nummer</string>
   <string name="conversation_action_block_this">Blockera kontakt</string>
   <string name="conversation_action_go_to_call">Återgå till pågående samtal</string>
+  <string name="clip_contact_uri">Kontaktadress</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Lägga till %1$s?</string>
   <string name="prompt_new_password">Nytt lösenord</string>
   <string name="prompt_new_password_optional">Nytt lösenord (ej obligatoriskt)</string>
   <string name="prompt_new_password_repeat">Upprepa nytt lösenord</string>
-  <string name="account_create_title">Skapa ett Ring-konto</string>
+  <string name="account_create_title">Skapa ett Jami-konto</string>
   <string name="prompt_new_username">Ange nytt användarnamn</string>
-  <string name="help_password_choose">Ange ett starkt lösenord, som du kommer ihåg, för att skydda ditt Ring-konto.</string>
-  <string name="help_password_enter">Ange ditt huvudsakliga Ring-kontos lösenord</string>
-  <string name="help_pin_enter">Ange PIN-koden från ett annat konfigurerat Ring-konto. Använd \"Exportera konto på Ring\", för att få din PIN-kod.</string>
   <string name="wizard_next">Nästa</string>
   <string name="wizard_back">Tillbaka</string>
   <string name="wizard_skip">Hopa över</string>
@@ -155,7 +147,6 @@
   <string name="take_a_photo">Ta ett foto</string>
   <string name="profile_name_hint">Ange ditt namn (frivilligt)</string>
   <!--Share fragment-->
-  <string name="share_message">Skanna den här koden med Ring</string>
   <string name="share_message_no_account">Välj ett konto att dela.</string>
   <string name="share_your_account_information">Dela min kontaktinformation</string>
   <string name="generic_error_migration">Fel</string>

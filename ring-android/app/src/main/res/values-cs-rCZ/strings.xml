@@ -2,9 +2,7 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Zpětná vazba</string>
-  <string name="report">&lt;u&gt;Pošlete nám elektronický dopis&lt;/u&gt;</string>
   <string name="section_license">Povolení</string>
-  <string name="sponsor_section">Ring je svobodný software, jejž vyvíjí a podporuje</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Přispět</string>
   <string name="version_section">Verze</string>
@@ -12,9 +10,6 @@
   <string name="no_browser_app_installed">Nenalezen žádný program na  prohlížení internetových stránek. Nainstalujte jej pro zobrazení této stránky.</string>
   <string name="email_chooser_title">Poslat zprávu pomocí…</string>
   <string name="website_chooser_title">Zobrazit stránku pomocí...</string>
-  <string name="license">Tento program je poskytován tak, jak je, bez jakýchkoli záruk. Na podrobnosti se podívejte na znění licence
-&lt;u&gt;GNU General Public License ve verzi 3 nebo pozdější&lt;/u&gt;</string>
-  <string name="description">Ring je svobodný software určený k univerzální komunikaci, který respektuje svobody a práva uživatelů.</string>
   <string name="credits">Zásluhy</string>
   <!--About dialog-->
   <string name="developed_by">Vyvíjeno</string>
@@ -35,7 +30,6 @@
   <string name="menu_item_accounts">Spravovat účty</string>
   <string name="menu_item_settings">Nastavení</string>
   <string name="menu_item_share">Sdílet můj kontakt</string>
-  <string name="menu_item_about">O Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Vytočit číslo</string>
   <!--History Fragment-->
@@ -68,8 +62,6 @@
   <string name="ongoing_call">Probíhající hovor</string>
   <string name="hist_in_call">Příchozí hovor %1$s</string>
   <string name="hist_out_call">Odchozí hovor %1$s</string>
-  <string name="start_error_title">Nelze spustit Ring!</string>
-  <string name="start_error_mic_required">Aby Ring správně pracoval, vyžaduje přístup k mikrofonu.</string>
   <string name="action_call_accept">Přijmout</string>
   <string name="action_call_decline">Odmítnout</string>
   <string name="ab_action_speakerphone">Zapnout reproduktor</string>
@@ -92,9 +84,7 @@
   <string name="ringtone_error_title">Chyba</string>
   <string name="ringtone_error_format_not_supported">Tento formát je nepodporovaný.</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Pro tuto funkci Ring vyžaduje povolení „Číst kontakty“. Povolte jej prosím.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Pro tuto funkci Ring vyžaduje povolení „Zapisovat záznam hovorů“. Povolte jej prosím.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Oskenujte QR kód účtu, který chcete přidat.</string>
   <!--Settings-->
@@ -111,11 +101,7 @@
   <!--Contacts-->
   <string name="prompt_new_password">Nové heslo</string>
   <string name="prompt_new_password_repeat">Zopakujte nové heslo</string>
-  <string name="account_create_title">Vytvořit účet Ring</string>
   <string name="prompt_new_username">Zadejte nové uživatelské jméno</string>
-  <string name="help_password_choose">K ochraně účtu Ring si zvolte silné heslo, které si dovedete zapamatovat.</string>
-  <string name="help_password_enter">Zadejte hlavní heslo ke svému účtu Ring</string>
-  <string name="help_pin_enter">Zadejte PIN z jiného nastaveného účtu Ring. Abyste PIN získali, použijte volbu „exportovat účet na Ring“.</string>
   <string name="wizard_next">Další</string>
   <string name="wizard_back">Zpět</string>
   <!--MenuHeaderView-->

@@ -2,9 +2,7 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Обратна връзка</string>
-  <string name="report">&lt;u&gt;Изпратете ни е-писмо&lt;/u&gt;</string>
   <string name="section_license">Лиценз</string>
-  <string name="sponsor_section">Ring е безплатен софтуер, разработван и поддържан от</string>
   <string name="copyright_section">Авторски права</string>
   <string name="contribute_section">Принос</string>
   <string name="version_section">Версия</string>
@@ -12,9 +10,6 @@
   <string name="no_browser_app_installed">Не е открито приложение-браузър. Инсталирайте такова, за да видите тази страница.</string>
   <string name="email_chooser_title">Изпращане на е-писмо чрез…</string>
   <string name="website_chooser_title">Преглед на уеб сайта чрез…</string>
-  <string name="license">Този софтуер се предоставя във вида, в който е, без никакви гаранции. За повече подробности, вижте
-&lt;u&gt;Общия публичен лиценз на ГНУ, версия 3 или по-нов&lt;/u&gt;</string>
-  <string name="description">Ring е безплатен софтуер за универсална комуникация, който уважава свободата и личните данни на потребителите си.</string>
   <string name="credits">Заслуги</string>
   <!--About dialog-->
   <string name="developed_by">Разработен от</string>
@@ -35,7 +30,6 @@
   <string name="menu_item_accounts">Управление на акаунтите</string>
   <string name="menu_item_settings">Настройки</string>
   <string name="menu_item_share">Споделяне на моята информация</string>
-  <string name="menu_item_about">Относно Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Наберете номер</string>
   <!--History Fragment-->
@@ -69,8 +63,6 @@
   <string name="ongoing_call">Текущо обаждане</string>
   <string name="hist_in_call">Входящо обаждане от %1$s</string>
   <string name="hist_out_call">Изходящо обаждане до %1$s</string>
-  <string name="start_error_title">Не мога да пусна Ring !</string>
-  <string name="start_error_mic_required">Ring се нуждае от правото за ползване на микрофона, за да работи</string>
   <string name="action_call_accept">Приемане</string>
   <string name="action_call_decline">Отказ</string>
   <string name="ab_action_speakerphone">Включване на колонката</string>
@@ -93,9 +85,7 @@
   <string name="ringtone_error_title">Грешка</string>
   <string name="ringtone_error_format_not_supported">Този формат не се поддържа.</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Ring се нуждае от правото за четене на контактите, за да работи тази функционалност. Моля, разрешете го.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Ring се нуждае от правото за запис в историята на обажданията, за да работи тази функционалност. Моля, разрешете го.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Сканирайте QR-кода на акаунта, който искате да добавите.</string>
   <!--Settings-->
@@ -112,11 +102,7 @@
   <!--Contacts-->
   <string name="prompt_new_password">Нова парола</string>
   <string name="prompt_new_password_repeat">Повторете новата парола</string>
-  <string name="account_create_title">Създаване на акаунт за Ring</string>
   <string name="prompt_new_username">Въведете ново потребителско име</string>
-  <string name="help_password_choose">Изберете сигурна парола, която ще запомните, за да е защитен акаунтът Ви.</string>
-  <string name="help_password_enter">Въведете основната си парола за Ring</string>
-  <string name="help_pin_enter">Въведете ПИН-кода на друг настроен акаунт за Ring. Използвайте функцията „Изнасяне на акаунта в Ring“, за да получите ПИН.</string>
   <string name="wizard_next">Напред</string>
   <string name="wizard_back">Назад</string>
   <!--MenuHeaderView-->

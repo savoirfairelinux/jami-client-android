@@ -15,7 +15,6 @@
   <!--TLS Details-->
   <!--restore/backup-->
   <string name="account_export_end_error_title">Eror</string>
-  <string name="account_new_button">Buat akun Ring</string>
   <!--Name registration-->
   <string name="account_status_unknown">Tidak diketahui</string>
   <!--Create account-->

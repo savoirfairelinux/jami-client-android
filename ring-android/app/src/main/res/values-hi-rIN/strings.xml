@@ -2,9 +2,7 @@
 <resources>
   <!--About-->
   <string name="feedback_section">प्रतिपुष्टि (फीड्बैक)</string>
-  <string name="report">हमें ई-मेल से संदेश भेजें</string>
   <string name="section_license">अनुज्ञा पत्र</string>
-  <string name="sponsor_section">रिंग एक मुक्त/स्विधीन साॅफ्टवेयर है, जिसे निम्नलिखित द्वारा बनाया व समर्थित किया गया है</string>
   <string name="copyright_section">प्रकाशनाधिकार</string>
   <string name="contribute_section">योगदान दें</string>
   <string name="version_section">वर्श़न/उल्था</string>
@@ -12,8 +10,6 @@
   <string name="no_browser_app_installed">कृपया पृष्ठ को देखने हेतु, वेब ब्राउज़र/विचरक ऐप्प इंस्टाॅल करें</string>
   <string name="email_chooser_title">ई-मेल निम्नलिखित में से एक के द्वारा भेजें</string>
   <string name="website_chooser_title">इस पृष्ठ को निम्नलिखित में से एक के द्वारा देखें</string>
-  <string name="license">यह साॅफ्टवेयर इसकी मौजूदा स्थिति में मुहैया किया गया है, बिना किसी ज़मिनत/वारंटी के। अधिक जानकारी के लिये, ग्नू जनरल पबलिक लाइसेंस/अनुज्ञा पत्र वर्श़न ३ या अधिक देखें।</string>
-  <string name="description">रिंग हर तरह के संवाद के लिये एक मुक्त/स्विधीन साॅफ्टवेयर है, जो अपने उपभोक्ताओं की स्वाधीनता व गोपनीयता का सम्मान करता है</string>
   <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">रिंग</string>

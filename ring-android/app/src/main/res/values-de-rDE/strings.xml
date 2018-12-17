@@ -2,9 +2,7 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Feedback</string>
-  <string name="report">&lt;u&gt;Schreiben Sie uns eine E-Mail&lt;/u&gt;</string>
   <string name="section_license">Lizenz</string>
-  <string name="sponsor_section">Ring ist freie Software. Sie wurde entwickelt und wird unterstützt von</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Mitwirken</string>
   <string name="version_section">Version</string>
@@ -12,9 +10,6 @@
   <string name="no_browser_app_installed">Keine Browser-App gefunden, installieren Sie eine, um die Homepage darzustellen</string>
   <string name="email_chooser_title">Senden von E-Mails über...</string>
   <string name="website_chooser_title">Darstellung der Homepage mit...</string>
-  <string name="license">Diese Software wird \"wie sie ist\" ohne Gewährleistung irgendwelcher Art zur Verfügung gestellt. Details finden Sie unter
-&lt;u&gt;GNU General Public License Version 3 oder später&lt;/u&gt;</string>
-  <string name="description">Ring ist Freie Software für universelle Kommunikation, die die Freiheiten und die Privatsphäre ihrer Nutzer respektiert.</string>
   <string name="credits">Abspann</string>
   <!--About dialog-->
   <string name="developed_by">Entwickelt von</string>
@@ -36,7 +31,6 @@
   <string name="menu_item_account">Konto verwalten</string>
   <string name="menu_item_settings">Einstellungen</string>
   <string name="menu_item_share">Teile meine RING-ID</string>
-  <string name="menu_item_about">Über Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Nummer wählen</string>
   <!--History Fragment-->
@@ -74,8 +68,6 @@
   <string name="ongoing_call">Aktiver Anruf</string>
   <string name="hist_in_call">Eingehender Anruf von %1$s</string>
   <string name="hist_out_call">Ausgehende Anruf von %1$s</string>
-  <string name="start_error_title">Kann nicht Ring starten!</string>
-  <string name="start_error_mic_required">Ring erfordert Mikrofon-Zugriff.</string>
   <string name="action_call_accept">Annehmen</string>
   <string name="action_call_decline">Ablehnen</string>
   <string name="ab_action_speakerphone">Lautsprecher aktivieren</string>
@@ -99,9 +91,7 @@
   <string name="ringtone_error_title">Fehler</string>
   <string name="ringtone_error_format_not_supported">Dieses Format wird nicht unterstützt.</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Ring benötigt für diese Funktion die Erlaubnis \"Kontakte lesen\". Bitte zulassen.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Ring benötigt für diese Funktion die Erlaubnis \"Anruf-Log schreiben\". Bitte zulassen.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Scannen Sie den QR-Code des Kontos, das Sie hinzufügen möchten.</string>
   <!--Settings-->
@@ -119,11 +109,7 @@
   <string name="prompt_new_password">Neues Passwort</string>
   <string name="prompt_new_password_optional">Neues Passwort (optional)</string>
   <string name="prompt_new_password_repeat">Neues Passwort wiederholen</string>
-  <string name="account_create_title">Erstelle ein Ring-Konto</string>
   <string name="prompt_new_username">Neuen Benutzername eingeben</string>
-  <string name="help_password_choose">Wählen Sie ein sicheres Passwort und merken Sie es sich um Ihre Ring-Zugangsdaten zu schützen.</string>
-  <string name="help_password_enter">Geben Sie Ring-Konto-Passwort ein.</string>
-  <string name="help_pin_enter">Geben Sie die PIN eines anderen konfigurierten Ring-Kontos ein.</string>
   <string name="wizard_next">Weiter</string>
   <string name="wizard_back">Zurück</string>
   <!--MenuHeaderView-->

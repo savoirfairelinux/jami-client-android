@@ -5,15 +5,10 @@
   <string name="pref_category_system">Sistema</string>
   <string name="pref_category_privacy">Privacy</string>
   <string name="pref_mobileData_title">Traffico dati mobile</string>
-  <string name="pref_mobileData_summary">Attivare Ring su le rete 3G/LTE oltre che in Wi-Fi</string>
   <string name="pref_pushNotifications_title">Push notifiche</string>
   <string name="pref_pushNotifications_summary">Usa i server Google per ricevere chiamate/messaggi in background</string>
   <string name="pref_systemContacts_title">Usare i contatti del dispositivo</string>
   <string name="pref_systemContacts_summary">Usare i contatti del dispositivo per mostrare i dettagli di chi chiama. </string>
-  <string name="pref_systemDialer_title">Usare Ring di default per le chiamate</string>
-  <string name="pref_systemDialer_summary">Usare Ring per le chiamate quando possibile.</string>
-  <string name="pref_startOnBoot_title">Eseguire Ring al avvio del sistema</string>
-  <string name="pref_startOnBoot_summary">Eseguire Ring in background quando si avvia il sistema.</string>
   <string name="pref_clearHistory_title">Svuotare lo storico</string>
   <string name="pref_clearHistory_summary">Rimuovere lo storico delle conversazione</string>
 </resources>

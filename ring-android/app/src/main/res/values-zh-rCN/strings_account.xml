@@ -5,7 +5,6 @@
   <string name="ic_advanced_menu">高级设置</string>
   <string name="ic_blacklist_menu">已屏蔽的联系人</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">添加Ring帐户</string>
   <string name="add_sip_account_title">添加SIP帐户</string>
   <string name="ring_account_default_name">Ring帐户%1$s</string>
   <string name="prompt_alias">别名</string>
@@ -26,7 +25,6 @@
 该帐户拨出或接听通话将只能直接通过IP地址。
 您可以稍后编辑该帐户。</string>
   <string name="account_type_ip2ip">IP帐户</string>
-  <string name="help_ring">Ring帐户允许您在完全分布式的网络中，与他人进行安全的点对点通信。</string>
   <string name="help_sip_title">添加您的SIP帐户</string>
   <string name="help_sip">配置已有的SIP帐户。</string>
   <string name="create_sip_account">添加SIP帐户</string>
@@ -36,7 +34,6 @@
   <!--AccountManagementFragment-->
   <string name="empty_account_list">没有已注册账户</string>
   <string name="normal_accounts_titles">帐户</string>
-  <string name="normal_devices_titles">与该Ring帐户连接的已知设备</string>
   <string name="account_device_revoke">吊销设备</string>
   <string name="account_device_revocation_success_title">成功</string>
   <string name="account_device_revocation_success">设备已吊销！</string>
@@ -120,32 +117,23 @@
   <string name="account_export_end_error_title">错误</string>
   <string name="account_export_end_error_message">无法导出帐户，发生未知错误。</string>
   <string name="account_enter_password">输入密码</string>
-  <string name="account_share_body">使用\'%1$s\'在Ring分布式通讯平台上联系我：https://ring.cx</string>
-  <string name="account_share_body_with_username">使用\'%1$s\'或我的公共用户名\'%2$s\'，在Ring分布式通讯平台上联系我：https://ring.cx</string>
-  <string name="account_contact_me">在Ring上联系我！</string>
   <string name="update_account">更新帐户</string>
-  <string name="account_migration">您的Ring帐户可以被更新。\n请输入您的密码。</string>
   <string name="ring_account">Ring帐户</string>
   <string name="ring_account_identity">身份</string>
   <string name="account_migration_title_dialog">帐户迁移</string>
   <string name="account_migration_message_dialog">您的帐户需要被更新。您想前往帐户管理界面进行该操作吗？</string>
   <string name="account_update_needed">需要更新</string>
   <string name="account_cannot_be_found_title">无法找到帐户</string>
-  <string name="account_cannot_be_found_message">无法在Ring网络中找到帐户。\n请确认该帐户已从其他设备中导出，并且您提供了正确的认证信息。</string>
   <string name="account_sip_cannot_be_registered_message">您可以前往下一步或在这里编辑您的信息。帐户创建后，您仍可在帐户设置中进行编辑。</string>
   <string name="account_no_network_title">无法连接至网络</string>
-  <string name="account_no_network_message">无法添加帐户，因为Ring未连接到网络。请检查您的网络连接。</string>
   <string name="account_device_added_title">帐户设备已添加</string>
-  <string name="account_device_added_message">已在这台设备成功设置了您的Ring帐户。</string>
   <string name="account_device_updated_title">帐户设备已更新</string>
-  <string name="account_device_updated_message">您的Ring帐户已更新。</string>
   <string name="account_cannot_be_updated_message">无法更新帐户设备。请检查您的密码。</string>
   <string name="account_sip_success_title">SIP帐户已注册</string>
   <string name="account_sip_success_message">您已成功注册了您的SIP帐户。</string>
   <string name="account_sip_register_anyway">仍然注册</string>
   <string name="account_link_button">将此设备与一个帐户进行连接</string>
   <string name="account_link_prompt_pin">输入PIN</string>
-  <string name="account_new_button">创建Ring帐户</string>
   <string name="account_link_export_button">将另一设备与该帐户进行连接</string>
   <string name="account_start_export_button">生成PIN</string>
   <string name="account_end_export_button">关闭</string>
@@ -165,9 +153,7 @@
   <string name="account_status_unknown">未知</string>
   <string name="account_status_offline">离线</string>
   <!--Create account-->
-  <string name="account_creation_home">欢迎来到Ring</string>
   <string name="account_creation_profile">创建您的帐户资料</string>
-  <string name="account_creation_ring">创建您的Ring帐户</string>
   <string name="account_link_title">连接此设备</string>
   <string name="account_sip_cannot_be_registered">无法注册帐户</string>
   <!--Edit profile-->
@@ -180,7 +166,6 @@
   <string name="revoke_device_wait_title">请稍等…</string>
   <string name="revoke_device_wait_message">正在吊销设备</string>
   <string name="rename_device_title">重命名该设备</string>
-  <string name="rename_device_message">为该设备取名，以在您的Ring帐户中识别该设备</string>
   <string name="rename_device_button">重命名设备</string>
   <string name="account_rename_device_hint">输入新的设备名</string>
   <string name="account_device_name_empty">设备名不可为空</string>

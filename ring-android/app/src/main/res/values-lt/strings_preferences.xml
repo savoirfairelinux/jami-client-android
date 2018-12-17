@@ -5,13 +5,8 @@
   <string name="pref_category_system">Sistema</string>
   <string name="pref_category_privacy">Privatumas</string>
   <string name="pref_mobileData_title">Mobilūs duomenys</string>
-  <string name="pref_mobileData_summary">Leisti Ring 3G/LTE tinkluose, papildomai prie belaidžio tinklo</string>
   <string name="pref_systemContacts_title">Naudoti sistemos kontaktus</string>
   <string name="pref_systemContacts_summary">Naudoti sistemos kontaktus, kad būtų rodoma skambinančio asmens informacija.</string>
-  <string name="pref_systemDialer_title">Vykdyti sistemos skambučius, naudojant Ring</string>
-  <string name="pref_systemDialer_summary">Kai įmanoma, naudoti Ring, norint vykdyti sistemos skambučius.</string>
-  <string name="pref_startOnBoot_title">Paleisti Ring paleisties metu</string>
-  <string name="pref_startOnBoot_summary">Vykdyti Ring fone, paleidus sistemą</string>
   <string name="pref_clearHistory_title">Išvalyti istoriją</string>
   <string name="pref_clearHistory_summary">Išvalyti visą pokalbių istoriją. Šio veiksmo negalima bus atšaukti.</string>
 </resources>

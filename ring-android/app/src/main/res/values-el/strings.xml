@@ -2,9 +2,7 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Προτάσεις</string>
-  <string name="report">&lt;u&gt;Επικοινωνήστε μαζί μας&lt;/u&gt;</string>
   <string name="section_license">Άδεια</string>
-  <string name="sponsor_section">Το Ring είναι δωρεάν/ελεύθερο λογισμικό αναπτυγμένο και υποστηριζόμενο από</string>
   <string name="copyright_section">Πνευματική ιδιοκτησία</string>
   <string name="contribute_section">Πρόσφερε</string>
   <string name="version_section">Έκδοση</string>
@@ -12,9 +10,6 @@
   <string name="no_browser_app_installed">Δεν βρέθηκε πρόγραμμα περιήγησης εγκατεστημένο, εγκαταστείστε ένα για να δείτε την σελίδα.</string>
   <string name="email_chooser_title">Αποστολή email σε χρήση...</string>
   <string name="website_chooser_title">Προβολή σελίδας με...</string>
-  <string name="license">Η εφαρμογή παρέχεται \"ως έχει\", χωρίς οποιαδήποτε εγγύηση. Για περισσότερες πληροφορίες, ανατρέξτε
-&lt;u&gt;GNU General Public License έκδοση 3 ή αργότερη&lt;/u&gt;</string>
-  <string name="description">Το Ring είναι ελεύθερο λογισμικό για παγκόσμια επικοινωνία που σέβεται τις ελευθερίες και την ιδιωτικότητα των χρηστών του.</string>
   <string name="credits">Μονάδες</string>
   <!--About dialog-->
   <string name="developed_by">Ανάπτυξη</string>
@@ -35,7 +30,6 @@
   <string name="menu_item_accounts">Διαχείριση Λογαριασμών</string>
   <string name="menu_item_settings">Ρυθμίσεις</string>
   <string name="menu_item_share">Μοίρασε τις επαφές μου</string>
-  <string name="menu_item_about">Σχετικά</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Κλήση αριθμού</string>
   <!--History Fragment-->
@@ -62,8 +56,6 @@
   <string name="ongoing_call">Εξερχόμενη κλήση</string>
   <string name="hist_in_call">Εισερχόμενη κλήση από %1$s</string>
   <string name="hist_out_call">Εξερχόμενη κλήση από %1$s</string>
-  <string name="start_error_title">Η εφαρμογή Ring δεν μπορεί να ξεκινήσει !</string>
-  <string name="start_error_mic_required">Η εφαρμογή Ring θέλει να χρησιμοποιήσει το μικρόφωνο για να λειτουργήσει.</string>
   <string name="action_call_accept">Κάνε μια κλήση</string>
   <string name="action_call_decline">Απόρριψη κλήσης</string>
   <string name="ab_action_speakerphone">Μεγάφωνο</string>
@@ -86,9 +78,7 @@
   <string name="ringtone_error_title">Σφάλμα</string>
   <string name="ringtone_error_format_not_supported">Η μορφή δεν υποστιρίζεται.</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Η εφαρμογή Ring χρειάζεται να διαβάσει τις επαφές σας ώστε να ενεργοποιήσει αυτή την λειτουργία. Παρακαλώ δώστε την.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Επιβαιβεώστε την πρόσβαση της εφαρμογής στο αρχείο κλησεων. </string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Σαρώστε τον κώδικα QR του λογαριασμού που θέλετε να προσθέσετε.</string>
   <!--Settings-->
@@ -103,11 +93,7 @@
   <!--Contacts-->
   <string name="prompt_new_password">Νέο συνθηματικό</string>
   <string name="prompt_new_password_repeat">Επανάληψη νέου συνθηματικού</string>
-  <string name="account_create_title">Δημιουργία λογαριασμού Ring</string>
   <string name="prompt_new_username">Εισάγετε νέο ψευδώνυμο</string>
-  <string name="help_password_choose">Επιλέξτε έναν ισχυρό κωδικό τον οποίο θα θυμάστε πάντα για την διασφάληση του λογαριασμού Ring.</string>
-  <string name="help_password_enter">Εισαγωγή συνθηματικού του κύριου Ring λογαριασμού σας</string>
-  <string name="help_pin_enter">Εισάγετε το PIN απο άλλο ρυθμισμένο λογαριασμό Ring. Επελέξτε την διαδικασία \"εξαγωγή λογαριασμού Ring\" για να λάβετε ένα PIN.</string>
   <string name="wizard_next">Επόμενο</string>
   <string name="wizard_back">Πίσω</string>
   <!--MenuHeaderView-->

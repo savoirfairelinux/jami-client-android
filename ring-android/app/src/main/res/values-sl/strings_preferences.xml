@@ -5,13 +5,8 @@
   <string name="pref_category_system">Sistem</string>
   <string name="pref_category_privacy">Zasebnost</string>
   <string name="pref_mobileData_title">Mobilni podatki</string>
-  <string name="pref_mobileData_summary">Omogoči Ring na 3G/LTE omrežjih skupaj z WiFi</string>
   <string name="pref_systemContacts_title">Uporabi sistemske stike</string>
   <string name="pref_systemContacts_summary">Uporabi sistemske stike za prikaz podatkov klicatelja.</string>
-  <string name="pref_systemDialer_title">Za sistemske klice uporabi Ring</string>
-  <string name="pref_systemDialer_summary">Uporabi  Ring za izvajanje sistemskih klicev, ko je to možno.</string>
-  <string name="pref_startOnBoot_title">Zaženi Ring ob zagonu</string>
-  <string name="pref_startOnBoot_summary">Ring naj dela v ozadju, ko se sistem zažene.</string>
   <string name="pref_clearHistory_title">Pobriši zgodovino</string>
   <string name="pref_clearHistory_summary">Pobriši vso zgodovino pogovorov. Ta funkcija ne more biti preklicana.</string>
 </resources>

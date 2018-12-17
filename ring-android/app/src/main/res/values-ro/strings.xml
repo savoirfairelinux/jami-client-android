@@ -2,9 +2,7 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Feedback </string>
-  <string name="report">&lt;u&gt;Trimite-ne un email&lt;/u&gt;</string>
   <string name="section_license">Licența</string>
-  <string name="sponsor_section">Ring este un program tip freeware, dezvoltat și susținut de către</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Contribuie</string>
   <string name="version_section">Versiune</string>
@@ -12,8 +10,6 @@
   <string name="no_browser_app_installed">Nu a fost găsită nicio aplicație de browser web. Vă rugăm să instalați una pentru a vedea această pagină</string>
   <string name="email_chooser_title">Trimite email folosind...</string>
   <string name="website_chooser_title">Vizualizează site-ul folosind ...</string>
-  <string name="license">Acest software este furnizat \"ca atare\", fără garanții de orice natură. Pentru detalii, consultați Licență Publică Generală GNU versiunea 3 sau mai recentă&lt;/u&gt;</string>
-  <string name="description">Ring este un software gratuit pentru comunicații universale care respectă libertățile individuale și dorința de anonimitate a utilizatorilor.</string>
   <string name="credits">Credite</string>
   <!--About dialog-->
   <string name="developed_by">Dezvoltat de</string>
@@ -34,7 +30,6 @@
   <string name="menu_item_accounts">Gestionează conturile</string>
   <string name="menu_item_settings">Setari</string>
   <string name="menu_item_share">Distribuie datele mele de contact</string>
-  <string name="menu_item_about">Despre Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Formează un număr</string>
   <!--History Fragment-->
@@ -58,7 +53,6 @@
   <string name="you_txt_prefix">Tu:</string>
   <string name="action_call_hangup">Închide</string>
   <string name="ongoing_call">Apel în curs</string>
-  <string name="start_error_title">Ring nu a putut porni!</string>
   <string name="action_call_decline">Refuză</string>
   <string name="ab_action_contact_add">Adaugă la contacte</string>
   <string name="ab_action_audio_call">Apel audio</string>
@@ -82,7 +76,6 @@
   <string name="conversation_action_delete_this">Șterge aceasta istorie</string>
   <!--Contacts-->
   <string name="prompt_new_password">Parolă nouă</string>
-  <string name="account_create_title">Crează un cont Ring</string>
   <string name="prompt_new_username">Introdu un nume de utilizator</string>
   <!--MenuHeaderView-->
   <string name="profile">Profilul meu</string>

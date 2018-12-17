@@ -1,7 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="sponsor_section">Ring adalah aplikasi percuma yang dibangunkan dan disokong oleh</string>
   <string name="copyright_section">Hakcipta</string>
   <string name="contribute_section">Sumbangkan</string>
   <string name="version_section">Versi</string>
@@ -24,7 +23,6 @@
   <string name="menu_item_accounts">Urus akaun</string>
   <string name="menu_item_settings">Tetapan</string>
   <string name="menu_item_share">Kongsikan profil saya</string>
-  <string name="menu_item_about">Mengenai Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Dail nombor</string>
   <!--History Fragment-->
@@ -52,8 +50,6 @@
   <string name="ongoing_call">Panggilan sedang berlangsung</string>
   <string name="hist_in_call">Panggilan masuk sebanyak %1$s</string>
   <string name="hist_out_call">Panggilan keluar sebanyak %1$s</string>
-  <string name="start_error_title">Tidak dapat memulakan Ring !</string>
-  <string name="start_error_mic_required">Ring memerlukan kebenaran mengakses mikrofon untuk bekerja dengan sempurna</string>
   <string name="action_call_accept">Terima panggilan</string>
   <string name="action_call_decline">Bantah panggilan</string>
   <string name="ab_action_speakerphone">Aktifkan pembesar suara</string>
@@ -75,9 +71,7 @@
   <string name="ringtone_error_title">Gagal</string>
   <string name="ringtone_error_format_not_supported">Format ini tidak disokong.</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Ring memerlukan keizinan akses kepada kenalan untuk mengaktifkan fungsi ini. Sila pertimbangkan untuk membenarkan akses tersebut.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Ring memerlukan keizinan akses kepada kenalan untuk mengaktifkan fungsi ini. Sila pertimbangkan untuk membenarkan akses tersebut.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Imbas kod QR akaun yang ingin anda tambah.</string>
   <!--Settings-->
@@ -94,11 +88,7 @@
   <!--Contacts-->
   <string name="prompt_new_password">Kata laluan baharu</string>
   <string name="prompt_new_password_repeat">Ulang kata laluan baharu</string>
-  <string name="account_create_title">Cipta akaun Ring</string>
   <string name="prompt_new_username">Masukkan nama pengguna baharu</string>
-  <string name="help_password_choose">Pilih kata laluan kukuh yang perlu anda ingat untuk menjaga akaun Ring anda.</string>
-  <string name="help_password_enter">Masukkan kata laluan akaun Ring anda</string>
-  <string name="help_pin_enter">Masukkan PIN daripada akaun Ring lain yang telah dijalankan. Gunakan fungsi \"eksport akaun ke Ring\" untuk mendapatkan PIN.</string>
   <!--MenuHeaderView-->
   <string name="profile">Profil saya</string>
   <string name="open_the_gallery">Buka galeri</string>

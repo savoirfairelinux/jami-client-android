@@ -5,15 +5,10 @@
   <string name="pref_category_system">Sistema</string>
   <string name="pref_category_privacy">Privadesa</string>
   <string name="pref_mobileData_title">Dades mòbils</string>
-  <string name="pref_mobileData_summary">Habilita Ring en xarxes 3G/LTE a més de connexions sense fils.</string>
   <string name="pref_pushNotifications_title">Notificacions Push</string>
   <string name="pref_pushNotifications_summary">Utilitza els servidors de Google per permetre rebre trucades/missatges en rerefons.</string>
   <string name="pref_systemContacts_title">Usa contactes del sistema</string>
   <string name="pref_systemContacts_summary">Usa contactes del sistema per mostrar detalls del que truca</string>
-  <string name="pref_systemDialer_title">Fer trucades del sistema amb Ring</string>
-  <string name="pref_systemDialer_summary">Usa Ring per fer trucades del sistema quan sigui possible</string>
-  <string name="pref_startOnBoot_title">Arranca Ring a l\'inici</string>
-  <string name="pref_startOnBoot_summary">Executa Ring en segon pla quan el sistema s\'inicia.</string>
   <string name="pref_clearHistory_title">Neteja historial</string>
   <string name="pref_clearHistory_summary">Neteja totes les converses de l\'historial. Aquesta acció no pot desfer-se.</string>
 </resources>

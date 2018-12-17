@@ -1,27 +1,37 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="sponsor_section">Ring é um software livre desenvolvido e mantido por</string>
-  <string name="copyright_section">Direitos de autor</string>
+  <string name="feedback_section">Comentários</string>
+  <string name="section_license">Licença</string>
+  <string name="copyright_section">Direitos de Autor</string>
   <string name="contribute_section">Contribuir</string>
   <string name="version_section">Versão</string>
-  <string name="no_email_app_installed">Nenhuma aplicação de email encontrada no dispositivo. Instale uma para que nos possa enviar um relatório.</string>
-  <string name="email_chooser_title">Enviar email utilizando...</string>
+  <string name="no_email_app_installed">A aplicação de e-mail não foi encontrada. Instale uma para nos poder enviar um relatório de erros</string>
+  <string name="no_browser_app_installed">Não foi encontrado nenhum navegador de Internet foi encontrado, instale um para aceder a esta página</string>
+  <string name="email_chooser_title">Enviar e-mail utilizando...</string>
+  <string name="website_chooser_title">Ver site utilizando...</string>
+  <string name="description">O Jami é um programa livre para comunicação universal que respeita as liberdades e privacidade dos seus utilizadores.</string>
+  <string name="credits">Créditos</string>
   <!--About dialog-->
+  <string name="developed_by">Desenvolvido por</string>
+  <string name="designed_by">Projetado por</string>
   <!--RingActivity-->
-  <string name="error_no_network">Sem conexão de rede</string>
-  <string name="error_mobile_network_available_but_disabled">Por favor, permita o acesso à rede móvel nas definições do dispositivo.</string>
+  <string name="title_activity_sflphone_home">Ring</string>
+  <string name="error_no_network">Sem conectividade à rede</string>
+  <string name="error_mobile_network_available_but_disabled">Por favor, conceda acesso à rede móvel no ecrã de configurações.</string>
   <!--AB menus-->
-  <string name="ab_action_chat">Mensagem de texto</string>
+  <string name="ab_action_chat">Mensagens de texto</string>
   <!--Left Drawer-->
   <!--Accessibility-->
+  <string name="drawer_open">Abrir gaveta de navegação</string>
+  <string name="drawer_close">Fechar gaveta de navegação</string>
   <!--Sections-->
   <string name="menu_item_home">Início</string>
-  <string name="menu_item_contact_request">Pedidos de contacto</string>
+  <string name="menu_item_contact_request">Solicitações de contactos</string>
   <string name="menu_item_accounts">Gerir contas</string>
+  <string name="menu_item_account">Gerir conta</string>
   <string name="menu_item_settings">Configurações</string>
   <string name="menu_item_share">Partilhar o meu contacto</string>
-  <string name="menu_item_about">Sobre Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Marcar um número</string>
   <!--History Fragment-->
@@ -32,79 +42,157 @@
     <item quantity="other">%d Conversas</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Introduza um nome ou número de telemóvel...</string>
-  <string name="choose_number">Escolha um número</string>
+  <string name="searchbar_hint">Introduza o nome ou número de telefone…</string>
+  <string name="choose_number">Escolher um número</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
-  <string name="notif_incoming_call_title">A receber chamada de %1$s</string>
-  <string name="notif_incoming_call">A receber chamada</string>
-  <string name="notif_current_call_title">Em chamada com %1$s</string>
+  <string name="notif_missed_incoming_call">Chamadas recebidas perdidas</string>
+  <string name="notif_missed_outgoing_call">Chamadas efetuadas perdidas</string>
+  <string name="notif_incoming_call_title">Chamada recebida de %1$s</string>
+  <string name="notif_incoming_call">Chamada recebida</string>
+  <string name="notif_outgoing_call_title">Chamada efetuada para %1$s</string>
+  <string name="notif_outgoing_call">Chamada efetuada</string>
+  <string name="notif_current_call_title">Chamada atual com %1$s</string>
   <string name="notif_current_call">Chamada atual</string>
+  <string name="notif_channel_calls">Chamadas</string>
+  <string name="notif_channel_missed_calls">Chamadas não atendidas</string>
+  <string name="notif_channel_messages">Mensagens</string>
+  <string name="notif_channel_requests">Solicitações</string>
+  <string name="notif_channel_file_transfer">Transferência de ficheiro</string>
+  <string name="notif_channel_background_service">Serviço em segundo plano</string>
+  <string name="notif_channel_background_service_descr">Permite receber chamadas e mensagens em qualquer altura.</string>
+  <string name="notif_mark_as_read">Marcar como lida</string>
+  <string name="notif_dismiss">Dispensar</string>
+  <string name="notif_reply">Responder</string>
+  <string name="notif_incoming_file_transfer_title">A receber ficheiro de %1$s</string>
+  <string name="notif_incoming_file_transfer">Alguém quer enviar-lhe um ficheiro</string>
+  <string name="notif_outgoing_file_transfer_title">A enviar ficheiro para %1$s</string>
+  <string name="notif_outgoing_file_transfer">Alguém quer enviar-lhe um ficheiro</string>
+  <string name="notif_incoming_picture">Foto de %1$s</string>
+  <string name="action_open">Abrir</string>
   <!--Call Fragment-->
-  <string name="you_txt_prefix">Tu:</string>
+  <string name="you_txt_prefix">Você:</string>
   <string name="action_call_hangup">Desligar</string>
-  <string name="ongoing_call">Chamada em curso</string>
-  <string name="hist_in_call">A receber chamada de %1$s</string>
-  <string name="start_error_title">Não foi possível iniciar o Ring !</string>
-  <string name="start_error_mic_required">Ring necessita da permissão de microfone para funcionar.</string>
+  <string name="ongoing_call">Chamada a decorrer</string>
+  <string name="hist_in_call">Chamada recebida de %1$s</string>
+  <string name="hist_out_call">Chamada feita para %1$s</string>
   <string name="action_call_accept">Atender chamada</string>
-  <string name="action_call_decline">Recusar</string>
-  <string name="ab_action_speakerphone">Ligar altifalante</string>
+  <string name="action_call_decline">Rejeitar</string>
+  <string name="ab_action_speakerphone">Ativar alta-voz</string>
   <string name="ab_action_contact_add">Adicionar aos contactos</string>
-  <string name="ab_action_audio_call">Chamada de áudio</string>
+  <string name="ab_action_contact_add_question">Adicionar aos contactos?</string>
+  <string name="hist_contact_added">Contacto adicionado</string>
+  <string name="hist_invitation_received">Convite recebido</string>
+  <string name="ab_action_audio_call">Chamada de voz</string>
   <string name="ab_action_video_call">Chamada de vídeo</string>
-  <string name="share_via">Partilhar via</string>
-  <string name="write_a_message">Escrever mensagem</string>
-  <string name="scan_qr">Digitalizar código QR</string>
-  <string name="ab_action_flipcamera">Alterar câmara</string>
+  <string name="ab_action_change_screen_orientation">Alterar orientação do ecrã</string>
+  <string name="share_via">Partilhar através de</string>
+  <string name="write_a_message">Escrever uma mensagem</string>
+  <string name="scan_qr">Digitalizar Código QR</string>
+  <string name="ab_action_flipcamera">Virar câmara</string>
   <!--Text messages-->
   <string name="send_message">Enviar mensagem</string>
-  <string name="message_sending">Enviando a mensagem...</string>
-  <string name="time_just_now">Agora mesmo</string>
+  <string name="message_sending">A enviar mensagem...</string>
+  <string name="message_failed">Falhou</string>
+  <string name="time_just_now">Ainda agora</string>
+  <string name="send_file">Enviar ficheiro</string>
+  <string name="hist_file_sent">Ficheiro enviado</string>
+  <string name="hist_file_received">Ficheiro recebido</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permissão de câmara</string>
-  <string name="permission_dialog_camera_message">As conversações por vídeo requerem a permissão da câmara. Por favor, considere garanti-la. </string>
+  <string name="permission_dialog_camera_message">As conversas de vídeo necessitam de permissão para aceder à câmara. Considere fornecer a permissão.</string>
   <string name="ringtone_error_title">Erro</string>
   <string name="ringtone_error_format_not_supported">Este formato não é suportado.</string>
+  <string name="ringtone_error_size_too_big">Este ficheiro é grande demais. O tamanho máximo é %1$dkB.</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Ring precisa da permissão \"Ler contactos\" para ativar esta funcionalidade. Por favor, garanta-a.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Ring precisa da permissão \"Escrever no registo de chamadas\" para ativar esta funcionalidade. Por favor, garanta-a.</string>
   <!--QRCode Scan-->
-  <string name="scan_qr_account_message">Digitalize o código QR da conta que pretende adicionar.</string>
+  <string name="scan_qr_account_message">Digitalize o Código QR da conta que deseja adicionar.</string>
   <!--Settings-->
-  <string name="clear_history_completed">Histórico limpo.</string>
+  <string name="clear_history_dialog_title">Limpar histórico?</string>
+  <string name="clear_history_dialog_message">Esta ação não pode ser desfeita.</string>
+  <string name="clear_history_completed">O histórico foi eliminado.</string>
   <!--Conversation-->
-  <string name="conversation_action_delete_this">Eliminar conversa</string>
-  <string name="conversation_action_delete_this_title">Eliminar conversa ?</string>
-  <string name="conversation_action_delete_this_message">Esta ação não pode ser reposta.</string>
+  <string name="conversation_details">Detalhes do contacto</string>
+  <string name="conversation_action_delete_this">Eliminar esta conversa</string>
+  <string name="conversation_action_delete_this_title">Eliminar esta conversa?</string>
+  <string name="conversation_action_delete_this_message">Esta ação não pode ser desfeita.</string>
+  <string name="conversation_action_history_clear">Limpar histórico</string>
+  <string name="conversation_action_history_clear_title">Limpar o histórico da conversação?</string>
+  <string name="conversation_action_history_clear_message">Isto irá eliminar o histórico da conversação permanentemente.</string>
+  <string name="conversation_action_remove_this">Eliminar contacto</string>
+  <string name="conversation_action_remove_this_title">Eliminar este contacto?</string>
+  <string name="conversation_action_remove_this_message">Isto irá eliminar o contacto e limpar o histórico de conversação definitivamente.</string>
   <string name="conversation_action_copy_peer_number">Copiar número</string>
-  <string name="conversation_action_copied_peer_number_clipboard">%1$s copiado para a área de transferência</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s copiado</string>
   <string name="conversation_action_select_peer_number">Selecione um número</string>
+  <string name="conversation_action_block_this">Bloquear contacto</string>
+  <string name="conversation_action_go_to_call">Voltar à chamada a decorrer</string>
+  <string name="clip_contact_uri">Endereço do contacto</string>
   <!--Contacts-->
-  <string name="prompt_new_password">Nova password</string>
-  <string name="prompt_new_password_repeat">Repetir nova password</string>
-  <string name="account_create_title">Criar uma conta Ring</string>
-  <string name="prompt_new_username">Introduza um nome de utilizador</string>
-  <string name="help_password_choose">Escolha uma password forte para proteger a sua conta Ring.</string>
-  <string name="help_password_enter">Introduza a sua password principal do Ring</string>
+  <string name="add_call_contact_number_to_contacts">Adicionar %1$s?</string>
+  <string name="prompt_new_password">Nova palavra-chave</string>
+  <string name="prompt_new_password_optional">Nova palavra-chave (opcional)</string>
+  <string name="prompt_new_password_repeat">Repita a nova palavra-chave</string>
+  <string name="account_create_title">Criar uma conta Jami</string>
+  <string name="prompt_new_username">Introduza o seu nome de utilizador</string>
   <string name="wizard_next">Próximo</string>
+  <string name="wizard_back">Voltar</string>
+  <string name="wizard_skip">Ignorar</string>
   <!--MenuHeaderView-->
-  <string name="profile">O meu perfil</string>
-  <string name="open_the_gallery">Abrir galeria</string>
-  <string name="take_a_photo">Capturar fotografia</string>
+  <string name="profile">Meu perfil</string>
+  <string name="profile_message_warning">O seu perfil é partilhado apenas com seus contactos</string>
+  <string name="open_the_gallery">Abrir a galeria</string>
+  <string name="take_a_photo">Tirar uma foto</string>
+  <string name="profile_name_hint">Introduza o seu nome (opcional)</string>
   <!--Share fragment-->
-  <string name="share_your_account_information">Partilhar a minha informação de contacto</string>
+  <string name="share_message_no_account">Por favor selecione uma conta para partilhar.</string>
+  <string name="share_your_account_information">Partilhar os meus dados de contacto</string>
   <string name="generic_error_migration">Erro</string>
+  <string name="generic_error_migration_message">Ocorreu um erro durante a migração</string>
   <!--Pending contact requests-->
   <string name="accept">Aceitar</string>
   <string name="refuse">Recusar</string>
+  <string name="block">Bloquear</string>
+  <string name="contact_request_title">Novo pedido de contacto</string>
+  <string name="contact_request_msg">Tem %1$s pedidos de contacto</string>
+  <string name="contact_request_account">Para %1$s</string>
+  <string name="no_requests">0 solicitações de contacto</string>
+  <string name="message_contact_not_trusted_yet">%s ainda não está nos seus contactos.\nAceita ou recusa este pedido de contacto?</string>
+  <string name="message_contact_not_trusted">%s não está nos seus contactos.\nAdicionar o novo contacto?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Enviar</string>
+  <string name="send_request_title">Enviar uma solicitação de contacto</string>
+  <string name="send_request_msg">Deve enviar um pedido de contacto para se comunicar com este utilizador. Enquanto o seu contacto não aceitar o pedido, pode enviar mensagens, mas ele não poderá respondê-las.</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">0 contactos bloqueados</string>
   <!--Smartlist-->
-  <string name="tv_contact_row_header">Contatos</string>
+  <string name="no_contact_request">Nenhuma solicitação de contacto enviada</string>
+  <string name="contact_request_sent">A solicitação de contacto foi enviada</string>
+  <string name="search_results">Resultados da Pesquisa</string>
+  <string name="tv_contact_row_header">Contactos</string>
+  <string name="gallery_error_title">Não foi encontrada nenhuma app de Galeria</string>
+  <string name="gallery_error_message">Não foi encontrada nenhuma aplicação no dispositivo para abrir a Galeria</string>
+  <string name="generic_error">Ocorreu um erro desconhecido</string>
   <!--File Transfer-->
-  <string name="menu_file_share">Anexar arquivo</string>
+  <string name="invalid_file">Ficheiro inválido</string>
+  <string name="not_able_to_write_file">Não foi possível gravar o ficheiro</string>
+  <string name="file_transfer_status_created">A inicializar a transferência</string>
+  <string name="file_transfer_status_unsupported">não suportado</string>
+  <string name="file_transfer_status_wait_peer_acceptance">a aguardar a aceitação do destinatário</string>
+  <string name="file_transfer_status_wait_host_acceptance">A aguardar a aceitação do servidor</string>
+  <string name="file_transfer_status_ongoing">a decorrer</string>
+  <string name="file_transfer_status_finished">terminado</string>
+  <string name="file_transfer_status_closed_by_host">fechado pelo servidor</string>
+  <string name="file_transfer_status_closed_by_peer">fechado pelo destinatário</string>
+  <string name="file_transfer_status_invalid_pathname">diretório inválido</string>
+  <string name="file_transfer_status_unjoinable_peer">contacto indisponível</string>
+  <string name="file_saved_in">Ficheiro gravado em %s</string>
+  <string name="no_space_left_on_device">Sem espaço disponível no dispositivo</string>
+  <string name="title_media_viewer">Visualizador de média</string>
+  <string name="menu_file_open">Abrir ficheiro</string>
+  <string name="menu_file_download">Descarregar ficheiro</string>
+  <string name="menu_file_delete">Eliminar ficheiro</string>
+  <string name="menu_file_share">Partilhar ficheiro</string>
 </resources>

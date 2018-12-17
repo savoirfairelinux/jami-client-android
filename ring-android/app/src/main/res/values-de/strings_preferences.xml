@@ -5,15 +5,10 @@
   <string name="pref_category_system">System</string>
   <string name="pref_category_privacy">Privatsphäre</string>
   <string name="pref_mobileData_title">Mobildaten</string>
-  <string name="pref_mobileData_summary">Ring die Nutzung von 3G/LTE neben WLAN erlauben</string>
   <string name="pref_pushNotifications_title">Push-Benachrichtigungen</string>
   <string name="pref_pushNotifications_summary">Google-Server verwenden, um Anrufe/Nachrichten im Hintergrund empfangen zu können.</string>
   <string name="pref_systemContacts_title">Systemkontakte benutzen</string>
   <string name="pref_systemContacts_summary">Systemkontakte benutzen, um Anruferdetails anzuzeigen</string>
-  <string name="pref_systemDialer_title">Auch normale Anrufe über Ring abwickeln</string>
-  <string name="pref_systemDialer_summary">Ring für normale Anrufe verwenden, wenn möglich.</string>
-  <string name="pref_startOnBoot_title">Ring beim Hochfahren starten</string>
-  <string name="pref_startOnBoot_summary">Ring im Hintergrund aktivieren während das System startet</string>
   <string name="pref_clearHistory_title">Verlauf leeren</string>
   <string name="pref_clearHistory_summary">Alle Konversationen aus dem Verlauf löschen. Diese Aktion kann nicht rückgängig gemacht werden.</string>
 </resources>

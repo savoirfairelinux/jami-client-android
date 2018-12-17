@@ -5,7 +5,6 @@
   <string name="ic_advanced_menu">Opciones avanzadas</string>
   <string name="ic_blacklist_menu">Contactos bloqueados</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">Añadir cuenta Ring</string>
   <string name="add_sip_account_title">Añadir cuenta SIP</string>
   <string name="ring_account_default_name">Cuenta Ring %1$s</string>
   <string name="prompt_alias">Alias</string>
@@ -26,7 +25,6 @@
 Solo podrá realizar y recibir llamadas de ip directas.
 Podrá editar su cuenta más tarde.</string>
   <string name="account_type_ip2ip">Cuenta IP</string>
-  <string name="help_ring">Una cuenta Ring le permite comunicarse con gente de forma segura a través de una red P2P totalmente distribuida.</string>
   <string name="help_sip_title">Añada su cuenta SIP</string>
   <string name="help_sip">Configure una cuenta SIP existente.</string>
   <string name="create_sip_account">Añadir cuenta SIP</string>
@@ -36,7 +34,6 @@ Podrá editar su cuenta más tarde.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">No hay cuenta registrada</string>
   <string name="normal_accounts_titles">Cuentas</string>
-  <string name="normal_devices_titles">Dispositivos conocidos enlazados a esta cuenta Ring</string>
   <string name="account_device_revoke">Revocar dispositivo</string>
   <string name="account_device_revocation_success_title">Éxito</string>
   <string name="account_device_revocation_success">¡Se ha revocado el dispositivo!</string>
@@ -92,15 +89,12 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_no_network_title">No se puede conectar a la red</string>
   <string name="account_link_button">Vincular este dispositivo a una cuenta</string>
   <string name="account_link_prompt_pin">Introducir PIN</string>
-  <string name="account_new_button">Crear cuenta Ring</string>
   <string name="account_link_export_button">Vincular otro dispositivo a esta cuenta</string>
   <!--Name registration-->
   <string name="account_status_connecting">Conectando</string>
   <string name="account_status_unknown">Desconocido</string>
   <!--Create account-->
-  <string name="account_creation_home">Bienvenido a Ring</string>
   <string name="account_creation_profile">Creá tu perfil</string>
-  <string name="account_creation_ring">Crear tu cuenta Ring</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Editar tu perfil</string>
   <!--Devices-->

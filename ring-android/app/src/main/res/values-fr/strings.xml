@@ -2,9 +2,7 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Commentaire</string>
-  <string name="report">&lt;u&gt;Envoyez-nous un courriel&lt;/u&gt;</string>
   <string name="section_license">Licence</string>
-  <string name="sponsor_section">Ring est un logiciel libre développé et soutenu par</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Contribuez</string>
   <string name="version_section">Version</string>
@@ -12,9 +10,6 @@
   <string name="no_browser_app_installed">Aucun navigateur internet trouvé. Vous devez en installer un afin de voir cette page</string>
   <string name="email_chooser_title">Envoi du courriel en utilisant…</string>
   <string name="website_chooser_title">Voir le site web avec...</string>
-  <string name="license">Ce logiciel est offert \"tel quel\", sans aucune garantie. Pour plus d\'informations, 
-&lt;u&gt;GNU General Public License version 3 or later&lt;/u&gt;</string>
-  <string name="description">Ring est un logiciel libre de communication universel qui respecte la liberté et la vie privée de ses utilisateurs.</string>
   <string name="credits">Crédits</string>
   <!--About dialog-->
   <string name="developed_by">Développé par</string>
@@ -36,7 +31,6 @@
   <string name="menu_item_account">Gestion du compte</string>
   <string name="menu_item_settings">Paramètres</string>
   <string name="menu_item_share">Partager mon contact</string>
-  <string name="menu_item_about">À propos de Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Composez un numéro</string>
   <!--History Fragment-->
@@ -65,6 +59,8 @@
   <string name="notif_channel_messages">Messages</string>
   <string name="notif_channel_requests">Sollicitations</string>
   <string name="notif_channel_file_transfer">Transfert de fichier</string>
+  <string name="notif_channel_background_service">Service en arrière-plan</string>
+  <string name="notif_channel_background_service_descr">Permet de recevoir des appels et des messages en tout temps.</string>
   <string name="notif_mark_as_read">Marquer comme lu</string>
   <string name="notif_dismiss">Rejeter</string>
   <string name="notif_reply">Répondre</string>
@@ -80,8 +76,6 @@
   <string name="ongoing_call">Appel en cours</string>
   <string name="hist_in_call">Appel entrant de %1$s</string>
   <string name="hist_out_call">Appel sortant de %1$s</string>
-  <string name="start_error_title">Impossible de démarrer Ring |</string>
-  <string name="start_error_mic_required">Ring nécessite les permissions d\'accès au micro pour fonctionner.</string>
   <string name="action_call_accept">Répondre</string>
   <string name="action_call_decline">Décliner</string>
   <string name="ab_action_speakerphone">Activer le haut-parleur</string>
@@ -111,9 +105,7 @@
   <string name="ringtone_error_format_not_supported">Ce format de fichier n\'est pas supporté.</string>
   <string name="ringtone_error_size_too_big">Le fichier est trop grand. La taille maximum est %1$d kB.</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Ring a besoin d\'accéder en lecture à votre liste de contact. SVP autorisez-le.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Ring a besoin d\'accéder en écriture à votre liste de contact. SVP autorisez-le.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Numérisez le code QR de votre interlocuteur.</string>
   <!--Settings-->
@@ -121,6 +113,7 @@
   <string name="clear_history_dialog_message">Cette action est irréversible.</string>
   <string name="clear_history_completed">Le journal d\'appels a été effacé.</string>
   <!--Conversation-->
+  <string name="conversation_details">Détails du contact</string>
   <string name="conversation_action_delete_this">Supprimer la conversation</string>
   <string name="conversation_action_delete_this_title">Supprimer la conversation ?</string>
   <string name="conversation_action_delete_this_message">Cette action est irréversible.</string>
@@ -135,16 +128,13 @@
   <string name="conversation_action_select_peer_number">Choisir un numéro</string>
   <string name="conversation_action_block_this">Bloquer le contact</string>
   <string name="conversation_action_go_to_call">Revenir à l\'appel en cours</string>
+  <string name="clip_contact_uri">Adresse du contact</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Ajouter %1$s ?</string>
   <string name="prompt_new_password">Nouveau mot de passe</string>
   <string name="prompt_new_password_optional">Nouveau mot de passe (optionnel)</string>
   <string name="prompt_new_password_repeat">Confirmez le mot de passe</string>
-  <string name="account_create_title">Créer un compte Ring</string>
   <string name="prompt_new_username">Entrez un nouveau nom d\'utilisateur</string>
-  <string name="help_password_choose">Pour protéger votre compte Ring, choisissez un mot de passe robuste dont vous vous rappellerez.</string>
-  <string name="help_password_enter">Entrez le mot de passe de votre compte Ring</string>
-  <string name="help_pin_enter">Entrez le NIP obtenu en configurant un autre compte Ring . Utilisez la fonction \"exportez un compte sur Ring\" pour obtenir un NIP.</string>
   <string name="wizard_next">Suivant</string>
   <string name="wizard_back">Précédent</string>
   <string name="wizard_skip">Passez</string>
@@ -155,7 +145,6 @@
   <string name="take_a_photo">Prendre une photo</string>
   <string name="profile_name_hint">Entrez votre nom (facultatif)</string>
   <!--Share fragment-->
-  <string name="share_message">Scanner ce code avec Ring</string>
   <string name="share_message_no_account">Veuillez sélectionner le compte à partager.</string>
   <string name="share_your_account_information">Partagez mes coordonnées</string>
   <string name="generic_error_migration">Erreur</string>
@@ -200,6 +189,7 @@
   <string name="file_saved_in">Fichier sauvegardé dans %s</string>
   <string name="no_space_left_on_device">Espace de stockage insuffisant sur l\'appareil</string>
   <string name="title_media_viewer">Application de consultation de média</string>
+  <string name="menu_file_open">Ouvrir le fichier</string>
   <string name="menu_file_download">Télécharger le fichier</string>
   <string name="menu_file_delete">Supprimer le fichier</string>
   <string name="menu_file_share">Partager un fichier</string>

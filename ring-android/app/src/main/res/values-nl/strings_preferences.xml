@@ -5,15 +5,10 @@
   <string name="pref_category_system">Systeem</string>
   <string name="pref_category_privacy">Privacy</string>
   <string name="pref_mobileData_title">Mobiele data</string>
-  <string name="pref_mobileData_summary">Ring toestaan om 3G/LTE-netwerken te gebruiken naast wifi</string>
   <string name="pref_pushNotifications_title">Pushmeldingen</string>
   <string name="pref_pushNotifications_summary">Gebruik de servers van Google om oproepen/berichten in de achtergrond te kunnen ontvangen</string>
   <string name="pref_systemContacts_title">Systeemcontacten gebruiken</string>
   <string name="pref_systemContacts_summary">Systeemcontacten gebruiken om gegevens van beller te tonen</string>
-  <string name="pref_systemDialer_title">Systeemoproepen plaatsen met Ring</string>
-  <string name="pref_systemDialer_summary">Ring gebruiken voor systeemoproepen wanneer mogelijk</string>
-  <string name="pref_startOnBoot_title">Ring automatisch starten</string>
-  <string name="pref_startOnBoot_summary">Ring in achtergrond uitvoeren wanneer apparaat ingeschakeld wordt.</string>
   <string name="pref_clearHistory_title">Geschiedenis wissen</string>
   <string name="pref_clearHistory_summary">Geschiedenis van alle gesprekken wissen. Deze handeling kan niet ongedaan gemaakt worden.</string>
 </resources>

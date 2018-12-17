@@ -17,7 +17,6 @@
   <string name="dialog_warn_ip2ip_account_message">Ви збираєтесь створити обліковий запис SIP без імені хоста.
 Вам будуть доступні лише прямі IP дзвінки. 
 Ви зможете відредагувати цей обліковий запис пізніше</string>
-  <string name="help_ring">Обліковий запис Ring дозволяє спілкуватися захищено у рівноправній та повністю розподіленій мережі.</string>
   <string name="help_sip_title">Додати Ваш обліковий запис SIP</string>
   <string name="help_sip">Налаштувати існуючий обліковий запис SIP</string>
   <!--Strings related to account deletion-->
@@ -90,13 +89,11 @@
   <string name="error_passwords_not_equals">Паролі не збігаються</string>
   <string name="export_account_wait_title">Будь ласка зачекайте</string>
   <string name="account_export_end_error_title">Помилка</string>
-  <string name="account_new_button">Створити обліковий запис Ring</string>
   <string name="account_link_export_button">Прив\'язати інший пристрій до цього облікового запису</string>
   <!--Name registration-->
   <string name="account_status_connecting">З\'єднання</string>
   <string name="account_status_unknown">Невідомий</string>
   <!--Create account-->
-  <string name="account_creation_home">Вітаємо у Ring</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="revoke_device_wait_title">Будь ласка зачекайте</string>

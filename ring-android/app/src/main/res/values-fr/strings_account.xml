@@ -5,7 +5,6 @@
   <string name="ic_advanced_menu">Réglages avancés</string>
   <string name="ic_blacklist_menu">Contacts bloqués</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">Ajouter un compte Ring</string>
   <string name="add_sip_account_title">Ajouter un compte SIP</string>
   <string name="ring_account_default_name">Compte Ring %1$s</string>
   <string name="prompt_alias">Alias</string>
@@ -26,7 +25,6 @@
 Vous pourrez uniquement faire et recevoir des appels directs directs sur IP.
 Vous pouvez modifier le compte plus tard.</string>
   <string name="account_type_ip2ip">Compte IP</string>
-  <string name="help_ring">Un compte Ring permet de se connecter sécuritairement avec un autre interlocuteur à travers un réseau distribué</string>
   <string name="help_sip_title">Ajouter votre compte SIP</string>
   <string name="help_sip">Configurez un compte SIP existant.</string>
   <string name="create_sip_account">Ajouter un compte SIP</string>
@@ -36,7 +34,6 @@ Vous pouvez modifier le compte plus tard.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Aucun compte enregistré</string>
   <string name="normal_accounts_titles">Comptes</string>
-  <string name="normal_devices_titles">Liste des appareils connus liés à votre compte Ring</string>
   <string name="account_device_revoke">Révoquer l\'appareil</string>
   <string name="account_device_revocation_success_title">Succès</string>
   <string name="account_device_revocation_success">L\'appareil est maintenant révoqué !</string>
@@ -120,38 +117,26 @@ Vous pouvez modifier le compte plus tard.</string>
   <string name="account_export_end_error_title">Erreur</string>
   <string name="account_export_end_error_message">Impossible d\'exporter le compte. Une erreur inconnue s\'est produite.</string>
   <string name="account_enter_password">Entrez le mot de passe</string>
-  <string name="account_share_body">Contactez-moi en utilisant  \'%1$s\' sur la plateforme de communication distribuée Ring: https://ring.cx</string>
-  <string name="account_share_body_with_username">Contactez-moi en utilisant  \'%1$s\' ou mon nom d\'utilisateur public \'%2$s\' sur la plateforme de communication distribuée Ring: https://ring.cx</string>
-  <string name="account_contact_me">Contactez moi sur Ring !</string>
   <string name="update_account">Mise à jour du compte </string>
-  <string name="account_migration">Votre compte Ring va être mis à jour.\nVeuillez entrer votre mot de passe.</string>
   <string name="ring_account">Compte Ring</string>
   <string name="ring_account_identity">Identité</string>
   <string name="account_migration_title_dialog">Migration du compte</string>
   <string name="account_migration_message_dialog">Vos comptes ont besoin d\'être mis à jour. Souhaitez-vous aller au panneau des comptes pour effectuer cet opération ?</string>
   <string name="account_update_needed">Mise à jour nécessaire</string>
   <string name="account_cannot_be_found_title">Compte introuvable</string>
-  <string name="account_cannot_be_found_message">Le compte n\'a pas pu être trouvé sur le réseau Ring. Veuillez vous assurer qu\'il a été correctement exporté sur Ring depuis un appareil existant et que les identifiants fournis sont corrects.</string>
   <string name="account_sip_cannot_be_registered_message">Vous pouvez continuer le processus de création du compte ou mettre à jour vos informations ici. Vous pouvez également mettre à jour vos informations plus tard dans les paramètres de compte.</string>
   <string name="account_no_network_title">Impossible de se connecter au réseau</string>
-  <string name="account_no_network_message">impossible d\'ajouter le compte car Ring ne peut pas se connecter au réseau. Veuillez vérifier votre connexion.</string>
   <string name="account_device_added_title">Appareil ajouté</string>
-  <string name="account_device_added_message">Le compte Ring a été correctement configuré sur cet appareil.</string>
   <string name="account_device_updated_title">Appareil mis à jour</string>
-  <string name="account_device_updated_message">Mise à jour de votre compte Ring effectuée avec succès. </string>
   <string name="account_cannot_be_updated_message">La mise à jour de l\'appareil associé à ce compte a échouée. S.v.p. vérifier votre mot de passe.</string>
   <string name="account_sip_success_title">Compte SIP enregistré</string>
   <string name="account_sip_success_message">Compte SIP enregistré avec succès</string>
   <string name="account_sip_register_anyway">Poursuivre l\'inscription</string>
   <string name="account_link_button">Lier cet appareil à un compte</string>
   <string name="account_link_prompt_pin">Entrer votre NIP</string>
-  <string name="account_new_button">Créer un compte Ring</string>
   <string name="account_link_export_button">Lier un autre appareil à ce compte</string>
-  <string name="account_link_export_info">Pour emmener ce compte sur un autre appareil, vous devez d\'abord l\'exposer sur Ring. Ceci créera un NIP que vous devrez entrer sur le nouvel appareil pour configurer le compte. Le NIP sera valable pendant 10 minutes.</string>
   <string name="account_start_export_button">Générer un NIP</string>
   <string name="account_end_export_button">fermer</string>
-  <string name="account_end_export_infos">Votre NIP est : \n\n1%%\n\nPour compléter le processus, ouvrir Ring sur le nouvel appareil, et choisir l\'option \"Lier cet appareil à un compte\". Le NIP est valide pendant 10 minutes.</string>
-  <string name="account_link_export_info_light">Pour emmener ce compte sur un autre appareil, vous devez d\'abord l\'exposer sur Ring. Ceci créera un NIP que vous devrez entrer sur le nouvel appareil pour configurer le compte. Le NIP sera valable pendant 10 minutes.</string>
   <string name="account_export_title">Ajoutez des appareils</string>
   <!--Name registration-->
   <string name="error_username_empty">Entrer un nom d\'utilisateur</string>
@@ -169,9 +154,7 @@ Vous pouvez modifier le compte plus tard.</string>
   <string name="account_status_unknown">Inconnu</string>
   <string name="account_status_offline">Déconnecté</string>
   <!--Create account-->
-  <string name="account_creation_home">Bienvenue sur Ring</string>
   <string name="account_creation_profile">Créer votre profil</string>
-  <string name="account_creation_ring">Créer votre compte Ring</string>
   <string name="account_link_title">Lier cet appareil</string>
   <string name="account_sip_cannot_be_registered">Impossible d\'enregistrer le compte</string>
   <!--Edit profile-->
@@ -184,7 +167,6 @@ Vous pouvez modifier le compte plus tard.</string>
   <string name="revoke_device_wait_title">Veuillez patienter</string>
   <string name="revoke_device_wait_message">Révoquer un appareil</string>
   <string name="rename_device_title">Renommer cet appareil</string>
-  <string name="rename_device_message">Choisissez un nom pour identifier cet appareil dans votre compte Ring</string>
   <string name="rename_device_button">Renommer l\'appareil</string>
   <string name="account_rename_device_hint">Choisissez un nouveau nom d\'appareil</string>
   <string name="account_device_name_empty">Le nom d\'appareil ne peut être vide</string>

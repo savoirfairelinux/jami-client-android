@@ -2,9 +2,7 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Feedback</string>
-  <string name="report">&lt;u&gt;Envie-nos um email&lt;/u&gt;</string>
   <string name="section_license">Licença</string>
-  <string name="sponsor_section">Ring é um software livre desenvolvido e mantido por</string>
   <string name="copyright_section">Direitos de Autor</string>
   <string name="contribute_section">Contribua</string>
   <string name="version_section">Versão</string>
@@ -12,9 +10,6 @@
   <string name="no_browser_app_installed">Nenhum navegador de internet foi encontrado, instale um para acessar esta página</string>
   <string name="email_chooser_title">Enviar e-mail usando...</string>
   <string name="website_chooser_title">Ver site utilizando...</string>
-  <string name="license">Este software é disponibilizado \"no estado\", sem garantia de qualquer tipo. 
-Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recente&lt;/u&gt;</string>
-  <string name="description">Ring é um software livre para comunicação universal que respeita as liberdades e privacidade de seus usuários.</string>
   <string name="credits">Créditos</string>
   <!--About dialog-->
   <string name="developed_by">Desenvolvido por</string>
@@ -36,7 +31,6 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="menu_item_account">Administrar conta</string>
   <string name="menu_item_settings">Configurações</string>
   <string name="menu_item_share">Compartilhar meu contato</string>
-  <string name="menu_item_about">Sobre o Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Disque um número</string>
   <!--History Fragment-->
@@ -80,8 +74,6 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="ongoing_call">Chamada em andamento</string>
   <string name="hist_in_call">Recebimento de chamada %1$s</string>
   <string name="hist_out_call">Chamada de saída %1$s</string>
-  <string name="start_error_title">Não é possível iniciar o Ring!</string>
-  <string name="start_error_mic_required">Ring requer permissão para uso do microfone para funcionar.</string>
   <string name="action_call_accept">Atender chamada</string>
   <string name="action_call_decline">Rejeitar</string>
   <string name="ab_action_speakerphone">Habilitar viva-voz</string>
@@ -111,9 +103,7 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="ringtone_error_format_not_supported">Este formato não é suportado.</string>
   <string name="ringtone_error_size_too_big">Este arquivo é grande demais. O tamanho máximo é %1$dkB.</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">O Ring precisa de permissão para \"Acessar contatos\" para habilitar esta função. Permita, por favor.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Ring precisa de permissão para \'Escrever registro de chamadas\' para ativar esse recurso. Por favor, conceda-o.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Escanear o Código QR da conta que deseja adicionar.</string>
   <!--Settings-->
@@ -140,11 +130,7 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="prompt_new_password">Nova senha</string>
   <string name="prompt_new_password_optional">Nova senha (opcional)</string>
   <string name="prompt_new_password_repeat">Repita a nova senha</string>
-  <string name="account_create_title">Criar uma conta no Ring</string>
   <string name="prompt_new_username">Entre novo nome de usuário</string>
-  <string name="help_password_choose">Utilize uma senha segura de sua preferência para proteger sua conta Ring.</string>
-  <string name="help_password_enter">Entre com a senha da sua conta Ring principal</string>
-  <string name="help_pin_enter">Entre com o PIN de uma outra conta Ring já configurada. Utilize a opção \"exportar conta no Ring\" para obter um novo PIN.</string>
   <string name="wizard_next">Próximo</string>
   <string name="wizard_back">Voltar</string>
   <string name="wizard_skip">Pular</string>
@@ -155,7 +141,6 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="take_a_photo">Tirar uma foto</string>
   <string name="profile_name_hint">Insira o seu nome (opcional)</string>
   <!--Share fragment-->
-  <string name="share_message">Digitalize este código com Ring</string>
   <string name="share_message_no_account">Por favor selecione uma conta para compartilhar.</string>
   <string name="share_your_account_information">Compartilhar meus dados de contato</string>
   <string name="generic_error_migration">Erro</string>
@@ -200,6 +185,7 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="file_saved_in">Arquivo salvo em %s</string>
   <string name="no_space_left_on_device">Sem espaço no dispositivo</string>
   <string name="title_media_viewer">Visualizador de mídia</string>
+  <string name="menu_file_open">Abrir arquivo</string>
   <string name="menu_file_download">Baixar arquivo</string>
   <string name="menu_file_delete">Excluir arquivo</string>
   <string name="menu_file_share">Compartilhar arquivo</string>

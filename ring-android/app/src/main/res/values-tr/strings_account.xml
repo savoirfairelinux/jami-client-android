@@ -5,7 +5,6 @@
   <string name="ic_advanced_menu">Gelişmiş ayarlar</string>
   <string name="ic_blacklist_menu">Engellenmiş kişiler</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">Ring hesabı ekle</string>
   <string name="add_sip_account_title">SIP hesabı ekle</string>
   <string name="ring_account_default_name">Ring hesabı %1$s</string>
   <string name="prompt_alias">Takma ad</string>
@@ -26,7 +25,6 @@
 Yalnızca doğrudan ip çağrıları alabilirsiniz.
 Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="account_type_ip2ip">IP hesabı</string>
-  <string name="help_ring">Bir Ring hesabı tümüyle dağıtık ağ üzerinden insanlara uçtan uca güvenle ulaşmanızı sağlar.</string>
   <string name="help_sip_title">SIP hesabınızı ekleyin</string>
   <string name="help_sip">Var olan SIP hesabını yapılandır</string>
   <string name="create_sip_account">SIP hesabı ekle</string>
@@ -36,7 +34,6 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Kayıtlı hesap yok</string>
   <string name="normal_accounts_titles">Hesaplar</string>
-  <string name="normal_devices_titles">Bu Ring hesabına bağlı bilinen aygıtlar</string>
   <string name="account_device_revoke">Aygıtı iptal et</string>
   <string name="account_device_revocation_success_title">Başarılı</string>
   <string name="account_device_revocation_success">Aygıt şimdi iptal edildi!</string>
@@ -117,32 +114,23 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="account_export_end_error_title">Hata</string>
   <string name="account_export_end_error_message">Hesap dışa aktarılamadı. Bilinmeyen bir hata oluştu.</string>
   <string name="account_enter_password">Parolayı gir</string>
-  <string name="account_share_body">Ring dağıtık iletişim platformunda \'%1$s\' kullanarak benimle iletişime geç: https://ring.cx</string>
-  <string name="account_share_body_with_username">Ring dağıtık iletişim platformunda \'%1$s\' veya herkese açık kullanıcı adımı \'%2$s\' kullanarak benimle iletişime geç: https://ring.cx</string>
-  <string name="account_contact_me">Benimle Ring üzerinden iletişime geç</string>
   <string name="update_account">Hesabı güncelle</string>
-  <string name="account_migration">Ring hesabınız güncellenebilir.\nParolanızı girin.</string>
   <string name="ring_account">Ring Hesabı</string>
   <string name="ring_account_identity">Kimlik</string>
   <string name="account_migration_title_dialog">Hesap taşıma</string>
   <string name="account_migration_message_dialog">Hesaplarınızın güncellenmesi gerekli.Hesap yönetim ekranından bu süreci yürütmek ister misiniz?</string>
   <string name="account_update_needed">Güncelleme gerekli</string>
   <string name="account_cannot_be_found_title">Hesap bulunamadı</string>
-  <string name="account_cannot_be_found_message">Hesap Ring ağı üzerinde bulunamadı.\nVar olan bir aygıttan Ring üzerinde dışa aktarıldığından ve sağladığı bilgilerin doğru olduğundan emin olun.</string>
   <string name="account_sip_cannot_be_registered_message">Hesap oluşturma süreciyle devam edebilir ya da bilginizi burada düzenleyebilirsiniz. Düzenleme daha sonra hesap ayarlarında yapılabilir.</string>
   <string name="account_no_network_title">Ağa bağlanılamıyor</string>
-  <string name="account_no_network_message">Hesap eklenemiyor çünkü Ring dağıtık ağa bağlanamıyor. Bağlanabilirliğinizi denetleyin.</string>
   <string name="account_device_added_title">Hesap aygıtı eklendi</string>
-  <string name="account_device_added_message">Bu aygıttaki Ring hesabınızı başarıyla kurdunuz.</string>
   <string name="account_device_updated_title">Hesap aygıtı güncellendi</string>
-  <string name="account_device_updated_message">Ring hesabınızı başarıyla güncellediniz.</string>
   <string name="account_cannot_be_updated_message">Hesap aygıtı güncellenemedi. Lütfen parolanızı kontrol edin</string>
   <string name="account_sip_success_title">Sip hesabı kayıtlı</string>
   <string name="account_sip_success_message">Sip hesabınızı başarıyla kaydettiniz.</string>
   <string name="account_sip_register_anyway">Her koşulda kaydol</string>
   <string name="account_link_button">Bu aygıtı bir hesaba bağla</string>
   <string name="account_link_prompt_pin">PIN\'i gir</string>
-  <string name="account_new_button">Bir Ring hesabı oluştur</string>
   <string name="account_link_export_button">Başka aygıtı bu hesaba bağla</string>
   <string name="account_end_export_button">kapat</string>
   <!--Name registration-->
@@ -160,9 +148,7 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="account_status_unknown">Bilinmeyen</string>
   <string name="account_status_offline">Çevrimdışı</string>
   <!--Create account-->
-  <string name="account_creation_home">Ring\'e Hoşgeldiniz</string>
   <string name="account_creation_profile">Profilinizi oluşturun</string>
-  <string name="account_creation_ring">Ring hesabınızı oluşturun</string>
   <string name="account_link_title">Bu aygıtı bağla</string>
   <string name="account_sip_cannot_be_registered">Hesap kaydedilemiyor</string>
   <!--Edit profile-->
@@ -174,7 +160,6 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="revoke_device_wait_title">Lütfen bekleyin...</string>
   <string name="revoke_device_wait_message">Aygıt iptal ediliyor</string>
   <string name="rename_device_title">Bu aygıtı yeniden adlandır</string>
-  <string name="rename_device_message">Ring hesabınızı bu aygıtta tanımlamak için yeni bir ad seçin</string>
   <string name="rename_device_button">Aygıtı yeniden adlandır</string>
   <string name="account_rename_device_hint">Yeni aygıt adı seç</string>
   <string name="account_device_name_empty">Aygıt adı boş bırakılamaz</string>
