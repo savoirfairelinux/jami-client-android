@@ -2,9 +2,7 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Comentários</string>
-  <string name="report">&lt;u&gt;Envie-nos um email&lt;/u&gt;</string>
   <string name="section_license">Licença</string>
-  <string name="sponsor_section">O Ring é um programa livre desenvolvido e apoiado por</string>
   <string name="copyright_section">Direitos de Autor</string>
   <string name="contribute_section">Contribuir</string>
   <string name="version_section">Versão</string>
@@ -12,9 +10,7 @@
   <string name="no_browser_app_installed">Não foi encontrado nenhum navegador de Internet foi encontrado, instale um para aceder a esta página</string>
   <string name="email_chooser_title">Enviar e-mail utilizando...</string>
   <string name="website_chooser_title">Ver site utilizando...</string>
-  <string name="license">Este programa é fornecido \"tal como está\", sem qualquer tipo de garantia. Para mais detalhes ver
-&lt;u&gt;GNU General Public License versão 3 ou posterior&lt;/u&gt;</string>
-  <string name="description">O Ring é um programa livre para comunicação universal que respeita as liberdades e privacidade dos seus utilizadores.</string>
+  <string name="description">O Jami é um programa livre para comunicação universal que respeita as liberdades e privacidade dos seus utilizadores.</string>
   <string name="credits">Créditos</string>
   <!--About dialog-->
   <string name="developed_by">Desenvolvido por</string>
@@ -36,7 +32,6 @@
   <string name="menu_item_account">Gerir conta</string>
   <string name="menu_item_settings">Configurações</string>
   <string name="menu_item_share">Partilhar o meu contacto</string>
-  <string name="menu_item_about">Sobre o Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Marcar um número</string>
   <!--History Fragment-->
@@ -65,6 +60,8 @@
   <string name="notif_channel_messages">Mensagens</string>
   <string name="notif_channel_requests">Solicitações</string>
   <string name="notif_channel_file_transfer">Transferência de ficheiro</string>
+  <string name="notif_channel_background_service">Serviço em segundo plano</string>
+  <string name="notif_channel_background_service_descr">Permite receber chamadas e mensagens em qualquer altura.</string>
   <string name="notif_mark_as_read">Marcar como lida</string>
   <string name="notif_dismiss">Dispensar</string>
   <string name="notif_reply">Responder</string>
@@ -80,8 +77,6 @@
   <string name="ongoing_call">Chamada a decorrer</string>
   <string name="hist_in_call">Chamada recebida de %1$s</string>
   <string name="hist_out_call">Chamada feita para %1$s</string>
-  <string name="start_error_title">Não é possível iniciar o Ring!</string>
-  <string name="start_error_mic_required">O Ring requer permissão para uso do microfone para funcionar.</string>
   <string name="action_call_accept">Atender chamada</string>
   <string name="action_call_decline">Rejeitar</string>
   <string name="ab_action_speakerphone">Ativar alta-voz</string>
@@ -111,9 +106,7 @@
   <string name="ringtone_error_format_not_supported">Este formato não é suportado.</string>
   <string name="ringtone_error_size_too_big">Este ficheiro é grande demais. O tamanho máximo é %1$dkB.</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">O Ring necessita de permissão para \"Ler contactos\" para ativar esta funcionalidade. Forneça por favor essa permissão.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">O Ring necessita de permissão para \"Escrever registos de chamadas\" para ativar esta funcionalidade. Por favor, conceda-a.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Digitalize o Código QR da conta que deseja adicionar.</string>
   <!--Settings-->
@@ -121,6 +114,7 @@
   <string name="clear_history_dialog_message">Esta ação não pode ser desfeita.</string>
   <string name="clear_history_completed">O histórico foi eliminado.</string>
   <!--Conversation-->
+  <string name="conversation_details">Detalhes do contacto</string>
   <string name="conversation_action_delete_this">Eliminar esta conversa</string>
   <string name="conversation_action_delete_this_title">Eliminar esta conversa?</string>
   <string name="conversation_action_delete_this_message">Esta ação não pode ser desfeita.</string>
@@ -135,16 +129,14 @@
   <string name="conversation_action_select_peer_number">Selecione um número</string>
   <string name="conversation_action_block_this">Bloquear contacto</string>
   <string name="conversation_action_go_to_call">Voltar à chamada a decorrer</string>
+  <string name="clip_contact_uri">Endereço do contacto</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Adicionar %1$s?</string>
   <string name="prompt_new_password">Nova palavra-chave</string>
   <string name="prompt_new_password_optional">Nova palavra-chave (opcional)</string>
   <string name="prompt_new_password_repeat">Repita a nova palavra-chave</string>
-  <string name="account_create_title">Criar uma conta no Ring</string>
+  <string name="account_create_title">Criar uma conta Jami</string>
   <string name="prompt_new_username">Introduza o seu nome de utilizador</string>
-  <string name="help_password_choose">Utilize uma palavra-chave segura mas que se lembre para proteger a sua conta Ring.</string>
-  <string name="help_password_enter">Introduza a sua palavra-chave da sua conta principal Ring</string>
-  <string name="help_pin_enter">Introduza o seu PIN de uma outra conta Ring já configurada. Utilize a opção \"Exportar conta no Ring\" para obter um PIN.</string>
   <string name="wizard_next">Próximo</string>
   <string name="wizard_back">Voltar</string>
   <string name="wizard_skip">Ignorar</string>
@@ -155,7 +147,6 @@
   <string name="take_a_photo">Tirar uma foto</string>
   <string name="profile_name_hint">Introduza o seu nome (opcional)</string>
   <!--Share fragment-->
-  <string name="share_message">Digitalizar este código com o Ring</string>
   <string name="share_message_no_account">Por favor selecione uma conta para partilhar.</string>
   <string name="share_your_account_information">Partilhar os meus dados de contacto</string>
   <string name="generic_error_migration">Erro</string>

@@ -5,7 +5,6 @@
   <string name="ic_advanced_menu">詳細設定</string>
   <string name="ic_blacklist_menu">ブロックした連絡先</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">Ringアカウントを追加</string>
   <string name="add_sip_account_title">SIPアカウントを追加</string>
   <string name="ring_account_default_name">Ring アカウント %1$s</string>
   <string name="prompt_alias">別名</string>
@@ -25,7 +24,6 @@
 これは、直接のIP呼び出しによる発着信しかできません。
 アカウントを後で編集してください。</string>
   <string name="account_type_ip2ip">IPアカウント</string>
-  <string name="help_ring">Ringアカウントを使用すると、完全に分散されたネットワークを通じてピアツーピアで安全に人々にアクセスできます。</string>
   <string name="help_sip_title">SIPアカウントを追加</string>
   <string name="help_sip">既存のSIPアカウントを設定</string>
   <string name="create_sip_account">SIPアカウントを追加</string>
@@ -35,7 +33,6 @@
   <!--AccountManagementFragment-->
   <string name="empty_account_list">アカウントが登録されていません</string>
   <string name="normal_accounts_titles">アカウント</string>
-  <string name="normal_devices_titles">既知のデバイスがこのRingアカウントにリンクされています</string>
   <string name="account_device_revoke">デバイスを取り消し</string>
   <string name="account_device_revocation_success_title">成功</string>
   <string name="account_device_revocation_success">デバイスを取り消しました!</string>
@@ -116,32 +113,23 @@
   <string name="account_export_end_error_title">エラー</string>
   <string name="account_export_end_error_message">アカウントをエクスポートできませんでした。 不明なエラーが発生しました。</string>
   <string name="account_enter_password">パスワードを入力してください</string>
-  <string name="account_share_body">Ring分散コミュニケーションプラットフォームで \'%1$s\' を使用して私にご連絡ください: https://ring.cx</string>
-  <string name="account_share_body_with_username">Ring分散コミュニケーションプラットフォームで \'%1$s\' または私の公開ユーザ―名 \'%2$s\' を使用して私にご連絡ください: https://ring.cx</string>
-  <string name="account_contact_me">Ring で私にご連絡ください !</string>
   <string name="update_account">アカウントの更新</string>
-  <string name="account_migration">Ringアカウントを更新することができます。\nパスワードを入力してください。</string>
   <string name="ring_account">Ringアカウント</string>
   <string name="ring_account_identity">ID</string>
   <string name="account_migration_title_dialog">アカウントの移行</string>
   <string name="account_migration_message_dialog">アカウントを更新する必要があります。 アカウント管理画面に移動して、この操作を実行しますか？</string>
   <string name="account_update_needed">更新が必要です</string>
   <string name="account_cannot_be_found_title">アカウントが見つかりません</string>
-  <string name="account_cannot_be_found_message">Ringネットワーク上にアカウントが見つかりませんでした。\n既存のデバイスからRing上にエクスポートされていることと、提供された資格情報が正しいことを確認してください。</string>
   <string name="account_sip_cannot_be_registered_message">アカウント作成プロセスを続行するか、ここで情報を編集することができます。 アカウント設定で、後で編集することも可能です。</string>
   <string name="account_no_network_title">ネットワークに接続できません</string>
-  <string name="account_no_network_message">Ringが分散ネットワークに接続できないため、アカウントを追加できませんでした。 デバイスの接続を確認してください。</string>
   <string name="account_device_added_title">アカウントデバイスが追加されました</string>
-  <string name="account_device_added_message">このデバイスでRingアカウントを設定しました。</string>
   <string name="account_device_updated_title">アカウントデバイスを更新しました</string>
-  <string name="account_device_updated_message">Ringアカウントを正常に更新しました。</string>
   <string name="account_cannot_be_updated_message">アカウントのデバイスを更新できませんでした。パスワードを確認してください。</string>
   <string name="account_sip_success_title">SIP アカウントを登録しました</string>
   <string name="account_sip_success_message">SIPアカウントを正常に登録しました。</string>
   <string name="account_sip_register_anyway">とにかく登録する</string>
   <string name="account_link_button">このデバイスをアカウントへリンク</string>
   <string name="account_link_prompt_pin">PINを入力してください</string>
-  <string name="account_new_button">Ringアカウントを作成</string>
   <string name="account_link_export_button">別のデバイスをこのアカウントへリンク</string>
   <string name="account_end_export_button">閉じる</string>
   <!--Name registration-->
@@ -159,9 +147,7 @@
   <string name="account_status_unknown">不明</string>
   <string name="account_status_offline">オフライン</string>
   <!--Create account-->
-  <string name="account_creation_home">Ring へようこそ</string>
   <string name="account_creation_profile">プロフィールを作成</string>
-  <string name="account_creation_ring">Ringアカウントを作成</string>
   <string name="account_link_title">このデバイスをリンク</string>
   <string name="account_sip_cannot_be_registered">アカウントを登録できません</string>
   <!--Edit profile-->
@@ -173,7 +159,6 @@
   <string name="revoke_device_wait_title">しばらくお待ちください…</string>
   <string name="revoke_device_wait_message">デバイスを取り消し中</string>
   <string name="rename_device_title">このデバイスの名前を変更</string>
-  <string name="rename_device_message">Ring アカウントでこのデバイスを識別する新しい名前を選択してください</string>
   <string name="rename_device_button">デバイスの名前を変更</string>
   <string name="account_rename_device_hint">新しいデバイス名を選択</string>
   <string name="account_device_name_empty">デバイス名は空にできません</string>

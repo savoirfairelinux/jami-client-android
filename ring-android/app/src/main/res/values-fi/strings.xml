@@ -1,7 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="sponsor_section">Ring on vapaa ohjelma jonka on kehittänyt ja jota tukee</string>
   <string name="copyright_section">Tekijänoikeus</string>
   <string name="contribute_section">Tuo panoksesi</string>
   <string name="version_section">Versio</string>
@@ -23,7 +22,6 @@
   <string name="menu_item_home">Koti</string>
   <string name="menu_item_accounts">Hallitse tunnuksia</string>
   <string name="menu_item_settings">Asetukset</string>
-  <string name="menu_item_about">Tietoa Ringistä</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Valitse numero</string>
   <!--History Fragment-->
@@ -52,8 +50,6 @@
   <string name="ongoing_call">Tämänhetkinen puhelu</string>
   <string name="hist_in_call">Saapuva puhelu %1$s</string>
   <string name="hist_out_call">Lähtevä puhelu %1$s</string>
-  <string name="start_error_title">Ringiä ei </string>
-  <string name="start_error_mic_required">Ring tarvitsee toimiakseen mikrofonin käyttöoikeuden.</string>
   <string name="action_call_accept">Vastaanota puhelu</string>
   <string name="action_call_decline">Kieltäydy</string>
   <string name="ab_action_speakerphone">Kaiutin päälle</string>
@@ -74,9 +70,7 @@
   <string name="permission_dialog_camera_message">Videopuhelut vaativat toimiakseen kameran käyttöoikeudet.</string>
   <string name="ringtone_error_title">Virhe</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Ring tarvitsee yhteystietojen lukuoikeudet tätä toimintoa varten.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Ring tarvitsee kirjoitusoikeudet soittolokiin tätä toimintoa varten.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skannaa lisättävän tunnuksen QR-koodi.</string>
   <!--Settings-->
@@ -92,7 +86,6 @@
   <string name="conversation_action_select_peer_number">Valitse numero</string>
   <!--Contacts-->
   <string name="prompt_new_password">Uusi salasana</string>
-  <string name="account_create_title">Luo Ring tunnus</string>
   <string name="wizard_next">Seuraava</string>
   <!--MenuHeaderView-->
   <!--Share fragment-->

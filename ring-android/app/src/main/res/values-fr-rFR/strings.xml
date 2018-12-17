@@ -1,7 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="sponsor_section">Ring est un logiciel open-source développé et supporté par </string>
   <string name="copyright_section">droit d\'auteur</string>
   <string name="contribute_section">Contribuer</string>
   <string name="version_section">Version</string>
@@ -23,7 +22,6 @@
   <string name="menu_item_accounts">Gérer des comptes</string>
   <string name="menu_item_settings">Réglages</string>
   <string name="menu_item_share">Partager mes contacts</string>
-  <string name="menu_item_about">A propos de Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Composer un numéro </string>
   <!--History Fragment-->
@@ -51,8 +49,6 @@
   <string name="ongoing_call">Appel en cours</string>
   <string name="hist_in_call">Appel entrant de %1$s</string>
   <string name="hist_out_call">Appel sortant de %1$s</string>
-  <string name="start_error_title">Ring ne démarre pas</string>
-  <string name="start_error_mic_required">Ring requiert une permission pour utiliser le micro</string>
   <string name="action_call_accept">Prendre un appel</string>
   <string name="action_call_decline">Refuser</string>
   <string name="ab_action_speakerphone">Activer le haut-parleur</string>
@@ -73,9 +69,7 @@
   <string name="ringtone_error_title">Erreur</string>
   <string name="ringtone_error_format_not_supported">Ce format n\'est pas supporté</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Ring souhaite accéder à vos contacts pour activer cette fonctionnalité. Merci d\'accorder les permissions nécessaires.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Ring nécessite d\'avoir des accès pour activer cette fonctionnalité. Merci d\'accorder les permissions nécessaires.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Merci de scanner le Code QR du compte que vous souhaitez ajouter.</string>
   <!--Settings-->
@@ -91,11 +85,7 @@
   <!--Contacts-->
   <string name="prompt_new_password">Nouveau mot de passe</string>
   <string name="prompt_new_password_repeat">Saisir à nouveau le mot de passe</string>
-  <string name="account_create_title">Créer un compte Ring</string>
   <string name="prompt_new_username">Saisir un nouveau nom d\'utilisateur</string>
-  <string name="help_password_choose">Saisir un mot de passe sécuritaire facile à retenir pour protéger votre compte Ring</string>
-  <string name="help_password_enter">Entrer votre mot de passe pour votre compte Ring principal</string>
-  <string name="help_pin_enter">Entrer votre PIN (numéro d\'identification personnel) configuré sur un autre compte Ring. Utiliser la fonction \"exporter un compte dans Ring\" pour obtenir votre numéro d\'identification personnel.</string>
   <string name="wizard_next">Suivant</string>
   <string name="wizard_back">Retour</string>
   <!--MenuHeaderView-->

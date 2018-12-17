@@ -2,9 +2,7 @@
 <resources>
   <!--About-->
   <string name="feedback_section">フィードバック</string>
-  <string name="report">&lt;u&gt;私たちにメールを送る&lt;/u&gt;</string>
   <string name="section_license">ライセンス</string>
-  <string name="sponsor_section">Ring はフリーソフトウェアです。開発およびサポートは</string>
   <string name="copyright_section">著作権表示</string>
   <string name="contribute_section">貢献</string>
   <string name="version_section">バージョン</string>
@@ -12,9 +10,6 @@
   <string name="no_browser_app_installed">Webブラウザーアプリが見つかりませんでした。このページを表示するためにインストールしてください</string>
   <string name="email_chooser_title">メール送信に使用するアプリ...</string>
   <string name="website_chooser_title">Webサイトを表示…</string>
-  <string name="license">このソフトウェアは、現状のまま提供され、いかなる種類の保証もありません。 詳細は以下を参照してください。
-&lt;u&gt;GNU General Public License version 3 以降&lt;/u&gt;</string>
-  <string name="description">Ring は、ユーザーの自由とプライバシーを尊重する普遍的なコミュニケーションのためのフリーソフトウェアです。</string>
   <string name="credits">クレジット</string>
   <!--About dialog-->
   <string name="developed_by">開発者</string>
@@ -35,7 +30,6 @@
   <string name="menu_item_accounts">アカウント管理</string>
   <string name="menu_item_settings">設定</string>
   <string name="menu_item_share">連絡先を共有</string>
-  <string name="menu_item_about">Ring について</string>
   <!--Dialing Fragment-->
   <string name="dial_number">電話番号を入力</string>
   <!--History Fragment-->
@@ -65,8 +59,6 @@
   <string name="ongoing_call">通話中</string>
   <string name="hist_in_call">%1$s の着信</string>
   <string name="hist_out_call">%1$s の発信</string>
-  <string name="start_error_title">Ring を開始できません !</string>
-  <string name="start_error_mic_required">Ring を使用するには、マイクのアクセス許可が必要です。</string>
   <string name="action_call_accept">電話を取る</string>
   <string name="action_call_decline">辞退</string>
   <string name="ab_action_speakerphone">スピーカーを有効にする</string>
@@ -89,9 +81,7 @@
   <string name="ringtone_error_title">エラー</string>
   <string name="ringtone_error_format_not_supported">この形式はサポートされていません。</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Ring は、この機能を有効にするために \"連絡先の読み取り\" アクセス許可が必要です。付与してください。</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Ring は、この機能を有効にするために \"通話ログの書き込み\" アクセス許可が必要です。付与してください。</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">追加したいアカウントの QR コートをスキャンしてください。</string>
   <!--Settings-->
@@ -108,11 +98,7 @@
   <!--Contacts-->
   <string name="prompt_new_password">新しいパスワード</string>
   <string name="prompt_new_password_repeat">新しいパスワードの繰り返し</string>
-  <string name="account_create_title">Ringアカウントを作成</string>
   <string name="prompt_new_username">新しいユーザー名を入力してください</string>
-  <string name="help_password_choose">Ring のアカウントを保護するために覚えておく強力なパスワードを選択してください。</string>
-  <string name="help_password_enter">メインの Ring アカウントパスワードを入力してください</string>
-  <string name="help_pin_enter">設定済みの別のRingアカウントからPINを入力してください。 PINを取得するには、\"Ringのアカウントをエクスポート\" 機能を使用します。</string>
   <string name="wizard_next">次へ</string>
   <string name="wizard_back">戻る</string>
   <!--MenuHeaderView-->

@@ -2,9 +2,7 @@
 <resources>
   <!--About-->
   <string name="feedback_section">بازخورد</string>
-  <string name="report">برایمان رایانامه‌ای بفرستید</string>
   <string name="section_license">مجوز</string>
-  <string name="sponsor_section">رینگ نرم‌افزاری آزاد است که توسعه داده و پشتیبانی می‌شود توسط</string>
   <string name="copyright_section">حق رونوشت</string>
   <string name="contribute_section">مشارکت</string>
   <string name="version_section">نگارش</string>
@@ -12,9 +10,6 @@
   <string name="no_browser_app_installed">هیچ کارهٔ مرورگری پیدا نشد، برای مشاهدهٔ این صفحه، یکی نصب کنبد</string>
   <string name="email_chooser_title">فرستادن نامه با…</string>
   <string name="website_chooser_title">دیدن پایگاه وب با…</string>
-  <string name="license">این نرم‌افزار همان‌گونه که هست، بدون هرنوع ضمانت فراهم شده است،
-برای جزئیات، نگارش ۳ یا بالاتر پروانهٔ جامع همگانی گنو را ببینید</string>
-  <string name="description">رینگ یک نرم‌افزار ارتباطات عمومی است که به آزادی‌ها و حریم شخصی کاربرانش احترام می‌گذارد.</string>
   <string name="credits">دست‌اندرکاران</string>
   <!--About dialog-->
   <string name="developed_by">توسعه توسّط</string>
@@ -36,7 +31,6 @@
   <string name="menu_item_account">مدیریت حساب</string>
   <string name="menu_item_settings">تنظیمات</string>
   <string name="menu_item_share">هم‌رسانی اطّلاعات تماس</string>
-  <string name="menu_item_about">دربارهٔ رینگ</string>
   <!--Dialing Fragment-->
   <string name="dial_number">تماس با یک شماره</string>
   <!--History Fragment-->
@@ -80,8 +74,6 @@
   <string name="ongoing_call">تماس خروجی</string>
   <string name="hist_in_call">تماس دریافتی به مدّت  %1$s</string>
   <string name="hist_out_call">تماس خروجی به مدّت %1$s</string>
-  <string name="start_error_title">رینگ نمی‌تواند شروع شود!</string>
-  <string name="start_error_mic_required">رینگ برای کار به دسترسی میکروفون نیازمند است.</string>
   <string name="action_call_accept">برداشتن تماس</string>
   <string name="action_call_decline">رد کردن</string>
   <string name="ab_action_speakerphone">فعال کردن بلندگو</string>
@@ -111,9 +103,7 @@
   <string name="ringtone_error_format_not_supported">این قالب پشتیبانی نمی‌شود.</string>
   <string name="ringtone_error_size_too_big">این فایل خیلی بزرگ است.حداکثر اندازه %1$d ک‌.ب. است.</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">رینگ برای فعّال کردن این ویژگی نیاز به دسترسی «خواندن مخاطبان» دارد. لطفاً اعطایش کنید.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">رینگ برای فعّال کردن این ویژگی نیاز به دسترسی «خواندن گزارش تماس» دارد. لطفاً اعطایش کنید.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">رمز QR حسابی که می‌خواهید بیفزایید را بپویید.</string>
   <!--Settings-->
@@ -140,11 +130,7 @@
   <string name="prompt_new_password">گذرواژه جدید</string>
   <string name="prompt_new_password_optional">گذرواژه جدید (اختیاری)</string>
   <string name="prompt_new_password_repeat">گذرواژه جدید را تکرار کنید</string>
-  <string name="account_create_title">ساخت یک حساب رینگ</string>
   <string name="prompt_new_username">نام کاربری جدید را وارد کنید</string>
-  <string name="help_password_choose">برای محافظت از حساب رینگ‌تان، گذرواژه‌ای قوی که به خاطر خواهید سپرد را برگزینید.</string>
-  <string name="help_password_enter">گذرواژهٔ حساب رینگ اصلیتان را وارد کنید</string>
-  <string name="help_pin_enter">پین را از دیگر حساب رینگ پیکربندی‌شده وارد کنید. برای به دست آوردن یک پین، از ویژگی «برون‌ریزی حساب روی رینگ» استفاده کنید.</string>
   <string name="wizard_next">بعدی</string>
   <string name="wizard_back">بازگشت</string>
   <string name="wizard_skip">اسکیپ</string>
@@ -155,7 +141,6 @@
   <string name="take_a_photo">گرفتن عکس</string>
   <string name="profile_name_hint">نامتان را وارد کنید (اختیاری)</string>
   <!--Share fragment-->
-  <string name="share_message">اسکن این کد با رینگ</string>
   <string name="share_message_no_account">لطفاً برای هم‌رسانی، حسابی را برگزینید.</string>
   <string name="share_your_account_information">هم‌رسانی اطّلاعات تماس من</string>
   <string name="generic_error_migration">خطا</string>

@@ -26,7 +26,7 @@ along with this program; if not, write to the Free Software
 
     <!-- SipCalls -->
     <string name="call_human_state_searching">A pesquisar</string>
-    <string name="call_human_state_incoming">Entrada</string>
+    <string name="call_human_state_incoming">A receber</string>
     <string name="call_human_state_connecting">A conectar</string>
     <string name="call_human_state_ringing">A tocar</string>
     <string name="call_human_state_current">A falar</string>

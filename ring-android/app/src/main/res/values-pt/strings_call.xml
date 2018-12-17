@@ -20,6 +20,22 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
+    <!-- Call error -->
+    <string name="call_error_no_microphone">A chamada foi cancelada. Não foi detetado nenhum microfone.</string>
+    <string name="call_error_no_camera_no_microphone">A chamada foi cancelada. Não foi detetado nenhum microfone nem câmara.</string>
+
+    <!-- SipCalls -->
+    <string name="call_human_state_searching">A pesquisar</string>
+    <string name="call_human_state_incoming">A receber</string>
+    <string name="call_human_state_connecting">A conectar</string>
+    <string name="call_human_state_ringing">A tocar</string>
+    <string name="call_human_state_current">A falar</string>
+    <string name="call_human_state_hungup">Sobre</string>
+    <string name="call_human_state_busy">Ocupado(a)</string>
+    <string name="call_human_state_failure">Falhou</string>
     <string name="call_human_state_hold">Espera</string>
+    <string name="call_human_state_unhold">Soltar</string>
+    <string name="call_human_state_over">Sobre</string>
+    <string name="call_human_state_none">Nenhum</string>
     <!-- Conferences -->
 </resources>

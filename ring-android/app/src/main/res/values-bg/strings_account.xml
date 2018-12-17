@@ -5,7 +5,6 @@
   <string name="ic_advanced_menu">Разширени настройки</string>
   <string name="ic_blacklist_menu">Блокирани контакти</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">Добавяне на акаунт за Ring</string>
   <string name="add_sip_account_title">Добавяне на акаунт за SIP</string>
   <string name="ring_account_default_name">Акаунт за Ring %1$s</string>
   <string name="prompt_alias">Псевдоним</string>
@@ -22,7 +21,6 @@
   <string name="dialog_wait_update">Обновяване на акаунта</string>
   <string name="dialog_wait_update_details">Моля, изчакайте докато новият Ви акаунт бъде обновен…</string>
   <string name="dialog_warn_ip2ip_account_title">Създаване на празен акаунт за SIP</string>
-  <string name="help_ring">Акаунтът за Ring Ви позволява да се свързвате безопасно с хора чрез директна връзка през изцяло разпределена мрежа.</string>
   <string name="help_sip_title">Добавяне на акаунт за SIP</string>
   <string name="help_sip">Настройка на съществуващ акаунт за SIP</string>
   <string name="create_sip_account">Добавяне на акаунт за SIP</string>
@@ -32,7 +30,6 @@
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Няма регистриран акаунт</string>
   <string name="normal_accounts_titles">Акаунти</string>
-  <string name="normal_devices_titles">Познати устройства свързани с този акаунт в Ring</string>
   <string name="account_device_revocation_wrong_password">Грешна парола.</string>
   <string name="account_device_revocation_unknown_device">Неизвестно устройство.</string>
   <string name="account_device_revocation_error_unknown">Неизвестна грешка.</string>
@@ -106,28 +103,19 @@
   <string name="account_export_end_error_title">Грешка</string>
   <string name="account_export_end_error_message">Акаунтът не може да бъде изнесен. Възникна непозната грешка.</string>
   <string name="account_enter_password">Въведете парола</string>
-  <string name="account_share_body">Свържете се с мен чрез „%1$s“ в системата за разпределена комуникация „Ring“: https://ring.cx</string>
-  <string name="account_share_body_with_username">Свържете се с мен чрез „%1$s“ или чрез моето публично потребителско име „%2$s“ в системата за разпределена комуникация „Ring“: https://ring.cx</string>
-  <string name="account_contact_me">Свържете се с мен в Ring !</string>
   <string name="update_account">Обновяване на акаунта</string>
-  <string name="account_migration">Вашият акаунт в Ring може да бъде обновен.\nМоля, въведете паролата си.</string>
   <string name="ring_account">Акаунт</string>
   <string name="account_migration_title_dialog">Пренасяне на акаунта</string>
   <string name="account_migration_message_dialog">Акаунтите Ви трябва да бъдат обновени. Искате ли да преминете към екрана за управление на акаунтите, за да направите това?</string>
   <string name="account_update_needed">Нужно е обновяване</string>
   <string name="account_cannot_be_found_title">Акаунтът не може да бъде открит</string>
-  <string name="account_cannot_be_found_message">Акаунтът не може да бъде открит в мрежата на Ring.\nУверете се, че е бил изнесен от Ring чрез съществуващо устройство, както и че данните за идентификация са правилни</string>
   <string name="account_sip_cannot_be_registered_message">Можете да продължите с процеса по създаване на акаунт, или да редактирате информацията си тук. Можете да редактирате информацията и по-късно, в настройките на акаунта.</string>
   <string name="account_no_network_title">Неуспешна връзка с мрежата</string>
-  <string name="account_no_network_message">Акаунтът не може да бъде добавен, тъй като Ring не може да се свърже с разпределената мрежа. Проверете връзката на устройството си.</string>
   <string name="account_device_added_title">Акаунтът е добавен на устройството</string>
-  <string name="account_device_added_message">Настройката на акаунта Ви на това устройство беше успешна.</string>
   <string name="account_device_updated_title">Акаунтът на устройството е обновен</string>
-  <string name="account_device_updated_message">Вие обновихте акаунта си успешно.</string>
   <string name="account_sip_register_anyway">Регистриране въпреки това</string>
   <string name="account_link_button">Свързване на това устройство с акаунт</string>
   <string name="account_link_prompt_pin">Въведете ПИН</string>
-  <string name="account_new_button">Създаване на акаунт за Ring</string>
   <string name="account_link_export_button">Свързване на друго устройство с този акаунт</string>
   <string name="account_end_export_button">затваряне</string>
   <!--Name registration-->
@@ -145,9 +133,7 @@
   <string name="account_status_unknown">Неизвестно</string>
   <string name="account_status_offline">Извън линия</string>
   <!--Create account-->
-  <string name="account_creation_home">Добре дошли в Ring</string>
   <string name="account_creation_profile">Създаване на профил</string>
-  <string name="account_creation_ring">Създаване на акаунт в Ring</string>
   <string name="account_link_title">Свързване на това устройство</string>
   <string name="account_sip_cannot_be_registered">Акаунтът не може да бъде регистриран</string>
   <!--Edit profile-->
@@ -156,7 +142,6 @@
   <string name="enter_password">Въведете парола</string>
   <string name="revoke_device_wait_title">Моля, изчакайте…</string>
   <string name="rename_device_title">Преименуване на това устройство</string>
-  <string name="rename_device_message">Изберете ново име, чрез което да разпознавате това устройство в своя акаунт в Ring</string>
   <string name="rename_device_button">Преименуване на устройството</string>
   <string name="account_rename_device_hint">Изберете ново име за устройството</string>
   <string name="account_device_name_empty">Името на устройството не може да бъде празно</string>

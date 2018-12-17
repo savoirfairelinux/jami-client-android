@@ -2,9 +2,7 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Tilbakemelding</string>
-  <string name="report">&lt;u&gt;Send oss en e-post&lt;/u&gt;</string>
   <string name="section_license">Lisens</string>
-  <string name="sponsor_section">Ring er fri programvare utviklet og støttet av</string>
   <string name="copyright_section">Opphavsrett</string>
   <string name="contribute_section">Bidra</string>
   <string name="version_section">Versjon</string>
@@ -12,9 +10,6 @@
   <string name="no_browser_app_installed">Ingen nettleser funnet, installer en for å vise denne siden</string>
   <string name="email_chooser_title">Send e-post ved bruk av…</string>
   <string name="website_chooser_title">Vis nettside ved bruk av…</string>
-  <string name="license">Denne programvaren tilbys \"som den er\", uten garanti av noen art. For detaljer, se
-&lt;u&gt;GNU General Public Lisens, versjon 3 eller senere&lt;/u&gt;</string>
-  <string name="description">Ring er fri programvare for universell kommunikasjon som respekteret privatlivets fred for dets brukere.</string>
   <string name="credits">Bidragsytere</string>
   <!--About dialog-->
   <string name="developed_by">Utviklet av</string>
@@ -36,7 +31,6 @@
   <string name="menu_item_account">Behandle konto</string>
   <string name="menu_item_settings">Innstillinger</string>
   <string name="menu_item_share">Del min kontakt</string>
-  <string name="menu_item_about">Om Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Slå et nummer</string>
   <!--History Fragment-->
@@ -76,8 +70,6 @@
   <string name="ongoing_call">Pågående samtale</string>
   <string name="hist_in_call">Innkommende samtale med %1$s</string>
   <string name="hist_out_call">Utgående samtale med %1$s</string>
-  <string name="start_error_title">Klarer ikke å starte Ring!</string>
-  <string name="start_error_mic_required">Ring krever tilgang til mikrofonen for å virke.</string>
   <string name="action_call_accept">Ta samtale</string>
   <string name="action_call_decline">Avslå</string>
   <string name="ab_action_speakerphone">Aktiver høytaler</string>
@@ -103,9 +95,7 @@
   <string name="ringtone_error_title">Feil</string>
   <string name="ringtone_error_format_not_supported">Dette formatet støttes ikke</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Ring trenger tillatelsen \"Lese kontakter\" for å aktivere denne egenskapen. Tillat dette.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Ring trenger tillatelsen \"Skriv i samtalelogg\" for å aktivere denne egenskapen. Tillat dette.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skann QR-koden tilhørende kontoen du ønsker å legge til.</string>
   <!--Settings-->
@@ -123,11 +113,7 @@
   <string name="prompt_new_password">Nytt passord</string>
   <string name="prompt_new_password_optional">Nytt passord (valgfritt)</string>
   <string name="prompt_new_password_repeat">Gjenta nytt passord</string>
-  <string name="account_create_title">Opprett en Ring-konto</string>
   <string name="prompt_new_username">Skriv inn nytt brukernavn</string>
-  <string name="help_password_choose">Velg et sterkt passord du husker for å beskytte din Ring-konto.</string>
-  <string name="help_password_enter">Skriv in hovedpassordet for din Ring-konto</string>
-  <string name="help_pin_enter">Skriv inn PIN fra en annen oppsatt Ring-konto. Bruk \"eksporter konto på Ring\"-funksjonen for å hente en PIN.</string>
   <string name="wizard_next">Neste</string>
   <string name="wizard_back">Tilbake</string>
   <string name="wizard_skip">Hopp over</string>

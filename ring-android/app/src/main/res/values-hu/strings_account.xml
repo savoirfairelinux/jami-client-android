@@ -5,7 +5,6 @@
   <string name="ic_advanced_menu">Haladó beállítások</string>
   <string name="ic_blacklist_menu">Blokkolt partnerek</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">Jami fiók hozzáadása</string>
   <string name="add_sip_account_title">SIP fiók hozzáadása</string>
   <string name="ring_account_default_name">Jami fiók: %1$s</string>
   <string name="prompt_alias">Álnév</string>
@@ -26,7 +25,6 @@
         Csak közvetlen IP hívásokat tud majd indítani és fogadni.
         A fiókját később is módosíthatja</string>
   <string name="account_type_ip2ip">IP fiók</string>
-  <string name="help_ring">A Jami fiók lehetővé teszi az emberek biztonságos elérését partneren egy teljesen elosztott hálózaton keresztül.</string>
   <string name="help_sip_title">SIP fiók hozzáadása</string>
   <string name="help_sip">Meglévő SIP fiók beállítása.</string>
   <string name="create_sip_account">SIP fiók hozzáadása</string>
@@ -36,7 +34,7 @@
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nem regisztrált fiók</string>
   <string name="normal_accounts_titles">Fiókok</string>
-  <string name="normal_devices_titles">Jami fiókhoz kapcsolódó ismert eszközök</string>
+  <string name="normal_devices_titles">A Jami fiókhoz kapcsolódó ismert eszközök</string>
   <string name="account_device_revoke">Eszköz visszavonása</string>
   <string name="account_device_revocation_success_title">Siker</string>
   <string name="account_device_revocation_success">Az eszköz most visszavonásra került!</string>
@@ -120,25 +118,17 @@
   <string name="account_export_end_error_title">Hiba</string>
   <string name="account_export_end_error_message">Fiók exportálása nem sikerült. Ismeretlen hiba történt.</string>
   <string name="account_enter_password">A jelszó megadása</string>
-  <string name="account_share_body">Lépjen kapcsolatba velem „%1$s” a Jami elosztott közlés emelvény használatával: https://jami.net</string>
-  <string name="account_share_body_with_username">Lépjen kapcsolatba velem „%1$s” vagy a nyilvános felhasználónév „%2$s” a Jami elosztott közlés emelvény használatával: https://jami.net</string>
-  <string name="account_contact_me">Lépjen kapcsolatba velem a Jami-n!</string>
   <string name="update_account">Fiók frissítése</string>
-  <string name="account_migration">Jami fiókja frissíthető.\ nKérjük hogy, adja meg a jelszavát.</string>
   <string name="ring_account">Jami fiók</string>
   <string name="ring_account_identity">Személyazonosság</string>
   <string name="account_migration_title_dialog">Fiókátvitel</string>
   <string name="account_migration_message_dialog">A fiókjait frissíteni kell. Szeretne a fiók kezelési lapra menni a művelet elvégzéséhez?</string>
   <string name="account_update_needed">Frissítés szükséges</string>
   <string name="account_cannot_be_found_title">A fiók nem található</string>
-  <string name="account_cannot_be_found_message">Nem található a fiók a Jami hálózatában.\nGyőződjön meg róla, hogy a meglévő eszközön a Jami-t exportálták és a hitelesítő adatok helyesek voltak.</string>
   <string name="account_sip_cannot_be_registered_message">Folytathatja a fiók létrehozásának folyamatát vagy itt szerkesztheti adatait. A fiókbeállítások később is szerkeszthetők.</string>
   <string name="account_no_network_title">Nem tud csatlakozni a hálózathoz</string>
-  <string name="account_no_network_message">Nem sikerült hozzáadni a fiókot mert a Jami nem tudott csatlakozni az elosztott hálózathoz. Ellenőrizze az eszköz csatlakoztatását.</string>
   <string name="account_device_added_title">Fiók eszköz hozzáadva</string>
-  <string name="account_device_added_message">Sikeresen beállította a Jami fiókját ezen az eszközön.</string>
   <string name="account_device_updated_title">A fiók eszköz frissítve</string>
-  <string name="account_device_updated_message">Sikeresen frissítette a Jami fiókját.</string>
   <string name="account_cannot_be_updated_message">A fiók eszköz nem frissíthető. Kérjük hogy, ellenőrizze a jelszavát.</string>
   <string name="account_sip_success_title">SIP-fiók regisztrálva</string>
   <string name="account_sip_success_message">Sikeresen regisztrálta a SIP-fiókját.</string>
@@ -147,11 +137,8 @@
   <string name="account_link_prompt_pin">PIN-kód megadása</string>
   <string name="account_new_button">Jami fiók létrehozása</string>
   <string name="account_link_export_button">Másik eszköz hozzárendelése ehhez a fiókhoz</string>
-  <string name="account_link_export_info">Ha ezt a fiókot más eszközökön szeretné használni, először meg kell jeleníteni a Jami-n. Ez létrehoz egy PIN-kódot, amelyet meg kell adnia az új eszközön a fiók beállításához. A PIN-kód 10 percig érvényes.</string>
   <string name="account_start_export_button">PIN-kód létrehozása</string>
   <string name="account_end_export_button">Bezárás</string>
-  <string name="account_end_export_infos">A PIN-kódja:\n\n%%\n\nA folyamat befejezéséhez meg kell nyitnia a Jami-t az új eszközön. Hozzon létre egy új fiókot az „Eszköz összekapcsolása egy fiókhoz” opcióval. A PIN-kódja 10 percig érvényes.</string>
-  <string name="account_link_export_info_light">Ha ezt a fiókot más eszközökön szeretné használni, először meg kell jeleníteni a Jami-n. Ez létrehoz egy PIN-kódot, amelyet meg kell adnia az új eszközön a fiók beállításához. A PIN-kód 10 percig érvényes.</string>
   <string name="account_export_title">Eszközök hozzáadása</string>
   <!--Name registration-->
   <string name="error_username_empty">Felhasználónév megadása</string>
@@ -162,16 +149,14 @@
   <string name="register_username">Nyilvános felhasználónév regisztrálása (ajánlott)</string>
   <string name="username_already_taken">A felhasználónév már regisztrálva van</string>
   <string name="invalid_username">Érvénytelen felhasználónév</string>
-  <string name="looking_for_username_availability">Keresni a felhasználónév elérhetőségét</string>
+  <string name="looking_for_username_availability">A felhasználónév rendelkezésre állás keresése…</string>
   <string name="account_status_connecting">Kapcsolódás</string>
   <string name="account_status_connection_error">Csatlakozási hiba</string>
   <string name="account_status_online">Elérhető</string>
   <string name="account_status_unknown">Ismeretlen</string>
   <string name="account_status_offline">Nem elérhető</string>
   <!--Create account-->
-  <string name="account_creation_home">Isten hozott!</string>
   <string name="account_creation_profile">Saját profil létrehozása</string>
-  <string name="account_creation_ring">Jami fiók létrehozása</string>
   <string name="account_link_title">Eszköz összekapcsolása</string>
   <string name="account_sip_cannot_be_registered">A fiók nem regisztrálható</string>
   <!--Edit profile-->
@@ -184,7 +169,6 @@
   <string name="revoke_device_wait_title">Kérem váronj…</string>
   <string name="revoke_device_wait_message">Eszköz visszavonása</string>
   <string name="rename_device_title">Eszköz átnevezése</string>
-  <string name="rename_device_message">Válasszon egy új nevet, amely azonosítja ezt az eszközt a Jami fiókjában</string>
   <string name="rename_device_button">Eszköz átnevezése</string>
   <string name="account_rename_device_hint">Válasszon új eszköznevet</string>
   <string name="account_device_name_empty">Az eszköz neve nem lehet üres</string>

@@ -2,7 +2,6 @@
 <resources>
   <!--About-->
   <string name="version_section">Eldono</string>
-  <string name="description">Ring estas libera programo por universala komunikado, kiu respektas liberon kaj privatecon de siaj uzantoj.</string>
   <string name="credits">Kredito</string>
   <!--About dialog-->
   <!--RingActivity-->
@@ -18,7 +17,6 @@
   <string name="menu_item_home">Hejmo</string>
   <string name="menu_item_accounts">Administri kontojn</string>
   <string name="menu_item_settings">Agordoj</string>
-  <string name="menu_item_about">Pri Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Diski numeron</string>
   <!--History Fragment-->
@@ -47,8 +45,6 @@
   <string name="ongoing_call">Aktiva voko</string>
   <string name="hist_in_call">Eniranta voko de %1$s</string>
   <string name="hist_out_call">Eliranta voko de %1$s</string>
-  <string name="start_error_title">Ne povas lanĉi Ring !</string>
-  <string name="start_error_mic_required">Ring bezonas permeson je mikrofono por funkcii.</string>
   <string name="action_call_accept">Akcepti</string>
   <string name="action_call_decline">Rifuzi</string>
   <string name="ab_action_speakerphone">Ŝalti laŭtparolilon</string>
@@ -69,9 +65,7 @@
   <string name="permission_dialog_camera_message">Video-konversacioj bezonas permeson je kamerao por funkcii. Bonvole pripensu permesi ĝin.</string>
   <string name="ringtone_error_title">Eraro</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Ring bezonas la \"Legu kontaktojn\" permeson por ŝalti tiu ĉi funkcion. Bonvole permesu ĝin.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Ring bezonas la \"Skribu protokolon de vokoj\" permeson por ŝalti tiu ĉi funkcion. Bonvole permesu ĝin.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skanu la QR Kodon de la konto, kiun vi volas aldoni.</string>
   <!--Settings-->
@@ -87,7 +81,6 @@
   <string name="conversation_action_select_peer_number">Elektu numeron</string>
   <!--Contacts-->
   <string name="prompt_new_password">Nova pasvorto</string>
-  <string name="account_create_title">Krei Ring konton</string>
   <string name="wizard_next">Sekva</string>
   <!--MenuHeaderView-->
   <!--Share fragment-->

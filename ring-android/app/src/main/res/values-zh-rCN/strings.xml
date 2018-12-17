@@ -2,9 +2,7 @@
 <resources>
   <!--About-->
   <string name="feedback_section">反馈</string>
-  <string name="report">&lt;u&gt;给我们发邮件&lt;/u&gt;</string>
   <string name="section_license">许可</string>
-  <string name="sponsor_section">Ring是一个自由软件，开发者与维护者是</string>
   <string name="copyright_section">版权所有</string>
   <string name="contribute_section">贡献</string>
   <string name="version_section">版本</string>
@@ -12,8 +10,6 @@
   <string name="no_browser_app_installed">未找到浏览器，请安装后再重试浏览该网页。</string>
   <string name="email_chooser_title">使用…发送邮件</string>
   <string name="website_chooser_title">用…浏览网站</string>
-  <string name="license">本软件由版权持有人及其他责任者“按原样”提供，不担保任何责任。详细信息请参阅&lt;u&gt;GNU通用公共许可证版本3或更新&lt;/u&gt;</string>
-  <string name="description">Ring是自由软件，尊重用户的通讯自由与隐私。</string>
   <string name="credits">致谢</string>
   <!--About dialog-->
   <string name="developed_by">开发者</string>
@@ -34,7 +30,6 @@
   <string name="menu_item_accounts">管理帐户</string>
   <string name="menu_item_settings">设置</string>
   <string name="menu_item_share">共享我的通讯录</string>
-  <string name="menu_item_about">关于Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">拨号</string>
   <!--History Fragment-->
@@ -64,8 +59,6 @@
   <string name="ongoing_call">正在通话</string>
   <string name="hist_in_call">来电：%1$s</string>
   <string name="hist_out_call">去电：%1$s</string>
-  <string name="start_error_title">无法启动Ring！</string>
-  <string name="start_error_mic_required">Ring需要开启麦克风使用权限。</string>
   <string name="action_call_accept">接听</string>
   <string name="action_call_decline">拒接</string>
   <string name="ab_action_speakerphone">开启扬声器</string>
@@ -88,9 +81,7 @@
   <string name="ringtone_error_title">错误</string>
   <string name="ringtone_error_format_not_supported">不支持的文件格式。</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">要开启此功能，Ring需要能够读取您的通讯录，请设置相应权限。</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">要开启此功能，Ring需要能够写入您的通话记录，请设置相应权限。</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">扫描您想添加帐户的二维码。</string>
   <!--Settings-->
@@ -107,11 +98,7 @@
   <!--Contacts-->
   <string name="prompt_new_password">新密码</string>
   <string name="prompt_new_password_repeat">确认新密码</string>
-  <string name="account_create_title">创建Ring帐户</string>
   <string name="prompt_new_username">输入新用户名</string>
-  <string name="help_password_choose">为了保护您的Ring帐户，请使用一个强密码并牢记</string>
-  <string name="help_password_enter">输入您的Ring主帐户密码</string>
-  <string name="help_pin_enter">输入另一个Ring帐户的PIN（使用“导出Ring帐户”功能获取）。</string>
   <string name="wizard_next">下一步</string>
   <string name="wizard_back">上一步</string>
   <!--MenuHeaderView-->

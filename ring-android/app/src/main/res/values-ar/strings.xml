@@ -1,7 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="sponsor_section">Ring برمجية حرّة طوّرت ودعمت بواسطة</string>
   <string name="copyright_section">الحقوق محفوظة</string>
   <string name="contribute_section">مساهمة</string>
   <string name="version_section">الإصدار</string>
@@ -21,7 +20,6 @@
   <string name="menu_item_home">الصفحة الرئيسية</string>
   <string name="menu_item_accounts">إدارة الحسابات</string>
   <string name="menu_item_settings">إعدادات</string>
-  <string name="menu_item_about">عن Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">أطلب رقم</string>
   <!--History Fragment-->
@@ -50,8 +48,6 @@
   <string name="ongoing_call">مكالمة جارية</string>
   <string name="hist_in_call">مكالمة واردة من %1$s</string>
   <string name="hist_out_call">مكالمة خارجة من %1$s</string>
-  <string name="start_error_title">لا يمكن تشغيل Ring!</string>
-  <string name="start_error_mic_required">Ring يستحق للاذن بإستخدام الميكروفون ليشتغل</string>
   <string name="action_call_accept">أجب عن المكالمة</string>
   <string name="action_call_decline">رفض</string>
   <string name="ab_action_speakerphone">فعل مكبرالصوت</string>

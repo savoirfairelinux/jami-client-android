@@ -5,7 +5,6 @@
   <string name="ic_advanced_menu">Avanserte innstillinger</string>
   <string name="ic_blacklist_menu">Blokkerte kontakter</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">Legg til Ring-konto</string>
   <string name="add_sip_account_title">Legg til SIP-konto</string>
   <string name="ring_account_default_name">Ring-konto %1$s</string>
   <string name="prompt_alias">Alias</string>
@@ -26,7 +25,6 @@
 Du vil kun være i stand til å gjennomføre direkte IP-samtaler.
 Du kan endre kontoen din senere</string>
   <string name="account_type_ip2ip">IP-konto</string>
-  <string name="help_ring">En Ring-konto lar deg nå folk på sikkert via mellom likemenn via et fullstendig distribuert nettverk.</string>
   <string name="help_sip_title">Legg til SIP-kontoen din</string>
   <string name="help_sip">Sett opp en eksisterende SIP-konto.</string>
   <string name="create_sip_account">Legg til SIP-konto</string>
@@ -36,7 +34,6 @@ Du kan endre kontoen din senere</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Ingen konto registrert</string>
   <string name="normal_accounts_titles">Kontoer</string>
-  <string name="normal_devices_titles">Kjente enheter som er lenket til denne Ring-kontoen</string>
   <string name="account_device_revoke">Tilbakekall enhet</string>
   <string name="account_device_revocation_success_title">Vellykket</string>
   <string name="account_device_revocation_success">Enheten er nå tilbakekalt!</string>
@@ -120,38 +117,26 @@ Du kan endre kontoen din senere</string>
   <string name="account_export_end_error_title">Feil</string>
   <string name="account_export_end_error_message">Kunne ikke eksportere konto. En ukjent feil inntraff.</string>
   <string name="account_enter_password">Skriv inn passord</string>
-  <string name="account_share_body">Kontakt meg ved bruk av \'%1$s\' på den distribuerte Ring-kommunikasjonsplattformen: https://ring.cx</string>
-  <string name="account_share_body_with_username">Kontakt meg ved bruk av \'%1$s\' eller mitt offentlige brukernavn \'%2$s\' på den distribuerte Ring-kommunikasjonsplattformen: https://ring.cx</string>
-  <string name="account_contact_me">Kontakt meg på Ring!</string>
   <string name="update_account">Oppdater konto</string>
-  <string name="account_migration">Din ring konto kan oppdateres.\nSkriv inn ditt passord.</string>
   <string name="ring_account">Ring-konto</string>
   <string name="ring_account_identity">Identitet</string>
   <string name="account_migration_title_dialog">Kontoflytting</string>
   <string name="account_migration_message_dialog">Dine kontoer må oppdateres. Ønsker du å gå til kontobehandling for å utføre dette?</string>
   <string name="account_update_needed">Oppdatering behøves</string>
   <string name="account_cannot_be_found_title">Kan ikke finne konto</string>
-  <string name="account_cannot_be_found_message">Finner ikke kontoen på Ring-nettverket.\nForsikre deg om at den ble eksportert fra Ring på en eksisterende enhet, og at oppgitte identitetsdetaljer er riktige.</string>
   <string name="account_sip_cannot_be_registered_message">Du kan fortsette med kontoopprettelsesprosessen eller skrive inn din informasjon her. Redigering er fremdeles mulig senere i kontoinnstillingene.</string>
   <string name="account_no_network_title">Kan ikke koble til nettverket</string>
-  <string name="account_no_network_message">Kan ikke legge til konto fordi Ring ikke kan koble til det distribuerte nettverket. Sjekk din enhets tilkobling.</string>
   <string name="account_device_added_title">Kontoenhet lagt til</string>
-  <string name="account_device_added_message">Du har nå satt opp din Ring-konto på denne enheten.</string>
   <string name="account_device_updated_title">Kontoenhet oppdatert</string>
-  <string name="account_device_updated_message">Du har nå oppdatert din Ring-konto.</string>
   <string name="account_cannot_be_updated_message">Kontoenheten kunne ikke oppdateres. Sjekk passordet ditt.</string>
   <string name="account_sip_success_title">SIP-konto registrert</string>
   <string name="account_sip_success_message">Du har nå registrert din SIP-konto.</string>
   <string name="account_sip_register_anyway">Registrer uansett</string>
   <string name="account_link_button">Lenk denne enheten til en konto</string>
   <string name="account_link_prompt_pin">Skriv inn PIN</string>
-  <string name="account_new_button">Opprett en Ring-konto</string>
   <string name="account_link_export_button">Lenk en annen enhet til denne kontoen</string>
-  <string name="account_link_export_info">For å bruke denne kontoen på andre enheter, må du først synliggjøre den på Ring. Dette vil generere en PIN-kode som du må skrive inn på den nye enheten for å sette opp en konto. PIN-koden er gyldig i 10 minutter.</string>
   <string name="account_start_export_button">Oppretter PIN</string>
   <string name="account_end_export_button">lukk</string>
-  <string name="account_end_export_infos">Din PIN er:\n\n%%\n\nFor å fullføre prosessen, må du åpne Ring på den nye enheten. Opprett en ny konto med \"Lenk denne enheten til en konto\". Din PIN-kode er gyldig i 10 minutter.</string>
-  <string name="account_link_export_info_light">For å bruke denne kontoen på andre enheter, må du først synliggjøre den på Ring. Dette vil generere en PIN-kode som du må skrive inn på den nye enheten for å sette opp en konto. PIN-koden er gyldig i 10 minutter.</string>
   <string name="account_export_title">Legg til enheter</string>
   <!--Name registration-->
   <string name="error_username_empty">Skriv inn et brukernavn</string>
@@ -169,9 +154,7 @@ Du kan endre kontoen din senere</string>
   <string name="account_status_unknown">Ukjent</string>
   <string name="account_status_offline">Frakoblet</string>
   <!--Create account-->
-  <string name="account_creation_home">Velkommen til Ring</string>
   <string name="account_creation_profile">Opprett din profil</string>
-  <string name="account_creation_ring">Opprett din Ring-konto</string>
   <string name="account_link_title">Lenk denne enheten</string>
   <string name="account_sip_cannot_be_registered">Kan ikke registrere konto</string>
   <!--Edit profile-->
@@ -184,7 +167,6 @@ Du kan endre kontoen din senere</string>
   <string name="revoke_device_wait_title">Vent…</string>
   <string name="revoke_device_wait_message">Tilbakekall enhet</string>
   <string name="rename_device_title">Gi denne enheten nytt navn</string>
-  <string name="rename_device_message">Velg et nytt navn for å identifisere denne enheten i din Ring-konto</string>
   <string name="rename_device_button">Gi enhet nytt navn</string>
   <string name="account_rename_device_hint">Velg nytt navn for enhet</string>
   <string name="account_device_name_empty">Enhetsnavn kan ikke stå tomt</string>

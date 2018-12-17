@@ -5,13 +5,8 @@
   <string name="pref_category_system">Sistemo</string>
   <string name="pref_category_privacy">Privateco</string>
   <string name="pref_mobileData_title">Porteblaj datumoj</string>
-  <string name="pref_mobileData_summary">Permesi Ring uzi 3G/LTE retojn aldone al Wi-Fi</string>
   <string name="pref_systemContacts_title">Uzi sistemajn kontaktojn</string>
   <string name="pref_systemContacts_summary">Uzi sistemajn kontaktojn por montri detalojn de la vokanto.</string>
-  <string name="pref_systemDialer_title">Fari sistemajn vokojn per Ring</string>
-  <string name="pref_systemDialer_summary">Uzi Ring por sistemajn vokojn kiam tio eblas.</string>
-  <string name="pref_startOnBoot_title">Lanĉi Ring je startigo</string>
-  <string name="pref_startOnBoot_summary">Lanĉi Ring fone kiam la sistemo startas.</string>
   <string name="pref_clearHistory_title">Vakigi historion</string>
   <string name="pref_clearHistory_summary">Vakigi la tutan historion de konversacioj. Tiun ĉi agon ne eblos malfari.</string>
 </resources>

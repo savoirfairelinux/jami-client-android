@@ -2,9 +2,7 @@
 <resources>
   <!--About-->
   <string name="feedback_section">回饋</string>
-  <string name="report">&lt;u&gt;寄一封email給我們&lt;/u&gt;</string>
   <string name="section_license">授權條款</string>
-  <string name="sponsor_section">Ring 是由此團隊開發與支援的自由軟體：</string>
   <string name="copyright_section">版權</string>
   <string name="contribute_section">貢獻</string>
   <string name="version_section">版本</string>
@@ -12,9 +10,7 @@
   <string name="no_browser_app_installed">沒有網頁瀏覽程式，請安裝一個以便觀看這網頁</string>
   <string name="email_chooser_title">傳送郵件藉由...</string>
   <string name="website_chooser_title">檢視網頁使用…</string>
-  <string name="license">本軟體以現狀（\"as is\"）提供，不負任何明示或暗示之擔保責任。詳細資訊請見
-&lt;u&gt;GNU通用公共授權條款第三版或更新&lt;/u&gt;</string>
-  <string name="description">Ring 是一套通用通訊的自由軟體，其尊重使用者的自由與隱私。</string>
+  <string name="description">Jami 是一套通用通訊的自由軟體，其尊重使用者的自由與隱私。</string>
   <string name="credits">榮譽</string>
   <!--About dialog-->
   <string name="developed_by">開發由</string>
@@ -36,7 +32,6 @@
   <string name="menu_item_account">管理帳號</string>
   <string name="menu_item_settings">設定</string>
   <string name="menu_item_share">分享我的聯絡人</string>
-  <string name="menu_item_about">關於 Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">播打一個號碼</string>
   <!--History Fragment-->
@@ -64,6 +59,8 @@
   <string name="notif_channel_messages">訊息</string>
   <string name="notif_channel_requests">請求</string>
   <string name="notif_channel_file_transfer">檔案傳輸</string>
+  <string name="notif_channel_background_service">背景服務</string>
+  <string name="notif_channel_background_service_descr">允許隨時接聽通話與訊息。</string>
   <string name="notif_mark_as_read">標示為已讀</string>
   <string name="notif_dismiss">忽略</string>
   <string name="notif_reply">回覆</string>
@@ -79,8 +76,6 @@
   <string name="ongoing_call">尚在進行中的通話</string>
   <string name="hist_in_call">%1$s 的來電</string>
   <string name="hist_out_call">%1$s 的去電</string>
-  <string name="start_error_title">無法啟動 Ring ！</string>
-  <string name="start_error_mic_required">Ring 需要麥克風權限以正常運作。</string>
   <string name="action_call_accept">打電話</string>
   <string name="action_call_decline">拒絕</string>
   <string name="ab_action_speakerphone">啟用喇叭</string>
@@ -110,9 +105,7 @@
   <string name="ringtone_error_format_not_supported">不支援此格式。</string>
   <string name="ringtone_error_size_too_big">這個檔案太大了。最大的大小為 %1$d kB。</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Ring 需要「讀取聯絡人」權限以啟用此功能。請給予它。</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Ring 需要「寫入通話紀錄」權限以啟用此功能。請給予它。</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">掃描你想要加入的帳號的 QR Code 。</string>
   <!--Settings-->
@@ -120,6 +113,7 @@
   <string name="clear_history_dialog_message">此動作無法復原。</string>
   <string name="clear_history_completed">記錄已經被清除。</string>
   <!--Conversation-->
+  <string name="conversation_details">聯絡人詳細資訊</string>
   <string name="conversation_action_delete_this">刪除此對話</string>
   <string name="conversation_action_delete_this_title">刪除此對話嗎？</string>
   <string name="conversation_action_delete_this_message">這個動作無法被復原。</string>
@@ -134,16 +128,14 @@
   <string name="conversation_action_select_peer_number">選擇號碼</string>
   <string name="conversation_action_block_this">阻擋連絡人</string>
   <string name="conversation_action_go_to_call">回到進行中的通話</string>
+  <string name="clip_contact_uri">聯絡人地址</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">新增 %1$s？</string>
   <string name="prompt_new_password">新密碼</string>
   <string name="prompt_new_password_optional">新密碼（選擇性）</string>
   <string name="prompt_new_password_repeat">重新輸入新密碼</string>
-  <string name="account_create_title">建立一個 Ring 帳號</string>
+  <string name="account_create_title">建立 Jami 帳號</string>
   <string name="prompt_new_username">輸入新使用者名稱</string>
-  <string name="help_password_choose">選擇您可以記住的高強度密碼來保護您的 Ring 帳號。</string>
-  <string name="help_password_enter">輸入您的主要 Ring 帳號密碼</string>
-  <string name="help_pin_enter">輸入從其他已設定 Ring 帳號的 PIN 碼。使用「在 RIng 上匯出帳號」功能來取得 PIN 碼。</string>
   <string name="wizard_next">下一個</string>
   <string name="wizard_back">前一個</string>
   <string name="wizard_skip">略過</string>
@@ -154,7 +146,6 @@
   <string name="take_a_photo">照相</string>
   <string name="profile_name_hint">輸入您的名稱（選擇性）</string>
   <!--Share fragment-->
-  <string name="share_message">使用 Ring 掃描此條碼</string>
   <string name="share_message_no_account">請選取要分享的帳號。</string>
   <string name="share_your_account_information">分享我的聯絡人資訊</string>
   <string name="generic_error_migration">錯誤</string>
