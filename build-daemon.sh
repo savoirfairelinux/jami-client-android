@@ -115,12 +115,12 @@ fi
 
 # Setup LDFLAGS
 if [ ${ANDROID_ABI} = "armeabi-v7a" ] ; then
-    EXTRA_CFLAGS="${EXTRA_CFLAGS} -march=armv7-a -mthumb"
-    EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -march=armv7-a -mthumb"
+    EXTRA_CFLAGS="${EXTRA_CFLAGS} -march=armv7-a -mthumb -mfpu=vfpv3-d16"
+    EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -march=armv7-a -mthumb -mfpu=vfpv3-d16"
 elif [ ${ANDROID_ABI} = "arm64-v8a" ] ; then
     EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${ANDROID_TOOLCHAIN}/sysroot/usr/lib -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/lib"
 fi
-EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/${LIBDIR}/${ANDROID_ABI} -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/${LIBDIR}"
+EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -Wl,-z,relro -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/${LIBDIR}/${ANDROID_ABI} -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/${LIBDIR}"
 
 # Make in //
 UNAMES=$(uname -s)
