@@ -43,6 +43,8 @@ public class CameraPreview extends SurfaceView implements
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
+        if (mCamera == null)
+            return;
         try {
             mCamera.setPreviewDisplay(surfaceHolder);
             mCamera.startPreview();
@@ -53,6 +55,8 @@ public class CameraPreview extends SurfaceView implements
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+        if (mCamera == null)
+            return;
         mCamera.stopPreview();
         mCamera.release();
     }
@@ -60,7 +64,8 @@ public class CameraPreview extends SurfaceView implements
     @Override
     public void surfaceChanged(SurfaceHolder surfaceHolder, int format,
             int width, int height) {
-        // start preview with new settings
+        if (mCamera == null)
+            return;
         try {
             mCamera.setPreviewDisplay(surfaceHolder);
             mCamera.startPreview();
