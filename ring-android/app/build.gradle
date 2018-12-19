@@ -111,7 +111,7 @@ dependencies {
 
     implementation 'com.jsibbold:zoomage:1.2.0'
 
-    withFirebaseImplementation 'com.google.firebase:firebase-core:16.0.5'
+    withFirebaseImplementation 'com.google.firebase:firebase-core:16.0.6'
     withFirebaseImplementation 'com.google.firebase:firebase-messaging:17.3.4'
 }
 
