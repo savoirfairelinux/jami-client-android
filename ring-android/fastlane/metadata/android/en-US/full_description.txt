@@ -1,6 +1,7 @@
-Ring (a GNU package) allows to make free and secure audio or video calls, to send pictures and messages around the world, without depending on a centralized service. Ring is a Free and open source software that is fully decentralized and distributed.
+Jami (a GNU package, formerly Ring) is a universal and distributed communication platform which respects the freedoms and privacy of users.
+It is 100% Free software. Available on all platforms.
 
-★ Communicate freely with Ring:
+★ Communicate freely with Jami:
   - send text messages
   - make audio calls
   - make video calls
@@ -8,16 +9,22 @@ Ring (a GNU package) allows to make free and secure audio or video calls, to sen
 
 ★ Reach your peers directly in peer to peer !
 
-★ Use your Ring account on multiple devices !
+★ Use your Jami account on multiple devices !
 
 ★ Available on Windows, macOS, iOS, GNU/Linux, Android and Android TV !
 
 ★ SIP account support available !
 
-Ring for Android TV is tested on NVidia Shield TV with Logitech cameras.
+★ Next additions: audio/video call recording (Android), group chat...
 
-There are plenty of ways to help us, check out: https://ring.cx/en/contribute
-All the info is on https://ring.cx/en
+Build with Jami on your IoT project: re-use the universal communications technology of Jami with its portable library on your system of choice. 
 
-Ring is published under the GPL licence, version 3 or higher.
+Jami for Android TV is tested on NVIDIA SHIELD TV with Logitech cameras.
+
+There are plenty of ways to help us, check out: https://jami.net/en/contribute ,
+Contact us on Twitter: @jami_social , or Mastodon: @Jami
+
+For more information, visit https://jami.net 
+
+Jami is published under the GPL license, version 3 or higher.
 Copyright © Savoir-faire Linux
