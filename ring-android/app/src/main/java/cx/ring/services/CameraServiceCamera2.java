@@ -66,6 +66,8 @@ import cx.ring.views.AutoFitTextureView;
 class CameraServiceCamera2 extends CameraService {
     private static final String TAG = CameraServiceCamera2.class.getName();
     private static final boolean USE_HARDWARE_ENCODER = false;
+    private static final int FPS_MAX = 30;
+    private static final int FPS_TARGET = 30;
 
     private final HandlerThread t = new HandlerThread("videoHandler");
 
@@ -219,9 +221,7 @@ class CameraServiceCamera2 extends CameraService {
 
     }
 
-    private static Size chooseOptimalSize(Size[] choices, int textureViewWidth,
-                                          int textureViewHeight, int maxWidth, int maxHeight, Size aspectRatio) {
-
+    private static Size chooseOptimalSize(Size[] choices, int textureViewWidth, int textureViewHeight, int maxWidth, int maxHeight, Size aspectRatio) {
         // Collect the supported resolutions that are at least as big as the preview Surface
         List<Size> bigEnough = new ArrayList<>();
         // Collect the supported resolutions that are smaller than the preview Surface
@@ -252,6 +252,25 @@ class CameraServiceCamera2 extends CameraService {
         }
     }
 
+    private static Range<Integer> chooseOptimalFpsRange(Range<Integer>[] ranges) {
+        Range<Integer> range = null;
+        if (ranges != null) {
+            for (Range<Integer> r : ranges) {
+                if (r.getUpper() > FPS_MAX)
+                    continue;
+                if (range != null) {
+                    int d = Math.abs(r.getUpper() - FPS_TARGET) - Math.abs(range.getUpper() - FPS_TARGET);
+                    if (d > 0)
+                        continue;
+                    if (d == 0 && r.getLower() > range.getLower())
+                        continue;
+                }
+                range = r;
+            }
+        }
+        return range == null ? new Range<>(0, FPS_TARGET) : range;
+    }
+
     @Override
     public void openCamera(Context context, VideoParams videoParams, Object surface, CameraListener listener) {
         CameraDevice camera = previewCamera;
@@ -266,27 +285,22 @@ class CameraServiceCamera2 extends CameraService {
         Handler handler = new Handler(t.getLooper());
         try {
             CameraCharacteristics cc = manager.getCameraCharacteristics(videoParams.id);
+
+            final Range<Integer> fpsRange = chooseOptimalFpsRange(cc.get(CameraCharacteristics.CONTROL_AE_AVAILABLE_TARGET_FPS_RANGES));
+            Log.w(TAG, "fpsRange: " + fpsRange);
+
             StreamConfigurationMap streamConfigs = cc.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
-            cc.get(CameraCharacteristics.CONTROL_AE_AVAILABLE_TARGET_FPS_RANGES);
             Size[] sizes = streamConfigs.getOutputSizes(SurfaceHolder.class);
             for (Size s : sizes)
                 Log.w(TAG, "supportedSize: " + s);
             AutoFitTextureView view = (AutoFitTextureView) surface;
             boolean flip = videoParams.rotation % 180 != 0;
 
-            Size previewSize = chooseOptimalSize(sizes,
+            final Size previewSize = chooseOptimalSize(sizes,
                     flip ? view.getHeight() : view.getWidth(), flip ? view.getWidth() : view.getHeight(),
                     videoParams.width, videoParams.height,
                     new Size(videoParams.width, videoParams.height));
 
-            //videoParams.
-            Log.e(TAG, "openCamera " + videoParams.width + "x" + videoParams.height + " flip:" + flip);
-            Log.e(TAG, "openCamera " + videoParams.rotWidth + "x" + videoParams.rotHeight);
-            Log.e(TAG, "openCamera view " + view.getWidth() + "x" + view.getHeight());
-            Log.e(TAG, "openCamera previewSize " + previewSize.getWidth() + "x" + previewSize.getHeight());
-
-            //view.setAspectRatio(flip ? videoParams.height : videoParams.width, flip ? videoParams.width : videoParams.height);
-            //view.setAspectRatio(videoParams.height, videoParams.width);
             int orientation = context.getResources().getConfiguration().orientation;
             if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 view.setAspectRatio(
@@ -297,10 +311,7 @@ class CameraServiceCamera2 extends CameraService {
             }
 
             SurfaceTexture texture = view.getSurfaceTexture();
-            //texture.setDefaultBufferSize(flip ? previewSize.getHeight() : previewSize.getWidth(), flip ? previewSize.getWidth() : previewSize.getHeight());
-
             Surface s = new Surface(texture);
-            //s.setFixedSize(flip ? videoParams.height : videoParams.width, flip ? videoParams.width : videoParams.height);
 
             Pair<MediaCodec, Surface> codec = USE_HARDWARE_ENCODER ? openCameraWithEncoder(videoParams, MediaFormat.MIMETYPE_VIDEO_VP8) : null;
 
@@ -336,7 +347,7 @@ class CameraServiceCamera2 extends CameraService {
                         }
                         builder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_VIDEO);
                         builder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON);
-                        builder.set(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, new Range<>(0, 24));
+                        builder.set(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, fpsRange);
                         builder.set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_AUTO);
                         final CaptureRequest request = builder.build();
 
@@ -456,12 +467,12 @@ class CameraServiceCamera2 extends CameraService {
 
     @Override
     String[] getCameraIds() {
-            try {
-                return manager.getCameraIdList();
-            } catch (Exception e) {
-                Log.w(TAG, "getCameraIds: can't enumerate devices", e);
-                return new String[0];
-            }
+        try {
+            return manager.getCameraIdList();
+        } catch (Exception e) {
+            Log.w(TAG, "getCameraIds: can't enumerate devices", e);
+            return new String[0];
+        }
     }
 
     @Override
