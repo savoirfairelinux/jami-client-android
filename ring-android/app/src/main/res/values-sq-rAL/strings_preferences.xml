@@ -5,11 +5,16 @@
   <string name="pref_category_system">Sistem</string>
   <string name="pref_category_privacy">Privatësi</string>
   <string name="pref_mobileData_title">Të dhëna celulare</string>
+  <string name="pref_mobileData_summary">Lejoni Jami në rrjete 3G/LTE, si shtesë ndaj atyre Wi-Fi</string>
   <string name="pref_pushNotifications_title">Njoftime push</string>
   <string name="pref_pushNotifications_summary">Përdorni shërbyesit Google që të lejoni marrje thirrjesh/mesazhesh në prapaskenë</string>
   <string name="pref_hd_summary">Aktivizoni dërgim videosh HD</string>
   <string name="pref_systemContacts_title">Përdor kontakte sistemi</string>
   <string name="pref_systemContacts_summary">Për shfaqjen e hollësive të thirrësit përdor kontakte sistemi.</string>
+  <string name="pref_systemDialer_title">Kryej thirrje sistemi duke përdoru Jami-n</string>
+  <string name="pref_systemDialer_summary">Kur është e mundur, përdor Jami-n për të kryer thirrje sistemi.</string>
+  <string name="pref_startOnBoot_title">Nise Jami-n kur niset sistemi</string>
+  <string name="pref_startOnBoot_summary">Xhirojeni Jami-n në prapaskenë, kur niset sistemi.</string>
   <string name="pref_clearHistory_title">Pastroje historikun</string>
   <string name="pref_clearHistory_summary">Pastroni krejt historikun e bisedave, Ky veprim nuk mund të zhbëhet.</string>
   <string name="pref_persistNotification_title">Xhiro në prapaskenë</string>

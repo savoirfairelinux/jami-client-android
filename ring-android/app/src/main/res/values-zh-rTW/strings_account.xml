@@ -5,6 +5,7 @@
   <string name="ic_advanced_menu">進階設定</string>
   <string name="ic_blacklist_menu">已阻擋的聯絡人</string>
   <!--Strings related to account creation-->
+  <string name="add_ring_account_title">新增 Jami 帳號</string>
   <string name="add_sip_account_title">新增 SIP 帳號</string>
   <string name="ring_account_default_name">Ring 帳號 %1$s</string>
   <string name="prompt_alias">別名</string>
@@ -25,6 +26,7 @@
         您將僅能撥出與接收直接 IP 通話。
         您稍後可以編輯您的帳號</string>
   <string name="account_type_ip2ip">IP 帳號</string>
+  <string name="help_ring">Jami 帳號讓您可以在完全分散式的網路中安全地點對點接觸其他人。</string>
   <string name="help_sip_title">加入你的 SIP 帳號</string>
   <string name="help_sip">配製一個存在的 SIP 帳號。</string>
   <string name="create_sip_account">新增 SIP 帳號</string>
@@ -118,17 +120,25 @@
   <string name="account_export_end_error_title">錯誤</string>
   <string name="account_export_end_error_message">無法匯出帳號。遇到未知的錯誤。</string>
   <string name="account_enter_password">輸入密碼</string>
+  <string name="account_share_body">在 Jami 分散式通訊平臺上使用「%1$s」聯絡我：https://ring.cx</string>
+  <string name="account_share_body_with_username">在 Jami 分散式通訊平臺上使用「%1$s」或是我的公開使用者名稱「%2$s」聯絡我：https://ring.cx</string>
+  <string name="account_contact_me">在 Jami 上聯絡我！</string>
   <string name="update_account">更新帳號</string>
+  <string name="account_migration">您的 Jami 帳號可以更新。\n請輸入您的密碼。</string>
   <string name="ring_account">Ring 帳號</string>
   <string name="ring_account_identity">身份</string>
   <string name="account_migration_title_dialog">帳號遷移</string>
   <string name="account_migration_message_dialog">您的帳號需要更新。您想要到帳號管理畫面來執行這個動作嗎？</string>
   <string name="account_update_needed">需要更新</string>
   <string name="account_cannot_be_found_title">找不到帳號</string>
+  <string name="account_cannot_be_found_message">在 Jami 網路中找不到帳號。請確定其已在 Jami 上從既有的裝置匯出，以及提供的憑證是正確的。</string>
   <string name="account_sip_cannot_be_registered_message">您可以繼續帳號建立程序，或是在這裡編輯您的資訊。稍後仍可以在帳號設定中編輯。</string>
   <string name="account_no_network_title">無法連接到網路</string>
+  <string name="account_no_network_message">因為 Jami 無法連線到分散式網路，所以無法新增帳號。請檢查您裝置的網路連線。</string>
   <string name="account_device_added_title">已新增裝置到帳號中</string>
+  <string name="account_device_added_message">你已經在這個裝置上成功設定你的 Jami 帳號。</string>
   <string name="account_device_updated_title">已更新帳號中的裝置</string>
+  <string name="account_device_updated_message">您已經成功地更新您的 Jami 帳號。</string>
   <string name="account_cannot_be_updated_message">帳號裝置無法更新。請檢查您的密碼。</string>
   <string name="account_sip_success_title">SIP 帳號已註冊</string>
   <string name="account_sip_success_message">您已成功註冊您的 SIP 帳號。</string>
@@ -137,8 +147,11 @@
   <string name="account_link_prompt_pin">輸入 PIN 碼</string>
   <string name="account_new_button">建立 Jami 帳號</string>
   <string name="account_link_export_button">連結其他裝置到這個帳號</string>
+  <string name="account_link_export_info">要在其他裝置上使用這個帳號，您必須先在 Jami 上揭露它。這將會生成一個您必須在新裝置上輸入以設定帳號的 PIN 碼。PIN 碼在 10 分鐘內有效。</string>
   <string name="account_start_export_button">生成 PIN 碼</string>
   <string name="account_end_export_button">關閉</string>
+  <string name="account_end_export_infos">您的 PIN 碼是：\n\n%%\n\n要完成過程，您需要在新裝置上開啟 Jami。以「連結這個裝置到一個帳號」來建立新帳號。您的 PIN 碼在 10 分鐘內有效。</string>
+  <string name="account_link_export_info_light">要在其他裝置上使用這個帳號，您必須先在 Jami 上揭露它。這將會生成一個您必須在新裝置上輸入以設定帳號的 PIN 碼。PIN 碼在 10 分鐘內有效。</string>
   <string name="account_export_title">新增裝置</string>
   <!--Name registration-->
   <string name="error_username_empty">輸入使用者名稱</string>
@@ -156,7 +169,9 @@
   <string name="account_status_unknown">未知</string>
   <string name="account_status_offline">離線</string>
   <!--Create account-->
+  <string name="account_creation_home">歡迎來到 Jami</string>
   <string name="account_creation_profile">建立您的檔案</string>
+  <string name="account_creation_ring">建立您的 Jami 帳號</string>
   <string name="account_link_title">連結此裝置</string>
   <string name="account_sip_cannot_be_registered">無法註冊帳號</string>
   <!--Edit profile-->
@@ -169,6 +184,7 @@
   <string name="revoke_device_wait_title">請等待...</string>
   <string name="revoke_device_wait_message">正在撤銷裝置</string>
   <string name="rename_device_title">重新命名此裝置</string>
+  <string name="rename_device_message">選擇新名稱來在您的 Jami 帳號上辨識此裝置</string>
   <string name="rename_device_button">重新命名裝置</string>
   <string name="account_rename_device_hint">選擇新裝置名稱</string>
   <string name="account_device_name_empty">裝置名稱不能為空</string>

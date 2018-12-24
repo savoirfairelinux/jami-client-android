@@ -2,6 +2,7 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Commentaire</string>
+  <string name="report"><u>Envoyez-nous un courriel</u></string>
   <string name="section_license">Licence</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Contribuez</string>
@@ -10,6 +11,7 @@
   <string name="no_browser_app_installed">Aucun navigateur internet trouvé. Vous devez en installer un afin de voir cette page</string>
   <string name="email_chooser_title">Envoi du courriel en utilisant…</string>
   <string name="website_chooser_title">Voir le site web avec...</string>
+  <string name="description">Jami est un logiciel libre de communication universel qui respecte la vie privée et l\'intimité de ses utilisateurs.</string>
   <string name="credits">Crédits</string>
   <!--About dialog-->
   <string name="developed_by">Développé par</string>
@@ -31,6 +33,7 @@
   <string name="menu_item_account">Gestion du compte</string>
   <string name="menu_item_settings">Paramètres</string>
   <string name="menu_item_share">Partager mon contact</string>
+  <string name="menu_item_about">À propos de Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Composez un numéro</string>
   <!--History Fragment-->
@@ -61,6 +64,7 @@
   <string name="notif_channel_file_transfer">Transfert de fichier</string>
   <string name="notif_channel_background_service">Service en arrière-plan</string>
   <string name="notif_channel_background_service_descr">Permet de recevoir des appels et des messages en tout temps.</string>
+  <string name="notif_background_service">Jami fonctionne en arrière-plan.</string>
   <string name="notif_mark_as_read">Marquer comme lu</string>
   <string name="notif_dismiss">Rejeter</string>
   <string name="notif_reply">Répondre</string>
@@ -76,8 +80,11 @@
   <string name="ongoing_call">Appel en cours</string>
   <string name="hist_in_call">Appel entrant de %1$s</string>
   <string name="hist_out_call">Appel sortant de %1$s</string>
+  <string name="start_error_title">Jami n\'arrive pas à se lancer !</string>
+  <string name="start_error_mic_required">Jami demande pour fonctionner votre autorisation d\'utiliser votre microphone .</string>
   <string name="action_call_accept">Répondre</string>
   <string name="action_call_decline">Décliner</string>
+  <string name="action_call_mic_mute">Rendre votre microphone muet</string>
   <string name="ab_action_speakerphone">Activer le haut-parleur</string>
   <string name="ab_action_contact_add">Ajouter aux contacts</string>
   <string name="ab_action_contact_add_question">Ajouter aux contacts ?</string>
@@ -134,7 +141,9 @@
   <string name="prompt_new_password">Nouveau mot de passe</string>
   <string name="prompt_new_password_optional">Nouveau mot de passe (optionnel)</string>
   <string name="prompt_new_password_repeat">Confirmez le mot de passe</string>
+  <string name="account_create_title">Créer un compte Jami</string>
   <string name="prompt_new_username">Entrez un nouveau nom d\'utilisateur</string>
+  <string name="help_password_enter">Saisissez le mot de passe du compte Jami de référence </string>
   <string name="wizard_next">Suivant</string>
   <string name="wizard_back">Précédent</string>
   <string name="wizard_skip">Passez</string>
@@ -145,6 +154,7 @@
   <string name="take_a_photo">Prendre une photo</string>
   <string name="profile_name_hint">Entrez votre nom (facultatif)</string>
   <!--Share fragment-->
+  <string name="share_message">Numériser cet identifiant avec Jami</string>
   <string name="share_message_no_account">Veuillez sélectionner le compte à partager.</string>
   <string name="share_your_account_information">Partagez mes coordonnées</string>
   <string name="generic_error_migration">Erreur</string>
