@@ -68,7 +68,7 @@ class CameraServiceCamera2 extends CameraService {
     private static final String TAG = CameraServiceCamera2.class.getName();
     private static final boolean USE_HARDWARE_ENCODER = false;
     private static final int FPS_MAX = 30;
-    private static final int FPS_TARGET = 30;
+    private static final int FPS_TARGET = 15;
 
     private final HandlerThread t = new HandlerThread("videoHandler");
 
