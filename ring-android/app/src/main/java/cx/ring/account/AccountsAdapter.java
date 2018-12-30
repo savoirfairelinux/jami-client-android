@@ -67,7 +67,6 @@ public class AccountsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        Log.d(TAG, "onBindViewHolder");
         AccountView entryView = (AccountView) holder;
         final Account item = accounts.get(position);
         entryView.alias.setText(item.getAlias());
