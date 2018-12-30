@@ -115,6 +115,7 @@ public class CallService {
     public void accept(final String callId) {
         mExecutor.execute(() -> {
             Log.i(TAG, "accept() running... " + callId);
+            Ringservice.muteCapture(false);
             Ringservice.accept(callId);
         });
     }
@@ -191,15 +192,7 @@ public class CallService {
     }
 
     public boolean isCaptureMuted() {
-        try {
-            return mExecutor.submit(() -> {
-                Log.i(TAG, "isCaptureMuted() running...");
-                return Ringservice.isCaptureMuted();
-            }).get();
-        } catch (Exception e) {
-            Log.e(TAG, "Error running isCaptureMuted()", e);
-        }
-        return false;
+        return Ringservice.isCaptureMuted();
     }
 
     public void transfer(final String callId, final String to) {

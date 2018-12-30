@@ -307,6 +307,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
         binding.shapeRipple.setRippleShape(new Circle());
         binding.callSpeakerBtn.setChecked(presenter.isSpeakerphoneOn());
+        binding.callMicBtn.setChecked(presenter.isMicrophoneMuted());
         binding.previewSurface.setSurfaceTextureListener(listener);
 
         binding.dialpadEditText.addTextChangedListener(new TextWatcher() {
@@ -515,7 +516,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     @Override
-    public void initNormalStateDisplay(final boolean audioOnly, boolean isSpeakerphoneOn) {
+    public void initNormalStateDisplay(final boolean audioOnly, boolean isSpeakerphoneOn, boolean isMuted) {
         binding.shapeRipple.stopRipple();
 
         binding.callAcceptBtn.setVisibility(View.GONE);
@@ -525,6 +526,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
         binding.contactBubbleLayout.setVisibility(audioOnly ? View.VISIBLE : View.GONE);
         binding.callSpeakerBtn.setChecked(isSpeakerphoneOn);
+        binding.callMicBtn.setChecked(isMuted);
 
         getActivity().invalidateOptionsMenu();
     }

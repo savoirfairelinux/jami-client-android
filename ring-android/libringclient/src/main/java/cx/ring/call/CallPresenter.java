@@ -157,6 +157,10 @@ public class CallPresenter extends RootPresenter<CallView> {
         mCallService.setMuted(checked);
     }
 
+    public boolean isMicrophoneMuted() {
+        return mCallService.isCaptureMuted();
+    }
+
     public void switchVideoInputClick() {
         mHardwareService.switchInput(mSipCall.getCallId());
         getView().switchCameraIcon(mHardwareService.isPreviewFromFrontCamera());
@@ -270,7 +274,7 @@ public class CallPresenter extends RootPresenter<CallView> {
         view.updateMenu();
         if (call.isOnGoing()) {
             mOnGoingCall = true;
-            view.initNormalStateDisplay(mAudioOnly, mHardwareService.isSpeakerPhoneOn());
+            view.initNormalStateDisplay(mAudioOnly, mHardwareService.isSpeakerPhoneOn(), isMicrophoneMuted());
             view.updateMenu();
             if (!mAudioOnly) {
                 mHardwareService.setPreviewSettings();
