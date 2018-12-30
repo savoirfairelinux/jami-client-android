@@ -48,6 +48,7 @@ import android.util.Range;
 import android.util.Size;
 import android.view.Surface;
 import android.view.SurfaceHolder;
+import android.view.TextureView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -276,8 +277,7 @@ class CameraServiceCamera2 extends CameraService {
         return range == null ? new Range<>(FPS_TARGET, FPS_TARGET) : range;
     }
 
-    @Override
-    public void openCamera(@NonNull Context context, VideoParams videoParams, Object surface, CameraListener listener) {
+    public void openCamera(@NonNull Context context, VideoParams videoParams, TextureView surface, CameraListener listener) {
         CameraDevice camera = previewCamera;
         if (camera != null) {
             camera.close();
@@ -300,7 +300,7 @@ class CameraServiceCamera2 extends CameraService {
                     flip ? view.getHeight() : view.getWidth(), flip ? view.getWidth() : view.getHeight(),
                     videoParams.width, videoParams.height,
                     new Size(videoParams.width, videoParams.height));
-            Log.d(TAG, "Selected preview size: " + previewSize + ", fps range: " + fpsRange);
+            Log.d(TAG, "Selected preview size: " + previewSize + ", fps range: " + fpsRange + " rate: "+videoParams.rate);
 
             int orientation = context.getResources().getConfiguration().orientation;
             if (orientation == Configuration.ORIENTATION_LANDSCAPE) {

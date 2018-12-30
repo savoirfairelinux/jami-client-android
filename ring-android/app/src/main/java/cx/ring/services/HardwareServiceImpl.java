@@ -33,8 +33,8 @@ import android.os.Build;
 
 import androidx.annotation.Nullable;
 
-import android.view.Surface;
 import android.view.SurfaceHolder;
+import android.view.TextureView;
 import android.view.WindowManager;
 
 import java.io.File;
@@ -61,15 +61,12 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     private static final Point VIDEO_SIZE_HD = new Point(1280, 720);
     private static final Point VIDEO_SIZE_FULL_HD = new Point(1920, 1080);
 
-    public static final int VIDEO_WIDTH = 640;
-    public static final int VIDEO_HEIGHT = 480;
-
     private static final String TAG = HardwareServiceImpl.class.getName();
-    private static WeakReference<Object> mCameraPreviewSurface = new WeakReference<>(null);
-    private static final Map<String, WeakReference<SurfaceHolder>> videoSurfaces = Collections.synchronizedMap(new HashMap<String, WeakReference<SurfaceHolder>>());
+    private static WeakReference<TextureView> mCameraPreviewSurface = new WeakReference<>(null);
+    private static final Map<String, WeakReference<SurfaceHolder>> videoSurfaces = Collections.synchronizedMap(new HashMap<>());
     private final Map<String, Shm> videoInputs = new HashMap<>();
     private final Context mContext;
-    private final CameraService cameraService;
+    private final CameraServiceCamera2 cameraService;
     private final Ringer mRinger;
     private final AudioManager mAudioManager;
     private BluetoothWrapper mBluetoothWrapper;
@@ -85,11 +82,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
         mHasSpeakerPhone = hasSpeakerphone();
         mRinger = new Ringer(mContext);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            cameraService = new CameraServiceCamera2(mContext);
-        } else {
-            cameraService = new CameraServiceKitKat();
-        }
+        cameraService = new CameraServiceCamera2(mContext);
     }
 
     public void initVideo() {
@@ -381,7 +374,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
             Log.w(TAG, "startCapture: no video parameters ");
             return;
         }
-        final Object surface = mCameraPreviewSurface.get();
+        final TextureView surface = mCameraPreviewSurface.get();
         if (surface == null) {
             Log.w(TAG, "Can't start capture: no surface registered.");
             cameraService.setPreviewParams(videoParams);
@@ -471,15 +464,14 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
 
     @Override
     public void addPreviewVideoSurface(Object oholder) {
-        /*if (!(oholder instanceof SurfaceHolder)) {
+        if (!(oholder instanceof TextureView)) {
             return;
         }
-        SurfaceHolder holder = (SurfaceHolder)oholder;*/
-        //Surface holder = (Surface) oholder;
-        Log.w(TAG, "addPreviewVideoSurface " + oholder.hashCode() + " mCapturingId " + mCapturingId);
+        TextureView holder = (TextureView)oholder;
+        Log.w(TAG, "addPreviewVideoSurface " + holder.hashCode() + " mCapturingId " + mCapturingId);
         if (mCameraPreviewSurface.get() == oholder)
             return;
-        mCameraPreviewSurface = new WeakReference<>(oholder);
+        mCameraPreviewSurface = new WeakReference<>(holder);
         if (mShouldCapture && !mIsCapturing) {
             startCapture(mCapturingId);
         }

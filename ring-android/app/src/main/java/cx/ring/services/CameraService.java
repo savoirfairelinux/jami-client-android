@@ -183,8 +183,6 @@ abstract public class CameraService {
         void onError();
     }
 
-    abstract void openCamera(Context c, VideoParams videoParams, Object surface, CameraListener listener);
-
     abstract void closeCamera();
 
     abstract boolean isOpen();
