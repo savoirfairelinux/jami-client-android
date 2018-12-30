@@ -203,6 +203,8 @@ public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPrefere
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (data == null)
+            return;
         Uri uri = data.getData();
         Context c = getContext();
         if (resultCode == Activity.RESULT_CANCELED || uri == null || c == null) {
@@ -211,19 +213,19 @@ public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPrefere
 
         if (requestCode == SELECT_RINGTONE_PATH) {
             try {
-                String path = AndroidFileUtils.getRealPathFromURI(getActivity(), uri);
+                String path = AndroidFileUtils.getRealPathFromURI(c, uri);
                 if (path == null)
                     throw new IllegalArgumentException();
                 String type = c.getContentResolver().getType(uri);
                 presenter.onFileFound(type, path);
             } catch (Exception e) {
                 try {
-                    File file = AndroidFileUtils.getCacheFile(getContext(), uri);
+                    File file = AndroidFileUtils.getCacheFile(c, uri);
                     String path = file.getAbsolutePath();
                     String type = c.getContentResolver().getType(uri);
                     presenter.onFileFound(type, path);
                 } catch (Exception e2) {
-                    Toast.makeText(getContext(), "Can't load ringtone !", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(c, "Can't load ringtone !", Toast.LENGTH_SHORT).show();
                 }
             }
         }
