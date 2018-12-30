@@ -304,7 +304,9 @@ public class ConversationFacade {
                 .clearHistory(contact.getRawUriString(), accountId)
                 .doOnSubscribe(s -> {
                     Account account = mAccountService.getAccount(accountId);
-                    account.clearHistory(contact);
+                    if (account != null) {
+                        account.clearHistory(contact);
+                    }
                 });
     }
 
@@ -364,27 +366,23 @@ public class ConversationFacade {
     }
 
     private void onCallStateChange(SipCall call) {
-        if (call == null) {
-            Log.w(TAG, "CALL_STATE_CHANGED : call is null");
-            return;
-        }
         SipCall.State newState = call.getCallState();
         boolean incomingCall = newState == SipCall.State.RINGING && call.isIncoming();
         mHardwareService.updateAudioState(newState, incomingCall, !call.isAudioOnly());
 
         Account account = mAccountService.getAccount(call.getAccount());
-        Conversation conversation = account.getByUri(call.getContact().getPrimaryUri());
-        if (conversation == null) {
-            Log.e(TAG, "CALL_STATE_CHANGED : can't find conversation for  " + call.getContact().getPrimaryUri());
-            return;
-        }
-        Conference conference = conversation.getConference(call.getCallId());
-        if (conference == null) {
-            if (newState == SipCall.State.OVER)
-                return;
-            conference = new Conference(call);
-            conversation.addConference(conference);
-            account.updated(conversation);
+        CallContact contact = call.getContact();
+        Conversation conversation = (contact == null || account == null) ? null : account.getByUri(contact.getPrimaryUri());
+        Conference conference = null;
+        if (conversation != null) {
+            conference = conversation.getConference(call.getCallId());
+            if (conference == null) {
+                if (newState == SipCall.State.OVER)
+                    return;
+                conference = new Conference(call);
+                conversation.addConference(conference);
+                account.updated(conversation);
+            }
         }
 
         Log.w(TAG, "CALL_STATE_CHANGED : updating call state to " + newState);
@@ -410,7 +408,8 @@ public class ConversationFacade {
             if (newState == SipCall.State.HUNGUP || call.getTimestampEnd() == 0) {
                 call.setTimestampEnd(now);
             }
-            if (conference.removeParticipant(call)) {
+
+            if (conversation != null && conference.removeParticipant(call)) {
                 HistoryCall historyCall = new HistoryCall(call);
                 mHistoryService.insertNewEntry(historyCall).subscribe();
                 conversation.addHistoryCall(historyCall);
@@ -420,7 +419,7 @@ public class ConversationFacade {
                 account.updated(conversation);
             }
             mCallService.removeCallForId(call.getCallId());
-            if (conference.getParticipants().isEmpty()) {
+            if (conversation != null && conference.getParticipants().isEmpty()) {
                 conversation.removeConference(conference);
             }
         }
