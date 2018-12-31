@@ -192,7 +192,7 @@ abstract public class CameraService {
 
     abstract void fillCameraInfo(DeviceParams p, String camId, IntVect formats, UintVect sizes, UintVect rates, Point minVideoSize);
 
-    int rotationToDegrees(int rotation) {
+    static private int rotationToDegrees(int rotation) {
         switch (rotation) {
             case Surface.ROTATION_0:
                 return 0;
