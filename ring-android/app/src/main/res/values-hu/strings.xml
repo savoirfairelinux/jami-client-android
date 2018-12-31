@@ -164,7 +164,7 @@
   <string name="share_message_no_account">Válassza ki a megosztandó fiókot.</string>
   <string name="share_your_account_information">Kapcsolati adatok megosztása</string>
   <string name="generic_error_migration">Hiba</string>
-  <string name="generic_error_migration_message">Hiba történt a migráció sorá</string>
+  <string name="generic_error_migration_message">Hiba történt az átvitel során</string>
   <!--Pending contact requests-->
   <string name="accept">Elfogadás</string>
   <string name="refuse">Elutasítás</string>
