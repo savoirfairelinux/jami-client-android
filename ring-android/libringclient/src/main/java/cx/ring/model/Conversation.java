@@ -52,16 +52,15 @@ public class Conversation {
     private final Subject<ConversationElement> newElementSubject = PublishSubject.create();
     private final Subject<ConversationElement> updatedElementSubject = PublishSubject.create();
     private final Subject<ConversationElement> removedElementSubject = PublishSubject.create();
-
+    private final Subject<List<ConversationElement>> clearedSubject = PublishSubject.create();
     private final Subject<List<Conference>> callsSubject = BehaviorSubject.create();
+    private Subject<Integer> color = BehaviorSubject.create();
 
     // runtime flag set to true if the user is currently viewing this conversation
     private boolean mVisible = false;
 
     // indicate the list needs sorting
     private boolean mDirty = false;
-
-    private Subject<Integer> color = BehaviorSubject.create();
 
     public Conversation(CallContact contact) {
         mContact = contact;
@@ -83,6 +82,9 @@ public class Conversation {
     }
     public Observable<ConversationElement> getRemovedElements() {
         return removedElementSubject;
+    }
+    public Observable<List<ConversationElement>> getCleared() {
+        return clearedSubject;
     }
     public Observable<List<Conference>> getCalls() {
         return callsSubject;
@@ -309,6 +311,7 @@ public class Conversation {
         mAggregateHistory.clear();
         mHistory.clear();
         mDirty = true;
+        clearedSubject.onNext(mAggregateHistory);
     }
 
     public void addFileTransfer(DataTransfer dataTransfer) {

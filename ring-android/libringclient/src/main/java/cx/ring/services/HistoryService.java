@@ -49,6 +49,7 @@ import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 import cx.ring.model.Uri;
 import cx.ring.utils.Log;
+import cx.ring.utils.StringUtils;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
@@ -362,22 +363,24 @@ public abstract class HistoryService {
         return getDataHistoryDao().query(queryBuilder.prepare());
     }
 
-    public Completable clearHistory(final String contactId, final String accoundId) {
+    public Completable clearHistory(final String contactId, final String accountId) {
+        if (StringUtils.isEmpty(accountId))
+            return Completable.complete();
         return Completable.fromAction(() -> {
             int deleted = 0;
             DeleteBuilder<HistoryText, Long> deleteTextHistoryBuilder = getTextHistoryDao()
                     .deleteBuilder();
-            deleteTextHistoryBuilder.where().eq(HistoryText.COLUMN_ACCOUNT_ID_NAME, accoundId).and().eq(HistoryText.COLUMN_NUMBER_NAME, contactId);
+            deleteTextHistoryBuilder.where().eq(HistoryText.COLUMN_ACCOUNT_ID_NAME, accountId).and().eq(HistoryText.COLUMN_NUMBER_NAME, contactId);
             deleted += deleteTextHistoryBuilder.delete();
 
             DeleteBuilder<HistoryCall, Integer> deleteCallsHistoryBuilder = getCallHistoryDao()
                     .deleteBuilder();
-            deleteCallsHistoryBuilder.where().eq(HistoryCall.COLUMN_ACCOUNT_ID_NAME, accoundId).and().eq(HistoryCall.COLUMN_NUMBER_NAME, contactId);
+            deleteCallsHistoryBuilder.where().eq(HistoryCall.COLUMN_ACCOUNT_ID_NAME, accountId).and().eq(HistoryCall.COLUMN_NUMBER_NAME, contactId);
             deleted += deleteCallsHistoryBuilder.delete();
 
             DeleteBuilder<DataTransfer, Long> deleteDataTransferHistoryBuilder = getDataHistoryDao()
                     .deleteBuilder();
-            deleteDataTransferHistoryBuilder.where().eq(DataTransfer.COLUMN_ACCOUNT_ID_NAME, accoundId).and().eq(DataTransfer.COLUMN_PEER_ID_NAME, contactId);
+            deleteDataTransferHistoryBuilder.where().eq(DataTransfer.COLUMN_ACCOUNT_ID_NAME, accountId).and().eq(DataTransfer.COLUMN_PEER_ID_NAME, contactId);
             deleted += deleteDataTransferHistoryBuilder.delete();
             Log.w(TAG, "clearHistory: removed " + deleted + " elements");
         }).subscribeOn(scheduler);

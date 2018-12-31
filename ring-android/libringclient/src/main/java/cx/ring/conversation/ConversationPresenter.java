@@ -183,6 +183,8 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
 
         mConversationDisposable.add(c.getSortedHistory()
                 .subscribe(view::refreshView));
+        mConversationDisposable.add(c.getCleared()
+                .subscribe(view::refreshView));
         mConversationDisposable.add(c.getContact().getUpdates()
                 .observeOn(mUiScheduler)
                 .subscribe(contact -> initContact(account, mContactRingId, view)));
