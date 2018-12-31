@@ -2,7 +2,9 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Обратная связь</string>
+  <string name="report"><u>Отправить нам письмо</u></string>
   <string name="section_license">Лицензия</string>
+  <string name="sponsor_section">Jami — свободное программное обеспечение, разрабатываемое и поддерживаемое</string>
   <string name="copyright_section">Авторское право</string>
   <string name="contribute_section">Помочь проекту</string>
   <string name="version_section">Версия</string>
@@ -10,6 +12,7 @@
   <string name="no_browser_app_installed">Не найден веб-браузер. Установите его, чтобы просмотреть эту страницу.</string>
   <string name="email_chooser_title">Отправить письмо используя…</string>
   <string name="website_chooser_title">Просмотреть веб-сайт с помощью…</string>
+  <string name="license">Это программное обеспечение предоставляется \"как есть\", без каких-либо гарантий. Для получения дополнительной информации смотрите <u>GNU General Public License версии 3 или выше</u></string>
   <string name="description">Jami — свободная программа для связи, уважающая свободу и конфиденциальность пользователей.</string>
   <string name="credits">Благодарности</string>
   <!--About dialog-->
@@ -32,6 +35,7 @@
   <string name="menu_item_account">Управление аккаунтом</string>
   <string name="menu_item_settings">Настройки</string>
   <string name="menu_item_share">Поделиться моим контактом</string>
+  <string name="menu_item_about">О программе Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Набрать номер</string>
   <!--History Fragment-->
@@ -64,6 +68,7 @@
   <string name="notif_channel_file_transfer">Передача файла</string>
   <string name="notif_channel_background_service">Фоновая служба</string>
   <string name="notif_channel_background_service_descr">Позволяет принимать звонки и сообщения в любое время.</string>
+  <string name="notif_background_service">Jami сейчас работает в фоновом режиме</string>
   <string name="notif_mark_as_read">Отметить как прочитанное</string>
   <string name="notif_dismiss">Отклонить</string>
   <string name="notif_reply">Ответить</string>
@@ -79,8 +84,11 @@
   <string name="ongoing_call">Исходящий вызов</string>
   <string name="hist_in_call">Входящий звонок %1$s</string>
   <string name="hist_out_call">Исходящий звонок %1$s</string>
+  <string name="start_error_title">Невозможно запустить Jami!</string>
+  <string name="start_error_mic_required">Jami требуется разрешение на использование микрофона для работы.</string>
   <string name="action_call_accept">Принять вызов</string>
   <string name="action_call_decline">Отклонить</string>
+  <string name="action_call_mic_mute">Выключить микрофон</string>
   <string name="ab_action_speakerphone">Включить громкоговоритель</string>
   <string name="ab_action_contact_add">Добавить в контакты</string>
   <string name="ab_action_contact_add_question">Добавить к контактам?</string>
@@ -108,7 +116,9 @@
   <string name="ringtone_error_format_not_supported">Этот формат не поддерживается</string>
   <string name="ringtone_error_size_too_big">Этот файл слишком большой. Максимальный размер — %1$dКб.</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Jami требуется разрешение «Чтение контактов», чтобы включить эту функцию. Пожалуйста, предоставьте его.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Jami требуется разрешение «Запись в журнал звонков», чтобы включить эту функцию. Пожалуйста, предоставьте его.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Отсканируйте QR-код аккаунта, который вы хотите добавить.</string>
   <!--Settings-->
@@ -131,12 +141,17 @@
   <string name="conversation_action_select_peer_number">Выбрать номер</string>
   <string name="conversation_action_block_this">Заблокировать контакт</string>
   <string name="conversation_action_go_to_call">Вернуться к текущему вызову</string>
+  <string name="clip_contact_uri">Контактный адрес</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Добавить %1$s?</string>
   <string name="prompt_new_password">Новый пароль</string>
   <string name="prompt_new_password_optional">Новый пароль (необязательно)</string>
   <string name="prompt_new_password_repeat">Повторите новый пароль</string>
+  <string name="account_create_title">Создать учётную запись Jami</string>
   <string name="prompt_new_username">Введите новое имя пользователя</string>
+  <string name="help_password_choose">Выберите надёжный пароль, который вы запомните, чтобы защитить ваш аккаунт Jami.</string>
+  <string name="help_password_enter">Введите пароль от вашего основного аккаунта Jami</string>
+  <string name="help_pin_enter">Введите PIN от настроенного аккаунта Jami. Используйте функцию «экспортировать аккаунт в Jami», чтобы получить PIN.</string>
   <string name="wizard_next">Далее</string>
   <string name="wizard_back">Назад</string>
   <string name="wizard_skip">Пропустить</string>
@@ -147,6 +162,7 @@
   <string name="take_a_photo">Сфотографировать</string>
   <string name="profile_name_hint">Введите ваше имя (опционально)</string>
   <!--Share fragment-->
+  <string name="share_message">Отсканируйте этот код Jami</string>
   <string name="share_message_no_account">Выберите аккаунт, которым хотите поделиться.</string>
   <string name="share_your_account_information">Поделиться моей контактной информацией</string>
   <string name="generic_error_migration">Ошибка</string>

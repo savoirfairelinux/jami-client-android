@@ -5,11 +5,16 @@
   <string name="pref_category_system">Система</string>
   <string name="pref_category_privacy">Конфиденциальность</string>
   <string name="pref_mobileData_title">Мобильные данные</string>
+  <string name="pref_mobileData_summary">Разрешить Jami использовать 3G/LTE сети в дополнение к Wi-Fi</string>
   <string name="pref_pushNotifications_title">Push-уведомления</string>
   <string name="pref_pushNotifications_summary">Использовать серверы Google для получения вызовов/сообщений в фоновом режиме</string>
   <string name="pref_hd_summary">Разрешить отправку видео высокого разрешения</string>
   <string name="pref_systemContacts_title">Использовать контакты из адресной книги</string>
   <string name="pref_systemContacts_summary">Использовать данные из адресной книги для отображения информации о звонящем.</string>
+  <string name="pref_systemDialer_title">Совершать системные звонки с помощью Jami</string>
+  <string name="pref_systemDialer_summary">Использовать Jami для системных звонков, если возможно.</string>
+  <string name="pref_startOnBoot_title">Запускать Jami при старте системы</string>
+  <string name="pref_startOnBoot_summary">Запускать Jami в фоновом режиме во время старта системы.</string>
   <string name="pref_clearHistory_title">Очистить историю</string>
   <string name="pref_clearHistory_summary">Очистить всю историю разговоров. Это действие нельзя отменить.</string>
   <string name="pref_persistNotification_title">Работа в фоновом режиме</string>
