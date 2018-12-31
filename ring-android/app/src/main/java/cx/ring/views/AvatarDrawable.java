@@ -96,29 +96,15 @@ public class AvatarDrawable extends Drawable {
     public AvatarDrawable(Context context, Account account) {
         this(context, VCardServiceImpl.readData(account.getProfile()), account.getRegisteredName(), account.getUri(), true);
     }
-    /*public AvatarDrawable(Context context, byte[] photo, String profileName, String username, String id, boolean crop) {
-        this(context, photo, TextUtils.isEmpty(profileName) ? username : profileName, id, crop);
-    }*/
-    public AvatarDrawable(Context context, Bitmap photo, String profileName, String username, String id, boolean crop) {
-        this(context, photo, TextUtils.isEmpty(profileName) ? username : profileName, id, crop);
-    }
     public AvatarDrawable(Context context, Tuple<String, Object> data, String registeredName, String uri, boolean crop) {
         this(context, (Bitmap)data.second, data.first, registeredName, uri, crop);
     }
     public AvatarDrawable(Context context, Tuple<String, Object> data, String registeredName, String uri) {
         this(context, (Bitmap)data.second, data.first, registeredName, uri, true);
     }
-    /*public AvatarDrawable(Context context, byte[] photo, String name, String id, boolean crop) {
-        this(context, photo == null ? null : getBitmap(photo), name, id, crop);
+    public AvatarDrawable(Context context, Bitmap photo, String profileName, String username, String id, boolean crop) {
+        this(context, photo, TextUtils.isEmpty(profileName) ? username : profileName, id, crop);
     }
-
-    private static Bitmap getBitmap(byte[] photo) {
-        Bitmap source = BitmapFactory.decodeByteArray(photo, 0, photo.length);
-        if (source == null)
-            return null;
-        int d = Math.min(source.getWidth(), source.getHeight());
-        return ThumbnailUtils.extractThumbnail(source, d, d);
-    }*/
 
     public AvatarDrawable(Context context, Bitmap photo, String name, String id, boolean crop) {
         Log.w("AvatarDrawable", photo + " " + name + " " + id);
