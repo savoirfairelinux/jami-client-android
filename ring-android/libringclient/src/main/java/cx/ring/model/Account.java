@@ -182,8 +182,13 @@ public class Account {
         else if (conversation == pending.get(key))
             pendingUpdated(conversation);
         else if (conversation == cache.get(key)) {
-            pending.put(key, conversation);
-            pendingChanged();
+            if (isRing()) {
+                pending.put(key, conversation);
+                pendingChanged();
+            } else {
+                conversations.put(key, conversation);
+                conversationChanged();
+            }
         }
     }
 
