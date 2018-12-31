@@ -38,11 +38,13 @@ import android.util.Log;
 import android.webkit.MimeTypeMap;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import androidx.annotation.NonNull;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
@@ -182,11 +184,13 @@ public class AndroidFileUtils {
         return "application/octet-stream";
     }
 
-    public static File getCacheFile(Context context, android.net.Uri uri) throws IOException {
+    public static @NonNull File getCacheFile(@NonNull Context context, @NonNull android.net.Uri uri) throws IOException {
         String filename = getFilename(context, uri);
         File file = new File(context.getCacheDir(), filename);
         FileOutputStream output = new FileOutputStream(file);
         InputStream inputStream = context.getContentResolver().openInputStream(uri);
+        if (inputStream == null)
+            throw new FileNotFoundException();
         FileUtils.copyFile(inputStream, output);
         inputStream.close();
         output.close();

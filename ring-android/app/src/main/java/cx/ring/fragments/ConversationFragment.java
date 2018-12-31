@@ -20,6 +20,7 @@
 package cx.ring.fragments;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.ClipData;
 import android.content.Context;
@@ -710,14 +711,20 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             final android.net.Uri shareUri = uri;
             setLoading(true);
             new Thread(() -> {
+                Context c = getContext();
+                if (c == null)
+                    return;
+                Activity a = null;
                 try {
-                    File cacheFile = AndroidFileUtils.getCacheFile(getActivity(), shareUri);
-                    presenter.sendFile(cacheFile);
-                } catch (IOException e) {
+                    presenter.sendFile(AndroidFileUtils.getCacheFile(c, shareUri));
+                    a = getActivity();
+                } catch (Exception e) {
                     Log.e(TAG, "onActivityResult: not able to create cache file");
-                    getActivity().runOnUiThread(() -> displayErrorToast(RingError.INVALID_FILE));
+                    if (a != null)
+                        a.runOnUiThread(() -> displayErrorToast(RingError.INVALID_FILE));
                 }
-                getActivity().runOnUiThread(() -> setLoading(false));
+                if (a != null)
+                    a.runOnUiThread(() -> setLoading(false));
             }).start();
         }
     }
