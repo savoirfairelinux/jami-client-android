@@ -87,7 +87,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
 
     public void initVideo() {
         Log.i(TAG, "initVideo()");
-        cameraService.init();
+        mExecutor.submit(cameraService::init);
     }
 
     public boolean isVideoAvailable() {
