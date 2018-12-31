@@ -34,6 +34,7 @@ Vous pouvez modifier le compte plus tard.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Aucun compte enregistré</string>
   <string name="normal_accounts_titles">Comptes</string>
+  <string name="normal_devices_titles">Appareils connus associés à ce compte Jami</string>
   <string name="account_device_revoke">Révoquer l\'appareil</string>
   <string name="account_device_revocation_success_title">Succès</string>
   <string name="account_device_revocation_success">L\'appareil est maintenant révoqué !</string>
@@ -117,6 +118,7 @@ Vous pouvez modifier le compte plus tard.</string>
   <string name="account_export_end_error_title">Erreur</string>
   <string name="account_export_end_error_message">Impossible d\'exporter le compte. Une erreur inconnue s\'est produite.</string>
   <string name="account_enter_password">Entrez le mot de passe</string>
+  <string name="account_contact_me">Contactez-moi sur Jami !</string>
   <string name="update_account">Mise à jour du compte </string>
   <string name="ring_account">Compte Ring</string>
   <string name="ring_account_identity">Identité</string>
@@ -155,6 +157,7 @@ Vous pouvez modifier le compte plus tard.</string>
   <string name="account_status_unknown">Inconnu</string>
   <string name="account_status_offline">Déconnecté</string>
   <!--Create account-->
+  <string name="account_creation_home">Bienvenu sur Jami</string>
   <string name="account_creation_profile">Créer votre profil</string>
   <string name="account_link_title">Lier cet appareil</string>
   <string name="account_sip_cannot_be_registered">Impossible d\'enregistrer le compte</string>

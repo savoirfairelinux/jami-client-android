@@ -4,6 +4,7 @@
   <string name="feedback_section">Commentaire</string>
   <string name="report"><u>Envoyez-nous un courriel</u></string>
   <string name="section_license">Licence</string>
+  <string name="sponsor_section">Jami est un logiciel libre développé et supporté par</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Contribuez</string>
   <string name="version_section">Version</string>
@@ -11,6 +12,7 @@
   <string name="no_browser_app_installed">Aucun navigateur internet trouvé. Vous devez en installer un afin de voir cette page</string>
   <string name="email_chooser_title">Envoi du courriel en utilisant…</string>
   <string name="website_chooser_title">Voir le site web avec...</string>
+  <string name="license">Ce logiciel est offert \"tel quel\", sans aucune garantie. Pour plus d\'informations,  &lt;u&gt;GNU General Public License version 3 or later&lt;/u&gt;</string>
   <string name="description">Jami est un logiciel libre de communication universel qui respecte la vie privée et l\'intimité de ses utilisateurs.</string>
   <string name="credits">Crédits</string>
   <!--About dialog-->
@@ -112,7 +114,9 @@
   <string name="ringtone_error_format_not_supported">Ce format de fichier n\'est pas supporté.</string>
   <string name="ringtone_error_size_too_big">Le fichier est trop grand. La taille maximum est %1$d kB.</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Jami a besoin de votre autorisation pour lire vos contacts. Autorisez Jami, svp.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Jami a besoin d\'accéder en écriture à votre liste de contact. SVP autorisez-le.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Numérisez le code QR de votre interlocuteur.</string>
   <!--Settings-->
@@ -143,7 +147,9 @@
   <string name="prompt_new_password_repeat">Confirmez le mot de passe</string>
   <string name="account_create_title">Créer un compte Jami</string>
   <string name="prompt_new_username">Entrez un nouveau nom d\'utilisateur</string>
+  <string name="help_password_choose">Pour protéger votre compte Jami, choisissez un mot de passe fort dont vous vous souviendrez.</string>
   <string name="help_password_enter">Saisissez le mot de passe du compte Jami de référence </string>
+  <string name="help_pin_enter">Entrez le NIP obtenu en configurant un autre compte Jami . Utilisez la fonction \"exportez un compte sur Jami\" pour obtenir un NIP.</string>
   <string name="wizard_next">Suivant</string>
   <string name="wizard_back">Précédent</string>
   <string name="wizard_skip">Passez</string>

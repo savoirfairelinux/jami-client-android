@@ -5,6 +5,7 @@
   <string name="ic_advanced_menu">Дополнительные настройки</string>
   <string name="ic_blacklist_menu">Заблокированные контакты</string>
   <!--Strings related to account creation-->
+  <string name="add_ring_account_title">Добавить аккаунт Jami</string>
   <string name="add_sip_account_title">Добавить аккаунт SIP </string>
   <string name="ring_account_default_name">Аккаунт Ring %1$s</string>
   <string name="prompt_alias">Псевдоним</string>
@@ -25,6 +26,7 @@
 Вы сможете совершать и принимать звонки только напрямую по IP.
 Можно будет изменить аккаунт позднее.</string>
   <string name="account_type_ip2ip">IP-аккаунт</string>
+  <string name="help_ring">Аккаунт Jami позволяет безопасно связываться с людьми напрямую через полностью распределенную сеть.</string>
   <string name="help_sip_title">Добавить ваш SIP-аккаунт</string>
   <string name="help_sip">Настроить существующий SIP-аккаунт</string>
   <string name="create_sip_account">Добавить аккаунт SIP </string>
@@ -118,26 +120,38 @@
   <string name="account_export_end_error_title">Ошибка</string>
   <string name="account_export_end_error_message">Не удалось экспортировать аккаунт. Произошла неизвестная ошибка.</string>
   <string name="account_enter_password">Введите пароль</string>
+  <string name="account_share_body">Свяжитесь со мной, используя \'%1$s\' в распределенной платформе для общения Jami: https://ring.cx</string>
+  <string name="account_share_body_with_username">Свяжитесь со мной, используя \'%1$s\' или мое публичное имя пользователя \'%2$s\' в распределенной платформе для общения Jami: https://ring.cx</string>
+  <string name="account_contact_me">Свяжитесь со мной в Jami!</string>
   <string name="update_account">Обновить аккаунт</string>
+  <string name="account_migration">Ваш аккаунт Jami может быть обновлен.\nПожалуйста, введите ваш пароль.</string>
   <string name="ring_account">Аккаунт Ring</string>
   <string name="ring_account_identity">Идентификатор</string>
   <string name="account_migration_title_dialog">Перенос аккаунта</string>
   <string name="account_migration_message_dialog">Ваш аккаунт требуется обновить. Хотите перейти на экран управления аккаунтом для выполнения этой операции?</string>
   <string name="account_update_needed">Необходимо обновление</string>
   <string name="account_cannot_be_found_title">Не удалось найти аккаунт</string>
+  <string name="account_cannot_be_found_message">Не удалось найти аккаунт в сети Jami.\nУдостоверьтесь, что он был экспортирован в сеть Jami с существующего устройства, и что предоставленные идентификационные данные верны.</string>
   <string name="account_sip_cannot_be_registered_message">Можно продолжить создание учетной записи или изменить информацию здесь. Редактирование будет возможно и позже в настройках аккаунта.</string>
   <string name="account_no_network_title">Не удается подключиться к сети</string>
+  <string name="account_no_network_message">Не удалось добавить аккаунт, потому что Jami не смог подключиться к распределенной сети. Проверьте сетевое соединение вашего устройства.</string>
   <string name="account_device_added_title">Аккаунт создан</string>
+  <string name="account_device_added_message">Вы успешно настроили аккаунт Jami на этом устройстве.</string>
   <string name="account_device_updated_title">Устройство аккаунта обновлено</string>
+  <string name="account_device_updated_message">Вы успешно обновили ваш аккаунт Jami.</string>
   <string name="account_cannot_be_updated_message">Устройство аккаунта не удалось обновить. Проверьте свой пароль.</string>
   <string name="account_sip_success_title">SIP-аккаунт зарегистрирован</string>
   <string name="account_sip_success_message">Вы успешно зарегистрировали свой SIP-аккаунт.</string>
   <string name="account_sip_register_anyway">Все равно зарегистрироваться</string>
   <string name="account_link_button">Привязать это устройство к аккаунту</string>
   <string name="account_link_prompt_pin">Введите PIN</string>
+  <string name="account_new_button">Создать учётную запись Jami</string>
   <string name="account_link_export_button">Привязать другое устройство к этому аккаунту</string>
+  <string name="account_link_export_info">Чтобы использовать этот аккаунт на других устройствах, вам необходимо сначала скопировать его в сеть Jami. При этом будет сгенерирован PIN-код, который вы должны будете ввести на новом устройстве для установки аккаунта. PIN-код действителен в течение 10 минут.</string>
   <string name="account_start_export_button">Сгенерировать PIN</string>
   <string name="account_end_export_button">закрыть</string>
+  <string name="account_end_export_infos">Ваш PIN:\n\n%%\n\nДля завершения процесса нужно открыть Jami на новом устройстве и выбрать \"Привязать это устройство к аккаунту\". Ваш PIN действителен в течение 10 минут.</string>
+  <string name="account_link_export_info_light">Чтобы использовать этот аккаунт на других устройствах, вам необходимо сначала скопировать его в сеть Jami. При этом будет сгенерирован PIN-код, который вы должны будете ввести на новом устройстве для установки аккаунта. PIN-код действителен в течение 10 минут.</string>
   <string name="account_export_title">Добавить устройства</string>
   <!--Name registration-->
   <string name="error_username_empty">Введите имя пользователя</string>
@@ -155,7 +169,9 @@
   <string name="account_status_unknown">Неизвестно</string>
   <string name="account_status_offline">Не в сети</string>
   <!--Create account-->
+  <string name="account_creation_home">Добро пожаловать в Jami</string>
   <string name="account_creation_profile">Создайте свой профиль</string>
+  <string name="account_creation_ring">Создать свой аккаунт Jami</string>
   <string name="account_link_title">Привязать это устройство</string>
   <string name="account_sip_cannot_be_registered">Не удалось зарегистрировать аккаунт</string>
   <!--Edit profile-->
@@ -168,6 +184,7 @@
   <string name="revoke_device_wait_title">Пожалуйста, подождите…</string>
   <string name="revoke_device_wait_message">Отзываем доступ устройства</string>
   <string name="rename_device_title">Переименовать это устройство</string>
+  <string name="rename_device_message">Выберите новое название для идентификации этого устройства в вашем аккаунте Jami</string>
   <string name="rename_device_button">Переименовать устройство</string>
   <string name="account_rename_device_hint">Выберите новое название для устройства</string>
   <string name="account_device_name_empty">Название устройства не может быть пустым</string>
