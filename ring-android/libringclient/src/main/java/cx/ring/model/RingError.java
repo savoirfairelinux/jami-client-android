@@ -1,7 +1,7 @@
 package cx.ring.model;
 
 /*
- *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2019 Savoir-faire Linux Inc.
  *
  *  Author: Hadrien De Sousa <hadrien.desousa@savoirfairelinux.com>
  *
