@@ -27,7 +27,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -58,12 +57,12 @@ import cx.ring.model.Account;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.services.VCardServiceImpl;
 import cx.ring.utils.AndroidFileUtils;
-import cx.ring.utils.BitmapUtils;
+import cx.ring.utils.Tuple;
 import cx.ring.views.AvatarDrawable;
-import ezvcard.VCard;
 import ezvcard.parameter.ImageType;
 import ezvcard.property.Photo;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPresenter> implements NavigationAdapter.OnNavigationItemClicked,
         AccountAdapter.OnAccountActionClicked, RingNavigationView {
@@ -117,6 +116,8 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
     private Account mSelectedAccount;
     private Bitmap mSourcePhoto;
     private ImageView mProfilePhoto;
+
+    private final CompositeDisposable mDisposableBag = new CompositeDisposable();
 
     @Override
     public void onAccountSelected(Account selectedAccount) {
@@ -183,6 +184,12 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
         }
     }
 
+    @Override
+    public void onDestroyView() {
+        mDisposableBag.clear();
+        super.onDestroyView();
+    }
+
     private void setupAccountList() {
         mAccountAdapter = new AccountAdapter(presenter);
         mAccountAdapter.setOnAccountActionClickedListener(this);
@@ -230,28 +237,25 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
         }
     }
 
-    private void updateUserView(final VCard vcard, final Account account) {
-        if (getActivity() == null || vcard == null || account == null) {
+    private void updateUserView(final Account account) {
+        if (getActivity() == null || account == null) {
             Log.e(TAG, "Not able to update navigation view");
             return;
         }
 
-        /*String username = account.getRegisteredName();
-        String ringId = account.getUri();
-        AvatarFactory.getGlideAvatar(getActivity(), Glide.with(this), vcard, username, ringId)
-                .into(mUserImage);*/
-        mUserImage.setImageDrawable(new AvatarDrawable(getActivity(), VCardServiceImpl.readData(vcard), account.getRegisteredName(), account.getUri()));
+        mUserImage.setImageDrawable(new AvatarDrawable(getActivity(), account));
     }
 
     public void updatePhoto(Uri uriImage) {
-        AndroidFileUtils.loadBitmap(getActivity(), uriImage)
+        mDisposableBag.add(AndroidFileUtils.loadBitmap(getActivity(), uriImage)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::updatePhoto, e -> Log.e(TAG, "Error loading image", e));
+                .subscribe(this::updatePhoto, e -> Log.e(TAG, "Error loading image", e)));
     }
 
     public void updatePhoto(Bitmap image) {
         mSourcePhoto = image;
-        mProfilePhoto.setImageBitmap(BitmapUtils.cropImageToCircle(image));
+        Tuple<String, Object> data = VCardServiceImpl.readData(mSelectedAccount.getProfile());
+        mProfilePhoto.setImageDrawable(new AvatarDrawable(getContext(), image, data.first, mSelectedAccount.getRegisteredName(), mSelectedAccount.getUri(), true));
     }
 
     @OnClick(R.id.addaccount_btn)
@@ -358,7 +362,7 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
     @Override
     public void showViewModel(final RingNavigationViewModel viewModel) {
         mAccountAdapter.replaceAll(viewModel.getAccounts());
-        updateUserView(viewModel.getVcard(), viewModel.getAccount());
+        updateUserView(viewModel.getAccount());
         updateSelectedAccountView(viewModel.getAccount());
         if (viewModel.getAccounts().isEmpty()) {
             mNewAccountBtn.setVisibility(View.VISIBLE);

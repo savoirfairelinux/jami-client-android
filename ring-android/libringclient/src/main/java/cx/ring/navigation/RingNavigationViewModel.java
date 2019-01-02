@@ -23,22 +23,14 @@ package cx.ring.navigation;
 import java.util.List;
 
 import cx.ring.model.Account;
-import ezvcard.VCard;
 
 public class RingNavigationViewModel {
-
     final private Account mAccount;
     final private List<Account> mAccounts;
-    final private VCard mProfile;
 
     public RingNavigationViewModel(Account account, List<Account> accounts) {
         mAccount = account;
         mAccounts = accounts;
-        mProfile = account == null ? null : account.getProfile();
-    }
-
-    public VCard getVcard() {
-        return mProfile;
     }
 
     public Account getAccount() {

@@ -255,11 +255,9 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
             return;
         }
 
-        VCard vcard = viewModel.getVcard();
         Account account = viewModel.getAccount();
-        String registeredName = account.getRegisteredName();
         String address = account.getDisplayUsername();
-        Tuple<String, Object> profile = VCardServiceImpl.readData(vcard);
+        Tuple<String, Object> profile = VCardServiceImpl.readData(account.getProfile());
 
         if (profile.first != null && !profile.first.isEmpty()) {
             titleView.setAlias(profile.first);
@@ -273,7 +271,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         }
 
         titleView.getLogoView().setVisibility(View.VISIBLE);
-        titleView.getLogoView().setImageDrawable(new AvatarDrawable(getActivity(), profile, registeredName, account.getUsername()));
+        titleView.getLogoView().setImageDrawable(new AvatarDrawable(getActivity(), account));
     }
 
     @Override
