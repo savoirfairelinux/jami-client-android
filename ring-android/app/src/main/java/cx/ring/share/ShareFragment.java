@@ -30,6 +30,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -77,7 +78,7 @@ public class ShareFragment extends BaseSupportFragment<SharePresenter> implement
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         setHasOptionsMenu(true);

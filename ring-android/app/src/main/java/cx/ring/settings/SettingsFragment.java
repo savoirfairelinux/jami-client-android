@@ -82,7 +82,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onViewCreated(view, savedInstanceState);
         if (TextUtils.isEmpty(RingApplication.getInstance().getPushToken())) {

@@ -143,7 +143,7 @@ public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPrefere
 
     @Override
     public void displayWrongFileFormatDialog() {
-        new AlertDialog.Builder(getActivity())
+        new AlertDialog.Builder(getContext())
                 .setTitle(R.string.ringtone_error_title)
                 .setMessage(R.string.ringtone_error_format_not_supported)
                 .setPositiveButton(android.R.string.ok, null)
@@ -152,7 +152,7 @@ public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPrefere
 
     @Override
     public void displayFileTooBigDialog() {
-        new AlertDialog.Builder(getActivity())
+        new AlertDialog.Builder(getContext())
                 .setTitle(R.string.ringtone_error_title)
                 .setMessage(getString(R.string.ringtone_error_size_too_big, MediaPreferencePresenter.MAX_SIZE_RINGTONE))
                 .setPositiveButton(android.R.string.ok, null)
@@ -161,7 +161,7 @@ public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPrefere
 
     @Override
     public void displayPermissionCameraDenied() {
-        new AlertDialog.Builder(getActivity())
+        new AlertDialog.Builder(getContext())
                 .setTitle(R.string.permission_dialog_camera_title)
                 .setMessage(R.string.permission_dialog_camera_message)
                 .setCancelable(false)

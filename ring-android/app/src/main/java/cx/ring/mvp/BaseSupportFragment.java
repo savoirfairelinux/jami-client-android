@@ -29,6 +29,7 @@ import javax.inject.Inject;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import butterknife.ButterKnife;
@@ -55,7 +56,7 @@ public abstract class BaseSupportFragment<T extends RootPresenter> extends Fragm
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View inflatedView = inflater.inflate(getLayout(), container, false);
         // dependency injection
         injectFragment(((RingApplication) getActivity().getApplication()).getRingInjectionComponent());
@@ -65,7 +66,7 @@ public abstract class BaseSupportFragment<T extends RootPresenter> extends Fragm
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         //Be sure to do the injection in onCreateView method
