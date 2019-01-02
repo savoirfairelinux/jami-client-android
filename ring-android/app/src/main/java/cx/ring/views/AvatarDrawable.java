@@ -169,13 +169,25 @@ public class AvatarDrawable extends Drawable {
             int cy = (bounds.height()-d)/2;
             placeholder.setBounds(cx, cy, cx + d, cy + d);
         }
-        if (cropCircle) {
-            if (bitmap != null) {
-                int r = d / 2;
-                int cx = bounds.centerX();
-                int cy = bounds.centerY();
-                backgroundBounds.set(cx - r, cy - r, cx + r, cy + r);
+        int iw = cropCircle ? d : bounds.width();
+        int ih = cropCircle ? d : bounds.height();
+        if (bitmap != null) {
+            int a = bitmap.getWidth() * ih;
+            int b = bitmap.getHeight() * iw;
+            int w;
+            int h;
+            if (a < b) {
+                w = Math.max(bitmap.getWidth(), iw);
+                h  = (w * bitmap.getHeight())/bitmap.getWidth();
+            } else {
+                h = Math.max(bitmap.getHeight(), ih);
+                w  = (h * bitmap.getWidth())/bitmap.getHeight();
             }
+            int cx = (iw - w)/2;
+            int cy = (ih - h)/2;
+            backgroundBounds.set(cx, cy, cx + w, h + cy);
+        }
+        if (cropCircle) {
             if (d > 0) {
                 workspace = Bitmap.createBitmap(d, d, Bitmap.Config.ARGB_8888);
                 clipPaint.setShader(new BitmapShader(workspace, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP));
@@ -185,24 +197,6 @@ public class AvatarDrawable extends Drawable {
                 workspace = null;
             }
         } else {
-            if (bitmap != null) {
-                int a = bitmap.getWidth() * getBounds().height();
-                int b = bitmap.getHeight() * getBounds().width();
-                int w;
-                int h;
-                if (a < b) {
-                    w = Math.max(bitmap.getWidth(), getBounds().width());
-                    h  = (w * bitmap.getHeight())/bitmap.getWidth();
-                } else {
-                    h = Math.max(bitmap.getHeight(), getBounds().height());
-                    w  = (h * bitmap.getWidth())/bitmap.getHeight();
-                }
-                int cx = (getBounds().width() - w)/2;
-                int cy = (getBounds().height() - h)/2;
-                backgroundBounds.set(cx, cy, cx + w, h + cy);
-            } else {
-                backgroundBounds.set(getBounds());
-            }
             workspace = Bitmap.createBitmap(getBounds().width(), getBounds().height(), Bitmap.Config.ARGB_8888);
         }
         update = true;

@@ -48,12 +48,9 @@ import cx.ring.model.Account;
 import cx.ring.navigation.RingNavigationPresenter;
 import cx.ring.navigation.RingNavigationView;
 import cx.ring.navigation.RingNavigationViewModel;
-import cx.ring.services.VCardServiceImpl;
 import cx.ring.tv.camera.CustomCameraActivity;
 import cx.ring.utils.AndroidFileUtils;
-import cx.ring.utils.VCardUtils;
 import cx.ring.views.AvatarDrawable;
-import ezvcard.VCard;
 import ezvcard.parameter.ImageType;
 import ezvcard.property.Photo;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -164,8 +161,6 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
 
     @Override
     public void showViewModel(RingNavigationViewModel viewModel) {
-        // displays account available info
-        VCard vcard = viewModel.getVcard();
         Account account = viewModel.getAccount();
         if (account == null) {
             Log.e(TAG, "Not able to get current account");
@@ -191,7 +186,7 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
         else
             getGuidanceStylist().getTitleView().setText(alias);
 
-        AvatarDrawable avatar = new AvatarDrawable(getContext(), VCardServiceImpl.readData(vcard), account.getUsername(), account.getUsername(), true);
+        AvatarDrawable avatar = new AvatarDrawable(getContext(), account, true);
         avatar.setInSize(iconSize);
         getGuidanceStylist().getIconView().setImageDrawable(avatar);
     }
