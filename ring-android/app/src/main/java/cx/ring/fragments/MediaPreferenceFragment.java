@@ -23,7 +23,6 @@ package cx.ring.fragments;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -50,7 +49,6 @@ import cx.ring.model.Codec;
 import cx.ring.model.ConfigKey;
 import cx.ring.mvp.BasePreferenceFragment;
 import cx.ring.utils.AndroidFileUtils;
-import cx.ring.utils.FileUtils;
 
 public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPreferencePresenter> implements MediaPreferenceView {
 
