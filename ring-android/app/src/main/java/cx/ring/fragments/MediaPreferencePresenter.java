@@ -35,15 +35,9 @@ import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
 import io.reactivex.Scheduler;
 
-public class MediaPreferencePresenter extends RootPresenter<MediaPreferenceView> {
-
+public class MediaPreferencePresenter extends RootPresenter<MediaPreferenceView>
+{
     public static final String TAG = MediaPreferencePresenter.class.getSimpleName();
-
-    public static final String MPEG = "audio/mpeg";
-    public static final String XMPEG = "audio/x-mpeg";
-    public static final String MPEG3 = "audio/mpeg3";
-    public static final String XMPEG3 = "audio/x-mpeg-3";
-
     public static final int MAX_SIZE_RINGTONE = 64 * 1024;
 
     protected AccountService mAccountService;
@@ -76,8 +70,7 @@ public class MediaPreferencePresenter extends RootPresenter<MediaPreferenceView>
         mCompositeDisposable.clear();
         mCompositeDisposable.add(mAccountService
                 .getObservableAccount(accountId)
-                .switchMapSingle(account -> mAccountService
-                        .getCodecList(accountId)
+                .switchMapSingle(account -> mAccountService.getCodecList(accountId)
                         .observeOn(mUiScheduler)
                         .doOnSuccess(codecList -> {
                             final ArrayList<Codec> audioCodec = new ArrayList<>();
@@ -91,14 +84,12 @@ public class MediaPreferencePresenter extends RootPresenter<MediaPreferenceView>
                             }
                             getView().accountChanged(account, audioCodec, videoCodec);
                         }))
-                .subscribe());
+                .subscribe(l -> {}, e -> Log.e(TAG, "Error loading codec list")));
     }
 
     void onFileFound(String type, String path) {
         File myFile = new File(path);
-        if (MPEG3.equals(type) || XMPEG3.equals(type) || MPEG.equals(type) || XMPEG.equals(type)) {
-            getView().displayWrongFileFormatDialog();
-        } else if (myFile.length() / 1024 > MAX_SIZE_RINGTONE) {
+        if (myFile.length() / 1024 > MAX_SIZE_RINGTONE) {
             getView().displayFileTooBigDialog();
         } else {
             mAccount.setDetail(ConfigKey.RINGTONE_PATH, myFile.getAbsolutePath());
