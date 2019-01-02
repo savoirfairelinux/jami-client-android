@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2019 Savoir-faire Linux Inc.
  *
  *  Author: Thibault Wittemberg <thibault.wittemberg@savoirfairelinux.com>
  *  Author: Adrien Beraud <adrien.beraud@savoirfairelinux.com>

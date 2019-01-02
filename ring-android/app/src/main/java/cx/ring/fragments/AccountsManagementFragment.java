@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2019 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Savard <alexandre.savard@savoirfairelinux.com>
  *          Alexandre Lision <alexandre.lision@savoirfairelinux.com>
