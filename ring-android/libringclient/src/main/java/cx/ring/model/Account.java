@@ -140,7 +140,7 @@ public class Account {
         } else {
             if (conversation != null)
                 conversation.sortHistory();
-            Collections.sort(sortedPending, (a, b) -> Long.compare(b.getLastEvent().getDate(), a.getLastEvent().getDate()));
+            Collections.sort(sortedPending, (a, b) -> ConversationElement.compare(b.getLastEvent(), a.getLastEvent()));
         }
         pendingSubject.onNext(getSortedPending());
     }
@@ -163,7 +163,7 @@ public class Account {
             } else {
                 if (conversation != null)
                     conversation.sortHistory();
-                Collections.sort(sortedConversations, (a, b) -> Long.compare(b.getLastEvent().getDate(), a.getLastEvent().getDate()));
+                Collections.sort(sortedConversations, (a, b) -> ConversationElement.compare(b.getLastEvent(), a.getLastEvent()));
             }
             conversationsSubject.onNext(new ArrayList<>(sortedConversations));
         }
@@ -788,16 +788,7 @@ public class Account {
     private static class ConversationComparator implements Comparator<Conversation> {
         @Override
         public int compare(Conversation a, Conversation b) {
-            ConversationElement eventA = a.getLastEvent();
-            ConversationElement eventB = b.getLastEvent();
-            if (eventA == null) {
-                if (eventB == null)
-                    return 0;
-                return 1;
-            }
-            if (eventB == null)
-                return -1;
-            return Long.compare(eventB.getDate(), eventA.getDate());
+            return ConversationElement.compare(b.getLastEvent(), a.getLastEvent());
         }
     }
 

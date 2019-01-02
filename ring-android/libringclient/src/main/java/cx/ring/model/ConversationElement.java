@@ -36,4 +36,11 @@ public interface ConversationElement {
     enum CEType {
         TEXT, CALL, FILE, CONTACT
     }
+
+    static int compare(ConversationElement a, ConversationElement b) {
+        if (a == null)
+            return b == null ? 0 : -1;
+        if (b == null) return 1;
+        return Long.compare(a.getDate(), b.getDate());
+    }
 }

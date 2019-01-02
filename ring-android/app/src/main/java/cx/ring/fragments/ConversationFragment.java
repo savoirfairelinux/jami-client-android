@@ -29,6 +29,8 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -166,20 +168,20 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         injectFragment(((RingApplication) getActivity().getApplication()).getRingInjectionComponent());
-        binding = DataBindingUtil.inflate(inflater, R.layout.frag_conversation, container, false);
+        binding = FragConversationBinding.inflate(inflater, container, false);
         binding.setPresenter(this);
         return binding.getRoot();
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         binding.msgInputTxt.setMediaListener(contentInfo -> {
             try {
-                presenter.sendFile(AndroidFileUtils.getCacheFile(getActivity(), contentInfo.getContentUri()));
+                presenter.sendFile(AndroidFileUtils.getCacheFile(getContext(), contentInfo.getContentUri()));
                 contentInfo.releasePermission();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -224,7 +226,8 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         }
 
         DefaultItemAnimator animator = (DefaultItemAnimator) binding.histList.getItemAnimator();
-        animator.setSupportsChangeAnimations(false);
+        if (animator != null)
+            animator.setSupportsChangeAnimations(false);
         binding.histList.setAdapter(mAdapter);
         setHasOptionsMenu(true);
     }
@@ -328,7 +331,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             setLoading(true);
             new Thread(() -> {
                 try {
-                    File cacheFile = AndroidFileUtils.getCacheFile(getActivity(), uri);
+                    File cacheFile = AndroidFileUtils.getCacheFile(getContext(), uri);
                     presenter.sendFile(cacheFile);
                 } catch (IOException e) {
                     Log.e(TAG, "onActivityResult: not able to create cache file");
@@ -484,19 +487,20 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
 
     @Override
     protected void initPresenter(ConversationPresenter presenter) {
-        super.initPresenter(presenter);
-        Uri contactUri = new Uri(getArguments().getString(KEY_CONTACT_RING_ID));
-        String accountId = getArguments().getString(KEY_ACCOUNT_ID);
+        Bundle args = getArguments();
+        if (args == null)
+            return;
+        Uri contactUri = new Uri(args.getString(KEY_CONTACT_RING_ID));
+        String accountId = args.getString(KEY_ACCOUNT_ID);
+        mAdapter = new ConversationAdapter(this, presenter);
+        presenter.init(contactUri, accountId);
         try {
             mPreferences = getActivity().getSharedPreferences(accountId + "_" + contactUri.getRawRingId(), Context.MODE_PRIVATE);
+            mPreferences.registerOnSharedPreferenceChangeListener(this);
+            presenter.setConversationColor(mPreferences.getInt(KEY_PREFERENCE_CONVERSATION_COLOR, getResources().getColor(R.color.color_primary_light)));
         } catch (Exception e) {
             Log.e(TAG, "Can't load conversation preferences");
         }
-
-        mAdapter = new ConversationAdapter(this, presenter);
-        presenter.init(contactUri, accountId);
-        presenter.setConversationColor(mPreferences.getInt(KEY_PREFERENCE_CONVERSATION_COLOR, getResources().getColor(R.color.color_primary_light)));
-        mPreferences.registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
