@@ -20,6 +20,8 @@ package cx.ring.contactrequests;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -71,7 +73,7 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         return super.onCreateView(inflater, parent, savedInstanceState);
     }

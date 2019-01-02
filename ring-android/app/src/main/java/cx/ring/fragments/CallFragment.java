@@ -241,7 +241,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         injectFragment(((RingApplication) getActivity().getApplication()).getRingInjectionComponent());
         binding = DataBindingUtil.inflate(inflater, R.layout.frag_call, container, false);
         binding.setPresenter(this);
@@ -271,7 +271,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     };
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onViewCreated(view, savedInstanceState);
         mCurrentOrientation = getResources().getConfiguration().orientation;

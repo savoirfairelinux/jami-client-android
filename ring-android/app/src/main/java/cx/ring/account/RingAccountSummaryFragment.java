@@ -27,6 +27,7 @@ import android.os.Bundle;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.appcompat.app.AlertDialog;
@@ -131,7 +132,7 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     private boolean mAccountHasPassword = true;
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mLinkAccountView.setContainer(this);
         hidePopWizard();

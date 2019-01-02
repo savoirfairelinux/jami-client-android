@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -51,7 +52,7 @@ public class HomeAccountCreationFragment extends BaseSupportFragment<HomeAccount
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setRetainInstance(true);
     }
