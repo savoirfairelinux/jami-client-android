@@ -62,13 +62,9 @@ public class LaunchPresenter extends RootPresenter<LaunchView> {
     }
 
     public void audioPermissionChanged(boolean isGranted) {
-        if (!isGranted) {
-            getView().displayAudioPermissionDialog();
-        }
     }
 
     public void contactPermissionChanged(boolean isGranted) {
-
     }
 
     public void cameraPermissionChanged(boolean isGranted) {
