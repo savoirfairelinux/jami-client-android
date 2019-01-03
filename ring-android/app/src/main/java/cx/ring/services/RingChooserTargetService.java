@@ -94,6 +94,7 @@ public class RingChooserTargetService extends ChooserTargetService {
                             }
                             return choosers;
                         }))
+                .onErrorReturn(e -> new ArrayList<>())
                 .blockingGet();
     }
 }
