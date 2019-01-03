@@ -26,6 +26,7 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -273,31 +274,33 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     public void takePicture() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-            // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-                Log.e(TAG, "takePicture: error creating temporary file", ex);
-                return;
+        if (!presenter.getDeviceRuntimeService().hasVideoPermission()) {
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, RingApplication.PERMISSIONS_REQUEST);
+        } else {
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                // Create the File where the photo should go
+                File photoFile = null;
+                try {
+                    photoFile = createImageFile();
+                } catch (IOException ex) {
+                    Log.e(TAG, "takePicture: error creating temporary file", ex);
+                    return;
+                }
+                Log.i(TAG, "takePicture: trying to save to " + photoFile);
+                mCurrentPhoto = photoFile;
+                android.net.Uri photoURI = FileProvider.getUriForFile(getActivity(),
+                        ContentUriHandler.AUTHORITY_FILES,
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_CODE_TAKE_PICTURE);
             }
-            Log.i(TAG, "takePicture: trying to save to " + photoFile);
-            mCurrentPhoto = photoFile;
-            android.net.Uri photoURI = FileProvider.getUriForFile(getActivity(),
-                    ContentUriHandler.AUTHORITY_FILES,
-                    photoFile);
-            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-            startActivityForResult(takePictureIntent, REQUEST_CODE_TAKE_PICTURE);
         }
     }
 
     @Override
     public void askWriteExternalStoragePermission() {
-        ActivityCompat.requestPermissions(getActivity(),
-                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                REQUEST_PERMISSION_CAMERA);
+        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, RingApplication.PERMISSIONS_REQUEST);
     }
 
     @Override
@@ -349,6 +352,23 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
                 presenter.sendFile(file);
                 getActivity().runOnUiThread(() -> setLoading(false));
             }).start();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        for (int i = 0, n = permissions.length; i < n; i++) {
+            switch (permissions[i]) {
+                case Manifest.permission.CAMERA:
+                    boolean granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
+                    if (granted) {
+                        takePicture();
+                    }
+                    return;
+                default:
+                    break;
+            }
         }
     }
 
