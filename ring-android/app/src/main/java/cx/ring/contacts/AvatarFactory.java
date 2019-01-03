@@ -58,7 +58,7 @@ public class AvatarFactory {
         return request.load(getDrawable(context, photo, profileName, username, id));
     }
 
-    public static RequestBuilder<Drawable> getGlideAvatar(Context context, RequestManager manager, CallContact contact) {
+    private static RequestBuilder<Drawable> getGlideAvatar(Context context, RequestManager manager, CallContact contact) {
         return getGlideRequest(context, manager.asDrawable(), (Bitmap)contact.getPhoto(), contact.getProfileName(), contact.getUsername(), contact.getPrimaryNumber());
     }
 
@@ -90,20 +90,12 @@ public class AvatarFactory {
                 .subscribeOn(Schedulers.computation());
     }
 
-    public static RequestBuilder<Drawable> getGlideAvatar(Fragment fragment, CallContact contact) {
-        return getGlideAvatar(fragment.getActivity(), Glide.with(fragment), contact);
-    }
-
-    public static RequestBuilder<Drawable> getGlideAvatar(Context context, CallContact contact) {
+    private static RequestBuilder<Drawable> getGlideAvatar(Context context, CallContact contact) {
         return getGlideAvatar(context, Glide.with(context), contact);
     }
 
     public static void loadGlideAvatar(ImageView view, CallContact contact) {
         getGlideAvatar(view.getContext(), contact).into(view);
-    }
-
-    public static RequestBuilder<Bitmap> getBitmapGlideAvatar(Context context, CallContact contact) {
-        return getGlideRequest(context, Glide.with(context).asBitmap(), (Bitmap)contact.getPhoto(), contact.getProfileName(), contact.getUsername(), contact.getPrimaryNumber());
     }
 
     public static void clearCache() {

@@ -33,13 +33,10 @@ import android.provider.MediaStore;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 
 import android.text.Editable;
@@ -89,7 +86,6 @@ import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.services.NotificationService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.AndroidFileUtils;
-import cx.ring.utils.ClipboardHelper;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.MediaButtonsHelper;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -98,11 +94,9 @@ import io.reactivex.disposables.Disposable;
 import static android.app.Activity.RESULT_OK;
 
 public class ConversationFragment extends BaseSupportFragment<ConversationPresenter> implements
-        ClipboardHelper.ClipboardHelperCallback,
         MediaButtonsHelper.MediaButtonsHelperCallback,
         ConversationView, SharedPreferences.OnSharedPreferenceChangeListener
 {
-
     protected static final String TAG = ConversationFragment.class.getSimpleName();
 
     public static final int REQ_ADD_CONTACT = 42;
@@ -376,9 +370,12 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
 
     @Override
     public void shareFile(File path) {
+        Context c = getContext();
+        if (c == null)
+            return;
         android.net.Uri fileUri = null;
         try {
-            fileUri = FileProvider.getUriForFile(getActivity(), ContentUriHandler.AUTHORITY_FILES, path);
+            fileUri = FileProvider.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path);
         } catch (IllegalArgumentException e) {
             Log.e("File Selector", "The selected file can't be shared: " + path.getName());
         }
@@ -386,7 +383,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            String type = getActivity().getContentResolver().getType(fileUri);
+            String type = c.getContentResolver().getType(fileUri);
             sendIntent.setDataAndType(fileUri, type);
             sendIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
             startActivity(Intent.createChooser(sendIntent, null));
@@ -395,9 +392,12 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
 
     @Override
     public void openFile(File path) {
+        Context c = getContext();
+        if (c == null)
+            return;
         android.net.Uri fileUri = null;
         try {
-            fileUri = FileProvider.getUriForFile(getActivity(), ContentUriHandler.AUTHORITY_FILES, path);
+            fileUri = FileProvider.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path);
         } catch (IllegalArgumentException e) {
             Log.e("File Selector", "The selected file can't be shared: " + path.getName());
         }
@@ -405,7 +405,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_VIEW);
             sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            String type = getActivity().getContentResolver().getType(fileUri);
+            String type = c.getContentResolver().getType(fileUri);
             sendIntent.setDataAndType(fileUri, type);
             sendIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
             //startActivity(Intent.createChooser(sendIntent, null));
@@ -472,16 +472,6 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    public void clipBoardDidCopyNumber(String copiedNumber) {
-        View view = getActivity().findViewById(android.R.id.content);
-        if (view != null) {
-            String snackbarText = getString(R.string.conversation_action_copied_peer_number_clipboard,
-                    ActionHelper.getShortenedNumber(copiedNumber));
-            Snackbar.make(view, snackbarText, Snackbar.LENGTH_LONG).show();
         }
     }
 

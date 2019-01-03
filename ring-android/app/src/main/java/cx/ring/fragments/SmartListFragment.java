@@ -368,18 +368,6 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
         ImageView photo = mNewContact.findViewById(R.id.photo);
 
         AvatarFactory.loadGlideAvatar(photo, contact);
-        /*Drawable contactPicture = AvatarFactory.getAvatar(
-                getActivity(),
-                contact.getPhoto(),
-                contact.getRingUsername(),
-                contact.getIds().get(0));
-
-        Glide.with(getActivity())
-                .load(contactPicture)
-                .apply(AvatarFactory.getGlideOptions(true, false))
-                //.transition(DrawableTransitionOptions.withCrossFade())
-                .into(photo);*/
-
         mNewContact.setVisibility(View.VISIBLE);
     }
 

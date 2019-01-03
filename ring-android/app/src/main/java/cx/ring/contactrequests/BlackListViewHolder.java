@@ -49,23 +49,7 @@ public class BlackListViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(final BlackListListeners clickListener, final CallContact contact) {
         AvatarFactory.loadGlideAvatar(mPhoto, contact);
-
-        /*byte[] photo = contact.getPhoto();
-
-        Drawable contactPicture = AvatarFactory.getAvatar(
-                itemView.getContext(),
-                photo,
-                contact.getUsername(),
-                contact.getPhones().get(0).getNumber().getHost());
-
-        Glide.with(itemView.getContext())
-                .load(contactPicture)
-                .apply(AvatarFactory.getGlideOptions(true, true))
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(mPhoto);*/
-
         mDisplayname.setText(contact.getRingUsername());
-
         mButtonUnblock.setOnClickListener(view -> clickListener.onUnblockClicked(contact));
     }
 
