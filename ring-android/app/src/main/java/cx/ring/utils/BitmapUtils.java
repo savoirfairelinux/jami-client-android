@@ -19,75 +19,35 @@
  */
 package cx.ring.utils;
 
-import android.content.Context;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.BitmapShader;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Matrix;
-import android.graphics.Paint;
-import android.graphics.RectF;
-import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.provider.MediaStore;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import io.reactivex.Single;
-import io.reactivex.schedulers.Schedulers;
+import ezvcard.parameter.ImageType;
+import ezvcard.property.Photo;
 
-import java.io.InputStream;
+import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
 
 /**
  * Helper calls to manipulates Bitmaps
  */
-public final class BitmapUtils {
-
+public final class BitmapUtils
+{
     private static final String TAG = BitmapUtils.class.getName();
+    private BitmapUtils() {}
 
-    private BitmapUtils() {
+    public static Photo bitmapToPhoto(@NonNull Bitmap image) {
+        return new Photo(bitmapToPng(image), ImageType.PNG);
     }
 
-
-
-    @Nullable
-    public static Bitmap cropImageToCircle(@NonNull byte[] bArray) {
-        Bitmap bitmap = BitmapFactory.decodeByteArray(bArray, 0, bArray.length);
-        if (bitmap != null) {
-            return cropImageToCircle(bitmap);
-        }
-
-        return null;
-    }
-
-    public static Bitmap cropImageToCircle(@NonNull Bitmap image) {
-        int side = Math.min(image.getWidth(), image.getHeight());
-
-        final Bitmap externalBMP = Bitmap.createBitmap(side, side, Bitmap.Config.ARGB_8888);
-
-        BitmapShader shader;
-        shader = new BitmapShader(image, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
-
-        Paint paint = new Paint();
-        paint.setAntiAlias(true);
-        paint.setShader(shader);
-        Canvas internalCanvas = new Canvas(externalBMP);
-
-        Paint paintLine = new Paint();
-        paintLine.setAntiAlias(true);
-        paintLine.setDither(true);
-        paintLine.setStyle(Paint.Style.STROKE);
-        paintLine.setColor(Color.WHITE);
-        internalCanvas.drawOval(
-                new RectF(0, 0, externalBMP.getWidth(), externalBMP.getHeight()),
-                paint);
-
-        return externalBMP;
+    public static byte[] bitmapToPng(@NonNull Bitmap image) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        return stream.toByteArray();
     }
 
     public static byte[] bitmapToBytes(Bitmap bmp) {
@@ -200,6 +160,4 @@ public final class BitmapUtils {
 
         return inSampleSize;
     }
-
-
 }

@@ -39,6 +39,7 @@ import ezvcard.property.Photo;
 import ezvcard.property.RawProperty;
 import ezvcard.property.Uid;
 import io.reactivex.Scheduler;
+import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
 public class RingNavigationPresenter extends RootPresenter<RingNavigationView> {
@@ -82,26 +83,27 @@ public class RingNavigationPresenter extends RootPresenter<RingNavigationView> {
         mAccountService.setCurrentAccount(selectedAccount);
     }
 
-    public void saveVCardPhoto(Photo photo) {
+    public void saveVCardPhoto(Single<Photo> photo) {
         Account account = mAccountService.getCurrentAccount();
         String accountId = account.getAccountID();
         String ringId = account.getUsername();
         File filesDir = mDeviceRuntimeService.provideFilesDir();
 
-        mCompositeDisposable.add(VCardUtils
-                .loadLocalProfileFromDisk(filesDir, accountId)
-                .doOnSuccess(vcard -> {
+        mCompositeDisposable.add(Single.zip(
+                VCardUtils.loadLocalProfileFromDisk(filesDir, accountId).subscribeOn(Schedulers.io()),
+                photo, (vcard, pic) -> {
                     vcard.setUid(new Uid(ringId));
                     vcard.removeProperties(Photo.class);
-                    vcard.addPhoto(photo);
+                    vcard.addPhoto(pic);
                     vcard.removeProperties(RawProperty.class);
+                    return vcard;
                 })
                 .flatMap(vcard -> VCardUtils.saveLocalProfileToDisk(vcard, accountId, filesDir))
                 .subscribeOn(Schedulers.io())
                 .subscribe(vcard -> {
                     account.setProfile(vcard);
                     mAccountService.refreshAccounts();
-                }));
+                }, e -> Log.e(TAG, "Error saving vCard !", e)));
     }
 
     public void saveVCardFormattedName(String username) {
@@ -120,33 +122,33 @@ public class RingNavigationPresenter extends RootPresenter<RingNavigationView> {
                 .subscribe(vcard -> {
                     account.setProfile(vcard);
                     mAccountService.refreshAccounts();
-                }));
+                }, e -> Log.e(TAG, "Error saving vCard !", e)));
     }
 
-    public void saveVCard(Account account, String username, Photo photo) {
+    public void saveVCard(Account account, String username, Single<Photo> photo) {
         String accountId = account.getAccountID();
         String ringId = account.getUsername();
         File filesDir = mDeviceRuntimeService.provideFilesDir();
-
-        mCompositeDisposable.add(VCardUtils
-                .loadLocalProfileFromDisk(filesDir, accountId)
-                .doOnSuccess(vcard -> {
+        mCompositeDisposable.add(Single.zip(
+                VCardUtils.loadLocalProfileFromDisk(filesDir, accountId).subscribeOn(Schedulers.io()),
+                photo, (vcard, pic) -> {
                     vcard.setUid(new Uid(ringId));
-                    if (photo != null) {
-                        vcard.removeProperties(Photo.class);
-                        vcard.addPhoto(photo);
-                    }
                     if (!StringUtils.isEmpty(username)) {
                         vcard.setFormattedName(username);
                     }
+                    if (photo != null) {
+                        vcard.removeProperties(Photo.class);
+                        vcard.addPhoto(pic);
+                    }
                     vcard.removeProperties(RawProperty.class);
+                    return vcard;
                 })
                 .flatMap(vcard -> VCardUtils.saveLocalProfileToDisk(vcard, accountId, filesDir))
                 .subscribeOn(Schedulers.io())
                 .subscribe(vcard -> {
                     account.setProfile(vcard);
                     mAccountService.refreshAccounts();
-                }));
+                }, e -> Log.e(TAG, "Error saving vCard !", e)));
     }
 
     public String getAlias(Account account) {

@@ -26,6 +26,7 @@ import android.os.Parcelable;
 import java.io.ByteArrayOutputStream;
 
 import cx.ring.mvp.AccountCreationModel;
+import cx.ring.utils.BitmapUtils;
 import ezvcard.VCard;
 import ezvcard.parameter.ImageType;
 import ezvcard.property.FormattedName;
@@ -59,12 +60,10 @@ public class AccountCreationModelImpl extends AccountCreationModel implements Pa
                     VCard vcard = new VCard();
                     vcard.setFormattedName(new FormattedName(getFullName()));
                     vcard.setUid(new Uid(getUsername()));
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    if (getPhoto() != null) {
-                        getPhoto().compress(Bitmap.CompressFormat.PNG, 100, stream);
-                        Photo photoVCard = new Photo(stream.toByteArray(), ImageType.PNG);
+                    Bitmap bmp = getPhoto();
+                    if (bmp != null) {
                         vcard.removeProperties(Photo.class);
-                        vcard.addPhoto(photoVCard);
+                        vcard.addPhoto(BitmapUtils.bitmapToPhoto(bmp));
                     }
                     vcard.removeProperties(RawProperty.class);
                     return vcard;

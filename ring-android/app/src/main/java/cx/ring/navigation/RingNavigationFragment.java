@@ -59,10 +59,12 @@ import cx.ring.model.Account;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.services.VCardServiceImpl;
 import cx.ring.utils.AndroidFileUtils;
+import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.Tuple;
 import cx.ring.views.AvatarDrawable;
 import ezvcard.parameter.ImageType;
 import ezvcard.property.Photo;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -310,11 +312,7 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
         builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> dialog.cancel());
         builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {
             if (mSourcePhoto != null) {
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                mSourcePhoto.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                Photo photo = new Photo(stream.toByteArray(), ImageType.PNG);
-                AvatarFactory.clearCache();
-                presenter.saveVCard(mSelectedAccount, editText.getText().toString().trim(), photo);
+                presenter.saveVCard(mSelectedAccount, editText.getText().toString().trim(), Single.just(mSourcePhoto).map(BitmapUtils::bitmapToPhoto));
                 mSourcePhoto = null;
             } else {
                 presenter.saveVCardFormattedName(editText.getText().toString().trim());

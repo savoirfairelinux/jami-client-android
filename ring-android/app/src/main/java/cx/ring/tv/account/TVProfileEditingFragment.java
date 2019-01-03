@@ -24,7 +24,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import androidx.annotation.NonNull;
@@ -36,24 +35,20 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
-
-import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import cx.ring.R;
 import cx.ring.account.ProfileCreationFragment;
 import cx.ring.application.RingApplication;
-import cx.ring.contacts.AvatarFactory;
 import cx.ring.model.Account;
 import cx.ring.navigation.RingNavigationPresenter;
 import cx.ring.navigation.RingNavigationView;
 import cx.ring.navigation.RingNavigationViewModel;
 import cx.ring.tv.camera.CustomCameraActivity;
 import cx.ring.utils.AndroidFileUtils;
+import cx.ring.utils.BitmapUtils;
 import cx.ring.views.AvatarDrawable;
-import ezvcard.parameter.ImageType;
-import ezvcard.property.Photo;
-import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.Single;
 
 public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigationPresenter>
         implements RingNavigationView {
@@ -79,12 +74,15 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
                         Log.e(TAG, "onActivityResult: Not able to get picture from extra");
                         return;
                     }
-                    updatePhoto((Bitmap) extras.get("data"));
+                    presenter.saveVCardPhoto(Single.just((Bitmap) extras.get("data"))
+                            .map(BitmapUtils::bitmapToPhoto));
                 }
                 break;
             case ProfileCreationFragment.REQUEST_CODE_GALLERY:
                 if (resultCode == Activity.RESULT_OK && data != null) {
-                    updatePhoto(data.getData());
+                    presenter.saveVCardPhoto(AndroidFileUtils
+                            .loadBitmap(getActivity(), data.getData())
+                            .map(BitmapUtils::bitmapToPhoto));
                 }
                 break;
             default:
@@ -225,25 +223,5 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
                     .setMessage(R.string.gallery_error_message)
                     .show();
         }
-    }
-
-    public void updatePhoto(Uri uriImage) {
-        AndroidFileUtils.loadBitmap(getActivity(), uriImage)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::updatePhoto, e -> Log.e(TAG, "Error loading image", e));
-    }
-
-    public void updatePhoto(Bitmap image) {
-        if (image == null) {
-            Log.w(TAG, "updatePhoto: null photo");
-            return;
-        }
-
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        Photo photo = new Photo(stream.toByteArray(), ImageType.PNG);
-
-        AvatarFactory.clearCache();
-        presenter.saveVCardPhoto(photo);
     }
 }
