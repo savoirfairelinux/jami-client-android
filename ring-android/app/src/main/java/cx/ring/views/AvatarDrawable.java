@@ -193,11 +193,13 @@ public class AvatarDrawable extends Drawable {
                 clipPaint.setShader(new BitmapShader(workspace, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP));
             } else {
                 clipPaint.setShader(null);
-                workspace.recycle();
-                workspace = null;
+                if (workspace != null) {
+                    workspace.recycle();
+                    workspace = null;
+                }
             }
         } else {
-            workspace = Bitmap.createBitmap(getBounds().width(), getBounds().height(), Bitmap.Config.ARGB_8888);
+            workspace = Bitmap.createBitmap(bounds.width(), bounds.height(), Bitmap.Config.ARGB_8888);
         }
         update = true;
     }
