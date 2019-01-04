@@ -34,7 +34,6 @@ import android.widget.EditText;
 import android.widget.Switch;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
@@ -43,15 +42,11 @@ import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 import cx.ring.R;
 import cx.ring.dependencyinjection.RingInjectionComponent;
-import cx.ring.model.Account;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.mvp.AccountCreationModel;
 import cx.ring.utils.RegisteredNameFilter;
-import io.reactivex.Observable;
 
 public class RingAccountCreationFragment extends BaseSupportFragment<RingAccountCreationPresenter> implements RingAccountCreationView {
-
-    public static final String KEY_RING_ACCOUNT = "RING_ACCOUNT";
 
     @BindView(R.id.switch_ring_username)
     protected Switch mUsernameSwitch;
@@ -83,11 +78,11 @@ public class RingAccountCreationFragment extends BaseSupportFragment<RingAccount
     @BindView(R.id.create_account)
     protected Button mCreateAccountButton;
 
+    private AccountCreationModel model;
+
     public static RingAccountCreationFragment newInstance(AccountCreationModelImpl ringAccountViewModel) {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(KEY_RING_ACCOUNT, ringAccountViewModel);
         RingAccountCreationFragment fragment = new RingAccountCreationFragment();
-        fragment.setArguments(bundle);
+        fragment.model = ringAccountViewModel;
         return fragment;
     }
 
@@ -104,14 +99,10 @@ public class RingAccountCreationFragment extends BaseSupportFragment<RingAccount
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         setRetainInstance(true);
-
         ButterKnife.bind(this, view);
         mUsernameTxt.setFilters(new InputFilter[]{new RegisteredNameFilter()});
-
-        AccountCreationModelImpl ringAccountViewModel = getArguments().getParcelable(KEY_RING_ACCOUNT);
-        presenter.init(ringAccountViewModel);
+        presenter.init(model);
         presenter.setPush(mPushSwitch.isChecked());
     }
 

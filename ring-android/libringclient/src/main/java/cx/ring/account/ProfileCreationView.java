@@ -19,9 +19,7 @@
  */
 package cx.ring.account;
 
-
 import cx.ring.mvp.AccountCreationModel;
-import ezvcard.VCard;
 
 public interface ProfileCreationView {
 
@@ -36,8 +34,6 @@ public interface ProfileCreationView {
     void askPhotoPermission();
 
     void goToNext(AccountCreationModel accountCreationModel, boolean saveProfile);
-
-    void photoUpdate(AccountCreationModel accountCreationModel);
 
     void setProfile(AccountCreationModel model);
 }

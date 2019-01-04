@@ -25,7 +25,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -39,22 +38,25 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 
+import androidx.core.content.FileProvider;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import cx.ring.R;
+import cx.ring.client.HomeActivity;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.Account;
 import cx.ring.mvp.AccountCreationModel;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.utils.AndroidFileUtils;
+import cx.ring.utils.ContentUriHandler;
 import cx.ring.views.AvatarDrawable;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-
-import static cx.ring.account.RingAccountCreationFragment.KEY_RING_ACCOUNT;
+import io.reactivex.Scheduler;
+import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 
 public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreationPresenter> implements ProfileCreationView, TextWatcher {
     public static final String TAG = ProfileCreationFragment.class.getSimpleName();
@@ -82,16 +84,12 @@ public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreation
     @BindView(R.id.next_create_account)
     protected Button mNextButton;
 
-    private Bitmap mSourcePhoto;
-
-    private Observable<Account> accountObservable = null;
+    private AccountCreationModel model;
+    private Uri tmpProfilePhotoUri;
 
     public static ProfileCreationFragment newInstance(AccountCreationModelImpl model) {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(KEY_RING_ACCOUNT, model);
         ProfileCreationFragment fragment = new ProfileCreationFragment();
-        fragment.accountObservable = model.getAccountObservable();
-        fragment.setArguments(bundle);
+        fragment.model = model;
         return fragment;
     }
 
@@ -110,48 +108,41 @@ public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreation
         super.onViewCreated(view, savedInstanceState);
         setRetainInstance(true);
 
-        if (savedInstanceState != null) {
-            byte[] bytes = savedInstanceState.getByteArray(PHOTO_TAG);
-            if (bytes != null && bytes.length > 0) {
-                mSourcePhoto = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-            }
-        }
-        if (accountObservable == null) {
+        if (model == null) {
             getActivity().finish();
             return;
         }
-        AccountCreationModelImpl ringAccountViewModel = getArguments().getParcelable(KEY_RING_ACCOUNT);
-        ringAccountViewModel.setAccountObservable(accountObservable);
         if (mPhotoView.getDrawable() == null) {
-            mPhotoView.setImageDrawable(new AvatarDrawable(view.getContext(), (Bitmap) null, ringAccountViewModel.getFullName(), ringAccountViewModel.getUsername(), null, true));
+            mPhotoView.setImageDrawable(new AvatarDrawable(view.getContext(), (Bitmap) null, model.getFullName(), model.getUsername(), null, true));
         }
-        presenter.initPresenter(ringAccountViewModel);
+        presenter.initPresenter(model);
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if (mSourcePhoto != null) {
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            mSourcePhoto.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            outState.putByteArray(PHOTO_TAG, stream.toByteArray());
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         switch (requestCode) {
             case ProfileCreationFragment.REQUEST_CODE_PHOTO:
-                if (resultCode == Activity.RESULT_OK && data != null) {
-                    updatePhoto((Bitmap) data.getExtras().get("data"));
+                if (resultCode == Activity.RESULT_OK) {
+                    if (tmpProfilePhotoUri == null) {
+                        if (intent != null) {
+                            Bundle bundle = intent.getExtras();
+                            Bitmap b = bundle == null ? null : (Bitmap) bundle.get("data");
+                            if (b != null) {
+                                presenter.photoUpdated(Single.just(b));
+                            }
+                        }
+                    } else {
+                        presenter.photoUpdated(AndroidFileUtils.loadBitmap(getContext(), tmpProfilePhotoUri).map(b -> (Object)b));
+                    }
                 }
                 break;
             case ProfileCreationFragment.REQUEST_CODE_GALLERY:
-                if (resultCode == Activity.RESULT_OK && data != null) {
-                    updatePhoto(data.getData());
+                if (resultCode == Activity.RESULT_OK && intent != null) {
+                    presenter.photoUpdated(AndroidFileUtils.loadBitmap(getActivity(), intent.getData()).map(b -> (Object)b));
                 }
                 break;
             default:
+                super.onActivityResult(requestCode, resultCode, intent);
                 break;
         }
     }
@@ -170,17 +161,6 @@ public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreation
                 }
                 break;
         }
-    }
-
-    public void updatePhoto(Uri uriImage) {
-        AndroidFileUtils.loadBitmap(getActivity(), uriImage)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::updatePhoto, e -> Log.e(TAG, "Error loading image", e));
-    }
-
-    public void updatePhoto(Bitmap image) {
-        mSourcePhoto = image;
-        presenter.photoUpdated();
     }
 
     @OnClick(R.id.gallery)
@@ -217,7 +197,16 @@ public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreation
     @Override
     public void goToPhotoCapture() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, REQUEST_CODE_PHOTO);
+        try {
+            File file = AndroidFileUtils.createImageFile(getContext());
+            Uri uri = FileProvider.getUriForFile(getContext(), ContentUriHandler.AUTHORITY_FILES, file);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            tmpProfilePhotoUri = uri;
+        } catch (IOException e) {
+            Log.e(TAG, "Can't create temp file", e);
+        }
+        startActivityForResult(intent, HomeActivity.REQUEST_CODE_PHOTO);
     }
 
     @Override
@@ -237,11 +226,6 @@ public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreation
             AccountWizardActivity wizard = (AccountWizardActivity) wizardActivity;
             wizard.profileCreated(accountCreationModel, saveProfile);
         }
-    }
-
-    @Override
-    public void photoUpdate(AccountCreationModel accountCreationModel) {
-        ((AccountCreationModelImpl)accountCreationModel).setPhoto(mSourcePhoto);
     }
 
     @Override

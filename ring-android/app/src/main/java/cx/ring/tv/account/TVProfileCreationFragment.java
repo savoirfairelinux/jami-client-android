@@ -50,6 +50,7 @@ import cx.ring.mvp.AccountCreationModel;
 import cx.ring.tv.camera.CustomCameraActivity;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.views.AvatarDrawable;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCreationPresenter>
@@ -60,7 +61,6 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
     private static final int CAMERA = 3;
     private static final int NEXT = 4;
 
-    private Bitmap mSourcePhoto;
     private AccountCreationModelImpl mModel;
     private int iconSize = -1;
 
@@ -71,20 +71,20 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         switch (requestCode) {
             case ProfileCreationFragment.REQUEST_CODE_PHOTO:
-                if (resultCode == Activity.RESULT_OK && data != null) {
-                    updatePhoto((Bitmap) data.getExtras().get("data"));
+                if (resultCode == Activity.RESULT_OK && intent != null) {
+                    presenter.photoUpdated(Single.just(intent).map(i -> i.getExtras().get("data")));
                 }
                 break;
             case ProfileCreationFragment.REQUEST_CODE_GALLERY:
-                if (resultCode == Activity.RESULT_OK && data != null) {
-                    updatePhoto(data.getData());
+                if (resultCode == Activity.RESULT_OK && intent != null) {
+                    presenter.photoUpdated(AndroidFileUtils.loadBitmap(getActivity(), intent.getData()).map(b -> (Object)b));
                 }
                 break;
             default:
-                super.onActivityResult(requestCode, resultCode, data);
+                super.onActivityResult(requestCode, resultCode, intent);
                 break;
         }
     }
@@ -200,11 +200,6 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
     }
 
     @Override
-    public void photoUpdate(AccountCreationModel accountCreationModel) {
-        ((AccountCreationModelImpl) accountCreationModel).setPhoto(mSourcePhoto);
-    }
-
-    @Override
     public void setProfile(AccountCreationModel accountCreationModel) {
         AccountCreationModelImpl model = ((AccountCreationModelImpl) accountCreationModel);
         Account newAccount = model.getNewAccount();
@@ -227,16 +222,5 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
             presenter.galleryClick();
         }
         return super.onGuidedActionEditedAndProceed(action);
-    }
-
-    public void updatePhoto(Uri uriImage) {
-        AndroidFileUtils.loadBitmap(getActivity(), uriImage)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::updatePhoto, e -> Log.e(TAG, "Error loading image", e));
-    }
-
-    public void updatePhoto(Bitmap image) {
-        mSourcePhoto = image;
-        presenter.photoUpdated();
     }
 }

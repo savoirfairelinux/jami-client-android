@@ -442,29 +442,6 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        switch (requestCode) {
-            case REQUEST_CODE_CALL:
-                if (resultCode == CallActivity.RESULT_FAILURE) {
-                    Log.w(TAG, "Call Failed");
-                }
-                break;
-            case REQUEST_CODE_PHOTO:
-                if (resultCode == RESULT_OK && data != null) {
-                    fNavigation.updatePhoto((Bitmap) data.getExtras().get("data"));
-                }
-                break;
-            case REQUEST_CODE_GALLERY:
-                if (resultCode == RESULT_OK && data != null) {
-                    fNavigation.updatePhoto(data.getData());
-                }
-                break;
-        }
-    }
-
-    @Override
     public void onNavigationSectionSelected(RingNavigationFragment.Section section) {
         if (!isDrawerLocked) {
             mNavigationDrawer.closeDrawers();
