@@ -20,7 +20,9 @@
 package cx.ring.navigation;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
@@ -28,11 +30,12 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,25 +48,25 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import cx.ring.R;
 import cx.ring.account.AccountWizardActivity;
+import cx.ring.client.CallActivity;
 import cx.ring.client.HomeActivity;
-import cx.ring.contacts.AvatarFactory;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.Account;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.services.VCardServiceImpl;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.BitmapUtils;
+import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.Tuple;
 import cx.ring.views.AvatarDrawable;
-import ezvcard.parameter.ImageType;
-import ezvcard.property.Photo;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -120,6 +123,7 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
     private Account mSelectedAccount;
     private Bitmap mSourcePhoto;
     private ImageView mProfilePhoto;
+    private Uri tmpProfilePhotoUri;
 
     private final CompositeDisposable mDisposableBag = new CompositeDisposable();
 
@@ -194,6 +198,48 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
         super.onDestroyView();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        switch (requestCode) {
+            case HomeActivity.REQUEST_CODE_CALL:
+                if (resultCode == CallActivity.RESULT_FAILURE) {
+                    Log.w(TAG, "Call Failed");
+                }
+                break;
+            case HomeActivity.REQUEST_CODE_PHOTO:
+                if (resultCode == Activity.RESULT_OK && intent != null) {
+                    if (tmpProfilePhotoUri == null) {
+                        updatePhoto((Bitmap) intent.getExtras().get("data"));
+                    } else {
+                        updatePhoto(tmpProfilePhotoUri);
+                    }
+                }
+                tmpProfilePhotoUri = null;
+                break;
+            case HomeActivity.REQUEST_CODE_GALLERY:
+                if (resultCode == Activity.RESULT_OK && intent != null) {
+                    updatePhoto(intent.getData());
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case HomeActivity.REQUEST_PERMISSION_CAMERA:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    presenter.cameraClicked();
+                }
+                break;
+            case HomeActivity.REQUEST_PERMISSION_READ_STORAGE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    presenter.galleryClicked();
+                }
+                break;
+        }
+    }
+
     private void setupAccountList() {
         mAccountAdapter = new AccountAdapter(presenter);
         mAccountAdapter.setOnAccountActionClickedListener(this);
@@ -253,7 +299,7 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
     public void updatePhoto(Uri uriImage) {
         mDisposableBag.add(AndroidFileUtils.loadBitmap(getActivity(), uriImage)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::updatePhoto, e -> Log.e(TAG, "Error loading image", e)));
+                .subscribe(this::updatePhoto, e -> Log.e(TAG, "Error loading image " + uriImage, e)));
     }
 
     public void updatePhoto(Bitmap image) {
@@ -264,7 +310,7 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
 
     @OnClick(R.id.addaccount_btn)
     public void addNewAccount() {
-        getActivity().startActivity(new Intent(getActivity(), AccountWizardActivity.class));
+        startActivity(new Intent(getActivity(), AccountWizardActivity.class));
     }
 
     private void setupNavigationMenu() {
@@ -383,27 +429,32 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
     @Override
     public void gotToImageCapture() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        getActivity().startActivityForResult(intent, HomeActivity.REQUEST_CODE_PHOTO);
+        try {
+            File file = AndroidFileUtils.createImageFile(getContext());
+            Uri uri = FileProvider.getUriForFile(getContext(), ContentUriHandler.AUTHORITY_FILES, file);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            tmpProfilePhotoUri = uri;
+        } catch (IOException e) {
+            Log.e(TAG, "Can't create temp file", e);
+        }
+        startActivityForResult(intent, HomeActivity.REQUEST_CODE_PHOTO);
     }
 
     @Override
     public void askCameraPermission() {
-        ActivityCompat.requestPermissions(getActivity(),
-                new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                HomeActivity.REQUEST_PERMISSION_CAMERA);
+        requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, HomeActivity.REQUEST_PERMISSION_CAMERA);
     }
 
     @Override
     public void goToGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        getActivity().startActivityForResult(intent, HomeActivity.REQUEST_CODE_GALLERY);
+        startActivityForResult(intent, HomeActivity.REQUEST_CODE_GALLERY);
     }
 
     @Override
     public void askGalleryPermission() {
-        ActivityCompat.requestPermissions(getActivity(),
-                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                HomeActivity.REQUEST_PERMISSION_READ_STORAGE);
+        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, HomeActivity.REQUEST_PERMISSION_READ_STORAGE);
     }
 
     /**

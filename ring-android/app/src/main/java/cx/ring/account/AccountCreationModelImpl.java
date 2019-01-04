@@ -20,38 +20,17 @@
 package cx.ring.account;
 
 import android.graphics.Bitmap;
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import java.io.ByteArrayOutputStream;
 
 import cx.ring.mvp.AccountCreationModel;
 import cx.ring.utils.BitmapUtils;
 import ezvcard.VCard;
-import ezvcard.parameter.ImageType;
 import ezvcard.property.FormattedName;
 import ezvcard.property.Photo;
 import ezvcard.property.RawProperty;
 import ezvcard.property.Uid;
 import io.reactivex.Single;
 
-public class AccountCreationModelImpl extends AccountCreationModel implements Parcelable {
-
-    public static final Creator<AccountCreationModelImpl> CREATOR = new Creator<AccountCreationModelImpl>() {
-        @Override
-        public AccountCreationModelImpl createFromParcel(Parcel source) {
-            return new AccountCreationModelImpl(source);
-        }
-
-        @Override
-        public AccountCreationModelImpl[] newArray(int size) {
-            return new AccountCreationModelImpl[size];
-        }
-    };
-    private Bitmap photo;
-
-    public AccountCreationModelImpl() {
-    }
+public class AccountCreationModelImpl extends AccountCreationModel {
 
     @Override
     public Single<VCard> toVCard() {
@@ -70,36 +49,12 @@ public class AccountCreationModelImpl extends AccountCreationModel implements Pa
                 });
     }
 
-    protected AccountCreationModelImpl(Parcel in) {
-        this.photo = in.readParcelable(Bitmap.class.getClassLoader());
-        this.mFullName = in.readString();
-        this.mUsername = in.readString();
-        this.mPassword = in.readString();
-        this.mPin = in.readString();
-        this.link = in.readByte() != 0;
-    }
-
+    @Override
     public Bitmap getPhoto() {
-        return photo;
+        return (Bitmap) photo;
     }
 
     public void setPhoto(Bitmap photo) {
-        this.photo = photo;
-        profile.onNext(this);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(this.photo, flags);
-        dest.writeString(this.mFullName);
-        dest.writeString(this.mUsername);
-        dest.writeString(this.mPassword);
-        dest.writeString(this.mPin);
-        dest.writeByte(this.link ? (byte) 1 : (byte) 0);
+        super.setPhoto(photo);
     }
 }
