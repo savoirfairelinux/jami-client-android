@@ -264,34 +264,26 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         presenter.selectFile();
     }
 
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "img_" + timeStamp + "_";
-
-        // Save a file: path for use with ACTION_VIEW intents
-        return File.createTempFile(imageFileName, ".jpg", getActivity().getExternalCacheDir());
-    }
-
     public void takePicture() {
         if (!presenter.getDeviceRuntimeService().hasVideoPermission()) {
             requestPermissions(new String[]{Manifest.permission.CAMERA}, RingApplication.PERMISSIONS_REQUEST);
         } else {
+            Context c = getContext();
+            if (c == null)
+                return;
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            if (takePictureIntent.resolveActivity(c.getPackageManager()) != null) {
                 // Create the File where the photo should go
                 File photoFile = null;
                 try {
-                    photoFile = createImageFile();
+                    photoFile = AndroidFileUtils.createImageFile(c);
                 } catch (IOException ex) {
                     Log.e(TAG, "takePicture: error creating temporary file", ex);
                     return;
                 }
                 Log.i(TAG, "takePicture: trying to save to " + photoFile);
                 mCurrentPhoto = photoFile;
-                android.net.Uri photoURI = FileProvider.getUriForFile(getActivity(),
-                        ContentUriHandler.AUTHORITY_FILES,
-                        photoFile);
+                android.net.Uri photoURI = FileProvider.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_CODE_TAKE_PICTURE);
             }

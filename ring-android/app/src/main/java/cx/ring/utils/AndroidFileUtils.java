@@ -26,6 +26,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -43,6 +44,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import androidx.annotation.NonNull;
 import io.reactivex.Single;
@@ -182,6 +185,15 @@ public class AndroidFileUtils {
                 return mimeType;
         }
         return "application/octet-stream";
+    }
+
+    public static File createImageFile(@NonNull Context context) throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "img_" + timeStamp + "_";
+
+        // Save a file: path for use with ACTION_VIEW intents
+        return File.createTempFile(imageFileName, ".jpg", context.getExternalCacheDir());
     }
 
     public static @NonNull File getCacheFile(@NonNull Context context, @NonNull android.net.Uri uri) throws IOException {
@@ -356,16 +368,43 @@ public class AndroidFileUtils {
         }).subscribeOn(Schedulers.io());
     }
 
-    public static int getOrientation(Context context, Uri photoUri) {
-        Cursor cursor = context.getContentResolver().query(photoUri,
-                new String[]{MediaStore.Images.ImageColumns.ORIENTATION}, null, null, null);
-
-        if (cursor.getCount() != 1) {
-            return -1;
+    public static int getOrientation(@NonNull Context context, Uri photoUri) {
+        ContentResolver resolver = context.getContentResolver();
+        if (resolver == null)
+            return 0;
+        try (Cursor cursor = resolver.query(photoUri, new String[]{MediaStore.Images.ImageColumns.ORIENTATION}, null, null, null)) {
+            cursor.moveToFirst();
+            return cursor.getInt(0);
+        } catch (Exception e) {
+            switch (getExifOrientation(resolver, photoUri)) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    return 90;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    return 180;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    return 270;
+                default:
+                    return 0;
+            }
         }
+    }
 
-        cursor.moveToFirst();
-        return cursor.getInt(0);
+    private static int getExifOrientation(@NonNull ContentResolver resolver, Uri photoUri) {
+        if (Build.VERSION.SDK_INT > 23) {
+            try (InputStream input = resolver.openInputStream(photoUri)) {
+                return new ExifInterface(input)
+                        .getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+            } catch (Exception e) {
+                return 0;
+            }
+        } else {
+            try {
+                return new ExifInterface(photoUri.getPath())
+                        .getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+            } catch (Exception e) {
+                return 0;
+            }
+        }
     }
 
 }
