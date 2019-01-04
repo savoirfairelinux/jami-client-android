@@ -169,19 +169,19 @@ public class AvatarDrawable extends Drawable {
             int cy = (bounds.height()-d)/2;
             placeholder.setBounds(cx, cy, cx + d, cy + d);
         }
-        int iw = cropCircle ? d : bounds.width();
-        int ih = cropCircle ? d : bounds.height();
         if (bitmap != null) {
+            int iw = cropCircle ? d : bounds.width();
+            int ih = cropCircle ? d : bounds.height();
             int a = bitmap.getWidth() * ih;
             int b = bitmap.getHeight() * iw;
             int w;
             int h;
             if (a < b) {
-                w = Math.max(bitmap.getWidth(), iw);
-                h  = (w * bitmap.getHeight())/bitmap.getWidth();
+                w = iw;
+                h  = (iw * bitmap.getHeight())/bitmap.getWidth();
             } else {
-                h = Math.max(bitmap.getHeight(), ih);
-                w  = (h * bitmap.getWidth())/bitmap.getHeight();
+                w  = (ih * bitmap.getWidth())/bitmap.getHeight();
+                h = ih;
             }
             int cx = (iw - w)/2;
             int cy = (ih - h)/2;
@@ -193,11 +193,13 @@ public class AvatarDrawable extends Drawable {
                 clipPaint.setShader(new BitmapShader(workspace, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP));
             } else {
                 clipPaint.setShader(null);
-                workspace.recycle();
-                workspace = null;
+                if (workspace != null) {
+                    workspace.recycle();
+                    workspace = null;
+                }
             }
         } else {
-            workspace = Bitmap.createBitmap(getBounds().width(), getBounds().height(), Bitmap.Config.ARGB_8888);
+            workspace = Bitmap.createBitmap(bounds.width(), bounds.height(), Bitmap.Config.ARGB_8888);
         }
         update = true;
     }
