@@ -26,20 +26,23 @@ import cx.ring.mvp.AccountCreationModel;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.utils.Log;
-import cx.ring.utils.StringUtils;
 import io.reactivex.Observable;
+import io.reactivex.Scheduler;
+import io.reactivex.Single;
 
 public class ProfileCreationPresenter extends RootPresenter<ProfileCreationView> {
 
     public static final String TAG = ProfileCreationPresenter.class.getSimpleName();
 
-    protected DeviceRuntimeService mDeviceRuntimeService;
+    private final DeviceRuntimeService mDeviceRuntimeService;
+    private final Scheduler mUiScheduler;
+
     private AccountCreationModel mAccountCreationModel;
-    private Account account = null;
 
     @Inject
-    public ProfileCreationPresenter(DeviceRuntimeService deviceRuntimeService) {
+    public ProfileCreationPresenter(DeviceRuntimeService deviceRuntimeService, Scheduler uiScheduler) {
         mDeviceRuntimeService = deviceRuntimeService;
+        mUiScheduler = uiScheduler;
     }
 
     public void initPresenter(AccountCreationModel accountCreationModel) {
@@ -53,27 +56,24 @@ public class ProfileCreationPresenter extends RootPresenter<ProfileCreationView>
         } else {
             Log.d(TAG, "READ_CONTACTS permission is not granted.");
         }
-        Observable<Account> accountObservable = accountCreationModel.getAccountObservable();
-        if (accountObservable != null) {
-            mCompositeDisposable.add(accountCreationModel
-                    .getProfileUpdates()
-                    .subscribe(model -> {
-                        Log.w(TAG, "setProfile");
-                        getView().setProfile(model);
-                    }));
-        } else {
-            Log.w(TAG, "no account observable !");
-        }
+        mCompositeDisposable.add(accountCreationModel
+                .getProfileUpdates()
+                .observeOn(mUiScheduler)
+                .subscribe(model -> {
+                    ProfileCreationView view = getView();
+                    if (view != null)
+                        view.setProfile(model);
+                }));
     }
 
     public void fullNameUpdated(String fullName) {
         mAccountCreationModel.setFullName(fullName);
     }
 
-    public void photoUpdated() {
-        ProfileCreationView view = getView();
-        if (view != null)
-            view.photoUpdate(mAccountCreationModel);
+    public void photoUpdated(Single<Object> bitmap) {
+        mCompositeDisposable.add(bitmap
+                .subscribe(b -> mAccountCreationModel.setPhoto(b),
+                           e -> Log.e(TAG, "Can't load image", e)));
     }
 
     public void galleryClick() {

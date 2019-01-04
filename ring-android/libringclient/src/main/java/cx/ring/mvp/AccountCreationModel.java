@@ -19,15 +19,8 @@
  */
 package cx.ring.mvp;
 
-import java.io.ByteArrayOutputStream;
-
 import cx.ring.model.Account;
 import ezvcard.VCard;
-import ezvcard.parameter.ImageType;
-import ezvcard.property.FormattedName;
-import ezvcard.property.Photo;
-import ezvcard.property.RawProperty;
-import ezvcard.property.Uid;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.subjects.BehaviorSubject;
@@ -42,6 +35,7 @@ public abstract class AccountCreationModel {
     protected boolean link = false;
     protected boolean mPush = false;
     private Account newAccount = null;
+    protected Object photo = null;
 
     private Observable<Account> account;
     protected final Subject<AccountCreationModel> profile = BehaviorSubject.createDefault(this);
@@ -55,6 +49,15 @@ public abstract class AccountCreationModel {
 
     public void setFullName(String fullName) {
         this.mFullName = fullName;
+        profile.onNext(this);
+    }
+
+    public Object getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Object photo) {
+        this.photo = photo;
         profile.onNext(this);
     }
 

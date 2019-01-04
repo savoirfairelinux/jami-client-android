@@ -49,11 +49,11 @@ public class RingLinkAccountFragment extends BaseSupportFragment<RingLinkAccount
     @BindView(R.id.link_button)
     protected Button mLinkAccountBtn;
 
+    private AccountCreationModel model;
+
     public static RingLinkAccountFragment newInstance(AccountCreationModelImpl ringAccountViewModel) {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(RingAccountCreationFragment.KEY_RING_ACCOUNT, ringAccountViewModel);
         RingLinkAccountFragment fragment = new RingLinkAccountFragment();
-        fragment.setArguments(bundle);
+        fragment.model = ringAccountViewModel;
         return fragment;
     }
 
@@ -70,8 +70,7 @@ public class RingLinkAccountFragment extends BaseSupportFragment<RingLinkAccount
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        AccountCreationModelImpl ringAccountViewModel = getArguments().getParcelable(RingAccountCreationFragment.KEY_RING_ACCOUNT);
-        presenter.init(ringAccountViewModel);
+        presenter.init(model);
     }
 
     @OnClick(R.id.link_button)

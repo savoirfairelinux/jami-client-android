@@ -40,15 +40,14 @@ public class TVRingLinkAccountFragment extends RingGuidedStepFragment<RingLinkAc
     private static final long PASSWORD = 1L;
     private static final long PIN = 2L;
     private static final long LINK = 3L;
+    private AccountCreationModelImpl model;
 
     public TVRingLinkAccountFragment() {
     }
 
     public static TVRingLinkAccountFragment newInstance(AccountCreationModelImpl ringAccountViewModel) {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(RingAccountCreationFragment.KEY_RING_ACCOUNT, ringAccountViewModel);
         TVRingLinkAccountFragment fragment = new TVRingLinkAccountFragment();
-        fragment.setArguments(bundle);
+        fragment.model = ringAccountViewModel;
         return fragment;
     }
 
@@ -57,10 +56,9 @@ public class TVRingLinkAccountFragment extends RingGuidedStepFragment<RingLinkAc
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
         super.onViewCreated(view, savedInstanceState);
 
-        AccountCreationModelImpl ringAccountViewModel = getArguments().getParcelable(RingAccountCreationFragment.KEY_RING_ACCOUNT);
-        presenter.init(ringAccountViewModel);
-        if (ringAccountViewModel.getPhoto() != null) {
-            getGuidanceStylist().getIconView().setImageBitmap(ringAccountViewModel.getPhoto());
+        presenter.init(model);
+        if (model.getPhoto() != null) {
+            getGuidanceStylist().getIconView().setImageBitmap(model.getPhoto());
         }
     }
 

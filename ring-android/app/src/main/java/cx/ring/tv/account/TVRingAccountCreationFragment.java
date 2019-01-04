@@ -51,6 +51,7 @@ public class TVRingAccountCreationFragment
     private static final int PASSWORD_CONFIRMATION = 2;
     private static final int CHECK = 3;
     private static final int CONTINUE = 4;
+    private AccountCreationModelImpl model;
 
     private TextWatcher mUsernameWatcher = new TextWatcher() {
         @Override
@@ -73,10 +74,8 @@ public class TVRingAccountCreationFragment
     }
 
     public static TVRingAccountCreationFragment newInstance(AccountCreationModelImpl ringAccountViewModel) {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(RingAccountCreationFragment.KEY_RING_ACCOUNT, ringAccountViewModel);
         TVRingAccountCreationFragment fragment = new TVRingAccountCreationFragment();
-        fragment.setArguments(bundle);
+        fragment.model = ringAccountViewModel;
         return fragment;
     }
 
@@ -87,13 +86,12 @@ public class TVRingAccountCreationFragment
         // Bind the presenter to the view
         super.onViewCreated(view, savedInstanceState);
 
-        AccountCreationModelImpl ringAccountViewModel = getArguments().getParcelable(RingAccountCreationFragment.KEY_RING_ACCOUNT);
-        if (ringAccountViewModel == null) {
+        if (model == null) {
             Log.e(TAG, "Not able to get model");
             return;
         }
 
-        presenter.init(ringAccountViewModel);
+        presenter.init(model);
         presenter.ringCheckChanged(false);
         getGuidanceStylist().getIconView().setImageResource(R.drawable.logo_ring);
     }
