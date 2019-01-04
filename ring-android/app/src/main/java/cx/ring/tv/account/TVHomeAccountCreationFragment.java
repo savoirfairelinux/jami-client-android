@@ -72,18 +72,14 @@ public class TVHomeAccountCreationFragment
         String title = getString(R.string.account_creation_home);
         String breadcrumb = "";
         String description = getString(R.string.help_ring);
-        Drawable icon = getActivity().getResources().getDrawable(R.drawable.ic_logo_ring_white);
+        Drawable icon = getResources().getDrawable(R.drawable.ic_jami);
         return new GuidanceStylist.Guidance(title, description, breadcrumb, icon);
     }
 
     @Override
     public void onCreateActions(@NonNull List<GuidedAction> actions, Bundle savedInstanceState) {
-        addAction(getActivity(), actions, LINK_ACCOUNT,
-                getString(R.string.account_link_button),
-                "",true);
-        addAction(getActivity(), actions, CREATE_ACCOUNT,
-                getString(R.string.account_create_title),
-                "",true);
+        addAction(getActivity(), actions, LINK_ACCOUNT, getString(R.string.account_link_button), "",true);
+        addAction(getActivity(), actions, CREATE_ACCOUNT, getString(R.string.account_create_title), "",true);
     }
 
     @Override

@@ -33,7 +33,6 @@ import java.util.List;
 
 import cx.ring.R;
 import cx.ring.account.AccountCreationModelImpl;
-import cx.ring.account.RingAccountCreationFragment;
 import cx.ring.account.RingAccountCreationPresenter;
 import cx.ring.account.RingAccountCreationView;
 import cx.ring.application.RingApplication;
@@ -93,7 +92,6 @@ public class TVRingAccountCreationFragment
 
         presenter.init(model);
         presenter.ringCheckChanged(false);
-        getGuidanceStylist().getIconView().setImageResource(R.drawable.logo_ring);
     }
 
     @Override

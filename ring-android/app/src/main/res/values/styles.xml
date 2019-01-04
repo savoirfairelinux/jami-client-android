@@ -101,27 +101,15 @@
     </style>
 
     <!-- AndroidTV Style -->
-    <style name="Widget.Ring.Leanback.GuidanceIconStyle" parent="Widget.Leanback.GuidanceIconStyle">
-        <item name="android:background">@color/color_primary_light</item>
-    </style>
-
-    <style name="Widget.Ring.Leanback.FirstStepGuidanceIconStyle" parent="Widget.Leanback.GuidanceIconStyle">
-        <item name="android:background">@color/color_primary_light</item>
-    </style>
-
     <style name="Theme.Ring.Leanback.GuidedStep" parent="Theme.Leanback.GuidedStep">
-        <item name="guidanceIconStyle">@style/Widget.Ring.Leanback.GuidanceIconStyle</item>
     </style>
 
     <style name="Theme.Ring.Leanback.GuidedStep.First">
-        <item name="guidanceIconStyle">@style/Widget.Ring.Leanback.FirstStepGuidanceIconStyle</item>
-        <item name="guidedStepBackground">@color/color_primary_light</item>
     </style>
 
     <style name="Theme.Ring.LeanbackBrowse" parent="Theme.Leanback.Browse">
         <item name="defaultSearchColor">@color/color_primary_light</item>
         <item name="searchOrbViewStyle">@style/CustomSearchOrbView</item>
-
     </style>
 
     <style name="Theme.Ring.Leanback.CustomTitle" parent="Theme.Ring.LeanbackBrowse">
@@ -135,7 +123,6 @@
     <style name="CustomSearchOrbView" parent="Widget.Leanback.SearchOrbViewStyle">
         <item name="searchOrbIcon">@drawable/ic_personadd</item>
     </style>
-
 
     <!-- A default card style. Used in cards example. -->
     <style name="DefaultCardImageStyle" parent="Widget.Leanback.ImageCardView.ImageStyle">

@@ -91,7 +91,7 @@ public class AboutDetailsFragment extends DetailsFragment {
                 card);
 
         // Add images and action buttons to the details view
-        detailsOverview.setImageDrawable(res.getDrawable(R.drawable.ic_logo_ring_white));
+        detailsOverview.setImageDrawable(res.getDrawable(R.drawable.ic_jami));
         mRowsAdapter.add(detailsOverview);
 
         setAdapter(mRowsAdapter);
