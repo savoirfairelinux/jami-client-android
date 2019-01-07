@@ -9,7 +9,7 @@
   <string name="contribute_section">Kontribuoni</string>
   <string name="version_section">Version</string>
   <string name="no_email_app_installed">S\’u gjet aplikacion email-esh, instaloni një të tillë që të na dërgoni një raport</string>
-  <string name="no_browser_app_installed">S\’u gjet aplikacion shfletuesi web, që të shihni këtë faqe, instaloni një të tillë </string>
+  <string name="no_browser_app_installed">S\’u gjet aplikacion shfletuesi, që të shihni këtë faqe, instaloni një të tillë </string>
   <string name="email_chooser_title">Dërgojeni mesazhi duke përdorur…</string>
   <string name="website_chooser_title">Shiheni sajtin duke përdorur…</string>
   <string name="license">Ky software jepet \"siç është\", pa asnjë garanci të çfarëdo lloji. Për hollësi, shihni <u>GNU General Public License, version 3 ose më të re</u></string>
@@ -52,7 +52,7 @@
   <!--TransferDFragment-->
   <!--Notifications-->
   <string name="notif_missed_incoming_call">Thirrje ardhëse të humbura</string>
-  <string name="notif_missed_outgoing_call">Thirrje ikëse të humbura</string>
+  <string name="notif_missed_outgoing_call">Thirrje ikse të humbura</string>
   <string name="notif_incoming_call_title">Thirrje ardhëse nga %1$s</string>
   <string name="notif_incoming_call">Thirrje ardhëse</string>
   <string name="notif_outgoing_call_title">Thirrje për %1$s</string>
@@ -109,7 +109,7 @@
   <string name="hist_file_received">Kartela u mor</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Leje për kamerën</string>
-  <string name="permission_dialog_camera_message">Që të funksionojnë, bisedat me video lypin doemos leje për kamerën Ju lutemi, shihni mundësinë e akordimit të saj.</string>
+  <string name="permission_dialog_camera_message">Që të funksionojnë, bisedat me video lypin doemos leje për kamerën. Ju lutemi, shihni mundësinë e akordimit të saj.</string>
   <string name="ringtone_error_title">Gabim</string>
   <string name="ringtone_error_format_not_supported">Ky format nuk mbulohet.</string>
   <string name="ringtone_error_size_too_big">Kjo kartelë është shumë e madhe. Madhësia maksimum është %1$dkB.</string>

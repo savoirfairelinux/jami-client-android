@@ -2,7 +2,9 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Opinia</string>
+  <string name="report"><u>Wyślij nam e-mail</u></string>
   <string name="section_license">Licencja</string>
+  <string name="sponsor_section">Jami jest wolnym oprogramowaniem rozwijanym i wspieranym przez</string>
   <string name="copyright_section">Prawa autorskie</string>
   <string name="contribute_section">Współpracuj</string>
   <string name="version_section">Wersja</string>
@@ -10,6 +12,8 @@
   <string name="no_browser_app_installed">Nie znaleziono przeglądarki internetowej, zainstaluj jakąś aby zobaczyć tę stronę</string>
   <string name="email_chooser_title">Wyślij e-mail używając...</string>
   <string name="website_chooser_title">Zobacz stronę używając..</string>
+  <string name="license">To oprogramowanie jest dostarczane \"tak jak jest\", bez jakiejkolwiek gwarancji. Aby uzyskać szczegółowe informacje, zobacz <u>GNU General Public License wersja 3 lub późniejsza</u></string>
+  <string name="description">Jami jest wolnym oprogramowaniem do uniwersalnej komunikacji, respektującym wolności i prywatność swoich użytkowników.</string>
   <string name="credits">Podziękowania</string>
   <!--About dialog-->
   <string name="developed_by">Rozwijany przez</string>
@@ -31,6 +35,7 @@
   <string name="menu_item_account">Zarządzaj kontem</string>
   <string name="menu_item_settings">Ustawienia</string>
   <string name="menu_item_share">Udostępnij mój kontakt</string>
+  <string name="menu_item_about">O Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Wykręć numer</string>
   <!--History Fragment-->
@@ -61,6 +66,9 @@
   <string name="notif_channel_messages">Wiadomości</string>
   <string name="notif_channel_requests">Prośby dodania</string>
   <string name="notif_channel_file_transfer">Transfer pliku</string>
+  <string name="notif_channel_background_service">Usługa w tle</string>
+  <string name="notif_channel_background_service_descr">Pozwala na odbieranie połączeń i wiadomości w dowolnym czasie.</string>
+  <string name="notif_background_service">Jami działa teraz w tle</string>
   <string name="notif_mark_as_read">Zaznacz jako przeczytane</string>
   <string name="notif_dismiss">Odrzuć</string>
   <string name="notif_reply">Odpowiedz</string>
@@ -76,8 +84,11 @@
   <string name="ongoing_call">Trwa połączenie</string>
   <string name="hist_in_call">Czas przychodzączego połączenia: %1$s</string>
   <string name="hist_out_call">Czas wychodzączego połączenia: %1$s</string>
+  <string name="start_error_title">Nie udało się uruchomić Jami!</string>
+  <string name="start_error_mic_required">Jami wymaga zezwolenia na korzystanie z mikrofonu, by działać.</string>
   <string name="action_call_accept">Odbierz</string>
   <string name="action_call_decline">Odrzuć</string>
+  <string name="action_call_mic_mute">Wycisz mikrofon</string>
   <string name="ab_action_speakerphone">Włącz głośnik</string>
   <string name="ab_action_contact_add">Dodaj do kontaków</string>
   <string name="ab_action_contact_add_question">Dodać do kontaktów?</string>
@@ -127,12 +138,15 @@
   <string name="conversation_action_select_peer_number">Wybierz numer</string>
   <string name="conversation_action_block_this">Blokuj kontakt</string>
   <string name="conversation_action_go_to_call">Powróć do trwającej rozmowy</string>
+  <string name="clip_contact_uri">Kontakty</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Dodać %1$s?</string>
   <string name="prompt_new_password">Nowe hasło</string>
   <string name="prompt_new_password_optional">Nowe hasło (opcjonalnie)</string>
   <string name="prompt_new_password_repeat">Powtórz nowe hasło</string>
   <string name="prompt_new_username">Wprowadź nową nazwę użytkownika</string>
+  <string name="help_password_choose">Wybierz silne hasło, które zapamiętasz, by chronić swoje konto Jami.</string>
+  <string name="help_password_enter">Wprowadź hasło do głównego konta Jami</string>
   <string name="wizard_next">Następne</string>
   <string name="wizard_back">Wstecz</string>
   <string name="wizard_skip">Pomiń</string>

@@ -9,6 +9,7 @@
   <string name="no_browser_app_installed">Nerasta jokios saityno naršyklės programėlės, įdiekite kurią nors, kad peržiūrėtumėte šį puslapį</string>
   <string name="email_chooser_title">Siųsti paštą, naudojant...</string>
   <string name="website_chooser_title">Rodyti svetainę, naudojant...</string>
+  <string name="description">Jami yra visuotiniam bendravimui skirta laisva programinė įranga, kuri gerbia savo naudotojų laisves ir privatumą.</string>
   <string name="credits">Padėkos</string>
   <!--About dialog-->
   <string name="developed_by">Sukūrė</string>
@@ -30,6 +31,7 @@
   <string name="menu_item_account">Tvarkyti paskyrą</string>
   <string name="menu_item_settings">Nustatymai</string>
   <string name="menu_item_share">Bendrinti mano kontaktus</string>
+  <string name="menu_item_about">Apie Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Rinkti numerį</string>
   <!--History Fragment-->
@@ -113,6 +115,7 @@
   <string name="prompt_new_password">Naujas slaptažodis</string>
   <string name="prompt_new_password_optional">Naujas slaptažodis (nebūtina)</string>
   <string name="prompt_new_password_repeat">Pakartokite naują slaptažodį</string>
+  <string name="account_create_title">Susikurti Jami paskyrą</string>
   <string name="prompt_new_username">Įveskite naują naudotojo vardą</string>
   <string name="wizard_next">Kitas</string>
   <string name="wizard_back">Atgal</string>

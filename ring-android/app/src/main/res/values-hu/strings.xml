@@ -13,7 +13,7 @@
   <string name="email_chooser_title">Levél küldése a következővel…</string>
   <string name="website_chooser_title">Weboldal megtekintése a következővel…</string>
   <string name="license">Ez a szoftver a „jelen állapotában” kerül kiadásra, mindenféle garanciavállalás nélkül. A részletekért lásd a<u>GNU General Public License 3-as vagy későbbi verzióját</u></string>
-  <string name="description">Jami a szabad szoftver az egyetemes közléshez, amely tiszteletben tartja a felhasználók szabadságát és magánéletét.</string>
+  <string name="description">A Jami (GNU csomag, korábban Ring) egy univerzális és elosztott kommunikációs platform, amely tiszteletben tartja a felhasználók szabadságait és magánéletét.</string>
   <string name="credits">Készítők</string>
   <!--About dialog-->
   <string name="developed_by">Fejlesztők</string>

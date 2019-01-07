@@ -23,7 +23,7 @@
   <string name="dialog_wait_update_details">Ju lutemi, pritni teksa përditësohet llogaria juaj e re…</string>
   <string name="dialog_warn_ip2ip_account_title">Të krijohet llogari SIP e zbrazët?</string>
   <string name="dialog_warn_ip2ip_account_message">Ju ndan një hap nga krijimi i një llogarie SIP pa strehëemër të vlefshëm.
-        Do të jeni në gjendje vetëm të bëni dhe të merrni thirrje ip të drejtpërdrejta.
+        Do të jeni në gjendje vetëm të bëni dhe të merrni thirrje IP të drejtpërdrejta.
         Llogarinë tuaj mund ta përpunoni më vonë</string>
   <string name="account_type_ip2ip">Llogari IP</string>
   <string name="help_ring">Një llogari Jami ju lejon të lidheni në mënyrë të sigurt me njerëz, sipas modelit tek për tek, përmes një rrjeti tërësisht të shpërndarë.</string>

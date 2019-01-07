@@ -34,6 +34,7 @@ Możesz edytować swoje konto później</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nie masz zarejestrowanego konta</string>
   <string name="normal_accounts_titles">Konta</string>
+  <string name="normal_devices_titles">Znane urządzenia połączone z tym kontem Jami</string>
   <string name="account_device_revoke">Odwołaj urządzenie</string>
   <string name="account_device_revocation_success_title">Sukces</string>
   <string name="account_device_revocation_success">Urządzenie jest odwołane!</string>
