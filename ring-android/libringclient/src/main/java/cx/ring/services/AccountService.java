@@ -979,9 +979,9 @@ public class AccountService {
             account.setCredentials(Ringservice.getCredentials(account.getAccountID()).toNative());
             account.setDevices(Ringservice.getKnownRingDevices(account.getAccountID()).toNative());
             account.setVolatileDetails(Ringservice.getVolatileAccountDetails(account.getAccountID()).toNative());
-        } else {
-            account.setRegistrationState(newState, code);
         }
+
+        account.setRegistrationState(newState, code);
 
         if (!oldState.equals(newState)) {
             accountSubject.onNext(account);
