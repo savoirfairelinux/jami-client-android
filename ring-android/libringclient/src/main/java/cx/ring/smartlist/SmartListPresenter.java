@@ -27,6 +27,8 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import cx.ring.daemon.StringMap;
+import cx.ring.daemon.VectMap;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
@@ -74,6 +76,9 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
     private final Scheduler mUiScheduler;
 
     private CompositeDisposable mConversationDisposable;
+
+    @Inject
+    PresenceService mPresenceService;
 
     @Inject
     public SmartListPresenter(AccountService accountService, ContactService contactService,
@@ -279,6 +284,14 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
                         .subscribe(vm -> {
                             if (mSmartListViewModels == null)
                                 return;
+
+                            VectMap subscriptions = mPresenceService.getSubscriptions(mAccount.getAccountID());
+                            for (int i = 0 ; i < subscriptions.size() ; ++i) {
+                                StringMap subscription = subscriptions.get(i);
+                                CallContact contact = mAccount.getContact(subscription.get("Buddy"));
+                                contact.setOnline(subscription.get("Status").equals("Online"));
+                            }
+
                             for (int i=0; i<mSmartListViewModels.size(); i++)
                                 if (mSmartListViewModels.get(i).getContact() == vm.getContact())
                                     mSmartListViewModels.set(i, vm);
