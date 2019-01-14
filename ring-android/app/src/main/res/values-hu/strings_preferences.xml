@@ -13,8 +13,8 @@
   <string name="pref_systemContacts_summary">A rendszer kapcsolatainak használata a hívó adatainak megjelenítéséhez.</string>
   <string name="pref_systemDialer_title">Helyezzen rendszerhívásokat a Jami programmal</string>
   <string name="pref_systemDialer_summary">A Jami használata a telefonhívásokhoz, ha az lehetséges.</string>
-  <string name="pref_startOnBoot_title">A Jami indítása rendszerindításkor</string>
-  <string name="pref_startOnBoot_summary">A Jami futtatása a háttérben a rendszer indításakor.</string>
+  <string name="pref_startOnBoot_title">Indítása bejelentkezéskor</string>
+  <string name="pref_startOnBoot_summary">Indítása bejelentkezéskor</string>
   <string name="pref_clearHistory_title">Előzmények törlése</string>
   <string name="pref_clearHistory_summary">Minden társalgás előzményének törlése. Ez a művelet nem vonható vissza.</string>
   <string name="pref_persistNotification_title">Fut a háttérben</string>
