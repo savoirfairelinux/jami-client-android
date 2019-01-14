@@ -235,6 +235,12 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        fContent = null;
+    }
+
     private void handleShareIntent(Intent intent) {
         String action = intent.getAction();
         if (Intent.ACTION_SEND.equals(action) || Intent.ACTION_SEND_MULTIPLE.equals(action)) {
@@ -282,25 +288,16 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
     }
 
     private void showMigrationDialog() {
-
         if (mIsMigrationDialogAlreadyShowed) {
             return;
         }
-
         mIsMigrationDialogAlreadyShowed = true;
-
-        new AlertDialog.Builder(HomeActivity.this)
+        new AlertDialog.Builder(this)
                 .setTitle(R.string.account_migration_title_dialog)
                 .setMessage(R.string.account_migration_message_dialog)
                 .setIcon(R.drawable.ic_warning)
-                .setCancelable(true)
-                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
-                    dialog.dismiss();
-                    fNavigation.selectSection(RingNavigationFragment.Section.MANAGE);
-                })
-                .setNegativeButton(android.R.string.cancel, (dialog, which) -> dialog.dismiss())
-                .setOnCancelListener(DialogInterface::dismiss)
-                .setOnDismissListener(DialogInterface::dismiss)
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> fNavigation.selectSection(RingNavigationFragment.Section.MANAGE))
+                .setNegativeButton(android.R.string.cancel, null)
                 .show();
     }
 
@@ -429,10 +426,9 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         }
     }
 
-    // TODO: Remove this when low level services are ready
     public void onNavigationViewReady() {
         if (fNavigation != null) {
-            fNavigation.setNavigationSectionSelectedListener(HomeActivity.this);
+            fNavigation.setNavigationSectionSelectedListener(this);
         }
     }
 
