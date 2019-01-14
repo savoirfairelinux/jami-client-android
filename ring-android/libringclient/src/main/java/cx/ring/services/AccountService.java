@@ -445,11 +445,10 @@ public class AccountService {
                 .observeOn(Schedulers.from(mExecutor))
                 .subscribe(vcard -> {
                     String stringVCard = VCardUtils.vcardToString(vcard);
-
                     int nbTotal = stringVCard.length() / VCARD_CHUNK_SIZE + (stringVCard.length() % VCARD_CHUNK_SIZE != 0 ? 1 : 0);
                     int i = 1;
                     Random r = new Random(System.currentTimeMillis());
-                    int key = r.nextInt();
+                    int key = Math.abs(r.nextInt());
 
                     Log.d(TAG, "sendProfile, vcard " + stringVCard);
 
@@ -459,11 +458,11 @@ public class AccountService {
                         String keyHashMap = VCardUtils.MIME_RING_PROFILE_VCARD + "; id=" + key + ",part=" + i + ",of=" + nbTotal;
                         String message = stringVCard.substring(0, Math.min(VCARD_CHUNK_SIZE, stringVCard.length()));
                         chunk.put(keyHashMap, message);
+                        Ringservice.sendTextMessage(callId, StringMap.toSwig(chunk), "Me", false);
                         if (stringVCard.length() > VCARD_CHUNK_SIZE) {
                             stringVCard = stringVCard.substring(VCARD_CHUNK_SIZE);
                         }
                         i++;
-                        Ringservice.sendTextMessage(callId, StringMap.toSwig(chunk), "Me", false);
                     }
                 });
     }
