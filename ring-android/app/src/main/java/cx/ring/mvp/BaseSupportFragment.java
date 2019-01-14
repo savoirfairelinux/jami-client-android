@@ -70,9 +70,10 @@ public abstract class BaseSupportFragment<T extends RootPresenter> extends Fragm
         super.onViewCreated(view, savedInstanceState);
 
         //Be sure to do the injection in onCreateView method
-        if (presenter != null)
+        if (presenter != null) {
             presenter.bindView(this);
-        initPresenter(presenter);
+            initPresenter(presenter);
+        }
     }
 
     @Override
