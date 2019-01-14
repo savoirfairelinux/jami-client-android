@@ -31,3 +31,9 @@ file_filter = ring-android/app/src/main/res/values-<lang>/strings_call.xml
 source_file = ring-android/app/src/main/res/values/strings_call.xml
 source_lang = en
 type = ANDROID
+
+[ring.store-description]
+file_filter = ring-android/fastlane/metadata/android/<lang>/full_description.txt
+source_file = ring-android/fastlane/metadata/android/en-US/full_description.txt
+source_lang = en
+type = TXT
