@@ -19,14 +19,11 @@
  */
 package cx.ring.account;
 
-import android.os.Bundle;
 import android.text.Editable;
-import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 
-import androidx.annotation.NonNull;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
@@ -68,8 +65,7 @@ public class RingLinkAccountFragment extends BaseSupportFragment<RingLinkAccount
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    protected void initPresenter(RingLinkAccountPresenter presenter) {
         presenter.init(model);
     }
 

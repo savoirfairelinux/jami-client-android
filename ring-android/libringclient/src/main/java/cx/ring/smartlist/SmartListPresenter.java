@@ -136,13 +136,16 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
 
     public void queryTextChanged(String query) {
         mCurrentQuery = query;
-        if (query.equals("")) {
+        SmartListView view = getView();
+        if (view == null)
+            return;
+        if (StringUtils.isEmpty(query)) {
             if (mQueryDisposable != null) {
                 mQueryDisposable.dispose();
                 mQueryDisposable = null;
             }
-            getView().hideSearchRow();
-            getView().setLoading(false);
+            view.hideSearchRow();
+            view.setLoading(false);
         } else {
             final Account currentAccount = mAccount;
             if (currentAccount == null) {
@@ -154,14 +157,14 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
                 // sip search
                 mCallContact = mContactService.findContact(currentAccount, uri);
                 mContactService.loadContactData(mCallContact);
-                getView().displayContact(mCallContact);
+                view.displayContact(mCallContact);
             } else {
                 if (uri.isRingId()) {
                     mCallContact = currentAccount.getContactFromCache(uri);
-                    getView().displayContact(mCallContact);
+                    view.displayContact(mCallContact);
                 } else {
-                    getView().hideSearchRow();
-                    getView().setLoading(true);
+                    view.hideSearchRow();
+                    view.setLoading(true);
 
                     // Ring search
                     if (mQueryDisposable == null || mQueryDisposable.isDisposed()) {
@@ -169,7 +172,8 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
                                 .debounce(350, TimeUnit.MILLISECONDS)
                                 .switchMapSingle(q -> mAccountService.findRegistrationByName(mAccount.getAccountID(), "", q))
                                 .observeOn(mUiScheduler)
-                                .subscribe(q -> parseEventState(mAccountService.getAccount(q.accountId), q.name, q.address, q.state));
+                                .subscribe(q -> parseEventState(mAccountService.getAccount(q.accountId), q.name, q.address, q.state),
+                                        e -> Log.e(TAG, "Can't perform query"));
                         mCompositeDisposable.add(mQueryDisposable);
                     }
                     contactQuery.onNext(query);
@@ -177,7 +181,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
             }
         }
 
-        getView().updateList(filter(mSmartListViewModels, query));
+        view.updateList(filter(mSmartListViewModels, query));
     }
 
     public void newContactClicked() {
