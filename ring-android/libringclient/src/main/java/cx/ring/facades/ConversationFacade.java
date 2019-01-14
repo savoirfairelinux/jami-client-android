@@ -106,19 +106,26 @@ public class ConversationFacade {
                 .subscribe(this::onCallStateChange));
 
         mDisposableBag.add(currentAccountSubject
-                .switchMap(a -> Observable
-                        .merge(a.getConversationsSubject(), a.getPendingSubject())
-                        .doOnNext(c -> {
-                            for (Conversation conversation : c) {
-                                CallContact contact = conversation.getContact();
-                                if (contact.subscribe()) {
-                                    Uri id = contact.getPrimaryUri();
-                                    mPresenceService.subscribeBuddy(a.getAccountID(), id.getRawUriString(), true);
-                                    mContactService.loadContactData(conversation.getContact());
-                                    mAccountService.lookupAddress(a.getAccountID(), "", id.getRawRingId());
-                                }
-                            }
-                        }))
+                .switchMap(a -> a
+                        .getPresenceEnabled()
+                        .switchMap(enabled ->
+                            Observable.merge(a.getConversationsSubject(), a.getPendingSubject())
+                                    .doOnNext(c -> {
+                                        for (Conversation conversation : c) {
+                                            CallContact contact = conversation.getContact();
+                                            Uri id = contact.getPrimaryUri();
+                                            if (enabled) {
+                                                mPresenceService.subscribeBuddy(a.getAccountID(), id.getRawUriString(), true);
+                                                if (contact.subscribe()) {
+                                                    mContactService.loadContactData(conversation.getContact());
+                                                    mAccountService.lookupAddress(a.getAccountID(), "", id.getRawRingId());
+                                                }
+                                            } else {
+                                                Log.w(TAG, "Unsubscribe buddy " + id.getRawUriString());
+                                                mPresenceService.subscribeBuddy(a.getAccountID(), id.getRawUriString(), false);
+                                            }
+                                        }
+                                    })))
                 .subscribeOn(Schedulers.computation())
                 .subscribe());
 

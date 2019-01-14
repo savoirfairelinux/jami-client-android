@@ -70,6 +70,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
     private final PublishSubject<String> contactQuery = PublishSubject.create();
     private final Observable<Account> accountSubject;
     private final Observable<List<SmartListViewModel>> conversationViews;
+    private final Observable<Account> presenceListener;
 
     private final Scheduler mUiScheduler;
 
@@ -94,6 +95,9 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
                 .getCurrentAccountSubject()
                 .doOnNext(a -> mAccount = a);
 
+        presenceListener = accountSubject
+                .switchMap(Account::getPresenceUpdates);
+
         conversationViews = accountSubject
                 .switchMap(Account::getConversationsViewModels)
                 .observeOn(mUiScheduler);
@@ -104,6 +108,8 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
         super.bindView(view);
         mConversationDisposable = new CompositeDisposable();
         mCompositeDisposable.add(mConversationDisposable);
+        mCompositeDisposable.add(presenceListener.subscribe());
+
         loadConversations();
     }
 

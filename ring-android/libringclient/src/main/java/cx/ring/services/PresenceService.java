@@ -20,8 +20,6 @@
 
 package cx.ring.services;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ScheduledExecutorService;
 
 import javax.inject.Inject;
@@ -32,7 +30,6 @@ import cx.ring.daemon.StringVect;
 import cx.ring.daemon.VectMap;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
-import cx.ring.model.Uri;
 import cx.ring.utils.Log;
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
