@@ -21,7 +21,7 @@ Build with Jami on your IoT project: re-use the universal communications technol
 
 Jami for Android TV is tested on NVIDIA SHIELD TV with Logitech cameras.
 
-There are plenty of ways to help us, check out: https://jami.net/en/contribute ,
+There are plenty of ways to help us, check out: https://jami.net/contribute ,
 Contact us on Twitter: @jami_social , or Mastodon: @Jami
 
 For more information, visit https://jami.net 
