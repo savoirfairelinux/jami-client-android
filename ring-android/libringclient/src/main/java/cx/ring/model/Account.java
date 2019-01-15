@@ -106,6 +106,15 @@ public class Account {
         setCredentials(credentials);
     }
 
+    public void cleanup() {
+        conversationSubject.onComplete();
+        conversationsSubject.onComplete();
+        pendingSubject.onComplete();
+        contactListSubject.onComplete();
+        trustRequestsSubject.onComplete();
+        presenceSubject.onComplete();
+    }
+
     public Observable<List<Conversation>> getConversationsSubject() {
         return conversationsSubject;
     }
