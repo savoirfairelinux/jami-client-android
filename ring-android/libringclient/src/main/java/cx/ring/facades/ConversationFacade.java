@@ -105,21 +105,30 @@ public class ConversationFacade {
                 .observeOn(Schedulers.io())
                 .subscribe(this::onCallStateChange));
 
-        mDisposableBag.add(currentAccountSubject
-                .switchMap(a -> Observable
-                        .merge(a.getConversationsSubject(), a.getPendingSubject())
+        Observable<Account> accounts = mAccountService
+                .getObservableAccountList()
+                .flatMapIterable(a -> a)
+                .distinct();
+
+        mDisposableBag.add(accounts.flatMap(a -> a
+                .getPresenceEnabled()
+                .observeOn(Schedulers.computation())
+                .switchMap(enabled -> Observable.merge(a.getConversationsSubject(), a.getPendingSubject())
                         .doOnNext(c -> {
                             for (Conversation conversation : c) {
                                 CallContact contact = conversation.getContact();
-                                if (contact.subscribe()) {
-                                    Uri id = contact.getPrimaryUri();
+                                Uri id = contact.getPrimaryUri();
+                                if (enabled) {
                                     mPresenceService.subscribeBuddy(a.getAccountID(), id.getRawUriString(), true);
-                                    mContactService.loadContactData(conversation.getContact());
-                                    mAccountService.lookupAddress(a.getAccountID(), "", id.getRawRingId());
+                                    if (contact.subscribe()) {
+                                        mContactService.loadContactData(conversation.getContact());
+                                        mAccountService.lookupAddress(a.getAccountID(), "", id.getRawRingId());
+                                    }
+                                } else {
+                                    mPresenceService.subscribeBuddy(a.getAccountID(), id.getRawUriString(), false);
                                 }
                             }
-                        }))
-                .subscribeOn(Schedulers.computation())
+                        })))
                 .subscribe());
 
         mDisposableBag.add(currentAccountSubject

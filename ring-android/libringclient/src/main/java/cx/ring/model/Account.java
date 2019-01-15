@@ -35,6 +35,7 @@ import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
 import ezvcard.VCard;
 import io.reactivex.Observable;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
@@ -77,6 +78,19 @@ public class Account {
     private final BehaviorSubject<Collection<TrustRequest>> trustRequestsSubject = BehaviorSubject.create();
     public Subject<Account> historyLoader;
     private VCard mProfile;
+
+    private final Subject<Boolean> presenceSubject = BehaviorSubject.createDefault(false);
+    private final Observable<Account> presenceUpdates = Observable.create((ObservableOnSubscribe<Account>) e -> {})
+            .doOnSubscribe(s -> presenceSubject.onNext(true))
+            .doOnDispose(() -> presenceSubject.onNext(false))
+            .share();
+
+    public Observable<Account> getPresenceUpdates() {
+        return presenceUpdates;
+    }
+    public Observable<Boolean> getPresenceEnabled() {
+        return presenceSubject;
+    }
 
     public Account(String bAccountID) {
         accountID = bAccountID;
