@@ -193,15 +193,23 @@ public class AccountService {
     private void refreshAccountsCacheFromDaemon() {
         Log.w(TAG, "refreshAccountsCacheFromDaemon");
         mAccountsLoaded.set(false);
+        boolean hasSip = false, hasJami = false;
+        List<Account> curList = mAccountList;
         List<String> accountIds = new ArrayList<>(Ringservice.getAccountList());
         List<Account> newAccounts = new ArrayList<>(accountIds.size());
         for (String id : accountIds) {
-            for (Account acc : mAccountList)
+            for (Account acc : curList)
                 if (acc.getAccountID().equals(id)) {
                     newAccounts.add(acc);
                     break;
                 }
         }
+
+        // Cleanup removed accounts
+        for (Account acc : curList)
+            if (!newAccounts.contains(acc))
+                acc.cleanup();
+
         for (String accountId : accountIds) {
             Account account = getAccount(accountId);
             Map<String, String> details = Ringservice.getAccountDetails(accountId).toNative();
@@ -217,9 +225,9 @@ public class AccountService {
             }
 
             if (account.isSip()) {
-                mHasSipAccount = true;
+                hasSip = true;
             } else if (account.isRing()) {
-                mHasRingAccount = true;
+                hasJami = true;
                 boolean enabled = account.isEnabled();
 
                 account.setDevices(Ringservice.getKnownRingDevices(accountId).toNative());
@@ -248,14 +256,16 @@ public class AccountService {
                 }
             }
         }
+        mHasSipAccount = hasSip;
+        mHasRingAccount = hasJami;
         mAccountList = newAccounts;
-        if (!mAccountList.isEmpty()) {
-            Account newAccount = mAccountList.get(0);
+        if (!newAccounts.isEmpty()) {
+            Account newAccount = newAccounts.get(0);
             if (mCurrentAccount != newAccount) {
                 mCurrentAccount = newAccount;
             }
         }
-        accountsSubject.onNext(mAccountList);
+        accountsSubject.onNext(newAccounts);
         mAccountsLoaded.set(true);
     }
 
@@ -382,7 +392,7 @@ public class AccountService {
         return mAccountList;
     }
 
-    public Subject<List<Account>> getObservableAccountList() {
+    public Observable<List<Account>> getObservableAccountList() {
         return accountsSubject;
     }
 
