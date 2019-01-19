@@ -69,7 +69,15 @@ public final class BitmapUtils
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeByteArray(data, 0, data.length, options);
-        options.inSampleSize = calculateInSampleSize(options, maxSize, maxSize);
+        int width = options.outWidth;
+        int height = options.outHeight;
+        int scale = 1;
+        while (3 * width * height > maxSize) {
+            scale *= 2;
+            width /= 2;
+            height /= 2;
+        }
+        options.inSampleSize = scale;
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeByteArray(data, 0, data.length, options);
     }
@@ -110,8 +118,11 @@ public final class BitmapUtils
                 height = (maxSize * bitmap.getHeight()) / bitmap.getWidth();
                 width = maxSize;
             }
+        } else {
+            width = maxSize;
+            height = maxSize;
         }
-        return Bitmap.createScaledBitmap(bitmap, width, height, false);
+        return Bitmap.createScaledBitmap(bitmap, width, height, true);
     }
 
     public static Bitmap drawableToBitmap(Drawable drawable) {
