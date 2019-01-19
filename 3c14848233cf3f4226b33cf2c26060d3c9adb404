@@ -22,6 +22,30 @@
       "revId": "3c14848233cf3f4226b33cf2c26060d3c9adb404",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "767977bb_32df8e7b",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/AccountService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-01-19T21:26:22Z",
+      "side": 1,
+      "message": "previous version was not resetting to false when removing accounts. also prep work to make the whole thing atomic",
+      "parentUuid": "05450a21_858ea898",
+      "range": {
+        "startLine": 196,
+        "startChar": 8,
+        "endLine": 196,
+        "endChar": 48
+      },
+      "revId": "3c14848233cf3f4226b33cf2c26060d3c9adb404",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
     }
   ]
 }
