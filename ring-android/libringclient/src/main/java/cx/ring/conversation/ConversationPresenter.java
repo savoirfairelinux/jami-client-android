@@ -180,7 +180,12 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         view.hideNumberSpinner();
 
         Account account = mAccountService.getAccount(mAccountId);
+        if (account == null) {
+            view.goToHome();
+            return;
+        }
 
+        mConversationDisposable.add(account.getPresenceUpdates().subscribe());
         mConversationDisposable.add(c.getSortedHistory()
                 .subscribe(view::refreshView));
         mConversationDisposable.add(c.getCleared()
