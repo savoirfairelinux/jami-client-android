@@ -1,3 +1,22 @@
+/*
+ *  Copyright (C) 2004-2019 Savoir-faire Linux Inc.
+ *
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
 package cx.ring.client;
 
 import android.content.ClipData;
@@ -19,12 +38,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +51,6 @@ import javax.inject.Singleton;
 import androidx.core.widget.ImageViewCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.databinding.ActivityContactDetailsBinding;
@@ -73,7 +87,7 @@ public class ContactDetailsActivity extends AppCompatActivity {
     class ContactAction {
         final int icon;
         int iconTint;
-        final CharSequence title;
+        CharSequence title;
         final IContactAction callback;
 
         ContactAction(int i, int tint, CharSequence t, IContactAction cb) {
@@ -92,6 +106,7 @@ public class ContactDetailsActivity extends AppCompatActivity {
         void setIconTint(int tint) {
             iconTint = tint;
         }
+        void setTitle(CharSequence t) { title = t; }
     }
 
     class ContactActionView extends RecyclerView.ViewHolder {
@@ -137,7 +152,9 @@ public class ContactDetailsActivity extends AppCompatActivity {
     private final CompositeDisposable mDisposableBag = new CompositeDisposable();
 
     private ContactAction colorAction;
+    private ContactAction contactAction;
     private int colorActionPosition;
+    private int contactIdPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,6 +187,8 @@ public class ContactDetailsActivity extends AppCompatActivity {
                             int color = mPreferences.getInt(ConversationFragment.KEY_PREFERENCE_CONVERSATION_COLOR, getResources().getColor(R.color.color_primary_light));
                             colorAction.setIconTint(color);
                             adapter.notifyItemChanged(colorActionPosition);
+                            contactAction.setTitle(contact.getRingUsername());
+                            adapter.notifyItemChanged(contactIdPosition);
                             collapsingToolbarLayout.setBackgroundColor(color);
                             collapsingToolbarLayout.setTitle(contact.getDisplayName());
                             collapsingToolbarLayout.setContentScrimColor(color);
@@ -190,35 +209,42 @@ public class ContactDetailsActivity extends AppCompatActivity {
                     frag.show(getSupportFragmentManager(), "colorChooser");
                 });
                 adapter.actions.add(colorAction);
-                adapter.actions.add(new ContactAction(R.drawable.ic_call_white, getText(R.string.ab_action_audio_call), () -> {
-                    goToCallActivity(mConversation.getLastAccountUsed(), mContact.getPrimaryNumber(), true);
-                }));
-                adapter.actions.add(new ContactAction(R.drawable.ic_videocam_white, getText(R.string.ab_action_video_call), () -> {
-                    goToCallActivity(mConversation.getLastAccountUsed(), mContact.getPrimaryNumber(), false);
-                }));
-                adapter.actions.add(new ContactAction(R.drawable.baseline_clear_all_24, getText(R.string.conversation_action_history_clear), () -> {
-                    new AlertDialog.Builder(ContactDetailsActivity.this)
-                            .setTitle(R.string.clear_history_dialog_title)
-                            .setMessage(R.string.clear_history_dialog_message)
-                            .setPositiveButton(R.string.conversation_action_history_clear, (b, i) -> {
-                                mConversationFacade.clearHistory(mConversation.getLastAccountUsed(), mContact.getPrimaryUri()).subscribe();
-                                Snackbar.make(binding.getRoot(), R.string.clear_history_completed, Snackbar.LENGTH_LONG).show();
-                            })
-                            .setNegativeButton(android.R.string.cancel, null)
-                            .create()
-                            .show();
-                }));
-                adapter.actions.add(new ContactAction(R.drawable.ic_block_white, getText(R.string.conversation_action_block_this), () -> {
-                    mAccountService.removeContact(mConversation.getLastAccountUsed(), mContact.getPrimaryUri().getRawRingId(), true);
-                    finish();
-                }));
-                adapter.actions.add(new ContactAction(R.drawable.ic_contact_picture_box_default, contactUri, () -> {
+                adapter.actions.add(new ContactAction(R.drawable.ic_call_white, getText(R.string.ab_action_audio_call), () ->
+                        goToCallActivity(mConversation.getLastAccountUsed(), mContact.getPrimaryNumber(), true)));
+                adapter.actions.add(new ContactAction(R.drawable.ic_videocam_white, getText(R.string.ab_action_video_call), () ->
+                        goToCallActivity(mConversation.getLastAccountUsed(), mContact.getPrimaryNumber(), false)));
+                adapter.actions.add(new ContactAction(R.drawable.baseline_clear_all_24, getText(R.string.conversation_action_history_clear), () ->
+                        new AlertDialog.Builder(ContactDetailsActivity.this)
+                                .setTitle(R.string.clear_history_dialog_title)
+                                .setMessage(R.string.clear_history_dialog_message)
+                                .setPositiveButton(R.string.conversation_action_history_clear, (b, i) -> {
+                                    mConversationFacade.clearHistory(mConversation.getLastAccountUsed(), mContact.getPrimaryUri()).subscribe();
+                                    Snackbar.make(binding.getRoot(), R.string.clear_history_completed, Snackbar.LENGTH_LONG).show();
+                                })
+                                .setNegativeButton(android.R.string.cancel, null)
+                                .create()
+                                .show()));
+                adapter.actions.add(new ContactAction(R.drawable.ic_block_white, getText(R.string.conversation_action_block_this), () ->
+                        new AlertDialog.Builder(ContactDetailsActivity.this)
+                                .setTitle(getString(R.string.block_contact_dialog_title, contactAction.title))
+                                .setMessage(getString(R.string.block_contact_dialog_message, contactAction.title))
+                                .setPositiveButton(R.string.conversation_action_block_this, (b, i) -> {
+                                    mAccountService.removeContact(mConversation.getLastAccountUsed(), mContact.getPrimaryUri().getRawRingId(), true);
+                                    Toast.makeText(getApplicationContext(), getString(R.string.block_contact_completed, contactAction.title), Toast.LENGTH_LONG).show();
+                                    finish();
+                                })
+                                .setNegativeButton(android.R.string.cancel, null)
+                                .create()
+                                .show()));
+                contactAction = new ContactAction(R.drawable.ic_contact_picture_box_default, "", () -> {
                     ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                    ClipData clip = ClipData.newPlainText(getText(R.string.clip_contact_uri), contactUri);
+                    ClipData clip = ClipData.newPlainText(getText(R.string.clip_contact_uri), contactAction.title);
                     clipboard.setPrimaryClip(clip);
                     Snackbar.make(binding.getRoot(), getString(R.string.conversation_action_copied_peer_number_clipboard, contactUri), Snackbar.LENGTH_LONG).show();
-                }));
+                });
+                adapter.actions.add(contactAction);
                 colorActionPosition = 0;
+                contactIdPosition = adapter.actions.size() - 1;
                 binding.contactActionList.setAdapter(adapter);
             }
         }
@@ -229,6 +255,10 @@ public class ContactDetailsActivity extends AppCompatActivity {
         adapter.actions.clear();
         mDisposableBag.clear();
         super.onDestroy();
+        contactAction = null;
+        colorAction = null;
+        mPreferences = null;
+        binding = null;
     }
 
     private void goToCallActivity(String accountId, String contactRingId, boolean audioOnly) {
