@@ -2,7 +2,9 @@
 <resources>
   <!--About-->
   <string name="feedback_section">بازخورد</string>
+  <string name="report"><u>رایانامه‌ای به ما بفرستید</u></string>
   <string name="section_license">مجوز</string>
+  <string name="sponsor_section">جمی نرم‌افزار آزادیست که به دست جامعه توسعه داده و پشتیبانی می‌شود</string>
   <string name="copyright_section">حق رونوشت</string>
   <string name="contribute_section">مشارکت</string>
   <string name="version_section">نگارش</string>
@@ -10,6 +12,8 @@
   <string name="no_browser_app_installed">هیچ کارهٔ مرورگری پیدا نشد، برای مشاهدهٔ این صفحه، یکی نصب کنبد</string>
   <string name="email_chooser_title">فرستادن نامه با…</string>
   <string name="website_chooser_title">دیدن پایگاه وب با…</string>
+  <string name="license">این نرم‌افزار همان گونه که هست، بدون هیچ ضمانتی ارائه شده است. برای جزییات بیش‌تر، <u>نگارش ۳ یا جدیدتر پروانهٔ جامع همگانی گنو</u>را ببینید</string>
+  <string name="description">جمی نرم‌افزار آزاد برای ارتباط جهانی است که به آزادی‌ها و محرمانگی کاربرانش احترام می‌گذارد.</string>
   <string name="credits">دست‌اندرکاران</string>
   <!--About dialog-->
   <string name="developed_by">توسعه توسّط</string>
@@ -31,6 +35,7 @@
   <string name="menu_item_account">مدیریت حساب</string>
   <string name="menu_item_settings">تنظیمات</string>
   <string name="menu_item_share">هم‌رسانی اطّلاعات تماس</string>
+  <string name="menu_item_about">دربارهٔ جمی</string>
   <!--Dialing Fragment-->
   <string name="dial_number">تماس با یک شماره</string>
   <!--History Fragment-->
@@ -59,6 +64,9 @@
   <string name="notif_channel_messages">پیام ها</string>
   <string name="notif_channel_requests">درخواست ها</string>
   <string name="notif_channel_file_transfer">انتقال فایل</string>
+  <string name="notif_channel_background_service">خدمت پس‌زمینه</string>
+  <string name="notif_channel_background_service_descr">اجازهٔ گرفتن تماس‌ها و پیام‌ها در هر زمان.</string>
+  <string name="notif_background_service">جمی در پس‌زمینه در حال اجراست.</string>
   <string name="notif_mark_as_read">به عنوان خوانده شده علامت بزن</string>
   <string name="notif_dismiss"> رد کنید</string>
   <string name="notif_reply">لطفا پاسخ دهید</string>
@@ -74,8 +82,11 @@
   <string name="ongoing_call">تماس خروجی</string>
   <string name="hist_in_call">تماس دریافتی به مدّت  %1$s</string>
   <string name="hist_out_call">تماس خروجی به مدّت %1$s</string>
+  <string name="start_error_title">نمی‌توان جمی را شروع کرد!</string>
+  <string name="start_error_mic_required">جمی برای کار به دسترسی میکروفون نیاز دارد.</string>
   <string name="action_call_accept">برداشتن تماس</string>
   <string name="action_call_decline">رد کردن</string>
+  <string name="action_call_mic_mute">صامت کردن میکروفون</string>
   <string name="ab_action_speakerphone">فعال کردن بلندگو</string>
   <string name="ab_action_contact_add">افزودن به مخاطبان</string>
   <string name="ab_action_contact_add_question">افزودن به مخاطبان؟</string>
@@ -103,7 +114,9 @@
   <string name="ringtone_error_format_not_supported">این قالب پشتیبانی نمی‌شود.</string>
   <string name="ringtone_error_size_too_big">این فایل خیلی بزرگ است.حداکثر اندازه %1$d ک‌.ب. است.</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">جمی برای فعّال کردن این ویژگی به دسترسی «خواندن مخاطبان» نیاز دارد. لطفاً اعطایش کنید.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">جمی برای فعّال کردن این ویژگی به دسترسی «نوشتن گزارش تماس» نیاز دارد. لطفاً اعطایش کنید.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">رمز QR حسابی که می‌خواهید بیفزایید را بپویید.</string>
   <!--Settings-->
@@ -111,6 +124,7 @@
   <string name="clear_history_dialog_message">این کار قابل بازگشت نیست.</string>
   <string name="clear_history_completed">تاریخچه پاک‌سازی شد.</string>
   <!--Conversation-->
+  <string name="conversation_details">جزییات مخاطب</string>
   <string name="conversation_action_delete_this">حذف این گفت‌وگو</string>
   <string name="conversation_action_delete_this_title">حذف این گفت‌وگو؟</string>
   <string name="conversation_action_delete_this_message">این کار قابل بازگشت نیست.</string>
@@ -125,12 +139,17 @@
   <string name="conversation_action_select_peer_number">گزینش یک شماره</string>
   <string name="conversation_action_block_this">مسدودسازی مخاطب</string>
   <string name="conversation_action_go_to_call">بازگشت به تماس در حال جريان</string>
+  <string name="clip_contact_uri">نشانی مخاطب</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">افزودن %1$s؟</string>
   <string name="prompt_new_password">گذرواژه جدید</string>
   <string name="prompt_new_password_optional">گذرواژه جدید (اختیاری)</string>
   <string name="prompt_new_password_repeat">گذرواژه جدید را تکرار کنید</string>
+  <string name="account_create_title">ایجاد یک حساب جمی</string>
   <string name="prompt_new_username">نام کاربری جدید را وارد کنید</string>
+  <string name="help_password_choose">برای حفاظت از حساب جمیتان، گذرواژه‌ای قوی که به خاطر خواهید سپرد را برگزینید.</string>
+  <string name="help_password_enter">گذرواژهٔ حساب جمیتان را وارد کنید</string>
+  <string name="help_pin_enter">پین را از دیگر حساب پیکربندی‌شدهٔ جمی وارد کنید. برای به دست آوردن یک پین، از ویژگی «صدور حساب جمی» استفاده کنید.</string>
   <string name="wizard_next">بعدی</string>
   <string name="wizard_back">بازگشت</string>
   <string name="wizard_skip">اسکیپ</string>
@@ -141,6 +160,7 @@
   <string name="take_a_photo">گرفتن عکس</string>
   <string name="profile_name_hint">نامتان را وارد کنید (اختیاری)</string>
   <!--Share fragment-->
+  <string name="share_message">این رمز را با جمی بپویید</string>
   <string name="share_message_no_account">لطفاً برای هم‌رسانی، حسابی را برگزینید.</string>
   <string name="share_your_account_information">هم‌رسانی اطّلاعات تماس من</string>
   <string name="generic_error_migration">خطا</string>
@@ -185,6 +205,7 @@
   <string name="file_saved_in">فایل در %s ذخیره شد</string>
   <string name="no_space_left_on_device">هیچ فضایی در دستگاه وجود ندارد.</string>
   <string name="title_media_viewer">بیننده رسانه ای</string>
+  <string name="menu_file_open">گشودن پرونده</string>
   <string name="menu_file_download">دانلود فایل</string>
   <string name="menu_file_delete">حذف فایل</string>
   <string name="menu_file_share">به اشتراک گذاری فایل</string>

@@ -1,15 +1,22 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <string name="pref_category_network">شبکه</string>
-  <string name="pref_category_contacts">مخاطبین</string>
-  <string name="pref_category_system">سیستم</string>
-  <string name="pref_category_privacy"> حریم خصوصی</string>
-  <string name="pref_mobileData_title">داده های موبایل</string>
-  <string name="pref_pushNotifications_title">پیام های اگاه سازی</string>
-  <string name="pref_pushNotifications_summary">از سرورهای Google برای دریافت تماس ها / پیام ها در پسزمینه استفاده کنید</string>
-  <string name="pref_hd_summary">فعال سازی ارسال ویدیو HD</string>
-  <string name="pref_systemContacts_title">استفاده از مخاطبین  سیستم</string>
-  <string name="pref_systemContacts_summary">استفاده از مخاطبین  سیستم برای نمایش جزییات تماس گیرنده.</string>
-  <string name="pref_clearHistory_title">پاکسازی تاریخچه</string>
+  <string name="pref_category_contacts">مخاطبان</string>
+  <string name="pref_category_system">سامانه</string>
+  <string name="pref_category_privacy">محرمانگی</string>
+  <string name="pref_mobileData_title">دادهٔ همراه</string>
+  <string name="pref_mobileData_summary">اجازه به جمی برای کار کردن روی شبکه‌های نسل سوم و LTE، علاوه بر وای‌فای</string>
+  <string name="pref_pushNotifications_title">ارسال آگاهی</string>
+  <string name="pref_pushNotifications_summary">استفاده از کارسازهای گوگل برای دریافت تماس‌ها/پیام‌ها در پس‌زمینه</string>
+  <string name="pref_hd_summary">فعّال کردن ارسال ویدیوی HD</string>
+  <string name="pref_systemContacts_title">استفاده از مخاطبان سامانه</string>
+  <string name="pref_systemContacts_summary">استفاده از مخاطبان سامانه برای نمایش جزییات تماس گیرنده.</string>
+  <string name="pref_systemDialer_title">انجام تماس‌های سامانه با استفاده از جمی</string>
+  <string name="pref_systemDialer_summary">استفاده از جمی برای انجام تماس‌های سامانه در صورت امکان.</string>
+  <string name="pref_startOnBoot_title">به کار انداختن جمی هنگام شروع به کار</string>
+  <string name="pref_startOnBoot_summary">اجرای جمی در پس‌زمینه هنگام آغاز به کار سامانه.</string>
+  <string name="pref_clearHistory_title">پاک‌سازی تاریخچه</string>
   <string name="pref_clearHistory_summary">پاک‌سازی تمام تاریخچهٔ گفت‌وگوها. این کار قابل بازگشت نیست.</string>
+  <string name="pref_persistNotification_title">اجرا در پس‌زمینه</string>
+  <string name="pref_persistNotification_summary">برای گرفتن تماس‌ها و پیام‌ها، اجرا در پس‌زمینه را مجاز کنید.</string>
 </resources>

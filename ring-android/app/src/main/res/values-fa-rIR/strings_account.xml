@@ -5,6 +5,7 @@
   <string name="ic_advanced_menu">تنظیمات پیش‌رفته</string>
   <string name="ic_blacklist_menu">مخاطبین مسدود شده</string>
   <!--Strings related to account creation-->
+  <string name="add_ring_account_title">افزدن حساب جمی</string>
   <string name="add_sip_account_title">افزودن حساب کاربری سیپ</string>
   <string name="ring_account_default_name">حساب کاربری رینگ %1$s</string>
   <string name="prompt_alias">نام مستعار</string>
@@ -25,6 +26,7 @@
 تنها قادر به ساخت و دریافت تماس های ip مستقیم هستید.
 می‌توانید در آینده حسابتان را ویرایش کنید</string>
   <string name="account_type_ip2ip">حساب آی‌پی</string>
+  <string name="help_ring">حساب جمی به شما اجازه می‌دهد از درون یک شبکه کاملاً توزیع‌شده، به صورت امن با افراد در تماس باشید.</string>
   <string name="help_sip_title">افزودن حساب سیپ</string>
   <string name="help_sip">پیکربندی یک حساب سیپ موجود.</string>
   <string name="create_sip_account">افزودن حساب کاربری سیپ</string>
@@ -34,6 +36,7 @@
   <!--AccountManagementFragment-->
   <string name="empty_account_list">هیچ حسابی ثبت نشده</string>
   <string name="normal_accounts_titles">حساب‌ها</string>
+  <string name="normal_devices_titles">افزاره‌های شناخته شدهٔ پیوسته به این حساب جمی</string>
   <string name="account_device_revoke">باطل کردن دستگاه</string>
   <string name="account_device_revocation_success_title">با موفقیت انجام شد</string>
   <string name="account_device_revocation_success">دستگاه لغو شد!</string>
@@ -117,26 +120,38 @@
   <string name="account_export_end_error_title">خطا</string>
   <string name="account_export_end_error_message">نمی‌توان حساب را در شبکه صادر کرد. خطایی ناشناخته رخ داد.</string>
   <string name="account_enter_password">گذرواژه را وارد کنید</string>
+  <string name="account_share_body">با استفاده از «%1$s» با من روی بن‌سازهٔ ارتباطی توزیع‌شدهٔ جمی در تماس باشید: http://ring.cx</string>
+  <string name="account_share_body_with_username">با استفاده از «%1$s» یا نام کاربری عمومی «%2$s» روی بن‌سازهٔ ارتباطی تویع‌شدهٔ جمی با من در تماس باشید: https://ring.cx</string>
+  <string name="account_contact_me">با من روی جمی در تماس باشید!</string>
   <string name="update_account">به روز رسانی حساب کاربری</string>
+  <string name="account_migration">حساب جمیتان می‌تواند به‌روز شود.\nلطفاً گذرواژه‌تان را وارد کنید.</string>
   <string name="ring_account">حساب رینگ</string>
   <string name="ring_account_identity">هویت</string>
   <string name="account_migration_title_dialog">مهاجرت حساب</string>
   <string name="account_migration_message_dialog">حساب‌هایتان باید به‌روز شوند. می‌خواهید برای انجام این عمل، به صفحه مدیریت حساب بروید؟</string>
   <string name="account_update_needed">نیاز به به‌روز رسانی است</string>
   <string name="account_cannot_be_found_title">نمی توان حساب را پیدا کرد</string>
+  <string name="account_cannot_be_found_message">حساب نتوانست روی شبکهٔ جمی پیدا شود.\n مطمئن شوید از یک افزارهٔ پیشین، روی جمی صادر شده است و اطّلاعات وارد شده صحیحند.</string>
   <string name="account_sip_cannot_be_registered_message">می‌توانید فرایند ایجاد حساب را ادامه داده یا در این‌جا اطّلاعاتتان را ویرایش کنید. ویرایش هم‌چنان بعداٍ در تنظیمات حساب ممکن است.</string>
   <string name="account_no_network_title">نمی‌توان به شبکه وصل شد</string>
+  <string name="account_no_network_message">نمی‌توان حساب را افزود، زیرا جمی نتوانست به شبکهٔ توزیع‌شده وصل شود. اتّصال افزاره‌تان را بررسی کنید.</string>
   <string name="account_device_added_title">دستگاه به حساب افزوده شد.</string>
+  <string name="account_device_added_message">با موفّقیت حساب جمیتان را روی این افزاره برپا کردید.</string>
   <string name="account_device_updated_title">حساب دستگاه  به روز شد.</string>
+  <string name="account_device_updated_message">با موفّقیت حساب جمیتان را به‌روز کردید.</string>
   <string name="account_cannot_be_updated_message">دستگاه نمی تواند به روز رسانی شود. لطفا کلمه عبور خود را چک نمایید.</string>
   <string name="account_sip_success_title">حساب سیپ ثبت شد</string>
   <string name="account_sip_success_message">حساب سیپتان را با موفّقیت ثبت کردید</string>
   <string name="account_sip_register_anyway">به هر حال ثبت کنید</string>
   <string name="account_link_button">پیوند این دستگاه به یک حساب</string>
   <string name="account_link_prompt_pin">پین را وارد کنید</string>
+  <string name="account_new_button">ایجاد یک حساب جمی</string>
   <string name="account_link_export_button">پیوند دستگاه دیگر به این حساب</string>
+  <string name="account_link_export_info">برای استفاده از این حساب روی افزاره‌های دیگر، باید نخست آن را روی جمی آشکار کنید. این کار یک رمز پین تولید خواهد کرد که باید برای برپایی حساب، روی افزارهٔ نو وارد کنید. پین تا ۱۰ دقیقه معتبر است.</string>
   <string name="account_start_export_button">تولید پین</string>
   <string name="account_end_export_button">بستن</string>
+  <string name="account_end_export_infos">پین شما:\n\n%%\n\nبرای کامل کردن فرایند، باید جمی را روی افزارهٔ نو گشوده و حساب جدیدی را با انتخاب «پیوند این افزاره به یک حساب» ایجاد کنید. پینتان برای ۱۰ دقیقه معتبر است.</string>
+  <string name="account_link_export_info_light">برای استفاده از این حساب روی افزاره‌های دیگر، باید نخست آن را روی جمی آشکار کنید. این کار یک رمز پین تولید خواهد کرد که باید برای برپایی حساب، روی افزارهٔ نو وارد کنید. پین تا ۱۰ دقیقه معتبر است.</string>
   <string name="account_export_title">اضافه کردن دستگاه ها</string>
   <!--Name registration-->
   <string name="error_username_empty">یک نام کاربری وارد کنید</string>
@@ -154,7 +169,9 @@
   <string name="account_status_unknown">ناشناخته</string>
   <string name="account_status_offline">آفلاین</string>
   <!--Create account-->
+  <string name="account_creation_home">به جمی خوش آمدید</string>
   <string name="account_creation_profile">پروفایل خود را بسازید</string>
+  <string name="account_creation_ring">حساب جمیتان را بسازید</string>
   <string name="account_link_title">پیوند این دستگاه</string>
   <string name="account_sip_cannot_be_registered">نمی‌توان حساب را ثبت کرد</string>
   <!--Edit profile-->
@@ -167,6 +184,7 @@
   <string name="revoke_device_wait_title">لطفاً صبر کنید…</string>
   <string name="revoke_device_wait_message">در حال باطل کردن دستگاه</string>
   <string name="rename_device_title">تغییر نام این دستگاه</string>
+  <string name="rename_device_message">نام جدیدی برای شناسایی این افزاره در حساب جمیتان برگزینید</string>
   <string name="rename_device_button">تغییر نام دستگاه</string>
   <string name="account_rename_device_hint">انتخاب نام جدید برای دستگاه </string>
   <string name="account_device_name_empty">نام دستگاه نمیتواند خالی باشد</string>
