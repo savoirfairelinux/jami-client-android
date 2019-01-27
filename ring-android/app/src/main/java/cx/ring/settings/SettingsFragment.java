@@ -70,6 +70,8 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
     private boolean mIsRefreshingViewFromPresenter;
     @BindView(R.id.settings_hd)
     Switch mViewHD;
+    @BindView(R.id.settings_hwenc)
+    Switch mViewHWEncode;
 
     @Override
     public int getLayout() {
@@ -109,9 +111,17 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         menu.clear();
     }
 
-    @OnCheckedChanged({R.id.settings_mobile_data, R.id.settings_push_notifications, R.id.settings_hd, R.id.settings_contacts, R.id.settings_place_call, R.id.settings_startup, R.id.settings_persistNotification})
+    @OnCheckedChanged({
+            R.id.settings_mobile_data,
+            R.id.settings_push_notifications,
+            R.id.settings_hd,
+            R.id.settings_hwenc,
+            R.id.settings_contacts,
+            R.id.settings_place_call,
+            R.id.settings_startup,
+            R.id.settings_persistNotification
+    })
     public void onSettingsCheckedChanged(CompoundButton button, boolean isChecked) {
-
         String neededPermission = null;
 
         if (isChecked) {
@@ -160,6 +170,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         newSettings.setAllowPushNotifications(mViewPushNotifications.isChecked());
         newSettings.setAllowPersistentNotification(mViewPersistNotif.isChecked());
         newSettings.setHD(mViewHD.isChecked());
+        newSettings.setHwEncoding(mViewHWEncode.isChecked());
 
         // save settings according to UI inputs
         presenter.saveSettings(newSettings);
@@ -244,6 +255,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         mViewPlaceCall.setChecked(viewModel.isAllowPlaceSystemCalls());
         mViewStartup.setChecked(viewModel.isAllowRingOnStartup());
         mViewHD.setChecked(viewModel.isHD());
+        mViewHWEncode.setChecked(viewModel.isHwEncoding());
         mIsRefreshingViewFromPresenter = false;
     }
 }

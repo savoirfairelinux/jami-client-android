@@ -68,7 +68,6 @@ import cx.ring.views.AutoFitTextureView;
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 class CameraServiceCamera2 extends CameraService {
     private static final String TAG = CameraServiceCamera2.class.getName();
-    private static final boolean USE_HARDWARE_ENCODER = false;
     private static final int FPS_MAX = 30;
     private static final int FPS_TARGET = 15;
 
@@ -294,7 +293,7 @@ class CameraServiceCamera2 extends CameraService {
         return range == null ? new Range<>(FPS_TARGET, FPS_TARGET) : range;
     }
 
-    public void openCamera(@NonNull Context context, VideoParams videoParams, TextureView surface, CameraListener listener) {
+    public void openCamera(@NonNull Context context, VideoParams videoParams, TextureView surface, CameraListener listener, boolean hw_accel) {
         CameraDevice camera = previewCamera;
         if (camera != null) {
             camera.close();
@@ -329,7 +328,7 @@ class CameraServiceCamera2 extends CameraService {
             SurfaceTexture texture = view.getSurfaceTexture();
             Surface s = new Surface(texture);
 
-            final Pair<MediaCodec, Surface> codec = USE_HARDWARE_ENCODER ? openCameraWithEncoder(videoParams, MediaFormat.MIMETYPE_VIDEO_VP8) : null;
+            final Pair<MediaCodec, Surface> codec = hw_accel ? openCameraWithEncoder(videoParams, MediaFormat.MIMETYPE_VIDEO_VP8) : null;
 
             final List<Surface> targets = new ArrayList<>(2);
             targets.add(s);

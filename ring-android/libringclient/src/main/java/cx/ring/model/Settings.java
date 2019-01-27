@@ -27,6 +27,7 @@ public class Settings {
     private boolean mAllowPlaceSystemCalls;
     private boolean mAllowRingOnStartup;
     private boolean mHdUpload;
+    private boolean mHwEncoding;
 
     public Settings() {
     }
@@ -85,6 +86,14 @@ public class Settings {
 
     public void setHD(boolean hd) {
         mHdUpload = hd;
+    }
+
+    public void setHwEncoding(boolean hw) {
+        mHwEncoding = hw;
+    }
+
+    public boolean isHwEncoding() {
+        return mHwEncoding;
     }
 
     public void setAllowPersistentNotification(boolean checked) {
