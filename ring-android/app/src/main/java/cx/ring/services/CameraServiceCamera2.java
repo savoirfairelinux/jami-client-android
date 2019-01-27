@@ -101,6 +101,10 @@ class CameraServiceCamera2 extends CameraService {
             }
             if (!TextUtils.isEmpty(cameraFront))
                 currentCamera = cameraFront;
+            else if (!TextUtils.isEmpty(cameraBack))
+                currentCamera = cameraBack;
+            else if (!TextUtils.isEmpty(cameraExternal))
+                currentCamera = cameraExternal;
             if (currentCamera != null)
                 RingserviceJNI.setDefaultDevice(currentCamera);
         } catch (Exception e) {
