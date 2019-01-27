@@ -50,6 +50,7 @@ import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.TextureView;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -188,8 +189,8 @@ class CameraServiceCamera2 extends CameraService {
 
                     @Override
                     public void onOutputBufferAvailable(@NonNull MediaCodec codec, int index, @NonNull MediaCodec.BufferInfo info) {
-                        /*ByteBuffer buffer = codec.getOutputBuffer(index);
-                        RingserviceJNI.captureVideoPacket(buffer, info.size, info.offset, (info.flags & MediaCodec.BUFFER_FLAG_KEY_FRAME) != 0, info.presentationTimeUs);*/
+                        ByteBuffer buffer = codec.getOutputBuffer(index);
+                        RingserviceJNI.captureVideoPacket(buffer, info.size, info.offset, (info.flags & MediaCodec.BUFFER_FLAG_KEY_FRAME) != 0, info.presentationTimeUs);
                         codec.releaseOutputBuffer(index, false);
                     }
 
