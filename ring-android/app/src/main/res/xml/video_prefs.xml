@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:key="video_hwenc"
+        android:summary="@string/pref_hwEncode_summary"
+        android:title="@string/pref_hwEncode_title"
+        android:icon="@drawable/baseline_memory_24"/>
+
+    <ListPreference
+        android:entries="@array/video_bitrateStrings"
+        android:entryValues="@array/video_bitrates"
+        android:icon="@drawable/baseline_network_check_24"
+        android:key="video_bitrate"
+        android:summary="Select default outgoing video bitrate (KB/s)"
+        android:title="Video bitrate" />
+
+    <ListPreference
+        android:entries="@array/video_resolutionStrings"
+        android:entryValues="@array/video_resolutions"
+        android:icon="@drawable/baseline_photo_size_select_small_24"
+        android:key="video_resolution"
+        android:summary="Select default outgoing video resolution"
+        android:title="Video resolution" />
+
+</PreferenceScreen>
