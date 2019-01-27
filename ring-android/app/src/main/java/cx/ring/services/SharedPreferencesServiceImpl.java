@@ -34,6 +34,7 @@ import javax.inject.Inject;
 
 import cx.ring.application.RingApplication;
 import cx.ring.model.Settings;
+import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.NetworkUtils;
 
 public class SharedPreferencesServiceImpl extends PreferencesService {
@@ -44,6 +45,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
     private static final String RING_PUSH_NOTIFICATIONS = "push_notifs";
     private static final String RING_PERSISTENT_NOTIFICATION = "persistent_notif";
     private static final String RING_HD = "hd_upload";
+    private static final String RING_HW_ENCODING = "hw_encoding";
     private static final String RING_SYSTEM_CONTACTS = "system_contacts";
     private static final String RING_PLACE_CALLS = "place_calls";
     private static final String RING_ON_STARTUP = "on_startup";
@@ -64,6 +66,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         edit.putBoolean(RING_PUSH_NOTIFICATIONS, settings.isAllowPushNotifications());
         edit.putBoolean(RING_PERSISTENT_NOTIFICATION, settings.isAllowPersistentNotification());
         edit.putBoolean(RING_HD, settings.isHD());
+        edit.putBoolean(RING_HW_ENCODING, settings.isHwEncoding());
         edit.apply();
     }
 
@@ -81,6 +84,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         settings.setAllowPushNotifications(appPrefs.getBoolean(RING_PUSH_NOTIFICATIONS, false));
         settings.setAllowPersistentNotification(appPrefs.getBoolean(RING_PERSISTENT_NOTIFICATION, false));
         settings.setHD(appPrefs.getBoolean(RING_HD, false));
+        settings.setHwEncoding(appPrefs.getBoolean(RING_HW_ENCODING, DeviceUtils.isTv(mContext)));
         return settings;
     }
 

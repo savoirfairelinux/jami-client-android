@@ -60,6 +60,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     private static final Point VIDEO_SIZE_DEFAULT = new Point(720, 480);
     private static final Point VIDEO_SIZE_HD = new Point(1280, 720);
     private static final Point VIDEO_SIZE_FULL_HD = new Point(1920, 1080);
+    private static final Point VIDEO_SIZE_ULTRA_HD = new Point(3840, 2160);
 
     private static final String TAG = HardwareServiceImpl.class.getName();
     private static WeakReference<TextureView> mCameraPreviewSurface = new WeakReference<>(null);
@@ -398,7 +399,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                 public void onError() {
                     stopCapture();
                 }
-            });
+            }, mPreferenceService.getUserSettings().isHwEncoding());
         });
         cameraService.setPreviewParams(videoParams);
         VideoEvent event = new VideoEvent();
