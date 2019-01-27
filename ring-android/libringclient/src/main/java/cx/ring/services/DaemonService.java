@@ -318,6 +318,11 @@ public class DaemonService {
         }
 
         @Override
+        public void requestKeyFrame() {
+            mHardwareService.requestKeyFrame();
+        }
+
+        @Override
         public void startCapture(String camId) {
             Log.d(TAG, "startCapture: " + camId);
             mHardwareService.startCapture(camId);
