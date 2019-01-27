@@ -2,6 +2,7 @@
 <resources>
     <string name="pref_category_network">Network</string>
     <string name="pref_category_contacts">Contacts</string>
+    <string name="pref_category_video">Video</string>
     <string name="pref_category_system">System</string>
     <string name="pref_category_privacy">Privacy</string>
 
@@ -13,6 +14,9 @@
 
     <string name="pref_hd_summary">Enable sending HD video</string>
     <string name="label_hd_720p" translatable="false">HD 720P</string>
+
+    <string name="pref_hwEncode_title">Enable accelerated encoding</string>
+    <string name="pref_hwEncode_summary">Experimental feature</string>
 
     <string name="pref_systemContacts_key" translatable="false">pref_systemContacts</string>
     <string name="pref_systemContacts_title">Use system contacts</string>
