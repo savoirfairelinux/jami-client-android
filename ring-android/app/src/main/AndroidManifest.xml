@@ -78,7 +78,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <application
         android:allowBackup="false"
-        android:banner="@drawable/banner"
+        android:banner="@drawable/jami_banner"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:resizeableActivity="true"
