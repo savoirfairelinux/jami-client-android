@@ -230,9 +230,11 @@ class CameraServiceCamera2 extends CameraService {
     public void requestKeyFrame() {
         Log.w(TAG, "requestKeyFrame()");
         try {
-            Bundle params = new Bundle();
-            params.putInt(MediaCodec.PARAMETER_KEY_REQUEST_SYNC_FRAME, 0);
-            currentCodec.setParameters(params);
+            if (currentCodec != null) {
+                Bundle params = new Bundle();
+                params.putInt(MediaCodec.PARAMETER_KEY_REQUEST_SYNC_FRAME, 0);
+                currentCodec.setParameters(params);
+            }
         } catch (IllegalStateException e) {
             Log.w(TAG, "Can't send keyframe request", e);
         }

@@ -229,7 +229,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="start"
-                    android:contentDescription="@string/pref_hd_summary"
+                    android:contentDescription="@string/pref_hwEncode_summary"
                     android:tint="@color/black"
                     app:srcCompat="@drawable/baseline_memory_24" />
 
