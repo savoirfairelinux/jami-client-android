@@ -416,6 +416,10 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         endCapture();
     }
 
+    public void requestKeyFrame() {
+        cameraService.requestKeyFrame();
+    }
+
     public void endCapture() {
         if (cameraService.isOpen()) {
             //final CameraService.VideoParams params = previewParams;

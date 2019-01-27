@@ -112,6 +112,7 @@ public abstract class HardwareService {
 
     public abstract void stopCapture();
     public abstract void endCapture();
+    public abstract void requestKeyFrame();
 
     public abstract void addVideoSurface(String id, Object holder);
 

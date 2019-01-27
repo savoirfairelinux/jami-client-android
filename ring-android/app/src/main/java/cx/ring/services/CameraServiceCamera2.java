@@ -76,6 +76,7 @@ class CameraServiceCamera2 extends CameraService {
 
     private final CameraManager manager;
     private CameraDevice previewCamera;
+    private MediaCodec currentCodec;
 
     CameraServiceCamera2(@NonNull Context c) {
         manager = (CameraManager) c.getSystemService(Context.CAMERA_SERVICE);
@@ -227,6 +228,17 @@ class CameraServiceCamera2 extends CameraService {
 
     }
 
+    public void requestKeyFrame() {
+        Log.w(TAG, "requestKeyFrame()");
+        try {
+            Bundle params = new Bundle();
+            params.putInt(MediaCodec.PARAMETER_KEY_REQUEST_SYNC_FRAME, 0);
+            currentCodec.setParameters(params);
+        } catch (IllegalStateException e) {
+            Log.w(TAG, "Can't send keyframe request", e);
+        }
+    }
+
     private static @NonNull Size chooseOptimalSize(@Nullable Size[] choices, int textureViewWidth, int textureViewHeight, int maxWidth, int maxHeight, Size target) {
         if (choices == null)
             return target;
@@ -369,6 +381,7 @@ class CameraServiceCamera2 extends CameraService {
                                             }
                                         }
                                     } : null, handler);
+                                    currentCodec = codec.first;
                                 } catch (CameraAccessException e) {
                                     Log.w(TAG, "onConfigured error:", e);
                                 }
@@ -393,6 +406,9 @@ class CameraServiceCamera2 extends CameraService {
                     }
                     camera.close();
                     if (codec != null && codec.first != null) {
+                        if (currentCodec == codec.first) {
+                            currentCodec = null;
+                        }
                         codec.first.signalEndOfInputStream();
                         codec.first.release();
                     }
