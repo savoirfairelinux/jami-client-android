@@ -119,7 +119,6 @@ Możesz edytować swoje konto później</string>
   <string name="account_export_end_error_message">Nie można eksportować konta. Wystąpił nieznany błąd.</string>
   <string name="account_enter_password">Wprowadź hasło</string>
   <string name="update_account">Zaktualizuj konto</string>
-  <string name="ring_account">konto Ring</string>
   <string name="ring_account_identity">Tożsamość</string>
   <string name="account_migration_title_dialog">Przenoszenie konta</string>
   <string name="account_migration_message_dialog">Twoje konto musi zostać zaktualizowane. Czy chcesz przejść do ekranu Zarządzania kontem aby przeprowadzić tę operację ?</string>

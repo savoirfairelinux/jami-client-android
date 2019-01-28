@@ -118,7 +118,6 @@
   <string name="account_export_end_error_message">无法导出帐户，发生未知错误。</string>
   <string name="account_enter_password">输入密码</string>
   <string name="update_account">更新帐户</string>
-  <string name="ring_account">Ring帐户</string>
   <string name="ring_account_identity">身份</string>
   <string name="account_migration_title_dialog">帐户迁移</string>
   <string name="account_migration_message_dialog">您的帐户需要被更新。您想前往帐户管理界面进行该操作吗？</string>

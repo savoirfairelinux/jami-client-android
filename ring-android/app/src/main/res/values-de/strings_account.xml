@@ -118,7 +118,6 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_export_end_error_message">Konto konnte nicht exportiert werden. Ein unbekannter Fehler ist aufgetreten.</string>
   <string name="account_enter_password">Passwort eingeben</string>
   <string name="update_account">Konto aktualisieren</string>
-  <string name="ring_account">Ring-Konto</string>
   <string name="ring_account_identity">Identität</string>
   <string name="account_migration_title_dialog">Konto-Migration</string>
   <string name="account_migration_message_dialog">Ihre Konten müssen aktualisiert werden. Möchten Sie zum Kontoverwaltungsfenster gehen, um diesen Vorgang auszuführen?</string>

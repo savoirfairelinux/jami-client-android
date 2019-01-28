@@ -2,6 +2,7 @@
 <resources>
   <string name="pref_category_network">Hálózat</string>
   <string name="pref_category_contacts">Partnerek</string>
+  <string name="pref_category_video">Videó</string>
   <string name="pref_category_system">Rendszer</string>
   <string name="pref_category_privacy">Adatvédelem</string>
   <string name="pref_mobileData_title">Adathasználat</string>

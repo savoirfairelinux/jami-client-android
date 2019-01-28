@@ -2,6 +2,7 @@
 <resources>
   <string name="pref_category_network">شبکه</string>
   <string name="pref_category_contacts">مخاطبان</string>
+  <string name="pref_category_video">ویدیو</string>
   <string name="pref_category_system">سامانه</string>
   <string name="pref_category_privacy">محرمانگی</string>
   <string name="pref_mobileData_title">دادهٔ همراه</string>

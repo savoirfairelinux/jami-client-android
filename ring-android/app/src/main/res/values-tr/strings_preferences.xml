@@ -2,6 +2,7 @@
 <resources>
   <string name="pref_category_network">Ağ</string>
   <string name="pref_category_contacts">Kişiler</string>
+  <string name="pref_category_video">Görüntü</string>
   <string name="pref_category_system">Düzen</string>
   <string name="pref_category_privacy">Gizlilik</string>
   <string name="pref_mobileData_title">Hücresel veri</string>

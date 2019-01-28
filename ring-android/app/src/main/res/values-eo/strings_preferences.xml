@@ -2,6 +2,7 @@
 <resources>
   <string name="pref_category_network">Reto</string>
   <string name="pref_category_contacts">Kontaktoj</string>
+  <string name="pref_category_video">Video</string>
   <string name="pref_category_system">Sistemo</string>
   <string name="pref_category_privacy">Privateco</string>
   <string name="pref_mobileData_title">Porteblaj datumoj</string>

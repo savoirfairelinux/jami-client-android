@@ -118,7 +118,6 @@
   <string name="account_export_end_error_message">Não foi possível exportar a conta. Um erro desconhecido ocorreu.</string>
   <string name="account_enter_password">Entre a senha</string>
   <string name="update_account">Atualize a conta</string>
-  <string name="ring_account">Conta Ring</string>
   <string name="ring_account_identity">Identificação</string>
   <string name="account_migration_title_dialog">Migração de conta</string>
   <string name="account_migration_message_dialog">Sua conta precisa ser atualizada. Você deseja ir na tela de administração da conta para fazer isto?</string>

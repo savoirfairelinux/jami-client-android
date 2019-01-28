@@ -120,12 +120,10 @@
   <string name="account_export_end_error_title">Erro</string>
   <string name="account_export_end_error_message">Não foi possível exportar a conta. Ocorreu um erro desconhecido.</string>
   <string name="account_enter_password">introduza a palavra-chave</string>
-  <string name="account_share_body">Contacte-me utilizando \'%1$s\' na rede Jami de comunicação distribuída: https://ring.cx</string>
-  <string name="account_share_body_with_username">Contacte-me utilizando \'%1$s\' ou através do meu nome de utilizador  \'%2$s\' na rede de comunicação distribuída Jami: https://ring.cx</string>
   <string name="account_contact_me">Contacte-me no Jami!</string>
   <string name="update_account">Atualizar conta</string>
   <string name="account_migration">A sua conta Jami pode ser atualizada.\nPor favor introduza a sua palavra-chave.</string>
-  <string name="ring_account">Conta Ring</string>
+  <string name="ring_account">Conta Jami</string>
   <string name="ring_account_identity">Identificação</string>
   <string name="account_migration_title_dialog">Migração de conta</string>
   <string name="account_migration_message_dialog">A sua conta necessita de ser atualizada. Quer ir ao ecrã de Gestão de Conta para fazer esta operação?</string>

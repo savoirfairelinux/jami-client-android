@@ -103,7 +103,6 @@
   <string name="account_export_end_error_title">Napaka</string>
   <string name="account_enter_password">Vnesi geslo</string>
   <string name="update_account">Posodobi račun</string>
-  <string name="ring_account">Ring račun</string>
   <string name="ring_account_identity">Identiteta</string>
   <string name="account_migration_title_dialog">Migracija računa</string>
   <string name="account_update_needed">Potrebna je posodobitev</string>

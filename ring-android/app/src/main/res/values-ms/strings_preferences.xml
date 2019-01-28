@@ -2,6 +2,7 @@
 <resources>
   <string name="pref_category_network">Rangkaian</string>
   <string name="pref_category_contacts">Kenalan</string>
+  <string name="pref_category_video">Video</string>
   <string name="pref_category_system">Sistem</string>
   <string name="pref_category_privacy">Privasi</string>
   <string name="pref_mobileData_title">Jaringan data</string>

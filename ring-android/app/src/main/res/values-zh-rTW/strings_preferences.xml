@@ -2,6 +2,7 @@
 <resources>
   <string name="pref_category_network">網路</string>
   <string name="pref_category_contacts">聯絡人</string>
+  <string name="pref_category_video">視訊</string>
   <string name="pref_category_system">系統</string>
   <string name="pref_category_privacy">隱私</string>
   <string name="pref_mobileData_title">行動數據</string>

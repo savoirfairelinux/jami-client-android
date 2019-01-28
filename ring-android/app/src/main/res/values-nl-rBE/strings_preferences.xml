@@ -2,6 +2,7 @@
 <resources>
   <string name="pref_category_network">Netwerk</string>
   <string name="pref_category_contacts">Contacten</string>
+  <string name="pref_category_video">Video</string>
   <string name="pref_category_system">Systeem</string>
   <string name="pref_category_privacy">Privacy</string>
   <string name="pref_mobileData_title">Mobiele gegevens</string>

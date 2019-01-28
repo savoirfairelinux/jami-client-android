@@ -118,7 +118,6 @@ Je kan je account later bewerken</string>
   <string name="account_export_end_error_message">Kon account niet exporteren. Er is een onbekende fout opgetreden.</string>
   <string name="account_enter_password">Voer wachtwoord in</string>
   <string name="update_account">Account bijwerken</string>
-  <string name="ring_account">Ring-account</string>
   <string name="ring_account_identity">Identiteit</string>
   <string name="account_migration_title_dialog">Accountmigratie</string>
   <string name="account_migration_message_dialog">Je account moeten bijgewerkt worden. Wil je naar het accountbeheerscherm gaan om deze handeling uit te voeren?</string>

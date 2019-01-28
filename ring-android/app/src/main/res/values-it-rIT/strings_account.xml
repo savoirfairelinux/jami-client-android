@@ -115,7 +115,6 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_export_end_error_message">Impossibile esportare l\'account. C\'è stato un errore sconosciuto.</string>
   <string name="account_enter_password">Inserire password</string>
   <string name="update_account">Aggiorna account</string>
-  <string name="ring_account">Account Ring</string>
   <string name="ring_account_identity">Indentità</string>
   <string name="account_migration_title_dialog">Migrazione account</string>
   <string name="account_migration_message_dialog">Il tuo account necessita di essere aggiornato. Vuoi andare alla schermata di gestione dell\'account per completare l\'operazione?</string>

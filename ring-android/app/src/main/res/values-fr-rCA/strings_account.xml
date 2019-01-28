@@ -114,7 +114,6 @@ Vous pourrez modifier votre compte plus tard.</string>
   <string name="account_export_end_error_message">L\'exportation du compte a échouée. Une erreur inconnue est survenue.</string>
   <string name="account_enter_password">Entrer le mot de passe</string>
   <string name="update_account">Mettre à jour le compte</string>
-  <string name="ring_account">Compte Ring</string>
   <string name="ring_account_identity">Identité</string>
   <string name="account_migration_title_dialog">Migration du compte</string>
   <string name="account_migration_message_dialog">Vos comptes doivent être mis à jour. Désirez-vous vous rendre à la fenêtre de Gestion de compte pour effectuer les modifications?</string>

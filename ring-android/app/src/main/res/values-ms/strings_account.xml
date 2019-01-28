@@ -100,7 +100,6 @@ Anda masih akan dapat mengubah maklumat akaun anda pada masa hadapan</string>
   <string name="account_export_end_error_message">Tidak dapat mengeksport akaun. Kegagalan yang tidak diketahui telah berlaku.</string>
   <string name="account_enter_password">Masukkan kata laluan</string>
   <string name="update_account">Kemaskini akaun</string>
-  <string name="ring_account">Akaun Ring</string>
   <string name="account_migration_title_dialog">Permindahan akaun</string>
   <string name="account_update_needed">Kemaskini diperlukan</string>
   <string name="account_cannot_be_found_title">Akaun tidak ditemui</string>

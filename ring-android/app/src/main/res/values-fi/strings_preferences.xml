@@ -2,6 +2,7 @@
 <resources>
   <string name="pref_category_network">Verkko</string>
   <string name="pref_category_contacts">Yhteystiedot</string>
+  <string name="pref_category_video">Video</string>
   <string name="pref_category_system">Järjestelmä</string>
   <string name="pref_category_privacy">Yksityisyys</string>
   <string name="pref_mobileData_title">Mobiilidata</string>

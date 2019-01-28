@@ -2,6 +2,7 @@
 <resources>
   <string name="pref_category_network">Rete</string>
   <string name="pref_category_contacts">Contatti</string>
+  <string name="pref_category_video">Video</string>
   <string name="pref_category_system">Sistema</string>
   <string name="pref_category_privacy">Privacy</string>
   <string name="pref_mobileData_title">Dati mobili</string>
