@@ -84,7 +84,6 @@ Podrá editar su cuenta más tarde.</string>
   <string name="error_password_char_count">6 carateres mínimo</string>
   <string name="account_export_end_error_title">Error</string>
   <string name="account_enter_password">Ingresar contraseña</string>
-  <string name="ring_account">Cuenta Ring</string>
   <string name="account_cannot_be_found_title">No se pudo encontrar la cuenta</string>
   <string name="account_no_network_title">No se puede conectar a la red</string>
   <string name="account_link_button">Vincular este dispositivo a una cuenta</string>

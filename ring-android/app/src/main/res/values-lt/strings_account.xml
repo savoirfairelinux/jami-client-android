@@ -121,7 +121,6 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_enter_password">Įveskite slaptažodį</string>
   <string name="update_account">Atnaujinti paskyrą</string>
   <string name="account_migration">Jūsų Jami paskyra gali būti atnaujinta.\nĮveskite savo slaptažodį.</string>
-  <string name="ring_account">Ring paskyra</string>
   <string name="ring_account_identity">Tapatybė</string>
   <string name="account_migration_title_dialog">Paskyros perkėlimas</string>
   <string name="account_update_needed">Reikalingas atnaujinimas</string>

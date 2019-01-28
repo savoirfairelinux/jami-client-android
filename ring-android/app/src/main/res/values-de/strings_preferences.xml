@@ -2,6 +2,7 @@
 <resources>
   <string name="pref_category_network">Netzwerk</string>
   <string name="pref_category_contacts">Kontakte</string>
+  <string name="pref_category_video">Video</string>
   <string name="pref_category_system">System</string>
   <string name="pref_category_privacy">Privatsphäre</string>
   <string name="pref_mobileData_title">Mobildaten</string>

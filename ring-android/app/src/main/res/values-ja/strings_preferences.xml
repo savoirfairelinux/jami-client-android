@@ -2,6 +2,7 @@
 <resources>
   <string name="pref_category_network">ネットワーク</string>
   <string name="pref_category_contacts">連絡先</string>
+  <string name="pref_category_video">動画</string>
   <string name="pref_category_system">システム</string>
   <string name="pref_category_privacy">プライバシー</string>
   <string name="pref_mobileData_title">モバイル通信</string>

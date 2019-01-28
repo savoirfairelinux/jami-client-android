@@ -114,7 +114,6 @@
   <string name="account_export_end_error_message">アカウントをエクスポートできませんでした。 不明なエラーが発生しました。</string>
   <string name="account_enter_password">パスワードを入力してください</string>
   <string name="update_account">アカウントの更新</string>
-  <string name="ring_account">Ringアカウント</string>
   <string name="ring_account_identity">ID</string>
   <string name="account_migration_title_dialog">アカウントの移行</string>
   <string name="account_migration_message_dialog">アカウントを更新する必要があります。 アカウント管理画面に移動して、この操作を実行しますか？</string>

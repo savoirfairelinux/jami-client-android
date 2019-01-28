@@ -2,6 +2,7 @@
 <resources>
   <string name="pref_category_network">Rrjet</string>
   <string name="pref_category_contacts">Kontakte</string>
+  <string name="pref_category_video">Video</string>
   <string name="pref_category_system">Sistem</string>
   <string name="pref_category_privacy">Privatësi</string>
   <string name="pref_mobileData_title">Të dhëna celulare</string>

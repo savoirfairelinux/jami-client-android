@@ -2,7 +2,9 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Feedback</string>
+  <string name="report"><u>Sende uns eine E-Mail an</u></string>
   <string name="section_license">Lizenz</string>
+  <string name="sponsor_section">Jami ist freie Software, entwickelt und unterstützt durch</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Beitragen</string>
   <string name="version_section">Version</string>
@@ -10,6 +12,8 @@
   <string name="no_browser_app_installed">Es konnte keine Browser-Anwendung gefunden werden, installieren Sie einen, um die Webseite anzusehen</string>
   <string name="email_chooser_title">E-Mail wird gesendet mit...</string>
   <string name="website_chooser_title">Webseite anzeigen mit...</string>
+  <string name="license">Diese Software wird \"wie sie ist\" ohne Gewährleistung irgendwelcher Art zur Verfügung gestellt. Details finden Sie unter <u>GNU General Public License Version 3 oder höher</u></string>
+  <string name="description">Jami ist eine freie Software für universelle Kommunikation und respektiert die Freiheiten und Privatsphäre der Benutzer.</string>
   <string name="credits">Würdigung</string>
   <!--About dialog-->
   <string name="developed_by">Entwickelt von</string>
@@ -31,6 +35,7 @@
   <string name="menu_item_account">Konto verwalten</string>
   <string name="menu_item_settings">Einstellungen</string>
   <string name="menu_item_share">Meinen Kontakt teilen</string>
+  <string name="menu_item_about">Über Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Nummer wählen</string>
   <!--History Fragment-->
@@ -59,6 +64,7 @@
   <string name="notif_channel_messages">Nachrichten</string>
   <string name="notif_channel_requests">Anfragen</string>
   <string name="notif_channel_file_transfer">Dateitransfer</string>
+  <string name="notif_channel_background_service">Hintergrunddienst</string>
   <string name="notif_mark_as_read">Als gelesen markieren</string>
   <string name="notif_incoming_file_transfer_title">Eingehende Datei von %1$s</string>
   <string name="notif_incoming_file_transfer">Jemand möchte Ihnen eine Datei schicken</string>
@@ -71,8 +77,10 @@
   <string name="ongoing_call">Derzeitiger Anruf</string>
   <string name="hist_in_call">Eingehender Anruf von %1$s</string>
   <string name="hist_out_call">Ausgehender Anruf von %1$s</string>
+  <string name="start_error_title">Jami konnte nicht gestartet werden!</string>
   <string name="action_call_accept">Anruf annehmen</string>
   <string name="action_call_decline">Ablehnen</string>
+  <string name="action_call_mic_mute">Mikrofon stummschalten</string>
   <string name="ab_action_speakerphone">Lautsprecher einschalten</string>
   <string name="ab_action_contact_add">Kontakte hinzufügen</string>
   <string name="hist_contact_added">Kontakt hinzugefügt</string>

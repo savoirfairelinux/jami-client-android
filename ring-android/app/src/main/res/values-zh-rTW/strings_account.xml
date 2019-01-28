@@ -120,12 +120,10 @@
   <string name="account_export_end_error_title">錯誤</string>
   <string name="account_export_end_error_message">無法匯出帳號。遇到未知的錯誤。</string>
   <string name="account_enter_password">輸入密碼</string>
-  <string name="account_share_body">在 Jami 分散式通訊平臺上使用「%1$s」聯絡我：https://ring.cx</string>
-  <string name="account_share_body_with_username">在 Jami 分散式通訊平臺上使用「%1$s」或是我的公開使用者名稱「%2$s」聯絡我：https://ring.cx</string>
   <string name="account_contact_me">在 Jami 上聯絡我！</string>
   <string name="update_account">更新帳號</string>
   <string name="account_migration">您的 Jami 帳號可以更新。\n請輸入您的密碼。</string>
-  <string name="ring_account">Ring 帳號</string>
+  <string name="ring_account">Jami 帳號</string>
   <string name="ring_account_identity">身份</string>
   <string name="account_migration_title_dialog">帳號遷移</string>
   <string name="account_migration_message_dialog">您的帳號需要更新。您想要到帳號管理畫面來執行這個動作嗎？</string>

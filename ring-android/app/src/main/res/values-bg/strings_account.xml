@@ -104,7 +104,6 @@
   <string name="account_export_end_error_message">Акаунтът не може да бъде изнесен. Възникна непозната грешка.</string>
   <string name="account_enter_password">Въведете парола</string>
   <string name="update_account">Обновяване на акаунта</string>
-  <string name="ring_account">Акаунт</string>
   <string name="account_migration_title_dialog">Пренасяне на акаунта</string>
   <string name="account_migration_message_dialog">Акаунтите Ви трябва да бъдат обновени. Искате ли да преминете към екрана за управление на акаунтите, за да направите това?</string>
   <string name="account_update_needed">Нужно е обновяване</string>

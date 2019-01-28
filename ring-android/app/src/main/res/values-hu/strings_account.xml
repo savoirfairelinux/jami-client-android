@@ -109,7 +109,7 @@
   <string name="account_rtp_min_port">Minimum</string>
   <string name="account_rtp_port_range">Hang RTP port korlát</string>
   <!--restore/backup-->
-  <string name="account_new_device_password">Adja meg a fő jelszót a fiók feloldásához</string>
+  <string name="account_new_device_password">Adja meg a főjelszót a fiók feloldásához</string>
   <string name="error_password_char_count">Legalább 6 karakter</string>
   <string name="error_passwords_not_equals">A jelszavak nem egyeznek</string>
   <string name="export_account_wait_title">Kérem várjon…</string>
@@ -120,8 +120,6 @@
   <string name="account_export_end_error_title">Hiba</string>
   <string name="account_export_end_error_message">Fiók exportálása nem sikerült. Ismeretlen hiba történt.</string>
   <string name="account_enter_password">A jelszó megadása</string>
-  <string name="account_share_body">Lépjen kapcsolatba velem „%1$s” a Jami elosztott közlés emelvény használatával: https://jami.net</string>
-  <string name="account_share_body_with_username">Lépjen kapcsolatba velem „%1$s” vagy a nyilvános felhasználónév „%2$s” a Jami elosztott közlés emelvény használatával: https://jami.net</string>
   <string name="account_contact_me">Lépjen kapcsolatba velem a Jami-n!</string>
   <string name="update_account">Fiók frissítése</string>
   <string name="account_migration">Jami fiókja frissíthető.\ nKérjük hogy, adja meg a jelszavát.</string>

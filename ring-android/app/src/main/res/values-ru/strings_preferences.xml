@@ -2,6 +2,7 @@
 <resources>
   <string name="pref_category_network">Сеть</string>
   <string name="pref_category_contacts">Контакты</string>
+  <string name="pref_category_video">Видео</string>
   <string name="pref_category_system">Система</string>
   <string name="pref_category_privacy">Конфиденциальность</string>
   <string name="pref_mobileData_title">Мобильные данные</string>

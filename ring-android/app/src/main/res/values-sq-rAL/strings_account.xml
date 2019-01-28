@@ -120,12 +120,10 @@
   <string name="account_export_end_error_title">Gabim</string>
   <string name="account_export_end_error_message">S\’u eksportua dot llogaria. Ndodhi një gabim i panjohur.</string>
   <string name="account_enter_password">Jepni fjalëkalimin</string>
-  <string name="account_share_body">Lidhuni me mua duke përdorur \'%1$s\' në platformën Jami të komunikimit të shpërndarë: https://ring.cx</string>
-  <string name="account_share_body_with_username">Lidhuni me mua duke përdorur \'%1$s\', ose emrin tim publik si përdorues, \'%2$s\', në platformën Jami të komunikimit të shpërndarë: https://ring.cx</string>
   <string name="account_contact_me">Lidhuni me mua në Jami!</string>
   <string name="update_account">Përditësoje llogarinë</string>
   <string name="account_migration">Llogaria juaj Jami mund të përditësohet.\nJu lutemi, jepni fjalëkalimin tuaj.</string>
-  <string name="ring_account">Llogari Ring</string>
+  <string name="ring_account">Llogari Jami</string>
   <string name="ring_account_identity">Identitet</string>
   <string name="account_migration_title_dialog">Migrim llogarie</string>
   <string name="account_migration_message_dialog">Llogaritë tuaja lypset të përditësohen. Doni të kalohet te skena e administrimit të Llogarive që të kryeni këtë veprim?</string>
@@ -134,7 +132,7 @@
   <string name="account_cannot_be_found_message">S’u gjet dot llogaria në rrjetin Jami. Sigurohuni që qe eksportuar në Jami që prej një pajisjeje ekzistuese, dhe që kredencialet e dhëna për hyrjen janë të sakta.</string>
   <string name="account_sip_cannot_be_registered_message">Mund të vazhdoni me procesin e krijimit të llogarisë ose të përpunoni këtu të dhënat tuaja. Përpunimi është i mundshëm edhe më vonë, që nga rregullimet llogarie.</string>
   <string name="account_no_network_title">S\’lidhet dot te rrjeti</string>
-  <string name="account_no_network_message">S\’u shtua dot llogaria, ngaqë Jami s\’u lidh dot me rrjetin e shpërndarë. Kontrolloni lidhjen e pajisjes tuaj.</string>
+  <string name="account_no_network_message">S’u shtua dot llogaria, ngaqë Jami s’u lidh dot me rrjetin e shpërndarë. Kontrolloni lidhjen e pajisjes tuaj.</string>
   <string name="account_device_added_title">Pajisja e llogarisë u shtua</string>
   <string name="account_device_added_message">E keni rregulluar me sukses llogarinë tuaj Jami në këtë pajisje.</string>
   <string name="account_device_updated_title">Pajisja e llogarisë u përditësua</string>

@@ -115,7 +115,6 @@ Svůj účet můžete upravit později</string>
   <string name="account_export_end_error_message">Nebylo možné účet exportovat. Nastala neznámá chyba.</string>
   <string name="account_enter_password">Zadejte heslo</string>
   <string name="update_account">Aktualizovat účet</string>
-  <string name="ring_account">Účet Ring</string>
   <string name="ring_account_identity">Totožnost</string>
   <string name="account_migration_title_dialog">Převod účtu</string>
   <string name="account_migration_message_dialog">Vaše účty je potřeba aktualizovat. Chcete jít na obrazovku se správou účtů pro provedení této činnosti?</string>

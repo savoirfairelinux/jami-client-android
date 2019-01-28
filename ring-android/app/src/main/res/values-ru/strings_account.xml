@@ -120,12 +120,9 @@
   <string name="account_export_end_error_title">Ошибка</string>
   <string name="account_export_end_error_message">Не удалось экспортировать аккаунт. Произошла неизвестная ошибка.</string>
   <string name="account_enter_password">Введите пароль</string>
-  <string name="account_share_body">Свяжитесь со мной, используя \'%1$s\' в распределенной платформе для общения Jami: https://ring.cx</string>
-  <string name="account_share_body_with_username">Свяжитесь со мной, используя \'%1$s\' или мое публичное имя пользователя \'%2$s\' в распределенной платформе для общения Jami: https://ring.cx</string>
   <string name="account_contact_me">Свяжитесь со мной в Jami!</string>
   <string name="update_account">Обновить аккаунт</string>
   <string name="account_migration">Ваш аккаунт Jami может быть обновлен.\nПожалуйста, введите ваш пароль.</string>
-  <string name="ring_account">Аккаунт Ring</string>
   <string name="ring_account_identity">Идентификатор</string>
   <string name="account_migration_title_dialog">Перенос аккаунта</string>
   <string name="account_migration_message_dialog">Ваш аккаунт требуется обновить. Хотите перейти на экран управления аккаунтом для выполнения этой операции?</string>
@@ -134,7 +131,7 @@
   <string name="account_cannot_be_found_message">Не удалось найти аккаунт в сети Jami.\nУдостоверьтесь, что он был экспортирован в сеть Jami с существующего устройства, и что предоставленные идентификационные данные верны.</string>
   <string name="account_sip_cannot_be_registered_message">Можно продолжить создание учетной записи или изменить информацию здесь. Редактирование будет возможно и позже в настройках аккаунта.</string>
   <string name="account_no_network_title">Не удается подключиться к сети</string>
-  <string name="account_no_network_message">Не удалось добавить аккаунт, потому что Jami не смог подключиться к распределенной сети. Проверьте сетевое соединение вашего устройства.</string>
+  <string name="account_no_network_message">Невозможно добавить аккаунт, так как Jami не смог подключиться к распределённой сети. Проверьте ваше соединение.</string>
   <string name="account_device_added_title">Аккаунт создан</string>
   <string name="account_device_added_message">Вы успешно настроили аккаунт Jami на этом устройстве.</string>
   <string name="account_device_updated_title">Устройство аккаунта обновлено</string>

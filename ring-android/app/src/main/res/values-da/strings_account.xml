@@ -118,7 +118,6 @@ Du kan rette din konto senere</string>
   <string name="account_export_end_error_message">Kunne ikke eksportere kontoen. En ukendt fejl opstod.</string>
   <string name="account_enter_password">Indtast adgangskode</string>
   <string name="update_account">Opdater konto</string>
-  <string name="ring_account">Ring-konto</string>
   <string name="ring_account_identity">Identitet</string>
   <string name="account_migration_title_dialog">Konto-migrering</string>
   <string name="account_migration_message_dialog">Dine konti kræver at blive opdateret. Vil du gå til Konto-indstillingerne for at foretage denne handling?</string>

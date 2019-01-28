@@ -115,7 +115,6 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="account_export_end_error_message">No s\'ha pogut exportar el compte. S\'ha produït un error desconegut.</string>
   <string name="account_enter_password">Introduïu la contrasenya</string>
   <string name="update_account">Actualitza el compte</string>
-  <string name="ring_account">Compte de Ring</string>
   <string name="ring_account_identity">Identitat</string>
   <string name="account_migration_title_dialog">Migració de compte</string>
   <string name="account_migration_message_dialog">El vostre compte necessita actualitzar-se. Voleu anar a la pantalla de gestió de comptes per realitzar aquesta operació?</string>

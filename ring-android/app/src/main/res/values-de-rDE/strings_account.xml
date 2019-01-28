@@ -96,7 +96,6 @@
   <string name="account_export_end_error_message">Das Konto konnte nicht exportiert werden. Ein unbekannter Fehler ist aufgetreten.</string>
   <string name="account_enter_password">Passwort eingeben</string>
   <string name="update_account">Konto aktualisieren</string>
-  <string name="ring_account">Ring-Konto</string>
   <string name="account_link_button">Dieses Gerät mit einem Ring-Konto verknüpfen</string>
   <string name="account_link_prompt_pin">PIN eingeben</string>
   <!--Name registration-->

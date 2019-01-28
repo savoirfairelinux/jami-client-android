@@ -118,7 +118,6 @@ Du kan endre kontoen din senere</string>
   <string name="account_export_end_error_message">Kunne ikke eksportere konto. En ukjent feil inntraff.</string>
   <string name="account_enter_password">Skriv inn passord</string>
   <string name="update_account">Oppdater konto</string>
-  <string name="ring_account">Ring-konto</string>
   <string name="ring_account_identity">Identitet</string>
   <string name="account_migration_title_dialog">Kontoflytting</string>
   <string name="account_migration_message_dialog">Dine kontoer må oppdateres. Ønsker du å gå til kontobehandling for å utføre dette?</string>
