@@ -33,7 +33,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -41,14 +40,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.READ_CALL_LOG" />
-    <uses-permission android:name="android.permission.WRITE_CALL_LOG" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <uses-feature
