@@ -40,6 +40,7 @@ import androidx.core.app.Person;
 import androidx.core.app.RemoteInput;
 import androidx.core.content.res.ResourcesCompat;
 
+import android.text.TextUtils;
 import android.util.SparseArray;
 
 import com.bumptech.glide.Glide;
@@ -71,6 +72,7 @@ import cx.ring.service.DRingService;
 import cx.ring.utils.FileUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.ResourceMapper;
+import cx.ring.utils.Tuple;
 
 public class NotificationServiceImpl implements NotificationService {
 
@@ -261,6 +263,9 @@ public class NotificationServiceImpl implements NotificationService {
         }
         TextMessage last = texts.lastEntry().getValue();
         String contactId = contactUri.getRawUriString();
+        String contactName = contact.getDisplayName();
+        if (TextUtils.isEmpty(contactName))
+            return;
 
         Intent intentConversation = new Intent(DRingService.ACTION_CONV_ACCEPT)
                 .setClass(mContext, DRingService.class)
@@ -278,7 +283,7 @@ public class NotificationServiceImpl implements NotificationService {
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setSmallIcon(R.drawable.ic_ring_logo_white)
-                .setContentTitle(contact.getDisplayName())
+                .setContentTitle(contactName)
                 .setContentText(last.getMessage())
                 .setWhen(last.getDate())
                 .setContentIntent(PendingIntent.getService(mContext, random.nextInt(), intentConversation, 0))
@@ -294,14 +299,17 @@ public class NotificationServiceImpl implements NotificationService {
             messageNotificationBuilder.setStyle(null);
         } else {
             Account account = mAccountService.getAccount(accountId);
+            Tuple<String, Object> profile = account == null ? null : VCardServiceImpl.loadProfile(account);
+            Bitmap myPic = account == null ? null : getContactPicture(account);
             Person userPerson = new Person.Builder()
                     .setKey(accountId)
-                    .setName(account == null ? "You" : account.getDisplayUsername())
+                    .setName(profile == null || TextUtils.isEmpty(profile.first) ? "You" : profile.first)
+                    .setIcon(myPic == null ? null : IconCompat.createWithBitmap(myPic))
                     .build();
 
             Person contactPerson = new Person.Builder()
-                    .setKey(contact.getPrimaryNumber())
-                    .setName(contact.getDisplayName())
+                    .setKey(contactId)
+                    .setName(contactName)
                     .setIcon(IconCompat.createWithBitmap(contactPicture))
                     .build();
 
@@ -656,6 +664,10 @@ public class NotificationServiceImpl implements NotificationService {
     private Bitmap getContactPicture(CallContact contact) {
         int size = (int) (mContext.getResources().getDisplayMetrics().density * AvatarFactory.SIZE_NOTIF);
         return AvatarFactory.getBitmapAvatar(mContext, contact, size).blockingGet();
+    }
+    private Bitmap getContactPicture(Account account) {
+        int size = (int) (mContext.getResources().getDisplayMetrics().density * AvatarFactory.SIZE_NOTIF);
+        return AvatarFactory.getBitmapAvatar(mContext, account, size).blockingGet();
     }
 
     private void setContactPicture(CallContact contact, NotificationCompat.Builder messageNotificationBuilder) {

@@ -24,6 +24,7 @@ import android.graphics.Bitmap;
 
 import java.io.ByteArrayOutputStream;
 
+import cx.ring.model.Account;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.Tuple;
@@ -40,6 +41,15 @@ public class VCardServiceImpl extends VCardService {
 
     public VCardServiceImpl(Context context) {
         this.mContext = context;
+    }
+
+    public static Tuple<String, Object> loadProfile(Account account) {
+        Tuple<String, Object> ret = account.getLoadedProfile();
+        if (ret == null) {
+            ret = VCardServiceImpl.readData(account.getProfile());
+            account.setLoadedProfile(ret);
+        }
+        return ret;
     }
 
     @Override

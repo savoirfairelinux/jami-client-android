@@ -91,10 +91,10 @@ public class AvatarDrawable extends Drawable {
         this(context, (Bitmap)contact.getPhoto(), contact.getProfileName(), contact.getUsername(), contact.getPrimaryNumber(), crop);
     }
     public AvatarDrawable(Context context, Account account, boolean crop) {
-        this(context, VCardServiceImpl.readData(account.getProfile()), account.getRegisteredName(), account.getUri(), crop);
+        this(context, VCardServiceImpl.loadProfile(account), account.getRegisteredName(), account.getUri(), crop);
     }
     public AvatarDrawable(Context context, Account account) {
-        this(context, VCardServiceImpl.readData(account.getProfile()), account.getRegisteredName(), account.getUri(), true);
+        this(context, VCardServiceImpl.loadProfile(account), account.getRegisteredName(), account.getUri(), true);
     }
     public AvatarDrawable(Context context, Tuple<String, Object> data, String registeredName, String uri, boolean crop) {
         this(context, (Bitmap)data.second, data.first, registeredName, uri, crop);

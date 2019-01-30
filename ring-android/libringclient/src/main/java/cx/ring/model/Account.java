@@ -33,6 +33,7 @@ import java.util.Set;
 import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
+import cx.ring.utils.Tuple;
 import ezvcard.VCard;
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
@@ -78,6 +79,7 @@ public class Account {
     private final BehaviorSubject<Collection<TrustRequest>> trustRequestsSubject = BehaviorSubject.create();
     public Subject<Account> historyLoader;
     private VCard mProfile;
+    private Tuple<String, Object> mLoadedProfile;
 
     private final Subject<Boolean> presenceSubject = BehaviorSubject.createDefault(false);
     private final Observable<Account> presenceUpdates = Observable.create((ObservableOnSubscribe<Account>) e -> {})
@@ -802,10 +804,18 @@ public class Account {
 
     public void setProfile(VCard vcard) {
         mProfile = vcard;
+        mLoadedProfile = null;
     }
 
     public VCard getProfile() {
         return mProfile;
+    }
+
+    public Tuple<String, Object> getLoadedProfile() {
+        return mLoadedProfile;
+    }
+    public void setLoadedProfile(Tuple<String, Object> profile) {
+        mLoadedProfile = profile;
     }
 
     private static class ConversationComparator implements Comparator<Conversation> {
