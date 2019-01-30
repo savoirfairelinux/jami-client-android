@@ -38,7 +38,7 @@
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
                     app:layout_collapseMode="parallax"
-                    tools:src="@drawable/banner" />
+                    tools:src="@drawable/jami_banner" />
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -57,7 +57,8 @@
             android:layout_height="match_parent"
             android:nestedScrollingEnabled="true"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:listitem="@layout/item_contact_action"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"

@@ -88,6 +88,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         android:background="?selectableItemBackgroundBorderless"
         android:contentDescription="@string/account_device_revoke"
         android:padding="8dp"
-        app:srcCompat="@drawable/ic_cancel_black_24dp" />
+        app:srcCompat="@drawable/baseline_cancel_24" />
 
 </RelativeLayout>

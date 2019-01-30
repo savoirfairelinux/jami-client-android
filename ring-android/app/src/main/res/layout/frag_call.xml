@@ -53,9 +53,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_margin="12dp"
+                android:visibility="gone"
                 app:cardCornerRadius="16dp"
-                app:cardPreventCornerOverlap="false"
-                android:visibility="gone">
+                app:cardPreventCornerOverlap="false">
 
                 <cx.ring.views.AutoFitTextureView
                     android:id="@+id/preview_surface"
@@ -160,12 +160,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_margin="16dp"
                     android:contentDescription="@string/action_call_decline"
                     android:onClick="@{() -> presenter.refuseClicked()}"
+                    android:tint="@color/white"
                     app:backgroundTint="@color/error_red"
                     app:elevation="6dp"
                     app:fabSize="normal"
                     app:pressedTranslationZ="12dp"
                     app:rippleColor="@android:color/white"
-                    app:srcCompat="@drawable/ic_call_end_white"
+                    app:srcCompat="@drawable/baseline_call_end_24"
                     app:useCompatPadding="true" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -254,12 +255,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_marginBottom="4dp"
                 android:contentDescription="@string/action_call_hangup"
                 android:onClick="@{() -> presenter.hangUpClicked()}"
+                android:tint="@color/white"
                 app:backgroundTint="@color/error_red"
                 app:elevation="6dp"
                 app:fabSize="normal"
                 app:pressedTranslationZ="12dp"
                 app:rippleColor="@android:color/white"
-                app:srcCompat="@drawable/ic_call_end_white"
+                app:srcCompat="@drawable/baseline_call_end_24"
                 app:useCompatPadding="true" />
 
         </RelativeLayout>

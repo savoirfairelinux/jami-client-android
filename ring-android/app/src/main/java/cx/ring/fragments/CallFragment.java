@@ -198,7 +198,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             }
             ArrayList<RemoteAction> actions = new ArrayList<>(1);
             actions.add(new RemoteAction(
-                    Icon.createWithResource(getContext(), R.drawable.ic_call_end_white),
+                    Icon.createWithResource(getContext(), R.drawable.baseline_call_end_24),
                     getString(R.string.action_call_hangup),
                     getString(R.string.action_call_hangup),
                     PendingIntent.getService(getContext(), new Random().nextInt(),

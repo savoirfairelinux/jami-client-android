@@ -190,7 +190,7 @@ public class NotificationServiceImpl implements NotificationService {
             messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_current_call_title, contact.getRingUsername()))
                     .setContentText(mContext.getText(R.string.notif_current_call))
                     .setContentIntent(gotoIntent)
-                    .addAction(R.drawable.ic_call_end_white_24dp, mContext.getText(R.string.action_call_hangup),
+                    .addAction(R.drawable.baseline_call_end_24, mContext.getText(R.string.action_call_hangup),
                             PendingIntent.getService(mContext, random.nextInt(),
                                     new Intent(DRingService.ACTION_CALL_END)
                                             .setClass(mContext, DRingService.class)
@@ -204,7 +204,7 @@ public class NotificationServiceImpl implements NotificationService {
                         .setContentText(mContext.getText(R.string.notif_incoming_call))
                         .setContentIntent(gotoIntent)
                         .setFullScreenIntent(gotoIntent, true)
-                        .addAction(R.drawable.ic_call_end_white_24dp, mContext.getText(R.string.action_call_decline),
+                        .addAction(R.drawable.baseline_call_end_24, mContext.getText(R.string.action_call_decline),
                                 PendingIntent.getService(mContext, random.nextInt(),
                                         new Intent(DRingService.ACTION_CALL_REFUSE)
                                                 .setClass(mContext, DRingService.class)
@@ -221,7 +221,7 @@ public class NotificationServiceImpl implements NotificationService {
                 messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_outgoing_call_title, contact.getRingUsername()))
                         .setContentText(mContext.getText(R.string.notif_outgoing_call))
                         .setContentIntent(gotoIntent)
-                        .addAction(R.drawable.ic_call_end_white_24dp, mContext.getText(R.string.action_call_hangup),
+                        .addAction(R.drawable.baseline_call_end_24, mContext.getText(R.string.action_call_hangup),
                                 PendingIntent.getService(mContext, random.nextInt(),
                                         new Intent(DRingService.ACTION_CALL_END)
                                                 .setClass(mContext, DRingService.class)
@@ -341,7 +341,7 @@ public class NotificationServiceImpl implements NotificationService {
                         intentReply,
                         PendingIntent.FLAG_UPDATE_CURRENT);
 
-        messageNotificationBuilder.addAction(new NotificationCompat.Action.Builder(R.drawable.baseline_reply_black_24, replyLabel, replyPendingIntent)
+        messageNotificationBuilder.addAction(new NotificationCompat.Action.Builder(R.drawable.baseline_reply_24, replyLabel, replyPendingIntent)
                 .setSemanticAction(NotificationCompat.Action.SEMANTIC_ACTION_REPLY)
                 .addRemoteInput(remoteInput)
                 .build());
@@ -384,13 +384,13 @@ public class NotificationServiceImpl implements NotificationService {
             info.putString(TRUST_REQUEST_NOTIFICATION_ACCOUNT_ID, account.getAccountID());
             info.putString(TRUST_REQUEST_NOTIFICATION_FROM, contact.getPrimaryNumber());
             messageNotificationBuilder.setContentText(contact.getRingUsername())
-                    .addAction(R.drawable.ic_action_accept, mContext.getText(R.string.accept),
+                    .addAction(R.drawable.baseline_person_add_24, mContext.getText(R.string.accept),
                             PendingIntent.getService(mContext, random.nextInt(),
                                     new Intent(DRingService.ACTION_TRUST_REQUEST_ACCEPT)
                                             .setClass(mContext, DRingService.class)
                                             .putExtras(info),
                                     PendingIntent.FLAG_ONE_SHOT))
-                    .addAction(R.drawable.ic_delete_white_24dp, mContext.getText(R.string.refuse),
+                    .addAction(R.drawable.baseline_delete_24, mContext.getText(R.string.refuse),
                             PendingIntent.getService(mContext, random.nextInt(),
                                     new Intent(DRingService.ACTION_TRUST_REQUEST_REFUSE)
                                             .setClass(mContext, DRingService.class)
@@ -530,13 +530,13 @@ public class NotificationServiceImpl implements NotificationService {
         messageNotificationBuilder.mActions.clear();
         if (event == DataTransferEventCode.WAIT_HOST_ACCEPTANCE) {
             messageNotificationBuilder
-                    .addAction(R.drawable.ic_call_received_black_24dp, mContext.getText(R.string.accept),
+                    .addAction(R.drawable.baseline_call_received_24, mContext.getText(R.string.accept),
                     PendingIntent.getService(mContext, random.nextInt(),
                             new Intent(DRingService.ACTION_FILE_ACCEPT)
                                     .setClass(mContext, DRingService.class)
                                     .putExtra(DRingService.KEY_TRANSFER_ID, dataTransferId),
                             PendingIntent.FLAG_ONE_SHOT))
-                    .addAction(R.drawable.baseline_cancel_black_24, mContext.getText(R.string.refuse),
+                    .addAction(R.drawable.baseline_cancel_24, mContext.getText(R.string.refuse),
                             PendingIntent.getService(mContext, random.nextInt(),
                                     new Intent(DRingService.ACTION_FILE_CANCEL)
                                             .setClass(mContext, DRingService.class)
@@ -544,7 +544,7 @@ public class NotificationServiceImpl implements NotificationService {
                                     PendingIntent.FLAG_ONE_SHOT));
         } else if (!event.isOver()) {
             messageNotificationBuilder
-                    .addAction(R.drawable.baseline_cancel_black_24, mContext.getText(android.R.string.cancel),
+                    .addAction(R.drawable.baseline_cancel_24, mContext.getText(android.R.string.cancel),
                             PendingIntent.getService(mContext, random.nextInt(),
                                     new Intent(DRingService.ACTION_FILE_CANCEL)
                                             .setClass(mContext, DRingService.class)
@@ -573,7 +573,7 @@ public class NotificationServiceImpl implements NotificationService {
         messageNotificationBuilder.setContentTitle(mContext.getText(R.string.notif_missed_incoming_call))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .setSmallIcon(R.drawable.baseline_call_missed_white_24)
+                .setSmallIcon(R.drawable.baseline_call_missed_24)
                 .setCategory(NotificationCompat.CATEGORY_CALL)
                 .setOnlyAlertOnce(true)
                 .setAutoCancel(true)

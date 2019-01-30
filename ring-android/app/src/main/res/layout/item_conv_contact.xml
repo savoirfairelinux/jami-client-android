@@ -40,7 +40,7 @@ along with this program; if not, write to the Free Software
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:layout_toStartOf="@id/contactDetailsGroup"
-        app:srcCompat="@drawable/baseline_person_black_24" />
+        app:srcCompat="@drawable/baseline_person_24" />
 
     <LinearLayout
         android:id="@+id/contactDetailsGroup"

@@ -110,7 +110,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_centerVertical="true"
                     android:layout_gravity="start"
                     android:contentDescription="@string/pref_pushNotifications_summary"
-                    android:src="@drawable/baseline_notification_important_black_24" />
+                    android:src="@drawable/baseline_notification_important_24" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -481,7 +481,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:contentDescription="@string/pref_persistNotification_summary"
-                        android:src="@drawable/baseline_notification_important_black_24" />
+                        android:src="@drawable/baseline_notification_important_24" />
 
                 </LinearLayout>
 
