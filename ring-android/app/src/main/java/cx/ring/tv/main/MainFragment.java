@@ -257,7 +257,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
 
         Account account = viewModel.getAccount();
         String address = account.getDisplayUsername();
-        Tuple<String, Object> profile = VCardServiceImpl.readData(account.getProfile());
+        Tuple<String, Object> profile = VCardServiceImpl.loadProfile(account);
 
         if (profile.first != null && !profile.first.isEmpty()) {
             titleView.setAlias(profile.first);

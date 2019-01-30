@@ -305,7 +305,7 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
 
     public void updatePhoto(Bitmap image) {
         mSourcePhoto = image;
-        Tuple<String, Object> data = VCardServiceImpl.readData(mSelectedAccount.getProfile());
+        Tuple<String, Object> data = VCardServiceImpl.loadProfile(mSelectedAccount);
         mProfilePhoto.setImageDrawable(new AvatarDrawable(getContext(), image, data.first, mSelectedAccount.getRegisteredName(), mSelectedAccount.getUri(), true));
     }
 

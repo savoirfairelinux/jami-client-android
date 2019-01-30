@@ -71,6 +71,7 @@ import cx.ring.service.DRingService;
 import cx.ring.utils.FileUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.ResourceMapper;
+import cx.ring.utils.Tuple;
 
 public class NotificationServiceImpl implements NotificationService {
 
@@ -294,9 +295,12 @@ public class NotificationServiceImpl implements NotificationService {
             messageNotificationBuilder.setStyle(null);
         } else {
             Account account = mAccountService.getAccount(accountId);
+            Tuple<String, Object> profile = account == null ? null : VCardServiceImpl.loadProfile(account);
+            Bitmap myPic = account == null ? null : getContactPicture(account);
             Person userPerson = new Person.Builder()
                     .setKey(accountId)
-                    .setName(account == null ? "You" : account.getDisplayUsername())
+                    .setName(profile == null ? "You" : profile.first)
+                    .setIcon(myPic == null ? null : IconCompat.createWithBitmap(myPic))
                     .build();
 
             Person contactPerson = new Person.Builder()
@@ -656,6 +660,10 @@ public class NotificationServiceImpl implements NotificationService {
     private Bitmap getContactPicture(CallContact contact) {
         int size = (int) (mContext.getResources().getDisplayMetrics().density * AvatarFactory.SIZE_NOTIF);
         return AvatarFactory.getBitmapAvatar(mContext, contact, size).blockingGet();
+    }
+    private Bitmap getContactPicture(Account account) {
+        int size = (int) (mContext.getResources().getDisplayMetrics().density * AvatarFactory.SIZE_NOTIF);
+        return AvatarFactory.getBitmapAvatar(mContext, account, size).blockingGet();
     }
 
     private void setContactPicture(CallContact contact, NotificationCompat.Builder messageNotificationBuilder) {

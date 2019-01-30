@@ -36,6 +36,7 @@ import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
+import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.views.AvatarDrawable;
 import ezvcard.VCard;
@@ -86,6 +87,12 @@ public class AvatarFactory {
 
     public static Single<Bitmap> getBitmapAvatar(Context context, CallContact contact, int size) {
         return getAvatar(context, contact)
+                .map(d -> drawableToBitmap(d, size))
+                .subscribeOn(Schedulers.computation());
+    }
+
+    public static Single<Bitmap> getBitmapAvatar(Context context, Account account, int size) {
+        return Single.fromCallable(() -> new AvatarDrawable(context, account))
                 .map(d -> drawableToBitmap(d, size))
                 .subscribeOn(Schedulers.computation());
     }
