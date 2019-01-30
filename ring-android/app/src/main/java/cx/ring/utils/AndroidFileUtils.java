@@ -46,6 +46,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import io.reactivex.Single;
@@ -189,7 +190,7 @@ public class AndroidFileUtils {
 
     public static File createImageFile(@NonNull Context context) throws IOException {
         // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
         String imageFileName = "img_" + timeStamp + "_";
 
         // Save a file: path for use with ACTION_VIEW intents
