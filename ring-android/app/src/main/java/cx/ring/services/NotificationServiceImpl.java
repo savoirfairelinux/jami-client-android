@@ -36,6 +36,7 @@ import android.os.Bundle;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.app.Person;
 import androidx.core.app.RemoteInput;
 import androidx.core.content.res.ResourcesCompat;
 
@@ -51,6 +52,7 @@ import java.util.TreeMap;
 
 import javax.inject.Inject;
 
+import androidx.core.graphics.drawable.IconCompat;
 import cx.ring.R;
 import cx.ring.client.HomeActivity;
 import cx.ring.contactrequests.ContactRequestsFragment;
@@ -284,47 +286,70 @@ public class NotificationServiceImpl implements NotificationService {
                 .setAutoCancel(true)
                 .setColor(ResourcesCompat.getColor(mContext.getResources(), R.color.color_primary_dark, null));
 
-        setContactPicture(contact, messageNotificationBuilder);
+        Bitmap contactPicture = getContactPicture(contact);
+        messageNotificationBuilder.setLargeIcon(contactPicture);
 
         if (texts.size() == 1) {
             last.setNotified(true);
             messageNotificationBuilder.setStyle(null);
         } else {
-            NotificationCompat.MessagingStyle history = new NotificationCompat.MessagingStyle(contact.getDisplayName());
+            Account account = mAccountService.getAccount(accountId);
+            Person userPerson = new Person.Builder()
+                    .setKey(accountId)
+                    .setName(account == null ? "You" : account.getDisplayUsername())
+                    .build();
+
+            Person contactPerson = new Person.Builder()
+                    .setKey(contact.getPrimaryNumber())
+                    .setName(contact.getDisplayName())
+                    .setIcon(IconCompat.createWithBitmap(contactPicture))
+                    .build();
+
+            NotificationCompat.MessagingStyle history = new NotificationCompat.MessagingStyle(userPerson);
             for (TextMessage textMessage : texts.values()) {
                 history.addMessage(new NotificationCompat.MessagingStyle.Message(
                         textMessage.getMessage(),
                         textMessage.getDate(),
-                        textMessage.isIncoming() ? contact.getDisplayName() : "You"));
+                        textMessage.isIncoming() ? contactPerson : null));
             }
             messageNotificationBuilder.setStyle(history);
         }
+
+        int notificationId = getTextNotificationId(contactUri);
+        int replyId = notificationId + 1;
+        int markAsReadId = notificationId + 2;
 
         CharSequence replyLabel = mContext.getText(R.string.notif_reply);
         RemoteInput remoteInput = new RemoteInput.Builder(DRingService.KEY_TEXT_REPLY)
                 .setLabel(replyLabel)
                 .build();
+
         Intent intentReply = new Intent(DRingService.ACTION_CONV_REPLY_INLINE)
                 .setClass(mContext, DRingService.class)
                 .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
                 .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
-        PendingIntent replyPendingIntent = PendingIntent.getService(mContext, random.nextInt(),
+
+        PendingIntent replyPendingIntent = PendingIntent.getService(mContext, replyId,
                         intentReply,
                         PendingIntent.FLAG_UPDATE_CURRENT);
-        NotificationCompat.Action action =
-                new NotificationCompat.Action.Builder(R.drawable.baseline_reply_black_24,
-                        replyLabel, replyPendingIntent)
-                        .addRemoteInput(remoteInput)
-                        .build();
-        messageNotificationBuilder.addAction(action);
+
+        messageNotificationBuilder.addAction(new NotificationCompat.Action.Builder(R.drawable.baseline_reply_black_24, replyLabel, replyPendingIntent)
+                .setSemanticAction(NotificationCompat.Action.SEMANTIC_ACTION_REPLY)
+                .addRemoteInput(remoteInput)
+                .build());
 
         Intent intentRead = new Intent(DRingService.ACTION_CONV_READ)
                 .setClass(mContext, DRingService.class)
                 .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
                 .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
-        messageNotificationBuilder.addAction(0, mContext.getString(R.string.notif_mark_as_read), PendingIntent.getService(mContext, Long.valueOf(System.currentTimeMillis()).intValue(), intentRead, 0));
 
-        int notificationId = getTextNotificationId(contactUri);
+        messageNotificationBuilder.addAction(new NotificationCompat.Action.Builder(0,
+                mContext.getString(R.string.notif_mark_as_read),
+                PendingIntent.getService(mContext, markAsReadId, intentRead, 0))
+                .setSemanticAction(NotificationCompat.Action.SEMANTIC_ACTION_MARK_AS_READ)
+                .setShowsUserInterface(false)
+                .build());
+
         notificationManager.notify(notificationId, messageNotificationBuilder.build());
         mNotificationBuilders.put(notificationId, messageNotificationBuilder);
     }
@@ -369,7 +394,6 @@ public class NotificationServiceImpl implements NotificationService {
                                             .setClass(mContext, DRingService.class)
                                             .putExtras(info),
                                     PendingIntent.FLAG_ONE_SHOT));
-
 
             /*List<Photo> photos = contact.vcard == null ? null : contact.vcard.getPhotos();
             byte[] data = null;
@@ -629,8 +653,12 @@ public class NotificationServiceImpl implements NotificationService {
         return (NOTIF_FILE_TRANSFER + dataTransferId).hashCode();
     }
 
-    private void setContactPicture(CallContact contact, NotificationCompat.Builder messageNotificationBuilder) {
+    private Bitmap getContactPicture(CallContact contact) {
         int size = (int) (mContext.getResources().getDisplayMetrics().density * AvatarFactory.SIZE_NOTIF);
-        messageNotificationBuilder.setLargeIcon(AvatarFactory.getBitmapAvatar(mContext, contact, size).blockingGet());
+        return AvatarFactory.getBitmapAvatar(mContext, contact, size).blockingGet();
+    }
+
+    private void setContactPicture(CallContact contact, NotificationCompat.Builder messageNotificationBuilder) {
+        messageNotificationBuilder.setLargeIcon(getContactPicture(contact));
     }
 }
