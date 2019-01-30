@@ -36,6 +36,9 @@ public class OutgoingCallHandler extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        if (intent == null || !Intent.ACTION_NEW_OUTGOING_CALL.equals(intent.getAction()))
+            return;
+
         String phoneNumber = getResultData();
         if (phoneNumber == null)
             phoneNumber = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);
