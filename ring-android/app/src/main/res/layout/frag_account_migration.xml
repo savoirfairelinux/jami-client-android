@@ -54,7 +54,7 @@ along with this program; if not, write to the Free Software
                     android:layout_alignParentTop="true"
                     android:layout_margin="16dp"
                     android:contentDescription="@string/app_name"
-                    app:srcCompat="@drawable/ring_logo_48dp" />
+                    app:srcCompat="@drawable/ic_logo_48" />
 
                 <TextView
                     android:id="@+id/ring_acc_title_txt"
