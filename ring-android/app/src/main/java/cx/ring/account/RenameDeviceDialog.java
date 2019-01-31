@@ -18,9 +18,12 @@
  */
 package cx.ring.account;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
 import com.google.android.material.textfield.TextInputLayout;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import android.view.View;
 import android.view.WindowManager;
@@ -51,14 +54,16 @@ public class RenameDeviceDialog extends DialogFragment {
         mListener = listener;
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_device_rename, null);
+        Activity activity = getActivity();
+        View view = activity.getLayoutInflater().inflate(R.layout.dialog_device_rename, null);
         ButterKnife.bind(this, view);
 
         mDeviceNameTxt.setText(getArguments().getString(DEVICENAME_KEY));
 
-        final AlertDialog dialog = new AlertDialog.Builder(getActivity())
+        final AlertDialog dialog = new AlertDialog.Builder(activity)
                 .setView(view)
                 .setTitle(R.string.rename_device_title)
                 .setMessage(R.string.rename_device_message)
@@ -77,7 +82,13 @@ public class RenameDeviceDialog extends DialogFragment {
         return dialog;
     }
 
-    public boolean checkInput(String input) {
+    @Override
+    public void onDestroy() {
+        mListener = null;
+        super.onDestroy();
+    }
+
+    private boolean checkInput(String input) {
         if (input.isEmpty()) {
             mDeviceNameTxtBox.setErrorEnabled(true);
             mDeviceNameTxtBox.setError(mPromptDeviceName);
@@ -89,7 +100,7 @@ public class RenameDeviceDialog extends DialogFragment {
         return true;
     }
 
-    boolean validate() {
+    private boolean validate() {
         String input = mDeviceNameTxt.getText().toString().trim();
         if (checkInput(input) && mListener != null) {
             mListener.onDeviceRename(input);
