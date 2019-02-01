@@ -22,6 +22,7 @@ package cx.ring.account;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -30,7 +31,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import androidx.annotation.NonNull;
 import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -46,7 +46,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import cx.ring.R;
-import cx.ring.client.HomeActivity;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.Account;
 import cx.ring.mvp.AccountCreationModel;
@@ -54,20 +53,15 @@ import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.views.AvatarDrawable;
-import io.reactivex.Scheduler;
 import io.reactivex.Single;
-import io.reactivex.schedulers.Schedulers;
 
-public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreationPresenter> implements ProfileCreationView, TextWatcher {
+public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreationPresenter> implements ProfileCreationView {
     public static final String TAG = ProfileCreationFragment.class.getSimpleName();
-    public static final String KEY_IS_LINK = "IS_LINK";
 
     public static final int REQUEST_CODE_PHOTO = 1;
     public static final int REQUEST_CODE_GALLERY = 2;
     public static final int REQUEST_PERMISSION_CAMERA = 3;
     public static final int REQUEST_PERMISSION_READ_STORAGE = 4;
-
-    public static final String PHOTO_TAG = "Photo";
 
     @BindView(R.id.profile_photo)
     protected ImageView mPhotoView;
@@ -121,7 +115,7 @@ public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreation
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         switch (requestCode) {
-            case ProfileCreationFragment.REQUEST_CODE_PHOTO:
+            case REQUEST_CODE_PHOTO:
                 if (resultCode == Activity.RESULT_OK) {
                     if (tmpProfilePhotoUri == null) {
                         if (intent != null) {
@@ -136,7 +130,7 @@ public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreation
                     }
                 }
                 break;
-            case ProfileCreationFragment.REQUEST_CODE_GALLERY:
+            case REQUEST_CODE_GALLERY:
                 if (resultCode == Activity.RESULT_OK && intent != null) {
                     presenter.photoUpdated(AndroidFileUtils.loadBitmap(getActivity(), intent.getData()).map(b -> (Object)b));
                 }
@@ -198,15 +192,16 @@ public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreation
     public void goToPhotoCapture() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         try {
-            File file = AndroidFileUtils.createImageFile(getContext());
-            Uri uri = FileProvider.getUriForFile(getContext(), ContentUriHandler.AUTHORITY_FILES, file);
+            Context context = requireContext();
+            File file = AndroidFileUtils.createImageFile(context);
+            Uri uri = FileProvider.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, file);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
             intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             tmpProfilePhotoUri = uri;
         } catch (IOException e) {
             Log.e(TAG, "Can't create temp file", e);
         }
-        startActivityForResult(intent, HomeActivity.REQUEST_CODE_PHOTO);
+        startActivityForResult(intent, REQUEST_CODE_PHOTO);
     }
 
     @Override
@@ -233,16 +228,6 @@ public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreation
         AccountCreationModelImpl model = ((AccountCreationModelImpl) accountCreationModel);
         Account newAccount = model.getNewAccount();
         mPhotoView.setImageDrawable(new AvatarDrawable(getContext(), model.getPhoto(), accountCreationModel.getFullName(), accountCreationModel.getUsername(), newAccount == null ? null : newAccount.getUsername(), true));
-    }
-
-    @Override
-    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-    }
-
-    @Override
-    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
     }
 
     @OnTextChanged(value = R.id.user_name, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
