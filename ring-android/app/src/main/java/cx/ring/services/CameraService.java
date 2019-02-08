@@ -19,12 +19,10 @@
  */
 package cx.ring.services;
 
-import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Point;
 import android.hardware.Camera;
 import android.view.Surface;
-import android.view.SurfaceHolder;
 
 import java.util.HashMap;
 import java.util.Map;
