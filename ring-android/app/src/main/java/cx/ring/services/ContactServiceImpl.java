@@ -199,7 +199,6 @@ public class ContactServiceImpl extends ContactService {
             contactCursor.close();
         }
 
-
         return systemContacts;
     }
 

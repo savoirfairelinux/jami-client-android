@@ -20,6 +20,7 @@
  */
 package cx.ring.services;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
@@ -33,6 +34,7 @@ import cx.ring.model.Uri;
 import cx.ring.utils.StringUtils;
 import ezvcard.VCard;
 import io.reactivex.Completable;
+import io.reactivex.Single;
 
 /**
  * This service handles the contacts
@@ -52,10 +54,6 @@ public abstract class ContactService {
     @Inject
     AccountService mAccountService;
 
-    @Inject
-    @Named("ApplicationExecutor")
-    ExecutorService mApplicationExecutor;
-
     public abstract Map<Long, CallContact> loadContactsFromSystem(boolean loadRingContacts, boolean loadSipContacts);
 
     protected abstract CallContact findContactByIdFromSystem(Long contactId, String contactKey);
@@ -74,12 +72,13 @@ public abstract class ContactService {
      * @param loadRingContacts if true, ring contacts will be taken care of
      * @param loadSipContacts  if true, sip contacts will be taken care of
      */
-    public void loadContacts(final boolean loadRingContacts, final boolean loadSipContacts, final Account account) {
-        mApplicationExecutor.submit(() -> {
+    public Single<Map<Long, CallContact>> loadContacts(final boolean loadRingContacts, final boolean loadSipContacts, final Account account) {
+        return Single.fromCallable(() -> {
             Settings settings = mPreferencesService.getSettings();
             if (settings.isAllowSystemContacts() && mDeviceRuntimeService.hasContactPermission()) {
-                loadContactsFromSystem(loadRingContacts, loadSipContacts);
+                return loadContactsFromSystem(loadRingContacts, loadSipContacts);
             }
+            return new HashMap<>();
         });
     }
 
