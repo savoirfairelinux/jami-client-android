@@ -1227,7 +1227,7 @@ public class AccountService {
                 transfer = new DataTransfer(transferId, info.getDisplayName(),
                         outgoing, info.getTotalSize(),
                         info.getBytesProgress(), info.getPeer(), info.getAccountId());
-                mHistoryService.insertDataTransfer(transfer);
+                mHistoryService.insertDataTransfer(transfer).subscribe(() -> {}, e -> Log.e(TAG, "Error adding data transfer", e));
             }
             mDataTransfers.put(transferId, transfer);
         } else synchronized (transfer) {
@@ -1255,7 +1255,7 @@ public class AccountService {
             }
             transfer.setEventCode(dataEvent);
             transfer.setBytesProgress(info.getBytesProgress());
-            mHistoryService.updateDataTransfer(transfer);
+            mHistoryService.updateDataTransfer(transfer).subscribe();
         }
 
         dataTransferSubject.onNext(transfer);

@@ -251,7 +251,7 @@ public class ConversationFacade {
         String peerId = to.getRawRingId();
         DataTransfer transfer = new DataTransfer(0L, file.getName(), true, file.length(), 0, peerId, account);
         // get generated ID
-        mHistoryService.insertDataTransfer(transfer);
+        mHistoryService.insertDataTransfer(transfer).subscribe(() -> {}, e -> Log.e(TAG, "Error adding data transfer", e));
 
         File dest = mDeviceRuntimeService.getConversationPath(peerId, transfer.getStoragePath());
         if (!FileUtils.moveFile(file, dest)) {
@@ -269,7 +269,8 @@ public class ConversationFacade {
                         mHistoryService.deleteFileHistory(transfer.getId()),
                         Completable.fromAction(file::delete).subscribeOn(Schedulers.io()))
                 .andThen(startConversation(transfer.getAccountId(), transfer.getContactNumber()))
-                .subscribe(c -> c.removeFileTransfer(transfer));
+                .subscribe(c -> c.removeFileTransfer(transfer),
+                        e -> Log.e(TAG, "Can't delete file transfer", e));
     }
 
     private Single<Account> loadConversations(final Account account) {
