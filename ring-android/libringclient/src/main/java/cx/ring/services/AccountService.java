@@ -871,7 +871,9 @@ public class AccountService {
     public void acceptTrustRequest(final String accountId, final Uri from) {
         Log.i(TAG, "acceptRequest() " + accountId + " " + from);
         Account account = getAccount(accountId);
-        account.removeRequest(from);
+        if (account != null) {
+            account.removeRequest(from);
+        }
         mExecutor.execute(() -> Ringservice.acceptTrustRequest(accountId, from.getRawRingId()));
     }
 
@@ -880,7 +882,10 @@ public class AccountService {
      */
     public boolean discardTrustRequest(final String accountId, final Uri contact) {
         Account account = getAccount(accountId);
-        boolean removed = account.removeRequest(contact);
+        boolean removed = false;
+        if (account != null) {
+             removed = account.removeRequest(contact);
+        }
         mExecutor.execute(() -> Ringservice.discardTrustRequest(accountId, contact.getRawRingId()));
         return removed;
     }
