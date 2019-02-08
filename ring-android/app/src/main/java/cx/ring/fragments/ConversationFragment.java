@@ -34,7 +34,6 @@ import android.provider.MediaStore;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -56,8 +55,6 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.OnEditorAction;
@@ -89,8 +86,11 @@ import cx.ring.utils.ActionHelper;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.MediaButtonsHelper;
+import io.reactivex.Completable;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -292,7 +292,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             if (takePictureIntent.resolveActivity(c.getPackageManager()) != null) {
                 // Create the File where the photo should go
-                File photoFile = null;
+                File photoFile;
                 try {
                     photoFile = AndroidFileUtils.createImageFile(c);
                 } catch (IOException ex) {
@@ -322,6 +322,25 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         startActivityForResult(intent, REQUEST_CODE_FILE_PICKER);
     }
 
+    private Completable sendFile(File file) {
+        return Completable.fromAction(() -> presenter.sendFile(file));
+    }
+
+    private Single<File> getCacheFile(android.net.Uri uri) {
+        return Single.fromCallable(() -> AndroidFileUtils.getCacheFile(requireContext(), uri));
+    }
+
+    private void startFileSend(Completable op) {
+        setLoading(true);
+        op.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> setLoading(false))
+                .subscribe(() -> {}, e -> {
+                    Log.e(TAG, "startFileSend: not able to create cache file", e);
+                    displayErrorToast(RingError.INVALID_FILE);
+                });
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
         Log.w(TAG, "onActivityResult: " + requestCode + " " + resultCode + " " + resultData);
@@ -335,17 +354,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             if (uri == null) {
                 return;
             }
-            setLoading(true);
-            new Thread(() -> {
-                try {
-                    File cacheFile = AndroidFileUtils.getCacheFile(getContext(), uri);
-                    presenter.sendFile(cacheFile);
-                } catch (IOException e) {
-                    Log.e(TAG, "onActivityResult: not able to create cache file");
-                    getActivity().runOnUiThread(() -> displayErrorToast(RingError.INVALID_FILE));
-                }
-                getActivity().runOnUiThread(() -> setLoading(false));
-            }).start();
+            startFileSend(getCacheFile(uri).flatMapCompletable(this::sendFile));
         } else if (requestCode == REQUEST_CODE_TAKE_PICTURE) {
             if (resultCode != RESULT_OK) {
                 mCurrentPhoto = null;
@@ -355,13 +364,9 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             if (mCurrentPhoto == null || !mCurrentPhoto.exists() || mCurrentPhoto.length() == 0) {
                 Toast.makeText(getActivity(), "Can't find picture", Toast.LENGTH_SHORT).show();
             }
-            setLoading(true);
-            new Thread(() -> {
-                File file = mCurrentPhoto;
-                mCurrentPhoto = null;
-                presenter.sendFile(file);
-                getActivity().runOnUiThread(() -> setLoading(false));
-            }).start();
+            File file = mCurrentPhoto;
+            mCurrentPhoto = null;
+            startFileSend(sendFile(file));
         }
     }
 
@@ -444,7 +449,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     @OnEditorAction(R.id.msg_input_txt)
-    public boolean actionSendMsgText(int actionId) {
+    boolean actionSendMsgText(int actionId) {
         switch (actionId) {
             case EditorInfo.IME_ACTION_SEND:
                 sendMessageText();
@@ -515,7 +520,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         mAdapter = new ConversationAdapter(this, presenter);
         presenter.init(contactUri, accountId);
         try {
-            mPreferences = getActivity().getSharedPreferences(accountId + "_" + contactUri.getRawRingId(), Context.MODE_PRIVATE);
+            mPreferences = requireActivity().getSharedPreferences(accountId + "_" + contactUri.getRawRingId(), Context.MODE_PRIVATE);
             mPreferences.registerOnSharedPreferenceChangeListener(this);
             presenter.setConversationColor(mPreferences.getInt(KEY_PREFERENCE_CONVERSATION_COLOR, getResources().getColor(R.color.color_primary_light)));
         } catch (Exception e) {
@@ -534,7 +539,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
 
     @Override
     public void displayContact(final CallContact contact) {
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
         if (actionBar == null) {
             return;
         }
@@ -599,20 +604,20 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     @Override
     public void goToCallActivity(String conferenceId) {
         startActivity(new Intent(Intent.ACTION_VIEW)
-                .setClass(getActivity().getApplicationContext(), CallActivity.class)
+                .setClass(requireActivity().getApplicationContext(), CallActivity.class)
                 .putExtra(NotificationService.KEY_CALL_ID, conferenceId));
     }
 
     @Override
     public void goToContactActivity(String accountId, String contactRingId) {
         startActivity(new Intent(Intent.ACTION_VIEW, android.net.Uri.withAppendedPath(android.net.Uri.withAppendedPath(ContentUriHandler.CONTACT_CONTENT_URI, accountId), contactRingId))
-                .setClass(getActivity().getApplicationContext(), ContactDetailsActivity.class));
+                .setClass(requireActivity().getApplicationContext(), ContactDetailsActivity.class));
     }
 
     @Override
     public void goToCallActivityWithResult(String accountId, String contactRingId, boolean audioOnly) {
         Intent intent = new Intent(CallActivity.ACTION_CALL)
-                .setClass(getActivity().getApplicationContext(), CallActivity.class)
+                .setClass(requireActivity().getApplicationContext(), CallActivity.class)
                 .putExtra(KEY_ACCOUNT_ID, accountId)
                 .putExtra(CallFragment.KEY_AUDIO_ONLY, audioOnly)
                 .putExtra(KEY_CONTACT_RING_ID, contactRingId);
@@ -652,7 +657,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         binding.trustRequestPrompt.setVisibility(View.GONE);
         binding.tvTrustRequestMessage.setText(String.format(getString(R.string.message_contact_not_trusted), contactDisplayName));
         binding.trustRequestMessageLayout.setVisibility(View.VISIBLE);
-        getActivity().invalidateOptionsMenu();
+        requireActivity().invalidateOptionsMenu();
     }
 
     @Override
@@ -662,7 +667,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         binding.trustRequestPrompt.setVisibility(View.VISIBLE);
         binding.tvTrustRequestMessage.setText(String.format(getString(R.string.message_contact_not_trusted_yet), contactDisplayName));
         binding.trustRequestMessageLayout.setVisibility(View.VISIBLE);
-        getActivity().invalidateOptionsMenu();
+        requireActivity().invalidateOptionsMenu();
     }
 
     @Override
@@ -671,7 +676,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         binding.unknownContactPrompt.setVisibility(View.GONE);
         binding.trustRequestPrompt.setVisibility(View.GONE);
         binding.trustRequestMessageLayout.setVisibility(View.GONE);
-        getActivity().invalidateOptionsMenu();
+        requireActivity().invalidateOptionsMenu();
     }
 
     @Override
@@ -705,7 +710,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
 
     @Override
     public void displayCompletedDownload(DataTransfer transfer, File destination) {
-        DownloadManager downloadManager = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+        DownloadManager downloadManager = (DownloadManager) requireContext().getSystemService(Context.DOWNLOAD_SERVICE);
         if (downloadManager != null) {
             downloadManager.addCompletedDownload(transfer.getDisplayName(),
                     transfer.getDisplayName(),
@@ -732,24 +737,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
                 uri = clip.getItemAt(0).getUri();
             if (uri == null)
                 return;
-            final android.net.Uri shareUri = uri;
-            setLoading(true);
-            new Thread(() -> {
-                Context c = getContext();
-                if (c == null)
-                    return;
-                Activity a = null;
-                try {
-                    presenter.sendFile(AndroidFileUtils.getCacheFile(c, shareUri));
-                    a = getActivity();
-                } catch (Exception e) {
-                    Log.e(TAG, "onActivityResult: not able to create cache file");
-                    if (a != null)
-                        a.runOnUiThread(() -> displayErrorToast(RingError.INVALID_FILE));
-                }
-                if (a != null)
-                    a.runOnUiThread(() -> setLoading(false));
-            }).start();
+            startFileSend(getCacheFile(uri).flatMapCompletable(this::sendFile));
         }
     }
 }
