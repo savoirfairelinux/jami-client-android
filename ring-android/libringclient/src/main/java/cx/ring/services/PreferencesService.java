@@ -38,7 +38,7 @@ public abstract class PreferencesService {
     DeviceRuntimeService mDeviceService;
 
     private Settings mUserSettings;
-    private Subject<Settings> mSettingsSubject = BehaviorSubject.create();
+    private final Subject<Settings> mSettingsSubject = BehaviorSubject.create();
 
     protected abstract Settings loadSettings();
     protected abstract void saveSettings(Settings settings);
@@ -54,7 +54,7 @@ public abstract class PreferencesService {
     public void setSettings(Settings settings) {
         saveSettings(settings);
         boolean allowPush = settings.isAllowPushNotifications();
-        if (mUserSettings.isAllowPushNotifications() != allowPush) {
+        if (mUserSettings == null || mUserSettings.isAllowPushNotifications() != allowPush) {
             mAccountService.setPushNotificationToken(allowPush ? mDeviceService.getPushToken() : "");
             mAccountService.setProxyEnabled(allowPush);
         }
