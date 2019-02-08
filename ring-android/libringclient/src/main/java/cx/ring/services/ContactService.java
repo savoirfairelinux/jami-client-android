@@ -20,7 +20,6 @@
  */
 package cx.ring.services;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
@@ -31,9 +30,9 @@ import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Settings;
 import cx.ring.model.Uri;
-import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
 import ezvcard.VCard;
+import io.reactivex.Completable;
 
 /**
  * This service handles the contacts
@@ -57,21 +56,17 @@ public abstract class ContactService {
     @Named("ApplicationExecutor")
     ExecutorService mApplicationExecutor;
 
-    private Map<Long, CallContact> mContactList = new HashMap<>();
-
     public abstract Map<Long, CallContact> loadContactsFromSystem(boolean loadRingContacts, boolean loadSipContacts);
 
     protected abstract CallContact findContactByIdFromSystem(Long contactId, String contactKey);
     protected abstract CallContact findContactBySipNumberFromSystem(String number);
     protected abstract CallContact findContactByNumberFromSystem(String number);
 
-    public abstract void loadContactData(CallContact callContact);
+    public abstract Completable loadContactData(CallContact callContact);
 
     public abstract void saveVCardContactData(CallContact contact, VCard vcard);
-    public abstract void loadVCardContactData(CallContact contact);
 
-    public ContactService() {
-    }
+    public ContactService() {}
 
     /**
      * Load contacts from system and generate a local contact cache
@@ -83,7 +78,7 @@ public abstract class ContactService {
         mApplicationExecutor.submit(() -> {
             Settings settings = mPreferencesService.getSettings();
             if (settings.isAllowSystemContacts() && mDeviceRuntimeService.hasContactPermission()) {
-                mContactList = loadContactsFromSystem(loadRingContacts, loadSipContacts);
+                loadContactsFromSystem(loadRingContacts, loadSipContacts);
             }
         });
     }

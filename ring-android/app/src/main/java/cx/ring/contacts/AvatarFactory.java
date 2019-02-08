@@ -92,7 +92,7 @@ public class AvatarFactory {
     }
 
     public static Single<Bitmap> getBitmapAvatar(Context context, Account account, int size) {
-        return Single.fromCallable(() -> new AvatarDrawable(context, account))
+        return AvatarDrawable.load(context, account)
                 .map(d -> drawableToBitmap(d, size))
                 .subscribeOn(Schedulers.computation());
     }
