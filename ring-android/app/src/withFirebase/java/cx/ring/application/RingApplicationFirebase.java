@@ -33,17 +33,22 @@ public class RingApplicationFirebase extends RingApplication {
 
     @Override
     public void onCreate() {
-        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(c -> {
-            Log.w(TAG, "Found push token");
-            try {
-                pushToken = c.getResult().getToken();
-                startService(new Intent(DRingService.ACTION_PUSH_TOKEN_CHANGED)
-                        .setClass(this, DRingService.class)
-                        .putExtra(DRingService.PUSH_TOKEN_FIELD_TOKEN, pushToken));
-            } catch (Exception e) {
-                Log.e(TAG, "Can't start service", e);
-            }
-        });
+        try {
+            FirebaseApp.initializeApp(this);
+            FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(c -> {
+                Log.w(TAG, "Found push token");
+                try {
+                    pushToken = c.getResult().getToken();
+                    startService(new Intent(DRingService.ACTION_PUSH_TOKEN_CHANGED)
+                            .setClass(this, DRingService.class)
+                            .putExtra(DRingService.PUSH_TOKEN_FIELD_TOKEN, pushToken));
+                } catch (Exception e) {
+                    Log.e(TAG, "Can't start service", e);
+                }
+            });
+        } catch (Exception e) {
+            Log.e(TAG, "Can't start service", e);
+        }
         super.onCreate();
     }
 
