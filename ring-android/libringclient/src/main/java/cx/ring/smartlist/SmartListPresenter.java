@@ -39,7 +39,6 @@ import cx.ring.services.ContactService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.PreferencesService;
-import cx.ring.services.PresenceService;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
 import io.reactivex.Observable;
@@ -230,7 +229,11 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
     }
 
     public void startConversation(Uri uri) {
-        getView().goToConversation(mAccount.getAccountID(), uri);
+        mCompositeDisposable.add(mConversationFacade.getCurrentAccountSubject()
+                .firstElement()
+                .observeOn(mUiScheduler)
+                .subscribe(account -> getView().goToConversation(mAccount.getAccountID(), uri),
+                        error -> Log.e(TAG, "Can't start conversation", error)));
     }
 
     public void copyNumber(SmartListViewModel smartListViewModel) {
