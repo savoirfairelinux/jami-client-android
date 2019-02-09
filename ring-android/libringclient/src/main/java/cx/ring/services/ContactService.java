@@ -22,19 +22,21 @@ package cx.ring.services;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Settings;
 import cx.ring.model.Uri;
+import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
 import ezvcard.VCard;
 import io.reactivex.Completable;
+import io.reactivex.Observable;
 import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * This service handles the contacts
@@ -80,6 +82,33 @@ public abstract class ContactService {
             }
             return new HashMap<>();
         });
+    }
+
+    public Observable<CallContact> observeContact(String accountId, CallContact contact) {
+        Uri uri = contact.getPrimaryUri();
+        String uriString = uri.getRawUriString();
+        Log.e(TAG, "observeContact: " + uriString);
+        synchronized (contact) {
+            if (contact.getUpdates() == null) {
+                contact.setUpdates(contact.getUpdatesSubject()
+                        .doOnSubscribe(d -> {
+                            Log.e(TAG, "doOnSubscribe: " + uriString);
+                            mAccountService.subscribeBuddy(accountId, uriString, true);
+                            mAccountService.lookupAddress(accountId, "", uri.getRawRingId());
+                            loadContactData(contact)
+                                    .subscribeOn(Schedulers.io())
+                                    .subscribe(() -> {}, e -> Log.e(TAG, "Error loading contact data: " + e.getMessage()));
+                        })
+                        .doOnDispose(() -> {
+                            Log.e(TAG, "doOnDispose: " + uriString);
+                            mAccountService.subscribeBuddy(accountId, uriString, false);
+                        })
+                        .debounce(1000, TimeUnit.MILLISECONDS)
+                        .replay(1)
+                        .refCount());
+            }
+            return contact.getUpdates();
+        }
     }
 
     /**
