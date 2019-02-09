@@ -121,7 +121,8 @@ public class ConversationFacade {
                                 if (enabled) {
                                     mPresenceService.subscribeBuddy(a.getAccountID(), id.getRawUriString(), true);
                                     if (contact.subscribe()) {
-                                        mContactService.loadContactData(conversation.getContact());
+                                        mContactService.loadContactData(contact)
+                                                .subscribe(() -> {}, e -> Log.e(TAG, "Error loading contact data", e));
                                         mAccountService.lookupAddress(a.getAccountID(), "", id.getRawRingId());
                                     }
                                 } else {
