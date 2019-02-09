@@ -41,7 +41,7 @@ public class HomeActivity extends FragmentActivity {
     @Override
     public void onBackPressed() {
         if (GuidedStepSupportFragment.getCurrentGuidedStepSupportFragment(getSupportFragmentManager()) != null) {
-            getFragmentManager().popBackStack();
+            getSupportFragmentManager().popBackStack();
         } else {
             super.onBackPressed();
         }
