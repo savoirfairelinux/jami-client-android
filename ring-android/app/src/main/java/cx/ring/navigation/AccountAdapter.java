@@ -21,9 +21,10 @@ package cx.ring.navigation;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,19 +32,17 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
-import cx.ring.contacts.AvatarFactory;
 import cx.ring.model.Account;
-import cx.ring.utils.VCardUtils;
 import cx.ring.views.AvatarDrawable;
-import ezvcard.VCard;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_ACCOUNT = 0;
@@ -72,7 +71,7 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public void replace(Account account) {
-        for (int i = 0; i<mDataset.size(); i++) {
+        for (int i = 0; i < mDataset.size(); i++) {
             Account a = mDataset.get(i);
             if (a == account) {
                 notifyItemChanged(i);
@@ -169,6 +168,8 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         @BindView(R.id.loading_indicator)
         ProgressBar loading;
 
+        private final CompositeDisposable mDisposable = new CompositeDisposable();
+
         AccountView(View view) {
             super(view);
             ButterKnife.bind(this, view);
@@ -184,7 +185,11 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public void update(final Account account) {
             final Context context = itemView.getContext();
-            photo.setImageDrawable(new AvatarDrawable(context, account));
+            mDisposable.clear();
+            mDisposable.add(AvatarDrawable.load(context, account)
+                    .subscribeOn(Schedulers.computation())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(avatar -> photo.setImageDrawable(avatar)));
 
             alias.setText(mRingNavigationPresenter.getAccountAlias(account));
             host.setText(mRingNavigationPresenter.getUri(account, context.getText(R.string.account_type_ip2ip)));
