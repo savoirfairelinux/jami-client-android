@@ -68,6 +68,7 @@ import cx.ring.views.AvatarDrawable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPresenter> implements NavigationAdapter.OnNavigationItemClicked,
         AccountAdapter.OnAccountActionClicked, RingNavigationView {
@@ -292,7 +293,10 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
             return;
         }
 
-        mUserImage.setImageDrawable(new AvatarDrawable(getActivity(), account));
+        mDisposableBag.add(AvatarDrawable.load(getActivity(), account)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(avatar -> mUserImage.setImageDrawable(avatar)));
     }
 
     public void updatePhoto(Uri uriImage) {
@@ -303,8 +307,11 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
 
     public void updatePhoto(Bitmap image) {
         mSourcePhoto = image;
-        Tuple<String, Object> data = VCardServiceImpl.loadProfile(mSelectedAccount);
-        mProfilePhoto.setImageDrawable(new AvatarDrawable(getContext(), image, data.first, mSelectedAccount.getRegisteredName(), mSelectedAccount.getUri(), true));
+        mDisposableBag.add(VCardServiceImpl.loadProfile(mSelectedAccount)
+                .map(profile -> new AvatarDrawable(getContext(), image, profile.first, mSelectedAccount.getRegisteredName(), mSelectedAccount.getUri(), true))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(avatar -> mProfilePhoto.setImageDrawable(avatar)));
     }
 
     @OnClick(R.id.addaccount_btn)
@@ -345,7 +352,8 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
         final EditText editText = view.findViewById(R.id.user_name);
         editText.setText(presenter.getAlias(mSelectedAccount));
         mProfilePhoto = view.findViewById(R.id.profile_photo);
-        mProfilePhoto.setImageDrawable(new AvatarDrawable(inflater.getContext(), mSelectedAccount));
+        mDisposableBag.add(AvatarDrawable.load(inflater.getContext(), mSelectedAccount)
+                .subscribe(a -> mProfilePhoto.setImageDrawable(a)));
 
         ImageButton cameraView = view.findViewById(R.id.camera);
         cameraView.setOnClickListener(v -> presenter.cameraClicked());
