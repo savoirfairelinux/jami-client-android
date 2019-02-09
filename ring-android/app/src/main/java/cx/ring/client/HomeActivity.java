@@ -19,10 +19,8 @@
  */
 package cx.ring.client;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -146,9 +144,10 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         RingApplication.getInstance().startDaemon();
 
         mToolbarSize = getResources().getDimension(R.dimen.abc_action_bar_default_height_material);
+        FragmentManager fragmentManager = getSupportFragmentManager();
 
         if (savedInstanceState != null) {
-            fNavigation = (RingNavigationFragment) getSupportFragmentManager().findFragmentByTag(NAVIGATION_TAG);
+            fNavigation = (RingNavigationFragment) fragmentManager.findFragmentByTag(NAVIGATION_TAG);
         }
         setContentView(R.layout.activity_home);
 
@@ -196,7 +195,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
 
         if (fNavigation == null && savedInstanceState == null) {
             fNavigation = new RingNavigationFragment();
-            getSupportFragmentManager().beginTransaction()
+            fragmentManager.beginTransaction()
                     .replace(R.id.navigation_container, fNavigation, NAVIGATION_TAG)
                     .commit();
         }
@@ -216,7 +215,6 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
 
         setVideoEnabledFromPermission();
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
         fContent = fragmentManager.findFragmentById(R.id.main_frame);
         if (fNavigation != null) {
             onNavigationViewReady();
@@ -276,7 +274,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
             return;
         }
 
-        if (!getFragmentManager().findFragmentByTag(HOME_TAG).isVisible()) {
+        if (!getSupportFragmentManager().findFragmentByTag(HOME_TAG).isVisible()) {
             fNavigation.selectSection(RingNavigationFragment.Section.HOME);
             onNavigationSectionSelected(RingNavigationFragment.Section.HOME);
         }
@@ -408,7 +406,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
             mNavigationDrawer.closeDrawer(GravityCompat.START);
             return;
         }
-        if (getFragmentManager().getBackStackEntryCount() > 1) {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
             popCustomBackStack();
             fNavigation.selectSection(RingNavigationFragment.Section.HOME);
             return;
@@ -420,7 +418,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
     private void popCustomBackStack() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentManager.BackStackEntry entry = fragmentManager.getBackStackEntryAt(0);
-        fContent = fragmentManager.findFragmentByTag(entry.getName());
+        fContent = fragmentManager.findFragmentById(entry.getId());
         for (int i = 0; i < fragmentManager.getBackStackEntryCount() - 1; ++i) {
             fragmentManager.popBackStack();
         }
@@ -449,12 +447,12 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
                     break;
                 }
                 FragmentManager manager = getSupportFragmentManager();
-                if (getFragmentManager().getBackStackEntryCount() == 1) {
+                if (manager.getBackStackEntryCount() == 1) {
                     break;
                 }
 
                 popCustomBackStack();
-                fContent = getSupportFragmentManager().findFragmentByTag(HOME_TAG);
+                fContent = manager.findFragmentByTag(HOME_TAG);
                 break;
             case CONTACT_REQUESTS:
                 Bundle bundle = new Bundle();
