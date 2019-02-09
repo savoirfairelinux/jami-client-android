@@ -307,7 +307,7 @@ public class NotificationServiceImpl implements NotificationService {
             unreadConvBuilder.addMessage(last.getMessage());
         } else {
             Account account = mAccountService.getAccount(accountId);
-            Tuple<String, Object> profile = account == null ? null : VCardServiceImpl.loadProfile(account);
+            Tuple<String, Object> profile = account == null ? null : VCardServiceImpl.loadProfile(account).blockingGet();
             Bitmap myPic = account == null ? null : getContactPicture(account);
             Person userPerson = new Person.Builder()
                     .setKey(accountId)
