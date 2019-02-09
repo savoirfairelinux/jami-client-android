@@ -257,21 +257,25 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
 
         Account account = viewModel.getAccount();
         String address = account.getDisplayUsername();
-        Tuple<String, Object> profile = VCardServiceImpl.loadProfile(account);
-
-        if (profile.first != null && !profile.first.isEmpty()) {
-            titleView.setAlias(profile.first);
-            if (address != null) {
-                setTitle(address);
-            } else {
-                setTitle("");
-            }
-        } else {
-            titleView.setAlias(address);
-        }
-
-        titleView.getLogoView().setVisibility(View.VISIBLE);
-        titleView.getLogoView().setImageDrawable(new AvatarDrawable(getActivity(), account));
+        VCardServiceImpl
+                .loadProfile(account)
+                .doOnSuccess(profile -> {
+                    if (profile.first != null && !profile.first.isEmpty()) {
+                        titleView.setAlias(profile.first);
+                        if (address != null) {
+                            setTitle(address);
+                        } else {
+                            setTitle("");
+                        }
+                    } else {
+                        titleView.setAlias(address);
+                    }
+                })
+                .flatMap(p -> AvatarDrawable.load(getActivity(), account))
+                .subscribe(a -> {
+                    titleView.getLogoView().setVisibility(View.VISIBLE);
+                    titleView.getLogoView().setImageDrawable(a);
+                });
     }
 
     @Override

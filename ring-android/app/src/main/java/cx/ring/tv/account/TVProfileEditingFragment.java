@@ -49,6 +49,8 @@ import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigationPresenter>
         implements RingNavigationView {
@@ -184,9 +186,14 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
         else
             getGuidanceStylist().getTitleView().setText(alias);
 
-        AvatarDrawable avatar = new AvatarDrawable(getContext(), account, true);
-        avatar.setInSize(iconSize);
-        getGuidanceStylist().getIconView().setImageDrawable(avatar);
+        AvatarDrawable.load(getContext(), account)
+                .map(avatar -> {
+                    avatar.setInSize(iconSize);
+                    return avatar;
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(avatar -> getGuidanceStylist().getIconView().setImageDrawable(avatar));
     }
 
     @Override
