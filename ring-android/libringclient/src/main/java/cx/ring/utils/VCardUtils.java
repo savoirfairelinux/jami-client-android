@@ -136,22 +136,15 @@ public final class VCardUtils {
 
     public static Single<VCard> loadLocalProfileFromDisk(File filesDir, String accountId) {
         return Single.fromCallable(() -> {
-            VCard vcard = null;
             String path = localProfilePath(filesDir);
             if (!"".equals(path)) {
                 File vcardPath = new File(path + File.separator + accountId + ".vcf");
                 if (vcardPath.exists()) {
-                    vcard = loadFromDisk(vcardPath.getAbsolutePath());
+                    return loadFromDisk(vcardPath.getAbsolutePath());
                 }
             }
-
-            if (vcard == null) {
-                Log.d(TAG, "load default profile");
-                vcard = setupDefaultProfile(filesDir, accountId);
-            }
-
-            return vcard;
-        });
+            return null;
+        }).onErrorReturn(e -> setupDefaultProfile(filesDir, accountId));
     }
 
     /**
