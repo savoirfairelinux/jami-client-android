@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="pref_category_network">Сеть</string>
   <string name="pref_category_contacts">Контакты</string>
@@ -20,4 +20,6 @@
   <string name="pref_clearHistory_summary">Очистить всю историю разговоров. Это действие нельзя отменить.</string>
   <string name="pref_persistNotification_title">Работа в фоновом режиме</string>
   <string name="pref_persistNotification_summary">Разрешить работу в фоновом режиме для принятия звонков и сообщений.</string>
+    <string name="pref_hwEncode_title">Включить аппаратное кодирование</string>
+    <string name="pref_hwEncode_summary">Экспериментальная опция</string>
 </resources>

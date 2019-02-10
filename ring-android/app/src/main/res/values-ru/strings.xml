@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!--About-->
   <string name="feedback_section">Обратная связь</string>
@@ -211,4 +211,7 @@
   <string name="menu_file_download">Загрузить файл</string>
   <string name="menu_file_delete">Удалить файл</string>
   <string name="menu_file_share">Поделиться файлом</string>
+    <string name="block_contact_dialog_title">Заблокировать %1$s\?</string>
+    <string name="block_contact_dialog_message">%1$s не сможет контактировать с вами пока вы не разблокируете его.</string>
+    <string name="block_contact_completed">%1$s был заблокирован.</string>
 </resources>
