@@ -94,7 +94,8 @@ public abstract class ContactService {
                         .doOnSubscribe(d -> {
                             Log.e(TAG, "doOnSubscribe: " + uriString);
                             mAccountService.subscribeBuddy(accountId, uriString, true);
-                            mAccountService.lookupAddress(accountId, "", uri.getRawRingId());
+                            if (!contact.isUsernameLoaded())
+                                mAccountService.lookupAddress(accountId, "", uri.getRawRingId());
                             loadContactData(contact)
                                     .subscribeOn(Schedulers.io())
                                     .subscribe(() -> {}, e -> Log.e(TAG, "Error loading contact data: " + e.getMessage()));
@@ -109,6 +110,12 @@ public abstract class ContactService {
             }
             return contact.getUpdates();
         }
+    }
+
+    public Single<CallContact> getLoadedContact(String accountId, CallContact contact) {
+        return observeContact(accountId, contact)
+                .filter(c -> c.isUsernameLoaded() && c.detailsLoaded)
+                .firstOrError();
     }
 
     /**
