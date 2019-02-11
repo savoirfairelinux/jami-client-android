@@ -104,7 +104,7 @@ public abstract class ContactService {
                             Log.e(TAG, "doOnDispose: " + uriString);
                             mAccountService.subscribeBuddy(accountId, uriString, false);
                         })
-                        .debounce(1000, TimeUnit.MILLISECONDS)
+                        .debounce(250, TimeUnit.MILLISECONDS)
                         .replay(1)
                         .refCount());
             }
