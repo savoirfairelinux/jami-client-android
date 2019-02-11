@@ -42,6 +42,8 @@ import cx.ring.model.Uri;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
 import io.reactivex.Completable;
+import io.reactivex.Maybe;
+import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.annotations.NonNull;
@@ -123,6 +125,45 @@ public abstract class HistoryService {
             queryBuilder.orderBy(DataTransfer.COLUMN_TIMESTAMP_NAME, false);
             return (List<ConversationElement>)(List<?>)getDataHistoryDao().query(queryBuilder.prepare());
         });
+    }
+
+    private Maybe<DataTransfer> getLastTransfer(final String accountId, String contact) {
+        return Maybe.fromCallable(() -> {
+            QueryBuilder<DataTransfer, Long> queryBuilder = getDataHistoryDao().queryBuilder();
+            queryBuilder.where().eq(DataTransfer.COLUMN_ACCOUNT_ID_NAME, accountId);
+            queryBuilder.where().eq(DataTransfer.COLUMN_PEER_ID_NAME, contact);
+            queryBuilder.orderBy(DataTransfer.COLUMN_TIMESTAMP_NAME, false);
+            queryBuilder.limit(1L);
+            return getDataHistoryDao().queryForFirst(queryBuilder.prepare());
+        });
+    }
+    private Maybe<TextMessage> getLastMessage(final String accountId, String contact) {
+        return Maybe.fromCallable(() -> {
+            QueryBuilder<HistoryText, Long> queryBuilder = getTextHistoryDao().queryBuilder();
+            queryBuilder.where().eq(HistoryText.COLUMN_ACCOUNT_ID_NAME, accountId);
+            queryBuilder.where().eq(HistoryText.COLUMN_NUMBER_NAME, contact);
+            queryBuilder.orderBy(HistoryText.COLUMN_TIMESTAMP_NAME, false);
+            queryBuilder.limit(1L);
+            return new TextMessage(getTextHistoryDao().queryForFirst(queryBuilder.prepare()));
+        });
+    }
+    private Maybe<HistoryCall> getLastCall(final String accountId, String contact) {
+        return Maybe.fromCallable(() -> {
+            QueryBuilder<HistoryCall, Integer> queryBuilder = getCallHistoryDao().queryBuilder();
+            queryBuilder.where().eq(HistoryCall.COLUMN_ACCOUNT_ID_NAME, accountId);
+            queryBuilder.where().eq(HistoryCall.COLUMN_NUMBER_NAME, contact);
+            queryBuilder.orderBy(HistoryCall.COLUMN_TIMESTAMP_START_NAME, false);
+            queryBuilder.limit(1L);
+            return getCallHistoryDao().queryForFirst(queryBuilder.prepare());
+        });
+    }
+    public Maybe<ConversationElement> getLastElement(final String accountId, String contact) {
+        return Maybe.merge(
+                getLastTransfer(accountId, contact),
+                getLastMessage(accountId, contact),
+                getLastCall(accountId, contact))
+                .reduce((a, b) -> (a.getDate() < b.getDate()) ? b : a)
+                .subscribeOn(scheduler);
     }
 
     public Completable clearHistory(final String contactId, final String accountId) {

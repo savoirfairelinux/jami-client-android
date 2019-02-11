@@ -290,6 +290,18 @@ public class ConversationFacade {
         }
     }
 
+    private Disposable loadConversationLastItems(final Account account, String contact) {
+        Log.d(TAG, "loadConversationHistory()");
+        return mHistoryService.getLastElement(account.getAccountID(), contact)
+                .observeOn(Schedulers.computation())
+                .doOnSuccess(e -> {
+                    Conversation conversation = account.getByUri(e.getContactNumber());
+                    if (conversation != null)
+                        conversation.addElement(e, conversation.getContact());
+                })
+                .subscribe();
+    }
+
     private Disposable loadConversationHistory(final Account account) {
         Log.d(TAG, "loadConversationHistory()");
         return Single
