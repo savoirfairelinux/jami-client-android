@@ -956,7 +956,6 @@ public class AccountService {
      * Reverse looks up the address in the blockchain to find the name
      */
     public void lookupAddress(final String account, final String nameserver, final String address) {
-        Log.i(TAG, "lookupAddress() " + account + " " + nameserver + " " + address);
         mExecutor.execute(() -> Ringservice.lookupAddress(account, nameserver, address));
     }
 
