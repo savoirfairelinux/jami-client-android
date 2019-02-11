@@ -47,7 +47,7 @@ public class DataTransfer implements ConversationElement {
 
     private static final int MAX_SIZE = 32 * 1024 * 1024;
 
-    @DatabaseField(index = true, generatedId = true, columnName = COLUMN_ID_NAME)
+    @DatabaseField(uniqueIndex = true, generatedId = true, columnName = COLUMN_ID_NAME)
     long id;
     @DatabaseField(index = true, columnName = COLUMN_TIMESTAMP_NAME)
     long timestamp;
@@ -57,9 +57,9 @@ public class DataTransfer implements ConversationElement {
     boolean isOutgoing;
     @DatabaseField(columnName = COLUMN_TOTAL_SIZE_NAME)
     long totalSize;
-    @DatabaseField(columnName = COLUMN_PEER_ID_NAME)
+    @DatabaseField(index = true, columnName = COLUMN_PEER_ID_NAME)
     String peerId;
-    @DatabaseField(columnName = COLUMN_ACCOUNT_ID_NAME)
+    @DatabaseField(index = true, columnName = COLUMN_ACCOUNT_ID_NAME)
     String accountId;
     @DatabaseField(columnName = COLUMN_DATA_TRANSFER_EVENT_CODE_NAME)
     String eventCode;
