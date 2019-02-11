@@ -99,7 +99,9 @@ public class ConversationFacade {
 
         currentAccountSubject = mAccountService
                 .getCurrentAccountSubject()
-                .switchMapSingle(this::loadConversations);
+                .switchMapSingle(this::loadConversations)
+                .replay(1)
+                .refCount();
 
         mDisposableBag.add(mCallService.getCallSubject()
                 .observeOn(Schedulers.io())
@@ -157,7 +159,9 @@ public class ConversationFacade {
                         .doOnSuccess(conv -> conv.updateTextMessage(txt)))
                 .subscribe());
 
-        mDisposableBag.add(mAccountService.getDataTransfers().subscribe(this::handleDataTransferEvent));
+        mDisposableBag.add(mAccountService
+                .getDataTransfers()
+                .subscribe(this::handleDataTransferEvent));
     }
 
     public Single<Conversation> startConversation(String accountId, final Uri contactId) {
