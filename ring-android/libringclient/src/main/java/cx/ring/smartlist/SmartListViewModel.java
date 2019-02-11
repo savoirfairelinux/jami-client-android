@@ -28,31 +28,31 @@ public class SmartListViewModel
     private final String accountId;
     private final CallContact contact;
     private final String uuid;
-    private final String contactName;
+    //private final String contactName;
     private final boolean hasUnreadTextMessage;
     private boolean hasOngoingCall;
-    private boolean isOnline = false;
+    //private boolean isOnline = false;
     private final ConversationElement lastEvent;
 
     public SmartListViewModel(String accountId, CallContact contact, String id, ConversationElement lastEvent) {
         this.accountId = accountId;
         this.contact = contact;
         this.uuid = id;
-        this.contactName = contact.getDisplayName();
+        //this.contactName = contact.getDisplayName();
         hasUnreadTextMessage = (lastEvent != null) && !lastEvent.isRead();
         this.hasOngoingCall = false;
         this.lastEvent = lastEvent;
-        isOnline = contact.isOnline();
+        //isOnline = contact.isOnline();
     }
     public SmartListViewModel(String accountId, CallContact contact, ConversationElement lastEvent) {
         this.accountId = accountId;
         this.contact = contact;
         this.uuid = contact.getIds().get(0);
-        this.contactName = contact.getDisplayName();
+        //this.contactName = contact.getDisplayName();
         hasUnreadTextMessage = (lastEvent != null) && !lastEvent.isRead();
         this.hasOngoingCall = false;
         this.lastEvent = lastEvent;
-        isOnline = contact.isOnline();
+        //isOnline = contact.isOnline();
     }
 
     public CallContact getContact() {
@@ -60,7 +60,7 @@ public class SmartListViewModel
     }
 
     public String getContactName() {
-        return contactName;
+        return contact.getDisplayName();
     }
 
     public long getLastInteractionTime() {
@@ -80,12 +80,12 @@ public class SmartListViewModel
     }
 
     public boolean isOnline() {
-        return isOnline;
+        return contact.isOnline();
     }
 
-    public void setOnline(boolean online) {
+    /*public void setOnline(boolean online) {
         isOnline = online;
-    }
+    }*/
 
     public void setHasOngoingCall(boolean hasOngoingCall) {
         this.hasOngoingCall = hasOngoingCall;
@@ -101,8 +101,8 @@ public class SmartListViewModel
             return false;
         SmartListViewModel other = (SmartListViewModel) o;
         return contact == other.contact
-                && contactName.equals(other.contactName)
-                && isOnline == other.isOnline
+                /*&& contactName.equals(other.contactName)
+                && isOnline == other.isOnline*/
                 && lastEvent == other.lastEvent
                 && hasOngoingCall == other.hasOngoingCall
                 && hasUnreadTextMessage == other.hasUnreadTextMessage;
