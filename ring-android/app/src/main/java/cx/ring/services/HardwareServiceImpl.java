@@ -350,8 +350,9 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         // Use a larger resolution for Android 6.0+, 64 bits devices
         final boolean useLargerSize = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.SUPPORTED_64_BIT_ABIS.length > 0;
         final boolean useHD = DeviceUtils.isTv(mContext) || mPreferenceService.getSettings().isHD();
+        final boolean useHW = mPreferenceService.getSettings().isHwEncoding();
         //int MIN_WIDTH = useLargerSize ? (useHD ? VIDEO_WIDTH_HD : VIDEO_WIDTH) : VIDEO_WIDTH_MIN;
-        final Point minVideoSize = useLargerSize ? (useHD ? VIDEO_SIZE_HD : VIDEO_SIZE_DEFAULT) : VIDEO_SIZE_LOW;
+        final Point minVideoSize = useLargerSize ? (useHD ? (useHW ? VIDEO_SIZE_ULTRA_HD : VIDEO_SIZE_FULL_HD) : VIDEO_SIZE_HD) : VIDEO_SIZE_LOW;
 
         cameraService.getCameraInfo(camId, formats, sizes, rates, minVideoSize);
     }

@@ -91,9 +91,9 @@ class CameraServiceCamera2 extends CameraService {
                 currentCamera = id;
                 CameraCharacteristics cc = manager.getCameraCharacteristics(id);
                 int facing = cc.get(CameraCharacteristics.LENS_FACING);
-                if (facing == CameraCharacteristics.LENS_FACING_FRONT) {
+                /*if (facing == CameraCharacteristics.LENS_FACING_FRONT) {
                     cameraFront = id;
-                } else if (facing == CameraCharacteristics.LENS_FACING_BACK) {
+                } else */if (facing == CameraCharacteristics.LENS_FACING_BACK) {
                     cameraBack = id;
                 } else if (facing == CameraCharacteristics.LENS_FACING_EXTERNAL) {
                     cameraExternal = id;
@@ -330,7 +330,7 @@ class CameraServiceCamera2 extends CameraService {
             SurfaceTexture texture = view.getSurfaceTexture();
             Surface s = new Surface(texture);
 
-            final Pair<MediaCodec, Surface> codec = hw_accel ? openCameraWithEncoder(videoParams, MediaFormat.MIMETYPE_VIDEO_VP8) : null;
+            final Pair<MediaCodec, Surface> codec = hw_accel ? openCameraWithEncoder(videoParams, MediaFormat.MIMETYPE_VIDEO_AVC) : null;
 
             final List<Surface> targets = new ArrayList<>(2);
             targets.add(s);
