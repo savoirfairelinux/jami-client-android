@@ -50,7 +50,6 @@ import cx.ring.services.HardwareService;
 import cx.ring.services.HistoryService;
 import cx.ring.services.NotificationService;
 import cx.ring.services.PreferencesService;
-import cx.ring.services.PresenceService;
 import cx.ring.utils.FileUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.VCardUtils;
@@ -71,9 +70,6 @@ public class ConversationFacade {
     private final ContactService mContactService;
     private final HistoryService mHistoryService;
     private final CallService mCallService;
-
-    @Inject
-    PresenceService mPresenceService;
 
     @Inject
     HardwareService mHardwareService;

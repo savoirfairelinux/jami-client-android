@@ -21,7 +21,6 @@ package cx.ring.dependencyinjection;
 
 import javax.inject.Singleton;
 
-import cx.ring.about.AboutFragment;
 import cx.ring.account.AccountEditionActivity;
 import cx.ring.account.AccountWizardActivity;
 import cx.ring.account.HomeAccountCreationFragment;
@@ -61,7 +60,6 @@ import cx.ring.services.DeviceRuntimeServiceImpl;
 import cx.ring.services.HardwareService;
 import cx.ring.services.HistoryServiceImpl;
 import cx.ring.services.NotificationServiceImpl;
-import cx.ring.services.PresenceService;
 import cx.ring.services.RingChooserTargetService;
 import cx.ring.services.SharedPreferencesServiceImpl;
 import cx.ring.settings.SettingsFragment;
@@ -150,8 +148,6 @@ public interface RingInjectionComponent {
     void inject(NotificationServiceImpl service);
 
     void inject(ConversationFacade service);
-
-    void inject(PresenceService service);
 
     void inject(BootReceiver receiver);
 
