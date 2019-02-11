@@ -36,7 +36,6 @@ import cx.ring.navigation.RingNavigationViewModel;
 import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.services.HardwareService;
-import cx.ring.services.PresenceService;
 import cx.ring.tv.model.TVListViewModel;
 import cx.ring.utils.Log;
 import io.reactivex.Observable;
@@ -48,7 +47,6 @@ public class MainPresenter extends RootPresenter<MainView> {
 
     private final AccountService mAccountService;
     private final ContactService mContactService;
-    private final PresenceService mPresenceService;
     private final HardwareService mHardwareService;
     private List<TVListViewModel> mTvListViewModels;
 
@@ -62,12 +60,10 @@ public class MainPresenter extends RootPresenter<MainView> {
     public MainPresenter(AccountService accountService,
                          ContactService contactService,
                          ConversationFacade conversationFacade,
-                         PresenceService presenceService,
                          HardwareService hardwareService,
                          @Named("UiScheduler") Scheduler uiScheduler) {
         mAccountService = accountService;
         mContactService = contactService;
-        mPresenceService = presenceService;
         mHardwareService = hardwareService;
         mUiScheduler = uiScheduler;
 
@@ -146,9 +142,6 @@ public class MainPresenter extends RootPresenter<MainView> {
                         }
                     }
                 }));
-        mCompositeDisposable.add(mPresenceService.getPresenceUpdates()
-                .observeOn(mUiScheduler)
-                .subscribe(this::refreshContact));
 
         Log.d(TAG, "getPendingSubject subscribe");
         mCompositeDisposable.add(accountSubject
@@ -158,7 +151,7 @@ public class MainPresenter extends RootPresenter<MainView> {
                             Log.d(TAG, "getPendingSubject " + pending.size());
                             ArrayList<TVListViewModel> viewmodel = new ArrayList<>(pending.size());
                             for (Conversation c : pending) {
-                                mContactService.loadContactData(c.getContact());
+                                mContactService.loadContactData(c.getContact()).subscribe();
                                 viewmodel.add(modelToViewModel(c.getContact()));
                             }
                             return viewmodel;
@@ -170,7 +163,7 @@ public class MainPresenter extends RootPresenter<MainView> {
     }
 
     private TVListViewModel modelToViewModel(CallContact callContact) {
-        mContactService.loadContactData(callContact);
+        mContactService.loadContactData(callContact).subscribe();
         return new TVListViewModel(callContact);
     }
 

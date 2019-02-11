@@ -20,9 +20,7 @@
 package cx.ring.dependencyinjection;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
 
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -48,7 +46,6 @@ import cx.ring.services.LogServiceImpl;
 import cx.ring.services.NotificationService;
 import cx.ring.services.NotificationServiceImpl;
 import cx.ring.services.PreferencesService;
-import cx.ring.services.PresenceService;
 import cx.ring.services.SharedPreferencesServiceImpl;
 import cx.ring.services.VCardService;
 import cx.ring.services.VCardServiceImpl;
@@ -156,14 +153,6 @@ public class ServiceInjectionModule {
         ContactServiceImpl contactService = new ContactServiceImpl();
         mRingApplication.getRingInjectionComponent().inject(contactService);
         return contactService;
-    }
-
-    @Provides
-    @Singleton
-    PresenceService providePresenceService() {
-        PresenceService presenceService = new PresenceService();
-        mRingApplication.getRingInjectionComponent().inject(presenceService);
-        return presenceService;
     }
 
     @Provides
