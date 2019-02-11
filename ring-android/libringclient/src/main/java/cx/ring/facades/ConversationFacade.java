@@ -44,7 +44,6 @@ import cx.ring.model.TrustRequest;
 import cx.ring.model.Uri;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
-import cx.ring.services.ContactService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.HistoryService;
@@ -67,7 +66,6 @@ public class ConversationFacade {
     private final static String TAG = ConversationFacade.class.getSimpleName();
 
     private final AccountService mAccountService;
-    private final ContactService mContactService;
     private final HistoryService mHistoryService;
     private final CallService mCallService;
 
@@ -87,10 +85,9 @@ public class ConversationFacade {
 
     private final Observable<Account> currentAccountSubject;
 
-    public ConversationFacade(HistoryService historyService, CallService callService, ContactService contactService, AccountService accountService) {
+    public ConversationFacade(HistoryService historyService, CallService callService, AccountService accountService) {
         mHistoryService = historyService;
         mCallService = callService;
-        mContactService = contactService;
         mAccountService = accountService;
 
         currentAccountSubject = mAccountService
