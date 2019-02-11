@@ -43,6 +43,7 @@ import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import io.reactivex.Completable;
 import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 
 public class ContactServiceImpl extends ContactService {
 
@@ -420,7 +421,7 @@ public class ContactServiceImpl extends ContactService {
                     .map(vcard -> {
                         callContact.setVCard(vcard);
                         return VCardServiceImpl.readData(vcard);
-                    });
+                    }).subscribeOn(Schedulers.io());
         }
         return Single.error(new IllegalArgumentException());
     }
@@ -431,6 +432,7 @@ public class ContactServiceImpl extends ContactService {
         return AndroidFileUtils
                 .loadBitmap(mContext, android.net.Uri.withAppendedPath(photoURI, ContactsContract.Contacts.Photo.DISPLAY_PHOTO))
                 .map(bitmap -> new Tuple<String, Object>(contactName, bitmap))
-                .onErrorReturn(e -> new Tuple<>(contactName, null));
+                .onErrorReturn(e -> new Tuple<>(contactName, null))
+                .subscribeOn(Schedulers.io());
     }
 }
