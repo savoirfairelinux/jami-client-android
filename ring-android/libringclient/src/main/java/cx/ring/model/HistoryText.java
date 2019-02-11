@@ -43,15 +43,15 @@ public class HistoryText {
 
     private static final Random random = new Random();
 
-    @DatabaseField(index = true, columnName = COLUMN_ID_NAME, id = true)
+    @DatabaseField(uniqueIndex = true, columnName = COLUMN_ID_NAME, id = true)
     public long id;
     @DatabaseField(index = true, columnName = COLUMN_TIMESTAMP_NAME)
     public long time;
-    @DatabaseField(columnName = COLUMN_NUMBER_NAME)
+    @DatabaseField(index = true, columnName = COLUMN_NUMBER_NAME)
     public String number;
     @DatabaseField(columnName = COLUMN_DIRECTION_NAME)
     public int direction;
-    @DatabaseField(columnName = COLUMN_ACCOUNT_ID_NAME)
+    @DatabaseField(index = true, columnName = COLUMN_ACCOUNT_ID_NAME)
     String accountID;
     @DatabaseField(columnName = COLUMN_CONTACT_ID_NAME)
     long contactID;
