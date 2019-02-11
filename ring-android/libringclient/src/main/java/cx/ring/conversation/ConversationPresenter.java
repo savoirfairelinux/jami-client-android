@@ -269,7 +269,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         final Uri contactId = mContactRingId;
         mVCardService.loadSmallVCard(accountId, VCardService.MAX_SIZE_REQUEST).subscribe(vCard -> {
             mAccountService.sendTrustRequest(accountId, contactId.getRawRingId(), Blob.fromString(VCardUtils.vcardToString(vCard)));
-            CallContact contact = mContactService.findContact(accountId, contactId);
+            CallContact contact = mContactService.findContact(mAccountService.getAccount(accountId), contactId);
             if (contact == null) {
                 Log.e(TAG, "sendTrustRequest: not able to find contact");
                 return;
