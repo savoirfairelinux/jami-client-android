@@ -60,9 +60,6 @@ public class DaemonService {
     protected HardwareService mHardwareService;
 
     @Inject
-    protected PresenceService mPresenceService;
-
-    @Inject
     protected AccountService mAccountService;
 
     private final SystemInfoCallbacks mSystemInfoCallbacks;
@@ -276,22 +273,22 @@ public class DaemonService {
 
         @Override
         public void newServerSubscriptionRequest(String remote) {
-            mPresenceService.newServerSubscriptionRequest(remote);
+            Log.d(TAG, "newServerSubscriptionRequest: " + remote);
         }
 
         @Override
         public void serverError(String accountId, String error, String message) {
-            mPresenceService.serverError(accountId, error, message);
+            Log.d(TAG, "serverError: " + accountId + ", " + error + ", " + message);
         }
 
         @Override
         public void newBuddyNotification(String accountId, String buddyUri, int status, String lineStatus) {
-            mPresenceService.newBuddyNotification(accountId, buddyUri, status, lineStatus);
+            mAccountService.getAccount(accountId).presenceUpdate(buddyUri, status == 1);
         }
 
         @Override
         public void subscriptionStateChanged(String accountId, String buddyUri, int state) {
-            mPresenceService.subscriptionStateChanged(accountId, buddyUri, state);
+            Log.d(TAG, "subscriptionStateChanged: " + accountId + ", " + buddyUri + ", " + state);
         }
     }
 
