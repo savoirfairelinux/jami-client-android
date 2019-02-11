@@ -81,7 +81,6 @@ public class LaunchPresenter extends RootPresenter<LaunchView> {
         mCompositeDisposable.add(mAccountService.getObservableAccountList()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(accounts -> {
-                    Log.w(TAG, "accounts: " + accounts.size());
                     if (accounts.isEmpty()) {
                         getView().goToAccountCreation();
                     } else {
