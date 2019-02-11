@@ -69,11 +69,11 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
     private final PublishSubject<String> contactQuery = PublishSubject.create();
     private final Observable<Account> accountSubject;
     private final Observable<List<SmartListViewModel>> conversationViews;
-    private final Observable<Account> presenceListener;
 
     private final Scheduler mUiScheduler;
 
-    private CompositeDisposable mConversationDisposable;
+    private final CompositeDisposable mConversationDisposable = new CompositeDisposable();
+    private final CompositeDisposable mContactDisposable = new CompositeDisposable();
 
     @Inject
     public SmartListPresenter(AccountService accountService, ContactService contactService,
@@ -94,21 +94,18 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
                 .getCurrentAccountSubject()
                 .doOnNext(a -> mAccount = a);
 
-        presenceListener = accountSubject
-                .switchMap(Account::getPresenceUpdates);
-
         conversationViews = accountSubject
                 .switchMap(Account::getConversationsViewModels)
+                .subscribeOn(Schedulers.computation())
                 .observeOn(mUiScheduler);
     }
 
     @Override
     public void bindView(SmartListView view) {
         super.bindView(view);
-        mConversationDisposable = new CompositeDisposable();
+        mCompositeDisposable.clear();
         mCompositeDisposable.add(mConversationDisposable);
-        mCompositeDisposable.add(presenceListener.subscribe());
-
+        mCompositeDisposable.add(mContactDisposable);
         loadConversations();
     }
 
@@ -155,12 +152,15 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
             if (currentAccount.isSip()) {
                 // sip search
                 mCallContact = mContactService.findContact(currentAccount, uri);
-                mContactService.loadContactData(mCallContact);
-                view.displayContact(mCallContact);
+                mCompositeDisposable.add(mContactService.loadContactData(mCallContact)
+                        .observeOn(mUiScheduler)
+                        .subscribe(() -> view.displayContact(mCallContact)));
             } else {
                 if (uri.isRingId()) {
                     mCallContact = currentAccount.getContactFromCache(uri);
-                    view.displayContact(mCallContact);
+                    mCompositeDisposable.add(mContactService.loadContactData(mCallContact)
+                            .observeOn(mUiScheduler)
+                            .subscribe(() -> view.displayContact(mCallContact)));
                 } else {
                     view.hideSearchRow();
                     view.setLoading(true);
@@ -280,6 +280,12 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
                                 view.hideList();
                                 view.displayNoConversationMessage();
                             }
+                            CompositeDisposable cd = new CompositeDisposable();
+                            for (SmartListViewModel vm : viewModels) {
+                                cd.add(mContactService.observeContact(vm.getAccountId(), vm.getContact()).subscribe());
+                            }
+                            mContactDisposable.clear();
+                            mContactDisposable.add(cd);
                         }, e -> {
                             getView().setLoading(false);
                             Log.d(TAG, "loadConversations subscribe onError", e);
