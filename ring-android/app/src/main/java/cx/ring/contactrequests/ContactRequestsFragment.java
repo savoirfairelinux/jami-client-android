@@ -134,6 +134,13 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
     }
 
     @Override
+    public void updateItem(SmartListViewModel item) {
+        if (mAdapter != null) {
+            mAdapter.update(item);
+        }
+    }
+
+    @Override
     public void goToConversation(String accountId, String contactId) {
         if (DeviceUtils.isTablet(getActivity())) {
             Bundle bundle = new Bundle();
