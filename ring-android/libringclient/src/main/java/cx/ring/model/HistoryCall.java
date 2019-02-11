@@ -48,7 +48,7 @@ public class HistoryCall implements ConversationElement, Serializable {
     public long call_start;
     @DatabaseField(columnName = COLUMN_TIMESTAMP_END_NAME)
     public long call_end;
-    @DatabaseField(columnName = COLUMN_NUMBER_NAME)
+    @DatabaseField(index = true, columnName = COLUMN_NUMBER_NAME)
     public String number;
     @DatabaseField(columnName = COLUMN_MISSED_NAME)
     boolean missed;
@@ -56,13 +56,13 @@ public class HistoryCall implements ConversationElement, Serializable {
     int direction;
     @DatabaseField(columnName = COLUMN_RECORD_PATH_NAME)
     String recordPath;
-    @DatabaseField(columnName = COLUMN_ACCOUNT_ID_NAME)
+    @DatabaseField(index = true, columnName = COLUMN_ACCOUNT_ID_NAME)
     String accountID;
     @DatabaseField(columnName = COLUMN_CONTACT_ID_NAME)
     long contactID;
     @DatabaseField(columnName = COLUMN_CONTACT_KEY_NAME)
     String contactKey;
-    @DatabaseField(columnName = COLUMN_CALL_ID_NAME)
+    @DatabaseField(uniqueIndex = true, columnName = COLUMN_CALL_ID_NAME)
     String callID;
 
     /* Needed by ORMLite */
