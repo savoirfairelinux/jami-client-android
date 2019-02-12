@@ -25,6 +25,7 @@ along with this program; if not, write to the Free Software
     <dimen name="padding_large">16dp</dimen>
 
     <dimen name="radius_message_input">16dp</dimen>
+    <dimen name="margin_message_input">16dp</dimen>
 
     <dimen name="activity_horizontal_margin">32dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>

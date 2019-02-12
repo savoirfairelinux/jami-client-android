@@ -20,6 +20,7 @@
 package cx.ring.fragments;
 
 import android.Manifest;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.ClipData;
@@ -117,6 +118,8 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
 
     private ConversationAdapter mAdapter = null;
     private NumberAdapter mNumberAdapter = null;
+    private int marginPx;
+    private final ValueAnimator animation = new ValueAnimator();
 
     private SharedPreferences mPreferences;
 
@@ -165,6 +168,8 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         injectFragment(((RingApplication) getActivity().getApplication()).getRingInjectionComponent());
+        marginPx = getResources().getDimensionPixelSize(R.dimen.margin_message_input);
+        animation.setDuration(150);
         binding = FragConversationBinding.inflate(inflater, container, false);
         binding.setPresenter(this);
         return binding.getRoot();
@@ -216,6 +221,19 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             }
         });
 
+        animation.addUpdateListener(valueAnimator -> binding.histList.setPadding(
+                binding.histList.getPaddingLeft(),
+                binding.histList.getPaddingTop(),
+                binding.histList.getPaddingRight(),
+                Integer.parseInt(valueAnimator.getAnimatedValue().toString())));
+
+        binding.msgInputTxt.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
+            if (animation.isStarted())
+                animation.cancel();
+            animation.setIntValues(binding.histList.getPaddingBottom(), binding.msgInputTxt.getHeight() + marginPx);
+            animation.start();
+        });
+
         if (binding != null) {
             binding.ongoingcallPane.setVisibility(View.GONE);
         }
@@ -239,6 +257,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     public void onDestroyView() {
         if (mPreferences != null)
             mPreferences.unregisterOnSharedPreferenceChangeListener(this);
+        animation.removeAllUpdateListeners();
         binding.histList.setAdapter(null);
         super.onDestroyView();
     }
