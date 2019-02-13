@@ -192,13 +192,6 @@ public class ServiceInjectionModule {
     }
 
     @Provides
-    @Named("ApplicationExecutor")
-    @Singleton
-    ExecutorService provideApplicationExecutorService() {
-        return Executors.newFixedThreadPool(5);
-    }
-
-    @Provides
     @Named("UiScheduler")
     @Singleton
     Scheduler provideUiScheduler() {

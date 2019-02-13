@@ -226,7 +226,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     }
 
     public void sendFile(File file) {
-        mConversationFacade.sendFile(mAccountId, mContactRingId, file);
+        mConversationFacade.sendFile(mAccountId, mContactRingId, file).subscribe();
     }
 
     public void downloadFile(final DataTransfer transfer, final File dest) {
