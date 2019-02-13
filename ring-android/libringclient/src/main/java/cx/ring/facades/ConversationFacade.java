@@ -233,34 +233,37 @@ public class ConversationFacade {
         c.addTextMessage(message);
     }
 
-    public void sendFile(String account, Uri to, File file) {
-        if (file == null) {
-            return;
-        }
+    public Completable sendFile(String account, Uri to, File file) {
+        return Completable.fromAction(() -> {
+            if (file == null) {
+                return;
+            }
 
-        // check file
-        if (!file.exists()) {
-            Log.w(TAG, "sendFile: file not found");
-            return;
-        }
+            // check file
+            if (!file.exists()) {
+                Log.w(TAG, "sendFile: file not found");
+                return;
+            }
 
-        if (!file.canRead()) {
-            Log.w(TAG, "sendFile: file not readable");
-            return;
-        }
-        String peerId = to.getRawRingId();
-        DataTransfer transfer = new DataTransfer(0L, file.getName(), true, file.length(), 0, peerId, account);
-        // get generated ID
-        mHistoryService.insertDataTransfer(transfer);
+            if (!file.canRead()) {
+                Log.w(TAG, "sendFile: file not readable");
+                return;
+            }
+            String peerId = to.getRawRingId();
+            DataTransfer transfer = new DataTransfer(0L, file.getName(), true, file.length(), 0, peerId, account);
 
-        File dest = mDeviceRuntimeService.getConversationPath(peerId, transfer.getStoragePath());
-        if (!FileUtils.moveFile(file, dest)) {
-            Log.e(TAG, "sendFile: can't move file to " + dest);
-            return;
-        }
+            // get generated ID
+            mHistoryService.insertDataTransfer(transfer).blockingAwait();
 
-        // send file
-        mAccountService.sendFile(transfer, dest);
+            File dest = mDeviceRuntimeService.getConversationPath(peerId, transfer.getStoragePath());
+            if (!FileUtils.moveFile(file, dest)) {
+                Log.e(TAG, "sendFile: can't move file to " + dest);
+                return;
+            }
+
+            // send file
+            mAccountService.sendFile(transfer, dest);
+        }).subscribeOn(Schedulers.io());
     }
 
     public void deleteFile(DataTransfer transfer) {
@@ -269,7 +272,8 @@ public class ConversationFacade {
                         mHistoryService.deleteFileHistory(transfer.getId()),
                         Completable.fromAction(file::delete).subscribeOn(Schedulers.io()))
                 .andThen(startConversation(transfer.getAccountId(), transfer.getContactNumber()))
-                .subscribe(c -> c.removeFileTransfer(transfer));
+                .subscribe(c -> c.removeFileTransfer(transfer),
+                        e -> Log.e(TAG, "Can't delete file transfer", e));
     }
 
     private Single<Account> loadConversations(final Account account) {
