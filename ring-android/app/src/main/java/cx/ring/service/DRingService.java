@@ -574,7 +574,7 @@ public class DRingService extends Service {
         updateConnectivityState();
 
         mDisposableBag.add(mPreferencesService.getSettingsSubject().subscribe(s -> {
-            refreshContacts();
+            //refreshContacts();
             updateConnectivityState();
             showSystemNotification(s);
         }));
@@ -856,7 +856,7 @@ public class DRingService extends Service {
         @Override
         public void onChange(boolean selfChange, android.net.Uri uri) {
             super.onChange(selfChange, uri);
-            mContactService.loadContacts(mAccountService.hasRingAccount(), mAccountService.hasSipAccount(), mAccountService.getCurrentAccount());
+            //mContactService.loadContacts(mAccountService.hasRingAccount(), mAccountService.hasSipAccount(), mAccountService.getCurrentAccount());
         }
     }
 }
