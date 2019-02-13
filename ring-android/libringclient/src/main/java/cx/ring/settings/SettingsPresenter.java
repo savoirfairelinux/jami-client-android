@@ -60,6 +60,8 @@ public class SettingsPresenter extends RootPresenter<GenericView<Settings>>  {
     }
 
     public void clearHistory() {
-        mHistoryService.clearHistory();
+        mCompositeDisposable.add(mHistoryService
+                .clearHistory()
+                .subscribe(()->{}, e -> {}));
     }
 }
