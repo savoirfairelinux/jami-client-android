@@ -62,7 +62,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     private static final Point VIDEO_SIZE_FULL_HD = new Point(1920, 1080);
     private static final Point VIDEO_SIZE_ULTRA_HD = new Point(3840, 2160);
 
-    private static final String TAG = HardwareServiceImpl.class.getName();
+    private static final String TAG = HardwareServiceImpl.class.getSimpleName();
     private static WeakReference<TextureView> mCameraPreviewSurface = new WeakReference<>(null);
     private static final Map<String, WeakReference<SurfaceHolder>> videoSurfaces = Collections.synchronizedMap(new HashMap<>());
     private final Map<String, Shm> videoInputs = new HashMap<>();
