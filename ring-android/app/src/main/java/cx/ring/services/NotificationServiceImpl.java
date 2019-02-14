@@ -96,6 +96,8 @@ public class NotificationServiceImpl implements NotificationService {
     @Inject
     protected AccountService mAccountService;
     @Inject
+    protected ContactService mContactService;
+    @Inject
     protected PreferencesService mPreferencesService;
     @Inject
     protected HistoryService mHistoryService;
@@ -263,6 +265,8 @@ public class NotificationServiceImpl implements NotificationService {
         }
         TextMessage last = texts.lastEntry().getValue();
         String contactId = contactUri.getRawUriString();
+
+        mContactService.loadContactData(contact);
         String contactName = contact.getDisplayName();
         if (TextUtils.isEmpty(contactName))
             return;
