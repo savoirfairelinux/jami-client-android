@@ -28,14 +28,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.FileProvider;
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,6 +44,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.FileProvider;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cx.ring.R;
@@ -65,7 +63,6 @@ import cx.ring.services.VCardServiceImpl;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.ContentUriHandler;
-import cx.ring.utils.Tuple;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -335,7 +332,7 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
         mSectionListener = listener;
     }
 
-    @OnClick(R.id.profile_container)
+    @OnClick({R.id.profile_container, R.id.user_profile_edit})
     public void profileContainerClicked() {
         Log.d(TAG, "profileContainerClicked: Click on the edit profile");
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

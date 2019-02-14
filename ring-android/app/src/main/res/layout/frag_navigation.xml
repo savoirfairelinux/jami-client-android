@@ -41,6 +41,7 @@
                     android:layout_centerHorizontal="true" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/user_profile_edit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/anchor"
