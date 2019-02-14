@@ -18,6 +18,8 @@
  */
 package cx.ring.contactrequests;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -142,14 +144,17 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
 
     @Override
     public void goToConversation(String accountId, String contactId) {
-        if (DeviceUtils.isTablet(getActivity())) {
+        Context context = requireContext();
+        if (DeviceUtils.isTablet(context)) {
             Bundle bundle = new Bundle();
             bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
             bundle.putString(ConversationFragment.KEY_ACCOUNT_ID, accountId);
-            ((HomeActivity) getActivity()).startConversationTablet(bundle);
+            Activity activity = getActivity();
+            if (activity instanceof HomeActivity)
+                ((HomeActivity) activity).startConversationTablet(bundle);
         } else {
             Intent intent = new Intent()
-                    .setClass(getActivity(), ConversationActivity.class)
+                    .setClass(context, ConversationActivity.class)
                     .setAction(Intent.ACTION_VIEW)
                     .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
                     .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
