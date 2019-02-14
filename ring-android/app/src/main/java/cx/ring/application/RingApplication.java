@@ -51,6 +51,7 @@ import cx.ring.dependencyinjection.DaggerRingInjectionComponent;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.dependencyinjection.RingInjectionModule;
 import cx.ring.dependencyinjection.ServiceInjectionModule;
+import cx.ring.facades.ConversationFacade;
 import cx.ring.service.DRingService;
 import cx.ring.service.RingJobService;
 import cx.ring.services.AccountService;
@@ -91,6 +92,8 @@ public abstract class RingApplication extends Application {
     ContactService mContactService;
     @Inject
     PresenceService mPresenceService;
+    @Inject
+    ConversationFacade mConversationFacade;
 
     private RingInjectionComponent mRingInjectionComponent;
     private final Map<String, Boolean> mPermissionsBeingAsked = new HashMap<>();;
