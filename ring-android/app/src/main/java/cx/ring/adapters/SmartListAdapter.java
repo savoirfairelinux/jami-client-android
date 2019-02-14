@@ -48,12 +48,11 @@ import cx.ring.views.AvatarDrawable;
 
 public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> {
 
-    private List<SmartListViewModel> mSmartListViewModels;
+    private List<SmartListViewModel> mSmartListViewModels = new ArrayList<>();
     private SmartListViewHolder.SmartListListeners listener;
 
     public SmartListAdapter(List<SmartListViewModel> smartListViewModels, SmartListViewHolder.SmartListListeners listener) {
         this.listener = listener;
-        mSmartListViewModels = new ArrayList<>();
         if (smartListViewModels != null)
             mSmartListViewModels.addAll(smartListViewModels);
     }
@@ -107,10 +106,14 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
         return mSmartListViewModels.size();
     }
 
-    public void update(List<SmartListViewModel> smartListViewModels) {
-        final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new SmartListDiffUtil(mSmartListViewModels, smartListViewModels));
-        mSmartListViewModels = smartListViewModels;
-        diffResult.dispatchUpdatesTo(this);
+    public void update(List<SmartListViewModel> viewModels) {
+        final List<SmartListViewModel> old = mSmartListViewModels;
+        mSmartListViewModels = viewModels == null ? new ArrayList<>() : viewModels;
+        if (old != null && viewModels != null) {
+            DiffUtil.calculateDiff(new SmartListDiffUtil(old, viewModels)).dispatchUpdatesTo(this);
+        } else {
+            notifyDataSetChanged();
+        }
     }
 
     public void update(SmartListViewModel smartListViewModel) {
