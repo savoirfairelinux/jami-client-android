@@ -33,13 +33,6 @@ import android.media.AudioAttributes;
 import android.media.RingtoneManager;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.RequiresApi;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.core.app.Person;
-import androidx.core.app.RemoteInput;
-import androidx.core.content.res.ResourcesCompat;
-
 import android.text.TextUtils;
 import android.util.SparseArray;
 
@@ -53,6 +46,13 @@ import java.util.TreeMap;
 
 import javax.inject.Inject;
 
+import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationCompat.CarExtender.UnreadConversation;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.app.Person;
+import androidx.core.app.RemoteInput;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.drawable.IconCompat;
 import cx.ring.R;
 import cx.ring.client.HomeActivity;
@@ -294,9 +294,13 @@ public class NotificationServiceImpl implements NotificationService {
         Bitmap contactPicture = getContactPicture(contact);
         messageNotificationBuilder.setLargeIcon(contactPicture);
 
+        UnreadConversation.Builder unreadConvBuilder = new UnreadConversation.Builder(contactName)
+                .setLatestTimestamp(last.getDate());
+
         if (texts.size() == 1) {
             last.setNotified(true);
             messageNotificationBuilder.setStyle(null);
+            unreadConvBuilder.addMessage(last.getMessage());
         } else {
             Account account = mAccountService.getAccount(accountId);
             Tuple<String, Object> profile = account == null ? null : VCardServiceImpl.loadProfile(account);
@@ -319,6 +323,7 @@ public class NotificationServiceImpl implements NotificationService {
                         textMessage.getMessage(),
                         textMessage.getDate(),
                         textMessage.isIncoming() ? contactPerson : null));
+                unreadConvBuilder.addMessage(textMessage.getMessage());
             }
             messageNotificationBuilder.setStyle(history);
         }
@@ -338,25 +343,32 @@ public class NotificationServiceImpl implements NotificationService {
                 .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
 
         PendingIntent replyPendingIntent = PendingIntent.getService(mContext, replyId,
-                        intentReply,
-                        PendingIntent.FLAG_UPDATE_CURRENT);
-
-        messageNotificationBuilder.addAction(new NotificationCompat.Action.Builder(R.drawable.baseline_reply_24, replyLabel, replyPendingIntent)
-                .setSemanticAction(NotificationCompat.Action.SEMANTIC_ACTION_REPLY)
-                .addRemoteInput(remoteInput)
-                .build());
+                intentReply,
+                PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent intentRead = new Intent(DRingService.ACTION_CONV_READ)
                 .setClass(mContext, DRingService.class)
                 .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
                 .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
 
-        messageNotificationBuilder.addAction(new NotificationCompat.Action.Builder(0,
-                mContext.getString(R.string.notif_mark_as_read),
-                PendingIntent.getService(mContext, markAsReadId, intentRead, 0))
-                .setSemanticAction(NotificationCompat.Action.SEMANTIC_ACTION_MARK_AS_READ)
-                .setShowsUserInterface(false)
-                .build());
+        PendingIntent readPendingIntent = PendingIntent.getService(mContext, markAsReadId, intentRead, 0);
+
+        messageNotificationBuilder
+                .addAction(new NotificationCompat.Action.Builder(R.drawable.baseline_reply_24, replyLabel, replyPendingIntent)
+                        .setSemanticAction(NotificationCompat.Action.SEMANTIC_ACTION_REPLY)
+                        .addRemoteInput(remoteInput)
+                        .build())
+                .addAction(new NotificationCompat.Action.Builder(0,
+                        mContext.getString(R.string.notif_mark_as_read),
+                        readPendingIntent)
+                        .setSemanticAction(NotificationCompat.Action.SEMANTIC_ACTION_MARK_AS_READ)
+                        .setShowsUserInterface(false)
+                        .build())
+                .extend(new NotificationCompat.CarExtender()
+                        .setUnreadConversation(unreadConvBuilder
+                                .setReadPendingIntent(readPendingIntent)
+                                .setReplyAction(replyPendingIntent, remoteInput)
+                                .build()));
 
         notificationManager.notify(notificationId, messageNotificationBuilder.build());
         mNotificationBuilders.put(notificationId, messageNotificationBuilder);
@@ -518,7 +530,7 @@ public class NotificationServiceImpl implements NotificationService {
         if (event.isOver()) {
             messageNotificationBuilder.setProgress(0, 0, false);
         } else if (ongoing) {
-            messageNotificationBuilder.setProgress((int)info.getTotalSize(), (int)info.getBytesProgress(), false);
+            messageNotificationBuilder.setProgress((int) info.getTotalSize(), (int) info.getBytesProgress(), false);
         } else {
             messageNotificationBuilder.setProgress(0, 0, true);
         }
@@ -531,11 +543,11 @@ public class NotificationServiceImpl implements NotificationService {
         if (event == DataTransferEventCode.WAIT_HOST_ACCEPTANCE) {
             messageNotificationBuilder
                     .addAction(R.drawable.baseline_call_received_24, mContext.getText(R.string.accept),
-                    PendingIntent.getService(mContext, random.nextInt(),
-                            new Intent(DRingService.ACTION_FILE_ACCEPT)
-                                    .setClass(mContext, DRingService.class)
-                                    .putExtra(DRingService.KEY_TRANSFER_ID, dataTransferId),
-                            PendingIntent.FLAG_ONE_SHOT))
+                            PendingIntent.getService(mContext, random.nextInt(),
+                                    new Intent(DRingService.ACTION_FILE_ACCEPT)
+                                            .setClass(mContext, DRingService.class)
+                                            .putExtra(DRingService.KEY_TRANSFER_ID, dataTransferId),
+                                    PendingIntent.FLAG_ONE_SHOT))
                     .addAction(R.drawable.baseline_cancel_24, mContext.getText(R.string.refuse),
                             PendingIntent.getService(mContext, random.nextInt(),
                                     new Intent(DRingService.ACTION_FILE_CANCEL)
