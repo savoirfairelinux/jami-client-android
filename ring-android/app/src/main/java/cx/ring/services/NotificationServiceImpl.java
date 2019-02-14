@@ -73,6 +73,7 @@ import cx.ring.utils.FileUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.ResourceMapper;
 import cx.ring.utils.Tuple;
+import cx.ring.views.AvatarDrawable;
 
 public class NotificationServiceImpl implements NotificationService {
 
@@ -105,12 +106,14 @@ public class NotificationServiceImpl implements NotificationService {
     protected DeviceRuntimeService mDeviceRuntimeService;
     private NotificationManagerCompat notificationManager;
     private final Random random = new Random();
+    private int avatarSize;
 
     @SuppressLint("CheckResult")
     public void initHelper() {
         if (notificationManager == null) {
             notificationManager = NotificationManagerCompat.from(mContext);
         }
+        avatarSize = (int) (mContext.getResources().getDisplayMetrics().density * AvatarFactory.SIZE_NOTIF);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             registerNotificationChannels();
         }
@@ -259,9 +262,9 @@ public class NotificationServiceImpl implements NotificationService {
         }
 
         Log.w(TAG, "showTextNotification " + accountId + " " + contact.getPrimaryNumber());
-        mContactService.getLoadedContact(accountId, contact).subscribe(c -> {
-            textNotification(accountId, texts, c);
-        });
+        mContactService.getLoadedContact(accountId, contact)
+                .subscribe(c -> textNotification(accountId, texts, c),
+                        e -> Log.w(TAG, "Can't load contact", e));
     }
 
     private void textNotification(String accountId, TreeMap<Long, TextMessage> texts, CallContact contact) {
@@ -298,7 +301,8 @@ public class NotificationServiceImpl implements NotificationService {
                 .setColor(ResourcesCompat.getColor(mContext.getResources(), R.color.color_primary_dark, null));
 
         Bitmap contactPicture = getContactPicture(contact);
-        messageNotificationBuilder.setLargeIcon(contactPicture);
+        if (contactPicture != null)
+            messageNotificationBuilder.setLargeIcon(contactPicture);
 
         UnreadConversation.Builder unreadConvBuilder = new UnreadConversation.Builder(contactName)
                 .setLatestTimestamp(last.getDate());
@@ -320,7 +324,7 @@ public class NotificationServiceImpl implements NotificationService {
             Person contactPerson = new Person.Builder()
                     .setKey(contactId)
                     .setName(contactName)
-                    .setIcon(IconCompat.createWithBitmap(contactPicture))
+                    .setIcon(contactPicture == null ? null : IconCompat.createWithBitmap(contactPicture))
                     .build();
 
             NotificationCompat.MessagingStyle history = new NotificationCompat.MessagingStyle(userPerson);
@@ -422,11 +426,6 @@ public class NotificationServiceImpl implements NotificationService {
                                             .putExtras(info),
                                     PendingIntent.FLAG_ONE_SHOT));
 
-            /*List<Photo> photos = contact.vcard == null ? null : contact.vcard.getPhotos();
-            byte[] data = null;
-            if (photos != null && !photos.isEmpty()) {
-                data = photos.get(0).getData();
-            }*/
             setContactPicture(contact, messageNotificationBuilder);
         } else {
             messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_REQUEST);
@@ -681,15 +680,19 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     private Bitmap getContactPicture(CallContact contact) {
-        int size = (int) (mContext.getResources().getDisplayMetrics().density * AvatarFactory.SIZE_NOTIF);
-        return AvatarFactory.getBitmapAvatar(mContext, contact, size).blockingGet();
+        try {
+            return AvatarFactory.getBitmapAvatar(mContext, contact, avatarSize).blockingGet();
+        } catch (Exception e) {
+            return null;
+        }
     }
     private Bitmap getContactPicture(Account account) {
-        int size = (int) (mContext.getResources().getDisplayMetrics().density * AvatarFactory.SIZE_NOTIF);
-        return AvatarFactory.getBitmapAvatar(mContext, account, size).blockingGet();
+        return AvatarFactory.getBitmapAvatar(mContext, account, avatarSize).blockingGet();
     }
 
     private void setContactPicture(CallContact contact, NotificationCompat.Builder messageNotificationBuilder) {
-        messageNotificationBuilder.setLargeIcon(getContactPicture(contact));
+        Bitmap pic = getContactPicture(contact);
+        if (pic != null)
+            messageNotificationBuilder.setLargeIcon(pic);
     }
 }
