@@ -225,8 +225,11 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
         getView().displayMenuItem();
     }
 
-    public void startConversation(String accountId, CallContact c) {
-        getView().goToConversation(accountId, c.getPrimaryUri());
+    private void startConversation(String accountId, CallContact c) {
+        SmartListView view = getView();
+        if (view != null && c != null) {
+            view.goToConversation(accountId, c.getPrimaryUri());
+        }
     }
 
     public void startConversation(Uri uri) {
