@@ -120,6 +120,8 @@ Vous pouvez modifier le compte plus tard.</string>
   <string name="account_export_end_error_title">Erreur</string>
   <string name="account_export_end_error_message">Impossible d\'exporter le compte. Une erreur inconnue s\'est produite.</string>
   <string name="account_enter_password">Entrez le mot de passe</string>
+  <string name="account_share_body">Contactez-moi en utilisant  \'%1$s\' sur la plateforme de communication distribuée %2$s</string>
+  <string name="account_share_body_with_username">Contactez-moi en utilisant  \'%1$s\' ou mon nom d\'utilisateur public \'%2$s\' sur la plateforme de communication distribuée %3$s</string>
   <string name="account_contact_me">Contactez-moi sur Jami !</string>
   <string name="update_account">Mise à jour du compte </string>
   <string name="account_migration">Votre compte Jami va être mis à jour.\nVeuillez entrer votre mot de passe.</string>

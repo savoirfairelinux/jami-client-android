@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <string name="pref_category_network">Hálózat</string>
-  <string name="pref_category_contacts">Partnerek</string>
+  <string name="pref_category_contacts">Kapcsolatok</string>
   <string name="pref_category_video">Videó</string>
   <string name="pref_category_system">Rendszer</string>
   <string name="pref_category_privacy">Adatvédelem</string>
@@ -10,6 +10,8 @@
   <string name="pref_pushNotifications_title">Leküldéses értesítések</string>
   <string name="pref_pushNotifications_summary">Használja a Google kiszolgálóit a háttérben lévő hívások és üzenetek fogadásához</string>
   <string name="pref_hd_summary">Engedélyezze a HD videó küldését</string>
+  <string name="pref_hwEncode_title">Gyorsított kódolás engedélyezése</string>
+  <string name="pref_hwEncode_summary">Kísérleti jellemző</string>
   <string name="pref_systemContacts_title">Rendszer kapcsolatainak használata</string>
   <string name="pref_systemContacts_summary">A rendszer kapcsolatainak használata a hívó adatainak megjelenítéséhez.</string>
   <string name="pref_systemDialer_title">Helyezzen rendszerhívásokat a Jami programmal</string>

@@ -140,6 +140,9 @@
   <string name="conversation_action_block_this">Bloquear contacto</string>
   <string name="conversation_action_go_to_call">Voltar à chamada a decorrer</string>
   <string name="clip_contact_uri">Endereço do contacto</string>
+  <string name="block_contact_dialog_title">Bloquear %1$s?</string>
+  <string name="block_contact_dialog_message">%1$s não poderá contactá-lo até que o desbloqueie.</string>
+  <string name="block_contact_completed">%1$s foi bloqueado.</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Adicionar %1$s?</string>
   <string name="prompt_new_password">Nova palavra-chave</string>

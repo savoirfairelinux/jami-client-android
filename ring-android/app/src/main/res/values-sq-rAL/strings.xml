@@ -140,6 +140,9 @@
   <string name="conversation_action_block_this">Bllokojeni kontaktin</string>
   <string name="conversation_action_go_to_call">Rikthehu te thirrja që po bëhej</string>
   <string name="clip_contact_uri">Adresë kontakti</string>
+  <string name="block_contact_dialog_title">Të bllokohet %1$s?</string>
+  <string name="block_contact_dialog_message">%1$s s’do të jetë në gjendje të lidhet me ju, deri sa ta zhbllokoni.</string>
+  <string name="block_contact_completed">%1$s u bllokua.</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Të shtohet %1$s?</string>
   <string name="prompt_new_password">Fjalëkalim i ri</string>

@@ -120,6 +120,8 @@
   <string name="account_export_end_error_title">Gabim</string>
   <string name="account_export_end_error_message">S\’u eksportua dot llogaria. Ndodhi një gabim i panjohur.</string>
   <string name="account_enter_password">Jepni fjalëkalimin</string>
+  <string name="account_share_body">Lidhuni me mua duke përdorur \'%1$s\' në platformën Jami të komunikimeve të shpërndara: %2$s</string>
+  <string name="account_share_body_with_username">Lidhuni me mua duke përdorur \'%1$s\' ose emrin tim publik të përdoruesit \'%2$s\' në platformën Jami të komunikimeve të shpërndara: %3$s</string>
   <string name="account_contact_me">Lidhuni me mua në Jami!</string>
   <string name="update_account">Përditësoje llogarinë</string>
   <string name="account_migration">Llogaria juaj Jami mund të përditësohet.\nJu lutemi, jepni fjalëkalimin tuaj.</string>

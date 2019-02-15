@@ -10,6 +10,8 @@
   <string name="pref_pushNotifications_title">Notificaciones push</string>
   <string name="pref_pushNotifications_summary">Usar servidores de Google para recibir llamadas/mensajes en segundo plano</string>
   <string name="pref_hd_summary">Permitir el envío de vídeo en HD</string>
+  <string name="pref_hwEncode_title">Activar cifrado acelerado</string>
+  <string name="pref_hwEncode_summary">Característica experimental</string>
   <string name="pref_systemContacts_title">Usar contactos del sistema</string>
   <string name="pref_systemContacts_summary">Usar contactos del sistema para mostrar detalles del interlocutor.</string>
   <string name="pref_systemDialer_title">Configurar el sistema para llamar usando Jami</string>

@@ -133,6 +133,7 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_sip_register_anyway">Trotzdem registieren</string>
   <string name="account_link_button">Dieses Gerät mit einem Konto verknüpfen</string>
   <string name="account_link_prompt_pin">PIN eingeben</string>
+  <string name="account_new_button">Ein Jami-Konto erstellen</string>
   <string name="account_link_export_button">Weiteres Gerät mit diesem Konto verknüpfen</string>
   <string name="account_start_export_button">PIN generieren</string>
   <string name="account_end_export_button">Schließen</string>

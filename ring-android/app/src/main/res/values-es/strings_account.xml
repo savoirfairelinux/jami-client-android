@@ -120,6 +120,8 @@ Puedes editar tu cuenta luego</string>
   <string name="account_export_end_error_title">Error</string>
   <string name="account_export_end_error_message">Error al exportar la cuenta. Se ha producido un error desconocido.</string>
   <string name="account_enter_password">Ingresa la contraseña</string>
+  <string name="account_share_body">Contáctame usando \'%1$s\' en Jami, plataforma de comunicación distribuída: %2$s</string>
+  <string name="account_share_body_with_username">Contáctame usando \'%1$s\' o mi nombre de usuario público \'%2$s\' en Jami, plataforma de comunicación distribuída: %3$s</string>
   <string name="account_contact_me">¡Contáctame en Jami!</string>
   <string name="update_account">Actualizar cuenta</string>
   <string name="account_migration">Su cuenta de Jami puede actualizarse.\nPor favor ingrese su contraseña.</string>

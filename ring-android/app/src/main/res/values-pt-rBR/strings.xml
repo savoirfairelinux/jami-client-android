@@ -2,7 +2,9 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Feedback</string>
+  <string name="report"><u>Nos mande um e-mail</u></string>
   <string name="section_license">Licença</string>
+  <string name="sponsor_section">Jami é um software livre desenvolvido e mantido por</string>
   <string name="copyright_section">Direitos de Autor</string>
   <string name="contribute_section">Contribua</string>
   <string name="version_section">Versão</string>
@@ -10,6 +12,9 @@
   <string name="no_browser_app_installed">Nenhum navegador de internet foi encontrado, instale um para acessar esta página</string>
   <string name="email_chooser_title">Enviar e-mail usando...</string>
   <string name="website_chooser_title">Ver site utilizando...</string>
+  <string name="license">Este software é disponibilizado \"no estado\", sem garantia de qualquer tipo. 
+Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u></string>
+  <string name="description">Jami é um software livre para comunicação universal que respeita as liberdades e privacidade de seus usuários.</string>
   <string name="credits">Créditos</string>
   <!--About dialog-->
   <string name="developed_by">Desenvolvido por</string>
@@ -31,6 +36,7 @@
   <string name="menu_item_account">Administrar conta</string>
   <string name="menu_item_settings">Configurações</string>
   <string name="menu_item_share">Compartilhar meu contato</string>
+  <string name="menu_item_about">Sobre Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Disque um número</string>
   <!--History Fragment-->
@@ -59,6 +65,9 @@
   <string name="notif_channel_messages">Mensagens</string>
   <string name="notif_channel_requests">Solicitações</string>
   <string name="notif_channel_file_transfer">Transferência de arquivo</string>
+  <string name="notif_channel_background_service">Serviço de segundo-plano</string>
+  <string name="notif_channel_background_service_descr">Permite receber chamadas e mensagens a qualquer hora.</string>
+  <string name="notif_background_service">Jami está ativo em segundo-plano.</string>
   <string name="notif_mark_as_read">Marcar como lida</string>
   <string name="notif_dismiss">Dispensar</string>
   <string name="notif_reply">Responder</string>
@@ -74,8 +83,11 @@
   <string name="ongoing_call">Chamada em andamento</string>
   <string name="hist_in_call">Recebimento de chamada %1$s</string>
   <string name="hist_out_call">Chamada de saída %1$s</string>
+  <string name="start_error_title">Não é possível iniciar o Jami !</string>
+  <string name="start_error_mic_required">O Jami requer permissão para uso do microfone para funcionar.</string>
   <string name="action_call_accept">Atender chamada</string>
   <string name="action_call_decline">Rejeitar</string>
+  <string name="action_call_mic_mute">Desativar microfone</string>
   <string name="ab_action_speakerphone">Habilitar viva-voz</string>
   <string name="ab_action_contact_add">Adicionar aos contatos</string>
   <string name="ab_action_contact_add_question">Adicionar aos contatos?</string>
@@ -103,7 +115,9 @@
   <string name="ringtone_error_format_not_supported">Este formato não é suportado.</string>
   <string name="ringtone_error_size_too_big">Este arquivo é grande demais. O tamanho máximo é %1$dkB.</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">O Jami precisa da permissão \"Acessar contatos\" para habilitar esta função. Permita, por favor.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">O Jami precisa da permissão \"Escrever registro de chamadas\" para ativar esse recurso. Permita, por favor.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Escanear o Código QR da conta que deseja adicionar.</string>
   <!--Settings-->
@@ -111,6 +125,7 @@
   <string name="clear_history_dialog_message">Esta ação não pode ser desfeita.</string>
   <string name="clear_history_completed">O histórico foi apagado.</string>
   <!--Conversation-->
+  <string name="conversation_details">Detalhes do contato</string>
   <string name="conversation_action_delete_this">Deletar conversa</string>
   <string name="conversation_action_delete_this_title">Deletar esta conversa ?</string>
   <string name="conversation_action_delete_this_message">Esta ação não pode ser desfeita.</string>
@@ -125,12 +140,20 @@
   <string name="conversation_action_select_peer_number">Selecione um número</string>
   <string name="conversation_action_block_this">Bloquear contato</string>
   <string name="conversation_action_go_to_call">Voltar à chamada em andamento</string>
+  <string name="clip_contact_uri">Endereço do contato</string>
+  <string name="block_contact_dialog_title">Bloquear %1$s?</string>
+  <string name="block_contact_dialog_message">%1$snão conseguirá te contactar até que você o desbloqueie.</string>
+  <string name="block_contact_completed">%1$s foi bloqueado.</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Adicionar %1$s?</string>
   <string name="prompt_new_password">Nova senha</string>
   <string name="prompt_new_password_optional">Nova senha (opcional)</string>
   <string name="prompt_new_password_repeat">Repita a nova senha</string>
+  <string name="account_create_title">Criar uma conta no Jami</string>
   <string name="prompt_new_username">Entre novo nome de usuário</string>
+  <string name="help_password_choose">Escolha uma senha difícil que você poderá lembrar para proteger a sua conta Jami. </string>
+  <string name="help_password_enter">Entre com a senha da sua conta Jami principal</string>
+  <string name="help_pin_enter">Entre com o PIN de uma outra conta Jami já configurada. Utilize a opção \"exportar conta do Jami\" para obter um novo PIN.</string>
   <string name="wizard_next">Próximo</string>
   <string name="wizard_back">Voltar</string>
   <string name="wizard_skip">Pular</string>
@@ -141,6 +164,7 @@
   <string name="take_a_photo">Tirar uma foto</string>
   <string name="profile_name_hint">Insira o seu nome (opcional)</string>
   <!--Share fragment-->
+  <string name="share_message">Digitalize este código com Jami</string>
   <string name="share_message_no_account">Por favor selecione uma conta para compartilhar.</string>
   <string name="share_your_account_information">Compartilhar meus dados de contato</string>
   <string name="generic_error_migration">Erro</string>

@@ -10,6 +10,8 @@
   <string name="pref_pushNotifications_title">Notifications poussées</string>
   <string name="pref_pushNotifications_summary">Utiliser les serveurs Google pour permettre de recevoir des appels et des messages en arrière plan.</string>
   <string name="pref_hd_summary">Activer l\'envoi de vidéo HD</string>
+  <string name="pref_hwEncode_title">Activer l\'encodage matériel</string>
+  <string name="pref_hwEncode_summary">Fonctionnalité expérimentale</string>
   <string name="pref_systemContacts_title">Utiliser les contacts de l\'appareil</string>
   <string name="pref_systemContacts_summary">Utiliser les contacts de l\'appareil pour afficher les détails du correspondant.</string>
   <string name="pref_systemDialer_title">Utiliser Jami par défaut pour les appels</string>

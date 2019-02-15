@@ -139,6 +139,9 @@
   <string name="conversation_action_block_this">阻擋連絡人</string>
   <string name="conversation_action_go_to_call">回到進行中的通話</string>
   <string name="clip_contact_uri">聯絡人地址</string>
+  <string name="block_contact_dialog_title">封鎖 %1$s？</string>
+  <string name="block_contact_dialog_message">直到您解除封鎖前，%1$s 都不能再聯絡您。</string>
+  <string name="block_contact_completed">%1$s 已被封鎖。</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">新增 %1$s？</string>
   <string name="prompt_new_password">新密碼</string>

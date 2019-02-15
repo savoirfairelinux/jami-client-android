@@ -54,6 +54,7 @@
   <string name="action_call_decline">Kieltäydy</string>
   <string name="ab_action_speakerphone">Kaiutin päälle</string>
   <string name="ab_action_contact_add">Lisää yhteystietoihin</string>
+  <string name="hist_contact_added">Kontakti lisätty</string>
   <string name="ab_action_audio_call">Äänipuhelu</string>
   <string name="ab_action_video_call">Videopuhelu</string>
   <string name="share_via">Jaa</string>

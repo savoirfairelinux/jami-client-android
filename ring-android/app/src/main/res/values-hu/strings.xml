@@ -12,8 +12,8 @@
   <string name="no_browser_app_installed">Nem található webböngésző app. Telepítsen egyet az oldal megtekintéséhez!</string>
   <string name="email_chooser_title">Levél küldése a következővel…</string>
   <string name="website_chooser_title">Weboldal megtekintése a következővel…</string>
-  <string name="license">Ez a szoftver a „jelen állapotában” kerül kiadásra, mindenféle garanciavállalás nélkül. A részletekért lásd a<u>GNU General Public License 3-as vagy későbbi verzióját</u></string>
-  <string name="description">A Jami (GNU csomag, korábban Ring) egy univerzális és elosztott kommunikációs platform, amely tiszteletben tartja a felhasználók szabadságait és magánéletét.</string>
+  <string name="license">Ez a szoftver a „jelen állapotában” kerül kiadásra, mindenféle garanciavállalás nélkül. A részletekért lásd a<u>GNU általános nyilvános engedély 3-as vagy újabb verzióját</u></string>
+  <string name="description">A Jami (GNU csomag, korábban Ring) egy univerzális és elosztott közlés emelvény, amely tiszteletben tartja a felhasználók szabadságait és magánéletét.</string>
   <string name="credits">Készítők</string>
   <!--About dialog-->
   <string name="developed_by">Fejlesztők</string>
@@ -30,7 +30,7 @@
   <string name="drawer_close">Navigációs fiók bezárása</string>
   <!--Sections-->
   <string name="menu_item_home">Főoldal</string>
-  <string name="menu_item_contact_request">Partnerkérelmek</string>
+  <string name="menu_item_contact_request">Kapcsolatkérelmek</string>
   <string name="menu_item_accounts">Fiókok kezelése</string>
   <string name="menu_item_account">Fiók kezelése</string>
   <string name="menu_item_settings">Beállítások</string>
@@ -88,8 +88,8 @@
   <string name="action_call_decline">Elutasítás</string>
   <string name="action_call_mic_mute">Mikrofon elnémítása</string>
   <string name="ab_action_speakerphone">Hangszóró engedélyezése</string>
-  <string name="ab_action_contact_add">Hozzáadás a partnerekhez</string>
-  <string name="ab_action_contact_add_question">Hozzáadja a partnerekhez?</string>
+  <string name="ab_action_contact_add">Hozzáadás a kapcsolatokhoz</string>
+  <string name="ab_action_contact_add_question">Hozzáadja a kapcsolatokhoz?</string>
   <string name="hist_contact_added">Kapcsolat hozzáadva</string>
   <string name="hist_invitation_received">Meghívó érkezett</string>
   <string name="ab_action_audio_call">Hanghívás</string>
@@ -114,7 +114,7 @@
   <string name="ringtone_error_format_not_supported">Ez a formátum nem támogatott</string>
   <string name="ringtone_error_size_too_big">Ez a fájl túl nagy. A maximum méret %1$d kB.</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">A Jaminak szüksége van a „Névjegyek olvasása” engedélyre. Kérjük, engedélyezze.</string>
+  <string name="permission_dialog_read_contacts_message">A Jaminak szüksége van a „Kapcsolatok olvasása” engedélyre. Kérjük, engedélyezze.</string>
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">A Jaminak szüksége van a „Hívásnapló írása” engedélyre. Kérjük, engedélyezze.</string>
   <!--QRCode Scan-->
@@ -131,15 +131,18 @@
   <string name="conversation_action_history_clear">Előzmények törlése</string>
   <string name="conversation_action_history_clear_title">Törli a beszélgetések előzményeit?</string>
   <string name="conversation_action_history_clear_message">Ez minden bizonnyal törli a beszélgetések előzményeit.</string>
-  <string name="conversation_action_remove_this">Partner törlése</string>
-  <string name="conversation_action_remove_this_title">Törli ezt a partnert?</string>
-  <string name="conversation_action_remove_this_message">Ez törli a partnert és egyértelműen törli a beszélgetés előzményeit.</string>
+  <string name="conversation_action_remove_this">Kapcsolat törlése</string>
+  <string name="conversation_action_remove_this_title">Kapcsolat törlése?</string>
+  <string name="conversation_action_remove_this_message">Ez törli a kapcsolatot és egyértelműen törli a beszélgetés előzményeit.</string>
   <string name="conversation_action_copy_peer_number">Szám másolása</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s a vágólapra másolva</string>
   <string name="conversation_action_select_peer_number">Válasszon egy számot</string>
-  <string name="conversation_action_block_this">Partner letiltása</string>
+  <string name="conversation_action_block_this">Kapcsolat letiltása</string>
   <string name="conversation_action_go_to_call">Visszatérés a folyamatban lévő híváshoz</string>
   <string name="clip_contact_uri">Kapcsolattartási címe</string>
+  <string name="block_contact_dialog_title">%1$sletiltása?</string>
+  <string name="block_contact_dialog_message">%1$s nem lesz képes felvenni veled a kapcsolatot, amíg nincsen feloldva a tiltásod.</string>
+  <string name="block_contact_completed">%1$s tiltva lett.</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Hozzáadja %1$s?</string>
   <string name="prompt_new_password">Új jelszó</string>
@@ -155,7 +158,7 @@
   <string name="wizard_skip">Átugrani</string>
   <!--MenuHeaderView-->
   <string name="profile">Profil</string>
-  <string name="profile_message_warning">A profilja csak a partnereivel kerül megosztásra</string>
+  <string name="profile_message_warning">A profilja csak a kapcsolataival kerül megosztásra</string>
   <string name="open_the_gallery">Galéria megnyitása</string>
   <string name="take_a_photo">Fotó készítése</string>
   <string name="profile_name_hint">Adja meg a nevét (nem kötelező)</string>
@@ -169,23 +172,23 @@
   <string name="accept">Elfogadás</string>
   <string name="refuse">Elutasítás</string>
   <string name="block">Letiltás</string>
-  <string name="contact_request_title">Új partnerkérelem</string>
-  <string name="contact_request_msg">%1$s partnerkérelme van</string>
+  <string name="contact_request_title">Új kapcsolatkérelem</string>
+  <string name="contact_request_msg">%1$s kapcsolatkérelme van</string>
   <string name="contact_request_account">Ehhez: %1$s</string>
-  <string name="no_requests">0 partnerkérelem</string>
+  <string name="no_requests">0 kapcsolatkérelem</string>
   <string name="message_contact_not_trusted_yet">%smég nincs a kapcsolatban Önnel.\nAkkor elfogadja vagy elutasítja ezt a felkérést?</string>
-  <string name="message_contact_not_trusted">%smég nincs a kapcsolatban Önnel.\nÚj partner hozzáadása?</string>
+  <string name="message_contact_not_trusted">%smég nincs a kapcsolatban Önnel.\nÚj kapcsolat hozzáadása?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Elküld</string>
-  <string name="send_request_title">Parnerkérelem küldése</string>
-  <string name="send_request_msg">Küldenie kell egy felkérést, hogy közléshasson ezzel a felhasználóval. Mindaddig, amíg a leendő partner nem fogadta el a felkérést, üzeneteket küldhet Neki, de nem tud vissza válaszolni.</string>
+  <string name="send_request_title">Kapcsolatkérelem küldése</string>
+  <string name="send_request_msg">Küldenie kell egy felkérést, hogy közléshasson ezzel a felhasználóval. Mindaddig, amíg a leendő kapcsolat nem fogadta el a felkérést, üzeneteket küldhet Neki, de nem tud vissza válaszolni.</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">0 letiltott partner</string>
+  <string name="no_blocked_contact">0 letiltott kapcsolat</string>
   <!--Smartlist-->
-  <string name="no_contact_request">Nincs elküldött partnerkérelem</string>
-  <string name="contact_request_sent">Partnerkérelem elküldve</string>
+  <string name="no_contact_request">Nincs elküldött kapcsolatkérelem</string>
+  <string name="contact_request_sent">Kapcsolatkérelem elküldve</string>
   <string name="search_results">Keresési eredmények</string>
-  <string name="tv_contact_row_header">Partnerek</string>
+  <string name="tv_contact_row_header">Kapcsolatok</string>
   <string name="gallery_error_title">Nem található Galéria alkalmazás</string>
   <string name="gallery_error_message">Nem található alkalmazás a készüléken a Galéria megnyitásához</string>
   <string name="generic_error">Ismeretlen hiba történt</string>
@@ -194,14 +197,14 @@
   <string name="not_able_to_write_file">Nem lehet írni a fájlt</string>
   <string name="file_transfer_status_created">az átvitel szignálása</string>
   <string name="file_transfer_status_unsupported">nem támogatott</string>
-  <string name="file_transfer_status_wait_peer_acceptance">várakozó partner elfogadás</string>
+  <string name="file_transfer_status_wait_peer_acceptance">várakozó egyenrangú elfogadás</string>
   <string name="file_transfer_status_wait_host_acceptance">várakozás a fogadó elfogadásra</string>
   <string name="file_transfer_status_ongoing">folyamatban lévő</string>
   <string name="file_transfer_status_finished">befejezett</string>
   <string name="file_transfer_status_closed_by_host">bezárva a fogadóval</string>
-  <string name="file_transfer_status_closed_by_peer">bezárva a partnerel</string>
+  <string name="file_transfer_status_closed_by_peer">bezárva a egyenrangúról</string>
   <string name="file_transfer_status_invalid_pathname">érvénytelen elérési útvonala</string>
-  <string name="file_transfer_status_unjoinable_peer">nem csatlakoztatható partner</string>
+  <string name="file_transfer_status_unjoinable_peer">páratlan</string>
   <string name="file_saved_in">A fájl mentve%s</string>
   <string name="no_space_left_on_device">Nincs hely az eszközön</string>
   <string name="title_media_viewer">Média lejátszó</string>

@@ -3,7 +3,7 @@
   <!--Strings related to account edition screen-->
   <string name="ic_delete_menu">Törlés</string>
   <string name="ic_advanced_menu">Haladó beállítások</string>
-  <string name="ic_blacklist_menu">Letiltott partnerek</string>
+  <string name="ic_blacklist_menu">Letiltott kapcsolatok</string>
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Jami fiók hozzáadása</string>
   <string name="add_sip_account_title">SIP fiók hozzáadása</string>
@@ -26,7 +26,7 @@
         Csak közvetlen IP hívásokat tud majd indítani és fogadni.
         A fiókját később is módosíthatja</string>
   <string name="account_type_ip2ip">IP fiók</string>
-  <string name="help_ring">A Jami fiók lehetővé teszi az emberek biztonságos elérését partneren egy teljesen elosztott hálózaton keresztül.</string>
+  <string name="help_ring">A Jami fiók lehetővé teszi az emberek biztonságos elérését kapcsolaton egy teljesen elosztott hálózaton keresztül.</string>
   <string name="help_sip_title">SIP fiók hozzáadása</string>
   <string name="help_sip">Meglévő SIP fiók beállítása.</string>
   <string name="create_sip_account">SIP fiók hozzáadása</string>
@@ -99,7 +99,7 @@
   <string name="account_tls_certificate_file_label">Tanúsítvány fájl</string>
   <string name="account_tls_private_key_file_label">Személyes kulcs fájl</string>
   <string name="account_tls_password_label">Személyes kulcs jelszava</string>
-  <string name="account_tls_method_label">TLS metódus</string>
+  <string name="account_tls_method_label">TLS eljárás</string>
   <string name="account_tls_ciphers_label">TLS kódolások</string>
   <string name="account_tls_server_name_label">Kiszolgáló név</string>
   <string name="account_tls_verify_server_label">A kiszolgáló ellenőrizése </string>
@@ -120,6 +120,8 @@
   <string name="account_export_end_error_title">Hiba</string>
   <string name="account_export_end_error_message">Fiók exportálása nem sikerült. Ismeretlen hiba történt.</string>
   <string name="account_enter_password">A jelszó megadása</string>
+  <string name="account_share_body">Lépjen kapcsolatba velem „%1$s” a Jami elosztott közlés emelvény használatával: %2$s</string>
+  <string name="account_share_body_with_username">Lépjen kapcsolatba velem „%1$s” vagy a nyilvános felhasználónév „%2$s” a Jami elosztott közlés emelvény használatával: %3$s</string>
   <string name="account_contact_me">Lépjen kapcsolatba velem a Jami-n!</string>
   <string name="update_account">Fiók frissítése</string>
   <string name="account_migration">Jami fiókja frissíthető.\ nKérjük hogy, adja meg a jelszavát.</string>

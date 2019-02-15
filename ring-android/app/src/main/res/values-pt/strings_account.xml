@@ -120,6 +120,8 @@
   <string name="account_export_end_error_title">Erro</string>
   <string name="account_export_end_error_message">Não foi possível exportar a conta. Ocorreu um erro desconhecido.</string>
   <string name="account_enter_password">introduza a palavra-chave</string>
+  <string name="account_share_body">Contacte-me utilizando \'%1$s\' na plataforma de comunicação distribuida Jami: %2$s</string>
+  <string name="account_share_body_with_username">Contacte-me utilizando \'%1$s\' ou o meu nome público de utilizador \'%2$s\' na plataforma de comunicação distribuída Jami: %3$s</string>
   <string name="account_contact_me">Contacte-me no Jami!</string>
   <string name="update_account">Atualizar conta</string>
   <string name="account_migration">A sua conta Jami pode ser atualizada.\nPor favor introduza a sua palavra-chave.</string>

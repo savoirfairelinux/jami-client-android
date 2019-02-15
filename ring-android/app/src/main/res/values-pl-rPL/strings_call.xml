@@ -21,21 +21,21 @@ along with this program; if not, write to the Free Software
 -->
 <resources>
     <!-- Call error -->
-    <string name="call_error_no_microphone">通话已取消。未检测到麦克风。</string>
-    <string name="call_error_no_camera_no_microphone">通话已取消。未检测到摄像头或麦克风。</string>
+    <string name="call_error_no_microphone">Rozmowa anulowana. Nie wykryto mikrofonu.</string>
+    <string name="call_error_no_camera_no_microphone">Rozmowa anulowana. Nie wykryto kamery lub mikrofonu.</string>
 
     <!-- SipCalls -->
-    <string name="call_human_state_searching">正在搜索</string>
-    <string name="call_human_state_incoming">来电</string>
-    <string name="call_human_state_connecting">正在连接</string>
-    <string name="call_human_state_ringing">正在呼叫</string>
-    <string name="call_human_state_current">正在通话</string>
-    <string name="call_human_state_hungup">结束</string>
-    <string name="call_human_state_busy">忙碌</string>
-    <string name="call_human_state_failure">失败</string>
-    <string name="call_human_state_hold">等待</string>
-    <string name="call_human_state_unhold">取消等待</string>
-    <string name="call_human_state_over">已结束</string>
-    <string name="call_human_state_none">无</string>
+    <string name="call_human_state_searching">Wyszukiwanie</string>
+    <string name="call_human_state_incoming">Przychodzące</string>
+    <string name="call_human_state_connecting">Łączenie</string>
+    <string name="call_human_state_ringing">Dzwonienie</string>
+    <string name="call_human_state_current">Rozmawianie</string>
+    <string name="call_human_state_hungup">Koniec</string>
+    <string name="call_human_state_busy">Zajęty</string>
+    <string name="call_human_state_failure">Nie powiodła się</string>
+    <string name="call_human_state_hold">Czekanie</string>
+    <string name="call_human_state_unhold">Wznów</string>
+    <string name="call_human_state_over">Koniec</string>
+    <string name="call_human_state_none">Nic</string>
     <!-- Conferences -->
 </resources>

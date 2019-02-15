@@ -65,24 +65,31 @@
   <string name="notif_channel_requests">Anfragen</string>
   <string name="notif_channel_file_transfer">Dateitransfer</string>
   <string name="notif_channel_background_service">Hintergrunddienst</string>
+  <string name="notif_channel_background_service_descr">Ermöglicht den jederzeitigen Empfang von Anrufen und Nachrichten.</string>
+  <string name="notif_background_service">Jami läuft momentan im Hintergrund</string>
   <string name="notif_mark_as_read">Als gelesen markieren</string>
+  <string name="notif_dismiss">Verwerfen</string>
+  <string name="notif_reply">Antworten</string>
   <string name="notif_incoming_file_transfer_title">Eingehende Datei von %1$s</string>
   <string name="notif_incoming_file_transfer">Jemand möchte Ihnen eine Datei schicken</string>
   <string name="notif_outgoing_file_transfer_title">Datei an %1$s senden</string>
   <string name="notif_outgoing_file_transfer">Jemand möchte Ihnen eine Datei schicken</string>
+  <string name="notif_incoming_picture">Bild von %1$s</string>
   <string name="action_open">Öffnen</string>
   <!--Call Fragment-->
-  <string name="you_txt_prefix">Du:</string>
+  <string name="you_txt_prefix">Sie:</string>
   <string name="action_call_hangup">Auflegen</string>
   <string name="ongoing_call">Derzeitiger Anruf</string>
   <string name="hist_in_call">Eingehender Anruf von %1$s</string>
   <string name="hist_out_call">Ausgehender Anruf von %1$s</string>
   <string name="start_error_title">Jami konnte nicht gestartet werden!</string>
+  <string name="start_error_mic_required">Jami benötigt die Erlaubnis, auf das Mikrofon zuzugreifen.</string>
   <string name="action_call_accept">Anruf annehmen</string>
   <string name="action_call_decline">Ablehnen</string>
   <string name="action_call_mic_mute">Mikrofon stummschalten</string>
   <string name="ab_action_speakerphone">Lautsprecher einschalten</string>
   <string name="ab_action_contact_add">Kontakte hinzufügen</string>
+  <string name="ab_action_contact_add_question">Zu Kontakten hinzufügen?</string>
   <string name="hist_contact_added">Kontakt hinzugefügt</string>
   <string name="hist_invitation_received">Einladung erhalten</string>
   <string name="ab_action_audio_call">Audioanruf</string>
@@ -105,27 +112,47 @@
   <string name="permission_dialog_camera_message">Für Video-Konversationen benötigt die Anwendung Zugriff auf die Kamera. Bitte erteilen Sie diese Berechtigung.</string>
   <string name="ringtone_error_title">Fehler</string>
   <string name="ringtone_error_format_not_supported">Dieses Format wird nicht unterstützt.</string>
+  <string name="ringtone_error_size_too_big">Diese Datei ist zu groß. Die maximale Größe ist %1$dkB.</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Ring benötigt die Berechtigung \"Kontaktdaten lesen\" für diese Funktion. Bitte erteilen Sie diese.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Ring benötigt die Berechtigung \"Anruflisten schreiben\" für diese Funktion. Bitte erteilen Sie diese.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Scannen Sie den QR-Code des Kontos, das Sie hinzufügen möchten.</string>
   <!--Settings-->
+  <string name="clear_history_dialog_title">Verlauf löschen?</string>
+  <string name="clear_history_dialog_message">Diese Aktion kann nicht rückgängig gemacht werden.</string>
   <string name="clear_history_completed">Der Verlauf wurde gelöscht.</string>
   <!--Conversation-->
+  <string name="conversation_details">Details</string>
   <string name="conversation_action_delete_this">Diese Unterhaltung löschen</string>
   <string name="conversation_action_delete_this_title">Diese Unterhaltung löschen?</string>
   <string name="conversation_action_delete_this_message">Diese Aktion kann nicht rückgängig gemacht werden.</string>
   <string name="conversation_action_history_clear">Verlauf leeren</string>
+  <string name="conversation_action_history_clear_title">Gesprächsverlauf löschen?</string>
+  <string name="conversation_action_history_clear_message">Das wird den Gesprächsverlauf endgültig löschen.</string>
   <string name="conversation_action_remove_this">Kontakt löschen</string>
+  <string name="conversation_action_remove_this_title">Diesen Kontakt löschen?</string>
+  <string name="conversation_action_remove_this_message">Das wird den Kontakt und den Gesprächsverlauf endgültig löschen.</string>
   <string name="conversation_action_copy_peer_number">Nummer kopieren</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s in die Zwischenablage kopiert</string>
-  <string name="conversation_action_select_peer_number">Suche eine Nummer aus</string>
+  <string name="conversation_action_select_peer_number">Eine Nummer auswählen</string>
+  <string name="conversation_action_block_this">Kontakt blockieren</string>
   <string name="conversation_action_go_to_call">Zurück zum laufenden Anruf</string>
+  <string name="clip_contact_uri">Kontakt-Addresse</string>
+  <string name="block_contact_dialog_title">%1$s blockieren?</string>
+  <string name="block_contact_dialog_message">%1$s wird nicht in der Lage sein, Sie zu kontaktieren, bis Sie die Blockierung entfernen.</string>
+  <string name="block_contact_completed">%1$s wurde blockiert.</string>
   <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">%1$s hinzufügen?</string>
   <string name="prompt_new_password">Neues Passwort</string>
   <string name="prompt_new_password_optional">Neues Passwort (optional)</string>
   <string name="prompt_new_password_repeat">Neues Passwort wiederholen</string>
+  <string name="account_create_title">Ein Jami-Konto erstellen</string>
   <string name="prompt_new_username">Neuen Benutzernamen eingeben</string>
+  <string name="help_password_choose">Wählen Sie ein sicheres Passwort, an das Sie sich erinnern können, um ihr Jami-Konto zu schützen.</string>
+  <string name="help_password_enter">Geben Sie ihr Haupt-Jami-Kontopasswort ein</string>
+  <string name="help_pin_enter">Geben Sie die PIN eines anderen konfigurierten Jami-Kontos ein. Benutzen Sie die Funktion \"Exportiere Konto\",bei Jami, um die PIN zu erhalten.</string>
   <string name="wizard_next">Weiter</string>
   <string name="wizard_back">Zurück</string>
   <string name="wizard_skip">Überspringen</string>
@@ -136,6 +163,7 @@
   <string name="take_a_photo">Foto machen</string>
   <string name="profile_name_hint">Name eingeben (optional)</string>
   <!--Share fragment-->
+  <string name="share_message">Diesen Code mit Jami scannen</string>
   <string name="share_message_no_account">Bitte wählen Sie ein Konto aus.</string>
   <string name="share_your_account_information">Teile meine Kontaktinformationen</string>
   <string name="generic_error_migration">Fehler</string>
@@ -148,12 +176,14 @@
   <string name="contact_request_msg">Du hast %1$s Kontaktanfragen</string>
   <string name="contact_request_account">Für %1$s</string>
   <string name="no_requests">0 Kontaktanfragen</string>
+  <string name="message_contact_not_trusted_yet">%s ist noch nicht in Ihrer Kontaktliste.\nDiese Kontaktanfrage annehmen oder ablehnen?</string>
+  <string name="message_contact_not_trusted">%s ist nicht in Ihrer Kontaktliste.\nNeuen Kontakt hinzufügen?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Senden</string>
   <string name="send_request_title">Sende eine Kontaktanfrage</string>
   <string name="send_request_msg">Sie müssen eine Kontaktanfrage senden, um mit diesem Benutzer zu kommunizieren. Solange Ihr Kontakt die Anforderung nicht akzeptiert hat, können Sie Nachrichten senden, aber Ihr Kontakt kann diese nicht beantworten.</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">0 gesperrte Kontakte</string>
+  <string name="no_blocked_contact">0 blockierte Kontakte</string>
   <!--Smartlist-->
   <string name="no_contact_request">Keine Kontaktanfrage gesendet</string>
   <string name="contact_request_sent">Kontaktanfrage gesendet</string>
@@ -164,9 +194,21 @@
   <string name="generic_error">Ein unbekannter Fehler ist aufgetreten</string>
   <!--File Transfer-->
   <string name="invalid_file">Ungültige Datei</string>
+  <string name="not_able_to_write_file">Datei kann nicht geschrieben werden</string>
+  <string name="file_transfer_status_created">Übertragung initialisieren</string>
+  <string name="file_transfer_status_unsupported">nicht unterstützt</string>
+  <string name="file_transfer_status_wait_peer_acceptance">warten auf Annahme durch Partner</string>
+  <string name="file_transfer_status_wait_host_acceptance">warten auf Annahme durch Host</string>
+  <string name="file_transfer_status_ongoing">läuft</string>
   <string name="file_transfer_status_finished">abgeschlossen</string>
+  <string name="file_transfer_status_closed_by_host">vom Host geschlossen</string>
+  <string name="file_transfer_status_closed_by_peer">vom Partner geschlossen</string>
+  <string name="file_transfer_status_invalid_pathname">Ungültiger Pfadname</string>
+  <string name="file_transfer_status_unjoinable_peer">Partner nicht erreichbar</string>
   <string name="file_saved_in">Datei gespeichert in %s</string>
   <string name="no_space_left_on_device">Kein Speicherplatz mehr auf dem Gerät</string>
+  <string name="title_media_viewer">Dateibetrachter</string>
+  <string name="menu_file_open">Datei öffnen</string>
   <string name="menu_file_download">Datei herunterladen</string>
   <string name="menu_file_delete">Datei löschen</string>
   <string name="menu_file_share">Datei teilen</string>
