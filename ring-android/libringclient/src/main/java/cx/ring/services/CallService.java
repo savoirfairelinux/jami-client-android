@@ -96,7 +96,7 @@ public class CallService {
             if (audioOnly) {
                 Ringservice.muteLocalMedia(callId, "MEDIA_TYPE_VIDEO", true);
             }
-            CallContact contact = mContactService.findContactByNumber(account, number);
+            CallContact contact = mContactService.findContactByNumber(mAccountService.getAccount(account), number);
             SipCall call = addCall(account, callId, number, SipCall.Direction.OUTGOING);
             call.muteVideo(audioOnly);
             call.setContact(contact);
@@ -305,7 +305,7 @@ public class CallService {
                 return null;
             }
             sipCall.setCallState(callState);
-            CallContact contact = mContactService.findContact(sipCall.getAccount(), sipCall.getNumberUri());
+            CallContact contact = mContactService.findContact(mAccountService.getAccount(sipCall.getAccount()), sipCall.getNumberUri());
             String registeredName = callDetails.get("REGISTERED_NAME");
             if (registeredName != null && !registeredName.isEmpty()) {
                 contact.setUsername(registeredName);
