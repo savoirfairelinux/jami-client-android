@@ -210,6 +210,7 @@ public class AccountService {
             if (!newAccounts.contains(acc))
                 acc.cleanup();
 
+        mAccountList = newAccounts;
         for (String accountId : accountIds) {
             Account account = getAccount(accountId);
             Map<String, String> details = Ringservice.getAccountDetails(accountId).toNative();
@@ -258,7 +259,6 @@ public class AccountService {
         }
         mHasSipAccount = hasSip;
         mHasRingAccount = hasJami;
-        mAccountList = newAccounts;
         if (!newAccounts.isEmpty()) {
             Account newAccount = newAccounts.get(0);
             if (mCurrentAccount != newAccount) {
@@ -1033,8 +1033,6 @@ public class AccountService {
     }
 
     void knownDevicesChanged(String accountId, Map<String, String> devices) {
-        Log.d(TAG, "knownDevicesChanged: " + accountId + ", " + devices);
-
         Account accountChanged = getAccount(accountId);
         if (accountChanged != null) {
             accountChanged.setDevices(devices);
@@ -1135,7 +1133,7 @@ public class AccountService {
     }
 
     void registeredNameFound(String accountId, int state, String address, String name) {
-        Log.d(TAG, "registeredNameFound: " + accountId + ", " + state + ", " + name + ", " + address);
+        // Log.d(TAG, "registeredNameFound: " + accountId + ", " + state + ", " + name + ", " + address);
 
         Account account = getAccount(accountId);
         if (account != null) {
