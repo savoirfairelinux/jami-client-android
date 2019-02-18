@@ -117,11 +117,11 @@ public abstract class ContactService {
      *
      * @return The found/created contact
      */
-    public CallContact findContactByNumber(String accountId, String number) {
-        if (StringUtils.isEmpty(number) || StringUtils.isEmpty(accountId)) {
+    public CallContact findContactByNumber(Account account, String number) {
+        if (StringUtils.isEmpty(number) || account == null) {
             return null;
         }
-        return findContact(accountId, new Uri(number));
+        return findContact(account, new Uri(number));
     }
 
     public CallContact findContact(Account account, Uri uri) {
@@ -135,9 +135,5 @@ public abstract class ContactService {
             loadContactData(contact).subscribe();
         }
         return contact;
-    }
-
-    public CallContact findContact(String accountId, Uri uri) {
-        return findContact(mAccountService.getAccount(accountId), uri);
     }
 }
