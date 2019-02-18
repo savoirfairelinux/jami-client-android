@@ -62,7 +62,6 @@ import cx.ring.services.DaemonService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.PreferencesService;
-import cx.ring.services.PresenceService;
 
 public abstract class RingApplication extends Application {
     private static final String TAG = RingApplication.class.getSimpleName();
@@ -90,8 +89,6 @@ public abstract class RingApplication extends Application {
     DeviceRuntimeService mDeviceRuntimeService;
     @Inject
     ContactService mContactService;
-    @Inject
-    PresenceService mPresenceService;
     @Inject
     ConversationFacade mConversationFacade;
 
