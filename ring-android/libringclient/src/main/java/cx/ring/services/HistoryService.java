@@ -28,14 +28,11 @@ import com.j256.ormlite.table.TableUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import cx.ring.model.CallContact;
-import cx.ring.model.Conversation;
 import cx.ring.model.ConversationElement;
 import cx.ring.model.HistoryCall;
 import cx.ring.model.DataTransfer;
-import cx.ring.model.HistoryEntry;
 import cx.ring.model.HistoryText;
 import cx.ring.model.TextMessage;
 import cx.ring.model.Uri;
@@ -44,7 +41,6 @@ import cx.ring.utils.StringUtils;
 import io.reactivex.Completable;
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
 
 public abstract class HistoryService {
@@ -145,53 +141,6 @@ public abstract class HistoryService {
             deleteDataTransferHistoryBuilder.where().eq(DataTransfer.COLUMN_ACCOUNT_ID_NAME, accountId).and().eq(DataTransfer.COLUMN_PEER_ID_NAME, contactId);
             deleted += deleteDataTransferHistoryBuilder.delete();
             Log.w(TAG, "clearHistory: removed " + deleted + " elements");
-        }).subscribeOn(scheduler);
-    }
-
-    /**
-     * Removes all the text messages and call histories from the database.
-     *
-     * @param conversation The conversation containing the elements to delete.
-     */
-    public Completable clearHistoryForConversation(@NonNull Conversation conversation) {
-        if (conversation == null) {
-            Log.d(TAG, "clearHistoryForConversation: conversation is null");
-            return Completable.error(NullPointerException::new);
-        }
-
-        return Completable.fromAction(() -> {
-            Map<String, HistoryEntry> history = conversation.getRawHistory();
-            for (Map.Entry<String, HistoryEntry> entry : history.entrySet()) {
-                //~ Deleting messages
-                ArrayList<Long> textMessagesIds = new ArrayList<>(entry.getValue().getTextMessages().size());
-                for (TextMessage textMessage : entry.getValue().getTextMessages().values()) {
-                    textMessagesIds.add(textMessage.getId());
-                }
-                DeleteBuilder<HistoryText, Long> deleteTextHistoryBuilder = getTextHistoryDao()
-                        .deleteBuilder();
-                deleteTextHistoryBuilder.where().in(HistoryText.COLUMN_ID_NAME, textMessagesIds);
-                deleteTextHistoryBuilder.delete();
-
-                //~ Deleting calls
-                ArrayList<String> callIds = new ArrayList<>(entry.getValue().getCalls().size());
-                for (HistoryCall historyCall : entry.getValue().getCalls().values()) {
-                    callIds.add(historyCall.getCallId().toString());
-                }
-                DeleteBuilder<HistoryCall, Integer> deleteCallsHistoryBuilder = getCallHistoryDao()
-                        .deleteBuilder();
-                deleteCallsHistoryBuilder.where().in(HistoryCall.COLUMN_CALL_ID_NAME, callIds);
-                deleteCallsHistoryBuilder.delete();
-
-                //~ Deleting data transfers
-                ArrayList<Long> dataTransferIds = new ArrayList<>(entry.getValue().getDataTransfers().size());
-                for (DataTransfer dataTransfer : entry.getValue().getDataTransfers().values()) {
-                    dataTransferIds.add(dataTransfer.getId());
-                }
-                DeleteBuilder<DataTransfer, Long> deleteDataTransfersHistoryBuilder = getDataHistoryDao()
-                        .deleteBuilder();
-                deleteDataTransfersHistoryBuilder.where().in(DataTransfer.COLUMN_ID_NAME, dataTransferIds);
-                deleteDataTransfersHistoryBuilder.delete();
-            }
         }).subscribeOn(scheduler);
     }
 

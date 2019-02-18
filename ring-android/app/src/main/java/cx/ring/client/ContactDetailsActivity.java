@@ -169,7 +169,7 @@ public class ContactDetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(view -> goToConversationActivity(mConversation.getLastAccountUsed(), mContact.getPrimaryNumber()));
+        fab.setOnClickListener(view -> goToConversationActivity(mConversation.getAccountId(), mContact.getPrimaryNumber()));
 
         Intent intent = getIntent();
         Uri uri = intent.getData();
@@ -183,7 +183,7 @@ public class ContactDetailsActivity extends AppCompatActivity {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(conversation -> {
                             CallContact contact = conversation.getContact();
-                            mPreferences = getSharedPreferences(conversation.getLastAccountUsed() + "_" + conversation.getContact().getPrimaryNumber(), Context.MODE_PRIVATE);
+                            mPreferences = getSharedPreferences(conversation.getAccountId() + "_" + conversation.getContact().getPrimaryNumber(), Context.MODE_PRIVATE);
                             int color = mPreferences.getInt(ConversationFragment.KEY_PREFERENCE_CONVERSATION_COLOR, getResources().getColor(R.color.color_primary_light));
                             colorAction.setIconTint(color);
                             adapter.notifyItemChanged(colorActionPosition);
@@ -210,15 +210,15 @@ public class ContactDetailsActivity extends AppCompatActivity {
                 });
                 adapter.actions.add(colorAction);
                 adapter.actions.add(new ContactAction(R.drawable.ic_call_white, getText(R.string.ab_action_audio_call), () ->
-                        goToCallActivity(mConversation.getLastAccountUsed(), mContact.getPrimaryNumber(), true)));
+                        goToCallActivity(mConversation.getAccountId(), mContact.getPrimaryNumber(), true)));
                 adapter.actions.add(new ContactAction(R.drawable.ic_videocam_white, getText(R.string.ab_action_video_call), () ->
-                        goToCallActivity(mConversation.getLastAccountUsed(), mContact.getPrimaryNumber(), false)));
+                        goToCallActivity(mConversation.getAccountId(), mContact.getPrimaryNumber(), false)));
                 adapter.actions.add(new ContactAction(R.drawable.baseline_clear_all_24, getText(R.string.conversation_action_history_clear), () ->
                         new AlertDialog.Builder(ContactDetailsActivity.this)
                                 .setTitle(R.string.clear_history_dialog_title)
                                 .setMessage(R.string.clear_history_dialog_message)
                                 .setPositiveButton(R.string.conversation_action_history_clear, (b, i) -> {
-                                    mConversationFacade.clearHistory(mConversation.getLastAccountUsed(), mContact.getPrimaryUri()).subscribe();
+                                    mConversationFacade.clearHistory(mConversation.getAccountId(), mContact.getPrimaryUri()).subscribe();
                                     Snackbar.make(binding.getRoot(), R.string.clear_history_completed, Snackbar.LENGTH_LONG).show();
                                 })
                                 .setNegativeButton(android.R.string.cancel, null)
@@ -229,7 +229,7 @@ public class ContactDetailsActivity extends AppCompatActivity {
                                 .setTitle(getString(R.string.block_contact_dialog_title, contactAction.title))
                                 .setMessage(getString(R.string.block_contact_dialog_message, contactAction.title))
                                 .setPositiveButton(R.string.conversation_action_block_this, (b, i) -> {
-                                    mAccountService.removeContact(mConversation.getLastAccountUsed(), mContact.getPrimaryUri().getRawRingId(), true);
+                                    mAccountService.removeContact(mConversation.getAccountId(), mContact.getPrimaryUri().getRawRingId(), true);
                                     Toast.makeText(getApplicationContext(), getString(R.string.block_contact_completed, contactAction.title), Toast.LENGTH_LONG).show();
                                     finish();
                                 })
