@@ -107,7 +107,8 @@ public class ConversationFacade {
 
         mDisposableBag.add(mAccountService.getIncomingRequests()
                 .concatMapSingle(r -> getAccountSubject(r.getAccountId()))
-                .subscribe(a -> mNotificationService.showIncomingTrustRequestNotification(a)));
+                .subscribe(a -> mNotificationService.showIncomingTrustRequestNotification(a),
+                        e-> Log.e(TAG, "Error showing contact request")));
 
         mDisposableBag.add(mAccountService
                 .getIncomingMessages()
@@ -116,18 +117,20 @@ public class ConversationFacade {
                             a.addTextMessage(msg);
                             return msg;
                         }))
-                .subscribe(this::parseNewMessage));
+                .subscribe(this::parseNewMessage,
+                        e-> Log.e(TAG, "Error adding text message")));
 
         mDisposableBag.add(mAccountService
                 .getMessageStateChanges()
                 .concatMapSingle(txt -> getAccountSubject(txt.getAccount())
                         .map(a -> a.getByUri(txt.getNumberUri()))
                         .doOnSuccess(conv -> conv.updateTextMessage(txt)))
-                .subscribe());
+                .subscribe(c -> {}, e-> Log.e(TAG, "Error updating text message")));
 
         mDisposableBag.add(mAccountService
                 .getDataTransfers()
-                .subscribe(this::handleDataTransferEvent));
+                .subscribe(this::handleDataTransferEvent,
+                        e-> Log.e(TAG, "Error adding data transfer")));
     }
 
     public Single<Conversation> startConversation(String accountId, final Uri contactId) {
