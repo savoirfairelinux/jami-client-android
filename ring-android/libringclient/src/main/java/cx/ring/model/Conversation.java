@@ -23,13 +23,10 @@ package cx.ring.model;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.NavigableMap;
 import java.util.TreeMap;
 
 import cx.ring.utils.Log;
@@ -40,12 +37,12 @@ import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
 public class Conversation {
-
     private static final String TAG = Conversation.class.getSimpleName();
 
+    private final String mAccountId;
     private final CallContact mContact;
 
-    private final Map<String, HistoryEntry> mHistory = new HashMap<>();
+    private final NavigableMap<Long, ConversationElement> mHistory = new TreeMap<>();
     private final ArrayList<Conference> mCurrentCalls = new ArrayList<>();
     private final ArrayList<ConversationElement> mAggregateHistory = new ArrayList<>(32);
 
@@ -62,7 +59,8 @@ public class Conversation {
     // indicate the list needs sorting
     private boolean mDirty = false;
 
-    public Conversation(CallContact contact) {
+    public Conversation(String accountId, CallContact contact) {
+        mAccountId = accountId;
         mContact = contact;
     }
 
@@ -129,14 +127,7 @@ public class Conversation {
         if (getHistoryCalls().contains(call)) {
             return;
         }
-        String accountId = call.getAccountID();
-        if (mHistory.containsKey(accountId)) {
-            mHistory.get(accountId).addHistoryCall(call, getContact());
-        } else {
-            HistoryEntry entry = new HistoryEntry(accountId, getContact());
-            entry.addHistoryCall(call, getContact());
-            mHistory.put(accountId, entry);
-        }
+        //mHistory.addHistoryCall(call, getContact());
         mDirty = true;
         mAggregateHistory.add(call);
         newElementSubject.onNext(call);
@@ -149,15 +140,7 @@ public class Conversation {
         if (txt.getContact() == null) {
             txt.setContact(getContact());
         }
-        String accountId = txt.getAccount();
-        HistoryEntry accountEntry = mHistory.get(accountId);
-        if (accountEntry != null) {
-            accountEntry.addTextMessage(txt);
-        } else {
-            accountEntry = new HistoryEntry(accountId, getContact());
-            accountEntry.addTextMessage(txt);
-            mHistory.put(accountId, accountEntry);
-        }
+        mHistory.put(txt.getDate(), txt);
         mDirty = true;
         mAggregateHistory.add(txt);
         newElementSubject.onNext(txt);
@@ -177,24 +160,17 @@ public class Conversation {
         newElementSubject.onNext(event);
     }
 
-    public void updateTextMessage(TextMessage txt) {
-        HistoryEntry accountEntry = mHistory.get(txt.getAccount());
-        TextMessage msg = null;
-        if (accountEntry != null) {
-            msg = accountEntry.updateTextMessage(txt);
+    public void updateTextMessage(TextMessage text) {
+        long time = text.getDate();
+        NavigableMap<Long, ConversationElement> msgs = mHistory.subMap(time, true, time, true);
+        for (ConversationElement txt : msgs.values()) {
+            if (txt.equals(text)) {
+                ((TextMessage)txt).setStatus(text.getStatus());
+                updatedElementSubject.onNext(txt);
+                return;
+            }
         }
-        if (msg == null) {
-            Log.e(TAG, "Can't find message to update: " + txt.getId());
-        } else {
-            updatedElementSubject.onNext(msg);
-        }
-    }
-
-    public Map<String, HistoryEntry> getHistory() {
-        return mHistory;
-    }
-    public HistoryEntry getHistory(String accountId) {
-        return mHistory.get(accountId);
+        Log.e(TAG, "Can't find message to update: " + text.getId());
     }
 
     public ArrayList<ConversationElement> getAggregateHistory() {
@@ -217,24 +193,6 @@ public class Conversation {
 
     public Single<List<ConversationElement>> getSortedHistory() {
         return sortedHistory;
-    }
-
-    public Set<String> getAccountsUsed() {
-        return mHistory.keySet();
-    }
-
-    public String getLastAccountUsed() {
-        String last = null;
-        Date d = new Date(0);
-        for (Map.Entry<String, HistoryEntry> e : mHistory.entrySet()) {
-            Date nd = e.getValue().getLastInteractionDate();
-            if (d.compareTo(nd) < 0) {
-                d = nd;
-                last = e.getKey();
-            }
-        }
-        Log.i(TAG, "getLastAccountUsed " + last);
-        return last;
     }
 
     public ConversationElement getLastEvent() {
@@ -267,17 +225,18 @@ public class Conversation {
 
     public TreeMap<Long, TextMessage> getUnreadTextMessages() {
         TreeMap<Long, TextMessage> texts = new TreeMap<>();
-        for (HistoryEntry h : mHistory.values()) {
-            for (Map.Entry<Long, TextMessage> entry : h.getTextMessages().descendingMap().entrySet())
+        for (Map.Entry<Long, ConversationElement> entry : mHistory.descendingMap().entrySet()) {
+            ConversationElement value = entry.getValue();
+            if (value instanceof TextMessage) {
                 if (entry.getValue().isRead())
                     break;
-                else
-                    texts.put(entry.getKey(), entry.getValue());
+                texts.put(entry.getKey(), (TextMessage) entry.getValue());
+            }
         }
         return texts;
     }
 
-    public Map<String, HistoryEntry> getRawHistory() {
+    public NavigableMap<Long, ConversationElement> getRawHistory() {
         return mHistory;
     }
 
@@ -369,6 +328,10 @@ public class Conversation {
 
     public Observable<Integer> getColor() {
         return color;
+    }
+
+    public String getAccountId() {
+        return mAccountId;
     }
 
     public interface ConversationActionCallback {

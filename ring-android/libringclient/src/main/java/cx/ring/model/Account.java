@@ -210,10 +210,11 @@ public class Account {
     }
 
     public void addTextMessage(TextMessage txt) {
-        Conversation conversation;
+        Conversation conversation = null;
         if (!StringUtils.isEmpty(txt.getCallId())) {
             conversation = getConversationByCallId(txt.getCallId());
-        } else {
+        }
+        if (conversation == null) {
             conversation = getByUri(txt.getNumberUri());
             txt.setContact(conversation.getContact());
         }
@@ -722,7 +723,7 @@ public class Account {
             return conversation;
         }
         CallContact contact = getContactFromCache(key);
-        conversation = new Conversation(contact);
+        conversation = new Conversation(getAccountID(), contact);
         cache.put(key, conversation);
         return conversation;
     }

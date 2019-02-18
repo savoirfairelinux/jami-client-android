@@ -186,7 +186,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         mConversationDisposable.add(c.getCleared()
                 .observeOn(mUiScheduler)
                 .subscribe(view::refreshView));
-        mConversationDisposable.add(mContactService.getLoadedContact(mAccountId, c.getContact())
+        mConversationDisposable.add(mContactService.getLoadedContact(c.getAccountId(), c.getContact())
                 .observeOn(mUiScheduler)
                 .subscribe(contact -> initContact(account, mContactRingId, view)));
         mConversationDisposable.add(c.getNewElements()
