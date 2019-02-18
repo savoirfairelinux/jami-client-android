@@ -436,6 +436,10 @@ public class AccountService {
         return currentAccountSubject;
     }
 
+    public void subscribeBuddy(final String accountID, final String uri, final boolean flag) {
+        mExecutor.execute(() -> Ringservice.subscribeBuddy(accountID, uri, flag));
+    }
+
     /**
      * Send profile through SIP
      */
