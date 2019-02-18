@@ -258,19 +258,21 @@ public class NotificationServiceImpl implements NotificationService {
             return;
         }
 
+        Log.w(TAG, "showTextNotification " + accountId + " " + contact.getPrimaryNumber());
+        mContactService.getLoadedContact(accountId, contact).subscribe(c -> {
+            textNotification(accountId, texts, c);
+        });
+    }
+
+    private void textNotification(String accountId, TreeMap<Long, TextMessage> texts, CallContact contact) {
         Uri contactUri = contact.getPrimaryUri();
-        if (texts.isEmpty()) {
-            cancelTextNotification(contactUri);
-            return;
-        }
-        TextMessage last = texts.lastEntry().getValue();
         String contactId = contactUri.getRawUriString();
 
-        mContactService.loadContactData(contact);
         String contactName = contact.getDisplayName();
         if (TextUtils.isEmpty(contactName))
             return;
 
+        TextMessage last = texts.lastEntry().getValue();
         Intent intentConversation = new Intent(DRingService.ACTION_CONV_ACCEPT)
                 .setClass(mContext, DRingService.class)
                 .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
@@ -394,6 +396,7 @@ public class NotificationServiceImpl implements NotificationService {
             if (notifiedRequests.contains(contactKey)) {
                 return;
             }
+            mContactService.loadContactData(contact);
             mPreferencesService.saveRequestPreferences(account.getAccountID(), contactKey);
             messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_REQUEST);
             Bundle info = new Bundle();
