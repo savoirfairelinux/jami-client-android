@@ -36,7 +36,6 @@ import cx.ring.model.ConversationElement;
 import cx.ring.model.DataTransfer;
 import cx.ring.model.DataTransferEventCode;
 import cx.ring.model.HistoryCall;
-import cx.ring.model.HistoryEntry;
 import cx.ring.model.HistoryText;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
@@ -169,9 +168,11 @@ public class ConversationFacade {
 
     private boolean readMessages(Conversation conversation) {
         boolean updated = false;
-        for (HistoryEntry h : conversation.getRawHistory().values()) {
-            NavigableMap<Long, TextMessage> messages = h.getTextMessages();
-            for (TextMessage message : messages.descendingMap().values()) {
+            NavigableMap<Long, ConversationElement> messages = conversation.getRawHistory();
+            for (ConversationElement e : messages.descendingMap().values()) {
+                if (!(e instanceof TextMessage))
+                    continue;
+                TextMessage message = (TextMessage) e;
                 if (message.isRead()) {
                     break;
                 }
@@ -179,7 +180,6 @@ public class ConversationFacade {
                 mHistoryService.updateTextMessage(new HistoryText(message)).subscribe();
                 updated = true;
             }
-        }
         return updated;
     }
 
