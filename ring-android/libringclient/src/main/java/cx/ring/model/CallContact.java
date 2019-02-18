@@ -20,14 +20,11 @@
  */
 package cx.ring.model;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Date;
 
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
-import cx.ring.utils.Tuple;
-import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
@@ -55,21 +52,16 @@ public class CallContact {
     private Date mAddedDate = null;
     private boolean mOnline = false;
 
-    private boolean subscribed = false;
     private boolean usernameLoaded = false;
     public boolean detailsLoaded = false;
 
     // Profile
     private VCard vcard = null;
     private String mDisplayName;
-    //private WeakReference<byte[]> mContactPhoto = new WeakReference<>(null);
     private Object mContactPhoto = null;
 
-    private Subject<CallContact> mContactUpdates = BehaviorSubject.create();
-
-    public Observable<CallContact> getUpdates() {
-        return mContactUpdates;
-    }
+    private final Subject<CallContact> mContactUpdates = PublishSubject.create();
+    private Observable<CallContact> mContactObservable;
 
     public CallContact(long cID) {
         this(cID, null, null, UNKNOWN_ID);
@@ -105,11 +97,14 @@ public class CallContact {
         return new CallContact(UNKNOWN_ID, null, null, 0, phones, false);
     }
 
-    public boolean subscribe() {
-        if (subscribed)
-            return false;
-        subscribed = true;
-        return true;
+    public Observable<CallContact> getUpdatesSubject() {
+        return mContactUpdates;
+    }
+    public Observable<CallContact> getUpdates() {
+        return mContactObservable;
+    }
+    public void setUpdates(Observable<CallContact> observable) {
+        mContactObservable = observable;
     }
 
     public boolean matches(String query) {

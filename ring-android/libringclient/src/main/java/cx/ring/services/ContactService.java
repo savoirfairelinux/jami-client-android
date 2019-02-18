@@ -22,18 +22,18 @@ package cx.ring.services;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Settings;
 import cx.ring.model.Uri;
+import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
 import ezvcard.VCard;
 import io.reactivex.Completable;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 
 /**
@@ -43,7 +43,7 @@ import io.reactivex.Single;
  * - Provide query tools to search contacts by id, number, ...
  */
 public abstract class ContactService {
-    private final static String TAG = ContactService.class.getName();
+    private final static String TAG = ContactService.class.getSimpleName();
 
     @Inject
     PreferencesService mPreferencesService;
@@ -80,6 +80,35 @@ public abstract class ContactService {
             }
             return new HashMap<>();
         });
+    }
+
+    public Observable<CallContact> observeContact(String accountId, CallContact contact) {
+        Uri uri = contact.getPrimaryUri();
+        String uriString = uri.getRawUriString();
+        synchronized (contact) {
+            if (contact.getUpdates() == null) {
+                contact.setUpdates(contact.getUpdatesSubject()
+                        .doOnSubscribe(d -> {
+                            mAccountService.subscribeBuddy(accountId, uriString, true);
+                            if (!contact.isUsernameLoaded())
+                                mAccountService.lookupAddress(accountId, "", uri.getRawRingId());
+                            loadContactData(contact)
+                                    .subscribe(() -> {}, e -> Log.e(TAG, "Error loading contact data: " + e.getMessage()));
+                        })
+                        .doOnDispose(() -> {
+                            mAccountService.subscribeBuddy(accountId, uriString, false);
+                        })
+                        .replay(1)
+                        .refCount());
+            }
+            return contact.getUpdates();
+        }
+    }
+
+    public Single<CallContact> getLoadedContact(String accountId, CallContact contact) {
+        return observeContact(accountId, contact)
+                .filter(c -> c.isUsernameLoaded() && c.detailsLoaded)
+                .firstOrError();
     }
 
     /**

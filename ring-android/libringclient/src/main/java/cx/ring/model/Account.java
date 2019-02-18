@@ -36,7 +36,6 @@ import cx.ring.utils.StringUtils;
 import cx.ring.utils.Tuple;
 import ezvcard.VCard;
 import io.reactivex.Observable;
-import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
@@ -53,11 +52,11 @@ public class Account {
 
     private AccountConfig mVolatileDetails;
     private AccountConfig mDetails;
-    private ArrayList<AccountCredentials> credentialsDetails = new ArrayList<>();
+    private final ArrayList<AccountCredentials> credentialsDetails = new ArrayList<>();
     private Map<String, String> devices = new HashMap<>();
-    private Map<String, CallContact> mContacts = new HashMap<>();
-    private Map<String, TrustRequest> mRequests = new HashMap<>();
-    private Map<String, CallContact> mContactCache = new HashMap<>();
+    private final Map<String, CallContact> mContacts = new HashMap<>();
+    private final Map<String, TrustRequest> mRequests = new HashMap<>();
+    private final Map<String, CallContact> mContactCache = new HashMap<>();
 
     private final Map<String, Conversation> conversations = new HashMap<>();
     private final Map<String, Conversation> pending = new HashMap<>();
@@ -81,19 +80,6 @@ public class Account {
     private VCard mProfile;
     private Tuple<String, Object> mLoadedProfile;
 
-    private final Subject<Boolean> presenceSubject = BehaviorSubject.createDefault(false);
-    private final Observable<Account> presenceUpdates = Observable.create((ObservableOnSubscribe<Account>) e -> {})
-            .doOnSubscribe(s -> presenceSubject.onNext(true))
-            .doOnDispose(() -> presenceSubject.onNext(false))
-            .share();
-
-    public Observable<Account> getPresenceUpdates() {
-        return presenceUpdates;
-    }
-    public Observable<Boolean> getPresenceEnabled() {
-        return presenceSubject;
-    }
-
     public Account(String bAccountID) {
         accountID = bAccountID;
         mDetails = new AccountConfig();
@@ -114,7 +100,6 @@ public class Account {
         pendingSubject.onComplete();
         contactListSubject.onComplete();
         trustRequestsSubject.onComplete();
-        presenceSubject.onComplete();
     }
 
     public Observable<List<Conversation>> getConversationsSubject() {
@@ -253,15 +238,17 @@ public class Account {
     }
 
     public CallContact getContactFromCache(String key) {
-        CallContact contact = mContactCache.get(key);
-        if (contact == null) {
-            if (isSip())
-                contact = CallContact.buildSIP(new Uri(key));
-            else
-                contact = CallContact.build(key);
-            mContactCache.put(key, contact);
+        synchronized (mContactCache) {
+            CallContact contact = mContactCache.get(key);
+            if (contact == null) {
+                if (isSip())
+                    contact = CallContact.buildSIP(new Uri(key));
+                else
+                    contact = CallContact.build(key);
+                mContactCache.put(key, contact);
+            }
+            return contact;
         }
-        return contact;
     }
     public CallContact getContactFromCache(Uri uri) {
         return getContactFromCache(uri.getRawUriString());

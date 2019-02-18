@@ -103,33 +103,6 @@ public class ConversationFacade {
                 .observeOn(Schedulers.io())
                 .subscribe(this::onCallStateChange));
 
-        Observable<Account> accounts = mAccountService
-                .getObservableAccountList()
-                .flatMapIterable(a -> a)
-                .distinct();
-
-        mDisposableBag.add(accounts.flatMap(a -> a
-                .getPresenceEnabled()
-                .observeOn(Schedulers.computation())
-                .switchMap(enabled -> Observable.merge(a.getConversationsSubject(), a.getPendingSubject())
-                        .doOnNext(c -> {
-                            for (Conversation conversation : c) {
-                                CallContact contact = conversation.getContact();
-                                Uri id = contact.getPrimaryUri();
-                                if (enabled) {
-                                    mAccountService.subscribeBuddy(a.getAccountID(), id.getRawUriString(), true);
-                                    if (contact.subscribe()) {
-                                        mContactService.loadContactData(contact)
-                                                .subscribe(() -> {}, e -> Log.e(TAG, "Error loading contact data", e));
-                                        mAccountService.lookupAddress(a.getAccountID(), "", id.getRawRingId());
-                                    }
-                                } else {
-                                    mAccountService.subscribeBuddy(a.getAccountID(), id.getRawUriString(), false);
-                                }
-                            }
-                        })))
-                .subscribe());
-
         mDisposableBag.add(currentAccountSubject
                 .switchMap(a -> a.getPendingSubject()
                         .doOnNext(p -> mNotificationService.showIncomingTrustRequestNotification(a)))

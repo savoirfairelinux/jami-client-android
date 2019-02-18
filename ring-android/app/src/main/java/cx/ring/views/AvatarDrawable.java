@@ -111,7 +111,7 @@ public class AvatarDrawable extends Drawable {
     }
 
     public AvatarDrawable(Context context, Bitmap photo, String name, String id, boolean crop) {
-        Log.w("AvatarDrawable", photo + " " + name + " " + id);
+        //Log.w("AvatarDrawable", photo + " " + name + " " + id);
         cropCircle = crop;
         Resources res = context.getResources();
         minSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, SIZE_AB, res.getDisplayMetrics());
