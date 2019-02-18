@@ -184,6 +184,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         mConversationDisposable.add(c.getSortedHistory()
                 .subscribe(view::refreshView));
         mConversationDisposable.add(c.getCleared()
+                .observeOn(mUiScheduler)
                 .subscribe(view::refreshView));
         mConversationDisposable.add(c.getContact().getUpdates()
                 .observeOn(mUiScheduler)
