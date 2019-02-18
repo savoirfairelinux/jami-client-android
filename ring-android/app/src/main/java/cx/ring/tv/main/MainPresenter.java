@@ -56,7 +56,6 @@ public class MainPresenter extends RootPresenter<MainView> {
 
     private final Observable<Account> accountSubject;
     private final Observable<ArrayList<TVListViewModel>> conversationViews;
-    private final Observable<Account> presenceListener;
 
     @Inject
     public MainPresenter(AccountService accountService,
@@ -73,9 +72,6 @@ public class MainPresenter extends RootPresenter<MainView> {
 
         accountSubject = conversationFacade
                 .getCurrentAccountSubject();
-
-        presenceListener = accountSubject
-                .switchMap(Account::getPresenceUpdates);
 
         conversationViews = accountSubject
                 .switchMap(a -> a
@@ -114,8 +110,6 @@ public class MainPresenter extends RootPresenter<MainView> {
     private void loadConversations() {
         mCompositeDisposable.clear();
         getView().showLoading(true);
-
-        mCompositeDisposable.add(presenceListener.subscribe());
 
         mCompositeDisposable.add(conversationViews
                 .subscribe(viewModels -> {
