@@ -384,51 +384,71 @@ public class NotificationServiceImpl implements NotificationService {
         mNotificationBuilders.put(notificationId, messageNotificationBuilder);
     }
 
+    private NotificationCompat.Builder getRequestNotificationBuilder(String accountId) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_REQUEST)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setAutoCancel(true)
+                .setSmallIcon(R.drawable.ic_ring_logo_white)
+                .setCategory(NotificationCompat.CATEGORY_SOCIAL)
+                .setContentTitle(mContext.getString(R.string.contact_request_title));
+        Intent intentOpenTrustRequestFragment = new Intent(HomeActivity.ACTION_PRESENT_TRUST_REQUEST_FRAGMENT)
+                .setClass(mContext, HomeActivity.class)
+                .putExtra(ContactRequestsFragment.ACCOUNT_ID, accountId);
+        builder.setContentIntent(PendingIntent.getActivity(mContext,
+                random.nextInt(), intentOpenTrustRequestFragment, PendingIntent.FLAG_ONE_SHOT));
+        builder.setColor(ResourcesCompat.getColor(mContext.getResources(),
+                R.color.color_primary_dark, null));
+        return builder;
+    }
+
     @Override
     public void showIncomingTrustRequestNotification(final Account account) {
         int notificationId = getIncomingTrustNotificationId(account.getAccountID());
-        NotificationCompat.Builder messageNotificationBuilder;
         Set<String> notifiedRequests = mPreferencesService.loadRequestsPreferences(account.getAccountID());
 
         Collection<Conversation> requests = account.getPending();
-        if (requests.isEmpty()) {
+        if (requests.isEmpty())
             return;
-        } else if (requests.size() == 1) {
+        if (requests.size() == 1) {
             Conversation request = requests.iterator().next();
             CallContact contact = request.getContact();
             String contactKey = contact.getPrimaryUri().getRawRingId();
             if (notifiedRequests.contains(contactKey)) {
                 return;
             }
-            mContactService.loadContactData(contact);
-            mPreferencesService.saveRequestPreferences(account.getAccountID(), contactKey);
-            messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_REQUEST);
-            Bundle info = new Bundle();
-            info.putString(TRUST_REQUEST_NOTIFICATION_ACCOUNT_ID, account.getAccountID());
-            info.putString(TRUST_REQUEST_NOTIFICATION_FROM, contact.getPrimaryNumber());
-            messageNotificationBuilder.setContentText(contact.getRingUsername())
-                    .addAction(R.drawable.baseline_person_add_24, mContext.getText(R.string.accept),
-                            PendingIntent.getService(mContext, random.nextInt(),
-                                    new Intent(DRingService.ACTION_TRUST_REQUEST_ACCEPT)
-                                            .setClass(mContext, DRingService.class)
-                                            .putExtras(info),
-                                    PendingIntent.FLAG_ONE_SHOT))
-                    .addAction(R.drawable.baseline_delete_24, mContext.getText(R.string.refuse),
-                            PendingIntent.getService(mContext, random.nextInt(),
-                                    new Intent(DRingService.ACTION_TRUST_REQUEST_REFUSE)
-                                            .setClass(mContext, DRingService.class)
-                                            .putExtras(info),
-                                    PendingIntent.FLAG_ONE_SHOT))
-                    .addAction(R.drawable.ic_close_white, mContext.getText(R.string.block),
-                            PendingIntent.getService(mContext, random.nextInt(),
-                                    new Intent(DRingService.ACTION_TRUST_REQUEST_BLOCK)
-                                            .setClass(mContext, DRingService.class)
-                                            .putExtras(info),
-                                    PendingIntent.FLAG_ONE_SHOT));
+            mContactService.getLoadedContact(account.getAccountID(), contact).subscribe(c -> {
+                NotificationCompat.Builder builder = getRequestNotificationBuilder(account.getAccountID());
+                mPreferencesService.saveRequestPreferences(account.getAccountID(), contactKey);
+                Bundle info = new Bundle();
+                info.putString(TRUST_REQUEST_NOTIFICATION_ACCOUNT_ID, account.getAccountID());
+                info.putString(TRUST_REQUEST_NOTIFICATION_FROM, c.getPrimaryNumber());
+                    builder.setContentText(c.getRingUsername())
+                        .addAction(R.drawable.baseline_person_add_24, mContext.getText(R.string.accept),
+                                PendingIntent.getService(mContext, random.nextInt(),
+                                        new Intent(DRingService.ACTION_TRUST_REQUEST_ACCEPT)
+                                                .setClass(mContext, DRingService.class)
+                                                .putExtras(info),
+                                        PendingIntent.FLAG_ONE_SHOT))
+                        .addAction(R.drawable.baseline_delete_24, mContext.getText(R.string.refuse),
+                                PendingIntent.getService(mContext, random.nextInt(),
+                                        new Intent(DRingService.ACTION_TRUST_REQUEST_REFUSE)
+                                                .setClass(mContext, DRingService.class)
+                                                .putExtras(info),
+                                        PendingIntent.FLAG_ONE_SHOT))
+                        .addAction(R.drawable.ic_close_white, mContext.getText(R.string.block),
+                                PendingIntent.getService(mContext, random.nextInt(),
+                                        new Intent(DRingService.ACTION_TRUST_REQUEST_BLOCK)
+                                                .setClass(mContext, DRingService.class)
+                                                .putExtras(info),
+                                        PendingIntent.FLAG_ONE_SHOT));
 
-            setContactPicture(contact, messageNotificationBuilder);
+                setContactPicture(c, builder);
+                notificationManager.notify(notificationId, builder.build());
+            });
         } else {
-            messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_REQUEST);
+            NotificationCompat.Builder builder = getRequestNotificationBuilder(account.getAccountID());
             boolean newRequest = false;
             for (Conversation request : requests) {
                 CallContact contact = request.getContact();
@@ -440,30 +460,10 @@ public class NotificationServiceImpl implements NotificationService {
             }
             if (!newRequest)
                 return;
-            messageNotificationBuilder.setContentText(String.format(mContext.getString(R.string.contact_request_msg), Integer.toString(requests.size())));
-            messageNotificationBuilder.setLargeIcon(null);
-            messageNotificationBuilder.mActions.clear();
+            builder.setContentText(String.format(mContext.getString(R.string.contact_request_msg), Integer.toString(requests.size())));
+            builder.setLargeIcon(null);
+            notificationManager.notify(notificationId, builder.build());
         }
-
-        messageNotificationBuilder
-                .setDefaults(NotificationCompat.DEFAULT_ALL)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .setAutoCancel(true)
-                .setSmallIcon(R.drawable.ic_ring_logo_white)
-                .setCategory(NotificationCompat.CATEGORY_SOCIAL)
-                .setContentTitle(mContext.getString(R.string.contact_request_title));
-        Intent intentOpenTrustRequestFragment = new Intent(HomeActivity.ACTION_PRESENT_TRUST_REQUEST_FRAGMENT)
-                .setClass(mContext, HomeActivity.class)
-                .putExtra(ContactRequestsFragment.ACCOUNT_ID, account.getAccountID());
-        messageNotificationBuilder.setContentIntent(PendingIntent.getActivity(mContext,
-                random.nextInt(), intentOpenTrustRequestFragment, PendingIntent.FLAG_ONE_SHOT));
-
-        messageNotificationBuilder.setColor(ResourcesCompat.getColor(mContext.getResources(),
-                R.color.color_primary_dark, null));
-
-        mNotificationBuilders.put(notificationId, messageNotificationBuilder);
-        notificationManager.notify(notificationId, messageNotificationBuilder.build());
     }
 
     @Override
@@ -645,7 +645,6 @@ public class NotificationServiceImpl implements NotificationService {
         }
         int notificationId = getIncomingTrustNotificationId(accountID);
         notificationManager.cancel(notificationId);
-        mNotificationBuilders.remove(notificationId);
     }
 
     @Override
