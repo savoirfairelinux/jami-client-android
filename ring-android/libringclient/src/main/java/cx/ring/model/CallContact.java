@@ -60,7 +60,7 @@ public class CallContact {
     private String mDisplayName;
     private Object mContactPhoto = null;
 
-    private final Subject<CallContact> mContactUpdates = PublishSubject.create();
+    private final Subject<CallContact> mContactUpdates = BehaviorSubject.create();
     private Observable<CallContact> mContactObservable;
 
     public CallContact(long cID) {

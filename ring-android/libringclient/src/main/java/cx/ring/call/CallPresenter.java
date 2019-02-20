@@ -29,6 +29,7 @@ import cx.ring.model.SipCall;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
+import cx.ring.services.ContactService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.NotificationService;
 import cx.ring.utils.Log;
@@ -41,6 +42,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     public final static String TAG = CallPresenter.class.getSimpleName();
 
     private AccountService mAccountService;
+    private ContactService mContactService;
     private NotificationService mNotificationService;
     private HardwareService mHardwareService;
     private CallService mCallService;
@@ -62,10 +64,12 @@ public class CallPresenter extends RootPresenter<CallView> {
 
     @Inject
     public CallPresenter(AccountService accountService,
+                         ContactService contactService,
                          NotificationService notificationService,
                          HardwareService hardwareService,
                          CallService callService) {
         mAccountService = accountService;
+        mContactService = contactService;
         mNotificationService = notificationService;
         mHardwareService = hardwareService;
         mCallService = callService;
@@ -259,8 +263,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     private void contactUpdate(final SipCall call) {
         if (mSipCall != call) {
             mSipCall = call;
-            mCompositeDisposable.add(call.getContact()
-                    .getUpdates()
+            mCompositeDisposable.add(mContactService.observeContact(call.getAccount(), call.getContact())
                     .observeOn(mUiScheduler)
                     .subscribe(c -> getView().updateContactBubble(c)));
         }

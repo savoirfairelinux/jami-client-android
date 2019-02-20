@@ -98,6 +98,7 @@ public abstract class ContactService {
                         .doOnDispose(() -> {
                             mAccountService.subscribeBuddy(accountId, uriString, false);
                         })
+                        .filter(c -> c.isUsernameLoaded() && c.detailsLoaded)
                         .replay(1)
                         .refCount());
             }
