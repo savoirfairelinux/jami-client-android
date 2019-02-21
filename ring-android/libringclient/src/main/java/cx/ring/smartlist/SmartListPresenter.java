@@ -184,7 +184,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
     }
 
     public void newContactClicked() {
-        if (mCallContact == null) {
+        if (mCallContact == null || mAccount == null) {
             return;
         }
         startConversation(mAccount.getAccountID(), mCallContact);
