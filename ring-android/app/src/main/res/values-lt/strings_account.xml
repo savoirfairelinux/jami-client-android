@@ -126,6 +126,7 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_update_needed">Reikalingas atnaujinimas</string>
   <string name="account_cannot_be_found_title">Nepavyksta rasti paskyros</string>
   <string name="account_no_network_title">Nepavyksta prisijungti prie tinklo</string>
+  <string name="account_no_network_message">Nepavyko pridėti paskyros, nes Jami nepavyko prisijungti prie paskirstytojo tinklo. Patikrinkite savo įrenginio ryšį.</string>
   <string name="account_device_added_title">Paskyros įrenginys pridėtas</string>
   <string name="account_device_added_message">Jūs sėkmingai nusistatėte savo Jami paskyrą šiame įrenginyje.</string>
   <string name="account_device_updated_title">Paskyros įrenginys atnaujintas</string>
