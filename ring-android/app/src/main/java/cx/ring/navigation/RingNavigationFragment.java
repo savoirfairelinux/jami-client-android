@@ -306,6 +306,8 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
     }
 
     public void updatePhoto(Bitmap image) {
+        if (mSelectedAccount == null)
+            return;
         mSourcePhoto = image;
         mDisposableBag.add(VCardServiceImpl.loadProfile(mSelectedAccount)
                 .map(profile -> new AvatarDrawable(getContext(), image, profile.first, mSelectedAccount.getRegisteredName(), mSelectedAccount.getUri(), true))
@@ -342,7 +344,8 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
 
     @OnClick({R.id.profile_container, R.id.user_profile_edit})
     public void profileContainerClicked() {
-        Log.d(TAG, "profileContainerClicked: Click on the edit profile");
+        if (mSelectedAccount == null)
+            return;
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.profile);
 
