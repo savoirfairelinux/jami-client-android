@@ -65,7 +65,7 @@ public class VCardServiceImpl extends VCardService {
                         Bitmap photo = BitmapUtils.bytesToBitmap(vcard.getPhotos().get(0).getData(), maxSize);
                         //photo = BitmapUtils.reduceBitmap(photo, maxSize);
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                        photo.compress(Bitmap.CompressFormat.JPEG, 92, stream);
+                        photo.compress(Bitmap.CompressFormat.JPEG, 88, stream);
                         vcard.removeProperties(Photo.class);
                         vcard.addPhoto(new Photo(stream.toByteArray(), ImageType.JPEG));
                         vcard.removeProperties(RawProperty.class);
