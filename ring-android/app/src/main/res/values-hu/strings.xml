@@ -91,7 +91,7 @@
   <string name="ab_action_contact_add">Hozzáadás a kapcsolatokhoz</string>
   <string name="ab_action_contact_add_question">Hozzáadja a kapcsolatokhoz?</string>
   <string name="hist_contact_added">Kapcsolat hozzáadva</string>
-  <string name="hist_invitation_received">Meghívó érkezett</string>
+  <string name="hist_invitation_received">Meghívás megérkezett</string>
   <string name="ab_action_audio_call">Hanghívás</string>
   <string name="ab_action_video_call">Videóhívás</string>
   <string name="ab_action_change_screen_orientation">Képernyő tájolásának módosítása</string>
@@ -151,7 +151,7 @@
   <string name="account_create_title">Jami fiók létrehozása</string>
   <string name="prompt_new_username">Új felhasználónév megadása</string>
   <string name="help_password_choose">Válasszon erős jelszót, amelyre emlékezni fog, hogy megvédje a Jami fiókját.</string>
-  <string name="help_password_enter">Adja meg a fő Jami fiókja jelszavát</string>
+  <string name="help_password_enter">Adja meg a fő Jami fiókja jelszót</string>
   <string name="help_pin_enter">Adja meg egy másik beállított Jami fiók PIN-jét! Használja a „Fiók exportálása a Jami-n” működést a PIN eléréséhez!</string>
   <string name="wizard_next">Tovább</string>
   <string name="wizard_back">Vissza</string>

@@ -14,7 +14,7 @@
   <string name="prompt_password">Jelszó</string>
   <string name="action_create">Fiók létrehozása</string>
   <string name="action_create_short">Létrehozás</string>
-  <string name="action_register">Regisztráció</string>
+  <string name="action_register">Bejegyez</string>
   <string name="action_settings">Beállítások</string>
   <string name="error_field_required">Ez a mező szükséges</string>
   <string name="dialog_wait_create">Fiók hozzáadása</string>
@@ -34,7 +34,7 @@
   <string name="account_delete_dialog_title">Fiók törlése?</string>
   <string name="account_delete_dialog_message">Ez a művelet nem vonható vissza.</string>
   <!--AccountManagementFragment-->
-  <string name="empty_account_list">Nem regisztrált fiók</string>
+  <string name="empty_account_list">Nincs bejegyzett fiók</string>
   <string name="normal_accounts_titles">Fiókok</string>
   <string name="normal_devices_titles">A Jami fiókhoz kapcsolódó ismert eszközök</string>
   <string name="account_device_revoke">Eszköz visszavonása</string>
@@ -54,9 +54,9 @@
   <string name="account_password_label">Jelszó</string>
   <string name="account_optionnal_category">Választható beállítások</string>
   <string name="account_useragent_label">Felhasználói ügynök</string>
-  <string name="account_autoanswer_label">Automatikus válasz</string>
+  <string name="account_autoanswer_label">Önműködő válasz</string>
   <string name="account_upnp_label">UPnP engedélyezése</string>
-  <string name="account_proxy_field">Proxy</string>
+  <string name="account_proxy_field">Meghatalmazott</string>
   <!--Audio Details-->
   <string name="account_audio_label">Hang</string>
   <string name="account_preferences_media_tab">Média</string>
@@ -70,11 +70,11 @@
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Haladó</string>
   <string name="account_dht_public_in_calls_label">Minden hívás/üzenet engedélyezése</string>
-  <string name="account_registration_exp_label">Regisztráció lejárta</string>
+  <string name="account_registration_exp_label">Bejegyeztetés lejárta</string>
   <string name="account_local_interface_label">Helyi felület</string>
   <string name="account_local_port_label">Helyi Port</string>
   <string name="account_stun_enable_label">STUN használata</string>
-  <string name="account_stun_server_label">STUN (Session Traversal Utilities for NAT) kiszolgáló</string>
+  <string name="account_stun_server_label">STUN kiszolgáló</string>
   <string name="account_turn_enable_label">TURN használata</string>
   <string name="account_turn_server_label">TURN kiszolgáló</string>
   <string name="account_turn_username_label">TURN felhasználónév</string>
@@ -82,9 +82,9 @@
   <string name="account_published_same_as_local_label">Közzététel, mint helyi</string>
   <string name="account_published_port_label">Közzétett Port</string>
   <string name="account_published_address_label">Nyilvános cím</string>
-  <string name="account_proxy_label">DHT proxy</string>
-  <string name="account_proxy_enable_label">DHT proxy használata</string>
-  <string name="account_proxy_server_label">DHT proxy címe</string>
+  <string name="account_proxy_label">DHT-meghatalmazott</string>
+  <string name="account_proxy_enable_label">DHT-meghatalmazott használata</string>
+  <string name="account_proxy_server_label">DHT-meghatalmazott címe</string>
   <!--Security Details-->
   <string name="account_credentials_label">Hitelesítő adatok</string>
   <string name="account_credentials_edit">Hitelesítő adatok szerkesztése</string>
@@ -98,7 +98,7 @@
   <string name="account_tls_certificate_list_label">Tanúsítványkibocsátó</string>
   <string name="account_tls_certificate_file_label">Tanúsítvány fájl</string>
   <string name="account_tls_private_key_file_label">Személyes kulcs fájl</string>
-  <string name="account_tls_password_label">Személyes kulcs jelszava</string>
+  <string name="account_tls_password_label">Személyes kulcs jelszó</string>
   <string name="account_tls_method_label">TLS eljárás</string>
   <string name="account_tls_ciphers_label">TLS kódolások</string>
   <string name="account_tls_server_name_label">Kiszolgáló név</string>
@@ -111,7 +111,7 @@
   <!--restore/backup-->
   <string name="account_new_device_password">Adja meg a főjelszót a fiók feloldásához</string>
   <string name="error_password_char_count">Legalább 6 karakter</string>
-  <string name="error_passwords_not_equals">A jelszavak nem egyeznek</string>
+  <string name="error_passwords_not_equals">A jelszók nem egyeznek</string>
   <string name="export_account_wait_title">Kérem várjon…</string>
   <string name="export_account_wait_message">Új fiók információk közzététele</string>
   <string name="account_export_end_decryption_message">Nem sikerült feloldani fiókját a megadott jelszó használatával.</string>
@@ -124,7 +124,7 @@
   <string name="account_share_body_with_username">Lépjen kapcsolatba velem „%1$s” vagy a nyilvános felhasználónév „%2$s” a Jami elosztott közlés emelvény használatával: %3$s</string>
   <string name="account_contact_me">Lépjen kapcsolatba velem a Jami-n!</string>
   <string name="update_account">Fiók frissítése</string>
-  <string name="account_migration">Jami fiókja frissíthető.\ nKérjük hogy, adja meg a jelszavát.</string>
+  <string name="account_migration">Jami fiókja frissíthető.\ nKérjük hogy, adja meg a jelszót.</string>
   <string name="ring_account">Jami fiók</string>
   <string name="ring_account_identity">Személyazonosság</string>
   <string name="account_migration_title_dialog">Fiók átvitel</string>
@@ -140,13 +140,13 @@
   <string name="account_device_updated_title">A fiók eszköz frissítve</string>
   <string name="account_device_updated_message">Sikeresen frissítette a Jami fiókját.</string>
   <string name="account_cannot_be_updated_message">A fiók eszköz nem frissíthető. Kérjük hogy, ellenőrizze a jelszavát.</string>
-  <string name="account_sip_success_title">SIP-fiók regisztrálva</string>
-  <string name="account_sip_success_message">Sikeresen regisztrálta a SIP-fiókját.</string>
-  <string name="account_sip_register_anyway">Regisztráció egyébként</string>
-  <string name="account_link_button">Ezen eszköz fiókhoz kapcsolása</string>
+  <string name="account_sip_success_title">SIP-fiók bejegyzett</string>
+  <string name="account_sip_success_message">Sikeresen bejegyezte a SIP-fiókját.</string>
+  <string name="account_sip_register_anyway">Bejegyeztetés egyébként</string>
+  <string name="account_link_button">Ezen eszköz összekapcsolása egy fiókhoz</string>
   <string name="account_link_prompt_pin">PIN-kód megadása</string>
   <string name="account_new_button">Jami fiók létrehozása</string>
-  <string name="account_link_export_button">Másik eszköz hozzárendelése ehhez a fiókhoz</string>
+  <string name="account_link_export_button">Másik eszköz összekapcsolása ehhez a fiókhoz</string>
   <string name="account_link_export_info">Ha ezt a fiókot más eszközökön szeretné használni, először meg kell jeleníteni a Jami-n. Ez létrehoz egy PIN-kódot, amelyet meg kell adnia az új eszközön a fiók beállításához. A PIN-kód 10 percig érvényes.</string>
   <string name="account_start_export_button">PIN-kód létrehozása</string>
   <string name="account_end_export_button">Bezárás</string>
@@ -155,11 +155,11 @@
   <string name="account_export_title">Eszközök hozzáadása</string>
   <!--Name registration-->
   <string name="error_username_empty">Felhasználónév megadása</string>
-  <string name="no_registered_name_for_account">Nem található regisztrált név erre a fiókra</string>
-  <string name="register_name">Regisztrációs név</string>
-  <string name="trying_to_register_name">A név regisztrálásának próbálása</string>
-  <string name="registered_username">Regisztrált felhasználónév</string>
-  <string name="register_username">Nyilvános felhasználónév regisztrálása (ajánlott)</string>
+  <string name="no_registered_name_for_account">Nincs bejegyzett név talált erre a fiókra</string>
+  <string name="register_name">Bejegyeztetés név</string>
+  <string name="trying_to_register_name">A név bejegyeztetésének kipróbálása</string>
+  <string name="registered_username">Bejegyzett felhasználónév</string>
+  <string name="register_username">Nyilvános felhasználónév bejegyeztetése (ajánlott)</string>
   <string name="username_already_taken">A felhasználónév már regisztrálva van</string>
   <string name="invalid_username">Érvénytelen felhasználónév</string>
   <string name="looking_for_username_availability">A felhasználónév rendelkezésre állás keresése…</string>
@@ -173,7 +173,7 @@
   <string name="account_creation_profile">Saját profil létrehozása</string>
   <string name="account_creation_ring">Jami fiók létrehozása</string>
   <string name="account_link_title">Eszköz összekapcsolása</string>
-  <string name="account_sip_cannot_be_registered">A fiók nem regisztrálható</string>
+  <string name="account_sip_cannot_be_registered">A fiók nem bejegyeztethető</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Profil szerkesztése</string>
   <!--Devices-->

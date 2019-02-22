@@ -140,6 +140,9 @@
   <string name="conversation_action_block_this">Blockera kontakt</string>
   <string name="conversation_action_go_to_call">Återgå till pågående samtal</string>
   <string name="clip_contact_uri">Kontaktadress</string>
+  <string name="block_contact_dialog_title">Blockera %1$s?</string>
+  <string name="block_contact_dialog_message">%1$s kommer inte att kunna kontakta dig, innan du avblockerat.</string>
+  <string name="block_contact_completed">%1$s blockerades.</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Lägga till %1$s?</string>
   <string name="prompt_new_password">Nytt lösenord</string>
