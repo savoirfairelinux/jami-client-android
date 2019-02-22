@@ -36,10 +36,13 @@ import cx.ring.navigation.RingNavigationViewModel;
 import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.services.HardwareService;
+import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.tv.model.TVListViewModel;
 import cx.ring.utils.Log;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class MainPresenter extends RootPresenter<MainView> {
 
@@ -54,6 +57,7 @@ public class MainPresenter extends RootPresenter<MainView> {
 
     private final Observable<Account> accountSubject;
     private final Observable<ArrayList<TVListViewModel>> conversationViews;
+    private final CompositeDisposable mContactDisposable = new CompositeDisposable();
 
     @Inject
     public MainPresenter(AccountService accountService,
@@ -75,7 +79,7 @@ public class MainPresenter extends RootPresenter<MainView> {
                         .map(conversations -> {
                             ArrayList<TVListViewModel> viewModel = new ArrayList<>(conversations.size());
                             for (Conversation c : conversations)
-                                viewModel.add(modelToViewModel(c.getContact()));
+                                viewModel.add(new TVListViewModel(a.getAccountID(), c.getContact()));
                             return viewModel;
                         }))
                 .observeOn(mUiScheduler);
@@ -94,10 +98,8 @@ public class MainPresenter extends RootPresenter<MainView> {
             TVListViewModel viewModel = mTvListViewModels.get(i);
             CallContact callContact = viewModel.getContact();
             if (callContact == buddy) {
-                if (viewModel.isOnline() != callContact.isOnline()) {
-                    viewModel.setOnline(callContact.isOnline());
-                    getView().refreshContact(i, viewModel);
-                }
+                viewModel.setOnline(callContact.isOnline());
+                getView().refreshContact(i, viewModel);
                 break;
             }
         }
@@ -105,6 +107,8 @@ public class MainPresenter extends RootPresenter<MainView> {
 
     private void loadConversations() {
         mCompositeDisposable.clear();
+        mCompositeDisposable.add(mContactDisposable);
+
         getView().showLoading(true);
 
         mCompositeDisposable.add(conversationViews
@@ -113,17 +117,28 @@ public class MainPresenter extends RootPresenter<MainView> {
                     final MainView view = getView();
                     view.showLoading(false);
                     mTvListViewModels = viewModels;
+
+                    CompositeDisposable cd = new CompositeDisposable();
+                    for (TVListViewModel vm : viewModels) {
+                        cd.add(mContactService.observeContact(vm.getAccountId(), vm.getContact())
+                                .subscribeOn(Schedulers.computation())
+                                .observeOn(mUiScheduler)
+                                .subscribe(this::refreshContact));
+                    }
+                    mContactDisposable.clear();
+                    mContactDisposable.add(cd);
+
                     getView().showContacts(viewModels);
                 }, e -> {
                     getView().showLoading(false);
-                    Log.d(TAG, "loadConversations subscribe onError", e);
+                    Log.d(TAG, "loadConversations conversationViews onError", e);
                 }));
 
         Log.w(TAG, "loadConversations() subscribe");
         mCompositeDisposable.add(accountSubject
                 .switchMap(a -> a
                         .getConversationSubject()
-                        .map(c -> modelToViewModel(c.getContact())))
+                        .map(c -> new TVListViewModel(a.getAccountID(), c.getContact())))
                 .observeOn(mUiScheduler)
                 .subscribe(vm -> {
                     Log.d(TAG, "getConversationSubject " + vm);
@@ -135,6 +150,8 @@ public class MainPresenter extends RootPresenter<MainView> {
                             break;
                         }
                     }
+                }, e-> {
+                    Log.d(TAG, "loadConversations getConversationSubject onError", e);
                 }));
 
         Log.d(TAG, "getPendingSubject subscribe");
@@ -146,19 +163,14 @@ public class MainPresenter extends RootPresenter<MainView> {
                             ArrayList<TVListViewModel> viewmodel = new ArrayList<>(pending.size());
                             for (Conversation c : pending) {
                                 mContactService.loadContactData(c.getContact()).subscribe();
-                                viewmodel.add(modelToViewModel(c.getContact()));
+                                viewmodel.add(new TVListViewModel(a.getAccountID(), c.getContact()));
                             }
                             return viewmodel;
                         }))
                 .observeOn(mUiScheduler)
                 .subscribe(viewModels -> getView().showContactRequests(viewModels),
-                        e -> Log.d(TAG, "updateList subscribe onError", e)));
+                        e -> Log.d(TAG, "updateList getPendingSubject onError", e)));
 
-    }
-
-    private TVListViewModel modelToViewModel(CallContact callContact) {
-        mContactService.loadContactData(callContact).subscribe();
-        return new TVListViewModel(callContact);
     }
 
     public void contactClicked(TVListViewModel item) {
@@ -183,7 +195,7 @@ public class MainPresenter extends RootPresenter<MainView> {
                     Account account = accounts.isEmpty() ? null : accounts.get(0);
                     RingNavigationViewModel viewModel = new RingNavigationViewModel(account, accounts);
                     getView().displayAccountInfos(viewModel);
-                }));
+                }, e-> Log.d(TAG, "reloadAccountInfos getProfileAccountList onError", e)));
     }
 
     public void onExportClicked() {

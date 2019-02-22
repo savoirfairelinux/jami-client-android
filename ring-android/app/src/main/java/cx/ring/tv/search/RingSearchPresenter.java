@@ -87,7 +87,7 @@ public class RingSearchPresenter extends RootPresenter<RingSearchView> {
             Uri uri = new Uri(query);
             if (uri.isRingId()) {
                 mCallContact = currentAccount.getContactFromCache(uri);
-                getView().displayContact(mCallContact);
+                getView().displayContact(currentAccount.getAccountID(), mCallContact);
             } else {
                 getView().clearSearch();
                 contactQuery.onNext(query);
@@ -101,14 +101,14 @@ public class RingSearchPresenter extends RootPresenter<RingSearchView> {
                 // on found
                 mCallContact = account.getContactFromCache(address);
                 mCallContact.setUsername(name);
-                getView().displayContact(mCallContact);
+                getView().displayContact(account.getAccountID(), mCallContact);
                 break;
             case 1:
                 // invalid name
                 Uri uriName = new Uri(name);
                 if (uriName.isRingId()) {
                     mCallContact = account.getContactFromCache(uriName);
-                    getView().displayContact(mCallContact);
+                    getView().displayContact(account.getAccountID(), mCallContact);
                 } else {
                     getView().clearSearch();
                 }
@@ -118,7 +118,7 @@ public class RingSearchPresenter extends RootPresenter<RingSearchView> {
                 Uri uriAddress = new Uri(address);
                 if (uriAddress.isRingId()) {
                     mCallContact = account.getContactFromCache(uriAddress);
-                    getView().displayContact(mCallContact);
+                    getView().displayContact(account.getAccountID(), mCallContact);
                 } else {
                     getView().clearSearch();
                 }

@@ -296,7 +296,7 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
         mDisposableBag.add(AvatarDrawable.load(getActivity(), account)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(avatar -> mUserImage.setImageDrawable(avatar)));
+                .subscribe(avatar -> mUserImage.setImageDrawable(avatar), e -> Log.e(TAG, "Error loading avatar", e)));
     }
 
     public void updatePhoto(Uri uriImage) {
@@ -311,7 +311,7 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
                 .map(profile -> new AvatarDrawable(getContext(), image, profile.first, mSelectedAccount.getRegisteredName(), mSelectedAccount.getUri(), true))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(avatar -> mProfilePhoto.setImageDrawable(avatar)));
+                .subscribe(avatar -> mProfilePhoto.setImageDrawable(avatar), e-> Log.e(TAG, "Error loading image", e)));
     }
 
     @OnClick(R.id.addaccount_btn)

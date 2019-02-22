@@ -113,12 +113,12 @@ public class RingSearchFragment extends BaseSearchFragment<RingSearchPresenter>
     }
 
     @Override
-    public void displayContact(final CallContact contact) {
-            mRowsAdapter.clear();
-            ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(new CardPresenterSelector(getActivity()));
-            listRowAdapter.add(new ContactCard(contact, Card.Type.SEARCH_RESULT));
-            HeaderItem header = new HeaderItem(getActivity().getResources().getString(R.string.search_results));
-            mRowsAdapter.add(new ListRow(header, listRowAdapter));
+    public void displayContact(String accountId, final CallContact contact) {
+        mRowsAdapter.clear();
+        ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(new CardPresenterSelector(getActivity()));
+        listRowAdapter.add(new ContactCard(accountId, contact, Card.Type.SEARCH_RESULT));
+        HeaderItem header = new HeaderItem(getActivity().getResources().getString(R.string.search_results));
+        mRowsAdapter.add(new ListRow(header, listRowAdapter));
     }
 
     @Override

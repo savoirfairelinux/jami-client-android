@@ -22,12 +22,14 @@ package cx.ring.tv.model;
 import cx.ring.model.CallContact;
 
 public class TVListViewModel {
+    private String mAccountId;
     private CallContact mCallContact;
     private boolean isOnline;
 
-    public TVListViewModel(CallContact pCallContact) {
-        mCallContact = pCallContact;
-        isOnline = pCallContact.isOnline();
+    public TVListViewModel(String accountId, CallContact callContact) {
+        mAccountId = accountId;
+        mCallContact = callContact;
+        isOnline = callContact.isOnline();
     }
 
     public CallContact getContact() {
@@ -45,5 +47,9 @@ public class TVListViewModel {
     @Override
     public String toString() {
         return mCallContact.toString() + " " + isOnline;
+    }
+
+    public String getAccountId() {
+        return mAccountId;
     }
 }

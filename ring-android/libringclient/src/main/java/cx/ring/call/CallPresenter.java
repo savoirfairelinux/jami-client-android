@@ -122,7 +122,7 @@ public class CallPresenter extends RootPresenter<CallView> {
                 .subscribe(call ->  {
                     contactUpdate(call);
                     confUpdate(call);
-                }));
+                }, e -> finish()));
     }
 
     public void initIncoming(String confId) {

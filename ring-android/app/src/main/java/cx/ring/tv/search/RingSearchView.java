@@ -23,7 +23,7 @@ import cx.ring.model.CallContact;
 
 public interface RingSearchView {
 
-    void displayContact(CallContact contact);
+    void displayContact(String accountId, CallContact contact);
 
     void clearSearch();
 

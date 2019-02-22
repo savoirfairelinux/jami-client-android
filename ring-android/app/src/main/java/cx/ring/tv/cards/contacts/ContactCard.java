@@ -31,8 +31,8 @@ public class ContactCard extends Card {
     private TVListViewModel mModel;
     private Bitmap mPhoto = null;
 
-    public ContactCard(CallContact pCallContact, Type type) {
-        mModel =  new TVListViewModel(pCallContact);
+    public ContactCard(String accountId, CallContact pCallContact, Type type) {
+        mModel =  new TVListViewModel(accountId, pCallContact);
         setId(pCallContact.getId());
         setTitle(pCallContact.getDisplayName());
         setDescription(pCallContact.getRingUsername());
