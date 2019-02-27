@@ -22,6 +22,7 @@ package cx.ring.services;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -100,7 +101,7 @@ public abstract class ContactService {
                         })
                         .filter(c -> c.isUsernameLoaded() && c.detailsLoaded)
                         .replay(1)
-                        .refCount());
+                        .refCount(20, TimeUnit.SECONDS));
             }
             return contact.getUpdates();
         }
