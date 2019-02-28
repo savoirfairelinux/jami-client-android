@@ -56,8 +56,10 @@ public class FileUtils {
     }
 
     public static boolean moveFile(File file, File dest) {
-        if (!file.exists() || !file.canRead())
+        if (!file.exists() || !file.canRead()) {
+            Log.d(TAG, "moveFile: file is not accessible " + file.exists() + " " + file.canRead());
             return false;
+        }
         if (file.equals(dest))
             return true;
         if (!file.renameTo(dest)) {
