@@ -32,7 +32,6 @@ import androidx.leanback.widget.Row;
 import androidx.leanback.widget.RowPresenter;
 import androidx.core.app.ActivityOptionsCompat;
 
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,10 +64,7 @@ import cx.ring.tv.contactrequest.TVContactRequestActivity;
 import cx.ring.tv.model.TVListViewModel;
 import cx.ring.tv.search.SearchActivity;
 import cx.ring.tv.views.CustomTitleView;
-import cx.ring.utils.Tuple;
-import cx.ring.utils.VCardUtils;
 import cx.ring.views.AvatarDrawable;
-import ezvcard.VCard;
 
 public class MainFragment extends BaseBrowseFragment<MainPresenter> implements MainView {
 
@@ -257,21 +253,25 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
 
         Account account = viewModel.getAccount();
         String address = account.getDisplayUsername();
-        Tuple<String, Object> profile = VCardServiceImpl.loadProfile(account);
-
-        if (profile.first != null && !profile.first.isEmpty()) {
-            titleView.setAlias(profile.first);
-            if (address != null) {
-                setTitle(address);
-            } else {
-                setTitle("");
-            }
-        } else {
-            titleView.setAlias(address);
-        }
-
-        titleView.getLogoView().setVisibility(View.VISIBLE);
-        titleView.getLogoView().setImageDrawable(new AvatarDrawable(getActivity(), account));
+        VCardServiceImpl
+                .loadProfile(account)
+                .doOnSuccess(profile -> {
+                    if (profile.first != null && !profile.first.isEmpty()) {
+                        titleView.setAlias(profile.first);
+                        if (address != null) {
+                            setTitle(address);
+                        } else {
+                            setTitle("");
+                        }
+                    } else {
+                        titleView.setAlias(address);
+                    }
+                })
+                .flatMap(p -> AvatarDrawable.load(getActivity(), account))
+                .subscribe(a -> {
+                    titleView.getLogoView().setVisibility(View.VISIBLE);
+                    titleView.getLogoView().setImageDrawable(a);
+                });
     }
 
     @Override

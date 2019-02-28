@@ -34,12 +34,14 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import cx.ring.R;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.services.VCardServiceImpl;
 import cx.ring.utils.HashUtils;
 import cx.ring.utils.Tuple;
+import io.reactivex.Single;
 
 import android.graphics.drawable.VectorDrawable;
 import android.text.TextUtils;
@@ -90,12 +92,6 @@ public class AvatarDrawable extends Drawable {
     public AvatarDrawable(Context context, CallContact contact, boolean crop) {
         this(context, (Bitmap)contact.getPhoto(), contact.getProfileName(), contact.getUsername(), contact.getPrimaryNumber(), crop);
     }
-    public AvatarDrawable(Context context, Account account, boolean crop) {
-        this(context, VCardServiceImpl.loadProfile(account), account.getRegisteredName(), account.getUri(), crop);
-    }
-    public AvatarDrawable(Context context, Account account) {
-        this(context, VCardServiceImpl.loadProfile(account), account.getRegisteredName(), account.getUri(), true);
-    }
     public AvatarDrawable(Context context, Tuple<String, Object> data, String registeredName, String uri, boolean crop) {
         this(context, (Bitmap)data.second, data.first, registeredName, uri, crop);
     }
@@ -106,8 +102,16 @@ public class AvatarDrawable extends Drawable {
         this(context, photo, TextUtils.isEmpty(profileName) ? username : profileName, id, crop);
     }
 
+    public static Single<AvatarDrawable> load(Context context, Account account, boolean crop) {
+        return VCardServiceImpl.loadProfile(account)
+                .map(data -> new AvatarDrawable(context, data, account.getRegisteredName(), account.getUri(), crop));
+    }
+    public static Single<AvatarDrawable> load(Context context, Account account) {
+        return load(context, account, true);
+    }
+
     public AvatarDrawable(Context context, Bitmap photo, String name, String id, boolean crop) {
-        Log.w("AvatarDrawable", photo + " " + name + " " + id);
+        //Log.w("AvatarDrawable", photo + " " + name + " " + id);
         cropCircle = crop;
         Resources res = context.getResources();
         minSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, SIZE_AB, res.getDisplayMetrics());
@@ -118,7 +122,7 @@ public class AvatarDrawable extends Drawable {
         } else {
             bitmap = null;
             avatarText = convertNameToAvatarText(name);
-            color = res.getColor(getAvatarColor(id));
+            color = ContextCompat.getColor(context, getAvatarColor(id));
             if (avatarText == null) {
                 placeholder = (VectorDrawable) context.getDrawable(PLACEHOLDER_ICON);
             } else {

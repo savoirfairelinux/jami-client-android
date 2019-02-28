@@ -92,7 +92,7 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
                 .flatMapObservable(accountDetails -> createNewAccount(accountCreationModel, accountDetails));
         mCompositeDisposable.add(newAccount
                 .observeOn(mUiScheduler)
-                .subscribe(accountCreationModel::setNewAccount));
+                .subscribe(accountCreationModel::setNewAccount, e-> Log.e(TAG, "Can't create account", e)));
         accountCreationModel.setAccountObservable(newAccount);
         getView().goToProfileCreation(accountCreationModel);
     }
@@ -158,6 +158,8 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
     }
 
     private Single<HashMap<String, String>> initAccountDetails() {
+        if (mAccountType == null)
+            return Single.error(new IllegalStateException());
         return mAccountService.getAccountTemplate(mAccountType)
                 .map(accountDetails -> {
                     for (Map.Entry<String, String> e : accountDetails.entrySet()) {

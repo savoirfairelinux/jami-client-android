@@ -22,10 +22,8 @@ package cx.ring.services;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
@@ -34,6 +32,9 @@ import cx.ring.model.Uri;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
 import ezvcard.VCard;
+import io.reactivex.Completable;
+import io.reactivex.Observable;
+import io.reactivex.Single;
 
 /**
  * This service handles the contacts
@@ -42,7 +43,7 @@ import ezvcard.VCard;
  * - Provide query tools to search contacts by id, number, ...
  */
 public abstract class ContactService {
-    private final static String TAG = ContactService.class.getName();
+    private final static String TAG = ContactService.class.getSimpleName();
 
     @Inject
     PreferencesService mPreferencesService;
@@ -53,25 +54,17 @@ public abstract class ContactService {
     @Inject
     AccountService mAccountService;
 
-    @Inject
-    @Named("ApplicationExecutor")
-    ExecutorService mApplicationExecutor;
-
-    private Map<Long, CallContact> mContactList = new HashMap<>();
-
     public abstract Map<Long, CallContact> loadContactsFromSystem(boolean loadRingContacts, boolean loadSipContacts);
 
     protected abstract CallContact findContactByIdFromSystem(Long contactId, String contactKey);
     protected abstract CallContact findContactBySipNumberFromSystem(String number);
     protected abstract CallContact findContactByNumberFromSystem(String number);
 
-    public abstract void loadContactData(CallContact callContact);
+    public abstract Completable loadContactData(CallContact callContact);
 
     public abstract void saveVCardContactData(CallContact contact, VCard vcard);
-    public abstract void loadVCardContactData(CallContact contact);
 
-    public ContactService() {
-    }
+    public ContactService() {}
 
     /**
      * Load contacts from system and generate a local contact cache
@@ -79,13 +72,43 @@ public abstract class ContactService {
      * @param loadRingContacts if true, ring contacts will be taken care of
      * @param loadSipContacts  if true, sip contacts will be taken care of
      */
-    public void loadContacts(final boolean loadRingContacts, final boolean loadSipContacts, final Account account) {
-        mApplicationExecutor.submit(() -> {
+    public Single<Map<Long, CallContact>> loadContacts(final boolean loadRingContacts, final boolean loadSipContacts, final Account account) {
+        return Single.fromCallable(() -> {
             Settings settings = mPreferencesService.getSettings();
             if (settings.isAllowSystemContacts() && mDeviceRuntimeService.hasContactPermission()) {
-                mContactList = loadContactsFromSystem(loadRingContacts, loadSipContacts);
+                return loadContactsFromSystem(loadRingContacts, loadSipContacts);
             }
+            return new HashMap<>();
         });
+    }
+
+    public Observable<CallContact> observeContact(String accountId, CallContact contact) {
+        Uri uri = contact.getPrimaryUri();
+        String uriString = uri.getRawUriString();
+        synchronized (contact) {
+            if (contact.getUpdates() == null) {
+                contact.setUpdates(contact.getUpdatesSubject()
+                        .doOnSubscribe(d -> {
+                            mAccountService.subscribeBuddy(accountId, uriString, true);
+                            if (!contact.isUsernameLoaded())
+                                mAccountService.lookupAddress(accountId, "", uri.getRawRingId());
+                            loadContactData(contact)
+                                    .subscribe(() -> {}, e -> Log.e(TAG, "Error loading contact data: " + e.getMessage()));
+                        })
+                        .doOnDispose(() -> {
+                            mAccountService.subscribeBuddy(accountId, uriString, false);
+                        })
+                        .replay(1)
+                        .refCount());
+            }
+            return contact.getUpdates();
+        }
+    }
+
+    public Single<CallContact> getLoadedContact(String accountId, CallContact contact) {
+        return observeContact(accountId, contact)
+                .filter(c -> c.isUsernameLoaded() && c.detailsLoaded)
+                .firstOrError();
     }
 
     /**
@@ -94,11 +117,11 @@ public abstract class ContactService {
      *
      * @return The found/created contact
      */
-    public CallContact findContactByNumber(String accountId, String number) {
-        if (StringUtils.isEmpty(number) || StringUtils.isEmpty(accountId)) {
+    public CallContact findContactByNumber(Account account, String number) {
+        if (StringUtils.isEmpty(number) || account == null) {
             return null;
         }
-        return findContact(accountId, new Uri(number));
+        return findContact(account, new Uri(number));
     }
 
     public CallContact findContact(Account account, Uri uri) {
@@ -109,12 +132,8 @@ public abstract class ContactService {
         CallContact contact = account.getContactFromCache(uri);
         // TODO load system contact info into SIP contact
         if (account.isSip()) {
-            loadContactData(contact);
+            loadContactData(contact).subscribe();
         }
         return contact;
-    }
-
-    public CallContact findContact(String accountId, Uri uri) {
-        return findContact(mAccountService.getAccount(accountId), uri);
     }
 }

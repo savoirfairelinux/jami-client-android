@@ -184,8 +184,9 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         mConversationDisposable.add(c.getSortedHistory()
                 .subscribe(view::refreshView));
         mConversationDisposable.add(c.getCleared()
+                .observeOn(mUiScheduler)
                 .subscribe(view::refreshView));
-        mConversationDisposable.add(c.getContact().getUpdates()
+        mConversationDisposable.add(mContactService.getLoadedContact(c.getAccountId(), c.getContact())
                 .observeOn(mUiScheduler)
                 .subscribe(contact -> initContact(account, mContactRingId, view)));
         mConversationDisposable.add(c.getNewElements()
@@ -226,7 +227,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     }
 
     public void sendFile(File file) {
-        mConversationFacade.sendFile(mAccountId, mContactRingId, file);
+        mConversationFacade.sendFile(mAccountId, mContactRingId, file).subscribe();
     }
 
     public void downloadFile(final DataTransfer transfer, final File dest) {
@@ -267,15 +268,17 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     public void sendTrustRequest() {
         final String accountId = mAccountId;
         final Uri contactId = mContactRingId;
-        mVCardService.loadSmallVCard(accountId, VCardService.MAX_SIZE_REQUEST).subscribe(vCard -> {
-            mAccountService.sendTrustRequest(accountId, contactId.getRawRingId(), Blob.fromString(VCardUtils.vcardToString(vCard)));
-            CallContact contact = mContactService.findContact(accountId, contactId);
-            if (contact == null) {
-                Log.e(TAG, "sendTrustRequest: not able to find contact");
-                return;
-            }
-            contact.setStatus(CallContact.Status.REQUEST_SENT);
-        });
+        mVCardService.loadSmallVCard(accountId, VCardService.MAX_SIZE_REQUEST)
+                .subscribeOn(Schedulers.computation())
+                .subscribe(vCard -> {
+                    mAccountService.sendTrustRequest(accountId, contactId.getRawRingId(), Blob.fromString(VCardUtils.vcardToString(vCard)));
+                    CallContact contact = mContactService.findContact(mAccountService.getAccount(accountId), contactId);
+                    if (contact == null) {
+                        Log.e(TAG, "sendTrustRequest: not able to find contact");
+                        return;
+                    }
+                    contact.setStatus(CallContact.Status.REQUEST_SENT);
+                });
     }
 
     public void clickOnGoingPane() {

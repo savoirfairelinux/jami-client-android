@@ -62,13 +62,9 @@ public class LaunchPresenter extends RootPresenter<LaunchView> {
     }
 
     public void audioPermissionChanged(boolean isGranted) {
-        if (!isGranted) {
-            getView().displayAudioPermissionDialog();
-        }
     }
 
     public void contactPermissionChanged(boolean isGranted) {
-
     }
 
     public void cameraPermissionChanged(boolean isGranted) {
@@ -81,7 +77,6 @@ public class LaunchPresenter extends RootPresenter<LaunchView> {
         mCompositeDisposable.add(mAccountService.getObservableAccountList()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(accounts -> {
-                    Log.w(TAG, "accounts: " + accounts.size());
                     if (accounts.isEmpty()) {
                         getView().goToAccountCreation();
                     } else {

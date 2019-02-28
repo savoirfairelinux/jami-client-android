@@ -41,6 +41,9 @@ import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.Tuple;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
+import io.reactivex.Completable;
+import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 
 public class ContactServiceImpl extends ContactService {
 
@@ -196,7 +199,6 @@ public class ContactServiceImpl extends ContactService {
             }
             contactCursor.close();
         }
-
 
         return systemContacts;
     }
@@ -390,15 +392,14 @@ public class ContactServiceImpl extends ContactService {
     }
 
     @Override
-    public void loadContactData(CallContact callContact) {
+    public Completable loadContactData(CallContact callContact) {
         if (!callContact.detailsLoaded) {
-            if (callContact.isFromSystem()) {
-                Tuple<String, Object> profileData = loadSystemContactData(callContact);
-                callContact.setProfile(profileData.first, profileData.second);
-            } else {
-                loadVCardContactData(callContact);
-            }
+            Single<Tuple<String, Object>> profile = callContact.isFromSystem() ? loadSystemContactData(callContact) : loadVCardContactData(callContact);
+            return profile.doOnSuccess(p -> {
+                callContact.setProfile(p.first, p.second);
+            }).ignoreElement();
         }
+        return Completable.complete();
     }
 
     @Override
@@ -413,28 +414,25 @@ public class ContactServiceImpl extends ContactService {
         }
     }
 
-    @Override
-    public void loadVCardContactData(CallContact callContact) {
+    private Single<Tuple<String, Object>> loadVCardContactData(CallContact callContact) {
         String id = callContact.getPrimaryNumber();
         if (id != null) {
-            VCard vcard = VCardUtils.loadPeerProfileFromDisk(mContext.getFilesDir(), id + ".vcf");
-            Tuple<String, Object> profileData = VCardServiceImpl.readData(vcard);
-            callContact.setVCard(vcard);
-            callContact.setProfile(profileData.first, profileData.second);
+            return Single.fromCallable(() -> VCardUtils.loadPeerProfileFromDisk(mContext.getFilesDir(), id + ".vcf"))
+                    .map(vcard -> {
+                        callContact.setVCard(vcard);
+                        return VCardServiceImpl.readData(vcard);
+                    }).subscribeOn(Schedulers.computation());
         }
+        return Single.error(new IllegalArgumentException());
     }
 
-    private Tuple<String, Object> loadSystemContactData(CallContact callContact) {
+    private Single<Tuple<String, Object>> loadSystemContactData(CallContact callContact) {
         String contactName = callContact.getDisplayName();
         android.net.Uri photoURI = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, callContact.getId());
-        try {
-            Bitmap bitmap = AndroidFileUtils
-                    .loadBitmap(mContext, android.net.Uri.withAppendedPath(photoURI, ContactsContract.Contacts.Photo.DISPLAY_PHOTO))
-                    .blockingGet();
-            return new Tuple<>(contactName, bitmap);
-        } catch (Exception e) {
-            Log.w(TAG, "Error loading photo for system contact");
-            return new Tuple<>(contactName, null);
-        }
+        return AndroidFileUtils
+                .loadBitmap(mContext, android.net.Uri.withAppendedPath(photoURI, ContactsContract.Contacts.Photo.DISPLAY_PHOTO))
+                .map(bitmap -> new Tuple<String, Object>(contactName, bitmap))
+                .onErrorReturn(e -> new Tuple<>(contactName, null))
+                .subscribeOn(Schedulers.io());
     }
 }

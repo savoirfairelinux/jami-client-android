@@ -36,7 +36,6 @@ import cx.ring.model.ConversationElement;
 import cx.ring.model.DataTransfer;
 import cx.ring.model.DataTransferEventCode;
 import cx.ring.model.HistoryCall;
-import cx.ring.model.HistoryEntry;
 import cx.ring.model.HistoryText;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
@@ -44,13 +43,11 @@ import cx.ring.model.TrustRequest;
 import cx.ring.model.Uri;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
-import cx.ring.services.ContactService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.HistoryService;
 import cx.ring.services.NotificationService;
 import cx.ring.services.PreferencesService;
-import cx.ring.services.PresenceService;
 import cx.ring.utils.FileUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.VCardUtils;
@@ -68,12 +65,8 @@ public class ConversationFacade {
     private final static String TAG = ConversationFacade.class.getSimpleName();
 
     private final AccountService mAccountService;
-    private final ContactService mContactService;
     private final HistoryService mHistoryService;
     private final CallService mCallService;
-
-    @Inject
-    PresenceService mPresenceService;
 
     @Inject
     HardwareService mHardwareService;
@@ -91,45 +84,20 @@ public class ConversationFacade {
 
     private final Observable<Account> currentAccountSubject;
 
-    public ConversationFacade(HistoryService historyService, CallService callService, ContactService contactService, AccountService accountService) {
+    public ConversationFacade(HistoryService historyService, CallService callService, AccountService accountService) {
         mHistoryService = historyService;
         mCallService = callService;
-        mContactService = contactService;
         mAccountService = accountService;
 
         currentAccountSubject = mAccountService
                 .getCurrentAccountSubject()
-                .switchMapSingle(this::loadConversations);
+                .switchMapSingle(this::loadConversations)
+                .replay(1)
+                .refCount();
 
         mDisposableBag.add(mCallService.getCallSubject()
                 .observeOn(Schedulers.io())
                 .subscribe(this::onCallStateChange));
-
-        Observable<Account> accounts = mAccountService
-                .getObservableAccountList()
-                .flatMapIterable(a -> a)
-                .distinct();
-
-        mDisposableBag.add(accounts.flatMap(a -> a
-                .getPresenceEnabled()
-                .observeOn(Schedulers.computation())
-                .switchMap(enabled -> Observable.merge(a.getConversationsSubject(), a.getPendingSubject())
-                        .doOnNext(c -> {
-                            for (Conversation conversation : c) {
-                                CallContact contact = conversation.getContact();
-                                Uri id = contact.getPrimaryUri();
-                                if (enabled) {
-                                    mPresenceService.subscribeBuddy(a.getAccountID(), id.getRawUriString(), true);
-                                    if (contact.subscribe()) {
-                                        mContactService.loadContactData(conversation.getContact());
-                                        mAccountService.lookupAddress(a.getAccountID(), "", id.getRawRingId());
-                                    }
-                                } else {
-                                    mPresenceService.subscribeBuddy(a.getAccountID(), id.getRawUriString(), false);
-                                }
-                            }
-                        })))
-                .subscribe());
 
         mDisposableBag.add(currentAccountSubject
                 .switchMap(a -> a.getPendingSubject()
@@ -138,7 +106,8 @@ public class ConversationFacade {
 
         mDisposableBag.add(mAccountService.getIncomingRequests()
                 .concatMapSingle(r -> getAccountSubject(r.getAccountId()))
-                .subscribe(a -> mNotificationService.showIncomingTrustRequestNotification(a)));
+                .subscribe(a -> mNotificationService.showIncomingTrustRequestNotification(a),
+                        e-> Log.e(TAG, "Error showing contact request")));
 
         mDisposableBag.add(mAccountService
                 .getIncomingMessages()
@@ -147,16 +116,20 @@ public class ConversationFacade {
                             a.addTextMessage(msg);
                             return msg;
                         }))
-                .subscribe(this::parseNewMessage));
+                .subscribe(this::parseNewMessage,
+                        e-> Log.e(TAG, "Error adding text message")));
 
         mDisposableBag.add(mAccountService
                 .getMessageStateChanges()
                 .concatMapSingle(txt -> getAccountSubject(txt.getAccount())
                         .map(a -> a.getByUri(txt.getNumberUri()))
                         .doOnSuccess(conv -> conv.updateTextMessage(txt)))
-                .subscribe());
+                .subscribe(c -> {}, e-> Log.e(TAG, "Error updating text message")));
 
-        mDisposableBag.add(mAccountService.getDataTransfers().subscribe(this::handleDataTransferEvent));
+        mDisposableBag.add(mAccountService
+                .getDataTransfers()
+                .subscribe(this::handleDataTransferEvent,
+                        e-> Log.e(TAG, "Error adding data transfer")));
     }
 
     public Single<Conversation> startConversation(String accountId, final Uri contactId) {
@@ -195,9 +168,11 @@ public class ConversationFacade {
 
     private boolean readMessages(Conversation conversation) {
         boolean updated = false;
-        for (HistoryEntry h : conversation.getRawHistory().values()) {
-            NavigableMap<Long, TextMessage> messages = h.getTextMessages();
-            for (TextMessage message : messages.descendingMap().values()) {
+            NavigableMap<Long, ConversationElement> messages = conversation.getRawHistory();
+            for (ConversationElement e : messages.descendingMap().values()) {
+                if (!(e instanceof TextMessage))
+                    continue;
+                TextMessage message = (TextMessage) e;
                 if (message.isRead()) {
                     break;
                 }
@@ -205,7 +180,6 @@ public class ConversationFacade {
                 mHistoryService.updateTextMessage(new HistoryText(message)).subscribe();
                 updated = true;
             }
-        }
         return updated;
     }
 
@@ -232,34 +206,37 @@ public class ConversationFacade {
         c.addTextMessage(message);
     }
 
-    public void sendFile(String account, Uri to, File file) {
-        if (file == null) {
-            return;
-        }
+    public Completable sendFile(String account, Uri to, File file) {
+        return Completable.fromAction(() -> {
+            if (file == null) {
+                return;
+            }
 
-        // check file
-        if (!file.exists()) {
-            Log.w(TAG, "sendFile: file not found");
-            return;
-        }
+            // check file
+            if (!file.exists()) {
+                Log.w(TAG, "sendFile: file not found");
+                return;
+            }
 
-        if (!file.canRead()) {
-            Log.w(TAG, "sendFile: file not readable");
-            return;
-        }
-        String peerId = to.getRawRingId();
-        DataTransfer transfer = new DataTransfer(0L, file.getName(), true, file.length(), 0, peerId, account);
-        // get generated ID
-        mHistoryService.insertDataTransfer(transfer);
+            if (!file.canRead()) {
+                Log.w(TAG, "sendFile: file not readable");
+                return;
+            }
+            String peerId = to.getRawRingId();
+            DataTransfer transfer = new DataTransfer(0L, file.getName(), true, file.length(), 0, peerId, account);
 
-        File dest = mDeviceRuntimeService.getConversationPath(peerId, transfer.getStoragePath());
-        if (!FileUtils.moveFile(file, dest)) {
-            Log.e(TAG, "sendFile: can't move file to " + dest);
-            return;
-        }
+            // get generated ID
+            mHistoryService.insertDataTransfer(transfer).blockingAwait();
 
-        // send file
-        mAccountService.sendFile(transfer, dest);
+            File dest = mDeviceRuntimeService.getConversationPath(peerId, transfer.getStoragePath());
+            if (!FileUtils.moveFile(file, dest)) {
+                Log.e(TAG, "sendFile: can't move file to " + dest);
+                return;
+            }
+
+            // send file
+            mAccountService.sendFile(transfer, dest);
+        }).subscribeOn(Schedulers.io());
     }
 
     public void deleteFile(DataTransfer transfer) {
@@ -268,7 +245,8 @@ public class ConversationFacade {
                         mHistoryService.deleteFileHistory(transfer.getId()),
                         Completable.fromAction(file::delete).subscribeOn(Schedulers.io()))
                 .andThen(startConversation(transfer.getAccountId(), transfer.getContactNumber()))
-                .subscribe(c -> c.removeFileTransfer(transfer));
+                .subscribe(c -> c.removeFileTransfer(transfer),
+                        e -> Log.e(TAG, "Can't delete file transfer", e));
     }
 
     private Single<Account> loadConversations(final Account account) {

@@ -210,6 +210,7 @@ public class AccountService {
             if (!newAccounts.contains(acc))
                 acc.cleanup();
 
+        mAccountList = newAccounts;
         for (String accountId : accountIds) {
             Account account = getAccount(accountId);
             Map<String, String> details = Ringservice.getAccountDetails(accountId).toNative();
@@ -258,7 +259,6 @@ public class AccountService {
         }
         mHasSipAccount = hasSip;
         mHasRingAccount = hasJami;
-        mAccountList = newAccounts;
         if (!newAccounts.isEmpty()) {
             Account newAccount = newAccounts.get(0);
             if (mCurrentAccount != newAccount) {
@@ -434,6 +434,10 @@ public class AccountService {
 
     public Observable<Account> getCurrentAccountSubject() {
         return currentAccountSubject;
+    }
+
+    public void subscribeBuddy(final String accountID, final String uri, final boolean flag) {
+        mExecutor.execute(() -> Ringservice.subscribeBuddy(accountID, uri, flag));
     }
 
     /**
@@ -952,7 +956,6 @@ public class AccountService {
      * Reverse looks up the address in the blockchain to find the name
      */
     public void lookupAddress(final String account, final String nameserver, final String address) {
-        Log.i(TAG, "lookupAddress() " + account + " " + nameserver + " " + address);
         mExecutor.execute(() -> Ringservice.lookupAddress(account, nameserver, address));
     }
 
@@ -1033,8 +1036,6 @@ public class AccountService {
     }
 
     void knownDevicesChanged(String accountId, Map<String, String> devices) {
-        Log.d(TAG, "knownDevicesChanged: " + accountId + ", " + devices);
-
         Account accountChanged = getAccount(accountId);
         if (accountChanged != null) {
             accountChanged.setDevices(devices);
@@ -1135,7 +1136,7 @@ public class AccountService {
     }
 
     void registeredNameFound(String accountId, int state, String address, String name) {
-        Log.d(TAG, "registeredNameFound: " + accountId + ", " + state + ", " + name + ", " + address);
+        // Log.d(TAG, "registeredNameFound: " + accountId + ", " + state + ", " + name + ", " + address);
 
         Account account = getAccount(accountId);
         if (account != null) {
@@ -1232,7 +1233,7 @@ public class AccountService {
                 transfer = new DataTransfer(transferId, info.getDisplayName(),
                         outgoing, info.getTotalSize(),
                         info.getBytesProgress(), info.getPeer(), info.getAccountId());
-                mHistoryService.insertDataTransfer(transfer);
+                mHistoryService.insertDataTransfer(transfer).subscribe(() -> {}, e -> Log.e(TAG, "Error adding data transfer", e));
             }
             mDataTransfers.put(transferId, transfer);
         } else synchronized (transfer) {
@@ -1260,7 +1261,7 @@ public class AccountService {
             }
             transfer.setEventCode(dataEvent);
             transfer.setBytesProgress(info.getBytesProgress());
-            mHistoryService.updateDataTransfer(transfer);
+            mHistoryService.updateDataTransfer(transfer).subscribe();
         }
 
         dataTransferSubject.onNext(transfer);

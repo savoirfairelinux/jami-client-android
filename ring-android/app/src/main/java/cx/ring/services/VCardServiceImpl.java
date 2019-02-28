@@ -43,13 +43,16 @@ public class VCardServiceImpl extends VCardService {
         this.mContext = context;
     }
 
-    public static Tuple<String, Object> loadProfile(Account account) {
+    public static Single<Tuple<String, Object>> loadProfile(Account account) {
         Tuple<String, Object> ret = account.getLoadedProfile();
         if (ret == null) {
-            ret = VCardServiceImpl.readData(account.getProfile());
-            account.setLoadedProfile(ret);
+            return Single.fromCallable(() -> readData(account.getProfile()))
+                    .map(profile -> {
+                        account.setLoadedProfile(profile);
+                        return profile;
+                    });
         }
-        return ret;
+        return Single.just(ret);
     }
 
     @Override
