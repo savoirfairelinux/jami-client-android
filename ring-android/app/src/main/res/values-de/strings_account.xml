@@ -34,6 +34,7 @@ Sie können ihr Konto später bearbeiten</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Kein Konto registriert</string>
   <string name="normal_accounts_titles">Konten</string>
+  <string name="normal_devices_titles">Bekannte Geräte, die mit diesem Jami-Konto verknüpft sind</string>
   <string name="account_device_revoke">Gerät widerrufen</string>
   <string name="account_device_revocation_success_title">Erfolgreich</string>
   <string name="account_device_revocation_success">Gerät wird jetzt widerrufen!</string>
