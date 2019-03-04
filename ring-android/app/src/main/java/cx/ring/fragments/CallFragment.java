@@ -53,6 +53,7 @@ import android.view.SurfaceHolder;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.RelativeLayout;
 
@@ -102,11 +103,15 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     private FragCallBinding binding;
 
     private MenuItem dialPadBtn = null;
-    private MenuItem changeScreenOrientationBtn = null;
     private boolean restartVideo = false;
     private PowerManager.WakeLock mScreenWakeLock;
     private int mCurrentOrientation = Configuration.ORIENTATION_UNDEFINED;
+
+    private int mVideoWidth = -1;
+    private int mVideoHeight = -1;
     private int mPreviewWidth = 720, mPreviewHeight = 1280;
+    private int mPreviewWidthRot = 720, mPreviewHeightRot = 1280;
+    private int mPreviewSurfaceWidth = 0, mPreviewSurfaceHeight = 0;
 
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
@@ -251,13 +256,15 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     private TextureView.SurfaceTextureListener listener = new TextureView.SurfaceTextureListener() {
         @Override
         public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-            configureTransform(width, height);
+            mPreviewSurfaceWidth = width;
+            mPreviewSurfaceHeight = height;
             presenter.previewVideoSurfaceCreated(binding.previewSurface);
         }
 
         @Override
         public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
-            configureTransform(width, height);
+            mPreviewSurfaceWidth = width;
+            mPreviewSurfaceHeight = height;
         }
 
         @Override
@@ -309,6 +316,9 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         binding.callSpeakerBtn.setChecked(presenter.isSpeakerphoneOn());
         binding.callMicBtn.setChecked(presenter.isMicrophoneMuted());
         binding.previewSurface.setSurfaceTextureListener(listener);
+        binding.previewSurface.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
+            configureTransform(mPreviewSurfaceWidth, mPreviewSurfaceHeight);
+        });
 
         binding.dialpadEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -321,6 +331,11 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
             @Override
             public void afterTextChanged(Editable s) {}
+        });
+
+        view.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
+            resetVideoSize(mVideoWidth, mVideoHeight);
+            resetPreviewVideoSize(mPreviewWidth, mPreviewHeight);
         });
     }
 
@@ -345,7 +360,9 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             return;
         }
         mCurrentOrientation = newOrientation;
-        presenter.configurationChanged();
+
+        WindowManager windowManager = (WindowManager) requireContext().getSystemService(Context.WINDOW_SERVICE);
+        presenter.configurationChanged(windowManager.getDefaultDisplay().getRotation());
     }
 
     @Override
@@ -353,7 +370,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         super.onCreateOptionsMenu(m, inf);
         inf.inflate(R.menu.ac_call, m);
         dialPadBtn = m.findItem(R.id.menuitem_dialpad);
-        changeScreenOrientationBtn = m.findItem(R.id.menuitem_change_screen_orientation);
     }
 
     @Override
@@ -373,9 +389,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             case R.id.menuitem_dialpad:
                 presenter.dialpadClick();
                 break;
-            case R.id.menuitem_change_screen_orientation:
-                presenter.screenRotationClick();
-                break;
         }
         return true;
     }
@@ -387,11 +400,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         else
             ((CallActivity) getActivity()).getSupportActionBar().show();
         presenter.pipModeChanged(isInPictureInPictureMode);
-    }
-
-    @Override
-    public void blockScreenRotation() {
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
     }
 
     @Override
@@ -435,16 +443,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     @Override
     public void updateMenu() {
-        getActivity().invalidateOptionsMenu();
-    }
-
-    @Override
-    public void changeScreenRotation() {
-        if (mCurrentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        } else {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        }
+        requireActivity().invalidateOptionsMenu();
     }
 
     @Override
@@ -510,9 +509,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         if (dialPadBtn != null) {
             dialPadBtn.setVisible(canDial);
         }
-        if (changeScreenOrientationBtn != null) {
-            changeScreenOrientationBtn.setVisible(binding.videoSurface.getVisibility() == View.VISIBLE);
-        }
     }
 
     @Override
@@ -554,14 +550,30 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     @Override
-    public void resetVideoSize(final int videoWidth, final int videoHeight, final int previewWidth, final int previewHeight) {
+    public void resetPreviewVideoSize(int previewWidth, int previewHeight) {
+        if (previewWidth == -1 && previewHeight == -1)
+            return;
+        mPreviewWidth = previewWidth;
+        mPreviewHeight = previewHeight;
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            mPreviewWidthRot = mPreviewHeight;
+            mPreviewHeightRot = mPreviewWidth;
+        } else {
+            mPreviewWidthRot = mPreviewWidth;
+            mPreviewHeightRot = mPreviewHeight;
+        }
+
+        binding.previewSurface.setAspectRatio(mPreviewWidthRot, mPreviewHeightRot);
+    }
+
+    @Override
+    public void resetVideoSize(int videoWidth, int videoHeight) {
         ViewGroup rootView = (ViewGroup) getView();
         if (rootView == null)
             return;
-
         double videoRatio = videoWidth / (double) videoHeight;
-        double screenRatio = getView().getWidth() / (double) getView().getHeight();
-
+        double screenRatio = rootView.getWidth() / (double) rootView.getHeight();
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.videoSurface.getLayoutParams();
         int oldW = params.width;
         int oldH = params.height;
@@ -576,12 +588,8 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         if (oldW != params.width || oldH != params.height) {
             binding.videoSurface.setLayoutParams(params);
         }
-
-        if (previewWidth == -1 && previewHeight == -1)
-            return;
-        mPreviewWidth = previewWidth;
-        mPreviewHeight = previewHeight;
-        Log.w(TAG, "resetVideoSize preview: " + previewWidth + "x" + previewHeight);
+        mVideoWidth = videoWidth;
+        mVideoHeight = videoHeight;
     }
 
     private void configureTransform(int viewWidth, int viewHeight) {
@@ -597,12 +605,12 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         float centerX = viewRect.centerX();
         float centerY = viewRect.centerY();
         if (rot) {
-            RectF bufferRect = new RectF(0, 0, mPreviewHeight, mPreviewWidth);
+            RectF bufferRect = new RectF(0, 0, mPreviewHeightRot, mPreviewWidthRot);
             bufferRect.offset(centerX - bufferRect.centerX(), centerY - bufferRect.centerY());
             matrix.setRectToRect(viewRect, bufferRect, Matrix.ScaleToFit.FILL);
             float scale = Math.max(
-                    (float) viewHeight / mPreviewHeight,
-                    (float) viewWidth / mPreviewWidth);
+                    (float) viewHeight / mPreviewHeightRot,
+                    (float) viewWidth / mPreviewWidthRot);
             matrix.postScale(scale, scale, centerX, centerY);
             matrix.postRotate(90 * (rotation - 2), centerX, centerY);
         } else if (Surface.ROTATION_180 == rotation) {

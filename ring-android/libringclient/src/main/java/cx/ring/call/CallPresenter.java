@@ -114,7 +114,7 @@ public class CallPresenter extends RootPresenter<CallView> {
         if (mHardwareService.getCameraCount() == 0) {
             audioOnly = true;
         }
-        getView().blockScreenRotation();
+        //getView().blockScreenRotation();
 
         mCompositeDisposable.add(mCallService
                 .placeCallObservable(accountId, StringUtils.toNumber(contactRingId), audioOnly)
@@ -126,7 +126,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void initIncoming(String confId) {
-        getView().blockScreenRotation();
+        //getView().blockScreenRotation();
         mCompositeDisposable.add(mCallService.getCallUpdates(confId)
                 .observeOn(mUiScheduler)
                 .subscribe(call -> {
@@ -170,16 +170,9 @@ public class CallPresenter extends RootPresenter<CallView> {
         getView().switchCameraIcon(mHardwareService.isPreviewFromFrontCamera());
     }
 
-    public void screenRotationClick() {
-        //getView().resetVideoSize(videoWidth, videoHeight, previewHeight, previewWidth);
-        mHardwareService.stopCapture();
-
-        getView().changeScreenRotation();
-    }
-
-    public void configurationChanged() {
+    public void configurationChanged(int rotation) {
         if (mSipCall != null) {
-            mHardwareService.restartCamera(mSipCall.getCallId());
+            mHardwareService.setDeviceOrientation(rotation);
         }
     }
 
@@ -324,16 +317,18 @@ public class CallPresenter extends RootPresenter<CallView> {
             if (event.started) {
                 videoWidth = event.w;
                 videoHeight = event.h;
+                getView().resetVideoSize(videoWidth, videoHeight);
             }
         } else if (event.callId == null) {
             if (event.started) {
                 previewWidth = event.w;
                 previewHeight = event.h;
+                getView().resetPreviewVideoSize(previewWidth, previewHeight);
             }
         }
-        if (event.started || event.start) {
+        /*if (event.started || event.start) {
             getView().resetVideoSize(videoWidth, videoHeight, previewWidth, previewHeight);
-        }
+        }*/
     }
 
     public void positiveButtonClicked() {
