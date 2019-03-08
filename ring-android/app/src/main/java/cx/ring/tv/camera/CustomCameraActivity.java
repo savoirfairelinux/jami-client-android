@@ -28,6 +28,7 @@ import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -35,9 +36,9 @@ import cx.ring.R;
 import cx.ring.utils.BitmapUtils;
 
 public class CustomCameraActivity extends Activity {
-    int cameraFront;
-    int cameraBack;
-    int currentCamera;
+    int cameraFront = -1;
+    int cameraBack = -1;
+    int currentCamera = 0;
     private Camera mCamera;
     private CameraPreview mCameraPreview;
     private final Camera.PictureCallback mPicture = (input, camera) -> {
@@ -54,8 +55,10 @@ public class CustomCameraActivity extends Activity {
     };
 
     @OnClick(R.id.button_capture)
-    public void takePicture(){
-        mCamera.takePicture(null, null, mPicture);
+    public void takePicture() {
+        if (mCamera != null) {
+            mCamera.takePicture(null, null, mPicture);
+        }
     }
 
     /**
@@ -67,6 +70,11 @@ public class CustomCameraActivity extends Activity {
         setContentView(R.layout.camerapicker);
         ButterKnife.bind(this);
         mCamera = getCameraInstance();
+        if (mCamera == null) {
+            Toast.makeText(this, "Can't open camera", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
         mCameraPreview = new CameraPreview(this, mCamera);
         FrameLayout preview = findViewById(R.id.camera_preview);
         preview.addView(mCameraPreview);
@@ -74,17 +82,18 @@ public class CustomCameraActivity extends Activity {
 
     public void initVideo() {
         int numberCameras = Camera.getNumberOfCameras();
+        if (numberCameras == 0)
+            return;
         Camera.CameraInfo camInfo = new Camera.CameraInfo();
         for (int i = 0; i < numberCameras; i++) {
             Camera.getCameraInfo(i, camInfo);
             if (camInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
                 cameraFront = i;
-
             } else {
                 cameraBack = i;
             }
         }
-        currentCamera = cameraFront;
+        currentCamera = cameraFront == -1 ? cameraBack : cameraFront;
     }
 
     /**
