@@ -95,7 +95,8 @@ public abstract class HistoryService {
             queryBuilder.where().eq(HistoryCall.COLUMN_ACCOUNT_ID_NAME, accountId);
             queryBuilder.orderBy(HistoryCall.COLUMN_TIMESTAMP_START_NAME, false);
             return (List<ConversationElement>)(List<?>)getCallHistoryDao().query(queryBuilder.prepare());
-        });
+        }).doOnError(e -> Log.e(TAG, "Can't load calls", e))
+          .onErrorReturn(e -> new ArrayList<>());
     }
 
     public Single<List<ConversationElement>> getMessagesSingle(final String accountId) {
@@ -109,7 +110,8 @@ public abstract class HistoryService {
             for (HistoryText t : l)
                 ret.add(new TextMessage(t));
             return ret;
-        });
+        }).doOnError(e -> Log.e(TAG, "Can't load messages", e))
+          .onErrorReturn(e -> new ArrayList<>());
     }
 
     public Single<List<ConversationElement>> getTransfersSingle(final String accountId) {
@@ -118,7 +120,8 @@ public abstract class HistoryService {
             queryBuilder.where().eq(DataTransfer.COLUMN_ACCOUNT_ID_NAME, accountId);
             queryBuilder.orderBy(DataTransfer.COLUMN_TIMESTAMP_NAME, false);
             return (List<ConversationElement>)(List<?>)getDataHistoryDao().query(queryBuilder.prepare());
-        });
+        }).doOnError(e -> Log.e(TAG, "Can't load data transfers", e))
+          .onErrorReturn(e -> new ArrayList<>());
     }
 
     public Completable clearHistory(final String contactId, final String accountId) {
