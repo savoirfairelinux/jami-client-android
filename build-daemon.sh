@@ -249,7 +249,7 @@ STATIC_LIBS_ALL="-llog -lOpenSLES -landroid \
                 -lgnutls -lhogweed -lnettle -lgmp \
                 -lrestbed -lssl -lcrypto \
                 -lavformat -lavdevice -lavfilter -lavcodec -lswresample -lswscale -lavutil \
-                -lpcre -lyaml-cpp -ljsoncpp \
+                -lyaml-cpp -ljsoncpp \
                 -luuid -lz \
                 -lvpx -lopus -lspeex \
                 -largon2 \
