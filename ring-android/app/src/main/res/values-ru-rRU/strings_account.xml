@@ -90,6 +90,7 @@
   <string name="account_status_connecting">Подключение</string>
   <string name="account_status_unknown">Неизвестно</string>
   <!--Create account-->
+  <string name="account_creation_home">Добро пожаловать в Jami</string>
   <!--Edit profile-->
   <!--Devices-->
   <string name="revoke_device_wait_title">Пожалуйста, подождите...</string>
