@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91adafdc_d7b19940",
+        "filename": "fdroidMergeRequest.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 103
+      },
+      "writtenOn": "2019-03-11T15:01:20Z",
+      "side": 1,
+      "message": "I would prefer \"cx.ring.txt.bkp\", but that\u0027s just me.",
+      "range": {
+        "startLine": 36,
+        "startChar": 49,
+        "endLine": 36,
+        "endChar": 61
+      },
+      "revId": "a8b631d95290392c1b1e566271a4303174e2f160",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
