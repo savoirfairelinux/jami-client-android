@@ -6,7 +6,6 @@
   <string name="version_section">Version</string>
   <string name="no_email_app_installed">Aucun logiciel de messagerie n\'a été trouvé, merci d\'installer un logiciel de messagerie pour nous envoyer un rapport</string>
   <string name="email_chooser_title">Envoyer un courriel en utilisant...</string>
-  <string name="description">Jami est un logiciel libre de communication universel qui respecte la vie privée et l\'intimité de ses utilisateurs.</string>
   <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
@@ -86,7 +85,6 @@
   <!--Contacts-->
   <string name="prompt_new_password">Nouveau mot de passe</string>
   <string name="prompt_new_password_repeat">Saisir à nouveau le mot de passe</string>
-  <string name="account_create_title">Créer un compte Jami</string>
   <string name="prompt_new_username">Saisir un nouveau nom d\'utilisateur</string>
   <string name="wizard_next">Suivant</string>
   <string name="wizard_back">Retour</string>
@@ -105,6 +103,5 @@
   <!--Send contact requests-->
   <!--Blacklist-->
   <!--Smartlist-->
-  <string name="tv_contact_row_header">Contacts</string>
   <!--File Transfer-->
 </resources>
