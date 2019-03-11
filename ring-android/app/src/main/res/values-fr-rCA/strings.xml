@@ -10,6 +10,7 @@
   <string name="no_browser_app_installed">Aucun navigateur trouvé; ajoutez-en un afin de voir cette page</string>
   <string name="email_chooser_title">Envoyer un courriel en utilisant</string>
   <string name="website_chooser_title">Visualiser le site web en utilisant ...</string>
+  <string name="description">Jami est un logiciel libre de communication universel qui respecte la vie privée et l\'intimité de ses utilisateurs.</string>
   <string name="credits">Crédits</string>
   <!--About dialog-->
   <string name="developed_by">Développé par</string>
@@ -104,6 +105,7 @@
   <string name="prompt_new_password">Nouveau mot de passe</string>
   <string name="prompt_new_password_optional">Nouveau mot de passe (optionnel)</string>
   <string name="prompt_new_password_repeat">Répéter le nouveau mot de passe</string>
+  <string name="account_create_title">Créer un compte Jami</string>
   <string name="prompt_new_username">Entrer un nouveau nom d\'utilisateur</string>
   <string name="wizard_next">Suivant</string>
   <string name="wizard_back">Précédent</string>
