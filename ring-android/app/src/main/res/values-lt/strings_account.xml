@@ -119,16 +119,12 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_export_end_error_title">Klaida</string>
   <string name="account_export_end_error_message">Nepavyko eksportuoti paskyros. Įvyko nežinoma klaida.</string>
   <string name="account_enter_password">Įveskite slaptažodį</string>
-  <string name="account_contact_me">Susisiekite su manimi, naudodami Jami!</string>
   <string name="update_account">Atnaujinti paskyrą</string>
   <string name="account_migration">Jūsų Jami paskyra gali būti atnaujinta.\nĮveskite savo slaptažodį.</string>
-  <string name="ring_account">Jami paskyra</string>
   <string name="ring_account_identity">Tapatybė</string>
   <string name="account_migration_title_dialog">Paskyros perkėlimas</string>
-  <string name="account_migration_message_dialog">Jūsų paskyros turi būti atnaujintos. Ar norite pereiti į paskyros tvarkymo ekraną, kad atliktumėte šį veiksmą?</string>
   <string name="account_update_needed">Reikalingas atnaujinimas</string>
   <string name="account_cannot_be_found_title">Nepavyksta rasti paskyros</string>
-  <string name="account_sip_cannot_be_registered_message">Galite tęsti paskyros kūrimo procesą arba taisyti savo informaciją čia. Vėliau taisymas taip pat yra įmanomas paskyros nustatymuose.</string>
   <string name="account_no_network_title">Nepavyksta prisijungti prie tinklo</string>
   <string name="account_no_network_message">Nepavyko pridėti paskyros, nes Jami nepavyko prisijungti prie paskirstytojo tinklo. Patikrinkite savo įrenginio ryšį.</string>
   <string name="account_device_added_title">Paskyros įrenginys pridėtas</string>
@@ -142,14 +138,10 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_link_prompt_pin">Įveskite PIN</string>
   <string name="account_new_button">Susikurti Jami paskyrą</string>
   <string name="account_link_export_button">Susieti kitą įrenginį su šia paskyra</string>
-  <string name="account_start_export_button">Generuoti PIN</string>
   <string name="account_end_export_button">užverti</string>
-  <string name="account_end_export_infos">Jūsų PIN yra:\n\n%%\n\nNorėdami užbaigti procesą, turite atverti Jami naujame įrenginyje. Susikurkite paskyrą, naudodami \"Susieti šį įrenginį su paskyra\". Jūsų PIN galioja 10 minučių.</string>
-  <string name="account_export_title">Pridėti įrenginius</string>
   <!--Name registration-->
   <string name="error_username_empty">Įveskite naudotojo vardą</string>
   <string name="no_registered_name_for_account">Šiai paskyrai nerasta jokio registruoto vardo</string>
-  <string name="register_name">Registruoti vardą</string>
   <string name="trying_to_register_name">Bandoma užregistruoti vardą</string>
   <string name="registered_username">Registruotas naudotojo vardas</string>
   <string name="register_username">Registruoti viešąjį naudotojo vardą (rekomenduojama)</string>
@@ -164,10 +156,8 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <!--Create account-->
   <string name="account_creation_home">Sveiki atvykę į Jami</string>
   <string name="account_creation_profile">Susikurkite savo profilį</string>
-  <string name="account_link_title">Susieti šį įrenginį</string>
   <string name="account_sip_cannot_be_registered">Nepavyksta užregistruoti paskyros</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Taisyti savo profilį</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Norėdami patvirtinti, įveskite slaptažodį</string>
   <string name="enter_password">Įveskite slaptažodį</string>
@@ -176,7 +166,6 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="revoke_device_wait_title">Prašome palaukti...</string>
   <string name="revoke_device_wait_message">Panaikinamas įrenginys</string>
   <string name="rename_device_title">Pervadinti šį įrenginį</string>
-  <string name="rename_device_message">Pasirinkite naują pavadinimą, pagal kurį atpažinsite šį įrenginį savo Jami paskyroje</string>
   <string name="rename_device_button">Pervadinti įrenginį</string>
   <string name="account_rename_device_hint">Pasirinkti naują įrenginio pavadinimą</string>
   <string name="account_device_name_empty">Įrenginio pavadinimas negali būti tuščias</string>

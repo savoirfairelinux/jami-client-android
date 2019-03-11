@@ -1,7 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="description">Jami est un logiciel libre de communication universel qui respecte la vie privée et l\'intimité de ses utilisateurs.</string>
   <!--About dialog-->
   <!--RingActivity-->
   <!--AB menus-->
@@ -26,13 +25,11 @@
   <!--Settings-->
   <!--Conversation-->
   <!--Contacts-->
-  <string name="account_create_title">Créer un compte Jami</string>
   <!--MenuHeaderView-->
   <!--Share fragment-->
   <!--Pending contact requests-->
   <!--Send contact requests-->
   <!--Blacklist-->
   <!--Smartlist-->
-  <string name="tv_contact_row_header">Contacts</string>
   <!--File Transfer-->
 </resources>

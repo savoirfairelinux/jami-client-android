@@ -5,7 +5,6 @@
   <string name="ic_advanced_menu">Impostazioni avanzate</string>
   <string name="ic_blacklist_menu">Contatti bloccati</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">Aggiungi account Jami</string>
   <string name="add_sip_account_title">Aggiungi SIP account</string>
   <string name="ring_account_default_name">Account di Ring %1$s</string>
   <string name="prompt_alias">Alias</string>
@@ -26,7 +25,6 @@
 Potrai solo fare e ricevere chiamate dirette tramite indirizzo ip.
 Potrai modificare il tuo account successivamente</string>
   <string name="account_type_ip2ip">Account IP</string>
-  <string name="help_ring">Un account Jami consente di raggiungere le persone in modo sicuro in peer to peer attraverso una rete completamente distribuita.</string>
   <string name="help_sip_title">Aggiungi il tuo account SIP</string>
   <string name="help_sip">Configura un account SIP esistente</string>
   <string name="create_sip_account">Aggiungi SIP account</string>
@@ -36,7 +34,6 @@ Potrai modificare il tuo account successivamente</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nessun account registrato</string>
   <string name="normal_accounts_titles">Accounts</string>
-  <string name="normal_devices_titles">Dispositivi noti collegati a questo account Jami</string>
   <string name="account_device_revoke">Revoca dispositivo</string>
   <string name="account_device_revocation_success_title">Successo</string>
   <string name="account_device_revocation_success">Il dispositivo è ora revocato!</string>
@@ -82,9 +79,6 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_published_same_as_local_label">Indirizzo pubblico uguale a quello locale</string>
   <string name="account_published_port_label">Porta Pubblica</string>
   <string name="account_published_address_label">Indirizzo Pubblico</string>
-  <string name="account_proxy_label">DHT proxy</string>
-  <string name="account_proxy_enable_label">Usa il proxy DHT</string>
-  <string name="account_proxy_server_label">Indirizzo proxy DHT</string>
   <!--Security Details-->
   <string name="account_credentials_label">Credenziali</string>
   <string name="account_credentials_edit">Modifica credenziali</string>
@@ -120,46 +114,30 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_export_end_error_title">Errore</string>
   <string name="account_export_end_error_message">Impossibile esportare l\'account. C\'è stato un errore sconosciuto.</string>
   <string name="account_enter_password">Inserire password</string>
-  <string name="account_share_body">Contattami usando \'%1$s\'sulla piattaforma di comunicazione distribuita Jami: %2$s</string>
-  <string name="account_share_body_with_username">Contattami usando \'%1$s\"o il mio nome utente pubblico\"%2$s\'sulla piattaforma di comunicazione distribuita Jami:%3$s</string>
-  <string name="account_contact_me">Contattami su Jami!</string>
   <string name="update_account">Aggiorna account</string>
-  <string name="account_migration">Il tuo account Jami può essere aggiornato. \ Inserisci la tua password.</string>
-  <string name="ring_account">Account Jami</string>
   <string name="ring_account_identity">Indentità</string>
   <string name="account_migration_title_dialog">Migrazione account</string>
   <string name="account_migration_message_dialog">Il tuo account necessita di essere aggiornato. Vuoi andare alla schermata di gestione dell\'account per completare l\'operazione?</string>
   <string name="account_update_needed">Aggiornamento necessario</string>
   <string name="account_cannot_be_found_title">Impossibile trovare l\'account</string>
-  <string name="account_cannot_be_found_message">Non è stato possibile trovare l\'account sulla rete Jami.\Assicurati che sia stato esportato su un dispositivo esistente e che le credenziali fornite siano corrette.</string>
   <string name="account_sip_cannot_be_registered_message">Puoi continuare con la creazione dell\'account oppure modificare le tue informazioni qui. La modifica sarà comunque possibile più tardi nelle impostazioni dell\'account.</string>
   <string name="account_no_network_title">Impossibile collegarsi alla rete</string>
-  <string name="account_no_network_message">Impossibile aggiungere account perché Jami non è riuscito a connettersi alla rete distribuita. Controlla la connettività del dispositivo.</string>
   <string name="account_device_added_title">Il dispositivo è stato aggiunto</string>
-  <string name="account_device_added_message">Hai configurato correttamente il tuo account Jami su questo dispositivo.</string>
   <string name="account_device_updated_title">Il dispositivo è stato aggiunto</string>
-  <string name="account_device_updated_message">Hai aggiornato con successo il tuo account Jami.</string>
   <string name="account_cannot_be_updated_message">Non è stato possibile aggiornare l\'account del dispositivo. Controlla la password.</string>
   <string name="account_sip_success_title">Account Sip registrato</string>
   <string name="account_sip_success_message">Hai registrato il tuo account Sip con successo.</string>
   <string name="account_sip_register_anyway">Registrati lo stesso</string>
   <string name="account_link_button">Collega questo dispositivo ad un account</string>
   <string name="account_link_prompt_pin">Inserisci il PIN</string>
-  <string name="account_new_button">Crea un account Jami</string>
   <string name="account_link_export_button">Collega un altro dispositivo a questo account</string>
-  <string name="account_link_export_info">Per utilizzare questo account su altri dispositivi, devi prima esporlo su Jami. Questo sarà un codice che devi configurare. Il PIN è valido per 10 minuti.</string>
-  <string name="account_start_export_button">Genera PIN</string>
   <string name="account_end_export_button">chiudi</string>
-  <string name="account_end_export_infos">Il tuo PIN è: \ n \ n%%\ n\nPer completare la procedura, è necessario aprire Jami sul nuovo dispositivo. Crea un nuovo account con \"Collega questo dispositivo a un account\". Il tuo PIN è valido per 10 minuti.</string>
-  <string name="account_link_export_info_light">Per utilizzare questo account su altri dispositivi, devi prima esporlo su Jami. Questo sarà un codice che devi configurare. Il PIN è valido per 10 minuti.</string>
-  <string name="account_export_title">Aggiungi dispositivi</string>
   <!--Name registration-->
   <string name="error_username_empty">Inserire un nome utente</string>
   <string name="no_registered_name_for_account">Nessun nome registrato è stato trovato per questo account</string>
   <string name="register_name">Nome registrazione</string>
   <string name="trying_to_register_name">Tentativo di registrazione del nome</string>
   <string name="registered_username">Nome utente registrato</string>
-  <string name="register_username">Registra nome utente pubblico (consigliato)</string>
   <string name="username_already_taken">Il nome utente è già utilizzato</string>
   <string name="invalid_username">Nome utente non valido</string>
   <string name="looking_for_username_availability">La disponibilità del nome utente viene controllata...</string>
@@ -169,13 +147,10 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_status_unknown">Sconosciuto</string>
   <string name="account_status_offline">Disconnesso</string>
   <!--Create account-->
-  <string name="account_creation_home">Benvenuto in Jami</string>
   <string name="account_creation_profile">Crea il tuo profilo</string>
-  <string name="account_creation_ring">Crea il tuo account Jami</string>
   <string name="account_link_title">Collega il dispositivo</string>
   <string name="account_sip_cannot_be_registered">Impossibile registrare l\'account</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Modifica il tuo profilo</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Inserire la password per confermare</string>
   <string name="enter_password">Inserire password</string>
@@ -184,7 +159,6 @@ Potrai modificare il tuo account successivamente</string>
   <string name="revoke_device_wait_title">Prego attendere...</string>
   <string name="revoke_device_wait_message">Revoca in corso</string>
   <string name="rename_device_title">Rinomina questo dispositivo</string>
-  <string name="rename_device_message">Scegli un nuovo nome per identificare il tuo dispositivo nel tuo account Jami</string>
   <string name="rename_device_button">Rinomina il dispositivo</string>
   <string name="account_rename_device_hint">Scegli un nuovo nome per il dispositivo</string>
   <string name="account_device_name_empty">Il nome del dispositivo non può essere vuoto</string>

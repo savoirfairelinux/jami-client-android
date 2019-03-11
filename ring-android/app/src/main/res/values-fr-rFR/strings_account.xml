@@ -6,15 +6,11 @@
   <string name="prompt_hostname">nom d\'hôte</string>
   <string name="prompt_username">nom d\'utilisateur</string>
   <string name="prompt_password">mot de passe</string>
-  <string name="action_create_short">Créer</string>
-  <string name="action_register">Enregistrer</string>
   <string name="action_settings">Réglages</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">Cette action ne peut pas être annulée</string>
   <!--AccountManagementFragment-->
-  <string name="normal_accounts_titles">Comptes</string>
   <!--Basic Details-->
-  <string name="account_preferences_basic_tab">Général</string>
   <string name="account_hostname_label">nom d\'hôte</string>
   <string name="account_username_label">nom d\'utilisateur</string>
   <string name="account_password_label">mot de passe</string>
@@ -24,7 +20,6 @@
   <!--Video Details-->
   <string name="account_video_label">Vidéo</string>
   <!--Advanced Details-->
-  <string name="account_preferences_advanced_tab">Options avancées</string>
   <!--Security Details-->
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">securité</string>
@@ -32,16 +27,10 @@
   <!--TLS Details-->
   <!--restore/backup-->
   <string name="account_export_end_error_title">Erreur</string>
-  <string name="account_enter_password">Entrez votre mot de passe</string>
-  <string name="account_link_button">Lier cet appareil à un compte</string>
-  <string name="account_new_button">Créer un compte Jami</string>
   <string name="account_link_export_button">Connecter un autre appareil à ce compte</string>
   <!--Name registration-->
   <string name="account_status_unknown">Inconnu</string>
   <!--Create account-->
-  <string name="account_creation_home">Bienvenu sur Jami</string>
-  <string name="account_creation_profile">Créez votre profil</string>
   <!--Edit profile-->
   <!--Devices-->
-  <string name="enter_password">Entrez votre mot de passe</string>
 </resources>

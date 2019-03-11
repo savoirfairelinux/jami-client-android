@@ -10,7 +10,6 @@
   <string name="no_browser_app_installed">Nessuna applicazione browser trovata, installane una per visualizzare questa pagina</string>
   <string name="email_chooser_title">Invia email con...</string>
   <string name="website_chooser_title">Visualizza sito web con...</string>
-  <string name="description">Jami è un software gratuito per la comunicazione universale che rispetta le libertà e la privacy dei suoi utenti.</string>
   <string name="credits">Crediti</string>
   <!--About dialog-->
   <string name="developed_by">Sviluppato da</string>
@@ -100,7 +99,6 @@
   <!--Contacts-->
   <string name="prompt_new_password">Nuova password</string>
   <string name="prompt_new_password_repeat">Ripeti nuova password</string>
-  <string name="account_create_title">Crea un account Jami</string>
   <string name="prompt_new_username">Inserisci il nuovo nome utente</string>
   <string name="wizard_next">Prossimo</string>
   <string name="wizard_back">Indietro</string>

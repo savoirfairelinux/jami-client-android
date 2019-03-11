@@ -3,7 +3,6 @@
   <!--About-->
   <string name="feedback_section">Opinioni</string>
   <string name="section_license">Licensa</string>
-  <string name="sponsor_section">Jami è un software gratuito sviluppato e supportato da</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Contribuisci</string>
   <string name="version_section">Versione</string>
@@ -11,7 +10,6 @@
   <string name="no_browser_app_installed">Browser web non trovato, installane uno per vedere questa pagina</string>
   <string name="email_chooser_title">Mandaci un\'email usando...</string>
   <string name="website_chooser_title">Visita il sito usando...</string>
-  <string name="description">Jami è un software gratuito per la comunicazione universale che rispetta le libertà e la privacy dei suoi utenti.</string>
   <string name="credits">Crediti</string>
   <!--About dialog-->
   <string name="developed_by">Sviluppato da</string>
@@ -57,7 +55,6 @@
   <string name="notif_current_call_title">Chiamata in corso con %1$s</string>
   <string name="notif_current_call">Chiamata attiva</string>
   <string name="notif_channel_calls">Chiamate</string>
-  <string name="notif_channel_missed_calls">Chiamate perse</string>
   <string name="notif_channel_messages">Messaggi</string>
   <string name="notif_channel_requests">Richieste</string>
   <string name="notif_channel_file_transfer">Trasferimento File</string>
