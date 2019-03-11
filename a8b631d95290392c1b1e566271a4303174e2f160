@@ -22,6 +22,30 @@
       "revId": "a8b631d95290392c1b1e566271a4303174e2f160",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "408c2f37_0650d2fb",
+        "filename": "fdroidMergeRequest.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 624
+      },
+      "writtenOn": "2019-03-11T15:05:50Z",
+      "side": 1,
+      "message": "Is this file a backup ?",
+      "parentUuid": "91adafdc_d7b19940",
+      "range": {
+        "startLine": 36,
+        "startChar": 49,
+        "endLine": 36,
+        "endChar": 61
+      },
+      "revId": "a8b631d95290392c1b1e566271a4303174e2f160",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
     }
   ]
 }
