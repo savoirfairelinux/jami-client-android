@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ae746a5_6b3963b4",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/DeviceAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-03-12T20:32:22Z",
+      "side": 1,
+      "message": "not needed",
+      "range": {
+        "startLine": 40,
+        "startChar": 20,
+        "endLine": 40,
+        "endChar": 39
+      },
+      "revId": "ea26b18a9131c10307390a977228ea6559b5bd2d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ace8c8db_68129f34",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountSummaryFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-03-12T20:32:22Z",
+      "side": 1,
+      "message": "not needed",
+      "range": {
+        "startLine": 418,
+        "startChar": 55,
+        "endLine": 418,
+        "endChar": 83
+      },
+      "revId": "ea26b18a9131c10307390a977228ea6559b5bd2d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f510d863_750026f0",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountSummaryFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-03-12T20:32:22Z",
+      "side": 1,
+      "message": "use mAccountHasPassword",
+      "range": {
+        "startLine": 422,
+        "startChar": 65,
+        "endLine": 422,
+        "endChar": 83
+      },
+      "revId": "ea26b18a9131c10307390a977228ea6559b5bd2d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
