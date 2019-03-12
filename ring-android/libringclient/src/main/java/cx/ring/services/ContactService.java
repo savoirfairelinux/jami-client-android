@@ -94,7 +94,7 @@ public abstract class ContactService {
                             if (!contact.isUsernameLoaded())
                                 mAccountService.lookupAddress(accountId, "", uri.getRawRingId());
                             loadContactData(contact)
-                                    .subscribe(() -> {}, e -> Log.e(TAG, "Error loading contact data: " + e.getMessage()));
+                                    .subscribe(() -> {}, e -> {/*Log.e(TAG, "Error loading contact data: " + e.getMessage())*/});
                         })
                         .doOnDispose(() -> {
                             mAccountService.subscribeBuddy(accountId, uriString, false);
