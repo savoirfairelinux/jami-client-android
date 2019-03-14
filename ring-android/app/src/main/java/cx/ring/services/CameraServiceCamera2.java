@@ -114,39 +114,46 @@ class CameraServiceCamera2 extends CameraService {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void listSupportedCodecs() {
+    private void listSupportedCodecs(MediaCodecList list) {
         try {
-            for (MediaCodecInfo codecInfo : new MediaCodecList(MediaCodecList.REGULAR_CODECS).getCodecInfos()) {
+            for (MediaCodecInfo codecInfo : list.getCodecInfos()) {
                 for (String type : codecInfo.getSupportedTypes()) {
-                    MediaCodecInfo.CodecCapabilities codecCaps = codecInfo.getCapabilitiesForType(type);
-                    MediaCodecInfo.EncoderCapabilities caps = codecCaps.getEncoderCapabilities();
-                    if (caps == null)
-                        continue;
-                    MediaCodecInfo.VideoCapabilities video_caps = codecCaps.getVideoCapabilities();
-                    if (video_caps == null)
-                        continue;
-                    Log.w(TAG, "Codec info:" + codecInfo.getName() + " type: " + type);
-                    Log.w(TAG, "Encoder capabilities: complexityRange: " + caps.getComplexityRange());
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                        Log.w(TAG, "Encoder capabilities: qualityRange: " + caps.getQualityRange());
-                    }
-                    Log.w(TAG, "Encoder capabilities: VBR: " + caps.isBitrateModeSupported(MediaCodecInfo.EncoderCapabilities.BITRATE_MODE_VBR));
-                    Log.w(TAG, "Encoder capabilities: CBR: " + caps.isBitrateModeSupported(MediaCodecInfo.EncoderCapabilities.BITRATE_MODE_CBR));
-                    Log.w(TAG, "Encoder capabilities: CQ: " + caps.isBitrateModeSupported(MediaCodecInfo.EncoderCapabilities.BITRATE_MODE_CQ));
-                    Log.w(TAG, "Bitrate range: " + video_caps.getBitrateRange());
+                    try {
+                        MediaCodecInfo.CodecCapabilities codecCaps = codecInfo.getCapabilitiesForType(type);
+                        MediaCodecInfo.EncoderCapabilities caps = codecCaps.getEncoderCapabilities();
+                        if (caps == null)
+                            continue;
+                        MediaCodecInfo.VideoCapabilities video_caps = codecCaps.getVideoCapabilities();
+                        if (video_caps == null)
+                            continue;
+                        Log.w(TAG, "Codec info:" + codecInfo.getName() + " type: " + type);
+                        Log.w(TAG, "Encoder capabilities: complexityRange: " + caps.getComplexityRange());
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                            Log.w(TAG, "Encoder capabilities: qualityRange: " + caps.getQualityRange());
+                        }
+                        Log.w(TAG, "Encoder capabilities: VBR: " + caps.isBitrateModeSupported(MediaCodecInfo.EncoderCapabilities.BITRATE_MODE_VBR));
+                        Log.w(TAG, "Encoder capabilities: CBR: " + caps.isBitrateModeSupported(MediaCodecInfo.EncoderCapabilities.BITRATE_MODE_CBR));
+                        Log.w(TAG, "Encoder capabilities: CQ: " + caps.isBitrateModeSupported(MediaCodecInfo.EncoderCapabilities.BITRATE_MODE_CQ));
+                        Log.w(TAG, "Bitrate range: " + video_caps.getBitrateRange());
+                        for (int format : codecCaps.colorFormats) {
+                            Log.w(TAG, "Supported color format: " + format);
+                        }
 
-                    Range<Integer> widths = video_caps.getSupportedWidths();
-                    Range<Integer> heights = video_caps.getSupportedHeights();
-                    Log.w(TAG, "Supported sizes: " + widths.getLower() + "x" + heights.getLower() + " -> " + widths.getUpper() + "x" + heights.getUpper());
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        Log.w(TAG, "AchievableFrameRates: " + video_caps.getAchievableFrameRatesFor(widths.getUpper(), heights.getUpper()));
-                    }
-                    Log.w(TAG, "SupportedFrameRates: " + video_caps.getSupportedFrameRatesFor(widths.getUpper(), heights.getUpper()));
+                        Range<Integer> widths = video_caps.getSupportedWidths();
+                        Range<Integer> heights = video_caps.getSupportedHeights();
+                        Log.w(TAG, "Supported sizes: " + widths.getLower() + "x" + heights.getLower() + " -> " + widths.getUpper() + "x" + heights.getUpper());
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            Log.w(TAG, "AchievableFrameRates: " + video_caps.getAchievableFrameRatesFor(1920, 1080));
+                        }
+                        Log.w(TAG, "SupportedFrameRates: " + video_caps.getSupportedFrameRatesFor(/*widths.getUpper(), heights.getUpper()*/1920, 1080));
 
-                    for (MediaCodecInfo.CodecProfileLevel profileLevel : codecCaps.profileLevels)
-                        Log.w(TAG, "profileLevels: " + profileLevel);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        Log.w(TAG, "FEATURE_IntraRefresh: " + codecCaps.isFeatureSupported(MediaCodecInfo.CodecCapabilities.FEATURE_IntraRefresh));
+                        for (MediaCodecInfo.CodecProfileLevel profileLevel : codecCaps.profileLevels)
+                            Log.w(TAG, "profileLevels: " + profileLevel);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            Log.w(TAG, "FEATURE_IntraRefresh: " + codecCaps.isFeatureSupported(MediaCodecInfo.CodecCapabilities.FEATURE_IntraRefresh));
+                        }
+                    } catch (Exception e) {
+                        Log.w(TAG, "Can't query codec info", e);
                     }
                 }
             }
@@ -161,7 +168,8 @@ class CameraServiceCamera2 extends CameraService {
         format.setInteger(MediaFormat.KEY_MAX_INPUT_SIZE, 0);
         format.setInteger(MediaFormat.KEY_BIT_RATE, BITRATE);
         format.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface);
-        format.setInteger(MediaFormat.KEY_FRAME_RATE, 30);
+        if (Build.VERSION.SDK_INT != Build.VERSION_CODES.LOLLIPOP)
+            format.setInteger(MediaFormat.KEY_FRAME_RATE, 30);
         /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             format.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, -1);
             format.setInteger(MediaFormat.KEY_INTRA_REFRESH_PERIOD, 5);
@@ -171,7 +179,12 @@ class CameraServiceCamera2 extends CameraService {
         format.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, 5);
         //format.setInteger(MediaFormat.KEY_BITRATE_MODE, MediaCodecInfo.CodecCapabilities.BITRATE_MODE_VBR);
 
-        String codecName = new MediaCodecList(MediaCodecList.REGULAR_CODECS).findEncoderForFormat(format);
+        MediaCodecList codecs = new MediaCodecList(MediaCodecList.REGULAR_CODECS);
+        //listSupportedCodecs(codecs);
+        String codecName = codecs.findEncoderForFormat(format);
+
+        format.setInteger(MediaFormat.KEY_FRAME_RATE, 30);
+
         Surface encoderInput = null;
         MediaCodec codec = null;
         if (codecName != null) {
@@ -190,7 +203,7 @@ class CameraServiceCamera2 extends CameraService {
                     @Override
                     public void onOutputBufferAvailable(@NonNull MediaCodec codec, int index, @NonNull MediaCodec.BufferInfo info) {
                         ByteBuffer buffer = codec.getOutputBuffer(index);
-                        RingserviceJNI.captureVideoPacket(buffer, info.size, info.offset, (info.flags & MediaCodec.BUFFER_FLAG_KEY_FRAME) != 0, info.presentationTimeUs);
+                        RingserviceJNI.captureVideoPacket(buffer, info.size, info.offset, (info.flags & MediaCodec.BUFFER_FLAG_KEY_FRAME) != 0, info.presentationTimeUs, videoParams.rotation);
                         codec.releaseOutputBuffer(index, false);
                     }
 
@@ -319,13 +332,7 @@ class CameraServiceCamera2 extends CameraService {
                     videoParams.width, videoParams.height,
                     new Size(videoParams.width, videoParams.height));
             Log.d(TAG, "Selected preview size: " + previewSize + ", fps range: " + fpsRange + " rate: "+videoParams.rate);
-
-            int orientation = context.getResources().getConfiguration().orientation;
-            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                view.setAspectRatio(previewSize.getWidth(), previewSize.getHeight());
-            } else {
-                view.setAspectRatio(previewSize.getHeight(), previewSize.getWidth());
-            }
+            view.setAspectRatio(previewSize.getHeight(), previewSize.getWidth());
 
             SurfaceTexture texture = view.getSurfaceTexture();
             Surface s = new Surface(texture);

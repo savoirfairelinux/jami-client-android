@@ -40,30 +40,21 @@ public class AutoFitTextureView extends TextureView {
         if (width < 0 || height < 0) {
             throw new IllegalArgumentException("Size cannot be negative.");
         }
-        Log.w("AutoFitTextureView", "setAspectRatio " + width + "x" + height);
-        mRatioWidth = width;
-        mRatioHeight = height;
-        requestLayout();
+        if (mRatioWidth != width || mRatioHeight != height) {
+            mRatioWidth = width;
+            mRatioHeight = height;
+            requestLayout();
+        }
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        Log.w("AutoFitTextureView", "onMeasure " + widthMeasureSpec + " " + heightMeasureSpec);
-        //int width = MeasureSpec.getSize(widthMeasureSpec);
-        //int height = MeasureSpec.getSize(heightMeasureSpec);
         int width = Math.min(MeasureSpec.getSize(widthMeasureSpec), mSize);
         int height = Math.min(MeasureSpec.getSize(heightMeasureSpec), mSize);
-        //MeasureSpec.getMode(widthMeasureSpec);
         if (0 == mRatioWidth || 0 == mRatioHeight) {
             setMeasuredDimension(width, height);
         } else {
-            /*int maxDim = Math.min(Math.max(width, height), mSize);
-            if (width > height) {
-                setMeasuredDimension(maxDim, maxDim * mRatioHeight / mRatioWidth);
-            } else {
-                setMeasuredDimension(maxDim * mRatioWidth / mRatioHeight, maxDim);
-            }*/
             if (width < height * mRatioWidth / mRatioHeight) {
                 setMeasuredDimension(width, width * mRatioHeight / mRatioWidth);
             } else {
@@ -71,35 +62,4 @@ public class AutoFitTextureView extends TextureView {
             }
         }
     }
-    /*@Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int width = MeasureSpec.getSize(widthMeasureSpec);
-        int height = MeasureSpec.getSize(heightMeasureSpec);
-        Log.w("AutoFitTextureView", "onMeasure " + width + "x" + height);
-        //width = Math.min(width, mSize);
-        //height = Math.min(height, mSize);
-        if (0 != mRatioWidth && 0 != mRatioHeight) {
-            int wrh = width * mRatioHeight;
-            int hrw = height * mRatioWidth;
-            //if (wrh == hrw) {
-            //    setMeasuredDimension(width, height);
-            //    return;
-            //}
-            float w, h;
-            if (wrh < hrw) {
-                w = width;
-                h = wrh / (float)mRatioWidth;
-            } else {
-                w = hrw / (float)mRatioHeight;
-                h = height;
-            }
-            //width = Math.round(w);
-            //height = Math.round(h);
-            Log.w("AutoFitTextureView", "setMeasuredDimension " + width + "x" + height + " ratio: " + (width > height ? height/(float)width : width/(float)height));
-            setMeasuredDimension((int)w, (int)h);
-        } else {
-            setMeasuredDimension(0, 0);
-        }
-    }*/
 }

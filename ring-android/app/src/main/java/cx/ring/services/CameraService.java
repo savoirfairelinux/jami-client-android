@@ -28,6 +28,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cx.ring.daemon.IntVect;
+import cx.ring.daemon.Ringservice;
+import cx.ring.daemon.RingserviceJNI;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.UintVect;
 import cx.ring.utils.Log;
@@ -83,17 +85,47 @@ abstract public class CameraService {
 
     public void setParameters(String camId, int format, int width, int height, int rate, int rotation) {
         DeviceParams deviceParams = mNativeParams.get(camId);
+        if (deviceParams == null)
+            return;
         CameraService.VideoParams newParams = new CameraService.VideoParams(camId, format, deviceParams.size.x, deviceParams.size.y, rate);
-        newParams.rotWidth = width;
-        newParams.rotHeight = height;
         if (deviceParams.infos != null) {
-            if (deviceParams.infos.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-                newParams.rotation = (deviceParams.infos.orientation + rotationToDegrees(rotation) + 360) % 360;
-            } else {
-                newParams.rotation = (deviceParams.infos.orientation - rotationToDegrees(rotation) + 360) % 360;
-            }
+            newParams.rotation = getCameraDisplayRotation(deviceParams, rotation);
         }
+        Ringservice.setDeviceOrientation(camId, newParams.rotation);
         mParams.put(camId, newParams);
+    }
+
+    public void setOrientation(int rotation) {
+        for (String id : getCameraIds())
+            setDeviceOrientation(id, rotation);
+    }
+
+    private void setDeviceOrientation(String camId, int screenRotation) {
+        DeviceParams deviceParams = mNativeParams.get(camId);
+        int rotation = 0;
+        if (deviceParams != null && deviceParams.infos != null) {
+            rotation = getCameraDisplayRotation(deviceParams, screenRotation);
+        }
+        CameraService.VideoParams params = mParams.get(camId);
+        if (params != null) {
+            params.rotation = rotation;
+        }
+        Ringservice.setDeviceOrientation(camId, rotation);
+    }
+
+    private static int getCameraDisplayRotation(DeviceParams device, int screenRotation) {
+        return getCameraDisplayRotation(device.infos.orientation, rotationToDegrees(screenRotation), device.infos.facing);
+    }
+
+    private static int getCameraDisplayRotation(int sensorOrientation, int screenOrientation, int cameraFacing) {
+        int rotation = 0;
+        if (cameraFacing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+            rotation = (sensorOrientation + screenOrientation + 360) % 360;
+        } else {
+            rotation = (sensorOrientation - screenOrientation + 360) % 360;
+        }
+        rotation = ((180 - rotation) + 180) % 360;
+        return rotation;
     }
 
     public void getCameraInfo(String camId, IntVect formats, UintVect sizes, UintVect rates, Point minVideoSize) {
@@ -121,23 +153,20 @@ abstract public class CameraService {
         return mNativeParams.size() == 1 || currentCamera.equals(cameraFront);
     }
 
-    public Map<String, StringMap> getPreviewSettings(int orientation) {
+    public Map<String, StringMap> getPreviewSettings() {
         Map<String, StringMap> camSettings = new HashMap<>();
         for (String id : getCameraIds()) {
             CameraService.DeviceParams params = getNativeParams(id);
             if (params != null) {
-                camSettings.put(id, params.toMap(orientation));
-                Log.w(TAG, "setPreviewSettings camera:" + id);
+                camSettings.put(id, params.toMap());
             }
         }
         return camSettings;
     }
 
-
     public boolean hasCamera() {
         return getCameraCount() > 0;
     }
-
 
     public static class VideoParams {
         public String id;
@@ -145,9 +174,6 @@ abstract public class CameraService {
         // size as captured by Android
         public int width;
         public int height;
-        //size, rotated, as seen by the daemon
-        public int rotWidth;
-        public int rotHeight;
         public int rate;
         public int rotation;
 
@@ -165,10 +191,9 @@ abstract public class CameraService {
         long rate;
         Camera.CameraInfo infos;
 
-        StringMap toMap(int orientation) {
+        StringMap toMap() {
             StringMap map = new StringMap();
-            boolean rotated = (size.x > size.y) == (orientation == Configuration.ORIENTATION_PORTRAIT);
-            map.set("size", Integer.toString(rotated ? size.y : size.x) + "x" + Integer.toString(rotated ? size.x : size.y));
+            map.set("size", Integer.toString(size.x) + "x" + Integer.toString(size.y));
             map.set("rate", Long.toString(rate));
             return map;
         }
