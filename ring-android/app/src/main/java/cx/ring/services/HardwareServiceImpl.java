@@ -45,6 +45,7 @@ import java.util.Map;
 
 import androidx.media.AudioAttributesCompat;
 import cx.ring.daemon.IntVect;
+import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.UintVect;
 import cx.ring.utils.BluetoothWrapper;
@@ -404,9 +405,9 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         cameraService.setPreviewParams(videoParams);
         VideoEvent event = new VideoEvent();
         event.started = true;
-        boolean s = videoParams.rotation % 180 != 0;
-        event.w = s ? videoParams.height : videoParams.width;
-        event.h = s ? videoParams.width : videoParams.height;
+        event.w = videoParams.width;
+        event.h = videoParams.height;
+        event.rot = videoParams.rotation;
         videoEvents.onNext(event);
     }
 
@@ -515,7 +516,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     public void switchInput(String id) {
         Log.w(TAG, "switchInput " + id);
         String camId = cameraService.switchInput();
-        final StringMap map = cameraService.getNativeParams(camId).toMap(mContext.getResources().getConfiguration().orientation);
+        final StringMap map = cameraService.getNativeParams(camId).toMap();
         final String uri = "camera://" + camId;
         switchInput(id, uri, map);
     }
@@ -527,14 +528,13 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         setPreviewSettings();
         String currentCamera = cameraService.getCurrentCamera();
         final String uri = "camera://" + currentCamera;
-        final StringMap map = cameraService.getNativeParams(currentCamera).toMap(mContext.getResources().getConfiguration().orientation);
+        final StringMap map = cameraService.getNativeParams(currentCamera).toMap();
         switchInput(id, uri, map);
     }
 
     @Override
     public void setPreviewSettings() {
-        int orientation = mContext.getResources().getConfiguration().orientation;
-        setPreviewSettings(cameraService.getPreviewSettings(orientation));
+        setPreviewSettings(cameraService.getPreviewSettings());
     }
 
     @Override
@@ -545,6 +545,25 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     @Override
     public boolean isPreviewFromFrontCamera() {
         return cameraService.isPreviewFromFrontCamera();
+    }
+
+    @Override
+    public void setDeviceOrientation(int rotation) {
+        cameraService.setOrientation(rotation);
+        if (mCapturingId != null) {
+            CameraService.VideoParams videoParams = cameraService.getParams(mCapturingId);
+            VideoEvent event = new VideoEvent();
+            event.started = true;
+            event.w = videoParams.width;
+            event.h = videoParams.height;
+            event.rot = videoParams.rotation;
+            videoEvents.onNext(event);
+        }
+    }
+
+    @Override
+    protected String[] getVideoDevices() {
+        return cameraService.getCameraIds();
     }
 
     private static class Shm {

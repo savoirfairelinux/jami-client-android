@@ -84,6 +84,7 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     private Runnable runnable;
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     private int mPreviewWidth = 720, mPreviewHeight = 1280;
+    private int mPreviewWidthRot = 720, mPreviewHeightRot = 1280;
 
     public static TVCallFragment newInstance(@NonNull String action, @Nullable String accountID, @Nullable String contactRingId, boolean audioOnly) {
         Bundle bundle = new Bundle();
@@ -220,11 +221,6 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     }
 
     @Override
-    public void blockScreenRotation() {
-
-    }
-
-    @Override
     public void displayContactBubble(final boolean display) {
         binding.contactBubbleLayout.setVisibility(display ? View.VISIBLE : View.GONE);
     }
@@ -276,11 +272,6 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
 
     @Override
     public void updateMenu() {
-
-    }
-
-    @Override
-    public void changeScreenRotation() {
 
     }
 
@@ -357,7 +348,17 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     }
 
     @Override
-    public void resetVideoSize(final int videoWidth, final int videoHeight, final int previewWidth, final int previewHeight) {
+    public void resetPreviewVideoSize(int previewWidth, int previewHeight, int rot) {
+        if (previewWidth == -1 && previewHeight == -1)
+            return;
+        mPreviewWidth = previewWidth;
+        mPreviewHeight = previewHeight;
+        boolean flip = (rot % 180) != 0;
+        binding.previewSurface.setAspectRatio(flip ? mPreviewHeight : mPreviewWidth, flip ? mPreviewWidth : mPreviewHeight);
+    }
+
+    @Override
+    public void resetVideoSize(final int videoWidth, final int videoHeight) {
         ViewGroup rootView = (ViewGroup) getView();
         if (rootView == null)
             return;
@@ -379,27 +380,6 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
         if (oldW != params.width || oldH != params.height) {
             binding.videoSurface.setLayoutParams(params);
         }
-
-        if (previewWidth == -1 && previewHeight == -1)
-            return;
-        mPreviewWidth = previewWidth;
-        mPreviewHeight = previewHeight;
-
-/*
-        final int mPreviewWidth = HardwareServiceImpl.VIDEO_WIDTH;
-            final int mPreviewHeight = HardwareServiceImpl.VIDEO_HEIGHT;
-
-            DisplayMetrics metrics = getResources().getDisplayMetrics();
-            RelativeLayout.LayoutParams paramsPreview = (RelativeLayout.LayoutParams) mVideoPreview.getLayoutParams();
-            oldW = paramsPreview.width;
-            oldH = paramsPreview.height;
-            double previewMaxDim = Math.max(mPreviewWidth, mPreviewHeight);
-            double previewRatio = metrics.density * 160. / previewMaxDim;
-            paramsPreview.width = (int) (mPreviewWidth * previewRatio);
-            paramsPreview.height = (int) (mPreviewHeight * previewRatio);
-            if (oldW != paramsPreview.width || oldH != paramsPreview.height) {
-                mVideoPreview.setLayoutParams(paramsPreview);
-            }*/
     }
 
     private void configureTransform(int viewWidth, int viewHeight) {
@@ -415,12 +395,12 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
         float centerX = viewRect.centerX();
         float centerY = viewRect.centerY();
         if (rot) {
-            RectF bufferRect = new RectF(0, 0, mPreviewHeight, mPreviewWidth);
+            RectF bufferRect = new RectF(0, 0, mPreviewHeightRot, mPreviewWidthRot);
             bufferRect.offset(centerX - bufferRect.centerX(), centerY - bufferRect.centerY());
             matrix.setRectToRect(viewRect, bufferRect, Matrix.ScaleToFit.FILL);
             float scale = Math.max(
-                    (float) viewHeight / mPreviewHeight,
-                    (float) viewWidth / mPreviewWidth);
+                    (float) viewHeight / mPreviewHeightRot,
+                    (float) viewWidth / mPreviewWidthRot);
             matrix.postScale(scale, scale, centerX, centerY);
             matrix.postRotate(90 * (rotation - 2), centerX, centerY);
         } else if (Surface.ROTATION_180 == rotation) {

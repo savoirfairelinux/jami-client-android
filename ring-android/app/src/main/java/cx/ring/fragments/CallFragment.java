@@ -26,8 +26,6 @@ import android.app.PictureInPictureParams;
 import android.app.RemoteAction;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.graphics.Matrix;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
@@ -48,11 +46,13 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.OrientationEventListener;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.RelativeLayout;
 
@@ -69,7 +69,6 @@ import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.call.CallPresenter;
 import cx.ring.call.CallView;
-import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.databinding.FragCallBinding;
@@ -100,13 +99,17 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     public static final String KEY_AUDIO_ONLY = "AUDIO_ONLY";
 
     private FragCallBinding binding;
+    private OrientationEventListener mOrientationListener;
 
     private MenuItem dialPadBtn = null;
-    private MenuItem changeScreenOrientationBtn = null;
     private boolean restartVideo = false;
     private PowerManager.WakeLock mScreenWakeLock;
-    private int mCurrentOrientation = Configuration.ORIENTATION_UNDEFINED;
+    private int mCurrentOrientation = 0;
+
+    private int mVideoWidth = -1;
+    private int mVideoHeight = -1;
     private int mPreviewWidth = 720, mPreviewHeight = 1280;
+    private int mPreviewSurfaceWidth = 0, mPreviewSurfaceHeight = 0;
 
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
@@ -161,15 +164,17 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     @Override
     protected void initPresenter(CallPresenter presenter) {
         super.initPresenter(presenter);
-
-        String action = getArguments().getString(KEY_ACTION);
-        if (action != null) {
-            if (action.equals(ACTION_PLACE_CALL)) {
-                presenter.initOutGoing(getArguments().getString(KEY_ACCOUNT_ID),
-                        getArguments().getString(ConversationFragment.KEY_CONTACT_RING_ID),
-                        getArguments().getBoolean(KEY_AUDIO_ONLY));
-            } else if (action.equals(ACTION_GET_CALL)) {
-                presenter.initIncoming(getArguments().getString(KEY_CONF_ID));
+        Bundle args = getArguments();
+        if (args != null) {
+            String action = args.getString(KEY_ACTION);
+            if (action != null) {
+                if (action.equals(ACTION_PLACE_CALL)) {
+                    presenter.initOutGoing(getArguments().getString(KEY_ACCOUNT_ID),
+                            getArguments().getString(ConversationFragment.KEY_CONTACT_RING_ID),
+                            getArguments().getBoolean(KEY_AUDIO_ONLY));
+                } else if (action.equals(ACTION_GET_CALL)) {
+                    presenter.initIncoming(getArguments().getString(KEY_CONF_ID));
+                }
             }
         }
     }
@@ -183,6 +188,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             return;
         }
+        Context context = requireContext();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             PictureInPictureParams.Builder paramBuilder = new PictureInPictureParams.Builder();
             if (binding.videoSurface.getVisibility() == View.VISIBLE) {
@@ -198,17 +204,17 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             }
             ArrayList<RemoteAction> actions = new ArrayList<>(1);
             actions.add(new RemoteAction(
-                    Icon.createWithResource(getContext(), R.drawable.baseline_call_end_24),
+                    Icon.createWithResource(context, R.drawable.baseline_call_end_24),
                     getString(R.string.action_call_hangup),
                     getString(R.string.action_call_hangup),
-                    PendingIntent.getService(getContext(), new Random().nextInt(),
+                    PendingIntent.getService(context, new Random().nextInt(),
                             new Intent(DRingService.ACTION_CALL_END)
-                                    .setClass(getContext(), DRingService.class)
+                                    .setClass(context, DRingService.class)
                                     .putExtra(NotificationService.KEY_CALL_ID, sipCall.getCallId()), PendingIntent.FLAG_ONE_SHOT)));
             paramBuilder.setActions(actions);
-            getActivity().enterPictureInPictureMode(paramBuilder.build());
-        } else if (DeviceUtils.isTv(getContext())) {
-            getActivity().enterPictureInPictureMode();
+            requireActivity().enterPictureInPictureMode(paramBuilder.build());
+        } else if (DeviceUtils.isTv(context)) {
+            requireActivity().enterPictureInPictureMode();
         }
     }
 
@@ -242,7 +248,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        injectFragment(((RingApplication) getActivity().getApplication()).getRingInjectionComponent());
+        injectFragment(((RingApplication) requireActivity().getApplication()).getRingInjectionComponent());
         binding = DataBindingUtil.inflate(inflater, R.layout.frag_call, container, false);
         binding.setPresenter(this);
         return binding.getRoot();
@@ -251,13 +257,15 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     private TextureView.SurfaceTextureListener listener = new TextureView.SurfaceTextureListener() {
         @Override
         public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-            configureTransform(width, height);
+            mPreviewSurfaceWidth = width;
+            mPreviewSurfaceHeight = height;
             presenter.previewVideoSurfaceCreated(binding.previewSurface);
         }
 
         @Override
         public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
-            configureTransform(width, height);
+            mPreviewSurfaceWidth = width;
+            mPreviewSurfaceHeight = height;
         }
 
         @Override
@@ -275,7 +283,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         setHasOptionsMenu(true);
         super.onViewCreated(view, savedInstanceState);
         mCurrentOrientation = getResources().getConfiguration().orientation;
-        PowerManager powerManager = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
+        PowerManager powerManager = (PowerManager) requireContext().getSystemService(Context.POWER_SERVICE);
         mScreenWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "ring:callLock");
         mScreenWakeLock.setReferenceCounted(false);
 
@@ -304,11 +312,30 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             boolean ui = (visibility & (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN)) == 0;
             presenter.uiVisibilityChanged(ui);
         });
+        view.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) ->
+                resetVideoSize(mVideoWidth, mVideoHeight));
+
+        WindowManager windowManager = (WindowManager) requireContext().getSystemService(Context.WINDOW_SERVICE);
+        mOrientationListener = new OrientationEventListener(getContext()) {
+            @Override
+            public void onOrientationChanged(int orientation) {
+                int rot = windowManager.getDefaultDisplay().getRotation();
+                if (mCurrentOrientation != rot) {
+                    mCurrentOrientation = rot;
+                    presenter.configurationChanged(rot);
+                }
+            }
+        };
+        if (mOrientationListener.canDetectOrientation()) {
+            mOrientationListener.enable();
+        }
 
         binding.shapeRipple.setRippleShape(new Circle());
         binding.callSpeakerBtn.setChecked(presenter.isSpeakerphoneOn());
         binding.callMicBtn.setChecked(presenter.isMicrophoneMuted());
         binding.previewSurface.setSurfaceTextureListener(listener);
+        binding.previewSurface.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) ->
+                configureTransform(mPreviewSurfaceWidth, mPreviewSurfaceHeight));
 
         binding.dialpadEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -327,6 +354,10 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        if (mOrientationListener != null) {
+            mOrientationListener.disable();
+            mOrientationListener = null;
+        }
         mCompositeDisposable.clear();
         if (mScreenWakeLock != null && mScreenWakeLock.isHeld()) {
             mScreenWakeLock.release();
@@ -334,26 +365,10 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        int newOrientation = newConfig.orientation;
-        if (newOrientation == mCurrentOrientation) {
-            return;
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && getActivity().isInPictureInPictureMode()) {
-            // avoid restarting the camera when entering PIP mode
-            return;
-        }
-        mCurrentOrientation = newOrientation;
-        presenter.configurationChanged();
-    }
-
-    @Override
     public void onCreateOptionsMenu(Menu m, MenuInflater inf) {
         super.onCreateOptionsMenu(m, inf);
         inf.inflate(R.menu.ac_call, m);
         dialPadBtn = m.findItem(R.id.menuitem_dialpad);
-        changeScreenOrientationBtn = m.findItem(R.id.menuitem_change_screen_orientation);
     }
 
     @Override
@@ -373,25 +388,21 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             case R.id.menuitem_dialpad:
                 presenter.dialpadClick();
                 break;
-            case R.id.menuitem_change_screen_orientation:
-                presenter.screenRotationClick();
-                break;
         }
         return true;
     }
 
     @Override
     public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode) {
-        if (isInPictureInPictureMode)
-            ((CallActivity) getActivity()).getSupportActionBar().hide();
-        else
-            ((CallActivity) getActivity()).getSupportActionBar().show();
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        ActionBar actionBar = activity == null ? null : activity.getSupportActionBar();
+        if (actionBar != null) {
+            if (isInPictureInPictureMode)
+                actionBar.hide();
+            else
+                actionBar.show();
+        }
         presenter.pipModeChanged(isInPictureInPictureMode);
-    }
-
-    @Override
-    public void blockScreenRotation() {
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
     }
 
     @Override
@@ -435,16 +446,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     @Override
     public void updateMenu() {
-        getActivity().invalidateOptionsMenu();
-    }
-
-    @Override
-    public void changeScreenRotation() {
-        if (mCurrentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        } else {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        }
+        requireActivity().invalidateOptionsMenu();
     }
 
     @Override
@@ -510,9 +512,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         if (dialPadBtn != null) {
             dialPadBtn.setVisible(canDial);
         }
-        if (changeScreenOrientationBtn != null) {
-            changeScreenOrientationBtn.setVisible(binding.videoSurface.getVisibility() == View.VISIBLE);
-        }
     }
 
     @Override
@@ -528,7 +527,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         binding.callSpeakerBtn.setChecked(isSpeakerphoneOn);
         binding.callMicBtn.setChecked(isMuted);
 
-        getActivity().invalidateOptionsMenu();
+        requireActivity().invalidateOptionsMenu();
     }
 
     @Override
@@ -539,7 +538,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         binding.callHangupBtn.setVisibility(View.GONE);
 
         binding.contactBubbleLayout.setVisibility(View.VISIBLE);
-        getActivity().invalidateOptionsMenu();
+        requireActivity().invalidateOptionsMenu();
     }
 
     @Override
@@ -550,18 +549,26 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         binding.callHangupBtn.setVisibility(View.GONE);
 
         binding.contactBubbleLayout.setVisibility(View.VISIBLE);
-        getActivity().invalidateOptionsMenu();
+        requireActivity().invalidateOptionsMenu();
     }
 
     @Override
-    public void resetVideoSize(final int videoWidth, final int videoHeight, final int previewWidth, final int previewHeight) {
+    public void resetPreviewVideoSize(int previewWidth, int previewHeight, int rot) {
+        if (previewWidth == -1 && previewHeight == -1)
+            return;
+        mPreviewWidth = previewWidth;
+        mPreviewHeight = previewHeight;
+        boolean flip = (rot % 180) != 0;
+        binding.previewSurface.setAspectRatio(flip ? mPreviewHeight : mPreviewWidth, flip ? mPreviewWidth : mPreviewHeight);
+    }
+
+    @Override
+    public void resetVideoSize(int videoWidth, int videoHeight) {
         ViewGroup rootView = (ViewGroup) getView();
         if (rootView == null)
             return;
-
         double videoRatio = videoWidth / (double) videoHeight;
-        double screenRatio = getView().getWidth() / (double) getView().getHeight();
-
+        double screenRatio = rootView.getWidth() / (double) rootView.getHeight();
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.videoSurface.getLayoutParams();
         int oldW = params.width;
         int oldH = params.height;
@@ -576,12 +583,8 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         if (oldW != params.width || oldH != params.height) {
             binding.videoSurface.setLayoutParams(params);
         }
-
-        if (previewWidth == -1 && previewHeight == -1)
-            return;
-        mPreviewWidth = previewWidth;
-        mPreviewHeight = previewHeight;
-        Log.w(TAG, "resetVideoSize preview: " + previewWidth + "x" + previewHeight);
+        mVideoWidth = videoWidth;
+        mVideoHeight = videoHeight;
     }
 
     private void configureTransform(int viewWidth, int viewHeight) {
@@ -591,7 +594,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         }
         int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
         boolean rot = Surface.ROTATION_90 == rotation || Surface.ROTATION_270 == rotation;
-        Log.w(TAG, "configureTransform " + viewWidth + "x" + viewHeight + " rot=" + rot + " mPreviewWidth=" + mPreviewWidth + " mPreviewHeight=" + mPreviewHeight);
+        // Log.w(TAG, "configureTransform " + viewWidth + "x" + viewHeight + " rot=" + rot + " mPreviewWidth=" + mPreviewWidth + " mPreviewHeight=" + mPreviewHeight);
         Matrix matrix = new Matrix();
         RectF viewRect = new RectF(0, 0, viewWidth, viewHeight);
         float centerX = viewRect.centerX();
@@ -614,13 +617,13 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     @Override
     public void goToConversation(String accountId, String conversationId) {
         Intent intent = new Intent();
-        if (DeviceUtils.isTablet(getActivity())) {
-            intent.setClass(getActivity(), HomeActivity.class)
+        if (DeviceUtils.isTablet(requireActivity())) {
+            intent.setClass(requireActivity(), HomeActivity.class)
                     .setAction(DRingService.ACTION_CONV_ACCEPT)
                     .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, conversationId);
             startActivity(intent);
         } else {
-            intent.setClass(getActivity(), ConversationActivity.class)
+            intent.setClass(requireActivity(), ConversationActivity.class)
                     .setAction(Intent.ACTION_VIEW)
                     .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
                     .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
@@ -637,7 +640,9 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     @Override
     public void finish() {
-        getActivity().finish();
+        Activity activity = getActivity();
+        if (activity != null)
+            activity.finish();
     }
 
     public void speakerClicked() {

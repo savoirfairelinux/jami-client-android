@@ -23,7 +23,6 @@ package cx.ring.services;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -64,6 +63,7 @@ public abstract class HardwareService {
         public boolean start = false;
         public boolean started = false;
         public int w = 0, h = 0;
+        public int rot = 0;
         public String callId = null;
     }
     public class BluetoothEvent {
@@ -194,4 +194,7 @@ public abstract class HardwareService {
         RingserviceJNI.setDefaultDevice(deviceId);
     }
 
+    public abstract void setDeviceOrientation(int rotation);
+
+    protected abstract String[] getVideoDevices();
 }

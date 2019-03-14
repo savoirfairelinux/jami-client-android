@@ -24,8 +24,6 @@ import cx.ring.model.SipCall;
 
 public interface CallView {
 
-    void blockScreenRotation();
-
     void displayContactBubble(boolean display);
 
     void displayVideoSurface(boolean display);
@@ -39,8 +37,6 @@ public interface CallView {
     void switchCameraIcon(boolean isFront);
 
     void updateMenu();
-
-    void changeScreenRotation();
 
     void updateTime(long duration);
 
@@ -56,7 +52,8 @@ public interface CallView {
 
     void initOutGoingCallDisplay();
 
-    void resetVideoSize(int videoWidth, int videoHeight, int previewWidth, int previewHeight);
+    void resetPreviewVideoSize(int previewWidth, int previewHeight, int rot);
+    void resetVideoSize(int videoWidth, int videoHeight);
 
     void goToConversation(String accountId, String conversationId);
 
