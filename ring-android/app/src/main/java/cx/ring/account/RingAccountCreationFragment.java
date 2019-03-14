@@ -166,67 +166,54 @@ public class RingAccountCreationFragment extends BaseSupportFragment<RingAccount
 
     @Override
     public void enableTextError() {
-        getActivity().runOnUiThread(() -> {
-            mUsernameTxtBox.setErrorEnabled(true);
-            mUsernameTxtBox.setError(getString(R.string.looking_for_username_availability));
-
-        });
+        mUsernameTxtBox.setErrorEnabled(true);
+        mUsernameTxtBox.setError(getString(R.string.looking_for_username_availability));
     }
 
     @Override
     public void disableTextError() {
-        getActivity().runOnUiThread(() -> {
-            mUsernameTxtBox.setErrorEnabled(false);
-            mUsernameTxtBox.setError(null);
-        });
+        mUsernameTxtBox.setErrorEnabled(false);
+        mUsernameTxtBox.setError(null);
     }
 
     @Override
     public void showExistingNameError() {
-        getActivity().runOnUiThread(() -> {
-            mUsernameTxtBox.setErrorEnabled(true);
-            mUsernameTxtBox.setError(getString(R.string.username_already_taken));
-        });
+        mUsernameTxtBox.setErrorEnabled(true);
+        mUsernameTxtBox.setError(getString(R.string.username_already_taken));
     }
 
     @Override
     public void showInvalidNameError() {
-        getActivity().runOnUiThread(() -> {
-            mUsernameTxtBox.setErrorEnabled(true);
-            mUsernameTxtBox.setError(getString(R.string.invalid_username));
-        });
+        mUsernameTxtBox.setErrorEnabled(true);
+        mUsernameTxtBox.setError(getString(R.string.invalid_username));
     }
 
     @Override
     public void showInvalidPasswordError(final boolean display) {
-        getActivity().runOnUiThread(() -> {
-            if (display) {
-                mPasswordTxtBox.setError(getString(R.string.error_password_char_count));
-            } else {
-                mPasswordTxtBox.setError(null);
-            }
-        });
+        if (display) {
+            mPasswordTxtBox.setError(getString(R.string.error_password_char_count));
+        } else {
+            mPasswordTxtBox.setError(null);
+        }
     }
 
     @Override
     public void showNonMatchingPasswordError(final boolean display) {
-        getActivity().runOnUiThread(() -> {
-            if (display) {
-                mPasswordRepeatTxtBox.setError(getString(R.string.error_passwords_not_equals));
-            } else {
-                mPasswordRepeatTxtBox.setError(null);
-            }
-        });
+        if (display) {
+            mPasswordRepeatTxtBox.setError(getString(R.string.error_passwords_not_equals));
+        } else {
+            mPasswordRepeatTxtBox.setError(null);
+        }
     }
 
     @Override
     public void displayUsernameBox(final boolean display) {
-        getActivity().runOnUiThread(() -> mUsernameBox.setVisibility(display ? View.VISIBLE : View.GONE));
+        mUsernameBox.setVisibility(display ? View.VISIBLE : View.GONE);
     }
 
     @Override
     public void enableNextButton(final boolean enabled) {
-        getActivity().runOnUiThread(() -> mCreateAccountButton.setEnabled(enabled));
+        mCreateAccountButton.setEnabled(enabled);
     }
 
     @Override
