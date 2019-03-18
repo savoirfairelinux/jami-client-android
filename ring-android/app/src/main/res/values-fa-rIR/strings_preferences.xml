@@ -10,6 +10,8 @@
   <string name="pref_pushNotifications_title">ارسال آگاهی</string>
   <string name="pref_pushNotifications_summary">استفاده از کارسازهای گوگل برای دریافت تماس‌ها/پیام‌ها در پس‌زمینه</string>
   <string name="pref_hd_summary">فعّال کردن ارسال ویدیوی HD</string>
+  <string name="pref_hwEncode_title">فعّال کردن رمزینش شتاب‌داده</string>
+  <string name="pref_hwEncode_summary">ویژگی آزمایشی</string>
   <string name="pref_systemContacts_title">استفاده از مخاطبان سامانه</string>
   <string name="pref_systemContacts_summary">استفاده از مخاطبان سامانه برای نمایش جزییات تماس گیرنده.</string>
   <string name="pref_systemDialer_title">انجام تماس‌های سامانه با استفاده از جمی</string>

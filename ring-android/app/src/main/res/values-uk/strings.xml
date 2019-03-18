@@ -2,7 +2,9 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Відгук</string>
+  <string name="report"><u>Відправте нам листа</u></string>
   <string name="section_license">Ліцензія</string>
+  <string name="sponsor_section">Jami це вільне програмне забезпечення яке розроблене і підтримується</string>
   <string name="copyright_section">Авторське право</string>
   <string name="contribute_section">Зробити внесок</string>
   <string name="version_section">Версія</string>
@@ -10,6 +12,8 @@
   <string name="no_browser_app_installed">Не знайдено жодного браузера. Будь ласка, встановіть браузер, щоб переглянути цю сторінку.</string>
   <string name="email_chooser_title">Надіслати повідомлення за допомогою...</string>
   <string name="website_chooser_title">Переглянути сайт за допомогою...</string>
+  <string name="license">Це програмне забезпечення надається \"як є\", без будь-яких гарантій. Більш детально дивіться<u>GNU General Public License версію 3 чи новішу</u></string>
+  <string name="description">Jami - це вільне програмне забезпечення для будь-якого спілкування, яке поважає свободу та конфіденційність своїх користувачів.</string>
   <string name="credits">Подяки</string>
   <!--About dialog-->
   <string name="developed_by">Розроблено</string>
@@ -28,8 +32,10 @@
   <string name="menu_item_home">Домівка</string>
   <string name="menu_item_contact_request">Запити контактів</string>
   <string name="menu_item_accounts">Керувати аккаунтами</string>
+  <string name="menu_item_account">Керувати акаунтом</string>
   <string name="menu_item_settings">Налаштування</string>
   <string name="menu_item_share">Поділитись своїми контактними даними</string>
+  <string name="menu_item_about">Про Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Набрати номер</string>
   <!--History Fragment-->
@@ -56,16 +62,36 @@
   <string name="notif_current_call_title">Поточний виклик з %1$s</string>
   <string name="notif_current_call">Поточний виклик</string>
   <string name="notif_channel_calls">Дзвінки</string>
+  <string name="notif_channel_missed_calls">Пропущені виклики</string>
+  <string name="notif_channel_messages">Повідомлення</string>
+  <string name="notif_channel_requests">Запити</string>
+  <string name="notif_channel_file_transfer">Передача файлів</string>
+  <string name="notif_channel_background_service">Фоновий сервіс</string>
+  <string name="notif_channel_background_service_descr">Дозволяє будь-коли отримувати дзвінки і повідомлення.</string>
+  <string name="notif_background_service">Jami на даний момент запущений у фоні</string>
+  <string name="notif_mark_as_read">Позначити прочитаним</string>
+  <string name="notif_reply">Відповісти</string>
+  <string name="notif_incoming_file_transfer_title">Вхідний файл від %1$s</string>
+  <string name="notif_incoming_file_transfer">Хтось хоче вислати вам файл</string>
+  <string name="notif_outgoing_file_transfer_title">Надсилаємо файл до %1$s </string>
+  <string name="notif_outgoing_file_transfer">Хтось хоче вислати вам файл</string>
+  <string name="notif_incoming_picture">Картинка від %1$s</string>
+  <string name="action_open">Відкрити</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ви:</string>
   <string name="action_call_hangup">Зупинити</string>
   <string name="ongoing_call">Вихідний виклик</string>
   <string name="hist_in_call">Вхідний виклик тривалістю %1$s</string>
   <string name="hist_out_call">Вихідний виклик тривалістю %1$s</string>
+  <string name="start_error_title">Неможливо запустити Jami!</string>
+  <string name="start_error_mic_required">Для своєї роботи, Jami вимагає доступ до мікрофону.</string>
   <string name="action_call_accept">Прийняти виклик</string>
   <string name="action_call_decline">Відхилити</string>
+  <string name="action_call_mic_mute">Відключити мікрофон</string>
   <string name="ab_action_speakerphone">Увімкнути гучномовець</string>
   <string name="ab_action_contact_add">Додати до контактів</string>
+  <string name="ab_action_contact_add_question">Додати до контактів?</string>
+  <string name="hist_contact_added">Контакт додано</string>
   <string name="ab_action_audio_call">Голосовий виклик</string>
   <string name="ab_action_video_call">Відео виклик</string>
   <string name="ab_action_change_screen_orientation">Змінити орієнтацію екрану</string>

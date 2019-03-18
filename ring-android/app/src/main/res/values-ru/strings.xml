@@ -142,6 +142,9 @@
   <string name="conversation_action_block_this">Заблокировать контакт</string>
   <string name="conversation_action_go_to_call">Вернуться к текущему вызову</string>
   <string name="clip_contact_uri">Контактный адрес</string>
+  <string name="block_contact_dialog_title">Заблокировать %1$s?</string>
+  <string name="block_contact_dialog_message">%1$s не сможет связаться с вами, пока вы не разблокируете его.</string>
+  <string name="block_contact_completed">%1$s заблокирован.</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Добавить %1$s?</string>
   <string name="prompt_new_password">Новый пароль</string>

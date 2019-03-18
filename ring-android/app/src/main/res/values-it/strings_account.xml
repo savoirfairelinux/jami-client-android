@@ -34,6 +34,7 @@ Si potra modificare questo account più tardi.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nessun account registrato</string>
   <string name="normal_accounts_titles">Accounts</string>
+  <string name="normal_devices_titles">Dispositivi noti collegati a questo account Jami</string>
   <string name="account_device_revoke">Revoca dispositivo</string>
   <string name="account_device_revocation_success_title">Successo</string>
   <!--Basic Details-->
@@ -101,9 +102,15 @@ Si potra modificare questo account più tardi.</string>
   <string name="export_account_wait_title">Aspettare</string>
   <string name="account_export_end_network_title">Errore di rete</string>
   <string name="account_export_end_error_title">Errore</string>
+  <string name="account_link_button">Collega questo dispositivo a un account</string>
+  <string name="account_new_button">Crea un account Jami</string>
   <!--Name registration-->
+  <string name="username_already_taken">Nome utente già utilizzato</string>
+  <string name="invalid_username">Nome utente non valido</string>
   <string name="account_status_connecting">Connessione in corso </string>
+  <string name="account_status_online">Online</string>
   <string name="account_status_unknown">Sconosciuto</string>
+  <string name="account_status_offline">Offline</string>
   <!--Create account-->
   <!--Edit profile-->
   <!--Devices-->

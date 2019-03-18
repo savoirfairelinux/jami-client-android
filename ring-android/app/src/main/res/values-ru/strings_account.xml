@@ -120,9 +120,12 @@
   <string name="account_export_end_error_title">Ошибка</string>
   <string name="account_export_end_error_message">Не удалось экспортировать аккаунт. Произошла неизвестная ошибка.</string>
   <string name="account_enter_password">Введите пароль</string>
+  <string name="account_share_body">Свяжитесь со мной, используя \'%1$s\' в распределенной платформе для общения Jami: %2$s</string>
+  <string name="account_share_body_with_username">Свяжитесь со мной, используя \'%1$s\' или мое публичное имя пользователя \'%2$s\' в распределенной платформе для общения Jami: %3$s</string>
   <string name="account_contact_me">Свяжитесь со мной в Jami!</string>
   <string name="update_account">Обновить аккаунт</string>
   <string name="account_migration">Ваш аккаунт Jami может быть обновлен.\nПожалуйста, введите ваш пароль.</string>
+  <string name="ring_account">Аккаунт Jami</string>
   <string name="ring_account_identity">Идентификатор</string>
   <string name="account_migration_title_dialog">Перенос аккаунта</string>
   <string name="account_migration_message_dialog">Ваш аккаунт требуется обновить. Хотите перейти на экран управления аккаунтом для выполнения этой операции?</string>

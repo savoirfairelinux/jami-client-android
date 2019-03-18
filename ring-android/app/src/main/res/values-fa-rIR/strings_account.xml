@@ -120,9 +120,12 @@
   <string name="account_export_end_error_title">خطا</string>
   <string name="account_export_end_error_message">نمی‌توان حساب را در شبکه صادر کرد. خطایی ناشناخته رخ داد.</string>
   <string name="account_enter_password">گذرواژه را وارد کنید</string>
+  <string name="account_share_body">با استفاده از «%1$s» روی بن‌سازهٔ ارتباطی توزیع‌شدهٔ جمی با من تماس بگیرید: %2$s</string>
+  <string name="account_share_body_with_username">با استفاده از «%1$s» یا نام کاربری عمومی «%2$s» روی بن‌سازهٔ ارتباطی توزیع‌شدهٔ جمی با من تماس بگیرید: %3$s</string>
   <string name="account_contact_me">با من روی جمی در تماس باشید!</string>
   <string name="update_account">به روز رسانی حساب کاربری</string>
   <string name="account_migration">حساب جمیتان می‌تواند به‌روز شود.\nلطفاً گذرواژه‌تان را وارد کنید.</string>
+  <string name="ring_account">حساب جمی</string>
   <string name="ring_account_identity">هویت</string>
   <string name="account_migration_title_dialog">مهاجرت حساب</string>
   <string name="account_migration_message_dialog">حساب‌هایتان باید به‌روز شوند. می‌خواهید برای انجام این عمل، به صفحه مدیریت حساب بروید؟</string>
@@ -131,6 +134,7 @@
   <string name="account_cannot_be_found_message">حساب نتوانست روی شبکهٔ جمی پیدا شود.\n مطمئن شوید از یک افزارهٔ پیشین، روی جمی صادر شده است و اطّلاعات وارد شده صحیحند.</string>
   <string name="account_sip_cannot_be_registered_message">می‌توانید فرایند ایجاد حساب را ادامه داده یا در این‌جا اطّلاعاتتان را ویرایش کنید. ویرایش هم‌چنان بعداٍ در تنظیمات حساب ممکن است.</string>
   <string name="account_no_network_title">نمی‌توان به شبکه وصل شد</string>
+  <string name="account_no_network_message">نمی‌توان حساب را افزود، زیرا جمی نتوانست به شبکهٔ توزیع شده وصل شود. اتّصال دستگاهتان را بررسی کنید.</string>
   <string name="account_device_added_title">دستگاه به حساب افزوده شد.</string>
   <string name="account_device_added_message">با موفّقیت حساب جمیتان را روی این افزاره برپا کردید.</string>
   <string name="account_device_updated_title">حساب دستگاه  به روز شد.</string>

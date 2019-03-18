@@ -2,7 +2,9 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Обратна връзка</string>
+  <string name="report">Изпратете ни емайл</string>
   <string name="section_license">Лиценз</string>
+  <string name="sponsor_section">Jami е безплатен софтуер, разработен и поддържан от</string>
   <string name="copyright_section">Авторски права</string>
   <string name="contribute_section">Принос</string>
   <string name="version_section">Версия</string>
@@ -28,8 +30,10 @@
   <string name="menu_item_home">Начало</string>
   <string name="menu_item_contact_request">Заявки за нови контакти</string>
   <string name="menu_item_accounts">Управление на акаунтите</string>
+  <string name="menu_item_account">Управление на акаунта</string>
   <string name="menu_item_settings">Настройки</string>
   <string name="menu_item_share">Споделяне на моята информация</string>
+  <string name="menu_item_about">Относно Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Наберете номер</string>
   <!--History Fragment-->
@@ -54,8 +58,10 @@
   <string name="notif_current_call_title">Текущ разговор с %1$s</string>
   <string name="notif_current_call">Текущ разговор</string>
   <string name="notif_channel_calls">Обаждания</string>
+  <string name="notif_channel_missed_calls">Пропуснати обаждания</string>
   <string name="notif_channel_messages">Съобщения</string>
   <string name="notif_channel_requests">Заявки</string>
+  <string name="notif_channel_file_transfer">Прехвърляне на файлове</string>
   <string name="action_open">Отваряне</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Вие:</string>

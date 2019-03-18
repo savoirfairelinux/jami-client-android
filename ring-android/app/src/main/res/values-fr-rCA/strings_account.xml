@@ -129,6 +129,7 @@ Vous pourrez modifier votre compte plus tard.</string>
   <string name="account_sip_register_anyway">S\'inscrire de toute façon</string>
   <string name="account_link_button">Associer cet appareil à un compte</string>
   <string name="account_link_prompt_pin">Entrer le NIP</string>
+  <string name="account_new_button">Créer un compte Jami</string>
   <string name="account_link_export_button">Associer un autre appareil à ce compte</string>
   <string name="account_start_export_button">Générer le NIP</string>
   <string name="account_end_export_button">fermer</string>
@@ -149,6 +150,7 @@ Vous pourrez modifier votre compte plus tard.</string>
   <string name="account_status_unknown">Inconnu</string>
   <string name="account_status_offline">Hors ligne</string>
   <!--Create account-->
+  <string name="account_creation_home">Bienvenu sur Jami</string>
   <string name="account_creation_profile">Créer votre profil</string>
   <string name="account_link_title">Associer cet appareil</string>
   <string name="account_sip_cannot_be_registered">Impossible d\'enregistrer le compte</string>
