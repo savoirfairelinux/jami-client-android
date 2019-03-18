@@ -35,6 +35,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	wget \
 	curl \
 	yasm \
+	nasm \
 	zip \
 	&& locale-gen $LANG $LC_ALL && update-locale $LANG $LC_ALL \
 	&& update-java-alternatives --set java-1.8.0-openjdk
