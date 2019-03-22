@@ -158,9 +158,9 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
             } else {
                 if (uri.isRingId()) {
                     mCallContact = currentAccount.getContactFromCache(uri);
-                    mCompositeDisposable.add(mContactService.loadContactData(mCallContact)
+                    mCompositeDisposable.add(mContactService.getLoadedContact(currentAccount.getAccountID(), mCallContact)
                             .observeOn(mUiScheduler)
-                            .subscribe(() -> view.displayContact(mCallContact)));
+                            .subscribe(view::displayContact, e -> Log.e(TAG, "Can't load contact")));
                 } else {
                     view.hideSearchRow();
                     view.setLoading(true);
