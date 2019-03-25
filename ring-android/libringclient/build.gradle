@@ -5,7 +5,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     // VCard parsing
-    compile 'com.googlecode.ez-vcard:ez-vcard:0.10.4'
+    compile 'com.googlecode.ez-vcard:ez-vcard:0.10.5'
 
     // QRCode encoding
     compile 'com.google.zxing:core:3.3.3'
@@ -20,7 +20,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     // RxJava
-    compile "io.reactivex.rxjava2:rxjava:2.2.2"
+    compile "io.reactivex.rxjava2:rxjava:2.2.7"
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
