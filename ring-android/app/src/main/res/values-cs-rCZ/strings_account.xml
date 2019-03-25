@@ -5,6 +5,7 @@
   <string name="ic_advanced_menu">Pokročilá nastavení</string>
   <string name="ic_blacklist_menu">Blokované kontakty</string>
   <!--Strings related to account creation-->
+  <string name="add_ring_account_title">Přidat účet Jami</string>
   <string name="add_sip_account_title">Přidat účet SIP</string>
   <string name="ring_account_default_name">Účet Ring %1$s</string>
   <string name="prompt_alias">Přezdívka</string>
@@ -79,6 +80,9 @@ Svůj účet můžete upravit později</string>
   <string name="account_published_same_as_local_label">Zveřejněné stejně jako místní</string>
   <string name="account_published_port_label">Zveřejněný port</string>
   <string name="account_published_address_label">Zveřejněná adresa</string>
+  <string name="account_proxy_label">Proxy DHT</string>
+  <string name="account_proxy_enable_label">Použít proxy DHT</string>
+  <string name="account_proxy_server_label">Adresa proxy DHT</string>
   <!--Security Details-->
   <string name="account_credentials_label">Ověřovací údaje</string>
   <string name="account_credentials_edit">Upravit ověřovací údaje</string>
@@ -114,7 +118,9 @@ Svůj účet můžete upravit později</string>
   <string name="account_export_end_error_title">Chyba</string>
   <string name="account_export_end_error_message">Nebylo možné účet exportovat. Nastala neznámá chyba.</string>
   <string name="account_enter_password">Zadejte heslo</string>
+  <string name="account_contact_me">Spojte se se mnou přes Jami</string>
   <string name="update_account">Aktualizovat účet</string>
+  <string name="ring_account">Účet Jami</string>
   <string name="ring_account_identity">Totožnost</string>
   <string name="account_migration_title_dialog">Převod účtu</string>
   <string name="account_migration_message_dialog">Vaše účty je potřeba aktualizovat. Chcete jít na obrazovku se správou účtů pro provedení této činnosti?</string>
@@ -122,6 +128,7 @@ Svůj účet můžete upravit později</string>
   <string name="account_cannot_be_found_title">Nelze nalézt účet</string>
   <string name="account_sip_cannot_be_registered_message">Můžete pokračovat v postupu vytvoření účtu nebo údaje upravit zde. Úpravy jsou možné i později v nastavení účtu.</string>
   <string name="account_no_network_title">Nelze se připojit k síti</string>
+  <string name="account_no_network_message">Nebylo možno přidat účet, protože se Jami nedokázal připojit k rozptýlené síti. Prověřte své síťové připojení.</string>
   <string name="account_device_added_title">Přístroj přidán k účtu</string>
   <string name="account_device_updated_title">Aktualizován přístroj v účtu</string>
   <string name="account_cannot_be_updated_message">Zařízení účtu se nepodařilo aktualizovat.
@@ -131,6 +138,7 @@ Prověřte, prosím, své heslo.</string>
   <string name="account_sip_register_anyway">Přesto zaregistrovat</string>
   <string name="account_link_button">Připojit toto zařízení k účtu</string>
   <string name="account_link_prompt_pin">Zadejte PIN</string>
+  <string name="account_new_button">Vytvořit účet Jami</string>
   <string name="account_link_export_button">Připojit k tomuto účtu další zařízení</string>
   <string name="account_end_export_button">zavřít</string>
   <!--Name registration-->
@@ -148,6 +156,7 @@ Prověřte, prosím, své heslo.</string>
   <string name="account_status_unknown">Neznámé</string>
   <string name="account_status_offline">Nepřipojen</string>
   <!--Create account-->
+  <string name="account_creation_home">Vítejte v Jami</string>
   <string name="account_creation_profile">Vytvořit vlastní profil</string>
   <string name="account_link_title">Připojit toto zařízení</string>
   <string name="account_sip_cannot_be_registered">Nelze zaregistrovat účet</string>

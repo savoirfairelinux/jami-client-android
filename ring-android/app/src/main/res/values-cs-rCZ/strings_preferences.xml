@@ -6,8 +6,19 @@
   <string name="pref_category_system">Systém</string>
   <string name="pref_category_privacy">Soukromí</string>
   <string name="pref_mobileData_title">Mobilní data</string>
+  <string name="pref_mobileData_summary">Povolit Jami na 3G/LTE sítích dodatečně k WiFi</string>
+  <string name="pref_pushNotifications_summary">Použít servery Google pro umožnění přijímání hovorů/zpráv na pozadí</string>
+  <string name="pref_hd_summary">Povolit posílání obrazu ve vysokém rozlišení (HD)</string>
+  <string name="pref_hwEncode_title">Povolit  zrychlené kódování</string>
+  <string name="pref_hwEncode_summary">Pokusná funkce</string>
   <string name="pref_systemContacts_title">Použít systémové kontakty</string>
   <string name="pref_systemContacts_summary">Použít systémové kontakty pro zobrazení údajů volajícího.</string>
+  <string name="pref_systemDialer_title">Vykonávat systémové hovory skrze Jami</string>
+  <string name="pref_systemDialer_summary">Použít Jami k vykonání systémových hovorů, když to bude možné.</string>
+  <string name="pref_startOnBoot_title">Spustit Jami po zapnutí</string>
+  <string name="pref_startOnBoot_summary">Spustit Jami na pozadí systému po jeho spuštění.</string>
   <string name="pref_clearHistory_title">Vymazat historii</string>
   <string name="pref_clearHistory_summary">Vymaže celou historii konverzací. Tuto činnost nelze vrátit zpět.</string>
+  <string name="pref_persistNotification_title">Běžet na pozadí</string>
+  <string name="pref_persistNotification_summary">Umožnit běh na pozadí pro příjem hovorů a zpráv.</string>
 </resources>

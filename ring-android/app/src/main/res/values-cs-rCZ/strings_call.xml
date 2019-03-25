@@ -20,9 +20,15 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
+    <!-- Call error -->
+    <string name="call_error_no_microphone">Hovor byl zrušen. Nebyl zjištěn žádný mikrofon.</string>
+    <string name="call_error_no_camera_no_microphone">Hovor byl zrušen. Nebyla zjištěna žádná kamera ani mikrofon.</string>
+
+    <!-- SipCalls -->
+    <string name="call_human_state_searching">Hledá se</string>
     <string name="call_human_state_incoming">Příchozí</string>
-    <string name="call_human_state_connecting">Spojování</string>
-    <string name="call_human_state_ringing">Vyzvánění</string>
+    <string name="call_human_state_connecting">Spojuje se</string>
+    <string name="call_human_state_ringing">Vyzvání</string>
     <string name="call_human_state_current">Probíhá hovor</string>
     <string name="call_human_state_hungup">Hovor skončil</string>
     <string name="call_human_state_busy">Zaneprázdněn</string>
