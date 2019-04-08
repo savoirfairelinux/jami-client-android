@@ -20,7 +20,6 @@
 package cx.ring.services;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.graphics.ImageFormat;
 import android.graphics.Point;
 import android.graphics.SurfaceTexture;
@@ -162,7 +161,7 @@ class CameraServiceCamera2 extends CameraService {
         }
     }
 
-    private Pair<MediaCodec, Surface> openCameraWithEncoder(VideoParams videoParams, String mimeType) {
+    private Pair<MediaCodec, Surface> openCameraWithEncoder(VideoParams videoParams, String mimeType, Handler handler) {
         final int BITRATE = 1600 * 1024;
         MediaFormat format = MediaFormat.createVideoFormat(mimeType, videoParams.width, videoParams.height);
         format.setInteger(MediaFormat.KEY_MAX_INPUT_SIZE, 0);
@@ -195,7 +194,7 @@ class CameraServiceCamera2 extends CameraService {
                 codec.setParameters(params);
                 codec.configure(format, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
                 encoderInput = codec.createInputSurface();
-                codec.setCallback(new MediaCodec.Callback() {
+                MediaCodec.Callback callback = new MediaCodec.Callback() {
                     @Override
                     public void onInputBufferAvailable(@NonNull MediaCodec codec, int index) {
                     }
@@ -216,7 +215,13 @@ class CameraServiceCamera2 extends CameraService {
                     public void onOutputFormatChanged(@NonNull MediaCodec codec, @NonNull MediaFormat format) {
                         Log.e(TAG, "MediaCodec onOutputFormatChanged " + format);
                     }
-                });
+                };
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    codec.setCallback(callback, handler);
+                } else {
+                    codec.setCallback(callback);
+                }
             } catch (Exception e) {
                 Log.e(TAG, "Can't open codec", e);
                 codec = null;
@@ -230,14 +235,12 @@ class CameraServiceCamera2 extends CameraService {
      * Compares two {@code Size}s based on their areas.
      */
     static class CompareSizesByArea implements Comparator<Size> {
-
         @Override
         public int compare(Size lhs, Size rhs) {
             // We cast here to ensure the multiplications won't overflow
             return Long.signum((long) lhs.getWidth() * lhs.getHeight() -
                     (long) rhs.getWidth() * rhs.getHeight());
         }
-
     }
 
     public void requestKeyFrame() {
@@ -337,7 +340,7 @@ class CameraServiceCamera2 extends CameraService {
             SurfaceTexture texture = view.getSurfaceTexture();
             Surface s = new Surface(texture);
 
-            final Pair<MediaCodec, Surface> codec = hw_accel ? openCameraWithEncoder(videoParams, MediaFormat.MIMETYPE_VIDEO_AVC) : null;
+            final Pair<MediaCodec, Surface> codec = hw_accel ? openCameraWithEncoder(videoParams, MediaFormat.MIMETYPE_VIDEO_AVC, handler) : null;
 
             final List<Surface> targets = new ArrayList<>(2);
             targets.add(s);
