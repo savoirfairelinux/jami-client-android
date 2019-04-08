@@ -1,8 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="feedback_section">Feedback</string>
+  <string name="feedback_section">Terugkoppeling</string>
+  <string name="report"><u>Stuur ons een e-mail</u></string>
   <string name="section_license">Licentie</string>
+  <string name="sponsor_section">Jami is vrije software ontwikkeld en ondersteund door</string>
   <string name="copyright_section">Auteursrecht</string>
   <string name="contribute_section">Bijdragen</string>
   <string name="version_section">Versie</string>
@@ -10,6 +12,8 @@
   <string name="no_browser_app_installed">Geen webbrowserapp gevonden, installeer er een om deze pagina te bekijken</string>
   <string name="email_chooser_title">E-mail versturen met…</string>
   <string name="website_chooser_title">Website bekijken met…</string>
+  <string name="license">Deze software wordt ‘als zodanig’ aangeboden zonder enige garantie. Bekijk voor meer informatie de <u>GNU General Public License versie 3 of later</u></string>
+  <string name="description">Jami is vrije software voor universele communicatie, die de vrijheden en privacy van zijn gebruikers eerbiedigt.</string>
   <string name="credits">Met dank aan</string>
   <!--About dialog-->
   <string name="developed_by">Ontwikkeld door</string>
@@ -17,7 +21,7 @@
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Geen netwerkverbinding</string>
-  <string name="error_mobile_network_available_but_disabled">Gelieve toegang te geven tot het mobiel netwerk in het instellingenscherm.</string>
+  <string name="error_mobile_network_available_but_disabled">Geef toegang tot mobiel netwerk in de instellingen.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Tekstberichten</string>
   <!--Left Drawer-->
@@ -30,7 +34,8 @@
   <string name="menu_item_accounts">Accounts beheren</string>
   <string name="menu_item_account">Account beheren</string>
   <string name="menu_item_settings">Instellingen</string>
-  <string name="menu_item_share">Mijn contact delen</string>
+  <string name="menu_item_share">Deel mijn contact</string>
+  <string name="menu_item_about">Over Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Kies een nummer</string>
   <!--History Fragment-->
@@ -38,10 +43,10 @@
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d gesprek</item>
-    <item quantity="other">%d Gesprekken</item>
+    <item quantity="other">%d gesprekken</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Voer een naam of telefoonnummer in…</string>
+  <string name="searchbar_hint">Geef een naam of telefoonnummer in…</string>
   <string name="choose_number">Kies een nummer</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -52,30 +57,36 @@
   <string name="notif_incoming_call">Inkomende oproep</string>
   <string name="notif_outgoing_call_title">Uitgaande oproep naar %1$s</string>
   <string name="notif_outgoing_call">Uitgaande oproep</string>
-  <string name="notif_current_call_title">Huidigen oproep met %1$s</string>
+  <string name="notif_current_call_title">Huidige oproep met %1$s</string>
   <string name="notif_current_call">Huidige oproep</string>
   <string name="notif_channel_calls">Oproepen</string>
   <string name="notif_channel_missed_calls">Gemiste oproepen</string>
   <string name="notif_channel_messages">Berichten</string>
   <string name="notif_channel_requests">Verzoeken</string>
   <string name="notif_channel_file_transfer">Bestandsoverdracht</string>
+  <string name="notif_channel_background_service">Achtergronddienst</string>
+  <string name="notif_channel_background_service_descr">Maakt het mogelijk om te allen tijde oproepen en berichten te ontvangen.</string>
+  <string name="notif_background_service">Jami draait momenteel in de achtergrond</string>
   <string name="notif_mark_as_read">Markeren als gelezen</string>
-  <string name="notif_dismiss">Afwijzen</string>
-  <string name="notif_reply">Antwoord</string>
+  <string name="notif_dismiss">Negeren</string>
+  <string name="notif_reply">Beantwoorden</string>
   <string name="notif_incoming_file_transfer_title">Inkomend bestand van %1$s</string>
-  <string name="notif_incoming_file_transfer">Iemand wil u een bestand sturen</string>
+  <string name="notif_incoming_file_transfer">Iemand wilt u een bestand sturen</string>
   <string name="notif_outgoing_file_transfer_title">Bestand wordt verstuurd naar %1$s</string>
-  <string name="notif_outgoing_file_transfer">Iemand wil u een bestand sturen</string>
+  <string name="notif_outgoing_file_transfer">Iemand wilt u een bestand sturen</string>
   <string name="notif_incoming_picture">Afbeelding van %1$s</string>
   <string name="action_open">Openen</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">U:</string>
   <string name="action_call_hangup">Ophangen</string>
-  <string name="ongoing_call">Actuele oproep</string>
+  <string name="ongoing_call">Lopende oproep</string>
   <string name="hist_in_call">Inkomende oproep van %1$s</string>
   <string name="hist_out_call">Uitgaande oproep van %1$s</string>
+  <string name="start_error_title">Jami kan niet opgestart worden!</string>
+  <string name="start_error_mic_required">Jami vereist toestemming om de microfoon te kunnen gebruiken.</string>
   <string name="action_call_accept">Oproep aannemen</string>
   <string name="action_call_decline">Weigeren</string>
+  <string name="action_call_mic_mute">Microfoon dempen</string>
   <string name="ab_action_speakerphone">Luidspreker inschakelen</string>
   <string name="ab_action_contact_add">Aan contacten toevoegen</string>
   <string name="ab_action_contact_add_question">Toevoegen aan contacten?</string>
@@ -97,40 +108,51 @@
   <string name="hist_file_sent">Bestand verstuurd</string>
   <string name="hist_file_received">Bestand ontvangen</string>
   <!--MediaPreferenceFragment-->
-  <string name="permission_dialog_camera_title">Cameratoelating</string>
-  <string name="permission_dialog_camera_message">Videogesprekken vereisen toelating voor gebruik van de camera. Gelieve te overwegen deze toelating alsnog te geven.</string>
+  <string name="permission_dialog_camera_title">Cameramachtiging</string>
+  <string name="permission_dialog_camera_message">Videogesprekken vereisen machtiging voor gebruik van de camera. Gelieve te overwegen deze machtiging alsnog toe te kennen.</string>
   <string name="ringtone_error_title">Fout</string>
   <string name="ringtone_error_format_not_supported">Dit formaat wordt niet ondersteund.</string>
-  <string name="ringtone_error_size_too_big">Dit bestand is te groot. De maximum grootte is %1$dkB.</string>
+  <string name="ringtone_error_size_too_big">Dit bestand is te groot. De maximale grootte is %1$dkB.</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Jami vereist de ‘Contacten lezen’-machtiging voor deze functie. Gelieve deze machtiging toe te kennen.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Jami vereist de ‘Oproepgeschiedenis’-machtiging voor deze functie. Gelieve deze machtiging toe te kennen.</string>
   <!--QRCode Scan-->
-  <string name="scan_qr_account_message">Scan de QR-code van het account dat je wil toevoegen.</string>
+  <string name="scan_qr_account_message">Scan de QR-code van de toe te voegen account.</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Geschiedenis wissen?</string>
   <string name="clear_history_dialog_message">Deze handeling kan niet ongedaan gemaakt worden.</string>
   <string name="clear_history_completed">Geschiedenis is gewist.</string>
   <!--Conversation-->
-  <string name="conversation_action_delete_this">Verwijder dit gesprek</string>
+  <string name="conversation_details">Contactdetails</string>
+  <string name="conversation_action_delete_this">Dit gesprek verwijderen</string>
   <string name="conversation_action_delete_this_title">Dit gesprek verwijderen?</string>
   <string name="conversation_action_delete_this_message">Deze handeling kan niet ongedaan gemaakt worden.</string>
   <string name="conversation_action_history_clear">Geschiedenis wissen</string>
-  <string name="conversation_action_history_clear_title">Wis de gespreksgeschiedenis?</string>
-  <string name="conversation_action_history_clear_message">Dit zal de gespreksgeschiedenis permanent wissen.</string>
+  <string name="conversation_action_history_clear_title">De gespreksgeschiedenis wissen?</string>
+  <string name="conversation_action_history_clear_message">Dit zal de gespreksgeschiedenis voorgoed wissen.</string>
   <string name="conversation_action_remove_this">Contact verwijderen</string>
-  <string name="conversation_action_remove_this_title">Verwijder dit contact?</string>
-  <string name="conversation_action_remove_this_message">Dit zal het contact verwijderen en de gespreksgeschiedenis permanent wissen.</string>
+  <string name="conversation_action_remove_this_title">Dit contact verwijderen?</string>
+  <string name="conversation_action_remove_this_message">Dit zal het contact verwijderen en de gespreksgeschiedenis voorgoed wissen.</string>
   <string name="conversation_action_copy_peer_number">Nummer kopiëren</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s gekopieerd naar klembord</string>
   <string name="conversation_action_select_peer_number">Kies een nummer</string>
-  <string name="conversation_action_block_this">Blokkeer contact</string>
-  <string name="conversation_action_go_to_call">Keer terug naar het lopende gesprek</string>
+  <string name="conversation_action_block_this">Contact blokkeren</string>
+  <string name="conversation_action_go_to_call">Terug naar lopende oproep</string>
+  <string name="clip_contact_uri">Contactadres</string>
+  <string name="block_contact_dialog_title">%1$s blokkeren?</string>
+  <string name="block_contact_dialog_message">%1$s zal u niet meer kunnen contacteren totdat u hem/haar deblokkeert.</string>
+  <string name="block_contact_completed">%1$s is geblokkeerd.</string>
   <!--Contacts-->
-  <string name="add_call_contact_number_to_contacts">Voeg %1$stoe?</string>
+  <string name="add_call_contact_number_to_contacts">%1$s toevoegen?</string>
   <string name="prompt_new_password">Nieuw wachtwoord</string>
   <string name="prompt_new_password_optional">Nieuw wachtwoord (optioneel)</string>
   <string name="prompt_new_password_repeat">Herhaal nieuw wachtwoord</string>
-  <string name="prompt_new_username">Voer een nieuwe gebruikersnaam in</string>
+  <string name="account_create_title">Een Jami-account aanmaken</string>
+  <string name="prompt_new_username">Geef nieuwe gebruikersnaam in</string>
+  <string name="help_password_choose">Kies een sterk wachtwoord om uw Jami-account te beschermen.</string>
+  <string name="help_password_enter">Geef het hoofdwachtwoord van uw Jami-account in</string>
+  <string name="help_pin_enter">Geef de pincode in vanuit uw Jami-account die al is geconfigureerd op een ander apparaat. Gebruik de functie ‘Jami-account exporteren’ om een pincode te verkrijgen.</string>
   <string name="wizard_next">Volgende</string>
   <string name="wizard_back">Terug</string>
   <string name="wizard_skip">Overslaan</string>
@@ -139,8 +161,9 @@
   <string name="profile_message_warning">Uw profiel wordt enkel gedeeld met uw contacten</string>
   <string name="open_the_gallery">Galerij openen</string>
   <string name="take_a_photo">Foto nemen</string>
-  <string name="profile_name_hint">Voer uw naam in (optioneel)</string>
+  <string name="profile_name_hint">Geef uw naam in (optioneel)</string>
   <!--Share fragment-->
+  <string name="share_message">Scan deze code met Jami</string>
   <string name="share_message_no_account">Selecteer een account om te delen.</string>
   <string name="share_your_account_information">Deel mijn contactinformatie</string>
   <string name="generic_error_migration">Fout</string>
@@ -150,15 +173,15 @@
   <string name="refuse">Afwijzen</string>
   <string name="block">Blokkeren</string>
   <string name="contact_request_title">Nieuw contactverzoek</string>
-  <string name="contact_request_msg">Je hebt %1$s contactverzoeken</string>
+  <string name="contact_request_msg">U heeft %1$s contactverzoeken</string>
   <string name="contact_request_account">Voor %1$s</string>
   <string name="no_requests">0 contactverzoeken</string>
-  <string name="message_contact_not_trusted_yet">%s staat nog niet in uw contacten.\nWil je dit contactverzoek aanvaarden of weigeren?</string>
-  <string name="message_contact_not_trusted">%sis niet in jouw contacten.\nNieuw contact aanmaken?</string>
+  <string name="message_contact_not_trusted_yet">%s staat nog niet in uw contacten.\nWilt u dit contactverzoek aanvaarden of weigeren?</string>
+  <string name="message_contact_not_trusted">%s staat niet in uw contacten.\nNieuw contact toevoegen?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Versturen</string>
   <string name="send_request_title">Contactverzoek versturen</string>
-  <string name="send_request_msg">Je moet een contactverzoek versturen om met deze gebruiker te communiceren. Je kan berichten versturen, maar zolang jouw contact het verzoek niet aanvaardt zal hij/zij deze niet kunnen beantwoorden.</string>
+  <string name="send_request_msg">U moet een contactverzoek versturen om met deze gebruiker te communiceren. U kunt berichten versturen, maar zolang de ander het verzoek niet aanvaardt zal hij/zij deze niet kunnen beantwoorden.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 geblokkeerde contacten</string>
   <!--Smartlist-->
@@ -167,24 +190,25 @@
   <string name="search_results">Zoekresultaten</string>
   <string name="tv_contact_row_header">Contacten</string>
   <string name="gallery_error_title">Geen Galerij-app gevonden</string>
-  <string name="gallery_error_message">Geen app gevonden op dit apparaat om de Galerij te openen</string>
+  <string name="gallery_error_message">Geen app om Galerij te openen gevonden op dit apparaat</string>
   <string name="generic_error">Er is een onbekende fout opgetreden</string>
   <!--File Transfer-->
   <string name="invalid_file">Ongeldig bestand</string>
   <string name="not_able_to_write_file">Kan bestand niet schrijven</string>
   <string name="file_transfer_status_created">overdracht initialiseren</string>
   <string name="file_transfer_status_unsupported">niet ondersteund</string>
-  <string name="file_transfer_status_wait_peer_acceptance">wachten op aanvaarding door gesprekspartner</string>
+  <string name="file_transfer_status_wait_peer_acceptance">wachten op aanvaarding door peer</string>
   <string name="file_transfer_status_wait_host_acceptance">wachten op aanvaarding door host</string>
   <string name="file_transfer_status_ongoing">bezig</string>
   <string name="file_transfer_status_finished">voltooid</string>
   <string name="file_transfer_status_closed_by_host">gesloten door host</string>
-  <string name="file_transfer_status_closed_by_peer">gesloten door gesprekspartner</string>
+  <string name="file_transfer_status_closed_by_peer">gesloten door peer</string>
   <string name="file_transfer_status_invalid_pathname">ongeldige padnaam</string>
-  <string name="file_transfer_status_unjoinable_peer">gesprekspartner kan niet deelnemen</string>
+  <string name="file_transfer_status_unjoinable_peer">peer kan niet deelnemen</string>
   <string name="file_saved_in">Bestand opgeslagen in %s</string>
   <string name="no_space_left_on_device">Geen vrije ruimte resterend op apparaat</string>
   <string name="title_media_viewer">Mediaweergave</string>
+  <string name="menu_file_open">Bestand openen</string>
   <string name="menu_file_download">Bestand downloaden</string>
   <string name="menu_file_delete">Bestand verwijderen</string>
   <string name="menu_file_share">Bestand delen</string>
