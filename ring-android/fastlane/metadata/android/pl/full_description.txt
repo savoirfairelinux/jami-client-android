@@ -2,18 +2,18 @@ Jami (a GNU package, formerly Ring) is a universal and distributed communication
 It is 100% Free software. Available on all platforms.
 
 ★ Communicate freely with Jami:
-  - send text messages
-  - make audio calls
-  - make video calls
-  - share pictures and files
+- wysyłaj wiadomości tekstowe
+- wykonuj rozmowy głosowe
+- wykonuj rozmowy wideo
+- dziel się plikami i obrazkami
 
-★ Reach your peers directly in peer to peer !
+★ Rozmawiaj bezpośrednio, dzięki architekturze klient-klient !
 
 ★ Use your Jami account on multiple devices !
 
-★ Available on Windows, macOS, iOS, GNU/Linux, Android and Android TV !
+★Dostępne na Windows, macOS, iOS, GNU/Linux, Android i Android TV !
 
-★ SIP account support available !
+★ Dostępne wsparcie dla SIP !
 
 ★ Next additions: audio/video call recording (Android), group chat...
 

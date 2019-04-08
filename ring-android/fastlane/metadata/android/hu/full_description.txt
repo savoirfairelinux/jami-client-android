@@ -1,0 +1,30 @@
+A Jami (GNU csomag, korábban Ring) egy univerzális és elosztott közlés emelvény, amely tiszteletben tartja a felhasználók szabadságait és magánéletét.
+Szabad szoftver. Minden emelvényhez elérhető.
+
+★ Közlékaljon ingyenesen a Jami-el:
+- üzenetek küldése
+- hívások kezdeményezése
+- video hívások kezdeményezése
+- képek és fájlok megosztása
+
+★ Érje el a társait közvetlenül egyenrangú félként!
+
+★ A Jami fiókot több eszközön is használhatja!
+
+★ Rendelkezésre áll  Windows, macOS, iOS, GNU/Linux, Android és Android TV-en!
+
+★ SIP támogatás elérhető!
+
+★ Következő kiegészítések: hanghívás rögzítése és videohívás rögzítése (Android), csoportos csevegés…
+
+A Jami univerzális közlés technológiájának újrahasznosítása az IoT (Internet of Things – tárgyak internete) feladatokbe, mivel a Jami rendelkezik egy hordozható könyvtárral, amely bármilyen tetszőleges rendszerbe integrálható.
+
+A Jami-et Android TV-hez a NVIDIA SHIELD TV-n teszteltük a Logitech kamerával.
+
+Rengeteg mód van arra, hogy segítsen nekünk, nézze meg: https://jami.net/contribute
+Lépjen velünk kapcsolatba a Twitteren: @jami_social vagy Mastodon: @Jami
+
+További információért látogasson el a https://jami.net oldalra
+
+A Jami-t közzéteszik a GNU általános nyilvános engedélyével, a 3-as vagy újabb verziókkal.
+Szerzői jog © Savoir-faire Linux

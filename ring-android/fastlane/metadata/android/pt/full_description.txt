@@ -1,0 +1,30 @@
+Jami (um pacote GNU, anteriormente chamado Ring) é uma plataforma universal e distribuída que respeita as liberdades e privacidade dos seus utilizadores.
+É um programa 100% Livre. Disponível em todas as plataformas.
+
+★ Comunique livremente com o Jami:
+- enviar mensagens de texto
+- fazer chamadas de áudio
+- fazer chamadas de vídeo
+- partilhar fotos e ficheiros
+
+★ Contacte os seus amigos diretamente numa rede "ponto-a-ponto"!
+
+★ Use a sua conta Jami em vários dispositivos!
+
+★ Disponível para Windows, macOS, iOS, GNU/Linux, Android e Android TV!
+
+★ Suporta contas SIP!
+
+★ Próximas funcionalidades: gravação de chamada áudio/vídeo  (Android), conversas em grupo...
+
+Compile com o Jami no seu projeto IoT: reutilize a tecnologia universal de comunicações do Jami com a sua biblioteca portátil no sistema à sua escolha.
+
+O Jami para Android TV é testado em NVIDIA SHIELD TV com câmaras Logitech.
+
+Há várias formas de nos ajudar, veja em: https://jami.net/contribute ,
+Contacte-nos no Twitter: @jami_social ou no Mastodon: @Jami
+
+Para mais informações visite https://jami.net 
+
+O Jami é publicado sob a licença GPL, versão 3 ou superior.
+Direitos de autor © Savoir-faire Linux

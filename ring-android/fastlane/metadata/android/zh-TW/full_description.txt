@@ -1,0 +1,30 @@
+Jami（GNU 軟體包，曾經叫做 Ring）是一個通用且分散式的通訊平臺，其尊重使用者的自由與隱私。
+100% 的自由軟體。在所有平臺上都可用。
+
+★ 使用 Jami 自由通訊：
+  - 傳送文字訊息
+  - 使用語音通話
+  - 使用視訊通話
+  - 分享圖片與檔案
+
+★ 與您的夥伴點對點通訊！
+
+★ 在多個裝置上使用您的 Jami 帳號！
+
+★ 在 Windows、macOS、iOS、GNU/Linux、Android 與 Android TV 上均可使用！
+
+★ 提供對 SIP 帳號的支援！
+
+★ 下一個新增功能：音訊／視訊通話錄音／錄影 (Android)、群組通話……
+
+在您的 IoT 專案上以 Jami 建構：重新使用 Jami 的通用通訊科技，以及它的可攜式函式庫，都在您選擇的系統上。
+
+Android TV 上的 Jami 在 NVIDIA SHIELD TV 與羅技的攝影機一同測試過。
+
+有許多方式可以協助我們，來看看吧：https://jami.net/contribute
+在 Twitter 上聯絡我們：@jami_social，或是在 Mastodon 上：@Jami
+
+要取得更多資訊，請見 https://jami.net
+
+Jami 以 GPL 授權條款第三版或更新版授權。
+Copyright © Savoir-faire Linux
