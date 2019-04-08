@@ -1,0 +1,30 @@
+Jami (GNU paketas, anksčiau žinomas kaip Ring) yra universali ir paskirstytoji bendravimo platforma, kuri gerbia naudotojų laisves ir privatumą.
+Tai yra 100% laisvoji programinė įranga. Prieinama visose platformose.
+
+★ Laisvai bendraukite, naudodami Jami:
+  - siųskite tekstines žinutes
+  - atlikite garso skambučius
+  - atlikite vaizdo skambučius
+  - dalinkitės paveikslais ir failais
+
+★ Reach your peers directly in peer to peer !
+
+★ Naudokite Jami paskyrą daugelyje įrenginių!
+
+★ Prieinama Windows, macOS, iOS, GNU/Linux, Android bei Android televizoriams!
+
+★ Yra prieinamas SIP paskyros palaikymas!
+
+★ Next additions: audio/video call recording (Android), group chat...
+
+Build with Jami on your IoT project: re-use the universal communications technology of Jami with its portable library on your system of choice. 
+
+Jami, skirta Android televizoriams yra išbandyta naudojant NVIDIA SHIELD televizorių bei Logitech kameras.
+
+Yra daugybė būdų kaip galite mums padėti, pasižvalgykite: https://jami.net/contribute ,
+Susisiekite su mumis naudodami Twitter: @jami_social , ar Mastodon: @Jami
+
+Išsamesnei informacijai, apsilankykite https://jami.net 
+
+Jami yra skelbiama pagal GPL licencijos 3 arba naujesnę versiją.
+Autorių teisės © Savoir-faire Linux

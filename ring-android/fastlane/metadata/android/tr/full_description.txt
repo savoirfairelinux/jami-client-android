@@ -24,7 +24,7 @@ Jami for Android TV is tested on NVIDIA SHIELD TV with Logitech cameras.
 There are plenty of ways to help us, check out: https://jami.net/contribute ,
 Contact us on Twitter: @jami_social , or Mastodon: @Jami
 
-For more information, visit https://jami.net 
+Daha çok bilgi için https://jami.net adresini ziyaret edin
 
 Jami is published under the GPL license, version 3 or higher.
 Copyright © Savoir-faire Linux

@@ -1,0 +1,30 @@
+Jami (një paketë GNU, dikur i njohur si Ring) është një platformë e shpërndarë dhe universale komunikimesh që respekton liritë dhe privatësinë e përdoruesve.
+Është 100% software i lirë. I përdorshëm në krejt platformat.
+
+★ Komunikoni lirisht me Jami-n:
+  - dërgoni mesazhe tekst
+  - bëni thirrje me zë
+  - bëni thirrje me video
+  - ndani me të tjerët foto dhe kartela
+
+★ Lidhuni me ortakët tuaj drejtpërsëdrejti!
+
+★ Përdoreni llogarinë tuaj Jami në shumë pajisje!
+
+★ I gatshëm për Windows, macOS, iOS, GNU/Linux, Android dhe Android TV!
+
+★ Me mbulim llogarish SIP!
+
+★ Shtimet e ardhshmes: regjistrim thirrjesh audio/video (Android), biseda në grup…
+
+Krijoni me Jami-n, në projektet tuaja të llojit IoT: ripërdorni në sistemin tuaj të zemrës teknologjinë Jami të komunikimeve universale, me librarinë e tij që mund të kalohet nga një sistem në një tjetër. 
+
+Jami për Android TV është provuar në NVIDIA SHIELD TV me kamera Logitech.
+
+Ka plot rrugë për të na ndihmuar, shihni te: https://jami.net/contribute,
+Lidhuni me ne në Twitter: @jami_social, ose Mastodon: @Jami
+
+Për më tepër të dhëna, vizitoni https://jami.net 
+
+Jami hidhet në qarkullim sipas një licence GPL, version 3 ose më të ri.
+Të dhëna kopjimi © Savoir-faire Linux
