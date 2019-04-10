@@ -11,7 +11,7 @@ It is 100% Free software. Available on all platforms.
 
 ★ Use your Jami account on multiple devices !
 
-★Dostępne na Windows, macOS, iOS, GNU/Linux, Android i Android TV !
+★ Dostępne na Windows, macOS, iOS, GNU/Linux, Android i Android TV !
 
 ★ Dostępne wsparcie dla SIP !
 

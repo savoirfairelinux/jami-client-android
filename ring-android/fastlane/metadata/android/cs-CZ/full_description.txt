@@ -1,0 +1,30 @@
+Jami (balíček GNU, dříve Ring) je univerzální a rozptýlený komunikační program, který si váží svobod a práv uživatelů.
+Je to 100 % svobodný software. Dostupný pro všechny systémy.
+
+★ Hovořte volně s Jami:
+  - posílejte textové zprávy
+  - dělejte zvukové hovory
+ - dělejte obrazové hovory
+  - sdílejte obrázky a soubory
+
+★ Dosáhněte ke svým protějškům přímo a rovně!
+
+★ Použijte svůj účet Jami na více zařízeních!
+
+★ Dostupné na Windows, macOS, iOS, GNU/Linux, Android a Android TV !
+
+★ Je dostupná podpora pro účet SIP!
+
+★ Další přídavky: nahrávání zvukových/obrazových hovorů (Android), skupinové hovory...
+
+Build with Jami on your IoT project: re-use the universal communications technology of Jami with its portable library on your system of choice. 
+
+Jami pro Android TV je zkoušen na NVIDIA SHIELD TV s kamerami Logitech.
+
+Je spousta způsobů, jak nám pomoci. Podívejte se na: https://jami.net/contribute ,
+Spojte se s námi přes Twitter: @jami_social , or Mastodon: @Jami
+
+Další informace najdete na https://jami.net 
+
+Jami je zveřejněno pod licencí GPL, verze 3 a novější.
+Kopírovací právo © Savoir-faire Linux
