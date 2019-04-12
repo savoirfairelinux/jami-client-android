@@ -972,7 +972,7 @@ public class AccountService {
     }
 
     public void pushNotificationReceived(final String from, final Map<String, String> data) {
-        Log.i(TAG, "pushNotificationReceived()");
+        // Log.i(TAG, "pushNotificationReceived()");
         mExecutor.execute(() -> Ringservice.pushNotificationReceived(from, StringMap.toSwig(data)));
     }
 
