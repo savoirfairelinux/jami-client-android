@@ -142,6 +142,12 @@ public class DaemonService {
         }
 
         @Override
+        public void accountDetailsChanged(String account_id, StringMap details) {
+            Map<String, String> jdetails = details.toNative();
+            mExecutor.submit(() -> mAccountService.accountDetailsChanged(account_id, jdetails));
+        }
+
+        @Override
         public void incomingAccountMessage(String accountId, String from, StringMap messages) {
             if (messages == null || messages.empty())
                 return;
