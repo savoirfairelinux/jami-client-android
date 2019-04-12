@@ -1017,6 +1017,16 @@ public class AccountService {
         }
     }
 
+    void accountDetailsChanged(String accountId, Map<String, String> details) {
+        Account account = getAccount(accountId);
+        if (account == null) {
+            return;
+        }
+        Log.d(TAG, "accountDetailsChanged: " + accountId + " " + details.size());
+        account.setDetails(details);
+        accountSubject.onNext(account);
+    }
+
     void volatileAccountDetailsChanged(String accountId, Map<String, String> details) {
         Account account = getAccount(accountId);
         if (account == null) {
@@ -1024,6 +1034,7 @@ public class AccountService {
         }
         Log.d(TAG, "volatileAccountDetailsChanged: " + accountId + " " + details.size());
         account.setVolatileDetails(details);
+        accountSubject.onNext(account);
     }
 
     void incomingAccountMessage(String accountId, String callId, String from, Map<String, String> messages) {
