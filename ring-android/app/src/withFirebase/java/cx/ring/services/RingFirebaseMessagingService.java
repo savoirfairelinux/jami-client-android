@@ -37,7 +37,7 @@ public class RingFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         try {
-            Log.d(TAG, "onMessageReceived: " + remoteMessage.getFrom());
+            // Log.d(TAG, "onMessageReceived: " + remoteMessage.getFrom());
             Map<String, String> data = remoteMessage.getData();
             Bundle bundle = new Bundle();
             for (Map.Entry<String, String> entry : data.entrySet()) {

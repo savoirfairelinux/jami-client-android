@@ -617,7 +617,7 @@ public class DRingService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i(TAG, "onStartCommand " + (intent == null ? "null" : intent.getAction()) + " " + flags + " " + startId);
+        // Log.i(TAG, "onStartCommand " + (intent == null ? "null" : intent.getAction()) + " " + flags + " " + startId);
         if (intent != null) {
             parseIntent(intent);
             WakefulBroadcastReceiver.completeWakefulIntent(intent);
