@@ -88,7 +88,6 @@ public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummar
                     RingAccountSummaryView view = getView();
                     if (view != null) {
                         view.accountChanged(account);
-                        view.updateDeviceList(account.getDevices(), account.getDeviceId());
                     }
                 }));
     }
@@ -117,6 +116,17 @@ public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummar
 
     public void renameDevice(String newName) {
         mAccountService.renameDevice(mAccountID, newName);
+    }
+
+    public void changePassword(String oldPassword, String newPassword) {
+        RingAccountSummaryView view = getView();
+        if (view != null)
+            view.showPasswordProgressDialog();
+        mCompositeDisposable.add(mAccountService.setAccountPassword(mAccountID, oldPassword, newPassword)
+                .observeOn(mUiScheduler)
+                .subscribe(
+                        () -> getView().passwordChangeEnded(true),
+                        e -> getView().passwordChangeEnded(false)));
     }
 
     public String getDeviceName() {

@@ -25,7 +25,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
     android:clipToPadding="false"
     android:paddingTop="20dp"
     android:theme="@style/Wizard"
-    tools:showIn="@layout/frag_device_list">
+    tools:showIn="@layout/frag_acc_summary">
 
     <LinearLayout
         android:layout_width="match_parent"

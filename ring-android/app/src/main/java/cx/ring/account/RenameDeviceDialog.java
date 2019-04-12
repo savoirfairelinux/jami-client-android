@@ -18,7 +18,6 @@
  */
 package cx.ring.account;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
 import com.google.android.material.textfield.TextInputLayout;
@@ -57,13 +56,12 @@ public class RenameDeviceDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Activity activity = getActivity();
-        View view = activity.getLayoutInflater().inflate(R.layout.dialog_device_rename, null);
+        View view = requireActivity().getLayoutInflater().inflate(R.layout.dialog_device_rename, null);
         ButterKnife.bind(this, view);
 
         mDeviceNameTxt.setText(getArguments().getString(DEVICENAME_KEY));
 
-        final AlertDialog dialog = new AlertDialog.Builder(activity)
+        final AlertDialog dialog = new AlertDialog.Builder(requireContext())
                 .setView(view)
                 .setTitle(R.string.rename_device_title)
                 .setMessage(R.string.rename_device_message)

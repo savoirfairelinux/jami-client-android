@@ -46,19 +46,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_height="wrap_content"
                     android:layout_toStartOf="@+id/account_switch"
                     android:paddingBottom="8dp"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
                     tools:text="@string/ring_account" />
 
-                <TextView
+                <com.google.android.material.chip.Chip
                     android:id="@+id/account_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/account_alias_txt"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small.Inverse"
                     android:textColor="@color/white"
-                    android:textStyle="bold"
                     tools:text="Registered" />
-
 
                 <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/account_switch"
@@ -73,58 +70,75 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_height="match_parent"
                 android:layout_below="@+id/ring_account_status_container"
                 android:orientation="vertical"
-                android:paddingBottom="8dp"
-                android:paddingEnd="16dp"
                 android:paddingStart="16dp"
-                android:paddingTop="24dp">
+                android:paddingTop="12dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dip"
+                    android:layout_marginVertical="16dp"
+                    android:background="?android:attr/listDivider"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/ring_account_identity"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline" />
 
                 <TextView
                     android:id="@+id/account_id_txt"
-                    style="@style/Subheader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="middle"
-                    android:gravity="center_vertical"
-                    android:paddingBottom="8dp"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:paddingTop="8dp"
                     android:singleLine="true"
                     android:textIsSelectable="true"
-                    android:textStyle="bold"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
                     tools:text="ring:8F29045378ACA68F2ACA2346078ACA68F2ACA290" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/change_password_btn"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="@string/account_password_change" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dip"
+                    android:layout_marginVertical="16dp"
+                    android:background="?android:attr/listDivider" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/registered_username"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline" />
 
                 <LinearLayout
                     android:id="@+id/group_register_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:gravity="center_horizontal"
                     android:orientation="vertical">
 
                     <TextView
-                        style="@style/Subheader"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:paddingBottom="8dp"
-                        android:paddingTop="8dp"
-                        android:text="@string/no_registered_name_for_account"
-                        android:textAlignment="center" />
+                        android:text="@string/no_registered_name_for_account" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/register_name_btn"
                         style="@style/Widget.MaterialComponents.Button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingEnd="16dp"
+                        android:layout_gravity="end"
                         android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
                         android:text="@string/register_name" />
 
                 </LinearLayout>
@@ -133,9 +147,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:id="@+id/group_registering_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="16dp"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/textView"
@@ -155,50 +167,33 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:id="@+id/group_registered_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <TextView
-                        style="@style/Subheader"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:paddingBottom="16dp"
-                        android:paddingTop="4dp"
-                        android:text="@string/registered_username" />
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/registered_name_txt"
-                        style="@style/Base.TextAppearance.AppCompat.Title"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
-                        android:paddingBottom="16dp"
-                        android:paddingEnd="8dp"
-                        android:paddingStart="16dp"
-                        android:paddingTop="4dp"
                         android:textAlignment="viewStart"
                         android:textIsSelectable="true"
                         tools:text="blockchain_name" />
 
                 </LinearLayout>
 
-                <TextView
-                    style="@style/Subheader"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:paddingBottom="8dp"
-                    android:paddingEnd="16dp"
-                    android:paddingStart="16dp"
-                    android:paddingTop="8dp"
-                    android:text="@string/normal_devices_titles" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
+                    android:layout_marginVertical="16dp"
                     android:background="?android:attr/listDivider" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="@string/normal_devices_titles"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -208,7 +203,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:id="@+id/device_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:divider="#CCCCCC"
+                        android:divider="#DDDDDD"
                         android:dividerHeight="1dp"
                         android:footerDividersEnabled="true"
                         android:headerDividersEnabled="true" />
