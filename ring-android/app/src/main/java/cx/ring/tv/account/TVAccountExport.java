@@ -106,6 +106,11 @@ public class TVAccountExport
     }
 
     @Override
+    public void showPasswordProgressDialog() {
+
+    }
+
+    @Override
     public void accountChanged(Account account) {
 
     }
@@ -163,6 +168,11 @@ public class TVAccountExport
 
     @Override
     public void deviceRevocationEnded(String device, int status) {
+
+    }
+
+    @Override
+    public void passwordChangeEnded(boolean ok) {
 
     }
 }

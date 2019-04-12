@@ -34,6 +34,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import javax.inject.Inject;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import butterknife.BindString;
@@ -113,9 +114,10 @@ public class RegisterNameDialog extends DialogFragment {
         }
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        final AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
 
         View view = getActivity().getLayoutInflater().inflate(R.layout.frag_register_name, null);
 

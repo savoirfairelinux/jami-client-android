@@ -22,6 +22,8 @@ package cx.ring.account;
 import android.app.Dialog;
 import android.os.Bundle;
 import com.google.android.material.textfield.TextInputLayout;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import android.view.View;
 import android.view.WindowManager;
@@ -55,14 +57,15 @@ public class ConfirmRevocationDialog extends DialogFragment {
         mListener = listener;
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_confirm_revocation, null);
+        View view = requireActivity().getLayoutInflater().inflate(R.layout.dialog_confirm_revocation, null);
         ButterKnife.bind(this, view);
 
         mDeviceId = getArguments().getString(DEVICEID_KEY);
 
-        final AlertDialog result = new AlertDialog.Builder(getActivity())
+        final AlertDialog result = new AlertDialog.Builder(requireContext())
                 .setView(view)
                 .setMessage(getString(R.string.revoke_device_message, mDeviceId))
                 .setTitle(mRegisterTitle)
@@ -83,7 +86,7 @@ public class ConfirmRevocationDialog extends DialogFragment {
         return result;
     }
 
-    public boolean checkInput() {
+    private boolean checkInput() {
         if (mPasswordTxt.getText().toString().isEmpty()) {
             mPasswordTxtBox.setErrorEnabled(true);
             mPasswordTxtBox.setError(mPromptPassword);
@@ -95,7 +98,7 @@ public class ConfirmRevocationDialog extends DialogFragment {
         return true;
     }
 
-    boolean validate() {
+    private boolean validate() {
         if (checkInput() && mListener != null) {
             final String password = mPasswordTxt.getText().toString();
             mListener.onConfirmRevocation(mDeviceId, password);
