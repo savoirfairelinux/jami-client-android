@@ -72,6 +72,9 @@ along with this program; if not, write to the Free Software
     <string name="account_device_revocation_wrong_password">Wrong password.</string>
     <string name="account_device_revocation_unknown_device">Unknown device.</string>
     <string name="account_device_revocation_error_unknown">Unknown error.</string>
+    <string name="account_password_change">Change password</string>
+    <string name="account_password_set">Set password</string>
+    <string name="account_password_change_wait_message">Changing account password</string>
 
     <!-- Basic Details -->
     <string name="account_preferences_basic_tab">General</string>

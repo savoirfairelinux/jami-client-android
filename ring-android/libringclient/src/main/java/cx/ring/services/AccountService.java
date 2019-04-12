@@ -58,6 +58,7 @@ import cx.ring.utils.Log;
 import cx.ring.utils.SwigNativeConverter;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
+import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.BehaviorSubject;
@@ -669,6 +670,17 @@ public class AccountService {
             account.setDetail(ConfigKey.ACCOUNT_DEVICE_NAME, newName);
             account.setDevices(Ringservice.getKnownRingDevices(accountId).toNative());
         });
+    }
+
+    /**
+     * @param accountId id of the account
+     * @param oldPassword   old account password
+     */
+    public Completable setAccountPassword(final String accountId, final String oldPassword, final String newPassword) {
+        return Completable.fromAction(() -> {
+            if (!Ringservice.changeAccountPassword(accountId, oldPassword, newPassword))
+                throw new IllegalArgumentException("Can't change password");
+        }).subscribeOn(Schedulers.from(mExecutor));
     }
 
     /**

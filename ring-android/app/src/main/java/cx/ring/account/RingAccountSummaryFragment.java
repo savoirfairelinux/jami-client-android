@@ -22,14 +22,12 @@ package cx.ring.account;
 
 import android.app.ProgressDialog;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import com.google.android.material.chip.Chip;
 import com.google.android.material.textfield.TextInputLayout;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SwitchCompat;
 
@@ -58,7 +56,6 @@ import cx.ring.R;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.model.Account;
-import cx.ring.model.ConfigKey;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.utils.KeyboardVisibilityManager;
 import cx.ring.views.LinkNewDeviceLayout;
@@ -68,10 +65,12 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
         RenameDeviceDialog.RenameDeviceListener,
         DeviceAdapter.DeviceRevocationListener,
         ConfirmRevocationDialog.ConfirmRevocationListener,
-        RingAccountSummaryView {
+        RingAccountSummaryView, ChangePasswordDialog.PasswordChangedListener {
 
     public static final String TAG = RingAccountSummaryFragment.class.getSimpleName();
-    private static final String FRAGMENT_DIALOG_REVOCATION = RingAccountSummaryFragment.class.getSimpleName() + ".dialog.deviceRevocation";
+    private static final String FRAGMENT_DIALOG_REVOCATION = TAG + ".dialog.deviceRevocation";
+    private static final String FRAGMENT_DIALOG_RENAME = TAG + ".dialog.deviceRename";
+    private static final String FRAGMENT_DIALOG_PASSWORD = TAG + ".dialog.changePassword";
 
     /*
     UI Bindings
@@ -96,6 +95,9 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
 
     @BindView(R.id.account_id_txt)
     TextView mAccountIdTxt;
+
+    @BindView(R.id.change_password_btn)
+    Button mChangePasswordBtn;
 
     @BindView(R.id.registered_name_txt)
     TextView mAccountUsernameTxt;
@@ -122,7 +124,7 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     SwitchCompat mAccountSwitch;
 
     @BindView(R.id.account_status)
-    TextView mAccountStatus;
+    Chip mAccountStatus;
 
     /*
     Declarations
@@ -145,14 +147,14 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     }
 
     @Override
-    public void accountChanged(final Account account) {
-        if (account == null) {
-            Log.w(TAG, "No account to display!");
-            return;
+    public void accountChanged(@NonNull final Account account) {
+        if (mDeviceAdapter == null) {
+            mDeviceAdapter = new DeviceAdapter(requireContext(), account.getDevices(), account.getDeviceId(),
+                    RingAccountSummaryFragment.this);
+            mDeviceList.setAdapter(mDeviceAdapter);
+        } else {
+            mDeviceAdapter.setData(account.getDevices(), account.getDeviceId());
         }
-        mDeviceAdapter = new DeviceAdapter(getActivity(), account.getDevices(), account.getDeviceId(),
-                RingAccountSummaryFragment.this);
-        mDeviceList.setAdapter(mDeviceAdapter);
 
         int totalHeight = 0;
         for (int i = 0; i < mDeviceAdapter.getCount(); i++) {
@@ -165,6 +167,8 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
         par.height = totalHeight + (mDeviceList.getDividerHeight() * (mDeviceAdapter.getCount() - 1));
         mDeviceList.setLayoutParams(par);
         mDeviceList.requestLayout();
+
+        mChangePasswordBtn.setText(account.hasPassword() ? R.string.account_password_change : R.string.account_password_set);
 
         mAccountSwitch.setChecked(account.isEnabled());
         mAccountNameTxt.setText(account.getAlias());
@@ -179,11 +183,12 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
             mAccountUsernameTxt.setText(username);
         }
 
-        int color = ContextCompat.getColor(getContext(), R.color.holo_red_light);
+        int color = R.color.red_400;
         String status;
 
         if (account.isEnabled()) {
             if (account.isTrying()) {
+                color = R.color.orange_400;
                 status = getString(R.string.account_status_connecting);
             } else if (account.needsMigration()) {
                 status = getString(R.string.account_update_needed);
@@ -191,21 +196,19 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
                 status = getString(R.string.account_status_connection_error);
             } else if (account.isRegistered()) {
                 status = getString(R.string.account_status_online);
-                color = ContextCompat.getColor(getContext(), R.color.holo_green_dark);
+                color = R.color.green_400;
             } else {
                 status = getString(R.string.account_status_unknown);
             }
         } else {
-            color = ContextCompat.getColor(getContext(), R.color.darker_gray);
+            color = R.color.grey_400;
             status = getString(R.string.account_status_offline);
         }
 
         mAccountStatus.setText(status);
-        Drawable wrapped = DrawableCompat.wrap(getContext().getDrawable(R.drawable.static_rounded_background));
-        DrawableCompat.setTint(wrapped, color);
-        mAccountStatus.setBackground(wrapped);
+        mAccountStatus.setChipBackgroundColorResource(color);
 
-        mAccountHasPassword = account.getDetailBoolean(ConfigKey.ARCHIVE_HAS_PASSWORD);
+        mAccountHasPassword = account.hasPassword();
         mPasswordLayout.setVisibility(mAccountHasPassword ? View.VISIBLE : View.GONE);
     }
 
@@ -254,8 +257,8 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
 
     @Override
     public void showNetworkError() {
-        mWaitDialog.dismiss();
-        new AlertDialog.Builder(getActivity())
+        dismissWaitDialog();
+        new AlertDialog.Builder(requireActivity())
                 .setTitle(R.string.account_export_end_network_title)
                 .setMessage(R.string.account_export_end_network_message)
                 .setPositiveButton(android.R.string.ok, null)
@@ -264,15 +267,15 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
 
     @Override
     public void showPasswordError() {
-        mWaitDialog.dismiss();
+        dismissWaitDialog();
         mPasswordLayout.setError(getString(R.string.account_export_end_decryption_message));
         mRingPassword.setText("");
     }
 
     @Override
     public void showGenericError() {
-        mWaitDialog.dismiss();
-        new AlertDialog.Builder(getActivity())
+        dismissWaitDialog();
+        new AlertDialog.Builder(requireActivity())
                 .setTitle(R.string.account_export_end_error_title)
                 .setMessage(R.string.account_export_end_error_message)
                 .setPositiveButton(android.R.string.ok, null)
@@ -284,8 +287,7 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     }
 
     @OnEditorAction(R.id.ring_password)
-    @SuppressWarnings("unused")
-    public boolean onPasswordEditorAction(TextView pwd, int actionId, KeyEvent event) {
+    boolean onPasswordEditorAction(TextView pwd, int actionId, KeyEvent event) {
         Log.i(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
         if (actionId == EditorInfo.IME_ACTION_DONE) {
             if (pwd.getText().length() == 0) {
@@ -299,26 +301,26 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     }
 
     @OnClick(R.id.btn_start_export)
-    public void onClickStart() {
+    void onClickStart() {
         mPasswordLayout.setError(null);
         String password = mRingPassword.getText().toString();
         presenter.startAccountExport(password);
     }
 
     @OnClick(R.id.account_switch)
-    public void onToggleAccount() {
+    void onToggleAccount() {
         presenter.enableAccount(mAccountSwitch.isChecked());
     }
 
     @OnClick(R.id.register_name_btn)
-    public void showUsernameRegistrationPopup() {
+    void showUsernameRegistrationPopup() {
         Bundle args = new Bundle();
         args.putString(AccountEditionActivity.ACCOUNT_ID_KEY, getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY));
         args.putBoolean(AccountEditionActivity.ACCOUNT_HAS_PASSWORD_KEY, mAccountHasPassword);
         RegisterNameDialog registrationDialog = new RegisterNameDialog();
         registrationDialog.setArguments(args);
         registrationDialog.setListener(this);
-        registrationDialog.show(getFragmentManager(), TAG);
+        registrationDialog.show(requireFragmentManager(), TAG);
     }
 
     @Override
@@ -341,8 +343,15 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     }
 
     @Override
+    public void showPasswordProgressDialog() {
+        mWaitDialog = ProgressDialog.show(getActivity(),
+                getString(R.string.export_account_wait_title),
+                getString(R.string.account_password_change_wait_message));
+    }
+
+    @Override
     public int getLayout() {
-        return R.layout.frag_device_list;
+        return R.layout.frag_acc_summary;
     }
 
     @Override
@@ -350,15 +359,22 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
         component.inject(this);
     }
 
+    private void dismissWaitDialog() {
+        if (mWaitDialog != null) {
+            mWaitDialog.dismiss();
+            mWaitDialog = null;
+        }
+    }
+
+
     @Override
     public void showPIN(final String pin) {
         hideWizard();
-        mWaitDialog.dismiss();
         mLinkAccountView.setVisibility(View.VISIBLE);
         mPasswordLayout.setVisibility(View.GONE);
         mEndBtn.setVisibility(View.VISIBLE);
         mStartBtn.setVisibility(View.GONE);
-
+        dismissWaitDialog();
         String pined = getString(R.string.account_end_export_infos).replace("%%", pin);
         final SpannableString styledResultText = new SpannableString(pined);
         int pos = pined.lastIndexOf(pin);
@@ -380,8 +396,20 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     }
 
     @Override
+    public void passwordChangeEnded(boolean ok) {
+        dismissWaitDialog();
+        if (!ok) {
+            new AlertDialog.Builder(requireActivity())
+                    .setTitle(R.string.account_device_revocation_wrong_password)
+                    .setMessage(R.string.account_export_end_decryption_message)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .show();
+        }
+    }
+
+    @Override
     public void deviceRevocationEnded(final String device, final int status) {
-        mWaitDialog.dismiss();
+        dismissWaitDialog();
         int message, title = R.string.account_device_revocation_error_title;
         switch (status) {
             case 0:
@@ -397,7 +425,7 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
             default:
                 message = R.string.account_device_revocation_error_unknown;
         }
-        new AlertDialog.Builder(getActivity())
+        new AlertDialog.Builder(requireActivity())
                 .setTitle(title)
                 .setMessage(message)
                 .setPositiveButton(android.R.string.ok, (dialog, which) -> {
@@ -421,7 +449,7 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
         args.putString(ConfirmRevocationDialog.DEVICEID_KEY, deviceId);
         dialog.setArguments(args);
         dialog.setListener(this);
-        dialog.show(getFragmentManager(), FRAGMENT_DIALOG_REVOCATION);
+        dialog.show(requireFragmentManager(), FRAGMENT_DIALOG_REVOCATION);
     }
 
     @Override
@@ -432,12 +460,28 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
         args.putString(RenameDeviceDialog.DEVICENAME_KEY, dev_name);
         dialog.setArguments(args);
         dialog.setListener(this);
-        dialog.show(getFragmentManager(), TAG);
+        dialog.show(requireFragmentManager(), FRAGMENT_DIALOG_RENAME);
+    }
+
+    @OnClick(R.id.change_password_btn)
+    public void onPasswordChangeAsked() {
+        ChangePasswordDialog dialog = new ChangePasswordDialog();
+        Bundle args = new Bundle();
+        args.putString(AccountEditionActivity.ACCOUNT_ID_KEY, getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY));
+        args.putBoolean(AccountEditionActivity.ACCOUNT_HAS_PASSWORD_KEY, mAccountHasPassword);
+        dialog.setArguments(args);
+        dialog.setListener(this);
+        dialog.show(requireFragmentManager(), FRAGMENT_DIALOG_PASSWORD);
     }
 
     @Override
     public void onDeviceRename(String newName) {
         Log.d(TAG, "onDeviceRename: " + presenter.getDeviceName() + " -> " + newName);
         presenter.renameDevice(newName);
+    }
+
+    @Override
+    public void onPasswordChanged(String oldPassword, String newPassword) {
+        presenter.changePassword(oldPassword, newPassword);
     }
 }

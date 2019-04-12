@@ -396,6 +396,10 @@ public class Account {
         mDetails.put(ConfigKey.ACCOUNT_ENABLE, isChecked);
     }
 
+    public boolean hasPassword() {
+        return mDetails.getBool(ConfigKey.ARCHIVE_HAS_PASSWORD);
+    }
+
     public HashMap<String, String> getDetails() {
         return mDetails.getAll();
     }

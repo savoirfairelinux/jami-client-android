@@ -29,6 +29,8 @@ public interface RingAccountSummaryView {
 
     void showRevokingProgressDialog();
 
+    void showPasswordProgressDialog();
+
     void accountChanged(final Account account);
 
     void showNetworkError();
@@ -42,5 +44,6 @@ public interface RingAccountSummaryView {
     void updateDeviceList(Map<String, String> devices, String currentDeviceId);
 
     void deviceRevocationEnded(String device, int status);
+    void passwordChangeEnded(boolean ok);
 
 }
