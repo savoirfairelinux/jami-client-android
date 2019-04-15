@@ -95,6 +95,7 @@
   <!--Contacts-->
   <string name="prompt_new_password">Nova lozinka</string>
   <string name="prompt_new_password_repeat">Ponovite novu lozinku</string>
+  <string name="account_create_title">Napravite Jami račun</string>
   <string name="prompt_new_username">Unesite novo korisničko ime</string>
   <string name="wizard_next">Slijedeće</string>
   <string name="wizard_back">Natrag</string>

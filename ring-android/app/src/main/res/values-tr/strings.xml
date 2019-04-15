@@ -137,7 +137,9 @@
   <string name="conversation_action_select_peer_number">Bir numara seçin</string>
   <string name="conversation_action_block_this">Kişiyi engelle</string>
   <string name="conversation_action_go_to_call">Giden aramalara geri dön</string>
+  <string name="clip_contact_uri">İletişim adresi</string>
   <string name="block_contact_dialog_title">%1$s Engellensin mi?</string>
+  <string name="block_contact_dialog_message">Sen engelini kaldırana dek %1$s sana ulaşamaz.</string>
   <string name="block_contact_completed">%1$s engellendi.</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s eklensin mi?</string>
