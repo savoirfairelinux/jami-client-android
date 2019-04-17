@@ -395,8 +395,9 @@ class CameraServiceCamera2 extends CameraService {
                                     if (codec != null && codec.first != null) {
                                         currentCodec = codec.first;
                                     }
-                                } catch (CameraAccessException e) {
+                                } catch (Exception e) {
                                     Log.w(TAG, "onConfigured error:", e);
+                                    camera.close();
                                 }
                             }
 
