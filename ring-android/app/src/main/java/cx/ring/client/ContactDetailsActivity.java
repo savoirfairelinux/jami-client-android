@@ -38,6 +38,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -66,6 +67,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
 public class ContactDetailsActivity extends AppCompatActivity {
+    private static final String TAG = ContactDetailsActivity.class.getName();
 
     @Inject
     @Singleton
@@ -116,8 +118,12 @@ public class ContactDetailsActivity extends AppCompatActivity {
             super(b.getRoot());
             binding = b;
             itemView.setOnClickListener(view -> {
-                if (callback != null)
-                    callback.onAction();
+                try {
+                    if (callback != null)
+                        callback.onAction();
+                } catch (Exception e) {
+                    Log.w(TAG, "Error performing action" ,e);
+                }
             });
         }
     }
