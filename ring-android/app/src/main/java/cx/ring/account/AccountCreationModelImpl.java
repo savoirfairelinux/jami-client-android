@@ -51,7 +51,7 @@ public class AccountCreationModelImpl extends AccountCreationModel {
 
     @Override
     public Bitmap getPhoto() {
-        return (Bitmap) photo;
+        return (Bitmap) super.getPhoto();
     }
 
     public void setPhoto(Bitmap photo) {

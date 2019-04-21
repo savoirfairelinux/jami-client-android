@@ -52,8 +52,17 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
                 android:text="@string/account_link_button"
                 android:theme="@style/ButtonColored" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/ring_import_account"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/account_link_archive_button" />
 
         </LinearLayout>
 

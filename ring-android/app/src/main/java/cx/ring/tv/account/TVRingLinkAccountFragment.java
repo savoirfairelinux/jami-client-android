@@ -99,6 +99,11 @@ public class TVRingLinkAccountFragment extends RingGuidedStepFragment<RingLinkAc
     }
 
     @Override
+    public void showPin(boolean show) {
+        // TODO
+    }
+
+    @Override
     public void createAccount(AccountCreationModel accountCreationModel) {
         ((TVAccountWizard) getActivity()).createAccount(accountCreationModel);
     }
