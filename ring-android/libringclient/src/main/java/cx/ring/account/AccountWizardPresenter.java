@@ -106,7 +106,9 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
                     if (!accountCreationModel.getPassword().isEmpty()) {
                         accountDetails.put(ConfigKey.ARCHIVE_PASSWORD.key(), accountCreationModel.getPassword());
                     }
-                    if (!accountCreationModel.getPin().isEmpty()) {
+                    if (accountCreationModel.getArchive() != null) {
+                        accountDetails.put(ConfigKey.ARCHIVE_PATH.key(), accountCreationModel.getArchive().getAbsolutePath());
+                    } else if (!accountCreationModel.getPin().isEmpty()) {
                         accountDetails.put(ConfigKey.ARCHIVE_PIN.key(), accountCreationModel.getPin());
                     }
                     return accountDetails;

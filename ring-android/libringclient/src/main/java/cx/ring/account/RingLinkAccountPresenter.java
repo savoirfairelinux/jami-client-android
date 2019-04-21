@@ -34,6 +34,9 @@ public class RingLinkAccountPresenter extends RootPresenter<RingLinkAccountView>
 
     public void init(AccountCreationModel accountCreationModel) {
         mAccountCreationModel = accountCreationModel;
+        boolean hasArchive = mAccountCreationModel.getArchive() != null;
+        getView().showPin(!hasArchive);
+        getView().enableLinkButton(hasArchive);
     }
 
     public void passwordChanged(String password) {
@@ -57,6 +60,6 @@ public class RingLinkAccountPresenter extends RootPresenter<RingLinkAccountView>
     }
 
     private boolean isFormValid() {
-        return !mAccountCreationModel.getPin().isEmpty();
+        return mAccountCreationModel.getArchive() != null || !mAccountCreationModel.getPin().isEmpty();
     }
 }

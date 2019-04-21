@@ -25,5 +25,7 @@ public interface RingLinkAccountView {
 
     void enableLinkButton(boolean enable);
 
+    void showPin(boolean show);
+
     void createAccount(AccountCreationModel accountCreationModel);
 }

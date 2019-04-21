@@ -19,6 +19,8 @@
  */
 package cx.ring.mvp;
 
+import java.io.File;
+
 import cx.ring.model.Account;
 import ezvcard.VCard;
 import io.reactivex.Observable;
@@ -28,14 +30,16 @@ import io.reactivex.subjects.Subject;
 
 public abstract class AccountCreationModel {
 
-    protected String mFullName = "";
-    protected String mUsername = "";
-    protected String mPassword = "";
-    protected String mPin = "";
-    protected boolean link = false;
-    protected boolean mPush = false;
+    private String mFullName = "";
+    private String mUsername = "";
+    private String mPassword = "";
+    private String mPin = "";
+    private File mArchive = null;
+
+    private boolean link = false;
+    private boolean mPush = false;
     private Account newAccount = null;
-    protected Object photo = null;
+    private Object photo = null;
 
     private Observable<Account> account;
     protected final Subject<AccountCreationModel> profile = BehaviorSubject.createDefault(this);
@@ -99,6 +103,14 @@ public abstract class AccountCreationModel {
 
     public void setLink(boolean link) {
         this.link = link;
+    }
+
+    public void setArchive(File archive) {
+        mArchive = archive;
+    }
+
+    public File getArchive() {
+        return mArchive;
     }
 
     public void setNewAccount(Account account) {

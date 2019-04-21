@@ -67,6 +67,7 @@ public enum ConfigKey {
     ARCHIVE_PASSWORD("Account.archivePassword"),
     ARCHIVE_HAS_PASSWORD("Account.archiveHasPassword"),
     ARCHIVE_PIN("Account.archivePIN"),
+    ARCHIVE_PATH("Account.archivePath"),
     DISPLAY_NAME("Account.displayName"),
     ETH_ACCOUNT("ETH.account"),
     TLS_LISTENER_PORT("TLS.listenerPort"),

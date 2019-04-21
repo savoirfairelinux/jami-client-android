@@ -20,6 +20,8 @@
 package cx.ring.account;
 
 import android.text.Editable;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,6 +38,12 @@ import cx.ring.mvp.AccountCreationModel;
 public class RingLinkAccountFragment extends BaseSupportFragment<RingLinkAccountPresenter> implements RingLinkAccountView {
 
     public static final String TAG = RingLinkAccountFragment.class.getSimpleName();
+
+    @BindView(R.id.pin_box)
+    protected ViewGroup mPinBox;
+
+    @BindView(R.id.pin_help_message)
+    protected View mPinMessage;
 
     @BindView(R.id.ring_add_pin)
     protected EditText mPinTxt;
@@ -98,7 +106,13 @@ public class RingLinkAccountFragment extends BaseSupportFragment<RingLinkAccount
     }
 
     @Override
+    public void showPin(boolean show) {
+        mPinBox.setVisibility(show ? View.VISIBLE : View.GONE);
+        mPinMessage.setVisibility(show ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
     public void createAccount(AccountCreationModel accountCreationModel) {
-        ((AccountWizardActivity) getActivity()).createAccount(accountCreationModel);
+        ((AccountWizardActivity) requireActivity()).createAccount(accountCreationModel);
     }
 }
