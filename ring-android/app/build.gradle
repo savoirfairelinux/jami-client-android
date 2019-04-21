@@ -19,10 +19,6 @@ android {
             jni.srcDirs = []
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
     buildTypes {
         debug {
             minifyEnabled true
@@ -64,13 +60,17 @@ android {
     dataBinding {
         enabled true
     }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
 }
 
 dependencies {
     def android_support_version = '1.0.0'
     def material_version = '1.0.0'
-    def butterknife_version = "10.0.0"
-    def dagger_version = "2.17"
+    def butterknife_version = '10.1.0'
+    def dagger_version = '2.22.1'
 
     implementation fileTree(include: '*.jar', dir: 'libs')
     implementation project(':libringclient')
@@ -87,7 +87,7 @@ dependencies {
     implementation "com.google.android.material:material:$material_version"
 
     // ORM
-    implementation 'com.j256.ormlite:ormlite-android:4.48'
+    implementation 'com.j256.ormlite:ormlite-android:5.1'
 
     // Barcode scanning
     implementation 'com.journeyapps:zxing-android-embedded:3.6.0@aar'
@@ -103,8 +103,8 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
 
     // Glide
-    implementation 'com.github.bumptech.glide:glide:4.8.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 
     // RxAndroid
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
