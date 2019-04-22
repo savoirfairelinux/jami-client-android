@@ -44,6 +44,7 @@
   <string name="account_device_revocation_wrong_password">Hibás jelszó.</string>
   <string name="account_device_revocation_unknown_device">Ismeretlen eszköz.</string>
   <string name="account_device_revocation_error_unknown">Ismeretlen hiba.</string>
+  <string name="account_password_change">Jelszó megváltoztatása</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Általános</string>
   <string name="account_basic_category">Alapbeállítások</string>

@@ -41,6 +41,7 @@ Vous pourrez modifier votre compte plus tard.</string>
   <string name="account_device_revocation_wrong_password">Mauvais mot de passe.</string>
   <string name="account_device_revocation_unknown_device">Appareil inconnu.</string>
   <string name="account_device_revocation_error_unknown">Erreur inconnue.</string>
+  <string name="account_password_change">Changer mot de passe</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Général</string>
   <string name="account_basic_category">Réglages de base</string>

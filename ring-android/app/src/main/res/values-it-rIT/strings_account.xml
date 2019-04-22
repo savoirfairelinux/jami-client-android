@@ -44,6 +44,7 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_device_revocation_wrong_password">Password errata.</string>
   <string name="account_device_revocation_unknown_device">Dispositivo sconosciuto.</string>
   <string name="account_device_revocation_error_unknown">Errore sconosciuto.</string>
+  <string name="account_password_change">Cambia password</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Generale</string>
   <string name="account_basic_category">Impostazioni base</string>

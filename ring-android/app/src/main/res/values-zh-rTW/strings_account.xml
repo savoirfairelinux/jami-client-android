@@ -44,6 +44,7 @@
   <string name="account_device_revocation_wrong_password">錯誤的密碼。</string>
   <string name="account_device_revocation_unknown_device">未知的裝置。</string>
   <string name="account_device_revocation_error_unknown">未知的錯誤。</string>
+  <string name="account_password_change">變更密碼</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">一般</string>
   <string name="account_basic_category">基本設定</string>

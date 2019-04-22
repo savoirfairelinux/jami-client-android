@@ -44,6 +44,7 @@
   <string name="account_device_revocation_wrong_password">Senha Incorreta.</string>
   <string name="account_device_revocation_unknown_device">Dispositivo desconhecido.</string>
   <string name="account_device_revocation_error_unknown">Erro desconhecido.</string>
+  <string name="account_password_change">Mudar senha</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Geral</string>
   <string name="account_basic_category">Configurações básicas</string>

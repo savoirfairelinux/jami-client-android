@@ -42,6 +42,7 @@ Możesz edytować swoje konto później</string>
   <string name="account_device_revocation_wrong_password">Błędne hasło.</string>
   <string name="account_device_revocation_unknown_device">Nieznane urządzenie.</string>
   <string name="account_device_revocation_error_unknown">Nieznany błąd.</string>
+  <string name="account_password_change">Zmień hasło</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Generalne</string>
   <string name="account_basic_category">Ustawienia Podstawowe</string>

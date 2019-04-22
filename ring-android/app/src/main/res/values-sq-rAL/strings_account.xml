@@ -44,6 +44,7 @@
   <string name="account_device_revocation_wrong_password">Fjalëkalim gabuar.</string>
   <string name="account_device_revocation_unknown_device">Pajisje e panjohur.</string>
   <string name="account_device_revocation_error_unknown">Gabim i panjohur.</string>
+  <string name="account_password_change">Ndryshoni fjalëkalimin</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Të përgjithshme</string>
   <string name="account_basic_category">Rregullime Bazë</string>

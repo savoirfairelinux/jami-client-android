@@ -37,6 +37,7 @@ Si potra modificare questo account più tardi.</string>
   <string name="normal_devices_titles">Dispositivi noti collegati a questo account Jami</string>
   <string name="account_device_revoke">Revoca dispositivo</string>
   <string name="account_device_revocation_success_title">Successo</string>
+  <string name="account_password_change">Cambia password</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Generale</string>
   <string name="account_basic_category">Impostazioni base</string>

@@ -43,6 +43,7 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_device_revocation_wrong_password">Neteisingas slaptažodis.</string>
   <string name="account_device_revocation_unknown_device">Nežinomas įrenginys.</string>
   <string name="account_device_revocation_error_unknown">Nežinoma klaida.</string>
+  <string name="account_password_change">Pakeisti slaptažodį</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Bendra</string>
   <string name="account_basic_category">Pagrindiniai nustatymai</string>

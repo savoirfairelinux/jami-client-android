@@ -12,7 +12,7 @@
   <string name="no_browser_app_installed">Aucun navigateur internet trouvé. Vous devez en installer un afin de voir cette page</string>
   <string name="email_chooser_title">Envoi du courriel en utilisant…</string>
   <string name="website_chooser_title">Voir le site web avec...</string>
-  <string name="license">Ce logiciel est offert \"tel quel\", sans aucune garantie. Pour plus d\'informations,  &lt;u&gt;GNU General Public License version 3 or later&lt;/u&gt;</string>
+  <string name="license">Ce logiciel est offert \"tel quel\", sans aucune garantie. Pour plus d\'informations,  voir <u>GNU General Public License version 3 or later</u></string>
   <string name="description">Jami est un logiciel libre de communication universel qui respecte la vie privée et l\'intimité de ses utilisateurs.</string>
   <string name="credits">Crédits</string>
   <!--About dialog-->

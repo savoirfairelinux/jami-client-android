@@ -41,6 +41,7 @@ Sie können Ihr Konto später ändern.</string>
   <string name="account_device_revocation_wrong_password">Falsches Passwort.</string>
   <string name="account_device_revocation_unknown_device">Unbekanntes Gerät.</string>
   <string name="account_device_revocation_error_unknown">Unbekannter Fehler.</string>
+  <string name="account_password_change">Passwort ändern</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Allgemein</string>
   <string name="account_basic_category">Grundeinstellungen</string>

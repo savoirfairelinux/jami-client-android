@@ -44,6 +44,7 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="account_device_revocation_wrong_password">Yanlış parola</string>
   <string name="account_device_revocation_unknown_device">Bilinmeyen aygıt.</string>
   <string name="account_device_revocation_error_unknown">Bilinmeyen hata.</string>
+  <string name="account_password_change">Parolayı değiştir</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Genel</string>
   <string name="account_basic_category">Temel Ayarlar</string>

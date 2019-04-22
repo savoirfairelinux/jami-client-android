@@ -44,6 +44,7 @@
   <string name="account_device_revocation_wrong_password">Неверный пароль.</string>
   <string name="account_device_revocation_unknown_device">Неизвестное устройство.</string>
   <string name="account_device_revocation_error_unknown">Неизвестная ошибка.</string>
+  <string name="account_password_change">Изменить пароль</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Общее</string>
   <string name="account_basic_category">Основные настройки</string>

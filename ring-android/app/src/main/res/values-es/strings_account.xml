@@ -44,6 +44,7 @@ Puedes editar tu cuenta luego</string>
   <string name="account_device_revocation_wrong_password">Contraseña errónea</string>
   <string name="account_device_revocation_unknown_device">Dispositivo desconocido</string>
   <string name="account_device_revocation_error_unknown">Error desconocido.</string>
+  <string name="account_password_change">Cambiar contraseña</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">General</string>
   <string name="account_basic_category">Ajustes básicos</string>
