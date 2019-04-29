@@ -2,6 +2,8 @@
 
 # This script pull/clone a fdroiddata repository
 
+set -x # Get a more verbose output for Jenkins
+
 if [ $# -lt 3 ] ; then
     echo "Usage:"
     echo "1: commit"
@@ -29,16 +31,31 @@ fi
 
 git -C fdroiddata remote add upstream https://gitlab.com/fdroid/fdroiddata.git
 git -C fdroiddata fetch upstream || exit
+git -C fdroiddata status
 git -C fdroiddata checkout upstream/master
+git -C fdroiddata config user.name "savoirfairelinux"
+git -C fdroiddata config user.email mobile@savoirfairelinux.com
 
 METADATA_FOLDER=fdroiddata/metadata
 
-cp $METADATA_FOLDER/cx.ring.txt $METADATA_FOLDER/cx.ring.txt_
+cp ${METADATA_FOLDER}/cx.ring.txt ${METADATA_FOLDER}/cx.ring.txt_
 
-head -n -12 $METADATA_FOLDER/cx.ring.txt_ > $METADATA_FOLDER/cx.ring.txt
+head -n -12 ${METADATA_FOLDER}/cx.ring.txt_ > ${METADATA_FOLDER}/cx.ring.txt
 
-echo "Build:$versionName,$versionCode
-    commit=$commit
+source_properties="${ANDROID_NDK}/source.properties"
+
+if [ ! -s "${source_properties}" ]; then
+    echo "No NDK found. Abort!"
+    exit 1
+fi
+
+major_version=$(sed -En -e 's/^Pkg.Revision[ \t]*=[ \t]*([0-9a-f]+).*/\1/p' ${source_properties})
+numerical_minor_version=$(sed -En -e 's/^Pkg.Revision[ \t]*=[ \t]*[0-9a-f]+\.([0-9]+).*/\1/p' ${source_properties})
+minor_version=$(echo ${numerical_minor_version} | tr 0123456789 abcdefghij)
+ndk_version=r${major_version}${minor_version}
+
+echo "Build:${versionName},${versionCode}
+    commit=${commit}
     timeout=10800
     subdir=client-android/ring-android/app
     submodules=yes
@@ -50,32 +67,33 @@ echo "Build:$versionName,$versionCode
         export ANDROID_NDK_ROOT=\"\$ANDROID_NDK\" && \\
         export ANDROID_ABI=\"armeabi-v7a arm64-v8a x86\" && \\
         ./compile.sh --release --no-gradle
-    ndk=r17b" >> $METADATA_FOLDER/cx.ring.txt
+    ndk=${ndk_version}" >> ${METADATA_FOLDER}/cx.ring.txt
 
-tail -n 13 $METADATA_FOLDER/cx.ring.txt_ | head -n -2 >> $METADATA_FOLDER/cx.ring.txt
+tail -n 13 ${METADATA_FOLDER}/cx.ring.txt_ | head -n -2 >> ${METADATA_FOLDER}/cx.ring.txt
 
-echo "Current Version:$versionName" >> $METADATA_FOLDER/cx.ring.txt
-echo "Current Version Code:$versionCode" >> $METADATA_FOLDER/cx.ring.txt
+echo "Current Version:${versionName}" >> ${METADATA_FOLDER}/cx.ring.txt
+echo "Current Version Code:${versionCode}" >> ${METADATA_FOLDER}/cx.ring.txt
 
-rm $METADATA_FOLDER/cx.ring.txt_
+rm ${METADATA_FOLDER}/cx.ring.txt_
 
 git -C fdroiddata add metadata/cx.ring.txt
 git -C fdroiddata commit -s -m "Updates Jami to $versionName"
-git -C fdroiddata push origin master
+git -C fdroiddata status
+git -C fdroiddata push origin HEAD:master
 
 FDROID_METADATA_PROJECT_ID=36528
 SFL_METADATA_PROJECT_ID=10540147
 
 if [ $# -ge 4 ] ; then
     curl --request POST \
-    --url https://gitlab.com/api/v4/projects/$SFL_METADATA_PROJECT_ID/merge_requests \
+    --url https://gitlab.com/api/v4/projects/${SFL_METADATA_PROJECT_ID}/merge_requests \
     --header 'content-type: application/json' \
-    --header "private-token: $gitlabToken" \
+    --header "private-token: ${gitlabToken}" \
     --data "{
     \"id\": 1,
     \"title\": \"New Jami revision\",
     \"target_branch\": \"master\",
     \"source_branch\": \"master\",
-    \"target_project_id\": $FDROID_METADATA_PROJECT_ID
+    \"target_project_id\": ${FDROID_METADATA_PROJECT_ID}
     }"
 fi
