@@ -4,21 +4,22 @@
 
 set -x # Get a more verbose output for Jenkins
 
-if [ $# -lt 3 ] ; then
+if [ $# -lt 4 ] ; then
     echo "Usage:"
     echo "1: commit"
     echo "2: versionName"
     echo "3: versionCode"
+    echo "4: ndkVersion"
     echo "4: private gitlab.com access token (optional)"
-    echo "e.g. ./fdroidMergeRequest.sh e5d0d7d2e625e2455fce3d041dd563c45ab9d4a9 20190123 146 djlhsdKH345456DDGfo7"
-    echo "NOTE: you need to set \$ANDROID_NDK"
+    echo "e.g. ./fdroidMergeRequest.sh e5d0d7d2e625e2455fce3d041dd563c45ab9d4a9 20190123 146 r19c djlhsdKH345456DDGfo7"
     exit
 fi
 
 commit=$1
 versionName="$2"
 versionCode=$3
-gitlabToken=$4
+ndkVersion=$4
+gitlabToken=$5
 
 if [ -d "fdroiddata" ]
 then
@@ -43,18 +44,6 @@ cp ${METADATA_FOLDER}/cx.ring.txt ${METADATA_FOLDER}/cx.ring.txt_
 
 head -n -12 ${METADATA_FOLDER}/cx.ring.txt_ > ${METADATA_FOLDER}/cx.ring.txt
 
-source_properties="${ANDROID_NDK}/source.properties"
-
-if [ ! -s "${source_properties}" ]; then
-    echo "No NDK found. Abort!"
-    exit 1
-fi
-
-major_version=$(sed -En -e 's/^Pkg.Revision[ \t]*=[ \t]*([0-9a-f]+).*/\1/p' ${source_properties})
-numerical_minor_version=$(sed -En -e 's/^Pkg.Revision[ \t]*=[ \t]*[0-9a-f]+\.([0-9]+).*/\1/p' ${source_properties})
-minor_version=$(echo ${numerical_minor_version} | tr 0123456789 abcdefghij)
-ndk_version=r${major_version}${minor_version}
-
 echo "Build:${versionName},${versionCode}
     commit=${commit}
     timeout=10800
@@ -68,7 +57,7 @@ echo "Build:${versionName},${versionCode}
         export ANDROID_NDK_ROOT=\"\$ANDROID_NDK\" && \\
         export ANDROID_ABI=\"armeabi-v7a arm64-v8a x86\" && \\
         ./compile.sh --release --no-gradle
-    ndk=${ndk_version}" >> ${METADATA_FOLDER}/cx.ring.txt
+    ndk=${ndkVersion}" >> ${METADATA_FOLDER}/cx.ring.txt
 
 tail -n 13 ${METADATA_FOLDER}/cx.ring.txt_ | head -n -2 >> ${METADATA_FOLDER}/cx.ring.txt
 
