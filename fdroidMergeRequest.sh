@@ -28,10 +28,10 @@ then
     git -C fdroiddata pull --rebase
 else
     echo "fdroiddata repository does not exists"
-    git clone https://gitlab.com/savoirfairelinux/fdroiddata.git
+    git clone git@gitlab.com:fdroid/fdroiddata.git
 fi
 
-git -C fdroiddata remote add upstream https://gitlab.com/fdroid/fdroiddata.git
+git -C fdroiddata remote add upstream git@gitlab.com:fdroid/fdroiddata.git
 git -C fdroiddata fetch upstream || exit
 git -C fdroiddata status
 git -C fdroiddata checkout upstream/master
