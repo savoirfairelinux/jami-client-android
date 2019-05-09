@@ -71,7 +71,7 @@ releaseBranch="release_${releaseDate}"
 
 git -C fdroiddata add metadata/cx.ring.txt
 git -C fdroiddata commit -s -m "Updates Jami to $versionName"
-git -C fdroiddata push origin HEAD:refs/headstt/${releaseBranch} -f
+git -C fdroiddata push origin HEAD:refs/heads/${releaseBranch} -f
 git -C fdroiddata status
 
 FDROID_METADATA_PROJECT_ID=36528
