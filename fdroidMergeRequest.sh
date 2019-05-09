@@ -66,8 +66,8 @@ echo "Current Version Code:${versionCode}" >> ${METADATA_FOLDER}/cx.ring.txt
 
 rm ${METADATA_FOLDER}/cx.ring.txt_
 
-releaseDate=`date +\"%Y%m\"`
-releaseBranch="release/${releaseDate}"
+releaseDate=`date +%Y%m`
+releaseBranch="release_${releaseDate}"
 
 git -C fdroiddata add metadata/cx.ring.txt
 git -C fdroiddata commit -s -m "Updates Jami to $versionName"
