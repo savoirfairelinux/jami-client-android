@@ -28,10 +28,10 @@ then
     git -C fdroiddata pull --rebase
 else
     echo "fdroiddata repository does not exists"
-    git clone git@gitlab.com:fdroid/fdroiddata.git
+    git clone git@gitlab.com:savoirfairelinux/fdroiddata.git
 fi
 
-git -C fdroiddata remote add upstream git@gitlab.com:savoirfairelinux/fdroiddata.git
+git -C fdroiddata remote add upstream git@gitlab.com:fdroid/fdroiddata.git
 git -C fdroiddata fetch upstream || exit
 git -C fdroiddata status
 git -C fdroiddata checkout upstream/master
@@ -66,10 +66,13 @@ echo "Current Version Code:${versionCode}" >> ${METADATA_FOLDER}/cx.ring.txt
 
 rm ${METADATA_FOLDER}/cx.ring.txt_
 
+releaseDate=`date +\"%Y%m\"`
+releaseBranch="release/${releaseDate}"
+
 git -C fdroiddata add metadata/cx.ring.txt
 git -C fdroiddata commit -s -m "Updates Jami to $versionName"
 git -C fdroiddata status
-git -C fdroiddata push origin HEAD:master
+git -C fdroiddata push origin HEAD:${releaseBranch}
 
 FDROID_METADATA_PROJECT_ID=36528
 SFL_METADATA_PROJECT_ID=10540147
@@ -83,7 +86,7 @@ if [ $# -ge 4 ] ; then
     \"id\": 1,
     \"title\": \"New Jami revision\",
     \"target_branch\": \"master\",
-    \"source_branch\": \"master\",
+    \"source_branch\": \"${releaseBranch}\",
     \"target_project_id\": ${FDROID_METADATA_PROJECT_ID}
     }"
 fi
