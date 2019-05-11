@@ -49,8 +49,6 @@ echo "Build:${versionName},${versionCode}
     timeout=10800
     subdir=client-android/ring-android/app
     submodules=yes
-    sudo=apt-get update && \\
-        apt-get install --yes swig
     gradle=noPush
     rm=client-electron,client-gnome,client-ios,client-macosx,client-uwp,client-windows,docker,docs,lrc,packaging,scripts
     build=cd ../.. && \\
