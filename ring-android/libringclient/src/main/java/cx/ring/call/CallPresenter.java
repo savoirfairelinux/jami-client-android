@@ -30,6 +30,7 @@ import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ContactService;
+import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.NotificationService;
 import cx.ring.utils.Log;
@@ -46,6 +47,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     private NotificationService mNotificationService;
     private HardwareService mHardwareService;
     private CallService mCallService;
+    private DeviceRuntimeService mDeviceRuntimeService;
 
     private SipCall mSipCall;
     private boolean mOnGoingCall = false;
@@ -67,13 +69,27 @@ public class CallPresenter extends RootPresenter<CallView> {
                          ContactService contactService,
                          NotificationService notificationService,
                          HardwareService hardwareService,
-                         CallService callService) {
+                         CallService callService, DeviceRuntimeService deviceRuntimeService) {
         mAccountService = accountService;
         mContactService = contactService;
         mNotificationService = notificationService;
         mHardwareService = hardwareService;
         mCallService = callService;
+        mDeviceRuntimeService = deviceRuntimeService;
     }
+
+    public void cameraPermissionChanged(boolean isGranted) {
+        if (isGranted && mHardwareService.isVideoAvailable()) {
+            mHardwareService.initVideo();
+        }
+    }
+
+    public void audioPermissionChanged(boolean isGranted) {
+        if(isGranted && mHardwareService.hasMicrophone()) {
+            mCallService.setAudioPlugin(mCallService.getCurrentAudioOutputPlugin());
+        }
+    }
+
 
     @Override
     public void unbindView() {
@@ -119,7 +135,7 @@ public class CallPresenter extends RootPresenter<CallView> {
         mCompositeDisposable.add(mCallService
                 .placeCallObservable(accountId, StringUtils.toNumber(contactRingId), audioOnly)
                 .observeOn(mUiScheduler)
-                .subscribe(call ->  {
+                .subscribe(call -> {
                     contactUpdate(call);
                     confUpdate(call);
                 }, e -> finish()));
@@ -160,6 +176,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     public void muteMicrophoneToggled(boolean checked) {
         mCallService.setMuted(checked);
     }
+
 
     public boolean isMicrophoneMuted() {
         return mCallService.isCaptureMuted();
@@ -234,6 +251,7 @@ public class CallPresenter extends RootPresenter<CallView> {
         //getView().resetVideoSize(videoWidth, videoHeight, previewWidth, previewHeight);
     }
 
+
     public void uiVisibilityChanged(boolean displayed) {
         CallView view = getView();
         if (view != null)
@@ -273,6 +291,10 @@ public class CallPresenter extends RootPresenter<CallView> {
             if (!mAudioOnly) {
                 mHardwareService.setPreviewSettings();
                 view.displayVideoSurface(true);
+                if(mDeviceRuntimeService.hasVideoPermission()) {
+                    mHardwareService.switchInput(mSipCall.getCallId());
+                    mHardwareService.switchInput(mSipCall.getCallId());
+                }
             }
             if (timeUpdateTask != null)
                 timeUpdateTask.dispose();
@@ -349,6 +371,10 @@ public class CallPresenter extends RootPresenter<CallView> {
         if (!(mSipCall.isRinging() && mSipCall.isIncoming())) {
             hangupCall();
         }
+    }
+
+    public boolean isAudioOnly() {
+        return mAudioOnly;
     }
 
     public void requestPipMode() {
