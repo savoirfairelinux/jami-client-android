@@ -377,6 +377,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             switch (permissions[i]) {
                 case Manifest.permission.CAMERA:
                     boolean granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
+                    presenter.cameraPermissionChanged(granted);
                     if (granted) {
                         takePicture();
                     }

@@ -61,17 +61,10 @@ public class LaunchPresenter extends RootPresenter<LaunchView> {
         }
     }
 
-    public void audioPermissionChanged(boolean isGranted) {
-    }
 
     public void contactPermissionChanged(boolean isGranted) {
     }
 
-    public void cameraPermissionChanged(boolean isGranted) {
-        if (isGranted && mHardwareService.isVideoAvailable()) {
-            mHardwareService.initVideo();
-        }
-    }
 
     public void checkAccounts() {
         mCompositeDisposable.add(mAccountService.getObservableAccountList()
@@ -89,9 +82,6 @@ public class LaunchPresenter extends RootPresenter<LaunchView> {
     private String[] buildPermissionsToAsk() {
         ArrayList<String> perms = new ArrayList<>();
 
-        if (!mDeviceRuntimeService.hasAudioPermission()) {
-            perms.add(Manifest.permission.RECORD_AUDIO);
-        }
 
         Settings settings = mPreferencesService.getSettings();
 
@@ -99,9 +89,6 @@ public class LaunchPresenter extends RootPresenter<LaunchView> {
             perms.add(Manifest.permission.READ_CONTACTS);
         }
 
-        if (!mDeviceRuntimeService.hasVideoPermission()) {
-            perms.add(Manifest.permission.CAMERA);
-        }
 
         if (settings.isAllowPlaceSystemCalls() && !mDeviceRuntimeService.hasCallLogPermission()) {
             perms.add(Manifest.permission.WRITE_CALL_LOG);
