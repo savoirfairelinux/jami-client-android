@@ -361,4 +361,11 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                 .firstElement()
                 .subscribe(conversation -> conversation.setColor(color)));
     }
+
+    public void cameraPermissionChanged(boolean isGranted) {
+        if (isGranted && mHardwareService.isVideoAvailable()) {
+            mHardwareService.initVideo();
+        }
+    }
+
 }
