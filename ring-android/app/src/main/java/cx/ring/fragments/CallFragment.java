@@ -20,12 +20,15 @@
  */
 package cx.ring.fragments;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.app.PictureInPictureParams;
 import android.app.RemoteAction;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Matrix;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
@@ -64,7 +67,9 @@ import java.util.Random;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
+
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.call.CallPresenter;
@@ -98,6 +103,10 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     public static final String KEY_CONF_ID = "confId";
     public static final String KEY_AUDIO_ONLY = "AUDIO_ONLY";
 
+    private static final int REQUEST_PERMISSION_AUDIO_INCOMING = 1003;
+    private static final int REQUEST_PERMISSION_VIDEO_INCOMING = 1004;
+    private static final int REQUEST_PERMISSION_AUDIO_OUTGOING = 1005;
+    private static final int REQUEST_PERMISSION_VIDEO_OUTGOING = 1006;
     private FragCallBinding binding;
     private OrientationEventListener mOrientationListener;
 
@@ -110,6 +119,8 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     private int mVideoHeight = -1;
     private int mPreviewWidth = 720, mPreviewHeight = 1280;
     private int mPreviewSurfaceWidth = 0, mPreviewSurfaceHeight = 0;
+
+    private Activity mActivity;
 
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
@@ -167,11 +178,39 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         Bundle args = getArguments();
         if (args != null) {
             String action = args.getString(KEY_ACTION);
+            boolean audioOnly = args.getBoolean(KEY_AUDIO_ONLY);
             if (action != null) {
                 if (action.equals(ACTION_PLACE_CALL)) {
-                    presenter.initOutGoing(getArguments().getString(KEY_ACCOUNT_ID),
-                            getArguments().getString(ConversationFragment.KEY_CONTACT_RING_ID),
-                            getArguments().getBoolean(KEY_AUDIO_ONLY));
+                    int audioGranted = ContextCompat.checkSelfPermission(mActivity, Manifest.permission.RECORD_AUDIO);
+                    if (!audioOnly) {
+                        int videoGranted = ContextCompat.checkSelfPermission(mActivity, Manifest.permission.CAMERA);
+
+                        if (audioGranted != PackageManager.PERMISSION_GRANTED || videoGranted != PackageManager.PERMISSION_GRANTED) {
+                            ArrayList<String> perms = new ArrayList<>();
+                            if (audioGranted != PackageManager.PERMISSION_GRANTED)
+                                perms.add(Manifest.permission.RECORD_AUDIO);
+
+
+                            if (videoGranted != PackageManager.PERMISSION_GRANTED) {
+                                perms.add(Manifest.permission.CAMERA);
+
+                            }
+                            requestPermissions(perms.toArray(new String[perms.size()]), REQUEST_PERMISSION_VIDEO_OUTGOING);
+                        } else {
+                            presenter.initOutGoing(getArguments().getString(KEY_ACCOUNT_ID),
+                                    getArguments().getString(ConversationFragment.KEY_CONTACT_RING_ID),
+                                    getArguments().getBoolean(KEY_AUDIO_ONLY));
+                        }
+                    } else {
+                        if (audioGranted != PackageManager.PERMISSION_GRANTED) {
+                            requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, REQUEST_PERMISSION_AUDIO_OUTGOING);
+                        } else {
+                            presenter.initOutGoing(getArguments().getString(KEY_ACCOUNT_ID),
+                                    getArguments().getString(ConversationFragment.KEY_CONTACT_RING_ID),
+                                    getArguments().getBoolean(KEY_AUDIO_ONLY));
+                        }
+
+                    }
                 } else if (action.equals(ACTION_GET_CALL)) {
                     presenter.initIncoming(getArguments().getString(KEY_CONF_ID));
                 }
@@ -275,7 +314,8 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         }
 
         @Override
-        public void onSurfaceTextureUpdated(SurfaceTexture surface) {}
+        public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+        }
     };
 
     @Override
@@ -339,7 +379,8 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
         binding.dialpadEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -347,7 +388,8 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
     }
 
@@ -361,6 +403,82 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         mCompositeDisposable.clear();
         if (mScreenWakeLock != null && mScreenWakeLock.isHeld()) {
             mScreenWakeLock.release();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        for (int i = 0, n = permissions.length; i < n; i++) {
+            int videoGranted = ContextCompat.checkSelfPermission(mActivity, Manifest.permission.CAMERA);
+            int audioGranted = ContextCompat.checkSelfPermission(mActivity, Manifest.permission.RECORD_AUDIO);
+
+            switch (permissions[i]) {
+                case Manifest.permission.CAMERA:
+                    if (requestCode == REQUEST_PERMISSION_VIDEO_INCOMING) {
+                        boolean granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
+                        presenter.cameraPermissionChanged(granted);
+                        if (granted && audioGranted == PackageManager.PERMISSION_GRANTED) {
+                            presenter.acceptCall();
+                        }
+                    } else if (requestCode == REQUEST_PERMISSION_VIDEO_OUTGOING) {
+                        Bundle args = getArguments();
+                        boolean granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
+                        presenter.cameraPermissionChanged(granted);
+                        if (granted && audioGranted == PackageManager.PERMISSION_GRANTED && args != null) {
+                            presenter.initOutGoing(getArguments().getString(KEY_ACCOUNT_ID),
+                                    getArguments().getString(ConversationFragment.KEY_CONTACT_RING_ID),
+                                    getArguments().getBoolean(KEY_AUDIO_ONLY));
+                        } else if (!granted) {
+                            presenter.refuseCall();
+                        }
+
+                    }
+                    break;
+                case Manifest.permission.RECORD_AUDIO:
+                    if (requestCode == REQUEST_PERMISSION_VIDEO_INCOMING) {
+                        boolean granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
+                        presenter.audioPermissionChanged(granted);
+                        if (granted && videoGranted == PackageManager.PERMISSION_GRANTED) {
+
+                            presenter.acceptCall();
+                        }
+                    } else if (requestCode == REQUEST_PERMISSION_AUDIO_INCOMING) {
+                        boolean granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
+                        presenter.audioPermissionChanged(granted);
+                        if (granted) {
+                            presenter.acceptCall();
+                        }
+                    } else if (requestCode == REQUEST_PERMISSION_VIDEO_OUTGOING) {
+                        Bundle args = getArguments();
+                        boolean granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
+                        presenter.audioPermissionChanged(granted);
+                        if (granted && videoGranted == PackageManager.PERMISSION_GRANTED && args != null) {
+                            presenter.initOutGoing(getArguments().getString(KEY_ACCOUNT_ID),
+                                    getArguments().getString(ConversationFragment.KEY_CONTACT_RING_ID),
+                                    getArguments().getBoolean(KEY_AUDIO_ONLY));
+                        } else if (!granted) {
+                            presenter.refuseCall();
+
+                        }
+                    } else if (requestCode == REQUEST_PERMISSION_AUDIO_OUTGOING) {
+                        Bundle args = getArguments();
+                        boolean granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
+                        presenter.audioPermissionChanged(granted);
+                        if (args != null && granted) {
+                            presenter.initOutGoing(getArguments().getString(KEY_ACCOUNT_ID),
+                                    getArguments().getString(ConversationFragment.KEY_CONTACT_RING_ID),
+                                    getArguments().getBoolean(KEY_AUDIO_ONLY));
+                        } else if (!granted) {
+                            presenter.refuseCall();
+                        }
+
+                    }
+                    break;
+                default:
+                    break;
+
+            }
         }
     }
 
@@ -662,7 +780,33 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     public void acceptClicked() {
-        presenter.acceptCall();
+        int audioGranted = ContextCompat.checkSelfPermission(mActivity, Manifest.permission.RECORD_AUDIO);
+        if (!presenter.isAudioOnly()) {
+            int videoGranted = ContextCompat.checkSelfPermission(mActivity, Manifest.permission.CAMERA);
+
+            if (audioGranted != PackageManager.PERMISSION_GRANTED || videoGranted != PackageManager.PERMISSION_GRANTED) {
+                ArrayList<String> perms = new ArrayList<>();
+                if (audioGranted != PackageManager.PERMISSION_GRANTED)
+                    perms.add(Manifest.permission.RECORD_AUDIO);
+
+
+                if (videoGranted != PackageManager.PERMISSION_GRANTED) {
+                    perms.add(Manifest.permission.CAMERA);
+
+                }
+                requestPermissions(perms.toArray(new String[perms.size()]), REQUEST_PERMISSION_VIDEO_INCOMING);
+            } else {
+                presenter.acceptCall();
+            }
+        } else {
+            if (audioGranted != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO},
+                        REQUEST_PERMISSION_AUDIO_INCOMING);
+            } else {
+                presenter.acceptCall();
+            }
+
+        }
     }
 
     public void cameraFlip() {
@@ -682,5 +826,23 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     @Override
     public void toggleMediaButtonClicked() {
         presenter.toggleButtonClicked();
+    }
+
+
+    @TargetApi(23)
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.mActivity = (Activity) context;
+    }
+
+    // deprecated below API 23
+    @SuppressWarnings("deprecation")
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            this.mActivity = activity;
+        }
     }
 }
