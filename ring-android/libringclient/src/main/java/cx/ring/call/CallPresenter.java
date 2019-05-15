@@ -75,6 +75,16 @@ public class CallPresenter extends RootPresenter<CallView> {
         mCallService = callService;
     }
 
+    public void cameraPermissionChanged(boolean isGranted) {
+        if (isGranted && mHardwareService.isVideoAvailable()) {
+            mHardwareService.initVideo();
+        }
+    }
+
+    public void audioPermissionChanged(boolean isGranted) {
+    }
+
+
     @Override
     public void unbindView() {
         if (!mAudioOnly) {
@@ -119,7 +129,7 @@ public class CallPresenter extends RootPresenter<CallView> {
         mCompositeDisposable.add(mCallService
                 .placeCallObservable(accountId, StringUtils.toNumber(contactRingId), audioOnly)
                 .observeOn(mUiScheduler)
-                .subscribe(call ->  {
+                .subscribe(call -> {
                     contactUpdate(call);
                     confUpdate(call);
                 }, e -> finish()));
@@ -349,6 +359,10 @@ public class CallPresenter extends RootPresenter<CallView> {
         if (!(mSipCall.isRinging() && mSipCall.isIncoming())) {
             hangupCall();
         }
+    }
+
+    public boolean isAudioOnly() {
+        return mAudioOnly;
     }
 
     public void requestPipMode() {
