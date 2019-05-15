@@ -23,6 +23,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AlertDialog;
@@ -85,24 +86,14 @@ public class LaunchActivity extends BaseActivity<LaunchPresenter> implements Lau
                 if (grantResults.length == 0) {
                     return;
                 }
-                boolean isAudioGranted = false;
                 for (int i = 0, n = permissions.length; i < n; i++) {
                     String permission = permissions[i];
                     RingApplication.getInstance().permissionHasBeenAsked(permission);
                     switch (permission) {
-                        case Manifest.permission.RECORD_AUDIO:
-                            isAudioGranted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
-                            presenter.audioPermissionChanged(isAudioGranted);
-                            break;
                         case Manifest.permission.READ_CONTACTS:
                             presenter.contactPermissionChanged(grantResults[i] == PackageManager.PERMISSION_GRANTED);
                             break;
-                        case Manifest.permission.CAMERA:
-                            presenter.cameraPermissionChanged(grantResults[i] == PackageManager.PERMISSION_GRANTED);
                     }
-                }
-                if (isAudioGranted) {
-                    presenter.checkAccounts();
                 }
                 break;
             }
