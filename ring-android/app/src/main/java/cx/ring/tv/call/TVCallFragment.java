@@ -20,6 +20,7 @@
  */
 package cx.ring.tv.call;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -49,7 +50,10 @@ import android.widget.RelativeLayout;
 
 import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 
+import java.util.ArrayList;
 import java.util.Locale;
+
+import javax.inject.Inject;
 
 import cx.ring.R;
 import cx.ring.application.RingApplication;
@@ -61,6 +65,7 @@ import cx.ring.fragments.CallFragment;
 import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
 import cx.ring.mvp.BaseFragment;
+import cx.ring.services.DeviceRuntimeService;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -77,6 +82,12 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     public static final String KEY_CONTACT_RING_ID = "CONTACT_RING_ID";
     public static final String KEY_AUDIO_ONLY = "AUDIO_ONLY";
 
+
+    private static final int REQUEST_PERMISSION_AUDIO_INCOMING = 1003;
+    private static final int REQUEST_PERMISSION_VIDEO_INCOMING = 1004;
+    private static final int REQUEST_PERMISSION_AUDIO_OUTGOING = 1005;
+    private static final int REQUEST_PERMISSION_VIDEO_OUTGOING = 1006;
+
     private TvFragCallBinding binding;
 
     // Screen wake lock for incoming call
@@ -85,6 +96,9 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     private int mPreviewWidth = 720, mPreviewHeight = 1280;
     private int mPreviewWidthRot = 720, mPreviewHeightRot = 1280;
+
+    @Inject
+    DeviceRuntimeService mDeviceRuntimeService;
 
     public static TVCallFragment newInstance(@NonNull String action, @Nullable String accountID, @Nullable String contactRingId, boolean audioOnly) {
         Bundle bundle = new Bundle();
@@ -113,9 +127,9 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
         String action = getArguments().getString(KEY_ACTION);
         if (action != null) {
             if (action.equals(ACTION_PLACE_CALL)) {
-                presenter.initOutGoing(getArguments().getString(KEY_ACCOUNT_ID),
-                        getArguments().getString(KEY_CONTACT_RING_ID),
-                        getArguments().getBoolean(KEY_AUDIO_ONLY));
+                if (isPermissionAccepted(false)) {
+                    initializeCall(false);
+                }
             } else if (action.equals(ACTION_GET_CALL)) {
                 presenter.initIncoming(getArguments().getString(KEY_CONF_ID));
             }
@@ -409,6 +423,75 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
         binding.previewSurface.setTransform(matrix);
     }
 
+    /**
+     * Checks if permissions are accepted for camera and microphone. Takes into account whether call is incoming and outgoing, and requests permissions if not available.
+     *
+     * @param isIncoming true if call is incoming, false for outgoing
+     * @return true if permissions are already accepted
+     */
+    public boolean isPermissionAccepted(boolean isIncoming) {
+        Bundle args = getArguments();
+        boolean audioGranted = mDeviceRuntimeService.hasAudioPermission();
+        boolean audioOnly;
+        int REQUEST_PERMISSION_AUDIO, REQUEST_PERMISSION_VIDEO;
+
+        if (isIncoming) {
+            audioOnly = presenter.isAudioOnly();
+            REQUEST_PERMISSION_AUDIO = REQUEST_PERMISSION_AUDIO_INCOMING;
+            REQUEST_PERMISSION_VIDEO = REQUEST_PERMISSION_VIDEO_INCOMING;
+
+        } else {
+            audioOnly = args.getBoolean(KEY_AUDIO_ONLY);
+            REQUEST_PERMISSION_AUDIO = REQUEST_PERMISSION_AUDIO_OUTGOING;
+            REQUEST_PERMISSION_VIDEO = REQUEST_PERMISSION_VIDEO_OUTGOING;
+        }
+        if (!audioOnly) {
+            boolean videoGranted = mDeviceRuntimeService.hasVideoPermission();
+
+            if ((!audioGranted || !videoGranted) && android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                ArrayList<String> perms = new ArrayList<>();
+                if (!audioGranted)
+                    perms.add(Manifest.permission.RECORD_AUDIO);
+                if (!videoGranted) {
+                    perms.add(Manifest.permission.CAMERA);
+                }
+                requestPermissions(perms.toArray(new String[perms.size()]), REQUEST_PERMISSION_VIDEO);
+            } else if (videoGranted && audioGranted) {
+                return true;
+            }
+        } else {
+            if (!audioGranted && android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO},
+                        REQUEST_PERMISSION_AUDIO);
+            } else if (audioGranted) {
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+
+
+    /**
+     * Starts a call. Takes into account whether call is incoming or outgoing.
+     *
+     * @param isIncoming true if call is incoming, false for outgoing
+     */
+    public void initializeCall(boolean isIncoming) {
+        if (isIncoming) {
+            presenter.acceptCall();
+        } else {
+            Bundle args;
+            args = getArguments();
+            if (args != null) {
+                presenter.initOutGoing(getArguments().getString(KEY_ACCOUNT_ID),
+                        getArguments().getString(KEY_CONTACT_RING_ID),
+                        getArguments().getBoolean(KEY_AUDIO_ONLY));
+            }
+        }
+    }
+
     @Override
     public void goToConversation(String accountId, String conversationId) {
 
@@ -428,7 +511,8 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     }
 
     public void acceptClicked() {
-        presenter.acceptCall();
+        if (isPermissionAccepted(true))
+            presenter.acceptCall();
     }
 
     @Override
