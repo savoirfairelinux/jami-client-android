@@ -154,7 +154,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
                 mCallContact = mContactService.findContact(currentAccount, uri);
                 mCompositeDisposable.add(mContactService.loadContactData(mCallContact)
                         .observeOn(mUiScheduler)
-                        .subscribe(() -> view.displayContact(mCallContact)));
+                        .subscribe(() -> view.displayContact(mCallContact), rt -> view.displayContact(mCallContact)));
             } else {
                 if (uri.isRingId()) {
                     mCallContact = currentAccount.getContactFromCache(uri);
