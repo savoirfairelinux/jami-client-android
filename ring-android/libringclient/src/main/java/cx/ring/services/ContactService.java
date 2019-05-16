@@ -134,7 +134,7 @@ public abstract class ContactService {
         CallContact contact = account.getContactFromCache(uri);
         // TODO load system contact info into SIP contact
         if (account.isSip()) {
-            loadContactData(contact).subscribe();
+            loadContactData(contact).subscribe(() -> {}, e -> Log.e(TAG, "Can't load contact data"));
         }
         return contact;
     }
