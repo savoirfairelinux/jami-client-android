@@ -67,8 +67,9 @@ import java.util.Random;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
+
+import javax.inject.Inject;
 
 import cx.ring.R;
 import cx.ring.application.RingApplication;
@@ -82,6 +83,7 @@ import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.service.DRingService;
+import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.NotificationService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.DeviceUtils;
@@ -120,7 +122,9 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     private int mPreviewWidth = 720, mPreviewHeight = 1280;
     private int mPreviewSurfaceWidth = 0, mPreviewSurfaceHeight = 0;
 
-    private Activity mActivity;
+
+    @Inject
+    DeviceRuntimeService mDeviceRuntimeService;
 
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
@@ -181,17 +185,17 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             boolean audioOnly = args.getBoolean(KEY_AUDIO_ONLY);
             if (action != null) {
                 if (action.equals(ACTION_PLACE_CALL)) {
-                    int audioGranted = ContextCompat.checkSelfPermission(mActivity, Manifest.permission.RECORD_AUDIO);
+                    boolean audioGranted = mDeviceRuntimeService.hasAudioPermission();
                     if (!audioOnly) {
-                        int videoGranted = ContextCompat.checkSelfPermission(mActivity, Manifest.permission.CAMERA);
+                        boolean videoGranted = mDeviceRuntimeService.hasVideoPermission();
 
-                        if (audioGranted != PackageManager.PERMISSION_GRANTED || videoGranted != PackageManager.PERMISSION_GRANTED) {
+                        if (!audioGranted  || !videoGranted) {
                             ArrayList<String> perms = new ArrayList<>();
-                            if (audioGranted != PackageManager.PERMISSION_GRANTED)
+                            if (!audioGranted)
                                 perms.add(Manifest.permission.RECORD_AUDIO);
 
 
-                            if (videoGranted != PackageManager.PERMISSION_GRANTED) {
+                            if (!videoGranted) {
                                 perms.add(Manifest.permission.CAMERA);
 
                             }
@@ -202,7 +206,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                                     getArguments().getBoolean(KEY_AUDIO_ONLY));
                         }
                     } else {
-                        if (audioGranted != PackageManager.PERMISSION_GRANTED) {
+                        if (!audioGranted) {
                             requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, REQUEST_PERMISSION_AUDIO_OUTGOING);
                         } else {
                             presenter.initOutGoing(getArguments().getString(KEY_ACCOUNT_ID),
@@ -406,78 +410,88 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         }
     }
 
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        boolean granted;
+        Bundle args;
         for (int i = 0, n = permissions.length; i < n; i++) {
-            int videoGranted = ContextCompat.checkSelfPermission(mActivity, Manifest.permission.CAMERA);
-            int audioGranted = ContextCompat.checkSelfPermission(mActivity, Manifest.permission.RECORD_AUDIO);
+            boolean videoGranted = mDeviceRuntimeService.hasVideoPermission();
+            boolean audioGranted = mDeviceRuntimeService.hasAudioPermission();
 
             switch (permissions[i]) {
                 case Manifest.permission.CAMERA:
-                    if (requestCode == REQUEST_PERMISSION_VIDEO_INCOMING) {
-                        boolean granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
-                        presenter.cameraPermissionChanged(granted);
-                        if (granted && audioGranted == PackageManager.PERMISSION_GRANTED) {
-                            presenter.acceptCall();
-                        }
-                    } else if (requestCode == REQUEST_PERMISSION_VIDEO_OUTGOING) {
-                        Bundle args = getArguments();
-                        boolean granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
-                        presenter.cameraPermissionChanged(granted);
-                        if (granted && audioGranted == PackageManager.PERMISSION_GRANTED && args != null) {
-                            presenter.initOutGoing(getArguments().getString(KEY_ACCOUNT_ID),
-                                    getArguments().getString(ConversationFragment.KEY_CONTACT_RING_ID),
-                                    getArguments().getBoolean(KEY_AUDIO_ONLY));
-                        } else if (!granted) {
-                            presenter.refuseCall();
-                        }
-
+                    switch (requestCode) {
+                        case REQUEST_PERMISSION_VIDEO_INCOMING:
+                            granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
+                            presenter.cameraPermissionChanged(granted);
+                            if (granted && audioGranted) {
+                                presenter.acceptCall();
+                            }
+                            break;
+                        case REQUEST_PERMISSION_VIDEO_OUTGOING:
+                            args = getArguments();
+                            granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
+                            presenter.cameraPermissionChanged(granted);
+                            if (granted && audioGranted && args != null) {
+                                presenter.initOutGoing(getArguments().getString(KEY_ACCOUNT_ID),
+                                        getArguments().getString(ConversationFragment.KEY_CONTACT_RING_ID),
+                                        getArguments().getBoolean(KEY_AUDIO_ONLY));
+                            } else if (!granted) {
+                                presenter.refuseCall();
+                            }
+                            break;
+                        default:
+                            break;
                     }
                     break;
                 case Manifest.permission.RECORD_AUDIO:
-                    if (requestCode == REQUEST_PERMISSION_VIDEO_INCOMING) {
-                        boolean granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
-                        presenter.audioPermissionChanged(granted);
-                        if (granted && videoGranted == PackageManager.PERMISSION_GRANTED) {
+                    switch (requestCode) {
+                        case REQUEST_PERMISSION_VIDEO_INCOMING:
+                            granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
+                            presenter.audioPermissionChanged(granted);
+                            if (granted && videoGranted) {
+                                presenter.acceptCall();
+                            }
+                            break;
+                        case REQUEST_PERMISSION_AUDIO_INCOMING:
+                            granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
+                            presenter.audioPermissionChanged(granted);
+                            if (granted) {
+                                presenter.acceptCall();
+                            }
+                            break;
+                        case REQUEST_PERMISSION_VIDEO_OUTGOING:
+                            args = getArguments();
+                            granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
+                            presenter.audioPermissionChanged(granted);
+                            if (granted && videoGranted && args != null) {
+                                presenter.initOutGoing(getArguments().getString(KEY_ACCOUNT_ID),
+                                        getArguments().getString(ConversationFragment.KEY_CONTACT_RING_ID),
+                                        getArguments().getBoolean(KEY_AUDIO_ONLY));
+                            } else if (!granted) {
+                                presenter.refuseCall();
 
-                            presenter.acceptCall();
-                        }
-                    } else if (requestCode == REQUEST_PERMISSION_AUDIO_INCOMING) {
-                        boolean granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
-                        presenter.audioPermissionChanged(granted);
-                        if (granted) {
-                            presenter.acceptCall();
-                        }
-                    } else if (requestCode == REQUEST_PERMISSION_VIDEO_OUTGOING) {
-                        Bundle args = getArguments();
-                        boolean granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
-                        presenter.audioPermissionChanged(granted);
-                        if (granted && videoGranted == PackageManager.PERMISSION_GRANTED && args != null) {
-                            presenter.initOutGoing(getArguments().getString(KEY_ACCOUNT_ID),
-                                    getArguments().getString(ConversationFragment.KEY_CONTACT_RING_ID),
-                                    getArguments().getBoolean(KEY_AUDIO_ONLY));
-                        } else if (!granted) {
-                            presenter.refuseCall();
-
-                        }
-                    } else if (requestCode == REQUEST_PERMISSION_AUDIO_OUTGOING) {
-                        Bundle args = getArguments();
-                        boolean granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
-                        presenter.audioPermissionChanged(granted);
-                        if (args != null && granted) {
-                            presenter.initOutGoing(getArguments().getString(KEY_ACCOUNT_ID),
-                                    getArguments().getString(ConversationFragment.KEY_CONTACT_RING_ID),
-                                    getArguments().getBoolean(KEY_AUDIO_ONLY));
-                        } else if (!granted) {
-                            presenter.refuseCall();
-                        }
-
+                            }
+                            break;
+                        case REQUEST_PERMISSION_AUDIO_OUTGOING:
+                            args = getArguments();
+                            granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
+                            presenter.audioPermissionChanged(granted);
+                            if (args != null && granted) {
+                                presenter.initOutGoing(getArguments().getString(KEY_ACCOUNT_ID),
+                                        getArguments().getString(ConversationFragment.KEY_CONTACT_RING_ID),
+                                        getArguments().getBoolean(KEY_AUDIO_ONLY));
+                            } else if (!granted) {
+                                presenter.refuseCall();
+                            }
+                            break;
+                        default:
+                            break;
                     }
-                    break;
                 default:
                     break;
-
             }
         }
     }
@@ -780,17 +794,17 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     public void acceptClicked() {
-        int audioGranted = ContextCompat.checkSelfPermission(mActivity, Manifest.permission.RECORD_AUDIO);
+        boolean audioGranted = mDeviceRuntimeService.hasAudioPermission();
         if (!presenter.isAudioOnly()) {
-            int videoGranted = ContextCompat.checkSelfPermission(mActivity, Manifest.permission.CAMERA);
+            boolean videoGranted = mDeviceRuntimeService.hasVideoPermission();
 
-            if (audioGranted != PackageManager.PERMISSION_GRANTED || videoGranted != PackageManager.PERMISSION_GRANTED) {
+            if (!audioGranted || !videoGranted) {
                 ArrayList<String> perms = new ArrayList<>();
-                if (audioGranted != PackageManager.PERMISSION_GRANTED)
+                if (!audioGranted)
                     perms.add(Manifest.permission.RECORD_AUDIO);
 
 
-                if (videoGranted != PackageManager.PERMISSION_GRANTED) {
+                if (!videoGranted) {
                     perms.add(Manifest.permission.CAMERA);
 
                 }
@@ -799,7 +813,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                 presenter.acceptCall();
             }
         } else {
-            if (audioGranted != PackageManager.PERMISSION_GRANTED) {
+            if (!audioGranted) {
                 requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO},
                         REQUEST_PERMISSION_AUDIO_INCOMING);
             } else {
@@ -829,20 +843,4 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
 
-    @TargetApi(23)
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.mActivity = (Activity) context;
-    }
-
-    // deprecated below API 23
-    @SuppressWarnings("deprecation")
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            this.mActivity = activity;
-        }
-    }
 }
