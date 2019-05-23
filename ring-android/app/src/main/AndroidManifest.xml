@@ -83,7 +83,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <meta-data
             android:name="com.google.android.gms.car.application"
-            android:resource="@xml/automotive_app_desc"/>
+            android:resource="@xml/automotive_app_desc" />
 
         <meta-data
             android:name="firebase_analytics_collection_deactivated"
@@ -134,11 +134,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <data android:scheme="ring" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".client.ShareActivity"
             android:theme="@style/AppThemeBase"
-            android:parentActivityName=".client.HomeActivity">
+        android:parentActivityName=".client.QRCodeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -266,12 +265,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:screenOrientation="fullUser"
             android:theme="@style/AppThemeBase"
             android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".client.QRCodeScannerActivity"
-            android:screenOrientation="fullUser"
-            android:stateNotNeeded="true"
-            android:theme="@style/zxing_CaptureTheme"
-            android:windowSoftInputMode="stateAlwaysHidden" />
 
         <service
             android:name=".service.DRingService"
@@ -292,19 +285,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="fullUser"
             android:theme="@style/AppThemeBase" />
-
         <activity
             android:name=".tv.search.SearchActivity"
             android:theme="@style/Theme.Leanback" />
-
         <activity
             android:name=".tv.about.AboutActivity"
             android:theme="@style/Theme.Leanback" />
-
         <activity
             android:name=".tv.account.TVProfileEditingActivity"
             android:theme="@style/Theme.Leanback" />
-
         <activity
             android:name=".tv.call.TVCallActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
@@ -317,7 +306,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".tv.camera.CustomCameraActivity"
             android:theme="@style/AppThemeBase">
@@ -332,7 +320,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <activity
             android:name=".tv.contact.TVContactActivity"
             android:theme="@style/Theme.Leanback.Details" />
-
         <activity
             android:name=".tv.account.TVSettingsActivity"
             android:theme="@style/LeanbackPreferences" />
@@ -348,6 +335,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </provider>
 
         <activity
+            android:name=".client.QRCodeActivity"
+            android:label="@string/title_activity_qrcode"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
+            android:screenOrientation="fullUser"
+            android:theme="@style/AppThemeBase"/>
+        <activity
             android:name=".client.MediaViewerActivity"
             android:exported="false"
             android:label="@string/title_media_viewer"
@@ -362,14 +355,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </intent-filter>
         </service>
 
-        <service android:name=".service.RingJobService"
+        <service
+            android:name=".service.RingJobService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <activity
             android:name=".client.ContactDetailsActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:label="@string/conversation_details"
-            android:theme="@style/AppThemeBase"
-            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize" />
+            android:theme="@style/AppThemeBase" />
     </application>
 
 </manifest>
