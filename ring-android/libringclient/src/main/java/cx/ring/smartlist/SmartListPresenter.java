@@ -220,6 +220,10 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
         }
     }
 
+    public String getAccountID() {
+        return mAccount.getAccountID();
+    }
+
     public void fabButtonClicked() {
         getView().displayMenuItem();
     }
