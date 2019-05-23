@@ -25,17 +25,15 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import butterknife.BindString;
 import butterknife.BindView;
-import butterknife.OnClick;
 import cx.ring.R;
-import cx.ring.client.HomeActivity;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.mvp.GenericView;
@@ -61,11 +59,10 @@ public class ShareFragment extends BaseSupportFragment<SharePresenter> implement
     @BindString(R.string.share_via)
     protected String mShareVia;
 
-    @BindView(R.id.share_button)
-    protected Button mShareButton;
 
     private String mUriToShow;
     private int mQRCodeSize = 0;
+    private boolean isShareLocked = false;
 
     @Override
     public int getLayout() {
@@ -92,22 +89,26 @@ public class ShareFragment extends BaseSupportFragment<SharePresenter> implement
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_share);
-    }
-
-    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
+        inflater.inflate(R.menu.qr_menu, menu);
     }
 
     @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        menu.clear();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menu_qr_share:
+                if (!isShareLocked) {
+                    shareRingAccount();
+                    return true;
+                } else {
+                    return false;
+                }
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
-    @OnClick(R.id.share_button)
     public void shareRingAccount() {
         if (!TextUtils.isEmpty(mUriToShow)) {
             Intent sharingIntent = new Intent(Intent.ACTION_SEND);
@@ -139,9 +140,9 @@ public class ShareFragment extends BaseSupportFragment<SharePresenter> implement
 
         mUriToShow = viewModel.getAccountShareUri();
         if (TextUtils.isEmpty(mUriToShow)) {
-            mShareButton.setEnabled(false);
+            isShareLocked = true;
         } else {
-            mShareButton.setEnabled(true);
+            isShareLocked = false;
         }
     }
 }
