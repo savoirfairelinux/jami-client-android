@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce31c6e0_df90b218",
+        "filename": "ring-android/app/build.gradle",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-05-23T22:36:42Z",
+      "side": 1,
+      "message": "already included",
+      "range": {
+        "startLine": 97,
+        "startChar": 4,
+        "endLine": 97,
+        "endChar": 63
+      },
+      "revId": "1e397629a9cbaa4bd8b2ee5589a2653b802d8fd2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c092d609_b640c21e",
+        "filename": "ring-android/app/build.gradle",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-05-23T22:36:42Z",
+      "side": 1,
+      "message": "not used",
+      "range": {
+        "startLine": 99,
+        "startChar": 4,
+        "endLine": 99,
+        "endChar": 66
+      },
+      "revId": "1e397629a9cbaa4bd8b2ee5589a2653b802d8fd2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "260e4aa2_08d7dc9f",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/SmartListFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-05-23T22:36:42Z",
+      "side": 1,
+      "message": "ideally, use the same key as other components passing the acccountId as argument",
+      "range": {
+        "startLine": 521,
+        "startChar": 29,
+        "endLine": 521,
+        "endChar": 42
+      },
+      "revId": "1e397629a9cbaa4bd8b2ee5589a2653b802d8fd2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89ecac71_1b943f56",
+        "filename": "ring-android/app/src/main/java/cx/ring/share/ScanFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-05-23T22:36:42Z",
+      "side": 1,
+      "message": "not needed, use getActivity()",
+      "range": {
+        "startLine": 78,
+        "startChar": 21,
+        "endLine": 78,
+        "endChar": 30
+      },
+      "revId": "1e397629a9cbaa4bd8b2ee5589a2653b802d8fd2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95b4255c_2e4e461c",
+        "filename": "ring-android/app/src/main/java/cx/ring/share/ScanFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-05-23T22:36:42Z",
+      "side": 1,
+      "message": "not needed, use getActivity or requireActivity",
+      "range": {
+        "startLine": 264,
+        "startChar": 0,
+        "endLine": 285,
+        "endChar": 0
+      },
+      "revId": "1e397629a9cbaa4bd8b2ee5589a2653b802d8fd2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
