@@ -179,9 +179,6 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
             } else if (fm.findFragmentByTag(HomeActivity.SETTINGS_TAG) != null &&
                     fm.findFragmentByTag(HomeActivity.SETTINGS_TAG).isAdded()) {
                 selectSection(RingNavigationFragment.Section.SETTINGS);
-            } else if (fm.findFragmentByTag(HomeActivity.SHARE_TAG) != null &&
-                    fm.findFragmentByTag(HomeActivity.SHARE_TAG).isAdded()) {
-                selectSection(RingNavigationFragment.Section.SHARE);
             } else if (fm.findFragmentByTag(HomeActivity.ABOUT_TAG) != null &&
                     fm.findFragmentByTag(HomeActivity.ABOUT_TAG).isAdded()) {
                 selectSection(RingNavigationFragment.Section.ABOUT);
@@ -330,8 +327,7 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
         menu.add(1, new NavigationItem(R.string.menu_item_contact_request, R.drawable.ic_drafts_black));
         menu.add(2, new NavigationItem(R.string.menu_item_accounts, R.drawable.ic_group_black));
         menu.add(3, new NavigationItem(R.string.menu_item_settings, R.drawable.ic_settings_black));
-        menu.add(4, new NavigationItem(R.string.menu_item_share, R.drawable.ic_share_black));
-        menu.add(5, new NavigationItem(R.string.menu_item_about, R.drawable.ic_info_black));
+        menu.add(4, new NavigationItem(R.string.menu_item_about, R.drawable.ic_info_black));
 
         mMenuAdapter = new NavigationAdapter(menu);
         mMenuView.setAdapter(mMenuAdapter);
@@ -475,8 +471,7 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
         CONTACT_REQUESTS(1),
         MANAGE(2),
         SETTINGS(3),
-        SHARE(4),
-        ABOUT(5);
+        ABOUT(4);
 
         final int position;
 
