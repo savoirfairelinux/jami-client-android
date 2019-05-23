@@ -72,7 +72,6 @@ import cx.ring.services.HardwareService;
 import cx.ring.services.NotificationService;
 import cx.ring.services.PreferencesService;
 import cx.ring.settings.SettingsFragment;
-import cx.ring.share.ShareFragment;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.DeviceUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -91,7 +90,6 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
     public static final String ACCOUNTS_TAG = "Accounts";
     public static final String ABOUT_TAG = "About";
     public static final String SETTINGS_TAG = "Prefs";
-    public static final String SHARE_TAG = "Share";
     static public final String ACTION_PRESENT_TRUST_REQUEST_FRAGMENT = BuildConfig.APPLICATION_ID + "presentTrustRequestFragment";
     static final String TAG = HomeActivity.class.getSimpleName();
     private static final String NAVIGATION_TAG = "Navigation";
@@ -491,9 +489,6 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
             case SETTINGS:
                 this.goToSettings();
                 break;
-            case SHARE:
-                goToShare();
-                break;
             default:
                 break;
         }
@@ -525,17 +520,6 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         startActivityForResult(intent, AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
     }
 
-    private void goToShare() {
-        if (fContent instanceof ShareFragment) {
-            return;
-        }
-        fContent = new ShareFragment();
-
-        getSupportFragmentManager().beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.main_frame, fContent, SHARE_TAG)
-                .addToBackStack(SHARE_TAG).commit();
-    }
 
     public void goToSettings() {
         if (mNavigationDrawer != null && !isDrawerLocked) {
