@@ -60,7 +60,7 @@ import cx.ring.adapters.SmartListAdapter;
 import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
-import cx.ring.client.QRCodeScannerActivity;
+import cx.ring.client.QRCodeActivity;
 import cx.ring.contacts.AvatarFactory;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.CallContact;
@@ -82,6 +82,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
 
     public static final String TAG = SmartListFragment.class.getSimpleName();
     private static final String STATE_LOADING = TAG + ".STATE_LOADING";
+    private static final String QR_ACCOUNT_ID = "qr_account_id";
 
     @BindView(R.id.newconv_fab)
     protected FloatingActionButton mFloatingActionButton;
@@ -257,18 +258,6 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     @OnClick(R.id.newconv_fab)
     void fabButtonClicked() {
         presenter.fabButtonClicked();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == IntentIntegrator.REQUEST_CODE) {
-            IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-            if (scanResult != null && resultCode == Activity.RESULT_OK) {
-                String contact_uri = scanResult.getContents();
-                presenter.startConversation(new cx.ring.model.Uri(contact_uri));
-            }
-        }
     }
 
     @Override
@@ -526,7 +515,13 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
 
     @Override
     public void goToQRActivity() {
-        QRCodeScannerActivity.startQRCodeScanWithFragmentReceiver(this);
+        Intent i = new Intent(getActivity(), QRCodeActivity.class);
+        if(presenter != null) {
+            Bundle bundle = new Bundle();
+            bundle.putString(QR_ACCOUNT_ID, presenter.getAccountID());
+            i.putExtras(bundle);
+        }
+        startActivity(i);
     }
 
     @Override
