@@ -169,6 +169,10 @@ along with this program; if not, write to the Free Software
 
     <!-- QRCode Scan -->
     <string name="scan_qr_account_message">Scan the QR Code of the account you want to add.</string>
+    <string name="title_activity_qrcode">Jami QR</string>
+    <string name="error_scan_no_camera_permissions">The QR scanner requires camera permissions to work</string>
+    <string name="tab_code">My Code</string>
+    <string name="tab_scan">Scan Code</string>
 
     <!-- Settings -->
     <string name="clear_history_dialog_title">Clear history?</string>
@@ -220,6 +224,7 @@ along with this program; if not, write to the Free Software
 
     <!-- Share fragment -->
     <string name="share_message">Scan this code with Jami</string>
+    <string name="share_label">Share</string>
     <string name="share_message_no_account">Please select an account to share.</string>
     <string name="share_your_account_information">Share my contact information</string>
     <string name="generic_error_migration">Error</string>
@@ -275,5 +280,6 @@ along with this program; if not, write to the Free Software
     <string name="menu_file_download">Download file</string>
     <string name="menu_file_delete">Delete file</string>
     <string name="menu_file_share">Share file</string>
+
 
 </resources>
