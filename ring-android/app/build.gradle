@@ -75,7 +75,7 @@ dependencies {
     implementation fileTree(include: '*.jar', dir: 'libs')
     implementation project(':libringclient')
 
-    implementation "androidx.core:core:1.0.1"
+    implementation "androidx.core:core:1.0.2"
     implementation "androidx.legacy:legacy-support-core-utils:$android_support_version"
 
     implementation "androidx.cardview:cardview:$android_support_version"
@@ -111,8 +111,8 @@ dependencies {
 
     implementation 'com.jsibbold:zoomage:1.2.0'
 
-    withFirebaseImplementation 'com.google.firebase:firebase-core:16.0.8'
-    withFirebaseImplementation 'com.google.firebase:firebase-messaging:17.6.0'
+    withFirebaseImplementation 'com.google.firebase:firebase-core:16.0.9'
+    withFirebaseImplementation 'com.google.firebase:firebase-messaging:18.0.0'
 }
 
 if (buildFirebase) {
