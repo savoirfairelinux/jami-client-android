@@ -56,10 +56,10 @@ ENV ANDROID_DEPS=\
  platforms;android-28 \
  extras;android;m2repository \
  extras;google;m2repository \
- ndk-bundle'
+ ndk;19.2.5345600'
 RUN (while sleep 1; do echo "y"; done) | sdkmanager $ANDROID_DEPS
 ENV ANDROID_SDK=/opt/android-sdk
-ENV ANDROID_NDK=/opt/android-sdk/ndk-bundle
+ENV ANDROID_NDK=/opt/android-sdk/ndk/19.2.5345600
 
 WORKDIR /home/builder/src
 VOLUME /home/builder/src
