@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d138974f_d759278a",
+        "filename": "ring-android/app/build.gradle",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-05-24T14:01:00Z",
+      "side": 1,
+      "message": "move above with other androidx components",
+      "range": {
+        "startLine": 97,
+        "startChar": 4,
+        "endLine": 97,
+        "endChar": 69
+      },
+      "revId": "4cc8c592431cb635ec70d097f21dc2b0e2e6cede",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84f762a2_513c3c4c",
+        "filename": "ring-android/app/src/main/java/cx/ring/share/ScanFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-05-24T14:01:00Z",
+      "side": 1,
+      "message": "accountId",
+      "range": {
+        "startLine": 71,
+        "startChar": 26,
+        "endLine": 71,
+        "endChar": 36
+      },
+      "revId": "4cc8c592431cb635ec70d097f21dc2b0e2e6cede",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
