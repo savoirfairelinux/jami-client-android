@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acb9fe62_5631afcd",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-05-24T17:42:49Z",
+      "side": 1,
+      "message": "factor",
+      "range": {
+        "startLine": 393,
+        "startChar": 28,
+        "endLine": 393,
+        "endChar": 91
+      },
+      "revId": "75137771de9a37fba224effacff4ddd347c00a30",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa5106bd_db53f6b2",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-05-24T17:42:49Z",
+      "side": 1,
+      "message": "factor",
+      "range": {
+        "startLine": 400,
+        "startChar": 28,
+        "endLine": 400,
+        "endChar": 63
+      },
+      "revId": "75137771de9a37fba224effacff4ddd347c00a30",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c1da0e6_b5d534dd",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-05-24T17:42:49Z",
+      "side": 1,
+      "message": "factor",
+      "range": {
+        "startLine": 413,
+        "startChar": 28,
+        "endLine": 413,
+        "endChar": 91
+      },
+      "revId": "75137771de9a37fba224effacff4ddd347c00a30",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a67b763_36a43fab",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-05-24T17:42:49Z",
+      "side": 1,
+      "message": "factor",
+      "range": {
+        "startLine": 418,
+        "startChar": 28,
+        "endLine": 418,
+        "endChar": 91
+      },
+      "revId": "75137771de9a37fba224effacff4ddd347c00a30",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ba2f92d_cbe78c4d",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-05-24T17:42:49Z",
+      "side": 1,
+      "message": "don\u0027t use capitals for non-static-const variables",
+      "range": {
+        "startLine": 715,
+        "startChar": 12,
+        "endLine": 715,
+        "endChar": 30
+      },
+      "revId": "75137771de9a37fba224effacff4ddd347c00a30",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
