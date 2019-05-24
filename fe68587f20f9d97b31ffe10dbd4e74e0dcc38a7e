@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad0e9553_919d48d4",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-05-24T12:50:39Z",
+      "side": 1,
+      "message": "use a single code for incoming and outgoing",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 0
+      },
+      "revId": "fe68587f20f9d97b31ffe10dbd4e74e0dcc38a7e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee0e7eca_51852c47",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-05-24T12:50:39Z",
+      "side": 1,
+      "message": "Call should never be refused because of A/V permissions: at worst the peer won\u0027t see or hear us but the call might still happen without sending audio or video.",
+      "range": {
+        "startLine": 417,
+        "startChar": 24,
+        "endLine": 451,
+        "endChar": 34
+      },
+      "revId": "fe68587f20f9d97b31ffe10dbd4e74e0dcc38a7e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
