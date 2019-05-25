@@ -36,14 +36,8 @@
 -dontwarn freemarker.**
 
 # EZVcard
--dontwarn ezvcard.io.json.**
--keep,includedescriptorclasses class ezvcard.io.json.JCardModule { *; }
--keepclassmembers class ezvcard.io.json.JCardModule { *; }
--keep,includedescriptorclasses enum ezvcard.io.json.JCardModule { *; }
--keepclassmembers enum ezvcard.io.json.JCardModule { *; }
--keep,includedescriptorclasses interface ezvcard.io.json.JCardModule { *; }
--keepclassmembers interface ezvcard.io.json.JCardModule { *; }
--keep class ezvcard.property.** { *; }
+-keep,includedescriptorclasses class ezvcard.** { *; }
+-keepclassmembers class ezvcard.** { *; }
 
 # barcodescanner
 -keep,includedescriptorclasses class com.journeyapps.barcodescanner.** { *; }
