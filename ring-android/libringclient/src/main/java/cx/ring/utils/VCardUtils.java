@@ -143,8 +143,8 @@ public final class VCardUtils {
                     return loadFromDisk(vcardPath.getAbsolutePath());
                 }
             }
-            return null;
-        }).onErrorReturn(e -> setupDefaultProfile(filesDir, accountId));
+            return setupDefaultProfile(filesDir, accountId);
+        });
     }
 
     /**
@@ -202,7 +202,8 @@ public final class VCardUtils {
     private static VCard setupDefaultProfile(File filesDir, String accountId) {
         VCard vcard = new VCard();
         vcard.setUid(new Uid(accountId));
-        saveLocalProfileToDisk(vcard, accountId, filesDir).subscribe();
+        saveLocalProfileToDisk(vcard, accountId, filesDir)
+                .subscribe(vc -> {}, e -> Log.e(TAG, "Error while saving vcard", e));
         return vcard;
     }
 }
