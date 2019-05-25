@@ -137,11 +137,15 @@ public final class VCardUtils {
     public static Single<VCard> loadLocalProfileFromDisk(File filesDir, String accountId) {
         return Single.fromCallable(() -> {
             String path = localProfilePath(filesDir);
-            if (!"".equals(path)) {
-                File vcardPath = new File(path + File.separator + accountId + ".vcf");
-                if (vcardPath.exists()) {
-                    return loadFromDisk(vcardPath.getAbsolutePath());
+            try {
+                if (!"".equals(path)) {
+                    File vcardPath = new File(path + File.separator + accountId + ".vcf");
+                    if (vcardPath.exists()) {
+                        return loadFromDisk(vcardPath.getAbsolutePath());
+                    }
                 }
+            } catch (Exception e) {
+                Log.e(TAG, "Can't load vcard");
             }
             return setupDefaultProfile(filesDir, accountId);
         });
@@ -167,7 +171,7 @@ public final class VCardUtils {
             }
 
             return Ezvcard.parse(vcardPath).first();
-        } catch (IOException e) {
+        } catch (Exception e) {
             Log.e(TAG, "Error while loading VCard from disk", e);
             return null;
         }

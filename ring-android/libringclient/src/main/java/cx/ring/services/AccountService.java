@@ -417,7 +417,8 @@ public class AccountService {
                     .map(vCard -> {
                         account.setProfile(vCard);
                         return account;
-                    });
+                    })
+                    .onErrorReturn(e -> account);
         else
             return Single.just(account);
     }

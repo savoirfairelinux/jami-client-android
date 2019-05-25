@@ -69,14 +69,14 @@ public class RingNavigationPresenter extends RootPresenter<RingNavigationView> {
                     RingNavigationView v = getView();
                     if (v != null)
                         v.showViewModel(new RingNavigationViewModel(accounts.isEmpty() ? null : accounts.get(0), accounts));
-                }));
+                }, e ->  Log.e(TAG, "Error loading account list !", e)));
         mCompositeDisposable.add(mAccountService.getObservableAccounts()
                 .observeOn(mUiScheduler)
                 .subscribe(account -> {
                     RingNavigationView v = getView();
                     if (v != null)
                         v.updateModel(account);
-                }));
+                }, e ->  Log.e(TAG, "Error loading account list !", e)));
     }
 
     public void setAccountOrder(Account selectedAccount) {
