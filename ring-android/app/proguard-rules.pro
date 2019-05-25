@@ -5,6 +5,7 @@
 -keepattributes Signature
 
 -keep class android.support.v7.widget.LinearLayoutManager { *; }
+-keep,includedescriptorclasses class androidx.core.content.FileProvider { *; }
 
 -keep,includedescriptorclasses class cx.ring.** { *; }
 -keepclassmembers class cx.ring.** { *; }
@@ -35,13 +36,14 @@
 -dontwarn freemarker.**
 
 # EZVcard
--dontwarn ezvcard.io.json.JCardModule
+-dontwarn ezvcard.io.json.**
 -keep,includedescriptorclasses class ezvcard.io.json.JCardModule { *; }
 -keepclassmembers class ezvcard.io.json.JCardModule { *; }
 -keep,includedescriptorclasses enum ezvcard.io.json.JCardModule { *; }
 -keepclassmembers enum ezvcard.io.json.JCardModule { *; }
 -keep,includedescriptorclasses interface ezvcard.io.json.JCardModule { *; }
 -keepclassmembers interface ezvcard.io.json.JCardModule { *; }
+-keep class ezvcard.property.** { *; }
 
 # barcodescanner
 -keep,includedescriptorclasses class com.journeyapps.barcodescanner.** { *; }

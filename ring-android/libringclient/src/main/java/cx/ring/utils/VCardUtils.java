@@ -161,14 +161,14 @@ public final class VCardUtils {
      */
     private static VCard loadFromDisk(String path) {
         try {
-            if (StringUtils.isEmpty(path)) {
-                // Log.d(TAG, "Empty file or error with the context");
+            if (path == null || path.isEmpty()) {
+                Log.d(TAG, "Empty file or error with the context");
                 return null;
             }
 
             File vcardPath = new File(path);
             if (!vcardPath.exists()) {
-                // Log.d(TAG, "vcardPath not exist " + vcardPath);
+                Log.d(TAG, "vcardPath not exist " + vcardPath);
                 return null;
             }
 
