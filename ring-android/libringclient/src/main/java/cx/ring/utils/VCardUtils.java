@@ -31,7 +31,9 @@ import ezvcard.VCardVersion;
 import ezvcard.io.text.VCardWriter;
 import ezvcard.property.FormattedName;
 import ezvcard.property.Uid;
+import io.reactivex.Scheduler;
 import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 
 public final class VCardUtils {
     public static final String TAG = VCardUtils.class.getSimpleName();
@@ -206,11 +208,9 @@ public final class VCardUtils {
     private static VCard setupDefaultProfile(File filesDir, String accountId) {
         VCard vcard = new VCard();
         vcard.setUid(new Uid(accountId));
-        try {
-            saveLocalProfileToDisk(vcard, accountId, filesDir).subscribe();
-        } catch (Exception e) {
-            Log.e(TAG, "Error while saving vcard", e);
-        }
+        saveLocalProfileToDisk(vcard, accountId, filesDir)
+                .subscribeOn(Schedulers.io())
+                .subscribe(vc -> {}, e -> Log.e(TAG, "Error while saving vcard", e));
         return vcard;
     }
 }

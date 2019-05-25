@@ -446,7 +446,7 @@ public class NotificationServiceImpl implements NotificationService {
 
                 setContactPicture(c, builder);
                 notificationManager.notify(notificationId, builder.build());
-            });
+            }, e -> Log.w(TAG,  "error showing notification", e));
         } else {
             NotificationCompat.Builder builder = getRequestNotificationBuilder(account.getAccountID());
             boolean newRequest = false;

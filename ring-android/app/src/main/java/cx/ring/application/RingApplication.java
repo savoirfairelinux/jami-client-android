@@ -62,6 +62,7 @@ import cx.ring.services.DaemonService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.PreferencesService;
+import io.reactivex.plugins.RxJavaPlugins;
 
 public abstract class RingApplication extends Application {
     private static final String TAG = RingApplication.class.getSimpleName();
@@ -220,6 +221,8 @@ public abstract class RingApplication extends Application {
     public void onCreate() {
         super.onCreate();
         sInstance = this;
+
+        RxJavaPlugins.setErrorHandler(e -> Log.e(TAG, "Unhandled RxJava error", e));
 
         // building injection dependency tree
         mRingInjectionComponent = DaggerRingInjectionComponent.builder()

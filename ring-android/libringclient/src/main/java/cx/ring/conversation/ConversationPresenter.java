@@ -182,28 +182,28 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         Account account = mAccountService.getAccount(mAccountId);
 
         mConversationDisposable.add(c.getSortedHistory()
-                .subscribe(view::refreshView));
+                .subscribe(view::refreshView, e -> Log.e(TAG, "Can't update element", e)));
         mConversationDisposable.add(c.getCleared()
                 .observeOn(mUiScheduler)
-                .subscribe(view::refreshView));
+                .subscribe(view::refreshView, e -> Log.e(TAG, "Can't update element", e)));
         mConversationDisposable.add(mContactService.getLoadedContact(c.getAccountId(), c.getContact())
                 .observeOn(mUiScheduler)
-                .subscribe(contact -> initContact(account, mContactRingId, view)));
+                .subscribe(contact -> initContact(account, mContactRingId, view), e -> Log.e(TAG, "Can't update element", e)));
         mConversationDisposable.add(c.getNewElements()
                 .observeOn(mUiScheduler)
-                .subscribe(view::addElement));
+                .subscribe(view::addElement, e -> Log.e(TAG, "Can't update element", e)));
         mConversationDisposable.add(c.getUpdatedElements()
                 .observeOn(mUiScheduler)
-                .subscribe(view::updateElement));
+                .subscribe(view::updateElement, e -> Log.e(TAG, "Can't update element", e)));
         mConversationDisposable.add(c.getRemovedElements()
                 .observeOn(mUiScheduler)
-                .subscribe(view::removeElement));
+                .subscribe(view::removeElement, e -> Log.e(TAG, "Can't update element", e)));
         mConversationDisposable.add(c.getCalls()
                 .observeOn(mUiScheduler)
-                .subscribe(calls -> updateOngoingCallView()));
+                .subscribe(calls -> updateOngoingCallView(), e -> Log.e(TAG, "Can't update element", e)));
         mConversationDisposable.add(c.getColor()
                 .observeOn(mUiScheduler)
-                .subscribe(view::setConversationColor));
+                .subscribe(view::setConversationColor, e -> Log.e(TAG, "Can't update element", e)));
     }
 
     public void openContact() {

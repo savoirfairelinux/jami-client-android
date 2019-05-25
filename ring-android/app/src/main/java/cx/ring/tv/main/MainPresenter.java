@@ -123,7 +123,7 @@ public class MainPresenter extends RootPresenter<MainView> {
                         cd.add(mContactService.observeContact(vm.getAccountId(), vm.getContact())
                                 .subscribeOn(Schedulers.computation())
                                 .observeOn(mUiScheduler)
-                                .subscribe(this::refreshContact));
+                                .subscribe(this::refreshContact, e -> Log.d(TAG, "error loading contact", e)));
                     }
                     mContactDisposable.clear();
                     mContactDisposable.add(cd);
@@ -162,7 +162,7 @@ public class MainPresenter extends RootPresenter<MainView> {
                             Log.d(TAG, "getPendingSubject " + pending.size());
                             ArrayList<TVListViewModel> viewmodel = new ArrayList<>(pending.size());
                             for (Conversation c : pending) {
-                                mContactService.loadContactData(c.getContact()).subscribe();
+                                mContactService.loadContactData(c.getContact()).subscribe(() -> {}, e -> Log.e(TAG, "Can't load contact data"));
                                 viewmodel.add(new TVListViewModel(a.getAccountID(), c.getContact()));
                             }
                             return viewmodel;

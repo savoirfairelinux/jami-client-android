@@ -304,7 +304,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
                                 if (mSmartListViewModels.get(i).getContact() == vm.getContact())
                                     mSmartListViewModels.set(i, vm);
                             getView().update(vm);
-                        }));
+                        }, e -> Log.d(TAG, "loadConversations accountSubject onError", e)));
     }
 
     private List<SmartListViewModel> filter(List<SmartListViewModel> list, String query) {
