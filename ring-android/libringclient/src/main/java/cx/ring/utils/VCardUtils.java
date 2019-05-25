@@ -202,8 +202,11 @@ public final class VCardUtils {
     private static VCard setupDefaultProfile(File filesDir, String accountId) {
         VCard vcard = new VCard();
         vcard.setUid(new Uid(accountId));
-        saveLocalProfileToDisk(vcard, accountId, filesDir)
-                .subscribe(vc -> {}, e -> Log.e(TAG, "Error while saving vcard", e));
+        try {
+            saveLocalProfileToDisk(vcard, accountId, filesDir).subscribe();
+        } catch (Exception e) {
+            Log.e(TAG, "Error while saving vcard", e);
+        }
         return vcard;
     }
 }
