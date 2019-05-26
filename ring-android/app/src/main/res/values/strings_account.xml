@@ -28,7 +28,7 @@ along with this program; if not, write to the Free Software
     <!-- Strings related to account creation -->
     <string name="add_ring_account_title">Add Jami account</string>
     <string name="add_sip_account_title">Add SIP account</string>
-    <string name="ring_account_default_name">Ring account %1$s</string>
+    <string name="ring_account_default_name">Jami account %1$s</string>
 
     <string name="prompt_alias">Alias</string>
     <string name="prompt_hostname">Hostname</string>

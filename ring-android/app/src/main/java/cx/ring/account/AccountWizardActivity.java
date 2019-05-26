@@ -232,7 +232,7 @@ public class AccountWizardActivity extends BaseActivity<AccountWizardPresenter> 
         mAlertDialog = new AlertDialog.Builder(AccountWizardActivity.this)
                 .setPositiveButton(android.R.string.ok, null)
                 .setTitle(R.string.account_cannot_be_found_title)
-                .setMessage(R.string.account_cannot_be_found_message)
+                .setMessage(R.string.account_export_end_decryption_message)
                 .show();
     }
 
