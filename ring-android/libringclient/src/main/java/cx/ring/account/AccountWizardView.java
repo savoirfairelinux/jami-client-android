@@ -44,9 +44,9 @@ public interface AccountWizardView {
 
     void displayNetworkError();
 
-    void displaySuccessDialog();
-
     void displayCannotBeFoundError();
+
+    void displaySuccessDialog();
 
     void goToProfileCreation(AccountCreationModel accountCreationModel);
 }

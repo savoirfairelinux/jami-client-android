@@ -75,8 +75,7 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
     }
 
     public void initRingAccountCreation(AccountCreationModel accountCreationModel, String defaultAccountName) {
-        mAccountCreationModel = accountCreationModel;
-        Observable<Account> newAccount = initRingAccountDetails(defaultAccountName)
+        Single<Map<String, String>> newAccount = initRingAccountDetails(defaultAccountName)
                 .map(accountDetails -> {
                     if (!accountCreationModel.getUsername().isEmpty()) {
                         accountDetails.put(ConfigKey.ACCOUNT_REGISTERED_NAME.key(), accountCreationModel.getUsername());
@@ -88,20 +87,12 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
                         accountDetails.put(ConfigKey.PROXY_ENABLED.key(), AccountConfig.TRUE_STR);
                     }
                     return accountDetails;
-                })
-                .flatMapObservable(accountDetails -> createNewAccount(accountCreationModel, accountDetails));
-        mCompositeDisposable.add(newAccount
-                .observeOn(mUiScheduler)
-                .subscribe(accountCreationModel::setNewAccount, e-> Log.e(TAG, "Can't create account", e)));
-        accountCreationModel.setAccountObservable(newAccount);
-        getView().goToProfileCreation(accountCreationModel);
+                });
+        createAccount(accountCreationModel, newAccount);
     }
 
     public void initRingAccountLink(AccountCreationModel accountCreationModel, String defaultAccountName) {
-        mAccountCreationModel = accountCreationModel;
-        getView().displayProgress(true);
-
-        Observable<Account> newAccount = initRingAccountDetails(defaultAccountName)
+        Single<Map<String, String>> newAccount = initRingAccountDetails(defaultAccountName)
                 .map(accountDetails -> {
                     if (!accountCreationModel.getPassword().isEmpty()) {
                         accountDetails.put(ConfigKey.ARCHIVE_PASSWORD.key(), accountCreationModel.getPassword());
@@ -112,35 +103,50 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
                         accountDetails.put(ConfigKey.ARCHIVE_PIN.key(), accountCreationModel.getPin());
                     }
                     return accountDetails;
-                })
-                .flatMapObservable(accountDetails -> createNewAccount(accountCreationModel, accountDetails));
+                });
+        createAccount(accountCreationModel, newAccount);
+    }
+
+    private void createAccount(AccountCreationModel accountCreationModel, Single<Map<String, String>> details) {
+        mAccountCreationModel = accountCreationModel;
+        Observable<Account> newAccount = details.flatMapObservable(accountDetails -> createNewAccount(accountCreationModel, accountDetails));
         accountCreationModel.setAccountObservable(newAccount);
         mCompositeDisposable.add(newAccount
-                .filter(a -> {
-                    String newState = a.getRegistrationState();
-                    return !(newState.isEmpty() || newState.contentEquals(AccountConfig.STATE_INITIALIZING));
-                })
-                .firstOrError()
                 .observeOn(mUiScheduler)
-                .subscribe(acc -> {
-                    Log.w(TAG, "newState " + acc.getRegistrationState());
-                    accountCreationModel.setNewAccount(acc);
-                    AccountWizardView view = getView();
-                    if (view != null) {
-                        view.displayProgress(false);
-                        String newState = acc.getRegistrationState();
-                        if (newState.contentEquals(AccountConfig.STATE_ERROR_GENERIC)) {
-                            mCreatingAccount = false;
-                            view.displayCannotBeFoundError();
-                        } else {
-                            view.goToProfileCreation(accountCreationModel);
+                .subscribe(accountCreationModel::setNewAccount, e-> Log.e(TAG, "Can't create account", e)));
+        if (accountCreationModel.isLink()) {
+            getView().displayProgress(true);
+            mCompositeDisposable.add(newAccount
+                    .filter(a -> {
+                        String newState = a.getRegistrationState();
+                        return !(newState.isEmpty() || newState.contentEquals(AccountConfig.STATE_INITIALIZING));
+                    })
+                    .firstOrError()
+                    .observeOn(mUiScheduler)
+                    .subscribe(acc -> {
+                        accountCreationModel.setNewAccount(acc);
+                        AccountWizardView view = getView();
+                        if (view != null) {
+                            view.displayProgress(false);
+                            String newState = acc.getRegistrationState();
+                            if (newState.contentEquals(AccountConfig.STATE_ERROR_GENERIC)) {
+                                mCreatingAccount = false;
+                                if (accountCreationModel.getArchive() == null)
+                                    view.displayCannotBeFoundError();
+                                else
+                                    view.displayGenericError();
+                            } else {
+                                view.goToProfileCreation(accountCreationModel);
+                            }
                         }
-                    }
-                }, e -> {
-                    mCreatingAccount = false;
-                    getView().displayProgress(false);
-                    getView().displayCannotBeFoundError();
-                }));
+                    }, e -> {
+                        mCreatingAccount = false;
+                        getView().displayProgress(false);
+                        getView().displayCannotBeFoundError();
+                    }));
+        } else {
+            getView().goToProfileCreation(accountCreationModel);
+        }
     }
 
     public void successDialogClosed() {
@@ -164,10 +170,6 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
             return Single.error(new IllegalStateException());
         return mAccountService.getAccountTemplate(mAccountType)
                 .map(accountDetails -> {
-                    for (Map.Entry<String, String> e : accountDetails.entrySet()) {
-                        Log.d(TAG, "Default account detail: " + e.getKey() + " -> " + e.getValue());
-                    }
-
                     boolean hasCameraPermission = mDeviceRuntimeService.hasVideoPermission();
                     accountDetails.put(ConfigKey.VIDEO_ENABLED.key(), Boolean.toString(hasCameraPermission));
                     accountDetails.put(ConfigKey.ACCOUNT_DTMF_TYPE.key(), "sipinfo");
@@ -175,7 +177,7 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
                 });
     }
 
-    private Observable<Account> createNewAccount(AccountCreationModel model, HashMap<String, String> accountDetails) {
+    private Observable<Account> createNewAccount(AccountCreationModel model, Map<String, String> accountDetails) {
         if (mCreatingAccount) {
             return newAccount;
         }
