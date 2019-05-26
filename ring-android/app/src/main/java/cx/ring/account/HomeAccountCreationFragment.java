@@ -41,6 +41,8 @@ import cx.ring.R;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.utils.AndroidFileUtils;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class HomeAccountCreationFragment extends BaseSupportFragment<HomeAccountCreationPresenter> implements HomeAccountCreationView {
     private static final int ARCHIVE_REQUEST_CODE = 42;
@@ -105,25 +107,23 @@ public class HomeAccountCreationFragment extends BaseSupportFragment<HomeAccount
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
         if (requestCode == ARCHIVE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            File file = null;
             if (resultData != null) {
                 Uri uri = resultData.getData();
                 if (uri != null) {
-                    try {
-                        file = AndroidFileUtils.getCacheFile(requireContext(), uri);
-                    } catch (IOException e) {
-                        View v = getView();
-                        if (v != null)
-                            Snackbar.make(v, "Can't import archive: " + e.getMessage(), Snackbar.LENGTH_LONG).show();
-                    }
+                    AndroidFileUtils.getCacheFile(requireContext(), uri)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(file -> {
+                                AccountCreationModelImpl ringAccountViewModel = new AccountCreationModelImpl();
+                                ringAccountViewModel.setLink(true);
+                                ringAccountViewModel.setArchive(file);
+                                Fragment fragment = RingLinkAccountFragment.newInstance(ringAccountViewModel);
+                                replaceFragmentWithSlide(fragment, R.id.wizard_container);
+                            }, e-> {
+                                View v = getView();
+                                if (v != null)
+                                    Snackbar.make(v, "Can't import archive: " + e.getMessage(), Snackbar.LENGTH_LONG).show();
+                            });
                 }
-            }
-            if (file != null) {
-                AccountCreationModelImpl ringAccountViewModel = new AccountCreationModelImpl();
-                ringAccountViewModel.setLink(true);
-                ringAccountViewModel.setArchive(file);
-                Fragment fragment = RingLinkAccountFragment.newInstance(ringAccountViewModel);
-                replaceFragmentWithSlide(fragment, R.id.wizard_container);
             }
         }
     }

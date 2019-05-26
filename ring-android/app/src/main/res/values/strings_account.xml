@@ -157,7 +157,7 @@ along with this program; if not, write to the Free Software
     <string name="error_password_char_count">6 characters minimum</string>
     <string name="error_passwords_not_equals">Passwords do not match</string>
     <string name="export_account_wait_title">Please wait…</string>
-    <string name="export_account_wait_message">Publishing new account information</string>
+    <string name="export_account_wait_message">Exporting account information</string>
     <string name="account_export_file">Backup account</string>
     <string name="account_export_end_decryption_message">Couldn\'t unlock your account using the provided password.</string>
     <string name="account_export_end_network_title">Network error</string>
@@ -190,7 +190,7 @@ along with this program; if not, write to the Free Software
     <string name="account_sip_register_anyway">Register anyway</string>
 
     <string name="account_link_button">Connect from network</string>
-    <string name="account_link_archive_button">Connect from archive</string>
+    <string name="account_link_archive_button">Connect from backup</string>
     <string name="account_link_prompt_pin">Enter PIN</string>
     <string name="account_new_button">Create a Jami account</string>
     <string name="account_link_export_button">Link another device to this account</string>
@@ -200,8 +200,6 @@ along with this program; if not, write to the Free Software
     <string name="account_end_export_infos">Your PIN is:\n\n%%\n\nTo complete the process, you need to open Jami on the new device. Create a new account with \"Link this device to an account\". Your PIN is valid for 10 minutes.</string>
     <string name="account_link_export_info_light">To use this account on other devices, you must first expose it on Jami. This will generate a PIN code that you must enter on the new device to set up the account. The PIN is valid for 10 minutes.</string>
     <string name="account_export_title">Add devices</string>
-    <string name="account_link_archive">Or choose an archive to import the account from</string>
-
 
     <!-- Name registration -->
     <string name="error_username_empty">Enter a username</string>

@@ -20,20 +20,22 @@
  */
 package cx.ring.account;
 
-import android.app.DownloadManager;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.google.android.material.chip.Chip;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SwitchCompat;
 
-import android.os.Environment;
 import android.text.Layout;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -67,6 +69,7 @@ import cx.ring.services.AccountService;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.KeyboardVisibilityManager;
 import cx.ring.views.LinkNewDeviceLayout;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountSummaryPresenter> implements BackHandlerInterface,
         RegisterNameDialog.RegisterNameDialogListener,
@@ -80,6 +83,7 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     private static final String FRAGMENT_DIALOG_RENAME = TAG + ".dialog.deviceRename";
     private static final String FRAGMENT_DIALOG_PASSWORD = TAG + ".dialog.changePassword";
     private static final String FRAGMENT_DIALOG_BACKUP = TAG + ".dialog.backup";
+    private static final int WRITE_REQUEST_CODE = 43;
 
     /*
     UI Bindings
@@ -95,9 +99,6 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
 
     @BindView(R.id.btn_start_export)
     Button mStartBtn;
-
-    //@BindView(R.id.export_account_btn)
-    //Button mExportToFile;
 
     @BindView(R.id.account_link_info)
     TextView mExportInfos;
@@ -146,7 +147,7 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     private boolean mAccountHasPassword = true;
     private String mBestName = "";
     private String mAccountId = "";
-
+    private File mCacheArchive = null;
 
     @Inject
     AccountService mAccountService;
@@ -160,6 +161,25 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
             String accountId = getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY);
             if (accountId != null) {
                 presenter.setAccountId(accountId);
+            }
+        }
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
+        if (requestCode == WRITE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            if (resultData != null) {
+                Uri uri = resultData.getData();
+                if (uri != null) {
+                    if (mCacheArchive != null) {
+                        AndroidFileUtils.moveToUri(requireContext().getContentResolver(), mCacheArchive, uri)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(() -> {}, e -> {
+                                View v = getView();
+                                if (v != null)
+                                    Snackbar.make(v, "Can't export archive: " + e.getMessage(), Snackbar.LENGTH_LONG).show();
+                            });
+                    }
+                }
             }
         }
     }
@@ -193,13 +213,14 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
         mAccountNameTxt.setText(account.getAlias());
         mAccountIdTxt.setText(account.getUsername());
         mAccountId = account.getAccountID();
-        mBestName = account.getAlias();
+        mBestName = account.getRegisteredName();
         if (mBestName.isEmpty()) {
-            mBestName = account.getRegisteredName();
+            mBestName = account.getAlias();
             if (mBestName.isEmpty()) {
                 mBestName = account.getUsername();
             }
         }
+        mBestName = mBestName + ".gz";
         String username = account.getRegisteredName();
         boolean currentRegisteredName = account.registeringUsername;
         boolean hasRegisteredName = !currentRegisteredName && username != null && !username.isEmpty();
@@ -472,20 +493,21 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
                 .show();
     }
 
-    @Override
-    public void displayCompleteArchive(File dest)  {
-        DownloadManager downloadManager = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
-        if (downloadManager != null) {
-            downloadManager.addCompletedDownload(dest.getName(),
-                    dest.getName(),
-                    true,
-                    AndroidFileUtils.getMimeType(dest.getAbsolutePath()),
-                    dest.getAbsolutePath(),
-                    dest.length(),
-                    true);
-        }
+    private void createFile(String mimeType, String fileName) {
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType(mimeType);
+        intent.putExtra(Intent.EXTRA_TITLE, fileName);
+        startActivityForResult(intent, WRITE_REQUEST_CODE);
     }
 
+    @Override
+    public void displayCompleteArchive(File dest)  {
+        String type = AndroidFileUtils.getMimeType(dest.getAbsolutePath());
+        mCacheArchive = dest;
+        dismissWaitDialog();
+        createFile(type, mBestName);
+    }
 
     @Override
     public void onConfirmRevocation(String deviceId, String password) {
@@ -546,9 +568,12 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
 
     @Override
     public void onUnlockAccount(String accountId, String password) {
-        File downloadDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "Ring");
-        downloadDir.mkdirs();
-        File dest = new File(downloadDir, mBestName + ".gz");
+        Context context = requireContext();
+        File cacheDir = new File(context.getExternalCacheDir(), "archives");
+        cacheDir.mkdirs();
+        if (!cacheDir.canWrite())
+            Log.w(TAG, "Can't write to: " + cacheDir);
+        File dest = new File(cacheDir, mBestName);
         if (dest.exists())
             dest.delete();
         presenter.downloadAccountsArchive(dest, password);
