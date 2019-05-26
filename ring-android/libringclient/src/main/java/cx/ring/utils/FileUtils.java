@@ -34,7 +34,7 @@ public class FileUtils {
 
     public static void copyFile(InputStream in, OutputStream out) throws IOException {
         // Buffer size based on https://stackoverflow.com/questions/10143731/android-optimal-buffer-size
-        byte[] buffer = new byte[32 * 1024];
+        byte[] buffer = new byte[64 * 1024];
         int read;
         while ((read = in.read(buffer)) != -1) {
             out.write(buffer, 0, read);

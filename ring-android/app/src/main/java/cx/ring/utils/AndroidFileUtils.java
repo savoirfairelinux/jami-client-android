@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2019 Savoir-faire Linux Inc.
  *
  *  Author: Aline Bonnet <aline.bonnet@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -39,6 +40,7 @@ import android.util.Log;
 import android.webkit.MimeTypeMap;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -49,6 +51,8 @@ import java.util.Date;
 import java.util.Locale;
 
 import androidx.annotation.NonNull;
+
+import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
@@ -59,23 +63,23 @@ public class AndroidFileUtils {
     private final static int ORIENTATION_RIGHT = 90;
     private final static int MAX_IMAGE_DIMENSION = 1024;
 
-    public static boolean copyAssetFolder(AssetManager assetManager, String fromAssetPath, String toPath) {
+    public static boolean copyAssetFolder(AssetManager assetManager, String fromAssetPath, File toPath) {
         try {
             String[] files = assetManager.list(fromAssetPath);
-            File fileTmp = new File(toPath);
-            if (!fileTmp.exists()) {
-                fileTmp.mkdirs();
+            if (!toPath.exists()) {
+                toPath.mkdirs();
             }
-            Log.d(TAG, "Creating :" + toPath);
             boolean res = true;
-            for (String file : files)
+            for (String file : files) {
+                File newFile = new File(toPath, file);
                 if (file.contains("")) {
-                    Log.d(TAG, "Copying file :" + fromAssetPath + "/" + file + " to " + toPath + "/" + file);
-                    res &= copyAsset(assetManager, fromAssetPath + "/" + file, toPath + "/" + file);
+                    Log.d(TAG, "Copying file :" + fromAssetPath + File.separator + file + " to " + newFile);
+                    res &= copyAsset(assetManager, fromAssetPath + File.separator + file, newFile);
                 } else {
-                    Log.d(TAG, "Copying folder :" + fromAssetPath + "/" + file + " to " + toPath + "/" + file);
-                    res &= copyAssetFolder(assetManager, fromAssetPath + "/" + file, toPath + "/" + file);
+                    Log.d(TAG, "Copying folder :" + fromAssetPath + File.separator + file + " to " + newFile);
+                    res &= copyAssetFolder(assetManager, fromAssetPath + File.separator + file, newFile);
                 }
+            }
             return res;
         } catch (IOException e) {
             Log.e(TAG, "Error while copying asset folder", e);
@@ -83,12 +87,12 @@ public class AndroidFileUtils {
         }
     }
 
-    private static boolean copyAsset(AssetManager assetManager, String fromAssetPath, String toPath) {
+    private static boolean copyAsset(AssetManager assetManager, String fromAssetPath, File toPath) {
         InputStream in;
         OutputStream out;
         try {
             in = assetManager.open(fromAssetPath);
-            new File(toPath).createNewFile();
+            toPath.createNewFile();
             out = new FileOutputStream(toPath);
             FileUtils.copyFile(in, out);
             in.close();
@@ -140,10 +144,10 @@ public class AndroidFileUtils {
         return path;
     }
 
-    public static String getFilename(Context context, Uri uri) {
+    public static String getFilename(ContentResolver cr, Uri uri) {
         String result = null;
         if (ContentResolver.SCHEME_CONTENT.equals(uri.getScheme())) {
-            try (Cursor cursor = context.getContentResolver().query(uri, null, null, null, null)) {
+            try (Cursor cursor = cr.query(uri, null, null, null, null)) {
                 if (cursor != null && cursor.moveToFirst()) {
                     result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
                 }
@@ -157,7 +161,7 @@ public class AndroidFileUtils {
             }
         }
         if (result.lastIndexOf('.') == -1) {
-            String mimeType = getMimeType(context, uri);
+            String mimeType = getMimeType(cr, uri);
             String extensionFromMimeType = MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType);
             if (extensionFromMimeType != null) {
                 result += '.' + extensionFromMimeType;
@@ -166,10 +170,9 @@ public class AndroidFileUtils {
         return result;
     }
 
-    public static String getMimeType(Context context, Uri uri) {
+    public static String getMimeType(ContentResolver cr, Uri uri) {
         String mimeType;
         if (ContentResolver.SCHEME_CONTENT.equals(uri.getScheme())) {
-            ContentResolver cr = context.getContentResolver();
             mimeType = cr.getType(uri);
         } else {
             mimeType = getMimeType(uri.toString());
@@ -184,6 +187,9 @@ public class AndroidFileUtils {
             String mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(fileExtension.toLowerCase());
             if (!TextUtils.isEmpty(mimeType))
                 return mimeType;
+            if (fileExtension.contentEquals("gz")) {
+                return "application/gzip";
+            }
         }
         return "application/octet-stream";
     }
@@ -197,20 +203,46 @@ public class AndroidFileUtils {
         return File.createTempFile(imageFileName, ".jpg", context.getExternalCacheDir());
     }
 
-    public static @NonNull File getCacheFile(@NonNull Context context, @NonNull android.net.Uri uri) throws IOException {
-        String filename = getFilename(context, uri);
-        File file = new File(context.getCacheDir(), filename);
-        FileOutputStream output = new FileOutputStream(file);
-        InputStream inputStream = context.getContentResolver().openInputStream(uri);
-        if (inputStream == null)
-            throw new FileNotFoundException();
-        FileUtils.copyFile(inputStream, output);
-        inputStream.close();
-        output.close();
-        return file;
+    public static @NonNull Single<File> getCacheFile(@NonNull Context context, @NonNull Uri uri) {
+        ContentResolver contentResolver = context.getContentResolver();
+        File cacheDir = context.getCacheDir();
+        return Single.fromCallable(() -> {
+            File file = new File(cacheDir, getFilename(contentResolver, uri));
+            FileOutputStream output = new FileOutputStream(file);
+            InputStream inputStream = contentResolver.openInputStream(uri);
+            if (inputStream == null)
+                throw new FileNotFoundException();
+            FileUtils.copyFile(inputStream, output);
+            inputStream.close();
+            output.flush();
+            output.close();
+            return file;
+        }).subscribeOn(Schedulers.io());
     }
 
-    public static File getConversationFile(Context context, android.net.Uri uri, String conversationId, String name) throws IOException {
+    public static Completable moveToUri(@NonNull ContentResolver cr, @NonNull File input, @NonNull Uri outUri) {
+        return Completable.fromAction(() -> {
+            InputStream inputStream = null;
+            OutputStream output = null;
+            try {
+                inputStream = new FileInputStream(input);
+                output = cr.openOutputStream(outUri);
+                FileUtils.copyFile(inputStream, output);
+                input.delete();
+            } finally {
+                try {
+                    if (inputStream != null)
+                        inputStream.close();
+                    if (output != null)
+                        output.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).subscribeOn(Schedulers.io());
+    }
+
+    public static File getConversationFile(Context context, Uri uri, String conversationId, String name) throws IOException {
         File file = getConversationPath(context, conversationId, name);
         FileOutputStream output = new FileOutputStream(file);
         InputStream inputStream = context.getContentResolver().openInputStream(uri);
@@ -304,8 +336,8 @@ public class AndroidFileUtils {
         return path;
     }
 
-    public static String ringtonesPath(Context context) {
-        return context.getFilesDir().getAbsolutePath() + File.separator + "ringtones";
+    public static File ringtonesPath(Context context) {
+        return new File(context.getFilesDir(), "ringtones");
     }
 
     /**

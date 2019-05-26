@@ -144,6 +144,7 @@ public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummar
     }
 
     public void downloadAccountsArchive(File dest, String password) {
+        getView().showExportingProgressDialog();
         mCompositeDisposable.add(
             mAccountService.exportToFile(mAccountID, dest.getAbsolutePath(), password)
             .observeOn(mUiScheduler)

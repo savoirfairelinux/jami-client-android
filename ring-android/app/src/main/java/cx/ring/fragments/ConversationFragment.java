@@ -178,14 +178,11 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.msgInputTxt.setMediaListener(contentInfo -> {
-            try {
-                presenter.sendFile(AndroidFileUtils.getCacheFile(getContext(), contentInfo.getContentUri()));
-                contentInfo.releasePermission();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        binding.msgInputTxt.setMediaListener(contentInfo -> startFileSend(AndroidFileUtils
+                        .getCacheFile(requireContext(), contentInfo.getContentUri())
+                        .flatMapCompletable(this::sendFile)
+                        .doFinally(contentInfo::releasePermission)));
+
         if (mPreferences != null) {
             String pendingMessage = mPreferences.getString(KEY_PREFERENCE_PENDING_MESSAGE, null);
             if (!TextUtils.isEmpty(pendingMessage)) {
@@ -326,14 +323,9 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         return Completable.fromAction(() -> presenter.sendFile(file));
     }
 
-    private Single<File> getCacheFile(android.net.Uri uri) {
-        return Single.fromCallable(() -> AndroidFileUtils.getCacheFile(requireContext(), uri));
-    }
-
     private void startFileSend(Completable op) {
         setLoading(true);
-        op.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        op.observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> setLoading(false))
                 .subscribe(() -> {}, e -> {
                     Log.e(TAG, "startFileSend: not able to create cache file", e);
@@ -354,7 +346,9 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             if (uri == null) {
                 return;
             }
-            startFileSend(getCacheFile(uri).flatMapCompletable(this::sendFile));
+            startFileSend(AndroidFileUtils.getCacheFile(requireContext(), uri)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .flatMapCompletable(this::sendFile));
         } else if (requestCode == REQUEST_CODE_TAKE_PICTURE) {
             if (resultCode != RESULT_OK) {
                 mCurrentPhoto = null;
@@ -738,7 +732,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
                 uri = clip.getItemAt(0).getUri();
             if (uri == null)
                 return;
-            startFileSend(getCacheFile(uri).flatMapCompletable(this::sendFile));
+            startFileSend(AndroidFileUtils.getCacheFile(requireContext(), uri).flatMapCompletable(this::sendFile));
         }
     }
 }
