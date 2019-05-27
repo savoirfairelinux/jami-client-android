@@ -56,8 +56,7 @@ public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPrefere
     private static final int SELECT_RINGTONE_PATH = 40;
     private final Preference.OnPreferenceChangeListener changeVideoPreferenceListener = (preference, newValue) -> {
         final ConfigKey key = ConfigKey.fromString(preference.getKey());
-        boolean versionMOrSuperior = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
-        presenter.videoPreferenceChanged(key, newValue, versionMOrSuperior);
+        presenter.videoPreferenceChanged(key, newValue);
         return true;
     };
     private CodecPreference audioCodecsPref = null;
@@ -176,13 +175,6 @@ public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPrefere
     }
 
     @Override
-    public void requestVideoPermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{Manifest.permission.CAMERA}, RingApplication.PERMISSIONS_REQUEST);
-        }
-    }
-
-    @Override
     public void refresh(Account account) {
         if (account != null) {
             setPreferenceDetails(account.getConfig());
@@ -225,21 +217,6 @@ public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPrefere
                 } catch (Exception e2) {
                     Toast.makeText(c, "Can't load ringtone !", Toast.LENGTH_SHORT).show();
                 }
-            }
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        for (int i = 0, n = permissions.length; i < n; i++) {
-            switch (permissions[i]) {
-                case Manifest.permission.CAMERA:
-                    boolean granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
-                    presenter.permissionsUpdated(granted);
-                    break;
-                default:
-                    break;
             }
         }
     }
