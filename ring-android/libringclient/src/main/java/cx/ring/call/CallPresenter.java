@@ -25,6 +25,7 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import cx.ring.model.ConfigKey;
 import cx.ring.model.SipCall;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
@@ -79,6 +80,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void cameraPermissionChanged(boolean isGranted) {
+        mAccountService.setAccountsVideoEnabled(isGranted);
         if (isGranted && mHardwareService.isVideoAvailable()) {
             mHardwareService.initVideo();
         }
@@ -89,7 +91,6 @@ public class CallPresenter extends RootPresenter<CallView> {
             mCallService.setAudioPlugin(mCallService.getCurrentAudioOutputPlugin());
         }
     }
-
 
     @Override
     public void unbindView() {

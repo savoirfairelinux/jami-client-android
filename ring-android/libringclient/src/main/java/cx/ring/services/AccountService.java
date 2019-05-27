@@ -128,6 +128,7 @@ public class AccountService {
         public String address;
         public int state;
     }
+
     private final Subject<RegisteredName> registeredNameSubject = PublishSubject.create();
 
     private class ExportOnRingResult {
@@ -135,15 +136,18 @@ public class AccountService {
         int code;
         String pin;
     }
+
     private class DeviceRevocationResult {
         String accountId;
         String deviceId;
         int code;
     }
+
     private class MigrationResult {
         String accountId;
         String state;
     }
+
     private final Subject<ExportOnRingResult> mExportSubject = PublishSubject.create();
     private final Subject<DeviceRevocationResult> mDeviceRevocationSubject = PublishSubject.create();
     private final Subject<MigrationResult> mMigrationSubject = PublishSubject.create();
@@ -151,12 +155,15 @@ public class AccountService {
     public Observable<RegisteredName> getRegisteredNames() {
         return registeredNameSubject;
     }
+
     public Observable<TextMessage> getIncomingMessages() {
         return incomingMessageSubject;
     }
+
     public Observable<TextMessage> getMessageStateChanges() {
         return messageSubject;
     }
+
     public Observable<TrustRequest> getIncomingRequests() {
         return incomingRequestsSubject;
     }
@@ -323,8 +330,8 @@ public class AccountService {
             return account;
         })
                 .flatMap(account -> accountSubject
-                    .filter(acc -> acc.getAccountID().equals(account.getAccountID()))
-                    .startWith(account))
+                        .filter(acc -> acc.getAccountID().equals(account.getAccountID()))
+                        .startWith(account))
                 .subscribeOn(Schedulers.from(mExecutor));
     }
 
@@ -426,9 +433,11 @@ public class AccountService {
     public Subject<Account> getObservableAccounts() {
         return accountSubject;
     }
+
     public Observable<Account> getObservableAccountUpdates(String accountId) {
         return accountSubject.filter(acc -> acc.getAccountID().equals(accountId));
     }
+
     public Observable<Account> getObservableAccount(String accountId) {
         return Observable.fromCallable(() -> getAccount(accountId))
                 .concatWith(getObservableAccountUpdates(accountId));
@@ -553,7 +562,7 @@ public class AccountService {
             Log.i(TAG, "setAccountsActive() running... " + active);
             StringVect list = Ringservice.getAccountList();
             for (int i = 0, n = list.size(); i < n; i++) {
-                String accountId =list.get(i);
+                String accountId = list.get(i);
                 Account a = getAccount(accountId);
                 // If the proxy is enabled we can considered the account
                 // as always active
@@ -570,9 +579,14 @@ public class AccountService {
      * Sets the video activation state of all the accounts in the local cache
      */
     public void setAccountsVideoEnabled(boolean isEnabled) {
-        for (Account account : mAccountList) {
-            account.setDetail(ConfigKey.VIDEO_ENABLED, isEnabled);
-        }
+        mCurrentAccount.setDetail(ConfigKey.VIDEO_ENABLED, isEnabled);
+        updateAccount();
+
+    }
+
+    private void updateAccount() {
+        setCredentials(mCurrentAccount.getAccountID(), mCurrentAccount.getCredentialsHashMapList());
+        setAccountDetails(mCurrentAccount.getAccountID(), mCurrentAccount.getDetails());
     }
 
     /**
@@ -583,7 +597,7 @@ public class AccountService {
             return mExecutor.submit(() -> Ringservice.getVolatileAccountDetails(accountId).toNative()).get();
         } catch (Exception e) {
             Log.e(TAG, "Error running getVolatileAccountDetails()", e);
-        }
+    }
         return null;
     }
 
@@ -681,8 +695,8 @@ public class AccountService {
     }
 
     /**
-     * @param accountId id of the account
-     * @param oldPassword   old account password
+     * @param accountId   id of the account
+     * @param oldPassword old account password
      */
     public Completable setAccountPassword(final String accountId, final String oldPassword, final String newPassword) {
         return Completable.fromAction(() -> {
@@ -741,9 +755,9 @@ public class AccountService {
     public Map<String, String> validateCertificatePath(final String accountID, final String certificatePath, final String privateKeyPath, final String privateKeyPass) {
         try {
             return mExecutor.submit(() -> {
-                        Log.i(TAG, "validateCertificatePath() running...");
-                        return Ringservice.validateCertificatePath(accountID, certificatePath, privateKeyPath, privateKeyPass, "").toNative();
-                    }).get();
+                Log.i(TAG, "validateCertificatePath() running...");
+                return Ringservice.validateCertificatePath(accountID, certificatePath, privateKeyPath, privateKeyPass, "").toNative();
+            }).get();
         } catch (Exception e) {
             Log.e(TAG, "Error running validateCertificatePath()", e);
         }
@@ -908,7 +922,7 @@ public class AccountService {
         Account account = getAccount(accountId);
         boolean removed = false;
         if (account != null) {
-             removed = account.removeRequest(contact);
+            removed = account.removeRequest(contact);
         }
         mExecutor.execute(() -> Ringservice.discardTrustRequest(accountId, contact.getRawRingId()));
         return removed;
@@ -1059,7 +1073,7 @@ public class AccountService {
         Log.d(TAG, "accountMessageStatusChanged: " + accountId + ", " + messageId + ", " + to + ", " + status);
         mHistoryService
                 .accountMessageStatusChanged(accountId, messageId, to, status)
-                .subscribe(messageSubject::onNext, e -> Log.e(TAG, "Error updating message",e));
+                .subscribe(messageSubject::onNext, e -> Log.e(TAG, "Error updating message", e));
     }
 
     void errorAlert(int alert) {
@@ -1194,7 +1208,8 @@ public class AccountService {
         Log.i(TAG, "sendFile() id=" + dataTransfer.getId() + " accountId=" + dataTransferInfo.getAccountId() + ", peer=" + dataTransferInfo.getPeer() + ", filePath=" + dataTransferInfo.getPath());
         try {
             return getDataTransferError(mExecutor.submit(() -> Ringservice.sendFile(dataTransferInfo, 0)).get());
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
         return DataTransferError.UNKNOWN;
     }
 
@@ -1230,9 +1245,11 @@ public class AccountService {
 
     private class DataTransferRefreshTask extends TimerTask {
         private final DataTransfer mToUpdate;
+
         DataTransferRefreshTask(DataTransfer t) {
             mToUpdate = t;
         }
+
         @Override
         public void run() {
             DataTransferEventCode eventCode;
@@ -1329,6 +1346,7 @@ public class AccountService {
     public Subject<DataTransfer> getDataTransfers() {
         return dataTransferSubject;
     }
+
     public Observable<DataTransfer> observeDataTransfer(DataTransfer transfer) {
         return dataTransferSubject
                 .filter(t -> t == transfer)
@@ -1337,7 +1355,7 @@ public class AccountService {
 
     public void setProxyEnabled(boolean enabled) {
         mExecutor.execute(() -> {
-            for (Account acc : mAccountList){
+            for (Account acc : mAccountList) {
                 if (acc.isRing() && (acc.isDhtProxyEnabled() != enabled)) {
                     Log.d(TAG, (enabled ? "Enabling" : "Disabling") + " proxy for account " + acc.getAccountID());
                     acc.setDhtProxyEnabled(enabled);
