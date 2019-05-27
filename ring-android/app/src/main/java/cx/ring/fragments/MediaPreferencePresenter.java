@@ -108,34 +108,9 @@ public class MediaPreferencePresenter extends RootPresenter<MediaPreferenceView>
         }
     }
 
-    void videoPreferenceChanged(ConfigKey key, Object newValue, boolean versionMOrSuperior) {
-        if (newValue.equals(true)) {
-            if (mDeviceRuntimeService.hasVideoPermission()) {
-                mAccount.setDetail(key, newValue.toString());
-                updateAccount();
-            } else {
-                if (versionMOrSuperior) {
-                    getView().requestVideoPermissions();
-                } else {
-                    mAccount.setDetail(key, newValue.toString());
-                    updateAccount();
-                }
-            }
-        } else {
+    void videoPreferenceChanged(ConfigKey key, Object newValue) {
             mAccount.setDetail(key, newValue.toString());
             updateAccount();
-        }
-    }
-
-    void permissionsUpdated(boolean granted) {
-        mAccount.setDetail(ConfigKey.VIDEO_ENABLED, granted);
-
-        updateAccount();
-
-        getView().refresh(mAccount);
-        if (!granted) {
-            getView().displayPermissionCameraDenied();
-        }
     }
 
     void fileSearchClicked() {
