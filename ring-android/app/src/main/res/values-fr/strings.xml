@@ -10,9 +10,9 @@
   <string name="version_section">Version</string>
   <string name="no_email_app_installed">Application d\'envoi de courriel non-trouvée, installez-en une pour envoyer votre rapport</string>
   <string name="no_browser_app_installed">Aucun navigateur internet trouvé. Vous devez en installer un afin de voir cette page</string>
-  <string name="email_chooser_title">Envoi du courriel en utilisant…</string>
+  <string name="email_chooser_title">Envoi du courriel en utilisant …</string>
   <string name="website_chooser_title">Voir le site web avec...</string>
-  <string name="license">Ce logiciel est offert \"tel quel\", sans aucune garantie. Pour plus d\'informations,  &lt;u&gt;GNU General Public License version 3 or later&lt;/u&gt;</string>
+  <string name="license">Ce logiciel est offert \"tel quel\", sans aucune garantie. Pour plus d\'informations,  voir <u>GNU General Public License version 3 or later</u></string>
   <string name="description">Jami est un logiciel libre de communication universel qui respecte la vie privée et l\'intimité de ses utilisateurs.</string>
   <string name="credits">Crédits</string>
   <!--About dialog-->
@@ -116,7 +116,7 @@
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Jami a besoin de votre autorisation pour lire vos contacts. Autorisez Jami, svp.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami a besoin d\'accéder en écriture à votre liste de contact. SVP autorisez-le.</string>
+  <string name="permission_dialog_write_call_log_message">Jami a besoin d\'accéder en écriture à votre liste de contact. Autorisez Jami, svp.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Numérisez le code QR de votre interlocuteur.</string>
   <!--Settings-->
@@ -164,7 +164,7 @@
   <string name="profile_name_hint">Entrez votre nom (facultatif)</string>
   <!--Share fragment-->
   <string name="share_message">Numériser cet identifiant avec Jami</string>
-  <string name="share_message_no_account">Veuillez sélectionner le compte à partager.</string>
+  <string name="share_message_no_account">Svp, sélectionnez le compte à partager</string>
   <string name="share_your_account_information">Partagez mes coordonnées</string>
   <string name="generic_error_migration">Erreur</string>
   <string name="generic_error_migration_message">Une erreur est survenue pendant la migration</string>

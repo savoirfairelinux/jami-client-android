@@ -86,7 +86,9 @@ Moćete urediti vaš račun kasnije</string>
   <string name="account_enter_password">Unesite lozinku</string>
   <string name="update_account">Ažuriraj račun</string>
   <string name="account_update_needed">Potrebno je ažuriranje</string>
-  <string name="account_link_button">Povežite ovaj uređaj s računom</string>
+  <string name="account_cannot_be_found_title">ne mogu naći račun</string>
+  <string name="account_no_network_title">Ne mogu se spojiti na mrežu</string>
+  <string name="account_link_prompt_pin">Unesite PIN</string>
   <string name="account_new_button">Napravite Jami račun</string>
   <!--Name registration-->
   <string name="account_status_connecting">Spajanje</string>

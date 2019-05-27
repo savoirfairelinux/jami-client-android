@@ -44,6 +44,7 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="account_device_revocation_wrong_password">Yanlış parola</string>
   <string name="account_device_revocation_unknown_device">Bilinmeyen aygıt.</string>
   <string name="account_device_revocation_error_unknown">Bilinmeyen hata.</string>
+  <string name="account_password_change">Parolayı değiştir</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Genel</string>
   <string name="account_basic_category">Temel Ayarlar</string>
@@ -114,6 +115,7 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="error_passwords_not_equals">Parolalar eşleşmedi</string>
   <string name="export_account_wait_title">Lütfen bekleyin...</string>
   <string name="export_account_wait_message">Yeni hesap bilgisi yayımlanıyor</string>
+  <string name="account_export_file">Hesabı yedekle</string>
   <string name="account_export_end_decryption_message">Sağlanan parola kullanılarak hesabınızın kilidi açılamıyor.</string>
   <string name="account_export_end_network_title">Ağ hatası</string>
   <string name="account_export_end_network_message">Hesap ağda dışa aktarılamadı. Bağlanabilirliğinizi denetleyin.</string>
@@ -143,7 +145,6 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="account_sip_success_title">Sip hesabı kayıtlı</string>
   <string name="account_sip_success_message">Sip hesabınızı başarıyla kaydettiniz.</string>
   <string name="account_sip_register_anyway">Her koşulda kaydol</string>
-  <string name="account_link_button">Bu aygıtı bir hesaba bağla</string>
   <string name="account_link_prompt_pin">PIN\'i gir</string>
   <string name="account_new_button">Bir Jami hesabı oluştur</string>
   <string name="account_link_export_button">Başka aygıtı bu hesaba bağla</string>

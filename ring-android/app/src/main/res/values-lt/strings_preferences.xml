@@ -1,16 +1,25 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <string name="pref_category_network">Tinklas</string>
-  <string name="pref_category_contacts">Kontaktai</string>
+  <string name="pref_category_contacts">Adresatai</string>
   <string name="pref_category_video">Vaizdas</string>
   <string name="pref_category_system">Sistema</string>
   <string name="pref_category_privacy">Privatumas</string>
   <string name="pref_mobileData_title">Mobilūs duomenys</string>
+  <string name="pref_mobileData_summary">Leisti Jami 3G/LTE tinkluose, papildomai prie belaidžio tinklo (Wi-Fi)</string>
+  <string name="pref_pushNotifications_title">\"Push\" pranešimai</string>
+  <string name="pref_pushNotifications_summary">Naudoti Google serverius, kad būtų leista fone gauti skambučius/žinutes</string>
+  <string name="pref_hd_summary">Įjungti aukštos raiškos (HD) vaizdo siuntimą</string>
   <string name="pref_hwEncode_title">Įjungti paspartintą kodavimą</string>
   <string name="pref_hwEncode_summary">Eksperimentinė ypatybė</string>
-  <string name="pref_systemContacts_title">Naudoti sistemos kontaktus</string>
-  <string name="pref_systemContacts_summary">Naudoti sistemos kontaktus, kad būtų rodoma skambinančio asmens informacija.</string>
+  <string name="pref_systemContacts_title">Naudoti sistemos adresatus</string>
+  <string name="pref_systemContacts_summary">Naudoti sistemos adresatus, kad būtų rodoma skambinančio asmens informacija.</string>
+  <string name="pref_systemDialer_title">Inicijuoti sistemos skambučius, naudojant Jami</string>
+  <string name="pref_systemDialer_summary">Kai įmanoma, naudoti Ring, norint inicijuoti sistemos skambučius.</string>
+  <string name="pref_startOnBoot_title">Paleisti Jami paleisties metu</string>
   <string name="pref_startOnBoot_summary">Sistemos paleidimo metu, paleisti Jami fone.</string>
   <string name="pref_clearHistory_title">Išvalyti istoriją</string>
   <string name="pref_clearHistory_summary">Išvalyti visą pokalbių istoriją. Šio veiksmo negalima bus atšaukti.</string>
+  <string name="pref_persistNotification_title">Paleisti fone</string>
+  <string name="pref_persistNotification_summary">Leisti veikti fone, kad būtų priimami skambučiai ir žinutės.</string>
 </resources>

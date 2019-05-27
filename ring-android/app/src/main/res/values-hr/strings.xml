@@ -2,6 +2,7 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Povratna informacija</string>
+  <string name="report"><u>Pošaljite nam email</u></string>
   <string name="section_license">Licenca</string>
   <string name="copyright_section">Autorska prava</string>
   <string name="contribute_section">Doprinesite</string>
@@ -50,16 +51,32 @@
   <string name="notif_current_call_title">Trenutni poziv sa %1$s</string>
   <string name="notif_current_call">Trenutni poziv</string>
   <string name="notif_channel_calls">Pozivi</string>
+  <string name="notif_channel_missed_calls">Propušteni pozivi</string>
+  <string name="notif_channel_messages">Poruke</string>
+  <string name="notif_channel_requests">Zahtjevi</string>
+  <string name="notif_channel_file_transfer">Prijenos datoteka </string>
+  <string name="notif_mark_as_read">Označi kao pročitano</string>
+  <string name="notif_reply">Odgovori</string>
+  <string name="notif_incoming_file_transfer_title">Dolazna datoteka od %1$s</string>
+  <string name="notif_incoming_file_transfer">Netko vam želi poslati datoteku</string>
+  <string name="notif_outgoing_file_transfer_title">Slanje datoteke za %1$s</string>
+  <string name="notif_outgoing_file_transfer">Netko vam želi poslati datoteku</string>
+  <string name="action_open">Otvori</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ti:</string>
   <string name="action_call_hangup">Poklopi</string>
   <string name="ongoing_call">Poziv koji je u tijeku</string>
   <string name="hist_in_call">Dolazni poziv od %1$s</string>
   <string name="hist_out_call">Odlazni poziv prema %1$s</string>
+  <string name="start_error_title">Ne mogu pokrenuti Jami !</string>
   <string name="action_call_accept">Preuzmi poziv</string>
   <string name="action_call_decline">Odbij</string>
+  <string name="action_call_mic_mute">Utišaj mikrofon</string>
   <string name="ab_action_speakerphone">Omogući zvučnik</string>
   <string name="ab_action_contact_add">Dodaj u kontakte</string>
+  <string name="ab_action_contact_add_question">Dodati u kontakte?</string>
+  <string name="hist_contact_added">Kontakt dodan</string>
+  <string name="hist_invitation_received">Poziv primljen</string>
   <string name="ab_action_audio_call">Audio poziv</string>
   <string name="ab_action_video_call">Video poziv</string>
   <string name="ab_action_change_screen_orientation">Promjeni orijentaciju zaslona</string>
@@ -72,33 +89,49 @@
   <string name="message_sending">Šaljem poruku...</string>
   <string name="message_failed">Neuspjelo</string>
   <string name="time_just_now">Upravo sada</string>
+  <string name="send_file">Pošalji datoteku</string>
+  <string name="hist_file_sent">Datoteka poslana</string>
+  <string name="hist_file_received">Datoteka primljena</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Dozvola kamere</string>
   <string name="permission_dialog_camera_message">Video pozivi zahtjevaju dozvolu korištenja kamere. Molimo dozvolite aplikaciji korištenje kamere.</string>
   <string name="ringtone_error_title">Greška</string>
   <string name="ringtone_error_format_not_supported">Ovaj format nije podržan.</string>
+  <string name="ringtone_error_size_too_big">Datoteka je prevelika. Maksimalna veličina je %1$dkB.</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skenirajte QR kod korisnika kojeg želite dodati.</string>
   <!--Settings-->
+  <string name="clear_history_dialog_title">Obrisati povijest?</string>
   <string name="clear_history_completed">Povijest je očišćena.</string>
   <!--Conversation-->
+  <string name="conversation_details">Pojedinosti kontakta</string>
   <string name="conversation_action_delete_this">Izbrišite ovaj razgovor</string>
   <string name="conversation_action_delete_this_title">Izbrisati ovaj razgovor?</string>
   <string name="conversation_action_delete_this_message"> Ova se radnja ne može poništiti.</string>
   <string name="conversation_action_history_clear">Očisti povijest</string>
+  <string name="conversation_action_history_clear_title">Očistiti povijest razgovora?</string>
   <string name="conversation_action_remove_this">Izbriši kontakt</string>
+  <string name="conversation_action_remove_this_title">Obrisati ovaj kontakt?</string>
   <string name="conversation_action_copy_peer_number">Kopiraj broj</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s kopiran u međuspremnik</string>
   <string name="conversation_action_select_peer_number">Odaberite broj</string>
+  <string name="conversation_action_block_this">Blokiraj kontakt</string>
+  <string name="clip_contact_uri">Adresa kontakta</string>
+  <string name="block_contact_dialog_title">Blokirati %1$s?</string>
+  <string name="block_contact_completed">%1$s je bio blokiran.</string>
   <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">Dodati %1$s?</string>
   <string name="prompt_new_password">Nova lozinka</string>
   <string name="prompt_new_password_repeat">Ponovite novu lozinku</string>
   <string name="account_create_title">Napravite Jami račun</string>
   <string name="prompt_new_username">Unesite novo korisničko ime</string>
+  <string name="help_password_choose">Odaberite jaku lozinku koje ćete se sjećati da biste zaštitili vaš Jami račun.</string>
+  <string name="help_password_enter">Unesite lozinku za vaš glavni Jami račun</string>
   <string name="wizard_next">Slijedeće</string>
   <string name="wizard_back">Natrag</string>
+  <string name="wizard_skip">Preskoči</string>
   <!--MenuHeaderView-->
   <string name="profile">Moj profil</string>
   <string name="profile_message_warning">Vaš profil je podjeljen samo sa vašim kontaktima</string>
@@ -118,6 +151,14 @@
   <string name="no_blocked_contact">0 blokiranih kontakata</string>
   <!--Smartlist-->
   <string name="tv_contact_row_header">Kontakti</string>
+  <string name="generic_error">Došlo je do nepoznate greške</string>
   <!--File Transfer-->
+  <string name="invalid_file">Neispravna datoteka</string>
+  <string name="file_transfer_status_unsupported">nepodržano</string>
+  <string name="file_saved_in">Datoteka je spremljena u %s</string>
+  <string name="no_space_left_on_device">Nije preostalo prostora na uređaju</string>
+  <string name="menu_file_open">Otvori datoteku</string>
+  <string name="menu_file_download">Preuzmi datoteku</string>
+  <string name="menu_file_delete">Izbriši datoteku</string>
   <string name="menu_file_share">Dijeli datoteku</string>
 </resources>

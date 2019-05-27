@@ -113,7 +113,6 @@
   <string name="account_sip_success_title">SIP račun prijavljen</string>
   <string name="account_sip_success_message">Uspešno si prijavil svoj SIP račun.</string>
   <string name="account_sip_register_anyway">Vseeno prijavi</string>
-  <string name="account_link_button">Poveži to napravo k računu</string>
   <string name="account_link_prompt_pin">Vnesi PIN</string>
   <string name="account_link_export_button">Poveži drugo napravo s tem računom</string>
   <string name="account_end_export_button">zapri</string>

@@ -114,6 +114,7 @@
   <string name="error_passwords_not_equals">密码不匹配</string>
   <string name="export_account_wait_title">请稍等…</string>
   <string name="export_account_wait_message">提交新帐户信息</string>
+  <string name="account_export_file">备份帐户</string>
   <string name="account_export_end_decryption_message">使用该密码无法解锁您的帐户。</string>
   <string name="account_export_end_network_title">网络错误</string>
   <string name="account_export_end_network_message">无法进行帐户在线导出。请检查您的网络连接。</string>
@@ -143,7 +144,6 @@
   <string name="account_sip_success_title">SIP帐户已注册</string>
   <string name="account_sip_success_message">您已成功注册了您的SIP帐户。</string>
   <string name="account_sip_register_anyway">仍然注册</string>
-  <string name="account_link_button">将此设备与一个帐户进行连接</string>
   <string name="account_link_prompt_pin">输入PIN</string>
   <string name="account_new_button">创建一个Jami账户</string>
   <string name="account_link_export_button">将另一设备与该帐户进行连接</string>

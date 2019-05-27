@@ -41,6 +41,7 @@ Du kan rette din konto senere</string>
   <string name="account_device_revocation_wrong_password">Forkert adgangskode.</string>
   <string name="account_device_revocation_unknown_device">Ukendt enhed.</string>
   <string name="account_device_revocation_error_unknown">Ukendt fejl.</string>
+  <string name="account_password_change">Skift adgangskode</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Generelt</string>
   <string name="account_basic_category">Almindelige Indstillinger</string>
@@ -131,7 +132,6 @@ Du kan rette din konto senere</string>
   <string name="account_sip_success_title">SIP-konto registreret</string>
   <string name="account_sip_success_message">Din SIP-konto blev registreret korrekt.</string>
   <string name="account_sip_register_anyway">Registrer alligevel</string>
-  <string name="account_link_button">Tilknyt denne enhed til en konto</string>
   <string name="account_link_prompt_pin">Indtast PIN-kode</string>
   <string name="account_link_export_button">Tilknyt en anden enhed til denne konto</string>
   <string name="account_start_export_button">Generer PIN</string>

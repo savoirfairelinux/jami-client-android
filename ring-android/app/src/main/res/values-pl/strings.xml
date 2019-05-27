@@ -116,7 +116,9 @@
   <string name="ringtone_error_format_not_supported">Ten format nie jest obsługiwany.</string>
   <string name="ringtone_error_size_too_big">Ten plik jest zbyt duży! Maksymalny rozmiar to %1$d kB.</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Jami potrzebuje pozwolenia na czytanie kontaktów, by włączyć tą funkcję.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Jami potrzebuje pozwolenia na zapisywanie logów rozmów, by włączyć tą funkcję.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Zeskanuj kod QR konta, które chcesz dodać.</string>
   <!--Settings-->
@@ -124,6 +126,7 @@
   <string name="clear_history_dialog_message">Tej czynności nie można cofnąć.</string>
   <string name="clear_history_completed">Historia została wyczyszczona.</string>
   <!--Conversation-->
+  <string name="conversation_details">Detale kontaktu</string>
   <string name="conversation_action_delete_this">Usuń tę rozmowę</string>
   <string name="conversation_action_delete_this_title">Czy usunąć tę rozmowę?</string>
   <string name="conversation_action_delete_this_message">Tego działania nie można cofnąć.</string>
@@ -139,14 +142,19 @@
   <string name="conversation_action_block_this">Blokuj kontakt</string>
   <string name="conversation_action_go_to_call">Powróć do trwającej rozmowy</string>
   <string name="clip_contact_uri">Kontakty</string>
+  <string name="block_contact_dialog_title">Czy zablokować %1$s?</string>
+  <string name="block_contact_dialog_message">%1$snie będzie w stanie się z tobą skontaktować, dopóki kontakt nie zostanie odblokowany.</string>
+  <string name="block_contact_completed">Kontakt %1$s został zablokowany.</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Dodać %1$s?</string>
   <string name="prompt_new_password">Nowe hasło</string>
   <string name="prompt_new_password_optional">Nowe hasło (opcjonalnie)</string>
   <string name="prompt_new_password_repeat">Powtórz nowe hasło</string>
+  <string name="account_create_title">Stwórz konto Jami</string>
   <string name="prompt_new_username">Wprowadź nową nazwę użytkownika</string>
   <string name="help_password_choose">Wybierz silne hasło, które zapamiętasz, by chronić swoje konto Jami.</string>
   <string name="help_password_enter">Wprowadź hasło do głównego konta Jami</string>
+  <string name="help_pin_enter">Wprowadź PIN z innego konta Jami. Użyj funkcji \"wyeksportuj konto Jami\" aby uzyskać PIN.</string>
   <string name="wizard_next">Następne</string>
   <string name="wizard_back">Wstecz</string>
   <string name="wizard_skip">Pomiń</string>
@@ -157,6 +165,7 @@
   <string name="take_a_photo">Zrób zdjęcie</string>
   <string name="profile_name_hint">Podaj swoje imię (opcjonalnie)</string>
   <!--Share fragment-->
+  <string name="share_message">Zeskanuj ten kod używając Jami</string>
   <string name="share_message_no_account">Wybierz, proszę, konto które chcesz udostępnić.</string>
   <string name="share_your_account_information">Udostępnij informacje o moim kontakcie</string>
   <string name="generic_error_migration">Błąd</string>
@@ -201,6 +210,7 @@
   <string name="file_saved_in">Plik zapisano w  %s</string>
   <string name="no_space_left_on_device">Brak wolnego miejsca</string>
   <string name="title_media_viewer">Przeglądarka mediów</string>
+  <string name="menu_file_open">Otwórz plik</string>
   <string name="menu_file_download">Pobierz plik</string>
   <string name="menu_file_delete">Usuń plik</string>
   <string name="menu_file_share">Podziel się plikiem</string>

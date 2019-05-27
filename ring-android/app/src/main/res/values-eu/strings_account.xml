@@ -17,7 +17,6 @@
   <!--SIP-->
   <!--TLS Details-->
   <!--restore/backup-->
-  <string name="account_link_button">Estekatu gailua kontu batekin</string>
   <!--Name registration-->
   <string name="account_status_connecting">Konektatzen</string>
   <!--Create account-->

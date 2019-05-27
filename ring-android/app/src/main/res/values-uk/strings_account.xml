@@ -2,29 +2,49 @@
 <resources>
   <!--Strings related to account edition screen-->
   <string name="ic_delete_menu">Видалити</string>
+  <string name="ic_advanced_menu">Розширені налаштування</string>
+  <string name="ic_blacklist_menu">Заблоковані контакти</string>
   <!--Strings related to account creation-->
+  <string name="add_ring_account_title">Додати обліковий запис Джамі</string>
+  <string name="add_sip_account_title">Додати обліковий запис SIP</string>
+  <string name="ring_account_default_name">Обліковий запис Ring %1$s</string>
   <string name="prompt_alias">Додаткове ім’я</string>
   <string name="prompt_hostname">Ім\'я хоста</string>
   <string name="prompt_username">Ім’я</string>
   <string name="prompt_password">Пароль</string>
+  <string name="action_create">Створити обліковий запис</string>
   <string name="action_create_short">Створити</string>
   <string name="action_register">Зареєструватися</string>
   <string name="action_settings">Налаштування</string>
   <string name="error_field_required">Це поле обов’язкове</string>
   <string name="dialog_wait_create">Додання аккаунту</string>
   <string name="dialog_wait_create_details">Почекайте поки ваш обліковий запис створюється.</string>
+  <string name="dialog_wait_update">Оновлення облікового запису</string>
+  <string name="dialog_wait_update_details">Будь ласка, зачекайте поки ваш новий обліковий запис оновлюється…</string>
   <string name="dialog_warn_ip2ip_account_title">Створити порожній обліковий запис SIP аккаунт?</string>
   <string name="dialog_warn_ip2ip_account_message">Ви збираєтесь створити обліковий запис SIP без імені хоста.
 Вам будуть доступні лише прямі IP дзвінки. 
 Ви зможете відредагувати цей обліковий запис пізніше</string>
+  <string name="account_type_ip2ip">Обліковий запис IP</string>
+  <string name="help_ring">Обліковий запис Джамі дозволяє вам зв\'язуватися з людьми безпечно та напряму через повністю розподілену мережу.</string>
   <string name="help_sip_title">Додати Ваш обліковий запис SIP</string>
   <string name="help_sip">Налаштувати існуючий обліковий запис SIP</string>
+  <string name="create_sip_account">Додати обліковий запис SIP</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Видалити обліковий запис?</string>
   <string name="account_delete_dialog_message">Ця дія не може бути скасована.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Немає зареєстрованного облікового запису</string>
   <string name="normal_accounts_titles">Облікові записи</string>
+  <string name="normal_devices_titles">Відомі пристрої, приєднані до цього облікового запису Джамі</string>
+  <string name="account_device_revoke">Відкликати пристрій</string>
+  <string name="account_device_revocation_success_title">Успішно</string>
+  <string name="account_device_revocation_success">Пристрій тепер відкликано!</string>
+  <string name="account_device_revocation_error_title">Не можу відкликати пристрій</string>
+  <string name="account_device_revocation_wrong_password">Неправильний пароль.</string>
+  <string name="account_device_revocation_unknown_device">Невідомий пристрій.</string>
+  <string name="account_device_revocation_error_unknown">Невідома помилка.</string>
+  <string name="account_password_change">Змінити пароль</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Головні</string>
   <string name="account_basic_category">Базові налаштування</string>
@@ -35,7 +55,7 @@
   <string name="account_password_label">Пароль</string>
   <string name="account_optionnal_category">Додаткові параметри</string>
   <string name="account_useragent_label">Ідентифікація клієнта</string>
-  <string name="account_autoanswer_label">Автоматична Відповідь</string>
+  <string name="account_autoanswer_label">Приймати дзвінок автоматично</string>
   <string name="account_upnp_label">Включити UPnP</string>
   <string name="account_proxy_field">Проксі</string>
   <!--Audio Details-->
@@ -44,11 +64,13 @@
   <string name="account_ringtone_label">Рингтони</string>
   <string name="account_ringtone_enabled_label">Увімкнути рингтони</string>
   <string name="account_ringtone_path_label">Шлях до рингтону</string>
+  <string name="account_ringtone_custom_label">Використовувати власний сигнал дзвінка</string>
   <!--Video Details-->
   <string name="account_video_label">Відео</string>
   <string name="account_video_enable">Увімкнути відео</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Продвинуті</string>
+  <string name="account_dht_public_in_calls_label">Дозволити всі дзвінки та повідомлення</string>
   <string name="account_registration_exp_label">Реєстрація спливла</string>
   <string name="account_local_interface_label">Локальний інтерфейс</string>
   <string name="account_local_port_label">Локальний порт</string>
@@ -85,16 +107,83 @@
   <string name="account_rtp_min_port">Мінімум</string>
   <string name="account_rtp_port_range">Порти для передачі аудіо по RTP</string>
   <!--restore/backup-->
+  <string name="account_new_device_password">Введіть ваш головний пароль, щоб розблокувати обліковий запис</string>
   <string name="error_password_char_count">мінімум 6 символів</string>
   <string name="error_passwords_not_equals">Паролі не збігаються</string>
   <string name="export_account_wait_title">Будь ласка зачекайте</string>
+  <string name="export_account_wait_message">Опублікувати відомості нового облікового запису</string>
+  <string name="account_export_end_decryption_message">Не вдалося розблокувати обліковий запис з наданим паролем.</string>
+  <string name="account_export_end_network_title">Збій мережі</string>
+  <string name="account_export_end_network_message">Не вдалося вивантажити обліковий запис у мережу. Перевірте з\'єднання.</string>
   <string name="account_export_end_error_title">Помилка</string>
+  <string name="account_export_end_error_message">Не вдалося вивантажити обліковий запис. Стався невідомий збій.</string>
+  <string name="account_enter_password">Ввести пароль</string>
+  <string name="account_share_body">Зв\'яжіться зі мною за допомогою «%1$s» у розподіленій комунікаційній платформі Джамі: %2$s</string>
+  <string name="account_share_body_with_username">Зв\'яжіться зі мною за допомогою «%1$s» або мого публічного імені користувача «%2$s» в розподіленій комунікаційній платформі Джамі: %3$s</string>
+  <string name="account_contact_me">Зв\'яжіться зі мною в Джамі!</string>
+  <string name="update_account">Оновити обліковий запис</string>
+  <string name="account_migration">Ваш обліковий запис Джамі можна оновити.\nБудь ласка, введіть пароль.</string>
+  <string name="ring_account">Обліковий запис Джамі</string>
+  <string name="ring_account_identity">Особа</string>
+  <string name="account_migration_title_dialog">Переведення облікового запису</string>
+  <string name="account_migration_message_dialog">Ваш обліковий запис необхідно оновити. Чи ви бажаєте перейти до екрану управління обліковим записом, щоб виконати цю операцію?</string>
+  <string name="account_update_needed">Необхідне оновлення</string>
+  <string name="account_cannot_be_found_title">Не можу знайти обліковий запис</string>
+  <string name="account_cannot_be_found_message">Не вдалося знайти обліковий запис у мережі Джамі.\nПереконайтеся, що його було вивантажено в Джамі з одного з наявних пристроїв, і що надані відомості для підтвердження особи правильні.</string>
+  <string name="account_sip_cannot_be_registered_message">Ви можете продовжити створювати обліковий запис або змінити відомості тут. Зміни можна зробити пізніше в налаштуваннях облікового запису.</string>
+  <string name="account_no_network_title">Не можу з\'єднатися з мережею</string>
+  <string name="account_no_network_message">Не вдалося додати обліковий запис, оскільки Джамі не вдалося з\'єднатися до розподіленої мережі. Перевірте зв\'язок пристрою з мережею.</string>
+  <string name="account_device_added_title">Пристрій облікового запису додано</string>
+  <string name="account_device_added_message">Ви успішно налаштували ваш обліковий запис Джамі на цьому пристрої.</string>
+  <string name="account_device_updated_title">Пристрій облікового запису оновлено</string>
+  <string name="account_device_updated_message">Ви успішно оновили свій обліковий запис Джамі.</string>
+  <string name="account_cannot_be_updated_message">Пристрій облікового запису не вдається оновити. Будь ласка, перевірте ваш пароль.</string>
+  <string name="account_sip_success_title">Зареєстровано обліковий запис SIP</string>
+  <string name="account_sip_success_message">Ви успішно зареєстрували обліковий запис SIP</string>
+  <string name="account_sip_register_anyway">Зареєструвати все одно</string>
+  <string name="account_link_prompt_pin">Ввести PIN-код</string>
+  <string name="account_new_button">Створити обліковий запис Джамі</string>
   <string name="account_link_export_button">Прив\'язати інший пристрій до цього облікового запису</string>
+  <string name="account_link_export_info">Для використання цього облікового запису на інших пристроях, вам необхідно надати доступ до нього в Джамі. При цьому буде згенеровано PIN-код, який вам необхідно буде ввести на іншому пристрої, щоб налаштувати обліковий запис. PIN-код дійсний протягом 10 хвилин.</string>
+  <string name="account_start_export_button">Отримати новий PIN-код</string>
+  <string name="account_end_export_button">закрити</string>
+  <string name="account_end_export_infos">Ваш PIN-код:\n\n%%\n\nЩоб завершити, відкрийте Джамі на іншому пристрої. Створіть обліковий запис через «Прив\'язати інший пристрій до облікового запису». Ваш PIN-код дійсний протягом 10 хвилин.</string>
+  <string name="account_link_export_info_light">Для використання цього облікового запису на інших пристроях, вам необхідно надати доступ до нього в Джамі. При цьому буде згенеровано PIN-код, який вам необхідно буде ввести на іншому пристрої, щоб налаштувати обліковий запис. PIN-код дійсний протягом 10 хвилин.</string>
+  <string name="account_export_title">Додати пристрої</string>
   <!--Name registration-->
+  <string name="error_username_empty">Ввести ім\'я користувача</string>
+  <string name="no_registered_name_for_account">Не знайдено зареєстрованого імені для цього облікового запису</string>
+  <string name="register_name">Зареєструвати ім\'я</string>
+  <string name="trying_to_register_name">Спроба реєстрації імені</string>
+  <string name="registered_username">Зареєстроване ім\'я користувача</string>
+  <string name="register_username">Зареєструвати публічне ім\'я користувача (рекомендовано)</string>
+  <string name="username_already_taken">Ім\'я користувача вже зайнято</string>
+  <string name="invalid_username">Недопустиме ім\'я користувача</string>
+  <string name="looking_for_username_availability">Перевіряю доступність імені користувача…</string>
   <string name="account_status_connecting">З\'єднання</string>
+  <string name="account_status_connection_error">Збій з\'єднання</string>
+  <string name="account_status_online">У мережі</string>
   <string name="account_status_unknown">Невідомий</string>
+  <string name="account_status_offline">Поза мережею</string>
   <!--Create account-->
+  <string name="account_creation_home">Вітаємо в Джамі</string>
+  <string name="account_creation_profile">Створіть ваш профіль</string>
+  <string name="account_creation_ring">Створіть свій обліковий запис Джамі</string>
+  <string name="account_link_title">Зв\'язати цей пристрій</string>
+  <string name="account_sip_cannot_be_registered">Не може зареєструвати обліковий запис</string>
   <!--Edit profile-->
   <!--Devices-->
+  <string name="account_revoke_device_hint">Введіть пароль для підтвердження</string>
+  <string name="enter_password">Ввести пароль</string>
+  <string name="revoke_device_title">Відкликати пристрій</string>
+  <string name="revoke_device_message">Ви впевнені, що бажаєте відкликати %1$s?</string>
   <string name="revoke_device_wait_title">Будь ласка зачекайте</string>
+  <string name="revoke_device_wait_message">Відкликаю пристрій</string>
+  <string name="rename_device_title">Перейменувати цей пристрій</string>
+  <string name="rename_device_message">Виберіть нову назву для позначення цього пристрою в вашому обліковому записі Джамі.</string>
+  <string name="rename_device_button">Перейменувати пристрій</string>
+  <string name="account_rename_device_hint">Вибрати нову назву для пристрою</string>
+  <string name="account_device_name_empty">Назва пристрою не може бути порожньою</string>
+  <string name="account_device_this_indicator">цей пристрій</string>
+  <string name="account_disabled_indicator">вимкнено</string>
 </resources>

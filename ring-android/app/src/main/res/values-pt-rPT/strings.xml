@@ -66,7 +66,7 @@
   <string name="notif_channel_file_transfer">Transferência de ficheiro</string>
   <string name="notif_channel_background_service">Serviço em segundo plano</string>
   <string name="notif_channel_background_service_descr">Permite receber chamadas e mensagens em qualquer altura.</string>
-  <string name="notif_background_service">O Jami está as er executado em segundo plano</string>
+  <string name="notif_background_service">O Jami está a ser executado em segundo plano</string>
   <string name="notif_mark_as_read">Marcar como lida</string>
   <string name="notif_dismiss">Dispensar</string>
   <string name="notif_reply">Responder</string>

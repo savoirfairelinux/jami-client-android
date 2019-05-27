@@ -29,7 +29,6 @@
   <!--SIP-->
   <!--TLS Details-->
   <!--restore/backup-->
-  <string name="account_link_button">이 장치를 계정에 연결하기</string>
   <!--Name registration-->
   <!--Create account-->
   <string name="account_creation_profile">프로필 만들기</string>

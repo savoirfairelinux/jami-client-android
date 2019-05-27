@@ -126,7 +126,6 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="account_device_updated_title">S\'ha actualitzat el dispositiu del compte</string>
   <string name="account_cannot_be_updated_message">No s\'ha pogut actualitzar el dispositiu del compte. Si us plau, comproveu la vostra contrasenya.</string>
   <string name="account_sip_register_anyway">Registre de totes maneres</string>
-  <string name="account_link_button">Enllaça aquest dispositiu a un compte</string>
   <string name="account_link_prompt_pin">Introdueix PIN</string>
   <string name="account_end_export_button">tanca</string>
   <!--Name registration-->

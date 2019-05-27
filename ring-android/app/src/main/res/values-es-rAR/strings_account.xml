@@ -41,6 +41,7 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_device_revocation_wrong_password">Contraseña incorrecta.</string>
   <string name="account_device_revocation_unknown_device">Dispositivo desconocido.</string>
   <string name="account_device_revocation_error_unknown">Error desconocido.</string>
+  <string name="account_password_change">Cambiar contraseña</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">General</string>
   <string name="account_basic_category">Parámetros básicos</string>
@@ -86,7 +87,6 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_enter_password">Ingresar contraseña</string>
   <string name="account_cannot_be_found_title">No se pudo encontrar la cuenta</string>
   <string name="account_no_network_title">No se puede conectar a la red</string>
-  <string name="account_link_button">Vincular este dispositivo a una cuenta</string>
   <string name="account_link_prompt_pin">Introducir PIN</string>
   <string name="account_link_export_button">Vincular otro dispositivo a esta cuenta</string>
   <!--Name registration-->

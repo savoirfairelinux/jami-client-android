@@ -37,6 +37,7 @@ Si potra modificare questo account più tardi.</string>
   <string name="normal_devices_titles">Dispositivi noti collegati a questo account Jami</string>
   <string name="account_device_revoke">Revoca dispositivo</string>
   <string name="account_device_revocation_success_title">Successo</string>
+  <string name="account_password_change">Cambia password</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Generale</string>
   <string name="account_basic_category">Impostazioni base</string>
@@ -102,7 +103,6 @@ Si potra modificare questo account più tardi.</string>
   <string name="export_account_wait_title">Aspettare</string>
   <string name="account_export_end_network_title">Errore di rete</string>
   <string name="account_export_end_error_title">Errore</string>
-  <string name="account_link_button">Collega questo dispositivo a un account</string>
   <string name="account_new_button">Crea un account Jami</string>
   <!--Name registration-->
   <string name="username_already_taken">Nome utente già utilizzato</string>

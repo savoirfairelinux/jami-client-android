@@ -1,9 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="feedback_section">Atsiliepimai</string>
+  <string name="report"><u>Siųskite mums el. laišką</u></string>
   <string name="section_license">Licencija</string>
   <string name="sponsor_section">Jami yra laisva programinė įranga, kurią kuria ir palaiko</string>
-  <string name="copyright_section">Autorių Teisės</string>
+  <string name="copyright_section">Autorių teisės</string>
   <string name="contribute_section">Talkinti</string>
   <string name="version_section">Versija</string>
   <string name="no_email_app_installed">Nerasta jokios el. pašto programėlės, įdiekite kurią nors, kad išsiųstumėte mums pranešimą</string>
@@ -28,11 +30,11 @@
   <string name="drawer_close">Uždaryti naršymo stalčių</string>
   <!--Sections-->
   <string name="menu_item_home">Pradžia</string>
-  <string name="menu_item_contact_request">Kontaktų užklausos</string>
+  <string name="menu_item_contact_request">Adresatų užklausos</string>
   <string name="menu_item_accounts">Tvarkyti paskyras</string>
   <string name="menu_item_account">Tvarkyti paskyrą</string>
   <string name="menu_item_settings">Nustatymai</string>
-  <string name="menu_item_share">Bendrinti mano kontaktus</string>
+  <string name="menu_item_share">Bendrinti mano adresatus</string>
   <string name="menu_item_about">Apie Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Rinkti numerį</string>
@@ -83,9 +85,9 @@
   <string name="action_call_decline">Atmesti</string>
   <string name="action_call_mic_mute">Išjungti mikrofoną</string>
   <string name="ab_action_speakerphone">Įjungti garsiakalbį</string>
-  <string name="ab_action_contact_add">Pridėti prie kontaktų</string>
-  <string name="ab_action_contact_add_question">Pridėti prie kontaktų?</string>
-  <string name="hist_contact_added">Kontaktas pridėtas</string>
+  <string name="ab_action_contact_add">Pridėti prie adresatų</string>
+  <string name="ab_action_contact_add_question">Pridėti prie adresatų?</string>
+  <string name="hist_contact_added">Adresatas pridėtas</string>
   <string name="hist_invitation_received">Gautas pakvietimas</string>
   <string name="ab_action_audio_call">Garso skambutis</string>
   <string name="ab_action_video_call">Vaizdo skambutis</string>
@@ -122,13 +124,13 @@
   <string name="conversation_action_history_clear">Išvalyti istoriją</string>
   <string name="conversation_action_history_clear_title">Išvalyti pokalbio istoriją?</string>
   <string name="conversation_action_history_clear_message">Tai išvalys pokalbio istoriją.</string>
-  <string name="conversation_action_remove_this">Ištrinti kontaktą</string>
-  <string name="conversation_action_remove_this_title">Ištrinti šį kontaktą?</string>
-  <string name="conversation_action_remove_this_message">Tai ištrins kontaktą ir išvalys pokalbio istoriją.</string>
+  <string name="conversation_action_remove_this">Ištrinti adresatą</string>
+  <string name="conversation_action_remove_this_title">Ištrinti šį adresatą?</string>
+  <string name="conversation_action_remove_this_message">Tai ištrins adresatą ir išvalys pokalbio istoriją.</string>
   <string name="conversation_action_copy_peer_number">Kopijuoti numerį</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s nukopijuota į iškarpinę</string>
-  <string name="conversation_action_block_this">Užblokuoti kontaktą</string>
-  <string name="clip_contact_uri">Kontakto adresas</string>
+  <string name="conversation_action_block_this">Užblokuoti adresatą</string>
+  <string name="clip_contact_uri">Adresato adresas</string>
   <string name="block_contact_dialog_title">Blokuoti %1$s?</string>
   <string name="block_contact_dialog_message">%1$s negalės su jumis susisiekti tol, kol neatblokuosite.</string>
   <!--Contacts-->
@@ -145,12 +147,13 @@
   <string name="wizard_skip">Praleisti</string>
   <!--MenuHeaderView-->
   <string name="profile">Mano profilis</string>
-  <string name="profile_message_warning">Jūsų profilis yra bendrinamas tik su jūsų kontaktais</string>
+  <string name="profile_message_warning">Jūsų profilis yra bendrinamas tik su jūsų adresatais</string>
   <string name="open_the_gallery">Atverti galeriją</string>
   <string name="take_a_photo">Padaryti nuotrauką</string>
   <string name="profile_name_hint">Įveskite savo vardą (nebūtina)</string>
   <!--Share fragment-->
   <string name="share_message">Nuskenuokite šį kodą, naudodami Jami</string>
+  <string name="share_message_no_account">Pasirinkite norimą bendrinti paskyrą.</string>
   <string name="share_your_account_information">Bendrinti mano kontaktinę informaciją</string>
   <string name="generic_error_migration">Klaida</string>
   <string name="generic_error_migration_message">Perkėlimo metu įvyko klaida</string>
@@ -158,23 +161,23 @@
   <string name="accept">Priimti</string>
   <string name="refuse">Atmesti</string>
   <string name="block">Užblokuoti</string>
-  <string name="contact_request_title">Nauja kontakto užklausa</string>
-  <string name="contact_request_msg">Jūs turite %1$s kontaktų užklausų</string>
+  <string name="contact_request_title">Nauja adresato užklausa</string>
+  <string name="contact_request_msg">Jūs turite %1$s adresatų užklausų</string>
   <string name="contact_request_account">Skirta %1$s</string>
-  <string name="no_requests">0 kontaktų užklausų</string>
-  <string name="message_contact_not_trusted_yet">%s kol kas nėra jūsų kontaktų sąraše.\nJūs priimate ar atmetate šią kontakto užklausą?</string>
-  <string name="message_contact_not_trusted">%s nėra jūsų kontaktų sąraše.\nPridėti naują kontaktą?</string>
+  <string name="no_requests">0 adresatų užklausų</string>
+  <string name="message_contact_not_trusted_yet">%s kol kas nėra jūsų adresatų sąraše.\nJūs priimate ar atmetate šią adresato užklausą?</string>
+  <string name="message_contact_not_trusted">%s nėra jūsų adresatų sąraše.\nPridėti naują adresatą?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Siųsti</string>
-  <string name="send_request_title">Siųsti kontakto užklausą</string>
-  <string name="send_request_msg">Norėdami bendrauti su šiuo naudotoju, privalote išsiųsti kontakto užklausą. Kol kontaktas nepriims užklausos, jūs galite siųsti žinutes, tačiau kontaktas negalės atsakyti.</string>
+  <string name="send_request_title">Siųsti adresato užklausą</string>
+  <string name="send_request_msg">Norėdami bendrauti su šiuo naudotoju, privalote išsiųsti adresato užklausą. Kol adresatas nepriims užklausos, jūs galite siųsti žinutes, tačiau adresatas negalės atsakyti.</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">0 užblokuotų kontaktų</string>
+  <string name="no_blocked_contact">0 užblokuotų adresatų</string>
   <!--Smartlist-->
-  <string name="no_contact_request">Jokia kontakto užklausa neišsiųsta</string>
-  <string name="contact_request_sent">Kontakto užklausa išsiųsta</string>
+  <string name="no_contact_request">Jokia adresato užklausa neišsiųsta</string>
+  <string name="contact_request_sent">Adresato užklausa išsiųsta</string>
   <string name="search_results">Paieškos rezultatai</string>
-  <string name="tv_contact_row_header">Kontaktai</string>
+  <string name="tv_contact_row_header">Adresatai</string>
   <string name="gallery_error_title">Nerasta jokios Galerijos programėlės</string>
   <string name="gallery_error_message">Įrenginyje nerasta jokios programėlės atverti Galeriją</string>
   <string name="generic_error">Įvyko nežinoma klaida</string>

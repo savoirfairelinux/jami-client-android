@@ -44,6 +44,9 @@ U kunt uw account later bewerken</string>
   <string name="account_device_revocation_wrong_password">Verkeerd wachtwoord.</string>
   <string name="account_device_revocation_unknown_device">Onbekend apparaat.</string>
   <string name="account_device_revocation_error_unknown">Onbekende fout.</string>
+  <string name="account_password_change">Wachtwoord wijzigen</string>
+  <string name="account_password_set">Wachtwoord instellen</string>
+  <string name="account_password_change_wait_message">Accountwachtwoord wordt gewijzigd</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Algemeen</string>
   <string name="account_basic_category">Basisinstellingen</string>
@@ -143,7 +146,6 @@ U kunt uw account later bewerken</string>
   <string name="account_sip_success_title">SIP-account geregistreerd</string>
   <string name="account_sip_success_message">Uw SIP-account is met succes geregistreerd.</string>
   <string name="account_sip_register_anyway">Toch registreren</string>
-  <string name="account_link_button">Dit apparaat aan een account koppelen</string>
   <string name="account_link_prompt_pin">Geef pincode in</string>
   <string name="account_new_button">Een Jami-account aanmaken</string>
   <string name="account_link_export_button">Een ander apparaat aan deze account koppelen</string>

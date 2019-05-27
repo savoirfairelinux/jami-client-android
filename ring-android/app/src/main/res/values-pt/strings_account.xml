@@ -44,6 +44,9 @@
   <string name="account_device_revocation_wrong_password">Palavra-chave errada.</string>
   <string name="account_device_revocation_unknown_device">Dispositivo desconhecido.</string>
   <string name="account_device_revocation_error_unknown">Erro desconhecido.</string>
+  <string name="account_password_change">Alterar palavra-chave</string>
+  <string name="account_password_set">Definir palavra-chave</string>
+  <string name="account_password_change_wait_message">Alterar palavra-chave da conta</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Geral</string>
   <string name="account_basic_category">Configurações Básicas</string>
@@ -114,6 +117,7 @@
   <string name="error_passwords_not_equals">As palavras-chave não são iguais</string>
   <string name="export_account_wait_title">Por favor aguarde...</string>
   <string name="export_account_wait_message">A publicar a informação da nova conta</string>
+  <string name="account_export_file">Conta de cópia de segurança</string>
   <string name="account_export_end_decryption_message">Não foi possível desbloquear a sua conta utilizando a palavra-chave fornecida.</string>
   <string name="account_export_end_network_title">Erro de rede</string>
   <string name="account_export_end_network_message">Não foi possível exportar a conta na rede. Verifique a sua conexão..</string>
@@ -143,7 +147,6 @@
   <string name="account_sip_success_title">Conta SIP registada</string>
   <string name="account_sip_success_message">Registou a sua conta SIP com sucesso.</string>
   <string name="account_sip_register_anyway">Registar mesmo assim</string>
-  <string name="account_link_button">Associar este dispositivo a uma conta</string>
   <string name="account_link_prompt_pin">Introduza o PIN</string>
   <string name="account_new_button">Criar uma conta Jami</string>
   <string name="account_link_export_button">Associar outro dispositivo a esta conta</string>

@@ -24,6 +24,7 @@
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Ei rekistöröityjä tunnuksia</string>
   <string name="normal_accounts_titles">Tunnukset</string>
+  <string name="account_password_change">Vaihda salasana</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Yleiset</string>
   <string name="account_basic_category">Yleiset asetukset</string>
@@ -75,6 +76,7 @@
   <string name="error_password_char_count">Vähintään 6 merkkiä</string>
   <string name="error_passwords_not_equals">Salasanat eivät täsmää</string>
   <string name="export_account_wait_title">Odota hetki...</string>
+  <string name="account_export_file">Varakäyttäjätunnus</string>
   <string name="account_export_end_error_title">Virhe</string>
   <string name="account_no_network_title">Verkkoon ei saada yhteyttä</string>
   <string name="account_link_prompt_pin">Syötä PIN-koodi</string>

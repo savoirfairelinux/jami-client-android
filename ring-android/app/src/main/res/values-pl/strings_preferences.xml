@@ -6,11 +6,20 @@
   <string name="pref_category_system">System</string>
   <string name="pref_category_privacy">Prywatność</string>
   <string name="pref_mobileData_title">Dane mobilne</string>
+  <string name="pref_mobileData_summary">Pozwól Jami na korzystanie z sieci 3G/LTE dodatkowo oprócz Wi-Fi</string>
   <string name="pref_pushNotifications_title">Powiadomienia Push</string>
   <string name="pref_pushNotifications_summary">Używaj serwerów Google, by umożliwić odbieranie wiadomości i rozmów w tle</string>
   <string name="pref_hd_summary">Zezwól na wysyłane wideo w jakości HD</string>
+  <string name="pref_hwEncode_title">Włącz przyspieszone kodowanie</string>
+  <string name="pref_hwEncode_summary">Funkcja eksperymentalna</string>
   <string name="pref_systemContacts_title">Użyj kontakty z systemu</string>
   <string name="pref_systemContacts_summary">Użyj kontakty z systemu aby pokazać detale tego który dzwoni</string>
+  <string name="pref_systemDialer_title">Użyj Jami jako zastępstwa dla rozmów systemowych</string>
+  <string name="pref_systemDialer_summary">Użyj Jami jako zastępstwa dla rozmów systemowych, jeżeli możliwe.</string>
+  <string name="pref_startOnBoot_title">Uruchamiaj Jami przy starcie</string>
+  <string name="pref_startOnBoot_summary">Uruchom Jami w tle, podczas uruchamiania systemu.</string>
   <string name="pref_clearHistory_title">Wyczyść historię</string>
   <string name="pref_clearHistory_summary">Wyczyść całą historię konwersacji. Ta czynność nie może być cofnięta.</string>
+  <string name="pref_persistNotification_title">Zezwalaj na pracę w tle</string>
+  <string name="pref_persistNotification_summary">Zezwalaj na pracę w tle, aby odbierać rozmowy i wiadomości</string>
 </resources>

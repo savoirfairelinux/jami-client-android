@@ -41,6 +41,7 @@ Vous pourrez modifier votre compte plus tard.</string>
   <string name="account_device_revocation_wrong_password">Mauvais mot de passe.</string>
   <string name="account_device_revocation_unknown_device">Appareil inconnu.</string>
   <string name="account_device_revocation_error_unknown">Erreur inconnue.</string>
+  <string name="account_password_change">Changer mot de passe</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Général</string>
   <string name="account_basic_category">Réglages de base</string>
@@ -107,6 +108,7 @@ Vous pourrez modifier votre compte plus tard.</string>
   <string name="error_passwords_not_equals">Les mots de passe ne concordent pas</string>
   <string name="export_account_wait_title">Patientez s\'il vous plaît</string>
   <string name="export_account_wait_message">Publication des informations du nouveau compte</string>
+  <string name="account_export_file">Compte de rechange</string>
   <string name="account_export_end_decryption_message">Votre compte n\'a pu être déverrouillé avec le mot de passe fourni.</string>
   <string name="account_export_end_network_title">Erreur de réseau</string>
   <string name="account_export_end_network_message">L\'exportation du compte sur le réseau a échouée. Vérifier votre connexion.</string>
@@ -127,7 +129,6 @@ Vous pourrez modifier votre compte plus tard.</string>
   <string name="account_sip_success_title">Compte Sip enregistré</string>
   <string name="account_sip_success_message">Votre compte Sip a été enregistré avec succès.</string>
   <string name="account_sip_register_anyway">S\'inscrire de toute façon</string>
-  <string name="account_link_button">Associer cet appareil à un compte</string>
   <string name="account_link_prompt_pin">Entrer le NIP</string>
   <string name="account_new_button">Créer un compte Jami</string>
   <string name="account_link_export_button">Associer un autre appareil à ce compte</string>

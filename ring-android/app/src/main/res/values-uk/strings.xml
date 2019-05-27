@@ -4,7 +4,7 @@
   <string name="feedback_section">Відгук</string>
   <string name="report"><u>Відправте нам листа</u></string>
   <string name="section_license">Ліцензія</string>
-  <string name="sponsor_section">Jami це вільне програмне забезпечення яке розроблене і підтримується</string>
+  <string name="sponsor_section">Джамі — це вільне програмне забезпечення, яке розроблене й підтримується</string>
   <string name="copyright_section">Авторське право</string>
   <string name="contribute_section">Зробити внесок</string>
   <string name="version_section">Версія</string>
@@ -13,7 +13,7 @@
   <string name="email_chooser_title">Надіслати повідомлення за допомогою...</string>
   <string name="website_chooser_title">Переглянути сайт за допомогою...</string>
   <string name="license">Це програмне забезпечення надається \"як є\", без будь-яких гарантій. Більш детально дивіться<u>GNU General Public License версію 3 чи новішу</u></string>
-  <string name="description">Jami - це вільне програмне забезпечення для будь-якого спілкування, яке поважає свободу та конфіденційність своїх користувачів.</string>
+  <string name="description">Джамі — це вільне програмне забезпечення для будь-якого зв\'язку з повагою до свобод і приватності користувачів.</string>
   <string name="credits">Подяки</string>
   <!--About dialog-->
   <string name="developed_by">Розроблено</string>
@@ -35,7 +35,7 @@
   <string name="menu_item_account">Керувати акаунтом</string>
   <string name="menu_item_settings">Налаштування</string>
   <string name="menu_item_share">Поділитись своїми контактними даними</string>
-  <string name="menu_item_about">Про Jami</string>
+  <string name="menu_item_about">Про Джамі</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Набрати номер</string>
   <!--History Fragment-->
@@ -68,7 +68,7 @@
   <string name="notif_channel_file_transfer">Передача файлів</string>
   <string name="notif_channel_background_service">Фоновий сервіс</string>
   <string name="notif_channel_background_service_descr">Дозволяє будь-коли отримувати дзвінки і повідомлення.</string>
-  <string name="notif_background_service">Jami на даний момент запущений у фоні</string>
+  <string name="notif_background_service">Джамі зараз працює поза екраном</string>
   <string name="notif_mark_as_read">Позначити прочитаним</string>
   <string name="notif_reply">Відповісти</string>
   <string name="notif_incoming_file_transfer_title">Вхідний файл від %1$s</string>
@@ -83,8 +83,8 @@
   <string name="ongoing_call">Вихідний виклик</string>
   <string name="hist_in_call">Вхідний виклик тривалістю %1$s</string>
   <string name="hist_out_call">Вихідний виклик тривалістю %1$s</string>
-  <string name="start_error_title">Неможливо запустити Jami!</string>
-  <string name="start_error_mic_required">Для своєї роботи, Jami вимагає доступ до мікрофону.</string>
+  <string name="start_error_title">Неможливо запустити Джамі!</string>
+  <string name="start_error_mic_required">Для роботи Джамі потрібен доступ до мікрофону.</string>
   <string name="action_call_accept">Прийняти виклик</string>
   <string name="action_call_decline">Відхилити</string>
   <string name="action_call_mic_mute">Відключити мікрофон</string>
@@ -109,11 +109,16 @@
   <string name="permission_dialog_camera_message">Для здійснення відерозмови необхідно надати доступ до камери. Будь ласка, розгляньте дану можливість.</string>
   <string name="ringtone_error_title">Помилка</string>
   <string name="ringtone_error_format_not_supported">Цей формат не підтримується</string>
+  <string name="ringtone_error_size_too_big">Цей файл надто великий. Максимальний розмір — %1$dкБ. </string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Для цього Джамі потрібні права «Читати контакти». Будь ласка, надайте їх.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Для цього Джамі потрібні права «Читати журнал дзвінків». Будь ласка, надайте їх.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Проскануйте QR-код облікового запису, який ви хочете додати.</string>
   <!--Settings-->
+  <string name="clear_history_dialog_title">Очистити історію?</string>
+  <string name="clear_history_dialog_message">Наслідки цієї дії не можна буде змінити.</string>
   <string name="clear_history_completed">Історія була очищена.</string>
   <!--Conversation-->
   <string name="conversation_action_delete_this">Видалити цю розмову</string>
@@ -124,19 +129,30 @@
   <string name="conversation_action_copy_peer_number">Копіювати номер</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s збережено у буфер</string>
   <string name="conversation_action_select_peer_number">Виберіть номер</string>
+  <string name="conversation_action_block_this">Заблокувати контакт</string>
   <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">Додати %1$s?</string>
   <string name="prompt_new_password">Новий пароль</string>
   <string name="prompt_new_password_repeat">Новий пароль ще раз</string>
+  <string name="account_create_title">Створити обліковий запис Джамі</string>
   <string name="prompt_new_username">Вкажіть нове ім\'я користувача</string>
+  <string name="help_password_choose">Оберіть сильний пароль, який ви запам\'ятаєте, щоб захистити ваш обліковий запис Джамі.</string>
+  <string name="help_password_enter">Введіть основний пароль від вашого облікового запису Джамі</string>
+  <string name="help_pin_enter">Введіть PIN-код з іншого налаштованого облікового запису Джамі. Скористайтеся можливістю «Вивантажити обліковий запис Джамі», щоб отримати PIN-код.</string>
   <string name="wizard_next">Далі</string>
   <string name="wizard_back">Назад</string>
   <!--MenuHeaderView-->
   <string name="profile">Мій профіль</string>
+  <string name="profile_message_warning">Ваш профіль бачитимуть лише ваші контакти</string>
   <string name="open_the_gallery">Відкрити галерею</string>
   <string name="take_a_photo">Зробити фото</string>
   <string name="profile_name_hint">Вкажіть ваше ім\'я (не обов\'язково)</string>
   <!--Share fragment-->
+  <string name="share_message">Зіскануйте цей код у Джамі</string>
+  <string name="share_message_no_account">Будь ласка, оберіть обліковий запис, щоб поділитися.</string>
+  <string name="share_your_account_information">Поділитися моїми контактними відомостями</string>
   <string name="generic_error_migration">Помилка</string>
+  <string name="generic_error_migration_message">Збій переведення</string>
   <!--Pending contact requests-->
   <string name="accept">Прийняти</string>
   <string name="refuse">Скидання</string>
@@ -147,10 +163,14 @@
   <string name="no_requests">0 запитів контактів</string>
   <!--Send contact requests-->
   <string name="send_request_button">Відправити</string>
+  <string name="send_request_title">Відправити запит контакту</string>
+  <string name="send_request_msg">Ви повинні відправити запит контакту, щоб спілкуватися з іншим користувачем. Поки контакт не прийме запит, ви можете надсилати повідомлення, але він не зможе відповісти.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 заблокованих контактів</string>
   <!--Smartlist-->
+  <string name="no_contact_request">Не було відправлено жодних запитів контакту</string>
   <string name="contact_request_sent">Запит контакту надіслано</string>
+  <string name="search_results">Результати пошуку</string>
   <string name="tv_contact_row_header">Контакти</string>
   <!--File Transfer-->
   <string name="menu_file_share">Відправити файл</string>

@@ -3,7 +3,7 @@
   <!--Strings related to account edition screen-->
   <string name="ic_delete_menu">Ištrinti</string>
   <string name="ic_advanced_menu">Išplėstiniai nustatymai</string>
-  <string name="ic_blacklist_menu">Užblokuoti kontaktai</string>
+  <string name="ic_blacklist_menu">Užblokuoti adresatai</string>
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Pridėti Jami paskyrą</string>
   <string name="add_sip_account_title">Pridėti SIP paskyrą</string>
@@ -26,6 +26,7 @@
 Jūs galėsite atlikti ir priimti tik tiesioginius ip skambučius. 
 Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_type_ip2ip">IP paskyra</string>
+  <string name="help_ring">Jami paskyra leidžia jums saugiai pasiekti žmones per visiškai paskirstytą tinklą.</string>
   <string name="help_sip_title">Pridėti savo SIP paskyrą</string>
   <string name="help_sip">Konfigūruokite esamą SIP paskyrą.</string>
   <string name="create_sip_account">Pridėti SIP paskyrą</string>
@@ -43,6 +44,9 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_device_revocation_wrong_password">Neteisingas slaptažodis.</string>
   <string name="account_device_revocation_unknown_device">Nežinomas įrenginys.</string>
   <string name="account_device_revocation_error_unknown">Nežinoma klaida.</string>
+  <string name="account_password_change">Pakeisti slaptažodį</string>
+  <string name="account_password_set">Nustatyti slaptažodį</string>
+  <string name="account_password_change_wait_message">Keičiamas paskyros slaptažodis</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Bendra</string>
   <string name="account_basic_category">Pagrindiniai nustatymai</string>
@@ -113,6 +117,7 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="error_passwords_not_equals">Slaptažodžiai nesutampa</string>
   <string name="export_account_wait_title">Prašome palaukti...</string>
   <string name="export_account_wait_message">Skelbiama naujos paskyros informacija</string>
+  <string name="account_export_file">Padaryti paskyros atsarginę kopiją</string>
   <string name="account_export_end_decryption_message">Naudojant pateiktą slaptažodį, nepavyko atrakinti jūsų paskyros.</string>
   <string name="account_export_end_network_title">Tinklo klaida</string>
   <string name="account_export_end_network_message">Nepavyko eksportuoti paskyrą tinkle. Patikrinkite savo tinklo ryšį.</string>
@@ -138,7 +143,6 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_sip_success_title">Sip paskyra užregistruota</string>
   <string name="account_sip_success_message">Jūs sėkmingai užregistravote savo Sip paskyrą.</string>
   <string name="account_sip_register_anyway">Vis tiek registruoti</string>
-  <string name="account_link_button">Susieti šį įrenginį su paskyra</string>
   <string name="account_link_prompt_pin">Įveskite PIN</string>
   <string name="account_new_button">Susikurti Jami paskyrą</string>
   <string name="account_link_export_button">Susieti kitą įrenginį su šia paskyra</string>
@@ -164,7 +168,8 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <!--Create account-->
   <string name="account_creation_home">Sveiki atvykę į Jami</string>
   <string name="account_creation_profile">Susikurkite savo profilį</string>
-  <string name="account_link_title">Susieti šį įrenginį</string>
+  <string name="account_creation_ring">Susikurkite savo Jami paskyrą</string>
+  <string name="account_link_title">Susiekite šį įrenginį</string>
   <string name="account_sip_cannot_be_registered">Nepavyksta užregistruoti paskyros</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Taisyti savo profilį</string>

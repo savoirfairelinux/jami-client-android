@@ -41,6 +41,7 @@ Du kan endre kontoen din senere</string>
   <string name="account_device_revocation_wrong_password">Feil passord.</string>
   <string name="account_device_revocation_unknown_device">Ukjent enhet.</string>
   <string name="account_device_revocation_error_unknown">Ukjent feil.</string>
+  <string name="account_password_change">Endre passord</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Generell</string>
   <string name="account_basic_category">Grunnleggende oppsett</string>
@@ -111,6 +112,7 @@ Du kan endre kontoen din senere</string>
   <string name="error_passwords_not_equals">Passordene stemmer ikke</string>
   <string name="export_account_wait_title">Vent…</string>
   <string name="export_account_wait_message">Offentliggjør ny kontoinformasjon</string>
+  <string name="account_export_file">Sikkerhetskopier konto</string>
   <string name="account_export_end_decryption_message">Kunne ikke låse opp kontoen ved bruk av oppgitt passord.</string>
   <string name="account_export_end_network_title">Nettverksfeil</string>
   <string name="account_export_end_network_message">Kunne ikke eksportere kontoen på nettverket. Sjekk dine tilkoblingsinnstillinger.</string>
@@ -131,7 +133,6 @@ Du kan endre kontoen din senere</string>
   <string name="account_sip_success_title">SIP-konto registrert</string>
   <string name="account_sip_success_message">Du har nå registrert din SIP-konto.</string>
   <string name="account_sip_register_anyway">Registrer uansett</string>
-  <string name="account_link_button">Lenk denne enheten til en konto</string>
   <string name="account_link_prompt_pin">Skriv inn PIN</string>
   <string name="account_link_export_button">Lenk en annen enhet til denne kontoen</string>
   <string name="account_start_export_button">Oppretter PIN</string>

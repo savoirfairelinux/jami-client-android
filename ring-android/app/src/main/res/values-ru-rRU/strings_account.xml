@@ -2,6 +2,7 @@
 <resources>
   <!--Strings related to account edition screen-->
   <string name="ic_delete_menu">Удалить</string>
+  <string name="ic_advanced_menu">Дополнительные настройки</string>
   <!--Strings related to account creation-->
   <string name="prompt_alias">Псевдоним</string>
   <string name="prompt_hostname">Узел</string>
@@ -22,6 +23,9 @@
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Аккаунт не зарегистрирован</string>
   <string name="normal_accounts_titles">Учетные записи</string>
+  <string name="normal_devices_titles">Устройства, привязанные к этому аккаунту Jami</string>
+  <string name="account_device_revoke">Отозвать устройство</string>
+  <string name="account_password_change">Изменить пароль</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Основные</string>
   <string name="account_basic_category">Основные настройки</string>
@@ -87,11 +91,16 @@
   <string name="export_account_wait_title">Пожалуйста, подождите...</string>
   <string name="account_export_end_error_title">Ошибка</string>
   <!--Name registration-->
+  <string name="username_already_taken">Имя пользователя уже занято</string>
+  <string name="invalid_username">Недопустимое имя пользователя</string>
   <string name="account_status_connecting">Подключение</string>
+  <string name="account_status_online">В сети</string>
   <string name="account_status_unknown">Неизвестно</string>
+  <string name="account_status_offline">Не в сети</string>
   <!--Create account-->
   <string name="account_creation_home">Добро пожаловать в Jami</string>
   <!--Edit profile-->
   <!--Devices-->
+  <string name="revoke_device_title">Отозвать устройство</string>
   <string name="revoke_device_wait_title">Пожалуйста, подождите...</string>
 </resources>

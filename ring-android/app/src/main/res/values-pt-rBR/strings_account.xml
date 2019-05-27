@@ -44,6 +44,7 @@
   <string name="account_device_revocation_wrong_password">Senha Incorreta.</string>
   <string name="account_device_revocation_unknown_device">Dispositivo desconhecido.</string>
   <string name="account_device_revocation_error_unknown">Erro desconhecido.</string>
+  <string name="account_password_change">Mudar senha</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Geral</string>
   <string name="account_basic_category">Configurações básicas</string>
@@ -114,6 +115,7 @@
   <string name="error_passwords_not_equals">Senhas não correspondem</string>
   <string name="export_account_wait_title">Por favor, aguarde...</string>
   <string name="export_account_wait_message">Propagando informação da nova conta</string>
+  <string name="account_export_file">Cópia de segurança da conta</string>
   <string name="account_export_end_decryption_message">Não foi possível desbloquear sua conta utilizando a senha fornecida.</string>
   <string name="account_export_end_network_title">Erro de rede</string>
   <string name="account_export_end_network_message">Não foi possível exportar a conta na rede. Verifique sua conexão.</string>
@@ -143,7 +145,6 @@
   <string name="account_sip_success_title">Conta SIP registrada</string>
   <string name="account_sip_success_message">Você registrou sua conta SIP com sucesso.</string>
   <string name="account_sip_register_anyway">Registrar mesmo assim</string>
-  <string name="account_link_button">Associar este dispositivo a uma conta</string>
   <string name="account_link_prompt_pin">Entre o PIN</string>
   <string name="account_new_button">Criar uma conta no Jami</string>
   <string name="account_link_export_button">Associar outro dispositivo à esta conta</string>

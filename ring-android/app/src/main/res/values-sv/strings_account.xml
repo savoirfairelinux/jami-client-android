@@ -44,6 +44,9 @@ Du kan ändra kontot senare.</string>
   <string name="account_device_revocation_wrong_password">Fel lösenord.</string>
   <string name="account_device_revocation_unknown_device">Okänd enhet.</string>
   <string name="account_device_revocation_error_unknown">Okänt fel.</string>
+  <string name="account_password_change">Byt lösenord</string>
+  <string name="account_password_set">Ange lösenord</string>
+  <string name="account_password_change_wait_message">Ändrar kontolösenord</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Allmänt</string>
   <string name="account_basic_category">Grundläggande inställningar</string>
@@ -114,6 +117,7 @@ Du kan ändra kontot senare.</string>
   <string name="error_passwords_not_equals">Lösenorden stämmer inte</string>
   <string name="export_account_wait_title">Vänta...</string>
   <string name="export_account_wait_message">Publicerar ny kontoinformation</string>
+  <string name="account_export_file">Säkerhetskopiera konto</string>
   <string name="account_export_end_decryption_message">Kunde inte låsa upp ditt konto med det givna lösenordet.</string>
   <string name="account_export_end_network_title">Nätverksfel</string>
   <string name="account_export_end_network_message">Kunde inte exportera kontot över nätverket. Kontrollera din uppkoppling.</string>
@@ -143,7 +147,6 @@ Du kan ändra kontot senare.</string>
   <string name="account_sip_success_title">SIP-konto registrerat</string>
   <string name="account_sip_success_message">Du har registrerat ditt SIP-konto.</string>
   <string name="account_sip_register_anyway">Registrera i alla fall</string>
-  <string name="account_link_button">Koppla denna enhet till ett konto</string>
   <string name="account_link_prompt_pin">Ange PIN-kod</string>
   <string name="account_new_button">Skapa ett Jami-konto</string>
   <string name="account_link_export_button">Koppla en annan enhet till detta konto</string>

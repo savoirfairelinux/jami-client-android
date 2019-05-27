@@ -44,6 +44,9 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_device_revocation_wrong_password">Password errata.</string>
   <string name="account_device_revocation_unknown_device">Dispositivo sconosciuto.</string>
   <string name="account_device_revocation_error_unknown">Errore sconosciuto.</string>
+  <string name="account_password_change">Cambia password</string>
+  <string name="account_password_set">Imposta password</string>
+  <string name="account_password_change_wait_message">Modifica della password dell\'account</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Generale</string>
   <string name="account_basic_category">Impostazioni base</string>
@@ -114,6 +117,7 @@ Potrai modificare il tuo account successivamente</string>
   <string name="error_passwords_not_equals">Le password non corrispondono</string>
   <string name="export_account_wait_title">Prego attendere...</string>
   <string name="export_account_wait_message">Sto pubblicando le informazioni del nuovo account</string>
+  <string name="account_export_file">Backup account</string>
   <string name="account_export_end_decryption_message">Impossibile sbloccare l\'account x la con la password inserita.</string>
   <string name="account_export_end_network_title">Errore di rete</string>
   <string name="account_export_end_network_message">Impossibile esportare l\'account sulla rete. Controlla la tua connettività.</string>
@@ -143,7 +147,6 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_sip_success_title">Account Sip registrato</string>
   <string name="account_sip_success_message">Hai registrato il tuo account Sip con successo.</string>
   <string name="account_sip_register_anyway">Registrati lo stesso</string>
-  <string name="account_link_button">Collega questo dispositivo ad un account</string>
   <string name="account_link_prompt_pin">Inserisci il PIN</string>
   <string name="account_new_button">Crea un account Jami</string>
   <string name="account_link_export_button">Collega un altro dispositivo a questo account</string>

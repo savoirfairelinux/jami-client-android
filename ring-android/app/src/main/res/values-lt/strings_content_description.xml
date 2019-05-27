@@ -2,7 +2,7 @@
 <resources>
   <!--Strings for xml content description of images-->
   <string name="contact_quick_call_description">Greitasis skambutis</string>
-  <string name="contact_picture_description">Kontakto paveikslas</string>
+  <string name="contact_picture_description">Adresato paveikslas</string>
   <string name="dial_numeric_pad">Skaitmeninė klaviatūra</string>
   <string name="contact_unblock">Atblokuoti</string>
 </resources>

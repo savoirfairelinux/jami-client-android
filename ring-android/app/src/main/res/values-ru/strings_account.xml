@@ -44,6 +44,9 @@
   <string name="account_device_revocation_wrong_password">Неверный пароль.</string>
   <string name="account_device_revocation_unknown_device">Неизвестное устройство.</string>
   <string name="account_device_revocation_error_unknown">Неизвестная ошибка.</string>
+  <string name="account_password_change">Изменить пароль</string>
+  <string name="account_password_set">Установить пароль</string>
+  <string name="account_password_change_wait_message">Смена пароля учетной записи</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Общее</string>
   <string name="account_basic_category">Основные настройки</string>
@@ -114,6 +117,7 @@
   <string name="error_passwords_not_equals">Пароли не совпадают</string>
   <string name="export_account_wait_title">Пожалуйста, подождите…</string>
   <string name="export_account_wait_message">Публикация информации о новом аккаунте</string>
+  <string name="account_export_file">Создать резервную копию аккаунта</string>
   <string name="account_export_end_decryption_message">Не удалось разблокировать аккаунт указанным паролем.</string>
   <string name="account_export_end_network_title">Ошибка сети</string>
   <string name="account_export_end_network_message">Не удалось экспортировать аккаунт по сети. Проверьте ваше сетевое соединение.</string>
@@ -143,7 +147,6 @@
   <string name="account_sip_success_title">SIP-аккаунт зарегистрирован</string>
   <string name="account_sip_success_message">Вы успешно зарегистрировали свой SIP-аккаунт.</string>
   <string name="account_sip_register_anyway">Все равно зарегистрироваться</string>
-  <string name="account_link_button">Привязать это устройство к аккаунту</string>
   <string name="account_link_prompt_pin">Введите PIN</string>
   <string name="account_new_button">Создать учётную запись Jami</string>
   <string name="account_link_export_button">Привязать другое устройство к этому аккаунту</string>

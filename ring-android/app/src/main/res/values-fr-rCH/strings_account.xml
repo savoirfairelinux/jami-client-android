@@ -21,7 +21,6 @@
   <!--TLS Details-->
   <!--restore/backup-->
   <string name="account_enter_password">Entrez votre mot de passe</string>
-  <string name="account_link_button">Lier cet appareil à un compte</string>
   <string name="account_new_button">Créer un compte Jami</string>
   <!--Name registration-->
   <!--Create account-->

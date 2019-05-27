@@ -44,6 +44,9 @@ Puedes editar tu cuenta luego</string>
   <string name="account_device_revocation_wrong_password">Contraseña errónea</string>
   <string name="account_device_revocation_unknown_device">Dispositivo desconocido</string>
   <string name="account_device_revocation_error_unknown">Error desconocido.</string>
+  <string name="account_password_change">Cambiar contraseña</string>
+  <string name="account_password_set">Establecer Contraseña</string>
+  <string name="account_password_change_wait_message">Cambiar contraseña de cuenta</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">General</string>
   <string name="account_basic_category">Ajustes básicos</string>
@@ -114,6 +117,7 @@ Puedes editar tu cuenta luego</string>
   <string name="error_passwords_not_equals">Las contraseñas no coinciden</string>
   <string name="export_account_wait_title">Por favor, espera...</string>
   <string name="export_account_wait_message">Publicando nueva información de la cuenta</string>
+  <string name="account_export_file">Cuenta de respaldo</string>
   <string name="account_export_end_decryption_message">Error al desbloquear tu cuenta con la contraseña provista</string>
   <string name="account_export_end_network_title">Error en la red</string>
   <string name="account_export_end_network_message">Error al exportar la cuenta a la red. Verifica tu conectividad.</string>
@@ -143,7 +147,6 @@ Puedes editar tu cuenta luego</string>
   <string name="account_sip_success_title">Cuenta SIP registrada</string>
   <string name="account_sip_success_message">Has registrado tu cuenta SIP correctamente.</string>
   <string name="account_sip_register_anyway">Registrar de todos modos</string>
-  <string name="account_link_button">Conectar este dispositivo a una cuenta</string>
   <string name="account_link_prompt_pin">Ingresa tu PIN</string>
   <string name="account_new_button">Crear una cuenta en Jami</string>
   <string name="account_link_export_button">Conectar otro dispositivo a esta cuenta</string>

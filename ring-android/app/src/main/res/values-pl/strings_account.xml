@@ -5,6 +5,7 @@
   <string name="ic_advanced_menu">Ustawienia zaawansowane</string>
   <string name="ic_blacklist_menu">Zablokowane kontakty</string>
   <!--Strings related to account creation-->
+  <string name="add_ring_account_title">Dodaj konto Jami</string>
   <string name="add_sip_account_title">Dodaj konto SIP</string>
   <string name="ring_account_default_name">Konto Ring %1$s</string>
   <string name="prompt_alias">Nazwa konta</string>
@@ -25,6 +26,7 @@
 Będziesz mógł nawiązywać i odbierać połączenia wyłącznie od bezpośrednich adresów IP.
 Możesz edytować swoje konto później</string>
   <string name="account_type_ip2ip">konto IP</string>
+  <string name="help_ring">Konto Jami pozwala Ci na dotarcie do ludzi bezpośrednio (p2p) w sieci całkowicie rozproszonej.</string>
   <string name="help_sip_title">Dodaj twoje konto SIP</string>
   <string name="help_sip">Skonfiguruj istniejące konto SIP.</string>
   <string name="create_sip_account">Dodaj konto SIP</string>
@@ -42,6 +44,9 @@ Możesz edytować swoje konto później</string>
   <string name="account_device_revocation_wrong_password">Błędne hasło.</string>
   <string name="account_device_revocation_unknown_device">Nieznane urządzenie.</string>
   <string name="account_device_revocation_error_unknown">Nieznany błąd.</string>
+  <string name="account_password_change">Zmień hasło</string>
+  <string name="account_password_set">Ustaw hasło</string>
+  <string name="account_password_change_wait_message">Zmienianie hasła do konta</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Generalne</string>
   <string name="account_basic_category">Ustawienia Podstawowe</string>
@@ -118,25 +123,37 @@ Możesz edytować swoje konto później</string>
   <string name="account_export_end_error_title">Błąd</string>
   <string name="account_export_end_error_message">Nie można eksportować konta. Wystąpił nieznany błąd.</string>
   <string name="account_enter_password">Wprowadź hasło</string>
+  <string name="account_share_body">Skontaktuj się ze mną używając \'%1$s\' w rozproszonej platformie komunikacyjnej Jami: %2$s</string>
+  <string name="account_share_body_with_username">Skontaktuj się ze mną używając \'%1$s\' lub mojej publicznej nazwy użytkownika \'%2$s\' w rozproszonej platformie komunikacyjnej Jami: %3$s</string>
+  <string name="account_contact_me">Skontaktuj się ze mną przez Jami !</string>
   <string name="update_account">Zaktualizuj konto</string>
+  <string name="account_migration">Twoje konto Jami może być zaktualizowane.\nProszę wprowadź swoje hasło.</string>
+  <string name="ring_account">Konto Jami</string>
   <string name="ring_account_identity">Tożsamość</string>
   <string name="account_migration_title_dialog">Przenoszenie konta</string>
   <string name="account_migration_message_dialog">Twoje konto musi zostać zaktualizowane. Czy chcesz przejść do ekranu Zarządzania kontem aby przeprowadzić tę operację ?</string>
   <string name="account_update_needed">Wymagana aktualizacja</string>
   <string name="account_cannot_be_found_title">Nie można znaleźć konta</string>
+  <string name="account_cannot_be_found_message">Konto nie mogło zostać znalezione w sieci Jami.\nUpewnij się, że zostało wyeksportowane z istniejącego urządzenia i, że wprowadzone dane dostępowe są poprawne.</string>
   <string name="account_sip_cannot_be_registered_message">Możesz kontynuować proces tworzenia konta albo edytować informacje w tym miejscu. Późniejsza edycja jest możliwa w ustawieniach konta.</string>
   <string name="account_no_network_title">Nie można połączyć z siecią</string>
+  <string name="account_no_network_message">Nie można dodać konta, ponieważ Jami nie może połączyć się z siecią rozproszoną. Sprawdź stan połączenia swojego urządzenia.</string>
   <string name="account_device_added_title">Konto dodane do urządzenia</string>
+  <string name="account_device_added_message">Pomyślnie skonfigurowałeś konto Jami na tym urządzeniu.</string>
   <string name="account_device_updated_title">Konto na urządzeniu zaktualizowane</string>
+  <string name="account_device_updated_message">Pomyślnie zaktualizowano konto Jami na tym urządzeniu.</string>
   <string name="account_cannot_be_updated_message">Nie można zaktualizować konta. Sprawdź swoje hasło.</string>
   <string name="account_sip_success_title">konto SIP zarejestrowane</string>
   <string name="account_sip_success_message">Pomyślnie zarejestrowałeś swoje konto SIP.</string>
   <string name="account_sip_register_anyway">Zarejestruj mimo to</string>
-  <string name="account_link_button">Połącz to urządzenie z kontem</string>
   <string name="account_link_prompt_pin">Wprowadź PIN</string>
+  <string name="account_new_button">Stwórz konto Jami</string>
   <string name="account_link_export_button">Połącz kolejne urządzenie z tym kontem</string>
+  <string name="account_link_export_info">Aby korzystać z tego konta na innych urządzeniach, musisz najpierw udostępnić je w Jami. To wygeneruje kod PIN, który musisz wprowadzić na nowym urządzeniu aby dodać konto. PIN jest ważny przez 10 minut. </string>
   <string name="account_start_export_button">Generuj PIN</string>
   <string name="account_end_export_button">zamknij</string>
+  <string name="account_end_export_infos"> Twój PIN to:\n\n%%\n\nAby dokończyć proces, musisz otworzyć Jami na nowym urządzeniu. Stwórz nowe konto przez \"Połącz to urządzenie z kontem\". Twój PIN jest ważny przez 10 minut. </string>
+  <string name="account_link_export_info_light">Aby korzystać z tego konta na innych urządzeniach, musisz najpierw udostępnić je w Jami. To wygeneruje kod PIN, który musisz wprowadzić na nowym urządzeniu aby dodać konto. PIN jest ważny przez 10 minut. </string>
   <string name="account_export_title">Dodaj urządzenia</string>
   <!--Name registration-->
   <string name="error_username_empty">Wprowadź nazwę użytkownika</string>
@@ -154,7 +171,9 @@ Możesz edytować swoje konto później</string>
   <string name="account_status_unknown">Nieznane</string>
   <string name="account_status_offline">Offline</string>
   <!--Create account-->
+  <string name="account_creation_home">Witaj w Jami</string>
   <string name="account_creation_profile">Stwórz swój profil</string>
+  <string name="account_creation_ring">Stwórz swoje konto Jami</string>
   <string name="account_link_title">Połącz to urządzenie</string>
   <string name="account_sip_cannot_be_registered">Nie można zarejestrować konta</string>
   <!--Edit profile-->
@@ -167,6 +186,7 @@ Możesz edytować swoje konto później</string>
   <string name="revoke_device_wait_title">Proszę czekać…</string>
   <string name="revoke_device_wait_message">Odwoływanie urządzenia</string>
   <string name="rename_device_title">Zmień nazwę tego urządzenia</string>
+  <string name="rename_device_message">Wybierz nową nazwę dla tego urządzenia na swoim koncie Jami</string>
   <string name="rename_device_button">Przemianuj urządzenie</string>
   <string name="account_rename_device_hint">Wybierz nową nazwę dla urządzenia</string>
   <string name="account_device_name_empty">Nazwa urządzenia nie może być pusta</string>

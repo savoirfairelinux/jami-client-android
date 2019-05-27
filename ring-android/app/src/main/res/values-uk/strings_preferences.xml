@@ -6,8 +6,13 @@
   <string name="pref_category_system">Система</string>
   <string name="pref_category_privacy">Приватність</string>
   <string name="pref_mobileData_title">Мобільні дані</string>
+  <string name="pref_mobileData_summary">Дозволити Джамі в мережах 3G/LTE додатково до Wi-Fi</string>
   <string name="pref_systemContacts_title">Використовувати контакти з адресної книги</string>
   <string name="pref_systemContacts_summary">Використовувати данні з адресної книги для показу деталей абоненту.</string>
+  <string name="pref_systemDialer_title">Виконувати дзвінки на пристрої з допомогою Джамі</string>
+  <string name="pref_systemDialer_summary">Використовувати Джамі, щоб дзвонити з пристрою, завжди, коли можливо.</string>
+  <string name="pref_startOnBoot_title">Запускати Джамі після включення пристрою</string>
+  <string name="pref_startOnBoot_summary">Дозволити Джамі працювати на задньому плані, коли вмикається пристрій.</string>
   <string name="pref_clearHistory_title">Видалити історію</string>
   <string name="pref_clearHistory_summary">Видалити всю історію розмов. Ця дія не може бути скасована.</string>
 </resources>

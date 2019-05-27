@@ -107,6 +107,7 @@
   <string name="error_passwords_not_equals">パスワードが一致しません</string>
   <string name="export_account_wait_title">しばらくお待ちください…</string>
   <string name="export_account_wait_message">新しいアカウント情報を発行しています</string>
+  <string name="account_export_file">アカウントをバックアップ</string>
   <string name="account_export_end_decryption_message">提供されたパスワードを使用してアカウントをロック解除できませんでした。</string>
   <string name="account_export_end_network_title">ネットワークエラー</string>
   <string name="account_export_end_network_message">ネットワーク上でアカウントをエクスポートできませんでした。 接続を確認してください。</string>
@@ -127,7 +128,6 @@
   <string name="account_sip_success_title">SIP アカウントを登録しました</string>
   <string name="account_sip_success_message">SIPアカウントを正常に登録しました。</string>
   <string name="account_sip_register_anyway">とにかく登録する</string>
-  <string name="account_link_button">このデバイスをアカウントへリンク</string>
   <string name="account_link_prompt_pin">PINを入力してください</string>
   <string name="account_link_export_button">別のデバイスをこのアカウントへリンク</string>
   <string name="account_end_export_button">閉じる</string>

@@ -44,6 +44,9 @@
   <string name="account_device_revocation_wrong_password">錯誤的密碼。</string>
   <string name="account_device_revocation_unknown_device">未知的裝置。</string>
   <string name="account_device_revocation_error_unknown">未知的錯誤。</string>
+  <string name="account_password_change">變更密碼</string>
+  <string name="account_password_set">設定密碼</string>
+  <string name="account_password_change_wait_message">正在變更帳號密碼</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">一般</string>
   <string name="account_basic_category">基本設定</string>
@@ -114,6 +117,7 @@
   <string name="error_passwords_not_equals">密碼不相符</string>
   <string name="export_account_wait_title">請等待...</string>
   <string name="export_account_wait_message">公開新帳號資訊</string>
+  <string name="account_export_file">備份帳號</string>
   <string name="account_export_end_decryption_message">無法使用您提供的密碼來解鎖您的帳號。</string>
   <string name="account_export_end_network_title">網路錯誤</string>
   <string name="account_export_end_network_message">無法在網路上匯出帳號。檢查您的連線。</string>
@@ -143,7 +147,6 @@
   <string name="account_sip_success_title">SIP 帳號已註冊</string>
   <string name="account_sip_success_message">您已成功註冊您的 SIP 帳號。</string>
   <string name="account_sip_register_anyway">無論如何都要註冊</string>
-  <string name="account_link_button">連結這個裝置到一個帳號</string>
   <string name="account_link_prompt_pin">輸入 PIN 碼</string>
   <string name="account_new_button">建立 Jami 帳號</string>
   <string name="account_link_export_button">連結其他裝置到這個帳號</string>

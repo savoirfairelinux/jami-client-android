@@ -44,6 +44,9 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_device_revocation_wrong_password">Falsches Passwort.</string>
   <string name="account_device_revocation_unknown_device">Unbekanntes Gerät.</string>
   <string name="account_device_revocation_error_unknown">Unbekannter Fehler.</string>
+  <string name="account_password_change">Passwort ändern</string>
+  <string name="account_password_set">Passwort festlegen</string>
+  <string name="account_password_change_wait_message">Kontopasswort ändern</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Allgemein</string>
   <string name="account_basic_category">Grundlegende Einstellungen</string>
@@ -114,6 +117,7 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="error_passwords_not_equals">Die Passwörter stimmen nicht überein</string>
   <string name="export_account_wait_title">Bitte warten…</string>
   <string name="export_account_wait_message">Neue Kontoinformationen veröffentlichen</string>
+  <string name="account_export_file">Konto sichern</string>
   <string name="account_export_end_decryption_message">Ihr Konto konnte mit dem angegebenen Passwort nicht entsperrt werden</string>
   <string name="account_export_end_network_title">Netzwerkfehler</string>
   <string name="account_export_end_network_message">Das Konto konnte nicht in das Netzwerk exportiert werden. Überprüfen sie ihre Verbindung.</string>
@@ -143,7 +147,6 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_sip_success_title">SIP-Konto registriert</string>
   <string name="account_sip_success_message">Sie haben erfolgreich Ihr SIP-Konto registriert.</string>
   <string name="account_sip_register_anyway">Trotzdem registieren</string>
-  <string name="account_link_button">Dieses Gerät mit einem Konto verknüpfen</string>
   <string name="account_link_prompt_pin">PIN eingeben</string>
   <string name="account_new_button">Ein Jami-Konto erstellen</string>
   <string name="account_link_export_button">Weiteres Gerät mit diesem Konto verknüpfen</string>

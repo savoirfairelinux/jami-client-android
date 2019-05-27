@@ -43,6 +43,7 @@ Możesz edytować swoje konto później</string>
   <string name="account_device_revocation_wrong_password">Błędne hasło.</string>
   <string name="account_device_revocation_unknown_device">Nieznane urządzenie.</string>
   <string name="account_device_revocation_error_unknown">Nieznany błąd.</string>
+  <string name="account_password_change">Zmień hasło</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Generalne</string>
   <string name="account_basic_category">Ustawienia Podstawowe</string>
@@ -135,7 +136,6 @@ Możesz edytować swoje konto później</string>
   <string name="account_sip_success_title">konto SIP zarejestrowane</string>
   <string name="account_sip_success_message">Pomyślnie zarejestrowałeś swoje konto SIP.</string>
   <string name="account_sip_register_anyway">Zarejestruj mimo to</string>
-  <string name="account_link_button">Połącz to urządzenie z kontem</string>
   <string name="account_link_prompt_pin">Wprowadź PIN</string>
   <string name="account_link_export_button">Połącz kolejne urządzenie z tym kontem</string>
   <string name="account_start_export_button">Generuj PIN</string>

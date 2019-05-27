@@ -6,6 +6,7 @@
   <string name="version_section">Версия</string>
   <string name="no_email_app_installed">Не найдено приложение электронной почты. Пожалуйста, установите его для отправки нам отчета.</string>
   <string name="email_chooser_title">Отправить почту, используя...</string>
+  <string name="description">Jami — свободная программа для связи, уважающая свободу и конфиденциальность пользователей.</string>
   <string name="credits">Кредиты</string>
   <!--About dialog-->
   <!--RingActivity-->
@@ -20,6 +21,7 @@
   <string name="drawer_close">Закрыть навигацию</string>
   <!--Sections-->
   <string name="menu_item_home">Домой</string>
+  <string name="menu_item_contact_request">Запросы на добавление в контакты</string>
   <string name="menu_item_accounts">Управление учетными записями</string>
   <string name="menu_item_settings">Настройки</string>
   <!--Dialing Fragment-->
@@ -93,6 +95,7 @@
   <string name="generic_error_migration">Ошибка</string>
   <!--Pending contact requests-->
   <string name="accept">Принять</string>
+  <string name="refuse">Отказать</string>
   <!--Send contact requests-->
   <string name="send_request_button">Отправть</string>
   <!--Blacklist-->

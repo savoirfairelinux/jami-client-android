@@ -14,6 +14,7 @@
   <string name="account_delete_dialog_message">Cette action ne peut pas être annulée</string>
   <!--AccountManagementFragment-->
   <string name="normal_accounts_titles">Comptes</string>
+  <string name="account_password_change">changer le mot de passe</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Général</string>
   <string name="account_hostname_label">nom d\'hôte</string>
@@ -35,7 +36,6 @@
   <string name="error_password_char_count">6 caractères minimum</string>
   <string name="account_export_end_error_title">Erreur</string>
   <string name="account_enter_password">Entrez votre mot de passe</string>
-  <string name="account_link_button">Lier cet appareil à un compte</string>
   <string name="account_link_prompt_pin">Saisissez le code PIN</string>
   <string name="account_new_button">Créer un compte Jami</string>
   <string name="account_link_export_button">Connecter un autre appareil à ce compte</string>

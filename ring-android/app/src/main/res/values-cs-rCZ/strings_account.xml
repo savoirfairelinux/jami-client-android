@@ -44,6 +44,7 @@ Svůj účet můžete upravit později</string>
   <string name="account_device_revocation_wrong_password">Špatné heslo</string>
   <string name="account_device_revocation_unknown_device">Neznámé zařízení.</string>
   <string name="account_device_revocation_error_unknown">Neznámá chyba.</string>
+  <string name="account_password_change">Změnit heslo</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Obecné</string>
   <string name="account_basic_category">Základní nastavení</string>
@@ -114,6 +115,7 @@ Svůj účet můžete upravit později</string>
   <string name="error_passwords_not_equals">Hesla se neshodují</string>
   <string name="export_account_wait_title">Počkejte prosím…</string>
   <string name="export_account_wait_message">Zveřejňují se informace o novém účtu</string>
+  <string name="account_export_file">Zálohovat účet</string>
   <string name="account_export_end_decryption_message">Zadaným heslem nebylo možné váš účet odemknout.</string>
   <string name="account_export_end_network_title">Chyba sítě</string>
   <string name="account_export_end_network_message">Nebylo možné exportovat účet do sítě. Zkontrolujte si připojení.</string>
@@ -145,7 +147,6 @@ Prověřte, prosím, své heslo.</string>
   <string name="account_sip_success_title">Účet SIP zaregistrován</string>
   <string name="account_sip_success_message">Úspěšně jste zaregistroval účet SIP.</string>
   <string name="account_sip_register_anyway">Přesto zaregistrovat</string>
-  <string name="account_link_button">Připojit toto zařízení k účtu</string>
   <string name="account_link_prompt_pin">Zadejte PIN</string>
   <string name="account_new_button">Vytvořit účet Jami</string>
   <string name="account_link_export_button">Připojit k tomuto účtu další zařízení</string>

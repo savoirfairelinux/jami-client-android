@@ -41,6 +41,7 @@ Sie können Ihr Konto später ändern.</string>
   <string name="account_device_revocation_wrong_password">Falsches Passwort.</string>
   <string name="account_device_revocation_unknown_device">Unbekanntes Gerät.</string>
   <string name="account_device_revocation_error_unknown">Unbekannter Fehler.</string>
+  <string name="account_password_change">Passwort ändern</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Allgemein</string>
   <string name="account_basic_category">Grundeinstellungen</string>
@@ -113,7 +114,6 @@ Sie können Ihr Konto später ändern.</string>
   <string name="account_cannot_be_found_title">Konto nicht gefunden</string>
   <string name="account_no_network_title">Kann keine Verbindung zum Netzwerk herstellen</string>
   <string name="account_sip_success_title">SIP-Konto registriert</string>
-  <string name="account_link_button">Dieses Gerät mit einem Ring-Konto verknüpfen</string>
   <string name="account_link_prompt_pin">PIN eingeben</string>
   <string name="account_new_button">Jami-Konto erstellen</string>
   <string name="account_link_export_button">Ein anderes Gerät mit diesem Konto verknüpfen</string>

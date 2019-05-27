@@ -44,6 +44,7 @@
   <string name="account_device_revocation_wrong_password">کلمه عبور اشتباه است.</string>
   <string name="account_device_revocation_unknown_device">دستگاه ناشناس.</string>
   <string name="account_device_revocation_error_unknown">خطای ناشناخته.</string>
+  <string name="account_password_change">تغییر رمز عبور</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">عمومی</string>
   <string name="account_basic_category">تنظیمات پایه</string>
@@ -114,6 +115,7 @@
   <string name="error_passwords_not_equals">گذرواژه‌ها یکسان نیستند</string>
   <string name="export_account_wait_title">لطفاً صبر کنید…</string>
   <string name="export_account_wait_message">در حال صدور اطّلاعات حساب جدید</string>
+  <string name="account_export_file">حساب کاربری پشتیبان</string>
   <string name="account_export_end_decryption_message">نمی‌توان قفل حسابتان را با گذرواژه  فراهم شده گشود.</string>
   <string name="account_export_end_network_title">خطای شبکه</string>
   <string name="account_export_end_network_message">نمی‌توان حساب را در شبکه صادر کرد. اتصال را بررسی کنید.</string>
@@ -143,7 +145,6 @@
   <string name="account_sip_success_title">حساب سیپ ثبت شد</string>
   <string name="account_sip_success_message">حساب سیپتان را با موفّقیت ثبت کردید</string>
   <string name="account_sip_register_anyway">به هر حال ثبت کنید</string>
-  <string name="account_link_button">پیوند این دستگاه به یک حساب</string>
   <string name="account_link_prompt_pin">پین را وارد کنید</string>
   <string name="account_new_button">ایجاد یک حساب جمی</string>
   <string name="account_link_export_button">پیوند دستگاه دیگر به این حساب</string>
