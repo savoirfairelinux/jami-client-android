@@ -38,7 +38,5 @@ public interface MediaPreferenceView {
 
     void displayFileSearchDialog();
 
-    void requestVideoPermissions();
-
     void refresh(Account account);
 }

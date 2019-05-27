@@ -168,8 +168,7 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
                         Log.d(TAG, "Default account detail: " + e.getKey() + " -> " + e.getValue());
                     }
 
-                    boolean hasCameraPermission = mDeviceRuntimeService.hasVideoPermission();
-                    accountDetails.put(ConfigKey.VIDEO_ENABLED.key(), Boolean.toString(hasCameraPermission));
+                    accountDetails.put(ConfigKey.VIDEO_ENABLED.key(), Boolean.toString(true));
                     accountDetails.put(ConfigKey.ACCOUNT_DTMF_TYPE.key(), "sipinfo");
                     return accountDetails;
                 });
