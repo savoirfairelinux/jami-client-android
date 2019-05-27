@@ -211,7 +211,6 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
             handleShareIntent(intent);
         }
 
-        setVideoEnabledFromPermission();
 
         fContent = fragmentManager.findFragmentById(R.id.main_frame);
         if (fNavigation != null) {
@@ -363,7 +362,6 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
                             }
                         }
                     }));
-        setVideoEnabledFromPermission();
     }
 
     public void startConversationTablet(Bundle bundle) {
@@ -534,15 +532,6 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(R.id.main_frame, fContent, SETTINGS_TAG)
                 .addToBackStack(SETTINGS_TAG).commit();
-    }
-
-    private void setVideoEnabledFromPermission() {
-        //~ Setting correct VIDEO_ENABLED value based on the state of the
-        //~ permission. It can handle the case where the user decides to remove a permission from
-        //~ the Android general settings.
-        if (!mDeviceRuntimeService.hasVideoPermission()) {
-            mAccountService.setAccountsVideoEnabled(false);
-        }
     }
 
     @Override
