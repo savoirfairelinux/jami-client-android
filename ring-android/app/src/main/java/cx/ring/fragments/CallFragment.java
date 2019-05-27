@@ -473,7 +473,8 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     @Override
     public void displayVideoSurface(final boolean display) {
         binding.videoSurface.setVisibility(display ? View.VISIBLE : View.GONE);
-        binding.previewContainer.setVisibility(display ? View.VISIBLE : View.GONE);
+        binding.previewContainer.setVisibility(mDeviceRuntimeService.hasVideoPermission() && display ? View.VISIBLE : View.GONE);
+
         updateMenu();
     }
 

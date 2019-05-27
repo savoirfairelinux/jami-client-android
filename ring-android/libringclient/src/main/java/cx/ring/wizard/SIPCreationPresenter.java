@@ -186,7 +186,7 @@ public class SIPCreationPresenter extends RootPresenter<SIPCreationView> {
                 Log.d(TAG, "Default account detail: " + e.getKey() + " -> " + e.getValue());
             }
 
-            accountDetails.put(ConfigKey.VIDEO_ENABLED.key(), Boolean.toString(mDeviceService.hasVideoPermission()));
+            accountDetails.put(ConfigKey.VIDEO_ENABLED.key(), Boolean.toString(true));
 
             //~ Sipinfo is forced for any sipaccount since overrtp is not supported yet.
             //~ This will have to be removed when it will be supported.
