@@ -35,8 +35,11 @@ public class RingLinkAccountPresenter extends RootPresenter<RingLinkAccountView>
     public void init(AccountCreationModel accountCreationModel) {
         mAccountCreationModel = accountCreationModel;
         boolean hasArchive = mAccountCreationModel.getArchive() != null;
-        getView().showPin(!hasArchive);
-        getView().enableLinkButton(hasArchive);
+        RingLinkAccountView view = getView();
+        if (view != null) {
+            view.showPin(!hasArchive);
+            view.enableLinkButton(hasArchive);
+        }
     }
 
     public void passwordChanged(String password) {
