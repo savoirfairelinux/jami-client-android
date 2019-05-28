@@ -65,11 +65,6 @@ public class TVContactPresenter extends RootPresenter<TVContactView> {
     }
 
     public void contactClicked(Uri uri) {
-        if (!mHardwareService.isVideoAvailable() && !mHardwareService.hasMicrophone()) {
-            getView().displayErrorToast(RingError.NO_INPUT);
-            return;
-        }
-
         Account account = mAccountService.getCurrentAccount();
         getView().callContact(account.getAccountID(), uri);
     }
