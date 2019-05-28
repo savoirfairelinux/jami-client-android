@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72239760_fb47ec78",
+        "filename": "ring-android/app/src/main/java/cx/ring/share/ScanFragment.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-05-28T19:08:00Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 75,
+        "startChar": 1,
+        "endLine": 78,
+        "endChar": 5
+      },
+      "revId": "60d96f80d0edc49e90f3b80043e5fe0775193391",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fedd236_b6b36f62",
+        "filename": "ring-android/app/src/main/res/layout/frag_scan.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-05-28T19:08:00Z",
+      "side": 1,
+      "message": "is nested ConstraintLayout really needed ?",
+      "range": {
+        "startLine": 9,
+        "startChar": 38,
+        "endLine": 9,
+        "endChar": 54
+      },
+      "revId": "60d96f80d0edc49e90f3b80043e5fe0775193391",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "688951b0_e63fec2c",
+        "filename": "ring-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-05-28T19:08:00Z",
+      "side": 1,
+      "message": "use better name",
+      "range": {
+        "startLine": 172,
+        "startChar": 41,
+        "endLine": 172,
+        "endChar": 48
+      },
+      "revId": "60d96f80d0edc49e90f3b80043e5fe0775193391",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eef341d_9b529e54",
+        "filename": "ring-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-05-28T19:08:00Z",
+      "side": 1,
+      "message": "use the existing share_your_account_information string ?",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 45
+      },
+      "revId": "60d96f80d0edc49e90f3b80043e5fe0775193391",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
