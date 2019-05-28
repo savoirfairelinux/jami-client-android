@@ -73,7 +73,6 @@ import cx.ring.utils.FileUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.ResourceMapper;
 import cx.ring.utils.Tuple;
-import cx.ring.views.AvatarDrawable;
 
 public class NotificationServiceImpl implements NotificationService {
 
