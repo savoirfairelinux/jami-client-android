@@ -28,7 +28,9 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import cx.ring.R;
@@ -52,6 +54,8 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
     public Surface surface = null;
     public long mCid = -1;
     public UiUpdater updater;
+    public RelativeLayout mTxtLayout;
+    public RelativeLayout mCallInfoLayout;
 
     public ConversationViewHolder(ViewGroup v, ConversationAdapter.MessageType type) {
         super(v);
@@ -59,14 +63,18 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
             mMsgTxt = v.findViewById(R.id.msg_txt);
             mMsgDetailTxt = v.findViewById(R.id.msg_details_txt);
             mPhoto = v.findViewById(R.id.photo);
+            mTxtLayout = v.findViewById(R.id.txt_entry);
         } else if (type == ConversationAdapter.MessageType.OUTGOING_TEXT_MESSAGE) {
             mMsgTxt = v.findViewById(R.id.msg_txt);
             mMsgDetailTxt = v.findViewById(R.id.msg_details_txt);
             mPhoto = v.findViewById(R.id.status_icon);
+            mTxtLayout = v.findViewById(R.id.txt_entry);
         } else if (type == ConversationAdapter.MessageType.CALL_INFORMATION) {
             mHistTxt = v.findViewById(R.id.call_hist_txt);
             mHistDetailTxt = v.findViewById(R.id.call_details_txt);
             mPhoto = v.findViewById(R.id.call_icon);
+            mCallInfoLayout = v.findViewById(R.id.callInfoLayout);
+
         } else if (type == ConversationAdapter.MessageType.FILE_TRANSFER) {
             mMsgTxt = v.findViewById(R.id.call_hist_filename);
             mMsgDetailTxt = v.findViewById(R.id.file_details_txt);

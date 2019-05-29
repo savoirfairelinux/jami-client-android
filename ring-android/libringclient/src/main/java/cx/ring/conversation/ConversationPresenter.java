@@ -33,8 +33,10 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.DataTransfer;
+import cx.ring.model.HistoryCall;
 import cx.ring.model.RingError;
 import cx.ring.model.SipCall;
+import cx.ring.model.TextMessage;
 import cx.ring.model.TrustRequest;
 import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
@@ -261,8 +263,20 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         getView().openFile(path);
     }
 
+    public void deleteMessage(TextMessage message) {
+        mConversationFacade.deleteConversationItem(message);
+    }
+
+    public void deleteCallHistory(HistoryCall callHistory) {
+        mConversationFacade.deleteConversationItem(callHistory);
+    }
+
     public void deleteFile(DataTransfer transfer) {
-        mConversationFacade.deleteFile(transfer);
+        mConversationFacade.deleteConversationItem(transfer);
+    }
+
+    public void cancelMessage(TextMessage message) {
+        mConversationFacade.cancelMessage(message);
     }
 
     public void sendTrustRequest() {
