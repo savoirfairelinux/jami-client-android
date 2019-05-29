@@ -33,6 +33,7 @@
     android:paddingStart="16dp">
 
     <LinearLayout
+        android:id="@+id/fileInfoLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="56dp"
@@ -45,8 +46,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="4dp"
             android:layout_marginStart="12dp"
+            android:layout_marginEnd="4dp"
             app:srcCompat="@drawable/ic_clip_black" />
 
         <LinearLayout
@@ -60,9 +61,9 @@
                 android:id="@+id/call_hist_filename"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="4dp"
                 android:ellipsize="middle"
                 android:maxWidth="200dp"
                 android:scrollHorizontally="true"
@@ -75,9 +76,9 @@
                 android:id="@+id/file_details_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
                 android:maxWidth="200dp"
                 android:textColor="@color/text_color_secondary"
                 android:textSize="12sp"
@@ -102,8 +103,8 @@
                 tools:visibility="visible">
 
                 <com.google.android.material.button.MaterialButton
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:id="@+id/btnRefuse"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
@@ -113,8 +114,8 @@
                     android:textColor="@color/color_primary_dark" />
 
                 <com.google.android.material.button.MaterialButton
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:id="@+id/btnAccept"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
