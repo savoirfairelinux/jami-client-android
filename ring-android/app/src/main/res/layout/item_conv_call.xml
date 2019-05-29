@@ -23,20 +23,23 @@ along with this program; if not, write to the Free Software
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="end|bottom"
-    android:layout_marginBottom="8dp"
     android:layout_marginTop="8dp"
-    android:descendantFocusability="blocksDescendants"
-    android:focusable="false"
+    android:layout_marginBottom="8dp"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="false"
+    android:focusable="true"
+    android:longClickable="true"
     android:paddingStart="72dp"
     android:paddingEnd="72dp">
 
     <LinearLayout
+        android:id="@+id/callInfoLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/textmsg_call_background"
         android:orientation="horizontal"
-        android:paddingBottom="4dp"
-        android:paddingTop="4dp">
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp">
 
         <ImageView
             android:id="@+id/call_icon"
