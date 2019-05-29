@@ -87,17 +87,14 @@ import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.MediaButtonsHelper;
 import io.reactivex.Completable;
-import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 import static android.app.Activity.RESULT_OK;
 
 public class ConversationFragment extends BaseSupportFragment<ConversationPresenter> implements
         MediaButtonsHelper.MediaButtonsHelperCallback,
-        ConversationView, SharedPreferences.OnSharedPreferenceChangeListener
-{
+        ConversationView, SharedPreferences.OnSharedPreferenceChangeListener {
     protected static final String TAG = ConversationFragment.class.getSimpleName();
 
     public static final int REQ_ADD_CONTACT = 42;
@@ -124,6 +121,8 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
 
     private File mCurrentPhoto = null;
     private Disposable actionbarTarget = null;
+    private static int position;
+
 
     private static int getIndex(Spinner spinner, Uri myString) {
         for (int i = 0, n = spinner.getCount(); i < n; i++)
@@ -265,6 +264,13 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         return super.onContextItemSelected(item);
     }
 
+    public void updateAdapterItem() {
+        if(position != -1) {
+            mAdapter.notifyItemChanged(position);
+            position = -1;
+        }
+    }
+
     public void sendMessageText() {
         String message = binding.msgInputTxt.getText().toString();
         clearMsgEdit();
@@ -277,6 +283,14 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
 
     public void selectFile() {
         presenter.selectFile();
+    }
+
+    /**
+     * Used to update with the past adapter position when a long click was registered
+     * @param position
+     */
+    public void updatePosition(int position) {
+        this.position = position;
     }
 
     public void takePicture() {
