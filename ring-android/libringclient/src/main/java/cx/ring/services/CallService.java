@@ -36,6 +36,7 @@ import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
 import cx.ring.utils.Log;
 import ezvcard.VCard;
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
@@ -261,6 +262,15 @@ public class CallService {
             msgs.setRaw("text/plain", Blob.fromString(msg));
             return Ringservice.sendAccountTextMessage(accountId, to, msgs);
         }).subscribeOn(Schedulers.from(mExecutor));
+    }
+
+    public Completable cancelMessage(final String accountId, final long messageID) {
+        return Completable
+                .fromAction(() -> {
+                    Log.i(TAG, "CancelMessage() running...   Account ID:  " + accountId + " " + "Message ID " + " " + messageID);
+                    Ringservice.cancelMessage(accountId, messageID);
+                })
+                .subscribeOn(Schedulers.from(mExecutor));
     }
 
     public SipCall getCurrentCallForId(String callId) {

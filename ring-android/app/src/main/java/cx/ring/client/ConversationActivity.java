@@ -29,6 +29,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.view.KeyEvent;
+import android.view.Menu;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -87,6 +88,12 @@ public class ConversationActivity extends AppCompatActivity implements Colorable
         if (Intent.ACTION_SEND.equals(action) || Intent.ACTION_SEND_MULTIPLE.equals(action)) {
             mPendingIntent = intent;
         }
+    }
+
+    @Override
+    public void onContextMenuClosed(Menu menu) {
+        mConversationFragment.updateAdapterItem();
+        super.onContextMenuClosed(menu);
     }
 
     @Override

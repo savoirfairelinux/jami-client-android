@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NavigableMap;
+import java.util.WeakHashMap;
 
 import javax.inject.Inject;
 
@@ -107,7 +108,7 @@ public class ConversationFacade {
         mDisposableBag.add(mAccountService.getIncomingRequests()
                 .concatMapSingle(r -> getAccountSubject(r.getAccountId()))
                 .subscribe(a -> mNotificationService.showIncomingTrustRequestNotification(a),
-                        e-> Log.e(TAG, "Error showing contact request")));
+                        e -> Log.e(TAG, "Error showing contact request")));
 
         mDisposableBag.add(mAccountService
                 .getIncomingMessages()
@@ -117,19 +118,20 @@ public class ConversationFacade {
                             return msg;
                         }))
                 .subscribe(this::parseNewMessage,
-                        e-> Log.e(TAG, "Error adding text message")));
+                        e -> Log.e(TAG, "Error adding text message")));
 
         mDisposableBag.add(mAccountService
                 .getMessageStateChanges()
                 .concatMapSingle(txt -> getAccountSubject(txt.getAccount())
                         .map(a -> a.getByUri(txt.getNumberUri()))
                         .doOnSuccess(conv -> conv.updateTextMessage(txt)))
-                .subscribe(c -> {}, e-> Log.e(TAG, "Error updating text message")));
+                .subscribe(c -> {
+                }, e -> Log.e(TAG, "Error updating text message")));
 
         mDisposableBag.add(mAccountService
                 .getDataTransfers()
                 .subscribe(this::handleDataTransferEvent,
-                        e-> Log.e(TAG, "Error adding data transfer")));
+                        e -> Log.e(TAG, "Error adding data transfer")));
     }
 
     public Single<Conversation> startConversation(String accountId, final Uri contactId) {
@@ -168,18 +170,18 @@ public class ConversationFacade {
 
     private boolean readMessages(Conversation conversation) {
         boolean updated = false;
-            NavigableMap<Long, ConversationElement> messages = conversation.getRawHistory();
-            for (ConversationElement e : messages.descendingMap().values()) {
-                if (!(e instanceof TextMessage))
-                    continue;
-                TextMessage message = (TextMessage) e;
-                if (message.isRead()) {
-                    break;
-                }
-                message.read();
-                mHistoryService.updateTextMessage(new HistoryText(message)).subscribe();
-                updated = true;
+        NavigableMap<Long, ConversationElement> messages = conversation.getRawHistory();
+        for (ConversationElement e : messages.descendingMap().values()) {
+            if (!(e instanceof TextMessage))
+                continue;
+            TextMessage message = (TextMessage) e;
+            if (message.isRead()) {
+                break;
             }
+            message.read();
+            mHistoryService.updateTextMessage(new HistoryText(message)).subscribe();
+            updated = true;
+        }
         return updated;
     }
 
@@ -239,14 +241,44 @@ public class ConversationFacade {
         }).subscribeOn(Schedulers.io());
     }
 
-    public void deleteFile(DataTransfer transfer) {
-        File file = mDeviceRuntimeService.getConversationPath(transfer.getPeerId(), transfer.getStoragePath());
-        Completable.mergeArrayDelayError(
+
+    public void deleteConversationItem(ConversationElement element) {
+        switch (element.getType()) {
+            case TEXT:
+                TextMessage message = (TextMessage) element;
+                mDisposableBag.add(Completable.mergeArrayDelayError(
+                        mHistoryService.deleteMessageHistory(message.getId()).subscribeOn(Schedulers.io()))
+                        .andThen(startConversation(message.getAccount(), message.getContactNumber()))
+                        .subscribe(c -> c.removeConversationElement(message),
+                                e -> Log.e(TAG, "Can't delete message", e)));
+                break;
+            case FILE:
+                DataTransfer transfer = (DataTransfer) element;
+                File file = mDeviceRuntimeService.getConversationPath(transfer.getPeerId(), transfer.getStoragePath());
+                mDisposableBag.add(Completable.mergeArrayDelayError(
                         mHistoryService.deleteFileHistory(transfer.getId()),
                         Completable.fromAction(file::delete).subscribeOn(Schedulers.io()))
-                .andThen(startConversation(transfer.getAccountId(), transfer.getContactNumber()))
-                .subscribe(c -> c.removeFileTransfer(transfer),
-                        e -> Log.e(TAG, "Can't delete file transfer", e));
+                        .andThen(startConversation(transfer.getAccountId(), transfer.getContactNumber()))
+                        .subscribe(c -> c.removeConversationElement(transfer),
+                                e -> Log.e(TAG, "Can't delete file transfer", e)));
+                break;
+            case CALL:
+                HistoryCall callHistory = (HistoryCall) element;
+                mDisposableBag.add(Completable.mergeArrayDelayError(
+                        mHistoryService.deleteCallHistory(callHistory.getCallId()).subscribeOn(Schedulers.io()))
+                        .andThen(startConversation(callHistory.getAccountID(), callHistory.getContactNumber()))
+                        .subscribe(c -> c.removeConversationElement(callHistory),
+                                e -> Log.e(TAG, "Can't delete call history", e)));
+                break;
+        }
+    }
+
+    public void cancelMessage(TextMessage message) {
+        mDisposableBag.add(Completable.mergeArrayDelayError(
+                mCallService.cancelMessage(message.getAccount(), message.getId()).subscribeOn(Schedulers.io()))
+                .andThen(startConversation(message.getAccount(), message.getContactNumber()))
+                .subscribe(c -> c.removeConversationElement(message),
+                        e -> Log.e(TAG, "Can't cancel message sending", e)));
     }
 
     private Single<Account> loadConversations(final Account account) {
@@ -269,7 +301,7 @@ public class ConversationFacade {
     private Disposable loadConversationHistory(final Account account) {
         Log.d(TAG, "loadConversationHistory()");
         return Single
-                .merge( mHistoryService.getCallsSingle(account.getAccountID()).subscribeOn(Schedulers.io()),
+                .merge(mHistoryService.getCallsSingle(account.getAccountID()).subscribeOn(Schedulers.io()),
                         mHistoryService.getTransfersSingle(account.getAccountID()).subscribeOn(Schedulers.io()),
                         mHistoryService.getMessagesSingle(account.getAccountID()).subscribeOn(Schedulers.io()))
                 .observeOn(Schedulers.computation())
@@ -427,7 +459,7 @@ public class ConversationFacade {
         mNotificationService.cancelFileNotification(id);
         DataTransfer transfer = mAccountService.getDataTransfer(id);
         if (transfer != null)
-            deleteFile(transfer);
+            deleteConversationItem(transfer);
     }
 
     public Completable removeConversation(String accountId, Uri contact) {
