@@ -20,7 +20,7 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/conv_action_delete"
+        android:id="@+id/conv_action_delete_file"
         android:icon="@drawable/baseline_delete_24"
         android:title="@string/menu_file_delete"
         app:showAsAction="ifRoom" />
