@@ -193,4 +193,20 @@ public abstract class HistoryService {
                 .fromAction(() -> getDataHistoryDao().deleteById(id))
                 .subscribeOn(scheduler);
     }
+
+    public Completable deleteMessageHistory(long id) {
+        return Completable
+                .fromAction(() -> getTextHistoryDao().deleteById(id))
+                .subscribeOn(scheduler);
+    }
+
+    public Completable deleteCallHistory(CharSequence id) {
+        return Completable
+                .fromAction(() -> {
+                    DeleteBuilder<HistoryCall, Integer> deleteBuilder = getCallHistoryDao().deleteBuilder();
+                    deleteBuilder.where().eq("callID", id);
+                    deleteBuilder.delete();
+                })
+                .subscribeOn(scheduler);
+    }
 }
