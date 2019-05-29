@@ -24,4 +24,31 @@
         android:icon="@drawable/baseline_delete_24"
         android:title="@string/menu_file_delete"
         app:showAsAction="ifRoom" />
+
+
+    <!-- TODO RESOURCES -->
+
+    <item
+        android:id="@+id/conv_action_copy_text"
+        android:icon="@drawable/baseline_delete_24"
+        android:title="Copy"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/conv_action_cancel_message"
+        android:icon="@drawable/baseline_delete_24"
+        android:title="Cancel Message"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/conv_action_delete_message"
+        android:icon="@drawable/baseline_delete_24"
+        android:title="Delete Message"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/conv_action_delete_call_history"
+        android:icon="@drawable/baseline_delete_24"
+        android:title="Delete"
+        app:showAsAction="always" />
 </menu>
