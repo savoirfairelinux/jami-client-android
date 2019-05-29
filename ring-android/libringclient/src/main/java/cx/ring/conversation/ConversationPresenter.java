@@ -32,9 +32,12 @@ import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
+import cx.ring.model.ConversationElement;
 import cx.ring.model.DataTransfer;
+import cx.ring.model.HistoryCall;
 import cx.ring.model.RingError;
 import cx.ring.model.SipCall;
+import cx.ring.model.TextMessage;
 import cx.ring.model.TrustRequest;
 import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
@@ -47,7 +50,6 @@ import cx.ring.utils.FileUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
 import cx.ring.utils.VCardUtils;
-import ezvcard.VCard;
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
@@ -261,8 +263,12 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         getView().openFile(path);
     }
 
-    public void deleteFile(DataTransfer transfer) {
-        mConversationFacade.deleteFile(transfer);
+    public void deleteConversationItem(ConversationElement element) {
+        mConversationFacade.deleteConversationItem(element);
+    }
+
+    public void cancelMessage(TextMessage message) {
+        mConversationFacade.cancelMessage(message);
     }
 
     public void sendTrustRequest() {
