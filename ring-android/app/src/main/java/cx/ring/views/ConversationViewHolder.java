@@ -28,6 +28,7 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -52,6 +53,7 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
     public Surface surface = null;
     public long mCid = -1;
     public UiUpdater updater;
+    public LinearLayout mCallInfoLayout, mFileInfoLayout, mAudioInfoLayout;
 
     public ConversationViewHolder(ViewGroup v, ConversationAdapter.MessageType type) {
         super(v);
@@ -67,10 +69,13 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
             mHistTxt = v.findViewById(R.id.call_hist_txt);
             mHistDetailTxt = v.findViewById(R.id.call_details_txt);
             mPhoto = v.findViewById(R.id.call_icon);
+            mCallInfoLayout = v.findViewById(R.id.callInfoLayout);
+
         } else if (type == ConversationAdapter.MessageType.FILE_TRANSFER) {
             mMsgTxt = v.findViewById(R.id.call_hist_filename);
             mMsgDetailTxt = v.findViewById(R.id.file_details_txt);
             mLayout = v.findViewById(R.id.file_layout);
+            mFileInfoLayout = v.findViewById(R.id.fileInfoLayout);
             mAnswerLayout = v.findViewById(R.id.llAnswer);
             btnAccept = v.findViewById(R.id.btnAccept);
             btnRefuse = v.findViewById(R.id.btnRefuse);
@@ -89,6 +94,7 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
             btnAccept = v.findViewById(R.id.play);
             btnRefuse = v.findViewById(R.id.replay);
             mMsgTxt = v.findViewById(R.id.msg_txt);
+            mAudioInfoLayout = v.findViewById(R.id.audioInfoLayout);
             mMsgDetailTxt = v.findViewById(R.id.file_details_txt);
         } else if (type == ConversationAdapter.MessageType.CONTACT_EVENT) {
             mMsgTxt = v.findViewById(R.id.contact_event_txt);
