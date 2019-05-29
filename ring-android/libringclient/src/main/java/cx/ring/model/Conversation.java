@@ -251,19 +251,17 @@ public class Conversation {
         }
         return null;
     }
-    private DataTransfer removeConversationElement(long id) {
+
+    private boolean removeConversationElement(long id) {
         Iterator<ConversationElement> it = mAggregateHistory.iterator();
         while (it.hasNext()) {
             ConversationElement e = it.next();
-            if (e.getType() == ConversationElement.CEType.FILE) {
-                DataTransfer hft = (DataTransfer) e;
-                if (id == hft.getId()) {
-                    it.remove();
-                    return hft;
-                }
+            if (e != null && id == e.getId()) {
+                it.remove();
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
     public void clearHistory() {
@@ -311,8 +309,18 @@ public class Conversation {
     }
 
     public void removeFileTransfer(DataTransfer transfer) {
-        if (removeConversationElement(transfer.getId()) != null)
+        if (removeConversationElement(transfer.getId()))
             removedElementSubject.onNext(transfer);
+    }
+
+    public void removeMessage(TextMessage message) {
+        if (removeConversationElement(message.getId()))
+            removedElementSubject.onNext(message);
+    }
+
+    public void removeCallHistory(HistoryCall message) {
+        if (removeConversationElement(message.getId()))
+            removedElementSubject.onNext(message);
     }
 
     public void removeAll() {
