@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NavigableMap;
+import java.util.WeakHashMap;
 
 import javax.inject.Inject;
 
@@ -239,14 +240,38 @@ public class ConversationFacade {
         }).subscribeOn(Schedulers.io());
     }
 
-    public void deleteFile(DataTransfer transfer) {
+    public void deleteConversationItem(DataTransfer transfer) {
         File file = mDeviceRuntimeService.getConversationPath(transfer.getPeerId(), transfer.getStoragePath());
-        Completable.mergeArrayDelayError(
+        mDisposableBag.add(Completable.mergeArrayDelayError(
                         mHistoryService.deleteFileHistory(transfer.getId()),
                         Completable.fromAction(file::delete).subscribeOn(Schedulers.io()))
                 .andThen(startConversation(transfer.getAccountId(), transfer.getContactNumber()))
                 .subscribe(c -> c.removeFileTransfer(transfer),
-                        e -> Log.e(TAG, "Can't delete file transfer", e));
+                        e -> Log.e(TAG, "Can't delete file transfer", e)));
+    }
+
+    public void deleteConversationItem(TextMessage message) {
+        mDisposableBag.add(Completable.mergeArrayDelayError(
+                mHistoryService.deleteMessageHistory(message.getId()).subscribeOn(Schedulers.io()))
+                .andThen(startConversation(message.getAccount(), message.getContactNumber()))
+                .subscribe(c -> c.removeMessage(message),
+                        e -> Log.e(TAG, "Can't delete message", e)));
+    }
+
+    public void deleteConversationItem(HistoryCall callHistory) {
+        mDisposableBag.add(Completable.mergeArrayDelayError(
+                mHistoryService.deleteCallHistory(callHistory.getCallId()).subscribeOn(Schedulers.io()))
+                .andThen(startConversation(callHistory.getAccountID(), callHistory.getContactNumber()))
+                .subscribe(c -> c.removeCallHistory(callHistory),
+                        e -> Log.e(TAG, "Can't delete call history", e)));
+    }
+
+    public void cancelMessage(TextMessage message) {
+        mDisposableBag.add(Completable.mergeArrayDelayError(
+                mCallService.cancelMessage(message.getAccount(), message.getId()).subscribeOn(Schedulers.io()))
+                .andThen(startConversation(message.getAccount(), message.getContactNumber()))
+                .subscribe(c -> c.removeMessage(message),
+                        e -> Log.e(TAG, "Can't cancel message sending", e)));
     }
 
     private Single<Account> loadConversations(final Account account) {
@@ -427,7 +452,7 @@ public class ConversationFacade {
         mNotificationService.cancelFileNotification(id);
         DataTransfer transfer = mAccountService.getDataTransfer(id);
         if (transfer != null)
-            deleteFile(transfer);
+            deleteConversationItem(transfer);
     }
 
     public Completable removeConversation(String accountId, Uri contact) {
