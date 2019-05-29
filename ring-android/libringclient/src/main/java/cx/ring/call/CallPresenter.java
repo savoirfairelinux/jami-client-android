@@ -292,7 +292,12 @@ public class CallPresenter extends RootPresenter<CallView> {
             view.updateMenu();
             if (!mAudioOnly) {
                 mHardwareService.setPreviewSettings();
-                view.displayVideoSurface(true);
+                if(mDeviceRuntimeService.hasVideoPermission()) {
+                    view.displayVideoSurface(true, true);
+                }
+                else {
+                    view.displayVideoSurface(true, false);
+                }
                 if(permissionChanged) {
                     mHardwareService.switchInput(mSipCall.getCallId(), permissionChanged);
                     permissionChanged = false;
@@ -331,11 +336,17 @@ public class CallPresenter extends RootPresenter<CallView> {
 
     private void onVideoEvent(HardwareService.VideoEvent event) {
         Log.d(TAG, "VIDEO_EVENT: " + event.start + " " + event.callId + " " + event.w + "x" + event.h);
-
+        boolean videoPermissionGranted = mDeviceRuntimeService.hasVideoPermission();
         if (event.start) {
-            getView().displayVideoSurface(true);
+            if(videoPermissionGranted) {
+                getView().displayVideoSurface(true, true);
+            }
+            else {
+                getView().displayVideoSurface(true, false);
+
+            }
         } else if (mSipCall != null && mSipCall.getCallId().equals(event.callId)) {
-            getView().displayVideoSurface(event.started);
+            getView().displayVideoSurface(event.started, videoPermissionGranted && event.started);
             if (event.started) {
                 videoWidth = event.w;
                 videoHeight = event.h;
