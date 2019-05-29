@@ -111,6 +111,8 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     private MenuItem dialPadBtn = null;
     private boolean restartVideo = false;
+    private boolean restartPreview = false;
+
     private PowerManager.WakeLock mScreenWakeLock;
     private int mCurrentOrientation = 0;
 
@@ -242,8 +244,13 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     @Override
     public void onStart() {
         super.onStart();
-        if (restartVideo) {
-            displayVideoSurface(true);
+        if (restartVideo && restartPreview) {
+            displayVideoSurface(true, true);
+            restartVideo = false;
+            restartPreview = false;
+        }
+        else if (restartVideo) {
+            displayVideoSurface(true, false);
             restartVideo = false;
         }
     }
@@ -253,6 +260,9 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         super.onStop();
         if (binding.videoSurface.getVisibility() == View.VISIBLE) {
             restartVideo = true;
+        }
+        if (binding.previewContainer.getVisibility() == View.VISIBLE) {
+            restartPreview = true;
         }
     }
 
@@ -471,10 +481,9 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     @Override
-    public void displayVideoSurface(final boolean display) {
-        binding.videoSurface.setVisibility(display ? View.VISIBLE : View.GONE);
-        binding.previewContainer.setVisibility(mDeviceRuntimeService.hasVideoPermission() && display ? View.VISIBLE : View.GONE);
-
+    public void displayVideoSurface(final boolean displaySurface, final boolean displayPreview) {
+        binding.videoSurface.setVisibility(displaySurface ? View.VISIBLE : View.GONE);
+        binding.previewContainer.setVisibility(displayPreview ? View.VISIBLE : View.GONE);
         updateMenu();
     }
 
