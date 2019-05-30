@@ -28,6 +28,7 @@ import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
@@ -125,6 +126,7 @@ public class AvatarDrawable extends Drawable {
             color = ContextCompat.getColor(context, getAvatarColor(id));
             if (avatarText == null) {
                 placeholder = (VectorDrawable) context.getDrawable(PLACEHOLDER_ICON);
+                placeholder.setColorFilter(context.getResources().getColor(R.color.white), PorterDuff.Mode.SRC_IN);
             } else {
                 textPaint.setColor(Color.WHITE);
                 textPaint.setTypeface(Typeface.SANS_SERIF);
