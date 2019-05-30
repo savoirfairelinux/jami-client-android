@@ -28,6 +28,7 @@ import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
@@ -158,7 +159,7 @@ public class AvatarDrawable extends Drawable {
             canvas.drawText(avatarText, textStartXPoint, textStartYPoint, textPaint);
         } else {
             canvas.drawColor(color);
-            placeholder.setTint(Color.WHITE);
+            placeholder.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
             placeholder.draw(canvas);
         }
     }
