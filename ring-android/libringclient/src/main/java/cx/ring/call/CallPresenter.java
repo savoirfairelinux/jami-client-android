@@ -138,7 +138,7 @@ public class CallPresenter extends RootPresenter<CallView> {
                 .subscribe(call -> {
                     contactUpdate(call);
                     confUpdate(call);
-                }, e -> finish()));
+                }, e -> Log.e(TAG, "Error with call presenter, initOutGoing: " + e.getMessage())));
     }
 
     public void initIncoming(String confId) {
@@ -274,7 +274,7 @@ public class CallPresenter extends RootPresenter<CallView> {
             mSipCall = call;
             mCompositeDisposable.add(mContactService.observeContact(call.getAccount(), call.getContact())
                     .observeOn(mUiScheduler)
-                    .subscribe(c -> getView().updateContactBubble(c)));
+                    .subscribe(c -> getView().updateContactBubble(c), e -> Log.e(TAG, e.getMessage())));
         }
     }
 
