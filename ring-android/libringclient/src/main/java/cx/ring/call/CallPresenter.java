@@ -81,6 +81,9 @@ public class CallPresenter extends RootPresenter<CallView> {
     public void cameraPermissionChanged(boolean isGranted) {
         if (isGranted && mHardwareService.isVideoAvailable()) {
             mHardwareService.initVideo();
+            if (mSipCall != null) {
+                mHardwareService.switchInput(mSipCall.getCallId());
+            }
         }
     }
 
@@ -291,10 +294,6 @@ public class CallPresenter extends RootPresenter<CallView> {
             if (!mAudioOnly) {
                 mHardwareService.setPreviewSettings();
                 view.displayVideoSurface(true);
-                if(mDeviceRuntimeService.hasVideoPermission()) {
-                    mHardwareService.switchInput(mSipCall.getCallId());
-                    mHardwareService.switchInput(mSipCall.getCallId());
-                }
             }
             if (timeUpdateTask != null)
                 timeUpdateTask.dispose();
