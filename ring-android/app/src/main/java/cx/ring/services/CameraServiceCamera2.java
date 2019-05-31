@@ -86,27 +86,30 @@ class CameraServiceCamera2 extends CameraService {
         if (manager == null)
             return;
         try {
+            cameras.clear();
             for (String id : manager.getCameraIdList()) {
                 currentCamera = id;
                 CameraCharacteristics cc = manager.getCameraCharacteristics(id);
                 int facing = cc.get(CameraCharacteristics.LENS_FACING);
                 if (facing == CameraCharacteristics.LENS_FACING_FRONT) {
                     cameraFront = id;
-                } else if (facing == CameraCharacteristics.LENS_FACING_BACK) {
-                    cameraBack = id;
-                } else if (facing == CameraCharacteristics.LENS_FACING_EXTERNAL) {
-                    cameraExternal = id;
                 }
+                cameras.add(id);
                 RingserviceJNI.addVideoDevice(id);
             }
             if (!TextUtils.isEmpty(cameraFront))
                 currentCamera = cameraFront;
-            else if (!TextUtils.isEmpty(cameraBack))
-                currentCamera = cameraBack;
-            else if (!TextUtils.isEmpty(cameraExternal))
-                currentCamera = cameraExternal;
-            if (currentCamera != null)
+            else if (!cameras.isEmpty())
+                currentCamera = cameras.get(0);
+
+            if (currentCamera != null) {
+                for (int i=0; i<cameras.size(); i++)
+                    if (cameras.get(i) == currentCamera) {
+                        currentCameraIndex = i;
+                        break;
+                    }
                 RingserviceJNI.setDefaultDevice(currentCamera);
+            }
         } catch (Exception e) {
             Log.w(TAG, "initVideo: can't enumerate devices", e);
         }
