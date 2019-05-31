@@ -87,7 +87,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void audioPermissionChanged(boolean isGranted) {
-        if(isGranted && mHardwareService.hasMicrophone()) {
+        if (isGranted && mHardwareService.hasMicrophone()) {
             mCallService.setAudioPlugin(mCallService.getCurrentAudioOutputPlugin());
         }
     }
@@ -140,7 +140,10 @@ public class CallPresenter extends RootPresenter<CallView> {
                 .subscribe(call -> {
                     contactUpdate(call);
                     confUpdate(call);
-                }, e -> finish()));
+                }, e -> {
+                    hangupCall();
+                    Log.e(TAG, "Error with initOutgoing: " + e.getMessage());
+                }));
     }
 
     public void initIncoming(String confId) {
@@ -150,7 +153,10 @@ public class CallPresenter extends RootPresenter<CallView> {
                 .subscribe(call -> {
                     contactUpdate(call);
                     confUpdate(call);
-                }, e -> finish()));
+                }, e -> {
+                    hangupCall();
+                    Log.e(TAG, "Error with initIncoming: " + e.getMessage());
+                }));
     }
 
     public void prepareOptionMenu() {
@@ -276,7 +282,7 @@ public class CallPresenter extends RootPresenter<CallView> {
             mSipCall = call;
             mCompositeDisposable.add(mContactService.observeContact(call.getAccount(), call.getContact())
                     .observeOn(mUiScheduler)
-                    .subscribe(c -> getView().updateContactBubble(c)));
+                    .subscribe(c -> getView().updateContactBubble(c), e -> Log.e(TAG, e.getMessage())));
         }
     }
 
