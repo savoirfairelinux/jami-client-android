@@ -516,9 +516,14 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     public void switchInput(String id) {
         Log.w(TAG, "switchInput " + id);
         String camId = cameraService.switchInput();
-        final StringMap map = cameraService.getNativeParams(camId).toMap();
-        final String uri = "camera://" + camId;
-        switchInput(id, uri, map);
+        try {
+            final StringMap map = cameraService.getNativeParams(camId).toMap();
+            final String uri = "camera://" + camId;
+            switchInput(id, uri, map);
+        }
+        catch(Exception e) {
+            Log.e(TAG, "Error with hardware service, switchInput: " + e.getMessage());
+        }
     }
 
     @Override
