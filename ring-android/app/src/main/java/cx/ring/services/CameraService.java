@@ -19,17 +19,16 @@
  */
 package cx.ring.services;
 
-import android.content.res.Configuration;
 import android.graphics.Point;
 import android.hardware.Camera;
 import android.view.Surface;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import cx.ring.daemon.IntVect;
 import cx.ring.daemon.Ringservice;
-import cx.ring.daemon.RingserviceJNI;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.UintVect;
 import cx.ring.utils.Log;
@@ -41,22 +40,20 @@ abstract public class CameraService {
     final Map<String, DeviceParams> mNativeParams = new HashMap<>();
 
     String cameraFront = null;
-    String cameraBack = null;
-    String cameraExternal = null;
+    final ArrayList<String> cameras = new ArrayList<>();
+
+    int currentCameraIndex = 0;
     String currentCamera = null;
     private VideoParams previewParams = null;
 
     public String switchInput() {
-        String camId;
-        if (cameraExternal != null && currentCamera.equals(cameraBack)) {
-            camId = cameraExternal;
-        } else if (currentCamera.equals(cameraFront)) {
-            camId = cameraBack;
+        if (!cameras.isEmpty()) {
+            currentCameraIndex = (currentCameraIndex + 1) % cameras.size();
+            currentCamera = cameras.get(currentCameraIndex);
         } else {
-            camId = cameraFront;
+            currentCamera = null;
         }
-        currentCamera = camId;
-        return camId;
+        return currentCamera;
     }
 
     public String getCurrentCamera() {
@@ -64,19 +61,18 @@ abstract public class CameraService {
     }
 
     public VideoParams getParams(String camId) {
-        VideoParams videoParams;
         if (camId != null) {
-            videoParams = mParams.get(camId);
+            return mParams.get(camId);
         } else if (previewParams != null) {
-            videoParams = previewParams;
-        } else if (mParams.size() == 2) {
+            return previewParams;
+        } else if (cameraFront != null) {
             currentCamera = cameraFront;
-            videoParams = mParams.get(cameraFront);
-        } else {
-            currentCamera = cameraBack;
-            videoParams = mParams.get(cameraBack);
+            return mParams.get(cameraFront);
+        } else if (!cameras.isEmpty()) {
+            currentCamera = cameras.get(0);
+            return mParams.get(currentCamera);
         }
-        return videoParams;
+        return null;
     }
 
     public void setPreviewParams(VideoParams params) {

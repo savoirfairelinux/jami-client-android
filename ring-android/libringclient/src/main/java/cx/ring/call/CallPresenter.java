@@ -52,6 +52,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     private SipCall mSipCall;
     private boolean mOnGoingCall = false;
     private boolean mAudioOnly = true;
+    private boolean permissionChanged = false;
 
     private int videoWidth = -1;
     private int videoHeight = -1;
@@ -81,6 +82,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     public void cameraPermissionChanged(boolean isGranted) {
         if (isGranted && mHardwareService.isVideoAvailable()) {
             mHardwareService.initVideo();
+            permissionChanged = true;
         }
     }
 
@@ -183,7 +185,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void switchVideoInputClick() {
-        mHardwareService.switchInput(mSipCall.getCallId());
+        mHardwareService.switchInput(mSipCall.getCallId(), false);
         getView().switchCameraIcon(mHardwareService.isPreviewFromFrontCamera());
     }
 
@@ -244,7 +246,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void displayChanged() {
-        mHardwareService.switchInput(mSipCall.getCallId());
+        mHardwareService.switchInput(mSipCall.getCallId(), false);
     }
 
     public void layoutChanged() {
@@ -291,9 +293,9 @@ public class CallPresenter extends RootPresenter<CallView> {
             if (!mAudioOnly) {
                 mHardwareService.setPreviewSettings();
                 view.displayVideoSurface(true);
-                if(mDeviceRuntimeService.hasVideoPermission()) {
-                    mHardwareService.switchInput(mSipCall.getCallId());
-                    mHardwareService.switchInput(mSipCall.getCallId());
+                if(permissionChanged) {
+                    mHardwareService.switchInput(mSipCall.getCallId(), permissionChanged);
+                    permissionChanged = false;
                 }
             }
             if (timeUpdateTask != null)

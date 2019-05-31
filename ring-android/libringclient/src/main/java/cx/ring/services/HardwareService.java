@@ -122,7 +122,7 @@ public abstract class HardwareService {
 
     public abstract void removePreviewVideoSurface();
 
-    public abstract void switchInput(String id);
+    public abstract void switchInput(String id, boolean setDefaultCamera);
 
     public abstract void restartCamera(String callId);
 
