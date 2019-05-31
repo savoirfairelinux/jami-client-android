@@ -231,45 +231,21 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        boolean granted;
+        if (requestCode != REQUEST_PERMISSION_INCOMING && requestCode != REQUEST_PERMISSION_OUTGOING)
+            return;
         for (int i = 0, n = permissions.length; i < n; i++) {
             boolean audioGranted = mDeviceRuntimeService.hasAudioPermission();
-            granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
+            boolean granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
             switch (permissions[i]) {
                 case Manifest.permission.CAMERA:
-                    switch (requestCode) {
-                        case REQUEST_PERMISSION_INCOMING:
-                            presenter.cameraPermissionChanged(granted);
-                            if (audioGranted) {
-                                initializeCall(true);
-                            }
-                            break;
-                        case REQUEST_PERMISSION_OUTGOING:
-                            presenter.cameraPermissionChanged(granted);
-                            if (audioGranted) {
-                                initializeCall(false);
-                            }
-                            break;
-                        default:
-                            break;
+                    presenter.cameraPermissionChanged(granted);
+                    if (audioGranted) {
+                        initializeCall(requestCode == REQUEST_PERMISSION_INCOMING);
                     }
                     break;
                 case Manifest.permission.RECORD_AUDIO:
-                    switch (requestCode) {
-                        case REQUEST_PERMISSION_INCOMING:
-                            granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
-                            presenter.audioPermissionChanged(granted);
-                            initializeCall(true);
-                            break;
-                        case REQUEST_PERMISSION_OUTGOING:
-                            granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
-                            presenter.audioPermissionChanged(granted);
-                            initializeCall(false);
-                            break;
-                        default:
-                            break;
-                    }
-                default:
+                    presenter.audioPermissionChanged(granted);
+                    initializeCall(requestCode == REQUEST_PERMISSION_INCOMING);
                     break;
             }
         }
