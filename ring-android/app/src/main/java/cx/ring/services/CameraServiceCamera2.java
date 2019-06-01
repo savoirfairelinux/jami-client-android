@@ -164,8 +164,8 @@ class CameraServiceCamera2 extends CameraService {
         }
     }
 
-    private Pair<MediaCodec, Surface> openCameraWithEncoder(VideoParams videoParams, String mimeType, Handler handler) {
-        final int BITRATE = 112 * 8 * 1024;
+    private Pair<MediaCodec, Surface> openCameraWithEncoder(VideoParams videoParams, String mimeType, Handler handler, boolean isHd) {
+        final int BITRATE = isHd ? 192 * 8 * 1024 : 100 * 8 * 1024;
         MediaFormat format = MediaFormat.createVideoFormat(mimeType, videoParams.width, videoParams.height);
         format.setInteger(MediaFormat.KEY_MAX_INPUT_SIZE, 0);
         format.setInteger(MediaFormat.KEY_BIT_RATE, BITRATE);
@@ -320,7 +320,7 @@ class CameraServiceCamera2 extends CameraService {
         return range == null ? new Range<>(FPS_TARGET, FPS_TARGET) : range;
     }
 
-    public void openCamera(@NonNull Context context, VideoParams videoParams, TextureView surface, CameraListener listener, boolean hw_accel) {
+    public void openCamera(@NonNull Context context, VideoParams videoParams, TextureView surface, CameraListener listener, boolean hw_accel, boolean is_hd) {
         CameraDevice camera = previewCamera;
         if (camera != null) {
             camera.close();
@@ -349,7 +349,7 @@ class CameraServiceCamera2 extends CameraService {
             SurfaceTexture texture = view.getSurfaceTexture();
             Surface s = new Surface(texture);
 
-            final Pair<MediaCodec, Surface> codec = hw_accel ? openCameraWithEncoder(videoParams, MediaFormat.MIMETYPE_VIDEO_AVC, handler) : null;
+            final Pair<MediaCodec, Surface> codec = hw_accel ? openCameraWithEncoder(videoParams, MediaFormat.MIMETYPE_VIDEO_AVC, handler, is_hd) : null;
 
             final List<Surface> targets = new ArrayList<>(2);
             targets.add(s);

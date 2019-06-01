@@ -84,7 +84,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         settings.setAllowPushNotifications(appPrefs.getBoolean(RING_PUSH_NOTIFICATIONS, false));
         settings.setAllowPersistentNotification(appPrefs.getBoolean(RING_PERSISTENT_NOTIFICATION, false));
         settings.setHD(appPrefs.getBoolean(RING_HD, false));
-        settings.setHwEncoding(appPrefs.getBoolean(RING_HW_ENCODING, DeviceUtils.isTv(mContext)));
+        settings.setHwEncoding(appPrefs.getBoolean(RING_HW_ENCODING, true));
         return settings;
     }
 
