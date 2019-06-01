@@ -360,6 +360,7 @@ class CameraServiceCamera2 extends CameraService {
                 targets.add(tmpReader.getSurface());
             }
             final ImageReader reader = tmpReader;
+            final boolean[] codecStarted = {false};
 
             manager.openCamera(videoParams.id, new CameraDevice.StateCallback() {
                 @Override
@@ -392,6 +393,7 @@ class CameraServiceCamera2 extends CameraService {
                                         public void onCaptureStarted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, long timestamp, long frameNumber) {
                                             if (frameNumber == 1) {
                                                 codec.first.start();
+                                                codecStarted[0] = true;
                                             }
                                         }
                                     } : null, handler);
@@ -409,6 +411,11 @@ class CameraServiceCamera2 extends CameraService {
                                 listener.onError();
                                 Log.w(TAG, "onConfigureFailed");
                             }
+
+                            @Override
+                            public void onClosed(@NonNull CameraCaptureSession session) {
+                                Log.w(TAG, "CameraCaptureSession onClosed");
+                            }
                         }, handler);
                     } catch (Exception e) {
                         Log.w(TAG, "onOpened error:", e);
@@ -418,28 +425,27 @@ class CameraServiceCamera2 extends CameraService {
                 @Override
                 public void onDisconnected(@NonNull CameraDevice camera) {
                     Log.w(TAG, "onDisconnected");
-                    if (previewCamera == camera) {
-                        previewCamera = null;
-                    }
                     camera.close();
-                    if (codec != null && codec.first != null) {
-                        if (currentCodec == codec.first) {
-                            currentCodec = null;
-                        }
-                        codec.first.signalEndOfInputStream();
-                        codec.first.release();
-                    }
+                    listener.onError();
                 }
 
                 @Override
                 public void onError(@NonNull CameraDevice camera, int error) {
                     Log.w(TAG, "onError: " + error);
+                    camera.close();
+                    listener.onError();
+                }
+
+                @Override
+                public void onClosed(@NonNull CameraDevice camera) {
+                    Log.w(TAG, "onClosed");
                     if (previewCamera == camera)
                         previewCamera = null;
                     if (codec != null && codec.first != null) {
+                        if (codecStarted[0])
+                            codec.first.signalEndOfInputStream();
                         codec.first.release();
                     }
-                    listener.onError();
                 }
             }, handler);
         } catch (SecurityException e) {
@@ -496,8 +502,10 @@ class CameraServiceCamera2 extends CameraService {
     @Override
     public void closeCamera() {
         CameraDevice camera = previewCamera;
-        previewCamera = null;
-        camera.close();
+        if (camera != null) {
+            previewCamera = null;
+            camera.close();
+        }
     }
 
     @Override
