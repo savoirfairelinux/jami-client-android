@@ -48,6 +48,7 @@ import cx.ring.daemon.IntVect;
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.UintVect;
+import cx.ring.model.SipCall;
 import cx.ring.utils.BluetoothWrapper;
 import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.Log;
@@ -65,6 +66,8 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
 
     private static final String TAG = HardwareServiceImpl.class.getSimpleName();
     private static WeakReference<TextureView> mCameraPreviewSurface = new WeakReference<>(null);
+    private static WeakReference<SipCall> mCameraPreviewCall = new WeakReference<>(null);
+
     private static final Map<String, WeakReference<SurfaceHolder>> videoSurfaces = Collections.synchronizedMap(new HashMap<>());
     private final Map<String, Shm> videoInputs = new HashMap<>();
     private final Context mContext;
@@ -366,7 +369,6 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
 
     @Override
     public void startCapture(@Nullable String camId) {
-        Log.w(TAG, "startCapture: call " + camId);
         mShouldCapture = true;
         if (mIsCapturing && mCapturingId != null && mCapturingId.equals(camId)) {
             return;
@@ -385,6 +387,12 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
             videoEvents.onNext(event);
             return;
         }
+        final SipCall call = mCameraPreviewCall.get();
+        if (call != null) {
+            call.setDetails(Ringservice.getCallDetails(call.getCallId()).toNative());
+            videoParams.codec = call.getVideoCodec();
+        }
+        Log.w(TAG, "startCapture: call " + camId + " " + videoParams.codec);
 
         mIsCapturing = true;
         mCapturingId = videoParams.id;
@@ -469,7 +477,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     }
 
     @Override
-    public void addPreviewVideoSurface(Object oholder) {
+    public void addPreviewVideoSurface(Object oholder, SipCall call) {
         if (!(oholder instanceof TextureView)) {
             return;
         }
@@ -478,6 +486,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         if (mCameraPreviewSurface.get() == oholder)
             return;
         mCameraPreviewSurface = new WeakReference<>(holder);
+        mCameraPreviewCall = new WeakReference<>(call);
         if (mShouldCapture && !mIsCapturing) {
             startCapture(mCapturingId);
         }

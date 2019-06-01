@@ -116,7 +116,7 @@ public abstract class HardwareService {
 
     public abstract void addVideoSurface(String id, Object holder);
 
-    public abstract void addPreviewVideoSurface(Object holder);
+    public abstract void addPreviewVideoSurface(Object holder, SipCall call);
 
     public abstract void removeVideoSurface(String id);
 

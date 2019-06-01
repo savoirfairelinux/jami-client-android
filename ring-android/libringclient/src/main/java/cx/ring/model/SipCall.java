@@ -40,6 +40,8 @@ public class SipCall {
     public final static String KEY_PEER_HOLDING = "PEER_HOLDING";
     public final static String KEY_AUDIO_MUTED = "PEER_NUMBER";
     public final static String KEY_VIDEO_MUTED = "VIDEO_MUTED";
+    public final static String KEY_AUDIO_CODEC = "AUDIO_CODEC";
+    public final static String KEY_VIDEO_CODEC = "VIDEO_CODEC";
 
     private final String mCallID;
     private final String mAccount;
@@ -53,6 +55,8 @@ public class SipCall {
     private long timestampStart = 0;
     private long timestampEnd = 0;
     private boolean missed = true;
+    private String mAudioCodec;
+    private String mVideoCodec;
 
     private int mCallType;
     private State mCallState = State.NONE;
@@ -103,6 +107,8 @@ public class SipCall {
         isAudioMuted = "true".equals(details.get(KEY_AUDIO_MUTED));
         isVideoMuted = "true".equals(details.get(KEY_VIDEO_MUTED));
         isAudioOnly = "true".equals(details.get(KEY_AUDIO_ONLY));
+        mAudioCodec = details.get(KEY_AUDIO_CODEC);
+        mVideoCodec = details.get(KEY_VIDEO_CODEC);
     }
 
     public long getDuration() {
@@ -113,6 +119,13 @@ public class SipCall {
         isVideoMuted = mute;
     }
 
+    public String getVideoCodec() {
+        return mVideoCodec;
+    }
+
+    public String getAudioCodec() {
+        return mAudioCodec;
+    }
     public interface Direction {
         int INCOMING = 0;
         int OUTGOING = 1;
