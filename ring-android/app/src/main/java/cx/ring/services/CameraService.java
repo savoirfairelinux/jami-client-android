@@ -21,6 +21,7 @@ package cx.ring.services;
 
 import android.graphics.Point;
 import android.hardware.Camera;
+import android.media.MediaFormat;
 import android.view.Surface;
 
 import java.util.ArrayList;
@@ -175,6 +176,7 @@ abstract public class CameraService {
         public int height;
         public int rate;
         public int rotation;
+        public String codec;
 
         public VideoParams(String id, int format, int width, int height, int rate) {
             this.id = id;
@@ -182,6 +184,17 @@ abstract public class CameraService {
             this.width = width;
             this.height = height;
             this.rate = rate;
+        }
+
+        public String getCodec() {
+            switch (codec) {
+                case "H264": return MediaFormat.MIMETYPE_VIDEO_AVC;
+                case "H265": return MediaFormat.MIMETYPE_VIDEO_HEVC;
+                case "VP8": return MediaFormat.MIMETYPE_VIDEO_VP8;
+                case "VP9": return MediaFormat.MIMETYPE_VIDEO_VP9;
+                case "MP4V-ES": return MediaFormat.MIMETYPE_VIDEO_MPEG4;
+            }
+            return codec;
         }
     }
 

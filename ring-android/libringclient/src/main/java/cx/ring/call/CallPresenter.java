@@ -229,7 +229,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void previewVideoSurfaceCreated(Object holder) {
-        mHardwareService.addPreviewVideoSurface(holder);
+        mHardwareService.addPreviewVideoSurface(holder, mSipCall);
         //mHardwareService.startCapture(null);
     }
 

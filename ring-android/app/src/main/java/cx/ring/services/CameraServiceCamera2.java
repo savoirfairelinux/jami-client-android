@@ -227,9 +227,9 @@ class CameraServiceCamera2 extends CameraService {
                 };
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    codec.setCallback(callback, handler);
+                    setCodecCallback(codec, callback, handler);
                 } else {
-                    codec.setCallback(callback);
+                    setCodecCallback(codec, callback);
                 }
             } catch (Exception e) {
                 Log.e(TAG, "Can't open codec", e);
@@ -238,6 +238,15 @@ class CameraServiceCamera2 extends CameraService {
             }
         }
         return new Pair<>(codec, encoderInput);
+    }
+
+    private void setCodecCallback(@NonNull MediaCodec codec, MediaCodec.Callback callback) {
+        codec.setCallback(callback);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void setCodecCallback(@NonNull MediaCodec codec, MediaCodec.Callback callback, Handler handler) {
+        codec.setCallback(callback, handler);
     }
 
     /**
@@ -349,7 +358,7 @@ class CameraServiceCamera2 extends CameraService {
             SurfaceTexture texture = view.getSurfaceTexture();
             Surface s = new Surface(texture);
 
-            final Pair<MediaCodec, Surface> codec = hw_accel ? openCameraWithEncoder(videoParams, MediaFormat.MIMETYPE_VIDEO_AVC, handler) : null;
+            final Pair<MediaCodec, Surface> codec = hw_accel ? openCameraWithEncoder(videoParams, videoParams.getCodec(), handler, is_hd) : null;
 
             final List<Surface> targets = new ArrayList<>(2);
             targets.add(s);
