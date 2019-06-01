@@ -400,7 +400,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                 public void onError() {
                     stopCapture();
                 }
-            }, mPreferenceService.getUserSettings().isHwEncoding());
+            }, mPreferenceService.getUserSettings().isHwEncoding(), mPreferenceService.getUserSettings().isHD());
         });
         cameraService.setPreviewParams(videoParams);
         VideoEvent event = new VideoEvent();
