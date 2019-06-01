@@ -165,7 +165,7 @@ class CameraServiceCamera2 extends CameraService {
     }
 
     private Pair<MediaCodec, Surface> openCameraWithEncoder(VideoParams videoParams, String mimeType, Handler handler) {
-        final int BITRATE = 1600 * 1024;
+        final int BITRATE = 112 * 8 * 1024;
         MediaFormat format = MediaFormat.createVideoFormat(mimeType, videoParams.width, videoParams.height);
         format.setInteger(MediaFormat.KEY_MAX_INPUT_SIZE, 0);
         format.setInteger(MediaFormat.KEY_BIT_RATE, BITRATE);
@@ -204,9 +204,15 @@ class CameraServiceCamera2 extends CameraService {
 
                     @Override
                     public void onOutputBufferAvailable(@NonNull MediaCodec codec, int index, @NonNull MediaCodec.BufferInfo info) {
-                        ByteBuffer buffer = codec.getOutputBuffer(index);
-                        RingserviceJNI.captureVideoPacket(buffer, info.size, info.offset, (info.flags & MediaCodec.BUFFER_FLAG_KEY_FRAME) != 0, info.presentationTimeUs, videoParams.rotation);
-                        codec.releaseOutputBuffer(index, false);
+                        try {
+                            if ((info.flags & MediaCodec.BUFFER_FLAG_END_OF_STREAM) == 0) {
+                                ByteBuffer buffer = codec.getOutputBuffer(index);
+                                RingserviceJNI.captureVideoPacket(buffer, info.size, info.offset, (info.flags & MediaCodec.BUFFER_FLAG_KEY_FRAME) != 0, info.presentationTimeUs, videoParams.rotation);
+                                codec.releaseOutputBuffer(index, false);
+                            }
+                        } catch (IllegalStateException e) {
+                            Log.e(TAG, "MediaCodec can't process buffer", e);
+                        }
                     }
 
                     @Override
