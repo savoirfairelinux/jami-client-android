@@ -171,7 +171,7 @@ class CameraServiceCamera2 extends CameraService {
         format.setInteger(MediaFormat.KEY_BIT_RATE, BITRATE);
         format.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface);
         if (Build.VERSION.SDK_INT != Build.VERSION_CODES.LOLLIPOP)
-            format.setInteger(MediaFormat.KEY_FRAME_RATE, 30);
+            format.setInteger(MediaFormat.KEY_FRAME_RATE, 24);
         /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             format.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, -1);
             format.setInteger(MediaFormat.KEY_INTRA_REFRESH_PERIOD, 5);
@@ -185,7 +185,7 @@ class CameraServiceCamera2 extends CameraService {
         //listSupportedCodecs(codecs);
         String codecName = codecs.findEncoderForFormat(format);
 
-        format.setInteger(MediaFormat.KEY_FRAME_RATE, 30);
+        format.setInteger(MediaFormat.KEY_FRAME_RATE, 24);
 
         Surface encoderInput = null;
         MediaCodec codec = null;
