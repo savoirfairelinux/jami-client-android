@@ -64,9 +64,7 @@ public class ShareFragment extends BaseSupportFragment<SharePresenter> implement
     @BindString(R.string.share_via)
     protected String mShareVia;
 
-
     private String mUriToShow;
-    private int mQRCodeSize = 0;
     private boolean isShareLocked = false;
 
     @Override
@@ -82,15 +80,7 @@ public class ShareFragment extends BaseSupportFragment<SharePresenter> implement
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         setHasOptionsMenu(true);
-
-        mQrImage.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
-            mQRCodeSize = mQrImage.getMeasuredWidth();
-
-            // when view is ready, we search for contact infos to display
-            presenter.loadContactInformation();
-        });
     }
 
     @Override
@@ -104,7 +94,7 @@ public class ShareFragment extends BaseSupportFragment<SharePresenter> implement
         switch (item.getItemId()) {
             case R.id.menu_qr_share:
                 if (!isShareLocked) {
-                    shareRingAccount();
+                    shareAccount();
                     return true;
                 } else {
                     return false;
@@ -115,14 +105,13 @@ public class ShareFragment extends BaseSupportFragment<SharePresenter> implement
     }
 
     @OnClick(R.id.share_button)
-    public void shareClicked(View view) {
+    void shareClicked(View view) {
         if(!isShareLocked) {
-            shareRingAccount();
+            shareAccount();
         }
     }
 
-
-    public void shareRingAccount() {
+    private void shareAccount() {
         if (!TextUtils.isEmpty(mUriToShow)) {
             Intent sharingIntent = new Intent(Intent.ACTION_SEND);
             sharingIntent.setType("text/plain");
@@ -140,7 +129,7 @@ public class ShareFragment extends BaseSupportFragment<SharePresenter> implement
             return;
         }
 
-        if (qrCodeData == null || mQRCodeSize <= 0) {
+        if (qrCodeData == null) {
             mQrImage.setVisibility(View.INVISIBLE);
             mShareInstruction.setText(mShareMessageNoAccount);
         } else {
@@ -152,10 +141,6 @@ public class ShareFragment extends BaseSupportFragment<SharePresenter> implement
         }
 
         mUriToShow = viewModel.getAccountShareUri();
-        if (TextUtils.isEmpty(mUriToShow)) {
-            isShareLocked = true;
-        } else {
-            isShareLocked = false;
-        }
+        isShareLocked = TextUtils.isEmpty(mUriToShow);
     }
 }

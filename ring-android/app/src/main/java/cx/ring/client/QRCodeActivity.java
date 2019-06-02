@@ -22,7 +22,6 @@ package cx.ring.client;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.view.View;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -47,36 +46,28 @@ public class QRCodeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrcode);
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
+
         ViewPager viewPager = findViewById(R.id.view_pager);
-        viewPager.setAdapter(sectionsPagerAdapter);
+        viewPager.setAdapter(new SectionsPagerAdapter(this, getSupportFragmentManager()));
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
 
         Toolbar toolbar = findViewById(R.id.qrToolbar);
-
         setSupportActionBar(toolbar);
         ActionBar supportActionBar = getSupportActionBar();
-
-
         if (supportActionBar != null) {
             supportActionBar.setDisplayHomeAsUpEnabled(true);
             supportActionBar.setDisplayShowHomeEnabled(true);
-
         }
-
-        toolbar.setNavigationOnClickListener((View v) ->
-                finish());
+        toolbar.setNavigationOnClickListener(v -> finish());
     }
 
-
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
+    class SectionsPagerAdapter extends FragmentPagerAdapter {
         @StringRes
         private final int[] TAB_TITLES = new int[]{R.string.tab_code, R.string.tab_scan};
         private final Context mContext;
 
-        public SectionsPagerAdapter(Context context, FragmentManager fm) {
+        SectionsPagerAdapter(Context context, FragmentManager fm) {
             super(fm);
             mContext = context;
         }
@@ -91,7 +82,6 @@ public class QRCodeActivity extends AppCompatActivity {
                 default:
                     return null;
             }
-
         }
 
         @Nullable
@@ -102,8 +92,7 @@ public class QRCodeActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 2 total pages.
-            return 2;
+            return TAB_TITLES.length;
         }
     }
 

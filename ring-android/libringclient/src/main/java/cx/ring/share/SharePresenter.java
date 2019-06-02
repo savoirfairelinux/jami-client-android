@@ -49,9 +49,6 @@ public class SharePresenter extends RootPresenter<GenericView<ShareViewModel>> {
                 .subscribe(this::loadContactInformation));
     }
 
-    public void loadContactInformation() {
-        loadContactInformation(new ShareViewModel(mAccountService.getCurrentAccount()));
-    }
     private void loadContactInformation(ShareViewModel model) {
         GenericView<ShareViewModel> view = getView();
         if (view != null) {
