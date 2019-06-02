@@ -67,7 +67,8 @@ public class ProfileCreationPresenter extends RootPresenter<ProfileCreationView>
     }
 
     public void fullNameUpdated(String fullName) {
-        mAccountCreationModel.setFullName(fullName);
+        if (mAccountCreationModel != null)
+            mAccountCreationModel.setFullName(fullName);
     }
 
     public void photoUpdated(Single<Object> bitmap) {

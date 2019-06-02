@@ -150,7 +150,7 @@ abstract public class CameraService {
     }
 
     public boolean isPreviewFromFrontCamera() {
-        return mNativeParams.size() == 1 || currentCamera.equals(cameraFront);
+        return mNativeParams.size() == 1 || (currentCamera != null && currentCamera.equals(cameraFront));
     }
 
     public Map<String, StringMap> getPreviewSettings() {
