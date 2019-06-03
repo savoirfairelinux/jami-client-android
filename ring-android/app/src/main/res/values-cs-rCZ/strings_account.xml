@@ -7,7 +7,6 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Přidat účet Jami</string>
   <string name="add_sip_account_title">Přidat účet SIP</string>
-  <string name="ring_account_default_name">Účet Ring %1$s</string>
   <string name="prompt_alias">Přezdívka</string>
   <string name="prompt_hostname">Hostitelské jméno</string>
   <string name="prompt_username">Uživatelské jméno</string>
@@ -114,7 +113,6 @@ Svůj účet můžete upravit později</string>
   <string name="error_password_char_count">Nejméně 6 znaků</string>
   <string name="error_passwords_not_equals">Hesla se neshodují</string>
   <string name="export_account_wait_title">Počkejte prosím…</string>
-  <string name="export_account_wait_message">Zveřejňují se informace o novém účtu</string>
   <string name="account_export_file">Zálohovat účet</string>
   <string name="account_export_end_decryption_message">Zadaným heslem nebylo možné váš účet odemknout.</string>
   <string name="account_export_end_network_title">Chyba sítě</string>

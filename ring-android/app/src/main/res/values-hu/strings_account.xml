@@ -7,7 +7,6 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Jami fiók hozzáadása</string>
   <string name="add_sip_account_title">SIP fiók hozzáadása</string>
-  <string name="ring_account_default_name">Jami fiók: %1$s</string>
   <string name="prompt_alias">Álnév</string>
   <string name="prompt_hostname">Kiszolgálónév</string>
   <string name="prompt_username">Felhasználónév</string>
@@ -116,7 +115,6 @@
   <string name="error_password_char_count">Legalább 6 karakter</string>
   <string name="error_passwords_not_equals">A jelszók nem egyeznek</string>
   <string name="export_account_wait_title">Kérem várjon…</string>
-  <string name="export_account_wait_message">Új fiók információk közzététele</string>
   <string name="account_export_file">Fiók biztonsági mentése</string>
   <string name="account_export_end_decryption_message">Nem sikerült feloldani fiókját a megadott jelszó használatával.</string>
   <string name="account_export_end_network_title">Hálózati hiba</string>
@@ -147,6 +145,7 @@
   <string name="account_sip_success_title">SIP-fiók bejegyzett</string>
   <string name="account_sip_success_message">Sikeresen bejegyezte a SIP-fiókját.</string>
   <string name="account_sip_register_anyway">Bejegyeztetés egyébként</string>
+  <string name="account_link_button">Csatlakozás a hálózatról</string>
   <string name="account_link_prompt_pin">PIN-kód megadása</string>
   <string name="account_new_button">Jami fiók létrehozása</string>
   <string name="account_link_export_button">Másik eszköz összekapcsolása ehhez a fiókhoz</string>

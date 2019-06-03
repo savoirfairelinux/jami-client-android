@@ -7,7 +7,6 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">添加Jami账户</string>
   <string name="add_sip_account_title">添加SIP帐户</string>
-  <string name="ring_account_default_name">Ring帐户%1$s</string>
   <string name="prompt_alias">别名</string>
   <string name="prompt_hostname">主机名</string>
   <string name="prompt_username">用户名</string>
@@ -113,7 +112,6 @@
   <string name="error_password_char_count">最少6字符</string>
   <string name="error_passwords_not_equals">密码不匹配</string>
   <string name="export_account_wait_title">请稍等…</string>
-  <string name="export_account_wait_message">提交新帐户信息</string>
   <string name="account_export_file">备份帐户</string>
   <string name="account_export_end_decryption_message">使用该密码无法解锁您的帐户。</string>
   <string name="account_export_end_network_title">网络错误</string>

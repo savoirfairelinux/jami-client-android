@@ -7,7 +7,6 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Добавяне на профил в Jami </string>
   <string name="add_sip_account_title">Добавяне на профил за SIP</string>
-  <string name="ring_account_default_name">Профил за Ring %1$s</string>
   <string name="prompt_alias">Псевдоним</string>
   <string name="prompt_hostname">Име на сървъра</string>
   <string name="prompt_username">Потребителско име</string>
@@ -110,7 +109,6 @@
   <string name="error_password_char_count">Най-малко 6 знака</string>
   <string name="error_passwords_not_equals">Паролите не съвпадат</string>
   <string name="export_account_wait_title">Моля, изчакайте…</string>
-  <string name="export_account_wait_message">Публикуване на новата информация за профилa</string>
   <string name="account_export_end_decryption_message">Отключването на профила Ви с предоставената парола не беше успешно.</string>
   <string name="account_export_end_network_title">Мрежова грешка</string>
   <string name="account_export_end_network_message">Профилът не може да бъде изнесен през мрежата. Проверете връзката си.</string>

@@ -177,7 +177,7 @@
   <string name="contact_request_account">Ehhez: %1$s</string>
   <string name="no_requests">0 kapcsolatkérelem</string>
   <string name="message_contact_not_trusted_yet">%smég nincs a kapcsolatban Önnel.\nAkkor elfogadja vagy elutasítja ezt a felkérést?</string>
-  <string name="message_contact_not_trusted">%smég nincs a kapcsolatban Önnel.\nÚj kapcsolat hozzáadása?</string>
+  <string name="message_contact_not_trusted">%snincs a kapcsolataiban.\nÚj kapcsolat hozzáadása?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Elküld</string>
   <string name="send_request_title">Kapcsolatkérelem küldése</string>

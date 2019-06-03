@@ -6,7 +6,6 @@
   <string name="ic_blacklist_menu">Contactes bloquejats</string>
   <!--Strings related to account creation-->
   <string name="add_sip_account_title">Afegeix un compte SIP</string>
-  <string name="ring_account_default_name">Compte de Ring %1$s</string>
   <string name="prompt_alias">Àlies</string>
   <string name="prompt_hostname">Nom d\'amfitrió</string>
   <string name="prompt_username">Nom d\'usuari</string>
@@ -107,7 +106,6 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="error_password_char_count">Mínim 6 caràcters</string>
   <string name="error_passwords_not_equals">No coincideixen les contrasenyes</string>
   <string name="export_account_wait_title">Si us plau espereu...</string>
-  <string name="export_account_wait_message">S\'està publicant la informació del nou compte</string>
   <string name="account_export_end_decryption_message">No s\'ha pogut desbloquejar el vostre compte amb la contrasenya que heu proveït</string>
   <string name="account_export_end_network_title">Error de xarxa</string>
   <string name="account_export_end_network_message">No s\'ha pogut exportar el vostre compte per la xarxa. Comproveu la vostre connectivitat.</string>

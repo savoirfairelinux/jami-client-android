@@ -7,7 +7,6 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Jami hesabı ekle</string>
   <string name="add_sip_account_title">SIP hesabı ekle</string>
-  <string name="ring_account_default_name">Ring hesabı %1$s</string>
   <string name="prompt_alias">Takma ad</string>
   <string name="prompt_hostname">Sunucu adı</string>
   <string name="prompt_username">Kullanıcı adı</string>
@@ -114,7 +113,6 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="error_password_char_count">En az 6 karakter</string>
   <string name="error_passwords_not_equals">Parolalar eşleşmedi</string>
   <string name="export_account_wait_title">Lütfen bekleyin...</string>
-  <string name="export_account_wait_message">Yeni hesap bilgisi yayımlanıyor</string>
   <string name="account_export_file">Hesabı yedekle</string>
   <string name="account_export_end_decryption_message">Sağlanan parola kullanılarak hesabınızın kilidi açılamıyor.</string>
   <string name="account_export_end_network_title">Ağ hatası</string>

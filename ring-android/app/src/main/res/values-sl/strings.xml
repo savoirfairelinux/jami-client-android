@@ -2,7 +2,9 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Povratna informacija</string>
+  <string name="report"><u>Send us an email</u></string>
   <string name="section_license">Licenca</string>
+  <string name="sponsor_section">Ring je prosto programje, ki ga razvija in podpira</string>
   <string name="copyright_section">Avtorske pravice</string>
   <string name="contribute_section">Prispevaj</string>
   <string name="version_section">Različica</string>

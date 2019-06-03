@@ -7,7 +7,6 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">新增 Jami 帳號</string>
   <string name="add_sip_account_title">新增 SIP 帳號</string>
-  <string name="ring_account_default_name">Ring 帳號 %1$s</string>
   <string name="prompt_alias">別名</string>
   <string name="prompt_hostname">主機名稱</string>
   <string name="prompt_username">使用者名稱</string>
@@ -116,7 +115,6 @@
   <string name="error_password_char_count">最小6個字元</string>
   <string name="error_passwords_not_equals">密碼不相符</string>
   <string name="export_account_wait_title">請等待...</string>
-  <string name="export_account_wait_message">公開新帳號資訊</string>
   <string name="account_export_file">備份帳號</string>
   <string name="account_export_end_decryption_message">無法使用您提供的密碼來解鎖您的帳號。</string>
   <string name="account_export_end_network_title">網路錯誤</string>
@@ -147,6 +145,7 @@
   <string name="account_sip_success_title">SIP 帳號已註冊</string>
   <string name="account_sip_success_message">您已成功註冊您的 SIP 帳號。</string>
   <string name="account_sip_register_anyway">無論如何都要註冊</string>
+  <string name="account_link_button">從網路連線</string>
   <string name="account_link_prompt_pin">輸入 PIN 碼</string>
   <string name="account_new_button">建立 Jami 帳號</string>
   <string name="account_link_export_button">連結其他裝置到這個帳號</string>

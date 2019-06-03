@@ -6,7 +6,6 @@
   <string name="ic_blacklist_menu">Contacts bloqués</string>
   <!--Strings related to account creation-->
   <string name="add_sip_account_title">Ajouter un compte SIP</string>
-  <string name="ring_account_default_name">Compte Ring %1$s</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Nom de domaine</string>
   <string name="prompt_username">Nom d\'utilisateur</string>
@@ -42,6 +41,7 @@ Vous pourrez modifier votre compte plus tard.</string>
   <string name="account_device_revocation_unknown_device">Appareil inconnu.</string>
   <string name="account_device_revocation_error_unknown">Erreur inconnue.</string>
   <string name="account_password_change">Changer mot de passe</string>
+  <string name="account_password_set">Définir mot de passe</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Général</string>
   <string name="account_basic_category">Réglages de base</string>
@@ -107,8 +107,7 @@ Vous pourrez modifier votre compte plus tard.</string>
   <string name="error_password_char_count">Minimum de 6 caractères</string>
   <string name="error_passwords_not_equals">Les mots de passe ne concordent pas</string>
   <string name="export_account_wait_title">Patientez s\'il vous plaît</string>
-  <string name="export_account_wait_message">Publication des informations du nouveau compte</string>
-  <string name="account_export_file">Compte de rechange</string>
+  <string name="account_export_file">Sauvegarder le compte</string>
   <string name="account_export_end_decryption_message">Votre compte n\'a pu être déverrouillé avec le mot de passe fourni.</string>
   <string name="account_export_end_network_title">Erreur de réseau</string>
   <string name="account_export_end_network_message">L\'exportation du compte sur le réseau a échouée. Vérifier votre connexion.</string>

@@ -6,7 +6,6 @@
   <string name="ic_blacklist_menu">Μπλοκαρισμένες επαφές</string>
   <!--Strings related to account creation-->
   <string name="add_sip_account_title">Προσθήκη λογαριασμού SIP</string>
-  <string name="ring_account_default_name">Λογαριασμός Ring %1$s</string>
   <string name="prompt_alias">Ψευδώνυμο</string>
   <string name="prompt_hostname">Hostname</string>
   <string name="prompt_username">Όνομα χρήστη</string>

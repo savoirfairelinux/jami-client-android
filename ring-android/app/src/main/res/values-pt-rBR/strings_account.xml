@@ -7,7 +7,6 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Adicionar conta do Jami</string>
   <string name="add_sip_account_title">Adicionar conta SIP</string>
-  <string name="ring_account_default_name">Conta Ring %1$s</string>
   <string name="prompt_alias">Apelido</string>
   <string name="prompt_hostname">Servidor</string>
   <string name="prompt_username">Nome de usuário</string>
@@ -114,7 +113,6 @@
   <string name="error_password_char_count">Pelo menos 6 caracteres</string>
   <string name="error_passwords_not_equals">Senhas não correspondem</string>
   <string name="export_account_wait_title">Por favor, aguarde...</string>
-  <string name="export_account_wait_message">Propagando informação da nova conta</string>
   <string name="account_export_file">Cópia de segurança da conta</string>
   <string name="account_export_end_decryption_message">Não foi possível desbloquear sua conta utilizando a senha fornecida.</string>
   <string name="account_export_end_network_title">Erro de rede</string>

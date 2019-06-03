@@ -7,7 +7,6 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Добавить аккаунт Jami</string>
   <string name="add_sip_account_title">Добавить аккаунт SIP </string>
-  <string name="ring_account_default_name">Аккаунт Ring %1$s</string>
   <string name="prompt_alias">Псевдоним</string>
   <string name="prompt_hostname">Имя узла</string>
   <string name="prompt_username">Имя пользователя</string>
@@ -56,7 +55,7 @@
   <string name="account_username_label">Имя пользователя</string>
   <string name="account_password_label">Пароль</string>
   <string name="account_optionnal_category">Дополнительные настройки</string>
-  <string name="account_useragent_label">User Agent</string>
+  <string name="account_useragent_label">Aгент пользователя</string>
   <string name="account_autoanswer_label">Автоответ</string>
   <string name="account_upnp_label">Включить UPnP</string>
   <string name="account_proxy_field">Прокси</string>
@@ -116,7 +115,6 @@
   <string name="error_password_char_count">Минимум 6 символов</string>
   <string name="error_passwords_not_equals">Пароли не совпадают</string>
   <string name="export_account_wait_title">Пожалуйста, подождите…</string>
-  <string name="export_account_wait_message">Публикация информации о новом аккаунте</string>
   <string name="account_export_file">Создать резервную копию аккаунта</string>
   <string name="account_export_end_decryption_message">Не удалось разблокировать аккаунт указанным паролем.</string>
   <string name="account_export_end_network_title">Ошибка сети</string>
@@ -147,6 +145,7 @@
   <string name="account_sip_success_title">SIP-аккаунт зарегистрирован</string>
   <string name="account_sip_success_message">Вы успешно зарегистрировали свой SIP-аккаунт.</string>
   <string name="account_sip_register_anyway">Все равно зарегистрироваться</string>
+  <string name="account_link_button">Подключение из сети</string>
   <string name="account_link_prompt_pin">Введите PIN</string>
   <string name="account_new_button">Создать учётную запись Jami</string>
   <string name="account_link_export_button">Привязать другое устройство к этому аккаунту</string>

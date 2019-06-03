@@ -7,7 +7,6 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Aggiungi account Jami</string>
   <string name="add_sip_account_title">Aggiungi SIP account</string>
-  <string name="ring_account_default_name">Account di Ring %1$s</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Hostname</string>
   <string name="prompt_username">Utente</string>
@@ -116,7 +115,6 @@ Potrai modificare il tuo account successivamente</string>
   <string name="error_password_char_count">Minimo 6 caratteri</string>
   <string name="error_passwords_not_equals">Le password non corrispondono</string>
   <string name="export_account_wait_title">Prego attendere...</string>
-  <string name="export_account_wait_message">Sto pubblicando le informazioni del nuovo account</string>
   <string name="account_export_file">Backup account</string>
   <string name="account_export_end_decryption_message">Impossibile sbloccare l\'account x la con la password inserita.</string>
   <string name="account_export_end_network_title">Errore di rete</string>

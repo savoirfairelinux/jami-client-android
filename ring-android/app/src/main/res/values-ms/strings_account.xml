@@ -92,7 +92,6 @@ Anda masih akan dapat mengubah maklumat akaun anda pada masa hadapan</string>
   <string name="error_password_char_count">Minimum 6 aksara</string>
   <string name="error_passwords_not_equals">Kata laluan tidak sepadan</string>
   <string name="export_account_wait_title">Sila tunggu...</string>
-  <string name="export_account_wait_message">Mengagihkan maklumat akaun baharu</string>
   <string name="account_export_end_decryption_message">Tidak dapat menyahsulitkan akaun anda dengan kata laluan yang diberikan.</string>
   <string name="account_export_end_network_title">Rangkaian gagal</string>
   <string name="account_export_end_network_message">Tidak dapat mengeksport akaun anda kepada rangkaian agihan. Sila periksa jaringan rangkaian anda.</string>

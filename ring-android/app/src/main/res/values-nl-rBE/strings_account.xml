@@ -7,7 +7,6 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Jami-account toevoegen</string>
   <string name="add_sip_account_title">SIP-account toevoegen</string>
-  <string name="ring_account_default_name">Ring-account %1$s</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Hostnaam</string>
   <string name="prompt_username">Gebruikersnaam</string>
@@ -116,7 +115,6 @@ U kunt uw account later bewerken</string>
   <string name="error_password_char_count">Minimaal 6 tekens</string>
   <string name="error_passwords_not_equals">Wachtwoorden komen niet overeen</string>
   <string name="export_account_wait_title">Even geduld…</string>
-  <string name="export_account_wait_message">Nieuwe accountinformatie wordt gepubliceerd</string>
   <string name="account_export_end_decryption_message">Kon uw account niet ontgrendelen met het ingegeven wachtwoord.</string>
   <string name="account_export_end_network_title">Netwerkfout</string>
   <string name="account_export_end_network_message">Kon account niet exporteren over het netwerk. Controleer uw netwerkverbinding.</string>

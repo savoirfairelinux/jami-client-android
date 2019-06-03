@@ -7,7 +7,6 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">افزدن حساب جمی</string>
   <string name="add_sip_account_title">افزودن حساب کاربری سیپ</string>
-  <string name="ring_account_default_name">حساب کاربری رینگ %1$s</string>
   <string name="prompt_alias">نام مستعار</string>
   <string name="prompt_hostname">نام میزبان</string>
   <string name="prompt_username">نام کاربری</string>
@@ -114,7 +113,6 @@
   <string name="error_password_char_count">حداقل ۶ کاراکتر</string>
   <string name="error_passwords_not_equals">گذرواژه‌ها یکسان نیستند</string>
   <string name="export_account_wait_title">لطفاً صبر کنید…</string>
-  <string name="export_account_wait_message">در حال صدور اطّلاعات حساب جدید</string>
   <string name="account_export_file">حساب کاربری پشتیبان</string>
   <string name="account_export_end_decryption_message">نمی‌توان قفل حسابتان را با گذرواژه  فراهم شده گشود.</string>
   <string name="account_export_end_network_title">خطای شبکه</string>

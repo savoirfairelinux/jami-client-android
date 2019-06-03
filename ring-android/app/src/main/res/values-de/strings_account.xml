@@ -7,7 +7,6 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Jami-Konto hinzufügen</string>
   <string name="add_sip_account_title">SIP-Konto hinzufügen</string>
-  <string name="ring_account_default_name">Ring-Konto %1$s</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Rechnername</string>
   <string name="prompt_username">Benutzername</string>
@@ -116,7 +115,6 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="error_password_char_count">Mindestens 6 Zeichen</string>
   <string name="error_passwords_not_equals">Die Passwörter stimmen nicht überein</string>
   <string name="export_account_wait_title">Bitte warten…</string>
-  <string name="export_account_wait_message">Neue Kontoinformationen veröffentlichen</string>
   <string name="account_export_file">Konto sichern</string>
   <string name="account_export_end_decryption_message">Ihr Konto konnte mit dem angegebenen Passwort nicht entsperrt werden</string>
   <string name="account_export_end_network_title">Netzwerkfehler</string>

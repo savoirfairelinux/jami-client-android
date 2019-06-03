@@ -7,7 +7,6 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Pridėti Jami paskyrą</string>
   <string name="add_sip_account_title">Pridėti SIP paskyrą</string>
-  <string name="ring_account_default_name">Ring paskyra %1$s</string>
   <string name="prompt_alias">Slapyvardis</string>
   <string name="prompt_hostname">Kompiuterio vardas</string>
   <string name="prompt_username">Naudotojo vardas</string>
@@ -116,7 +115,6 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="error_password_char_count">Mažiausiai 6 simboliai</string>
   <string name="error_passwords_not_equals">Slaptažodžiai nesutampa</string>
   <string name="export_account_wait_title">Prašome palaukti...</string>
-  <string name="export_account_wait_message">Skelbiama naujos paskyros informacija</string>
   <string name="account_export_file">Padaryti paskyros atsarginę kopiją</string>
   <string name="account_export_end_decryption_message">Naudojant pateiktą slaptažodį, nepavyko atrakinti jūsų paskyros.</string>
   <string name="account_export_end_network_title">Tinklo klaida</string>

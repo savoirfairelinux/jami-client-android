@@ -7,7 +7,6 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Додати обліковий запис Джамі</string>
   <string name="add_sip_account_title">Додати обліковий запис SIP</string>
-  <string name="ring_account_default_name">Обліковий запис Ring %1$s</string>
   <string name="prompt_alias">Додаткове ім’я</string>
   <string name="prompt_hostname">Ім\'я хоста</string>
   <string name="prompt_username">Ім’я</string>
@@ -111,7 +110,6 @@
   <string name="error_password_char_count">мінімум 6 символів</string>
   <string name="error_passwords_not_equals">Паролі не збігаються</string>
   <string name="export_account_wait_title">Будь ласка зачекайте</string>
-  <string name="export_account_wait_message">Опублікувати відомості нового облікового запису</string>
   <string name="account_export_end_decryption_message">Не вдалося розблокувати обліковий запис з наданим паролем.</string>
   <string name="account_export_end_network_title">Збій мережі</string>
   <string name="account_export_end_network_message">Не вдалося вивантажити обліковий запис у мережу. Перевірте з\'єднання.</string>

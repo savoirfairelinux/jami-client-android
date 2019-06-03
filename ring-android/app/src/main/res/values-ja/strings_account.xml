@@ -6,7 +6,6 @@
   <string name="ic_blacklist_menu">ブロックした連絡先</string>
   <!--Strings related to account creation-->
   <string name="add_sip_account_title">SIPアカウントを追加</string>
-  <string name="ring_account_default_name">Ring アカウント %1$s</string>
   <string name="prompt_alias">別名</string>
   <string name="prompt_hostname">ホスト名</string>
   <string name="prompt_username">ユーザー名</string>
@@ -106,7 +105,6 @@
   <string name="error_password_char_count">6文字以上</string>
   <string name="error_passwords_not_equals">パスワードが一致しません</string>
   <string name="export_account_wait_title">しばらくお待ちください…</string>
-  <string name="export_account_wait_message">新しいアカウント情報を発行しています</string>
   <string name="account_export_file">アカウントをバックアップ</string>
   <string name="account_export_end_decryption_message">提供されたパスワードを使用してアカウントをロック解除できませんでした。</string>
   <string name="account_export_end_network_title">ネットワークエラー</string>

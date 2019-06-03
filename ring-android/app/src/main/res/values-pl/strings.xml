@@ -11,7 +11,7 @@
   <string name="no_email_app_installed">Nie znaleziono aplikacji e-mail. Zainstaluj jakąś aby wysłać nam zgłoszenie.</string>
   <string name="no_browser_app_installed">Nie znaleziono przeglądarki internetowej, zainstaluj jakąś aby zobaczyć tę stronę</string>
   <string name="email_chooser_title">Wyślij e-mail używając...</string>
-  <string name="website_chooser_title">Zobacz stronę używając..</string>
+  <string name="website_chooser_title">Zobacz stronę używając...</string>
   <string name="license">To oprogramowanie jest dostarczane \"tak jak jest\", bez jakiejkolwiek gwarancji. Aby uzyskać szczegółowe informacje, zobacz <u>GNU General Public License wersja 3 lub późniejsza</u></string>
   <string name="description">Jami jest wolnym oprogramowaniem do uniwersalnej komunikacji, respektującym wolności i prywatność swoich użytkowników.</string>
   <string name="credits">Podziękowania</string>

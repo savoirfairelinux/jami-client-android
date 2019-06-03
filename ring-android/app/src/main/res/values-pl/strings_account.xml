@@ -7,7 +7,6 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Dodaj konto Jami</string>
   <string name="add_sip_account_title">Dodaj konto SIP</string>
-  <string name="ring_account_default_name">Konto Ring %1$s</string>
   <string name="prompt_alias">Nazwa konta</string>
   <string name="prompt_hostname">Nazwa hosta</string>
   <string name="prompt_username">Nazwa użytkownika</string>
@@ -116,7 +115,7 @@ Możesz edytować swoje konto później</string>
   <string name="error_password_char_count">minimum 6 znaków</string>
   <string name="error_passwords_not_equals">Hasła nie pasują do siebie</string>
   <string name="export_account_wait_title">Proszę czekać…</string>
-  <string name="export_account_wait_message">Publikowanie informacji o nowym koncie</string>
+  <string name="account_export_file">Wykonaj kopię zapasową</string>
   <string name="account_export_end_decryption_message">Nie można było odblokować twojego konta podanym hasłem.</string>
   <string name="account_export_end_network_title">Błąd sieci</string>
   <string name="account_export_end_network_message">Nie można eksportować konta w tej sieci. Sprawdź swoje połączenie.</string>
@@ -146,6 +145,7 @@ Możesz edytować swoje konto później</string>
   <string name="account_sip_success_title">konto SIP zarejestrowane</string>
   <string name="account_sip_success_message">Pomyślnie zarejestrowałeś swoje konto SIP.</string>
   <string name="account_sip_register_anyway">Zarejestruj mimo to</string>
+  <string name="account_link_button">Połącz z sieci</string>
   <string name="account_link_prompt_pin">Wprowadź PIN</string>
   <string name="account_new_button">Stwórz konto Jami</string>
   <string name="account_link_export_button">Połącz kolejne urządzenie z tym kontem</string>

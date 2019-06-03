@@ -6,7 +6,6 @@
   <string name="ic_blacklist_menu">Blokirani stiki</string>
   <!--Strings related to account creation-->
   <string name="add_sip_account_title">Dodaj SIP račun</string>
-  <string name="ring_account_default_name">Ring račun%1$s</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Strežnik</string>
   <string name="prompt_username">Uporabnik</string>
@@ -98,7 +97,6 @@
   <string name="error_password_char_count">najmanj 6 znakov</string>
   <string name="error_passwords_not_equals">Gesli nista enaki</string>
   <string name="export_account_wait_title">Prosim, počakaj...</string>
-  <string name="export_account_wait_message">Objavljanje podatkov o računu</string>
   <string name="account_export_end_network_title">Napaka mreže</string>
   <string name="account_export_end_error_title">Napaka</string>
   <string name="account_enter_password">Vnesi geslo</string>

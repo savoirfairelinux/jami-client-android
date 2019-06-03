@@ -7,7 +7,6 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Lägg till Jami-konto</string>
   <string name="add_sip_account_title">Lägg till SIP-konto</string>
-  <string name="ring_account_default_name">Ring-konto %1$s</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Värdnamn</string>
   <string name="prompt_username">Användarnamn</string>
@@ -116,7 +115,6 @@ Du kan ändra kontot senare.</string>
   <string name="error_password_char_count">6 tecken minimum</string>
   <string name="error_passwords_not_equals">Lösenorden stämmer inte</string>
   <string name="export_account_wait_title">Vänta...</string>
-  <string name="export_account_wait_message">Publicerar ny kontoinformation</string>
   <string name="account_export_file">Säkerhetskopiera konto</string>
   <string name="account_export_end_decryption_message">Kunde inte låsa upp ditt konto med det givna lösenordet.</string>
   <string name="account_export_end_network_title">Nätverksfel</string>
