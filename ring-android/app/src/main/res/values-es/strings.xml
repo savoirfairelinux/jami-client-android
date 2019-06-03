@@ -166,6 +166,7 @@
   <!--Share fragment-->
   <string name="share_message">Escanear este código con Jami</string>
   <string name="share_message_no_account">Seleccione una cuenta para compartir.</string>
+  <string name="share_label">Compartir</string>
   <string name="share_your_account_information">Compartir mi información de contacto</string>
   <string name="generic_error_migration">Error</string>
   <string name="generic_error_migration_message">Ha ocurrido un error durante la migración</string>
