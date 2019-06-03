@@ -68,7 +68,6 @@ public class ScanFragment extends BaseSupportFragment {
 
     public static final String KEY_ACCOUNT_ID = "accountId";
     private static String accountId;
-    private Boolean isTabletMode = false;
 
 
     @Override
@@ -88,11 +87,6 @@ public class ScanFragment extends BaseSupportFragment {
 
         barcodeView = rootView.findViewById(R.id.barcode_scanner);
         mErrorMessageTextView = rootView.findViewById(R.id.error_msg_txt);
-
-
-        if (DeviceUtils.isTablet(getActivity())) {
-            isTabletMode = true;
-        }
 
         if (ContextCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.CAMERA)
@@ -133,6 +127,7 @@ public class ScanFragment extends BaseSupportFragment {
                 == PackageManager.PERMISSION_GRANTED && barcodeView != null) {
             barcodeView.resume();
         }
+
     }
 
 
@@ -230,19 +225,15 @@ public class ScanFragment extends BaseSupportFragment {
 
 
     public void goToConversation(String accountId, cx.ring.model.Uri contactId) {
-        if (!isTabletMode) {
             Intent intent = new Intent()
                     .setClass(getActivity(), ConversationActivity.class)
                     .setAction(Intent.ACTION_VIEW)
                     .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
                     .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactId.toString());
-            startActivity(intent);
-        } else {
-            Bundle bundle = new Bundle();
-            bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, contactId.toString());
-            bundle.putString(ConversationFragment.KEY_ACCOUNT_ID, accountId);
-            ((QRCodeActivity) getActivity()).startConversationTablet(bundle);
-        }
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+            getActivity().finish();
+
     }
 
 }

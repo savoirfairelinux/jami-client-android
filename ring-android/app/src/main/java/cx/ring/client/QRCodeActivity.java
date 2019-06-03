@@ -96,12 +96,4 @@ public class QRCodeActivity extends AppCompatActivity {
         }
     }
 
-    public void startConversationTablet(Bundle bundle) {
-        ConversationFragment fConversation = new ConversationFragment();
-        fConversation.setArguments(bundle);
-
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.conversation_container, fConversation, ConversationFragment.class.getName())
-                .commit();
-    }
 }
