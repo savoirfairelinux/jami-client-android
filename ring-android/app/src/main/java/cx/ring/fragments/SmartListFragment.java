@@ -480,6 +480,17 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == HomeActivity.REQUEST_CODE_QR_CONVERSATION && data != null && resultCode == Activity.RESULT_OK) {
+            String contactID = data.getStringExtra(ConversationFragment.KEY_CONTACT_RING_ID);
+            if (contactID != null) {
+                presenter.startConversation(new cx.ring.model.Uri(contactID));
+            }
+        }
+    }
+
+    @Override
     public void goToConversation(String accountId, cx.ring.model.Uri contactId) {
         if (mSearchMenuItem != null) {
             mSearchMenuItem.collapseActionView();
@@ -512,13 +523,9 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
 
     @Override
     public void goToQRActivity() {
-        Intent i = new Intent(getActivity(), QRCodeActivity.class);
-        if(presenter != null) {
-            Bundle bundle = new Bundle();
-            bundle.putString(KEY_ACCOUNT_ID, presenter.getAccountID());
-            i.putExtras(bundle);
-        }
-        startActivity(i);
+        Intent intent = new Intent(QRCodeActivity.ACTION_SCAN)
+                .setClass(getActivity(), QRCodeActivity.class);
+        startActivityForResult(intent, HomeActivity.REQUEST_CODE_QR_CONVERSATION);
     }
 
     @Override

@@ -83,6 +83,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
     public static final int REQUEST_CODE_CONVERSATION = 4;
     public static final int REQUEST_CODE_PHOTO = 5;
     public static final int REQUEST_CODE_GALLERY = 6;
+    public static final int REQUEST_CODE_QR_CONVERSATION = 7;
     public static final int REQUEST_PERMISSION_CAMERA = 113;
     public static final int REQUEST_PERMISSION_READ_STORAGE = 114;
     public static final String HOME_TAG = "Home";
