@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "056f5ca5_910eae20",
+        "filename": "ring-android/app/src/main/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-03T16:52:12Z",
+      "side": 0,
+      "message": "I think you might confuse the share activity (used to share media like photos with contacts) and the share fragment that is used to share out QR code. Maybe the share fragment could be called QR fragment or something ?",
+      "range": {
+        "startLine": 140,
+        "startChar": 34,
+        "endLine": 140,
+        "endChar": 47
+      },
+      "revId": "fa24923f4af2f8949e85a6e2f479b43181a164c9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
