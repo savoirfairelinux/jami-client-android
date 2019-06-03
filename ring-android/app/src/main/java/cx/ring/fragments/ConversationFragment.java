@@ -22,6 +22,7 @@ package cx.ring.fragments;
 import android.Manifest;
 import android.animation.ValueAnimator;
 import android.app.DownloadManager;
+import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
@@ -52,6 +53,8 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
 import java.io.IOException;
@@ -453,7 +456,12 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             sendIntent.setDataAndType(fileUri, type);
             sendIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
             //startActivity(Intent.createChooser(sendIntent, null));
-            startActivity(sendIntent);
+            try {
+                startActivity(sendIntent);
+            } catch (ActivityNotFoundException e) {
+                Snackbar.make(getView(), R.string.conversation_open_file_error, Snackbar.LENGTH_LONG).show();
+                Log.e("File Loader", "File of unknown type, could not open: " + path.getName());
+            }
         }
     }
 
@@ -739,7 +747,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         }
         if (type.startsWith("text/")) {
             binding.msgInputTxt.setText(intent.getStringExtra(Intent.EXTRA_TEXT));
-        } else if (type.startsWith("image/") || type.startsWith("video/") || type.startsWith("application/")) {
+        } else if (type.startsWith("image/") || type.startsWith("video/") || type.startsWith("application/")  || type.startsWith("audio/")) {
             android.net.Uri uri = intent.getData();
             ClipData clip = intent.getClipData();
             if (uri == null && clip != null && clip.getItemCount() > 0)
