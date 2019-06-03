@@ -58,5 +58,11 @@ RUN (while sleep 1; do echo "y"; done) | sdkmanager $ANDROID_DEPS
 ENV ANDROID_SDK=/opt/android-sdk
 ENV ANDROID_NDK=/opt/android-sdk/ndk/19.2.5345600
 
+RUN mkdir tmp && cd tmp && \
+	gradle wrapper --no-daemon --gradle-version 5.4.1 --distribution-type bin && \
+	./gradlew --no-daemon && \
+	cd .. && mkdir -p /home/builder && cp -r .gradle /home/builder && rm -rf tmp
+ENV GRADLE_USER_HOME=/home/builder/.gradle
+
 WORKDIR /home/builder/src
 VOLUME /home/builder/src
