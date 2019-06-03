@@ -139,7 +139,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <activity
             android:name=".client.ShareActivity"
             android:theme="@style/AppThemeBase"
-        android:parentActivityName=".client.QRCodeActivity">
+            android:parentActivityName=".client.QRCodeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -338,8 +338,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <activity
             android:name=".client.QRCodeActivity"
+            android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:label="@string/title_activity_qrcode"
-            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="fullUser"
             android:theme="@style/AppThemeBase"/>
         <activity
