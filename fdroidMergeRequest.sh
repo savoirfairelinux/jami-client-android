@@ -44,7 +44,7 @@ cp ${METADATA_FOLDER}/cx.ring.yml ${METADATA_FOLDER}/cx.ring.yml_
 
 head -n -11 ${METADATA_FOLDER}/cx.ring.yml_ > ${METADATA_FOLDER}/cx.ring.yml
 
-echo "- versionName: ${versionName}
+echo "- versionName: '${versionName}'
     versionCode: ${versionCode}
     commit: ${commit}
     timeout: 10800
@@ -74,8 +74,8 @@ echo "- versionName: ${versionName}
 
 tail -n 12 ${METADATA_FOLDER}/cx.ring.yml_ | head -n -2 >> ${METADATA_FOLDER}/cx.ring.yml
 
-echo "Current Version:${versionName}" >> ${METADATA_FOLDER}/cx.ring.yml
-echo "Current Version Code:${versionCode}" >> ${METADATA_FOLDER}/cx.ring.yml
+echo "Current Version: '${versionName}'" >> ${METADATA_FOLDER}/cx.ring.yml
+echo "Current Version Code: ${versionCode}" >> ${METADATA_FOLDER}/cx.ring.yml
 
 rm ${METADATA_FOLDER}/cx.ring.yml_
 
