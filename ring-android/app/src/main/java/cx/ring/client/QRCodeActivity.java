@@ -35,12 +35,15 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
+import cx.ring.BuildConfig;
 import cx.ring.R;
-import cx.ring.fragments.ConversationFragment;
 import cx.ring.share.ScanFragment;
 import cx.ring.share.ShareFragment;
 
 public class QRCodeActivity extends AppCompatActivity {
+
+    public static final String ACTION_SCAN = BuildConfig.APPLICATION_ID + ".action.scan";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,12 +99,4 @@ public class QRCodeActivity extends AppCompatActivity {
         }
     }
 
-    public void startConversationTablet(Bundle bundle) {
-        ConversationFragment fConversation = new ConversationFragment();
-        fConversation.setArguments(bundle);
-
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.conversation_container, fConversation, ConversationFragment.class.getName())
-                .commit();
-    }
 }
