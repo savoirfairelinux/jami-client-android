@@ -40,34 +40,49 @@ git -C fdroiddata config user.email mobile@savoirfairelinux.com
 
 METADATA_FOLDER=fdroiddata/metadata
 
-cp ${METADATA_FOLDER}/cx.ring.txt ${METADATA_FOLDER}/cx.ring.txt_
+cp ${METADATA_FOLDER}/cx.ring.yml ${METADATA_FOLDER}/cx.ring.yml_
 
-head -n -12 ${METADATA_FOLDER}/cx.ring.txt_ > ${METADATA_FOLDER}/cx.ring.txt
+head -n -11 ${METADATA_FOLDER}/cx.ring.yml_ > ${METADATA_FOLDER}/cx.ring.yml
 
-echo "Build:${versionName},${versionCode}
-    commit=${commit}
-    timeout=10800
-    subdir=client-android/ring-android/app
-    submodules=yes
-    gradle=noPush
-    rm=client-electron,client-gnome,client-ios,client-macosx,client-uwp,client-windows,docker,docs,lrc,packaging,scripts
-    build=cd ../.. && \\
-        export ANDROID_NDK_ROOT=\"\$ANDROID_NDK\" && \\
-        export ANDROID_ABI=\"armeabi-v7a arm64-v8a x86\" && \\
-        ./compile.sh --release --no-gradle
-    ndk=${ndkVersion}" >> ${METADATA_FOLDER}/cx.ring.txt
+echo "- versionName: ${versionName}
+    versionCode: ${versionCode}
+    commit: ${commit}
+    timeout: 10800
+    subdir: client-android/ring-android/app
+    submodules: true
+    gradle:
+        - noPush
+    rm:
+        - client-electron
+        - client-gnome
+        - client-ios
+        - client-macosx
+        - client-uwp
+        - client-windows
+        - docker
+        - docs
+        - lrc
+        - packaging
+        - scripts
+    build:
+        - cd ../..
+        - export ANDROID_NDK_ROOT=\"\$ANDROID_NDK\"
+        - export ANDROID_ABI=\"armeabi-v7a arm64-v8a x86\"
+        - ./compile.sh --release --no-gradle
+    ndk: ${ndkVersion}" >> ${METADATA_FOLDER}/cx.ring.yml
 
-tail -n 13 ${METADATA_FOLDER}/cx.ring.txt_ | head -n -2 >> ${METADATA_FOLDER}/cx.ring.txt
 
-echo "Current Version:${versionName}" >> ${METADATA_FOLDER}/cx.ring.txt
-echo "Current Version Code:${versionCode}" >> ${METADATA_FOLDER}/cx.ring.txt
+tail -n 12 ${METADATA_FOLDER}/cx.ring.yml_ | head -n -2 >> ${METADATA_FOLDER}/cx.ring.yml
 
-rm ${METADATA_FOLDER}/cx.ring.txt_
+echo "Current Version:${versionName}" >> ${METADATA_FOLDER}/cx.ring.yml
+echo "Current Version Code:${versionCode}" >> ${METADATA_FOLDER}/cx.ring.yml
+
+rm ${METADATA_FOLDER}/cx.ring.yml_
 
 releaseDate=`date +%Y%m`
 releaseBranch="release_${releaseDate}"
 
-git -C fdroiddata add metadata/cx.ring.txt
+git -C fdroiddata add metadata/cx.ring.yml
 git -C fdroiddata commit -s -m "Updates Jami to $versionName"
 git -C fdroiddata push origin HEAD:refs/heads/${releaseBranch} -f
 git -C fdroiddata status
