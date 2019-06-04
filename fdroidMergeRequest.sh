@@ -74,8 +74,8 @@ echo "- versionName: '${versionName}'
 
 tail -n 12 ${METADATA_FOLDER}/cx.ring.yml_ | head -n -2 >> ${METADATA_FOLDER}/cx.ring.yml
 
-echo "Current Version: '${versionName}'" >> ${METADATA_FOLDER}/cx.ring.yml
-echo "Current Version Code: ${versionCode}" >> ${METADATA_FOLDER}/cx.ring.yml
+echo "CurrentVersion: '${versionName}'" >> ${METADATA_FOLDER}/cx.ring.yml
+echo "CurrentVersionCode: ${versionCode}" >> ${METADATA_FOLDER}/cx.ring.yml
 
 rm ${METADATA_FOLDER}/cx.ring.yml_
 
