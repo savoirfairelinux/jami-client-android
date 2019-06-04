@@ -244,7 +244,7 @@ STATIC_LIBS_ALL="-llog -lOpenSLES -landroid \
                 -lpjmedia-${PJ_TARGET_TUPLE} \
                 -lpjlib-util-${PJ_TARGET_TUPLE} \
                 -lpj-${PJ_TARGET_TUPLE} \
-                -lupnp -lixml -lthreadutil \
+                -lupnp -lixml \
                 -lsecp256k1 \
                 -lgnutls -lhogweed -lnettle -lgmp \
                 -lrestbed -lssl -lcrypto \
