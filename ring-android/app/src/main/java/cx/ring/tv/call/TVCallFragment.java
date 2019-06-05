@@ -22,14 +22,19 @@ package cx.ring.tv.call;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.PendingIntent;
+import android.app.PictureInPictureParams;
+import android.app.RemoteAction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Matrix;
 import android.graphics.PixelFormat;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.SurfaceTexture;
+import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -39,6 +44,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import android.util.Log;
+import android.util.Rational;
 import android.view.LayoutInflater;
 import android.view.Surface;
 import android.view.SurfaceHolder;
@@ -54,6 +60,7 @@ import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Random;
 
 import javax.inject.Inject;
 
@@ -67,8 +74,11 @@ import cx.ring.fragments.CallFragment;
 import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
 import cx.ring.mvp.BaseFragment;
+import cx.ring.service.DRingService;
 import cx.ring.services.DeviceRuntimeService;
+import cx.ring.services.NotificationService;
 import cx.ring.tv.main.HomeActivity;
+import cx.ring.utils.DeviceUtils;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -96,6 +106,10 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     private int mPreviewWidth = 720, mPreviewHeight = 1280;
     private int mPreviewWidthRot = 720, mPreviewHeightRot = 1280;
+
+
+    private int mVideoWidth = -1;
+    private int mVideoHeight = -1;
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
@@ -207,6 +221,9 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
                 presenter.videoSurfaceDestroyed();
             }
         });
+
+        view.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) ->
+                resetVideoSize(mVideoWidth, mVideoHeight));
 
         binding.previewSurface.setSurfaceTextureListener(listener);
         binding.shapeRipple.setRippleShape(new Circle());
@@ -417,6 +434,8 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
         if (oldW != params.width || oldH != params.height) {
             binding.videoSurface.setLayoutParams(params);
         }
+        mVideoWidth = videoWidth;
+        mVideoHeight = videoHeight;
     }
 
     private void configureTransform(int viewWidth, int viewHeight) {
@@ -556,7 +575,35 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
 
     @Override
     public void enterPipMode(SipCall sipCall) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            return;
+        }
+        Context context = getContext();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            PictureInPictureParams.Builder paramBuilder = new PictureInPictureParams.Builder();
+            if (binding.videoSurface.getVisibility() == View.VISIBLE) {
+                int[] l = new int[2];
+                binding.videoSurface.getLocationInWindow(l);
+                int x = l[0];
+                int y = l[1];
+                int w = binding.videoSurface.getWidth();
+                int h = binding.videoSurface.getHeight();
+                Rect videoBounds = new Rect(x, y, x + w, y + h);
+                paramBuilder.setAspectRatio(new Rational(w, h));
+                paramBuilder.setSourceRectHint(videoBounds);
+            }
+            ArrayList<RemoteAction> actions = new ArrayList<>(1);
+            actions.add(new RemoteAction(
+                    Icon.createWithResource(context, R.drawable.baseline_call_end_24),
+                    getString(R.string.action_call_hangup),
+                    getString(R.string.action_call_hangup),
+                    PendingIntent.getService(context, new Random().nextInt(),
+                            new Intent(DRingService.ACTION_CALL_END)
+                                    .setClass(context, DRingService.class)
+                                    .putExtra(NotificationService.KEY_CALL_ID, sipCall.getCallId()), PendingIntent.FLAG_ONE_SHOT)));
+            paramBuilder.setActions(actions);
+            getActivity().enterPictureInPictureMode(paramBuilder.build());
+        } else  {
             getActivity().enterPictureInPictureMode();
         }
     }
