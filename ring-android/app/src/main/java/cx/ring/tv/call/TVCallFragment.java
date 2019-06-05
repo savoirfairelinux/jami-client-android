@@ -262,9 +262,9 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     }
 
     @Override
-    public void displayVideoSurface(final boolean display) {
-        binding.videoSurface.setVisibility(display ? View.VISIBLE : View.GONE);
-        binding.previewContainer.setVisibility(mDeviceRuntimeService.hasVideoPermission() && display ? View.VISIBLE : View.GONE);
+    public void displayVideoSurface(final boolean displayVideoSurface, final boolean displayPreviewContainer) {
+        binding.videoSurface.setVisibility(displayVideoSurface ? View.VISIBLE : View.GONE);
+        binding.previewContainer.setVisibility(displayPreviewContainer ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -274,9 +274,8 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
             //mVideoPreview.setZOrderMediaOverlay(true);
             binding.videoSurface.setZOrderMediaOverlay(false);
         } else {
-            binding.videoSurface.setZOrderMediaOverlay(false);
-            //mVideoSurface.setZOrderMediaOverlay(true);
-            //mVideoSurface.setZOrderOnTop(true);
+            binding.videoSurface.setZOrderMediaOverlay(true);
+            binding.videoSurface.setZOrderOnTop(true);
         }
     }
 
