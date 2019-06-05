@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e18df53a_2fe2295e",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-05T21:13:29Z",
+      "side": 1,
+      "message": "Use a single delete action",
+      "range": {
+        "startLine": 330,
+        "startChar": 12,
+        "endLine": 341,
+        "endChar": 13
+      },
+      "revId": "7a3a05d3a2fad5b8935a6a1e62a446f821f048ef",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aead4de_78daa430",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-05T21:13:29Z",
+      "side": 1,
+      "message": "use different menu files ?",
+      "range": {
+        "startLine": 751,
+        "startChar": 0,
+        "endLine": 757,
+        "endChar": 56
+      },
+      "revId": "7a3a05d3a2fad5b8935a6a1e62a446f821f048ef",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
