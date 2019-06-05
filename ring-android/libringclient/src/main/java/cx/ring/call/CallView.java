@@ -26,7 +26,7 @@ public interface CallView {
 
     void displayContactBubble(boolean display);
 
-    void displayVideoSurface(boolean display);
+    void displayVideoSurface(boolean displayVideoSurface, boolean displayPreviewContainer);
 
     void displayPreviewSurface(boolean display);
 
