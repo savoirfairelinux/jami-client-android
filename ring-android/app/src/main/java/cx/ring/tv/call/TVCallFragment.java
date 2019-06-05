@@ -22,6 +22,7 @@ package cx.ring.tv.call;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.PictureInPictureParams;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -38,6 +39,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import android.util.Log;
+import android.util.Rational;
 import android.view.LayoutInflater;
 import android.view.Surface;
 import android.view.SurfaceHolder;
@@ -548,7 +550,11 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     @Override
     public void enterPipMode(SipCall sipCall) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            getActivity().enterPictureInPictureMode();
+           PictureInPictureParams.Builder mPictureInPictureParamsBuilder =
+                    new PictureInPictureParams.Builder();
+            Rational aspectRatio = new Rational(binding.videoSurface.getWidth(), binding.videoSurface.getHeight());
+            mPictureInPictureParamsBuilder.setAspectRatio(aspectRatio).build();
+            getActivity().enterPictureInPictureMode(mPictureInPictureParamsBuilder.build());
         }
     }
 
