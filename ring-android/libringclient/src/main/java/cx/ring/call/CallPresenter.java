@@ -53,6 +53,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     private boolean mOnGoingCall = false;
     private boolean mAudioOnly = true;
     private boolean permissionChanged = false;
+    private boolean pipIsActive = false;
 
     private int videoWidth = -1;
     private int videoHeight = -1;
@@ -292,7 +293,7 @@ public class CallPresenter extends RootPresenter<CallView> {
             view.updateMenu();
             if (!mAudioOnly) {
                 mHardwareService.setPreviewSettings();
-                view.displayVideoSurface(true);
+                view.displayVideoSurface(true, mDeviceRuntimeService.hasVideoPermission());
                 if(permissionChanged) {
                     mHardwareService.switchInput(mSipCall.getCallId(), permissionChanged);
                     permissionChanged = false;
@@ -333,9 +334,9 @@ public class CallPresenter extends RootPresenter<CallView> {
         Log.d(TAG, "VIDEO_EVENT: " + event.start + " " + event.callId + " " + event.w + "x" + event.h);
 
         if (event.start) {
-            getView().displayVideoSurface(true);
+            getView().displayVideoSurface(true, !isPipMode() && mDeviceRuntimeService.hasVideoPermission());
         } else if (mSipCall != null && mSipCall.getCallId().equals(event.callId)) {
-            getView().displayVideoSurface(event.started);
+            getView().displayVideoSurface(event.started, event.started && !isPipMode() && mDeviceRuntimeService.hasVideoPermission());
             if (event.started) {
                 videoWidth = event.w;
                 videoHeight = event.h;
@@ -385,12 +386,18 @@ public class CallPresenter extends RootPresenter<CallView> {
         }
     }
 
+    public boolean isPipMode() {
+        return pipIsActive;
+    }
+
     public void pipModeChanged(boolean pip) {
+        pipIsActive = pip;
         if (pip) {
             getView().displayHangupButton(false);
             getView().displayPreviewSurface(false);
         } else {
             getView().displayPreviewSurface(true);
+            getView().displayVideoSurface(true, mDeviceRuntimeService.hasVideoPermission());
         }
     }
 
