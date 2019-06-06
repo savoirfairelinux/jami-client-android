@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fc716cb_629b237c",
+        "filename": "ring-android/app/src/main/java/cx/ring/share/ScanFragment.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-06T14:37:19Z",
+      "side": 1,
+      "message": "why using FLAG_ACTIVITY_CLEAR_TOP here ?",
+      "range": {
+        "startLine": 221,
+        "startChar": 16,
+        "endLine": 221,
+        "endChar": 57
+      },
+      "revId": "f062af75c4a57cba7d76530672fe507916a4d555",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
