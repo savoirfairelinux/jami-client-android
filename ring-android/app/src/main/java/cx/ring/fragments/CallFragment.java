@@ -247,8 +247,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             displayVideoSurface(true, !presenter.isPipMode());
             restartVideo = false;
             restartPreview = false;
-        }
-        else if (restartVideo) {
+        } else if (restartVideo) {
             displayVideoSurface(true, false);
             restartVideo = false;
         }
@@ -708,7 +707,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         if (!audioOnly) {
             boolean videoGranted = mDeviceRuntimeService.hasVideoPermission();
 
-            if ((!audioGranted || !videoGranted) &&  android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if ((!audioGranted || !videoGranted) && android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 ArrayList<String> perms = new ArrayList<>();
                 if (!videoGranted) {
                     perms.add(Manifest.permission.CAMERA);
@@ -753,9 +752,15 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     @Override
     public void finish() {
         Activity activity = getActivity();
-        if (activity != null)
+        if (activity != null) {
+            Intent i = new Intent(activity, HomeActivity
+                    .class)
+                    .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(i);
             activity.finish();
+        }
     }
+
 
     public void speakerClicked() {
         presenter.speakerClick(binding.callSpeakerBtn.isChecked());

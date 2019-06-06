@@ -23,6 +23,7 @@ package cx.ring.tv.call;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Matrix;
@@ -67,6 +68,7 @@ import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.services.DeviceRuntimeService;
+import cx.ring.tv.main.HomeActivity;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -537,7 +539,14 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
 
     @Override
     public void finish() {
-        getActivity().finish();
+        Activity activity = getActivity();
+        if (activity != null) {
+            Intent i = new Intent(activity, HomeActivity
+                    .class)
+                    .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(i);
+            activity.finish();
+        }
     }
 
     @Override
