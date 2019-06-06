@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8788f8b_40f44d7a",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/conversation/ConversationPresenter.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-06T15:17:09Z",
+      "side": 1,
+      "message": "do this in mConversationFacade",
+      "range": {
+        "startLine": 267,
+        "startChar": 0,
+        "endLine": 277,
+        "endChar": 9
+      },
+      "revId": "03de95d587e77eefbcf301931c6ca8d3e4534885",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
