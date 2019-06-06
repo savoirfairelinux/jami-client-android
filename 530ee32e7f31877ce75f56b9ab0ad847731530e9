@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "735b6c5a_abb49d2a",
+        "filename": "ring-android/app/src/main/AndroidManifest.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 642
+      },
+      "writtenOn": "2019-06-06T18:06:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "541f7a2e_ab0d8f2d",
+      "range": {
+        "startLine": 167,
+        "startChar": 16,
+        "endLine": 181,
+        "endChar": 76
+      },
+      "revId": "530ee32e7f31877ce75f56b9ab0ad847731530e9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57639d54_49441b97",
         "filename": "ring-android/app/src/main/res/values/strings.xml",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "530ee32e7f31877ce75f56b9ab0ad847731530e9",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c659faa3_25b1d507",
+        "filename": "ring-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 642
+      },
+      "writtenOn": "2019-06-06T18:06:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57639d54_49441b97",
+      "range": {
+        "startLine": 199,
+        "startChar": 48,
+        "endLine": 199,
+        "endChar": 128
+      },
+      "revId": "530ee32e7f31877ce75f56b9ab0ad847731530e9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
