@@ -187,6 +187,8 @@ abstract public class CameraService {
         }
 
         public String getCodec() {
+            if (codec == null)
+                return MediaFormat.MIMETYPE_VIDEO_AVC;
             switch (codec) {
                 case "H264": return MediaFormat.MIMETYPE_VIDEO_AVC;
                 case "H265": return MediaFormat.MIMETYPE_VIDEO_HEVC;
