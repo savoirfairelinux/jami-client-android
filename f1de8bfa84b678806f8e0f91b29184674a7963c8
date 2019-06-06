@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af9490cb_c3f28d00",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-06T14:41:58Z",
+      "side": 1,
+      "message": "is it possible to use a common action id (conv_action_delete) in all menu files ? This would allow to factorize all those methods",
+      "range": {
+        "startLine": 330,
+        "startChar": 22,
+        "endLine": 330,
+        "endChar": 45
+      },
+      "revId": "f1de8bfa84b678806f8e0f91b29184674a7963c8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
