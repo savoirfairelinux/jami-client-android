@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "541f7a2e_ab0d8f2d",
+        "filename": "ring-android/app/src/main/AndroidManifest.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-06T14:27:54Z",
+      "side": 1,
+      "message": "would */* work ?",
+      "range": {
+        "startLine": 167,
+        "startChar": 16,
+        "endLine": 181,
+        "endChar": 76
+      },
+      "revId": "530ee32e7f31877ce75f56b9ab0ad847731530e9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57639d54_49441b97",
+        "filename": "ring-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-06T14:27:54Z",
+      "side": 1,
+      "message": "\"No installed app is able to open this file type.\" ?",
+      "range": {
+        "startLine": 199,
+        "startChar": 48,
+        "endLine": 199,
+        "endChar": 128
+      },
+      "revId": "530ee32e7f31877ce75f56b9ab0ad847731530e9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
