@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.app.PendingIntent;
 import android.app.PictureInPictureParams;
 import android.app.RemoteAction;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -119,6 +120,8 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     private int mVideoHeight = -1;
     private int mPreviewWidth = 720, mPreviewHeight = 1280;
     private int mPreviewSurfaceWidth = 0, mPreviewSurfaceHeight = 0;
+
+    private boolean mBackstackLost = false;
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
@@ -247,8 +250,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             displayVideoSurface(true, !presenter.isPipMode());
             restartVideo = false;
             restartPreview = false;
-        }
-        else if (restartVideo) {
+        } else if (restartVideo) {
             displayVideoSurface(true, false);
             restartVideo = false;
         }
@@ -444,10 +446,12 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         ActionBar actionBar = activity == null ? null : activity.getSupportActionBar();
         if (actionBar != null) {
-            if (isInPictureInPictureMode)
+            if (isInPictureInPictureMode) {
                 actionBar.hide();
-            else
+            } else {
+                mBackstackLost = true;
                 actionBar.show();
+            }
         }
         presenter.pipModeChanged(isInPictureInPictureMode);
     }
@@ -708,7 +712,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         if (!audioOnly) {
             boolean videoGranted = mDeviceRuntimeService.hasVideoPermission();
 
-            if ((!audioGranted || !videoGranted) &&  android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if ((!audioGranted || !videoGranted) && android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 ArrayList<String> perms = new ArrayList<>();
                 if (!videoGranted) {
                     perms.add(Manifest.permission.CAMERA);
@@ -753,9 +757,18 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     @Override
     public void finish() {
         Activity activity = getActivity();
-        if (activity != null)
-            activity.finish();
+        if (activity != null) {
+            if (mBackstackLost) {
+                activity.finishAndRemoveTask();
+                startActivity(
+                        Intent.makeMainActivity(
+                                new ComponentName(activity, HomeActivity.class)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+            } else {
+                activity.finish();
+            }
+        }
     }
+
 
     public void speakerClicked() {
         presenter.speakerClick(binding.callSpeakerBtn.isChecked());

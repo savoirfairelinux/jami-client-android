@@ -22,7 +22,9 @@ package cx.ring.tv.call;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Matrix;
@@ -60,6 +62,7 @@ import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.call.CallPresenter;
 import cx.ring.call.CallView;
+import cx.ring.client.HomeActivity;
 import cx.ring.databinding.TvFragCallBinding;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.fragments.CallFragment;
@@ -94,6 +97,8 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     private int mPreviewWidth = 720, mPreviewHeight = 1280;
     private int mPreviewWidthRot = 720, mPreviewHeightRot = 1280;
+
+    private boolean mBackstackLost = false;
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
@@ -253,6 +258,9 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
 
     @Override
     public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode, Configuration newConfig) {
+        if(!isInPictureInPictureMode) {
+            mBackstackLost = true;
+        }
         presenter.pipModeChanged(isInPictureInPictureMode);
     }
 
@@ -537,7 +545,17 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
 
     @Override
     public void finish() {
-        getActivity().finish();
+        Activity activity = getActivity();
+        if (activity != null) {
+            if (mBackstackLost) {
+                activity.finishAndRemoveTask();
+                startActivity(
+                        Intent.makeMainActivity(
+                                new ComponentName(activity, HomeActivity.class)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+            } else {
+                activity.finish();
+            }
+        }
     }
 
     @Override
