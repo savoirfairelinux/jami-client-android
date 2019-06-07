@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93357b9e_9d367f06",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ShareWithFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-07T21:11:59Z",
+      "side": 1,
+      "message": "only use this in lrc (otherwise use Android native Log)",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 25
+      },
+      "revId": "9fb9c133fae4565de9fb27a7e3323c204e26a31c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
