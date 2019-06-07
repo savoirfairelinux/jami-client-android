@@ -31,15 +31,6 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import androidx.core.content.FileProvider;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -55,6 +46,13 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 
 import java.io.File;
 import java.io.IOException;
@@ -126,6 +124,10 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     private Disposable actionbarTarget = null;
     private static int position;
 
+
+    private String mCurrentFileAbsolutePath = null;
+
+    public static final int SAVE_FILE_REQUEST_CODE = 1003;
 
     private static int getIndex(Spinner spinner, Uri myString) {
         for (int i = 0, n = spinner.getCount(); i < n; i++)
@@ -379,6 +381,29 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             mCurrentPhoto = null;
             startFileSend(sendFile(file));
         }
+        // File download trough SAF
+        else if(requestCode == ConversationFragment.SAVE_FILE_REQUEST_CODE
+                && resultCode == RESULT_OK){
+            if(resultData != null && resultData.getData() != null ) {
+                boolean success = false;
+                //Get the Uri of the file that was created by the app that received our intent
+                android.net.Uri createdUri = resultData.getData();
+
+                //Try to copy the data of the current file into the newly created one
+                File input = new File(mCurrentFileAbsolutePath);
+                if(getContext().getContentResolver() != null)
+                    success = AndroidFileUtils.copyFileToUri(
+                            getContext().getContentResolver(),input,createdUri);
+                if(success)
+                    Toast.makeText(getContext(), "File saved successfully",
+                        Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(getContext(), "Failed to save the file",
+                            Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
     }
 
     @Override
@@ -757,4 +782,25 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             startFileSend(AndroidFileUtils.getCacheFile(requireContext(), uri).flatMapCompletable(this::sendFile));
         }
     }
+
+    /**
+     * Creates an intent using Android Storage Access Framework
+     * This intent is then received by application that can handle it like
+     * Downloads or Google drive
+     * @param file DataTranser of the file that is going to be stored
+     */
+    public void createSaveFileIntent(DataTransfer file){
+        //Get the current file absolute path and store it
+        mCurrentFileAbsolutePath = presenter.getCurrentFile(file).getAbsolutePath();
+
+        //Use Android Storage File Access to download the file
+        Intent downloadFileIntent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        downloadFileIntent.setType(AndroidFileUtils.getMimeTypeFromExtension(file.getExtension()));
+
+        downloadFileIntent.addCategory(Intent.CATEGORY_OPENABLE);
+        downloadFileIntent.putExtra(Intent.EXTRA_TITLE,file.getDisplayName());
+
+        startActivityForResult(downloadFileIntent, ConversationFragment.SAVE_FILE_REQUEST_CODE);
+    }
+
 }

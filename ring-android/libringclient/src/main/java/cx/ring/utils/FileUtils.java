@@ -49,6 +49,7 @@ public class FileUtils {
             inputStream.close();
             outputStream.close();
         } catch (IOException e) {
+            e.printStackTrace();
             Log.w(TAG, "Can't copy file", e);
             return false;
         }
