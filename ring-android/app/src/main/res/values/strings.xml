@@ -227,6 +227,7 @@ along with this program; if not, write to the Free Software
     <string name="share_message">Scan this code with Jami</string>
     <string name="share_message_no_account">Please select an account to share.</string>
     <string name="share_your_account_information">Share my contact information</string>
+    <string name="share_label">Share</string>
     <string name="generic_error_migration">Error</string>
     <string name="generic_error_migration_message">An error occurred during migration</string>
 
