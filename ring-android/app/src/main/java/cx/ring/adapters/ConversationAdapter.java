@@ -309,6 +309,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         if (conversationElement.getType() == ConversationElement.CEType.CONTACT)
             return false;
 
+        DataTransfer file = (DataTransfer) conversationElement;
+
         switch (item.getItemId()) {
             case R.id.conv_action_download: {
                 File downloadDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "Ring");
