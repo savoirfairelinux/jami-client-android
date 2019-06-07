@@ -251,6 +251,11 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                 }));
     }
 
+    public File getCurrentFile(final DataTransfer transfer){
+        return getDeviceRuntimeService().
+                getConversationPath(transfer.getPeerId(), transfer.getStoragePath());
+    }
+
     public void shareFile(DataTransfer file) {
         File path = getDeviceRuntimeService().getConversationPath(file.getPeerId(), file.getStoragePath());
         getView().shareFile(path);

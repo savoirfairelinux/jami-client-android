@@ -310,7 +310,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                 File newFile = new File(downloadDir, file.getDisplayName());
                 if (newFile.exists())
                     newFile.delete();
-                presenter.downloadFile(file, newFile);
+                conversationFragment.createSaveFileIntent(file);
+//                presenter.downloadFile(file, newFile);
                 break;
             }
             case R.id.conv_action_share: {

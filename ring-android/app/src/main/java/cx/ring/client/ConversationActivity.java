@@ -23,12 +23,12 @@ package cx.ring.client;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.KeyEvent;
 
 import androidx.annotation.ColorInt;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import android.view.KeyEvent;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

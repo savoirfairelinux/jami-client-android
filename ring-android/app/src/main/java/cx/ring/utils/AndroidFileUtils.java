@@ -184,13 +184,18 @@ public class AndroidFileUtils {
         int pos = filename.lastIndexOf(".");
         if (pos >= 0) {
             String fileExtension = MimeTypeMap.getFileExtensionFromUrl(filename.substring(pos));
-            String mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(fileExtension.toLowerCase());
+            return getMimeTypeFromExtension(fileExtension);
+        }
+        return "application/octet-stream";
+    }
+
+    public static String getMimeTypeFromExtension(String ext) {
+            String mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(ext.toLowerCase());
             if (!TextUtils.isEmpty(mimeType))
                 return mimeType;
-            if (fileExtension.contentEquals("gz")) {
+            if (ext.contentEquals("gz")) {
                 return "application/gzip";
             }
-        }
         return "application/octet-stream";
     }
 
@@ -240,6 +245,31 @@ public class AndroidFileUtils {
                 }
             }
         }).subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * Copies a file to a predefined Uri destination
+     * Uses the underlying copyFile(InputStream,OutputStream)
+     * @param cr content resolver
+     * @param input the file we want to copy
+     * @param outUri the uri destination
+     * @return success value
+     */
+    public static boolean copyFileToUri(ContentResolver cr, File input, Uri outUri){
+        boolean success = false;
+        try {
+            InputStream inputStream = new FileInputStream(input);
+            OutputStream output = cr.openOutputStream(outUri);
+            FileUtils.copyFile(inputStream, output);
+            if(output!= null)
+                output.close();
+            success = true;
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return success;
     }
 
     public static File getConversationFile(Context context, Uri uri, String conversationId, String name) throws IOException {
