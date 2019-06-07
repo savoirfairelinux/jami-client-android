@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca6c46b3_6e69de2c",
+        "filename": "ring-android/app/src/main/res/layout-land/frag_share.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-07T15:27:17Z",
+      "side": 1,
+      "message": "don\u0027t hardcode textview sizes",
+      "range": {
+        "startLine": 9,
+        "startChar": 30,
+        "endLine": 9,
+        "endChar": 35
+      },
+      "revId": "826ee02c5724c7b9f460d27b64ced3961e70724d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
