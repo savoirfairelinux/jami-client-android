@@ -31,7 +31,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -122,8 +125,12 @@ public class ShareWithFragment extends Fragment {
                 Uri data = mPendingIntent.getData();
                 if (data == null && clip != null && clip.getItemCount() > 0)
                     data = clip.getItemAt(0).getUri();
-                previewVideo.setVideoURI(data);
-                previewVideo.setVisibility(View.VISIBLE);
+                try {
+                    previewVideo.setVideoURI(data);
+                    previewVideo.setVisibility(View.VISIBLE);
+                } catch (NullPointerException | InflateException | NumberFormatException e) {
+                    Log.e(TAG, e.getMessage());
+                }
                 previewVideo.setOnCompletionListener(mediaPlayer -> previewVideo.start());
             }
         }
