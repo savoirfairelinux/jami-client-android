@@ -255,21 +255,21 @@ public class AndroidFileUtils {
      * @param outUri the uri destination
      * @return success value
      */
-    public static boolean copyFileToUri(ContentResolver cr, File input, Uri outUri){
-        boolean success = false;
-        try {
-            InputStream inputStream = new FileInputStream(input);
-            OutputStream output = cr.openOutputStream(outUri);
-            FileUtils.copyFile(inputStream, output);
-            if(output!= null)
-                output.close();
-            success = true;
-        }catch (FileNotFoundException e){
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return success;
+    public static Completable copyFileToUri(ContentResolver cr, File input, Uri outUri){
+        return Completable.fromAction(() -> {
+            InputStream inputStream = null;
+            OutputStream outputStream = null;
+            try {
+                inputStream = new FileInputStream(input);
+                outputStream = cr.openOutputStream(outUri);
+                FileUtils.copyFile(inputStream, outputStream);
+            } finally {
+                if (outputStream != null)
+                    outputStream.close();
+                if (inputStream != null)
+                    inputStream.close();
+            }
+        }).subscribeOn(Schedulers.io());
     }
 
     public static File getConversationFile(Context context, Uri uri, String conversationId, String name) throws IOException {
