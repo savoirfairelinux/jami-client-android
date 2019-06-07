@@ -88,6 +88,7 @@ import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.MediaButtonsHelper;
 import io.reactivex.Completable;
+import io.reactivex.CompletableObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
@@ -375,17 +376,16 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
 
                 //Try to copy the data of the current file into the newly created one
                 File input = new File(mCurrentFileAbsolutePath);
-                if(getContext().getContentResolver() != null)
-                    success = AndroidFileUtils.copyFileToUri(
-                            getContext().getContentResolver(),input,createdUri);
-                if(success)
-                    Toast.makeText(getContext(), "File saved successfully",
-                        Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(getContext(), "Failed to save the file",
-                            Toast.LENGTH_SHORT).show();
-            }
+                if(requireContext().getContentResolver() != null)
+                    AndroidFileUtils.copyFileToUri(
+                            requireContext().getContentResolver(),input,createdUri).
+                            observeOn(AndroidSchedulers.mainThread()).
+                            subscribe(()->Toast.makeText(getContext(), R.string.file_saved_successfully,
+                                    Toast.LENGTH_SHORT).show(),
+                                    error->Toast.makeText(getContext(), R.string.generic_error,
+                                            Toast.LENGTH_SHORT).show());
 
+            }
         }
 
     }
@@ -769,9 +769,9 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
 
     /**
      * Creates an intent using Android Storage Access Framework
-     * This intent is then received by application that can handle it like
+     * This intent is then received by applications that can handle it like
      * Downloads or Google drive
-     * @param file DataTranser of the file that is going to be stored
+     * @param file DataTransfer of the file that is going to be stored
      */
     public void createSaveFileIntent(DataTransfer file){
         //Get the current file absolute path and store it
