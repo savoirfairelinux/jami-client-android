@@ -20,19 +20,22 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#888888"
+        android:focusableInTouchMode="true"
         android:elevation="2dp">
 
         <EditText
             android:id="@+id/previewText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@null"
-            android:maxHeight="@dimen/share_preview_height"
+            android:inputType="textMultiLine"
             android:singleLine="false"
-            android:textColor="@color/text_color_primary_dark"
+            android:textColor="@color/text_color_primary"
             android:visibility="gone"
-            android:inputType="textShortMessage"
             tools:text="Test text message" />
 
         <ImageView
@@ -52,6 +55,12 @@
             android:visibility="gone" />
 
     </FrameLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="?android:attr/listDivider" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/shareList"
