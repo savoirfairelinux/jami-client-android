@@ -3,11 +3,11 @@ apply plugin: 'com.android.application'
 def buildFirebase = project.hasProperty('buildFirebase') || getGradle().getStartParameter().getTaskRequests().toString().contains('Firebase')
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion '28.0.3'
+    compileSdkVersion 29
+    buildToolsVersion '29.0.0'
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 170
         versionName "20190607-01"
     }
