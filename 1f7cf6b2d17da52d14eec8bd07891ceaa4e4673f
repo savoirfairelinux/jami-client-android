@@ -22,6 +22,30 @@
       "revId": "1f7cf6b2d17da52d14eec8bd07891ceaa4e4673f",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "262f9dac_d805b276",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 644
+      },
+      "writtenOn": "2019-06-10T17:29:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a22aab92_51945c08",
+      "range": {
+        "startLine": 313,
+        "startChar": 64,
+        "endLine": 314,
+        "endChar": 56
+      },
+      "revId": "1f7cf6b2d17da52d14eec8bd07891ceaa4e4673f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
