@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "70d64125_4afdf893",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 644
+      },
+      "writtenOn": "2019-06-10T17:29:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "535ac2c3_2e3500b3",
+      "range": {
+        "startLine": 314,
+        "startChar": 16,
+        "endLine": 318,
+        "endChar": 37
+      },
+      "revId": "cce54919b00d6e3f20a357ac4366570535c0b976",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64d20846_80ddcb02",
         "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2d84737a_bdc1fe27",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 644
+      },
+      "writtenOn": "2019-06-10T17:29:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64d20846_80ddcb02",
+      "range": {
+        "startLine": 130,
+        "startChar": 28,
+        "endLine": 130,
+        "endChar": 50
+      },
+      "revId": "cce54919b00d6e3f20a357ac4366570535c0b976",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b02b9b0b_d8871062",
         "filename": "ring-android/app/src/main/java/cx/ring/utils/AndroidFileUtils.java",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "cce54919b00d6e3f20a357ac4366570535c0b976",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f75413c6_e85b05e3",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/AndroidFileUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 644
+      },
+      "writtenOn": "2019-06-10T17:29:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b02b9b0b_d8871062",
+      "range": {
+        "startLine": 184,
+        "startChar": 7,
+        "endLine": 189,
+        "endChar": 42
+      },
+      "revId": "cce54919b00d6e3f20a357ac4366570535c0b976",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     },
     {
       "key": {
