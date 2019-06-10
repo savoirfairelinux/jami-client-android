@@ -279,7 +279,8 @@ along with this program; if not, write to the Free Software
     <string name="no_space_left_on_device">No space left on device</string>
     <string name="title_media_viewer">Media viewer</string>
     <string name="menu_file_open">Open file</string>
-    <string name="menu_file_download">Save file</string>
+    <string name="menu_file_download">Download file</string>
+    <string name="menu_file_save">Save file</string>
     <string name="menu_file_delete">Delete file</string>
     <string name="menu_file_share">Share file</string>
     <string name="menu_message_copy">Copy</string>

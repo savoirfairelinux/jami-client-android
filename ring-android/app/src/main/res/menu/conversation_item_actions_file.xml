@@ -16,7 +16,7 @@
     <item
         android:id="@+id/conv_action_download"
         android:icon="@drawable/ic_file_download"
-        android:title="@string/menu_file_download"
+        android:title="@string/menu_file_save"
         app:showAsAction="ifRoom" />
 
     <item
