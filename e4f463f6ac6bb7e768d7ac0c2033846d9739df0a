@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91a9db06_aa4bef4e",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2019-06-10T14:20:02Z",
+      "side": 1,
+      "message": "Not used",
+      "range": {
+        "startLine": 310,
+        "startChar": 25,
+        "endLine": 312,
+        "endChar": 63
+      },
+      "revId": "e4f463f6ac6bb7e768d7ac0c2033846d9739df0a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
