@@ -232,25 +232,9 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         mConversationFacade.sendFile(mAccountId, mContactRingId, file).subscribe();
     }
 
-    public void downloadFile(final DataTransfer transfer, final File dest) {
-        mCompositeDisposable.add(
-                Single.fromCallable(() -> {
-                    if (!transfer.isComplete())
-                        throw new IllegalStateException();
-                    File file = getDeviceRuntimeService().getConversationPath(transfer.getPeerId(), transfer.getStoragePath());
-                    if (FileUtils.copyFile(file, dest)) {
-                        Log.w(TAG, "Copied file to " + dest.getAbsolutePath() + " (" + FileUtils.readableFileSize(file.length()) + ")");
-                        return dest;
-                    }
-                    throw new IOException();
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(mUiScheduler)
-                .subscribe(file -> {
-                    getView().displayCompletedDownload(transfer, file);
-                }, error -> {
-                    Log.e(TAG, "Can't download file " + dest, error);
-                }));
+    public File getCurrentFile(final DataTransfer transfer){
+        return getDeviceRuntimeService().
+                getConversationPath(transfer.getPeerId(), transfer.getStoragePath());
     }
 
     public void shareFile(DataTransfer file) {
