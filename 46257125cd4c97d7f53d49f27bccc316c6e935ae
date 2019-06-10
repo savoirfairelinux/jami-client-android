@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6eaad071_c7a7de72",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-10T15:22:44Z",
+      "side": 1,
+      "message": "private",
+      "revId": "46257125cd4c97d7f53d49f27bccc316c6e935ae",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ac7341e_a3781c2d",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-10T15:22:44Z",
+      "side": 1,
+      "message": "move with mCurrentPhoto",
+      "range": {
+        "startLine": 129,
+        "startChar": 19,
+        "endLine": 129,
+        "endChar": 43
+      },
+      "revId": "46257125cd4c97d7f53d49f27bccc316c6e935ae",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13989942_05d00662",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-10T15:22:44Z",
+      "side": 1,
+      "message": "simply rename to startSaveFile",
+      "range": {
+        "startLine": 796,
+        "startChar": 16,
+        "endLine": 796,
+        "endChar": 35
+      },
+      "revId": "46257125cd4c97d7f53d49f27bccc316c6e935ae",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f21abce_45376e14",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/AndroidFileUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-10T15:22:44Z",
+      "side": 1,
+      "message": "remove duplicated line",
+      "range": {
+        "startLine": 188,
+        "startChar": 12,
+        "endLine": 188,
+        "endChar": 59
+      },
+      "revId": "46257125cd4c97d7f53d49f27bccc316c6e935ae",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ca6dc0d_a8811a74",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/conversation/ConversationPresenter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-10T15:22:44Z",
+      "side": 1,
+      "message": "to remove if not used anymore",
+      "range": {
+        "startLine": 246,
+        "startChar": 0,
+        "endLine": 250,
+        "endChar": 5
+      },
+      "revId": "46257125cd4c97d7f53d49f27bccc316c6e935ae",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b56e85cc_dc6f5433",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/conversation/ConversationView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-10T15:22:44Z",
+      "side": 1,
+      "message": "To remove",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 75
+      },
+      "revId": "46257125cd4c97d7f53d49f27bccc316c6e935ae",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
