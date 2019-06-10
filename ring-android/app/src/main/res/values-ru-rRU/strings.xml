@@ -92,6 +92,7 @@
   <string name="wizard_next">Далее</string>
   <!--MenuHeaderView-->
   <!--Share fragment-->
+  <string name="share_label">Поделится</string>
   <string name="generic_error_migration">Ошибка</string>
   <!--Pending contact requests-->
   <string name="accept">Принять</string>
@@ -103,4 +104,6 @@
   <string name="tv_contact_row_header">Контакты</string>
   <!--File Transfer-->
   <string name="menu_file_share">Поделится файлом</string>
+  <string name="menu_message_copy">Копировать</string>
+  <string name="menu_delete">Удалить</string>
 </resources>

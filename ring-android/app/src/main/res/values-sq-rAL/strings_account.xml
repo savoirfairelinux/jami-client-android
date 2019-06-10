@@ -7,6 +7,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Shtoni llogari Jami</string>
   <string name="add_sip_account_title">Shtoni llogari SIP</string>
+  <string name="ring_account_default_name">Llogari Jami %1$s</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Strehëemër</string>
   <string name="prompt_username">Emër përdoruesi</string>
@@ -115,6 +116,7 @@
   <string name="error_password_char_count">Minimumi 6 shenja</string>
   <string name="error_passwords_not_equals">Fjalëkalimet nuk përputhen</string>
   <string name="export_account_wait_title">Ju lutemi, pritni…</string>
+  <string name="export_account_wait_message">Po eksportohen të dhëna llogarie</string>
   <string name="account_export_file">Kopjeruaje llogarinë</string>
   <string name="account_export_end_decryption_message">S\’u zhbllokua dot llogaria juaj duke përdorur fjalëkalimin e dhënë.</string>
   <string name="account_export_end_network_title">Gabim rrjeti</string>
@@ -146,6 +148,7 @@
   <string name="account_sip_success_message">E regjistruat me sukses llogarinë tuaj SIP</string>
   <string name="account_sip_register_anyway">Regjistroje sido qoftë</string>
   <string name="account_link_button">Lidhu prej rrjeti</string>
+  <string name="account_link_archive_button">Lidhje prej kopjeruajtjeje</string>
   <string name="account_link_prompt_pin">Jepni PIN-in</string>
   <string name="account_new_button">Krijoni një llogari Jami</string>
   <string name="account_link_export_button">Lidhni te kjo llogari një pajisje tjetër</string>

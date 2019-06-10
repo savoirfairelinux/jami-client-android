@@ -139,6 +139,7 @@
   <string name="take_a_photo">Fotografiraj</string>
   <!--Share fragment-->
   <string name="share_message_no_account">Molim odaberite račun za djeljenje</string>
+  <string name="share_label">Podijeli</string>
   <string name="generic_error_migration">Greška</string>
   <!--Pending contact requests-->
   <string name="accept">Prihvati</string>
@@ -161,4 +162,6 @@
   <string name="menu_file_download">Preuzmi datoteku</string>
   <string name="menu_file_delete">Izbriši datoteku</string>
   <string name="menu_file_share">Dijeli datoteku</string>
+  <string name="menu_message_copy">Kopiraj</string>
+  <string name="menu_delete">Izbriši</string>
 </resources>

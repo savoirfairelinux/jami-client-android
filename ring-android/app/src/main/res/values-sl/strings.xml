@@ -109,6 +109,7 @@
   <!--Share fragment-->
   <string name="share_message_no_account">Izberi račun, ki ga želiš deliti.</string>
   <string name="share_your_account_information">Deli informacije mojega stika</string>
+  <string name="share_label">Deli</string>
   <string name="generic_error_migration">Napaka</string>
   <string name="generic_error_migration_message">Zgodila se je napaka med migracijo</string>
   <!--Pending contact requests-->
@@ -130,4 +131,6 @@
   <string name="tv_contact_row_header">Stiki</string>
   <!--File Transfer-->
   <string name="menu_file_share">Deli datoteko</string>
+  <string name="menu_message_copy">Kopiraj</string>
+  <string name="menu_delete">Pobriši</string>
 </resources>

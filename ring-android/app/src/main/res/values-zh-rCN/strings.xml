@@ -165,6 +165,7 @@
   <string name="share_message">用Jami扫描此码</string>
   <string name="share_message_no_account">请选择要共享的帐户。</string>
   <string name="share_your_account_information">共享我的通讯信息</string>
+  <string name="share_label">共享</string>
   <string name="generic_error_migration">错误</string>
   <string name="generic_error_migration_message">帐户迁移时发生错误</string>
   <!--Pending contact requests-->
@@ -211,4 +212,6 @@
   <string name="menu_file_download">下载文件</string>
   <string name="menu_file_delete">删除文件</string>
   <string name="menu_file_share">共享文件</string>
+  <string name="menu_message_copy">复制</string>
+  <string name="menu_delete">删除</string>
 </resources>

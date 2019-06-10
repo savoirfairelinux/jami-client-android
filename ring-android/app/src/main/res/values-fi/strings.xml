@@ -90,6 +90,7 @@
   <string name="wizard_next">Seuraava</string>
   <!--MenuHeaderView-->
   <!--Share fragment-->
+  <string name="share_label">Jako</string>
   <string name="generic_error_migration">Virhe</string>
   <!--Pending contact requests-->
   <string name="accept">Hyväksy</string>
@@ -101,4 +102,6 @@
   <string name="tv_contact_row_header">Yhteystiedot</string>
   <!--File Transfer-->
   <string name="menu_file_share">Jaa tiedosto</string>
+  <string name="menu_message_copy">Kopioi</string>
+  <string name="menu_delete">Poista</string>
 </resources>

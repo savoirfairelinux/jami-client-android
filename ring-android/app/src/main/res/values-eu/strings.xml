@@ -35,4 +35,5 @@
   <!--Smartlist-->
   <string name="tv_contact_row_header">Kontaktuak</string>
   <!--File Transfer-->
+  <string name="menu_delete">Ezabatu</string>
 </resources>

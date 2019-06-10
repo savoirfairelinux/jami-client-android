@@ -119,6 +119,10 @@
   <string name="permission_dialog_write_call_log_message">O Jami necessita da permissão \"Registo de gravar chamadas\" para ativar esta funcionalidade. Conceda esta permissão.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Digitalize o Código QR da conta que deseja adicionar.</string>
+  <string name="title_activity_qrcode">Partilhar a minha conta</string>
+  <string name="error_scan_no_camera_permissions">O digitalizador de códigos QR requer a permissão de acesso à câmara para funcionar</string>
+  <string name="tab_code">O meu código</string>
+  <string name="tab_scan">Digitalizar código</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Limpar histórico?</string>
   <string name="clear_history_dialog_message">Esta ação não pode ser desfeita.</string>
@@ -166,6 +170,7 @@
   <string name="share_message">Digitalizar este código com o Jami</string>
   <string name="share_message_no_account">Por favor selecione uma conta para partilhar.</string>
   <string name="share_your_account_information">Partilhar os meus dados de contacto</string>
+  <string name="share_label">Partilhar</string>
   <string name="generic_error_migration">Erro</string>
   <string name="generic_error_migration_message">Ocorreu um erro durante a migração</string>
   <!--Pending contact requests-->
@@ -212,4 +217,6 @@
   <string name="menu_file_download">Descarregar ficheiro</string>
   <string name="menu_file_delete">Eliminar ficheiro</string>
   <string name="menu_file_share">Partilhar ficheiro</string>
+  <string name="menu_message_copy">Copiar</string>
+  <string name="menu_delete">Eliminar</string>
 </resources>

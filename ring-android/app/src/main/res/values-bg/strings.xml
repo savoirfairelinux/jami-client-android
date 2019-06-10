@@ -166,6 +166,7 @@
   <string name="share_message">Сканирайте този код с Jami</string>
   <string name="share_message_no_account">Моля, изберете кой профил искате да споделите.</string>
   <string name="share_your_account_information">Споделяне на информацията аз връзка с мен</string>
+  <string name="share_label">Споделяне</string>
   <string name="generic_error_migration">Грешка</string>
   <string name="generic_error_migration_message">Възникна грешка при прехвърлянето</string>
   <!--Pending contact requests-->
@@ -208,4 +209,6 @@
   <string name="menu_file_download">Теглене на файл</string>
   <string name="menu_file_delete">Изтриване на файл</string>
   <string name="menu_file_share">Споделяне на файл</string>
+  <string name="menu_message_copy">Копиране</string>
+  <string name="menu_delete">Изтриване</string>
 </resources>

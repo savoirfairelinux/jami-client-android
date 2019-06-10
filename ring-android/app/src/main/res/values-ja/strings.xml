@@ -110,6 +110,7 @@
   <!--Share fragment-->
   <string name="share_message_no_account">共有するアカウントを選択してください。</string>
   <string name="share_your_account_information">連絡先情報を共有</string>
+  <string name="share_label">共有</string>
   <string name="generic_error_migration">エラー</string>
   <string name="generic_error_migration_message">移行中にエラーが発生しました。</string>
   <!--Pending contact requests-->
@@ -131,4 +132,6 @@
   <string name="tv_contact_row_header">連絡先</string>
   <!--File Transfer-->
   <string name="menu_file_share">ファイルを共有</string>
+  <string name="menu_message_copy">コピー</string>
+  <string name="menu_delete">削除</string>
 </resources>

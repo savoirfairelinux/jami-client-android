@@ -7,6 +7,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Adicionar conta Jami</string>
   <string name="add_sip_account_title">Adicionar conta SIP</string>
+  <string name="ring_account_default_name">Conta Jami %1$s</string>
   <string name="prompt_alias">Apelido</string>
   <string name="prompt_hostname">Servidor</string>
   <string name="prompt_username">Nome de utilizador</string>
@@ -115,6 +116,7 @@
   <string name="error_password_char_count">Pelo menos 6 caracteres</string>
   <string name="error_passwords_not_equals">As palavras-chave não são iguais</string>
   <string name="export_account_wait_title">Por favor aguarde...</string>
+  <string name="export_account_wait_message">Exportar a informação da conta</string>
   <string name="account_export_file">Conta de cópia de segurança</string>
   <string name="account_export_end_decryption_message">Não foi possível desbloquear a sua conta utilizando a palavra-chave fornecida.</string>
   <string name="account_export_end_network_title">Erro de rede</string>
@@ -145,6 +147,8 @@
   <string name="account_sip_success_title">Conta SIP registada</string>
   <string name="account_sip_success_message">Registou a sua conta SIP com sucesso.</string>
   <string name="account_sip_register_anyway">Registar mesmo assim</string>
+  <string name="account_link_button">Conectar da rede</string>
+  <string name="account_link_archive_button">Conectar da cópia de segurança</string>
   <string name="account_link_prompt_pin">Introduza o PIN</string>
   <string name="account_new_button">Criar uma conta Jami</string>
   <string name="account_link_export_button">Associar outro dispositivo a esta conta</string>

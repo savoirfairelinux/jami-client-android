@@ -87,4 +87,5 @@
   <!--Blacklist-->
   <!--Smartlist-->
   <!--File Transfer-->
+  <string name="menu_delete">Șterge</string>
 </resources>

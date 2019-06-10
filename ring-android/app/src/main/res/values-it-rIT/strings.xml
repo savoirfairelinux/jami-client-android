@@ -166,6 +166,7 @@
   <string name="share_message">Scansione questo codice con Jami</string>
   <string name="share_message_no_account">Seleziona un account per la condivisione.</string>
   <string name="share_your_account_information">Condividi le mie informazioni di contatto</string>
+  <string name="share_label">Condividi</string>
   <string name="generic_error_migration">Errore</string>
   <string name="generic_error_migration_message">Si è verificato un errore durante la migrazione</string>
   <!--Pending contact requests-->
@@ -211,4 +212,6 @@
   <string name="menu_file_download">Scarica file</string>
   <string name="menu_file_delete">Cancella file</string>
   <string name="menu_file_share">Condividi file</string>
+  <string name="menu_message_copy">Copia</string>
+  <string name="menu_delete">Elimina</string>
 </resources>

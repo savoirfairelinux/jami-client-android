@@ -119,6 +119,10 @@
   <string name="permission_dialog_write_call_log_message">Ring behöver rättighet att läsa \"Kontakter\" för att aktivera den här funktionen. Överväg att tilldela rättigheterna.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Scanna in QR-koden för det konto du vill lägga till.</string>
+  <string name="title_activity_qrcode">Dela mitt konto</string>
+  <string name="error_scan_no_camera_permissions">QR-skannern kräver kamerabehörighet för att fungera</string>
+  <string name="tab_code">Min kod</string>
+  <string name="tab_scan">Skanna kod</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Rensa historiken?</string>
   <string name="clear_history_dialog_message">Denna åtgärd kan inte ångras.</string>
@@ -166,6 +170,7 @@
   <string name="share_message">Skanna den här koden med Jami</string>
   <string name="share_message_no_account">Välj ett konto att dela.</string>
   <string name="share_your_account_information">Dela min kontaktinformation</string>
+  <string name="share_label">Dela</string>
   <string name="generic_error_migration">Fel</string>
   <string name="generic_error_migration_message">Ett fel inträffade vid migrering</string>
   <!--Pending contact requests-->
@@ -212,4 +217,6 @@
   <string name="menu_file_download">Ladda ner fil</string>
   <string name="menu_file_delete">Ta bort fil</string>
   <string name="menu_file_share">Dela fil</string>
+  <string name="menu_message_copy">Kopiera</string>
+  <string name="menu_delete">Ta bort</string>
 </resources>

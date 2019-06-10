@@ -98,7 +98,6 @@
   <!--Share fragment-->
   <string name="share_message_no_account">Sélectionnez un compte à partager.</string>
   <string name="share_your_account_information">Partager mes coordonnées</string>
-  <string name="share_label">Partager</string>
   <string name="generic_error_migration">Erreur</string>
   <string name="generic_error_migration_message">Une erreur est survenue lors de la migration</string>
   <!--Pending contact requests-->

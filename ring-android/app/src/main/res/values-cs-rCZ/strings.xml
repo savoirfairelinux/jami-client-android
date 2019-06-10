@@ -168,6 +168,7 @@
   <string name="share_message">Skenovat tento kód s Jami</string>
   <string name="share_message_no_account">Vyberte, prosím, účet ke sdílení.</string>
   <string name="share_your_account_information">Sdílet mé kontaktní informace</string>
+  <string name="share_label">Sdílet</string>
   <string name="generic_error_migration">Chyba</string>
   <string name="generic_error_migration_message">Při převádění došlo k chybě</string>
   <!--Pending contact requests-->
@@ -213,4 +214,6 @@
   <string name="menu_file_download">Stáhnout soubor</string>
   <string name="menu_file_delete">Smazat soubor</string>
   <string name="menu_file_share">Sdílet soubor</string>
+  <string name="menu_message_copy">Zkopírovat</string>
+  <string name="menu_delete">Odstranit</string>
 </resources>

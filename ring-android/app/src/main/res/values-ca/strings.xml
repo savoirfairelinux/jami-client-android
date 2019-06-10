@@ -141,4 +141,5 @@
   <string name="tv_contact_row_header">Contactes</string>
   <!--File Transfer-->
   <string name="menu_file_share">Compartir arxiu</string>
+  <string name="menu_delete">Suprimeix</string>
 </resources>

@@ -118,6 +118,9 @@
   <!--Write call log permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Eklemek istediğiniz hesabın QR kodunu tarayın.</string>
+  <string name="title_activity_qrcode">Hesabımı paylaş</string>
+  <string name="tab_code">Kodum</string>
+  <string name="tab_scan">Kodu Tara</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Geçmiş silinsin mi?</string>
   <string name="clear_history_dialog_message">Bu eylem geri alınamaz.</string>

@@ -7,6 +7,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Añadir cuenta de Jami</string>
   <string name="add_sip_account_title">Agregar cuenta SIP</string>
+  <string name="ring_account_default_name">Cuenta Jami %1$s</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Nombre del host</string>
   <string name="prompt_username">Nombre de usuario</string>
@@ -115,6 +116,7 @@ Puedes editar tu cuenta luego</string>
   <string name="error_password_char_count">6 caracteres mínimo</string>
   <string name="error_passwords_not_equals">Las contraseñas no coinciden</string>
   <string name="export_account_wait_title">Por favor, espera...</string>
+  <string name="export_account_wait_message">Exportando información de cuenta</string>
   <string name="account_export_file">Cuenta de respaldo</string>
   <string name="account_export_end_decryption_message">Error al desbloquear tu cuenta con la contraseña provista</string>
   <string name="account_export_end_network_title">Error en la red</string>
@@ -146,6 +148,7 @@ Puedes editar tu cuenta luego</string>
   <string name="account_sip_success_message">Has registrado tu cuenta SIP correctamente.</string>
   <string name="account_sip_register_anyway">Registrar de todos modos</string>
   <string name="account_link_button">Conectar desde red</string>
+  <string name="account_link_archive_button">Conectar desde copia de seguridad</string>
   <string name="account_link_prompt_pin">Ingresa tu PIN</string>
   <string name="account_new_button">Crear una cuenta en Jami</string>
   <string name="account_link_export_button">Conectar otro dispositivo a esta cuenta</string>

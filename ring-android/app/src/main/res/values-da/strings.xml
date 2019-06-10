@@ -143,6 +143,7 @@
   <!--Share fragment-->
   <string name="share_message_no_account">Vælg en konto at dele.</string>
   <string name="share_your_account_information">Del min kontaktinformation</string>
+  <string name="share_label">Del</string>
   <string name="generic_error_migration">Fejl</string>
   <string name="generic_error_migration_message">Der opstod en fejl under migrering</string>
   <!--Pending contact requests-->
@@ -188,4 +189,6 @@
   <string name="menu_file_download">Hent fil</string>
   <string name="menu_file_delete">Slet fil</string>
   <string name="menu_file_share">Del fil</string>
+  <string name="menu_message_copy">Kopiér</string>
+  <string name="menu_delete">Slet</string>
 </resources>

@@ -118,6 +118,10 @@
   <string name="permission_dialog_write_call_log_message">Jami 需要「寫入通話紀錄」權限以啟用此功能。請給予它。</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">掃描你想要加入的帳號的 QR Code 。</string>
+  <string name="title_activity_qrcode">分享我的帳號</string>
+  <string name="error_scan_no_camera_permissions">QR Code 掃描器需要相機權限才能正常運作</string>
+  <string name="tab_code">我的條碼</string>
+  <string name="tab_scan">掃描條碼</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">清除歷史？</string>
   <string name="clear_history_dialog_message">此動作無法復原。</string>
@@ -165,6 +169,7 @@
   <string name="share_message">使用 Jami 掃描此條碼</string>
   <string name="share_message_no_account">請選取要分享的帳號。</string>
   <string name="share_your_account_information">分享我的聯絡人資訊</string>
+  <string name="share_label">分享</string>
   <string name="generic_error_migration">錯誤</string>
   <string name="generic_error_migration_message">在導入時遇到錯誤</string>
   <!--Pending contact requests-->
@@ -211,4 +216,6 @@
   <string name="menu_file_download">下載檔案</string>
   <string name="menu_file_delete">刪除檔案</string>
   <string name="menu_file_share">分享檔案</string>
+  <string name="menu_message_copy">複製</string>
+  <string name="menu_delete">刪除</string>
 </resources>

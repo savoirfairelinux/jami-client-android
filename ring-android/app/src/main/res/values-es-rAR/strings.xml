@@ -126,6 +126,7 @@
   <!--Share fragment-->
   <string name="share_message_no_account">Selecciona una cuenta que quieras compartir.</string>
   <string name="share_your_account_information">Compartir mi información de contactos.</string>
+  <string name="share_label">Compartir</string>
   <string name="generic_error_migration">Error</string>
   <string name="generic_error_migration_message">Ocurrió un error durante la migración</string>
   <!--Pending contact requests-->
@@ -170,4 +171,6 @@
   <string name="menu_file_download">Descargar archivo</string>
   <string name="menu_file_delete">Borrar archivo</string>
   <string name="menu_file_share">Compartir archivo</string>
+  <string name="menu_message_copy">Copiar</string>
+  <string name="menu_delete">Eliminar</string>
 </resources>

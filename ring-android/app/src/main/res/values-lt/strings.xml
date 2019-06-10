@@ -113,6 +113,8 @@
   <!--Write call log permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Nuskenuokite paskyros, kurią norite pridėti, QR kodą.</string>
+  <string name="tab_code">Mano kodas</string>
+  <string name="tab_scan">Skenuoti kodą</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Išvalyti istoriją?</string>
   <string name="clear_history_dialog_message">Šio veiksmo neįmanoma bus atšaukti.</string>
@@ -155,6 +157,7 @@
   <string name="share_message">Nuskenuokite šį kodą, naudodami Jami</string>
   <string name="share_message_no_account">Pasirinkite norimą bendrinti paskyrą.</string>
   <string name="share_your_account_information">Bendrinti mano kontaktinę informaciją</string>
+  <string name="share_label">Bendrinti</string>
   <string name="generic_error_migration">Klaida</string>
   <string name="generic_error_migration_message">Perkėlimo metu įvyko klaida</string>
   <!--Pending contact requests-->
@@ -193,4 +196,6 @@
   <string name="menu_file_download">Atsisiųsti failą</string>
   <string name="menu_file_delete">Ištrinti failą</string>
   <string name="menu_file_share">Bendrinti failą</string>
+  <string name="menu_message_copy">Kopijuoti</string>
+  <string name="menu_delete">Ištrinti</string>
 </resources>

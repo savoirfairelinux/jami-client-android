@@ -126,6 +126,7 @@
   <!--Share fragment-->
   <string name="share_message_no_account">Velg en konto å dele.</string>
   <string name="share_your_account_information">Del min kontaktinformasjon</string>
+  <string name="share_label">Del</string>
   <string name="generic_error_migration">Feil</string>
   <string name="generic_error_migration_message">En feil inntraff under flytting</string>
   <!--Pending contact requests-->
@@ -170,4 +171,6 @@
   <string name="menu_file_download">Last ned fil</string>
   <string name="menu_file_delete">Slett fil</string>
   <string name="menu_file_share">Del fil</string>
+  <string name="menu_message_copy">Kopier</string>
+  <string name="menu_delete">Slett</string>
 </resources>

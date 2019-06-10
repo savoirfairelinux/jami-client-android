@@ -166,6 +166,7 @@
   <string name="share_message">Scan deze code met Jami</string>
   <string name="share_message_no_account">Selecteer een account om te delen.</string>
   <string name="share_your_account_information">Deel mijn contactinformatie</string>
+  <string name="share_label">Delen</string>
   <string name="generic_error_migration">Fout</string>
   <string name="generic_error_migration_message">Er is een fout opgetreden tijdens het migratieproces</string>
   <!--Pending contact requests-->
@@ -212,4 +213,6 @@
   <string name="menu_file_download">Bestand downloaden</string>
   <string name="menu_file_delete">Bestand verwijderen</string>
   <string name="menu_file_share">Bestand delen</string>
+  <string name="menu_message_copy">Kopiëren</string>
+  <string name="menu_delete">Verwijderen</string>
 </resources>

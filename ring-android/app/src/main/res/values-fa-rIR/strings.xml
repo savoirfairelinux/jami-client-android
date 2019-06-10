@@ -166,6 +166,7 @@
   <string name="share_message">این رمز را با جمی بپویید</string>
   <string name="share_message_no_account">لطفاً برای هم‌رسانی، حسابی را برگزینید.</string>
   <string name="share_your_account_information">هم‌رسانی اطّلاعات تماس من</string>
+  <string name="share_label">هم‌رسانی</string>
   <string name="generic_error_migration">خطا</string>
   <string name="generic_error_migration_message">هنگام مهاجرت، خطایی رخ داد</string>
   <!--Pending contact requests-->
@@ -212,4 +213,6 @@
   <string name="menu_file_download">دانلود فایل</string>
   <string name="menu_file_delete">حذف فایل</string>
   <string name="menu_file_share">به اشتراک گذاری فایل</string>
+  <string name="menu_message_copy">کپی</string>
+  <string name="menu_delete">حذف</string>
 </resources>

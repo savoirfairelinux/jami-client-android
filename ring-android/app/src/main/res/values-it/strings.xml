@@ -206,4 +206,6 @@
   <string name="menu_file_download">Scarica file</string>
   <string name="menu_file_delete">Cancella file</string>
   <string name="menu_file_share">Condividere file</string>
+  <string name="menu_message_copy">Copia</string>
+  <string name="menu_delete">Cancella</string>
 </resources>

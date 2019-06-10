@@ -64,4 +64,6 @@
   <!--Smartlist-->
   <string name="tv_contact_row_header">Kontakty</string>
   <!--File Transfer-->
+  <string name="menu_message_copy">Kopíruj</string>
+  <string name="menu_delete">Vymaž</string>
 </resources>

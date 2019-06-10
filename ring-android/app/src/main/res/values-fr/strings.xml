@@ -19,7 +19,7 @@
   <string name="developed_by">Développé par</string>
   <string name="designed_by">Conçu par</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Ring</string>
+  <string name="title_activity_sflphone_home">Jami</string>
   <string name="error_no_network">Pas d\'accès au réseau</string>
   <string name="error_mobile_network_available_but_disabled">Autorisez l\'accès au réseau cellulaire dans les options de configuration s\'il vous plaît</string>
   <!--AB menus-->
@@ -166,6 +166,7 @@
   <string name="share_message">Numériser cet identifiant avec Jami</string>
   <string name="share_message_no_account">Svp, sélectionnez le compte à partager</string>
   <string name="share_your_account_information">Partagez mes coordonnées</string>
+  <string name="share_label">Partager</string>
   <string name="generic_error_migration">Erreur</string>
   <string name="generic_error_migration_message">Une erreur est survenue pendant la migration</string>
   <!--Pending contact requests-->
@@ -212,4 +213,6 @@
   <string name="menu_file_download">Télécharger le fichier</string>
   <string name="menu_file_delete">Supprimer le fichier</string>
   <string name="menu_file_share">Partager un fichier</string>
+  <string name="menu_message_copy">Copier</string>
+  <string name="menu_delete">Supprimer</string>
 </resources>

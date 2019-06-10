@@ -7,6 +7,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Pridėti Jami paskyrą</string>
   <string name="add_sip_account_title">Pridėti SIP paskyrą</string>
+  <string name="ring_account_default_name">Jami paskyra %1$s</string>
   <string name="prompt_alias">Slapyvardis</string>
   <string name="prompt_hostname">Kompiuterio vardas</string>
   <string name="prompt_username">Naudotojo vardas</string>

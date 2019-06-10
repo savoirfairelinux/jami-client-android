@@ -119,6 +119,10 @@
   <string name="permission_dialog_write_call_log_message">A Jaminak szüksége van a „Hívásnapló írása” engedélyre. Kérjük, engedélyezze.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Olvassa be a hozzáadandó fiók QR-kódját.</string>
+  <string name="title_activity_qrcode">Fiókomat megosztása</string>
+  <string name="error_scan_no_camera_permissions">A QR-beolvasása működéséhez szükséges a fényképezőgép elérés engedélyezése</string>
+  <string name="tab_code">Saját kód</string>
+  <string name="tab_scan">Kód beolvasása</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Törli az előzményeket?</string>
   <string name="clear_history_dialog_message">Ez a művelet nem vonható vissza.</string>
@@ -166,6 +170,7 @@
   <string name="share_message">Olvassa be a kódot a Jami programmal</string>
   <string name="share_message_no_account">Válassza ki a megosztandó fiókot.</string>
   <string name="share_your_account_information">Kapcsolati adatok megosztása</string>
+  <string name="share_label">Megosztás </string>
   <string name="generic_error_migration">Hiba</string>
   <string name="generic_error_migration_message">Hiba történt az átvitel során</string>
   <!--Pending contact requests-->
@@ -212,4 +217,6 @@
   <string name="menu_file_download">Fájl letöltése</string>
   <string name="menu_file_delete">Fájl törlése</string>
   <string name="menu_file_share">Fájl megosztása</string>
+  <string name="menu_message_copy">Másolás</string>
+  <string name="menu_delete">Törlés</string>
 </resources>

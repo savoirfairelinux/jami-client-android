@@ -119,6 +119,10 @@
   <string name="permission_dialog_write_call_log_message">Jami-t i duhet leja \"Shkruaj në regjistër thirrjesh\" që të aktivizojë këtë veçori. Ju lutemi, akordojani.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skanoni kodin QR të llogarisë që doni të shtoni.</string>
+  <string name="title_activity_qrcode">Ndaje llogarinë time</string>
+  <string name="error_scan_no_camera_permissions">Që të funksionojë, skaneri QR lyp leje për kamerën</string>
+  <string name="tab_code">Kodi Im</string>
+  <string name="tab_scan">Skanojeni Kodin</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Të pastrohet historiku?</string>
   <string name="clear_history_dialog_message">Ky veprim s\’mund të zhbëhet.</string>
@@ -166,6 +170,7 @@
   <string name="share_message">Skanojeni këtë kod me Jami-n</string>
   <string name="share_message_no_account">Ju lutemi, përzgjidhni një llogari për ndarje me të.</string>
   <string name="share_your_account_information">Ndaji me të tjerët të dhënat e mia të kontaktit</string>
+  <string name="share_label">Ndajeni me të tjerë</string>
   <string name="generic_error_migration">Gabim</string>
   <string name="generic_error_migration_message">Ndodhi një gabim gjatë migrimit</string>
   <!--Pending contact requests-->
@@ -212,4 +217,6 @@
   <string name="menu_file_download">Shkarkoje kartelën</string>
   <string name="menu_file_delete">Fshije kartelën</string>
   <string name="menu_file_share">Ndani kartelë me të tjerë</string>
+  <string name="menu_message_copy">Kopjoje</string>
+  <string name="menu_delete">Fshije</string>
 </resources>

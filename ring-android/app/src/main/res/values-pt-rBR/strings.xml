@@ -167,6 +167,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="share_message">Digitalize este código com Jami</string>
   <string name="share_message_no_account">Por favor selecione uma conta para compartilhar.</string>
   <string name="share_your_account_information">Compartilhar meus dados de contato</string>
+  <string name="share_label">Compartilhar</string>
   <string name="generic_error_migration">Erro</string>
   <string name="generic_error_migration_message">Um erro ocorreu durante a migração</string>
   <!--Pending contact requests-->
@@ -213,4 +214,6 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="menu_file_download">Baixar arquivo</string>
   <string name="menu_file_delete">Excluir arquivo</string>
   <string name="menu_file_share">Compartilhar arquivo</string>
+  <string name="menu_message_copy">Copiar</string>
+  <string name="menu_delete">Deletar</string>
 </resources>

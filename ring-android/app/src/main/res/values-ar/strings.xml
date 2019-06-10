@@ -74,6 +74,7 @@
   <string name="wizard_next">التالي</string>
   <!--MenuHeaderView-->
   <!--Share fragment-->
+  <string name="share_label">مشاركة</string>
   <string name="generic_error_migration">خطأ</string>
   <!--Pending contact requests-->
   <string name="accept">اقبل</string>
@@ -85,4 +86,6 @@
   <string name="tv_contact_row_header">الاتصالات</string>
   <!--File Transfer-->
   <string name="menu_file_share">تقاسم الوثيقة</string>
+  <string name="menu_message_copy">إنسخ</string>
+  <string name="menu_delete">إحذف</string>
 </resources>

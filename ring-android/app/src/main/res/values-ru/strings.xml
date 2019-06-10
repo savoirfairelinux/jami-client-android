@@ -168,6 +168,7 @@
   <string name="share_message">Отсканируйте этот код Jami</string>
   <string name="share_message_no_account">Выберите аккаунт, которым хотите поделиться.</string>
   <string name="share_your_account_information">Поделиться моей контактной информацией</string>
+  <string name="share_label">Поделиться</string>
   <string name="generic_error_migration">Ошибка</string>
   <string name="generic_error_migration_message">В процессе переноса произошла ошибка</string>
   <!--Pending contact requests-->
@@ -214,4 +215,6 @@
   <string name="menu_file_download">Загрузить файл</string>
   <string name="menu_file_delete">Удалить файл</string>
   <string name="menu_file_share">Поделиться файлом</string>
+  <string name="menu_message_copy">Копировать</string>
+  <string name="menu_delete">Удалить</string>
 </resources>
