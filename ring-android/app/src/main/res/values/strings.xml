@@ -275,6 +275,7 @@ along with this program; if not, write to the Free Software
     <string name="file_transfer_status_invalid_pathname">invalid pathname</string>
     <string name="file_transfer_status_unjoinable_peer">unjoinable peer</string>
     <string name="file_saved_in">File saved in %s</string>
+    <string name="file_saved_successfully">File saved successfully</string>
     <string name="no_space_left_on_device">No space left on device</string>
     <string name="title_media_viewer">Media viewer</string>
     <string name="menu_file_open">Open file</string>
