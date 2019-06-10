@@ -78,4 +78,6 @@ public interface ConversationView extends BaseView {
     void removeElement(ConversationElement e);
 
     void setConversationColor(int integer);
+
+    void startSaveFile(DataTransfer currentFile, String fileAbsolutePath);
 }

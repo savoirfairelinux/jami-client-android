@@ -232,25 +232,21 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         mConversationFacade.sendFile(mAccountId, mContactRingId, file).subscribe();
     }
 
-    public void downloadFile(final DataTransfer transfer, final File dest) {
-        mCompositeDisposable.add(
-                Single.fromCallable(() -> {
-                    if (!transfer.isComplete())
-                        throw new IllegalStateException();
-                    File file = getDeviceRuntimeService().getConversationPath(transfer.getPeerId(), transfer.getStoragePath());
-                    if (FileUtils.copyFile(file, dest)) {
-                        Log.w(TAG, "Copied file to " + dest.getAbsolutePath() + " (" + FileUtils.readableFileSize(file.length()) + ")");
-                        return dest;
-                    }
-                    throw new IOException();
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(mUiScheduler)
-                .subscribe(file -> {
-                    getView().displayCompletedDownload(transfer, file);
-                }, error -> {
-                    Log.e(TAG, "Can't download file " + dest, error);
-                }));
+    /**
+     * Gets the absolute path of the file dataTransfer and sends both the DataTransfer and the
+     * found path to the ConversationView in order to start saving the file
+     * @param transfer DataTransfer of the file
+     */
+    public void saveFile(DataTransfer transfer) {
+       String fileAbsolutePath =  getDeviceRuntimeService().
+                getConversationPath(transfer.getPeerId(), transfer.getStoragePath())
+               .getAbsolutePath();
+        getView().startSaveFile(transfer,fileAbsolutePath);
+    }
+
+    public File getCurrentFile(final DataTransfer transfer){
+        return getDeviceRuntimeService().
+                getConversationPath(transfer.getPeerId(), transfer.getStoragePath());
     }
 
     public void shareFile(DataTransfer file) {

@@ -182,15 +182,21 @@ public class AndroidFileUtils {
 
     public static String getMimeType(String filename) {
         int pos = filename.lastIndexOf(".");
+        String fileExtension = null;
         if (pos >= 0) {
-            String fileExtension = MimeTypeMap.getFileExtensionFromUrl(filename.substring(pos));
-            String mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(fileExtension.toLowerCase());
+            fileExtension = MimeTypeMap.getFileExtensionFromUrl(filename.substring(pos));
+            return getMimeTypeFromExtension(fileExtension);
+        }
+        return getMimeTypeFromExtension(fileExtension);
+    }
+
+    public static String getMimeTypeFromExtension(String ext) {
+            String mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(ext.toLowerCase());
             if (!TextUtils.isEmpty(mimeType))
                 return mimeType;
-            if (fileExtension.contentEquals("gz")) {
+            if (ext.contentEquals("gz")) {
                 return "application/gzip";
             }
-        }
         return "application/octet-stream";
     }
 
@@ -238,6 +244,31 @@ public class AndroidFileUtils {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+        }).subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * Copies a file to a predefined Uri destination
+     * Uses the underlying copyFile(InputStream,OutputStream)
+     * @param cr content resolver
+     * @param input the file we want to copy
+     * @param outUri the uri destination
+     * @return success value
+     */
+    public static Completable copyFileToUri(ContentResolver cr, File input, Uri outUri){
+        return Completable.fromAction(() -> {
+            InputStream inputStream = null;
+            OutputStream outputStream = null;
+            try {
+                inputStream = new FileInputStream(input);
+                outputStream = cr.openOutputStream(outUri);
+                FileUtils.copyFile(inputStream, outputStream);
+            } finally {
+                if (outputStream != null)
+                    outputStream.close();
+                if (inputStream != null)
+                    inputStream.close();
             }
         }).subscribeOn(Schedulers.io());
     }
