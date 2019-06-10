@@ -2,3 +2,4 @@
 env.sh
 obj/
 android-toolchain-*/
+.idea/

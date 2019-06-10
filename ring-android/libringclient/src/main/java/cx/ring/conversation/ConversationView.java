@@ -43,8 +43,6 @@ public interface ConversationView extends BaseView {
 
     void displayErrorToast(int error);
 
-    void displayCompletedDownload(DataTransfer transfer, File destination);
-
     void hideNumberSpinner();
 
     void clearMsgEdit();
@@ -78,4 +76,6 @@ public interface ConversationView extends BaseView {
     void removeElement(ConversationElement e);
 
     void setConversationColor(int integer);
+
+    void startSaveFile(DataTransfer currentFile, String fileAbsolutePath);
 }

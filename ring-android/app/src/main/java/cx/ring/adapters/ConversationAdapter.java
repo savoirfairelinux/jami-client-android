@@ -311,12 +311,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
         switch (item.getItemId()) {
             case R.id.conv_action_download: {
-                File downloadDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "Ring");
-                downloadDir.mkdirs();
-                File newFile = new File(downloadDir, ((DataTransfer) conversationElement).getDisplayName());
-                if (newFile.exists())
-                    newFile.delete();
-                presenter.downloadFile((DataTransfer) conversationElement, newFile);
+                presenter.saveFile((DataTransfer) conversationElement);
                 break;
             }
             case R.id.conv_action_share: {
