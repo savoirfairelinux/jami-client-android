@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "535ac2c3_2e3500b3",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-10T14:00:02Z",
+      "side": 1,
+      "message": "to remove",
+      "range": {
+        "startLine": 314,
+        "startChar": 16,
+        "endLine": 318,
+        "endChar": 37
+      },
+      "revId": "cce54919b00d6e3f20a357ac4366570535c0b976",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64d20846_80ddcb02",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-10T14:00:02Z",
+      "side": 1,
+      "message": "* move with other REQUEST_CODEs above\n* rename to REQUEST_CODE_SAVE_FILE to use the same convention as other constants",
+      "range": {
+        "startLine": 130,
+        "startChar": 28,
+        "endLine": 130,
+        "endChar": 50
+      },
+      "revId": "cce54919b00d6e3f20a357ac4366570535c0b976",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b02b9b0b_d8871062",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/AndroidFileUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-10T14:00:02Z",
+      "side": 1,
+      "message": "Use:\n        int pos \u003d filename.lastIndexOf(\".\");\n        String fileExtension \u003d null;\n        if (pos \u003e\u003d 0) {\n            fileExtension \u003d MimeTypeMap.getFileExtensionFromUrl(filename.substring(pos));\n        }\n        return getMimeTypeFromExtension(fileExtension);\n\nThis reduces code duplication",
+      "range": {
+        "startLine": 184,
+        "startChar": 7,
+        "endLine": 189,
+        "endChar": 42
+      },
+      "revId": "cce54919b00d6e3f20a357ac4366570535c0b976",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "612bb940_914523ad",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/conversation/ConversationPresenter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-10T14:00:02Z",
+      "side": 1,
+      "message": "To remove if not used",
+      "range": {
+        "startLine": 235,
+        "startChar": 0,
+        "endLine": 254,
+        "endChar": 5
+      },
+      "revId": "cce54919b00d6e3f20a357ac4366570535c0b976",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17572f04_d953d157",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/utils/FileUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-10T14:00:02Z",
+      "side": 1,
+      "message": "already printed by following line",
+      "range": {
+        "startLine": 52,
+        "startChar": 12,
+        "endLine": 52,
+        "endChar": 32
+      },
+      "revId": "cce54919b00d6e3f20a357ac4366570535c0b976",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
