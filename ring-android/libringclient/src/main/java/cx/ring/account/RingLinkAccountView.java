@@ -28,4 +28,6 @@ public interface RingLinkAccountView {
     void showPin(boolean show);
 
     void createAccount(AccountCreationModel accountCreationModel);
+
+    void finish();
 }
