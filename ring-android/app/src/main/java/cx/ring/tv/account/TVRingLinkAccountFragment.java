@@ -17,6 +17,7 @@
  */
 package cx.ring.tv.account;
 
+import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -27,7 +28,6 @@ import android.view.View;
 import java.util.List;
 
 import cx.ring.R;
-import cx.ring.account.RingAccountCreationFragment;
 import cx.ring.account.AccountCreationModelImpl;
 import cx.ring.account.RingLinkAccountPresenter;
 import cx.ring.account.RingLinkAccountView;
@@ -124,6 +124,14 @@ public class TVRingLinkAccountFragment extends RingGuidedStepFragment<RingLinkAc
             presenter.pinChanged(action.getEditDescription().toString());
         }
         return GuidedAction.ACTION_ID_NEXT;
+    }
+
+    @Override
+    public void finish() {
+        Activity a = getActivity();
+        if(a != null) {
+            getActivity().finish();
+        }
     }
 
 }
