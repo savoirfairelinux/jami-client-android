@@ -281,6 +281,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:name=".tv.account.TVProfileEditingActivity"
             android:theme="@style/Theme.Leanback" />
         <activity
+            android:name=".tv.account.TVShareActivity"
+            android:theme="@style/Theme.Ring.Leanback" />
+        <activity
             android:name=".tv.call.TVCallActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:resizeableActivity="true"

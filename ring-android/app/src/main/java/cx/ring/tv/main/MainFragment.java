@@ -20,7 +20,16 @@
 package cx.ring.tv.main;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.leanback.app.BackgroundManager;
 import androidx.leanback.app.GuidedStepSupportFragment;
 import androidx.leanback.widget.ArrayObjectAdapter;
@@ -30,12 +39,6 @@ import androidx.leanback.widget.OnItemViewClickedListener;
 import androidx.leanback.widget.Presenter;
 import androidx.leanback.widget.Row;
 import androidx.leanback.widget.RowPresenter;
-import androidx.core.app.ActivityOptionsCompat;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +53,7 @@ import cx.ring.tv.about.AboutActivity;
 import cx.ring.tv.account.TVAccountExport;
 import cx.ring.tv.account.TVProfileEditingActivity;
 import cx.ring.tv.account.TVSettingsActivity;
+import cx.ring.tv.account.TVShareActivity;
 import cx.ring.tv.call.TVCallActivity;
 import cx.ring.tv.cards.Card;
 import cx.ring.tv.cards.CardListRow;
@@ -64,6 +68,7 @@ import cx.ring.tv.contactrequest.TVContactRequestActivity;
 import cx.ring.tv.model.TVListViewModel;
 import cx.ring.tv.search.SearchActivity;
 import cx.ring.tv.views.CustomTitleView;
+import cx.ring.utils.QRCodeUtils;
 import cx.ring.views.AvatarDrawable;
 
 public class MainFragment extends BaseBrowseFragment<MainPresenter> implements MainView {
@@ -163,6 +168,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         List<Card> cards = new ArrayList<>();
         cards.add(IconCardHelper.getAccountAddDeviceCard(getActivity()));
         cards.add(IconCardHelper.getAccountManagementCard(getActivity()));
+        cards.add(IconCardHelper.getAccountShareCard(getActivity(), prepareAccountQr()));
         cards.add(IconCardHelper.getAccountSettingsCard(getActivity()));
 
         return createRow(getString(R.string.ring_account), cards, false);
@@ -245,6 +251,14 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     }
 
     @Override
+    public BitmapDrawable prepareAccountQr() {
+        QRCodeUtils.QRCodeData qrCodeData = QRCodeUtils.encodeStringAsQRCodeData(presenter.getAccountUri(), 0X00000000, 0xFFFFFFFF);
+        Bitmap bitmap = Bitmap.createBitmap(qrCodeData.getWidth(), qrCodeData.getHeight(), Bitmap.Config.ARGB_8888);
+        bitmap.setPixels(qrCodeData.getData(), 0, qrCodeData.getWidth(), 0, 0, qrCodeData.getWidth(), qrCodeData.getHeight());
+        return new BitmapDrawable(requireActivity().getResources(), bitmap);
+    }
+
+    @Override
     public void displayAccountInfos(final RingNavigationViewModel viewModel) {
         if (getActivity() == null) {
             Log.e(TAG, "displayAccountInfos: Not able to get activity");
@@ -283,6 +297,12 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     @Override
     public void showProfileEditing() {
         Intent intent = new Intent(getActivity(), TVProfileEditingActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void showAccountShare() {
+        Intent intent = new Intent(getActivity(), TVShareActivity.class);
         startActivity(intent);
     }
 
@@ -336,6 +356,12 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
                         break;
                     case ACCOUNT_EDIT_PROFILE:
                         presenter.onEditProfileClicked();
+                        break;
+                    case ACCOUNT_SHARE_ACCOUNT:
+                        ImageView view = ((ImageCardView) itemViewHolder.view).getMainImageView();
+                        Intent intent = new Intent(getActivity(), TVShareActivity.class);
+                        Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), view, TVShareActivity.SHARED_ELEMENT_NAME).toBundle();
+                        requireActivity().startActivity(intent, bundle);
                         break;
                     case ACCOUNT_SETTINGS:
                         presenter.onSettingsClicked();
