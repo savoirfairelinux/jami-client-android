@@ -19,6 +19,7 @@
  */
 package cx.ring.account;
 
+import android.app.Activity;
 import android.text.Editable;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,5 +116,13 @@ public class RingLinkAccountFragment extends BaseSupportFragment<RingLinkAccount
     @Override
     public void createAccount(AccountCreationModel accountCreationModel) {
         ((AccountWizardActivity) requireActivity()).createAccount(accountCreationModel);
+    }
+
+    @Override
+    public void finish() {
+        Activity activity = getActivity();
+        if(activity != null) {
+            activity.finish();
+        }
     }
 }
