@@ -50,6 +50,7 @@ import cx.ring.tv.about.AboutActivity;
 import cx.ring.tv.account.TVAccountExport;
 import cx.ring.tv.account.TVProfileEditingActivity;
 import cx.ring.tv.account.TVSettingsActivity;
+import cx.ring.tv.account.TVShareActivity;
 import cx.ring.tv.call.TVCallActivity;
 import cx.ring.tv.cards.Card;
 import cx.ring.tv.cards.CardListRow;
@@ -163,6 +164,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         List<Card> cards = new ArrayList<>();
         cards.add(IconCardHelper.getAccountAddDeviceCard(getActivity()));
         cards.add(IconCardHelper.getAccountManagementCard(getActivity()));
+        cards.add(IconCardHelper.getAccountShareCard(getActivity()));
         cards.add(IconCardHelper.getAccountSettingsCard(getActivity()));
 
         return createRow(getString(R.string.ring_account), cards, false);
@@ -287,6 +289,12 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     }
 
     @Override
+    public void showAccountShare() {
+        Intent intent = new Intent(getActivity(), TVShareActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
     public void showLicence(int aboutType) {
         Intent intent = new Intent(getActivity(), AboutActivity.class);
         intent.putExtra("abouttype", aboutType);
@@ -336,6 +344,9 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
                         break;
                     case ACCOUNT_EDIT_PROFILE:
                         presenter.onEditProfileClicked();
+                        break;
+                    case ACCOUNT_SHARE_ACCOUNT:
+                        presenter.onShareAccountClicked();
                         break;
                     case ACCOUNT_SETTINGS:
                         presenter.onSettingsClicked();
