@@ -210,6 +210,10 @@ public class MainPresenter extends RootPresenter<MainView> {
         getView().showProfileEditing();
     }
 
+    public void onShareAccountClicked() {
+        getView().showAccountShare();
+    }
+
     public void onSettingsClicked() {
         getView().showSettings();
     }
