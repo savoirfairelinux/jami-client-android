@@ -22,7 +22,6 @@ package cx.ring.account;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import com.google.android.material.textfield.TextInputLayout;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.view.View;
@@ -31,9 +30,13 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Switch;
 
 import androidx.annotation.NonNull;
+
+import com.google.android.material.textfield.TextInputLayout;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
@@ -42,8 +45,8 @@ import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 import cx.ring.R;
 import cx.ring.dependencyinjection.RingInjectionComponent;
-import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.mvp.AccountCreationModel;
+import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.utils.RegisteredNameFilter;
 
 public class RingAccountCreationFragment extends BaseSupportFragment<RingAccountCreationPresenter> implements RingAccountCreationView {
@@ -77,6 +80,9 @@ public class RingAccountCreationFragment extends BaseSupportFragment<RingAccount
 
     @BindView(R.id.create_account)
     protected Button mCreateAccountButton;
+
+    @BindView(R.id.ring_username_availability_image_view)
+    protected ImageView mUsernameAvailabilityImageView;
 
     private AccountCreationModel model;
 
@@ -168,6 +174,7 @@ public class RingAccountCreationFragment extends BaseSupportFragment<RingAccount
     public void enableTextError() {
         mUsernameTxtBox.setErrorEnabled(true);
         mUsernameTxtBox.setError(getString(R.string.looking_for_username_availability));
+        showValidName(false);
     }
 
     @Override
@@ -180,12 +187,32 @@ public class RingAccountCreationFragment extends BaseSupportFragment<RingAccount
     public void showExistingNameError() {
         mUsernameTxtBox.setErrorEnabled(true);
         mUsernameTxtBox.setError(getString(R.string.username_already_taken));
+        showValidName(false);
     }
 
     @Override
     public void showInvalidNameError() {
         mUsernameTxtBox.setErrorEnabled(true);
         mUsernameTxtBox.setError(getString(R.string.invalid_username));
+        showValidName(false);
+
+    }
+
+    @Override
+    public void showValidName(boolean enabled) {
+        if(enabled)
+            mUsernameAvailabilityImageView.setImageDrawable(getResources().
+                getDrawable(R.drawable.ic_good_green));
+        else
+            mUsernameAvailabilityImageView.setImageDrawable(getResources().
+                    getDrawable(R.drawable.ic_error_red));
+    }
+
+    @Override
+    public void showUnknownError() {
+        mUsernameTxtBox.setErrorEnabled(true);
+        mUsernameTxtBox.setError(getString(R.string.unknown_error));
+        showValidName(false);
     }
 
     @Override
