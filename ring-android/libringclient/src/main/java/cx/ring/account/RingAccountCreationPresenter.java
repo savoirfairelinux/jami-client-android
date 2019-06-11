@@ -35,22 +35,17 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
 
     public static final String TAG = RingAccountCreationPresenter.class.getSimpleName();
     public static final int PASSWORD_MIN_LENGTH = 6;
-
+    private final PublishSubject<String> contactQuery = PublishSubject.create();
     protected AccountService mAccountService;
-
     @Inject
     @Named("UiScheduler")
     protected Scheduler mUiScheduler;
-
     private AccountCreationModel mAccountCreationModel;
-
     private boolean isRingUserNameCorrect = false;
     private boolean isPasswordCorrect = true;
     private boolean isConfirmCorrect = true;
     private boolean isRegisterUsernameChecked = true;
     private String mPasswordConfirm = "";
-
-    private final PublishSubject<String> contactQuery = PublishSubject.create();
 
     @Inject
     public RingAccountCreationPresenter(AccountService accountService) {
@@ -73,16 +68,20 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
     }
 
     public void userNameChanged(String userName) {
+
         if (!userName.isEmpty()) {
             mAccountCreationModel.setUsername(userName);
             contactQuery.onNext(userName);
             isRingUserNameCorrect = false;
             getView().enableTextError();
+            checkForms();
         } else {
+            //Reset all username related views
             mAccountCreationModel.setUsername("");
             getView().disableTextError();
+            getView().showValidName(null);
+            getView().enableNextButton(false);
         }
-        checkForms();
     }
 
     public void ringCheckChanged(boolean isChecked) {
@@ -140,7 +139,9 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
     }
 
     private void checkForms() {
-        getView().enableNextButton(isInputValid());
+        boolean valid = isInputValid();
+        getView().enableNextButton(valid);
+        getView().showValidName(valid);
     }
 
     private void handleBlockchainResult(String name, String address, int state) {
@@ -171,7 +172,7 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
                     break;
                 default:
                     // on error
-                    view.disableTextError();
+                    view.showUnknownError();
                     isRingUserNameCorrect = false;
                     break;
             }

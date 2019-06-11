@@ -212,6 +212,16 @@ public class TVRingAccountCreationFragment
     }
 
     @Override
+    public void showValidName(Boolean enabled) {
+
+    }
+
+    @Override
+    public void showUnknownError() {
+
+    }
+
+    @Override
     public void showInvalidPasswordError(boolean display) {
         if (display) {
             GuidedAction action = findActionById(CONTINUE);
@@ -232,6 +242,7 @@ public class TVRingAccountCreationFragment
         }
         notifyActionChanged(findActionPositionById(CONTINUE));
     }
+
 
     @Override
     public void displayUsernameBox(boolean display) {
