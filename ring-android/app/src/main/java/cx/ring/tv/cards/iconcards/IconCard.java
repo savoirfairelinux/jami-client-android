@@ -19,6 +19,8 @@
  */
 package cx.ring.tv.cards.iconcards;
 
+import android.graphics.drawable.BitmapDrawable;
+
 import androidx.annotation.DrawableRes;
 
 import cx.ring.tv.cards.Card;
@@ -32,4 +34,10 @@ public class IconCard extends Card {
         setLocalImageResource(imageId);
     }
 
+    public IconCard(Type pType, String name, CharSequence description, BitmapDrawable bitmapDrawable) {
+        setType(pType);
+        setTitle(name);
+        setDescription(description);
+        setBitmapDrawableResource(bitmapDrawable);
+    }
 }

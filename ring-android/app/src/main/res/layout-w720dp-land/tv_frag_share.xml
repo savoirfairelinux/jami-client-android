@@ -1,4 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--Copyright (C) 2004-2019 Savoir-faire Linux Inc.
+
+Author: Rayan Osseiran <rayan.osseiran@savoirfairelinux.com>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+-->
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -8,16 +26,16 @@
         android:id="@+id/share_instruction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="@dimen/padding_small"
+        android:layout_marginEnd="@dimen/padding_small"
         android:gravity="center"
         android:text="@string/share_message"
-        android:textColor="@color/text_color_primary"
-        android:textSize="16sp"
+        android:textColor="@color/text_color_primary_dark"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/share_button"
+        app:layout_constraintEnd_toStartOf="@+id/qr_image"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/share_button"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -25,32 +43,15 @@
         android:id="@+id/qr_image"
         android:layout_width="@dimen/qr_code_size"
         android:layout_height="@dimen/qr_code_size"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="48dp"
-        android:layout_marginBottom="8dp"
         android:background="@null"
         android:gravity="center"
         android:padding="@dimen/padding_small"
         android:scaleType="fitCenter"
+        android:transitionName="photo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/share_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:text="@string/share_label"
-        android:theme="@style/ButtonColored"
-        app:layout_constraintEnd_toStartOf="@+id/qr_image"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/share_instruction" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

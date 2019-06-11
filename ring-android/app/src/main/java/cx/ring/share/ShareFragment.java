@@ -123,7 +123,7 @@ public class ShareFragment extends BaseSupportFragment<SharePresenter> implement
 
     @Override
     public void showViewModel(final ShareViewModel viewModel) {
-        final QRCodeUtils.QRCodeData qrCodeData = viewModel.getAccountQRCodeData();
+        final QRCodeUtils.QRCodeData qrCodeData = viewModel.getAccountQRCodeData(0xFF000000, 0xFFFFFFFF);
 
         if (mQrImage == null || mShareInstruction == null) {
             return;
