@@ -31,6 +31,8 @@ public interface RingAccountCreationView {
 
     void showInvalidNameError();
 
+    void showValidName(boolean enabled);
+
     void showInvalidPasswordError(boolean display);
 
     void showNonMatchingPasswordError(boolean display);
