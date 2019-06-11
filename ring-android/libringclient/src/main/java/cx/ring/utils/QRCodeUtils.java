@@ -39,7 +39,7 @@ public class QRCodeUtils {
      * @param input uri to be displayed
      * @return the resulting data
      */
-    public static QRCodeData encodeStringAsQRCodeData(String input) {
+    public static QRCodeData encodeStringAsQRCodeData(String input, final int foregroundColor, final int backgroundColor) {
 
         if (input == null || input.isEmpty()) {
             return null;
@@ -62,13 +62,10 @@ public class QRCodeUtils {
         int qrImageHeight = qrImageMatrix.getHeight();
         int[] pixels = new int[qrImageWidth * qrImageHeight];
 
-        final int BLACK = 0xFF000000;
-        final int WHITE = 0xFFFFFFFF;
-
         for (int row = 0; row < qrImageHeight; row++) {
             int offset = row * qrImageWidth;
             for (int column = 0; column < qrImageWidth; column++) {
-                pixels[offset + column] = qrImageMatrix.get(column, row) ? BLACK : WHITE;
+                pixels[offset + column] = qrImageMatrix.get(column, row) ? foregroundColor : backgroundColor;
             }
         }
 

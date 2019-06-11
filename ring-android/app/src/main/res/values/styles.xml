@@ -120,6 +120,7 @@
     </style>
 
     <style name="Theme.Ring.Leanback" parent="Theme.Leanback">
+        <item name="android:windowContentTransitions">true</item>
         <item name="searchOrbViewStyle">@style/CustomSearchOrbView</item>
     </style>
 

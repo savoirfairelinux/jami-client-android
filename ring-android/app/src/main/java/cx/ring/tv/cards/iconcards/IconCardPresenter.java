@@ -27,11 +27,18 @@ import androidx.core.content.ContextCompat;
 import android.view.ContextThemeWrapper;
 import android.widget.ImageView;
 
+import javax.inject.Inject;
+
 import cx.ring.R;
+import cx.ring.application.RingApplication;
+import cx.ring.services.AccountService;
 import cx.ring.tv.cards.AbstractCardPresenter;
 import cx.ring.tv.cards.Card;
 
 public class IconCardPresenter extends AbstractCardPresenter<ImageCardView> {
+
+    @Inject
+    AccountService mAccountService;
 
     private static final int ANIMATION_DURATION = 200;
 
@@ -41,6 +48,7 @@ public class IconCardPresenter extends AbstractCardPresenter<ImageCardView> {
 
     @Override
     protected ImageCardView onCreateView() {
+        RingApplication.getInstance().getRingInjectionComponent().inject(this);
         ImageCardView imageCardView = new ImageCardView(getContext());
         final ImageView image = imageCardView.getMainImageView();
         image.setBackgroundResource(R.drawable.icon_focused);
@@ -53,8 +61,11 @@ public class IconCardPresenter extends AbstractCardPresenter<ImageCardView> {
     public void onBindViewHolder(Card card, ImageCardView cardView) {
         cardView.setTitleText(card.getTitle());
         cardView.setContentText(card.getDescription());
-        cardView.setMainImage(
-                ContextCompat.getDrawable(cardView.getContext(), card.getLocalImageResource()));
+
+        if(card.getBitmapDrawableResource() != null)
+            cardView.setMainImage(card.getBitmapDrawableResource());
+        else
+            cardView.setMainImage(ContextCompat.getDrawable(cardView.getContext(), card.getLocalImageResource()));
     }
 
     private void animateIconBackground(Drawable drawable, boolean hasFocus) {

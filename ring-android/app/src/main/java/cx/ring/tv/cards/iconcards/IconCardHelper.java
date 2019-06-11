@@ -21,6 +21,7 @@ package cx.ring.tv.cards.iconcards;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.drawable.BitmapDrawable;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
@@ -49,6 +50,8 @@ public final class IconCardHelper {
                 return getAccountManagementCard(pContext);
             case ACCOUNT_SETTINGS:
                 return getAccountSettingsCard(pContext);
+            case ACCOUNT_SHARE_ACCOUNT:
+                return getAccountShareCard(pContext, null);
             default:
                 return null;
         }
@@ -64,6 +67,10 @@ public final class IconCardHelper {
 
     public static IconCard getAccountSettingsCard(Context pContext) {
         return new IconCard(Card.Type.ACCOUNT_SETTINGS, pContext.getString(R.string.menu_item_settings), "", R.drawable.ic_settings_white);
+    }
+
+    public static IconCard getAccountShareCard(Context pContext, BitmapDrawable bitmapDrawable) {
+        return new IconCard(Card.Type.ACCOUNT_SHARE_ACCOUNT, pContext.getString(R.string.menu_item_share), "", bitmapDrawable);
     }
 
     public static IconCard getVersionCard(Context pContext) {

@@ -19,6 +19,8 @@
  */
 package cx.ring.tv.main;
 
+import android.graphics.drawable.BitmapDrawable;
+
 import java.util.List;
 
 import cx.ring.navigation.RingNavigationViewModel;
@@ -40,9 +42,13 @@ public interface MainView {
 
     void displayAccountInfos(RingNavigationViewModel viewModel);
 
+    BitmapDrawable prepareAccountQr();
+
     void showExportDialog(String pAccountID);
 
     void showProfileEditing();
+
+    void showAccountShare();
 
     void showLicence(int aboutType);
 

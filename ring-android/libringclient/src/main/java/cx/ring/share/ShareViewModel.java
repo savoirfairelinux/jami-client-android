@@ -25,15 +25,13 @@ import cx.ring.utils.QRCodeUtils;
 public class ShareViewModel {
 
     private final String shareUri;
-    private final QRCodeUtils.QRCodeData data;
 
     public ShareViewModel(Account account) {
         shareUri = account.getDisplayUri();
-        data = QRCodeUtils.encodeStringAsQRCodeData(account.getUri());
     }
 
-    public QRCodeUtils.QRCodeData getAccountQRCodeData() {
-        return data;
+    public QRCodeUtils.QRCodeData getAccountQRCodeData(final int foregroundColor, final int backgroundColor) {
+        return QRCodeUtils.encodeStringAsQRCodeData(shareUri, foregroundColor, backgroundColor);
     }
 
     public String getAccountShareUri() {
