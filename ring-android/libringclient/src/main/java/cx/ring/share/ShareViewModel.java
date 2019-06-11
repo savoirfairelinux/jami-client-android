@@ -29,7 +29,7 @@ public class ShareViewModel {
 
     public ShareViewModel(Account account) {
         shareUri = account.getDisplayUri();
-        data = QRCodeUtils.encodeStringAsQRCodeData(account.getUri());
+        data = QRCodeUtils.encodeStringAsQRCodeData(account.getUri(),0xFF000000, 0xFFFFFFFF);
     }
 
     public QRCodeUtils.QRCodeData getAccountQRCodeData() {

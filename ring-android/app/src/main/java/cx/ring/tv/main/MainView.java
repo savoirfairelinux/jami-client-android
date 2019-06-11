@@ -44,6 +44,8 @@ public interface MainView {
 
     void showProfileEditing();
 
+    void showAccountShare();
+
     void showLicence(int aboutType);
 
     void showSettings();
