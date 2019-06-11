@@ -49,6 +49,8 @@ public final class IconCardHelper {
                 return getAccountManagementCard(pContext);
             case ACCOUNT_SETTINGS:
                 return getAccountSettingsCard(pContext);
+            case ACCOUNT_SHARE_ACCOUNT:
+                return getAccountShareCard(pContext);
             default:
                 return null;
         }
@@ -64,6 +66,10 @@ public final class IconCardHelper {
 
     public static IconCard getAccountSettingsCard(Context pContext) {
         return new IconCard(Card.Type.ACCOUNT_SETTINGS, pContext.getString(R.string.menu_item_settings), "", R.drawable.ic_settings_white);
+    }
+
+    public static IconCard getAccountShareCard(Context pContext) {
+        return new IconCard(Card.Type.ACCOUNT_SHARE_ACCOUNT, pContext.getString(R.string.menu_item_share), "", R.drawable.ic_action_scan_qr);
     }
 
     public static IconCard getVersionCard(Context pContext) {

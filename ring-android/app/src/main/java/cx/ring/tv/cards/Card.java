@@ -128,6 +128,7 @@ public class Card {
         ABOUT_CONTRIBUTOR,
         ACCOUNT_ADD_DEVICE,
         ACCOUNT_EDIT_PROFILE,
+        ACCOUNT_SHARE_ACCOUNT,
         ABOUT_LICENCES,
         CONTACT,
         CONTACT_ONLINE,
