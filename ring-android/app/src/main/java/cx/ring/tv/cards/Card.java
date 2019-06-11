@@ -17,6 +17,7 @@
 package cx.ring.tv.cards;
 
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import androidx.annotation.DrawableRes;
 
 /**
@@ -26,6 +27,7 @@ import androidx.annotation.DrawableRes;
 public class Card {
 
     int mLocalImageResource = -1;
+    BitmapDrawable mBitmapDrawable = null;
     private String mTitle = "";
     private CharSequence mDescription = "";
     /*not used at the moment but will be use in futur*/
@@ -95,6 +97,14 @@ public class Card {
         mLocalImageResource = localImageResource;
     }
 
+    public void setBitmapDrawableResource(BitmapDrawable bitmapDrawable) {
+        mBitmapDrawable = bitmapDrawable;
+    }
+
+    public BitmapDrawable getBitmapDrawableResource() {
+        return mBitmapDrawable;
+    }
+
     /*not used at the moment but will be use in futur*/
     public String getFooterResource() {
         return mFooterResource;
@@ -128,6 +138,7 @@ public class Card {
         ABOUT_CONTRIBUTOR,
         ACCOUNT_ADD_DEVICE,
         ACCOUNT_EDIT_PROFILE,
+        ACCOUNT_SHARE_ACCOUNT,
         ABOUT_LICENCES,
         CONTACT,
         CONTACT_ONLINE,

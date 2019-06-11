@@ -8,17 +8,18 @@
 
     <ImageView
         android:id="@+id/qr_image"
-        android:layout_width="@dimen/qr_code_size"
-        android:layout_height="@dimen/qr_code_size"
-        android:layout_marginTop="32dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginEnd="55dp"
+        android:layout_marginBottom="181dp"
         android:gravity="center"
         android:padding="@dimen/padding_small"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/share_instruction"
         tools:layout_conversion_wrapHeight="1050"
         tools:layout_conversion_wrapWidth="1050" />
 
@@ -26,30 +27,20 @@
         android:id="@+id/share_instruction"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="128dp"
+        android:layout_marginEnd="76dp"
+        android:layout_marginBottom="64dp"
         android:gravity="center"
         android:text="@string/share_message"
-        android:textColor="@color/text_color_primary"
+        android:textColor="@color/text_color_primary_dark"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/share_button"
-        app:layout_constraintEnd_toEndOf="@+id/share_button"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/share_button"
-        tools:layout_conversion_wrapHeight="215"
-        tools:layout_conversion_wrapWidth="1440" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/share_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="8dp"
-        android:text="@string/share_your_account_information"
-        android:theme="@style/ButtonColored"
         app:layout_constraintBottom_toTopOf="@+id/qr_image"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_conversion_wrapHeight="215"
+        tools:layout_conversion_wrapWidth="1440" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
