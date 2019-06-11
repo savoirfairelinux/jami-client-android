@@ -141,6 +141,7 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
 
     private void checkForms() {
         getView().enableNextButton(isInputValid());
+        getView().showValidName(isInputValid());
     }
 
     private void handleBlockchainResult(String name, String address, int state) {
@@ -171,7 +172,7 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
                     break;
                 default:
                     // on error
-                    view.disableTextError();
+                    view.showUnknownError();
                     isRingUserNameCorrect = false;
                     break;
             }
