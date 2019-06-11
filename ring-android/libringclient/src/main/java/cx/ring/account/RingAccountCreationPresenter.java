@@ -180,6 +180,8 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
     }
 
     public void setPush(boolean push) {
-        mAccountCreationModel.setPush(push);
+        if(mAccountCreationModel != null) {
+            mAccountCreationModel.setPush(push);
+        }
     }
 }
