@@ -22,6 +22,30 @@
       "revId": "aa9305ae45aa8056c78c16d9e214248c54abd728",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f3fd8d9_d14aacef",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/account/RingLinkAccountPresenter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 642
+      },
+      "writtenOn": "2019-06-12T14:02:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a529aa6d_356904df",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 9
+      },
+      "revId": "aa9305ae45aa8056c78c16d9e214248c54abd728",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
