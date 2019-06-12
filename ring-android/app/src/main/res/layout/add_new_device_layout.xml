@@ -76,6 +76,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                         android:id="@+id/password_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColorHint="@color/text_color_secondary_dark"
+                        app:passwordToggleTint="@color/text_color_secondary_dark"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
                         app:passwordToggleEnabled="true">
@@ -85,6 +87,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/account_enter_password"
+                            android:textColor="@color/text_color_primary_dark"
+                            android:backgroundTint="@color/text_color_secondary_dark"
                             android:imeOptions="actionDone"
                             android:inputType="textPassword" />
                     </com.google.android.material.textfield.TextInputLayout>
