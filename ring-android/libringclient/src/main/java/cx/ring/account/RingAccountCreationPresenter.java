@@ -21,6 +21,7 @@
 package cx.ring.account;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -35,22 +36,17 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
 
     public static final String TAG = RingAccountCreationPresenter.class.getSimpleName();
     public static final int PASSWORD_MIN_LENGTH = 6;
-
+    private final PublishSubject<String> contactQuery = PublishSubject.create();
     protected AccountService mAccountService;
-
     @Inject
     @Named("UiScheduler")
     protected Scheduler mUiScheduler;
-
     private AccountCreationModel mAccountCreationModel;
-
     private boolean isRingUserNameCorrect = false;
     private boolean isPasswordCorrect = true;
     private boolean isConfirmCorrect = true;
     private boolean isRegisterUsernameChecked = true;
     private String mPasswordConfirm = "";
-
-    private final PublishSubject<String> contactQuery = PublishSubject.create();
 
     @Inject
     public RingAccountCreationPresenter(AccountService accountService) {
@@ -64,8 +60,10 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
                 .debounce(350, TimeUnit.MILLISECONDS)
                 .switchMapSingle(q -> mAccountService.findRegistrationByName("", "", q))
                 .observeOn(mUiScheduler)
-                .subscribe(q -> handleBlockchainResult(q.name, q.address, q.state)));
-
+                .subscribe(q -> handleBlockchainResult(q.name, q.address, q.state), e-> {
+                            if (e instanceof TimeoutException)
+                                handleBlockchainResult("error","",3);
+                        }));
     }
 
     public void init(AccountCreationModel accountCreationModel) {
@@ -73,16 +71,12 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
     }
 
     public void userNameChanged(String userName) {
-        if (!userName.isEmpty()) {
-            mAccountCreationModel.setUsername(userName);
-            contactQuery.onNext(userName);
-            isRingUserNameCorrect = false;
-            getView().enableTextError();
-        } else {
-            mAccountCreationModel.setUsername("");
-            getView().disableTextError();
-        }
-        checkForms();
+        mAccountCreationModel.setUsername(userName);
+        contactQuery.onNext(userName);
+        isRingUserNameCorrect = false;
+        RingAccountCreationView view = getView();
+        view.enableTextError();
+        view.showValidName(RingAccountCreationView.UsernameIconStatus.LOADING);
     }
 
     public void ringCheckChanged(boolean isChecked) {
@@ -140,7 +134,10 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
     }
 
     private void checkForms() {
-        getView().enableNextButton(isInputValid());
+        boolean valid = isInputValid();
+        getView().enableNextButton(valid);
+        if(valid)
+            getView().showValidName(RingAccountCreationView.UsernameIconStatus.VALID);
     }
 
     private void handleBlockchainResult(String name, String address, int state) {
@@ -149,7 +146,8 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
             return;
         }
         if (name == null || name.isEmpty()) {
-            view.disableTextError();
+
+            view.resetUsernameViews();
             isRingUserNameCorrect = false;
         } else {
             switch (state) {
@@ -169,9 +167,13 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
                     mAccountCreationModel.setUsername(name);
                     isRingUserNameCorrect = true;
                     break;
+                case 3:
+                    // The daemon failed to respond
+                    view.showDaemonFailedToRespond();
+                    isRingUserNameCorrect = false;
                 default:
                     // on error
-                    view.disableTextError();
+                    view.showUnknownError();
                     isRingUserNameCorrect = false;
                     break;
             }

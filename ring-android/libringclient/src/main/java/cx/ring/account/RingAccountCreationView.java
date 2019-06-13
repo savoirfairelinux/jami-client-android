@@ -23,6 +23,13 @@ import cx.ring.mvp.AccountCreationModel;
 
 public interface RingAccountCreationView {
 
+    enum UsernameIconStatus {
+        ERROR,
+        LOADING,
+        VALID,
+        INVISIBLE
+    }
+
     void enableTextError();
 
     void disableTextError();
@@ -30,6 +37,14 @@ public interface RingAccountCreationView {
     void showExistingNameError();
 
     void showInvalidNameError();
+
+    void showValidName(UsernameIconStatus status);
+
+    void resetUsernameViews();
+
+    void showUnknownError();
+
+    void showDaemonFailedToRespond();
 
     void showInvalidPasswordError(boolean display);
 
