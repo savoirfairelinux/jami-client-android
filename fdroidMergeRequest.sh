@@ -51,24 +51,24 @@ echo "  - versionName: '${versionName}'
     subdir: client-android/ring-android/app
     submodules: true
     gradle:
-        - noPush
+      - noPush
     rm:
-        - client-electron
-        - client-gnome
-        - client-ios
-        - client-macosx
-        - client-uwp
-        - client-windows
-        - docker
-        - docs
-        - lrc
-        - packaging
-        - scripts
+      - client-electron
+      - client-gnome
+      - client-ios
+      - client-macosx
+      - client-uwp
+      - client-windows
+      - docker
+      - docs
+      - lrc
+      - packaging
+      - scripts
     build:
-        - cd ../..
-        - export ANDROID_NDK_ROOT=\"\$ANDROID_NDK\"
-        - export ANDROID_ABI=\"armeabi-v7a arm64-v8a x86\"
-        - ./compile.sh --release --no-gradle
+      - cd ../..
+      - export ANDROID_NDK_ROOT=\"\$ANDROID_NDK\"
+      - export ANDROID_ABI=\"armeabi-v7a arm64-v8a x86\"
+      - ./compile.sh --release --no-gradle
     ndk: ${ndkVersion}" >> ${METADATA_FOLDER}/cx.ring.yml
 
 
