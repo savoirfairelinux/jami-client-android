@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73933ee3_9ca7c5d3",
+        "filename": "ring-android/app/src/main/res/drawable/ic_sync_green_24dp.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-14T20:45:09Z",
+      "side": 1,
+      "message": "use a spinner or no icon during lookup",
+      "revId": "2cfd2dbb876a140bd714c17df68b41300e028f9c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
