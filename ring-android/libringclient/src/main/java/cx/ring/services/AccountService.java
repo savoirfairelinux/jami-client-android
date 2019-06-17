@@ -59,12 +59,12 @@ import cx.ring.utils.SwigNativeConverter;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import io.reactivex.Completable;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
-import io.reactivex.Observable;
 
 /**
  * This service handles the accounts (Ring and SIP)
@@ -970,7 +970,7 @@ public class AccountService {
 
     public Single<RegisteredName> findRegistrationByName(final String account, final String nameserver, final String name) {
         if (name == null || name.isEmpty()) {
-            return Single.create(l -> l.onError(new IllegalArgumentException()));
+            return Single.just(new RegisteredName());
         }
         return getRegisteredNames()
                 .filter(r -> account.equals(r.accountId) && name.equals(r.name))
