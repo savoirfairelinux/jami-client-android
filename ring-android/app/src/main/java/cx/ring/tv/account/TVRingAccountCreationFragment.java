@@ -62,10 +62,14 @@ public class TVRingAccountCreationFragment
         @Override
         public void afterTextChanged(Editable s) {
             String newName = s.toString();
-            boolean empty = newName.isEmpty();
-            presenter.ringCheckChanged(!empty);
-            if (!empty)
+            if (!newName.equals(getResources().getString(R.string.register_username))) {
+                boolean empty = newName.isEmpty();
+                /** If the username is empty make sure to set isRegisterUsernameChecked
+                 *  to False, this allows to create an account with an empty username */
+                presenter.ringCheckChanged(!empty);
+                /** Send the newName even when empty (in order to reset the views) */
                 presenter.userNameChanged(newName);
+            }
         }
     };
 
@@ -108,10 +112,15 @@ public class TVRingAccountCreationFragment
     @Override
     public void onCreateActions(@NonNull List<GuidedAction> actions, Bundle savedInstanceState) {
         addEditTextAction(getActivity(), actions, USERNAME, R.string.register_username, R.string.prompt_new_username);
-        addDisabledAction(getActivity(), actions, CHECK, "", "", null);
+        addDisabledNonFocusableAction(getActivity(), actions, CHECK, "", "", null);
         addPasswordAction(getActivity(), actions, PASSWORD, getString(R.string.prompt_new_password_optional), getString(R.string.enter_password), "");
         addPasswordAction(getActivity(), actions, PASSWORD_CONFIRMATION, getString(R.string.prompt_new_password_repeat), getString(R.string.enter_password), "");
         addDisabledAction(getActivity(), actions, CONTINUE, getString(R.string.action_create), "", null, true);
+    }
+
+    @Override
+    public boolean isFocusOutStartAllowed() {
+        return super.isFocusOutStartAllowed();
     }
 
     @Override
@@ -128,28 +137,66 @@ public class TVRingAccountCreationFragment
 
     @Override
     public long onGuidedActionEditedAndProceed(GuidedAction action) {
-        if (action.getId() == PASSWORD) {
-            passwordChanged(action);
-        } else if (action.getId() == PASSWORD_CONFIRMATION) {
-            confirmPasswordChanged(action);
-        } else if (action.getId() == USERNAME) {
-            ViewGroup view = (ViewGroup) getActionItemView(findActionPositionById(USERNAME));
-            if (view != null) {
-                EditText text = view.findViewById(R.id.guidedactions_item_title);
-                text.removeTextChangedListener(mUsernameWatcher);
-            }
-            String username = action.getEditTitle().toString();
-            boolean empty = username.isEmpty();
-            if (empty) {
-                action.setTitle(getString(R.string.register_username));
-            } else {
-                action.setTitle(username);
-            }
-            GuidedAction a = findActionById(CHECK);
-            a.setEnabled(!empty);
-            notifyActionChanged(findActionPositionById(CHECK));
+        int id = (int) action.getId();
+        switch (id){
+            case PASSWORD:
+                passwordChanged(action);
+            break;
+            case PASSWORD_CONFIRMATION:
+                confirmPasswordChanged(action);
+                break;
+            case USERNAME:
+                ViewGroup view = (ViewGroup) getActionItemView(findActionPositionById(USERNAME));
+                if (view != null) {
+                    EditText text = view.findViewById(R.id.guidedactions_item_title);
+                    text.removeTextChangedListener(mUsernameWatcher);
+                }
+                String username = action.getEditTitle().toString();
+                boolean empty = username.isEmpty();
+                if(empty)
+                    action.setTitle(getString(R.string.register_username));
+                else
+                    action.setTitle(username);
+                GuidedAction a = findActionById(CHECK);
+                a.setEnabled(!empty);
+                notifyActionChanged(findActionPositionById(CHECK));
+                break;
         }
+
         return GuidedAction.ACTION_ID_NEXT;
+    }
+
+    @Override
+    public void onGuidedActionEditCanceled(GuidedAction action) {
+        int id = (int) action.getId();
+        switch (id){
+            case USERNAME:
+                usernameChanged(action);
+                break;
+            case PASSWORD:
+                passwordChanged(action);
+                break;
+            case PASSWORD_CONFIRMATION:
+                confirmPasswordChanged(action);
+                break;
+
+        }
+    }
+
+    private void usernameChanged(GuidedAction action) {
+        String username = action.getEditTitle().toString();
+        ViewGroup view = (ViewGroup) getActionItemView(findActionPositionById(USERNAME));
+        if (view != null) {
+            EditText text = view.findViewById(R.id.guidedactions_item_title);
+            text.removeTextChangedListener(mUsernameWatcher);
+        }
+        boolean empty = username.isEmpty();
+        if(empty)
+            action.setTitle(getString(R.string.register_username));
+        else
+            action.setTitle(username);
+
+        notifyActionChanged(findActionPositionById(PASSWORD));
     }
 
     private void passwordChanged(GuidedAction action) {
@@ -180,58 +227,67 @@ public class TVRingAccountCreationFragment
     }
 
     @Override
-    public void enableTextError() {
-        GuidedAction action = findActionById(CHECK);
-        action.setIcon(null);
-        action.setTitle(getString(R.string.looking_for_username_availability));
-        notifyActionChanged(findActionPositionById(CHECK));
-    }
+    public void updateUsernameAvailability(UsernameAvailabilityStatus status) {
+        GuidedAction actionCheck = findActionById(CHECK);
+        switch (status){
+            case ERROR:
+                actionCheck.setTitle(getResources().getString(R.string.generic_error));
+                showUsernameAvailabilityError(actionCheck, getString(R.string.unknown_error));
+                break;
+            case ERROR_USERNAME_INVALID:
+                showUsernameAvailabilityError(actionCheck,getString(R.string.invalid_username));
+                break;
+            case ERROR_USERNAME_TAKEN:
+                showUsernameAvailabilityError(actionCheck,
+                        getString(R.string.username_already_taken));
+                break;
+            case LOADING:
+                actionCheck.setIcon(null);
+                actionCheck.setTitle(getResources().
+                        getString(R.string.looking_for_username_availability));
+                break;
+            case AVAILABLE:
+                actionCheck.setTitle(getString(R.string.username_available));
+                actionCheck.setIcon(getResources().getDrawable(R.drawable.ic_good_green));
+                break;
+            case RESET:
+                actionCheck.setIcon(null);
+                actionCheck.setTitle("");
+                enableNextButton(false);
+            default:
+                actionCheck.setIcon(null);
+                break;
+        }
 
-    @Override
-    public void disableTextError() {
-        GuidedAction action = findActionById(CHECK);
-        action.setIcon(null);
-        action.setDescription("");
-        notifyActionChanged(findActionPositionById(CHECK));
-    }
-
-    @Override
-    public void showExistingNameError() {
-        GuidedAction action = findActionById(CHECK);
-        action.setIcon(getResources().getDrawable(R.drawable.ic_error_red));
-        action.setDescription(getString(R.string.username_already_taken));
-        notifyActionChanged(findActionPositionById(CHECK));
-    }
-
-    @Override
-    public void showInvalidNameError() {
-        GuidedAction action = findActionById(CHECK);
-        action.setIcon(getResources().getDrawable(R.drawable.ic_error_red));
-        action.setDescription(getString(R.string.invalid_username));
         notifyActionChanged(findActionPositionById(CHECK));
     }
 
     @Override
     public void showInvalidPasswordError(boolean display) {
+        GuidedAction action = findActionById(CONTINUE);
         if (display) {
-            GuidedAction action = findActionById(CONTINUE);
             action.setIcon(getResources().getDrawable(R.drawable.ic_error_red));
             action.setDescription(getString(R.string.error_password_char_count));
             action.setEnabled(false);
+        } else {
+            action.setDescription("");
         }
         notifyActionChanged(findActionPositionById(CONTINUE));
     }
 
     @Override
     public void showNonMatchingPasswordError(boolean display) {
+        GuidedAction action = findActionById(CONTINUE);
         if (display) {
-            GuidedAction action = findActionById(CONTINUE);
             action.setIcon(getResources().getDrawable(R.drawable.ic_error_red));
             action.setDescription(getString(R.string.error_passwords_not_equals));
             action.setEnabled(false);
+        } else {
+            action.setDescription("");
         }
         notifyActionChanged(findActionPositionById(CONTINUE));
     }
+
 
     @Override
     public void displayUsernameBox(boolean display) {
@@ -240,17 +296,10 @@ public class TVRingAccountCreationFragment
     @Override
     public void enableNextButton(boolean enabled) {
         Log.d(TAG, "enableNextButton: " + enabled);
-        GuidedAction actionCheck = findActionById(CHECK);
         GuidedAction actionContinue = findActionById(CONTINUE);
-        if (enabled) {
-            actionCheck.setIcon(getResources().getDrawable(R.drawable.ic_good_green));
-            actionCheck.setTitle(getString(R.string.no_registered_name_for_account));
-            actionCheck.setDescription("");
+        if (enabled)
             actionContinue.setIcon(null);
-            actionCheck.setDescription("");
-        }
         actionContinue.setEnabled(enabled);
-        notifyActionChanged(findActionPositionById(CHECK));
         notifyActionChanged(findActionPositionById(CONTINUE));
     }
 
@@ -269,5 +318,11 @@ public class TVRingAccountCreationFragment
             presenter.createAccount();
         }
     }
+
+    public void showUsernameAvailabilityError(GuidedAction action, String title) {
+        action.setIcon(getResources().getDrawable(R.drawable.ic_error_red));
+        action.setTitle(title);
+    }
+
 
 }
