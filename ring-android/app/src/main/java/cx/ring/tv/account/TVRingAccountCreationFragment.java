@@ -179,7 +179,6 @@ public class TVRingAccountCreationFragment
         return R.style.Theme_Ring_Leanback_GuidedStep_First;
     }
 
-    @Override
     public void enableTextError() {
         GuidedAction action = findActionById(CHECK);
         action.setIcon(null);
@@ -187,7 +186,6 @@ public class TVRingAccountCreationFragment
         notifyActionChanged(findActionPositionById(CHECK));
     }
 
-    @Override
     public void disableTextError() {
         GuidedAction action = findActionById(CHECK);
         action.setIcon(null);
@@ -195,7 +193,6 @@ public class TVRingAccountCreationFragment
         notifyActionChanged(findActionPositionById(CHECK));
     }
 
-    @Override
     public void showExistingNameError() {
         GuidedAction action = findActionById(CHECK);
         action.setIcon(getResources().getDrawable(R.drawable.ic_error_red));
@@ -203,12 +200,20 @@ public class TVRingAccountCreationFragment
         notifyActionChanged(findActionPositionById(CHECK));
     }
 
-    @Override
     public void showInvalidNameError() {
         GuidedAction action = findActionById(CHECK);
         action.setIcon(getResources().getDrawable(R.drawable.ic_error_red));
         action.setDescription(getString(R.string.invalid_username));
         notifyActionChanged(findActionPositionById(CHECK));
+    }
+
+    @Override
+    public void updateUsernameAvailability(UsernameAvailabilityStatus enabled) {
+
+    }
+
+    public void showUnknownError() {
+
     }
 
     @Override
@@ -232,6 +237,7 @@ public class TVRingAccountCreationFragment
         }
         notifyActionChanged(findActionPositionById(CONTINUE));
     }
+
 
     @Override
     public void displayUsernameBox(boolean display) {
