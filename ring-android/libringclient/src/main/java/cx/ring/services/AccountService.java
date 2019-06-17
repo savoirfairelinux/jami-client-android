@@ -30,6 +30,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.inject.Inject;
@@ -970,9 +971,10 @@ public class AccountService {
 
     public Single<RegisteredName> findRegistrationByName(final String account, final String nameserver, final String name) {
         if (name == null || name.isEmpty()) {
-            return Single.create(l -> l.onError(new IllegalArgumentException()));
+            return Single.just(new RegisteredName());
         }
         return getRegisteredNames()
+                .timeout(3,TimeUnit.SECONDS)
                 .filter(r -> account.equals(r.accountId) && name.equals(r.name))
                 .firstOrError()
                 .doOnSubscribe(s -> {

@@ -260,6 +260,7 @@ along with this program; if not, write to the Free Software
     <string name="gallery_error_message">No application found on device to open Gallery</string>
 
     <string name="generic_error">An unknown error occurred</string>
+    <string name="daemon_failed_to_respond">The daemon failed to respond</string>
 
     <!--File Transfer-->
     <string name="invalid_file">Invalid file</string>
