@@ -23,13 +23,16 @@ import cx.ring.mvp.AccountCreationModel;
 
 public interface RingAccountCreationView {
 
-    void enableTextError();
+    enum UsernameAvailabilityStatus {
+        ERROR_USERNAME_TAKEN,
+        ERROR_USERNAME_INVALID,
+        ERROR,
+        LOADING,
+        AVAILABLE,
+        RESET
+    }
 
-    void disableTextError();
-
-    void showExistingNameError();
-
-    void showInvalidNameError();
+    void updateUsernameAvailability(UsernameAvailabilityStatus status);
 
     void showInvalidPasswordError(boolean display);
 
