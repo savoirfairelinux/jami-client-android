@@ -54,4 +54,5 @@ along with this program; if not, write to the Free Software
     <dimen name="text_margin">16dp</dimen>
 
     <dimen name="tv_avatar_size">320dp</dimen>
+
 </resources>
