@@ -142,6 +142,7 @@
   <string name="conversation_action_select_peer_number">選擇號碼</string>
   <string name="conversation_action_block_this">阻擋連絡人</string>
   <string name="conversation_action_go_to_call">回到進行中的通話</string>
+  <string name="conversation_open_file_error">沒有已安裝的應用程式可以開啟這個檔案類型。</string>
   <string name="clip_contact_uri">聯絡人地址</string>
   <string name="block_contact_dialog_title">封鎖 %1$s？</string>
   <string name="block_contact_dialog_message">直到您解除封鎖前，%1$s 都不能再聯絡您。</string>
@@ -217,5 +218,7 @@
   <string name="menu_file_delete">刪除檔案</string>
   <string name="menu_file_share">分享檔案</string>
   <string name="menu_message_copy">複製</string>
+  <string name="menu_message_delete">刪除訊息</string>
+  <string name="menu_message_cancel">取消訊息</string>
   <string name="menu_delete">刪除</string>
 </resources>

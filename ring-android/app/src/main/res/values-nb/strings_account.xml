@@ -33,6 +33,7 @@ Du kan endre kontoen din senere</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Ingen konto registrert</string>
   <string name="normal_accounts_titles">Kontoer</string>
+  <string name="normal_devices_titles">Kjente enheter koblet til denne Jami-kontoen</string>
   <string name="account_device_revoke">Tilbakekall enhet</string>
   <string name="account_device_revocation_success_title">Vellykket</string>
   <string name="account_device_revocation_success">Enheten er nå tilbakekalt!</string>
@@ -132,6 +133,7 @@ Du kan endre kontoen din senere</string>
   <string name="account_sip_success_message">Du har nå registrert din SIP-konto.</string>
   <string name="account_sip_register_anyway">Registrer uansett</string>
   <string name="account_link_prompt_pin">Skriv inn PIN</string>
+  <string name="account_new_button">Opprett en Jami-konto</string>
   <string name="account_link_export_button">Lenk en annen enhet til denne kontoen</string>
   <string name="account_start_export_button">Oppretter PIN</string>
   <string name="account_end_export_button">lukk</string>
@@ -152,6 +154,7 @@ Du kan endre kontoen din senere</string>
   <string name="account_status_unknown">Ukjent</string>
   <string name="account_status_offline">Frakoblet</string>
   <!--Create account-->
+  <string name="account_creation_home">Velkommen til Jami</string>
   <string name="account_creation_profile">Opprett din profil</string>
   <string name="account_link_title">Lenk denne enheten</string>
   <string name="account_sip_cannot_be_registered">Kan ikke registrere konto</string>

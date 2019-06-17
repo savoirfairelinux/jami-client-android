@@ -1,38 +1,225 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="feedback_section">ਪ੍ਰਤੀਕਰਮ</string>
+  <string name="report"><u>ਸਾਨੂੰ ਈਮੇਲ ਭੇਜੋ</u></string>
+  <string name="section_license">ਲਾਇਸੰਸ</string>
+  <string name="sponsor_section">Jami ਇਹਨਾਂ ਵੱਲੋਂ ਵਿਕਸਿਤ ਅਤੇ ਸਮਰਥਿਤ ਮੁਫ਼ਤ ਸਾਫ਼ਟਵੇਅਰ ਹੈ</string>
+  <string name="copyright_section">ਕਾਪੀਰਾਈਟ</string>
+  <string name="contribute_section">ਯੋਗਦਾਨ ਪਾਓ</string>
+  <string name="version_section">ਵਰਜਨ</string>
+  <string name="no_email_app_installed">ਕੋਈ ਈਮੇਲ ਐਪ ਨਹੀਂ ਮਿਲੀ, ਸਾਨੂੰ ਰਿਪੋਰਟ ਭੇਜਣ ਲਈ ਐਪ ਸਥਾਪਤ ਕਰੋ</string>
+  <string name="no_browser_app_installed">ਕੋਈ ਵੈੱਬ ਬ੍ਰਾਊਜ਼ਰ ਨਹੀਂ ਮਿਲਿਆ, ਇਹ ਪੰਨਾ ਦੇਖਣ ਲਈ ਬ੍ਰਾਊਜ਼ਰ ਸਥਾਪਤ ਕਰੋ</string>
+  <string name="email_chooser_title">ਇਹ ਵਰਤ ਕੇ ਮੇਲ ਭੇਜੋ…</string>
+  <string name="website_chooser_title">ਇਹ ਵਰਤ ਕੇ ਵੈੱਬਸਾਈਟ ਦੇਖੋ…</string>
+  <string name="license">ਇਹ ਸਾਫ਼ਟਵੇਅਰ \"ਜਿਵੇਂ ਵੀ ਐ\", ਕਿਸੇ ਵੀ ਵਾਰੰਟੀ ਦੇ ਬਿਨਾਂ ਦਿੱਤਾ ਜਾਂਦਾ ਹੈ। ਵੇਰਵਿਆਂ ਲਈ, <u>GNU General Public License version 3 ਜਾਂ ਬਾਅਦ ਵਾਲੇ ਲਾਇਸੰਸ</u> ਦੇਖੋ</string>
+  <string name="description">Jami ਦੁਨੀਆ ਭਰ ਵਿੱਚ ਸੰਚਾਰ ਕਰਨ ਲਈ ਮੁਫ਼ਤ ਸਾਫ਼ਟਵੇਅਰ ਹੈ ਜੋ ਆਪਣੇ ਵਰਤੋਂਕਾਰਾਂ ਦੀ ਅਜ਼ਾਦੀ ਅਤੇ ਪਰਦੇਦਾਰੀ ਦਾ ਖਿਆਲ ਰੱਖਦਾ ਹੈ।</string>
+  <string name="credits">ਸ਼ਲਾਘਾਯੋਗ ਵਿਅਕਤੀ</string>
   <!--About dialog-->
+  <string name="developed_by">ਵਿਕਾਸਕਾਰ</string>
+  <string name="designed_by">ਡਿਜ਼ਾਈਨਰ</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">ਰਿੰਗ</string>
+  <string name="error_no_network">ਕੋਈ ਨੈੱਟਵਰਕ ਕਨੈਕਸ਼ਨ ਨਹੀਂ ਹੈ</string>
+  <string name="error_mobile_network_available_but_disabled">ਕਿਰਪਾ ਕਰਕੇ ਸੈਟਿੰਗਾਂ ਸਕ੍ਰੀਨ ਵਿੱਚ ਸੈਲਿਊਲਰ ਨੈੱਟਵਰਕ ਤੱਕ ਪਹੁੰਚ ਦਿਓ।</string>
   <!--AB menus-->
+  <string name="ab_action_chat">ਲਿਖਤ ਸੁਨੇਹੇ</string>
   <!--Left Drawer-->
   <!--Accessibility-->
+  <string name="drawer_open">ਆਵਾਗੌਣ ਦਰਾਜ਼ ਖੋਲ੍ਹੋ</string>
+  <string name="drawer_close">ਆਵਾਗੌਣ ਦਰਾਜ਼ ਬੰਦ ਕਰੋ</string>
   <!--Sections-->
-  <string name="menu_item_settings">ਸੈਟਿੰਗ</string>
+  <string name="menu_item_home">ਮੁੱਖ ਪੰਨਾ</string>
+  <string name="menu_item_contact_request">ਸੰਪਰਕ ਬੇਨਤੀਆਂ</string>
+  <string name="menu_item_accounts">ਖਾਤਿਆਂ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰੋ</string>
+  <string name="menu_item_account">ਖਾਤੇ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰੋ</string>
+  <string name="menu_item_settings">ਸੈਟਿੰਗਾਂ</string>
+  <string name="menu_item_share">ਮੇਰਾ ਸੰਪਰਕ ਸਾਂਝਾ ਕਰੋ</string>
+  <string name="menu_item_about">Jami ਬਾਰੇ</string>
   <!--Dialing Fragment-->
+  <string name="dial_number">ਨੰਬਰ ਡਾਇਲ ਕਰੋ</string>
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
+  <plurals name="home_conferences_title">
+    <item quantity="one">%d ਗੱਲਬਾਤ</item>
+    <item quantity="other">%d ਗੱਲਾਂਬਾਤਾਂ</item>
+  </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">ਨਾਂ ਜਾਂ ਫ਼ੋਨ ਨੰਬਰ ਦਾਖਲ ਕਰੋ…</string>
   <string name="choose_number">ਨੰਬਰ ਚੁਣੋ</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">ਖੁੰਝੀ ਆਉਂਦੀ ਕਾਲ</string>
+  <string name="notif_missed_outgoing_call">ਖੁੰਝੀ ਜਾਂਦੀ ਕਾਲ</string>
+  <string name="notif_incoming_call_title">%1$s ਤੋਂ ਆਉਂਦੀ ਕਾਲ</string>
+  <string name="notif_incoming_call">ਆਉਂਦੀ ਕਾਲ</string>
+  <string name="notif_outgoing_call_title">%1$s ਨੂੰ ਜਾਂਦੀ ਕਾਲ</string>
+  <string name="notif_outgoing_call">ਜਾਂਦੀ ਕਾਲ</string>
+  <string name="notif_current_call_title">%1$s ਨਾਲ ਮੌਜੂਦਾ ਕਾਲ</string>
+  <string name="notif_current_call">ਮੌਜੂਦਾ ਕਾਲ</string>
+  <string name="notif_channel_calls">ਕਾਲਾਂ</string>
+  <string name="notif_channel_missed_calls">ਖੁੰਝੀਆਂ ਕਾਲਾਂ</string>
+  <string name="notif_channel_messages">ਸੁਨੇਹੇ</string>
+  <string name="notif_channel_requests">ਬੇਨਤੀਆਂ</string>
+  <string name="notif_channel_file_transfer">ਫ਼ਾਈਲ ਤਬਾਦਲਾ</string>
+  <string name="notif_channel_background_service">ਬੈਕਗ੍ਰਾਊਂਡ ਸੇਵਾ</string>
+  <string name="notif_channel_background_service_descr">ਕਿਸੇ ਵੇਲੇ ਵੀ ਕਾਲਾਂ ਅਤੇ ਸੁਨੇਹੇ ਆਉਣ ਦਿਓ।</string>
+  <string name="notif_background_service">Jami ਐਪ ਫਿਲਹਾਲ ਬੈਕਗ੍ਰਾਊਂਡ ਵਿੱਚ ਚੱਲ ਰਹੀ ਹੈ</string>
+  <string name="notif_mark_as_read">ਪੜ੍ਹੇ ਵਜੋਂ ਨਿਸ਼ਾਨ ਲਗਾਓ</string>
+  <string name="notif_dismiss">ਖਾਰਜ ਕਰੋ</string>
+  <string name="notif_reply">ਜਵਾਬ ਦਿਓ</string>
+  <string name="notif_incoming_file_transfer_title">%1$s ਤੋਂ ਆਉਂਦੀ ਫ਼ਾਈਲ</string>
+  <string name="notif_incoming_file_transfer">ਕੋਈ ਤੁਹਾਨੂੰ ਫ਼ਾਈਲ ਭੇਜਣੀ ਚਾਹੁੰਦਾ ਹੈ</string>
+  <string name="notif_outgoing_file_transfer_title">%1$s ਨੂੰ ਫ਼ਾਈਲ ਭੇਜੀ ਜਾ ਰਹੀ ਹੈ</string>
+  <string name="notif_outgoing_file_transfer">ਕੋਈ ਤੁਹਾਨੂੰ ਫ਼ਾਈਲ ਭੇਜਣੀ ਚਾਹੁੰਦਾ ਹੈ</string>
+  <string name="notif_incoming_picture">%1$s ਵੱਲੋਂ ਤਸਵੀਰ</string>
+  <string name="action_open">ਖੋਲ੍ਹੋ</string>
   <!--Call Fragment-->
+  <string name="you_txt_prefix">ਤੁਸੀਂ:</string>
+  <string name="action_call_hangup">ਕਾਲ ਕੱਟੋ</string>
+  <string name="ongoing_call">ਜਾਂਦੀ ਕਾਲ</string>
+  <string name="hist_in_call">%1$s ਤੋਂ ਆਉਂਦੀ ਕਾਲ</string>
+  <string name="hist_out_call">%1$s ਨੂੰ ਜਾਂਦੀ ਕਾਲ</string>
+  <string name="start_error_title">Jami ਨੂੰ ਸ਼ੁਰੂ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ !</string>
+  <string name="start_error_mic_required">Jami ਨੂੰ ਚੱਲਣ ਲਈ ਮਾਈਕ੍ਰੋਫ਼ੋਨ ਇਜਾਜ਼ਤ ਦੀ ਲੋੜ ਹੈ।</string>
+  <string name="action_call_accept">ਕਾਲ ਸੁਣੋ</string>
+  <string name="action_call_decline">ਕਾਲ ਕੱਟੋ</string>
+  <string name="action_call_mic_mute">ਮਾਈਕ੍ਰੋਫ਼ੋਨ ਮਿਊਟ ਕਰੋ</string>
+  <string name="ab_action_speakerphone">ਸਪੀਕਰ ਚਾਲੂ ਕਰੋ</string>
+  <string name="ab_action_contact_add">ਸੰਪਰਕਾਂ ਵਿੱਚ ਸ਼ਾਮਲ ਕਰੋ</string>
+  <string name="ab_action_contact_add_question">ਸੰਪਰਕਾਂ ਵਿੱਚ ਸ਼ਾਮਲ ਕਰੀਏ?</string>
+  <string name="hist_contact_added">ਸੰਪਰਕ ਸ਼ਾਮਲ ਕੀਤਾ ਗਿਆ</string>
+  <string name="hist_invitation_received">ਸੱਦਾ ਮਿਲਿਆ</string>
+  <string name="ab_action_audio_call">ਆਡੀਓ ਕਾਲ</string>
+  <string name="ab_action_video_call">ਵੀਡੀਓ ਕਾਲ</string>
+  <string name="ab_action_change_screen_orientation">ਸਕ੍ਰੀਨ ਦਿਸ਼ਾਮਾਨ ਬਦਲੋ</string>
+  <string name="share_via">ਇਸ ਰਾਹੀਂ ਸਾਂਝਾ ਕਰੋ</string>
+  <string name="write_a_message">ਸੁਨੇਹਾ ਲਿਖੋ</string>
+  <string name="scan_qr">QR ਕੋਡ ਸਕੈਨ ਕਰੋ</string>
+  <string name="ab_action_flipcamera">ਕੈਮਰਾ ਪਲਟਾਓ</string>
   <!--Text messages-->
+  <string name="send_message">ਸੁਨੇਹਾ ਭੇਜੋ</string>
+  <string name="message_sending">ਸੁਨੇਹਾ ਭੇਜਿਆ ਜਾ ਰਿਹਾ ਹੈ…</string>
+  <string name="message_failed">ਅਸਫਲ ਰਿਹਾ</string>
+  <string name="time_just_now">ਹੁਣੇ ਹੀ</string>
+  <string name="send_file">ਫ਼ਾਈਲ ਭੇਜੋ</string>
+  <string name="hist_file_sent">ਫ਼ਾਈਲ ਭੇਜੀ ਗਈ</string>
+  <string name="hist_file_received">ਫ਼ਾਈਲ ਮਿਲੀ</string>
   <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">ਕੈਮਰਾ ਇਜਾਜ਼ਤ</string>
+  <string name="permission_dialog_camera_message">ਵੀਡੀਓ ਗੱਲਾਂਬਾਤਾਂ ਕਰਨ ਲਈ ਕੈਮਰਾ ਇਜਾਜ਼ਤ ਦੀ ਲੋੜ ਹੈ। ਇਜਾਜ਼ਤ ਚਾਲੂ ਕਰਨ ਬਾਰੇ ਵਿਚਾਰੋ।</string>
+  <string name="ringtone_error_title">ਗੜਬੜ</string>
+  <string name="ringtone_error_format_not_supported">ਇਸ ਵੰਨਗੀ ਦੀ ਸੁਵਿਧਾ ਨਹੀਂ ਹੈ।</string>
+  <string name="ringtone_error_size_too_big">ਇਹ ਫ਼ਾਈਲ ਬਹੁਤ ਵੱਡੀ ਹੈ। ਵੱਧ ਤੋਂ ਵੱਧ ਆਕਾਰ %1$dkB ਹੋਵੇ।</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Jami ਨੂੰ ਇਹ ਵਿਸ਼ੇਸ਼ਤਾ ਚਾਲੂ ਕਰਨ ਲਈ \"ਸੰਪਰਕ ਪੜ੍ਨ\" ਦੀ ਇਜਾਜ਼ਤ ਦੀ ਲੋੜ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਇਜਾਜ਼ਤ ਦਿਓ।</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Jami ਨੂੰ ਇਹ ਵਿਸ਼ੇਸ਼ਤਾ ਚਾਲੂ ਕਰਨ ਲਈ \"ਕਾਲ ਲੌਗ ਲਿਖਣ\" ਦੀ ਇਜਾਜ਼ਤ ਦੀ ਲੋੜ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਇਜਾਜ਼ਤ ਦਿਓ।</string>
   <!--QRCode Scan-->
+  <string name="scan_qr_account_message">ਉਸ ਖਾਤੇ ਦਾ QR ਕੋਡ ਸਕੈਨ ਕਰੋ, ਜਿਸਨੂੰ ਤੁਸੀਂ ਸ਼ਾਮਲ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ।</string>
+  <string name="title_activity_qrcode">ਮੇਰਾ ਖਾਤਾ ਸਾਂਝਾ ਕਰੋ</string>
+  <string name="error_scan_no_camera_permissions">QR ਸਕੈਨਰ ਨੂੰ ਚੱਲਣ ਲਈ ਕੈਮਰਾ ਇਜਾਜ਼ਤਾਂ ਦੀ ਲੋੜ ਹੈ</string>
+  <string name="tab_code">ਮੇਰਾ ਕੋਡ</string>
+  <string name="tab_scan">ਕੋਡ ਸਕੈਨ ਕਰੋ</string>
   <!--Settings-->
+  <string name="clear_history_dialog_title">ਇਤਿਹਾਸ ਮਿਟਾਈਏ?</string>
+  <string name="clear_history_dialog_message">ਇਸ ਕਾਰਵਾਈ ਨੂੰ ਅਣਕੀਤਾ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ।</string>
+  <string name="clear_history_completed">ਇਤਿਹਾਸ ਮਿਟਾਇਆ ਜਾ ਚੁੱਕਾ ਹੈ।</string>
   <!--Conversation-->
+  <string name="conversation_details">ਸੰਪਰਕ ਵੇਰਵੇ</string>
+  <string name="conversation_action_delete_this">ਇਹ ਗੱਲਬਾਤ ਮਿਟਾਓ</string>
+  <string name="conversation_action_delete_this_title">ਇਹ ਗੱਲਬਾਤ ਮਿਟਾਈਏ?</string>
+  <string name="conversation_action_delete_this_message">ਇਸ ਕਾਰਵਾਈ ਨੂੰ ਅਣਕੀਤਾ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ।</string>
+  <string name="conversation_action_history_clear">ਇਤਿਹਾਸ ਮਿਟਾਓ</string>
+  <string name="conversation_action_history_clear_title">ਗੱਲਬਾਤ ਇਤਿਹਾਸ ਮਿਟਾਈਏ?</string>
+  <string name="conversation_action_history_clear_message">ਇੰਝ ਕਰਨ ਨਾਲ ਗੱਲਬਾਤ ਇਤਿਹਾਸ ਮਿਟ ਜਾਵੇਗਾ।</string>
+  <string name="conversation_action_remove_this">ਸੰਪਰਕ ਮਿਟਾਓ</string>
+  <string name="conversation_action_remove_this_title">ਇਹ ਸੰਪਰਕ ਮਿਟਾਈਏ?</string>
+  <string name="conversation_action_remove_this_message">ਇੰਝ ਕਰਨ ਨਾਲ ਸੰਪਰਕ ਅਤੇ ਗੱਲਬਾਤ ਇਤਿਹਾਸ ਮਿਟ ਜਾਵੇਗਾ।</string>
+  <string name="conversation_action_copy_peer_number">ਨੰਬਰ ਕਾਪੀ ਕਰੋ</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s ਨੂੰ ਕਲਿੱਪਬੋਰਡ \'ਤੇ ਕਾਪੀ ਕੀਤਾ ਗਿਆ</string>
+  <string name="conversation_action_select_peer_number">ਨੰਬਰ ਚੁਣੋ</string>
+  <string name="conversation_action_block_this">ਸੰਪਰਕ ਬਲਾਕ ਕਰੋ</string>
+  <string name="conversation_action_go_to_call">ਜਾਂਦੀ ਕਾਲ \'ਤੇ ਵਾਪਸ ਜਾਓ</string>
+  <string name="conversation_open_file_error">ਇਸ ਫ਼ਾਈਲ ਕਿਸਮ ਨੂੰ ਖੋਲ੍ਹਣ ਵਾਲੀ ਕੋਈ ਐਪਲੀਕੇਸ਼ਨ ਸਥਾਪਤ ਨਹੀਂ ਹੈ।</string>
+  <string name="clip_contact_uri">ਸੰਪਰਕ ਦਾ ਪਤਾ</string>
+  <string name="block_contact_dialog_title">%1$s ਨੂੰ ਬਲਾਕ ਕਰੀਏ?</string>
+  <string name="block_contact_dialog_message">%1$s ਤੁਹਾਨੂੰ ਤਦ ਤੱਕ ਸੰਪਰਕ ਨਹੀਂ ਕਰ ਸਕਣਗੇ, ਜਦ ਤੱਕ ਤੁਸੀਂ ਉਹਨਾਂ ਨੂੰ ਅਣਬਲਾਕ ਨਹੀਂ ਕਰਦੇ।</string>
+  <string name="block_contact_completed">%1$sਨੂੰ ਬਲਾਕ ਕੀਤਾ ਗਿਆ।</string>
   <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">%1$s ਨੂੰ ਸ਼ਾਮਲ ਕਰੀਏ?</string>
+  <string name="prompt_new_password">ਨਵਾਂ ਪਾਸਵਰਡ</string>
+  <string name="prompt_new_password_optional">ਨਵਾਂ ਪਾਸਵਰਡ (ਵਿਕਲਪਿਕ)</string>
+  <string name="prompt_new_password_repeat">ਨਵਾਂ ਪਾਸਵਰਡ ਦੁਹਰਾਓ</string>
+  <string name="account_create_title">Jami ਖਾਤਾ ਬਣਾਓ</string>
+  <string name="prompt_new_username">ਨਵਾਂ ਵਰਤੋਂਕਾਰ ਨਾਮ ਦਾਖਲ ਕਰੋ</string>
+  <string name="help_password_choose">ਆਪਣੇ Jami ਖਾਤੇ ਨੂੰ ਸੁਰੱਖਿਅਤ ਰੱਖਣ ਲਈ ਅਜਿਹਾ ਮਜ਼ਬੂਤ ਪਾਸਵਰਡ ਚੁਣੋ ਜੋ ਤੁਹਾਨੂੰ ਯਾਦ ਰਹੇ।</string>
+  <string name="help_password_enter">ਆਪਣਾ ਮੁੱਖ Jami ਖਾਤਾ ਪਾਸਵਰਡ ਦਾਖਲ ਕਰੋ</string>
+  <string name="help_pin_enter">ਕਿਸੇ ਹੋਰ ਸੰਰੂਪਣ ਕੀਤੇ Jami ਖਾਤੇ ਤੋਂ ਪਿੰਨ ਦਾਖਲ ਕਰੋ। ਪਿੰਨ ਹਾਸਲ ਕਰਨ ਲਈ \"Jami ਖਾਤਾ ਨਿਰਯਾਤ ਕਰੋ\" ਵਿਸ਼ੇਸ਼ਤਾ ਵਰਤੋ।</string>
+  <string name="wizard_next">ਅੱਗੇ</string>
+  <string name="wizard_back">ਪਿੱਛੇ</string>
+  <string name="wizard_skip">ਲੰਘਾਓ</string>
   <!--MenuHeaderView-->
+  <string name="profile">ਮੇਰਾ ਪ੍ਰੋਫਾਈਲ</string>
+  <string name="profile_message_warning">ਤੁਹਾਡਾ ਪ੍ਰੋਫਾਈਲ ਸਿਰਫ਼ ਤੁਹਾਡੇ ਸੰਪਰਕਾਂ ਨਾਲ ਸਾਂਝਾ ਕੀਤਾ ਜਾਂਦਾ ਹੈ</string>
+  <string name="open_the_gallery">ਗੈਲਰੀ ਖੋਲ੍ਹੋ</string>
+  <string name="take_a_photo">ਫ਼ੋਟੋ ਖਿੱਚੋ</string>
+  <string name="profile_name_hint">ਆਪਣਾ ਨਾਮ ਦਾਖਲ ਕਰੋ (ਵਿਕਲਪਿਕ)</string>
   <!--Share fragment-->
+  <string name="share_message">Jami ਨਾਲ ਇਹ ਕੋਡ ਸਕੈਨ ਕਰੋ</string>
+  <string name="share_message_no_account">ਕਿਰਪਾ ਕਰਕੇ ਸਾਂਝਾ ਕਰਨ ਲਈ ਕੋਈ ਖਾਤਾ ਚੁਣੋ।</string>
+  <string name="share_your_account_information">ਮੇਰੀ ਸੰਪਰਕ ਜਾਣਕਾਰੀ ਸਾਂਝੀ ਕਰੋ</string>
+  <string name="share_label">ਸਾਂਝਾ ਕਰੋ</string>
+  <string name="generic_error_migration">ਗੜਬੜ</string>
+  <string name="generic_error_migration_message">ਤਬਾਦਲੇ ਵੇਲੇ ਕੋਈ ਗੜਬੜ ਹੋਈ</string>
   <!--Pending contact requests-->
+  <string name="accept">ਮਨਜ਼ੂਰ ਕਰੋ</string>
+  <string name="refuse">ਨਾ-ਮਨਜ਼ੂਰ ਕਰੋ</string>
+  <string name="block">ਬਲਾਕ ਕਰੋ</string>
+  <string name="contact_request_title">ਨਵੀਂ ਸੰਪਰਕ ਬੇਨਤੀ</string>
+  <string name="contact_request_msg">ਤੁਹਾਡੇ ਕੋਲ %1$s ਸੰਪਰਕ ਬੇਨਤੀਆਂ ਹਨ</string>
+  <string name="contact_request_account">%1$s ਲਈ</string>
+  <string name="no_requests">0 ਸੰਪਰਕ ਬੇਨਤੀ</string>
+  <string name="message_contact_not_trusted_yet">%s ਫਿਲਹਾਲ ਤੁਹਾਡੇ ਸੰਪਰਕਾਂ ਵਿੱਚ ਨਹੀਂ ਹਨ।\nਕੀ ਤੁਸੀਂ ਇਹ ਸੰਪਰਕ ਬੇਨਤੀ ਮਨਜ਼ੂਰ ਜਾਂ ਨਾ-ਮਨਜ਼ੂਰ ਕਰਨੀ ਹੈ?</string>
+  <string name="message_contact_not_trusted">%s ਤੁਹਾਡੇ ਸੰਪਰਕਾਂ ਵਿੱਚ ਨਹੀਂ ਹਨ।\nਨਵਾਂ ਸੰਪਰਕ ਸ਼ਾਮਲ ਕਰੀਏ?</string>
   <!--Send contact requests-->
+  <string name="send_request_button">ਭੇਜੋ</string>
+  <string name="send_request_title">ਸੰਪਰਕ ਬੇਨਤੀ ਭੇਜੋ</string>
+  <string name="send_request_msg">ਇਸ ਵਰਤੋਂਕਾਰ ਨਾਲ ਸੰਚਾਰ ਕਰਨ ਲਈ ਤੁਹਾਡਾ ਸੰਪਰਕ ਬੇਨਤੀ ਭੇਜਣਾ ਲਾਜ਼ਮੀ ਹੈ। ਤੁਹਾਡੇ ਸੰਪਰਕ ਵੱਲੋਂ ਬੇਨਤੀ ਮਨਜ਼ੂਰ ਨਾ ਕੀਤੇ ਜਾਣ ਤੱਕ, ਤੁਸੀਂ ਸੁਨੇਹੇ ਭੇਜ ਸਕਦੇ ਹੋ ਪਰ ਉਹ ਜਵਾਬ ਨਹੀਂ ਦੇ ਸਕਣਗੇ।</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">ਬਲਾਕ ਕੀਤਾ 0 ਸੰਪਰਕ</string>
   <!--Smartlist-->
+  <string name="no_contact_request">ਕੋਈ ਵੀ ਸੰਪਰਕ ਬੇਨਤੀ ਨਹੀਂ ਭੇਜੀ ਗਈ</string>
+  <string name="contact_request_sent">ਸੰਪਰਕ ਬੇਨਤੀ ਭੇਜੀ ਗਈ</string>
+  <string name="search_results">ਖੋਜ ਨਤੀਜੇ</string>
+  <string name="tv_contact_row_header">ਸੰਪਰਕ</string>
+  <string name="gallery_error_title">ਕੋਈ ਗੈਲਰੀ ਐਪ ਨਹੀਂ ਮਿਲੀ</string>
+  <string name="gallery_error_message">ਗੈਲਰੀ ਖੋਲ੍ਹਣ ਲਈ ਇਸ ਡੀਵਾਈਸ \'ਤੇ ਕੋਈ ਐਪਲੀਕੇਸ਼ਨ ਨਹੀਂ ਮਿਲੀ</string>
+  <string name="generic_error">ਕੋਈ ਅਗਿਆਤ ਗੜਬੜ ਹੋਈ</string>
   <!--File Transfer-->
+  <string name="invalid_file">ਅਵੈਧ ਫ਼ਾਈਲ</string>
+  <string name="not_able_to_write_file">ਫ਼ਾਈਲ ਲਿਖੀ ਨਹੀਂ ਜਾ ਸਕੀ</string>
+  <string name="file_transfer_status_created">ਤਬਾਦਲਾ ਸ਼ੁਰੂ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ</string>
+  <string name="file_transfer_status_unsupported">ਸੁਵਿਧਾ ਨਹੀਂ</string>
+  <string name="file_transfer_status_wait_peer_acceptance">ਸਾਥੀ ਦੀ ਮਨਜ਼ੂਰੀ ਦੀ ਉਡੀਕ ਹੋ ਰਹੀ ਹੈ</string>
+  <string name="file_transfer_status_wait_host_acceptance">ਮੇਜ਼ਬਾਨ ਦੀ ਮਨਜ਼ੂਰੀ ਦੀ ਉਡੀਕ ਹੋ ਰਹੀ ਹੈ</string>
+  <string name="file_transfer_status_ongoing">ਜਾਰੀ</string>
+  <string name="file_transfer_status_finished">ਮੁਕੰਮਲ ਹੋਇਆ</string>
+  <string name="file_transfer_status_closed_by_host">ਮੇਜ਼ਬਾਨ ਵੱਲੋਂ ਬੰਦ ਕੀਤਾ ਗਿਆ</string>
+  <string name="file_transfer_status_closed_by_peer">ਸਾਥੀ ਵੱਲੋਂ ਬੰਦ ਕੀਤਾ ਗਿਆ</string>
+  <string name="file_transfer_status_invalid_pathname">ਰਾਹ ਦਾ ਅਵੈਧ ਨਾਮ</string>
+  <string name="file_transfer_status_unjoinable_peer">ਗੈਰ-ਜੁੜਨਯੋਗ ਸਾਥੀ</string>
+  <string name="file_saved_in">ਫ਼ਾਈਲ %s ਵਿੱਚ ਰੱਖਿਅਤ ਕੀਤੀ ਗਈ</string>
+  <string name="no_space_left_on_device">ਡੀਵਾਈਸ ਵਿੱਚ ਜਗ੍ਹਾ ਭਰ ਗਈ ਹੈ</string>
+  <string name="title_media_viewer">ਮੀਡੀਆ ਵਿਊਅਰ</string>
+  <string name="menu_file_open">ਫ਼ਾਈਲ ਖੋਲ੍ਹੋ</string>
+  <string name="menu_file_download">ਫ਼ਾਈਲ ਡਾਊਨਲੋਡ ਕਰੋ</string>
+  <string name="menu_file_delete">ਫ਼ਾਈਲ ਮਿਟਾਓ</string>
+  <string name="menu_file_share">ਫ਼ਾਈਲ ਸਾਂਝੀ ਕਰੋ</string>
+  <string name="menu_message_copy">ਕਾਪੀ ਕਰੋ</string>
+  <string name="menu_message_delete">ਸੁਨੇਹਾ ਮਿਟਾਓ</string>
+  <string name="menu_message_cancel">ਸੁਨੇਹਾ ਰੱਦ ਕਰੋ</string>
   <string name="menu_delete">ਮਿਟਾਓ</string>
 </resources>

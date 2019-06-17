@@ -108,4 +108,6 @@
   <!--Smartlist-->
   <string name="tv_contact_row_header">Contacts</string>
   <!--File Transfer-->
+  <string name="menu_message_copy">Copier</string>
+  <string name="menu_delete">Supprimer</string>
 </resources>

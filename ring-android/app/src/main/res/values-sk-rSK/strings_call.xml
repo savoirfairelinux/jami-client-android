@@ -20,12 +20,22 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
+    <!-- Call error -->
+    <string name="call_error_no_microphone">Hovor zrušený. Nebol nájdený mikrofón.</string>
+    <string name="call_error_no_camera_no_microphone">Hovor zrušený. Nebola nájdená kamera.</string>
+
+    <!-- SipCalls -->
+    <string name="call_human_state_searching">Hľadanie</string>
+    <string name="call_human_state_incoming">Prichádzajúci</string>
+    <string name="call_human_state_connecting">Pripájanie</string>
     <string name="call_human_state_ringing">Vyzváňanie</string>
-    <string name="call_human_state_current">Hovorenie</string>
+    <string name="call_human_state_current">Volanie</string>
     <string name="call_human_state_hungup">Cez</string>
     <string name="call_human_state_busy">Zaneprazdnený</string>
     <string name="call_human_state_failure">Zlyhal</string>
     <string name="call_human_state_hold">Podržať</string>
+    <string name="call_human_state_unhold">Zrušiť podržanie</string>
     <string name="call_human_state_over">Cez</string>
+    <string name="call_human_state_none">Žiadny</string>
     <!-- Conferences -->
 </resources>

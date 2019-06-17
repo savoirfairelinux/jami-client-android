@@ -84,6 +84,7 @@
   <string name="wizard_next">Sekva</string>
   <!--MenuHeaderView-->
   <!--Share fragment-->
+  <string name="share_label">Kunhavi</string>
   <string name="generic_error_migration">Eraro</string>
   <!--Pending contact requests-->
   <string name="accept">Akcepti</string>
@@ -95,4 +96,6 @@
   <string name="tv_contact_row_header">Kontaktoj</string>
   <!--File Transfer-->
   <string name="menu_file_share">Kunhavigi dosieron</string>
+  <string name="menu_message_copy">Kopii</string>
+  <string name="menu_delete">Forigi</string>
 </resources>

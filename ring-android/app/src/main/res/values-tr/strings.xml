@@ -166,6 +166,7 @@
   <string name="share_message">Bu kodu Jami ile tarayın</string>
   <string name="share_message_no_account">Lütfen paylaşmak için bir hesap seçin.</string>
   <string name="share_your_account_information">İletişim bilgimi paylaş</string>
+  <string name="share_label">Paylaş</string>
   <string name="generic_error_migration">Hata</string>
   <string name="generic_error_migration_message">Göç sırasında bir hata oluştu</string>
   <!--Pending contact requests-->
@@ -199,4 +200,6 @@
   <string name="menu_file_download">Dosyayı indir</string>
   <string name="menu_file_delete">Dosyayı sil</string>
   <string name="menu_file_share">Dosya paylaş</string>
+  <string name="menu_message_copy">Kopyala</string>
+  <string name="menu_delete">Sil</string>
 </resources>

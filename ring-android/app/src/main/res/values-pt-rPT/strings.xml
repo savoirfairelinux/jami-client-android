@@ -143,6 +143,7 @@
   <string name="conversation_action_select_peer_number">Selecione um número</string>
   <string name="conversation_action_block_this">Bloquear contacto</string>
   <string name="conversation_action_go_to_call">Voltar à chamada a decorrer</string>
+  <string name="conversation_open_file_error">Não existe nenhuma aplicação instalada capaz de abrir este tipo de ficheiro.</string>
   <string name="clip_contact_uri">Endereço do contacto</string>
   <string name="block_contact_dialog_title">Bloquear %1$s?</string>
   <string name="block_contact_dialog_message">%1$s não poderá contactá-lo até que o desbloqueie.</string>
@@ -218,5 +219,7 @@
   <string name="menu_file_delete">Eliminar ficheiro</string>
   <string name="menu_file_share">Partilhar ficheiro</string>
   <string name="menu_message_copy">Copiar</string>
+  <string name="menu_message_delete">Eliminar mensagem</string>
+  <string name="menu_message_cancel">Cancelar mensagem</string>
   <string name="menu_delete">Eliminar</string>
 </resources>

@@ -143,6 +143,7 @@
   <string name="conversation_action_select_peer_number">Përzgjidhni një numër</string>
   <string name="conversation_action_block_this">Bllokojeni kontaktin</string>
   <string name="conversation_action_go_to_call">Rikthehu te thirrja që po bëhej</string>
+  <string name="conversation_open_file_error">S’ka të instaluar aplikacion të aftë të hapë këtë lloj kartelash.</string>
   <string name="clip_contact_uri">Adresë kontakti</string>
   <string name="block_contact_dialog_title">Të bllokohet %1$s?</string>
   <string name="block_contact_dialog_message">%1$s s’do të jetë në gjendje të lidhet me ju, deri sa ta zhbllokoni.</string>
@@ -218,5 +219,7 @@
   <string name="menu_file_delete">Fshije kartelën</string>
   <string name="menu_file_share">Ndani kartelë me të tjerë</string>
   <string name="menu_message_copy">Kopjoje</string>
+  <string name="menu_message_delete">Fshije mesazhin</string>
+  <string name="menu_message_cancel">Anuloje mesazhin</string>
   <string name="menu_delete">Fshije</string>
 </resources>

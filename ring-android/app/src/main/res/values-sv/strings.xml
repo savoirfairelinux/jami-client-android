@@ -143,6 +143,7 @@
   <string name="conversation_action_select_peer_number">Välj ett nummer</string>
   <string name="conversation_action_block_this">Blockera kontakt</string>
   <string name="conversation_action_go_to_call">Återgå till pågående samtal</string>
+  <string name="conversation_open_file_error">Det finns inget installerat program som kan öppna den här filtypen.</string>
   <string name="clip_contact_uri">Kontaktadress</string>
   <string name="block_contact_dialog_title">Blockera %1$s?</string>
   <string name="block_contact_dialog_message">%1$s kommer inte att kunna kontakta dig, innan du avblockerat.</string>
@@ -218,5 +219,7 @@
   <string name="menu_file_delete">Ta bort fil</string>
   <string name="menu_file_share">Dela fil</string>
   <string name="menu_message_copy">Kopiera</string>
+  <string name="menu_message_delete">Ta bort meddelandet</string>
+  <string name="menu_message_cancel">Avbryt meddelandet</string>
   <string name="menu_delete">Ta bort</string>
 </resources>

@@ -119,6 +119,10 @@
   <string name="permission_dialog_write_call_log_message">Jami a besoin d\'accéder en écriture à votre liste de contact. Autorisez Jami, svp.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Numérisez le code QR de votre interlocuteur.</string>
+  <string name="title_activity_qrcode">Partager mon compte</string>
+  <string name="error_scan_no_camera_permissions">Le scanner QR requiert la permission de la caméra</string>
+  <string name="tab_code">Mon Code</string>
+  <string name="tab_scan">Scanner un code</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Effacer l\'historique</string>
   <string name="clear_history_dialog_message">Cette action est irréversible.</string>
@@ -139,6 +143,7 @@
   <string name="conversation_action_select_peer_number">Choisir un numéro</string>
   <string name="conversation_action_block_this">Bloquer le contact</string>
   <string name="conversation_action_go_to_call">Revenir à l\'appel en cours</string>
+  <string name="conversation_open_file_error">Il n\'y a aucune application installée capable d\'ouvrir ce type de fichier.</string>
   <string name="clip_contact_uri">Adresse du contact</string>
   <string name="block_contact_dialog_title">Bloquer %1$s ?</string>
   <string name="block_contact_dialog_message">%1$s ne pourra pas vous contacter tant que vous ne l\'aurez pas débloqué.</string>
@@ -212,7 +217,9 @@
   <string name="menu_file_open">Ouvrir le fichier</string>
   <string name="menu_file_download">Télécharger le fichier</string>
   <string name="menu_file_delete">Supprimer le fichier</string>
-  <string name="menu_file_share">Partager un fichier</string>
+  <string name="menu_file_share">Partager le fichier</string>
   <string name="menu_message_copy">Copier</string>
+  <string name="menu_message_delete">Supprimer le message</string>
+  <string name="menu_message_cancel">Annuler le message</string>
   <string name="menu_delete">Supprimer</string>
 </resources>

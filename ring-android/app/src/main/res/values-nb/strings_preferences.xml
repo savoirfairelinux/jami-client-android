@@ -6,10 +6,20 @@
   <string name="pref_category_system">System</string>
   <string name="pref_category_privacy">Personvern</string>
   <string name="pref_mobileData_title">Mobildata</string>
+  <string name="pref_mobileData_summary">Tillat Jami på 3G/LTE-nettverk i tillegg til Wi-Fi</string>
   <string name="pref_pushNotifications_title">Push-merknader</string>
   <string name="pref_pushNotifications_summary">Bruk Google-tjenere til å tillate mottak av samtaler/meldinger i bakgrunnen</string>
+  <string name="pref_hd_summary">Aktiver sending av HD-video</string>
+  <string name="pref_hwEncode_title">Aktiver aksellerert koding</string>
+  <string name="pref_hwEncode_summary">Eksperimentelt valg</string>
   <string name="pref_systemContacts_title">Bruk systemkontakter</string>
   <string name="pref_systemContacts_summary">Bruk systemkontakter for å vise innringerdetaljer</string>
+  <string name="pref_systemDialer_title">Gjennomfør systemanrop med Jami</string>
+  <string name="pref_systemDialer_summary">Bruk Jami til å gjennomføre systemanrop når det er mulig.</string>
+  <string name="pref_startOnBoot_title">Start Jami ved oppstart</string>
+  <string name="pref_startOnBoot_summary">Kjør Jami i bakgrunnen når systemet starter.</string>
   <string name="pref_clearHistory_title">Slett historikk</string>
   <string name="pref_clearHistory_summary">Slett all konversasjonshistorikk.  Dette kan ikke endres tilbake.</string>
+  <string name="pref_persistNotification_title">Kjør i bakgrunnen</string>
+  <string name="pref_persistNotification_summary">Tillater kjøring i bakgrunnen for å motta samtaler og meldinger.</string>
 </resources>

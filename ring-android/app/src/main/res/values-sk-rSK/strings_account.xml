@@ -1,39 +1,198 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings related to account edition screen-->
-  <string name="ic_delete_menu">Vymaž</string>
+  <string name="ic_delete_menu">Vymazať</string>
+  <string name="ic_advanced_menu">Pokročilé nastavenia</string>
+  <string name="ic_blacklist_menu">Blokované kontakty</string>
   <!--Strings related to account creation-->
+  <string name="add_ring_account_title">Pridať Jami účet</string>
+  <string name="add_sip_account_title">Pridať SIP účet</string>
+  <string name="ring_account_default_name">Jami účet %1$s</string>
   <string name="prompt_alias">Alias</string>
-  <string name="prompt_hostname">Hostname</string>
-  <string name="action_create_short">Vytvor</string>
-  <string name="action_settings">Nastavenie</string>
+  <string name="prompt_hostname">Názov hostiteľa</string>
+  <string name="prompt_username">Používateľské meno</string>
+  <string name="prompt_password">Heslo</string>
+  <string name="action_create">Vytvoriť účet</string>
+  <string name="action_create_short">Vytvoriť</string>
+  <string name="action_register">Registrovať</string>
+  <string name="action_settings">Nastavenia</string>
+  <string name="error_field_required">Toto je povinné pole</string>
+  <string name="dialog_wait_create">Pridávanie účtu</string>
+  <string name="dialog_wait_create_details">Čakajte, prosím, kým sa váš účet pridá...</string>
+  <string name="dialog_wait_update">Aktualizácia účtu</string>
+  <string name="dialog_wait_update_details">Čakajte, prosím, kým sa váš účet aktualizuje...</string>
+  <string name="dialog_warn_ip2ip_account_title">Vytvoriť prázdny SIP účet?</string>
+  <string name="dialog_warn_ip2ip_account_message">Chystáte sa vytvoriť účet bez správneho mena hostiteľa.
+        Budete môcť vykonať výhradne priame IP hovory.
+        Neskôr môžete upraviť tento účet.</string>
+  <string name="account_type_ip2ip">IP účet</string>
+  <string name="help_ring">Jami účet vám umožňuje kontaktovať ľudí pomocou P2P pripojenia na plne distribuovanej sieti.</string>
+  <string name="help_sip_title">Pridajte váš SIP účet</string>
+  <string name="help_sip">Konfigurovať existujúci SIP účet</string>
+  <string name="create_sip_account">Pridať SIP účet</string>
   <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_title">Zmazať účet?</string>
+  <string name="account_delete_dialog_message">Túto akciu nie je možné zvrátiť.</string>
   <!--AccountManagementFragment-->
-  <string name="normal_accounts_titles">Účet</string>
+  <string name="empty_account_list">Žiaden registrovaný účet</string>
+  <string name="normal_accounts_titles">Účty</string>
+  <string name="normal_devices_titles">Známe zariadenia prepojené s týmto Jami účtom</string>
+  <string name="account_device_revoke">Odobrať zariadenie</string>
+  <string name="account_device_revocation_success_title">Úspech</string>
+  <string name="account_device_revocation_success">Zariadenie bolo odobrané!</string>
+  <string name="account_device_revocation_error_title">Nie je možné odobrať zariadenie</string>
+  <string name="account_device_revocation_wrong_password">Nesprávne heslo.</string>
+  <string name="account_device_revocation_unknown_device">Neznáme zariadenie.</string>
+  <string name="account_device_revocation_error_unknown">Neznáma chyba.</string>
+  <string name="account_password_change">Zmeniť heslo</string>
+  <string name="account_password_set">Nastaviť heslo</string>
+  <string name="account_password_change_wait_message">Zmena hesla účtu</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Všeobecné</string>
-  <string name="account_hostname_label">Hostname</string>
+  <string name="account_basic_category">Základné nastavenia</string>
+  <string name="account_alias_label">Názov účtu</string>
+  <string name="account_hostname_label">Názov hostiteľa</string>
+  <string name="account_bootstrap_label">Zavádzač</string>
+  <string name="account_username_label">Používateľské meno</string>
+  <string name="account_password_label">Heslo</string>
+  <string name="account_optionnal_category">Voliteľné nastavenia</string>
+  <string name="account_useragent_label">Používateľský agent</string>
+  <string name="account_autoanswer_label">Automatická odpoveď</string>
+  <string name="account_upnp_label">Zapnúť UPnP</string>
+  <string name="account_proxy_field">Proxy</string>
   <!--Audio Details-->
   <string name="account_audio_label">Zvuk</string>
+  <string name="account_preferences_media_tab">Médiá</string>
   <string name="account_ringtone_label">Vyzváňacie tóny</string>
+  <string name="account_ringtone_enabled_label">Aktivovať vyzváňacie tóny</string>
+  <string name="account_ringtone_path_label">Cesta k vyzváňacím tónom</string>
+  <string name="account_ringtone_custom_label">Použiť vlastný vyzváňací tón</string>
   <!--Video Details-->
   <string name="account_video_label">Video</string>
   <string name="account_video_enable">Zapnúť video</string>
   <!--Advanced Details-->
+  <string name="account_preferences_advanced_tab">Pokročilé</string>
+  <string name="account_dht_public_in_calls_label">Povoliť všetky hovory/správy</string>
+  <string name="account_registration_exp_label">Expirácia registrácie</string>
+  <string name="account_local_interface_label">Lokálne rozhranie</string>
+  <string name="account_local_port_label">Miestny port</string>
+  <string name="account_stun_enable_label">Použiť STUN</string>
+  <string name="account_stun_server_label">STUN server</string>
+  <string name="account_turn_enable_label">Použiť TURN</string>
+  <string name="account_turn_server_label">TURN server</string>
+  <string name="account_turn_username_label">TURN používateľské meno</string>
+  <string name="account_turn_password_label">TURN heslo</string>
+  <string name="account_published_same_as_local_label">Publikovaný rovnaký ako miestny</string>
+  <string name="account_published_port_label">Publikovaný port</string>
+  <string name="account_published_address_label">Publikovaná adresa</string>
+  <string name="account_proxy_label">DHT proxy</string>
+  <string name="account_proxy_enable_label">Použiť DHT proxy</string>
+  <string name="account_proxy_server_label">DHT proxy adresa</string>
   <!--Security Details-->
+  <string name="account_credentials_label">Prihlasovacie údaje</string>
+  <string name="account_credentials_edit">Upraviť prihlasovacie údaje</string>
+  <string name="account_credentials_add">Pridať prihlasovacie údaje</string>
   <!--SRTP Details-->
+  <string name="account_preferences_security_tab">Bezpečnosť</string>
   <!--SIP-->
   <!--TLS Details-->
-  <string name="account_tls_method_label">TLS Metóda</string>
+  <string name="account_tls_transport_switch_label">Používať TLS prenos</string>
+  <string name="account_tls_port_label">TLS počúvací port</string>
+  <string name="account_tls_certificate_list_label">Certifikačné autority</string>
+  <string name="account_tls_certificate_file_label">Súbor s certifikátom</string>
+  <string name="account_tls_private_key_file_label">Súbor s privátnym kľúčom</string>
+  <string name="account_tls_password_label">Heslo privátneho kľúča</string>
+  <string name="account_tls_method_label">TLS metóda</string>
+  <string name="account_tls_ciphers_label">TLS šifry</string>
   <string name="account_tls_server_name_label">Názov servera</string>
+  <string name="account_tls_verify_server_label">Overiť server</string>
+  <string name="account_tls_verify_client_label">Overiť klienta</string>
+  <string name="account_tls_negotiation_timeout_sec">Časový limit vyjednávania (v sekundách)</string>
+  <string name="account_rtp_max_port">Maximum</string>
+  <string name="account_rtp_min_port">Minimum</string>
+  <string name="account_rtp_port_range">Rozsah audio RTP portov</string>
   <!--restore/backup-->
+  <string name="account_new_device_password">Zadajte hlavné heslo na odomknutie účtu</string>
+  <string name="error_password_char_count">Minímálne 6 znakov</string>
+  <string name="error_passwords_not_equals">Heslá sa nezhodujú</string>
+  <string name="export_account_wait_title">Čakajte, prosím...</string>
+  <string name="export_account_wait_message">Exportovanie údajov o účte</string>
+  <string name="account_export_file">Zálohovať účet</string>
+  <string name="account_export_end_decryption_message">Nemohli sme odomknúť váš účet na základe zadaného hesla.</string>
+  <string name="account_export_end_network_title">Chyba siete</string>
+  <string name="account_export_end_network_message">Účet sa nedal exportovať na sieť. Skontrolujte pripojenie vášho zariadenia.</string>
   <string name="account_export_end_error_title">Chyba</string>
-  <string name="account_enter_password">Zadaj heslo</string>
-  <string name="account_link_prompt_pin">Zadaj PIN</string>
+  <string name="account_export_end_error_message">Účet sa nedal exportovať. Vyskytla sa neznáma chyba.</string>
+  <string name="account_enter_password">Zadajte heslo</string>
+  <string name="account_share_body">Kontaktujete ma pomocou \'%1$s\' na distribuovanej komunikačnej platforme Jami: %2$s</string>
+  <string name="account_share_body_with_username">Kontaktujete ma pomocou \'%1$s\' alebo môjho verejného používateľského mena \'%2$s\' na distribuovanej komunikačnej platforme Jami: %3$s</string>
+  <string name="account_contact_me">Kontaktujte ma na Jami!</string>
+  <string name="update_account">Aktualizovať účet</string>
+  <string name="account_migration">Váš Jami účet môže byť aktualizovaný.\nZadajte vaše heslo.</string>
+  <string name="ring_account">Jami účet</string>
+  <string name="ring_account_identity">Identita</string>
+  <string name="account_migration_title_dialog">Migrácia účtu</string>
+  <string name="account_migration_message_dialog">Váš účet musí byť aktualizovaný. Chcete prejsť na obrazovku Nastavenia účtu a vykonať túto akciu?</string>
+  <string name="account_update_needed">Vyžaduje sa aktualizácia</string>
+  <string name="account_cannot_be_found_title">Nemôžeme nájsť účet</string>
+  <string name="account_cannot_be_found_message">Účet nebol v sieti Jami nájdený.\nUistite sa, že bol správne exportovaný z existujúceho zariadenia, a že ste zadali správne údaje.</string>
+  <string name="account_sip_cannot_be_registered_message">Môžete pokračovať vo vytváraní alebo upraviť vaše údaje. Úprava bude tiež možná neskôr v nastaveniach.</string>
+  <string name="account_no_network_title">Nedá sa pripojiť ku sieti</string>
+  <string name="account_no_network_message">Účet sa nedal pridať, pretože Jami sa nedokázal pripojiť k distribuovanej sieti. Skontrolujte pripojenie vášho zariadenia.</string>
+  <string name="account_device_added_title">Zariadenie pridané k účtu</string>
+  <string name="account_device_added_message">Úspešne ste nastavili váš Jami účet na tomto zariadení.</string>
+  <string name="account_device_updated_title">Zariadenie účtu aktualizované</string>
+  <string name="account_device_updated_message">Úspešne ste aktualizovali váš Jami účet.</string>
+  <string name="account_cannot_be_updated_message">Účet sa nedal aktualizovať. Skontrolujte zadané heslo.</string>
+  <string name="account_sip_success_title">SIP účet registrovaný</string>
+  <string name="account_sip_success_message">Úspešne ste zaregistrovali váš SIP účet.</string>
+  <string name="account_sip_register_anyway">Napriek tomu registrovať</string>
+  <string name="account_link_button">Pripojiť zo siete</string>
+  <string name="account_link_archive_button">Pripojiť zo zálohy</string>
+  <string name="account_link_prompt_pin">Zadajte PIN</string>
+  <string name="account_new_button">Vytvoriť Jami účet</string>
+  <string name="account_link_export_button">Prepojiť ďalšie zariadenie s týmto účtom</string>
+  <string name="account_link_export_info">Aby ste mohli tento účet používať na viacerých zariadeniach, musíte ho najprv sprístupniť na Jami. Vygeneruje sa PIN kód, ktorý je potrebný zadať na novom zariadení. Tento kód bude funkčný 10 minút.</string>
+  <string name="account_start_export_button">Vygenerovať PIN</string>
+  <string name="account_end_export_button">Zavrieť</string>
+  <string name="account_end_export_infos">Váš PIN je:\n\n%%\n\nNa dokončenie procesu je potrebné otvoriť aplikáciu Jami na novom zariadení. Vytvorte nový účet pomocou \"Prepojiť toto zariadenie s iným účtom\". Váš PIN bude funkčný 10 minút.</string>
+  <string name="account_link_export_info_light">Aby ste mohli tento účet používať na viacerých zariadeniach, musíte ho najprv sprístupniť na Jami. Vygeneruje sa PIN kód, ktorý je potrebný zadať na novom zariadení. Tento kód bude funkčný 10 minút.</string>
+  <string name="account_export_title">Pridať zariadenia</string>
   <!--Name registration-->
+  <string name="error_username_empty">Zadajte používateľské meno</string>
+  <string name="no_registered_name_for_account">Pre tento účet nebolo nájdené zaregistrované meno</string>
+  <string name="register_name">Registrovať meno</string>
+  <string name="trying_to_register_name">Pokus o registráciu mena</string>
+  <string name="registered_username">Registrované používateľské meno</string>
+  <string name="register_username">Registrovať verejné používateľské meno (odporúčané)</string>
+  <string name="username_already_taken">Používateľské meno už je zabrané</string>
+  <string name="invalid_username">Neplatné používateľské meno</string>
+  <string name="looking_for_username_availability">Kontrolujeme dostupnosť používateľského mena...</string>
+  <string name="account_status_connecting">Pripájanie</string>
+  <string name="account_status_connection_error">Chyba pripojenia</string>
+  <string name="account_status_online">Online</string>
   <string name="account_status_unknown">Neznámy</string>
+  <string name="account_status_offline">Offline</string>
   <!--Create account-->
+  <string name="account_creation_home">Vitajte v Jami</string>
+  <string name="account_creation_profile">Vytvorte si váš profil</string>
+  <string name="account_creation_ring">Vytvorte si svoj Jami účet</string>
+  <string name="account_link_title">Prepojiť toto zariadenie</string>
+  <string name="account_sip_cannot_be_registered">Účet sa nedá zaregistrovať</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">Upraviť váš profil</string>
   <!--Devices-->
+  <string name="account_revoke_device_hint">Zadajte heslo na potvrdenie</string>
   <string name="enter_password">Zadaj heslo</string>
+  <string name="revoke_device_title">Odobrať zariadenie</string>
+  <string name="revoke_device_message">Určite chcete odobrať zariadenie %1$s?</string>
+  <string name="revoke_device_wait_title">Prosíme, čakajte...</string>
+  <string name="revoke_device_wait_message">Odoberanie zariadenia</string>
+  <string name="rename_device_title">Premenovať toto zariadenie</string>
+  <string name="rename_device_message">Zvoľte nové, ktoré bude identifikovať toto zariadenie vo vašom Jami účte</string>
+  <string name="rename_device_button">Premenovať zariadenie</string>
+  <string name="account_rename_device_hint">Zvoľte nový názov zariadenia</string>
+  <string name="account_device_name_empty">Názov zariadenia nesmie byť prázdny </string>
+  <string name="account_device_this_indicator">toto zariadenie</string>
+  <string name="account_disabled_indicator">vypnuté</string>
 </resources>

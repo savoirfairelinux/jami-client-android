@@ -32,6 +32,7 @@
   <string name="wizard_next">下一步</string>
   <!--MenuHeaderView-->
   <!--Share fragment-->
+  <string name="share_label">分享</string>
   <!--Pending contact requests-->
   <string name="refuse">拒絕</string>
   <!--Send contact requests-->
@@ -41,4 +42,6 @@
   <string name="tv_contact_row_header">聯絡人</string>
   <!--File Transfer-->
   <string name="menu_file_share">分享檔案</string>
+  <string name="menu_message_copy">複製</string>
+  <string name="menu_delete">刪除</string>
 </resources>

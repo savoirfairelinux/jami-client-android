@@ -2,7 +2,9 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Tilbakemelding</string>
+  <string name="report"><u>Send oss en epost</u></string>
   <string name="section_license">Lisens</string>
+  <string name="sponsor_section">Jami er fri programvare utviklet og støttet av</string>
   <string name="copyright_section">Opphavsrett</string>
   <string name="contribute_section">Bidra</string>
   <string name="version_section">Versjon</string>
@@ -10,6 +12,8 @@
   <string name="no_browser_app_installed">Ingen nettleser funnet, installer en for å vise denne siden</string>
   <string name="email_chooser_title">Send e-post ved bruk av…</string>
   <string name="website_chooser_title">Vis nettside ved bruk av…</string>
+  <string name="license">Denne programvaren tilbys «som den er», uten garantier av noe slag.  For detaljer, se <u>GNU General Public License versjon 3 eller senere</u></string>
+  <string name="description">Jami er fri programvare for allsidig kommunikasjon som respekterer brukernes frihet og retten til privatliv.</string>
   <string name="credits">Bidragsytere</string>
   <!--About dialog-->
   <string name="developed_by">Utviklet av</string>
@@ -31,6 +35,7 @@
   <string name="menu_item_account">Behandle konto</string>
   <string name="menu_item_settings">Innstillinger</string>
   <string name="menu_item_share">Del min kontakt</string>
+  <string name="menu_item_about">Om Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Slå et nummer</string>
   <!--History Fragment-->
@@ -55,14 +60,21 @@
   <string name="notif_current_call_title">Pågående samtale med %1$s</string>
   <string name="notif_current_call">Pågående samtale</string>
   <string name="notif_channel_calls">Samtaler</string>
+  <string name="notif_channel_missed_calls">Tapte anrop</string>
   <string name="notif_channel_messages">Meldinger</string>
   <string name="notif_channel_requests">Forespørsler</string>
   <string name="notif_channel_file_transfer">Filoverføring</string>
+  <string name="notif_channel_background_service">Bakgrunnstjeneste</string>
+  <string name="notif_channel_background_service_descr">Tillater anropsmottak og meldinger når som helst.</string>
+  <string name="notif_background_service">Jami kjører for tiden i bakgrunnen</string>
   <string name="notif_mark_as_read">Merk som lest</string>
+  <string name="notif_dismiss">Avvis</string>
+  <string name="notif_reply">Svar</string>
   <string name="notif_incoming_file_transfer_title">Innkommende fil fra %1$s</string>
   <string name="notif_incoming_file_transfer">Noen ønsker å sende deg ei fil</string>
   <string name="notif_outgoing_file_transfer_title">Sender fil til %1$s</string>
   <string name="notif_outgoing_file_transfer">Noen ønsker å sende deg ei fil</string>
+  <string name="notif_incoming_picture">Bilde fra %1$s</string>
   <string name="action_open">Åpne</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Deg:</string>
@@ -70,10 +82,14 @@
   <string name="ongoing_call">Pågående samtale</string>
   <string name="hist_in_call">Innkommende samtale med %1$s</string>
   <string name="hist_out_call">Utgående samtale med %1$s</string>
+  <string name="start_error_title">Klarte ikke starte Jami!</string>
+  <string name="start_error_mic_required">Jami krever tilgang til mikrofonen for å virke.</string>
   <string name="action_call_accept">Ta samtale</string>
   <string name="action_call_decline">Avslå</string>
+  <string name="action_call_mic_mute">Koble ut mikrofon</string>
   <string name="ab_action_speakerphone">Aktiver høytaler</string>
   <string name="ab_action_contact_add">Legg til kontakter</string>
+  <string name="ab_action_contact_add_question">Legg til kontakter?</string>
   <string name="hist_contact_added">Kontakt lagt til</string>
   <string name="hist_invitation_received">Invitasjon mottatt</string>
   <string name="ab_action_audio_call">Talesamtale</string>
@@ -89,31 +105,59 @@
   <string name="message_failed">Mislyktes</string>
   <string name="time_just_now">Akkurat nå</string>
   <string name="send_file">Send fil</string>
+  <string name="hist_file_sent">Sent fil</string>
+  <string name="hist_file_received">Mottatt fil</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamerarettigheter</string>
   <string name="permission_dialog_camera_message">Videosamtaler krever tilgang til kameraet for å virke.  Vurder å aktivere det.</string>
   <string name="ringtone_error_title">Feil</string>
   <string name="ringtone_error_format_not_supported">Dette formatet støttes ikke</string>
+  <string name="ringtone_error_size_too_big">Filen er for stor.  Maksimal størrelse er %1$d kB.</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Jami trenger tilgang til å «Lese kontakter» for å aktivere denne egenskapen.  Vær så snill å gi tilgang.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Jami trenger tilgang til «Skriv samtalelogg» for å aktivere denne egenskapen. Vær så snill å gi tilgang.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skann QR-koden tilhørende kontoen du ønsker å legge til.</string>
+  <string name="title_activity_qrcode">Del kontoen min</string>
+  <string name="error_scan_no_camera_permissions">QR-skanneren krever tilgang til kamera for å virke</string>
+  <string name="tab_code">Min kode</string>
+  <string name="tab_scan">Les av kode</string>
   <!--Settings-->
+  <string name="clear_history_dialog_title">Nullstill historikk?</string>
+  <string name="clear_history_dialog_message">Denne handlingen kan ikke tilbakestilles.</string>
   <string name="clear_history_completed">Historikken har blitt tømt.</string>
   <!--Conversation-->
+  <string name="conversation_details">Kontaktdetaljer</string>
   <string name="conversation_action_delete_this">Slett denne samtalen</string>
   <string name="conversation_action_delete_this_title">Slett denne samtalen?</string>
   <string name="conversation_action_delete_this_message">Denne handlingen kan ikke gjøres om.</string>
   <string name="conversation_action_history_clear">Slett historikk</string>
+  <string name="conversation_action_history_clear_title">Nullstill samtalehistorikken?</string>
+  <string name="conversation_action_history_clear_message">Dette vil permanent nullstille samtalehistorikken.</string>
   <string name="conversation_action_remove_this">Slett kontakt</string>
+  <string name="conversation_action_remove_this_title">Slett denne kontakten?</string>
+  <string name="conversation_action_remove_this_message">Dette vil slette denne kontakten og permanent nullstille samtalehistorikken.</string>
   <string name="conversation_action_copy_peer_number">Kopier nummer</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s kopiert til utklippstavle</string>
   <string name="conversation_action_select_peer_number">Velg et nummer</string>
+  <string name="conversation_action_block_this">Blokker kontakt</string>
+  <string name="conversation_action_go_to_call">Gå tilbake til pågående samtale.</string>
+  <string name="conversation_open_file_error">Det er intet installert program som er i stand til å åpne denne filtypen.</string>
+  <string name="clip_contact_uri">Kontaktadresser</string>
+  <string name="block_contact_dialog_title">Blokker %1$s?</string>
+  <string name="block_contact_dialog_message">%1$s vil ikke være i stand til å kontakte deg inntil du fjerner blokkeringen.</string>
+  <string name="block_contact_completed">%1$s ble blokkert.</string>
   <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">Legg til %1$s?</string>
   <string name="prompt_new_password">Nytt passord</string>
   <string name="prompt_new_password_optional">Nytt passord (valgfritt)</string>
   <string name="prompt_new_password_repeat">Gjenta nytt passord</string>
+  <string name="account_create_title">Opprett en Jami-konto</string>
   <string name="prompt_new_username">Skriv inn nytt brukernavn</string>
+  <string name="help_password_choose">Velg et sterkt passord som du husker, for å beskytte Jami-kontoen din.</string>
+  <string name="help_password_enter">Skriv inn hovedpassord for Jami-kontoen din</string>
+  <string name="help_pin_enter">Skriv inn PIN fra en annen ferdig oppsatt Jami-konto.  Bruk «Eksporter Jami-konto»-valget for å få tak i en PIN.</string>
   <string name="wizard_next">Neste</string>
   <string name="wizard_back">Tilbake</string>
   <string name="wizard_skip">Hopp over</string>
@@ -124,6 +168,7 @@
   <string name="take_a_photo">Ta et bilde</string>
   <string name="profile_name_hint">Skriv inn ditt navn (valgfritt)</string>
   <!--Share fragment-->
+  <string name="share_message">Søk etter denne koden med Jami</string>
   <string name="share_message_no_account">Velg en konto å dele.</string>
   <string name="share_your_account_information">Del min kontaktinformasjon</string>
   <string name="share_label">Del</string>
@@ -138,6 +183,7 @@
   <string name="contact_request_account">For %1$s</string>
   <string name="no_requests">0 kontaktforespørsler</string>
   <string name="message_contact_not_trusted_yet">%s er ikke i din kontaktliste enda.\nØnsker du å godta eller avslå denne kontaktforespørselen?</string>
+  <string name="message_contact_not_trusted">%s er ikke blant dine kontakter.\nLegg til ny kontakt?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Send</string>
   <string name="send_request_title">Send en kontaktforespørsel</string>
@@ -168,9 +214,12 @@
   <string name="file_saved_in">Fil lagret i %s</string>
   <string name="no_space_left_on_device">Ingen plass igjen på enheten</string>
   <string name="title_media_viewer">Mediaviser</string>
+  <string name="menu_file_open">Åpne fil</string>
   <string name="menu_file_download">Last ned fil</string>
   <string name="menu_file_delete">Slett fil</string>
   <string name="menu_file_share">Del fil</string>
   <string name="menu_message_copy">Kopier</string>
+  <string name="menu_message_delete">Slett melding</string>
+  <string name="menu_message_cancel">Avbryt melding</string>
   <string name="menu_delete">Slett</string>
 </resources>

@@ -143,6 +143,7 @@
   <string name="conversation_action_select_peer_number">Válasszon egy számot</string>
   <string name="conversation_action_block_this">Kapcsolat letiltása</string>
   <string name="conversation_action_go_to_call">Visszatérés a folyamatban lévő híváshoz</string>
+  <string name="conversation_open_file_error">Nem található alkalmazás ehhez a fájltípushoz.</string>
   <string name="clip_contact_uri">Kapcsolattartási címe</string>
   <string name="block_contact_dialog_title">%1$sletiltása?</string>
   <string name="block_contact_dialog_message">%1$s nem lesz képes felvenni veled a kapcsolatot, amíg nincsen feloldva a tiltásod.</string>
@@ -218,5 +219,7 @@
   <string name="menu_file_delete">Fájl törlése</string>
   <string name="menu_file_share">Fájl megosztása</string>
   <string name="menu_message_copy">Másolás</string>
+  <string name="menu_message_delete">Üzenet törlése</string>
+  <string name="menu_message_cancel">Üzenet érvénytelenítése</string>
   <string name="menu_delete">Törlés</string>
 </resources>

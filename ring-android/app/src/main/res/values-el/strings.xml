@@ -127,4 +127,6 @@
   <string name="tv_contact_row_header">Επαφές</string>
   <!--File Transfer-->
   <string name="menu_file_share">Μοίρασμα αρχείου</string>
+  <string name="menu_message_copy">Αντιγραφή</string>
+  <string name="menu_delete">Διαγραφή</string>
 </resources>
