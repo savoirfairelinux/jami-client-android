@@ -101,27 +101,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:baselineAligned="false"
                     android:orientation="horizontal">
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/export_account_btn"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
-                        android:paddingStart="16dp"
-                        android:paddingEnd="16dp"
+                        android:layout_weight="1"
                         android:text="@string/account_export_file" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/change_password_btn"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:paddingStart="16dp"
-                        android:paddingEnd="16dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
                         android:text="@string/account_password_change" />
                 </LinearLayout>
 
