@@ -22,7 +22,6 @@ package cx.ring.account;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import com.google.android.material.textfield.TextInputLayout;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.view.View;
@@ -31,9 +30,14 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 
 import androidx.annotation.NonNull;
+
+import com.google.android.material.textfield.TextInputLayout;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
@@ -42,11 +46,12 @@ import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 import cx.ring.R;
 import cx.ring.dependencyinjection.RingInjectionComponent;
-import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.mvp.AccountCreationModel;
+import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.utils.RegisteredNameFilter;
 
-public class RingAccountCreationFragment extends BaseSupportFragment<RingAccountCreationPresenter> implements RingAccountCreationView {
+public class RingAccountCreationFragment extends BaseSupportFragment<RingAccountCreationPresenter>
+        implements RingAccountCreationView {
 
     @BindView(R.id.switch_ring_username)
     protected Switch mUsernameSwitch;
@@ -77,6 +82,12 @@ public class RingAccountCreationFragment extends BaseSupportFragment<RingAccount
 
     @BindView(R.id.create_account)
     protected Button mCreateAccountButton;
+
+    @BindView(R.id.ring_username_availability_image_view)
+    protected ImageView mUsernameAvailabilityImageView;
+
+    @BindView(R.id.ring_username_availability_spinner)
+    protected ProgressBar mUsernameAvailabilitySpinner;
 
     private AccountCreationModel model;
 
@@ -111,7 +122,8 @@ public class RingAccountCreationFragment extends BaseSupportFragment<RingAccount
         super.onResume();
         if (mUsernameBox.getVisibility() == View.VISIBLE) {
             mUsernameTxt.requestFocus();
-            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) requireActivity().
+                    getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.showSoftInput(mUsernameTxt, InputMethodManager.SHOW_IMPLICIT);
         }
     }
@@ -134,11 +146,6 @@ public class RingAccountCreationFragment extends BaseSupportFragment<RingAccount
     @OnClick(R.id.create_account)
     public void onCreateAccountButtonClick() {
         presenter.createAccount();
-    }
-
-    @OnTextChanged(value = R.id.ring_username, callback = OnTextChanged.Callback.TEXT_CHANGED)
-    public void onUsernameChanged() {
-        mUsernameTxt.setError(null);
     }
 
     @OnTextChanged(value = R.id.ring_password, callback = OnTextChanged.Callback.TEXT_CHANGED)
@@ -165,27 +172,46 @@ public class RingAccountCreationFragment extends BaseSupportFragment<RingAccount
     }
 
     @Override
-    public void enableTextError() {
-        mUsernameTxtBox.setErrorEnabled(true);
-        mUsernameTxtBox.setError(getString(R.string.looking_for_username_availability));
-    }
-
-    @Override
-    public void disableTextError() {
-        mUsernameTxtBox.setErrorEnabled(false);
-        mUsernameTxtBox.setError(null);
-    }
-
-    @Override
-    public void showExistingNameError() {
-        mUsernameTxtBox.setErrorEnabled(true);
-        mUsernameTxtBox.setError(getString(R.string.username_already_taken));
-    }
-
-    @Override
-    public void showInvalidNameError() {
-        mUsernameTxtBox.setErrorEnabled(true);
-        mUsernameTxtBox.setError(getString(R.string.invalid_username));
+    public void updateUsernameAvailability(UsernameAvailabilityStatus status) {
+        mUsernameAvailabilitySpinner.setVisibility(View.GONE);
+        mUsernameAvailabilityImageView.setVisibility(View.VISIBLE);
+        switch (status){
+            case ERROR:
+                mUsernameTxtBox.setErrorEnabled(true);
+                mUsernameTxtBox.setError(getString(R.string.unknown_error));
+                mUsernameAvailabilityImageView.setImageDrawable(getResources().
+                        getDrawable(R.drawable.ic_error_red));
+                break;
+            case ERROR_USERNAME_INVALID:
+                mUsernameTxtBox.setErrorEnabled(true);
+                mUsernameTxtBox.setError(getString(R.string.invalid_username));
+                mUsernameAvailabilityImageView.setImageDrawable(getResources().
+                        getDrawable(R.drawable.ic_error_red));
+                break;
+            case ERROR_USERNAME_TAKEN:
+                mUsernameTxtBox.setErrorEnabled(true);
+                mUsernameTxtBox.setError(getString(R.string.username_already_taken));
+                mUsernameAvailabilityImageView.setImageDrawable(getResources().
+                        getDrawable(R.drawable.ic_error_red));
+                break;
+            case LOADING:
+                mUsernameTxtBox.setErrorEnabled(false);
+                mUsernameAvailabilityImageView.setVisibility(View.INVISIBLE);
+                mUsernameAvailabilitySpinner.setVisibility(View.VISIBLE);
+                break;
+            case AVAILABLE:
+                mUsernameTxtBox.setErrorEnabled(false);
+                mUsernameAvailabilityImageView.setImageDrawable(getResources().
+                        getDrawable(R.drawable.ic_good_green));
+                break;
+            case RESET:
+                mUsernameTxtBox.setErrorEnabled(false);
+                mUsernameAvailabilityImageView.setVisibility(View.INVISIBLE);
+                enableNextButton(false);
+            default:
+                mUsernameAvailabilityImageView.setVisibility(View.INVISIBLE);
+                break;
+        }
     }
 
     @Override

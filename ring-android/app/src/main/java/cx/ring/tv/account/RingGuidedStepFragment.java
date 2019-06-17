@@ -72,6 +72,18 @@ public abstract class RingGuidedStepFragment<T extends RootPresenter> extends Gu
                 .icon(icon)
                 .build());
     }
+
+    protected static void addDisabledNonFocusableAction(Context context, List<GuidedAction> actions, long id, String title, String desc, Drawable icon) {
+        actions.add(new GuidedAction.Builder(context)
+                .id(id)
+                .title(title)
+                .description(desc)
+                .enabled(false)
+                .focusable(false)
+                .icon(icon)
+                .build());
+    }
+
     protected static void addDisabledAction(Context context, List<GuidedAction> actions, long id, String title, String desc, Drawable icon,boolean next) {
         actions.add(new GuidedAction.Builder(context)
                 .id(id)
