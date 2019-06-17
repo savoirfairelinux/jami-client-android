@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d11f9f81_f00de7ce",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/cards/Card.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 642
+      },
+      "writtenOn": "2019-06-17T17:30:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c55d77be_73a986c2",
+      "range": {
+        "startLine": 28,
+        "startChar": 8,
+        "endLine": 28,
+        "endChar": 27
+      },
+      "revId": "71359d13a8c8c6591fe7b7341b64ea2d2110d947",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c073c5ee_140d7fda",
         "filename": "ring-android/app/src/main/java/cx/ring/tv/cards/iconcards/IconCardPresenter.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "71359d13a8c8c6591fe7b7341b64ea2d2110d947",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f76845b7_4056ebfe",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/cards/iconcards/IconCardPresenter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 642
+      },
+      "writtenOn": "2019-06-17T17:30:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c073c5ee_140d7fda",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 5
+      },
+      "revId": "71359d13a8c8c6591fe7b7341b64ea2d2110d947",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "43ea5243_75c11a66",
+        "filename": "ring-android/app/src/main/res/layout-w720dp-land/tv_activity_share.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 642
+      },
+      "writtenOn": "2019-06-17T17:30:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89772860_85b10af8",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 32
+      },
+      "revId": "71359d13a8c8c6591fe7b7341b64ea2d2110d947",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "712af959_9cb4a41a",
         "filename": "ring-android/app/src/main/res/layout-w720dp-land/tv_frag_share.xml",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "71359d13a8c8c6591fe7b7341b64ea2d2110d947",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "355cfcb0_567de491",
+        "filename": "ring-android/app/src/main/res/layout-w720dp-land/tv_frag_share.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 642
+      },
+      "writtenOn": "2019-06-17T17:30:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "712af959_9cb4a41a",
+      "range": {
+        "startLine": 30,
+        "startChar": 36,
+        "endLine": 31,
+        "endChar": 39
+      },
+      "revId": "71359d13a8c8c6591fe7b7341b64ea2d2110d947",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "06896102_7e215e14",
+        "filename": "ring-android/app/src/main/res/layout-w720dp-land/tv_frag_share.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 642
+      },
+      "writtenOn": "2019-06-17T17:30:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "123be315_ae7b6011",
+      "range": {
+        "startLine": 47,
+        "startChar": 34,
+        "endLine": 47,
+        "endChar": 38
+      },
+      "revId": "71359d13a8c8c6591fe7b7341b64ea2d2110d947",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc89e12d_639fe523",
         "filename": "ring-android/app/src/main/res/layout/tv_activity_share.xml",
         "patchSetId": 5
@@ -131,6 +251,24 @@
       "revId": "71359d13a8c8c6591fe7b7341b64ea2d2110d947",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cbdf52a_6dcd6948",
+        "filename": "ring-android/app/src/main/res/layout/tv_activity_share.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 642
+      },
+      "writtenOn": "2019-06-17T17:30:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc89e12d_639fe523",
+      "revId": "71359d13a8c8c6591fe7b7341b64ea2d2110d947",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     },
     {
       "key": {
@@ -154,6 +292,30 @@
       "revId": "71359d13a8c8c6591fe7b7341b64ea2d2110d947",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeb997dc_3f476773",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/share/ShareViewModel.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 642
+      },
+      "writtenOn": "2019-06-17T17:30:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cdb5727_b490bf74",
+      "range": {
+        "startLine": 32,
+        "startChar": 68,
+        "endLine": 32,
+        "endChar": 91
+      },
+      "revId": "71359d13a8c8c6591fe7b7341b64ea2d2110d947",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     },
     {
       "key": {
@@ -200,6 +362,54 @@
       "revId": "71359d13a8c8c6591fe7b7341b64ea2d2110d947",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8a28c16_95297c5b",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/utils/QRCodeUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 642
+      },
+      "writtenOn": "2019-06-17T17:30:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc258714_684d3a07",
+      "range": {
+        "startLine": 42,
+        "startChar": 78,
+        "endLine": 42,
+        "endChar": 83
+      },
+      "revId": "71359d13a8c8c6591fe7b7341b64ea2d2110d947",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16cb8a90_51e5b77b",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/utils/QRCodeUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 642
+      },
+      "writtenOn": "2019-06-17T17:30:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70939319_2cd3b35c",
+      "range": {
+        "startLine": 42,
+        "startChar": 95,
+        "endLine": 42,
+        "endChar": 100
+      },
+      "revId": "71359d13a8c8c6591fe7b7341b64ea2d2110d947",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
