@@ -21,7 +21,6 @@
 package cx.ring.conversation;
 
 import java.io.File;
-import java.io.IOException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -34,7 +33,6 @@ import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.ConversationElement;
 import cx.ring.model.DataTransfer;
-import cx.ring.model.HistoryCall;
 import cx.ring.model.RingError;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
@@ -46,12 +44,10 @@ import cx.ring.services.ContactService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.VCardService;
-import cx.ring.utils.FileUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
 import cx.ring.utils.VCardUtils;
 import io.reactivex.Scheduler;
-import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.BehaviorSubject;
