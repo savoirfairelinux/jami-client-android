@@ -81,11 +81,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         tools:ignore="UnusedAttribute"
         tools:replace="android:allowBackup">
 
-        <!--
         <meta-data
             android:name="com.google.android.gms.car.application"
             android:resource="@xml/automotive_app_desc"/>
-            -->
 
         <meta-data
             android:name="firebase_analytics_collection_deactivated"
