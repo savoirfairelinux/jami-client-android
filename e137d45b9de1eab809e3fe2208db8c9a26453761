@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dff2395d_d4e234b4",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountCreationFragment.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 642
+      },
+      "writtenOn": "2019-06-20T20:41:04Z",
+      "side": 1,
+      "message": "updateAvailabilityView() or something like that ? The name isn\u0027t clear",
+      "range": {
+        "startLine": 202,
+        "startChar": 16,
+        "endLine": 202,
+        "endChar": 29
+      },
+      "revId": "e137d45b9de1eab809e3fe2208db8c9a26453761",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "180f6771_fd0e1783",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountCreationFragment.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 642
+      },
+      "writtenOn": "2019-06-20T20:41:04Z",
+      "side": 1,
+      "message": "Setting visibility to gone makes the text input layout\u0027s width variable when the user is typing vs not",
+      "revId": "e137d45b9de1eab809e3fe2208db8c9a26453761",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8e5bf2e_43011cf0",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountCreationFragment.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 642
+      },
+      "writtenOn": "2019-06-20T20:41:04Z",
+      "side": 1,
+      "message": "More generic error text? The user probably doesn\u0027t know what the daemon is.",
+      "range": {
+        "startLine": 243,
+        "startChar": 16,
+        "endLine": 243,
+        "endChar": 41
+      },
+      "revId": "e137d45b9de1eab809e3fe2208db8c9a26453761",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6929c61e_793ba66d",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/account/RingAccountCreationPresenter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 642
+      },
+      "writtenOn": "2019-06-20T20:41:04Z",
+      "side": 1,
+      "message": "I think it shouldn\u0027t show an error while the user is searching. Disabling instead also prevents the issue where the error is cutting into the edit text",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 31
+      },
+      "revId": "e137d45b9de1eab809e3fe2208db8c9a26453761",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
