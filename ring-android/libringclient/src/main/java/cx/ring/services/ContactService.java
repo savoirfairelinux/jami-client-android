@@ -63,7 +63,7 @@ public abstract class ContactService {
 
     public abstract Completable loadContactData(CallContact callContact);
 
-    public abstract void saveVCardContactData(CallContact contact, VCard vcard);
+    public abstract void saveVCardContactData(CallContact contact, String accountId, VCard vcard);
 
     public ContactService() {}
 
