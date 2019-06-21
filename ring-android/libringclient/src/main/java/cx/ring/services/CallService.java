@@ -363,7 +363,7 @@ public class CallService {
         }
         VCard vcard = sipCall.appendToVCard(messages);
         if (vcard != null) {
-            mContactService.saveVCardContactData(sipCall.getContact(), vcard);
+            mContactService.saveVCardContactData(sipCall.getContact(), sipCall.getAccount(), vcard);
         }
         if (messages.containsKey(MIME_TEXT_PLAIN)) {
             mAccountService.incomingAccountMessage(sipCall.getAccount(), callId, from, messages);

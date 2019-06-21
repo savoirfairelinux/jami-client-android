@@ -31,7 +31,6 @@ import ezvcard.VCardVersion;
 import ezvcard.io.text.VCardWriter;
 import ezvcard.property.FormattedName;
 import ezvcard.property.Uid;
-import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
@@ -42,6 +41,8 @@ public final class VCardUtils {
     public static final String VCARD_KEY_MIME_TYPE = "mimeType";
     public static final String VCARD_KEY_PART = "part";
     public static final String VCARD_KEY_OF = "of";
+
+    public static final String LOCAL_USER_VCARD_NAME = "profile.vcf";
 
     private VCardUtils() {
         // Hidden default constructor
@@ -90,16 +91,15 @@ public final class VCardUtils {
         return messageKeyValue;
     }
 
-    public static void savePeerProfileToDisk(VCard vcard, String filename, File filesDir) {
-        String path = peerProfilePath(filesDir);
+    public static void savePeerProfileToDisk(VCard vcard, String accountId, String filename, File filesDir) {
+        String path = peerProfilePath(filesDir, accountId).getAbsolutePath();
         saveToDisk(vcard, filename, path);
     }
 
     public static Single<VCard> saveLocalProfileToDisk(VCard vcard, String accountId, File filesDir) {
         return Single.fromCallable(() -> {
-            String path = localProfilePath(filesDir);
-            String filename = accountId + ".vcf";
-            saveToDisk(vcard, filename, path);
+            String path = localProfilePath(filesDir, accountId).getAbsolutePath();
+            saveToDisk(vcard, LOCAL_USER_VCARD_NAME, path);
             return vcard;
         });
     }
@@ -131,17 +131,18 @@ public final class VCardUtils {
         }
     }
 
-    public static VCard loadPeerProfileFromDisk(File filesDir, String filename) {
-        String path = peerProfilePath(filesDir) + File.separator + filename;
-        return loadFromDisk(path);
+    public static VCard loadPeerProfileFromDisk(File filesDir, String filename, String accountId) {
+        File profileFolder = peerProfilePath(filesDir, accountId);
+        File profilePath = new File(profileFolder, filename);
+        return loadFromDisk(profilePath.getAbsolutePath());
     }
 
     public static Single<VCard> loadLocalProfileFromDisk(File filesDir, String accountId) {
         return Single.fromCallable(() -> {
-            String path = localProfilePath(filesDir);
+            String path = localProfilePath(filesDir, accountId).getAbsolutePath();
             try {
                 if (!"".equals(path)) {
-                    File vcardPath = new File(path + File.separator + accountId + ".vcf");
+                    File vcardPath = new File(path, LOCAL_USER_VCARD_NAME);
                     if (vcardPath.exists()) {
                         return loadFromDisk(vcardPath.getAbsolutePath());
                     }
@@ -197,12 +198,17 @@ public final class VCardUtils {
         return stringVCard;
     }
 
-    private static String peerProfilePath(File filesDir) {
-        return filesDir.getAbsolutePath() + File.separator + "peer_profiles";
+    private static File peerProfilePath(File filesDir, String accountId) {
+        File accountDir = new File(filesDir, accountId);
+        File profileDir = new File(accountDir, "profiles");
+        profileDir.mkdirs();
+        return profileDir;
     }
 
-    private static String localProfilePath(File filesDir) {
-        return filesDir.getAbsolutePath() + File.separator + "profiles";
+    private static File localProfilePath(File filesDir, String accountId) {
+        File accountDir = new File(filesDir, accountId);
+        accountDir.mkdir();
+        return accountDir;
     }
 
     private static VCard setupDefaultProfile(File filesDir, String accountId) {
