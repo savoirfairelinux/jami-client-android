@@ -22,10 +22,8 @@ package cx.ring.facades;
 
 import java.io.File;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.NavigableMap;
-import java.util.WeakHashMap;
 
 import javax.inject.Inject;
 
@@ -40,7 +38,6 @@ import cx.ring.model.HistoryCall;
 import cx.ring.model.HistoryText;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
-import cx.ring.model.TrustRequest;
 import cx.ring.model.Uri;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
@@ -51,8 +48,6 @@ import cx.ring.services.NotificationService;
 import cx.ring.services.PreferencesService;
 import cx.ring.utils.FileUtils;
 import cx.ring.utils.Log;
-import cx.ring.utils.VCardUtils;
-import ezvcard.VCard;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
@@ -248,7 +243,7 @@ public class ConversationFacade {
             case TEXT:
                 TextMessage message = (TextMessage) element;
                 mDisposableBag.add(Completable.mergeArrayDelayError(
-                        mHistoryService.deleteMessageHistory(message.getId()).subscribeOn(Schedulers.io()))
+                        mHistoryService.deleteMessageHistory(message.getId(), message.getAccount()).subscribeOn(Schedulers.io()))
                         .andThen(startConversation(message.getAccount(), message.getContactNumber()))
                         .subscribe(c -> c.removeConversationElement(message),
                                 e -> Log.e(TAG, "Can't delete message", e)));
@@ -257,7 +252,7 @@ public class ConversationFacade {
                 DataTransfer transfer = (DataTransfer) element;
                 File file = mDeviceRuntimeService.getConversationPath(transfer.getPeerId(), transfer.getStoragePath());
                 mDisposableBag.add(Completable.mergeArrayDelayError(
-                        mHistoryService.deleteFileHistory(transfer.getId()),
+                        mHistoryService.deleteFileHistory(transfer.getId(), transfer.getAccountId()),
                         Completable.fromAction(file::delete).subscribeOn(Schedulers.io()))
                         .andThen(startConversation(transfer.getAccountId(), transfer.getContactNumber()))
                         .subscribe(c -> c.removeConversationElement(transfer),
@@ -266,7 +261,7 @@ public class ConversationFacade {
             case CALL:
                 HistoryCall callHistory = (HistoryCall) element;
                 mDisposableBag.add(Completable.mergeArrayDelayError(
-                        mHistoryService.deleteCallHistory(callHistory.getCallId()).subscribeOn(Schedulers.io()))
+                        mHistoryService.deleteCallHistory(callHistory.getCallId(), callHistory.getAccountID()).subscribeOn(Schedulers.io()))
                         .andThen(startConversation(callHistory.getAccountID(), callHistory.getContactNumber()))
                         .subscribe(c -> c.removeConversationElement(callHistory),
                                 e -> Log.e(TAG, "Can't delete call history", e)));
@@ -326,6 +321,19 @@ public class ConversationFacade {
                     Account account = mAccountService.getAccount(accountId);
                     if (account != null) {
                         account.clearHistory(contact);
+                    }
+                });
+    }
+
+    public Completable clearAllHistory() {
+        List<Account> accounts = mAccountService.getAccounts();
+        return mHistoryService
+                .clearHistory(accounts)
+                .doOnSubscribe(s -> {
+                    for (Account account : accounts) {
+                        if (account != null) {
+                            account.clearAllHistory();
+                        }
                     }
                 });
     }

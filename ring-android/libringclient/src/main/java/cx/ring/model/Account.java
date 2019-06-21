@@ -85,6 +85,7 @@ public class Account {
         mDetails = new AccountConfig();
         mVolatileDetails = new AccountConfig();
     }
+
     public Account(String bAccountID, final Map<String, String> details,
                    final List<Map<String, String>> credentials,
                    final Map<String, String> volDetails) {
@@ -105,6 +106,7 @@ public class Account {
     public Observable<List<Conversation>> getConversationsSubject() {
         return conversationsSubject;
     }
+
     public Observable<List<SmartListViewModel>> getConversationsViewModels() {
         return conversationsSubject
                 .map(conversations -> {
@@ -118,6 +120,7 @@ public class Account {
     public Observable<Conversation> getConversationSubject() {
         return conversationSubject;
     }
+
     public Observable<SmartListViewModel> getConversationViewModel() {
         return conversationSubject.map(c -> new SmartListViewModel(accountID, c.getContact(), c.getLastEvent()));
     }
@@ -138,10 +141,12 @@ public class Account {
         if (historyLoaded)
             pendingSubject.onNext(getSortedPending());
     }
+
     private void pendingChanged() {
         pendingsChanged = true;
         pendingRefreshed();
     }
+
     public void pendingUpdated(Conversation conversation) {
         if (!historyLoaded)
             return;
@@ -159,11 +164,13 @@ public class Account {
         if (historyLoaded)
             conversationSubject.onNext(conversation);
     }
+
     private void conversationChanged() {
         conversationsChanged = true;
         if (historyLoaded)
             conversationsSubject.onNext(new ArrayList<>(getSortedConversations()));
     }
+
     public void conversationUpdated(Conversation conversation) {
         if (!historyLoaded)
             return;
@@ -183,6 +190,19 @@ public class Account {
         Conversation conversation = getByUri(contact);
         conversation.clearHistory();
         conversationChanged();
+    }
+
+    public void clearAllHistory() {
+        for (Conversation conversation : getConversations()) {
+            conversation.clearHistory();
+            conversation.addContactEvent();
+        }
+        for (Conversation conversation : pending.values()) {
+            conversation.clearHistory();
+            conversation.addRequestEvent(mRequests.get(conversation.getContact().getPrimaryNumber()));
+        }
+        conversationChanged();
+        pendingChanged();
     }
 
     public void updated(Conversation conversation) {
@@ -251,6 +271,7 @@ public class Account {
             return contact;
         }
     }
+
     public CallContact getContactFromCache(Uri uri) {
         return getContactFromCache(uri.getRawUriString());
     }
@@ -331,6 +352,7 @@ public class Account {
     public boolean isDhtProxyEnabled() {
         return mDetails.getBool(ConfigKey.PROXY_ENABLED);
     }
+
     public void setDhtProxyEnabled(boolean active) {
         mDetails.put(ConfigKey.PROXY_ENABLED, active ? "true" : "false");
     }
@@ -806,6 +828,7 @@ public class Account {
     public Tuple<String, Object> getLoadedProfile() {
         return mLoadedProfile;
     }
+
     public void setLoadedProfile(Tuple<String, Object> profile) {
         mLoadedProfile = profile;
     }
