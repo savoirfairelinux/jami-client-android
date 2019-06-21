@@ -21,15 +21,13 @@
 package cx.ring.services;
 
 import android.content.Context;
-
-import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 
+import java.io.File;
 import java.sql.SQLException;
-
+import java.util.concurrent.ConcurrentHashMap;
 import javax.inject.Inject;
-
 import cx.ring.history.DatabaseHelper;
 import cx.ring.model.DataTransfer;
 import cx.ring.model.HistoryCall;
@@ -44,20 +42,21 @@ public class HistoryServiceImpl extends HistoryService {
     @Inject
     protected Context mContext;
 
-    private DatabaseHelper historyDBHelper = null;
+    private ConcurrentHashMap<String, DatabaseHelper> databaseHelpers = new ConcurrentHashMap<>();
+    private final static String DATABASE_NAME = "history.db";
 
     public HistoryServiceImpl() {
     }
 
     @Override
-    protected ConnectionSource getConnectionSource() {
-        return getHelper().getConnectionSource();
+    protected ConnectionSource getConnectionSource(String dbName) {
+        return getHelper(dbName).getConnectionSource();
     }
 
     @Override
-    protected Dao<HistoryCall, Integer> getCallHistoryDao() {
+    protected Dao<HistoryCall, Integer> getCallHistoryDao(String dbName) {
         try {
-            return getHelper().getHistoryDao();
+            return getHelper(dbName).getHistoryDao();
         } catch (SQLException e) {
             cx.ring.utils.Log.e(TAG, "Unable to get a CallHistoryDao");
             return null;
@@ -65,9 +64,9 @@ public class HistoryServiceImpl extends HistoryService {
     }
 
     @Override
-    protected Dao<HistoryText, Long> getTextHistoryDao() {
+    protected Dao<HistoryText, Long> getTextHistoryDao(String dbName) {
         try {
-            return getHelper().getTextHistoryDao();
+            return getHelper(dbName).getTextHistoryDao();
         } catch (SQLException e) {
             cx.ring.utils.Log.e(TAG, "Unable to get a TextHistoryDao");
             return null;
@@ -75,31 +74,61 @@ public class HistoryServiceImpl extends HistoryService {
     }
 
     @Override
-    protected Dao<DataTransfer, Long> getDataHistoryDao() {
+    protected Dao<DataTransfer, Long> getDataHistoryDao(String dbName) {
         try {
-            return getHelper().getDataHistoryDao();
+            return getHelper(dbName).getDataHistoryDao();
         } catch (SQLException e) {
             cx.ring.utils.Log.e(TAG, "Unable to get a DataHistoryDao");
             return null;
         }
     }
 
-    /**
-     * Init Helper for our DB
-     */
-    public void initHelper() {
-        if (historyDBHelper == null) {
-            historyDBHelper = OpenHelperManager.getHelper(mContext, DatabaseHelper.class);
-        }
+
+
+    @Override
+    protected void migrateDatabase() {
+
     }
 
     /**
-     * Retrieve helper for our DB
+     * Checks if the legacy database exists in the file path for migration purposes.
+     * @return true if history.db exists
      */
-    private DatabaseHelper getHelper() {
-        if (historyDBHelper == null) {
-            historyDBHelper = OpenHelperManager.getHelper(mContext, DatabaseHelper.class);
-        }
-        return historyDBHelper;
+    private Boolean checkForLegacyDb() {
+        return mContext.getDatabasePath(DATABASE_NAME).exists();
     }
+
+    /**
+     * Creates an instance of our database's helper.
+     *
+     * @param accountId represents the file where the database is stored
+     * @return the database helper
+     */
+    @Override
+    protected DatabaseHelper initHelper(String accountId) {
+        String dbDirectory = mContext.getFilesDir().getAbsolutePath() + File.separator + accountId + File.separator + DATABASE_NAME;
+        DatabaseHelper helper = new DatabaseHelper(mContext, dbDirectory);
+        databaseHelpers.put(accountId, helper);
+        return helper;
+    }
+
+    /**
+     * Retrieve helper for our DB. Creates a new instance if it does not exist.
+     * Stores the result in a hash map for easy retrieval.
+     *
+     * @param accountId represents the file where the database is stored
+     * @return the database helper
+     */
+    @Override
+    protected DatabaseHelper getHelper(String accountId) {
+        if (checkForLegacyDb())
+            return initHelper(DATABASE_NAME);
+
+        if (!databaseHelpers.isEmpty() && databaseHelpers.containsKey(accountId))
+            return databaseHelpers.get(accountId);
+        else
+            return initHelper(accountId);
+    }
+
+
 }
