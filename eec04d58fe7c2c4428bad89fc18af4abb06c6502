@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11df895d_cda04009",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-21T19:25:00Z",
+      "side": 1,
+      "message": "message too long.\n\nSuggestion:\n\"account creation: clarify availability state\"",
+      "revId": "eec04d58fe7c2c4428bad89fc18af4abb06c6502",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
