@@ -1146,7 +1146,7 @@ public class AccountService {
             if (vcard != null) {
                 CallContact contact = account.getContactFromCache(request.getContactId());
                 if (!contact.detailsLoaded) {
-                    VCardUtils.savePeerProfileToDisk(vcard, from + ".vcf", mDeviceRuntimeService.provideFilesDir());
+                    VCardUtils.savePeerProfileToDisk(vcard, account.getAccountID(), from + ".vcf", mDeviceRuntimeService.provideFilesDir());
                     mVCardService.loadVCardProfile(vcard)
                             .subscribeOn(Schedulers.computation())
                             .subscribe(profile -> contact.setProfile(profile.first, profile.second));
