@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbe05e50_36b2157c",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountCreationFragment.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 642
+      },
+      "writtenOn": "2019-06-21T20:57:19Z",
+      "side": 1,
+      "message": "Can be simplified to one method with the error string as an argument",
+      "range": {
+        "startLine": 179,
+        "startChar": 0,
+        "endLine": 196,
+        "endChar": 22
+      },
+      "revId": "d852ebc53fb8c89a4326558e9ce8f53174d1a249",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
