@@ -219,6 +219,7 @@ public class AccountService {
                 acc.cleanup();
 
         mAccountList = newAccounts;
+        mVCardService.migrateProfiles(accountIds);
         for (String accountId : accountIds) {
             Account account = getAccount(accountId);
             Map<String, String> details = Ringservice.getAccountDetails(accountId).toNative();
@@ -233,6 +234,7 @@ public class AccountService {
                 account.setVolatileDetails(volatileAccountDetails);
             }
 
+
             if (account.isSip()) {
                 hasSip = true;
             } else if (account.isRing()) {
@@ -240,6 +242,8 @@ public class AccountService {
                 boolean enabled = account.isEnabled();
 
                 account.setDevices(Ringservice.getKnownRingDevices(accountId).toNative());
+
+
                 account.setContacts(Ringservice.getContacts(accountId).toNative());
                 List<Map<String, String>> requests = Ringservice.getTrustRequests(accountId).toNative();
                 for (Map<String, String> requestInfo : requests) {
@@ -264,7 +268,11 @@ public class AccountService {
                     }
                 }
             }
+
+            Map<String, CallContact>  contacts = account.getContacts();
+            mVCardService.migrateContact(contacts, account.getAccountID());
         }
+        mVCardService.deleteLegacyProfiles();
         mHasSipAccount = hasSip;
         mHasRingAccount = hasJami;
         if (!newAccounts.isEmpty()) {
@@ -1146,7 +1154,7 @@ public class AccountService {
             if (vcard != null) {
                 CallContact contact = account.getContactFromCache(request.getContactId());
                 if (!contact.detailsLoaded) {
-                    VCardUtils.savePeerProfileToDisk(vcard, from + ".vcf", mDeviceRuntimeService.provideFilesDir());
+                    VCardUtils.savePeerProfileToDisk(vcard, account.getAccountID(), from + ".vcf", mDeviceRuntimeService.provideFilesDir());
                     mVCardService.loadVCardProfile(vcard)
                             .subscribeOn(Schedulers.computation())
                             .subscribe(profile -> contact.setProfile(profile.first, profile.second));
