@@ -327,6 +327,9 @@ public class AccountService {
                 mAccountList.add(account);
                 accountsSubject.onNext(mAccountList);
             }
+
+         //   mHistoryService.insertAccount(accountId).subscribe();
+
             return account;
         })
                 .flatMap(account -> accountSubject
@@ -610,6 +613,7 @@ public class AccountService {
      */
     public void removeAccount(final String accountId) {
         Log.i(TAG, "removeAccount() " + accountId);
+        mHistoryService.deleteAccount(accountId).subscribe();
         mExecutor.execute(() -> Ringservice.removeAccount(accountId));
     }
 

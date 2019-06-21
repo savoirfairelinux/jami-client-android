@@ -247,7 +247,7 @@ public class ConversationFacade {
             case TEXT:
                 TextMessage message = (TextMessage) element;
                 mDisposableBag.add(Completable.mergeArrayDelayError(
-                        mHistoryService.deleteMessageHistory(message.getId()).subscribeOn(Schedulers.io()))
+                        mHistoryService.deleteMessageHistory(message.getId(), message.getAccount()).subscribeOn(Schedulers.io()))
                         .andThen(startConversation(message.getAccount(), message.getContactNumber()))
                         .subscribe(c -> c.removeConversationElement(message),
                                 e -> Log.e(TAG, "Can't delete message", e)));
@@ -256,7 +256,7 @@ public class ConversationFacade {
                 DataTransfer transfer = (DataTransfer) element;
                 File file = mDeviceRuntimeService.getConversationPath(transfer.getPeerId(), transfer.getStoragePath());
                 mDisposableBag.add(Completable.mergeArrayDelayError(
-                        mHistoryService.deleteFileHistory(transfer.getId()),
+                        mHistoryService.deleteFileHistory(transfer.getId(), transfer.getAccountId()),
                         Completable.fromAction(file::delete).subscribeOn(Schedulers.io()))
                         .andThen(startConversation(transfer.getAccountId(), transfer.getContactNumber()))
                         .subscribe(c -> c.removeConversationElement(transfer),
@@ -265,7 +265,7 @@ public class ConversationFacade {
             case CALL:
                 HistoryCall callHistory = (HistoryCall) element;
                 mDisposableBag.add(Completable.mergeArrayDelayError(
-                        mHistoryService.deleteCallHistory(callHistory.getCallId()).subscribeOn(Schedulers.io()))
+                        mHistoryService.deleteCallHistory(callHistory.getCallId(), callHistory.getAccountID()).subscribeOn(Schedulers.io()))
                         .andThen(startConversation(callHistory.getAccountID(), callHistory.getContactNumber()))
                         .subscribe(c -> c.removeConversationElement(callHistory),
                                 e -> Log.e(TAG, "Can't delete call history", e)));

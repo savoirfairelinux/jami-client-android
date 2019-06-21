@@ -21,12 +21,15 @@
 package cx.ring.services;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.inject.Inject;
 
@@ -44,20 +47,20 @@ public class HistoryServiceImpl extends HistoryService {
     @Inject
     protected Context mContext;
 
-    private DatabaseHelper historyDBHelper = null;
+    private ConcurrentHashMap<String, DatabaseHelper> databaseHelpers = new ConcurrentHashMap<>();
 
     public HistoryServiceImpl() {
     }
 
     @Override
-    protected ConnectionSource getConnectionSource() {
-        return getHelper().getConnectionSource();
+    protected ConnectionSource getConnectionSource(String dbName) {
+        return getHelper(dbName).getConnectionSource();
     }
 
     @Override
-    protected Dao<HistoryCall, Integer> getCallHistoryDao() {
+    protected Dao<HistoryCall, Integer> getCallHistoryDao(String dbName) {
         try {
-            return getHelper().getHistoryDao();
+            return getHelper(dbName).getHistoryDao();
         } catch (SQLException e) {
             cx.ring.utils.Log.e(TAG, "Unable to get a CallHistoryDao");
             return null;
@@ -65,9 +68,9 @@ public class HistoryServiceImpl extends HistoryService {
     }
 
     @Override
-    protected Dao<HistoryText, Long> getTextHistoryDao() {
+    protected Dao<HistoryText, Long> getTextHistoryDao(String dbName) {
         try {
-            return getHelper().getTextHistoryDao();
+            return getHelper(dbName).getTextHistoryDao();
         } catch (SQLException e) {
             cx.ring.utils.Log.e(TAG, "Unable to get a TextHistoryDao");
             return null;
@@ -75,9 +78,9 @@ public class HistoryServiceImpl extends HistoryService {
     }
 
     @Override
-    protected Dao<DataTransfer, Long> getDataHistoryDao() {
+    protected Dao<DataTransfer, Long> getDataHistoryDao(String dbName) {
         try {
-            return getHelper().getDataHistoryDao();
+            return getHelper(dbName).getDataHistoryDao();
         } catch (SQLException e) {
             cx.ring.utils.Log.e(TAG, "Unable to get a DataHistoryDao");
             return null;
@@ -85,21 +88,45 @@ public class HistoryServiceImpl extends HistoryService {
     }
 
     /**
-     * Init Helper for our DB
+     * Deletes a specified database.
+     *
+     * @param dbName the database name which is the user's account ID
      */
-    public void initHelper() {
-        if (historyDBHelper == null) {
-            historyDBHelper = OpenHelperManager.getHelper(mContext, DatabaseHelper.class);
+    protected void deleteDatabase(String dbName) {
+        try {
+            getConnectionSource(dbName).close();
+            databaseHelpers.remove(dbName);
+            mContext.deleteDatabase(dbName + ".db");
+        } catch (IOException | NullPointerException e) {
+            Log.e(TAG, "Error deleting database", e);
         }
     }
 
     /**
-     * Retrieve helper for our DB
+     * Creates an instance of our database's helper.
+     * @param dbName the database name which is the user's account ID
+     * @return the database helper
      */
-    private DatabaseHelper getHelper() {
-        if (historyDBHelper == null) {
-            historyDBHelper = OpenHelperManager.getHelper(mContext, DatabaseHelper.class);
-        }
-        return historyDBHelper;
+    protected DatabaseHelper initHelper(String dbName) {
+        DatabaseHelper helper = new DatabaseHelper(mContext, dbName + ".db");
+        databaseHelpers.put(dbName, helper);
+        return helper;
     }
+
+    /**
+     * Retrieve helper for our DB. Creates a new instance if it does not exist.
+     * Stores the result in a hash map for easy retrieval.
+     *
+     * @param dbName the database name which is the user's account ID
+     * @return the database helper
+     */
+    protected DatabaseHelper getHelper(String dbName) {
+        if (!databaseHelpers.isEmpty() && databaseHelpers.containsKey(dbName)) {
+            return databaseHelpers.get(dbName);
+        } else {
+            return initHelper(dbName);
+        }
+    }
+
+
 }

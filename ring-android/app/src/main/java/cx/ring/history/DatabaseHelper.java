@@ -48,16 +48,15 @@ import cx.ring.model.HistoryText;
  */
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String TAG = DatabaseHelper.class.getSimpleName();
-    private static final String DATABASE_NAME = "history.db";
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION = 9;
+    private static final int DATABASE_VERSION = 10;
 
     private Dao<HistoryCall, Integer> historyDao = null;
     private Dao<HistoryText, Long> historyTextDao = null;
     private Dao<DataTransfer, Long> historyDataDao = null;
 
-    public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    public DatabaseHelper(Context context, String dbName) {
+        super(context, dbName, null, DATABASE_VERSION);
     }
 
     /**
@@ -131,6 +130,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         super.close();
         historyDao = null;
         historyTextDao = null;
+        historyDataDao = null;
     }
 
     /**
@@ -152,6 +152,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
                         break;
                     case 8:
                         updateDatabaseFrom8(connectionSource);
+                        break;
+                    case 9:
+                        updateDatabaseFrom9(connectionSource);
                         break;
                 }
                 fromDatabaseVersion++;
@@ -249,6 +252,19 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             Log.e(TAG, "Migration from database version 8 to next, failed.", e);
             throw e;
         }
+    }
+
+
+    // TODO
+    private void updateDatabaseFrom9(ConnectionSource connectionSource) throws SQLException {
+       /* try {
+
+            Log.d(TAG, "Migration from database version 9 to next, done.");
+        } catch (SQLException e) {
+            Log.e(TAG, "Migration from database version 9 to next, failed.", e);
+            throw e;
+        }
+        */
     }
 
     /**
