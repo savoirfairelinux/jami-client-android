@@ -48,10 +48,13 @@ public abstract class HistoryService {
 
     private final Scheduler scheduler = Schedulers.single();
 
-    protected abstract ConnectionSource getConnectionSource();
-    protected abstract Dao<HistoryCall, Integer> getCallHistoryDao();
-    protected abstract Dao<HistoryText, Long> getTextHistoryDao();
-    protected abstract Dao<DataTransfer, Long> getDataHistoryDao();
+    protected abstract ConnectionSource getConnectionSource(String dbName);
+    protected abstract Dao<HistoryCall, Integer> getCallHistoryDao(String dbName);
+    protected abstract Dao<HistoryText, Long> getTextHistoryDao(String dbName);
+    protected abstract Dao<DataTransfer, Long> getDataHistoryDao(String dbName);
+    protected abstract Object getHelper(String dbName);
+    protected abstract void migrateDatabase(List<String> accounts);
+    protected abstract void deleteAccountHistory(String accountId);
 
     public Scheduler getScheduler() {
         return scheduler;
@@ -59,14 +62,14 @@ public abstract class HistoryService {
 
     public Completable insertNewEntry(final HistoryCall call) {
         return Completable
-                .fromAction(() -> getCallHistoryDao().create(call))
+                .fromAction(() -> getCallHistoryDao(call.getAccountID()).create(call))
                 .subscribeOn(scheduler);
     }
 
     public Completable insertNewTextMessage(TextMessage txt) {
         return Completable.fromAction(() -> {
             HistoryText historyTxt = new HistoryText(txt);
-            getTextHistoryDao().create(historyTxt);
+            getTextHistoryDao(txt.getAccount()).create(historyTxt);
             txt.setID(historyTxt.id);
         }).subscribeOn(scheduler);
     }
@@ -75,36 +78,36 @@ public abstract class HistoryService {
         return Completable.fromAction(() -> {
             Log.d(TAG, "HistoryDao().update() id:" + txt.id + " acc:" + txt.getAccountID() + " num:"
                     + txt.getNumber() + " date:" + txt.getDate() + " msg:" + txt.getMessage() + " status:" + txt.getStatus());
-            getTextHistoryDao().update(txt);
+            getTextHistoryDao(txt.getAccountID()).update(txt);
         }).subscribeOn(scheduler);
     }
 
     public Completable insertDataTransfer(DataTransfer dataTransfer) {
-        return Completable.fromAction(() -> getDataHistoryDao().create(dataTransfer))
+        return Completable.fromAction(() -> getDataHistoryDao(dataTransfer.getAccountId()).create(dataTransfer))
                 .subscribeOn(scheduler);
     }
 
     public Completable updateDataTransfer(DataTransfer dataTransfer) {
-        return Completable.fromAction(() -> getDataHistoryDao().update(dataTransfer))
+        return Completable.fromAction(() -> getDataHistoryDao(dataTransfer.getAccountId()).update(dataTransfer))
                 .subscribeOn(scheduler);
     }
 
     public Single<List<ConversationElement>> getCallsSingle(final String accountId) {
         return Single.fromCallable(() -> {
-            QueryBuilder<HistoryCall, Integer> queryBuilder = getCallHistoryDao().queryBuilder();
+            QueryBuilder<HistoryCall, Integer> queryBuilder = getCallHistoryDao(accountId).queryBuilder();
             queryBuilder.where().eq(HistoryCall.COLUMN_ACCOUNT_ID_NAME, accountId);
             queryBuilder.orderBy(HistoryCall.COLUMN_TIMESTAMP_START_NAME, false);
-            return (List<ConversationElement>)(List<?>)getCallHistoryDao().query(queryBuilder.prepare());
+            return (List<ConversationElement>)(List<?>)getCallHistoryDao(accountId).query(queryBuilder.prepare());
         }).doOnError(e -> Log.e(TAG, "Can't load calls", e))
           .onErrorReturn(e -> new ArrayList<>());
     }
 
     public Single<List<ConversationElement>> getMessagesSingle(final String accountId) {
         return Single.fromCallable(() -> {
-            QueryBuilder<HistoryText, Long> queryBuilder = getTextHistoryDao().queryBuilder();
+            QueryBuilder<HistoryText, Long> queryBuilder = getTextHistoryDao(accountId).queryBuilder();
             queryBuilder.where().eq(HistoryText.COLUMN_ACCOUNT_ID_NAME, accountId);
             queryBuilder.orderBy(HistoryText.COLUMN_TIMESTAMP_NAME, false);
-            return getTextHistoryDao().query(queryBuilder.prepare());
+            return getTextHistoryDao(accountId).query(queryBuilder.prepare());
         }).map(l -> {
             List<ConversationElement> ret = new ArrayList<>(l.size());
             for (HistoryText t : l)
@@ -116,10 +119,10 @@ public abstract class HistoryService {
 
     public Single<List<ConversationElement>> getTransfersSingle(final String accountId) {
         return Single.fromCallable(() -> {
-            QueryBuilder<DataTransfer, Long> queryBuilder = getDataHistoryDao().queryBuilder();
+            QueryBuilder<DataTransfer, Long> queryBuilder = getDataHistoryDao(accountId).queryBuilder();
             queryBuilder.where().eq(DataTransfer.COLUMN_ACCOUNT_ID_NAME, accountId);
             queryBuilder.orderBy(DataTransfer.COLUMN_TIMESTAMP_NAME, false);
-            return (List<ConversationElement>)(List<?>)getDataHistoryDao().query(queryBuilder.prepare());
+            return (List<ConversationElement>)(List<?>)getDataHistoryDao(accountId).query(queryBuilder.prepare());
         }).doOnError(e -> Log.e(TAG, "Can't load data transfers", e))
           .onErrorReturn(e -> new ArrayList<>());
     }
@@ -129,17 +132,17 @@ public abstract class HistoryService {
             return Completable.complete();
         return Completable.fromAction(() -> {
             int deleted = 0;
-            DeleteBuilder<HistoryText, Long> deleteTextHistoryBuilder = getTextHistoryDao()
+            DeleteBuilder<HistoryText, Long> deleteTextHistoryBuilder = getTextHistoryDao(accountId)
                     .deleteBuilder();
             deleteTextHistoryBuilder.where().eq(HistoryText.COLUMN_ACCOUNT_ID_NAME, accountId).and().eq(HistoryText.COLUMN_NUMBER_NAME, contactId);
             deleted += deleteTextHistoryBuilder.delete();
 
-            DeleteBuilder<HistoryCall, Integer> deleteCallsHistoryBuilder = getCallHistoryDao()
+            DeleteBuilder<HistoryCall, Integer> deleteCallsHistoryBuilder = getCallHistoryDao(accountId)
                     .deleteBuilder();
             deleteCallsHistoryBuilder.where().eq(HistoryCall.COLUMN_ACCOUNT_ID_NAME, accountId).and().eq(HistoryCall.COLUMN_NUMBER_NAME, contactId);
             deleted += deleteCallsHistoryBuilder.delete();
 
-            DeleteBuilder<DataTransfer, Long> deleteDataTransferHistoryBuilder = getDataHistoryDao()
+            DeleteBuilder<DataTransfer, Long> deleteDataTransferHistoryBuilder = getDataHistoryDao(accountId)
                     .deleteBuilder();
             deleteDataTransferHistoryBuilder.where().eq(DataTransfer.COLUMN_ACCOUNT_ID_NAME, accountId).and().eq(DataTransfer.COLUMN_PEER_ID_NAME, contactId);
             deleted += deleteDataTransferHistoryBuilder.delete();
@@ -147,11 +150,11 @@ public abstract class HistoryService {
         }).subscribeOn(scheduler);
     }
 
-    public Completable clearHistory() {
+    public Completable clearHistory(String accountId) {
         return Completable.fromAction(() -> {
-            TableUtils.clearTable(getConnectionSource(), HistoryCall.class);
-            TableUtils.clearTable(getConnectionSource(), HistoryText.class);
-            TableUtils.clearTable(getConnectionSource(), DataTransfer.class);
+            TableUtils.clearTable(getConnectionSource(accountId), HistoryCall.class);
+            TableUtils.clearTable(getConnectionSource(accountId), HistoryText.class);
+            TableUtils.clearTable(getConnectionSource(accountId), DataTransfer.class);
         }).subscribeOn(scheduler);
     }
 
@@ -166,7 +169,7 @@ public abstract class HistoryService {
             Log.w(TAG, "New text messsage " + txt.getAccount() + " " + txt.getCallId() + " " + txt.getMessage());
 
             HistoryText t = new HistoryText(txt);
-            getTextHistoryDao().create(t);
+            getTextHistoryDao(accountId).create(t);
             txt.setID(t.id);
             return txt;
         }).subscribeOn(scheduler);
@@ -174,7 +177,7 @@ public abstract class HistoryService {
 
     public Single<TextMessage> accountMessageStatusChanged(String accountId, long messageId, String to, int status) {
         return Single.fromCallable(() -> {
-            HistoryText historyText = getTextHistoryDao().queryForId(messageId);
+            HistoryText historyText = getTextHistoryDao(accountId).queryForId(messageId);
             if (historyText == null) {
                 throw new RuntimeException("accountMessageStatusChanged: not able to find message with id " + messageId + " in database");
             }
@@ -183,27 +186,27 @@ public abstract class HistoryService {
                 throw new RuntimeException("accountMessageStatusChanged: received an invalid text message");
             }
             textMessage.setStatus(status);
-            getTextHistoryDao().update(new HistoryText(textMessage));
+            getTextHistoryDao(accountId).update(new HistoryText(textMessage));
             return textMessage;
         }).subscribeOn(scheduler);
     }
 
-    public Completable deleteFileHistory(long id) {
+    public Completable deleteFileHistory(long id, String accountId) {
         return Completable
-                .fromAction(() -> getDataHistoryDao().deleteById(id))
+                .fromAction(() -> getDataHistoryDao(accountId).deleteById(id))
                 .subscribeOn(scheduler);
     }
 
-    public Completable deleteMessageHistory(long id) {
+    public Completable deleteMessageHistory(long id, String accountId) {
         return Completable
-                .fromAction(() -> getTextHistoryDao().deleteById(id))
+                .fromAction(() -> getTextHistoryDao(accountId).deleteById(id))
                 .subscribeOn(scheduler);
     }
 
-    public Completable deleteCallHistory(CharSequence id) {
+    public Completable deleteCallHistory(CharSequence id, String accountId) {
         return Completable
                 .fromAction(() -> {
-                    DeleteBuilder<HistoryCall, Integer> deleteBuilder = getCallHistoryDao().deleteBuilder();
+                    DeleteBuilder<HistoryCall, Integer> deleteBuilder = getCallHistoryDao(accountId).deleteBuilder();
                     deleteBuilder.where().eq("callID", id);
                     deleteBuilder.delete();
                 })

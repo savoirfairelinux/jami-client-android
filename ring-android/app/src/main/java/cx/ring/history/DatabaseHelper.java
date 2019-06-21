@@ -40,6 +40,7 @@ import cx.ring.model.HistoryText;
 /*
  * Database History Version
  * 7 : changing columns names. See https://gerrit-ring.savoirfairelinux.com/#/c/4297
+ * 10: Switches to per account database. Migration handled outside helper for this iteration exclusively.
  */
 
 /**
@@ -48,16 +49,15 @@ import cx.ring.model.HistoryText;
  */
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String TAG = DatabaseHelper.class.getSimpleName();
-    private static final String DATABASE_NAME = "history.db";
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION = 9;
+    private static final int DATABASE_VERSION = 10;
 
     private Dao<HistoryCall, Integer> historyDao = null;
     private Dao<HistoryText, Long> historyTextDao = null;
     private Dao<DataTransfer, Long> historyDataDao = null;
 
-    public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    public DatabaseHelper(Context context, String dbDirectory) {
+        super(context, dbDirectory, null, DATABASE_VERSION);
     }
 
     /**
@@ -131,6 +131,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         super.close();
         historyDao = null;
         historyTextDao = null;
+        historyDataDao = null;
     }
 
     /**
@@ -152,6 +153,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
                         break;
                     case 8:
                         updateDatabaseFrom8(connectionSource);
+                        break;
+                    case 9:
                         break;
                 }
                 fromDatabaseVersion++;
