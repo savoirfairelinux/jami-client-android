@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05b11c90_76b32bc2",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountCreationFragment.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-21T14:10:59Z",
+      "side": 1,
+      "message": "Duplicate code paths to set the mUsernameTxtBox error and the image error. Merge with enableTextError, disableTextError, showExistingNameError, showInvalidNameError.",
+      "range": {
+        "startLine": 199,
+        "startChar": 0,
+        "endLine": 239,
+        "endChar": 5
+      },
+      "revId": "12241517f49f73bdbdfcd3f4c6d14c2ec4691f0d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f18cbdf_73deb29b",
+        "filename": "ring-android/app/src/main/res/drawable/ic_sync_green_24dp.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-21T14:10:59Z",
+      "side": 1,
+      "message": "not used",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 9
+      },
+      "revId": "12241517f49f73bdbdfcd3f4c6d14c2ec4691f0d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
