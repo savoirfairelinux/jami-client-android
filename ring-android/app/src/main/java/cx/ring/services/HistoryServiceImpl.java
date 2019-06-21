@@ -3,6 +3,7 @@
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+ *  Author: Rayan Osseiran <rayan.osseiran@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,12 +22,18 @@
 package cx.ring.services;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
+import android.util.Log;
 
-import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.inject.Inject;
 
@@ -44,20 +51,23 @@ public class HistoryServiceImpl extends HistoryService {
     @Inject
     protected Context mContext;
 
-    private DatabaseHelper historyDBHelper = null;
+    private ConcurrentHashMap<String, DatabaseHelper> databaseHelpers = new ConcurrentHashMap<>();
+    private final static String DATABASE_NAME = "history.db";
+    private final static String LEGACY_DATABASE_KEY = "legacy";
+    private static boolean migrationInitialized = false;
 
     public HistoryServiceImpl() {
     }
 
     @Override
-    protected ConnectionSource getConnectionSource() {
-        return getHelper().getConnectionSource();
+    protected ConnectionSource getConnectionSource(String dbName) {
+        return getHelper(dbName).getConnectionSource();
     }
 
     @Override
-    protected Dao<HistoryCall, Integer> getCallHistoryDao() {
+    protected Dao<HistoryCall, Integer> getCallHistoryDao(String dbName) {
         try {
-            return getHelper().getHistoryDao();
+            return getHelper(dbName).getHistoryDao();
         } catch (SQLException e) {
             cx.ring.utils.Log.e(TAG, "Unable to get a CallHistoryDao");
             return null;
@@ -65,9 +75,9 @@ public class HistoryServiceImpl extends HistoryService {
     }
 
     @Override
-    protected Dao<HistoryText, Long> getTextHistoryDao() {
+    protected Dao<HistoryText, Long> getTextHistoryDao(String dbName) {
         try {
-            return getHelper().getTextHistoryDao();
+            return getHelper(dbName).getTextHistoryDao();
         } catch (SQLException e) {
             cx.ring.utils.Log.e(TAG, "Unable to get a TextHistoryDao");
             return null;
@@ -75,9 +85,9 @@ public class HistoryServiceImpl extends HistoryService {
     }
 
     @Override
-    protected Dao<DataTransfer, Long> getDataHistoryDao() {
+    protected Dao<DataTransfer, Long> getDataHistoryDao(String dbName) {
         try {
-            return getHelper().getDataHistoryDao();
+            return getHelper(dbName).getDataHistoryDao();
         } catch (SQLException e) {
             cx.ring.utils.Log.e(TAG, "Unable to get a DataHistoryDao");
             return null;
@@ -85,21 +95,171 @@ public class HistoryServiceImpl extends HistoryService {
     }
 
     /**
-     * Init Helper for our DB
+     * Creates an instance of our database's helper.
+     * Stores it in a hash map for easy retrieval in the future.
+     *
+     * @param accountId represents the file where the database is stored
+     * @return the database helper
      */
-    public void initHelper() {
-        if (historyDBHelper == null) {
-            historyDBHelper = OpenHelperManager.getHelper(mContext, DatabaseHelper.class);
+    private DatabaseHelper initHelper(String accountId) {
+        File dbPath = new File(mContext.getFilesDir(), accountId);
+        File db = new File(dbPath, DATABASE_NAME);
+        DatabaseHelper helper = new DatabaseHelper(mContext, db.getAbsolutePath());
+        databaseHelpers.put(accountId, helper);
+        return helper;
+    }
+
+    /**
+     * Retrieve helper for our DB. Creates a new instance if it does not exist through the initHelper method.
+     *
+     * @param accountId represents the file where the database is stored
+     * @return the database helper
+     * @see #initHelper(String) initHelper
+     */
+    @SuppressWarnings("JavadocReference")
+    @Override
+    protected DatabaseHelper getHelper(String accountId) {
+        if (checkForLegacyDb()) {
+            return initLegacyDb();
+        }
+
+
+        if (!databaseHelpers.isEmpty() && databaseHelpers.containsKey(accountId))
+            return databaseHelpers.get(accountId);
+        else
+            return initHelper(accountId);
+    }
+
+    // DATABASE MIGRATION
+
+    /**
+     * Checks if the legacy database exists in the file path for migration purposes.
+     *
+     * @return true if history.db exists in the database folder
+     */
+    private Boolean checkForLegacyDb() {
+        return mContext.getDatabasePath(DATABASE_NAME).exists();
+    }
+
+    /**
+     * Initializes the database prior to version 10
+     *
+     * @return the database helper
+     */
+    private DatabaseHelper initLegacyDb() {
+        if (databaseHelpers.containsKey(LEGACY_DATABASE_KEY)) {
+            return databaseHelpers.get(LEGACY_DATABASE_KEY);
+        }
+
+        DatabaseHelper helper = new DatabaseHelper(mContext, DATABASE_NAME);
+        databaseHelpers.put(LEGACY_DATABASE_KEY, helper);
+        return helper;
+    }
+
+    /**
+     * Deletes a database and removes its helper from the hashmap
+     *
+     * @param dbName the name of the database you want to delete
+     */
+    private void deleteLegacyDatabase(String dbName) {
+        try {
+            getConnectionSource(dbName).close();
+            mContext.deleteDatabase(dbName);
+            databaseHelpers.remove(LEGACY_DATABASE_KEY);
+        } catch (IOException e) {
+            Log.e(TAG, "Error deleting database", e);
         }
     }
 
     /**
-     * Retrieve helper for our DB
+     * Deletes the user's account file and all its children
+     *
+     * @param accountId the file name
+     * @see #deleteFolder(File) deleteFolder
      */
-    private DatabaseHelper getHelper() {
-        if (historyDBHelper == null) {
-            historyDBHelper = OpenHelperManager.getHelper(mContext, DatabaseHelper.class);
-        }
-        return historyDBHelper;
+    @Override
+    protected void deleteAccountHistory(String accountId) {
+        File accountDir = new File(mContext.getFilesDir(), accountId);
+        if (accountDir.exists())
+            deleteFolder(accountDir);
     }
+
+    /**
+     * Deletes a file and all its children recursively
+     *
+     * @param file the file to delete
+     */
+    private void deleteFolder(File file) {
+        if (file.isDirectory()) {
+            File[] children = file.listFiles();
+            if (children != null) {
+                for (File child : children)
+                    deleteFolder(child);
+            }
+        }
+        file.delete();
+    }
+
+    /**
+     * Migrates to the new per account database system. Should only be used once.
+     *
+     * @param accounts The list of accounts to migrate
+     */
+    @Override
+    protected void migrateDatabase(List<String> accounts) {
+
+        if (!checkForLegacyDb())
+            return;
+
+        if (migrationInitialized)
+            return;
+
+        migrationInitialized = true;
+
+        Log.i(TAG, "Initializing database migration...");
+
+        try {
+            SQLiteDatabase db = initLegacyDb().getReadableDatabase();
+
+            if (accounts == null) {
+                Log.i(TAG, "No existing accounts found in directory, aborting migration...");
+                return;
+            }
+
+            // create new database for each account
+            for (String newDb : accounts) {
+
+                DatabaseHelper helper = initHelper(newDb);
+
+                SQLiteDatabase newDatabase = helper.getWritableDatabase();
+
+                String legacyDbPath = mContext.getDatabasePath(DATABASE_NAME).getAbsolutePath();
+
+                String[] dbName = {newDb};
+
+                // attach new database to begin migration
+                newDatabase.execSQL("ATTACH DATABASE '" + legacyDbPath + "' AS tempDb");
+
+                // migrate any data where account id matches
+                newDatabase.execSQL("INSERT INTO historydata SELECT * FROM tempDb.historydata WHERE accountId=?", dbName);
+                newDatabase.execSQL("INSERT INTO historycall SELECT * FROM tempDb.historycall WHERE accountID=?", dbName);
+                newDatabase.execSQL("INSERT INTO historytext SELECT * FROM tempDb.historytext WHERE accountID=?", dbName);
+
+                newDatabase.execSQL("DETACH tempDb");
+            }
+
+            db.close();
+            deleteLegacyDatabase(DATABASE_NAME);
+
+            Log.i(TAG, "Migration complete. Each account now has its own database");
+
+        } catch (SQLiteException e) {
+            migrationInitialized = false;
+            Log.e(TAG, "Error migrating database.", e);
+        } catch (NullPointerException e) {
+            migrationInitialized = false;
+            Log.e(TAG, "An unexpected error occurred. The migration will run again when the helper is called again", e);
+        }
+    }
+
 }
