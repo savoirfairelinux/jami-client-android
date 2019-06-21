@@ -22,12 +22,17 @@ package cx.ring.services;
 import android.content.Context;
 import android.graphics.Bitmap;
 
-import java.io.ByteArrayOutputStream;
-
 import androidx.annotation.NonNull;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.util.List;
+import java.util.Map;
+
 import cx.ring.model.Account;
-import cx.ring.utils.AndroidFileUtils;
+import cx.ring.model.CallContact;
 import cx.ring.utils.BitmapUtils;
+import cx.ring.utils.FileUtils;
 import cx.ring.utils.Tuple;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
@@ -83,8 +88,97 @@ public class VCardServiceImpl extends VCardService {
     public static Tuple<String, Object> readData(VCard vcard) {
         return readData(VCardUtils.readData(vcard));
     }
+
     public static Tuple<String, Object> readData(Tuple<String, byte[]> profile) {
         return new Tuple<>(profile.first, BitmapUtils.bytesToBitmap(profile.second));
     }
 
+    /**
+     * Migrates the user's contcts to their individual account folders under the subfolder profiles
+     * @param contacts a hash map of the user's contacts
+     * @param accountId the directory where the profile is stored
+     */
+    @Override
+    public void migrateContact(Map<String, CallContact> contacts, String accountId) {
+        File fileDir = mContext.getFilesDir();
+        File legacyProfileFolder = new File(fileDir, "peer_profiles");
+        if (!legacyProfileFolder.exists())
+            return;
+
+        File[] profiles = legacyProfileFolder.listFiles();
+
+        if (profiles == null)
+            return;
+
+        File accountDir = new File(fileDir, accountId);
+        File profilesDir = new File(accountDir, "profiles");
+        profilesDir.mkdirs();
+
+
+        for (File profile : profiles) {
+            String filename = profile.getName();
+            String contactUri = filename.lastIndexOf(".") > 0 ? filename.substring(0, filename.lastIndexOf(".")) : filename;
+            if (contacts.containsKey(contactUri)) {
+                File destination = new File(profilesDir, filename);
+                FileUtils.copyFile(profile, destination);
+            }
+        }
+    }
+
+    /**
+     * Migrates the user's vcards and renames them to profile.vcf
+     *
+     * @param accountIds the list of accounts to migrate
+     */
+    @Override
+    public void migrateProfiles(List<String> accountIds) {
+        File fileDir = mContext.getFilesDir();
+        File profileDir = new File(fileDir, "profiles");
+
+        if (!profileDir.exists())
+            return;
+
+        File[] profiles = profileDir.listFiles();
+
+        if (profiles == null)
+            return;
+
+        profileLoop:
+        for (File profile : profiles) {
+            for (String account : accountIds) {
+                if (profile.getName().equals(account + ".vcf")) {
+                    File accountDir = new File(fileDir, account);
+                    File newProfile = new File(accountDir, VCardUtils.LOCAL_USER_VCARD_NAME);
+                    FileUtils.moveFile(profile, newProfile);
+                    break profileLoop;
+                }
+            }
+        }
+
+        // necessary to delete profiles leftover by deleted accounts
+        for (File profile : profiles) {
+            profile.delete();
+        }
+
+
+        profileDir.delete();
+    }
+
+    /**
+     * Deletes the legacy peer_profiles folder
+     */
+    @Override
+    public void deleteLegacyProfiles() {
+        File fileDir = mContext.getFilesDir();
+        File legacyProfileFolder = new File(fileDir, "peer_profiles");
+        File[] profiles = legacyProfileFolder.listFiles();
+        if (profiles == null)
+            return;
+
+        for (File file : profiles) {
+            file.delete();
+        }
+
+        legacyProfileFolder.delete();
+    }
 }
