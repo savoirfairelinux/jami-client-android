@@ -327,6 +327,9 @@ public class AccountService {
                 mAccountList.add(account);
                 accountsSubject.onNext(mAccountList);
             }
+
+         //   mHistoryService.insertAccount(accountId).subscribe();
+
             return account;
         })
                 .flatMap(account -> accountSubject
@@ -1146,7 +1149,7 @@ public class AccountService {
             if (vcard != null) {
                 CallContact contact = account.getContactFromCache(request.getContactId());
                 if (!contact.detailsLoaded) {
-                    VCardUtils.savePeerProfileToDisk(vcard, from + ".vcf", mDeviceRuntimeService.provideFilesDir());
+                    VCardUtils.savePeerProfileToDisk(vcard, account.getAccountID(), from + ".vcf", mDeviceRuntimeService.provideFilesDir());
                     mVCardService.loadVCardProfile(vcard)
                             .subscribeOn(Schedulers.computation())
                             .subscribe(profile -> contact.setProfile(profile.first, profile.second));

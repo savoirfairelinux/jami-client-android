@@ -23,11 +23,11 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.provider.ContactsContract;
-import androidx.annotation.NonNull;
 import android.util.Log;
 import android.util.LongSparseArray;
+
+import androidx.annotation.NonNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -409,7 +409,8 @@ public class ContactServiceImpl extends ContactService {
             contact.setVCard(vcard);
             contact.setProfile(profileData.first, profileData.second);
             String filename = contact.getPrimaryNumber() + ".vcf";
-            VCardUtils.savePeerProfileToDisk(vcard, filename, mContext.getFilesDir());
+            VCardUtils.savePeerProfileToDisk(vcard, mAccountService.getCurrentAccount().getAccountID()
+                    , filename, mContext.getFilesDir());
             AvatarFactory.clearCache();
         }
     }
@@ -417,7 +418,7 @@ public class ContactServiceImpl extends ContactService {
     private Single<Tuple<String, Object>> loadVCardContactData(CallContact callContact) {
         String id = callContact.getPrimaryNumber();
         if (id != null) {
-            return Single.fromCallable(() -> VCardUtils.loadPeerProfileFromDisk(mContext.getFilesDir(), id + ".vcf"))
+            return Single.fromCallable(() -> VCardUtils.loadPeerProfileFromDisk(mContext.getFilesDir(), id + ".vcf", mAccountService.getCurrentAccount().getAccountID()))
                     .map(vcard -> {
                         callContact.setVCard(vcard);
                         return VCardServiceImpl.readData(vcard);
