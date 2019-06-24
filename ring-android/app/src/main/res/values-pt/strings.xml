@@ -212,10 +212,12 @@
   <string name="file_transfer_status_invalid_pathname">diretório inválido</string>
   <string name="file_transfer_status_unjoinable_peer">contacto indisponível</string>
   <string name="file_saved_in">Ficheiro gravado em %s</string>
+  <string name="file_saved_successfully">Ficheiro gravado com sucesso</string>
   <string name="no_space_left_on_device">Sem espaço disponível no dispositivo</string>
   <string name="title_media_viewer">Visualizador de média</string>
   <string name="menu_file_open">Abrir ficheiro</string>
   <string name="menu_file_download">Descarregar ficheiro</string>
+  <string name="menu_file_save">Gravar ficheiro</string>
   <string name="menu_file_delete">Eliminar ficheiro</string>
   <string name="menu_file_share">Partilhar ficheiro</string>
   <string name="menu_message_copy">Copiar</string>

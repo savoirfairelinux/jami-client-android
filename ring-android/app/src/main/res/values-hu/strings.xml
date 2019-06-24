@@ -212,10 +212,12 @@
   <string name="file_transfer_status_invalid_pathname">érvénytelen elérési útvonala</string>
   <string name="file_transfer_status_unjoinable_peer">páratlan</string>
   <string name="file_saved_in">A fájl mentve%s</string>
+  <string name="file_saved_successfully">Fájl sikeresen mentve</string>
   <string name="no_space_left_on_device">Nincs hely az eszközön</string>
   <string name="title_media_viewer">Média lejátszó</string>
   <string name="menu_file_open">Fájl megnyitása</string>
   <string name="menu_file_download">Fájl letöltése</string>
+  <string name="menu_file_save">Fájl mentése</string>
   <string name="menu_file_delete">Fájl törlése</string>
   <string name="menu_file_share">Fájl megosztása</string>
   <string name="menu_message_copy">Másolás</string>

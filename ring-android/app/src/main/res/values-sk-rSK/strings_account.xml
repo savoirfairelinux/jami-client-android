@@ -16,7 +16,7 @@
   <string name="action_create_short">Vytvoriť</string>
   <string name="action_register">Registrovať</string>
   <string name="action_settings">Nastavenia</string>
-  <string name="error_field_required">Toto je povinné pole</string>
+  <string name="error_field_required">Toto pole je povinné</string>
   <string name="dialog_wait_create">Pridávanie účtu</string>
   <string name="dialog_wait_create_details">Čakajte, prosím, kým sa váš účet pridá...</string>
   <string name="dialog_wait_update">Aktualizácia účtu</string>
@@ -52,12 +52,12 @@
   <string name="account_basic_category">Základné nastavenia</string>
   <string name="account_alias_label">Názov účtu</string>
   <string name="account_hostname_label">Názov hostiteľa</string>
-  <string name="account_bootstrap_label">Zavádzač</string>
+  <string name="account_bootstrap_label">Zavádzací uzol</string>
   <string name="account_username_label">Používateľské meno</string>
   <string name="account_password_label">Heslo</string>
   <string name="account_optionnal_category">Voliteľné nastavenia</string>
   <string name="account_useragent_label">Používateľský agent</string>
-  <string name="account_autoanswer_label">Automatická odpoveď</string>
+  <string name="account_autoanswer_label">Automaticky zdvihnúť</string>
   <string name="account_upnp_label">Zapnúť UPnP</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Audio Details-->
@@ -183,13 +183,13 @@
   <string name="account_edit_profile">Upraviť váš profil</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Zadajte heslo na potvrdenie</string>
-  <string name="enter_password">Zadaj heslo</string>
+  <string name="enter_password">Zadajte heslo</string>
   <string name="revoke_device_title">Odobrať zariadenie</string>
   <string name="revoke_device_message">Určite chcete odobrať zariadenie %1$s?</string>
-  <string name="revoke_device_wait_title">Prosíme, čakajte...</string>
+  <string name="revoke_device_wait_title">Čakajte, prosím...</string>
   <string name="revoke_device_wait_message">Odoberanie zariadenia</string>
   <string name="rename_device_title">Premenovať toto zariadenie</string>
-  <string name="rename_device_message">Zvoľte nové, ktoré bude identifikovať toto zariadenie vo vašom Jami účte</string>
+  <string name="rename_device_message">Zvoľte nový názov, ktorý bude identifikovať toto zariadenie vo vašom Jami účte</string>
   <string name="rename_device_button">Premenovať zariadenie</string>
   <string name="account_rename_device_hint">Zvoľte nový názov zariadenia</string>
   <string name="account_device_name_empty">Názov zariadenia nesmie byť prázdny </string>

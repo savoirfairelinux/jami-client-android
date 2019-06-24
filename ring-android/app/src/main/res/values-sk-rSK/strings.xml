@@ -53,8 +53,8 @@
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">Zmeškané hovory</string>
-  <string name="notif_missed_outgoing_call">Zmeškané hovory</string>
+  <string name="notif_missed_incoming_call">Zmeškaný príchodzí hovor</string>
+  <string name="notif_missed_outgoing_call">Zmeškaný odchádzajúci hovory</string>
   <string name="notif_incoming_call_title">Prichádzajúci hovor od %1$s</string>
   <string name="notif_incoming_call">Prichádzajúci hovor</string>
   <string name="notif_outgoing_call_title">Odchádzajúci hovor %1$s</string>

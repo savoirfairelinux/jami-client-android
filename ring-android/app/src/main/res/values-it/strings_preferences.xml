@@ -6,10 +6,19 @@
   <string name="pref_category_system">Sistema</string>
   <string name="pref_category_privacy">Privacy</string>
   <string name="pref_mobileData_title">Traffico dati mobile</string>
+  <string name="pref_mobileData_summary">Attiva Jami sulle reti 3G/LTE in aggiunta al Wi-Fi</string>
   <string name="pref_pushNotifications_title">Push notifiche</string>
   <string name="pref_pushNotifications_summary">Usa i server Google per ricevere chiamate/messaggi in background</string>
+  <string name="pref_hd_summary">Attiva invio video HD</string>
+  <string name="pref_hwEncode_summary">Funzione sperimentale</string>
   <string name="pref_systemContacts_title">Usare i contatti del dispositivo</string>
   <string name="pref_systemContacts_summary">Usare i contatti del dispositivo per mostrare i dettagli di chi chiama. </string>
-  <string name="pref_clearHistory_title">Svuotare lo storico</string>
-  <string name="pref_clearHistory_summary">Rimuovere lo storico delle conversazione</string>
+  <string name="pref_systemDialer_title">Effettua le chiamate di sistema usando Jami</string>
+  <string name="pref_systemDialer_summary">Usa Jami per effettuare le chiamate di sistema quando possibile.</string>
+  <string name="pref_startOnBoot_title">Avvia Jami all\'avvio del sistema</string>
+  <string name="pref_startOnBoot_summary">Esegui Jami in background quando il sistema si avvia.</string>
+  <string name="pref_clearHistory_title">Cancella cronologia</string>
+  <string name="pref_clearHistory_summary">Cancella la cronologia di tutte le conversazioni. Questa azione non può essere annullata.</string>
+  <string name="pref_persistNotification_title">Esegui in background</string>
+  <string name="pref_persistNotification_summary">Consenti l\'esecuzione in background per ricevere chiamate e messaggi.</string>
 </resources>

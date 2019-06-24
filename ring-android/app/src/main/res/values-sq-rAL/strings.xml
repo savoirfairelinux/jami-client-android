@@ -212,10 +212,12 @@
   <string name="file_transfer_status_invalid_pathname">emër i pavlefshëm shtegu</string>
   <string name="file_transfer_status_unjoinable_peer">ortak që s\’futet dot</string>
   <string name="file_saved_in">Kartela u ruajt te %s</string>
+  <string name="file_saved_successfully">Kartela u ruajt me sukses</string>
   <string name="no_space_left_on_device">S\’ka më hapësirë në pajisje</string>
   <string name="title_media_viewer">Parës mediash</string>
   <string name="menu_file_open">Hap kartelë</string>
   <string name="menu_file_download">Shkarkoje kartelën</string>
+  <string name="menu_file_save">Ruaje kartelën</string>
   <string name="menu_file_delete">Fshije kartelën</string>
   <string name="menu_file_share">Ndani kartelë me të tjerë</string>
   <string name="menu_message_copy">Kopjoje</string>
