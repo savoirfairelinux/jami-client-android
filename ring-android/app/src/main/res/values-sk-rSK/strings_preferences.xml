@@ -15,7 +15,7 @@
   <string name="pref_systemContacts_title">Použiť systémové kontakty</string>
   <string name="pref_systemContacts_summary">Použiť systémové kontakty na zobrazenie detailov o volajúcom.</string>
   <string name="pref_systemDialer_title">Uskutočňovať systémové hovory pomocou Jami</string>
-  <string name="pref_systemDialer_summary">Používať Jami na uskutočnenie systémových hovorov vždy, keď to je možné.</string>
+  <string name="pref_systemDialer_summary">Používať Jami na uskutočnenie systémových hovorov vždy, keď to bude možné.</string>
   <string name="pref_startOnBoot_title">Spustiť Jami pri zapnutí zariadenia</string>
   <string name="pref_startOnBoot_summary">Spustiť Jami na pozadí pri štarte systému.</string>
   <string name="pref_clearHistory_title">Vymazať históriu</string>

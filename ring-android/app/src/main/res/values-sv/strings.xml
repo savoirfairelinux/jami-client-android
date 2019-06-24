@@ -212,10 +212,12 @@
   <string name="file_transfer_status_invalid_pathname">ogiltigt sökvägsnamn</string>
   <string name="file_transfer_status_unjoinable_peer">oanslutbar motpart</string>
   <string name="file_saved_in">Fil sparad i %s</string>
+  <string name="file_saved_successfully">Filen sparade korrekt</string>
   <string name="no_space_left_on_device">Det finns inget utrymme kvar på enheten</string>
   <string name="title_media_viewer">Mediaspelare</string>
   <string name="menu_file_open">Öppna fil</string>
   <string name="menu_file_download">Ladda ner fil</string>
+  <string name="menu_file_save">Spara fil</string>
   <string name="menu_file_delete">Ta bort fil</string>
   <string name="menu_file_share">Dela fil</string>
   <string name="menu_message_copy">Kopiera</string>

@@ -8,7 +8,7 @@
   <string name="pref_mobileData_title">ਮੋਬਾਈਲ ਡਾਟਾ</string>
   <string name="pref_mobileData_summary">Jami ਨੂੰ ਵਾਈ-ਫਾਈ ਦੀ ਥਾਂ 3G/LTE ਨੈੱਟਵਰਕ ਵਰਤਣ ਦਿਓ</string>
   <string name="pref_pushNotifications_title">ਪੁਸ਼ ਸੂਚਨਾਵਾਂ</string>
-  <string name="pref_pushNotifications_summary">ਬੈਕਗ੍ਰਾਊਂਡ ਵਿੱਚ ਕਾਲਾਂ/ਸੁਨੇਹੇ ਮਿਲਣ ਦੇਣ ਲਈ Google ਸਰਵਰ ਵਰਤੋ</string>
+  <string name="pref_pushNotifications_summary">ਬੈਕਗ੍ਰਾਊਂਡ ਵਿੱਚ ਕਾਲਾਂ/ਸੁਨੇਹੇ ਲੈਂਦੇ ਰਹਿਣ ਲਈ Google ਸਰਵਰ ਵਰਤੋ</string>
   <string name="pref_hd_summary">HD ਵੀਡੀਓ ਭੇਜਣਾ ਚਾਲੂ ਕਰੋ</string>
   <string name="pref_hwEncode_title">ਐਕਸਲਰੇਟਿਡ ਇਨਕੋਡਿੰਗ ਚਾਲੂ ਕਰੋ</string>
   <string name="pref_hwEncode_summary">ਪ੍ਰਯੋਗਮਈ ਵਿਸ਼ੇਸ਼ਤਾ</string>

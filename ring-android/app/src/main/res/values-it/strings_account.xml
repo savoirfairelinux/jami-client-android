@@ -1,18 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings related to account edition screen-->
-  <string name="ic_delete_menu">Cancella</string>
+  <string name="ic_delete_menu">Elimina</string>
   <string name="ic_advanced_menu">Impostazioni avanzate</string>
   <string name="ic_blacklist_menu">Contatti bloccati</string>
   <!--Strings related to account creation-->
+  <string name="add_ring_account_title">Aggiungi account Jami</string>
   <string name="add_sip_account_title">Aggiungi account SIP</string>
+  <string name="ring_account_default_name">Account Jami %1$s</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Nome Host</string>
   <string name="prompt_username">Nome utente</string>
   <string name="prompt_password">Password</string>
   <string name="action_create">Crea account</string>
   <string name="action_create_short">Crea</string>
-  <string name="action_register">Register</string>
+  <string name="action_register">Registra</string>
   <string name="action_settings">Impostazioni</string>
   <string name="error_field_required">Questo campo è richiesto</string>
   <string name="dialog_wait_create">Aggiunta account </string>
@@ -36,7 +38,11 @@ Si potra modificare questo account più tardi.</string>
   <string name="normal_devices_titles">Dispositivi noti collegati a questo account Jami</string>
   <string name="account_device_revoke">Revoca dispositivo</string>
   <string name="account_device_revocation_success_title">Successo</string>
+  <string name="account_device_revocation_wrong_password">Password errata.</string>
+  <string name="account_device_revocation_unknown_device">Dispositivo sconosciuto.</string>
+  <string name="account_device_revocation_error_unknown">Errore sconosciuto.</string>
   <string name="account_password_change">Cambia password</string>
+  <string name="account_password_set">Imposta password</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Generale</string>
   <string name="account_basic_category">Impostazioni base</string>
@@ -56,6 +62,7 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_ringtone_label">Suonerie</string>
   <string name="account_ringtone_enabled_label">Attivare le suonerie</string>
   <string name="account_ringtone_path_label">Percorso suonerie</string>
+  <string name="account_ringtone_custom_label">Usa suoneria personalizzata</string>
   <!--Video Details-->
   <string name="account_video_label">Video</string>
   <string name="account_video_enable">Attivare Video</string>
@@ -66,17 +73,20 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_local_port_label">Porto locale</string>
   <string name="account_stun_enable_label">Usare STUN</string>
   <string name="account_stun_server_label">Server STUN</string>
-  <string name="account_turn_enable_label">Usare TURN</string>
+  <string name="account_turn_enable_label">Usa TURN</string>
   <string name="account_turn_server_label">Server TURN</string>
   <string name="account_turn_username_label">Nome utente TURN</string>
   <string name="account_turn_password_label">Password TURN</string>
   <string name="account_published_same_as_local_label">Identico alle impostazione locali</string>
   <string name="account_published_port_label">Porto di publicazione</string>
   <string name="account_published_address_label">Indirizzo di publicazione</string>
+  <string name="account_proxy_label">Proxy DHT</string>
+  <string name="account_proxy_enable_label">Usa proxy DHT</string>
+  <string name="account_proxy_server_label">Indirizzo proxy DHT</string>
   <!--Security Details-->
-  <string name="account_credentials_label">Identificazione</string>
-  <string name="account_credentials_edit">Modificare i dati d\'identificazione</string>
-  <string name="account_credentials_add">Aggiungere dati d\'identificazione</string>
+  <string name="account_credentials_label">Credenziali</string>
+  <string name="account_credentials_edit">Modifica credenziali</string>
+  <string name="account_credentials_add">Aggiungi credenziali</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Sicurezza</string>
   <!--SIP-->
@@ -97,22 +107,48 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_rtp_min_port">Minimo</string>
   <string name="account_rtp_port_range">Intervallo porti audio RTP</string>
   <!--restore/backup-->
+  <string name="account_new_device_password">Inserisci la password principale per sbloccare l\'account</string>
   <string name="error_password_char_count">6 caratteri minimo</string>
   <string name="error_passwords_not_equals">Le password no corrispondono</string>
   <string name="export_account_wait_title">Aspettare</string>
   <string name="account_export_end_network_title">Errore di rete</string>
   <string name="account_export_end_error_title">Errore</string>
+  <string name="account_enter_password">Inserisci la password</string>
+  <string name="account_contact_me">Contattami su Jami !</string>
+  <string name="update_account">Aggiorna account</string>
+  <string name="ring_account">Account Jami</string>
+  <string name="ring_account_identity">Identità</string>
+  <string name="account_update_needed">Aggiornamento necessario</string>
+  <string name="account_sip_success_title">Account SIP registrato</string>
+  <string name="account_link_prompt_pin">Inserisci PIN</string>
   <string name="account_new_button">Crea un account Jami</string>
+  <string name="account_start_export_button">Genera PIN</string>
+  <string name="account_end_export_button">chiudi</string>
+  <string name="account_export_title">Aggiungi dispositivi</string>
   <!--Name registration-->
+  <string name="error_username_empty">Inserisci un nome utente</string>
   <string name="username_already_taken">Nome utente già utilizzato</string>
   <string name="invalid_username">Nome utente non valido</string>
   <string name="account_status_connecting">Connessione in corso </string>
+  <string name="account_status_connection_error">Errore di connessione</string>
   <string name="account_status_online">Online</string>
   <string name="account_status_unknown">Sconosciuto</string>
   <string name="account_status_offline">Offline</string>
   <!--Create account-->
+  <string name="account_creation_home">Benvenuto in Jami</string>
+  <string name="account_creation_profile">Crea il tuo profilo</string>
+  <string name="account_creation_ring">Crea il tuo account Jami</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">Modifica il tuo profilo</string>
   <!--Devices-->
+  <string name="account_revoke_device_hint">Inserisci la password per confermare</string>
+  <string name="enter_password">Inserisci la password</string>
   <string name="revoke_device_title">Revoca dispositivo</string>
   <string name="revoke_device_wait_title">Aspettare</string>
+  <string name="rename_device_title">Rinomina questo dispositivo</string>
+  <string name="rename_device_button">Rinomina dispositivo</string>
+  <string name="account_rename_device_hint">Scegli il nuovo nome del dispositivo</string>
+  <string name="account_device_name_empty">Il nome del dispositivo non può essere vuoto</string>
+  <string name="account_device_this_indicator">questo dispositivo</string>
+  <string name="account_disabled_indicator">disattivato</string>
 </resources>

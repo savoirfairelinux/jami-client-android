@@ -211,10 +211,12 @@
   <string name="file_transfer_status_invalid_pathname">無效的路徑名稱</string>
   <string name="file_transfer_status_unjoinable_peer">對方無法加入</string>
   <string name="file_saved_in">檔案儲存在 %s</string>
+  <string name="file_saved_successfully">檔案儲存成功</string>
   <string name="no_space_left_on_device">裝置上沒有剩餘空間</string>
   <string name="title_media_viewer">媒體檢視器</string>
   <string name="menu_file_open">開啟檔案</string>
   <string name="menu_file_download">下載檔案</string>
+  <string name="menu_file_save">儲存檔案</string>
   <string name="menu_file_delete">刪除檔案</string>
   <string name="menu_file_share">分享檔案</string>
   <string name="menu_message_copy">複製</string>
