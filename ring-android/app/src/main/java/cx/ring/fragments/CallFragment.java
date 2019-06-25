@@ -307,7 +307,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         super.onViewCreated(view, savedInstanceState);
         mCurrentOrientation = getResources().getConfiguration().orientation;
         PowerManager powerManager = (PowerManager) requireContext().getSystemService(Context.POWER_SERVICE);
-        mScreenWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "ring:callLock");
+        mScreenWakeLock = powerManager.newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "ring:callLock");
         mScreenWakeLock.setReferenceCounted(false);
 
         if (mScreenWakeLock != null && !mScreenWakeLock.isHeld()) {
