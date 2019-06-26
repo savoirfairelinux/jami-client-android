@@ -209,18 +209,39 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
     }
 
     public long onGuidedActionEditedAndProceed(GuidedAction action) {
-        if (action.getId() == USER_NAME) {
+        onGuidedActionChange(action);
+        return super.onGuidedActionEditedAndProceed(action);
+    }
+
+    @Override
+    public void onGuidedActionEditCanceled(GuidedAction action) {
+        if ((int) action.getId() == USER_NAME) {
             String username = action.getEditTitle().toString();
             presenter.fullNameUpdated(username);
             if (TextUtils.isEmpty(username))
                 action.setTitle(getString(R.string.profile_name_hint));
             else
                 action.setTitle(username);
-        } else if (action.getId() == CAMERA) {
-            presenter.cameraClick();
-        } else if (action.getId() == GALLERY) {
-            presenter.galleryClick();
         }
-        return super.onGuidedActionEditedAndProceed(action);
+        super.onGuidedActionEditCanceled(action);
+    }
+
+    private void onGuidedActionChange(GuidedAction action) {
+        switch ((int) action.getId()){
+            case USER_NAME:
+                String username = action.getEditTitle().toString();
+                presenter.fullNameUpdated(username);
+                if (username.isEmpty())
+                    action.setTitle(getString(R.string.profile_name_hint));
+                else
+                    action.setTitle(username);
+                break;
+            case CAMERA:
+                presenter.cameraClick();
+                break;
+            case GALLERY:
+                presenter.galleryClick();
+                break;
+        }
     }
 }
