@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61f0df0f_363b5ac4",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/account/TVProfileCreationFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-27T19:07:55Z",
+      "side": 1,
+      "message": "separate function not needed, merge with onGuidedActionEditedAndProceed",
+      "revId": "3b29b1b2c46cffb1655ca2a5ffb5a0d34466192c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
