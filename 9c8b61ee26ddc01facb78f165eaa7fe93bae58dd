@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49a7f179_27988e40",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/CallActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-28T21:01:05Z",
+      "side": 1,
+      "message": "ACTION_CALL_ACCEPT",
+      "range": {
+        "startLine": 49,
+        "startChar": 31,
+        "endLine": 49,
+        "endChar": 50
+      },
+      "revId": "9c8b61ee26ddc01facb78f165eaa7fe93bae58dd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8136ae70_54dd5141",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/CallActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-28T21:01:05Z",
+      "side": 1,
+      "message": "factor ?",
+      "range": {
+        "startLine": 104,
+        "startChar": 8,
+        "endLine": 118,
+        "endChar": 9
+      },
+      "revId": "9c8b61ee26ddc01facb78f165eaa7fe93bae58dd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "422b5be9_2f0ef8cb",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-28T21:01:05Z",
+      "side": 1,
+      "message": "cleanup",
+      "range": {
+        "startLine": 593,
+        "startChar": 0,
+        "endLine": 594,
+        "endChar": 54
+      },
+      "revId": "9c8b61ee26ddc01facb78f165eaa7fe93bae58dd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee911194_d76fa110",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-28T21:01:05Z",
+      "side": 1,
+      "message": "ACTION_CALL_ACCEPT ?",
+      "range": {
+        "startLine": 773,
+        "startChar": 40,
+        "endLine": 773,
+        "endChar": 59
+      },
+      "revId": "9c8b61ee26ddc01facb78f165eaa7fe93bae58dd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14c06172_318b5190",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-28T21:01:05Z",
+      "side": 1,
+      "message": "Could always use ACTION_CALL_ACCEPT and check permissions and do mCallService.accept in the fragment",
+      "range": {
+        "startLine": 771,
+        "startChar": 16,
+        "endLine": 777,
+        "endChar": 17
+      },
+      "revId": "9c8b61ee26ddc01facb78f165eaa7fe93bae58dd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bb775fd_9866f4ef",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/call/CallPresenter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-06-28T21:01:05Z",
+      "side": 1,
+      "message": "already in confUpdate... getCurrentCallForId might return null here and the logic is broken",
+      "range": {
+        "startLine": 164,
+        "startChar": 8,
+        "endLine": 164,
+        "endChar": 76
+      },
+      "revId": "9c8b61ee26ddc01facb78f165eaa7fe93bae58dd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
