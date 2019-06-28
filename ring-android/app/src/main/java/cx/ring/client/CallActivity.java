@@ -46,6 +46,7 @@ import cx.ring.utils.MediaButtonsHelper;
 
 public class CallActivity extends AppCompatActivity {
     public static final String ACTION_CALL = BuildConfig.APPLICATION_ID + ".action.call";
+    public static final String ACTION_CALL_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CALL_ACCEPT";
 
     private static final String CALL_FRAGMENT_TAG = "CALL_FRAGMENT_TAG";
 
@@ -85,27 +86,25 @@ public class CallActivity extends AppCompatActivity {
 
         String action = getIntent().getAction();
         CallFragment callFragment;
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
         if (Intent.ACTION_CALL.equals(action) || ACTION_CALL.equals(action)) {
 
             boolean audioOnly = getIntent().getBooleanExtra(CallFragment.KEY_AUDIO_ONLY, true);
             String accountId = getIntent().getStringExtra(ConversationFragment.KEY_ACCOUNT_ID);
             String contactRingId = getIntent().getStringExtra(ConversationFragment.KEY_CONTACT_RING_ID);
-
             // Reload a new view
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             callFragment = CallFragment.newInstance(CallFragment.ACTION_PLACE_CALL,
                     accountId,
                     contactRingId,
                     audioOnly);
             fragmentTransaction.replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit();
 
-        } else if (Intent.ACTION_VIEW.equals(action)) {
+        } else if (Intent.ACTION_VIEW.equals(action) || ACTION_CALL_ACCEPT.equals(action)) {
             String confId = getIntent().getStringExtra(NotificationService.KEY_CALL_ID);
             // Reload a new view
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            callFragment = CallFragment.newInstance(CallFragment.ACTION_GET_CALL, confId);
+            callFragment = CallFragment.newInstance(Intent.ACTION_VIEW.equals(action) ? CallFragment.ACTION_GET_CALL : ACTION_CALL_ACCEPT, confId);
             fragmentTransaction.replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit();
         }
     }

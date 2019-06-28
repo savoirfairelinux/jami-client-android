@@ -147,7 +147,7 @@ public class CallPresenter extends RootPresenter<CallView> {
                 }));
     }
 
-    public void initIncoming(String confId) {
+    public void updateIncomingCall(String confId) {
         //getView().blockScreenRotation();
         mCompositeDisposable.add(mCallService.getCallUpdates(confId)
                 .observeOn(mUiScheduler)
@@ -156,8 +156,19 @@ public class CallPresenter extends RootPresenter<CallView> {
                     confUpdate(call);
                 }, e -> {
                     hangupCall();
-                    Log.e(TAG, "Error with initIncoming: " + e.getMessage());
+                    Log.e(TAG, "Error with updateIncoming: " + e.getMessage());
                 }));
+    }
+
+    public void initIncoming(String confId) {
+        mCompositeDisposable.add(mCallService.getCallUpdates(confId).observeOn(mUiScheduler).firstOrError().subscribe(call -> {
+            contactUpdate(call);
+            confUpdate(call);
+            getView().prepareCall(true);
+        }, e -> {
+            hangupCall();
+            Log.e(TAG, "Error with initIncoming: " + e.getMessage());
+        }));
     }
 
     public void prepareOptionMenu() {
@@ -301,7 +312,7 @@ public class CallPresenter extends RootPresenter<CallView> {
             if (!mAudioOnly) {
                 mHardwareService.setPreviewSettings();
                 view.displayVideoSurface(true, mDeviceRuntimeService.hasVideoPermission());
-                if(permissionChanged) {
+                if (permissionChanged) {
                     mHardwareService.switchInput(mSipCall.getCallId(), permissionChanged);
                     permissionChanged = false;
                 }

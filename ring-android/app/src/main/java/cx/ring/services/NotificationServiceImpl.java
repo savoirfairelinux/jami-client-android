@@ -174,7 +174,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public void showCallNotification(Conference conference) {
-        if (conference == null || conference.getParticipants().isEmpty() || !(conference.isOnGoing() || conference.isRinging())) {
+        if (conference == null || conference.getParticipants().isEmpty()) {
             return;
         }
 
@@ -191,7 +191,7 @@ public class NotificationServiceImpl implements NotificationService {
         NotificationCompat.Builder messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_CALL);
 
         if (conference.isOnGoing()) {
-            messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_current_call_title, contact.getRingUsername()))
+            messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_current_call_title, contact.getDisplayName()))
                     .setContentText(mContext.getText(R.string.notif_current_call))
                     .setContentIntent(gotoIntent)
                     .addAction(R.drawable.baseline_call_end_24, mContext.getText(R.string.action_call_hangup),
@@ -203,7 +203,7 @@ public class NotificationServiceImpl implements NotificationService {
         } else if (conference.isRinging()) {
             if (conference.isIncoming()) {
                 Bundle extras = new Bundle();
-                messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_incoming_call_title, contact.getRingUsername()))
+                messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_incoming_call_title, contact.getDisplayName()))
                         .setPriority(NotificationCompat.PRIORITY_MAX)
                         .setContentText(mContext.getText(R.string.notif_incoming_call))
                         .setContentIntent(gotoIntent)
@@ -222,7 +222,7 @@ public class NotificationServiceImpl implements NotificationService {
                                         PendingIntent.FLAG_ONE_SHOT))
                         .addExtras(extras);
             } else {
-                messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_outgoing_call_title, contact.getRingUsername()))
+                messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_outgoing_call_title, contact.getDisplayName()))
                         .setContentText(mContext.getText(R.string.notif_outgoing_call))
                         .setContentIntent(gotoIntent)
                         .addAction(R.drawable.baseline_call_end_24, mContext.getText(R.string.action_call_hangup),

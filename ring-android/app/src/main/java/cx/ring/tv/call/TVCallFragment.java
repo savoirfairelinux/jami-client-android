@@ -142,11 +142,9 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
         String action = getArguments().getString(KEY_ACTION);
         if (action != null) {
             if (action.equals(ACTION_PLACE_CALL)) {
-                if (isPermissionAccepted(false)) {
-                    initializeCall(false);
-                }
+                prepareCall(false);
             } else if (action.equals(ACTION_GET_CALL)) {
-                presenter.initIncoming(getArguments().getString(KEY_CONF_ID));
+                presenter.updateIncomingCall(getArguments().getString(KEY_CONF_ID));
             }
         }
     }
@@ -471,11 +469,13 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
 
     /**
      * Checks if permissions are accepted for camera and microphone. Takes into account whether call is incoming and outgoing, and requests permissions if not available.
+     * Initializes the call if permissions are accepted.
      *
      * @param isIncoming true if call is incoming, false for outgoing
-     * @return true if permissions are already accepted
+     * @see #initializeCall(boolean) initializeCall
      */
-    public boolean isPermissionAccepted(boolean isIncoming) {
+    @Override
+    public void prepareCall(boolean isIncoming) {
         Bundle args = getArguments();
         boolean audioGranted = mDeviceRuntimeService.hasAudioPermission();
         boolean audioOnly;
@@ -502,18 +502,15 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
                 }
                 requestPermissions(perms.toArray(new String[perms.size()]), permissionType);
             } else if (audioGranted && videoGranted) {
-                return true;
+                initializeCall(isIncoming);
             }
         } else {
             if (!audioGranted && android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO},
-                        permissionType);
+                requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, permissionType);
             } else if (audioGranted) {
-                return true;
+                initializeCall(isIncoming);
             }
         }
-        return false;
-
     }
 
 
@@ -556,8 +553,7 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     }
 
     public void acceptClicked() {
-        if (isPermissionAccepted(true))
-            presenter.acceptCall();
+        prepareCall(true);
     }
 
     @Override
