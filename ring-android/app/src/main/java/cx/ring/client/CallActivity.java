@@ -46,6 +46,7 @@ import cx.ring.utils.MediaButtonsHelper;
 
 public class CallActivity extends AppCompatActivity {
     public static final String ACTION_CALL = BuildConfig.APPLICATION_ID + ".action.call";
+    public static final String ACTION_CALL_RECEIVE = BuildConfig.APPLICATION_ID + ".action.CALL_RECEIVE";
 
     private static final String CALL_FRAGMENT_TAG = "CALL_FRAGMENT_TAG";
 
@@ -106,6 +107,13 @@ public class CallActivity extends AppCompatActivity {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             callFragment = CallFragment.newInstance(CallFragment.ACTION_GET_CALL, confId);
+            fragmentTransaction.replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit();
+        }
+        else if (ACTION_CALL_RECEIVE.equals(action)) {
+            String confId = getIntent().getStringExtra(NotificationService.KEY_CALL_ID);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            callFragment = CallFragment.newInstance(ACTION_CALL_RECEIVE, confId);
             fragmentTransaction.replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit();
         }
     }

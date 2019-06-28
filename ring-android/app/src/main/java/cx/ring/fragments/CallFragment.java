@@ -38,10 +38,6 @@ import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Rational;
@@ -59,15 +55,17 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+
 import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Random;
-
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
 
 import javax.inject.Inject;
 
@@ -75,6 +73,7 @@ import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.call.CallPresenter;
 import cx.ring.call.CallView;
+import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.databinding.FragCallBinding;
@@ -187,8 +186,16 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                     if (isPermissionAccepted(false)) {
                         initializeCall(false);
                     }
-                } else if (action.equals(ACTION_GET_CALL)) {
+                }
+                else if (action.equals(ACTION_GET_CALL)) {
                     presenter.initIncoming(getArguments().getString(KEY_CONF_ID));
+                }else if (action.equals(CallActivity.ACTION_CALL_RECEIVE)) {
+                    String confId = getArguments().getString(KEY_CONF_ID);
+                    presenter.updateAudioState(confId);
+                    presenter.initIncoming(confId);
+                    if (isPermissionAccepted(true)) {
+                        initializeCall(true);
+                    }
                 }
             }
         }

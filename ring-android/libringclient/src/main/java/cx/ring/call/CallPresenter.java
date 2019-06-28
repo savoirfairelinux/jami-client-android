@@ -160,6 +160,10 @@ public class CallPresenter extends RootPresenter<CallView> {
                 }));
     }
 
+    public void updateAudioState(String confId) {
+        mAudioOnly = mCallService.getCurrentCallForId(confId).isAudioOnly();
+    }
+
     public void prepareOptionMenu() {
         boolean isSpeakerOn = mHardwareService.isSpeakerPhoneOn();
         boolean hasContact = mSipCall != null && null != mSipCall.getContact() && mSipCall.getContact().isUnknown();
@@ -301,7 +305,7 @@ public class CallPresenter extends RootPresenter<CallView> {
             if (!mAudioOnly) {
                 mHardwareService.setPreviewSettings();
                 view.displayVideoSurface(true, mDeviceRuntimeService.hasVideoPermission());
-                if(permissionChanged) {
+                if (permissionChanged) {
                     mHardwareService.switchInput(mSipCall.getCallId(), permissionChanged);
                     permissionChanged = false;
                 }
