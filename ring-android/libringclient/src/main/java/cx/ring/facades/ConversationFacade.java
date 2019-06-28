@@ -407,10 +407,11 @@ public class ConversationFacade {
             call.setTimestampStart(System.currentTimeMillis());
         }
         if (incomingCall) {
-            //mNotificationService.showCallNotification(conference);
             mHardwareService.setPreviewSettings();
+            mNotificationService.showCallNotification(conference);
         } else if ((newState == SipCall.State.CURRENT && call.isIncoming())
                 || newState == SipCall.State.RINGING && call.isOutGoing()) {
+            mNotificationService.showCallNotification(conference);
             mAccountService.sendProfile(call.getCallId(), call.getAccount());
         } else if (newState == SipCall.State.HUNGUP
                 || newState == SipCall.State.BUSY
