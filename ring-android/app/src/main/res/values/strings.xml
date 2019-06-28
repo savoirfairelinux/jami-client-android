@@ -101,8 +101,8 @@ along with this program; if not, write to the Free Software
     <string name="notif_incoming_call">Incoming call</string>
     <string name="notif_outgoing_call_title">Outgoing call to %1$s</string>
     <string name="notif_outgoing_call">Outgoing call</string>
-    <string name="notif_current_call_title">Current call with %1$s</string>
-    <string name="notif_current_call">Current call</string>
+    <string name="notif_current_call_title">Ongoing call with %1$s</string>
+    <string name="notif_current_call">Ongoing call</string>
     <string name="notif_channel_calls">Calls</string>
     <string name="notif_channel_missed_calls">Missed calls</string>
     <string name="notif_channel_messages">Messages</string>

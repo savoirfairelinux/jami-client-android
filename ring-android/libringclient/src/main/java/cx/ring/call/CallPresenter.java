@@ -54,6 +54,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     private boolean mAudioOnly = true;
     private boolean permissionChanged = false;
     private boolean pipIsActive = false;
+    private boolean incomingIsFullIntent = true;
 
     private int videoWidth = -1;
     private int videoHeight = -1;
@@ -147,7 +148,7 @@ public class CallPresenter extends RootPresenter<CallView> {
                 }));
     }
 
-    public void initIncoming(String confId) {
+    public void updateIncomingCall(String confId) {
         //getView().blockScreenRotation();
         mCompositeDisposable.add(mCallService.getCallUpdates(confId)
                 .observeOn(mUiScheduler)
@@ -156,8 +157,20 @@ public class CallPresenter extends RootPresenter<CallView> {
                     confUpdate(call);
                 }, e -> {
                     hangupCall();
-                    Log.e(TAG, "Error with initIncoming: " + e.getMessage());
+                    Log.e(TAG, "Error with updateIncoming: " + e.getMessage());
                 }));
+    }
+
+    public void initIncoming(String confId) {
+        mCompositeDisposable.add(mCallService.getCallUpdates(confId).observeOn(mUiScheduler).firstOrError().subscribe(call -> {
+            incomingIsFullIntent = false;
+            contactUpdate(call);
+            confUpdate(call);
+            getView().prepareCall(true);
+        }, e -> {
+            hangupCall();
+            Log.e(TAG, "Error with initIncoming: " + e.getMessage());
+        }));
     }
 
     public void prepareOptionMenu() {
@@ -301,7 +314,7 @@ public class CallPresenter extends RootPresenter<CallView> {
             if (!mAudioOnly) {
                 mHardwareService.setPreviewSettings();
                 view.displayVideoSurface(true, mDeviceRuntimeService.hasVideoPermission());
-                if(permissionChanged) {
+                if (permissionChanged) {
                     mHardwareService.switchInput(mSipCall.getCallId(), permissionChanged);
                     permissionChanged = false;
                 }
@@ -313,7 +326,8 @@ public class CallPresenter extends RootPresenter<CallView> {
             if (call.isIncoming()) {
                 if (mAccountService.getAccount(call.getAccount()).isAutoanswerEnabled()) {
                     mCallService.accept(call.getCallId());
-                } else {
+                    // only display the incoming call screen if the notification is a full screen intent
+                } else if (incomingIsFullIntent) {
                     view.initIncomingCallDisplay();
                 }
             } else {
