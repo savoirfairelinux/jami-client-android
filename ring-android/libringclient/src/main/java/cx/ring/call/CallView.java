@@ -64,4 +64,6 @@ public interface CallView {
     void onUserLeave();
 
     void enterPipMode(SipCall sipCall);
+
+    void prepareCall(boolean isIncoming);
 }

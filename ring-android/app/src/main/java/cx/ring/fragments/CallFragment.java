@@ -38,10 +38,6 @@ import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Rational;
@@ -59,15 +55,17 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+
 import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Random;
-
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
 
 import javax.inject.Inject;
 
@@ -75,6 +73,7 @@ import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.call.CallPresenter;
 import cx.ring.call.CallView;
+import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.databinding.FragCallBinding;
@@ -184,11 +183,13 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             String action = args.getString(KEY_ACTION);
             if (action != null) {
                 if (action.equals(ACTION_PLACE_CALL)) {
-                    if (isPermissionAccepted(false)) {
-                        initializeCall(false);
-                    }
-                } else if (action.equals(ACTION_GET_CALL)) {
-                    presenter.initIncoming(getArguments().getString(KEY_CONF_ID));
+                    prepareCall(false);
+                }
+                else if (action.equals(ACTION_GET_CALL) || action.equals(CallActivity.ACTION_CALL_ACCEPT)) {
+                    String confId = getArguments().getString(KEY_CONF_ID);
+                    if(action.equals(CallActivity.ACTION_CALL_ACCEPT))
+                        presenter.initIncoming(confId);
+                    presenter.updateIncomingCall(confId);
                 }
             }
         }
@@ -691,11 +692,13 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     /**
      * Checks if permissions are accepted for camera and microphone. Takes into account whether call is incoming and outgoing, and requests permissions if not available.
+     * Initializes the call if permissions are accepted.
      *
      * @param isIncoming true if call is incoming, false for outgoing
-     * @return true if permissions are already accepted
+     * @see #initializeCall(boolean) initializeCall
      */
-    public boolean isPermissionAccepted(boolean isIncoming) {
+    @Override
+    public void prepareCall(boolean isIncoming) {
         Bundle args = getArguments();
         boolean audioGranted = mDeviceRuntimeService.hasAudioPermission();
         boolean audioOnly;
@@ -722,17 +725,15 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                 }
                 requestPermissions(perms.toArray(new String[perms.size()]), permissionType);
             } else if (audioGranted && videoGranted) {
-                return true;
+                initializeCall(isIncoming);
             }
         } else {
             if (!audioGranted && android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, permissionType);
             } else if (audioGranted) {
-                return true;
+                initializeCall(isIncoming);
             }
         }
-        return false;
-
     }
 
     /**
@@ -787,8 +788,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     public void acceptClicked() {
-        if (isPermissionAccepted(true))
-            presenter.acceptCall();
+        prepareCall(true);
     }
 
     public void cameraFlip() {
