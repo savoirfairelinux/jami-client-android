@@ -563,10 +563,14 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         if (dialPadBtn != null) {
             dialPadBtn.setVisible(canDial);
         }
+
+        if(binding.callSpeakerBtn != null) {
+            binding.callSpeakerBtn.setChecked(isSpeakerOn);
+        }
     }
 
     @Override
-    public void initNormalStateDisplay(final boolean audioOnly, boolean isSpeakerphoneOn, boolean isMuted) {
+    public void initNormalStateDisplay(final boolean audioOnly, boolean isMuted) {
         binding.shapeRipple.stopRipple();
 
         binding.callAcceptBtn.setVisibility(View.GONE);
@@ -575,7 +579,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         binding.callHangupBtn.setVisibility(View.VISIBLE);
 
         binding.contactBubbleLayout.setVisibility(audioOnly ? View.VISIBLE : View.GONE);
-        binding.callSpeakerBtn.setChecked(isSpeakerphoneOn);
+        binding.callSpeakerBtn.setChecked(!audioOnly);
         binding.callMicBtn.setChecked(isMuted);
 
         requireActivity().invalidateOptionsMenu();
@@ -768,7 +772,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             }
         }
     }
-
 
     public void speakerClicked() {
         presenter.speakerClick(binding.callSpeakerBtn.isChecked());

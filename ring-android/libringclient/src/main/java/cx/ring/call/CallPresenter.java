@@ -161,7 +161,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void prepareOptionMenu() {
-        boolean isSpeakerOn = mHardwareService.isSpeakerPhoneOn();
+        boolean isSpeakerOn = !mAudioOnly;
         boolean hasContact = mSipCall != null && null != mSipCall.getContact() && mSipCall.getContact().isUnknown();
         boolean canDial = mOnGoingCall && mSipCall != null && !mSipCall.isIncoming();
         boolean hasMultipleCamera = mHardwareService.getCameraCount() > 1 && mOnGoingCall && !mAudioOnly;
@@ -295,7 +295,7 @@ public class CallPresenter extends RootPresenter<CallView> {
         view.updateMenu();
         if (call.isOnGoing()) {
             mOnGoingCall = true;
-            view.initNormalStateDisplay(mAudioOnly, mHardwareService.isSpeakerPhoneOn(), isMicrophoneMuted());
+            view.initNormalStateDisplay(mAudioOnly, isMicrophoneMuted());
             view.updateMenu();
             if (!mAudioOnly) {
                 mHardwareService.setPreviewSettings();
