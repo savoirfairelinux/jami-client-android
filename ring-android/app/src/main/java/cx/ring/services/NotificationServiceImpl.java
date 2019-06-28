@@ -23,6 +23,7 @@ package cx.ring.services;
 import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
+import android.app.NotificationChannelGroup;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -34,6 +35,7 @@ import android.media.RingtoneManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.SparseArray;
 
 import com.bumptech.glide.Glide;
@@ -69,8 +71,8 @@ import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 import cx.ring.model.Uri;
 import cx.ring.service.DRingService;
+import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.FileUtils;
-import cx.ring.utils.Log;
 import cx.ring.utils.ResourceMapper;
 import cx.ring.utils.Tuple;
 
@@ -83,12 +85,20 @@ public class NotificationServiceImpl implements NotificationService {
     private static final String NOTIF_FILE_TRANSFER = "FILE_TRANSFER";
     private static final String NOTIF_MISSED_CALL = "MISSED_CALL";
 
-    private static final String NOTIF_CHANNEL_CALL = "call";
+    private static final String NOTIF_CHANNEL_CALL_IN_PROGRESS = "current_call";
+    private static final String NOTIF_CHANNEL_MISSED_CALL = "missed_calls";
+    private static final String NOTIF_CHANNEL_INCOMING_CALL = "incoming_call";
+
     private static final String NOTIF_CHANNEL_MESSAGE = "messages";
     private static final String NOTIF_CHANNEL_REQUEST = "requests";
     private static final String NOTIF_CHANNEL_FILE_TRANSFER = "file_transfer";
-    private static final String NOTIF_CHANNEL_MISSED_CALL = "missed_call";
     private static final String NOTIF_CHANNEL_SERVICE = "service";
+
+    // old channel codes that were replaced or split
+    private static final String NOTIF_CHANNEL_CALL_LEGACY = "call";
+    private static final String NOTIF_CHANNEL_MISSED_CALL_LEGACY = "missed_call";
+
+    private static final String NOTIF_CALL_GROUP = "calls";
 
     private final SparseArray<NotificationCompat.Builder> mNotificationBuilders = new SparseArray<>();
     @Inject
@@ -124,11 +134,35 @@ public class NotificationServiceImpl implements NotificationService {
         if (notificationManager == null)
             return;
 
-        // Call channel
-        NotificationChannel callChannel = new NotificationChannel(NOTIF_CHANNEL_CALL, mContext.getString(R.string.notif_channel_calls), NotificationManager.IMPORTANCE_HIGH);
-        callChannel.enableVibration(true);
-        callChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
-        notificationManager.createNotificationChannel(callChannel);
+
+        notificationManager.deleteNotificationChannel(NOTIF_CHANNEL_MISSED_CALL_LEGACY);
+        notificationManager.deleteNotificationChannel(NOTIF_CHANNEL_CALL_LEGACY);
+
+        // Setting up groups
+
+        notificationManager.createNotificationChannelGroup(new NotificationChannelGroup(NOTIF_CALL_GROUP, mContext.getString(R.string.notif_group_calls)));
+
+        // Incoming call channel
+        NotificationChannel incomingCallChannel = new NotificationChannel(NOTIF_CHANNEL_INCOMING_CALL, mContext.getString(R.string.notif_channel_incoming_calls), NotificationManager.IMPORTANCE_HIGH);
+        incomingCallChannel.enableVibration(true);
+        incomingCallChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+        incomingCallChannel.setGroup(NOTIF_CALL_GROUP);
+        notificationManager.createNotificationChannel(incomingCallChannel);
+
+        // Missed calls channel
+        NotificationChannel missedCallsChannel = new NotificationChannel(NOTIF_CHANNEL_MISSED_CALL, mContext.getString(R.string.notif_channel_missed_calls), NotificationManager.IMPORTANCE_DEFAULT);
+        missedCallsChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+        missedCallsChannel.setSound(null, null);
+        missedCallsChannel.setGroup(NOTIF_CALL_GROUP);
+        notificationManager.createNotificationChannel(missedCallsChannel);
+
+
+        // Call in progress channel
+        NotificationChannel callInProgressChannel = new NotificationChannel(NOTIF_CHANNEL_CALL_IN_PROGRESS, mContext.getString(R.string.notif_channel_call_in_progress), NotificationManager.IMPORTANCE_DEFAULT);
+        callInProgressChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+        missedCallsChannel.setSound(null, null);
+        callInProgressChannel.setGroup(NOTIF_CALL_GROUP);
+        notificationManager.createNotificationChannel(callInProgressChannel);
 
         // Text messages channel
         AudioAttributes soundAttributes = new AudioAttributes.Builder()
@@ -156,12 +190,6 @@ public class NotificationServiceImpl implements NotificationService {
         fileTransferChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), soundAttributes);
         notificationManager.createNotificationChannel(fileTransferChannel);
 
-        // Missed calls channel
-        NotificationChannel missedCallsChannel = new NotificationChannel(NOTIF_CHANNEL_MISSED_CALL, mContext.getString(R.string.notif_channel_missed_calls), NotificationManager.IMPORTANCE_DEFAULT);
-        missedCallsChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
-        missedCallsChannel.setSound(null, null);
-        notificationManager.createNotificationChannel(missedCallsChannel);
-
         // Background service channel
         NotificationChannel backgroundChannel = new NotificationChannel(NOTIF_CHANNEL_SERVICE, mContext.getString(R.string.notif_channel_background_service), NotificationManager.IMPORTANCE_LOW);
         backgroundChannel.setDescription(mContext.getString(R.string.notif_channel_background_service_descr));
@@ -174,7 +202,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public void showCallNotification(Conference conference) {
-        if (conference == null || conference.getParticipants().isEmpty() || !(conference.isOnGoing() || conference.isRinging())) {
+        if (conference == null || conference.getParticipants().isEmpty()) {
             return;
         }
 
@@ -188,11 +216,24 @@ public class NotificationServiceImpl implements NotificationService {
                 new Intent(DRingService.ACTION_CALL_VIEW)
                         .setClass(mContext, DRingService.class)
                         .putExtra(KEY_CALL_ID, call.getCallId()), 0);
-        NotificationCompat.Builder messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_CALL);
+
+        if(DeviceUtils.isTv(mContext)) {
+            try {
+                gotoIntent.send();
+            }
+            catch(PendingIntent.CanceledException e) {
+                Log.e(TAG, "Error launching incoming call on Android TV", e);
+            }
+            return;
+        }
+
+        NotificationCompat.Builder messageNotificationBuilder = null;
 
         if (conference.isOnGoing()) {
-            messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_current_call_title, contact.getRingUsername()))
+            messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_CALL_IN_PROGRESS);
+            messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_current_call_title, contact.getDisplayName()))
                     .setContentText(mContext.getText(R.string.notif_current_call))
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setContentIntent(gotoIntent)
                     .addAction(R.drawable.baseline_call_end_24, mContext.getText(R.string.action_call_hangup),
                             PendingIntent.getService(mContext, random.nextInt(),
@@ -202,8 +243,9 @@ public class NotificationServiceImpl implements NotificationService {
                                     PendingIntent.FLAG_ONE_SHOT));
         } else if (conference.isRinging()) {
             if (conference.isIncoming()) {
+                messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_INCOMING_CALL);
                 Bundle extras = new Bundle();
-                messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_incoming_call_title, contact.getRingUsername()))
+                messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_incoming_call_title, contact.getDisplayName()))
                         .setPriority(NotificationCompat.PRIORITY_MAX)
                         .setContentText(mContext.getText(R.string.notif_incoming_call))
                         .setContentIntent(gotoIntent)
@@ -222,8 +264,10 @@ public class NotificationServiceImpl implements NotificationService {
                                         PendingIntent.FLAG_ONE_SHOT))
                         .addExtras(extras);
             } else {
-                messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_outgoing_call_title, contact.getRingUsername()))
+                messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_CALL_IN_PROGRESS);
+                messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_outgoing_call_title, contact.getDisplayName()))
                         .setContentText(mContext.getText(R.string.notif_outgoing_call))
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                         .setContentIntent(gotoIntent)
                         .addAction(R.drawable.baseline_call_end_24, mContext.getText(R.string.action_call_hangup),
                                 PendingIntent.getService(mContext, random.nextInt(),
