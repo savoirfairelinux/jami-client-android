@@ -34,6 +34,7 @@ import android.media.RingtoneManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.SparseArray;
 
 import com.bumptech.glide.Glide;
@@ -69,8 +70,8 @@ import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 import cx.ring.model.Uri;
 import cx.ring.service.DRingService;
+import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.FileUtils;
-import cx.ring.utils.Log;
 import cx.ring.utils.ResourceMapper;
 import cx.ring.utils.Tuple;
 
@@ -174,7 +175,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public void showCallNotification(Conference conference) {
-        if (conference == null || conference.getParticipants().isEmpty() || !(conference.isOnGoing() || conference.isRinging())) {
+        if (conference == null || conference.getParticipants().isEmpty()) {
             return;
         }
 
@@ -188,10 +189,21 @@ public class NotificationServiceImpl implements NotificationService {
                 new Intent(DRingService.ACTION_CALL_VIEW)
                         .setClass(mContext, DRingService.class)
                         .putExtra(KEY_CALL_ID, call.getCallId()), 0);
+
+        if(DeviceUtils.isTv(mContext)) {
+            try {
+                gotoIntent.send();
+            }
+            catch(PendingIntent.CanceledException e) {
+                Log.e(TAG, "Error launching incoming call on Android TV", e);
+            }
+            return;
+        }
+
         NotificationCompat.Builder messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_CALL);
 
         if (conference.isOnGoing()) {
-            messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_current_call_title, contact.getRingUsername()))
+            messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_current_call_title, contact.getDisplayName()))
                     .setContentText(mContext.getText(R.string.notif_current_call))
                     .setContentIntent(gotoIntent)
                     .addAction(R.drawable.baseline_call_end_24, mContext.getText(R.string.action_call_hangup),
@@ -203,7 +215,7 @@ public class NotificationServiceImpl implements NotificationService {
         } else if (conference.isRinging()) {
             if (conference.isIncoming()) {
                 Bundle extras = new Bundle();
-                messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_incoming_call_title, contact.getRingUsername()))
+                messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_incoming_call_title, contact.getDisplayName()))
                         .setPriority(NotificationCompat.PRIORITY_MAX)
                         .setContentText(mContext.getText(R.string.notif_incoming_call))
                         .setContentIntent(gotoIntent)
@@ -222,7 +234,7 @@ public class NotificationServiceImpl implements NotificationService {
                                         PendingIntent.FLAG_ONE_SHOT))
                         .addExtras(extras);
             } else {
-                messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_outgoing_call_title, contact.getRingUsername()))
+                messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_outgoing_call_title, contact.getDisplayName()))
                         .setContentText(mContext.getText(R.string.notif_outgoing_call))
                         .setContentIntent(gotoIntent)
                         .addAction(R.drawable.baseline_call_end_24, mContext.getText(R.string.action_call_hangup),
