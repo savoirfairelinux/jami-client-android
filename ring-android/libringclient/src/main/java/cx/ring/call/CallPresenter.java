@@ -295,6 +295,7 @@ public class CallPresenter extends RootPresenter<CallView> {
         view.updateMenu();
         if (call.isOnGoing()) {
             mOnGoingCall = true;
+            mHardwareService.toggleSpeakerphone(!mAudioOnly);
             view.initNormalStateDisplay(mAudioOnly, mHardwareService.isSpeakerPhoneOn(), isMicrophoneMuted());
             view.updateMenu();
             if (!mAudioOnly) {
