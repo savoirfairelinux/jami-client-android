@@ -39,11 +39,12 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
+import android.text.TextUtils;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.RemoteInput;
 import androidx.legacy.content.WakefulBroadcastReceiver;
-import android.text.TextUtils;
-import android.util.Log;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -66,7 +67,6 @@ import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.Account;
 import cx.ring.model.Codec;
 import cx.ring.model.Settings;
-import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
@@ -115,27 +115,38 @@ public class DRingService extends Service {
     private final ContactsContentObserver contactContentObserver = new ContactsContentObserver();
     @Inject @Singleton
     protected DaemonService mDaemonService;
-    @Inject @Singleton
+    @Inject
+    @Singleton
     protected CallService mCallService;
-    @Inject @Singleton
+    @Inject
+    @Singleton
     protected ConferenceService mConferenceService;
-    @Inject @Singleton
+    @Inject
+    @Singleton
     protected AccountService mAccountService;
-    @Inject @Singleton
+    @Inject
+    @Singleton
     protected HardwareService mHardwareService;
-    @Inject @Singleton
+    @Inject
+    @Singleton
     protected HistoryService mHistoryService;
-    @Inject @Singleton
+    @Inject
+    @Singleton
     protected DeviceRuntimeService mDeviceRuntimeService;
-    @Inject @Singleton
+    @Inject
+    @Singleton
     protected NotificationService mNotificationService;
-    @Inject @Singleton
+    @Inject
+    @Singleton
     protected ContactService mContactService;
-    @Inject @Singleton
+    @Inject
+    @Singleton
     protected PreferencesService mPreferencesService;
-    @Inject @Singleton
+    @Inject
+    @Singleton
     protected ConversationFacade mConversationFacade;
-    @Inject @Singleton
+    @Inject
+    @Singleton
     @Named("DaemonExecutor")
     protected ScheduledExecutorService mExecutor;
 
@@ -247,7 +258,7 @@ public class DRingService extends Service {
         // Hashmap runtime cast
         @Override
         public String addAccount(final Map map) {
-            return mAccountService.addAccount((Map<String, String>)map).blockingFirst().getAccountID();
+            return mAccountService.addAccount((Map<String, String>) map).blockingFirst().getAccountID();
         }
 
         @Override
@@ -543,8 +554,8 @@ public class DRingService extends Service {
                     break;
                 }
                 case PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED: {
-                  mConnectivityChecker.run();
-                  mHandler.postDelayed(mConnectivityChecker, 100);
+                    mConnectivityChecker.run();
+                    mHandler.postDelayed(mConnectivityChecker, 100);
                 }
             }
         }
@@ -577,19 +588,6 @@ public class DRingService extends Service {
             //refreshContacts();
             updateConnectivityState();
             showSystemNotification(s);
-        }));
-        mDisposableBag.add(mCallService.getCallSubject().subscribe(call -> {
-            SipCall.State newState = call.getCallState();
-            boolean incomingCall = newState == SipCall.State.RINGING && call.isIncoming();
-            if (incomingCall) {
-                Bundle extras = new Bundle();
-                extras.putString(ConversationFragment.KEY_ACCOUNT_ID, mAccountService.getCurrentAccount().getAccountID());
-                extras.putString(NotificationService.KEY_CALL_ID, call.getCallId());
-                startActivity(new Intent(Intent.ACTION_VIEW)
-                        .putExtras(extras)
-                        .setClass(getApplicationContext(), DeviceUtils.isTv(this) ? TVCallActivity.class : CallActivity.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
-            }
         }));
 
         RingApplication.getInstance().bindDaemon();
@@ -767,9 +765,8 @@ public class DRingService extends Service {
 
         switch (action) {
             case ACTION_CALL_ACCEPT:
-                mCallService.accept(callId);
                 mNotificationService.cancelCallNotification(callId.hashCode());
-                startActivity(new Intent(Intent.ACTION_VIEW)
+                startActivity(new Intent(ACTION_CALL_ACCEPT)
                         .putExtras(extras)
                         .setClass(getApplicationContext(), CallActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));

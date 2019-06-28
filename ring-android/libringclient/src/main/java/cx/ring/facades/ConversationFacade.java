@@ -408,9 +408,11 @@ public class ConversationFacade {
         if ((call.isRinging() || newState == SipCall.State.CURRENT) && call.getTimestampStart() == 0) {
             call.setTimestampStart(System.currentTimeMillis());
         }
+        if(newState == SipCall.State.CURRENT)
+            mNotificationService.showCallNotification(conference);
         if (incomingCall) {
-            //mNotificationService.showCallNotification(conference);
             mHardwareService.setPreviewSettings();
+            mNotificationService.showCallNotification(conference);
         } else if ((newState == SipCall.State.CURRENT && call.isIncoming())
                 || newState == SipCall.State.RINGING && call.isOutGoing()) {
             mAccountService.sendProfile(call.getCallId(), call.getAccount());
