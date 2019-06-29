@@ -106,11 +106,11 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         if (!hasMicrophone) {
             MediaRecorder recorder = new MediaRecorder();
             File testFile = new File(mContext.getCacheDir(), "MediaUtil#micAvailTestFile");
-            recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            recorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
-            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
-            recorder.setOutputFile(testFile.getAbsolutePath());
             try {
+                recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+                recorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
+                recorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
+                recorder.setOutputFile(testFile.getAbsolutePath());
                 recorder.prepare();
                 recorder.start();
                 hasMicrophone = true;
