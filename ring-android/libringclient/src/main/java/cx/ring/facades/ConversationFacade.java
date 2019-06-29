@@ -349,20 +349,10 @@ public class ConversationFacade {
     }
 
     public void acceptRequest(String accountId, Uri contactUri) {
-        String contactId = contactUri.getRawRingId();
-        Account account = mAccountService.getAccount(accountId);
+        if (accountId == null || contactUri == null)
+            return;
+        mPreferencesService.removeRequestPreferences(accountId, contactUri.getRawRingId());
         mAccountService.acceptTrustRequest(accountId, contactUri);
-        mPreferencesService.removeRequestPreferences(accountId, contactId);
-        for (Iterator<TrustRequest> it = account.getRequests().iterator(); it.hasNext(); ) {
-            TrustRequest request = it.next();
-            if (accountId.equals(request.getAccountId()) && contactId.equals(request.getContactId())) {
-                VCard vCard = request.getVCard();
-                if (vCard != null) {
-                    VCardUtils.savePeerProfileToDisk(vCard, contactId + ".vcf", mDeviceRuntimeService.provideFilesDir());
-                }
-                it.remove();
-            }
-        }
     }
 
     public void discardRequest(String accountId, Uri contact) {

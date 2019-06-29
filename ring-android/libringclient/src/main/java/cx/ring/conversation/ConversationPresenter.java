@@ -147,7 +147,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
             contact = account.getContact(rawId);
             if (contact == null) {
                 contact = account.getContactFromCache(uri);
-                TrustRequest req = account.getRequest(rawId);
+                TrustRequest req = account.getRequest(uri);
                 if (req == null) {
                     view.switchToUnknownView(contact.getRingUsername());
                 } else {

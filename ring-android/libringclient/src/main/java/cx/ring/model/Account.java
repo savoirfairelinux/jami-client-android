@@ -590,8 +590,8 @@ public class Account {
         return requests;
     }
 
-    public TrustRequest getRequest(String contactId) {
-        return mRequests.get(contactId);
+    public TrustRequest getRequest(Uri uri) {
+        return mRequests.get(uri.getRawUriString());
     }
 
     public void addRequest(TrustRequest request) {

@@ -905,6 +905,13 @@ public class AccountService {
         Log.i(TAG, "acceptRequest() " + accountId + " " + from);
         Account account = getAccount(accountId);
         if (account != null) {
+            TrustRequest request = account.getRequest(from);
+            if (request != null) {
+                VCard vCard = request.getVCard();
+                if (vCard != null) {
+                    VCardUtils.savePeerProfileToDisk(vCard, from.getRawRingId() + ".vcf", mDeviceRuntimeService.provideFilesDir());
+                }
+            }
             account.removeRequest(from);
         }
         mExecutor.execute(() -> Ringservice.acceptTrustRequest(accountId, from.getRawRingId()));

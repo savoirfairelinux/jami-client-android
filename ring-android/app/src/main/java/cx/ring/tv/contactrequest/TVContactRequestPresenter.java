@@ -60,7 +60,7 @@ public class TVContactRequestPresenter extends RootPresenter<TVContactRequestVie
 
     public void refuseTrustRequest(Uri viewModel) {
         String accountId = mAccountService.getCurrentAccount().getAccountID();
-        mAccountService.discardTrustRequest(accountId, viewModel);
+        mConversationService.discardRequest(accountId, viewModel);
         getView().finishView();
     }
 
