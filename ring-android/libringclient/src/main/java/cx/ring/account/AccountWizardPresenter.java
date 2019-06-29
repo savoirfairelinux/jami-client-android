@@ -159,7 +159,6 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
     private Single<HashMap<String, String>> initRingAccountDetails(String defaultAccountName) {
         return initAccountDetails().map(accountDetails -> {
             accountDetails.put(ConfigKey.ACCOUNT_ALIAS.key(), mAccountService.getNewAccountName(defaultAccountName));
-            accountDetails.put(ConfigKey.ACCOUNT_HOSTNAME.key(), "bootstrap.ring.cx");
             accountDetails.put(ConfigKey.ACCOUNT_UPNP_ENABLE.key(), AccountConfig.TRUE_STR);
             return accountDetails;
         });
