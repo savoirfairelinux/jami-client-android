@@ -119,10 +119,10 @@ public class RingLinkAccountFragment extends BaseSupportFragment<RingLinkAccount
     }
 
     @Override
-    public void finish() {
-        Activity activity = getActivity();
-        if(activity != null) {
-            activity.finish();
+    public void cancel() {
+        Activity wizardActivity = getActivity();
+        if (wizardActivity != null) {
+            wizardActivity.onBackPressed();
         }
     }
 }

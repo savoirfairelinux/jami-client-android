@@ -66,6 +66,9 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
     }
 
     public void init(AccountCreationModel accountCreationModel) {
+        if (accountCreationModel == null) {
+            getView().cancel();
+        }
         mAccountCreationModel = accountCreationModel;
     }
 
@@ -88,13 +91,15 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
         }
     }
 
-    public void ringCheckChanged(boolean isChecked) {
+    public void registerUsernameChanged(boolean isChecked) {
         getView().displayUsernameBox(isChecked);
         isRegisterUsernameChecked = isChecked;
-        if (!isChecked) {
-            mAccountCreationModel.setUsername("");
+        if (mAccountCreationModel != null) {
+            if (!isChecked) {
+                mAccountCreationModel.setUsername("");
+            }
+            checkForms();
         }
-        checkForms();
     }
 
     public void passwordChanged(String password) {

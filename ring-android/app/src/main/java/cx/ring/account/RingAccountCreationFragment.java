@@ -140,7 +140,7 @@ public class RingAccountCreationFragment extends BaseSupportFragment<RingAccount
 
     @OnCheckedChanged(R.id.switch_ring_username)
     public void onCheckedChanged(boolean isChecked) {
-        presenter.ringCheckChanged(isChecked);
+        presenter.registerUsernameChanged(isChecked);
     }
 
     @OnClick(R.id.create_account)
@@ -250,4 +250,13 @@ public class RingAccountCreationFragment extends BaseSupportFragment<RingAccount
             wizard.createAccount(accountCreationModel);
         }
     }
+
+    @Override
+    public void cancel() {
+        Activity wizardActivity = getActivity();
+        if (wizardActivity != null) {
+            wizardActivity.onBackPressed();
+        }
+    }
+
 }

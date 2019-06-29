@@ -29,5 +29,5 @@ public interface RingLinkAccountView {
 
     void createAccount(AccountCreationModel accountCreationModel);
 
-    void finish();
+    void cancel();
 }

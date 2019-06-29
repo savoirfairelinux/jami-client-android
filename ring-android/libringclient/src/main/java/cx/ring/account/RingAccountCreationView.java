@@ -44,4 +44,5 @@ public interface RingAccountCreationView {
 
     void goToAccountCreation(AccountCreationModel accountCreationModel);
 
+    void cancel();
 }

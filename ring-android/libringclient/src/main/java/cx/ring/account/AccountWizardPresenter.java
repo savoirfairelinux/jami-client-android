@@ -32,7 +32,6 @@ import cx.ring.model.Settings;
 import cx.ring.mvp.AccountCreationModel;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
-import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.PreferencesService;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
@@ -46,7 +45,6 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
     public static final String TAG = AccountWizardPresenter.class.getSimpleName();
 
     private final AccountService mAccountService;
-    private final DeviceRuntimeService mDeviceRuntimeService;
     private final PreferencesService mPreferences;
     private final Scheduler mUiScheduler;
 
@@ -58,9 +56,8 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
     private Observable<Account> newAccount;
 
     @Inject
-    public AccountWizardPresenter(AccountService accountService, DeviceRuntimeService deviceRuntimeService, PreferencesService preferences, @Named("UiScheduler") Scheduler uiScheduler) {
+    public AccountWizardPresenter(AccountService accountService, PreferencesService preferences, @Named("UiScheduler") Scheduler uiScheduler) {
         mAccountService = accountService;
-        mDeviceRuntimeService = deviceRuntimeService;
         mPreferences = preferences;
         mUiScheduler = uiScheduler;
     }

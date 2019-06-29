@@ -35,7 +35,7 @@ public class RingLinkAccountPresenter extends RootPresenter<RingLinkAccountView>
     public void init(AccountCreationModel accountCreationModel) {
         mAccountCreationModel = accountCreationModel;
         if (mAccountCreationModel == null) {
-            getView().finish();
+            getView().cancel();
             return;
         }
 

@@ -66,7 +66,7 @@ public class TVRingAccountCreationFragment
                 boolean empty = newName.isEmpty();
                 /** If the username is empty make sure to set isRegisterUsernameChecked
                  *  to False, this allows to create an account with an empty username */
-                presenter.ringCheckChanged(!empty);
+                presenter.registerUsernameChanged(!empty);
                 /** Send the newName even when empty (in order to reset the views) */
                 presenter.userNameChanged(newName);
             }
@@ -95,7 +95,7 @@ public class TVRingAccountCreationFragment
         }
 
         presenter.init(model);
-        presenter.ringCheckChanged(false);
+        presenter.registerUsernameChanged(false);
     }
 
     @Override
@@ -279,6 +279,14 @@ public class TVRingAccountCreationFragment
         if (wizardActivity instanceof TVAccountWizard) {
             TVAccountWizard wizard = (TVAccountWizard) wizardActivity;
             wizard.createAccount(accountCreationModel);
+        }
+    }
+
+    @Override
+    public void cancel() {
+        Activity wizardActivity = getActivity();
+        if (wizardActivity != null) {
+            wizardActivity.onBackPressed();
         }
     }
 
