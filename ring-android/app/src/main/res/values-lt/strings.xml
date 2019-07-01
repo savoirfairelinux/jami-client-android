@@ -132,6 +132,7 @@
   <string name="conversation_action_copy_peer_number">Kopijuoti numerį</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s nukopijuota į iškarpinę</string>
   <string name="conversation_action_block_this">Užblokuoti adresatą</string>
+  <string name="conversation_open_file_error">Nėra įdiegtos programos, kuri galėtų atverti šį failo tipą.</string>
   <string name="clip_contact_uri">Adresato adresas</string>
   <string name="block_contact_dialog_title">Blokuoti %1$s?</string>
   <string name="block_contact_dialog_message">%1$s negalės su jumis susisiekti tol, kol neatblokuosite.</string>

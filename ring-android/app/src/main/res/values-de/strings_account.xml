@@ -7,6 +7,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Jami-Konto hinzufügen</string>
   <string name="add_sip_account_title">SIP-Konto hinzufügen</string>
+  <string name="ring_account_default_name">Jami-Konto %1$s</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Rechnername</string>
   <string name="prompt_username">Benutzername</string>

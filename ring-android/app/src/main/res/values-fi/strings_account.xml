@@ -78,14 +78,19 @@
   <string name="export_account_wait_title">Odota hetki...</string>
   <string name="account_export_file">Varakäyttäjätunnus</string>
   <string name="account_export_end_error_title">Virhe</string>
+  <string name="account_enter_password">Syötä salasana</string>
   <string name="account_no_network_title">Verkkoon ei saada yhteyttä</string>
   <string name="account_link_prompt_pin">Syötä PIN-koodi</string>
+  <string name="account_new_button">Tee Jami-tili</string>
   <!--Name registration-->
   <string name="invalid_username">Käyttäjätunnus ei kelpaa</string>
   <string name="account_status_connecting">Yhdistää</string>
   <string name="account_status_unknown">Tuntematon</string>
   <!--Create account-->
+  <string name="account_creation_home">Tervetuloa Jamiin</string>
+  <string name="account_creation_profile">Tee profiilisi</string>
   <!--Edit profile-->
   <!--Devices-->
+  <string name="enter_password">Syötä salasana</string>
   <string name="revoke_device_wait_title">Odota hetki...</string>
 </resources>

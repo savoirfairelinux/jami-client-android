@@ -1,13 +1,23 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="feedback_section">Palaute</string>
+  <string name="report"><u>Lähetä meille sähköposti</u></string>
+  <string name="section_license">Lisenssi</string>
+  <string name="sponsor_section">Jami on vapaata ohjelmistoa jota kehittää ja tukee</string>
   <string name="copyright_section">Tekijänoikeus</string>
   <string name="contribute_section">Tuo panoksesi</string>
   <string name="version_section">Versio</string>
   <string name="no_email_app_installed">Sähköpostiohjelmaa ei löydetty, asenna sellainen lähettääksesi meille raportin</string>
+  <string name="no_browser_app_installed">Selainsovellusta ei löytynyt, asenna sellainen tämän sivun näyttämiseksi</string>
   <string name="email_chooser_title">Lähetä sähköpostia käyttäen...</string>
+  <string name="website_chooser_title">Näytä verkkosivu käyttäen...</string>
+  <string name="license">Tämä ohjelmisto on jaettu sellaisenaan, ilman minkäänlaista takuuta. Saadaksesi lisätietoja, katso <u>GNU General Public License versio 3 tai myöhempi</u></string>
+  <string name="description">Jami on vapaa ja universaali viestintäalusta, joka kunnioittaa käyttäjiensä vapauksia ja yksityisyyttä.</string>
   <string name="credits">Tekijät</string>
   <!--About dialog-->
+  <string name="developed_by">Kehittänyt</string>
+  <string name="designed_by">Suunnitellut</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Ei verkkoyhteyttä</string>
@@ -20,8 +30,12 @@
   <string name="drawer_close">Sulje sivuvalikko</string>
   <!--Sections-->
   <string name="menu_item_home">Koti</string>
+  <string name="menu_item_contact_request">Yhteyspyynnöt</string>
   <string name="menu_item_accounts">Hallitse tunnuksia</string>
+  <string name="menu_item_account">Hallitse tiliä</string>
   <string name="menu_item_settings">Asetukset</string>
+  <string name="menu_item_share">Jaa yhteystietoni</string>
+  <string name="menu_item_about">Tietoa Jamista</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Valitse numero</string>
   <!--History Fragment-->
@@ -37,6 +51,8 @@
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">Vastaamaton puhelu</string>
+  <string name="notif_missed_outgoing_call">Vastaamaton lähtevä puhelu</string>
   <string name="notif_incoming_call_title">Saapuva puhelu %1$s</string>
   <string name="notif_incoming_call">Saapuva puhelu</string>
   <string name="notif_outgoing_call_title">Lähtevä puhelu %1$s</string>
@@ -44,19 +60,40 @@
   <string name="notif_current_call_title">Puhelu %1$s</string>
   <string name="notif_current_call">Puhelu</string>
   <string name="notif_channel_calls">Puhelut</string>
+  <string name="notif_channel_missed_calls">Vastaamattomat puhelut</string>
+  <string name="notif_channel_messages">Viestit</string>
+  <string name="notif_channel_requests">Pyynnöt</string>
+  <string name="notif_channel_file_transfer">Tiedostonsiirto</string>
+  <string name="notif_channel_background_service">Taustapalvelu</string>
+  <string name="notif_channel_background_service_descr">Sallii puheluiden ja viestien saamisen milloin vain.</string>
+  <string name="notif_background_service">Jami toimii taustalla</string>
+  <string name="notif_mark_as_read">Merkitse luetuksi</string>
+  <string name="notif_reply">Vastaa</string>
+  <string name="notif_incoming_file_transfer_title">Tuleva tiedosto käyttäjältä %1$s</string>
+  <string name="notif_incoming_file_transfer">Joku haluaa lähettää sinulle tiedoston</string>
+  <string name="notif_outgoing_file_transfer_title">Lähetetään tiedosto käyttäjälle %1$s</string>
+  <string name="notif_outgoing_file_transfer">Joku haluaa lähettää sinulle tiedoston</string>
+  <string name="notif_incoming_picture">Kuva käyttäjältä %1$s</string>
+  <string name="action_open">Avaa</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Sinä:</string>
   <string name="action_call_hangup">Katkaise puhelu</string>
   <string name="ongoing_call">Tämänhetkinen puhelu</string>
   <string name="hist_in_call">Saapuva puhelu %1$s</string>
   <string name="hist_out_call">Lähtevä puhelu %1$s</string>
+  <string name="start_error_title">Jamia ei voitu käynnistää!</string>
+  <string name="start_error_mic_required">Jami vaatii mikrofonin käyttöoikeuden toimiakseen.</string>
   <string name="action_call_accept">Vastaanota puhelu</string>
   <string name="action_call_decline">Kieltäydy</string>
+  <string name="action_call_mic_mute">Mykistä mikrofoni</string>
   <string name="ab_action_speakerphone">Kaiutin päälle</string>
   <string name="ab_action_contact_add">Lisää yhteystietoihin</string>
+  <string name="ab_action_contact_add_question">Lisää yhteystietoihin?</string>
   <string name="hist_contact_added">Kontakti lisätty</string>
+  <string name="hist_invitation_received">Kutsu vastaanotettu</string>
   <string name="ab_action_audio_call">Äänipuhelu</string>
   <string name="ab_action_video_call">Videopuhelu</string>
+  <string name="ab_action_change_screen_orientation">Muuta näytön suuntaa</string>
   <string name="share_via">Jaa</string>
   <string name="write_a_message">Kirjoita viesti</string>
   <string name="scan_qr">Skannaa QR-koodi</string>
@@ -66,27 +103,59 @@
   <string name="message_sending">Viestiä lähetetään...</string>
   <string name="message_failed">Epäonnistui</string>
   <string name="time_just_now">Juuri nyt</string>
+  <string name="send_file">Lähetä tiedosto</string>
+  <string name="hist_file_sent">Tiedosto lähetetty</string>
+  <string name="hist_file_received">Tiedosto vastaanotettu</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera oikeudet</string>
   <string name="permission_dialog_camera_message">Videopuhelut vaativat toimiakseen kameran käyttöoikeudet.</string>
   <string name="ringtone_error_title">Virhe</string>
+  <string name="ringtone_error_format_not_supported">Tätä tiedostomuotoa ei tueta.</string>
+  <string name="ringtone_error_size_too_big">Tämä tiedosto on liian suuri. Maksimikoko on %1$dkt.</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Jami tarvitsee yhteystietojen lukuoikeudet tätä toimintoa varten.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Jami tarvitsee kirjoitusoikeudet soittolokiin tätä toimintoa varten.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skannaa lisättävän tunnuksen QR-koodi.</string>
+  <string name="title_activity_qrcode">Jaa tilini</string>
+  <string name="error_scan_no_camera_permissions">QR-skanneri tarvitsee kameran käyttöoikeuden toimiakseen.</string>
+  <string name="tab_code">Minun koodini</string>
+  <string name="tab_scan">Skannaa koodi</string>
   <!--Settings-->
+  <string name="clear_history_dialog_title">Tyhjennä historia?</string>
+  <string name="clear_history_dialog_message">Tätä toimintoa ei voi perua.</string>
   <string name="clear_history_completed">Historia on tyhjennetty.</string>
   <!--Conversation-->
+  <string name="conversation_details">Keskustelun tiedot</string>
   <string name="conversation_action_delete_this">Poista tämä keskustelu</string>
   <string name="conversation_action_delete_this_title">Poistetaanko tämä keskustelu?</string>
   <string name="conversation_action_delete_this_message">Tätä toimintoa ei voi perua.</string>
   <string name="conversation_action_history_clear">Tyhjennä historia</string>
+  <string name="conversation_action_history_clear_title">Tyhjennä keskusteluhistoria?</string>
+  <string name="conversation_action_history_clear_message">Tämä selvästikin tyhjentää keskusteluhistorian.</string>
   <string name="conversation_action_remove_this">Poista yhteystieto</string>
+  <string name="conversation_action_remove_this_title">Poista tämä yhteystieto?</string>
+  <string name="conversation_action_remove_this_message">Tämä poistaa yhteystiedon ja kaikki keskustelut tämän kanssa.</string>
   <string name="conversation_action_copy_peer_number">Kopioi numero</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s kopioitu leikepöydälle</string>
   <string name="conversation_action_select_peer_number">Valitse numero</string>
+  <string name="conversation_action_block_this">Estä yhteystieto</string>
+  <string name="conversation_action_go_to_call">Palaa jatkuvaan puheluun</string>
+  <string name="conversation_open_file_error">Laitteessa ei ole sovellusta, joka pystyisi avaamaan tämän tiedoston.</string>
+  <string name="clip_contact_uri">Yhteystiedon verkko-osoite</string>
+  <string name="block_contact_dialog_title">Estä %1$s?</string>
+  <string name="block_contact_dialog_message">%1$sei voi ottaa sinuun yhteyttä kunnes poistat hänen estonsa.</string>
+  <string name="block_contact_completed">%1$s estettiin.</string>
   <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">Lisää %1$s?</string>
   <string name="prompt_new_password">Uusi salasana</string>
+  <string name="prompt_new_password_optional">Uusi salasana (vaihtoehtoinen)</string>
+  <string name="prompt_new_password_repeat">Toista uusi salasana</string>
+  <string name="account_create_title">Tee Jami-tili</string>
+  <string name="prompt_new_username">Syötä uusi käyttäjänimi</string>
+  <string name="help_password_choose">Valitse muistettava, vahva salasana jota käytät Jami-tilisi suojaamiseen.</string>
+  <string name="help_password_enter">Syötä pääasiallisen Jami-tilisi salasana</string>
   <string name="wizard_next">Seuraava</string>
   <!--MenuHeaderView-->
   <!--Share fragment-->
@@ -95,6 +164,7 @@
   <!--Pending contact requests-->
   <string name="accept">Hyväksy</string>
   <string name="refuse">Kieltäydy</string>
+  <string name="block">Estä</string>
   <!--Send contact requests-->
   <string name="send_request_button">Lähetä</string>
   <!--Blacklist-->

@@ -119,6 +119,7 @@
   <string name="permission_dialog_write_call_log_message">Ring benötigt die Berechtigung \"Anruflisten schreiben\" für diese Funktion. Bitte erteilen Sie diese.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Scannen Sie den QR-Code des Kontos, das Sie hinzufügen möchten.</string>
+  <string name="tab_code">Mein Code</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Verlauf löschen?</string>
   <string name="clear_history_dialog_message">Diese Aktion kann nicht rückgängig gemacht werden.</string>
