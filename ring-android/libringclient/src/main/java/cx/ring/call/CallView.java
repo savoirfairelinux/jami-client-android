@@ -66,4 +66,6 @@ public interface CallView {
     void enterPipMode(SipCall sipCall);
 
     void prepareCall(boolean isIncoming);
+
+    void handleCallWakelock(boolean isAudioOnly);
 }
