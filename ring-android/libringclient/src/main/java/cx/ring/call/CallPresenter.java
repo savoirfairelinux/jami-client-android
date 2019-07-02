@@ -321,6 +321,7 @@ public class CallPresenter extends RootPresenter<CallView> {
                 timeUpdateTask.dispose();
             timeUpdateTask = mUiScheduler.schedulePeriodicallyDirect(this::updateTime, 0, 1, TimeUnit.SECONDS);
         } else if (call.isRinging()) {
+            view.handleCallWakelock(mAudioOnly);
             if (call.isIncoming()) {
                 if (mAccountService.getAccount(call.getAccount()).isAutoanswerEnabled()) {
                     mCallService.accept(call.getCallId());
