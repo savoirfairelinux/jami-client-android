@@ -136,6 +136,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                 .firstOrError()
                 .subscribe(conversation -> {
                     conversation.setVisible(true);
+                    updateOngoingCallView();
                     mConversationFacade.readMessages(mAccountService.getAccount(mAccountId), conversation);
                 }));
     }
@@ -307,7 +308,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
 
     private void updateOngoingCallView() {
         Conference conf = mConversation.getCurrentCall();
-        if (conf != null && conf.getState() != SipCall.State.INACTIVE) {
+        if (conf != null && (conf.getState() == SipCall.State.CURRENT || conf.getState() == SipCall.State.HOLD || conf.getState() == SipCall.State.RINGING)) {
             getView().displayOnGoingCallPane(true);
         } else {
             getView().displayOnGoingCallPane(false);
