@@ -112,7 +112,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     private MenuItem dialPadBtn = null;
     private boolean restartVideo = false;
     private boolean restartPreview = false;
-    private PowerManager.WakeLock mScreenWakeLock;
+    private PowerManager.WakeLock mScreenWakeLock = null;
     private int mCurrentOrientation = 0;
 
     private int mVideoWidth = -1;
@@ -307,8 +307,9 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         setHasOptionsMenu(true);
         super.onViewCreated(view, savedInstanceState);
         mCurrentOrientation = getResources().getConfiguration().orientation;
+        requireActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         PowerManager powerManager = (PowerManager) requireContext().getSystemService(Context.POWER_SERVICE);
-        mScreenWakeLock = powerManager.newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "ring:callLock");
+        mScreenWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "ring:callLock");
         mScreenWakeLock.setReferenceCounted(false);
 
         if (mScreenWakeLock != null && !mScreenWakeLock.isHeld()) {
@@ -375,6 +376,26 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             public void afterTextChanged(Editable s) {
             }
         });
+    }
+
+    /**
+     * Releases current wakelock and acquires a new proximity wakelock if current call is audio only.
+     * @param isAudioOnly true if it is an audio call
+     */
+    @Override
+    public void handleCallWakelock(boolean isAudioOnly) {
+        if (isAudioOnly) {
+            if (mScreenWakeLock != null && mScreenWakeLock.isHeld()) {
+                mScreenWakeLock.release();
+            }
+            PowerManager powerManager = (PowerManager) requireContext().getSystemService(Context.POWER_SERVICE);
+            mScreenWakeLock = powerManager.newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "ring:callLock");
+            mScreenWakeLock.setReferenceCounted(false);
+
+            if (mScreenWakeLock != null && !mScreenWakeLock.isHeld()) {
+                mScreenWakeLock.acquire();
+            }
+        }
     }
 
     @Override

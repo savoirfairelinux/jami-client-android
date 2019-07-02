@@ -52,6 +52,7 @@ import android.view.SurfaceHolder;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.AnimationSet;
@@ -101,11 +102,11 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     private TvFragCallBinding binding;
 
     // Screen wake lock for incoming call
-    private PowerManager.WakeLock mScreenWakeLock;
     private Runnable runnable;
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     private int mPreviewWidth = 720, mPreviewHeight = 1280;
     private int mPreviewWidthRot = 720, mPreviewHeightRot = 1280;
+    private PowerManager.WakeLock mScreenWakeLock;
 
     private boolean mBackstackLost = false;
 
@@ -155,6 +156,9 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     }
 
     @Override
+    public void handleCallWakelock(boolean isAudioOnly) { }
+
+    @Override
     public void injectFragment(RingInjectionComponent component) {
         component.inject(this);
     }
@@ -194,7 +198,6 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         PowerManager powerManager = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
         mScreenWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "ring:callLock");
         mScreenWakeLock.setReferenceCounted(false);
@@ -233,6 +236,9 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     public void onDestroyView() {
         super.onDestroyView();
         mCompositeDisposable.clear();
+        if (mScreenWakeLock != null && mScreenWakeLock.isHeld()) {
+            mScreenWakeLock.release();
+        }
         presenter.hangupCall();
         runnable = null;
     }
@@ -244,7 +250,6 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
             mScreenWakeLock.release();
         }
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
