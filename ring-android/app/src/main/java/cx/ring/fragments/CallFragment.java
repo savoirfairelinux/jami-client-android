@@ -112,7 +112,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     private MenuItem dialPadBtn = null;
     private boolean restartVideo = false;
     private boolean restartPreview = false;
-    private PowerManager.WakeLock mScreenWakeLock;
+    private PowerManager.WakeLock mScreenWakeLock = null;
     private int mCurrentOrientation = 0;
 
     private int mVideoWidth = -1;
@@ -302,18 +302,29 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         }
     };
 
+    /**
+     * Enables the wakelock for a call. Enables proximity wakelock for audio calls or simply keeps screen on for video calls.
+     * @param isAudioOnly true if it is an audio call
+     */
+    @Override
+    public void handleCallWakelock(boolean isAudioOnly) {
+        if (isAudioOnly) {
+            PowerManager powerManager = (PowerManager) requireContext().getSystemService(Context.POWER_SERVICE);
+            mScreenWakeLock = powerManager.newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "ring:callLock");
+            mScreenWakeLock.setReferenceCounted(false);
+
+            if (mScreenWakeLock != null && !mScreenWakeLock.isHeld()) {
+                mScreenWakeLock.acquire();
+            }
+        } else
+            requireActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onViewCreated(view, savedInstanceState);
         mCurrentOrientation = getResources().getConfiguration().orientation;
-        PowerManager powerManager = (PowerManager) requireContext().getSystemService(Context.POWER_SERVICE);
-        mScreenWakeLock = powerManager.newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "ring:callLock");
-        mScreenWakeLock.setReferenceCounted(false);
-
-        if (mScreenWakeLock != null && !mScreenWakeLock.isHeld()) {
-            mScreenWakeLock.acquire();
-        }
 
         binding.videoSurface.getHolder().setFormat(PixelFormat.RGBA_8888);
         binding.videoSurface.getHolder().addCallback(new SurfaceHolder.Callback() {
