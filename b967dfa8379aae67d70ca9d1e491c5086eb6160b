@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "19fd31cd_864cc3e0",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/CallActivity.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 642
+      },
+      "writtenOn": "2019-07-03T18:19:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3626bfbe_c44b3fba",
+      "revId": "b967dfa8379aae67d70ca9d1e491c5086eb6160b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d120a60_f8d13b46",
         "filename": "ring-android/app/src/main/java/cx/ring/client/CallActivity.java",
         "patchSetId": 9
