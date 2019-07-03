@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aca8773_642f8b0d",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/settings/SettingsPresenter.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-07-03T15:34:18Z",
+      "side": 1,
+      "message": "should clear history for all accounts",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 81
+      },
+      "revId": "07d64f54cc37a6153ec95553559d169c6ba907ea",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
