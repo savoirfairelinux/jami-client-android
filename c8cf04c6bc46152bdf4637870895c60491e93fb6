@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85544238_bed5c721",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/Account.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-07-03T18:28:45Z",
+      "side": 1,
+      "message": "What if conversation is not for a contact (eg contact request) ?",
+      "range": {
+        "startLine": 198,
+        "startChar": 12,
+        "endLine": 198,
+        "endChar": 43
+      },
+      "revId": "c8cf04c6bc46152bdf4637870895c60491e93fb6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
