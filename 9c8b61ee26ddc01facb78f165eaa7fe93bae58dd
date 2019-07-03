@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4e54aec9_109ce363",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/CallActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 642
+      },
+      "writtenOn": "2019-07-03T15:26:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49a7f179_27988e40",
+      "range": {
+        "startLine": 49,
+        "startChar": 31,
+        "endLine": 49,
+        "endChar": 50
+      },
+      "revId": "9c8b61ee26ddc01facb78f165eaa7fe93bae58dd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8136ae70_54dd5141",
         "filename": "ring-android/app/src/main/java/cx/ring/client/CallActivity.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "9c8b61ee26ddc01facb78f165eaa7fe93bae58dd",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "453e31a7_eb40ccc9",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/CallActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 642
+      },
+      "writtenOn": "2019-07-03T15:26:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8136ae70_54dd5141",
+      "range": {
+        "startLine": 104,
+        "startChar": 8,
+        "endLine": 118,
+        "endChar": 9
+      },
+      "revId": "9c8b61ee26ddc01facb78f165eaa7fe93bae58dd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f017b5b3_2edba246",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 642
+      },
+      "writtenOn": "2019-07-03T15:26:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "422b5be9_2f0ef8cb",
+      "range": {
+        "startLine": 593,
+        "startChar": 0,
+        "endLine": 594,
+        "endChar": 54
+      },
+      "revId": "9c8b61ee26ddc01facb78f165eaa7fe93bae58dd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee911194_d76fa110",
         "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "9c8b61ee26ddc01facb78f165eaa7fe93bae58dd",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7f09515_3c813477",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 642
+      },
+      "writtenOn": "2019-07-03T15:26:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee911194_d76fa110",
+      "range": {
+        "startLine": 773,
+        "startChar": 40,
+        "endLine": 773,
+        "endChar": 59
+      },
+      "revId": "9c8b61ee26ddc01facb78f165eaa7fe93bae58dd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "32c2e445_c377d76f",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 642
+      },
+      "writtenOn": "2019-07-03T15:26:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14c06172_318b5190",
+      "range": {
+        "startLine": 771,
+        "startChar": 16,
+        "endLine": 777,
+        "endChar": 17
+      },
+      "revId": "9c8b61ee26ddc01facb78f165eaa7fe93bae58dd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bb775fd_9866f4ef",
         "filename": "ring-android/libringclient/src/main/java/cx/ring/call/CallPresenter.java",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "9c8b61ee26ddc01facb78f165eaa7fe93bae58dd",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a72ca2fd_c371c604",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/call/CallPresenter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 642
+      },
+      "writtenOn": "2019-07-03T15:26:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bb775fd_9866f4ef",
+      "range": {
+        "startLine": 164,
+        "startChar": 8,
+        "endLine": 164,
+        "endChar": 76
+      },
+      "revId": "9c8b61ee26ddc01facb78f165eaa7fe93bae58dd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
