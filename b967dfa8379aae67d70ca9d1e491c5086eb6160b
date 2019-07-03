@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d120a60_f8d13b46",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/CallActivity.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-07-03T17:20:45Z",
+      "side": 1,
+      "message": "consistency",
+      "range": {
+        "startLine": 104,
+        "startChar": 19,
+        "endLine": 104,
+        "endChar": 89
+      },
+      "revId": "b967dfa8379aae67d70ca9d1e491c5086eb6160b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
