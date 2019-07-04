@@ -19,12 +19,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/share_instruction"
+        app:layout_constraintTop_toBottomOf="@+id/share_qr_instruction"
         tools:layout_conversion_wrapHeight="1050"
         tools:layout_conversion_wrapWidth="1050" />
 
     <TextView
-        android:id="@+id/share_instruction"
+        android:id="@+id/share_qr_instruction"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="76dp"

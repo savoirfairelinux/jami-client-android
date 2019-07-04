@@ -185,7 +185,7 @@ public class MainPresenter extends RootPresenter<MainView> {
     }
 
     public String getAccountUri() {
-        return mAccountService.getCurrentAccount().getDisplayUri();
+        return mAccountService.getCurrentAccount().getUri();
     }
 
     public void reloadAccountInfos() {

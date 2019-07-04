@@ -31,16 +31,20 @@ import butterknife.BindString;
 import butterknife.BindView;
 import cx.ring.R;
 import cx.ring.dependencyinjection.RingInjectionComponent;
+import cx.ring.model.Account;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.mvp.GenericView;
+import cx.ring.services.VCardServiceImpl;
 import cx.ring.share.SharePresenter;
 import cx.ring.share.ShareViewModel;
+import cx.ring.utils.Log;
 import cx.ring.utils.QRCodeUtils;
+import cx.ring.views.AvatarDrawable;
 
 public class TVShareFragment extends BaseFragment<SharePresenter> implements GenericView<ShareViewModel> {
 
 
-    @BindView(R.id.share_instruction)
+    @BindView(R.id.share_qr_instruction)
     protected TextView mShareInstruction;
 
     @BindView(R.id.qr_image)
@@ -48,6 +52,12 @@ public class TVShareFragment extends BaseFragment<SharePresenter> implements Gen
 
     @BindString(R.string.share_message)
     protected String mShareMessage;
+
+    @BindView(R.id.share_uri)
+    protected TextView mShareUri;
+
+    @BindView(R.id.qr_user_photo)
+    protected ImageView mUserPhoto;
 
     @Override
     public int getLayout() {
@@ -67,13 +77,15 @@ public class TVShareFragment extends BaseFragment<SharePresenter> implements Gen
     @Override
     public void showViewModel(final ShareViewModel viewModel) {
         final QRCodeUtils.QRCodeData qrCodeData = viewModel.getAccountQRCodeData(0x00000000, 0xFFFFFFFF);
+        getUserAvatar(viewModel.getAccount());
 
-        if (mQrImage == null || mShareInstruction == null) {
+        if (mQrImage == null || mShareInstruction == null || mShareUri == null) {
             return;
         }
 
         if (qrCodeData == null) {
             mQrImage.setVisibility(View.INVISIBLE);
+
         } else {
             Bitmap bitmap = Bitmap.createBitmap(qrCodeData.getWidth(), qrCodeData.getHeight(), Bitmap.Config.ARGB_8888);
             bitmap.setPixels(qrCodeData.getData(), 0, qrCodeData.getWidth(), 0, 0, qrCodeData.getWidth(), qrCodeData.getHeight());
@@ -81,5 +93,23 @@ public class TVShareFragment extends BaseFragment<SharePresenter> implements Gen
             mShareInstruction.setText(mShareMessage);
             mQrImage.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void getUserAvatar(Account account) {
+        VCardServiceImpl
+                .loadProfile(account)
+                .doOnSuccess(profile -> {
+                    mShareUri.setVisibility(View.VISIBLE);
+                    if (profile.first != null && !profile.first.isEmpty()) {
+                        mShareUri.setText(profile.first);
+                    } else {
+                        mShareUri.setText(account.getDisplayUri());
+                    }
+                })
+                .flatMap(p -> AvatarDrawable.load(getActivity(), account))
+                .subscribe(a -> {
+                    mUserPhoto.setVisibility(View.VISIBLE);
+                    mUserPhoto.setImageDrawable(a);
+                }, e-> Log.e(TAG, e.getMessage()));
     }
 }
