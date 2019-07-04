@@ -19,23 +19,37 @@ along with this program; if not, write to the Free Software
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/share_instruction"
-        android:layout_width="wrap_content"
+        android:id="@+id/share_qr_instruction"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/padding_small"
-        android:layout_marginEnd="@dimen/padding_small"
+        android:layout_marginBottom="@dimen/padding_small"
         android:gravity="center"
         android:text="@string/share_message"
         android:textColor="@color/text_color_primary_dark"
         android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/qr_image"
+        app:layout_constraintEnd_toEndOf="@+id/qr_image"
+        app:layout_constraintStart_toStartOf="@+id/qr_image" />
+
+
+    <TextView
+        android:id="@+id/share_uri"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/padding_small"
+        android:layout_marginEnd="48dp"
+        android:gravity="center"
+        android:text=""
+        android:textColor="@color/text_color_primary_dark"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/qr_image"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/qr_image"
         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -43,15 +57,26 @@ along with this program; if not, write to the Free Software
         android:id="@+id/qr_image"
         android:layout_width="@dimen/qr_code_size"
         android:layout_height="@dimen/qr_code_size"
-        android:layout_marginEnd="48dp"
+        android:layout_marginStart="48dp"
         android:background="@null"
         android:gravity="center"
         android:padding="@dimen/padding_small"
         android:scaleType="fitCenter"
         android:transitionName="photo"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/qr_user_photo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="32dp"
+        app:layout_constraintBottom_toBottomOf="@+id/share_uri"
+        app:layout_constraintStart_toEndOf="@+id/share_uri"
+        app:layout_constraintTop_toTopOf="@+id/share_uri"
+        app:layout_constraintVertical_bias="0.504"
+        tools:srcCompat="@tools:sample/avatars[0]" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
