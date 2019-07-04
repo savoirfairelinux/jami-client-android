@@ -40,7 +40,7 @@ import cx.ring.utils.QRCodeUtils;
 public class TVShareFragment extends BaseFragment<SharePresenter> implements GenericView<ShareViewModel> {
 
 
-    @BindView(R.id.share_instruction)
+    @BindView(R.id.share_qr_instruction)
     protected TextView mShareInstruction;
 
     @BindView(R.id.qr_image)
@@ -48,6 +48,9 @@ public class TVShareFragment extends BaseFragment<SharePresenter> implements Gen
 
     @BindString(R.string.share_message)
     protected String mShareMessage;
+
+    @BindView(R.id.share_uri)
+    protected TextView mShareUri;
 
     @Override
     public int getLayout() {
@@ -67,9 +70,14 @@ public class TVShareFragment extends BaseFragment<SharePresenter> implements Gen
     @Override
     public void showViewModel(final ShareViewModel viewModel) {
         final QRCodeUtils.QRCodeData qrCodeData = viewModel.getAccountQRCodeData(0x00000000, 0xFFFFFFFF);
+        String uri = viewModel.getAccountDisplayUri();
 
-        if (mQrImage == null || mShareInstruction == null) {
+        if (mQrImage == null || mShareInstruction == null || mShareUri == null) {
             return;
+        }
+
+        if(uri == null) {
+            mShareUri.setVisibility(View.INVISIBLE);
         }
 
         if (qrCodeData == null) {
@@ -79,7 +87,9 @@ public class TVShareFragment extends BaseFragment<SharePresenter> implements Gen
             bitmap.setPixels(qrCodeData.getData(), 0, qrCodeData.getWidth(), 0, 0, qrCodeData.getWidth(), qrCodeData.getHeight());
             mQrImage.setImageBitmap(bitmap);
             mShareInstruction.setText(mShareMessage);
+            mShareUri.setText(uri);
             mQrImage.setVisibility(View.VISIBLE);
+            mShareUri.setVisibility(View.VISIBLE);
         }
     }
 }

@@ -23,8 +23,8 @@ along with this program; if not, write to the Free Software
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/share_instruction"
-        android:layout_width="wrap_content"
+        android:id="@+id/share_qr_instruction"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/padding_small"
         android:layout_marginEnd="@dimen/padding_small"
@@ -33,24 +33,39 @@ along with this program; if not, write to the Free Software
         android:textColor="@color/text_color_primary_dark"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/qr_image"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/qr_image"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/share_uri"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_small"
+        android:gravity="center"
+        android:text="@sting/take_a_photo"
+        android:textColor="@color/text_color_primary_dark"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/share_qr_instruction"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/share_qr_instruction"
+        app:layout_constraintTop_toBottomOf="@+id/share_qr_instruction" />
 
 
     <ImageView
         android:id="@+id/qr_image"
         android:layout_width="@dimen/qr_code_size"
         android:layout_height="@dimen/qr_code_size"
-        android:layout_marginEnd="48dp"
+        android:layout_marginStart="48dp"
         android:background="@null"
         android:gravity="center"
         android:padding="@dimen/padding_small"
         android:scaleType="fitCenter"
         android:transitionName="photo"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
