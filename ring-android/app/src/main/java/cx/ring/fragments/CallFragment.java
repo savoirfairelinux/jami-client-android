@@ -186,10 +186,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                     prepareCall(false);
                 }
                 else if (action.equals(ACTION_GET_CALL) || action.equals(CallActivity.ACTION_CALL_ACCEPT)) {
-                    String confId = getArguments().getString(KEY_CONF_ID);
-                    if(action.equals(CallActivity.ACTION_CALL_ACCEPT))
-                        presenter.initIncoming(confId);
-                    presenter.updateIncomingCall(confId);
+                    presenter.initIncomingCall(getArguments().getString(KEY_CONF_ID), action.equals(ACTION_GET_CALL));
                 }
             }
         }

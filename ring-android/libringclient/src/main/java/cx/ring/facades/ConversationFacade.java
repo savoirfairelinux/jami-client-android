@@ -344,8 +344,8 @@ public class ConversationFacade {
         getAccountSubject(txt.getAccount())
                 .flatMapObservable(Account::getConversationsSubject)
                 .firstOrError()
-                .subscribeOn(Schedulers.computation())
-                .subscribe(c -> updateTextNotifications(txt.getAccount(), c));
+                .subscribeOn(Schedulers.io())
+                .subscribe(c -> updateTextNotifications(txt.getAccount(), c), e -> Log.e(TAG, e.getMessage()));
     }
 
     public void acceptRequest(String accountId, Uri contactUri) {

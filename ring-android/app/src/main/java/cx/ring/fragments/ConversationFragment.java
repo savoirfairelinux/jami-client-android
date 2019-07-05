@@ -90,6 +90,7 @@ import cx.ring.utils.MediaButtonsHelper;
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -591,6 +592,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         }
         int targetSize = (int) (AvatarFactory.SIZE_AB * context.getResources().getDisplayMetrics().density);
         actionbarTarget = AvatarFactory.getBitmapAvatar(context, contact, targetSize)
+                .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(b -> actionBar.setLogo(new BitmapDrawable(context.getResources(), b)));
 
