@@ -84,13 +84,28 @@ public class CallActivity extends AppCompatActivity {
             }
         });
 
-        String action = getIntent().getAction();
+        Intent intent = getIntent();
+
+        if(intent != null)
+            handleNewIntent(intent);
+
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        handleNewIntent(intent);
+    }
+
+    private void handleNewIntent(Intent intent) {
+        String action = intent.getAction();
 
         if (Intent.ACTION_CALL.equals(action) || ACTION_CALL.equals(action)) {
 
-            boolean audioOnly = getIntent().getBooleanExtra(CallFragment.KEY_AUDIO_ONLY, true);
-            String accountId = getIntent().getStringExtra(ConversationFragment.KEY_ACCOUNT_ID);
-            String contactRingId = getIntent().getStringExtra(ConversationFragment.KEY_CONTACT_RING_ID);
+            boolean audioOnly = intent.getBooleanExtra(CallFragment.KEY_AUDIO_ONLY, true);
+            String accountId = intent.getStringExtra(ConversationFragment.KEY_ACCOUNT_ID);
+            String contactRingId = intent.getStringExtra(ConversationFragment.KEY_CONTACT_RING_ID);
             // Reload a new view
             CallFragment callFragment = CallFragment.newInstance(CallFragment.ACTION_PLACE_CALL,
                     accountId,
@@ -99,7 +114,7 @@ public class CallActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit();
 
         } else if (Intent.ACTION_VIEW.equals(action) || ACTION_CALL_ACCEPT.equals(action)) {
-            String confId = getIntent().getStringExtra(NotificationService.KEY_CALL_ID);
+            String confId = intent.getStringExtra(NotificationService.KEY_CALL_ID);
             // Reload a new view
             CallFragment callFragment = CallFragment.newInstance(Intent.ACTION_VIEW.equals(action) ? CallFragment.ACTION_GET_CALL : ACTION_CALL_ACCEPT, confId);
             getSupportFragmentManager().beginTransaction().replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit();

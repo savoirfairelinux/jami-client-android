@@ -145,7 +145,7 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
             if (action.equals(ACTION_PLACE_CALL)) {
                 prepareCall(false);
             } else if (action.equals(ACTION_GET_CALL)) {
-                presenter.updateIncomingCall(getArguments().getString(KEY_CONF_ID));
+                presenter.initIncomingCall(getArguments().getString(KEY_CONF_ID), true);
             }
         }
     }

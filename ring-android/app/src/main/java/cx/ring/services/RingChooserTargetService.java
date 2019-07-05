@@ -43,6 +43,7 @@ import cx.ring.facades.ConversationFacade;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
+import io.reactivex.schedulers.Schedulers;
 
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class RingChooserTargetService extends ChooserTargetService {
@@ -73,7 +74,9 @@ public class RingChooserTargetService extends ChooserTargetService {
                             List<Future<Bitmap>> futureIcons = new ArrayList<>(conversations.size());
                             for (Conversation conversation : conversations) {
                                 CallContact contact = conversation.getContact();
-                                futureIcons.add(AvatarFactory.getBitmapAvatar(this, contact, targetSize).toFuture());
+                                futureIcons.add(AvatarFactory.getBitmapAvatar(this, contact, targetSize)
+                                        .subscribeOn(Schedulers.computation())
+                                        .toFuture());
                             }
                             int i=0;
                             List<ChooserTarget> choosers = new ArrayList<>(conversations.size());

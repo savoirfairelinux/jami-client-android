@@ -389,6 +389,7 @@ public class AccountService {
                             return account;
                         }
                     }
+                    Log.d(TAG, "getAccountSingle() can't find account " + accountId);
                     throw new IllegalArgumentException();
                 });
     }

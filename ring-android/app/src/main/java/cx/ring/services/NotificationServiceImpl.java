@@ -142,13 +142,6 @@ public class NotificationServiceImpl implements NotificationService {
 
         notificationManager.createNotificationChannelGroup(new NotificationChannelGroup(NOTIF_CALL_GROUP, mContext.getString(R.string.notif_group_calls)));
 
-        // Incoming call channel
-        NotificationChannel incomingCallChannel = new NotificationChannel(NOTIF_CHANNEL_INCOMING_CALL, mContext.getString(R.string.notif_channel_incoming_calls), NotificationManager.IMPORTANCE_HIGH);
-        incomingCallChannel.enableVibration(true);
-        incomingCallChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
-        incomingCallChannel.setGroup(NOTIF_CALL_GROUP);
-        notificationManager.createNotificationChannel(incomingCallChannel);
-
         // Missed calls channel
         NotificationChannel missedCallsChannel = new NotificationChannel(NOTIF_CHANNEL_MISSED_CALL, mContext.getString(R.string.notif_channel_missed_calls), NotificationManager.IMPORTANCE_DEFAULT);
         missedCallsChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
@@ -156,11 +149,18 @@ public class NotificationServiceImpl implements NotificationService {
         missedCallsChannel.setGroup(NOTIF_CALL_GROUP);
         notificationManager.createNotificationChannel(missedCallsChannel);
 
+        // Incoming call channel
+        NotificationChannel incomingCallChannel = new NotificationChannel(NOTIF_CHANNEL_INCOMING_CALL, mContext.getString(R.string.notif_channel_incoming_calls), NotificationManager.IMPORTANCE_HIGH);
+        incomingCallChannel.enableVibration(true);
+        incomingCallChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+        incomingCallChannel.setGroup(NOTIF_CALL_GROUP);
+        incomingCallChannel.setSound(null, null);
+        notificationManager.createNotificationChannel(incomingCallChannel);
 
         // Call in progress channel
         NotificationChannel callInProgressChannel = new NotificationChannel(NOTIF_CHANNEL_CALL_IN_PROGRESS, mContext.getString(R.string.notif_channel_call_in_progress), NotificationManager.IMPORTANCE_DEFAULT);
         callInProgressChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
-        missedCallsChannel.setSound(null, null);
+        callInProgressChannel.setSound(null, null);
         callInProgressChannel.setGroup(NOTIF_CALL_GROUP);
         notificationManager.createNotificationChannel(callInProgressChannel);
 
@@ -235,6 +235,9 @@ public class NotificationServiceImpl implements NotificationService {
                     .setContentText(mContext.getText(R.string.notif_current_call))
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setContentIntent(gotoIntent)
+                    .setSound(null)
+                    .setColorized(true)
+                    .setColor(mContext.getResources().getColor(R.color.color_primary_light))
                     .addAction(R.drawable.baseline_call_end_24, mContext.getText(R.string.action_call_hangup),
                             PendingIntent.getService(mContext, random.nextInt(),
                                     new Intent(DRingService.ACTION_CALL_END)
@@ -269,6 +272,7 @@ public class NotificationServiceImpl implements NotificationService {
                         .setContentText(mContext.getText(R.string.notif_outgoing_call))
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                         .setContentIntent(gotoIntent)
+                        .setSound(null)
                         .addAction(R.drawable.baseline_call_end_24, mContext.getText(R.string.action_call_hangup),
                                 PendingIntent.getService(mContext, random.nextInt(),
                                         new Intent(DRingService.ACTION_CALL_END)

@@ -87,14 +87,12 @@ public class AvatarFactory {
 
     public static Single<Bitmap> getBitmapAvatar(Context context, CallContact contact, int size) {
         return getAvatar(context, contact)
-                .map(d -> drawableToBitmap(d, size))
-                .subscribeOn(Schedulers.computation());
+                .map(d -> drawableToBitmap(d, size));
     }
 
     public static Single<Bitmap> getBitmapAvatar(Context context, Account account, int size) {
         return AvatarDrawable.load(context, account)
-                .map(d -> drawableToBitmap(d, size))
-                .subscribeOn(Schedulers.computation());
+                .map(d -> drawableToBitmap(d, size));
     }
 
     private static RequestBuilder<Drawable> getGlideAvatar(Context context, CallContact contact) {

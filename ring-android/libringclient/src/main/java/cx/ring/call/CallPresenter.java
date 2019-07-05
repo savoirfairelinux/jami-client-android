@@ -35,6 +35,7 @@ import cx.ring.services.HardwareService;
 import cx.ring.services.NotificationService;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
+import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.Disposable;
 
@@ -55,6 +56,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     private boolean permissionChanged = false;
     private boolean pipIsActive = false;
     private boolean incomingIsFullIntent = true;
+    private boolean callInitialized = false;
 
     private int videoWidth = -1;
     private int videoHeight = -1;
@@ -148,28 +150,43 @@ public class CallPresenter extends RootPresenter<CallView> {
                 }));
     }
 
-    public void updateIncomingCall(String confId) {
-        //getView().blockScreenRotation();
-        mCompositeDisposable.add(mCallService.getCallUpdates(confId)
-                .observeOn(mUiScheduler)
-                .subscribe(call -> {
-                    contactUpdate(call);
-                    confUpdate(call);
-                }, e -> {
-                    hangupCall();
-                    Log.e(TAG, "Error with updateIncoming: " + e.getMessage());
-                }));
-    }
 
-    public void initIncoming(String confId) {
-        mCompositeDisposable.add(mCallService.getCallUpdates(confId).observeOn(mUiScheduler).firstOrError().subscribe(call -> {
-            incomingIsFullIntent = false;
-            contactUpdate(call);
-            confUpdate(call);
-            getView().prepareCall(true);
+    /**
+     * Returns to or starts an incoming call
+     *
+     * @param confId         the call id
+     * @param actionViewOnly true if only returning to call or if using full screen intent
+     */
+    public void initIncomingCall(String confId, boolean actionViewOnly) {
+        //getView().blockScreenRotation();
+
+        // if the call is incoming through a full intent, this allows the incoming call to display
+        incomingIsFullIntent = actionViewOnly;
+
+        Observable<SipCall> callObservable = mCallService.getCallUpdates(confId).observeOn(mUiScheduler).share();
+
+        // Handles the case where the call has been accepted, emits a single so as to only check for permissions and start the call once
+        mCompositeDisposable.add(callObservable.firstOrError().subscribe(call -> {
+            if (!actionViewOnly) {
+                contactUpdate(call);
+                confUpdate(call);
+                callInitialized = true;
+                getView().prepareCall(true);
+            }
         }, e -> {
             hangupCall();
-            Log.e(TAG, "Error with initIncoming: " + e.getMessage());
+            Log.e(TAG, "Error with initIncoming, preparing call flow :" , e);
+        }));
+
+        // Handles retrieving call updates. Items emitted are only used if call is already in process or if user is returning to a call.
+        mCompositeDisposable.add(callObservable.subscribe(call -> {
+            if (callInitialized || actionViewOnly) {
+                contactUpdate(call);
+                confUpdate(call);
+            }
+        }, e -> {
+            hangupCall();
+            Log.e(TAG, "Error with initIncoming, action view flow: ", e);
         }));
     }
 

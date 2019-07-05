@@ -138,7 +138,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                     conversation.setVisible(true);
                     updateOngoingCallView();
                     mConversationFacade.readMessages(mAccountService.getAccount(mAccountId), conversation);
-                }));
+                }, e-> Log.e(TAG, "Error loading conversation", e)));
     }
 
     private CallContact initContact(final Account account, final Uri uri, final ConversationView view) {
@@ -291,15 +291,10 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         }
 
         Conference conf = mConversation.getCurrentCall();
-
-        if (conf != null && (conf.getParticipants().isEmpty()
-                || conf.getParticipants().get(0).getCallState() == SipCall.State.INACTIVE
-                || conf.getParticipants().get(0).getCallState() == SipCall.State.FAILURE)) {
-            mConversation.removeConference(conf);
-            conf = null;
-        }
-
-        if (conf != null) {
+        if (conf != null
+                && !conf.getParticipants().isEmpty()
+                && conf.getParticipants().get(0).getCallState() != SipCall.State.INACTIVE
+                && conf.getParticipants().get(0).getCallState() != SipCall.State.FAILURE) {
             getView().goToCallActivity(conf.getId());
         } else {
             getView().goToCallActivityWithResult(mAccountId, mContactRingId.getRawUriString(), audioOnly);
