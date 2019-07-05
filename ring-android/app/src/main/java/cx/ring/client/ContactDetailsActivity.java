@@ -60,8 +60,11 @@ import cx.ring.facades.ConversationFacade;
 import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.CallContact;
+import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
+import cx.ring.model.SipCall;
 import cx.ring.services.AccountService;
+import cx.ring.services.NotificationService;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -268,12 +271,27 @@ public class ContactDetailsActivity extends AppCompatActivity {
     }
 
     private void goToCallActivity(String accountId, String contactRingId, boolean audioOnly) {
-        Intent intent = new Intent(CallActivity.ACTION_CALL)
-                .setClass(getApplicationContext(), CallActivity.class)
-                .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
-                .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactRingId)
-                .putExtra(CallFragment.KEY_AUDIO_ONLY, audioOnly);
-        startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
+        Conference conf = mConversation.getCurrentCall();
+
+        if (conf != null && (conf.getParticipants().isEmpty()
+                || conf.getParticipants().get(0).getCallState() == SipCall.State.INACTIVE
+                || conf.getParticipants().get(0).getCallState() == SipCall.State.FAILURE)) {
+            mConversation.removeConference(conf);
+            conf = null;
+        }
+
+        if (conf != null) {
+            startActivity(new Intent(Intent.ACTION_VIEW)
+                    .setClass(getApplicationContext(), CallActivity.class)
+                    .putExtra(NotificationService.KEY_CALL_ID, conf.getId()));
+        } else {
+            Intent intent = new Intent(Intent.ACTION_CALL)
+                    .setClass(getApplicationContext(), CallActivity.class)
+                    .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
+                    .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactRingId)
+                    .putExtra(CallFragment.KEY_AUDIO_ONLY, audioOnly);
+            startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
+        }
     }
 
     private void goToConversationActivity(String accountId, String contactRingId) {

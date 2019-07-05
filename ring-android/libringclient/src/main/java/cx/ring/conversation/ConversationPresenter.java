@@ -138,7 +138,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                     conversation.setVisible(true);
                     updateOngoingCallView();
                     mConversationFacade.readMessages(mAccountService.getAccount(mAccountId), conversation);
-                }));
+                }, e-> Log.e(TAG, "Error loading conversation", e)));
     }
 
     private CallContact initContact(final Account account, final Uri uri, final ConversationView view) {

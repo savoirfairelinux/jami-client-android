@@ -235,6 +235,7 @@ public class NotificationServiceImpl implements NotificationService {
                     .setContentText(mContext.getText(R.string.notif_current_call))
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setContentIntent(gotoIntent)
+                    .setSound(null)
                     .addAction(R.drawable.baseline_call_end_24, mContext.getText(R.string.action_call_hangup),
                             PendingIntent.getService(mContext, random.nextInt(),
                                     new Intent(DRingService.ACTION_CALL_END)
@@ -269,6 +270,7 @@ public class NotificationServiceImpl implements NotificationService {
                         .setContentText(mContext.getText(R.string.notif_outgoing_call))
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                         .setContentIntent(gotoIntent)
+                        .setSound(null)
                         .addAction(R.drawable.baseline_call_end_24, mContext.getText(R.string.action_call_hangup),
                                 PendingIntent.getService(mContext, random.nextInt(),
                                         new Intent(DRingService.ACTION_CALL_END)
