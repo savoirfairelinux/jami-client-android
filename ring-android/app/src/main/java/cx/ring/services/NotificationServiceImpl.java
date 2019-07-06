@@ -207,7 +207,6 @@ public class NotificationServiceImpl implements NotificationService {
         }
 
         SipCall call = conference.getParticipants().get(0);
-        CallContact contact = call.getContact();
         final int notificationId = call.getCallId().hashCode();
         notificationManager.cancel(notificationId);
 
@@ -227,8 +226,8 @@ public class NotificationServiceImpl implements NotificationService {
             return;
         }
 
-        NotificationCompat.Builder messageNotificationBuilder = null;
-
+        CallContact contact = call.getContact();
+        NotificationCompat.Builder messageNotificationBuilder;
         if (conference.isOnGoing()) {
             messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_CALL_IN_PROGRESS);
             messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_current_call_title, contact.getDisplayName()))
@@ -247,7 +246,6 @@ public class NotificationServiceImpl implements NotificationService {
         } else if (conference.isRinging()) {
             if (conference.isIncoming()) {
                 messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_INCOMING_CALL);
-                Bundle extras = new Bundle();
                 messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_incoming_call_title, contact.getDisplayName()))
                         .setPriority(NotificationCompat.PRIORITY_MAX)
                         .setContentText(mContext.getText(R.string.notif_incoming_call))
@@ -264,8 +262,7 @@ public class NotificationServiceImpl implements NotificationService {
                                         new Intent(DRingService.ACTION_CALL_ACCEPT)
                                                 .setClass(mContext, DRingService.class)
                                                 .putExtra(KEY_CALL_ID, call.getCallId()),
-                                        PendingIntent.FLAG_ONE_SHOT))
-                        .addExtras(extras);
+                                        PendingIntent.FLAG_ONE_SHOT));
             } else {
                 messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_CALL_IN_PROGRESS);
                 messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_outgoing_call_title, contact.getDisplayName()))
@@ -273,6 +270,8 @@ public class NotificationServiceImpl implements NotificationService {
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                         .setContentIntent(gotoIntent)
                         .setSound(null)
+                        .setColorized(true)
+                        .setColor(mContext.getResources().getColor(R.color.color_primary_light))
                         .addAction(R.drawable.baseline_call_end_24, mContext.getText(R.string.action_call_hangup),
                                 PendingIntent.getService(mContext, random.nextInt(),
                                         new Intent(DRingService.ACTION_CALL_END)
@@ -280,6 +279,8 @@ public class NotificationServiceImpl implements NotificationService {
                                                 .putExtra(KEY_CALL_ID, call.getCallId()),
                                         PendingIntent.FLAG_ONE_SHOT));
             }
+        } else {
+            return;
         }
 
         messageNotificationBuilder.setOngoing(true)
@@ -287,12 +288,7 @@ public class NotificationServiceImpl implements NotificationService {
                 .setSmallIcon(R.drawable.ic_ring_logo_white);
 
         setContactPicture(contact, messageNotificationBuilder);
-
-        messageNotificationBuilder.setColor(ResourcesCompat.getColor(mContext.getResources(),
-                R.color.color_primary_dark, null));
-
         notificationManager.notify(notificationId, messageNotificationBuilder.build());
-        mNotificationBuilders.put(notificationId, messageNotificationBuilder);
     }
 
     @Override
