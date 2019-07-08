@@ -44,11 +44,11 @@
   <string name="notif_missed_incoming_call">Apel pierdut</string>
   <string name="notif_incoming_call_title">Apel de la %1$s</string>
   <string name="notif_incoming_call">Apel</string>
-  <string name="notif_current_call_title">Apelul curent cu %1$s</string>
-  <string name="notif_current_call">Apelul curent</string>
+  <string name="notif_current_call">Apel în curs</string>
   <string name="notif_channel_calls">Apeluri</string>
   <string name="notif_channel_messages">Mesaje</string>
   <string name="notif_channel_requests">Cereri</string>
+  <string name="notif_group_calls">Apeluri</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Tu:</string>
   <string name="action_call_hangup">Închide</string>

@@ -57,8 +57,7 @@
   <string name="notif_incoming_call">ਆਉਂਦੀ ਕਾਲ</string>
   <string name="notif_outgoing_call_title">%1$s ਨੂੰ ਜਾਂਦੀ ਕਾਲ</string>
   <string name="notif_outgoing_call">ਜਾਂਦੀ ਕਾਲ</string>
-  <string name="notif_current_call_title">%1$s ਨਾਲ ਮੌਜੂਦਾ ਕਾਲ</string>
-  <string name="notif_current_call">ਮੌਜੂਦਾ ਕਾਲ</string>
+  <string name="notif_current_call">ਜਾਂਦੀ ਕਾਲ</string>
   <string name="notif_channel_calls">ਕਾਲਾਂ</string>
   <string name="notif_channel_missed_calls">ਖੁੰਝੀਆਂ ਕਾਲਾਂ</string>
   <string name="notif_channel_messages">ਸੁਨੇਹੇ</string>
@@ -66,6 +65,7 @@
   <string name="notif_channel_file_transfer">ਫ਼ਾਈਲ ਤਬਾਦਲਾ</string>
   <string name="notif_channel_background_service">ਬੈਕਗ੍ਰਾਊਂਡ ਸੇਵਾ</string>
   <string name="notif_channel_background_service_descr">ਕਿਸੇ ਵੇਲੇ ਵੀ ਕਾਲਾਂ ਅਤੇ ਸੁਨੇਹੇ ਆਉਣ ਦਿਓ।</string>
+  <string name="notif_group_calls">ਕਾਲਾਂ</string>
   <string name="notif_background_service">Jami ਐਪ ਫਿਲਹਾਲ ਬੈਕਗ੍ਰਾਊਂਡ ਵਿੱਚ ਚੱਲ ਰਹੀ ਹੈ</string>
   <string name="notif_mark_as_read">ਪੜ੍ਹੇ ਵਜੋਂ ਨਿਸ਼ਾਨ ਲਗਾਓ</string>
   <string name="notif_dismiss">ਖਾਰਜ ਕਰੋ</string>

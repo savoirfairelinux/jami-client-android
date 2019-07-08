@@ -36,9 +36,9 @@
   <string name="notif_incoming_call">Eniranta voko</string>
   <string name="notif_outgoing_call_title">Eliranta voko al %1$s</string>
   <string name="notif_outgoing_call">Eliranta voko</string>
-  <string name="notif_current_call_title">Aktiva voko kun %1$s</string>
   <string name="notif_current_call">Aktiva voko</string>
   <string name="notif_channel_calls">Vokoj</string>
+  <string name="notif_group_calls">Vokoj</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Vi:</string>
   <string name="action_call_hangup">Fini vokon</string>

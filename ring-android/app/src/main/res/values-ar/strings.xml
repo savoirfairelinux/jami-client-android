@@ -40,8 +40,9 @@
   <!--TransferDFragment-->
   <!--Notifications-->
   <string name="notif_incoming_call">مكالمة واردة</string>
-  <string name="notif_current_call">المكالمات الحالية</string>
+  <string name="notif_current_call">مكالمة جارية</string>
   <string name="notif_channel_calls">المكالمات</string>
+  <string name="notif_group_calls">المكالمات</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">أنت:</string>
   <string name="action_call_hangup">أنهي المكالمة</string>

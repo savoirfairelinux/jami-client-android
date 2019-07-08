@@ -58,7 +58,6 @@
   <string name="notif_incoming_call">Llamada entrante</string>
   <string name="notif_outgoing_call_title">Llamando a %1$s</string>
   <string name="notif_outgoing_call">Llamada saliente</string>
-  <string name="notif_current_call_title">Llamada en curso con %1$s</string>
   <string name="notif_current_call">Llamada en curso</string>
   <string name="notif_channel_calls">Llamadas</string>
   <string name="notif_channel_missed_calls">Llamadas perdidas</string>
@@ -67,6 +66,7 @@
   <string name="notif_channel_file_transfer">Transferencia de archivos</string>
   <string name="notif_channel_background_service">Servicio en segundo plano</string>
   <string name="notif_channel_background_service_descr">Permitir recibir llamadas y mensajes en cualquier momento.</string>
+  <string name="notif_group_calls">Llamadas</string>
   <string name="notif_background_service">Jami se está ejecutando en segundo plano</string>
   <string name="notif_mark_as_read">Marcar como leído</string>
   <string name="notif_dismiss">Descartar</string>

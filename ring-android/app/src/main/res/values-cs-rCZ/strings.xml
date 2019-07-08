@@ -59,8 +59,7 @@
   <string name="notif_incoming_call">Příchozí hovor</string>
   <string name="notif_outgoing_call_title">Odchozí hovor k %1$s</string>
   <string name="notif_outgoing_call">Odchozí hovor</string>
-  <string name="notif_current_call_title">Současný hovor s %1$s</string>
-  <string name="notif_current_call">Současný hovor</string>
+  <string name="notif_current_call">Probíhající hovor</string>
   <string name="notif_channel_calls">Hovory</string>
   <string name="notif_channel_missed_calls">Zmeškané hovory</string>
   <string name="notif_channel_messages">Zprávy</string>
@@ -68,6 +67,7 @@
   <string name="notif_channel_file_transfer">Přenos souboru</string>
   <string name="notif_channel_background_service">Služba na pozadí</string>
   <string name="notif_channel_background_service_descr">Umožňuje příjem hovorů a zpráv kdykoli.</string>
+  <string name="notif_group_calls">Hovory</string>
   <string name="notif_background_service">Jami nyní běží na pozadí</string>
   <string name="notif_mark_as_read">Označit jako přečtené</string>
   <string name="notif_dismiss">Odmítnout</string>

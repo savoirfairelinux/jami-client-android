@@ -57,8 +57,7 @@
   <string name="notif_incoming_call">Saapuva puhelu</string>
   <string name="notif_outgoing_call_title">Lähtevä puhelu %1$s</string>
   <string name="notif_outgoing_call">Lähtevä puhelu</string>
-  <string name="notif_current_call_title">Puhelu %1$s</string>
-  <string name="notif_current_call">Puhelu</string>
+  <string name="notif_current_call">Tämänhetkinen puhelu</string>
   <string name="notif_channel_calls">Puhelut</string>
   <string name="notif_channel_missed_calls">Vastaamattomat puhelut</string>
   <string name="notif_channel_messages">Viestit</string>
@@ -66,6 +65,7 @@
   <string name="notif_channel_file_transfer">Tiedostonsiirto</string>
   <string name="notif_channel_background_service">Taustapalvelu</string>
   <string name="notif_channel_background_service_descr">Sallii puheluiden ja viestien saamisen milloin vain.</string>
+  <string name="notif_group_calls">Puhelut</string>
   <string name="notif_background_service">Jami toimii taustalla</string>
   <string name="notif_mark_as_read">Merkitse luetuksi</string>
   <string name="notif_reply">Vastaa</string>

@@ -56,8 +56,7 @@
   <string name="notif_incoming_call">来电</string>
   <string name="notif_outgoing_call_title">去电：%1$s</string>
   <string name="notif_outgoing_call">去电</string>
-  <string name="notif_current_call_title">当前通话：%1$s</string>
-  <string name="notif_current_call">当前通话</string>
+  <string name="notif_current_call">正在通话</string>
   <string name="notif_channel_calls">呼叫</string>
   <string name="notif_channel_missed_calls">未接电话</string>
   <string name="notif_channel_messages">消息</string>
@@ -65,6 +64,7 @@
   <string name="notif_channel_file_transfer">文件传输</string>
   <string name="notif_channel_background_service">后台服务</string>
   <string name="notif_channel_background_service_descr">允许在任何时间接受电话和消息。</string>
+  <string name="notif_group_calls">呼叫</string>
   <string name="notif_background_service">Jami正在后台运行</string>
   <string name="notif_mark_as_read">标为已读</string>
   <string name="notif_dismiss">解散</string>
@@ -118,6 +118,10 @@
   <string name="permission_dialog_write_call_log_message">Jami需要“写入通话记录”权限才能启用此功能，请批准。</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">扫描您想添加帐户的二维码。</string>
+  <string name="title_activity_qrcode">分享我的账户</string>
+  <string name="error_scan_no_camera_permissions">二维码扫描器需要摄像头使用权限来工作</string>
+  <string name="tab_code">我的代码</string>
+  <string name="tab_scan">扫描二维码</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">清除历史记录？</string>
   <string name="clear_history_dialog_message">此操作不可撤销。</string>
@@ -138,6 +142,7 @@
   <string name="conversation_action_select_peer_number">选择一个数字</string>
   <string name="conversation_action_block_this">屏蔽联系人</string>
   <string name="conversation_action_go_to_call">返回正在进行的通话</string>
+  <string name="conversation_open_file_error">没有适合打开这种文件类型的应用程序。</string>
   <string name="clip_contact_uri">联系人地址</string>
   <string name="block_contact_dialog_title">屏蔽%1$s？</string>
   <string name="block_contact_dialog_message">你将不能联系%1$s直到你解除屏蔽。</string>
@@ -206,12 +211,16 @@
   <string name="file_transfer_status_invalid_pathname">无效路径</string>
   <string name="file_transfer_status_unjoinable_peer">无法加入的对等节点</string>
   <string name="file_saved_in">文件已保存到%s</string>
+  <string name="file_saved_successfully">文件保存成功</string>
   <string name="no_space_left_on_device">设备无剩余空间</string>
   <string name="title_media_viewer">媒体播放器</string>
   <string name="menu_file_open">打开文件</string>
   <string name="menu_file_download">下载文件</string>
+  <string name="menu_file_save">保存文件</string>
   <string name="menu_file_delete">删除文件</string>
   <string name="menu_file_share">共享文件</string>
   <string name="menu_message_copy">复制</string>
+  <string name="menu_message_delete">删除消息</string>
+  <string name="menu_message_cancel">取消消息</string>
   <string name="menu_delete">删除</string>
 </resources>

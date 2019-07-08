@@ -57,8 +57,7 @@
   <string name="notif_incoming_call">Chamada recebida</string>
   <string name="notif_outgoing_call_title">Chamada efetuada para %1$s</string>
   <string name="notif_outgoing_call">Chamada efetuada</string>
-  <string name="notif_current_call_title">Chamada atual com %1$s</string>
-  <string name="notif_current_call">Chamada atual</string>
+  <string name="notif_current_call">Chamada a decorrer</string>
   <string name="notif_channel_calls">Chamadas</string>
   <string name="notif_channel_missed_calls">Chamadas não atendidas</string>
   <string name="notif_channel_messages">Mensagens</string>
@@ -66,6 +65,7 @@
   <string name="notif_channel_file_transfer">Transferência de ficheiro</string>
   <string name="notif_channel_background_service">Serviço em segundo plano</string>
   <string name="notif_channel_background_service_descr">Permite receber chamadas e mensagens em qualquer altura.</string>
+  <string name="notif_group_calls">Chamadas</string>
   <string name="notif_background_service">O Jami está a ser executado em segundo plano</string>
   <string name="notif_mark_as_read">Marcar como lida</string>
   <string name="notif_dismiss">Dispensar</string>

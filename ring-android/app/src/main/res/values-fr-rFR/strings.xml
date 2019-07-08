@@ -42,7 +42,6 @@
   <string name="notif_incoming_call">Appel entrant</string>
   <string name="notif_outgoing_call_title">Appel sortant à %1$s</string>
   <string name="notif_outgoing_call">Appel sortant</string>
-  <string name="notif_current_call_title">Appel en cours avec %1$s</string>
   <string name="notif_current_call">Appel en cours</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Toi</string>

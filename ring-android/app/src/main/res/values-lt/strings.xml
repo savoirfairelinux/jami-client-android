@@ -57,7 +57,6 @@
   <string name="notif_incoming_call">Gaunamasis skambutis</string>
   <string name="notif_outgoing_call_title">Išsiunčiamasis skambutis naudotojui %1$s</string>
   <string name="notif_outgoing_call">Išsiunčiamasis skambutis</string>
-  <string name="notif_current_call_title">Esamas skambutis su %1$s</string>
   <string name="notif_current_call">Esamas skambutis</string>
   <string name="notif_channel_calls">Skambučiai</string>
   <string name="notif_channel_missed_calls">Praleisti skambučiai</string>
@@ -65,6 +64,7 @@
   <string name="notif_channel_requests">Užklausos</string>
   <string name="notif_channel_file_transfer">Failų persiuntimas</string>
   <string name="notif_channel_background_service_descr">Leidžia bet kuriuo metu priimti skambučius ir gauti žinutes.</string>
+  <string name="notif_group_calls">Skambučiai</string>
   <string name="notif_background_service">Šiuo metu Jami veikia fone</string>
   <string name="notif_mark_as_read">Žymėti kaip skaitytą</string>
   <string name="notif_reply">Atsakyti</string>

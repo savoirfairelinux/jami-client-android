@@ -59,7 +59,6 @@
   <string name="notif_incoming_call">Prichádzajúci hovor</string>
   <string name="notif_outgoing_call_title">Odchádzajúci hovor %1$s</string>
   <string name="notif_outgoing_call">Odchádzajúci hovor</string>
-  <string name="notif_current_call_title">Prebiehajúci hovor s %1$s</string>
   <string name="notif_current_call">Prebiehajúci hovor</string>
   <string name="notif_channel_calls">Hovory</string>
   <string name="notif_channel_missed_calls">Zmeškané hovory</string>
@@ -68,6 +67,7 @@
   <string name="notif_channel_file_transfer">Prenos súborov</string>
   <string name="notif_channel_background_service">Služba na pozadí</string>
   <string name="notif_channel_background_service_descr">Povoliť neustále prijímanie a odosielanie správ.</string>
+  <string name="notif_group_calls">Hovory</string>
   <string name="notif_background_service">Aplikácia Jami je spustená na pozadí</string>
   <string name="notif_mark_as_read">Označiť ako prečítané</string>
   <string name="notif_dismiss">Odmietnuť</string>

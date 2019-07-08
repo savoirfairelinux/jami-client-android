@@ -161,12 +161,14 @@
   <!--Name registration-->
   <string name="error_username_empty">Felhasználónév megadása</string>
   <string name="no_registered_name_for_account">Nincs bejegyzett név talált erre a fiókra</string>
+  <string name="username_available">A felhasználónév elérhető!</string>
   <string name="register_name">Bejegyeztetés név</string>
   <string name="trying_to_register_name">A név bejegyeztetésének kipróbálása</string>
   <string name="registered_username">Bejegyzett felhasználónév</string>
   <string name="register_username">Nyilvános felhasználónév bejegyeztetése (ajánlott)</string>
   <string name="username_already_taken">A felhasználónév már regisztrálva van</string>
   <string name="invalid_username">Érvénytelen felhasználónév</string>
+  <string name="unknown_error">Ismeretlen hiba történt. Ellenőrizze a hálózati kapcsolatot.</string>
   <string name="looking_for_username_availability">A felhasználónév rendelkezésre állás keresése…</string>
   <string name="account_status_connecting">Kapcsolódás</string>
   <string name="account_status_connection_error">Csatlakozási hiba</string>

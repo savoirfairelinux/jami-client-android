@@ -26,6 +26,7 @@
   <!--Notifications-->
   <string name="notif_incoming_call">קריאה נכנסת</string>
   <string name="notif_channel_calls">קריאות</string>
+  <string name="notif_group_calls">קריאות</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">את(ה):</string>
   <string name="action_call_hangup">   נתק</string>

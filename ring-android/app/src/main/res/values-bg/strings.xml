@@ -57,8 +57,7 @@
   <string name="notif_incoming_call">Входящо обаждане</string>
   <string name="notif_outgoing_call_title">Изходящо обаждане до %1$s</string>
   <string name="notif_outgoing_call">Изходящо обаждане</string>
-  <string name="notif_current_call_title">Текущ разговор с %1$s</string>
-  <string name="notif_current_call">Текущ разговор</string>
+  <string name="notif_current_call">Текущо обаждане</string>
   <string name="notif_channel_calls">Обаждания</string>
   <string name="notif_channel_missed_calls">Пропуснати обаждания</string>
   <string name="notif_channel_messages">Съобщения</string>
@@ -66,6 +65,7 @@
   <string name="notif_channel_file_transfer">Прехвърляне на файлове</string>
   <string name="notif_channel_background_service">Фонов режим</string>
   <string name="notif_channel_background_service_descr">Позволява получаването на обаждания и съобщения по всяко време.</string>
+  <string name="notif_group_calls">Обаждания</string>
   <string name="notif_background_service">Jami в момента работи във фонов режим</string>
   <string name="notif_mark_as_read">Маркиране като прочетено</string>
   <string name="notif_dismiss">Отказ</string>

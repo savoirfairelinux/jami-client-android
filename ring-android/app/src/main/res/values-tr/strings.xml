@@ -57,8 +57,7 @@
   <string name="notif_incoming_call">Gelen arama</string>
   <string name="notif_outgoing_call_title">%1$s\'a giden arama</string>
   <string name="notif_outgoing_call">Giden arama</string>
-  <string name="notif_current_call_title">%1$s ile şimdiki arama</string>
-  <string name="notif_current_call">Şimdiki arama</string>
+  <string name="notif_current_call">Giden arama</string>
   <string name="notif_channel_calls">Aramalar</string>
   <string name="notif_channel_missed_calls">Yanıtsız aramalar</string>
   <string name="notif_channel_messages">İletiler</string>
@@ -66,6 +65,7 @@
   <string name="notif_channel_file_transfer">Dosya aktarımı</string>
   <string name="notif_channel_background_service">Artalan hizmeti</string>
   <string name="notif_channel_background_service_descr">Herzaman çağrı ve ileti almaya izin verir</string>
+  <string name="notif_group_calls">Aramalar</string>
   <string name="notif_background_service">Jami şu an artalanda çalışıyor</string>
   <string name="notif_mark_as_read">Okundu olarak işaretle</string>
   <string name="notif_dismiss">Reddet</string>
@@ -119,6 +119,7 @@
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Eklemek istediğiniz hesabın QR kodunu tarayın.</string>
   <string name="title_activity_qrcode">Hesabımı paylaş</string>
+  <string name="error_scan_no_camera_permissions">QR tarayıcının çalışması için kamera izni gerekli</string>
   <string name="tab_code">Kodum</string>
   <string name="tab_scan">Kodu Tara</string>
   <!--Settings-->
@@ -135,11 +136,13 @@
   <string name="conversation_action_history_clear_message">Bu, konuşma geçmişini kesinlikle temizleyecek.</string>
   <string name="conversation_action_remove_this">Kişiyi sil</string>
   <string name="conversation_action_remove_this_title">Bu kişi silinsin mi?</string>
+  <string name="conversation_action_remove_this_message">Bu, kişiyi silecek ve konuşma geçmişini tamamen temizleyecektir.</string>
   <string name="conversation_action_copy_peer_number">Numarayı kopyala</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s panoya kopyalandı</string>
   <string name="conversation_action_select_peer_number">Bir numara seçin</string>
   <string name="conversation_action_block_this">Kişiyi engelle</string>
   <string name="conversation_action_go_to_call">Giden aramalara geri dön</string>
+  <string name="conversation_open_file_error">Bu dosya türünü açabilecek yüklü bir uygulama yok.</string>
   <string name="clip_contact_uri">İletişim adresi</string>
   <string name="block_contact_dialog_title">%1$s Engellensin mi?</string>
   <string name="block_contact_dialog_message">Sen engelini kaldırana dek %1$s sana ulaşamaz.</string>
@@ -153,6 +156,7 @@
   <string name="prompt_new_username">Yeni kullanıcı adı gir</string>
   <string name="help_password_choose">Jami hesabınızı korumak için anımsayacağınız güçlü bir şifre seçin.</string>
   <string name="help_password_enter">Jami ana hesap parolanızı girin</string>
+  <string name="help_pin_enter">Başka yapılandırılmış Jami hesabından PIN\'i girin. PIN edinmek için \"Jami\'de hesabı dışa aktarma\" özelliğini kullanın.</string>
   <string name="wizard_next">İleri</string>
   <string name="wizard_back">Geri</string>
   <string name="wizard_skip">Atla</string>

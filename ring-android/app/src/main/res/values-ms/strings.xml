@@ -41,9 +41,9 @@
   <string name="notif_incoming_call">Panggilan masuk</string>
   <string name="notif_outgoing_call_title">Panggilan keluar kepada %1$s</string>
   <string name="notif_outgoing_call">Panggilan keluar</string>
-  <string name="notif_current_call_title">Panggilan sedang berlangsung dengan %1$s</string>
   <string name="notif_current_call">Panggilan sedang berlangsung</string>
   <string name="notif_channel_calls">Panggilan</string>
+  <string name="notif_group_calls">Panggilan</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Anda</string>
   <string name="action_call_hangup">Putuskan</string>

@@ -161,12 +161,14 @@
   <!--Name registration-->
   <string name="error_username_empty">Jepni një emër përdoruesi</string>
   <string name="no_registered_name_for_account">S\’u gjet emër i regjistruar për këtë llogari</string>
+  <string name="username_available">Emër përdoruesi i pazënë!</string>
   <string name="register_name">Regjistroni emër</string>
   <string name="trying_to_register_name">Po provohet të regjistrohet emri</string>
   <string name="registered_username">Emër përdoruesi i regjistruar</string>
   <string name="register_username">Regjistroni emër publik përdoruesi (e këshilluar)</string>
   <string name="username_already_taken">Emër përdoruesi tashmë i zënë</string>
   <string name="invalid_username">Emër përdoruesi i pavlefshëm</string>
+  <string name="unknown_error">Gabim i panjohur. Ju lutemi, kontrolloni lidhjen në rrjet!</string>
   <string name="looking_for_username_availability">Po shihet nëse emri i përdoruesit është i pazënë…</string>
   <string name="account_status_connecting">Po lidhet</string>
   <string name="account_status_connection_error">Gabim lidhjeje</string>

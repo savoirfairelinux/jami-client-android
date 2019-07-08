@@ -52,12 +52,12 @@
   <string name="notif_incoming_call">Trucada entrant</string>
   <string name="notif_outgoing_call_title">Trucada sortint de %1$s</string>
   <string name="notif_outgoing_call">Trucada sortint</string>
-  <string name="notif_current_call_title">Trucada actual amb %1$s</string>
-  <string name="notif_current_call">Trucada actual</string>
+  <string name="notif_current_call">Trucada sortint</string>
   <string name="notif_channel_calls">Trucades</string>
   <string name="notif_channel_messages">Missatges</string>
   <string name="notif_channel_requests">Peticions</string>
   <string name="notif_channel_file_transfer">Transferència de fitxers</string>
+  <string name="notif_group_calls">Trucades</string>
   <string name="notif_mark_as_read">Marca com a llegit</string>
   <string name="notif_incoming_file_transfer">Alguna persona us està enviant un fitxer</string>
   <string name="notif_outgoing_file_transfer">Alguna persona us està enviant un fitxer</string>

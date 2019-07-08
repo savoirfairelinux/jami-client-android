@@ -56,8 +56,7 @@
   <string name="notif_incoming_call">來電</string>
   <string name="notif_outgoing_call_title">撥出電話到 %1$s</string>
   <string name="notif_outgoing_call">撥出電話</string>
-  <string name="notif_current_call_title">目前和 %1$s 通話</string>
-  <string name="notif_current_call">目前通話</string>
+  <string name="notif_current_call">尚在進行中的通話</string>
   <string name="notif_channel_calls">通話</string>
   <string name="notif_channel_missed_calls">錯過的通話</string>
   <string name="notif_channel_messages">訊息</string>
@@ -65,6 +64,7 @@
   <string name="notif_channel_file_transfer">檔案傳輸</string>
   <string name="notif_channel_background_service">背景服務</string>
   <string name="notif_channel_background_service_descr">允許隨時接聽通話與訊息。</string>
+  <string name="notif_group_calls">通話</string>
   <string name="notif_background_service">Jami 正在背景執行</string>
   <string name="notif_mark_as_read">標示為已讀</string>
   <string name="notif_dismiss">忽略</string>

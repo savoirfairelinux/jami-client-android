@@ -59,8 +59,7 @@
   <string name="notif_incoming_call">Входящий вызов</string>
   <string name="notif_outgoing_call_title">Исходящий вызов к %1$s</string>
   <string name="notif_outgoing_call">Исходящий вызов</string>
-  <string name="notif_current_call_title">Текущий вызов с %1$s</string>
-  <string name="notif_current_call">Текущий вызов</string>
+  <string name="notif_current_call">Исходящий вызов</string>
   <string name="notif_channel_calls">Звонки</string>
   <string name="notif_channel_missed_calls">Пропущенные вызовы</string>
   <string name="notif_channel_messages">Сообщения</string>
@@ -68,6 +67,7 @@
   <string name="notif_channel_file_transfer">Передача файла</string>
   <string name="notif_channel_background_service">Фоновая служба</string>
   <string name="notif_channel_background_service_descr">Позволяет принимать звонки и сообщения в любое время.</string>
+  <string name="notif_group_calls">Звонки</string>
   <string name="notif_background_service">Jami сейчас работает в фоновом режиме</string>
   <string name="notif_mark_as_read">Отметить как прочитанное</string>
   <string name="notif_dismiss">Отклонить</string>
@@ -121,6 +121,7 @@
   <string name="permission_dialog_write_call_log_message">Jami требуется разрешение «Запись в журнал звонков», чтобы включить эту функцию. Пожалуйста, предоставьте его.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Отсканируйте QR-код аккаунта, который вы хотите добавить.</string>
+  <string name="error_scan_no_camera_permissions">Для сканирования QR кода требуется разрешение на использование камеры</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Очистить историю?</string>
   <string name="clear_history_dialog_message">Это действие невозможно отменить.</string>
@@ -141,6 +142,7 @@
   <string name="conversation_action_select_peer_number">Выбрать номер</string>
   <string name="conversation_action_block_this">Заблокировать контакт</string>
   <string name="conversation_action_go_to_call">Вернуться к текущему вызову</string>
+  <string name="conversation_open_file_error">Отсутствует приложение для открытия данного типа файлов.</string>
   <string name="clip_contact_uri">Контактный адрес</string>
   <string name="block_contact_dialog_title">Заблокировать %1$s?</string>
   <string name="block_contact_dialog_message">%1$s не сможет связаться с вами, пока вы не разблокируете его.</string>
@@ -209,12 +211,16 @@
   <string name="file_transfer_status_invalid_pathname">Некорректный путь</string>
   <string name="file_transfer_status_unjoinable_peer">пир недоступен</string>
   <string name="file_saved_in">Файл сохранён в %s</string>
+  <string name="file_saved_successfully">Файл успешно сохранён</string>
   <string name="no_space_left_on_device">На устройстве не осталось свободного места</string>
   <string name="title_media_viewer">Просмотрщик медиа</string>
   <string name="menu_file_open">Открыть файл</string>
   <string name="menu_file_download">Загрузить файл</string>
+  <string name="menu_file_save">Сохранить файл</string>
   <string name="menu_file_delete">Удалить файл</string>
   <string name="menu_file_share">Поделиться файлом</string>
   <string name="menu_message_copy">Копировать</string>
+  <string name="menu_message_delete">Удалить сообщение</string>
+  <string name="menu_message_cancel">Отменить передачу сообщения</string>
   <string name="menu_delete">Удалить</string>
 </resources>

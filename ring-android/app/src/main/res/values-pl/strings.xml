@@ -59,8 +59,7 @@
   <string name="notif_incoming_call">Połączenie przychodzące</string>
   <string name="notif_outgoing_call_title">Połączenie wychodzące do %1$s</string>
   <string name="notif_outgoing_call">Połączenie wychodzące</string>
-  <string name="notif_current_call_title">Aktualna rozmowa z %1$s</string>
-  <string name="notif_current_call">Aktualna rozmowa</string>
+  <string name="notif_current_call">Trwa połączenie</string>
   <string name="notif_channel_calls">Rozmowy</string>
   <string name="notif_channel_missed_calls">Nieodebrane rozmowy</string>
   <string name="notif_channel_messages">Wiadomości</string>
@@ -68,6 +67,7 @@
   <string name="notif_channel_file_transfer">Transfer pliku</string>
   <string name="notif_channel_background_service">Usługa w tle</string>
   <string name="notif_channel_background_service_descr">Pozwala na odbieranie połączeń i wiadomości w dowolnym czasie.</string>
+  <string name="notif_group_calls">Rozmowy</string>
   <string name="notif_background_service">Jami działa teraz w tle</string>
   <string name="notif_mark_as_read">Zaznacz jako przeczytane</string>
   <string name="notif_dismiss">Odrzuć</string>

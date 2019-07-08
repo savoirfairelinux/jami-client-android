@@ -57,8 +57,7 @@
   <string name="notif_incoming_call">Inkomende oproep</string>
   <string name="notif_outgoing_call_title">Uitgaande oproep naar %1$s</string>
   <string name="notif_outgoing_call">Uitgaande oproep</string>
-  <string name="notif_current_call_title">Huidige oproep met %1$s</string>
-  <string name="notif_current_call">Huidige oproep</string>
+  <string name="notif_current_call">Lopende oproep</string>
   <string name="notif_channel_calls">Oproepen</string>
   <string name="notif_channel_missed_calls">Gemiste oproepen</string>
   <string name="notif_channel_messages">Berichten</string>
@@ -66,6 +65,7 @@
   <string name="notif_channel_file_transfer">Bestandsoverdracht</string>
   <string name="notif_channel_background_service">Achtergronddienst</string>
   <string name="notif_channel_background_service_descr">Maakt het mogelijk om te allen tijde oproepen en berichten te ontvangen.</string>
+  <string name="notif_group_calls">Oproepen</string>
   <string name="notif_background_service">Jami draait momenteel in de achtergrond</string>
   <string name="notif_mark_as_read">Markeren als gelezen</string>
   <string name="notif_dismiss">Negeren</string>

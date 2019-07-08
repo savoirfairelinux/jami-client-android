@@ -48,13 +48,13 @@
   <string name="notif_incoming_call">Dolazni poziv</string>
   <string name="notif_outgoing_call_title">Odlazni poziv za %1$s</string>
   <string name="notif_outgoing_call">Odlazni poziv</string>
-  <string name="notif_current_call_title">Trenutni poziv sa %1$s</string>
-  <string name="notif_current_call">Trenutni poziv</string>
+  <string name="notif_current_call">Poziv koji je u tijeku</string>
   <string name="notif_channel_calls">Pozivi</string>
   <string name="notif_channel_missed_calls">Propušteni pozivi</string>
   <string name="notif_channel_messages">Poruke</string>
   <string name="notif_channel_requests">Zahtjevi</string>
   <string name="notif_channel_file_transfer">Prijenos datoteka </string>
+  <string name="notif_group_calls">Pozivi</string>
   <string name="notif_mark_as_read">Označi kao pročitano</string>
   <string name="notif_reply">Odgovori</string>
   <string name="notif_incoming_file_transfer_title">Dolazna datoteka od %1$s</string>

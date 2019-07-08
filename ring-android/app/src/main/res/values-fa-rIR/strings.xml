@@ -57,8 +57,7 @@
   <string name="notif_incoming_call">تماس دریافتی</string>
   <string name="notif_outgoing_call_title">تماس خروجی با %1$s</string>
   <string name="notif_outgoing_call">تماس خروجی</string>
-  <string name="notif_current_call_title">تماس کنونی با %1$s</string>
-  <string name="notif_current_call">تماس کنونی</string>
+  <string name="notif_current_call">تماس خروجی</string>
   <string name="notif_channel_calls">تماس‌ها</string>
   <string name="notif_channel_missed_calls">تماس از دست رفته</string>
   <string name="notif_channel_messages">پیام ها</string>
@@ -66,6 +65,7 @@
   <string name="notif_channel_file_transfer">انتقال فایل</string>
   <string name="notif_channel_background_service">خدمت پس‌زمینه</string>
   <string name="notif_channel_background_service_descr">اجازهٔ گرفتن تماس‌ها و پیام‌ها در هر زمان.</string>
+  <string name="notif_group_calls">تماس‌ها</string>
   <string name="notif_background_service">جمی در پس‌زمینه در حال اجراست.</string>
   <string name="notif_mark_as_read">به عنوان خوانده شده علامت بزن</string>
   <string name="notif_dismiss"> رد کنید</string>

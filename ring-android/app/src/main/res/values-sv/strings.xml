@@ -57,8 +57,7 @@
   <string name="notif_incoming_call">Inkommande samtal</string>
   <string name="notif_outgoing_call_title">Utgående samtal till %1$s</string>
   <string name="notif_outgoing_call">Utgående samtal</string>
-  <string name="notif_current_call_title">Aktuellt samtal med %1$s</string>
-  <string name="notif_current_call">Aktuellt samtal</string>
+  <string name="notif_current_call">Pågående samtal</string>
   <string name="notif_channel_calls">Samtal</string>
   <string name="notif_channel_missed_calls">Missade samtal</string>
   <string name="notif_channel_messages">Meddelanden</string>
@@ -66,6 +65,7 @@
   <string name="notif_channel_file_transfer">Filöverföring</string>
   <string name="notif_channel_background_service">Bakgrundstjänst</string>
   <string name="notif_channel_background_service_descr">Tillåt alltid inkommande samtal och meddelanden.</string>
+  <string name="notif_group_calls">Samtal</string>
   <string name="notif_background_service">Jami körs nu i bakgrunden</string>
   <string name="notif_mark_as_read">Markera som läst</string>
   <string name="notif_dismiss">Avfärda</string>

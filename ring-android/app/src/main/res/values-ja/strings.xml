@@ -50,9 +50,9 @@
   <string name="notif_incoming_call">着信</string>
   <string name="notif_outgoing_call_title">%1$s への発信</string>
   <string name="notif_outgoing_call">発信</string>
-  <string name="notif_current_call_title">%1$s と現在の通話</string>
-  <string name="notif_current_call">現在の通話</string>
+  <string name="notif_current_call">通話中</string>
   <string name="notif_channel_calls">発信</string>
+  <string name="notif_group_calls">発信</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">あなた:</string>
   <string name="action_call_hangup">通話終了</string>

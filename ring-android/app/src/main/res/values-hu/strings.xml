@@ -57,8 +57,7 @@
   <string name="notif_incoming_call">Bejövő hívás</string>
   <string name="notif_outgoing_call_title">Kimenő hívás a következő felé: %1$s</string>
   <string name="notif_outgoing_call">Kimenő hívás</string>
-  <string name="notif_current_call_title">Jelenlegi hívás a következővel: %1$s</string>
-  <string name="notif_current_call">Jelenlegi hívás</string>
+  <string name="notif_current_call">Folyamatban lévő hívás</string>
   <string name="notif_channel_calls">Hívások</string>
   <string name="notif_channel_missed_calls">Nem fogadott hívások</string>
   <string name="notif_channel_messages">Üzenetek</string>
@@ -66,6 +65,7 @@
   <string name="notif_channel_file_transfer">Fájl átvitel</string>
   <string name="notif_channel_background_service">Háttérben futó szolgáltatás</string>
   <string name="notif_channel_background_service_descr">Bejövő hívások és üzenetek engedélyezése bármikor.</string>
+  <string name="notif_group_calls">Hívások</string>
   <string name="notif_background_service">Jami jelenleg fut a háttérben</string>
   <string name="notif_mark_as_read">Megjelölés olvasottként</string>
   <string name="notif_dismiss">Elutasítás</string>

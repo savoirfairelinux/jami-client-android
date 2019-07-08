@@ -59,8 +59,7 @@
   <string name="notif_incoming_call">Вхідний виклик</string>
   <string name="notif_outgoing_call_title">Вихідний виклик до %1$s</string>
   <string name="notif_outgoing_call">Вихідний виклик</string>
-  <string name="notif_current_call_title">Поточний виклик з %1$s</string>
-  <string name="notif_current_call">Поточний виклик</string>
+  <string name="notif_current_call">Вихідний виклик</string>
   <string name="notif_channel_calls">Дзвінки</string>
   <string name="notif_channel_missed_calls">Пропущені виклики</string>
   <string name="notif_channel_messages">Повідомлення</string>
@@ -68,6 +67,7 @@
   <string name="notif_channel_file_transfer">Передача файлів</string>
   <string name="notif_channel_background_service">Фоновий сервіс</string>
   <string name="notif_channel_background_service_descr">Дозволяє будь-коли отримувати дзвінки і повідомлення.</string>
+  <string name="notif_group_calls">Дзвінки</string>
   <string name="notif_background_service">Джамі зараз працює поза екраном</string>
   <string name="notif_mark_as_read">Позначити прочитаним</string>
   <string name="notif_dismiss">Відхилити</string>

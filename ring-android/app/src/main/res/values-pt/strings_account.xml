@@ -161,12 +161,14 @@
   <!--Name registration-->
   <string name="error_username_empty">Introduza um nome de utilizador</string>
   <string name="no_registered_name_for_account">Não foi encontrado nenhum nome registado para esta conta</string>
+  <string name="username_available">Nome de utilizador disponível!</string>
   <string name="register_name">Registar nome</string>
   <string name="trying_to_register_name">A tentar registar o nome</string>
   <string name="registered_username">Nome de utilizador registado</string>
   <string name="register_username">Registar nome de utilizador público (recomendado)</string>
   <string name="username_already_taken">O nome de utilizador já está registado</string>
   <string name="invalid_username">O nome de utilizador não é válido</string>
+  <string name="unknown_error">Erro desconhecido. Por favor verifique a sua ligação à rede!</string>
   <string name="looking_for_username_availability">A pesquisar pela disponibilidade do nome de utilizador…</string>
   <string name="account_status_connecting">A conectar</string>
   <string name="account_status_connection_error">Erro de conexão</string>

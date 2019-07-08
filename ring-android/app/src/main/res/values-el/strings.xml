@@ -47,9 +47,9 @@
   <string name="notif_incoming_call">Εισερχόμενη κλήση</string>
   <string name="notif_outgoing_call_title">Εξερχόμενη κλήση  %1$s</string>
   <string name="notif_outgoing_call">Εξερχόμενη κλήση</string>
-  <string name="notif_current_call_title">Κλήση σε εξέλιξη με %1$s</string>
-  <string name="notif_current_call">Κλήση σε εξέλιξη</string>
+  <string name="notif_current_call">Εξερχόμενη κλήση</string>
   <string name="notif_channel_calls">Κλήσεις</string>
+  <string name="notif_group_calls">Κλήσεις</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Εσύ</string>
   <string name="action_call_hangup">Κλείσιμο</string>

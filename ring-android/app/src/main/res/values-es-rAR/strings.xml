@@ -52,12 +52,12 @@
   <string name="notif_incoming_call">Llamada entrante</string>
   <string name="notif_outgoing_call_title">Llamada saliente a %1$s</string>
   <string name="notif_outgoing_call">Llamada saliente</string>
-  <string name="notif_current_call_title">Llamada en curso con %1$s</string>
   <string name="notif_current_call">Llamada en curso</string>
   <string name="notif_channel_calls">Llamadas</string>
   <string name="notif_channel_messages">Mensajes</string>
   <string name="notif_channel_requests">Solicitudes</string>
   <string name="notif_channel_file_transfer">Transferencia de archivos</string>
+  <string name="notif_group_calls">Llamadas</string>
   <string name="notif_mark_as_read">Marcar como leído</string>
   <string name="notif_incoming_file_transfer_title">Archivo entrante de %1$s</string>
   <string name="notif_incoming_file_transfer">Alguien quiere enviarte un archivo</string>

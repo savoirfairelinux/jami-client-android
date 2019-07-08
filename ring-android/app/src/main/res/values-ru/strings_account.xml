@@ -115,6 +115,7 @@
   <string name="error_password_char_count">Минимум 6 символов</string>
   <string name="error_passwords_not_equals">Пароли не совпадают</string>
   <string name="export_account_wait_title">Пожалуйста, подождите…</string>
+  <string name="export_account_wait_message">Экспортирование аккаунта…</string>
   <string name="account_export_file">Создать резервную копию аккаунта</string>
   <string name="account_export_end_decryption_message">Не удалось разблокировать аккаунт указанным паролем.</string>
   <string name="account_export_end_network_title">Ошибка сети</string>
@@ -158,12 +159,14 @@
   <!--Name registration-->
   <string name="error_username_empty">Введите имя пользователя</string>
   <string name="no_registered_name_for_account">Не найдено зарегистрированного имени для этого аккаунта</string>
+  <string name="username_available">Имя доступно !</string>
   <string name="register_name">Зарегистрировать имя</string>
   <string name="trying_to_register_name">Попытка зарегистрировать имя</string>
   <string name="registered_username">Зарегистрированное имя пользователя</string>
   <string name="register_username">Зарегистрировать публичное имя пользователя (рекомендуется)</string>
   <string name="username_already_taken">Имя пользователя уже занято</string>
   <string name="invalid_username">Недопустимое имя пользователя</string>
+  <string name="unknown_error">Неизвестная ошибка. Пожалуйста, проверьте сетевое соединение.</string>
   <string name="looking_for_username_availability">Проверяем доступность имени пользователя…</string>
   <string name="account_status_connecting">Подключение</string>
   <string name="account_status_connection_error">Ошибка подключения</string>

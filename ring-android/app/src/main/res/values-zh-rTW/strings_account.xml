@@ -161,12 +161,14 @@
   <!--Name registration-->
   <string name="error_username_empty">輸入使用者名稱</string>
   <string name="no_registered_name_for_account">找不到這個帳號已註冊的名稱</string>
+  <string name="username_available">使用者名稱可用！</string>
   <string name="register_name">註冊名稱</string>
   <string name="trying_to_register_name">正在嘗試註冊名稱</string>
   <string name="registered_username">已註冊的使用者名稱</string>
   <string name="register_username">註冊公開的使用者名稱（建議）</string>
   <string name="username_already_taken">已取得的使用者名稱</string>
   <string name="invalid_username">無效的使用者名稱</string>
+  <string name="unknown_error">未知的錯誤。請檢查您的網路連線！</string>
   <string name="looking_for_username_availability">正在尋找使用者名稱的可用性…</string>
   <string name="account_status_connecting">連接中</string>
   <string name="account_status_connection_error">連線錯誤</string>

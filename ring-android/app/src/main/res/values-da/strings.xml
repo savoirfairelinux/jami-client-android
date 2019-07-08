@@ -52,13 +52,13 @@
   <string name="notif_incoming_call">Indgående opkald</string>
   <string name="notif_outgoing_call_title">Udgående opkald til %1$s</string>
   <string name="notif_outgoing_call">Udgående opkald</string>
-  <string name="notif_current_call_title">Aktivt opkald med %1$s</string>
-  <string name="notif_current_call">Nuværende opkald</string>
+  <string name="notif_current_call">Igangværende opkald</string>
   <string name="notif_channel_calls">Opkald</string>
   <string name="notif_channel_missed_calls">Ubesvarede opkald</string>
   <string name="notif_channel_messages">Beskeder</string>
   <string name="notif_channel_requests">Forespørgsler</string>
   <string name="notif_channel_file_transfer">Filoverførsler</string>
+  <string name="notif_group_calls">Opkald</string>
   <string name="notif_mark_as_read">Marker som læst</string>
   <string name="notif_dismiss">Afvis</string>
   <string name="notif_reply">Svar</string>
