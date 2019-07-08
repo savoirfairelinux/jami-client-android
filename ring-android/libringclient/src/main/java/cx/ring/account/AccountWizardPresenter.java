@@ -91,6 +91,11 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
     public void initRingAccountLink(AccountCreationModel accountCreationModel, String defaultAccountName) {
         Single<Map<String, String>> newAccount = initRingAccountDetails(defaultAccountName)
                 .map(accountDetails -> {
+                    Settings settings = mPreferences.getSettings();
+                    if(settings != null && settings.isAllowPushNotifications()) {
+                        accountCreationModel.setPush(true);
+                        accountDetails.put(ConfigKey.PROXY_ENABLED.key(), AccountConfig.TRUE_STR);
+                    }
                     if (!accountCreationModel.getPassword().isEmpty()) {
                         accountDetails.put(ConfigKey.ARCHIVE_PASSWORD.key(), accountCreationModel.getPassword());
                     }
