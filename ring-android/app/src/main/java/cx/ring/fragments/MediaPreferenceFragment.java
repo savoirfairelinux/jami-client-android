@@ -21,14 +21,11 @@
  */
 package cx.ring.fragments;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -170,7 +167,7 @@ public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPrefere
 
     @Override
     public void displayFileSearchDialog() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("audio/*");
         startActivityForResult(intent, SELECT_RINGTONE_PATH);
