@@ -57,9 +57,12 @@
   <string name="notif_incoming_call">Thirrje ardhëse</string>
   <string name="notif_outgoing_call_title">Thirrje për %1$s</string>
   <string name="notif_outgoing_call">Thirrje për</string>
+  <string name="notif_current_call_title">Thirrje me %1$s</string>
   <string name="notif_current_call">Thirrje në kryerje e sipër</string>
+  <string name="notif_channel_call_in_progress">Thirrje në Ecuri e Sipër</string>
   <string name="notif_channel_calls">Thirrje</string>
   <string name="notif_channel_missed_calls">Thirrje të humbura</string>
+  <string name="notif_channel_incoming_calls">Thirrje ardhëse</string>
   <string name="notif_channel_messages">Mesazhe</string>
   <string name="notif_channel_requests">Kërkesa</string>
   <string name="notif_channel_file_transfer">Shpërngulje kartelash</string>

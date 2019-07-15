@@ -57,9 +57,12 @@
   <string name="notif_incoming_call">Chamada recebida</string>
   <string name="notif_outgoing_call_title">Chamada efetuada para %1$s</string>
   <string name="notif_outgoing_call">Chamada efetuada</string>
+  <string name="notif_current_call_title">Chamada a decorrer com %1$s</string>
   <string name="notif_current_call">Chamada a decorrer</string>
+  <string name="notif_channel_call_in_progress">Chamada a decorrer</string>
   <string name="notif_channel_calls">Chamadas</string>
   <string name="notif_channel_missed_calls">Chamadas não atendidas</string>
+  <string name="notif_channel_incoming_calls">Chamadas recebidas</string>
   <string name="notif_channel_messages">Mensagens</string>
   <string name="notif_channel_requests">Solicitações</string>
   <string name="notif_channel_file_transfer">Transferência de ficheiro</string>

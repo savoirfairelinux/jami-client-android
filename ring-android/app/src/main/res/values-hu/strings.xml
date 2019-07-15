@@ -57,9 +57,12 @@
   <string name="notif_incoming_call">Bejövő hívás</string>
   <string name="notif_outgoing_call_title">Kimenő hívás a következő felé: %1$s</string>
   <string name="notif_outgoing_call">Kimenő hívás</string>
+  <string name="notif_current_call_title">Folyamatban lévő hívás a következővel: %1$s</string>
   <string name="notif_current_call">Folyamatban lévő hívás</string>
+  <string name="notif_channel_call_in_progress">Folyamatban lévő hívás</string>
   <string name="notif_channel_calls">Hívások</string>
   <string name="notif_channel_missed_calls">Nem fogadott hívások</string>
+  <string name="notif_channel_incoming_calls">Bejövő hívások</string>
   <string name="notif_channel_messages">Üzenetek</string>
   <string name="notif_channel_requests">Kérések</string>
   <string name="notif_channel_file_transfer">Fájl átvitel</string>

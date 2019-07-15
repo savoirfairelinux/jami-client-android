@@ -116,6 +116,7 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="error_password_char_count">Mindestens 6 Zeichen</string>
   <string name="error_passwords_not_equals">Die Passwörter stimmen nicht überein</string>
   <string name="export_account_wait_title">Bitte warten…</string>
+  <string name="export_account_wait_message">Kontodaten werden exportiert</string>
   <string name="account_export_file">Konto sichern</string>
   <string name="account_export_end_decryption_message">Ihr Konto konnte mit dem angegebenen Passwort nicht entsperrt werden</string>
   <string name="account_export_end_network_title">Netzwerkfehler</string>
@@ -146,6 +147,8 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_sip_success_title">SIP-Konto registriert</string>
   <string name="account_sip_success_message">Sie haben erfolgreich Ihr SIP-Konto registriert.</string>
   <string name="account_sip_register_anyway">Trotzdem registieren</string>
+  <string name="account_link_button">Durch Netzwerk verbinden</string>
+  <string name="account_link_archive_button">Durch Backup verbinden</string>
   <string name="account_link_prompt_pin">PIN eingeben</string>
   <string name="account_new_button">Ein Jami-Konto erstellen</string>
   <string name="account_link_export_button">Weiteres Gerät mit diesem Konto verknüpfen</string>
@@ -158,12 +161,14 @@ Sie können ihr Konto später bearbeiten</string>
   <!--Name registration-->
   <string name="error_username_empty">Benutzername eingeben</string>
   <string name="no_registered_name_for_account">Es wurde kein registrierter Name für dieses Konto gefunden</string>
+  <string name="username_available">Benutzername verfügbar !</string>
   <string name="register_name">Name registrieren</string>
   <string name="trying_to_register_name">Name wird registriert</string>
   <string name="registered_username">Benutzername wurde registriert</string>
   <string name="register_username">Öffentlichen Benutzernamen registrieren (empfohlen)</string>
   <string name="username_already_taken">Dieser Benutzername ist bereits vergeben</string>
   <string name="invalid_username">Ungültiger Benutzername</string>
+  <string name="unknown_error">Unbekannter Fehler. Bitte überprüfen sie ihre Netzwerkverbindung!</string>
   <string name="looking_for_username_availability">Prüfe, ob der Benutzername verfügbar ist...</string>
   <string name="account_status_connecting">Verbindet</string>
   <string name="account_status_connection_error">Verbindungsfehler</string>

@@ -57,9 +57,12 @@
   <string name="notif_incoming_call">Eingehender Anruf</string>
   <string name="notif_outgoing_call_title">Ausgehender Anruf von %1$s</string>
   <string name="notif_outgoing_call">Ausgehender Anruf</string>
+  <string name="notif_current_call_title">Derzeitiger Anruf mit %1$s</string>
   <string name="notif_current_call">Derzeitiger Anruf</string>
+  <string name="notif_channel_call_in_progress">Anruf läuft</string>
   <string name="notif_channel_calls">Anrufe</string>
   <string name="notif_channel_missed_calls">Entgangene Anrufe</string>
+  <string name="notif_channel_incoming_calls">Eingehende Anrufe</string>
   <string name="notif_channel_messages">Nachrichten</string>
   <string name="notif_channel_requests">Anfragen</string>
   <string name="notif_channel_file_transfer">Dateitransfer</string>
@@ -119,7 +122,10 @@
   <string name="permission_dialog_write_call_log_message">Ring benötigt die Berechtigung \"Anruflisten schreiben\" für diese Funktion. Bitte erteilen Sie diese.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Scannen Sie den QR-Code des Kontos, das Sie hinzufügen möchten.</string>
+  <string name="title_activity_qrcode">Mein Konto teilen</string>
+  <string name="error_scan_no_camera_permissions">Der QR-Scanner benötigt die Erlaubnis, auf die Kamera zuzugreifen. </string>
   <string name="tab_code">Mein Code</string>
+  <string name="tab_scan">Code scannen</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Verlauf löschen?</string>
   <string name="clear_history_dialog_message">Diese Aktion kann nicht rückgängig gemacht werden.</string>
@@ -140,6 +146,7 @@
   <string name="conversation_action_select_peer_number">Eine Nummer auswählen</string>
   <string name="conversation_action_block_this">Kontakt blockieren</string>
   <string name="conversation_action_go_to_call">Zurück zum laufenden Anruf</string>
+  <string name="conversation_open_file_error">Es gibt keine installierte App, die diesen Dateityp öffnen kann.</string>
   <string name="clip_contact_uri">Kontakt-Addresse</string>
   <string name="block_contact_dialog_title">%1$s blockieren?</string>
   <string name="block_contact_dialog_message">%1$s wird nicht in der Lage sein, Sie zu kontaktieren, bis Sie die Blockierung entfernen.</string>
@@ -208,12 +215,16 @@
   <string name="file_transfer_status_invalid_pathname">Ungültiger Pfadname</string>
   <string name="file_transfer_status_unjoinable_peer">Partner nicht erreichbar</string>
   <string name="file_saved_in">Datei gespeichert in %s</string>
+  <string name="file_saved_successfully">Datei erfolgreich gespeichert</string>
   <string name="no_space_left_on_device">Kein Speicherplatz mehr auf dem Gerät</string>
   <string name="title_media_viewer">Dateibetrachter</string>
   <string name="menu_file_open">Datei öffnen</string>
   <string name="menu_file_download">Datei herunterladen</string>
+  <string name="menu_file_save">Datei speichern</string>
   <string name="menu_file_delete">Datei löschen</string>
   <string name="menu_file_share">Datei teilen</string>
   <string name="menu_message_copy">Kopieren</string>
+  <string name="menu_message_delete">Nachricht löschen</string>
+  <string name="menu_message_cancel">Nachricht abbrechen</string>
   <string name="menu_delete">Löschen</string>
 </resources>

@@ -56,9 +56,12 @@
   <string name="notif_incoming_call">來電</string>
   <string name="notif_outgoing_call_title">撥出電話到 %1$s</string>
   <string name="notif_outgoing_call">撥出電話</string>
+  <string name="notif_current_call_title">正在與 %1$s 進行通話</string>
   <string name="notif_current_call">尚在進行中的通話</string>
+  <string name="notif_channel_call_in_progress">進行中的通話</string>
   <string name="notif_channel_calls">通話</string>
   <string name="notif_channel_missed_calls">錯過的通話</string>
+  <string name="notif_channel_incoming_calls">來電</string>
   <string name="notif_channel_messages">訊息</string>
   <string name="notif_channel_requests">請求</string>
   <string name="notif_channel_file_transfer">檔案傳輸</string>
