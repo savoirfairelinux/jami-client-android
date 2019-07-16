@@ -156,7 +156,8 @@ public class ConversationFacade {
 
     public void readMessages(String accountId, Uri contact) {
         Account account = mAccountService.getAccount(accountId);
-        readMessages(account, account.getByUri(contact));
+        if(account != null)
+            readMessages(account, account.getByUri(contact));
     }
 
     public void readMessages(Account account, Conversation conversation) {
