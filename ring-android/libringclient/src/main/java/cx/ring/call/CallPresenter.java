@@ -222,6 +222,9 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void switchVideoInputClick() {
+        if(mSipCall == null)
+            return;
+
         mHardwareService.switchInput(mSipCall.getCallId(), false);
         getView().switchCameraIcon(mHardwareService.isPreviewFromFrontCamera());
     }
