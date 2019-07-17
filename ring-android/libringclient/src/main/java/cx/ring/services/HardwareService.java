@@ -132,6 +132,8 @@ public abstract class HardwareService {
 
     public abstract boolean isPreviewFromFrontCamera();
 
+    public abstract boolean shouldPlaySpeaker();
+
     public void connectivityChanged() {
         Log.i(TAG, "connectivityChange()");
         mExecutor.execute(Ringservice::connectivityChanged);
