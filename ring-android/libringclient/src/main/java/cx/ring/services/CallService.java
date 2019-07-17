@@ -159,6 +159,13 @@ public class CallService {
         Ringservice.muteRingtone(mute);
     }
 
+    public void restartAudioLayer() {
+        mExecutor.execute(() -> {
+            Log.i(TAG, "restartAudioLayer() running...");
+            Ringservice.setAudioPlugin(Ringservice.getCurrentAudioOutputPlugin());
+        });
+    }
+
     public void setAudioPlugin(final String audioPlugin) {
         mExecutor.execute(() -> {
             Log.i(TAG, "setAudioPlugin() running...");

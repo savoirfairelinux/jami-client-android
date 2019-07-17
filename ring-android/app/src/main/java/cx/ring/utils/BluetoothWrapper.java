@@ -54,7 +54,8 @@ public class BluetoothWrapper {
             if (BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED.equals(action)) {
                 int status = intent.getIntExtra(BluetoothHeadset.EXTRA_STATE, BluetoothHeadset.STATE_DISCONNECTED);
                 Log.d(TAG, "BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED " + status);
-            } if (BluetoothHeadset.ACTION_AUDIO_STATE_CHANGED.equals(action)) {
+            }
+            if (BluetoothHeadset.ACTION_AUDIO_STATE_CHANGED.equals(action)) {
                 int status = intent.getIntExtra(BluetoothHeadset.EXTRA_STATE, BluetoothHeadset.STATE_AUDIO_DISCONNECTED);
                 Log.d(TAG, "BluetoothHeadset.ACTION_AUDIO_STATE_CHANGED " + status);
                 if (DBG && headsetAdapter != null && status == BluetoothHeadset.STATE_AUDIO_CONNECTED) {
@@ -82,6 +83,7 @@ public class BluetoothWrapper {
 
                 if (status == AudioManager.SCO_AUDIO_STATE_CONNECTED) {
                     Log.d(TAG, "BT SCO state changed : CONNECTED");
+                    audioManager.setBluetoothScoOn(true);
                     isBluetoothConnecting = false;
                     isBluetoothConnected = true;
                     if (btChangesListener != null) {
@@ -90,6 +92,7 @@ public class BluetoothWrapper {
                 } else if (status == AudioManager.SCO_AUDIO_STATE_DISCONNECTED) {
                     Log.d(TAG, "BT SCO state changed : DISCONNECTED");
                     boolean wasConnected = isBluetoothConnected;
+                    audioManager.setBluetoothScoOn(false);
                     isBluetoothConnecting = false;
                     isBluetoothConnected = false;
                     if (btChangesListener != null && wasConnected) {
@@ -156,27 +159,19 @@ public class BluetoothWrapper {
 
     public void setBluetoothOn(boolean on) {
         targetBt = on;
-        if (on && isBluetoothConnecting) {
+        if (on && isBluetoothConnecting || on && isBluetoothConnected) {
             return;
         }
         Log.d(TAG, "setBluetoothOn: " + on);
         Log.i(TAG, "mAudioManager.isBluetoothA2dpOn():" + audioManager.isBluetoothA2dpOn());
         Log.i(TAG, "mAudioManager.isBluetoothscoOn():" + audioManager.isBluetoothScoOn());
 
-        if (on != isBluetoothConnected) {
-            // BT SCO connection state is different from required activation
             if (on) {
-                // First we try to connect
                 isBluetoothConnecting = true;
                 audioManager.startBluetoothSco();
             } else {
-                isBluetoothConnecting = false;
-                // We stop to use BT SCO
-                audioManager.setBluetoothScoOn(false);
-                // And we stop BT SCO connection
                 audioManager.stopBluetoothSco();
             }
-        }
     }
 
     public void registerScoUpdate() {
