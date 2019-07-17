@@ -121,7 +121,7 @@ public class CallPresenter extends RootPresenter<CallView> {
         mCompositeDisposable.add(mHardwareService
                 .getBluetoothEvents()
                 .subscribe(event -> {
-                    if (!event.connected && mSipCall != null) {
+                    if (!event.connected && mSipCall == null) {
                         hangupCall();
                     }
                 }));

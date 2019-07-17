@@ -163,11 +163,11 @@ public class BluetoothWrapper {
         Log.i(TAG, "mAudioManager.isBluetoothA2dpOn():" + audioManager.isBluetoothA2dpOn());
         Log.i(TAG, "mAudioManager.isBluetoothscoOn():" + audioManager.isBluetoothScoOn());
 
-        if (on != isBluetoothConnected) {
             // BT SCO connection state is different from required activation
             if (on) {
                 // First we try to connect
                 isBluetoothConnecting = true;
+            //    audioManager.setBluetoothScoOn(true);
                 audioManager.startBluetoothSco();
             } else {
                 isBluetoothConnecting = false;
@@ -176,7 +176,6 @@ public class BluetoothWrapper {
                 // And we stop BT SCO connection
                 audioManager.stopBluetoothSco();
             }
-        }
     }
 
     public void registerScoUpdate() {
