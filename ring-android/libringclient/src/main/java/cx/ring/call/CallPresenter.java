@@ -121,7 +121,7 @@ public class CallPresenter extends RootPresenter<CallView> {
         mCompositeDisposable.add(mHardwareService
                 .getBluetoothEvents()
                 .subscribe(event -> {
-                    if (!event.connected && mSipCall != null) {
+                    if (!event.connected && mSipCall == null) {
                         hangupCall();
                     }
                 }));
@@ -209,6 +209,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void speakerClick(boolean checked) {
+        mCallService.restartAudioLayer();
         mHardwareService.toggleSpeakerphone(checked);
     }
 
@@ -306,6 +307,7 @@ public class CallPresenter extends RootPresenter<CallView> {
             timeUpdateTask = null;
         }
         mSipCall = null;
+        mHardwareService.closeAudioState();
         CallView view = getView();
         if (view != null)
             view.finish();
@@ -328,7 +330,7 @@ public class CallPresenter extends RootPresenter<CallView> {
         view.updateMenu();
         if (call.isOnGoing()) {
             mOnGoingCall = true;
-            mHardwareService.toggleSpeakerphone(!mAudioOnly);
+            mCallService.restartAudioLayer();
             view.initNormalStateDisplay(mAudioOnly, mHardwareService.isSpeakerPhoneOn(), isMicrophoneMuted());
             view.updateMenu();
             if (!mAudioOnly) {
