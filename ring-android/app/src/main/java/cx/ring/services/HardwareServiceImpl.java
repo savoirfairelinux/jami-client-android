@@ -30,12 +30,12 @@ import android.media.AudioFocusRequest;
 import android.media.AudioManager;
 import android.media.MediaRecorder;
 import android.os.Build;
-
-import androidx.annotation.Nullable;
-
 import android.view.SurfaceHolder;
 import android.view.TextureView;
 import android.view.WindowManager;
+
+import androidx.annotation.Nullable;
+import androidx.media.AudioAttributesCompat;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -43,7 +43,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import androidx.media.AudioAttributesCompat;
 import cx.ring.daemon.IntVect;
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
@@ -165,8 +164,11 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                 } else {
                     mAudioManager.requestAudioFocus(this, RINGTONE_ATTRIBUTES.getLegacyStreamType(), AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
                 }
-                mAudioManager.setMode(AudioManager.MODE_RINGTONE);
-                setAudioRouting(true);
+                if (incomingCall) {
+                    // ringtone for incoming calls
+                    mAudioManager.setMode(AudioManager.MODE_RINGTONE);
+                }
+                setAudioRouting(isOngoingVideo);
                 break;
             case CURRENT:
                 stopRinging();
@@ -229,13 +231,11 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
 
     private void setAudioRouting(boolean requestSpeakerOn) {
         mShouldSpeakerphone = requestSpeakerOn;
+        // prioritize bluetooth by checking for bluetooth device first
         if (mBluetoothWrapper != null && mBluetoothWrapper.canBluetooth() && mBluetoothWrapper.isBTHeadsetConnected()) {
-            Log.d(TAG, "setAudioRouting: Try to enable bluetooth");
-            mBluetoothWrapper.setBluetoothOn(true);
-        } else if (!mAudioManager.isWiredHeadsetOn()
-                && !DeviceUtils.isTv(mContext)
-                && mHasSpeakerPhone) {
-            mAudioManager.setSpeakerphoneOn(requestSpeakerOn);
+            routeToBTHeadset();
+        } else if (mHasSpeakerPhone && mShouldSpeakerphone) {
+            routeToSpeaker();
         }
     }
 
@@ -258,27 +258,55 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         return true;
     }
 
+    /**
+     * Routes audio to a bluetooth headset.
+     */
     private void routeToBTHeadset() {
         Log.d(TAG, "routeToBTHeadset: Try to enable bluetooth");
         mAudioManager.setSpeakerphoneOn(false);
-        mAudioManager.setMode(AudioManager.MODE_NORMAL);
-        mBluetoothWrapper.setBluetoothOn(true);
         mAudioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
+        mBluetoothWrapper.setBluetoothOn(true);
     }
+
+    /**
+     * Routes audio to the device's speaker and takes into account whether the transition is coming from bluetooth.
+     */
+    private void routeToSpeaker() {
+
+        // if we are returning from bluetooth mode, switch to mode normal, otherwise, we switch to mode in communication
+        if (mAudioManager.isBluetoothScoOn()) {
+            mAudioManager.setMode(AudioManager.MODE_NORMAL);
+            mBluetoothWrapper.setBluetoothOn(false);
+        } else
+            mAudioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
+
+        mAudioManager.setSpeakerphoneOn(true);
+    }
+
+    /**
+     * Returns to earpiece audio
+     */
+    private void resetAudio() {
+        mAudioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
+        if (mBluetoothWrapper != null)
+            mBluetoothWrapper.setBluetoothOn(false);
+        mAudioManager.setSpeakerphoneOn(false);
+    }
+
 
     @Override
     public void toggleSpeakerphone(boolean checked) {
-        if (!mHasSpeakerPhone || checked == mAudioManager.isSpeakerphoneOn()) {
+        if (!mHasSpeakerPhone && checked) {
             return;
         }
+        mShouldSpeakerphone = checked;
         Log.w(TAG, "toggleSpeakerphone setSpeakerphoneOn " + checked);
         if (checked) {
-            mAudioManager.setSpeakerphoneOn(true);
+            routeToSpeaker();
+        } else if (mBluetoothWrapper != null && mBluetoothWrapper.canBluetooth() && mBluetoothWrapper.isBTHeadsetConnected()) {
+            routeToBTHeadset();
         } else {
-            mAudioManager.setSpeakerphoneOn(false);
-            if (mBluetoothWrapper != null && mBluetoothWrapper.isBTHeadsetConnected()) {
-                mBluetoothWrapper.setBluetoothOn(true);
-            }
+            resetAudio();
         }
     }
 
@@ -292,12 +320,12 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         } else if (status == BluetoothHeadset.STATE_AUDIO_DISCONNECTED) {
             Log.d(TAG, "BluetoothHeadset Disconnected");
             event.connected = false;
-            if (mShouldSpeakerphone) {
-                mAudioManager.setSpeakerphoneOn(true);
-            }
+            if (mShouldSpeakerphone)
+                routeToSpeaker();
         }
         bluetoothEvents.onNext(event);
     }
+
 
     public void decodingStarted(String id, String shmPath, int width, int height, boolean isMixer) {
         Log.i(TAG, "decodingStarted() " + id + " " + width + "x" + height);
@@ -481,7 +509,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         if (!(oholder instanceof TextureView)) {
             return;
         }
-        TextureView holder = (TextureView)oholder;
+        TextureView holder = (TextureView) oholder;
         Log.w(TAG, "addPreviewVideoSurface " + holder.hashCode() + " mCapturingId " + mCapturingId);
         if (mCameraPreviewSurface.get() == oholder)
             return;
@@ -529,8 +557,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
             final StringMap map = cameraService.getNativeParams(camId).toMap();
             final String uri = "camera://" + camId;
             switchInput(id, uri, map);
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             Log.e(TAG, "Error with hardware service, switchInput: " + e.getMessage());
         }
     }
