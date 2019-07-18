@@ -769,14 +769,15 @@ public class DRingService extends Service {
             case ACTION_CALL_REFUSE:
                 mCallService.refuse(callId);
                 mHardwareService.closeAudioState();
-                mNotificationService.cancelCallNotification(callId.hashCode());
+                mNotificationService.stopForegroundService(callId.hashCode());
                 break;
             case ACTION_CALL_END:
                 mCallService.hangUp(callId);
                 mHardwareService.closeAudioState();
-                mNotificationService.cancelCallNotification(callId.hashCode());
+                mNotificationService.stopForegroundService(callId.hashCode());
                 break;
             case ACTION_CALL_VIEW:
+                mNotificationService.cancelCallNotification(callId.hashCode());
                 if (DeviceUtils.isTv(this)) {
                     startActivity(new Intent(Intent.ACTION_VIEW)
                             .putExtras(extras)
