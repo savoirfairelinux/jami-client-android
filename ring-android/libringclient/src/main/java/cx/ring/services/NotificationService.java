@@ -32,12 +32,13 @@ public interface NotificationService {
     String TRUST_REQUEST_NOTIFICATION_ACCOUNT_ID = "trustRequestNotificationAccountId";
     String TRUST_REQUEST_NOTIFICATION_FROM = "trustRequestNotificationFrom";
     String KEY_CALL_ID = "callId";
+    String KEY_NOTIFICATION_ID = "notificationId";
 
-    void showCallNotification(Conference conference);
+    Object showCallNotification(int callId);
 
     void showTextNotification(String accountId, Conversation conversation);
 
-    void cancelCallNotification(int notificationId);
+    void cancelCallNotification();
 
     void cancelTextNotification(Uri contact);
 
@@ -55,5 +56,13 @@ public interface NotificationService {
 
     void cancelFileNotification(long id);
 
+    void updateNotification(Object notification, int notificationId);
+
+    void startForegroundService(int notificationId, boolean isCallService);
+
+    void stopCallForegroundService();
+
     Object getServiceNotification();
+
+    void handleCallNotification(Conference conference, boolean remove);
 }
