@@ -399,18 +399,20 @@ public class ConversationFacade {
         if ((call.isRinging() || newState == SipCall.State.CURRENT) && call.getTimestampStart() == 0) {
             call.setTimestampStart(System.currentTimeMillis());
         }
+        mNotificationService.setConference(conference);
+
         if (incomingCall) {
+            mNotificationService.startForegroundService();
             mHardwareService.setPreviewSettings();
-            mNotificationService.showCallNotification(conference);
         } else if ((newState == SipCall.State.CURRENT && call.isIncoming())
                 || newState == SipCall.State.RINGING && call.isOutGoing()) {
-            mNotificationService.showCallNotification(conference);
+            mNotificationService.startForegroundService();
             mAccountService.sendProfile(call.getCallId(), call.getAccount());
         } else if (newState == SipCall.State.HUNGUP
                 || newState == SipCall.State.BUSY
                 || newState == SipCall.State.FAILURE
                 || newState == SipCall.State.OVER) {
-            mNotificationService.cancelCallNotification(call.getCallId().hashCode());
+            mNotificationService.stopForegroundService();
             mHardwareService.closeAudioState();
             long now = System.currentTimeMillis();
             if (call.getTimestampStart() == 0) {
