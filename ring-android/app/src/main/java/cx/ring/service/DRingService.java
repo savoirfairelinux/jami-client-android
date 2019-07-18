@@ -782,6 +782,7 @@ public class DRingService extends Service {
                 mNotificationService.cancelCallNotification(callId.hashCode());
                 break;
             case ACTION_CALL_VIEW:
+                mNotificationService.cancelCallNotification(callId.hashCode());
                 if (DeviceUtils.isTv(this)) {
                     startActivity(new Intent(Intent.ACTION_VIEW)
                             .putExtras(extras)
