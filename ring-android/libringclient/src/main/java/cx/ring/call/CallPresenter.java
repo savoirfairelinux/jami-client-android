@@ -165,6 +165,11 @@ public class CallPresenter extends RootPresenter<CallView> {
 
         Observable<SipCall> callObservable = mCallService.getCallUpdates(confId).observeOn(mUiScheduler).share();
 
+        if(callObservable == null) {
+            Log.e(TAG, "Illegal argument exception. Issue in getCallUpdates");
+            return;
+        }
+
         // Handles the case where the call has been accepted, emits a single so as to only check for permissions and start the call once
         mCompositeDisposable.add(callObservable.firstOrError().subscribe(call -> {
             if (!actionViewOnly) {
