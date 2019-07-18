@@ -49,6 +49,7 @@ import cx.ring.fragments.SmartListFragment;
 import cx.ring.launch.LaunchActivity;
 import cx.ring.navigation.RingNavigationFragment;
 import cx.ring.service.BootReceiver;
+import cx.ring.service.CallNotificationService;
 import cx.ring.service.DRingService;
 import cx.ring.service.RingJobService;
 import cx.ring.services.AccountService;
@@ -150,6 +151,8 @@ public interface RingInjectionComponent {
     void inject(NotificationServiceImpl service);
 
     void inject(ConversationFacade service);
+
+    void inject(CallNotificationService service);
 
     void inject(BootReceiver receiver);
 

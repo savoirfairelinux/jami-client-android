@@ -376,6 +376,7 @@ public class ConversationFacade {
     }
 
     private void onCallStateChange(SipCall call) {
+        Log.d(TAG, "Thread id: " + Thread.currentThread().getId());
         SipCall.State newState = call.getCallState();
         boolean incomingCall = newState == SipCall.State.RINGING && call.isIncoming();
         mHardwareService.updateAudioState(newState, incomingCall, !call.isAudioOnly());
@@ -400,17 +401,17 @@ public class ConversationFacade {
             call.setTimestampStart(System.currentTimeMillis());
         }
         if (incomingCall) {
+            mNotificationService.handleCallNotification(conference, false);
             mHardwareService.setPreviewSettings();
-            mNotificationService.showCallNotification(conference);
         } else if ((newState == SipCall.State.CURRENT && call.isIncoming())
                 || newState == SipCall.State.RINGING && call.isOutGoing()) {
-            mNotificationService.showCallNotification(conference);
+            mNotificationService.handleCallNotification(conference, false);
             mAccountService.sendProfile(call.getCallId(), call.getAccount());
         } else if (newState == SipCall.State.HUNGUP
                 || newState == SipCall.State.BUSY
                 || newState == SipCall.State.FAILURE
                 || newState == SipCall.State.OVER) {
-            mNotificationService.cancelCallNotification(call.getCallId().hashCode());
+            mNotificationService.handleCallNotification(conference, true);
             mHardwareService.closeAudioState();
             long now = System.currentTimeMillis();
             if (call.getTimestampStart() == 0) {
