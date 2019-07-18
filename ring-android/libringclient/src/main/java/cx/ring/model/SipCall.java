@@ -63,6 +63,7 @@ public class SipCall {
 
     private ProfileChunk mProfileChunk = null;
 
+
     public SipCall(String id, String account, Uri number, int direction) {
         mCallID = id;
         mAccount = account;

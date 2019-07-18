@@ -134,7 +134,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     public void initOutGoing(String accountId, String contactRingId, boolean audioOnly) {
         if (accountId == null || contactRingId == null) {
             Log.e(TAG, "initOutGoing: null account or contact");
-            getView().finish();
+            hangupCall();
             return;
         }
         if (mHardwareService.getCameraCount() == 0) {
@@ -259,7 +259,6 @@ public class CallPresenter extends RootPresenter<CallView> {
         final SipCall call = mSipCall;
         if (call != null) {
             mCallService.refuse(call.getCallId());
-            mNotificationService.cancelCallNotification(call.getCallId().hashCode());
         }
         finish();
     }

@@ -38,16 +38,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
 
-import com.bumptech.glide.Glide;
-
-import java.io.File;
-import java.util.Collection;
-import java.util.Random;
-import java.util.Set;
-import java.util.TreeMap;
-
-import javax.inject.Inject;
-
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationCompat.CarExtender.UnreadConversation;
@@ -56,6 +46,19 @@ import androidx.core.app.Person;
 import androidx.core.app.RemoteInput;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.drawable.IconCompat;
+
+import com.bumptech.glide.Glide;
+
+import java.io.File;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Random;
+import java.util.Set;
+import java.util.TreeMap;
+
+import javax.inject.Inject;
+
 import cx.ring.R;
 import cx.ring.client.HomeActivity;
 import cx.ring.contactrequests.ContactRequestsFragment;
@@ -70,6 +73,7 @@ import cx.ring.model.DataTransferEventCode;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 import cx.ring.model.Uri;
+import cx.ring.service.CallNotificationService;
 import cx.ring.service.DRingService;
 import cx.ring.tv.call.TVCallActivity;
 import cx.ring.utils.DeviceUtils;
@@ -101,6 +105,9 @@ public class NotificationServiceImpl implements NotificationService {
 
     private static final String NOTIF_CALL_GROUP = "calls";
 
+    private static final int NOTIF_CALL_ID = 1001;
+
+
     private final SparseArray<NotificationCompat.Builder> mNotificationBuilders = new SparseArray<>();
     @Inject
     protected Context mContext;
@@ -117,6 +124,7 @@ public class NotificationServiceImpl implements NotificationService {
     private NotificationManagerCompat notificationManager;
     private final Random random = new Random();
     private int avatarSize;
+    private LinkedHashMap<Integer, Conference> currentCalls = new LinkedHashMap<>();
 
     @SuppressLint("CheckResult")
     public void initHelper() {
@@ -147,21 +155,23 @@ public class NotificationServiceImpl implements NotificationService {
         NotificationChannel missedCallsChannel = new NotificationChannel(NOTIF_CHANNEL_MISSED_CALL, mContext.getString(R.string.notif_channel_missed_calls), NotificationManager.IMPORTANCE_DEFAULT);
         missedCallsChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
         missedCallsChannel.setSound(null, null);
+        missedCallsChannel.enableVibration(false);
         missedCallsChannel.setGroup(NOTIF_CALL_GROUP);
         notificationManager.createNotificationChannel(missedCallsChannel);
 
         // Incoming call channel
         NotificationChannel incomingCallChannel = new NotificationChannel(NOTIF_CHANNEL_INCOMING_CALL, mContext.getString(R.string.notif_channel_incoming_calls), NotificationManager.IMPORTANCE_HIGH);
-        incomingCallChannel.enableVibration(true);
         incomingCallChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
         incomingCallChannel.setGroup(NOTIF_CALL_GROUP);
         incomingCallChannel.setSound(null, null);
+        incomingCallChannel.enableVibration(false);
         notificationManager.createNotificationChannel(incomingCallChannel);
 
         // Call in progress channel
         NotificationChannel callInProgressChannel = new NotificationChannel(NOTIF_CHANNEL_CALL_IN_PROGRESS, mContext.getString(R.string.notif_channel_call_in_progress), NotificationManager.IMPORTANCE_DEFAULT);
         callInProgressChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
         callInProgressChannel.setSound(null, null);
+        missedCallsChannel.enableVibration(false);
         callInProgressChannel.setGroup(NOTIF_CALL_GROUP);
         notificationManager.createNotificationChannel(callInProgressChannel);
 
@@ -203,6 +213,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     /**
      * Starts the call activity directly for Android TV
+     *
      * @param callId the call ID
      */
     private void startCallActivity(String callId) {
@@ -213,20 +224,15 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public void showCallNotification(Conference conference) {
-        if (conference == null || conference.getParticipants().isEmpty()) {
-            return;
+    public Object showCallNotification(int callId) {
+        Conference mConference = currentCalls.get(callId);
+        if (mConference == null || mConference.getParticipants().isEmpty()) {
+            return null;
         }
 
-        SipCall call = conference.getParticipants().get(0);
+        SipCall call = mConference.getParticipants().get(0);
 
-        if(DeviceUtils.isTv(mContext)) {
-            startCallActivity(call.getCallId());
-            return;
-        }
-
-        final int notificationId = call.getCallId().hashCode();
-        notificationManager.cancel(notificationId);
+        notificationManager.cancel(NOTIF_CALL_ID);
 
         PendingIntent gotoIntent = PendingIntent.getService(mContext,
                 random.nextInt(),
@@ -236,13 +242,14 @@ public class NotificationServiceImpl implements NotificationService {
 
         CallContact contact = call.getContact();
         NotificationCompat.Builder messageNotificationBuilder;
-        if (conference.isOnGoing()) {
+        if (mConference.isOnGoing()) {
             messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_CALL_IN_PROGRESS);
             messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_current_call_title, contact.getDisplayName()))
                     .setContentText(mContext.getText(R.string.notif_current_call))
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setContentIntent(gotoIntent)
                     .setSound(null)
+                    .setVibrate(null)
                     .setColorized(true)
                     .setColor(mContext.getResources().getColor(R.color.color_primary_light))
                     .addAction(R.drawable.baseline_call_end_24, mContext.getText(R.string.action_call_hangup),
@@ -251,13 +258,15 @@ public class NotificationServiceImpl implements NotificationService {
                                             .setClass(mContext, DRingService.class)
                                             .putExtra(KEY_CALL_ID, call.getCallId()),
                                     PendingIntent.FLAG_ONE_SHOT));
-        } else if (conference.isRinging()) {
-            if (conference.isIncoming()) {
+        } else if (mConference.isRinging()) {
+            if (mConference.isIncoming()) {
                 messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_INCOMING_CALL);
                 messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_incoming_call_title, contact.getDisplayName()))
                         .setPriority(NotificationCompat.PRIORITY_MAX)
                         .setContentText(mContext.getText(R.string.notif_incoming_call))
                         .setContentIntent(gotoIntent)
+                        .setSound(null)
+                        .setVibrate(null)
                         .setFullScreenIntent(gotoIntent, true)
                         .addAction(R.drawable.baseline_call_end_24, mContext.getText(R.string.action_call_decline),
                                 PendingIntent.getService(mContext, random.nextInt(),
@@ -278,6 +287,7 @@ public class NotificationServiceImpl implements NotificationService {
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                         .setContentIntent(gotoIntent)
                         .setSound(null)
+                        .setVibrate(null)
                         .setColorized(true)
                         .setColor(mContext.getResources().getColor(R.color.color_primary_light))
                         .addAction(R.drawable.baseline_call_end_24, mContext.getText(R.string.action_call_hangup),
@@ -288,7 +298,8 @@ public class NotificationServiceImpl implements NotificationService {
                                         PendingIntent.FLAG_ONE_SHOT));
             }
         } else {
-            return;
+            handleCallNotification(mConference, true);
+            return null;
         }
 
         messageNotificationBuilder.setOngoing(true)
@@ -296,8 +307,80 @@ public class NotificationServiceImpl implements NotificationService {
                 .setSmallIcon(R.drawable.ic_ring_logo_white);
 
         setContactPicture(contact, messageNotificationBuilder);
-        notificationManager.notify(notificationId, messageNotificationBuilder.build());
+
+        return messageNotificationBuilder.build();
     }
+
+    /**
+     * Updates a notification
+     *
+     * @param notification   a built notification object
+     * @param notificationId the notification's id
+     */
+    @Override
+    public void updateNotification(Object notification, int notificationId) {
+        notificationManager.notify(notificationId, (Notification) notification);
+    }
+
+    /**
+     * Starts a service (data transfer or call)
+     *
+     * @param id            the notification id
+     * @param isCallService true if the intended service is a call service
+     */
+    @Override
+    public void startForegroundService(int id, boolean isCallService) {
+        Intent serviceIntent = new Intent(mContext, CallNotificationService.class);
+
+        serviceIntent.putExtra(KEY_NOTIFICATION_ID, id);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            mContext.startForegroundService(serviceIntent);
+        else
+            mContext.startService(serviceIntent);
+    }
+
+    /**
+     * Kills a foreground service. Currently only applicable to calls.
+     */
+    @Override
+    public void stopCallForegroundService() {
+        Intent serviceIntent = new Intent(mContext, CallNotificationService.class);
+        mContext.stopService(serviceIntent);
+    }
+
+    /**
+     * Handles the creation and destruction of services associated with calls as well as displaying notifications.
+     *
+     * @param conference the conference object for the notification
+     * @param remove     true if it should be removed from current calls
+     */
+    @Override
+    public void handleCallNotification(Conference conference, boolean remove) {
+        if (DeviceUtils.isTv(mContext)) {
+            if (!remove)
+                startCallActivity(conference.getId());
+            return;
+        }
+
+        int id = conference.getId().hashCode();
+        currentCalls.remove(id);
+        if (!remove) {
+            currentCalls.put(id, conference);
+            startForegroundService(id, true);
+        } else if (currentCalls.isEmpty())
+            stopCallForegroundService();
+            // this is a temporary solution until we have direct support for concurrent calls and the call state will exclusively update notifications
+        else {
+            int key = -1;
+            Iterator<Integer> iterator = (currentCalls.keySet().iterator());
+            while (iterator.hasNext()) {
+                key = iterator.next();
+            }
+            updateNotification(showCallNotification(key), NOTIF_CALL_ID);
+        }
+    }
+
 
     @Override
     public void showTextNotification(String accountId, Conversation conversation) {
@@ -475,7 +558,7 @@ public class NotificationServiceImpl implements NotificationService {
                 Bundle info = new Bundle();
                 info.putString(TRUST_REQUEST_NOTIFICATION_ACCOUNT_ID, account.getAccountID());
                 info.putString(TRUST_REQUEST_NOTIFICATION_FROM, c.getPrimaryNumber());
-                    builder.setContentText(c.getRingUsername())
+                builder.setContentText(c.getRingUsername())
                         .addAction(R.drawable.baseline_person_add_24, mContext.getText(R.string.accept),
                                 PendingIntent.getService(mContext, random.nextInt(),
                                         new Intent(DRingService.ACTION_TRUST_REQUEST_ACCEPT)
@@ -497,7 +580,7 @@ public class NotificationServiceImpl implements NotificationService {
 
                 setContactPicture(c, builder);
                 notificationManager.notify(notificationId, builder.build());
-            }, e -> Log.w(TAG,  "error showing notification", e));
+            }, e -> Log.w(TAG, "error showing notification", e));
         } else {
             NotificationCompat.Builder builder = getRequestNotificationBuilder(account.getAccountID());
             boolean newRequest = false;
@@ -699,9 +782,9 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public void cancelCallNotification(int notificationId) {
-        notificationManager.cancel(notificationId);
-        mNotificationBuilders.remove(notificationId);
+    public void cancelCallNotification() {
+        notificationManager.cancel(NOTIF_CALL_ID);
+        mNotificationBuilders.remove(NOTIF_CALL_ID);
     }
 
     @Override
@@ -736,6 +819,7 @@ public class NotificationServiceImpl implements NotificationService {
             return null;
         }
     }
+
     private Bitmap getContactPicture(Account account) {
         return AvatarFactory.getBitmapAvatar(mContext, account, avatarSize).blockingGet();
     }
