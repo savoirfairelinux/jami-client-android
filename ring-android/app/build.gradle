@@ -8,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 175
-        versionName "20190715-01"
+        versionCode 176
+        versionName "20190717-01"
     }
 
     sourceSets {
@@ -112,7 +112,7 @@ dependencies {
 
     implementation 'com.jsibbold:zoomage:1.2.0'
 
-    withFirebaseImplementation 'com.google.firebase:firebase-core:17.0.0'
+    withFirebaseImplementation 'com.google.firebase:firebase-core:17.0.1'
     withFirebaseImplementation 'com.google.firebase:firebase-messaging:19.0.1'
 }
 
