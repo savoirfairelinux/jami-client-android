@@ -113,7 +113,8 @@ public class DRingService extends Service {
     private static final int NOTIFICATION_ID = 1;
 
     private final ContactsContentObserver contactContentObserver = new ContactsContentObserver();
-    @Inject @Singleton
+    @Inject
+    @Singleton
     protected DaemonService mDaemonService;
     @Inject
     @Singleton
@@ -760,7 +761,7 @@ public class DRingService extends Service {
 
         switch (action) {
             case ACTION_CALL_ACCEPT:
-                mNotificationService.cancelCallNotification(callId.hashCode());
+                mNotificationService.cancelCallNotification();
                 startActivity(new Intent(ACTION_CALL_ACCEPT)
                         .putExtras(extras)
                         .setClass(getApplicationContext(), CallActivity.class)
@@ -769,14 +770,13 @@ public class DRingService extends Service {
             case ACTION_CALL_REFUSE:
                 mCallService.refuse(callId);
                 mHardwareService.closeAudioState();
-                mNotificationService.cancelCallNotification(callId.hashCode());
                 break;
             case ACTION_CALL_END:
                 mCallService.hangUp(callId);
                 mHardwareService.closeAudioState();
-                mNotificationService.cancelCallNotification(callId.hashCode());
                 break;
             case ACTION_CALL_VIEW:
+                mNotificationService.cancelCallNotification();
                 if (DeviceUtils.isTv(this)) {
                     startActivity(new Intent(Intent.ACTION_VIEW)
                             .putExtras(extras)

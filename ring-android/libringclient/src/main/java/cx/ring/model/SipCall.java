@@ -63,6 +63,14 @@ public class SipCall {
 
     private ProfileChunk mProfileChunk = null;
 
+
+    // this was created to make observables with null objects
+    public SipCall() {
+        mCallID = null;
+        mAccount = null;
+
+    }
+
     public SipCall(String id, String account, Uri number, int direction) {
         mCallID = id;
         mAccount = account;

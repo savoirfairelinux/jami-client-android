@@ -134,7 +134,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     public void initOutGoing(String accountId, String contactRingId, boolean audioOnly) {
         if (accountId == null || contactRingId == null) {
             Log.e(TAG, "initOutGoing: null account or contact");
-            getView().finish();
+            hangupCall();
             return;
         }
         if (mHardwareService.getCameraCount() == 0) {
@@ -167,7 +167,9 @@ public class CallPresenter extends RootPresenter<CallView> {
         // if the call is incoming through a full intent, this allows the incoming call to display
         incomingIsFullIntent = actionViewOnly;
 
-        Observable<SipCall> callObservable = mCallService.getCallUpdates(confId).observeOn(mUiScheduler).share();
+        Observable<SipCall> callObservable = mCallService.getCallUpdates(confId)
+                .filter(call -> call.getCallId() != null)
+                .observeOn(mUiScheduler).share();
 
         // Handles the case where the call has been accepted, emits a single so as to only check for permissions and start the call once
         mCompositeDisposable.add(callObservable.firstOrError().subscribe(call -> {
@@ -259,7 +261,6 @@ public class CallPresenter extends RootPresenter<CallView> {
         final SipCall call = mSipCall;
         if (call != null) {
             mCallService.refuse(call.getCallId());
-            mNotificationService.cancelCallNotification(call.getCallId().hashCode());
         }
         finish();
     }

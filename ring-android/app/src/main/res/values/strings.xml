@@ -46,6 +46,10 @@ along with this program; if not, write to the Free Software
     <string name="description">Jami is free software for universal communication which respects the freedoms and privacy of its users.</string>
     <string name="credits">Credits</string>
 
+
+    <string name="call_service_description">This service is necessary to keep your calls running in the foreground. It only runs during calls.</string>
+
+
     <!-- About dialog -->
     <string name="developed_by">Developed by</string>
     <string name="designed_by">Designed by</string>
