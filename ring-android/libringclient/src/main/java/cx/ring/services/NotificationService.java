@@ -33,7 +33,11 @@ public interface NotificationService {
     String TRUST_REQUEST_NOTIFICATION_FROM = "trustRequestNotificationFrom";
     String KEY_CALL_ID = "callId";
 
-    void showCallNotification(Conference conference);
+    Object[] showCallNotification();
+
+    void startForegroundService();
+
+    void stopForegroundService();
 
     void showTextNotification(String accountId, Conversation conversation);
 
@@ -54,6 +58,8 @@ public interface NotificationService {
     void showMissedCallNotification(SipCall call);
 
     void cancelFileNotification(long id);
+
+    void setConference(Conference conference);
 
     Object getServiceNotification();
 }
