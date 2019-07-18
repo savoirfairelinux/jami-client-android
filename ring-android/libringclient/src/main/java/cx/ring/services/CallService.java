@@ -76,7 +76,7 @@ public class CallService {
     }
     public Observable<SipCall> getCallUpdates(final String callId) {
         SipCall call = getCurrentCallForId(callId);
-        return call == null ? Observable.error(new IllegalArgumentException()) : getCallUpdates(call);
+        return call == null ? Observable.just(new SipCall()) : getCallUpdates(call);
     }
 
     public Observable<SipCall> placeCallObservable(final String accountId, final String number, final boolean audioOnly) {
