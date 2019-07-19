@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af46b416_bcdd4094",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/call/CallPresenter.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 642
+      },
+      "writtenOn": "2019-07-19T18:33:30Z",
+      "side": 1,
+      "message": "Sometimes, a call would finish without hanging up. Potential problem area.",
+      "range": {
+        "startLine": 133,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 25
+      },
+      "revId": "79bf75a25086212dfd0348f5d29c8435d53ed31d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "556e0145_91c4271e",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/call/CallPresenter.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 642
+      },
+      "writtenOn": "2019-07-19T18:33:30Z",
+      "side": 1,
+      "message": "Is this bad handling? It seems better then just throwing an exception earlier which causes a crash.",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 170,
+        "endChar": 25
+      },
+      "revId": "79bf75a25086212dfd0348f5d29c8435d53ed31d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
