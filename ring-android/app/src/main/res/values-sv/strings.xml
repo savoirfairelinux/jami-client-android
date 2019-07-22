@@ -57,9 +57,12 @@
   <string name="notif_incoming_call">Inkommande samtal</string>
   <string name="notif_outgoing_call_title">Utgående samtal till %1$s</string>
   <string name="notif_outgoing_call">Utgående samtal</string>
+  <string name="notif_current_call_title">Pågående samtal med %1$s</string>
   <string name="notif_current_call">Pågående samtal</string>
+  <string name="notif_channel_call_in_progress">Pågående samtal</string>
   <string name="notif_channel_calls">Samtal</string>
   <string name="notif_channel_missed_calls">Missade samtal</string>
+  <string name="notif_channel_incoming_calls">Inkommande samtal</string>
   <string name="notif_channel_messages">Meddelanden</string>
   <string name="notif_channel_requests">Förfrågningar</string>
   <string name="notif_channel_file_transfer">Filöverföring</string>

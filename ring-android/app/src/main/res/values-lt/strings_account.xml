@@ -142,6 +142,8 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_sip_success_title">Sip paskyra užregistruota</string>
   <string name="account_sip_success_message">Jūs sėkmingai užregistravote savo Sip paskyrą.</string>
   <string name="account_sip_register_anyway">Vis tiek registruoti</string>
+  <string name="account_link_button">Prijungti iš tinklo</string>
+  <string name="account_link_archive_button">Prijungti iš atsarginės kopijos</string>
   <string name="account_link_prompt_pin">Įveskite PIN</string>
   <string name="account_new_button">Susikurti Jami paskyrą</string>
   <string name="account_link_export_button">Susieti kitą įrenginį su šia paskyra</string>
