@@ -145,6 +145,7 @@
   <string name="prompt_new_username">Įveskite naują naudotojo vardą</string>
   <string name="help_password_choose">Pasirinkite stiprų slaptažodį, kurį prisiminsite, kad apsaugotumėte savo Jami paskyrą.</string>
   <string name="help_password_enter">Įveskite savo pagrindinės Jami paskyros slaptažodį</string>
+  <string name="help_pin_enter">Įveskite PIN iš kitos sukonfigūruotos Jami paskyros. Norėdami gauti PIN, naudokite ypatybę \"eksportuoti Jami paskyrą\".</string>
   <string name="wizard_next">Kitas</string>
   <string name="wizard_back">Atgal</string>
   <string name="wizard_skip">Praleisti</string>

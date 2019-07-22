@@ -59,9 +59,12 @@
   <string name="notif_incoming_call">Połączenie przychodzące</string>
   <string name="notif_outgoing_call_title">Połączenie wychodzące do %1$s</string>
   <string name="notif_outgoing_call">Połączenie wychodzące</string>
+  <string name="notif_current_call_title">Połączenie wychodzące z %1$s</string>
   <string name="notif_current_call">Trwa połączenie</string>
+  <string name="notif_channel_call_in_progress">Rozmowa w toku</string>
   <string name="notif_channel_calls">Rozmowy</string>
   <string name="notif_channel_missed_calls">Nieodebrane rozmowy</string>
+  <string name="notif_channel_incoming_calls">Połączenia przychodzące</string>
   <string name="notif_channel_messages">Wiadomości</string>
   <string name="notif_channel_requests">Prośby dodania</string>
   <string name="notif_channel_file_transfer">Transfer pliku</string>
@@ -121,6 +124,10 @@
   <string name="permission_dialog_write_call_log_message">Jami potrzebuje pozwolenia na zapisywanie logów rozmów, by włączyć tą funkcję.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Zeskanuj kod QR konta, które chcesz dodać.</string>
+  <string name="title_activity_qrcode">Udostępnij moje konto</string>
+  <string name="error_scan_no_camera_permissions">Czytnik QR wymaga pozwolenia na użycie kamery, by działać</string>
+  <string name="tab_code">Mój Kod</string>
+  <string name="tab_scan">Skanuj Kod</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Wyczyścić historię?</string>
   <string name="clear_history_dialog_message">Tej czynności nie można cofnąć.</string>
@@ -141,6 +148,7 @@
   <string name="conversation_action_select_peer_number">Wybierz numer</string>
   <string name="conversation_action_block_this">Blokuj kontakt</string>
   <string name="conversation_action_go_to_call">Powróć do trwającej rozmowy</string>
+  <string name="conversation_open_file_error">Nie ma zainstalowanej aplikacji zdolnej otworzyć ten plik.</string>
   <string name="clip_contact_uri">Kontakty</string>
   <string name="block_contact_dialog_title">Czy zablokować %1$s?</string>
   <string name="block_contact_dialog_message">%1$snie będzie w stanie się z tobą skontaktować, dopóki kontakt nie zostanie odblokowany.</string>
@@ -209,12 +217,16 @@
   <string name="file_transfer_status_invalid_pathname">nieprawidłowa ścieżka</string>
   <string name="file_transfer_status_unjoinable_peer">nieosiągalny klient</string>
   <string name="file_saved_in">Plik zapisano w  %s</string>
+  <string name="file_saved_successfully">Plik został zapisany poprawnie</string>
   <string name="no_space_left_on_device">Brak wolnego miejsca</string>
   <string name="title_media_viewer">Przeglądarka mediów</string>
   <string name="menu_file_open">Otwórz plik</string>
   <string name="menu_file_download">Pobierz plik</string>
+  <string name="menu_file_save">Zapisz plik</string>
   <string name="menu_file_delete">Usuń plik</string>
   <string name="menu_file_share">Podziel się plikiem</string>
   <string name="menu_message_copy">Skopiuj</string>
+  <string name="menu_message_delete">Usuń wiadomość</string>
+  <string name="menu_message_cancel">Anuluj wiadomość</string>
   <string name="menu_delete">Usuń</string>
 </resources>

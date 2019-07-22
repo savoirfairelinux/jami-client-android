@@ -7,6 +7,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Dodaj konto Jami</string>
   <string name="add_sip_account_title">Dodaj konto SIP</string>
+  <string name="ring_account_default_name">Konto Jami %1$s</string>
   <string name="prompt_alias">Nazwa konta</string>
   <string name="prompt_hostname">Nazwa hosta</string>
   <string name="prompt_username">Nazwa użytkownika</string>
@@ -115,6 +116,7 @@ Możesz edytować swoje konto później</string>
   <string name="error_password_char_count">minimum 6 znaków</string>
   <string name="error_passwords_not_equals">Hasła nie pasują do siebie</string>
   <string name="export_account_wait_title">Proszę czekać…</string>
+  <string name="export_account_wait_message">Eksportowanie informacji o koncie</string>
   <string name="account_export_file">Wykonaj kopię zapasową</string>
   <string name="account_export_end_decryption_message">Nie można było odblokować twojego konta podanym hasłem.</string>
   <string name="account_export_end_network_title">Błąd sieci</string>
@@ -146,6 +148,7 @@ Możesz edytować swoje konto później</string>
   <string name="account_sip_success_message">Pomyślnie zarejestrowałeś swoje konto SIP.</string>
   <string name="account_sip_register_anyway">Zarejestruj mimo to</string>
   <string name="account_link_button">Połącz z sieci</string>
+  <string name="account_link_archive_button">Połącz z kopii zapasowej</string>
   <string name="account_link_prompt_pin">Wprowadź PIN</string>
   <string name="account_new_button">Stwórz konto Jami</string>
   <string name="account_link_export_button">Połącz kolejne urządzenie z tym kontem</string>
@@ -158,12 +161,14 @@ Możesz edytować swoje konto później</string>
   <!--Name registration-->
   <string name="error_username_empty">Wprowadź nazwę użytkownika</string>
   <string name="no_registered_name_for_account">Nie znaleziono żadnej nazwy zarejestrowanej dla tego konta </string>
+  <string name="username_available">Nazwa dostępna!</string>
   <string name="register_name">Zarejestruj nazwę</string>
   <string name="trying_to_register_name">Trwa próba rejestracji nazwy</string>
   <string name="registered_username">Zarejestruj nazwę użytkownika</string>
   <string name="register_username">Zarejestruj publiczny login (zalecane)</string>
   <string name="username_already_taken">Nazwa użytkownika zajęta</string>
   <string name="invalid_username">Nieprawidłowa nazwa użytkownika</string>
+  <string name="unknown_error">Nieznany błąd. Proszę sprawdź swoje połączenie sieciowe!</string>
   <string name="looking_for_username_availability">Sprawdzanie dostępności nazwy użytkownika...</string>
   <string name="account_status_connecting">Łączenie</string>
   <string name="account_status_connection_error">Błąd połączenia</string>

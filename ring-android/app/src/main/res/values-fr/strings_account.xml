@@ -161,12 +161,14 @@ Vous pouvez modifier le compte plus tard.</string>
   <!--Name registration-->
   <string name="error_username_empty">Entrer un nom d\'utilisateur</string>
   <string name="no_registered_name_for_account">Aucun nom n\'a été trouvé pour ce compte.</string>
+  <string name="username_available">Identifiant disponible !</string>
   <string name="register_name">Enregistrer un nom</string>
   <string name="trying_to_register_name">Enregistrement du nom en cours</string>
   <string name="registered_username">Nom d\'utilisateur enregistré</string>
   <string name="register_username">Enregistrer un nom d\'usager public (recommandé)</string>
   <string name="username_already_taken">Ce nom d\'utilisateur est déjà utilisé</string>
   <string name="invalid_username">Nom d\'utilisateur incorrect</string>
+  <string name="unknown_error">Erreur inconnue. Veuillez vérifier votre connexion réseau !</string>
   <string name="looking_for_username_availability">Vérification de la disponibilité…</string>
   <string name="account_status_connecting">En cours de connexion</string>
   <string name="account_status_connection_error">Erreur de connexion</string>

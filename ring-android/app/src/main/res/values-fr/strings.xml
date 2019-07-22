@@ -57,9 +57,12 @@
   <string name="notif_incoming_call">Appel entrant</string>
   <string name="notif_outgoing_call_title">Appel sortant vers %1$s</string>
   <string name="notif_outgoing_call">Appel sortant</string>
+  <string name="notif_current_call_title">Appel en cours avec %1$s</string>
   <string name="notif_current_call">Appel en cours</string>
+  <string name="notif_channel_call_in_progress">Appel en Cours</string>
   <string name="notif_channel_calls">Appels</string>
   <string name="notif_channel_missed_calls">Appels manqués</string>
+  <string name="notif_channel_incoming_calls">Appels entrants</string>
   <string name="notif_channel_messages">Messages</string>
   <string name="notif_channel_requests">Sollicitations</string>
   <string name="notif_channel_file_transfer">Transfert de fichier</string>
