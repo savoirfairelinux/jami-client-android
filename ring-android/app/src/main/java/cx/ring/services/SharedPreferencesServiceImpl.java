@@ -23,6 +23,8 @@ package cx.ring.services;
 import android.content.Context;
 import android.content.SharedPreferences;
 import androidx.annotation.NonNull;
+import androidx.preference.PreferenceManager;
+
 import android.text.TextUtils;
 
 import java.util.HashMap;
@@ -34,7 +36,6 @@ import javax.inject.Inject;
 
 import cx.ring.application.RingApplication;
 import cx.ring.model.Settings;
-import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.NetworkUtils;
 
 public class SharedPreferencesServiceImpl extends PreferencesService {
@@ -45,7 +46,9 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
     private static final String RING_PUSH_NOTIFICATIONS = "push_notifs";
     private static final String RING_PERSISTENT_NOTIFICATION = "persistent_notif";
     private static final String RING_HD = "hd_upload";
-    private static final String RING_HW_ENCODING = "hw_encoding";
+    private static final String RING_HW_ENCODING = "video_hwenc";
+    private static final String RING_BITRATE = "video_bitrate";
+    private static final String RING_RESOLUTION = "video_resolution";
     private static final String RING_SYSTEM_CONTACTS = "system_contacts";
     private static final String RING_PLACE_CALLS = "place_calls";
     private static final String RING_ON_STARTUP = "on_startup";
@@ -65,8 +68,6 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         edit.putBoolean(RING_ON_STARTUP, settings.isAllowRingOnStartup());
         edit.putBoolean(RING_PUSH_NOTIFICATIONS, settings.isAllowPushNotifications());
         edit.putBoolean(RING_PERSISTENT_NOTIFICATION, settings.isAllowPersistentNotification());
-        edit.putBoolean(RING_HD, settings.isHD());
-        edit.putBoolean(RING_HW_ENCODING, settings.isHwEncoding());
         edit.apply();
     }
 
@@ -83,8 +84,6 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         settings.setAllowRingOnStartup(appPrefs.getBoolean(RING_ON_STARTUP, true));
         settings.setAllowPushNotifications(appPrefs.getBoolean(RING_PUSH_NOTIFICATIONS, false));
         settings.setAllowPersistentNotification(appPrefs.getBoolean(RING_PERSISTENT_NOTIFICATION, false));
-        settings.setHD(appPrefs.getBoolean(RING_HD, false));
-        settings.setHwEncoding(appPrefs.getBoolean(RING_HW_ENCODING, true));
         return settings;
     }
 
@@ -130,5 +129,29 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
     public boolean isPushAllowed() {
         String token = RingApplication.getInstance().getPushToken();
         return getSettings().isAllowPushNotifications() && !TextUtils.isEmpty(token) /*&& NetworkUtils.isPushAllowed(mContext, getSettings().isAllowMobileData())*/;
+    }
+
+    @Override
+    public String getResolution() {
+        return getPreferenceValue(RING_RESOLUTION, "720");
+    }
+
+    @Override
+    public String getBitrate() {
+        return getPreferenceValue(RING_BITRATE, "Auto");
+    }
+
+    @Override
+    public boolean isHardwareAccelerationEnabled() {
+        return getPreferenceValue(RING_HW_ENCODING, null).equals("true");
+
+    }
+
+    private String getPreferenceValue(String key, String defaultValue) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        if(key.equals(RING_HW_ENCODING)) {
+            return String.valueOf(prefs.getBoolean(key, false));
+        }
+        return prefs.getString(key, defaultValue);
     }
 }

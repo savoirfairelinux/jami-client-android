@@ -80,22 +80,6 @@ public class Settings {
         this.mAllowRingOnStartup = allowRingOnStartup;
     }
 
-    public boolean isHD() {
-        return mHdUpload;
-    }
-
-    public void setHD(boolean hd) {
-        mHdUpload = hd;
-    }
-
-    public void setHwEncoding(boolean hw) {
-        mHwEncoding = hw;
-    }
-
-    public boolean isHwEncoding() {
-        return mHwEncoding;
-    }
-
     public void setAllowPersistentNotification(boolean checked) {
         this.mAllowPersistentNotification = checked;
     }
