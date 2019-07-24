@@ -639,14 +639,9 @@ public class DRingService extends Service {
     private void updateConnectivityState() {
         if (mDaemonService.isStarted()) {
             mAccountService.setAccountsActive(mPreferencesService.hasNetworkConnected());
-
-            for (Account account : mAccountService.getAccounts()) {
-                if (account.isActive() && !account.isRegistered()) {
-                    // Account is active, but still not connected. Execute connectivityChanged
-                    mHardwareService.connectivityChanged();
-                    break;
-                }
-            }
+            // Execute connectivityChanged to reload UPnP
+            // and reconnect active accounts if necessary.
+            mHardwareService.connectivityChanged();
         }
     }
 
