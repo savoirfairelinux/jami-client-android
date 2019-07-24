@@ -176,6 +176,14 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         presenter.saveSettings(newSettings);
     }
 
+    @OnClick(R.id.settings_video)
+    void onVideoClick() {
+        HomeActivity activity = (HomeActivity) getActivity();
+        if (activity != null) {
+            activity.goToVideoSettings();
+        }
+    }
+
     @OnClick(R.id.settings_clear_history)
     public void onClearHistoryClick() {
         new AlertDialog.Builder(getActivity())

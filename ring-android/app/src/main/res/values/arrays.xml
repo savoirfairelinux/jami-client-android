@@ -27,4 +27,31 @@ along with this program; if not, write to the Free Software
         <item>@string/conversation_action_block_this</item>
     </string-array>
 
+    <string-array name="video_bitrates">
+        <item>64</item>
+        <item>128</item>
+        <item>256</item>
+        <item>512</item>
+        <item>1024</item>
+    </string-array>
+    <string-array name="video_bitrateStrings">
+        <item>64 kB/s</item>
+        <item>128 kB/s</item>
+        <item>256 kB/s</item>
+        <item>512 kB/s</item>
+        <item>1 MB/s</item>
+    </string-array>
+
+    <string-array name="video_resolutionStrings">
+        <item>480p SD</item>
+        <item>720p HD</item>
+        <item>1080p Full HD</item>
+        <item>4K Ultra HD</item>
+    </string-array>
+    <string-array name="video_resolutions">
+        <item>480</item>
+        <item>720</item>
+        <item>1080</item>
+        <item>2160</item>
+    </string-array>
 </resources>

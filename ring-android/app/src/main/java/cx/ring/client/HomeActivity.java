@@ -72,6 +72,8 @@ import cx.ring.services.HardwareService;
 import cx.ring.services.NotificationService;
 import cx.ring.services.PreferencesService;
 import cx.ring.settings.SettingsFragment;
+import cx.ring.settings.VideoSettingsFragment;
+import cx.ring.share.ShareFragment;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.DeviceUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -527,6 +529,20 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
             return;
         }
         fContent = new SettingsFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .replace(R.id.main_frame, fContent, SETTINGS_TAG)
+                .addToBackStack(SETTINGS_TAG).commit();
+    }
+    public void goToVideoSettings() {
+        if (mNavigationDrawer != null && !isDrawerLocked) {
+            mNavigationDrawer.closeDrawers();
+        }
+        if (fContent instanceof VideoSettingsFragment) {
+            return;
+        }
+        fContent = new VideoSettingsFragment();
         getSupportFragmentManager()
                 .beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
