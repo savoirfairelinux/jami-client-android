@@ -641,11 +641,10 @@ public class DRingService extends Service {
             mAccountService.setAccountsActive(mPreferencesService.hasNetworkConnected());
 
             for (Account account : mAccountService.getAccounts()) {
-                if (account.isActive() && !account.isRegistered()) {
-                    // Account is active, but still not connected. Execute connectivityChanged
-                    mHardwareService.connectivityChanged();
-                    break;
-                }
+                // Execute connectivityChanged to reload UPnP
+                // and reconnect active account if necessary.
+                mHardwareService.connectivityChanged();
+                break;
             }
         }
     }
