@@ -68,10 +68,8 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
     @BindView(R.id.settings_persistNotification)
     Switch mViewPersistNotif;
     private boolean mIsRefreshingViewFromPresenter;
-    @BindView(R.id.settings_hd)
-    Switch mViewHD;
-    @BindView(R.id.settings_hwenc)
-    Switch mViewHWEncode;
+    @BindView(R.id.settings_video_layout)
+    View settings_video_layout;
 
     @Override
     public int getLayout() {
@@ -114,8 +112,6 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
     @OnCheckedChanged({
             R.id.settings_mobile_data,
             R.id.settings_push_notifications,
-            R.id.settings_hd,
-            R.id.settings_hwenc,
             R.id.settings_contacts,
             R.id.settings_place_call,
             R.id.settings_startup,
@@ -169,11 +165,17 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         newSettings.setAllowRingOnStartup(mViewStartup.isChecked());
         newSettings.setAllowPushNotifications(mViewPushNotifications.isChecked());
         newSettings.setAllowPersistentNotification(mViewPersistNotif.isChecked());
-        newSettings.setHD(mViewHD.isChecked());
-        newSettings.setHwEncoding(mViewHWEncode.isChecked());
 
         // save settings according to UI inputs
         presenter.saveSettings(newSettings);
+    }
+
+    @OnClick(R.id.settings_video_layout)
+    void onVideoClick() {
+        HomeActivity activity = (HomeActivity) getActivity();
+        if (activity != null) {
+            activity.goToVideoSettings();
+        }
     }
 
     @OnClick(R.id.settings_clear_history)
@@ -254,8 +256,6 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         mViewContacts.setChecked(viewModel.isAllowSystemContacts());
         mViewPlaceCall.setChecked(viewModel.isAllowPlaceSystemCalls());
         mViewStartup.setChecked(viewModel.isAllowRingOnStartup());
-        mViewHD.setChecked(viewModel.isHD());
-        mViewHWEncode.setChecked(viewModel.isHwEncoding());
         mIsRefreshingViewFromPresenter = false;
     }
 }
