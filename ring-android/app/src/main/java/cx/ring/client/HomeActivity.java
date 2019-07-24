@@ -24,16 +24,6 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
@@ -43,13 +33,24 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+
 import java.io.File;
 
 import javax.inject.Inject;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.BuildConfig;
@@ -72,6 +73,7 @@ import cx.ring.services.HardwareService;
 import cx.ring.services.NotificationService;
 import cx.ring.services.PreferencesService;
 import cx.ring.settings.SettingsFragment;
+import cx.ring.settings.VideoSettingsFragment;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.DeviceUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -91,6 +93,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
     public static final String ACCOUNTS_TAG = "Accounts";
     public static final String ABOUT_TAG = "About";
     public static final String SETTINGS_TAG = "Prefs";
+    public static final String VIDEO_SETTINGS_TAG = "VideoPrefs";
     static public final String ACTION_PRESENT_TRUST_REQUEST_FRAGMENT = BuildConfig.APPLICATION_ID + "presentTrustRequestFragment";
     static final String TAG = HomeActivity.class.getSimpleName();
     private static final String NAVIGATION_TAG = "Navigation";
@@ -354,14 +357,14 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         mDisposable.clear();
         mDisposable.add(mAccountService.getObservableAccountList()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(accounts ->  {
-                        for (Account account : accounts) {
-                            if (account.needsMigration()) {
-                                showMigrationDialog();
-                                break;
-                            }
+                .subscribe(accounts -> {
+                    for (Account account : accounts) {
+                        if (account.needsMigration()) {
+                            showMigrationDialog();
+                            break;
                         }
-                    }));
+                    }
+                }));
     }
 
     public void startConversationTablet(Bundle bundle) {
@@ -415,9 +418,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentManager.BackStackEntry entry = fragmentManager.getBackStackEntryAt(0);
         fContent = fragmentManager.findFragmentById(entry.getId());
-        for (int i = 0; i < fragmentManager.getBackStackEntryCount() - 1; ++i) {
-            fragmentManager.popBackStack();
-        }
+        fragmentManager.popBackStack();
     }
 
     public void onNavigationViewReady() {
@@ -532,6 +533,21 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(R.id.main_frame, fContent, SETTINGS_TAG)
                 .addToBackStack(SETTINGS_TAG).commit();
+    }
+
+    public void goToVideoSettings() {
+        if (mNavigationDrawer != null && !isDrawerLocked) {
+            mNavigationDrawer.closeDrawers();
+        }
+        if (fContent instanceof VideoSettingsFragment) {
+            return;
+        }
+        fContent = new VideoSettingsFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .replace(R.id.main_frame, fContent, VIDEO_SETTINGS_TAG)
+                .addToBackStack(VIDEO_SETTINGS_TAG).commit();
     }
 
     @Override

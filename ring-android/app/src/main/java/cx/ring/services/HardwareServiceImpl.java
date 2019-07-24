@@ -405,12 +405,35 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     @Override
     public void getCameraInfo(String camId, IntVect formats, UintVect sizes, UintVect rates) {
         // Use a larger resolution for Android 6.0+, 64 bits devices
+        final int resolution = Integer.parseInt(mPreferenceService.getResolution());
         final boolean useLargerSize = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.SUPPORTED_64_BIT_ABIS.length > 0;
-        final boolean useHD = DeviceUtils.isTv(mContext) || mPreferenceService.getSettings().isHD();
         //int MIN_WIDTH = useLargerSize ? (useHD ? VIDEO_WIDTH_HD : VIDEO_WIDTH) : VIDEO_WIDTH_MIN;
-        final Point minVideoSize = useLargerSize ? (useHD ? VIDEO_SIZE_HD : VIDEO_SIZE_DEFAULT) : VIDEO_SIZE_LOW;
+        Point minVideoSize;
+        if(useLargerSize)
+            minVideoSize = parseResolution(resolution);
+        else
+            minVideoSize = VIDEO_SIZE_LOW;
 
         cameraService.getCameraInfo(camId, formats, sizes, rates, minVideoSize);
+
+    }
+
+    private Point parseResolution(int resolution) {
+        if (DeviceUtils.isTv(mContext))
+                return VIDEO_SIZE_HD;
+
+        switch(resolution) {
+            case 480:
+                return VIDEO_SIZE_DEFAULT;
+            case 720:
+                return VIDEO_SIZE_HD;
+            case 1080:
+                return VIDEO_SIZE_FULL_HD;
+            case 2160:
+                return VIDEO_SIZE_ULTRA_HD;
+            default:
+                return VIDEO_SIZE_HD;
+        }
     }
 
     @Override
@@ -461,7 +484,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                 public void onError() {
                     stopCapture();
                 }
-            }, mPreferenceService.getUserSettings().isHwEncoding(), mPreferenceService.getUserSettings().isHD());
+            }, mPreferenceService.isHardwareAccelerationEnabled(), mPreferenceService.getResolution(), mPreferenceService.getBitrate());
         });
         cameraService.setPreviewParams(videoParams);
         VideoEvent event = new VideoEvent();
