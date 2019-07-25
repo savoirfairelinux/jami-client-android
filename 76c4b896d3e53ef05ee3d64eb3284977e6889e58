@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bd2cdf7_59178003",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/ContactServiceImpl.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-07-25T15:21:29Z",
+      "side": 1,
+      "message": "contact might not be part of the current account",
+      "range": {
+        "startLine": 421,
+        "startChar": 117,
+        "endLine": 421,
+        "endChar": 167
+      },
+      "revId": "76c4b896d3e53ef05ee3d64eb3284977e6889e58",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
