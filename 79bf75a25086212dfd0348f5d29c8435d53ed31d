@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "919bb132_517bc0f6",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 642
+      },
+      "writtenOn": "2019-07-26T17:58:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a9505016_0c71b11f",
+      "range": {
+        "startLine": 121,
+        "startChar": 23,
+        "endLine": 121,
+        "endChar": 34
+      },
+      "revId": "79bf75a25086212dfd0348f5d29c8435d53ed31d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af46b416_bcdd4094",
         "filename": "ring-android/libringclient/src/main/java/cx/ring/call/CallPresenter.java",
         "patchSetId": 10
