@@ -165,19 +165,19 @@ cd $DAEMON_DIR/contrib/native-${TARGET_TUPLE}
 ../bootstrap --host=${TARGET_TUPLE} --disable-libav --enable-ffmpeg --disable-speexdsp
 
 # Always strip symbols for libring.so remove it if you want to debug the daemon
-STRIP_ARG="-s "
+#STRIP_ARG="-s "
 
 EXTRA_CFLAGS="${EXTRA_CFLAGS} -DNDEBUG -fPIC -fno-integrated-as"
 EXTRA_CXXFLAGS="${EXTRA_CXXFLAGS} -DNDEBUG -fPIC"
 EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${SYSROOT}/usr/${LIBDIR}"
 
-if [ "${RELEASE}" -eq 1 ]; then
-    echo "Daemon in release mode."
-    OPTS=""
-else
+#if [ "${RELEASE}" -eq 1 ]; then
+#    echo "Daemon in release mode."
+#    OPTS=""
+#else
     echo "Daemon in debug mode."
     OPTS="--enable-debug"
-fi
+#fi
 
 export SYSROOT=$ANDROID_TOOLCHAIN/sysroot
 echo "EXTRA_CFLAGS= ${EXTRA_CFLAGS}" >> config.mak
