@@ -23,9 +23,7 @@ package cx.ring.tv.call;
 import android.Manifest;
 import android.app.Activity;
 import android.content.ComponentName;
-import android.app.PendingIntent;
 import android.app.PictureInPictureParams;
-import android.app.RemoteAction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -35,7 +33,6 @@ import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.SurfaceTexture;
-import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -52,7 +49,6 @@ import android.view.SurfaceHolder;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.AnimationSet;
@@ -62,7 +58,6 @@ import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.Random;
 
 import javax.inject.Inject;
 
@@ -76,9 +71,7 @@ import cx.ring.fragments.CallFragment;
 import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
 import cx.ring.mvp.BaseFragment;
-import cx.ring.service.DRingService;
 import cx.ring.services.DeviceRuntimeService;
-import cx.ring.services.NotificationService;
 import cx.ring.tv.main.HomeActivity;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.disposables.CompositeDisposable;
@@ -363,13 +356,13 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     }
 
     @Override
-    public void updateCallStatus(final SipCall.State callState) {
-        switch (callState) {
+    public void updateCallStatus(final SipCall.CallStatus callStatus) {
+        switch (callStatus) {
             case NONE:
                 binding.callStatusTxt.setText("");
                 break;
             default:
-                binding.callStatusTxt.setText(CallFragment.callStateToHumanState(callState));
+                binding.callStatusTxt.setText(CallFragment.callStateToHumanState(callStatus));
                 break;
         }
     }
