@@ -36,6 +36,7 @@ import cx.ring.model.SipCall;
 import cx.ring.utils.Log;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
+import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
@@ -69,15 +70,33 @@ public abstract class HardwareService {
     public class BluetoothEvent {
         public boolean connected;
     }
+    public enum AudioOutput {
+        INTERNAL, SPEAKERS, BLUETOOTH
+    }
+    public class AudioState {
+        private final AudioOutput outputType;
+        private final String outputName;
+
+        AudioState() {outputType = AudioOutput.INTERNAL; outputName = null;}
+        AudioState(AudioOutput ot) { outputType = ot; outputName = null; }
+        AudioState(AudioOutput ot, String name) { outputType = ot; outputName = name; }
+
+        public AudioOutput getOutputType() { return outputType; }
+        public String getOutputName() { return outputName; }
+    }
 
     protected final Subject<VideoEvent> videoEvents = PublishSubject.create();
     protected final Subject<BluetoothEvent> bluetoothEvents = PublishSubject.create();
+    protected final Subject<AudioState> audioStateSubject = BehaviorSubject.createDefault(new AudioState());
 
     public Observable<VideoEvent> getVideoEvents() {
         return videoEvents;
     }
     public Observable<BluetoothEvent> getBluetoothEvents() {
         return bluetoothEvents;
+    }
+    public Observable<AudioState> getAudioState() {
+        return audioStateSubject;
     }
 
     public abstract void initVideo();
