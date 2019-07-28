@@ -118,6 +118,10 @@ public class CallPresenter extends RootPresenter<CallView> {
         mCompositeDisposable.add(mHardwareService.getVideoEvents()
                 .observeOn(mUiScheduler)
                 .subscribe(this::onVideoEvent));
+        mCompositeDisposable.add(mHardwareService.getAudioState()
+                .observeOn(mUiScheduler)
+                .subscribe(state -> getView().updateAudioState(state)));
+
         /*mCompositeDisposable.add(mHardwareService
                 .getBluetoothEvents()
                 .subscribe(event -> {
@@ -328,7 +332,7 @@ public class CallPresenter extends RootPresenter<CallView> {
         view.updateMenu();
         if (call.isOnGoing()) {
             mOnGoingCall = true;
-            view.initNormalStateDisplay(mAudioOnly, mHardwareService.isSpeakerPhoneOn(), isMicrophoneMuted());
+            view.initNormalStateDisplay(mAudioOnly, isMicrophoneMuted());
             view.updateMenu();
             if (!mAudioOnly) {
                 mHardwareService.setPreviewSettings();
