@@ -226,6 +226,24 @@ public class BluetoothWrapper {
         }
     }
 
+    synchronized public String getDeviceName() {
+        if (connectedDevices != null && !connectedDevices.isEmpty()) {
+            // Use first bounded device with audio connected
+            for (BluetoothDevice device : connectedDevices) {
+                if (device.getBondState() == BluetoothDevice.BOND_BONDED && headsetAdapter.isAudioConnected(device)) {
+                    return device.getName();
+                }
+            }
+            // Fallback on first bounded device
+            for (BluetoothDevice device : connectedDevices) {
+                if (device.getBondState() == BluetoothDevice.BOND_BONDED) {
+                    return device.getName();
+                }
+            }
+        }
+        return null;
+    }
+
     public interface BluetoothChangeListener {
         void onBluetoothStateChanged(int status);
     }

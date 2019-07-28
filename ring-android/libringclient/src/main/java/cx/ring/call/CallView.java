@@ -21,6 +21,7 @@ package cx.ring.call;
 
 import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
+import cx.ring.services.HardwareService;
 
 public interface CallView {
 
@@ -35,6 +36,7 @@ public interface CallView {
     void displayDialPadKeyboard();
 
     void switchCameraIcon(boolean isFront);
+    void updateAudioState(HardwareService.AudioState state);
 
     void updateMenu();
 
@@ -46,7 +48,7 @@ public interface CallView {
 
     void initMenu(boolean isSpeakerOn, boolean hasContact, boolean displayFlip, boolean canDial, boolean onGoingCall);
 
-    void initNormalStateDisplay(boolean audioOnly, boolean isSpeakerphoneOn, boolean muted);
+    void initNormalStateDisplay(boolean audioOnly, boolean muted);
 
     void initIncomingCallDisplay();
 
