@@ -83,6 +83,7 @@ import cx.ring.model.SipCall;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.service.DRingService;
 import cx.ring.services.DeviceRuntimeService;
+import cx.ring.services.HardwareService;
 import cx.ring.services.NotificationService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.DeviceUtils;
@@ -515,6 +516,11 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     @Override
+    public void updateAudioState(HardwareService.AudioState state) {
+        binding.callSpeakerBtn.setChecked(state.getOutputType() == HardwareService.AudioOutput.SPEAKERS);
+    }
+
+    @Override
     public void updateMenu() {
         requireActivity().invalidateOptionsMenu();
     }
@@ -585,7 +591,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     @Override
-    public void initNormalStateDisplay(final boolean audioOnly, boolean isSpeakerphoneOn, boolean isMuted) {
+    public void initNormalStateDisplay(final boolean audioOnly, boolean isMuted) {
         binding.shapeRipple.stopRipple();
 
         binding.callAcceptBtn.setVisibility(View.GONE);
@@ -594,7 +600,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         binding.callHangupBtn.setVisibility(View.VISIBLE);
 
         binding.contactBubbleLayout.setVisibility(audioOnly ? View.VISIBLE : View.GONE);
-        binding.callSpeakerBtn.setChecked(isSpeakerphoneOn);
         binding.callMicBtn.setChecked(isMuted);
 
         requireActivity().invalidateOptionsMenu();
