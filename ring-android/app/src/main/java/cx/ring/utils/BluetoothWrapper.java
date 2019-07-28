@@ -1,6 +1,7 @@
 /*
- * Copyright (C) 2010-2012 Regis Montoya (aka r3gis - www.r3gis.fr)
- * This file is part of CSipSimple.
+ *  Copyright (C) 2004-2019 Savoir-faire Linux Inc.
+ *
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -36,17 +37,18 @@ import java.util.Set;
 public class BluetoothWrapper {
 
     private static String TAG = BluetoothWrapper.class.getSimpleName();
-    private static final boolean DBG = false;
+    private static final boolean DBG = true;
 
-    protected Context mContext;
-    private AudioManager audioManager;
+    private final Context mContext;
+    private final BluetoothChangeListener btChangesListener;
+    private final AudioManager audioManager;
+    private final BluetoothAdapter bluetoothAdapter;
+
     private boolean isBluetoothConnecting = false;
     private boolean isBluetoothConnected = false;
-    private BluetoothAdapter bluetoothAdapter;
     private BluetoothHeadset headsetAdapter = null;
-
+    private List<BluetoothDevice> connectedDevices = null;
     private boolean targetBt = false;
-    private BluetoothChangeListener btChangesListener;
 
     private final BroadcastReceiver mHeadsetProfileReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
@@ -58,11 +60,16 @@ public class BluetoothWrapper {
             if (BluetoothHeadset.ACTION_AUDIO_STATE_CHANGED.equals(action)) {
                 int status = intent.getIntExtra(BluetoothHeadset.EXTRA_STATE, BluetoothHeadset.STATE_AUDIO_DISCONNECTED);
                 Log.d(TAG, "BluetoothHeadset.ACTION_AUDIO_STATE_CHANGED " + status);
-                if (DBG && headsetAdapter != null && status == BluetoothHeadset.STATE_AUDIO_CONNECTED) {
-                    List<BluetoothDevice> devices = headsetAdapter.getConnectedDevices();
-                    Log.d(TAG, "Bluetooth Headset profile: " + devices.size() + " devices.");
-                    for (BluetoothDevice device : devices) {
-                        Log.d(TAG, "BluetoothDevice " + device.getName() + " " + device + " " + device.getBondState() + " connected: " + headsetAdapter.isAudioConnected(device));
+                synchronized (this) {
+                    if (headsetAdapter != null && status == BluetoothHeadset.STATE_AUDIO_CONNECTED) {
+                        List<BluetoothDevice> devices = headsetAdapter.getConnectedDevices();
+                        connectedDevices = devices;
+                        if (DBG) {
+                            for (BluetoothDevice device : devices)
+                                Log.d(TAG, "BluetoothDevice " + device.getName() + " " + device + " " + device.getBondState() + " connected: " + headsetAdapter.isAudioConnected(device));
+                        }
+                    } else if (status == BluetoothHeadset.STATE_AUDIO_DISCONNECTED) {
+                        connectedDevices = null;
                     }
                 }
             } else if (BluetoothHeadset.ACTION_VENDOR_SPECIFIC_HEADSET_EVENT.equals(action)) {
@@ -73,7 +80,7 @@ public class BluetoothWrapper {
         }
     };
 
-    private BroadcastReceiver mediaStateReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver mediaStateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
@@ -105,20 +112,18 @@ public class BluetoothWrapper {
         }
     };
 
-    public BluetoothWrapper(Context context) {
+    public BluetoothWrapper(Context context, BluetoothChangeListener listener) {
         mContext = context;
-        audioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
-        if (bluetoothAdapter == null) {
-            try {
-                bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-            } catch (RuntimeException e) {
-                Log.w(TAG, "Cant get default bluetooth adapter ", e);
-            }
-        }
-    }
-
-    public void setBluetoothChangeListener(BluetoothChangeListener listener) {
         btChangesListener = listener;
+        audioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+        BluetoothAdapter adapter = null;
+        try {
+            adapter = BluetoothAdapter.getDefaultAdapter();
+        } catch (RuntimeException e) {
+            Log.w(TAG, "Cant get default bluetooth adapter ", e);
+        }
+        bluetoothAdapter = adapter;
+        registerUpdates();
     }
 
     public boolean isBTHeadsetConnected() {
@@ -162,24 +167,21 @@ public class BluetoothWrapper {
         if (on && isBluetoothConnecting || on && isBluetoothConnected) {
             return;
         }
-        Log.d(TAG, "setBluetoothOn: " + on);
+        /*Log.d(TAG, "setBluetoothOn: " + on);
         Log.i(TAG, "mAudioManager.isBluetoothA2dpOn():" + audioManager.isBluetoothA2dpOn());
-        Log.i(TAG, "mAudioManager.isBluetoothscoOn():" + audioManager.isBluetoothScoOn());
-
-            if (on) {
-                isBluetoothConnecting = true;
-                audioManager.startBluetoothSco();
-            } else {
-                audioManager.stopBluetoothSco();
-            }
+        Log.i(TAG, "mAudioManager.isBluetoothscoOn():" + audioManager.isBluetoothScoOn());*/
+        if (on) {
+            isBluetoothConnecting = true;
+            audioManager.startBluetoothSco();
+        } else {
+            audioManager.stopBluetoothSco();
+        }
     }
 
-    public void registerScoUpdate() {
+    private void registerUpdates() {
         Log.d(TAG, "registerScoUpdate: Register BT media receiver");
         mContext.registerReceiver(mediaStateReceiver, new IntentFilter(AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED));
-    }
 
-    public void registerBtConnection() {
         Log.d(TAG, "registerBtConnection: Register BT connection");
         mContext.registerReceiver(mHeadsetProfileReceiver, new IntentFilter(BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED));
         mContext.registerReceiver(mHeadsetProfileReceiver, new IntentFilter(BluetoothHeadset.ACTION_AUDIO_STATE_CHANGED));
@@ -212,7 +214,7 @@ public class BluetoothWrapper {
         }
     }
 
-    public void unregister() {
+    synchronized public void unregister() {
         try {
             Log.d(TAG, "unregister: Unregister BT media receiver");
             mContext.unregisterReceiver(mediaStateReceiver);
@@ -221,9 +223,28 @@ public class BluetoothWrapper {
                 bluetoothAdapter.closeProfileProxy(BluetoothProfile.HEADSET, headsetAdapter);
                 headsetAdapter = null;
             }
+            connectedDevices = null;
         } catch (Exception e) {
             Log.w(TAG, "Failed to unregister media state receiver", e);
         }
+    }
+
+    synchronized public String getDeviceName() {
+        if (connectedDevices != null && !connectedDevices.isEmpty()) {
+            // Use first bounded device with audio connected
+            for (BluetoothDevice device : connectedDevices) {
+                if (device.getBondState() == BluetoothDevice.BOND_BONDED && headsetAdapter.isAudioConnected(device)) {
+                    return device.getName();
+                }
+            }
+            // Fallback on first bounded device
+            for (BluetoothDevice device : connectedDevices) {
+                if (device.getBondState() == BluetoothDevice.BOND_BONDED) {
+                    return device.getName();
+                }
+            }
+        }
+        return null;
     }
 
     public interface BluetoothChangeListener {
