@@ -92,7 +92,7 @@ public class CallPresenter extends RootPresenter<CallView> {
 
     public void audioPermissionChanged(boolean isGranted) {
         if (isGranted && mHardwareService.hasMicrophone()) {
-            mCallService.setAudioPlugin(mCallService.getCurrentAudioOutputPlugin());
+            mCallService.restartAudioLayer();
         }
     }
 
@@ -118,13 +118,13 @@ public class CallPresenter extends RootPresenter<CallView> {
         mCompositeDisposable.add(mHardwareService.getVideoEvents()
                 .observeOn(mUiScheduler)
                 .subscribe(this::onVideoEvent));
-        mCompositeDisposable.add(mHardwareService
+        /*mCompositeDisposable.add(mHardwareService
                 .getBluetoothEvents()
                 .subscribe(event -> {
                     if (!event.connected && mSipCall == null) {
                         hangupCall();
                     }
-                }));
+                }));*/
     }
 
     public void initOutGoing(String accountId, String contactRingId, boolean audioOnly) {
@@ -209,7 +209,6 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void speakerClick(boolean checked) {
-        mCallService.restartAudioLayer();
         mHardwareService.toggleSpeakerphone(checked);
     }
 
@@ -329,8 +328,6 @@ public class CallPresenter extends RootPresenter<CallView> {
         view.updateMenu();
         if (call.isOnGoing()) {
             mOnGoingCall = true;
-            mCallService.restartAudioLayer();
-            mHardwareService.toggleSpeakerphone(mHardwareService.shouldPlaySpeaker());
             view.initNormalStateDisplay(mAudioOnly, mHardwareService.isSpeakerPhoneOn(), isMicrophoneMuted());
             view.updateMenu();
             if (!mAudioOnly) {
