@@ -33,14 +33,15 @@ import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import cx.ring.model.ConversationHistory;
 import cx.ring.model.DataTransfer;
-import cx.ring.model.HistoryCall;
-import cx.ring.model.HistoryText;
+import cx.ring.model.Interaction;
 
 /*
  * Database History Version
  * 7 : changing columns names. See https://gerrit-ring.savoirfairelinux.com/#/c/4297
  * 10: Switches to per account database. Migration handled outside helper for this iteration exclusively.
+ * 11: Removed all previous tables and created two new interaction and conversation tables.
  */
 
 /**
@@ -50,11 +51,10 @@ import cx.ring.model.HistoryText;
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String TAG = DatabaseHelper.class.getSimpleName();
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION = 10;
+    private static final int DATABASE_VERSION = 11;
 
-    private Dao<HistoryCall, Integer> historyDao = null;
-    private Dao<HistoryText, Long> historyTextDao = null;
-    private Dao<DataTransfer, Long> historyDataDao = null;
+    private Dao<Interaction, Integer> interactionDataDao = null;
+    private Dao<ConversationHistory, Integer> conversationDataDao = null;
 
     public DatabaseHelper(Context context, String dbDirectory) {
         super(context, dbDirectory, null, DATABASE_VERSION);
@@ -69,9 +69,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         try {
             db.beginTransaction();
             try {
-                TableUtils.createTable(connectionSource, HistoryCall.class);
-                TableUtils.createTable(connectionSource, HistoryText.class);
-                TableUtils.createTable(connectionSource, DataTransfer.class);
+                TableUtils.createTable(connectionSource, ConversationHistory.class);
+                TableUtils.createTable(connectionSource, Interaction.class);
                 db.setTransactionSuccessful();
             } catch (SQLException e) {
                 Log.e(TAG, "Can't create database", e);
@@ -102,25 +101,19 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
      * Returns the Database Access Object (DAO) for our SimpleData class. It will create it or just give the cached
      * value.
      */
-    public Dao<HistoryCall, Integer> getHistoryDao() throws SQLException {
-        if (historyDao == null) {
-            historyDao = getDao(HistoryCall.class);
+
+    public Dao<Interaction, Integer> getInteractionDataDao() throws SQLException {
+        if (interactionDataDao == null) {
+            interactionDataDao = getDao(Interaction.class);
         }
-        return historyDao;
+        return interactionDataDao;
     }
 
-    public Dao<HistoryText, Long> getTextHistoryDao() throws SQLException {
-        if (historyTextDao == null) {
-            historyTextDao = getDao(HistoryText.class);
+    public Dao<ConversationHistory, Integer> getConversationDataDao() throws SQLException {
+        if (conversationDataDao == null) {
+            conversationDataDao = getDao(ConversationHistory.class);
         }
-        return historyTextDao;
-    }
-
-    public Dao<DataTransfer, Long> getDataHistoryDao() throws SQLException {
-        if (historyDataDao == null) {
-            historyDataDao = getDao(DataTransfer.class);
-        }
-        return historyDataDao;
+        return conversationDataDao;
     }
 
     /**
@@ -129,9 +122,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void close() {
         super.close();
-        historyDao = null;
-        historyTextDao = null;
-        historyDataDao = null;
+        interactionDataDao = null;
+        conversationDataDao = null;
     }
 
     /**
