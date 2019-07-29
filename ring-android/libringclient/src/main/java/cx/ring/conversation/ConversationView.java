@@ -24,14 +24,14 @@ import java.util.List;
 
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
-import cx.ring.model.ConversationElement;
+import cx.ring.model.Interaction;
 import cx.ring.model.DataTransfer;
 import cx.ring.model.Uri;
 import cx.ring.mvp.BaseView;
 
 public interface ConversationView extends BaseView {
 
-    void refreshView(List<ConversationElement> conversation);
+    void refreshView(List<Interaction> conversation);
 
     void scrollToEnd();
 
@@ -71,9 +71,9 @@ public interface ConversationView extends BaseView {
 
     void openFile(File path);
 
-    void addElement(ConversationElement e);
-    void updateElement(ConversationElement e);
-    void removeElement(ConversationElement e);
+    void addElement(Interaction e);
+    void updateElement(Interaction e);
+    void removeElement(Interaction e);
 
     void setConversationColor(int integer);
 

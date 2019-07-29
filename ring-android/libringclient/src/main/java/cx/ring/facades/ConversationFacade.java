@@ -31,11 +31,11 @@ import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
-import cx.ring.model.ConversationElement;
+import cx.ring.model.ConversationHistory;
 import cx.ring.model.DataTransfer;
-import cx.ring.model.DataTransferEventCode;
-import cx.ring.model.HistoryCall;
-import cx.ring.model.HistoryText;
+import cx.ring.model.Interaction;
+import cx.ring.model.Interaction.InteractionStatus;
+import cx.ring.model.Interaction.InteractionType;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 import cx.ring.model.Uri;
@@ -55,6 +55,8 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.AsyncSubject;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
 
 public class ConversationFacade {
 
@@ -80,6 +82,8 @@ public class ConversationFacade {
 
     private final Observable<Account> currentAccountSubject;
 
+    private final Subject<Conversation> conversationSubject = PublishSubject.create();
+
     public ConversationFacade(HistoryService historyService, CallService callService, AccountService accountService) {
         mHistoryService = historyService;
         mCallService = callService;
@@ -87,7 +91,7 @@ public class ConversationFacade {
 
         currentAccountSubject = mAccountService
                 .getCurrentAccountSubject()
-                .switchMapSingle(this::loadConversations)
+                .switchMapSingle(this::loadSmartlist)
                 .replay(1)
                 .refCount();
 
@@ -113,20 +117,24 @@ public class ConversationFacade {
                             return msg;
                         }))
                 .subscribe(this::parseNewMessage,
-                        e -> Log.e(TAG, "Error adding text message")));
+                        e -> Log.e(TAG, "Error adding text message", e)));
 
         mDisposableBag.add(mAccountService
                 .getMessageStateChanges()
                 .concatMapSingle(txt -> getAccountSubject(txt.getAccount())
-                        .map(a -> a.getByUri(txt.getNumberUri()))
+                        .map(a -> a.getByUri(txt.getConversation().getParticipant()))
                         .doOnSuccess(conv -> conv.updateTextMessage(txt)))
                 .subscribe(c -> {
-                }, e -> Log.e(TAG, "Error updating text message")));
+                }, e -> Log.e(TAG, "Error updating text message", e)));
 
         mDisposableBag.add(mAccountService
                 .getDataTransfers()
                 .subscribe(this::handleDataTransferEvent,
                         e -> Log.e(TAG, "Error adding data transfer")));
+    }
+
+    public Observable<Conversation> getUpdatedConversation() {
+        return conversationSubject;
     }
 
     public Single<Conversation> startConversation(String accountId, final Uri contactId) {
@@ -141,7 +149,7 @@ public class ConversationFacade {
     public Single<Account> getAccountSubject(String accountId) {
         return mAccountService
                 .getAccountSingle(accountId)
-                .flatMap(this::loadConversations);
+                .flatMap(this::loadSmartlist);
     }
 
     public Observable<List<Conversation>> getConversationsSubject() {
@@ -151,7 +159,7 @@ public class ConversationFacade {
 
     public void readMessages(String accountId, Uri contact) {
         Account account = mAccountService.getAccount(accountId);
-        if(account != null)
+        if (account != null)
             readMessages(account, account.getByUri(contact));
     }
 
@@ -166,29 +174,40 @@ public class ConversationFacade {
 
     private boolean readMessages(Conversation conversation) {
         boolean updated = false;
-        NavigableMap<Long, ConversationElement> messages = conversation.getRawHistory();
-        for (ConversationElement e : messages.descendingMap().values()) {
-            if (!(e instanceof TextMessage))
+        NavigableMap<Long, Interaction> messages = conversation.getRawHistory();
+        for (Interaction e : messages.descendingMap().values()) {
+            if (!(e.getType().equals(InteractionType.TEXT)))
                 continue;
-            TextMessage message = (TextMessage) e;
-            if (message.isRead()) {
+            if (e.isRead()) {
                 break;
             }
-            message.read();
-            mHistoryService.updateTextMessage(new HistoryText(message)).subscribe();
+            e.read();
+            mHistoryService.updateInteraction(e, conversation.getAccountId()).subscribe();
             updated = true;
         }
         return updated;
     }
 
+    /**
+     * Retrieves a specific conversation. Primarily called to update the conversation ID.
+     * @param accountId the user's account ID
+     * @param contact the participant's URI
+     * @return a conversation single with the generated ID
+     */
+    public Single<ConversationHistory> getConversationByContact(String accountId, String contact) {
+        return mHistoryService.getConversation(accountId, contact);
+    }
+
     public Single<TextMessage> sendTextMessage(String account, Conversation c, Uri to, String txt) {
         return mCallService.sendAccountTextMessage(account, to.getRawUriString(), txt)
                 .map(id -> {
-                    TextMessage message = new TextMessage(false, txt, to, null, account);
-                    message.setID(id);
+                    ConversationHistory history = new ConversationHistory(c);
+                    TextMessage message = new TextMessage(null, history, txt);
+                    message.setDaemonId(id);
                     if (c.isVisible())
                         message.read();
-                    mHistoryService.insertNewTextMessage(message).subscribe();
+                    mHistoryService.insertInteraction(message, account).subscribe();
+                    message.setAccount(account);
                     c.addTextMessage(message);
                     mAccountService.getAccount(account).conversationUpdated(c);
                     return message;
@@ -196,11 +215,13 @@ public class ConversationFacade {
     }
 
     public void sendTextMessage(Conversation c, Conference conf, String txt) {
+        ConversationHistory history = new ConversationHistory(c);
         mCallService.sendTextMessage(conf.getId(), txt);
-        SipCall call = conf.getParticipants().get(0);
-        TextMessage message = new TextMessage(false, txt, call.getNumberUri(), conf.getId(), call.getAccount());
+        TextMessage message = new TextMessage(null, history, txt);
+        message.setDaemonId(conf.getId());
+        message.setAccount(c.getAccountId());
         message.read();
-        mHistoryService.insertNewTextMessage(message).subscribe();
+        mHistoryService.insertInteraction(message, c.getAccountId()).subscribe();
         c.addTextMessage(message);
     }
 
@@ -220,11 +241,12 @@ public class ConversationFacade {
                 Log.w(TAG, "sendFile: file not readable");
                 return;
             }
-            String peerId = to.getRawRingId();
-            DataTransfer transfer = new DataTransfer(0L, file.getName(), true, file.length(), 0, peerId, account);
-
+            String peerId = to.getUri();
+            DataTransfer transfer = new DataTransfer(mAccountService.getAccount(account).getByUri(to), file.getName(), true, file.length(), 0);
+            transfer.setAccount(account);
+            transfer.setDaemonId(0L);
             // get generated ID
-            mHistoryService.insertDataTransfer(transfer).blockingAwait();
+            mHistoryService.insertInteraction(transfer, account).blockingAwait();
 
             File dest = mDeviceRuntimeService.getConversationPath(peerId, transfer.getStoragePath());
             if (!FileUtils.moveFile(file, dest)) {
@@ -238,85 +260,108 @@ public class ConversationFacade {
     }
 
 
-    public void deleteConversationItem(ConversationElement element) {
+    public void deleteConversationItem(Interaction element) {
         switch (element.getType()) {
-            case TEXT:
-                TextMessage message = (TextMessage) element;
-                mDisposableBag.add(Completable.mergeArrayDelayError(
-                        mHistoryService.deleteMessageHistory(message.getId(), message.getAccount()).subscribeOn(Schedulers.io()))
-                        .andThen(startConversation(message.getAccount(), message.getContactNumber()))
-                        .subscribe(c -> c.removeConversationElement(message),
-                                e -> Log.e(TAG, "Can't delete message", e)));
-                break;
-            case FILE:
-                DataTransfer transfer = (DataTransfer) element;
+            case DATA_TRANSFER:
+                DataTransfer transfer = new DataTransfer(element);
                 File file = mDeviceRuntimeService.getConversationPath(transfer.getPeerId(), transfer.getStoragePath());
                 mDisposableBag.add(Completable.mergeArrayDelayError(
-                        mHistoryService.deleteFileHistory(transfer.getId(), transfer.getAccountId()),
+                        mHistoryService.deleteInteraction(element.getId(), element.getAccount()),
                         Completable.fromAction(file::delete).subscribeOn(Schedulers.io()))
-                        .andThen(startConversation(transfer.getAccountId(), transfer.getContactNumber()))
-                        .subscribe(c -> c.removeConversationElement(transfer),
+                        .andThen(startConversation(transfer.getAccount(), new Uri(transfer.getConversation().getParticipant())))
+                        .subscribe(c -> c.removeInteraction(transfer),
                                 e -> Log.e(TAG, "Can't delete file transfer", e)));
                 break;
-            case CALL:
-                HistoryCall callHistory = (HistoryCall) element;
+            default:
                 mDisposableBag.add(Completable.mergeArrayDelayError(
-                        mHistoryService.deleteCallHistory(callHistory.getCallId(), callHistory.getAccountID()).subscribeOn(Schedulers.io()))
-                        .andThen(startConversation(callHistory.getAccountID(), callHistory.getContactNumber()))
-                        .subscribe(c -> c.removeConversationElement(callHistory),
-                                e -> Log.e(TAG, "Can't delete call history", e)));
+                        mHistoryService.deleteInteraction(element.getId(), element.getAccount()).subscribeOn(Schedulers.io()))
+                        .andThen(startConversation(element.getAccount(), new Uri(element.getConversation().getParticipant())))
+                        .subscribe(c -> c.removeInteraction(element),
+                                e -> Log.e(TAG, "Can't delete message", e)));
                 break;
         }
     }
 
-    public void cancelMessage(TextMessage message) {
+    public void cancelMessage(Interaction message) {
         mDisposableBag.add(Completable.mergeArrayDelayError(
                 mCallService.cancelMessage(message.getAccount(), message.getId()).subscribeOn(Schedulers.io()))
-                .andThen(startConversation(message.getAccount(), message.getContactNumber()))
-                .subscribe(c -> c.removeConversationElement(message),
+                .andThen(startConversation(message.getAccount(), new Uri(message.getConversation().getParticipant())))
+                .subscribe(c -> c.removeInteraction(message),
                         e -> Log.e(TAG, "Can't cancel message sending", e)));
     }
 
-    private Single<Account> loadConversations(final Account account) {
+    public Single<Account> loadSmartlist(final Account account) {
         synchronized (account) {
             if (account.isHistoryLoaded()) {
-                Log.d(TAG, "loadConversations(): just");
+                Log.d(TAG, "loadSmartlist(): just");
                 return Single.just(account);
             }
             if (account.historyLoader == null) {
-                Log.d(TAG, "loadConversations(): start loading");
+                Log.d(TAG, "loadSmartlist(): start loading");
                 account.historyLoader = AsyncSubject.create();
-                loadConversationHistory(account);
+                getSmartlist(account);
             } else {
-                Log.d(TAG, "loadConversations(): already loading");
+                Log.d(TAG, "loadSmartlist(): already loading");
             }
             return account.historyLoader.singleOrError();
         }
     }
 
-    private Disposable loadConversationHistory(final Account account) {
-        Log.d(TAG, "loadConversationHistory()");
-        return Single
-                .merge(mHistoryService.getCallsSingle(account.getAccountID()).subscribeOn(Schedulers.io()),
-                        mHistoryService.getTransfersSingle(account.getAccountID()).subscribeOn(Schedulers.io()),
-                        mHistoryService.getMessagesSingle(account.getAccountID()).subscribeOn(Schedulers.io()))
-                .observeOn(Schedulers.computation())
-                .reduce(new HashSet<Conversation>(), (h, c) -> {
-                    for (ConversationElement e : c) {
-                        Conversation conversation = account.getByUri(e.getContactNumber());
-                        if (conversation == null)
-                            continue;
-                        conversation.addElement(e, conversation.getContact());
-                        h.add(conversation);
-                    }
-                    return h;
-                })
-                .subscribe(account::setHistoryLoaded);
+    public void loadConversationHistory(final Account account, final Conversation conversation) {
+        if (conversation.isLoaded()) {
+            Log.d(TAG, "loadConversationHistory(): Already loaded");
+        } else {
+            getConversationHistory(account, conversation);
+            Log.d(TAG, "loadConversationHistory(): loading");
+        }
+
     }
+
+    private Disposable getSmartlist(final Account account) {
+        Log.d(TAG, "getSmartlist()");
+        return mHistoryService.getSmartlist(account.getAccountID()).observeOn(Schedulers.computation()).map(conversationHistories -> {
+            HashSet<Conversation> h = new HashSet<>();
+            for (Interaction e : conversationHistories) {
+                Conversation conversation = account.getConversationFromHistory(e.getConversation());
+                if (conversation == null)
+                    continue;
+                conversation.addElement(e, conversation.getContact());
+                h.add(conversation);
+            }
+            return h;
+        }).subscribe(account::setHistoryLoaded);
+    }
+
+    private Disposable getConversationHistory(final Account account, final Conversation conversation) {
+        Log.d(TAG, "getConversationHistory()");
+        if (conversation.isLoaded())
+            return null;
+
+        return mHistoryService.getConversationHistory(account.getAccountID(), conversation.getId()).observeOn(Schedulers.computation()).map(loadedConversation -> {
+            if (loadedConversation == null || loadedConversation.isEmpty())
+                return null;
+
+            conversation.clearHistory();
+
+
+            for (Interaction interaction : loadedConversation) {
+                if (interaction == null)
+                    continue;
+                conversation.addElement(interaction, conversation.getContact());
+            }
+            conversation.setLoaded(true);
+            return conversation;
+
+        }).subscribe(c -> {
+            account.updated(c);
+            conversationSubject.onNext(conversation);
+        });
+    }
+
 
     public Completable clearHistory(final String accountId, final Uri contact) {
         return mHistoryService
-                .clearHistory(contact.getRawUriString(), accountId)
+                .clearHistory(contact.getUri(), accountId)
                 .doOnSubscribe(s -> {
                     Account account = mAccountService.getAccount(accountId);
                     if (account != null) {
@@ -348,7 +393,7 @@ public class ConversationFacade {
 
     private void parseNewMessage(final TextMessage txt) {
         if (txt.isRead()) {
-            mHistoryService.updateTextMessage(new HistoryText(txt)).subscribe();
+            mHistoryService.updateInteraction(txt, txt.getAccount()).subscribe();
         }
         getAccountSubject(txt.getAccount())
                 .flatMapObservable(Account::getConversationsSubject)
@@ -356,6 +401,7 @@ public class ConversationFacade {
                 .subscribeOn(Schedulers.io())
                 .subscribe(c -> updateTextNotifications(txt.getAccount(), c), e -> Log.e(TAG, e.getMessage()));
     }
+
 
     public void acceptRequest(String accountId, Uri contactUri) {
         if (accountId == null || contactUri == null)
@@ -365,14 +411,14 @@ public class ConversationFacade {
     }
 
     public void discardRequest(String accountId, Uri contact) {
-        mHistoryService.clearHistory(contact.getRawUriString(), accountId).subscribe();
+        mHistoryService.clearHistory(contact.getUri(), accountId).subscribe();
         mPreferencesService.removeRequestPreferences(accountId, contact.getRawRingId());
         mAccountService.discardTrustRequest(accountId, contact);
     }
 
     private void handleDataTransferEvent(DataTransfer transfer) {
-        Conversation conversation = mAccountService.getAccount(transfer.getAccountId()).onDataTransferEvent(transfer);
-        if (transfer.getEventCode() == DataTransferEventCode.CREATED && !transfer.isOutgoing()) {
+        Conversation conversation = mAccountService.getAccount(transfer.getAccount()).onDataTransferEvent(transfer);
+        if (transfer.getStatus().equals(InteractionStatus.TRANSFER_CREATED) && !transfer.isOutgoing()) {
             if (transfer.canAutoAccept()) {
                 mAccountService.acceptFileTransfer(transfer);
             }
@@ -385,8 +431,8 @@ public class ConversationFacade {
 
     private void onCallStateChange(SipCall call) {
         Log.d(TAG, "Thread id: " + Thread.currentThread().getId());
-        SipCall.State newState = call.getCallState();
-        boolean incomingCall = newState == SipCall.State.RINGING && call.isIncoming();
+        SipCall.CallStatus newState = call.getCallStatus();
+        boolean incomingCall = newState == SipCall.CallStatus.RINGING && call.isIncoming();
         mHardwareService.updateAudioState(newState, incomingCall, !call.isAudioOnly());
 
         Account account = mAccountService.getAccount(call.getAccount());
@@ -394,9 +440,9 @@ public class ConversationFacade {
         Conversation conversation = (contact == null || account == null) ? null : account.getByUri(contact.getPrimaryUri());
         Conference conference = null;
         if (conversation != null) {
-            conference = conversation.getConference(call.getCallId());
+            conference = conversation.getConference(call.getDaemonIdString());
             if (conference == null) {
-                if (newState == SipCall.State.OVER)
+                if (newState == SipCall.CallStatus.OVER)
                     return;
                 conference = new Conference(call);
                 conversation.addConference(conference);
@@ -405,40 +451,40 @@ public class ConversationFacade {
         }
 
         Log.w(TAG, "CALL_STATE_CHANGED : updating call state to " + newState);
-        if ((call.isRinging() || newState == SipCall.State.CURRENT) && call.getTimestampStart() == 0) {
-            call.setTimestampStart(System.currentTimeMillis());
+        if ((call.isRinging() || newState == SipCall.CallStatus.CURRENT) && call.getTimestamp() == 0) {
+            call.setTimestamp(System.currentTimeMillis());
         }
         if (incomingCall) {
             mNotificationService.startForegroundService(conference);
             mHardwareService.setPreviewSettings();
-        } else if ((newState == SipCall.State.CURRENT && call.isIncoming())
-                || newState == SipCall.State.RINGING && call.isOutGoing()) {
+        } else if ((newState == SipCall.CallStatus.CURRENT && call.isIncoming())
+                || newState == SipCall.CallStatus.RINGING && !call.isIncoming()) {
             mNotificationService.startForegroundService(conference);
-            mAccountService.sendProfile(call.getCallId(), call.getAccount());
-        } else if (newState == SipCall.State.HUNGUP
-                || newState == SipCall.State.BUSY
-                || newState == SipCall.State.FAILURE
-                || newState == SipCall.State.OVER) {
+            mAccountService.sendProfile(call.getDaemonIdString(), call.getAccount());
+        } else if (newState == SipCall.CallStatus.HUNGUP
+                || newState == SipCall.CallStatus.BUSY
+                || newState == SipCall.CallStatus.FAILURE
+                || newState == SipCall.CallStatus.OVER) {
             mNotificationService.stopForegroundService(conference.getId().hashCode());
             mHardwareService.closeAudioState();
             long now = System.currentTimeMillis();
-            if (call.getTimestampStart() == 0) {
-                call.setTimestampStart(now);
+            if (call.getTimestamp() == 0) {
+                call.setTimestamp(now);
             }
-            if (newState == SipCall.State.HUNGUP || call.getTimestampEnd() == 0) {
+            if (newState == SipCall.CallStatus.HUNGUP || call.getTimestampEnd() == 0) {
                 call.setTimestampEnd(now);
             }
 
             if (conversation != null && conference.removeParticipant(call)) {
-                HistoryCall historyCall = new HistoryCall(call);
-                mHistoryService.insertNewEntry(historyCall).subscribe();
-                conversation.addHistoryCall(historyCall);
-                if (historyCall.isIncoming() && historyCall.isMissed()) {
+                mHistoryService.insertInteraction(call, account.getAccountID()).subscribe();
+                call.setAccount(account.getAccountID());
+                conversation.addHistoryCall(call);
+                if (call.isIncoming() && call.isMissed()) {
                     mNotificationService.showMissedCallNotification(call);
                 }
                 account.updated(conversation);
             }
-            mCallService.removeCallForId(call.getCallId());
+            mCallService.removeCallForId(call.getDaemonIdString());
             if (conversation != null && conference.getParticipants().isEmpty()) {
                 conversation.removeConference(conference);
             }
@@ -465,7 +511,7 @@ public class ConversationFacade {
 
     public Completable removeConversation(String accountId, Uri contact) {
         return mHistoryService
-                .clearHistory(contact.getRawUriString(), accountId)
+                .clearHistory(contact.getUri(), accountId)
                 .doOnSubscribe(s -> {
                     Account account = mAccountService.getAccount(accountId);
                     account.clearHistory(contact);
