@@ -38,9 +38,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.inject.Inject;
 
 import cx.ring.history.DatabaseHelper;
+import cx.ring.model.ConversationHistory;
 import cx.ring.model.DataTransfer;
-import cx.ring.model.HistoryCall;
-import cx.ring.model.HistoryText;
+import cx.ring.model.Interaction;
 
 /**
  * Implements the necessary Android related methods for the {@link HistoryService}
@@ -65,31 +65,21 @@ public class HistoryServiceImpl extends HistoryService {
     }
 
     @Override
-    protected Dao<HistoryCall, Integer> getCallHistoryDao(String dbName) {
+    protected Dao<Interaction, Integer> getInteractionDataDao(String dbName) {
         try {
-            return getHelper(dbName).getHistoryDao();
+            return getHelper(dbName).getInteractionDataDao();
         } catch (SQLException e) {
-            cx.ring.utils.Log.e(TAG, "Unable to get a CallHistoryDao");
+            cx.ring.utils.Log.e(TAG, "Unable to get a interactionDataDao");
             return null;
         }
     }
 
     @Override
-    protected Dao<HistoryText, Long> getTextHistoryDao(String dbName) {
+    protected Dao<ConversationHistory, Integer> getConversationDataDao(String dbName) {
         try {
-            return getHelper(dbName).getTextHistoryDao();
+            return getHelper(dbName).getConversationDataDao();
         } catch (SQLException e) {
-            cx.ring.utils.Log.e(TAG, "Unable to get a TextHistoryDao");
-            return null;
-        }
-    }
-
-    @Override
-    protected Dao<DataTransfer, Long> getDataHistoryDao(String dbName) {
-        try {
-            return getHelper(dbName).getDataHistoryDao();
-        } catch (SQLException e) {
-            cx.ring.utils.Log.e(TAG, "Unable to get a DataHistoryDao");
+            cx.ring.utils.Log.e(TAG, "Unable to get a conversationDataDao");
             return null;
         }
     }
