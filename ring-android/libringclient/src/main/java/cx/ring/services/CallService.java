@@ -31,7 +31,9 @@ import cx.ring.daemon.Blob;
 import cx.ring.daemon.IntegerMap;
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
+import cx.ring.model.Account;
 import cx.ring.model.CallContact;
+import cx.ring.model.Conversation;
 import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
 import cx.ring.utils.Log;
@@ -298,9 +300,14 @@ public class CallService {
     }
 
     private SipCall addCall(String accountId, String callId, String from, int direction) {
+        Account account = mAccountService.getAccount(accountId);
+        Conversation conversation = account.getByUri(new Uri(from).getUri());
         SipCall call = currentCalls.get(callId);
         if (call == null) {
-            call = new SipCall(callId, accountId, new Uri(from), direction);
+            call = new SipCall(callId, new Uri(from).getUri(), conversation ,direction);
+            CallContact contact = mContactService.findContact(account, new Uri(from));
+            call.setAccount(accountId);
+            call.setContact(contact);
             currentCalls.put(callId, call);
         } else {
             Log.w(TAG, "Call already existed ! " + callId + " " + from);
@@ -309,12 +316,12 @@ public class CallService {
     }
 
     private SipCall parseCallState(String callId, String newState) {
-        SipCall.State callState = SipCall.stateFromString(newState);
+        SipCall.CallStatus callState = SipCall.stateFromString(newState);
         SipCall sipCall = currentCalls.get(callId);
         if (sipCall != null) {
             sipCall.setCallState(callState);
             sipCall.setDetails(Ringservice.getCallDetails(callId).toNative());
-        } else if (callState != SipCall.State.OVER && callState != SipCall.State.FAILURE) {
+        } else if (callState !=  SipCall.CallStatus.OVER && callState !=  SipCall.CallStatus.FAILURE) {
             Map<String, String> callDetails = Ringservice.getCallDetails(callId).toNative();
             sipCall = new SipCall(callId, callDetails);
             if (!callDetails.containsKey(SipCall.KEY_PEER_NUMBER)) {
@@ -322,12 +329,17 @@ public class CallService {
                 return null;
             }
             sipCall.setCallState(callState);
-            CallContact contact = mContactService.findContact(mAccountService.getAccount(sipCall.getAccount()), sipCall.getNumberUri());
+
+            CallContact contact = mContactService.findContact(mAccountService.getAccount(sipCall.getAccount()), new Uri(sipCall.getContactNumber()));
             String registeredName = callDetails.get("REGISTERED_NAME");
             if (registeredName != null && !registeredName.isEmpty()) {
                 contact.setUsername(registeredName);
             }
             sipCall.setContact(contact);
+
+            Account account = mAccountService.getAccount(sipCall.getAccount());
+            sipCall.setConversation(account.getByUri(contact.getPrimaryUri()));
+
             currentCalls.put(callId, sipCall);
         }
         return sipCall;
@@ -339,8 +351,8 @@ public class CallService {
             SipCall call = parseCallState(callId, newState);
             if (call != null) {
                 callSubject.onNext(call);
-                if (call.getCallState() == SipCall.State.OVER) {
-                    currentCalls.remove(call.getCallId());
+                if (call.getCallStatus() == SipCall.CallStatus.OVER) {
+                    currentCalls.remove(call.getDaemonIdString());
                 }
             }
         } catch (Exception e) {

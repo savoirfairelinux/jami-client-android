@@ -20,7 +20,9 @@
 package cx.ring.call;
 
 import cx.ring.model.CallContact;
+import cx.ring.model.SipCall.CallStatus;
 import cx.ring.model.SipCall;
+
 
 public interface CallView {
 
@@ -42,7 +44,7 @@ public interface CallView {
 
     void updateContactBubble(CallContact contact);
 
-    void updateCallStatus(SipCall.State callState);
+    void updateCallStatus(CallStatus callState);
 
     void initMenu(boolean isSpeakerOn, boolean hasContact, boolean displayFlip, boolean canDial, boolean onGoingCall);
 
