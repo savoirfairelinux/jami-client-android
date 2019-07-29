@@ -26,12 +26,16 @@ along with this program; if not, write to the Free Software
 
     <!-- SipCalls -->
     <string name="call_human_state_searching">Bilatzen</string>
+    <string name="call_human_state_incoming">Jasotzen</string>
     <string name="call_human_state_connecting">Konektatzen</string>
     <string name="call_human_state_ringing">Deitzen</string>
     <string name="call_human_state_current">Hizketan</string>
     <string name="call_human_state_hungup">Amaituta</string>
     <string name="call_human_state_busy">Lanpetuta</string>
     <string name="call_human_state_failure">Huts eginda</string>
+    <string name="call_human_state_hold">Esperoan</string>
+    <string name="call_human_state_unhold">Jaso esperotik</string>
     <string name="call_human_state_over">Amaituta</string>
+    <string name="call_human_state_none">Bat ere ez</string>
     <!-- Conferences -->
 </resources>

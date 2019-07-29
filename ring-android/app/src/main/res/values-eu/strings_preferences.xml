@@ -2,4 +2,24 @@
 <resources>
   <string name="pref_category_network">Sarea</string>
   <string name="pref_category_contacts">Kontaktuak</string>
+  <string name="pref_category_video">Bideoa</string>
+  <string name="pref_category_system">Sistema</string>
+  <string name="pref_category_privacy">Pribatutasuna</string>
+  <string name="pref_mobileData_title">Datu mugikorrak</string>
+  <string name="pref_mobileData_summary">Baimendu Jami  3G/LTE sareetan, wifi sareetan gain</string>
+  <string name="pref_pushNotifications_title">Push jakinarazpenak</string>
+  <string name="pref_pushNotifications_summary">Erabili Google zerbitzariak deiak eta mezuak bigarren planoan jasotzea ahalbidetzeko</string>
+  <string name="pref_hd_summary">Gaitu HD bideoa bidaltzea</string>
+  <string name="pref_hwEncode_title">Gaitu kodetze azeleratua</string>
+  <string name="pref_hwEncode_summary">Ezaugarri esperimentala</string>
+  <string name="pref_systemContacts_title">Erabili sistemako kontaktuak</string>
+  <string name="pref_systemContacts_summary">Erakutsi sistemako kontaktuak deitzailearen xehetasunak erakusteko.</string>
+  <string name="pref_systemDialer_title">Egin sistemako deiak Jami erabiliz</string>
+  <string name="pref_systemDialer_summary">Erabili Jami sistemako deiak egiteko ahal denean.</string>
+  <string name="pref_startOnBoot_title">Hasi Jami abioan</string>
+  <string name="pref_startOnBoot_summary">Hasi Jami bigarren planoan sistema abiatzean.</string>
+  <string name="pref_clearHistory_title">Garbitu historiala</string>
+  <string name="pref_clearHistory_summary">Garbitu dei guztien historiala. Ekintza hau ezin da desegin.</string>
+  <string name="pref_persistNotification_title">Aritu bigarren planoan</string>
+  <string name="pref_persistNotification_summary">Baimendu bigarren planoan aritzea deiak eta mezuak jasotzeko.</string>
 </resources>

@@ -57,9 +57,12 @@
   <string name="notif_incoming_call">Gelen arama</string>
   <string name="notif_outgoing_call_title">%1$s\'a giden arama</string>
   <string name="notif_outgoing_call">Giden arama</string>
+  <string name="notif_current_call_title">%1$s ile giden arama</string>
   <string name="notif_current_call">Giden arama</string>
+  <string name="notif_channel_call_in_progress">Devam eden arama</string>
   <string name="notif_channel_calls">Aramalar</string>
   <string name="notif_channel_missed_calls">Yanıtsız aramalar</string>
+  <string name="notif_channel_incoming_calls">Gelen arama</string>
   <string name="notif_channel_messages">İletiler</string>
   <string name="notif_channel_requests">İstekler</string>
   <string name="notif_channel_file_transfer">Dosya aktarımı</string>
@@ -116,6 +119,7 @@
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Jami\'nin bu özelliğini etkinleştirmek için \"Rehberi oku\" izni gerekli. Lütfen izin verin.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Jami bu özelliği etkinleştirmek için \"Çağrı kaydına yazma\" iznine gereksiniyor. Lütfen verin.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Eklemek istediğiniz hesabın QR kodunu tarayın.</string>
   <string name="title_activity_qrcode">Hesabımı paylaş</string>
@@ -181,9 +185,11 @@
   <string name="contact_request_msg">%1$s iletişim isteğiniz var</string>
   <string name="contact_request_account">%1$s için</string>
   <string name="no_requests">0 iletişim isteği</string>
+  <string name="message_contact_not_trusted">%s kişilerinizde yok.\n yeni bir kişi eklensin mi?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Gönder</string>
   <string name="send_request_title">Bir ileteşem isteği gönder</string>
+  <string name="send_request_msg">Bu kullanıcıyla iletişime geçmek için iletişim isteği göndermelisiniz. Kişiniz bu isteği kabul etmediği sürece, siz ona ileti gönderebilirsiniz fakat o bunları yanıtlayamaz.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 engellenmiş kişi</string>
   <!--Smartlist-->
@@ -200,10 +206,16 @@
   <string name="file_transfer_status_unsupported">desteklenmeyen</string>
   <string name="file_transfer_status_finished">Bitti</string>
   <string name="file_transfer_status_invalid_pathname">geçersiz yol adı</string>
+  <string name="file_saved_in">Dosya %s içine kaydedildi</string>
+  <string name="file_saved_successfully">Dosya başarıyla kaydedildi</string>
+  <string name="no_space_left_on_device">Aygıtda boş alan kalmadı</string>
   <string name="menu_file_open">Dosyayı Aç</string>
   <string name="menu_file_download">Dosyayı indir</string>
+  <string name="menu_file_save">Dosyayı Kaydet</string>
   <string name="menu_file_delete">Dosyayı sil</string>
   <string name="menu_file_share">Dosya paylaş</string>
   <string name="menu_message_copy">Kopyala</string>
+  <string name="menu_message_delete">İletiyi sil</string>
+  <string name="menu_message_cancel">İletiyi iptal et</string>
   <string name="menu_delete">Sil</string>
 </resources>

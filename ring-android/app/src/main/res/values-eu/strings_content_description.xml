@@ -3,5 +3,6 @@
   <!--Strings for xml content description of images-->
   <string name="contact_quick_call_description">Dei azkarra</string>
   <string name="contact_picture_description">Kontaktuaren argazkia</string>
+  <string name="dial_numeric_pad">Zenbakizko teklatua</string>
   <string name="contact_unblock">Desblokeatu</string>
 </resources>
