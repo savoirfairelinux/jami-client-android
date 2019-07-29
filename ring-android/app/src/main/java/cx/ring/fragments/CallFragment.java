@@ -147,7 +147,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         return countDownFragment;
     }
 
-    public static int callStateToHumanState(final SipCall.State state) {
+    public static int callStateToHumanState(final SipCall.CallStatus state) {
         switch (state) {
             case SEARCHING:
                 return R.string.call_human_state_searching;
@@ -223,7 +223,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                     PendingIntent.getService(context, new Random().nextInt(),
                             new Intent(DRingService.ACTION_CALL_END)
                                     .setClass(context, DRingService.class)
-                                    .putExtra(NotificationService.KEY_CALL_ID, sipCall.getCallId()), PendingIntent.FLAG_ONE_SHOT)));
+                                    .putExtra(NotificationService.KEY_CALL_ID, sipCall.getDaemonIdString()), PendingIntent.FLAG_ONE_SHOT)));
             paramBuilder.setActions(actions);
             requireActivity().enterPictureInPictureMode(paramBuilder.build());
         } else if (DeviceUtils.isTv(context)) {
@@ -563,13 +563,13 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     @Override
-    public void updateCallStatus(final SipCall.State callState) {
-        switch (callState) {
+    public void updateCallStatus(final SipCall.CallStatus callStatus) {
+        switch (callStatus) {
             case NONE:
                 binding.callStatusTxt.setText("");
                 break;
             default:
-                binding.callStatusTxt.setText(callStateToHumanState(callState));
+                binding.callStatusTxt.setText(callStateToHumanState(callStatus));
                 break;
         }
     }
