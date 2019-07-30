@@ -83,9 +83,8 @@ public class AccountsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         entryView.enabled.setChecked(item.isEnabled());
         entryView.enabled.setOnClickListener(v -> {
             item.setEnabled(!item.isEnabled());
-            mListeners.onItemClicked(item.getAccountID(), item.getDetails());
+            mListeners.onAccountEnabled(item.getAccountID(), item.isEnabled());
         });
-
 
         if (item.isEnabled()) {
             if (!item.isActive()) {
@@ -129,8 +128,8 @@ public class AccountsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public interface AccountListeners {
-        void onItemClicked(String accountId, HashMap<String, String> details);
         void onItemClicked(Account account);
+        void onAccountEnabled(String accountID, boolean enabled);
     }
 
     public class AccountView extends RecyclerView.ViewHolder implements View.OnClickListener {

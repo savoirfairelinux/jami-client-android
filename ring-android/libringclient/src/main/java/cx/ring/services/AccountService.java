@@ -548,6 +548,10 @@ public class AccountService {
                 .subscribeOn(Schedulers.from(mExecutor));
     }
 
+    public void setAccountEnabled(final String accountId, final boolean active) {
+        mExecutor.execute(() -> Ringservice.sendRegister(accountId, active));
+    }
+
     /**
      * Sets the activation state of the account in the Daemon
      */

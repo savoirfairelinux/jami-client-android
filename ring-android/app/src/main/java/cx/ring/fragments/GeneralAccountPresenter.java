@@ -72,14 +72,19 @@ public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> {
         }
     }
 
-    void accountChanged(Object newValue) {
-        mAccount.setEnabled((Boolean) newValue);
-        updateAccount();
+    void setEnabled(Object newValue) {
+        boolean enabled = (Boolean) newValue;
+        mAccount.setEnabled(enabled);
+        mAccountService.setAccountEnabled(mAccount.getAccountID(), enabled);
     }
 
     public void twoStatePreferenceChanged(ConfigKey configKey, Object newValue) {
-        mAccount.setDetail(configKey, newValue.toString());
-        updateAccount();
+        if (configKey == ConfigKey.ACCOUNT_ENABLE) {
+            setEnabled(newValue);
+        } else {
+            mAccount.setDetail(configKey, newValue.toString());
+            updateAccount();
+        }
     }
 
     void passwordPreferenceChanged(ConfigKey configKey, Object newValue) {
