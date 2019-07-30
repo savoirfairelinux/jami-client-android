@@ -62,10 +62,6 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
     private List<GuidedAction> actions;
     private int iconSize = -1;
 
-    public static GuidedStepSupportFragment newInstance() {
-        return new TVProfileEditingFragment();
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
