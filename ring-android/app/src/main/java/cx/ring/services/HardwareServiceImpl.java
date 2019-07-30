@@ -302,7 +302,10 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     private void routeToSpeaker() {
         // if we are returning from bluetooth mode, switch to mode normal, otherwise, we switch to mode in communication
         if (mAudioManager.isBluetoothScoOn()) {
+            int oldMode = mAudioManager.getMode();
+            mAudioManager.setMode(AudioManager.MODE_NORMAL);
             mBluetoothWrapper.setBluetoothOn(false);
+            mAudioManager.setMode(oldMode);
         }
         mAudioManager.setSpeakerphoneOn(true);
         audioStateSubject.onNext(new AudioState(AudioOutput.SPEAKERS));
