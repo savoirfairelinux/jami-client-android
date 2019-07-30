@@ -168,10 +168,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         Log.d(TAG, "updateAudioState: Call state updated to " + state + " Call is incoming: " + incomingCall + " Call is video: " + isOngoingVideo);
         boolean callEnded = state.equals(State.HUNGUP) || state.equals(State.FAILURE) || state.equals(State.OVER);
         if (mBluetoothWrapper == null && !callEnded) {
-            mBluetoothWrapper = new BluetoothWrapper(mContext);
-            mBluetoothWrapper.setBluetoothChangeListener(this);
-            mBluetoothWrapper.registerScoUpdate();
-            mBluetoothWrapper.registerBtConnection();
+            mBluetoothWrapper = new BluetoothWrapper(mContext, this);
         }
         switch (state) {
             case RINGING:
