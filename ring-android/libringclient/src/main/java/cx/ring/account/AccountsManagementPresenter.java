@@ -63,7 +63,7 @@ public class AccountsManagementPresenter extends RootPresenter<AccountsManagemen
         getView().launchWizardActivity();
     }
 
-    public void itemClicked(String accountId, Map<String, String> details) {
-        mAccountService.setAccountDetails(accountId, details);
+    public void accountEnabled(String accountId, boolean enabled) {
+        mAccountService.setAccountEnabled(accountId, enabled);
     }
 }
