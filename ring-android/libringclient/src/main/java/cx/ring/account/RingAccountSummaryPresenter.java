@@ -105,8 +105,7 @@ public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummar
         }
 
         account.setEnabled(newValue);
-        mAccountService.setCredentials(account.getAccountID(), account.getCredentialsHashMapList());
-        mAccountService.setAccountDetails(account.getAccountID(), account.getDetails());
+        mAccountService.setAccountEnabled(account.getAccountID(), newValue);
     }
 
     public void revokeDevice(final String deviceId, String password) {
