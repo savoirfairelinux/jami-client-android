@@ -51,7 +51,7 @@ import cx.ring.navigation.RingNavigationViewModel;
 import cx.ring.services.VCardServiceImpl;
 import cx.ring.tv.about.AboutActivity;
 import cx.ring.tv.account.TVAccountExport;
-import cx.ring.tv.account.TVProfileEditingActivity;
+import cx.ring.tv.account.TVProfileEditingFragment;
 import cx.ring.tv.account.TVSettingsActivity;
 import cx.ring.tv.account.TVShareActivity;
 import cx.ring.tv.call.TVCallActivity;
@@ -296,8 +296,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
 
     @Override
     public void showProfileEditing() {
-        Intent intent = new Intent(getActivity(), TVProfileEditingActivity.class);
-        startActivity(intent);
+        GuidedStepSupportFragment.add(getFragmentManager(), new TVProfileEditingFragment(), R.id.main_browse_fragment);
     }
 
     @Override
