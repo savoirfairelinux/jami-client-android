@@ -97,11 +97,6 @@ public class AccountsManagementFragment extends BaseSupportFragment<AccountsMana
     }
 
     @Override
-    public void onItemClicked(Account account) {
-        presenter.clickAccount(account);
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         Log.w(TAG, "onResume()");
@@ -181,7 +176,12 @@ public class AccountsManagementFragment extends BaseSupportFragment<AccountsMana
     }
 
     @Override
-    public void onItemClicked(String accountId, HashMap<String, String> details) {
-        presenter.itemClicked(accountId, details);
+    public void onItemClicked(Account account) {
+        presenter.clickAccount(account);
+    }
+
+    @Override
+    public void onAccountEnabled(String accountId, boolean enabled) {
+        presenter.accountEnabled(accountId, enabled);
     }
 }

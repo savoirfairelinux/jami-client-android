@@ -44,7 +44,7 @@ public class GeneralAccountFragment extends BasePreferenceFragment<GeneralAccoun
     private static final String TAG = GeneralAccountFragment.class.getSimpleName();
     private static final String DIALOG_FRAGMENT_TAG = "androidx.preference.PreferenceFragment.DIALOG";
     private final Preference.OnPreferenceChangeListener changeAccountStatusListener = (preference, newValue) -> {
-        presenter.accountChanged(newValue);
+        presenter.setEnabled(newValue);
         return false;
     };
     private final Preference.OnPreferenceChangeListener changeBasicPreferenceListener = (preference, newValue) -> {
