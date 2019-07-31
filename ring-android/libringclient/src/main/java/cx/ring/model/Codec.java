@@ -38,12 +38,6 @@ public class Codec {
     private boolean mIsEnabled;
 
     public Codec(long i, Map<String, String> audioCodecDetails, boolean enabled) {
-
-        Log.d("CodecDetail", Long.toString(i));
-        for (String s : audioCodecDetails.keySet()) {
-            Log.d("CodecDetail", s + " -> " + audioCodecDetails.get(s));
-        }
-
         mPayload = i;
         mName = audioCodecDetails.get("CodecInfo.name");
         mType = audioCodecDetails.get("CodecInfo.type").contentEquals("AUDIO") ? Type.AUDIO : Type.VIDEO;

@@ -728,14 +728,12 @@ public class AccountService {
 
             UintVect activePayloads = Ringservice.getActiveCodecList(accountId);
             for (int i = 0; i < activePayloads.size(); ++i) {
-                Log.i(TAG, "getCodecDetails(" + accountId + ", " + activePayloads.get(i) + ")");
                 StringMap codecsDetails = Ringservice.getCodecDetails(accountId, activePayloads.get(i));
                 results.add(new Codec(activePayloads.get(i), codecsDetails.toNative(), true));
             }
-            UintVect payloads = Ringservice.getCodecList();
 
-            cl:
-            for (int i = 0; i < payloads.size(); ++i) {
+            UintVect payloads = Ringservice.getCodecList();
+            cl: for (int i = 0; i < payloads.size(); ++i) {
                 for (Codec co : results) {
                     if (co.getPayload() == payloads.get(i)) {
                         continue cl;
