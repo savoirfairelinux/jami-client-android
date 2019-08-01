@@ -362,13 +362,13 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     }
 
     @Override
-    public void updateCallStatus(final SipCall.State callState) {
-        switch (callState) {
+    public void updateCallStatus(final SipCall.CallStatus callStatus) {
+        switch (callStatus) {
             case NONE:
                 binding.callStatusTxt.setText("");
                 break;
             default:
-                binding.callStatusTxt.setText(CallFragment.callStateToHumanState(callState));
+                binding.callStatusTxt.setText(CallFragment.callStateToHumanState(callStatus));
                 break;
         }
     }
