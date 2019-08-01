@@ -275,8 +275,8 @@ public class ContactDetailsActivity extends AppCompatActivity {
 
         if (conf != null
                 && !conf.getParticipants().isEmpty()
-                && conf.getParticipants().get(0).getCallState() != SipCall.State.INACTIVE
-                && conf.getParticipants().get(0).getCallState() != SipCall.State.FAILURE) {
+                && conf.getParticipants().get(0).getCallStatus() != SipCall.CallStatus.INACTIVE
+                && conf.getParticipants().get(0).getCallStatus() != SipCall.CallStatus.FAILURE) {
             startActivity(new Intent(Intent.ACTION_VIEW)
                     .setClass(getApplicationContext(), CallActivity.class)
                     .putExtra(NotificationService.KEY_CALL_ID, conf.getId()));
