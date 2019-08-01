@@ -168,7 +168,7 @@ public class CallPresenter extends RootPresenter<CallView> {
         incomingIsFullIntent = actionViewOnly;
 
         Observable<SipCall> callObservable = mCallService.getCallUpdates(confId)
-                .filter(call -> call.getCallId() != null)
+                .filter(call -> call.getDaemonIdString() != null)
                 .observeOn(mUiScheduler).share();
 
         // Handles the case where the call has been accepted, emits a single so as to only check for permissions and start the call once
@@ -231,7 +231,7 @@ public class CallPresenter extends RootPresenter<CallView> {
         if(mSipCall == null)
             return;
 
-        mHardwareService.switchInput(mSipCall.getCallId(), false);
+        mHardwareService.switchInput(mSipCall.getDaemonIdString(), false);
         getView().switchCameraIcon(mHardwareService.isPreviewFromFrontCamera());
     }
 
@@ -247,12 +247,12 @@ public class CallPresenter extends RootPresenter<CallView> {
         if (mSipCall == null) {
             return;
         }
-        mCallService.accept(mSipCall.getCallId());
+        mCallService.accept(mSipCall.getDaemonIdString());
     }
 
     public void hangupCall() {
         if (mSipCall != null) {
-            mCallService.hangUp(mSipCall.getCallId());
+            mCallService.hangUp(mSipCall.getDaemonIdString());
         }
         finish();
     }
@@ -260,7 +260,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     public void refuseCall() {
         final SipCall call = mSipCall;
         if (call != null) {
-            mCallService.refuse(call.getCallId());
+            mCallService.refuse(call.getDaemonIdString());
         }
         finish();
     }
@@ -269,7 +269,7 @@ public class CallPresenter extends RootPresenter<CallView> {
         if (mSipCall == null) {
             return;
         }
-        mHardwareService.addVideoSurface(mSipCall.getCallId(), holder);
+        mHardwareService.addVideoSurface(mSipCall.getDaemonIdString(), holder);
         getView().displayContactBubble(false);
     }
 
@@ -282,7 +282,7 @@ public class CallPresenter extends RootPresenter<CallView> {
         if (mSipCall == null) {
             return;
         }
-        mHardwareService.removeVideoSurface(mSipCall.getCallId());
+        mHardwareService.removeVideoSurface(mSipCall.getDaemonIdString());
     }
 
     public void previewVideoSurfaceDestroyed() {
@@ -291,7 +291,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void displayChanged() {
-        mHardwareService.switchInput(mSipCall.getCallId(), false);
+        mHardwareService.switchInput(mSipCall.getDaemonIdString(), false);
     }
 
     public void layoutChanged() {
@@ -339,7 +339,7 @@ public class CallPresenter extends RootPresenter<CallView> {
                 mHardwareService.setPreviewSettings();
                 view.displayVideoSurface(true, mDeviceRuntimeService.hasVideoPermission());
                 if (permissionChanged) {
-                    mHardwareService.switchInput(mSipCall.getCallId(), permissionChanged);
+                    mHardwareService.switchInput(mSipCall.getDaemonIdString(), permissionChanged);
                     permissionChanged = false;
                 }
             }
@@ -350,14 +350,14 @@ public class CallPresenter extends RootPresenter<CallView> {
             view.handleCallWakelock(mAudioOnly);
             if (call.isIncoming()) {
                 if (mAccountService.getAccount(call.getAccount()).isAutoanswerEnabled()) {
-                    mCallService.accept(call.getCallId());
+                    mCallService.accept(call.getDaemonIdString());
                     // only display the incoming call screen if the notification is a full screen intent
                 } else if (incomingIsFullIntent) {
                     view.initIncomingCallDisplay();
                 }
             } else {
                 mOnGoingCall = false;
-                view.updateCallStatus(call.getCallState());
+                view.updateCallStatus(call.getCallStatus());
                 view.initOutGoingCallDisplay();
             }
         } else {
@@ -368,7 +368,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     private void updateTime() {
         CallView view = getView();
         if (view != null && mSipCall != null) {
-            long duration = System.currentTimeMillis() - mSipCall.getTimestampStart();
+            long duration = System.currentTimeMillis() - mSipCall.getTimestamp();
             duration = duration / 1000;
             if (mSipCall.isOnGoing()) {
                 view.updateTime(duration);
@@ -381,7 +381,7 @@ public class CallPresenter extends RootPresenter<CallView> {
 
         if (event.start) {
             getView().displayVideoSurface(true, !isPipMode() && mDeviceRuntimeService.hasVideoPermission());
-        } else if (mSipCall != null && mSipCall.getCallId().equals(event.callId)) {
+        } else if (mSipCall != null && mSipCall.getDaemonIdString().equals(event.callId)) {
             getView().displayVideoSurface(event.started, event.started && !isPipMode() && mDeviceRuntimeService.hasVideoPermission());
             if (event.started) {
                 videoWidth = event.w;
