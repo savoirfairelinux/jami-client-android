@@ -103,7 +103,7 @@ public abstract class HardwareService {
 
     public abstract boolean isVideoAvailable();
 
-    public abstract void updateAudioState(SipCall.State state, boolean incomingCall, boolean isOngoingVideo);
+    public abstract void updateAudioState(SipCall.CallStatus state, boolean incomingCall, boolean isOngoingVideo);
 
     public abstract void closeAudioState();
 
