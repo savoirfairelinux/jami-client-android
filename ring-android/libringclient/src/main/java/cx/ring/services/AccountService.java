@@ -47,9 +47,13 @@ import cx.ring.model.AccountConfig;
 import cx.ring.model.CallContact;
 import cx.ring.model.Codec;
 import cx.ring.model.ConfigKey;
+import cx.ring.model.ContactEvent;
+import cx.ring.model.Conversation;
+import cx.ring.model.ConversationHistory;
 import cx.ring.model.DataTransfer;
 import cx.ring.model.DataTransferError;
-import cx.ring.model.DataTransferEventCode;
+import cx.ring.model.Interaction;
+import cx.ring.model.Interaction.InteractionStatus;
 import cx.ring.model.TextMessage;
 import cx.ring.model.TrustRequest;
 import cx.ring.model.Uri;
@@ -115,8 +119,11 @@ public class AccountService {
 
     private final Subject<TextMessage> incomingMessageSubject = PublishSubject.create();
     private final Subject<TextMessage> messageSubject = PublishSubject.create();
+
     private final Subject<DataTransfer> dataTransferSubject = PublishSubject.create();
     private final Subject<TrustRequest> incomingRequestsSubject = PublishSubject.create();
+
+    private final Subject<ConversationHistory> contactAddedSubject = BehaviorSubject.create();
 
     public void refreshAccounts() {
         accountsSubject.onNext(mAccountList);
@@ -219,6 +226,13 @@ public class AccountService {
                 acc.cleanup();
 
         mAccountList = newAccounts;
+
+        mHistoryService.migrateDatabase(accountIds);
+        mHistoryService.isAccountMigrationComplete().firstOrError().subscribe(complete -> {
+            if(complete)
+                mVCardService.migrateProfiles(accountIds);
+        }, e -> Log.e(TAG, e.getMessage()));
+
         for (String accountId : accountIds) {
             Account account = getAccount(accountId);
             Map<String, String> details = Ringservice.getAccountDetails(accountId).toNative();
@@ -232,6 +246,7 @@ public class AccountService {
                 account.setCredentials(credentials);
                 account.setVolatileDetails(volatileAccountDetails);
             }
+
 
             if (account.isSip()) {
                 hasSip = true;
@@ -264,7 +279,10 @@ public class AccountService {
                     }
                 }
             }
+
+            mVCardService.migrateContact(account.getContacts(), account.getAccountID());
         }
+        mVCardService.deleteLegacyProfiles();
         mHasSipAccount = hasSip;
         mHasRingAccount = hasJami;
         if (!newAccounts.isEmpty()) {
@@ -611,11 +629,12 @@ public class AccountService {
     }
 
     /**
-     * Removes the account in the Daemon
+     * Removes the account in the Daemon as well as local history
      */
     public void removeAccount(final String accountId) {
         Log.i(TAG, "removeAccount() " + accountId);
         mExecutor.execute(() -> Ringservice.removeAccount(accountId));
+        mHistoryService.deleteAccountHistory(accountId);
     }
 
     /**
@@ -912,12 +931,57 @@ public class AccountService {
             if (request != null) {
                 VCard vCard = request.getVCard();
                 if (vCard != null) {
-                    VCardUtils.savePeerProfileToDisk(vCard, from.getRawRingId() + ".vcf", mDeviceRuntimeService.provideFilesDir());
+                    VCardUtils.savePeerProfileToDisk(vCard, accountId, from.getRawRingId() + ".vcf", mDeviceRuntimeService.provideFilesDir());
                 }
             }
             account.removeRequest(from);
+            handleTrustRequest(accountId, from.getUri(), null, ContactType.INVITATION_ACCEPTED);
         }
         mExecutor.execute(() -> Ringservice.acceptTrustRequest(accountId, from.getRawRingId()));
+    }
+
+
+    /**
+     * Handles adding contacts and is the initial point of conversation creation
+     *
+     * @param accountId  the user's account id
+     * @param contactUri the contacts raw string uri
+     */
+    private void handleTrustRequest(String accountId, String contactUri, TrustRequest request, ContactType type) {
+        ConversationHistory history = new ConversationHistory(contactUri);
+        ContactEvent event = new ContactEvent();
+        switch (type) {
+            case ADDED:
+                break;
+            case INVITATION_RECEIVED:
+                event.setStatus(Interaction.InteractionStatus.UNKNOWN);
+                event.setAuthor(contactUri);
+                event.setTimestamp(request.getTimestamp());
+                break;
+            case INVITATION_ACCEPTED:
+                event.setStatus(Interaction.InteractionStatus.SUCCEEDED);
+                event.setAuthor(contactUri);
+                break;
+            case INVITATION_DISCARDED:
+                mHistoryService.clearHistory(contactUri, accountId, true).subscribe();
+                return;
+            default:
+                return;
+        }
+        mHistoryService.insertConversationAndEvent(history, event, accountId).subscribe(id -> {
+            history.setAccount(accountId);
+            history.setId(id);
+            contactAddedSubject.onNext(history);
+        });
+
+    }
+
+    public Observable<ConversationHistory> getContactAddedSubject() {
+        return contactAddedSubject;
+    }
+
+    private enum ContactType {
+        ADDED, INVITATION_RECEIVED, INVITATION_ACCEPTED, INVITATION_DISCARDED
     }
 
     /**
@@ -928,6 +992,7 @@ public class AccountService {
         boolean removed = false;
         if (account != null) {
             removed = account.removeRequest(contact);
+            handleTrustRequest(accountId, contact.getUri(), null, ContactType.INVITATION_DISCARDED);
         }
         mExecutor.execute(() -> Ringservice.discardTrustRequest(accountId, contact.getRawRingId()));
         return removed;
@@ -938,6 +1003,7 @@ public class AccountService {
      */
     public void sendTrustRequest(final String accountId, final String to, final Blob message) {
         Log.i(TAG, "sendTrustRequest() " + accountId + " " + to);
+        handleTrustRequest(accountId, new Uri(to).getUri(), null, ContactType.ADDED);
         mExecutor.execute(() -> Ringservice.sendTrustRequest(accountId, to, message));
     }
 
@@ -947,6 +1013,7 @@ public class AccountService {
      */
     public void addContact(final String accountId, final String uri) {
         Log.i(TAG, "addContact() " + accountId + " " + uri);
+        handleTrustRequest(accountId, new Uri(uri).getUri(), null, ContactType.ADDED);
         mExecutor.execute(() -> Ringservice.addContact(accountId, uri));
     }
 
@@ -1156,13 +1223,14 @@ public class AccountService {
             if (vcard != null) {
                 CallContact contact = account.getContactFromCache(request.getContactId());
                 if (!contact.detailsLoaded) {
-                    VCardUtils.savePeerProfileToDisk(vcard, from + ".vcf", mDeviceRuntimeService.provideFilesDir());
+                    VCardUtils.savePeerProfileToDisk(vcard, accountId, from + ".vcf", mDeviceRuntimeService.provideFilesDir());
                     mVCardService.loadVCardProfile(vcard)
                             .subscribeOn(Schedulers.computation())
                             .subscribe(profile -> contact.setProfile(profile.first, profile.second));
                 }
             }
             account.addRequest(request);
+            handleTrustRequest(accountId, new Uri(from).getUri(), request, ContactType.INVITATION_RECEIVED);
             if (account.isEnabled())
                 lookupAddress(accountId, "", from);
             incomingRequestsSubject.onNext(request);
@@ -1181,8 +1249,11 @@ public class AccountService {
 
     void contactRemoved(String accountId, String uri, boolean banned) {
         Account account = getAccount(accountId);
-        if (account != null)
+        Log.d(TAG, "Contact removed: " + uri + " User is banned: " + banned);
+        if (account != null) {
+            mHistoryService.clearHistory(uri, accountId, true).subscribe();
             account.removeContact(uri, banned);
+        }
     }
 
     void registeredNameFound(String accountId, int state, String address, String name) {
@@ -1205,7 +1276,7 @@ public class AccountService {
         mStartingTransfer = dataTransfer;
 
         DataTransferInfo dataTransferInfo = new DataTransferInfo();
-        dataTransferInfo.setAccountId(dataTransfer.getAccountId());
+        dataTransferInfo.setAccountId(dataTransfer.getAccount());
         dataTransferInfo.setPeer(dataTransfer.getPeerId());
         dataTransferInfo.setPath(file.getPath());
         dataTransferInfo.setDisplayName(dataTransfer.getDisplayName());
@@ -1235,7 +1306,7 @@ public class AccountService {
         if (transfer == null)
             return;
         File path = mDeviceRuntimeService.getTemporaryPath(transfer.getPeerId(), transfer.getStoragePath());
-        acceptFileTransfer(transfer.getDataTransferId(), path.getAbsolutePath(), 0);
+        acceptFileTransfer(transfer.getDaemonId(), path.getAbsolutePath(), 0);
     }
 
     private void acceptFileTransfer(final Long dataTransferId, final String filePath, final long offset) {
@@ -1257,11 +1328,11 @@ public class AccountService {
 
         @Override
         public void run() {
-            DataTransferEventCode eventCode;
+            Interaction.InteractionStatus eventCode;
             synchronized (mToUpdate) {
-                eventCode = mToUpdate.getEventCode();
-                if (eventCode == DataTransferEventCode.ONGOING) {
-                    dataTransferEvent(mToUpdate.getDataTransferId(), eventCode.ordinal());
+                eventCode = mToUpdate.getStatus();
+                if (eventCode == Interaction.InteractionStatus.TRANSFER_ONGOING) {
+                    dataTransferEvent(mToUpdate.getDaemonId(), eventCode.ordinal());
                 } else {
                     cancel();
                 }
@@ -1270,29 +1341,39 @@ public class AccountService {
     }
 
     void dataTransferEvent(final long transferId, int eventCode) {
-        DataTransferEventCode dataEvent = getDataTransferEventCode(eventCode);
+        Interaction.InteractionStatus dataEvent = getDataTransferEventCode(eventCode);
         DataTransferInfo info = new DataTransferInfo();
         if (getDataTransferError(Ringservice.dataTransferInfo(transferId, info)) != DataTransferError.SUCCESS)
             return;
 
+        Account account = getAccount(info.getAccountId());
+        Conversation c = account.getByUri(new Uri(info.getPeer()).getUri());
+
         boolean outgoing = info.getFlags() == 0;
         DataTransfer transfer = mDataTransfers.get(transferId);
         if (transfer == null) {
+
             if (outgoing && mStartingTransfer != null) {
                 transfer = mStartingTransfer;
                 mStartingTransfer = null;
-                transfer.setDataTransferId(transferId);
+                if (transfer.getConversation() == null)
+                    transfer.setConversation(c);
+                transfer.setDaemonId(transferId);
+                transfer.setAccount(account.getAccountID());
+
             } else {
-                transfer = new DataTransfer(transferId, info.getDisplayName(),
+                transfer = new DataTransfer(c, info.getDisplayName(),
                         outgoing, info.getTotalSize(),
-                        info.getBytesProgress(), info.getPeer(), info.getAccountId());
-                mHistoryService.insertDataTransfer(transfer).blockingAwait();
+                        info.getBytesProgress());
+                transfer.setDaemonId(transferId);
+                transfer.setAccount(account.getAccountID());
+                mHistoryService.insertInteraction(transfer, account.getAccountID()).blockingAwait();
             }
             mDataTransfers.put(transferId, transfer);
         } else synchronized (transfer) {
-            DataTransferEventCode oldState = transfer.getEventCode();
+            InteractionStatus oldState = transfer.getStatus();
             if (oldState != dataEvent) {
-                if (dataEvent == DataTransferEventCode.ONGOING) {
+                if (dataEvent.equals(Interaction.InteractionStatus.TRANSFER_ONGOING)) {
                     if (mTransferRefreshTimer == null)
                         mTransferRefreshTimer = new Timer();
                     mTransferRefreshTimer.scheduleAtFixedRate(
@@ -1304,7 +1385,7 @@ public class AccountService {
                         File tmpPath = mDeviceRuntimeService.getTemporaryPath(transfer.getPeerId(), transfer.getStoragePath());
                         tmpPath.delete();
                     }
-                } else if (dataEvent == DataTransferEventCode.FINISHED) {
+                } else if (dataEvent.equals(Interaction.InteractionStatus.TRANSFER_FINISHED)) {
                     if (!transfer.isOutgoing()) {
                         File tmpPath = mDeviceRuntimeService.getTemporaryPath(transfer.getPeerId(), transfer.getStoragePath());
                         File path = mDeviceRuntimeService.getConversationPath(transfer.getPeerId(), transfer.getStoragePath());
@@ -1312,18 +1393,18 @@ public class AccountService {
                     }
                 }
             }
-            transfer.setEventCode(dataEvent);
+            transfer.setStatus(dataEvent);
             transfer.setBytesProgress(info.getBytesProgress());
-            mHistoryService.updateDataTransfer(transfer).subscribe();
+            mHistoryService.updateInteraction(transfer, account.getAccountID()).subscribe();
         }
 
         dataTransferSubject.onNext(transfer);
     }
 
-    private static DataTransferEventCode getDataTransferEventCode(int eventCode) {
-        DataTransferEventCode dataTransferEventCode = DataTransferEventCode.INVALID;
+    private static Interaction.InteractionStatus getDataTransferEventCode(int eventCode) {
+        Interaction.InteractionStatus dataTransferEventCode = Interaction.InteractionStatus.INVALID;
         try {
-            dataTransferEventCode = DataTransferEventCode.values()[eventCode];
+            dataTransferEventCode = InteractionStatus.fromIntFile(eventCode);
         } catch (ArrayIndexOutOfBoundsException ignored) {
             Log.e(TAG, "getEventCode: invalid data transfer status from daemon");
         }

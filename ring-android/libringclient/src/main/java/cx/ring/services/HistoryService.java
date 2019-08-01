@@ -26,19 +26,19 @@ import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import cx.ring.model.CallContact;
-import cx.ring.model.ConversationElement;
-import cx.ring.model.HistoryCall;
-import cx.ring.model.DataTransfer;
-import cx.ring.model.HistoryText;
+import cx.ring.model.Account;
+import cx.ring.model.ConversationHistory;
+import cx.ring.model.Interaction;
 import cx.ring.model.TextMessage;
 import cx.ring.model.Uri;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
 import io.reactivex.Completable;
+import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
@@ -48,165 +48,197 @@ public abstract class HistoryService {
 
     private final Scheduler scheduler = Schedulers.single();
 
-    protected abstract ConnectionSource getConnectionSource();
-    protected abstract Dao<HistoryCall, Integer> getCallHistoryDao();
-    protected abstract Dao<HistoryText, Long> getTextHistoryDao();
-    protected abstract Dao<DataTransfer, Long> getDataHistoryDao();
+    protected abstract ConnectionSource getConnectionSource(String dbName);
+
+    protected abstract Dao<Interaction, Integer> getInteractionDataDao(String dbName);
+
+    protected abstract Dao<ConversationHistory, Integer> getConversationDataDao(String dbName);
+
+    protected abstract Object getHelper(String dbName);
+
+    protected abstract void migrateDatabase(List<String> accounts);
+
+    protected abstract void deleteAccountHistory(String accountId);
+
+    public abstract Observable<Boolean> isAccountMigrationComplete();
 
     public Scheduler getScheduler() {
         return scheduler;
     }
 
-    public Completable insertNewEntry(final HistoryCall call) {
-        return Completable
-                .fromAction(() -> getCallHistoryDao().create(call))
-                .subscribeOn(scheduler);
-    }
-
-    public Completable insertNewTextMessage(TextMessage txt) {
-        return Completable.fromAction(() -> {
-            HistoryText historyTxt = new HistoryText(txt);
-            getTextHistoryDao().create(historyTxt);
-            txt.setID(historyTxt.id);
-        }).subscribeOn(scheduler);
-    }
-
-    public Completable updateTextMessage(final HistoryText txt) {
-        return Completable.fromAction(() -> {
-            Log.d(TAG, "HistoryDao().update() id:" + txt.id + " acc:" + txt.getAccountID() + " num:"
-                    + txt.getNumber() + " date:" + txt.getDate() + " msg:" + txt.getMessage() + " status:" + txt.getStatus());
-            getTextHistoryDao().update(txt);
-        }).subscribeOn(scheduler);
-    }
-
-    public Completable insertDataTransfer(DataTransfer dataTransfer) {
-        return Completable.fromAction(() -> getDataHistoryDao().create(dataTransfer))
-                .subscribeOn(scheduler);
-    }
-
-    public Completable updateDataTransfer(DataTransfer dataTransfer) {
-        return Completable.fromAction(() -> getDataHistoryDao().update(dataTransfer))
-                .subscribeOn(scheduler);
-    }
-
-    public Single<List<ConversationElement>> getCallsSingle(final String accountId) {
-        return Single.fromCallable(() -> {
-            QueryBuilder<HistoryCall, Integer> queryBuilder = getCallHistoryDao().queryBuilder();
-            queryBuilder.where().eq(HistoryCall.COLUMN_ACCOUNT_ID_NAME, accountId);
-            queryBuilder.orderBy(HistoryCall.COLUMN_TIMESTAMP_START_NAME, false);
-            return (List<ConversationElement>)(List<?>)getCallHistoryDao().query(queryBuilder.prepare());
-        }).doOnError(e -> Log.e(TAG, "Can't load calls", e))
-          .onErrorReturn(e -> new ArrayList<>());
-    }
-
-    public Single<List<ConversationElement>> getMessagesSingle(final String accountId) {
-        return Single.fromCallable(() -> {
-            QueryBuilder<HistoryText, Long> queryBuilder = getTextHistoryDao().queryBuilder();
-            queryBuilder.where().eq(HistoryText.COLUMN_ACCOUNT_ID_NAME, accountId);
-            queryBuilder.orderBy(HistoryText.COLUMN_TIMESTAMP_NAME, false);
-            return getTextHistoryDao().query(queryBuilder.prepare());
-        }).map(l -> {
-            List<ConversationElement> ret = new ArrayList<>(l.size());
-            for (HistoryText t : l)
-                ret.add(new TextMessage(t));
-            return ret;
-        }).doOnError(e -> Log.e(TAG, "Can't load messages", e))
-          .onErrorReturn(e -> new ArrayList<>());
-    }
-
-    public Single<List<ConversationElement>> getTransfersSingle(final String accountId) {
-        return Single.fromCallable(() -> {
-            QueryBuilder<DataTransfer, Long> queryBuilder = getDataHistoryDao().queryBuilder();
-            queryBuilder.where().eq(DataTransfer.COLUMN_ACCOUNT_ID_NAME, accountId);
-            queryBuilder.orderBy(DataTransfer.COLUMN_TIMESTAMP_NAME, false);
-            return (List<ConversationElement>)(List<?>)getDataHistoryDao().query(queryBuilder.prepare());
-        }).doOnError(e -> Log.e(TAG, "Can't load data transfers", e))
-          .onErrorReturn(e -> new ArrayList<>());
-    }
-
-    public Completable clearHistory(final String contactId, final String accountId) {
+    public Completable clearHistory(final String contactId, final String accountId, boolean deleteConversation) {
         if (StringUtils.isEmpty(accountId))
             return Completable.complete();
         return Completable.fromAction(() -> {
             int deleted = 0;
-            DeleteBuilder<HistoryText, Long> deleteTextHistoryBuilder = getTextHistoryDao()
-                    .deleteBuilder();
-            deleteTextHistoryBuilder.where().eq(HistoryText.COLUMN_ACCOUNT_ID_NAME, accountId).and().eq(HistoryText.COLUMN_NUMBER_NAME, contactId);
-            deleted += deleteTextHistoryBuilder.delete();
 
-            DeleteBuilder<HistoryCall, Integer> deleteCallsHistoryBuilder = getCallHistoryDao()
-                    .deleteBuilder();
-            deleteCallsHistoryBuilder.where().eq(HistoryCall.COLUMN_ACCOUNT_ID_NAME, accountId).and().eq(HistoryCall.COLUMN_NUMBER_NAME, contactId);
-            deleted += deleteCallsHistoryBuilder.delete();
+            List<ConversationHistory> history = getConversationDataDao(accountId).queryBuilder()
+                    .where().eq(ConversationHistory.COLUMN_PARTICIPANT, contactId).query();
 
-            DeleteBuilder<DataTransfer, Long> deleteDataTransferHistoryBuilder = getDataHistoryDao()
-                    .deleteBuilder();
-            deleteDataTransferHistoryBuilder.where().eq(DataTransfer.COLUMN_ACCOUNT_ID_NAME, accountId).and().eq(DataTransfer.COLUMN_PEER_ID_NAME, contactId);
-            deleted += deleteDataTransferHistoryBuilder.delete();
+            if (history == null || history.isEmpty())
+                return;
+
+            ConversationHistory conversation = history.get(0);
+
+            DeleteBuilder<Interaction, Integer> deleteBuilder = getInteractionDataDao(accountId).deleteBuilder();
+            if (deleteConversation) {
+                deleteBuilder.where().eq(Interaction.COLUMN_CONVERSATION, conversation);
+                getConversationDataDao(accountId).deleteById(conversation.getId());
+            } else {
+                deleteBuilder.where()
+                        .eq(Interaction.COLUMN_CONVERSATION, conversation).and()
+                        .ne(Interaction.COLUMN_TYPE, Interaction.InteractionType.CONTACT.toString());
+            }
+
+            deleted += deleteBuilder.delete();
+
             Log.w(TAG, "clearHistory: removed " + deleted + " elements");
         }).subscribeOn(scheduler);
     }
 
-    public Completable clearHistory() {
+    public Completable clearHistory(List<Account> accounts) {
         return Completable.fromAction(() -> {
-            TableUtils.clearTable(getConnectionSource(), HistoryCall.class);
-            TableUtils.clearTable(getConnectionSource(), HistoryText.class);
-            TableUtils.clearTable(getConnectionSource(), DataTransfer.class);
+            for (Account account : accounts) {
+                String accountId = account.getAccountID();
+                TableUtils.clearTable(getConnectionSource(accountId), ConversationHistory.class);
+                TableUtils.clearTable(getConnectionSource(accountId), Interaction.class);
+            }
         }).subscribeOn(scheduler);
     }
 
-    public Single<TextMessage> incomingMessage(final String accountId, final String callId, final String from, final String message) {
+    public Completable insertInteraction(Interaction interaction, String accountId) {
+        Log.d(TAG, "Inserting interaction...");
+        return Completable.fromAction(() -> getInteractionDataDao(accountId).create(interaction)).subscribeOn(scheduler);
+    }
+
+
+    public Completable insertConversation(ConversationHistory conversation, String accountId) {
+        Log.d(TAG, "Inserting conversation...");
+        return Completable.fromAction(() -> getConversationDataDao(accountId).createIfNotExists(conversation))
+                .subscribeOn(scheduler);
+    }
+
+
+    /**
+     * Inserts a conversation and an interaction element. Typically used for the initial contact event.
+     *
+     * @param conversation the conversation object
+     * @param event        the first interaction to insert
+     * @param accountId    the user's account ID
+     * @return a completable
+     */
+    Single<Integer> insertConversationAndEvent(ConversationHistory conversation, Interaction event, String accountId) {
         return Single.fromCallable(() -> {
-            String f = from;
-            if (!f.contains(CallContact.PREFIX_RING)) {
-                f = CallContact.PREFIX_RING + from;
+            Log.d(TAG, "Insert conversation is running......");
+            QueryBuilder<ConversationHistory, Integer> conversationQueryBuilder = getConversationDataDao(accountId).queryBuilder();
+
+            conversationQueryBuilder.where().eq(ConversationHistory.COLUMN_PARTICIPANT, conversation.getParticipant());
+            List<ConversationHistory> list = getConversationDataDao(accountId).query(conversationQueryBuilder.prepare());
+
+            if (list == null || list.isEmpty()) {
+                getConversationDataDao(accountId).create(conversation);
+                event.setConversation(getConversationDataDao(accountId).query(conversationQueryBuilder.prepare()).get(0));
+            } else
+                event.setConversation(list.get(0));
+
+
+            getInteractionDataDao(accountId).createIfNotExists(event);
+
+            return event.getConversation().getId();
+
+        }).doOnError(e -> Log.e(TAG, "Can't create conversation", e)).subscribeOn(scheduler);
+    }
+
+
+    public Completable updateInteraction(Interaction interaction, String accountId) {
+        return Completable.fromAction(() -> getInteractionDataDao(accountId).update(interaction))
+                .subscribeOn(scheduler);
+    }
+
+    public Completable deleteInteraction(int id, String accountId) {
+        return Completable
+                .fromAction(() -> getInteractionDataDao(accountId).deleteById(id))
+                .subscribeOn(scheduler);
+    }
+
+    /**
+     * Loads data required to load the smartlist. Only requires the most recent message or contact action.
+     *
+     * @param accountId required to query the appropriate account database
+     * @return a list of the most recent interactions with each contact
+     */
+    public Single<List<Interaction>> getSmartlist(final String accountId) {
+        return Single.fromCallable(() ->
+                // a raw query is done as MAX is not supported by ormlite without a raw query and a raw query cannot be combined with an orm query so a complete raw query is done
+                // raw row mapper maps the sqlite result which is a list of strings, into the interactions object
+                getInteractionDataDao(accountId).queryRaw("SELECT * FROM (SELECT DISTINCT id, author, conversation, MAX(timestamp), body, type, status, daemon_id, is_read, extra_data from interactions GROUP BY interactions.conversation) as final\n" +
+                        "JOIN conversations\n" +
+                        "WHERE conversations.id = final.conversation\n" +
+                        "GROUP BY final.conversation\n",  (columnNames, resultColumns) -> new Interaction(resultColumns[0],
+                                resultColumns[1], new ConversationHistory(Integer.parseInt(resultColumns[2]), resultColumns[12]), resultColumns[3], resultColumns[4], resultColumns[5], resultColumns[6], resultColumns[7], resultColumns[8], resultColumns[9])).getResults())
+                .doOnError(e -> Log.e(TAG, "Can't load smartlist from database", e))
+                .onErrorReturn(e -> new ArrayList<>());
+    }
+
+    /**
+     * Retrieves an entire conversations history
+     *
+     * @param accountId      the user's account id
+     * @param conversationId the conversation id
+     * @return a conversation and all of its interactions
+     */
+    public Single<List<Interaction>> getConversationHistory(final String accountId, final int conversationId) {
+        return Single.fromCallable(() -> {
+            QueryBuilder<Interaction, Integer> interactionQueryBuilder = getInteractionDataDao(accountId).queryBuilder();
+
+            QueryBuilder<ConversationHistory, Integer> conversationQueryBuilder = getConversationDataDao(accountId).queryBuilder();
+            conversationQueryBuilder.where().eq(ConversationHistory.COLUMN_CONVERSATION_ID, conversationId);
+            return getInteractionDataDao(accountId).query(interactionQueryBuilder.join(conversationQueryBuilder).orderBy(Interaction.COLUMN_TIMESTAMP, true).prepare());
+        }).doOnError(e -> Log.e(TAG, "Can't load conversation from database", e))
+                .onErrorReturn(e -> new ArrayList<>());
+    }
+
+    Single<TextMessage> incomingMessage(final String accountId, final String callId, final String from, final String message) {
+        return Single.fromCallable(() -> {
+            String f = new Uri(from).getUri();
+
+            ConversationHistory conversation;
+            try {
+                conversation = getConversationDataDao(accountId).queryForEq(ConversationHistory.COLUMN_PARTICIPANT, f).get(0);
+            } catch (IndexOutOfBoundsException | SQLException e) {
+                conversation = new ConversationHistory(f);
+                insertConversation(conversation, accountId).subscribe();
             }
 
-            TextMessage txt = new TextMessage(true, message, new Uri(f), callId, accountId);
-            Log.w(TAG, "New text messsage " + txt.getAccount() + " " + txt.getCallId() + " " + txt.getMessage());
+            TextMessage txt = new TextMessage(f, conversation, message);
+            txt.setDaemonId(callId);
+            txt.setAccount(accountId);
+            txt.setStatus(Interaction.InteractionStatus.SUCCEEDED);
 
-            HistoryText t = new HistoryText(txt);
-            getTextHistoryDao().create(t);
-            txt.setID(t.id);
+
+            Log.w(TAG, "New text messsage " + txt.getAuthor() + " " + txt.getDaemonIdString() + " " + txt.getBody());
+            getInteractionDataDao(accountId).create(txt);
             return txt;
         }).subscribeOn(scheduler);
     }
 
-    public Single<TextMessage> accountMessageStatusChanged(String accountId, long messageId, String to, int status) {
+
+    Single<TextMessage> accountMessageStatusChanged(String accountId, long interactionId, String to, int status) {
         return Single.fromCallable(() -> {
-            HistoryText historyText = getTextHistoryDao().queryForId(messageId);
-            if (historyText == null) {
-                throw new RuntimeException("accountMessageStatusChanged: not able to find message with id " + messageId + " in database");
+            List<Interaction> textList = getInteractionDataDao(accountId).queryForEq(Interaction.COLUMN_DAEMON_ID, Long.toString(interactionId));
+            if (textList == null || textList.isEmpty()) {
+                throw new RuntimeException("accountMessageStatusChanged: not able to find message with id " + interactionId + " in database");
             }
-            TextMessage textMessage = new TextMessage(historyText);
-            if (!textMessage.getAccount().equals(accountId)) {
+            Interaction text = textList.get(0);
+            String participant = (new Uri(to)).getUri();
+            if (!text.getConversation().getParticipant().equals(participant)) {
                 throw new RuntimeException("accountMessageStatusChanged: received an invalid text message");
             }
-            textMessage.setStatus(status);
-            getTextHistoryDao().update(new HistoryText(textMessage));
-            return textMessage;
+            TextMessage msg = new TextMessage(text);
+            msg.setStatus(status);
+            getInteractionDataDao(accountId).update(msg);
+            msg.setAccount(accountId);
+            return msg;
         }).subscribeOn(scheduler);
-    }
-
-    public Completable deleteFileHistory(long id) {
-        return Completable
-                .fromAction(() -> getDataHistoryDao().deleteById(id))
-                .subscribeOn(scheduler);
-    }
-
-    public Completable deleteMessageHistory(long id) {
-        return Completable
-                .fromAction(() -> getTextHistoryDao().deleteById(id))
-                .subscribeOn(scheduler);
-    }
-
-    public Completable deleteCallHistory(CharSequence id) {
-        return Completable
-                .fromAction(() -> {
-                    DeleteBuilder<HistoryCall, Integer> deleteBuilder = getCallHistoryDao().deleteBuilder();
-                    deleteBuilder.where().eq("callID", id);
-                    deleteBuilder.delete();
-                })
-                .subscribeOn(scheduler);
     }
 }
