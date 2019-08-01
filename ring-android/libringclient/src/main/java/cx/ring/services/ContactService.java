@@ -61,9 +61,9 @@ public abstract class ContactService {
     protected abstract CallContact findContactBySipNumberFromSystem(String number);
     protected abstract CallContact findContactByNumberFromSystem(String number);
 
-    public abstract Completable loadContactData(CallContact callContact);
+    public abstract Completable loadContactData(CallContact callContact, String accountId);
 
-    public abstract void saveVCardContactData(CallContact contact, VCard vcard);
+    public abstract void saveVCardContactData(CallContact contact, String accountId, VCard vcard);
 
     public ContactService() {}
 
@@ -93,7 +93,7 @@ public abstract class ContactService {
                             mAccountService.subscribeBuddy(accountId, uriString, true);
                             if (!contact.isUsernameLoaded())
                                 mAccountService.lookupAddress(accountId, "", uri.getRawRingId());
-                            loadContactData(contact)
+                            loadContactData(contact, accountId)
                                     .subscribe(() -> {}, e -> {/*Log.e(TAG, "Error loading contact data: " + e.getMessage())*/});
                         })
                         .doOnDispose(() -> {
@@ -134,7 +134,7 @@ public abstract class ContactService {
         CallContact contact = account.getContactFromCache(uri);
         // TODO load system contact info into SIP contact
         if (account.isSip()) {
-            loadContactData(contact).subscribe(() -> {}, e -> Log.e(TAG, "Can't load contact data"));
+            loadContactData(contact, account.getAccountID()).subscribe(() -> {}, e -> Log.e(TAG, "Can't load contact data"));
         }
         return contact;
     }
