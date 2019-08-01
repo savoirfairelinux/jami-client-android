@@ -48,12 +48,12 @@ import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.UintVect;
 import cx.ring.model.SipCall;
+import cx.ring.model.SipCall.CallStatus;
 import cx.ring.utils.BluetoothWrapper;
 import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.Ringer;
 
-import static cx.ring.model.SipCall.State;
 
 public class HardwareServiceImpl extends HardwareService implements AudioManager.OnAudioFocusChangeListener, BluetoothWrapper.BluetoothChangeListener {
 
@@ -164,9 +164,9 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     }
 
     @Override
-    synchronized public void updateAudioState(final State state, final boolean incomingCall, final boolean isOngoingVideo) {
+    public void updateAudioState(final SipCall.CallStatus state, final boolean incomingCall, final boolean isOngoingVideo) {
         Log.d(TAG, "updateAudioState: Call state updated to " + state + " Call is incoming: " + incomingCall + " Call is video: " + isOngoingVideo);
-        boolean callEnded = state.equals(State.HUNGUP) || state.equals(State.FAILURE) || state.equals(State.OVER);
+        boolean callEnded = state.equals(CallStatus.HUNGUP) || state.equals(CallStatus.FAILURE) || state.equals(CallStatus.OVER);
         if (mBluetoothWrapper == null && !callEnded) {
             mBluetoothWrapper = new BluetoothWrapper(mContext, this);
         }
@@ -441,7 +441,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         }
         final SipCall call = mCameraPreviewCall.get();
         if (call != null) {
-            call.setDetails(Ringservice.getCallDetails(call.getCallId()).toNative());
+            call.setDetails(Ringservice.getCallDetails(call.getDaemonIdString()).toNative());
             videoParams.codec = call.getVideoCodec();
         }
         Log.w(TAG, "startCapture: call " + camId + " " + videoParams.codec);
