@@ -23,11 +23,11 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.provider.ContactsContract;
-import androidx.annotation.NonNull;
 import android.util.Log;
 import android.util.LongSparseArray;
+
+import androidx.annotation.NonNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -392,9 +392,9 @@ public class ContactServiceImpl extends ContactService {
     }
 
     @Override
-    public Completable loadContactData(CallContact callContact) {
+    public Completable loadContactData(CallContact callContact, String accountId) {
         if (!callContact.detailsLoaded) {
-            Single<Tuple<String, Object>> profile = callContact.isFromSystem() ? loadSystemContactData(callContact) : loadVCardContactData(callContact);
+            Single<Tuple<String, Object>> profile = callContact.isFromSystem() ? loadSystemContactData(callContact) : loadVCardContactData(callContact, accountId);
             return profile
                     .doOnSuccess(p -> callContact.setProfile(p.first, p.second))
                     .doOnError(e -> callContact.setProfile(null, null)).ignoreElement();
@@ -403,21 +403,22 @@ public class ContactServiceImpl extends ContactService {
     }
 
     @Override
-    public void saveVCardContactData(CallContact contact, VCard vcard) {
+    public void saveVCardContactData(CallContact contact, String accountId, VCard vcard) {
         if (vcard != null) {
             Tuple<String, Object> profileData = VCardServiceImpl.readData(vcard);
             contact.setVCard(vcard);
             contact.setProfile(profileData.first, profileData.second);
             String filename = contact.getPrimaryNumber() + ".vcf";
-            VCardUtils.savePeerProfileToDisk(vcard, filename, mContext.getFilesDir());
+            VCardUtils.savePeerProfileToDisk(vcard, accountId
+                    , filename, mContext.getFilesDir());
             AvatarFactory.clearCache();
         }
     }
 
-    private Single<Tuple<String, Object>> loadVCardContactData(CallContact callContact) {
+    private Single<Tuple<String, Object>> loadVCardContactData(CallContact callContact, String accountId) {
         String id = callContact.getPrimaryNumber();
         if (id != null) {
-            return Single.fromCallable(() -> VCardUtils.loadPeerProfileFromDisk(mContext.getFilesDir(), id + ".vcf"))
+            return Single.fromCallable(() -> VCardUtils.loadPeerProfileFromDisk(mContext.getFilesDir(), id + ".vcf", accountId))
                     .map(vcard -> {
                         callContact.setVCard(vcard);
                         return VCardServiceImpl.readData(vcard);
