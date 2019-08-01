@@ -118,6 +118,21 @@ public class Uri implements Serializable {
         }
     }
 
+    public String getUri() {
+        if (isRingId())
+            return getRawRingId();
+        else {
+            StringBuilder builder = new StringBuilder(64);
+            if (getUsername() != null && !getUsername().isEmpty()) {
+                builder.append(getUsername()).append("@");
+            }
+            if (getHost() != null) {
+                builder.append(getHost());
+            }
+            return builder.toString();
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
