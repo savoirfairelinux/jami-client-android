@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.NavigableMap;
 import java.util.TreeMap;
 
+import cx.ring.model.Interaction.InteractionType;
 import cx.ring.utils.Log;
 import io.reactivex.Observable;
 import io.reactivex.Single;
@@ -36,22 +37,26 @@ import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
-public class Conversation {
+public class Conversation extends ConversationHistory {
+
+
     private static final String TAG = Conversation.class.getSimpleName();
 
     private final String mAccountId;
     private final CallContact mContact;
 
-    private final NavigableMap<Long, ConversationElement> mHistory = new TreeMap<>();
+    private final NavigableMap<Long, Interaction> mHistory = new TreeMap<>();
     private final ArrayList<Conference> mCurrentCalls = new ArrayList<>();
-    private final ArrayList<ConversationElement> mAggregateHistory = new ArrayList<>(32);
+    private final ArrayList<Interaction> mAggregateHistory = new ArrayList<>(32);
 
-    private final Subject<ConversationElement> newElementSubject = PublishSubject.create();
-    private final Subject<ConversationElement> updatedElementSubject = PublishSubject.create();
-    private final Subject<ConversationElement> removedElementSubject = PublishSubject.create();
-    private final Subject<List<ConversationElement>> clearedSubject = PublishSubject.create();
+    private final Subject<Interaction> newElementSubject = PublishSubject.create();
+    private final Subject<Interaction> updatedElementSubject = PublishSubject.create();
+    private final Subject<Interaction> removedElementSubject = PublishSubject.create();
+    private final Subject<List<Interaction>> clearedSubject = PublishSubject.create();
     private final Subject<List<Conference>> callsSubject = BehaviorSubject.create();
     private Subject<Integer> color = BehaviorSubject.create();
+
+    private boolean isLoaded = false;
 
     // runtime flag set to true if the user is currently viewing this conversation
     private boolean mVisible = false;
@@ -62,6 +67,7 @@ public class Conversation {
     public Conversation(String accountId, CallContact contact) {
         mAccountId = accountId;
         mContact = contact;
+        mParticipant = contact.getPrimaryUri().getUri();
     }
 
     public Conference getConference(String id) {
@@ -72,18 +78,22 @@ public class Conversation {
         return null;
     }
 
-    public Observable<ConversationElement> getNewElements() {
+    public Observable<Interaction> getNewElements() {
         return newElementSubject;
     }
-    public Observable<ConversationElement> getUpdatedElements() {
+
+    public Observable<Interaction> getUpdatedElements() {
         return updatedElementSubject;
     }
-    public Observable<ConversationElement> getRemovedElements() {
+
+    public Observable<Interaction> getRemovedElements() {
         return removedElementSubject;
     }
-    public Observable<List<ConversationElement>> getCleared() {
+
+    public Observable<List<Interaction>> getCleared() {
         return clearedSubject;
     }
+
     public Observable<List<Conference>> getCalls() {
         return callsSubject;
     }
@@ -115,6 +125,14 @@ public class Conversation {
         return mVisible;
     }
 
+    public void setLoaded(boolean loaded) {
+        isLoaded = loaded;
+    }
+
+    public boolean isLoaded() {
+        return isLoaded;
+    }
+
     public void setVisible(boolean mVisible) {
         this.mVisible = mVisible;
     }
@@ -123,11 +141,10 @@ public class Conversation {
         return mContact;
     }
 
-    public void addHistoryCall(HistoryCall call) {
-        if (getHistoryCalls().contains(call)) {
+    public void addCall(SipCall call) {
+        if (getCallHistory().contains(call)) {
             return;
         }
-        //mHistory.addHistoryCall(call, getContact());
         mDirty = true;
         mAggregateHistory.add(call);
         newElementSubject.onNext(call);
@@ -137,10 +154,13 @@ public class Conversation {
         if (mVisible) {
             txt.read();
         }
+        if (txt.getConversation() == null) {
+            Log.e(TAG, "Error in conversation class... No conversation is attached to this interaction");
+        }
         if (txt.getContact() == null) {
             txt.setContact(getContact());
         }
-        mHistory.put(txt.getDate(), txt);
+        mHistory.put(txt.getTimestamp(), txt);
         mDirty = true;
         mAggregateHistory.add(txt);
         newElementSubject.onNext(txt);
@@ -160,12 +180,19 @@ public class Conversation {
         newElementSubject.onNext(event);
     }
 
+    public void addContactEvent(ContactEvent contactEvent) {
+        mDirty = true;
+        mAggregateHistory.add(contactEvent);
+        newElementSubject.onNext(contactEvent);
+    }
+
     public void updateTextMessage(TextMessage text) {
-        long time = text.getDate();
-        NavigableMap<Long, ConversationElement> msgs = mHistory.subMap(time, true, time, true);
-        for (ConversationElement txt : msgs.values()) {
-            if (txt.equals(text)) {
-                ((TextMessage)txt).setStatus(text.getStatus());
+        text.setContact(getContact());
+        long time = text.getTimestamp();
+        NavigableMap<Long, Interaction> msgs = mHistory.subMap(time, true, time, true);
+        for (Interaction txt : msgs.values()) {
+            if (txt.getId().equals(text.getId())) {
+                txt.setStatus(text.getStatus());
                 updatedElementSubject.onNext(txt);
                 return;
             }
@@ -173,11 +200,11 @@ public class Conversation {
         Log.e(TAG, "Can't find message to update: " + text.getId());
     }
 
-    public ArrayList<ConversationElement> getAggregateHistory() {
+    public ArrayList<Interaction> getAggregateHistory() {
         return mAggregateHistory;
     }
 
-    private final Single<List<ConversationElement>> sortedHistory = Single.fromCallable(() -> {
+    private final Single<List<Interaction>> sortedHistory = Single.fromCallable(() -> {
         sortHistory();
         return mAggregateHistory;
     });
@@ -185,17 +212,24 @@ public class Conversation {
     public void sortHistory() {
         if (mDirty) {
             synchronized (mAggregateHistory) {
-                Collections.sort(mAggregateHistory, (c1, c2) -> Long.compare(c1.getDate(), c2.getDate()));
+                Collections.sort(mAggregateHistory, (c1, c2) -> Long.compare(c1.getTimestamp(), c2.getTimestamp()));
             }
             mDirty = false;
         }
     }
 
-    public Single<List<ConversationElement>> getSortedHistory() {
+    public Single<List<Interaction>> getSortedHistory() {
         return sortedHistory;
     }
 
-    public ConversationElement getLastEvent() {
+    public Interaction getFirstEvent() {
+        if (mAggregateHistory.isEmpty())
+            return null;
+
+        return mAggregateHistory.get(0);
+    }
+
+    public Interaction getLastEvent() {
         sortHistory();
         if (mAggregateHistory.isEmpty())
             return null;
@@ -213,11 +247,11 @@ public class Conversation {
         return mCurrentCalls;
     }
 
-    public Collection<HistoryCall> getHistoryCalls() {
-        List<HistoryCall> result = new ArrayList<>();
-        for (ConversationElement ce : mAggregateHistory) {
-            if (ce.getType() == ConversationElement.CEType.CALL) {
-                result.add((HistoryCall) ce);
+    public Collection<SipCall> getCallHistory() {
+        List<SipCall> result = new ArrayList<>();
+        for (Interaction interaction : mAggregateHistory) {
+            if (interaction.getType() == InteractionType.CALL) {
+                result.add(new SipCall(interaction));
             }
         }
         return result;
@@ -225,38 +259,40 @@ public class Conversation {
 
     public TreeMap<Long, TextMessage> getUnreadTextMessages() {
         TreeMap<Long, TextMessage> texts = new TreeMap<>();
-        for (Map.Entry<Long, ConversationElement> entry : mHistory.descendingMap().entrySet()) {
-            ConversationElement value = entry.getValue();
-            if (value instanceof TextMessage) {
-                if (entry.getValue().isRead())
+        for (Map.Entry<Long, Interaction> entry : mHistory.descendingMap().entrySet()) {
+            Interaction value = entry.getValue();
+            if (value.getType().equals(InteractionType.TEXT)) {
+                TextMessage message = new TextMessage(value);
+                if (message.isRead())
                     break;
-                texts.put(entry.getKey(), (TextMessage) entry.getValue());
+                texts.put(entry.getKey(), message);
             }
         }
         return texts;
     }
 
-    public NavigableMap<Long, ConversationElement> getRawHistory() {
+    public NavigableMap<Long, Interaction> getRawHistory() {
         return mHistory;
     }
 
-    private DataTransfer findConversationElement(Long transferId) {
-        for (ConversationElement iConversationElement : mAggregateHistory) {
-            if (iConversationElement != null && iConversationElement.getType() == ConversationElement.CEType.FILE) {
-                DataTransfer hft = (DataTransfer) iConversationElement;
-                if (transferId.equals(hft.getId())) {
-                    return hft;
+
+    private Interaction findConversationElement(int transferId) {
+        for (Interaction interaction : mAggregateHistory) {
+            if (interaction != null && interaction.getType() == (InteractionType.DATA_TRANSFER)) {
+                if (transferId == (interaction.getId())) {
+                    return interaction;
                 }
             }
         }
         return null;
     }
 
-    private boolean removeConversationElement(long id) {
-        Iterator<ConversationElement> it = mAggregateHistory.iterator();
+
+    private boolean removeInteraction(long interactionId) {
+        Iterator<Interaction> it = mAggregateHistory.iterator();
         while (it.hasNext()) {
-            ConversationElement e = it.next();
-            if (e != null && id == e.getId()) {
+            Interaction interaction = it.next();
+            if (interaction != null && interactionId == interaction.getId()) {
                 it.remove();
                 return true;
             }
@@ -280,17 +316,21 @@ public class Conversation {
         newElementSubject.onNext(dataTransfer);
     }
 
-    public void addElement(ConversationElement e, CallContact contact) {
-        if (e instanceof HistoryCall) {
-            HistoryCall call = (HistoryCall) e;
-            addHistoryCall(call);
-        } else if (e instanceof TextMessage) {
-            TextMessage msg = (TextMessage) e;
-            msg.setContact(contact);
+    public void addElement(Interaction interaction, CallContact contact) {
+        interaction.setAccount(mAccountId);
+        interaction.setContact(contact);
+        if (interaction.getType() == InteractionType.TEXT) {
+            TextMessage msg = new TextMessage(interaction);
             addTextMessage(msg);
-        } else if (e instanceof DataTransfer) {
-            DataTransfer t = (DataTransfer) e;
-            addFileTransfer(t);
+        } else if (interaction.getType() == InteractionType.CALL) {
+            SipCall call = new SipCall(interaction);
+            addCall(call);
+        } else if (interaction.getType() == InteractionType.CONTACT) {
+            ContactEvent event = new ContactEvent(interaction);
+            addContactEvent(event);
+        } else if (interaction.getType() == InteractionType.DATA_TRANSFER) {
+            DataTransfer dataTransfer = new DataTransfer(interaction);
+            addFileTransfer(dataTransfer);
         }
     }
 
@@ -300,18 +340,19 @@ public class Conversation {
         }
     }
 
-    public void updateFileTransfer(DataTransfer transfer, DataTransferEventCode eventCode) {
-        DataTransfer dataTransfer = findConversationElement(transfer.getId());
+    public void updateFileTransfer(DataTransfer transfer, Interaction.InteractionStatus eventCode) {
+        DataTransfer dataTransfer = (DataTransfer) findConversationElement(transfer.getId());
         if (dataTransfer != null) {
-            dataTransfer.setEventCode(eventCode);
+            dataTransfer.setStatus(eventCode);
             updatedElementSubject.onNext(dataTransfer);
         }
     }
 
-    public void removeConversationElement(ConversationElement element) {
-        if (removeConversationElement(element.getId()))
-            removedElementSubject.onNext(element);
+    public void removeInteraction(Interaction interaction) {
+        if (removeInteraction(interaction.getId()))
+            removedElementSubject.onNext(interaction);
     }
+
 
     public void removeAll() {
         mAggregateHistory.clear();
