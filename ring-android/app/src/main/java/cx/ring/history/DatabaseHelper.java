@@ -33,13 +33,15 @@ import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import cx.ring.model.ConversationHistory;
 import cx.ring.model.DataTransfer;
-import cx.ring.model.HistoryCall;
-import cx.ring.model.HistoryText;
+import cx.ring.model.Interaction;
 
 /*
  * Database History Version
  * 7 : changing columns names. See https://gerrit-ring.savoirfairelinux.com/#/c/4297
+ * 10: Switches to per account database. Migration handled outside helper for this iteration exclusively.
+ * 11: Removed all previous tables and created two new interaction and conversation tables.
  */
 
 /**
@@ -48,16 +50,14 @@ import cx.ring.model.HistoryText;
  */
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String TAG = DatabaseHelper.class.getSimpleName();
-    private static final String DATABASE_NAME = "history.db";
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION = 9;
+    private static final int DATABASE_VERSION = 11;
 
-    private Dao<HistoryCall, Integer> historyDao = null;
-    private Dao<HistoryText, Long> historyTextDao = null;
-    private Dao<DataTransfer, Long> historyDataDao = null;
+    private Dao<Interaction, Integer> interactionDataDao = null;
+    private Dao<ConversationHistory, Integer> conversationDataDao = null;
 
-    public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    public DatabaseHelper(Context context, String dbDirectory) {
+        super(context, dbDirectory, null, DATABASE_VERSION);
     }
 
     /**
@@ -69,9 +69,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         try {
             db.beginTransaction();
             try {
-                TableUtils.createTable(connectionSource, HistoryCall.class);
-                TableUtils.createTable(connectionSource, HistoryText.class);
-                TableUtils.createTable(connectionSource, DataTransfer.class);
+                TableUtils.createTable(connectionSource, ConversationHistory.class);
+                TableUtils.createTable(connectionSource, Interaction.class);
                 db.setTransactionSuccessful();
             } catch (SQLException e) {
                 Log.e(TAG, "Can't create database", e);
@@ -102,25 +101,19 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
      * Returns the Database Access Object (DAO) for our SimpleData class. It will create it or just give the cached
      * value.
      */
-    public Dao<HistoryCall, Integer> getHistoryDao() throws SQLException {
-        if (historyDao == null) {
-            historyDao = getDao(HistoryCall.class);
+
+    public Dao<Interaction, Integer> getInteractionDataDao() throws SQLException {
+        if (interactionDataDao == null) {
+            interactionDataDao = getDao(Interaction.class);
         }
-        return historyDao;
+        return interactionDataDao;
     }
 
-    public Dao<HistoryText, Long> getTextHistoryDao() throws SQLException {
-        if (historyTextDao == null) {
-            historyTextDao = getDao(HistoryText.class);
+    public Dao<ConversationHistory, Integer> getConversationDataDao() throws SQLException {
+        if (conversationDataDao == null) {
+            conversationDataDao = getDao(ConversationHistory.class);
         }
-        return historyTextDao;
-    }
-
-    public Dao<DataTransfer, Long> getDataHistoryDao() throws SQLException {
-        if (historyDataDao == null) {
-            historyDataDao = getDao(DataTransfer.class);
-        }
-        return historyDataDao;
+        return conversationDataDao;
     }
 
     /**
@@ -129,8 +122,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void close() {
         super.close();
-        historyDao = null;
-        historyTextDao = null;
+        interactionDataDao = null;
+        conversationDataDao = null;
     }
 
     /**
@@ -153,6 +146,10 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
                     case 8:
                         updateDatabaseFrom8(connectionSource);
                         break;
+                    case 9:
+                        break;
+                    case 10:
+                        updateDatabaseFrom10(db);
                 }
                 fromDatabaseVersion++;
             }
@@ -248,6 +245,133 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         } catch (SQLException e) {
             Log.e(TAG, "Migration from database version 8 to next, failed.", e);
             throw e;
+        }
+    }
+
+    /**
+     * This updates the database to version 11 which includes the switch to interaction and conversation tables.
+     * It will delete previous tables.
+     *
+     * @param db the database to migrate
+     * @throws SQLiteException
+     */
+    private void updateDatabaseFrom10(SQLiteDatabase db) throws SQLiteException {
+        if (db != null && db.isOpen()) {
+            try {
+                Log.d(TAG, "updateDatabaseFrom10: Will begin migration from database version 10 to next.");
+                db.beginTransaction();
+                TableUtils.createTable(connectionSource, Interaction.class);
+                TableUtils.createTable(connectionSource, ConversationHistory.class);
+
+                // removing ring prefix from both call and text database
+
+                db.execSQL("UPDATE historytext\n" +
+                        "SET number = substr(number, 6, length(number))");
+
+                db.execSQL("UPDATE historycall\n" +
+                        "SET number = substr(number, 6, length(number))");
+
+                // populating conversations table
+
+                db.execSQL("INSERT INTO conversations (participant)\n" +
+                        "SELECT DISTINCT historytext.number\n" +
+                        "FROM historytext\n" +
+                        "INNER JOIN historycall ON historycall.number = historytext.number\n" +
+                        "INNER JOIN historydata ON historytext.number = historydata.peerId\n");
+
+
+                // MESSAGE TABLE
+
+                // updating status in text message table
+
+                db.execSQL("UPDATE historytext SET state='SUCCEEDED' WHERE state='SENT'");
+                db.execSQL("UPDATE historytext SET state='SUCCEEDED' WHERE state='READ'");
+                db.execSQL("UPDATE historytext SET state='FAILED' WHERE state='FAILURE'");
+                db.execSQL("UPDATE historytext SET state='INVALID' WHERE state=null");
+
+                // migration
+
+                // divided into two similar functions, where author needs to be null in case of outgoing message
+
+                db.execSQL("INSERT INTO interactions (author ,daemon_id, body, is_read, status, timestamp, type, extra_data, conversation)\n" +
+                        "SELECT null, historytext.id, historytext.message, historytext.read, historytext.state, historytext.TIMESTAMP, 'TEXT','{}', conversations.id\n" +
+                        "FROM historytext\n" +
+                        "JOIN conversations ON conversations.participant = historytext.number\n" +
+                        "WHERE direction = 2\n"
+                );
+
+                db.execSQL("INSERT INTO interactions (author ,daemon_id, body, is_read, status, timestamp, type, extra_data, conversation)\n" +
+                        "SELECT historytext.number, historytext.id, historytext.message, historytext.read, historytext.state, historytext.TIMESTAMP, 'TEXT','{}', conversations.id\n" +
+                        "FROM historytext\n" +
+                        "JOIN conversations ON conversations.participant = historytext.number\n" +
+                        "WHERE direction = 1\n"
+                );
+
+
+                // CALL TABLE
+
+                // setting the timestamp end to the duration string before migration
+                db.execSQL("UPDATE historycall SET call_end='{\"duration\":' || (historycall.call_end - historycall.TIMESTAMP_START) || '}'");
+
+
+                db.execSQL("INSERT INTO interactions (author ,daemon_id, body, is_read, status, timestamp, type, extra_data, conversation)\n" +
+                        "SELECT null, historycall.callID, null, 1, 'SUCCEEDED', historycall.TIMESTAMP_START, 'CALL', historycall.call_end, conversations.id\n" +
+                        "FROM historycall\n" +
+                        "JOIN conversations ON conversations.participant = historycall.number\n" +
+                        "WHERE direction = 1\n"
+                );
+
+                db.execSQL("INSERT INTO interactions (author ,daemon_id, body, is_read, status, timestamp, type, extra_data, conversation)\n" +
+                        "SELECT historycall.number, historycall.callID, null, 1, 'SUCCEEDED', historycall.TIMESTAMP_START, 'CALL', historycall.call_end, conversations.id\n" +
+                        "FROM historycall\n" +
+                        "JOIN conversations ON conversations.participant = historycall.number\n" +
+                        "WHERE direction = 0\n"
+                );
+
+                // DATA TRANSFER TABLE
+
+                // updating the statuses to the new schema
+
+                db.execSQL("UPDATE historydata SET dataTransferEventCode='TRANSFER_CREATED' WHERE dataTransferEventCode='CREATED'");
+                db.execSQL("UPDATE historydata SET dataTransferEventCode='TRANSFER_ERROR' WHERE dataTransferEventCode='UNSUPPORTED'");
+                db.execSQL("UPDATE historydata SET dataTransferEventCode='TRANSFER_AWAITING_PEER' WHERE dataTransferEventCode='WAIT_PEER_ACCEPTANCE'");
+                db.execSQL("UPDATE historydata SET dataTransferEventCode='TRANSFER_AWAITING_HOST' WHERE dataTransferEventCode='WAIT_HOST_ACCEPTANCE'");
+                db.execSQL("UPDATE historydata SET dataTransferEventCode='TRANSFER_ONGOING' WHERE dataTransferEventCode='ONGOING'");
+                db.execSQL("UPDATE historydata SET dataTransferEventCode='TRANSFER_FINISHED' WHERE dataTransferEventCode='FINISHED'");
+                db.execSQL("UPDATE historydata SET dataTransferEventCode='TRANSFER_UNJOINABLE_PEER' WHERE dataTransferEventCode='CLOSED_BY_HOST'");
+                db.execSQL("UPDATE historydata SET dataTransferEventCode='TRANSFER_UNJOINABLE_PEER' WHERE dataTransferEventCode='CLOSED_BY_PEER'");
+                db.execSQL("UPDATE historydata SET dataTransferEventCode='TRANSFER_ERROR' WHERE dataTransferEventCode='INVALID_PATHNAME'");
+                db.execSQL("UPDATE historydata SET dataTransferEventCode='TRANSFER_UNJOINABLE_PEER' WHERE dataTransferEventCode='UNJOINABLE_PEER'");
+
+                // migration
+
+                db.execSQL("INSERT INTO interactions (author ,daemon_id, body, is_read, status, timestamp, type, extra_data, conversation)\n" +
+                        "SELECT historydata.peerId, null, historydata.displayName, 1, historydata.dataTransferEventCode, historydata.TIMESTAMP, 'DATA_TRANSFER', null, conversations.id\n" +
+                        "FROM historydata\n" +
+                        "JOIN conversations ON conversations.participant = historydata.peerId\n" +
+                        "WHERE isOutgoing = 0\n"
+                );
+
+                db.execSQL("INSERT INTO interactions (author ,daemon_id, body, is_read, status, timestamp, type, extra_data, conversation)\n" +
+                        "SELECT null, null, historydata.displayName, 1, historydata.dataTransferEventCode, historydata.TIMESTAMP, 'DATA_TRANSFER', null, conversations.id\n" +
+                        "FROM historydata\n" +
+                        "JOIN conversations ON conversations.participant = historydata.peerId\n" +
+                        "WHERE isOutgoing = 1\n"
+                );
+
+
+                // drop old tables
+
+                db.execSQL("DROP TABLE historycall;");
+                db.execSQL("DROP TABLE historytext;");
+                db.execSQL("DROP TABLE historydata;");
+
+                db.setTransactionSuccessful();
+                db.endTransaction();
+                Log.d(TAG, "updateDatabaseFrom10: Migration from database version 10 to next, done.");
+            } catch (SQLiteException | SQLException exception) {
+                Log.e(TAG, "updateDatabaseFrom10: Migration from database version 10 to next, failed.", exception);
+            }
         }
     }
 
