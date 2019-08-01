@@ -27,7 +27,7 @@ import java.util.Random;
 public class Conference {
 
     private String mId;
-    private SipCall.State mConfState;
+    private SipCall.CallStatus mConfState;
     private ArrayList<SipCall> mParticipants;
     private boolean mRecording;
     private int uuid;
@@ -65,15 +65,15 @@ public class Conference {
 
     public String getId() {
         if (mParticipants.size() == 1) {
-            return mParticipants.get(0).getCallId();
+            return mParticipants.get(0).getDaemonIdString();
         } else {
             return mId;
         }
     }
 
-    public SipCall.State getState() {
+    public SipCall.CallStatus getState() {
         if (mParticipants.size() == 1) {
-            return mParticipants.get(0).getCallState();
+            return mParticipants.get(0).getCallStatus();
         }
         return mConfState;
     }
@@ -91,7 +91,7 @@ public class Conference {
 
     boolean contains(String callID) {
         for (SipCall participant : mParticipants) {
-            if (participant.getCallId().contentEquals(callID))
+            if (participant.getDaemonIdString().contentEquals(callID))
                 return true;
         }
         return false;
@@ -99,7 +99,7 @@ public class Conference {
 
     public SipCall getCallById(String callID) {
         for (SipCall participant : mParticipants) {
-            if (participant.getCallId().contentEquals(callID))
+            if (participant.getDaemonIdString().contentEquals(callID))
                 return participant;
         }
         return null;
@@ -116,7 +116,7 @@ public class Conference {
             } else {
                 if (((Conference) c).mId.contentEquals(mId)) {
                     for (SipCall participant : mParticipants) {
-                        if (!((Conference) c).contains(participant.getCallId())) {
+                        if (!((Conference) c).contains(participant.getDaemonIdString())) {
                             return false;
                         }
                     }
