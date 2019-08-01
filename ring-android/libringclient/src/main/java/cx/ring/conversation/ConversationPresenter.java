@@ -31,11 +31,10 @@ import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
-import cx.ring.model.ConversationElement;
 import cx.ring.model.DataTransfer;
+import cx.ring.model.Interaction;
 import cx.ring.model.RingError;
 import cx.ring.model.SipCall;
-import cx.ring.model.TextMessage;
 import cx.ring.model.TrustRequest;
 import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
@@ -106,10 +105,20 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         Account account = mAccountService.getAccount(accountId);
         if (account != null)
             initContact(account, contactRingId, getView());
-        mCompositeDisposable.add(mConversationFacade
-                .startConversation(accountId, contactRingId)
+
+        mCompositeDisposable.add(mConversationFacade.startConversation(accountId, mContactRingId)
                 .observeOn(mUiScheduler)
-                .subscribe(this::setConversation, e -> getView().goToHome()));
+                .subscribe(c -> {
+                        setConversation(c);
+                        mConversationFacade.loadConversationHistory(account, c);
+                    }, e -> getView().goToHome()));
+
+        mCompositeDisposable.add(mAccountService.getContactAddedSubject()
+                .firstOrError()
+                .subscribe(conversationHistory -> {
+            if(conversationHistory.getParticipant().equals(mContactRingId.getUri()))
+                mConversation.setId(conversationHistory.getId());
+        }));
     }
 
     private void setConversation(final Conversation conversation) {
@@ -138,10 +147,11 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                     conversation.setVisible(true);
                     updateOngoingCallView();
                     mConversationFacade.readMessages(mAccountService.getAccount(mAccountId), conversation);
-                }, e-> Log.e(TAG, "Error loading conversation", e)));
+                }, e -> Log.e(TAG, "Error loading conversation", e)));
     }
 
-    private CallContact initContact(final Account account, final Uri uri, final ConversationView view) {
+    private CallContact initContact(final Account account, final Uri uri,
+                                    final ConversationView view) {
         CallContact contact;
         if (account.isRing()) {
             String rawId = uri.getRawRingId();
@@ -203,6 +213,10 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         mConversationDisposable.add(c.getColor()
                 .observeOn(mUiScheduler)
                 .subscribe(view::setConversationColor, e -> Log.e(TAG, "Can't update element", e)));
+        mCompositeDisposable.add(mConversationFacade.getUpdatedConversation().
+                observeOn(mUiScheduler).
+                subscribe(conversation -> getView().refreshView(conversation.getAggregateHistory()), e -> Log.e(TAG, "Can't update conversation view", e)));
+
     }
 
     public void openContact() {
@@ -232,30 +246,34 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     /**
      * Gets the absolute path of the file dataTransfer and sends both the DataTransfer and the
      * found path to the ConversationView in order to start saving the file
-     * @param transfer DataTransfer of the file
+     *
+     * @param interaction an interaction representing a datat transfer
      */
-    public void saveFile(DataTransfer transfer) {
-       String fileAbsolutePath =  getDeviceRuntimeService().
+    public void saveFile(Interaction interaction) {
+        DataTransfer transfer = new DataTransfer(interaction);
+        String fileAbsolutePath = getDeviceRuntimeService().
                 getConversationPath(transfer.getPeerId(), transfer.getStoragePath())
-               .getAbsolutePath();
-        getView().startSaveFile(transfer,fileAbsolutePath);
+                .getAbsolutePath();
+        getView().startSaveFile(transfer, fileAbsolutePath);
     }
 
-    public void shareFile(DataTransfer file) {
+    public void shareFile(Interaction interaction) {
+        DataTransfer file = new DataTransfer(interaction);
         File path = getDeviceRuntimeService().getConversationPath(file.getPeerId(), file.getStoragePath());
         getView().shareFile(path);
     }
 
-    public void openFile(DataTransfer file) {
+    public void openFile(Interaction interaction) {
+        DataTransfer file = new DataTransfer(interaction);
         File path = getDeviceRuntimeService().getConversationPath(file.getPeerId(), file.getStoragePath());
         getView().openFile(path);
     }
 
-    public void deleteConversationItem(ConversationElement element) {
+    public void deleteConversationItem(Interaction element) {
         mConversationFacade.deleteConversationItem(element);
     }
 
-    public void cancelMessage(TextMessage message) {
+    public void cancelMessage(Interaction message) {
         mConversationFacade.cancelMessage(message);
     }
 
@@ -293,8 +311,8 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         Conference conf = mConversation.getCurrentCall();
         if (conf != null
                 && !conf.getParticipants().isEmpty()
-                && conf.getParticipants().get(0).getCallState() != SipCall.State.INACTIVE
-                && conf.getParticipants().get(0).getCallState() != SipCall.State.FAILURE) {
+                && conf.getParticipants().get(0).getCallStatus() != SipCall.CallStatus.INACTIVE
+                && conf.getParticipants().get(0).getCallStatus() != SipCall.CallStatus.FAILURE) {
             getView().goToCallActivity(conf.getId());
         } else {
             getView().goToCallActivityWithResult(mAccountId, mContactRingId.getRawUriString(), audioOnly);
@@ -303,7 +321,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
 
     private void updateOngoingCallView() {
         Conference conf = mConversation.getCurrentCall();
-        if (conf != null && (conf.getState() == SipCall.State.CURRENT || conf.getState() == SipCall.State.HOLD || conf.getState() == SipCall.State.RINGING)) {
+        if (conf != null && (conf.getState() == SipCall.CallStatus.CURRENT || conf.getState() == SipCall.CallStatus.HOLD || conf.getState() == SipCall.CallStatus.RINGING)) {
             getView().displayOnGoingCallPane(true);
         } else {
             getView().displayOnGoingCallPane(false);
