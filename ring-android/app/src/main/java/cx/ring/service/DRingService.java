@@ -157,7 +157,7 @@ public class DRingService extends Service {
 
         @Override
         public String placeCall(final String account, final String number, final boolean video) {
-            return mConversationFacade.placeCall(account, number, video).blockingGet().getCallId();
+            return mConversationFacade.placeCall(account, number, video).blockingGet().getDaemonIdString();
         }
 
         @Override

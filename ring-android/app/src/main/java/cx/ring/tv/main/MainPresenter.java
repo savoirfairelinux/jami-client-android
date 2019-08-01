@@ -162,7 +162,7 @@ public class MainPresenter extends RootPresenter<MainView> {
                             Log.d(TAG, "getPendingSubject " + pending.size());
                             ArrayList<TVListViewModel> viewmodel = new ArrayList<>(pending.size());
                             for (Conversation c : pending) {
-                                mContactService.loadContactData(c.getContact()).subscribe(() -> {}, e -> Log.e(TAG, "Can't load contact data"));
+                                mContactService.loadContactData(c.getContact(), c.getAccountId()).subscribe(() -> {}, e -> Log.e(TAG, "Can't load contact data"));
                                 viewmodel.add(new TVListViewModel(a.getAccountID(), c.getContact()));
                             }
                             return viewmodel;

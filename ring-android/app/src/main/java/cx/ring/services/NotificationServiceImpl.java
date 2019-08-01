@@ -69,8 +69,9 @@ import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
+import cx.ring.model.Interaction;
+import cx.ring.model.Interaction.InteractionStatus;
 import cx.ring.model.DataTransfer;
-import cx.ring.model.DataTransferEventCode;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 import cx.ring.model.Uri;
@@ -232,11 +233,11 @@ public class NotificationServiceImpl implements NotificationService {
         SipCall call = mConference.getParticipants().get(0);
 
         if(DeviceUtils.isTv(mContext)) {
-            startCallActivity(call.getCallId());
-            return;
+            startCallActivity(call.getDaemonIdString());
+            return null;
         }
 
-        final int notificationId = call.getCallId().hashCode();
+        final int notificationId = call.getDaemonIdString().hashCode();
 
 
         notificationManager.cancel(notificationId);
@@ -245,7 +246,7 @@ public class NotificationServiceImpl implements NotificationService {
                 random.nextInt(),
                 new Intent(DRingService.ACTION_CALL_VIEW)
                         .setClass(mContext, DRingService.class)
-                        .putExtra(KEY_CALL_ID, call.getCallId()), PendingIntent.FLAG_UPDATE_CURRENT);
+                        .putExtra(KEY_CALL_ID, call.getDaemonIdString()), 0);
 
         CallContact contact = call.getContact();
         NotificationCompat.Builder messageNotificationBuilder;
@@ -262,7 +263,7 @@ public class NotificationServiceImpl implements NotificationService {
                             PendingIntent.getService(mContext, random.nextInt(),
                                     new Intent(DRingService.ACTION_CALL_END)
                                             .setClass(mContext, DRingService.class)
-                                            .putExtra(KEY_CALL_ID, call.getCallId()),
+                                            .putExtra(KEY_CALL_ID, call.getDaemonIdString()),
                                     PendingIntent.FLAG_ONE_SHOT));
         } else if (mConference.isRinging()) {
             if (mConference.isIncoming()) {
@@ -276,13 +277,13 @@ public class NotificationServiceImpl implements NotificationService {
                                 PendingIntent.getService(mContext, random.nextInt(),
                                         new Intent(DRingService.ACTION_CALL_REFUSE)
                                                 .setClass(mContext, DRingService.class)
-                                                .putExtra(KEY_CALL_ID, call.getCallId()),
+                                                .putExtra(KEY_CALL_ID, call.getDaemonIdString()),
                                         PendingIntent.FLAG_ONE_SHOT))
                         .addAction(R.drawable.ic_action_accept, mContext.getText(R.string.action_call_accept),
                                 PendingIntent.getService(mContext, random.nextInt(),
                                         new Intent(DRingService.ACTION_CALL_ACCEPT)
                                                 .setClass(mContext, DRingService.class)
-                                                .putExtra(KEY_CALL_ID, call.getCallId()),
+                                                .putExtra(KEY_CALL_ID, call.getDaemonIdString()),
                                         PendingIntent.FLAG_ONE_SHOT));
             } else {
                 messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_CALL_IN_PROGRESS);
@@ -297,7 +298,7 @@ public class NotificationServiceImpl implements NotificationService {
                                 PendingIntent.getService(mContext, random.nextInt(),
                                         new Intent(DRingService.ACTION_CALL_END)
                                                 .setClass(mContext, DRingService.class)
-                                                .putExtra(KEY_CALL_ID, call.getCallId()),
+                                                .putExtra(KEY_CALL_ID, call.getDaemonIdString()),
                                         PendingIntent.FLAG_ONE_SHOT));
             }
         } else {
@@ -413,7 +414,7 @@ public class NotificationServiceImpl implements NotificationService {
         if (!remove) {
             showFileTransferNotification(transfer, contact);
         } else {
-            removeTransferNotification(transfer.getDataTransferId());
+            removeTransferNotification(transfer.getDaemonId());
         }
     }
 
@@ -488,8 +489,8 @@ public class NotificationServiceImpl implements NotificationService {
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setSmallIcon(R.drawable.ic_ring_logo_white)
                 .setContentTitle(contactName)
-                .setContentText(last.getMessage())
-                .setWhen(last.getDate())
+                .setContentText(last.getBody())
+                .setWhen(last.getTimestamp())
                 .setContentIntent(PendingIntent.getService(mContext, random.nextInt(), intentConversation, 0))
                 .setDeleteIntent(PendingIntent.getService(mContext, random.nextInt(), intentDelete, 0))
                 .setAutoCancel(true)
@@ -500,12 +501,12 @@ public class NotificationServiceImpl implements NotificationService {
             messageNotificationBuilder.setLargeIcon(contactPicture);
 
         UnreadConversation.Builder unreadConvBuilder = new UnreadConversation.Builder(contactName)
-                .setLatestTimestamp(last.getDate());
+                .setLatestTimestamp(last.getTimestamp());
 
         if (texts.size() == 1) {
             last.setNotified(true);
             messageNotificationBuilder.setStyle(null);
-            unreadConvBuilder.addMessage(last.getMessage());
+            unreadConvBuilder.addMessage(last.getBody());
         } else {
             Account account = mAccountService.getAccount(accountId);
             Tuple<String, Object> profile = account == null ? null : VCardServiceImpl.loadProfile(account).blockingGet();
@@ -525,10 +526,10 @@ public class NotificationServiceImpl implements NotificationService {
             NotificationCompat.MessagingStyle history = new NotificationCompat.MessagingStyle(userPerson);
             for (TextMessage textMessage : texts.values()) {
                 history.addMessage(new NotificationCompat.MessagingStyle.Message(
-                        textMessage.getMessage(),
-                        textMessage.getDate(),
+                        textMessage.getBody(),
+                        textMessage.getTimestamp(),
                         textMessage.isIncoming() ? contactPerson : null));
-                unreadConvBuilder.addMessage(textMessage.getMessage());
+                unreadConvBuilder.addMessage(textMessage.getBody());
             }
             messageNotificationBuilder.setStyle(history);
         }
@@ -666,12 +667,11 @@ public class NotificationServiceImpl implements NotificationService {
         if (info == null) {
             return;
         }
-        DataTransferEventCode event = info.getEventCode();
+        InteractionStatus event = info.getStatus();
         if (event == null) {
             return;
         }
-        Log.d(TAG, "Transfer event " + event);
-        long dataTransferId = info.getDataTransferId();
+        long dataTransferId = info.getDaemonId();
         int notificationId = getFileTransferNotificationId(dataTransferId);
 
         String contactUri = new Uri(info.getPeerId()).getRawUriString();
@@ -713,7 +713,7 @@ public class NotificationServiceImpl implements NotificationService {
             messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_FILE_TRANSFER);
         }
 
-        boolean ongoing = event == DataTransferEventCode.ONGOING;
+        boolean ongoing = event == InteractionStatus.TRANSFER_ONGOING || event == InteractionStatus.TRANSFER_ACCEPTED;
         String titleMessage = mContext.getString(info.isOutgoing() ? R.string.notif_outgoing_file_transfer_title : R.string.notif_incoming_file_transfer_title, contact.getDisplayName());
         messageNotificationBuilder.setContentTitle(titleMessage)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -723,7 +723,7 @@ public class NotificationServiceImpl implements NotificationService {
                 .setSmallIcon(R.drawable.ic_ring_logo_white)
                 .setCategory(NotificationCompat.CATEGORY_PROGRESS)
                 .setOnlyAlertOnce(true)
-                .setContentText(event == DataTransferEventCode.ONGOING ?
+                .setContentText(event == Interaction.InteractionStatus.TRANSFER_ONGOING ?
                         FileUtils.readableFileProgress(info.getBytesProgress(), info.getTotalSize()) :
                         info.getDisplayName() + ": " + ResourceMapper.getReadableFileTransferStatus(mContext, event))
                 .setContentIntent(PendingIntent.getService(mContext, random.nextInt(), intentConversation, 0))
@@ -736,7 +736,7 @@ public class NotificationServiceImpl implements NotificationService {
         } else {
             messageNotificationBuilder.setProgress(0, 0, true);
         }
-        if (event == DataTransferEventCode.CREATED) {
+        if (event == Interaction.InteractionStatus.TRANSFER_CREATED) {
             messageNotificationBuilder.setDefaults(NotificationCompat.DEFAULT_VIBRATE);
             mNotificationBuilders.put(notificationId, messageNotificationBuilder);
             updateNotification(messageNotificationBuilder.build(), notificationId);
@@ -745,7 +745,7 @@ public class NotificationServiceImpl implements NotificationService {
             messageNotificationBuilder.setDefaults(NotificationCompat.DEFAULT_LIGHTS);
         }
         messageNotificationBuilder.mActions.clear();
-        if (event == DataTransferEventCode.WAIT_HOST_ACCEPTANCE) {
+        if (event == Interaction.InteractionStatus.TRANSFER_AWAITING_HOST) {
             messageNotificationBuilder
                     .addAction(R.drawable.baseline_call_received_24, mContext.getText(R.string.accept),
                             PendingIntent.getService(mContext, random.nextInt(),
@@ -779,13 +779,13 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public void showMissedCallNotification(SipCall call) {
-        final int notificationId = call.getCallId().hashCode();
+        final int notificationId = call.getDaemonIdString().hashCode();
         NotificationCompat.Builder messageNotificationBuilder = mNotificationBuilders.get(notificationId);
         if (messageNotificationBuilder == null) {
             messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_MISSED_CALL);
         }
 
-        String contactUri = call.getNumberUri().getRawUriString();
+        String contactUri = call.getConversation().getParticipant();
         Intent intentConversation = new Intent(DRingService.ACTION_CONV_ACCEPT)
                 .setClass(mContext, DRingService.class)
                 .putExtra(ConversationFragment.KEY_ACCOUNT_ID, mAccountService.getCurrentAccount().getAccountID())
