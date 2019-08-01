@@ -22,26 +22,24 @@ package cx.ring.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import cx.ring.R;
-import cx.ring.contacts.AvatarFactory;
 import cx.ring.model.CallContact;
 import cx.ring.model.ContactEvent;
-import cx.ring.model.ConversationElement;
-import cx.ring.model.DataTransfer;
-import cx.ring.model.HistoryCall;
-import cx.ring.model.TextMessage;
+import cx.ring.model.Interaction;
+import cx.ring.model.Interaction.InteractionType;
+import cx.ring.model.SipCall;
 import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.viewholders.SmartListViewHolder;
 import cx.ring.views.AvatarDrawable;
@@ -117,7 +115,7 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
     }
 
     public void update(SmartListViewModel smartListViewModel) {
-        for (int i=0; i<mSmartListViewModels.size(); i++) {
+        for (int i = 0; i < mSmartListViewModels.size(); i++) {
             SmartListViewModel old = mSmartListViewModels.get(i);
             if (old.getContact() == smartListViewModel.getContact()) {
                 mSmartListViewModels.set(i, smartListViewModel);
@@ -126,9 +124,16 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
         }
     }
 
-    private String getLastEventSummary(ConversationElement e, Context context) {
-        if (e instanceof HistoryCall) {
-            HistoryCall call = (HistoryCall) e;
+
+    private String getLastEventSummary(Interaction e, Context context) {
+        if (e.getType() == (InteractionType.TEXT)) {
+            if (e.isIncoming()) {
+                return e.getBody();
+            } else {
+                return context.getText(R.string.you_txt_prefix) + " " + e.getBody();
+            }
+        } else if (e.getType() == (InteractionType.CALL)) {
+            SipCall call = new SipCall(e);
             if (call.isMissed())
                 return call.isIncoming() ?
                         context.getString(R.string.notif_missed_incoming_call) :
@@ -137,23 +142,15 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
                 return call.isIncoming() ?
                         String.format(context.getString(R.string.hist_in_call), call.getDurationString()) :
                         String.format(context.getString(R.string.hist_out_call), call.getDurationString());
-        } else if (e instanceof TextMessage) {
-            TextMessage t = (TextMessage) e;
-            if (t.isIncoming()) {
-                return t.getMessage();
-            } else {
-                return context.getText(R.string.you_txt_prefix) + " " + t.getMessage();
-            }
-        } else if (e instanceof ContactEvent) {
-            ContactEvent t = (ContactEvent) e;
-            if (t.event == ContactEvent.Event.ADDED) {
+        } else if (e.getType() == (InteractionType.CONTACT)) {
+            ContactEvent contactEvent = new ContactEvent(e);
+            if (contactEvent.event == ContactEvent.Event.ADDED) {
                 return context.getString(R.string.hist_contact_added);
-            } else if (t.event == ContactEvent.Event.INCOMING_REQUEST) {
+            } else if (contactEvent.event == ContactEvent.Event.INCOMING_REQUEST) {
                 return context.getString(R.string.hist_invitation_received);
             }
-        } else if(e instanceof DataTransfer) {
-            DataTransfer d = (DataTransfer) e;
-            if (d.isOutgoing()) {
+        } else if (e.getType() == (InteractionType.DATA_TRANSFER)) {
+            if (!e.isIncoming()) {
                 return context.getString(R.string.hist_file_sent);
             } else {
                 return context.getString(R.string.hist_file_received);
