@@ -21,23 +21,13 @@
 package cx.ring.adapters;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.SurfaceTexture;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Environment;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.util.TypedValue;
@@ -53,6 +43,14 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.load.resource.bitmap.CenterInside;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
@@ -71,10 +69,11 @@ import cx.ring.conversation.ConversationPresenter;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.CallContact;
 import cx.ring.model.ContactEvent;
-import cx.ring.model.ConversationElement;
-import cx.ring.model.DataTransferEventCode;
-import cx.ring.model.HistoryCall;
 import cx.ring.model.DataTransfer;
+import cx.ring.model.Interaction;
+import cx.ring.model.Interaction.InteractionStatus;
+import cx.ring.model.Interaction.InteractionType;
+import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 import cx.ring.service.DRingService;
 import cx.ring.utils.AndroidFileUtils;
@@ -95,7 +94,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     private static final double MINUTE = 60L * 1000L;
     private static final double HOUR = 3600L * 1000L;
 
-    private final ArrayList<ConversationElement> mConversationElements = new ArrayList<>();
+    private final ArrayList<Interaction> mInteractions = new ArrayList<>();
+
     private final ConversationPresenter presenter;
     private final ConversationFragment conversationFragment;
     private final int hPadding;
@@ -125,32 +125,32 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     /**
      * Refreshes the data and notifies the changes
      *
-     * @param list an arraylist of IConversationElement
+     * @param list an arraylist of interactions
      */
-    public void updateDataset(final List<ConversationElement> list) {
+    public void updateDataset(final List<Interaction> list) {
         Log.d(TAG, "updateDataset: list size=" + list.size());
-        if (mConversationElements.isEmpty()) {
-            mConversationElements.addAll(list);
-        } else if (list.size() > mConversationElements.size()) {
-            mConversationElements.addAll(list.subList(mConversationElements.size(), list.size()));
+        if (mInteractions.isEmpty()) {
+            mInteractions.addAll(list);
+        } else if (list.size() > mInteractions.size()) {
+            mInteractions.addAll(list.subList(mInteractions.size(), list.size()));
         } else {
-            mConversationElements.clear();
-            mConversationElements.addAll(list);
+            mInteractions.clear();
+            mInteractions.addAll(list);
         }
         notifyDataSetChanged();
     }
 
-    public void add(ConversationElement e) {
-        boolean update = !mConversationElements.isEmpty();
-        mConversationElements.add(e);
-        notifyItemInserted(mConversationElements.size() - 1);
+    public void add(Interaction e) {
+        boolean update = !mInteractions.isEmpty();
+        mInteractions.add(e);
+        notifyItemInserted(mInteractions.size() - 1);
         if (update)
-            notifyItemChanged(mConversationElements.size() - 2);
+            notifyItemChanged(mInteractions.size() - 2);
     }
 
-    public void update(ConversationElement e) {
-        for (int i = mConversationElements.size() - 1; i >= 0; i--) {
-            ConversationElement element = mConversationElements.get(i);
+    public void update(Interaction e) {
+        for (int i = mInteractions.size() - 1; i >= 0; i--) {
+            Interaction element = mInteractions.get(i);
             if (e == element) {
                 notifyItemChanged(i);
                 break;
@@ -158,11 +158,11 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         }
     }
 
-    public void remove(ConversationElement e) {
-        for (int i = mConversationElements.size() - 1; i >= 0; i--) {
-            ConversationElement element = mConversationElements.get(i);
-            if (e == element) {
-                mConversationElements.remove(i);
+    public void remove(Interaction e) {
+        for (int i = mInteractions.size() - 1; i >= 0; i--) {
+            Interaction element = mInteractions.get(i);
+            if (e.getId().equals(element.getId())) {
+                mInteractions.remove(i);
                 notifyItemRemoved(i);
                 break;
             }
@@ -178,29 +178,30 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
     @Override
     public int getItemCount() {
-        return mConversationElements.size();
+        return mInteractions.size();
     }
 
     @Override
     public long getItemId(int position) {
-        return mConversationElements.get(position).getId();
+        return mInteractions.get(position).getId();
     }
 
     @Override
     public int getItemViewType(int position) {
-        ConversationElement conversationElement = mConversationElements.get(position);
-        if (conversationElement != null) {
-            switch (conversationElement.getType()) {
-                case TEXT: {
-                    TextMessage ht = (TextMessage) conversationElement;
-                    if (ht.isIncoming()) {
+        Interaction interaction = mInteractions.get(position);
+
+        if (interaction != null) {
+            switch (interaction.getType()) {
+                case TEXT:
+                    if (interaction.isIncoming()) {
                         return MessageType.INCOMING_TEXT_MESSAGE.ordinal();
                     } else {
                         return MessageType.OUTGOING_TEXT_MESSAGE.ordinal();
                     }
-                }
-                case FILE: {
-                    DataTransfer file = (DataTransfer) conversationElement;
+                case CALL:
+                    return MessageType.CALL_INFORMATION.ordinal();
+                case DATA_TRANSFER:
+                    DataTransfer file = (DataTransfer) interaction;
                     if (file.isComplete()) {
                         if (file.isPicture()) {
                             return MessageType.IMAGE.ordinal();
@@ -213,9 +214,6 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                         }
                     } else
                         return MessageType.FILE_TRANSFER.ordinal();
-                }
-                case CALL:
-                    return MessageType.CALL_INFORMATION.ordinal();
                 case CONTACT:
                     return MessageType.CONTACT_EVENT.ordinal();
             }
@@ -233,17 +231,18 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ConversationViewHolder conversationViewHolder, int position) {
-        ConversationElement conversationElement = mConversationElements.get(position);
-        if (conversationElement != null) {
-            if (conversationElement.getType() == ConversationElement.CEType.TEXT) {
-                configureForTextMessage(conversationViewHolder, conversationElement, position);
-            } else if (conversationElement.getType() == ConversationElement.CEType.FILE) {
-                configureForFileInfoTextMessage(conversationViewHolder, conversationElement, position);
-            } else if (conversationElement.getType() == ConversationElement.CEType.CALL) {
-                configureForCallInfoTextMessage(conversationViewHolder, conversationElement);
-            } else if (conversationElement.getType() == ConversationElement.CEType.CONTACT) {
-                configureForContactEvent(conversationViewHolder, conversationElement);
-            }
+        Interaction interaction = mInteractions.get(position);
+        if (interaction == null)
+            return;
+
+        if (interaction.getType() == (InteractionType.TEXT)) {
+            configureForTextMessage(conversationViewHolder, interaction, position);
+        } else if (interaction.getType() == (InteractionType.CALL)) {
+            configureForCallInfoTextMessage(conversationViewHolder, interaction);
+        } else if (interaction.getType() == (InteractionType.CONTACT)) {
+            configureForContactEvent(conversationViewHolder, interaction);
+        } else if (interaction.getType() == (InteractionType.DATA_TRANSFER)) {
+            configureForFileInfoTextMessage(conversationViewHolder, interaction, position);
         }
     }
 
@@ -295,43 +294,43 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
     public boolean onContextItemSelected(MenuItem item) {
         ConversationAdapter.RecyclerViewContextMenuInfo info = getCurrentLongItem();
-        ConversationElement conversationElement = null;
+        Interaction interaction = null;
         if (info == null) {
             return false;
         }
         try {
-            conversationElement = mConversationElements.get(info.position);
+            interaction = mInteractions.get(info.position);
         } catch (IndexOutOfBoundsException e) {
-            Log.e(TAG, e.getMessage());
+            Log.e(TAG, "Interaction array may be empty or null", e);
         }
-        if (conversationElement == null)
+        if (interaction == null)
             return false;
-        if (conversationElement.getType() == ConversationElement.CEType.CONTACT)
+        if (interaction.getType() == (InteractionType.CONTACT))
             return false;
 
         switch (item.getItemId()) {
             case R.id.conv_action_download: {
-                presenter.saveFile((DataTransfer) conversationElement);
+                presenter.saveFile(interaction);
                 break;
             }
             case R.id.conv_action_share: {
-                presenter.shareFile((DataTransfer) conversationElement);
+                presenter.shareFile(interaction);
                 break;
             }
             case R.id.conv_action_open: {
-                presenter.openFile((DataTransfer) conversationElement);
+                presenter.openFile(interaction);
                 break;
             }
             case R.id.conv_action_delete: {
-                presenter.deleteConversationItem(conversationElement);
+                presenter.deleteConversationItem(interaction);
                 break;
             }
             case R.id.conv_action_cancel_message: {
-                presenter.cancelMessage((TextMessage) conversationElement);
+                presenter.cancelMessage(interaction);
                 break;
             }
             case R.id.conv_action_copy_text: {
-                addToClipboard(((TextMessage) conversationElement).getMessage());
+                addToClipboard((interaction).getBody());
                 break;
             }
         }
@@ -339,18 +338,21 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     }
 
     private void addToClipboard(String text) {
-        android.content.ClipboardManager clipboard = (android.content.ClipboardManager) conversationFragment.getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+        android.content.ClipboardManager clipboard = (android.content.ClipboardManager) conversationFragment.requireActivity().getSystemService(Context.CLIPBOARD_SERVICE);
         android.content.ClipData clip = android.content.ClipData.newPlainText("Copied Message", text);
         clipboard.setPrimaryClip(clip);
     }
 
-    private void configureForFileInfoTextMessage(@NonNull final ConversationViewHolder viewHolder,
-                                                 @NonNull final ConversationElement conversationElement, int position) {
-        DataTransfer file = (DataTransfer) conversationElement;
 
-        String timeSeparationString = timestampToDetailString(viewHolder.itemView.getContext(), file.getDate());
-        if (file.getEventCode() == DataTransferEventCode.FINISHED) {
-            boolean separateByDetails = shouldSeparateByDetails(conversationElement, position);
+    private void configureForFileInfoTextMessage(@NonNull final ConversationViewHolder viewHolder,
+                                                 @NonNull final Interaction interaction, int position) {
+        DataTransfer file = (DataTransfer) interaction;
+        File path = presenter.getDeviceRuntimeService().getConversationPath(file.getPeerId(), file.getStoragePath());
+        file.setSize(path.length());
+
+        String timeSeparationString = timestampToDetailString(viewHolder.itemView.getContext(), file.getTimestamp());
+        if (file.getStatus() == InteractionStatus.TRANSFER_FINISHED) {
+            boolean separateByDetails = shouldSeparateByDetails(interaction, position);
             if (separateByDetails) {
                 viewHolder.mMsgDetailTxt.setVisibility(View.VISIBLE);
                 viewHolder.mMsgDetailTxt.setText(String.format("%s - %s",
@@ -361,7 +363,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             viewHolder.mMsgDetailTxt.setVisibility(View.VISIBLE);
             viewHolder.mMsgDetailTxt.setText(String.format("%s - %s - %s",
                     timeSeparationString, FileUtils.readableFileSize(file.getTotalSize()),
-                    ResourceMapper.getReadableFileTransferStatus(conversationFragment.getActivity(), file.getEventCode())));
+                    ResourceMapper.getReadableFileTransferStatus(conversationFragment.getActivity(), file.getStatus())));
         }
 
         MessageType type;
@@ -403,7 +405,6 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
         if (type == MessageType.IMAGE) {
             Context context = viewHolder.mPhoto.getContext();
-            File path = presenter.getDeviceRuntimeService().getConversationPath(file.getPeerId(), file.getStoragePath());
 
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) viewHolder.mAnswerLayout.getLayoutParams();
             params.gravity = (file.isOutgoing() ? Gravity.END : Gravity.START) | Gravity.BOTTOM;
@@ -434,7 +435,6 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             viewHolder.mAnswerLayout.setLayoutParams(params);
 
             Context context = viewHolder.itemView.getContext();
-            File path = presenter.getDeviceRuntimeService().getConversationPath(file.getPeerId(), file.getStoragePath());
             if (viewHolder.player != null) {
                 viewHolder.player.release();
             }
@@ -502,7 +502,6 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             return;
         } else if (type == MessageType.AUDIO) {
             Context context = viewHolder.itemView.getContext();
-            File path = presenter.getDeviceRuntimeService().getConversationPath(file.getPeerId(), file.getStoragePath());
             try {
                 final MediaPlayer player = MediaPlayer.create(context, getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path));
                 viewHolder.player = player;
@@ -531,14 +530,14 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                     int dS = player.getDuration() / 1000;
                     viewHolder.mMsgTxt.setText(String.format("%02d:%02d / %02d:%02d", pS / 60, pS % 60, dS / 60, dS % 60));
                 });
+                viewHolder.updater.start();
             } catch (IllegalStateException | NullPointerException e) {
                 Log.e(TAG, "Error initializing player, it may have already been released: " + e.getMessage());
             }
-            viewHolder.updater.start();
             return;
         }
 
-        if (file.getEventCode().isError()) {
+        if (file.getStatus().isError()) {
             viewHolder.icon.setImageResource(R.drawable.ic_warning);
         } else {
             viewHolder.icon.setImageResource(R.drawable.ic_clip_black);
@@ -548,7 +547,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
         ((LinearLayout) viewHolder.mLayout).setGravity(file.isOutgoing() ? Gravity.END : Gravity.START);
 
-        if (file.getEventCode() == DataTransferEventCode.WAIT_HOST_ACCEPTANCE) {
+        if (file.getStatus() == InteractionStatus.TRANSFER_AWAITING_HOST) {
             viewHolder.mAnswerLayout.setVisibility(View.VISIBLE);
             viewHolder.btnAccept.setOnClickListener(v -> {
                 if (!presenter.getDeviceRuntimeService().hasWriteExternalStoragePermission()) {
@@ -564,13 +563,13 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                 }
                 context.startService(new Intent(DRingService.ACTION_FILE_ACCEPT)
                         .setClass(context.getApplicationContext(), DRingService.class)
-                        .putExtra(DRingService.KEY_TRANSFER_ID, file.getDataTransferId()));
+                        .putExtra(DRingService.KEY_TRANSFER_ID, file.getDaemonId()));
             });
             viewHolder.btnRefuse.setOnClickListener(v -> {
                 Context context = v.getContext();
                 context.startService(new Intent(DRingService.ACTION_FILE_CANCEL)
                         .setClass(context.getApplicationContext(), DRingService.class)
-                        .putExtra(DRingService.KEY_TRANSFER_ID, file.getDataTransferId()));
+                        .putExtra(DRingService.KEY_TRANSFER_ID, file.getDaemonId()));
             });
         } else {
             viewHolder.mAnswerLayout.setVisibility(View.GONE);
@@ -582,13 +581,13 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
      * Configures the viewholder to display a classic text message, ie. not a call info text message
      *
      * @param convViewHolder The conversation viewHolder
-     * @param convElement    The conversation element to display
+     * @param interaction    The conversation element to display
      * @param position       The position of the viewHolder
      */
     private void configureForTextMessage(@NonNull final ConversationViewHolder convViewHolder,
-                                         @NonNull final ConversationElement convElement,
+                                         @NonNull final Interaction interaction,
                                          int position) {
-        TextMessage textMessage = (TextMessage) convElement;
+        TextMessage textMessage = (TextMessage)interaction;
         CallContact contact = textMessage.getContact();
         if (contact == null) {
             Log.e(TAG, "Invalid contact, not able to display message correctly");
@@ -603,7 +602,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             MenuInflater inflater = conversationFragment.getActivity().getMenuInflater();
             inflater.inflate(R.menu.conversation_item_actions_messages, menu);
 
-            if (((TextMessage) convElement).getStatus().equals(TextMessage.Status.SENDING)) {
+            if ((interaction).getStatus() == (InteractionStatus.SENDING)) {
                 menu.removeItem(R.id.conv_action_delete);
             } else {
                 menu.findItem(R.id.conv_action_delete).setTitle(R.string.menu_message_delete);
@@ -627,8 +626,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         });
 
 
-        convViewHolder.mCid = textMessage.getContact().getId();
-        String message = textMessage.getMessage().trim();
+        convViewHolder.mCid = textMessage.getConversation().getParticipant();
+        String message = textMessage.getBody().trim();
         if (StringUtils.isOnlyEmoji(message)) {
             convViewHolder.mMsgTxt.getBackground().setAlpha(0);
             convViewHolder.mMsgTxt.setTextSize(24.f);
@@ -648,7 +647,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         }
 
         boolean separateByDetails = shouldSeparateByDetails(textMessage, position);
-        boolean isLast = position == mConversationElements.size() - 1;
+        boolean isLast = position == mInteractions.size() - 1;
         boolean sameAsPreviousMsg = isMessageConfigSameAsPrevious(textMessage, position);
         final Context context = convViewHolder.itemView.getContext();
 
@@ -679,7 +678,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                     }
                     if (!isLast) {
                         convViewHolder.updater = new UiUpdater(() -> {
-                            convViewHolder.mMsgDetailTxt.setText(timestampToDetailString(context, textMessage.getDate()));
+                            convViewHolder.mMsgDetailTxt.setText(timestampToDetailString(context, textMessage.getTimestamp()));
                         }, 10000);
                         convViewHolder.updater.start();
                         convViewHolder.mMsgDetailTxt.setVisibility(View.VISIBLE);
@@ -695,15 +694,15 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         }
     }
 
-    private void configureForContactEvent(@NonNull final ConversationViewHolder viewHolder, @NonNull final ConversationElement conversationElement) {
-        ContactEvent event = (ContactEvent) conversationElement;
+    private void configureForContactEvent(@NonNull final ConversationViewHolder viewHolder, @NonNull final Interaction interaction) {
+        ContactEvent event = (ContactEvent) interaction;
         if (event.event == ContactEvent.Event.ADDED) {
             viewHolder.mMsgTxt.setText(R.string.hist_contact_added);
         } else if (event.event == ContactEvent.Event.INCOMING_REQUEST) {
             viewHolder.mMsgTxt.setText(R.string.hist_invitation_received);
         }
         viewHolder.updater = new UiUpdater(() -> {
-            String timeSeparationString = timestampToDetailString(viewHolder.itemView.getContext(), conversationElement.getDate());
+            String timeSeparationString = timestampToDetailString(viewHolder.itemView.getContext(), event.getTimestamp());
             viewHolder.mMsgDetailTxt.setText(timeSeparationString);
         }, 10000);
         viewHolder.updater.start();
@@ -713,10 +712,10 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
      * Configures the viewholder to display a call info text message, ie. not a classic text message
      *
      * @param convViewHolder The conversation viewHolder
-     * @param convElement    The conversation element to display
+     * @param interaction    The conversation element to display
      */
     private void configureForCallInfoTextMessage(@NonNull final ConversationViewHolder convViewHolder,
-                                                 @NonNull final ConversationElement convElement) {
+                                                 @NonNull final Interaction interaction) {
         int pictureResID;
         String historyTxt;
         convViewHolder.mPhoto.setScaleY(1);
@@ -743,38 +742,36 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             conversationFragment.updatePosition(convViewHolder.getAdapterPosition());
             mCurrentLongItem = new RecyclerViewContextMenuInfo(convViewHolder.getAdapterPosition(), v.getId());
             return false;
-
-
         });
 
 
-        HistoryCall hc = (HistoryCall) convElement;
+        SipCall call = (SipCall) interaction;
 
-        if (hc.isMissed()) {
-            if (hc.isIncoming()) {
+        if (call.isMissed()) {
+            if (call.isIncoming()) {
                 pictureResID = R.drawable.ic_call_missed_incoming_black;
             } else {
                 pictureResID = R.drawable.ic_call_missed_outgoing_black;
                 // Flip the photo upside down to show a "missed outgoing call"
                 convViewHolder.mPhoto.setScaleY(-1);
             }
-            historyTxt = hc.isIncoming() ?
+            historyTxt = call.isIncoming() ?
                     context.getString(R.string.notif_missed_incoming_call) :
                     context.getString(R.string.notif_missed_outgoing_call);
         } else {
-            pictureResID = (hc.isIncoming()) ?
+            pictureResID = (call.isIncoming()) ?
                     R.drawable.ic_incoming_black :
                     R.drawable.ic_outgoing_black;
-            historyTxt = hc.isIncoming() ?
+            historyTxt = call.isIncoming() ?
                     context.getString(R.string.notif_incoming_call) :
                     context.getString(R.string.notif_outgoing_call);
         }
 
-        convViewHolder.mCid = hc.getContactID();
+        convViewHolder.mCid = call.getConversation().getParticipant();
         convViewHolder.mPhoto.setImageResource(pictureResID);
         convViewHolder.mHistTxt.setText(historyTxt);
         convViewHolder.mHistDetailTxt.setText(DateFormat.getDateTimeInstance()
-                .format(hc.getStartDate()));
+                .format(call.getTimestamp())); // start date
     }
 
     /**
@@ -803,9 +800,9 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
      * @return the previous TextMessage if any, null otherwise
      */
     @Nullable
-    private ConversationElement getPreviousMessageFromPosition(int position) {
-        if (!mConversationElements.isEmpty() && position > 0) {
-            return mConversationElements.get(position - 1);
+    private Interaction getPreviousMessageFromPosition(int position) {
+        if (!mInteractions.isEmpty() && position > 0) {
+            return mInteractions.get(position - 1);
         }
         return null;
     }
@@ -817,9 +814,9 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
      * @return the next TextMessage if any, null otherwise
      */
     @Nullable
-    private ConversationElement getNextMessageFromPosition(int position) {
-        if (!mConversationElements.isEmpty() && position < mConversationElements.size() - 1) {
-            return mConversationElements.get(position + 1);
+    private Interaction getNextMessageFromPosition(int position) {
+        if (!mInteractions.isEmpty() && position < mInteractions.size() - 1) {
+            return mInteractions.get(position + 1);
         }
         return null;
     }
@@ -832,17 +829,17 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
      * @param position The position of the current message
      * @return true if a text details string should be displayed under the message
      */
-    private boolean shouldSeparateByDetails(final ConversationElement ht, int position) {
+    private boolean shouldSeparateByDetails(final Interaction ht, int position) {
         if (ht == null) {
             return false;
         }
         boolean shouldSeparateMsg = false;
-        ConversationElement previousTextMessage = getPreviousMessageFromPosition(position);
+        Interaction previousTextMessage = getPreviousMessageFromPosition(position);
         if (previousTextMessage != null) {
             shouldSeparateMsg = true;
-            ConversationElement nextTextMessage = getNextMessageFromPosition(position);
+            Interaction nextTextMessage = getNextMessageFromPosition(position);
             if (nextTextMessage != null) {
-                long diff = nextTextMessage.getDate() - ht.getDate();
+                long diff = nextTextMessage.getTimestamp() - ht.getTimestamp();
                 if (diff < MINUTE) {
                     shouldSeparateMsg = false;
                 }
@@ -859,18 +856,18 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
      * @param position    The position of the current message
      * @return true if the configuration is the same as the previous message, false otherwise.
      */
-    private boolean isMessageConfigSameAsPrevious(final TextMessage textMessage,
+    private boolean isMessageConfigSameAsPrevious(final Interaction textMessage,
                                                   int position) {
         if (textMessage == null) {
             return false;
         }
 
         boolean sameConfig = false;
-        ConversationElement previousMessage = getPreviousMessageFromPosition(position);
+        Interaction previousMessage = getPreviousMessageFromPosition(position);
         if (previousMessage != null &&
-                textMessage.getType() == previousMessage.getType() &&
+                textMessage.getType() == (previousMessage.getType()) &&
                 textMessage.isIncoming() &&
-                previousMessage.getContactNumber().equals(textMessage.getContactNumber())) {
+                previousMessage.getConversation().getParticipant().equals(textMessage.getConversation().getParticipant())) {
             sameConfig = true;
         }
         return sameConfig;
