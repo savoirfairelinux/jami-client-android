@@ -186,6 +186,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                 break;
             case CURRENT:
                 stopRinging();
+                Ringservice.setAudioPlugin(Ringservice.getCurrentAudioOutputPlugin());
                 getFocus(CALL_REQUEST);
                 mAudioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
                 setAudioRouting(isOngoingVideo);
@@ -323,6 +324,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
 
     @Override
     synchronized public void toggleSpeakerphone(boolean checked) {
+        Ringservice.setAudioPlugin(Ringservice.getCurrentAudioOutputPlugin());
         mShouldSpeakerphone = checked;
         Log.w(TAG, "toggleSpeakerphone setSpeakerphoneOn " + checked);
         if (mHasSpeakerPhone && checked) {
