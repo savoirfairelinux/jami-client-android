@@ -109,7 +109,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <activity
             android:name=".client.HomeActivity"
-            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
+            android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:theme="@style/AppThemeBase"
