@@ -56,6 +56,7 @@ import java.util.LinkedHashMap;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.inject.Inject;
 
@@ -125,6 +126,7 @@ public class NotificationServiceImpl implements NotificationService {
     private final Random random = new Random();
     private int avatarSize;
     private LinkedHashMap<Integer, Conference> currentCalls = new LinkedHashMap<>();
+    private ConcurrentHashMap<Integer, Notification> dataTransferNotifications = new ConcurrentHashMap<>();
 
     @SuppressLint("CheckResult")
     public void initHelper() {
@@ -331,7 +333,12 @@ public class NotificationServiceImpl implements NotificationService {
      */
     @Override
     public void startForegroundService(int id, boolean isCallService) {
-        Intent serviceIntent = new Intent(mContext, CallNotificationService.class);
+        Intent serviceIntent;
+        if (isCallService)
+            serviceIntent = new Intent(mContext, CallNotificationService.class);
+        else
+            serviceIntent = new Intent(mContext, DataTransferService.class);
+
 
         serviceIntent.putExtra(KEY_NOTIFICATION_ID, id);
 
@@ -342,11 +349,17 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     /**
-     * Kills a foreground service. Currently only applicable to calls.
+     * Kills a foreground service.
+     *
+     * @param isCallService true if the service in question is for calls, false if it is for data transfers
      */
     @Override
-    public void stopCallForegroundService() {
-        Intent serviceIntent = new Intent(mContext, CallNotificationService.class);
+    public void stopForegroundService(boolean isCallService) {
+        Intent serviceIntent;
+        if (isCallService)
+            serviceIntent = new Intent(mContext, CallNotificationService.class);
+        else
+            serviceIntent = new Intent(mContext, DataTransferService.class);
         mContext.stopService(serviceIntent);
     }
 
@@ -370,7 +383,7 @@ public class NotificationServiceImpl implements NotificationService {
             currentCalls.put(id, conference);
             startForegroundService(id, true);
         } else if (currentCalls.isEmpty())
-            stopCallForegroundService();
+            stopForegroundService(true);
             // this is a temporary solution until we have direct support for concurrent calls and the call state will exclusively update notifications
         else {
             int key = -1;
@@ -382,6 +395,51 @@ public class NotificationServiceImpl implements NotificationService {
         }
     }
 
+    /**
+     * Handles the creation and destruction of services associated with transfers as well as displaying notifications.
+     *
+     * @param transfer the data transfer object
+     * @param contact  the contact to whom the data transfer is being sent
+     * @param remove   true if it should be removed from current calls
+     */
+    @Override
+    public void handleDataTransferNotification(DataTransfer transfer, CallContact contact, boolean remove) {
+        Log.d(TAG, "handleDataTransferNotification, a data transfer event is in progress");
+        if (DeviceUtils.isTv(mContext)) {
+            return;
+        }
+        if (!remove) {
+            showFileTransferNotification(transfer, contact);
+        } else {
+            removeTransferNotification(transfer.getDataTransferId());
+        }
+    }
+
+    /**
+     * Cancels a data transfer notification and removes it from the list of notifications
+     *
+     * @param transferId the transfer id which is required to generate the notification id
+     */
+    @Override
+    public void removeTransferNotification(long transferId) {
+        int id = getFileTransferNotificationId(transferId);
+        dataTransferNotifications.remove(id);
+        cancelFileNotification(id, false);
+        if (dataTransferNotifications.isEmpty())
+            stopForegroundService(false);
+        else {
+            startForegroundService(dataTransferNotifications.keySet().iterator().next(), false);
+        }
+    }
+
+    /**
+     * @param notificationId the notification id
+     * @return the notification object for a data transfer notification
+     */
+    @Override
+    public Notification getDataTransferNotification(int notificationId) {
+        return dataTransferNotifications.get(notificationId);
+    }
 
     @Override
     public void showTextNotification(String accountId, Conversation conversation) {
@@ -610,6 +668,7 @@ public class NotificationServiceImpl implements NotificationService {
         if (event == null) {
             return;
         }
+        Log.d(TAG, "Transfer event " + event);
         long dataTransferId = info.getDataTransferId();
         int notificationId = getFileTransferNotificationId(dataTransferId);
 
@@ -620,8 +679,8 @@ public class NotificationServiceImpl implements NotificationService {
                 .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactUri);
 
         if (event.isOver()) {
-            notificationManager.cancel(notificationId);
-            mNotificationBuilders.delete(notificationId);
+            removeTransferNotification(dataTransferId);
+
             if (!info.isOutgoing() && info.showPicture()) {
                 File path = mDeviceRuntimeService.getConversationPath(info.getPeerId(), info.getStoragePath());
                 Bitmap img;
@@ -652,7 +711,7 @@ public class NotificationServiceImpl implements NotificationService {
             messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_FILE_TRANSFER);
         }
 
-        boolean ongoing = event == DataTransferEventCode.CREATED || event == DataTransferEventCode.ONGOING;
+        boolean ongoing = event == DataTransferEventCode.ONGOING;
         String titleMessage = mContext.getString(info.isOutgoing() ? R.string.notif_outgoing_file_transfer_title : R.string.notif_incoming_file_transfer_title, contact.getDisplayName());
         messageNotificationBuilder.setContentTitle(titleMessage)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -677,6 +736,9 @@ public class NotificationServiceImpl implements NotificationService {
         }
         if (event == DataTransferEventCode.CREATED) {
             messageNotificationBuilder.setDefaults(NotificationCompat.DEFAULT_VIBRATE);
+            mNotificationBuilders.put(notificationId, messageNotificationBuilder);
+            updateNotification(messageNotificationBuilder.build(), notificationId);
+            return;
         } else {
             messageNotificationBuilder.setDefaults(NotificationCompat.DEFAULT_LIGHTS);
         }
@@ -695,6 +757,9 @@ public class NotificationServiceImpl implements NotificationService {
                                             .setClass(mContext, DRingService.class)
                                             .putExtra(DRingService.KEY_TRANSFER_ID, dataTransferId),
                                     PendingIntent.FLAG_ONE_SHOT));
+            mNotificationBuilders.put(notificationId, messageNotificationBuilder);
+            updateNotification(messageNotificationBuilder.build(), notificationId);
+            return;
         } else if (!event.isOver()) {
             messageNotificationBuilder
                     .addAction(R.drawable.baseline_cancel_24, mContext.getText(android.R.string.cancel),
@@ -704,9 +769,10 @@ public class NotificationServiceImpl implements NotificationService {
                                             .putExtra(DRingService.KEY_TRANSFER_ID, dataTransferId),
                                     PendingIntent.FLAG_ONE_SHOT));
         }
-
         mNotificationBuilders.put(notificationId, messageNotificationBuilder);
-        notificationManager.notify(notificationId, messageNotificationBuilder.build());
+        dataTransferNotifications.remove(notificationId);
+        dataTransferNotifications.put(notificationId, messageNotificationBuilder.build());
+        startForegroundService(notificationId, false);
     }
 
     @Override
@@ -788,11 +854,16 @@ public class NotificationServiceImpl implements NotificationService {
         mNotificationBuilders.remove(NOTIF_CALL_ID);
     }
 
+    /**\
+     * Cancels a notification
+     * @param notificationId the notification ID
+     * @param isMigratingToService true if the notification is being updated to be a part of the foreground service
+     */
     @Override
-    public void cancelFileNotification(long fileId) {
-        int nId = getFileTransferNotificationId(fileId);
-        notificationManager.cancel(nId);
-        mNotificationBuilders.remove(nId);
+    public void cancelFileNotification(int notificationId, boolean isMigratingToService) {
+        notificationManager.cancel(notificationId);
+        if(!isMigratingToService)
+            mNotificationBuilders.remove(notificationId);
     }
 
     @Override
