@@ -57,6 +57,7 @@ import cx.ring.services.CallService;
 import cx.ring.services.ConferenceService;
 import cx.ring.services.ContactServiceImpl;
 import cx.ring.services.DaemonService;
+import cx.ring.services.DataTransferService;
 import cx.ring.services.DeviceRuntimeServiceImpl;
 import cx.ring.services.HardwareService;
 import cx.ring.services.HistoryServiceImpl;
@@ -153,6 +154,8 @@ public interface RingInjectionComponent {
     void inject(ConversationFacade service);
 
     void inject(CallNotificationService service);
+
+    void inject(DataTransferService service);
 
     void inject(BootReceiver receiver);
 
