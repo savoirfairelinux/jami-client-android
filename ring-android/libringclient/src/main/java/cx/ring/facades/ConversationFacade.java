@@ -22,10 +22,8 @@ package cx.ring.facades;
 
 import java.io.File;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.NavigableMap;
-import java.util.WeakHashMap;
 
 import javax.inject.Inject;
 
@@ -40,7 +38,6 @@ import cx.ring.model.HistoryCall;
 import cx.ring.model.HistoryText;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
-import cx.ring.model.TrustRequest;
 import cx.ring.model.Uri;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
@@ -51,8 +48,6 @@ import cx.ring.services.NotificationService;
 import cx.ring.services.PreferencesService;
 import cx.ring.utils.FileUtils;
 import cx.ring.utils.Log;
-import cx.ring.utils.VCardUtils;
-import ezvcard.VCard;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
@@ -156,7 +151,7 @@ public class ConversationFacade {
 
     public void readMessages(String accountId, Uri contact) {
         Account account = mAccountService.getAccount(accountId);
-        if(account != null)
+        if (account != null)
             readMessages(account, account.getByUri(contact));
     }
 
@@ -369,10 +364,7 @@ public class ConversationFacade {
                 mAccountService.acceptFileTransfer(transfer);
             }
         }
-        if (conversation.isVisible())
-            mNotificationService.cancelFileNotification(transfer.getId());
-        else
-            mNotificationService.showFileTransferNotification(transfer, conversation.getContact());
+        mNotificationService.handleDataTransferNotification(transfer, conversation.getContact(), conversation.isVisible());
     }
 
     private void onCallStateChange(SipCall call) {
@@ -449,7 +441,7 @@ public class ConversationFacade {
 
     public void cancelFileTransfer(long id) {
         mAccountService.cancelDataTransfer(id);
-        mNotificationService.cancelFileNotification(id);
+        mNotificationService.removeTransferNotification(id);
         DataTransfer transfer = mAccountService.getDataTransfer(id);
         if (transfer != null)
             deleteConversationItem(transfer);
