@@ -1271,6 +1271,7 @@ public class AccountService {
 
     void dataTransferEvent(final long transferId, int eventCode) {
         DataTransferEventCode dataEvent = getDataTransferEventCode(eventCode);
+        Log.d(TAG, "Data Transfer " + dataEvent);
         DataTransferInfo info = new DataTransferInfo();
         if (getDataTransferError(Ringservice.dataTransferInfo(transferId, info)) != DataTransferError.SUCCESS)
             return;
