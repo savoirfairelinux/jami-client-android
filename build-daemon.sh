@@ -1,6 +1,11 @@
 #! /bin/bash
 # Build Ring daemon for architecture specified by ANDROID_ABI
 
+# Tensorflow lite root library path
+# There should be different builds according to the different supported platforms
+# E.g: TENSORFLOW_LITE_ROOT_LIB_DIR/arm64-v8a/ for armv8 architecture
+TENSORFLOW_LITE_ROOT_LIB_DIR="/home/ayounes/Libs/_tensorflow_dist_/lib"
+
 #for OSX/BSD
 realpath() {
     [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
@@ -253,7 +258,9 @@ STATIC_LIBS_ALL="-llog -lOpenSLES -landroid \
                 -luuid -lz \
                 -lvpx -lopus -lspeex -lx264 \
                 -largon2 \
-                -liconv"
+                -liconv \
+                -lopencv_core -lopencv_imgproc -lopencv_highgui -lcpufeatures"
+
 
 LIBRING_JNI_DIR=${ANDROID_APP_DIR}/app/src/main/libs/${ANDROID_ABI}
 
@@ -274,4 +281,9 @@ ${NDK_TOOLCHAIN_PATH}/clang++ \
                 -L${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/lib \
                 ${STATIC_LIBS_ALL} \
                 ${STRIP_ARG} --std=c++14 -O3 -fPIC \
+                -L${TENSORFLOW_LITE_ROOT_LIB_DIR}/${ANDROID_ABI} \
+                -ltensorflowlite \
                 -o ${LIBRING_JNI_DIR}/libring.so
+
+# Tensorflow
+cp $HOME/Libs/_tensorflow_dist_/lib/${ANDROID_ABI}/libtensorflowlite.so $LIBRING_JNI_DIR

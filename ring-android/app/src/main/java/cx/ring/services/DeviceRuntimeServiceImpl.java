@@ -27,6 +27,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.provider.ContactsContract;
+
 import androidx.core.content.ContextCompat;
 
 import java.io.File;
@@ -57,18 +58,32 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
     ScheduledExecutorService mExecutor;
     private long mDaemonThreadId = -1;
 
+    private void copyAssets() {
+        File ringtonesPath = new File(mContext.getFilesDir(), "ringtones");
+        if (!(new File(ringtonesPath, "default.opus")).exists()) {
+            AndroidFileUtils.copyAssetFolder(mContext.getAssets(), "ringtones", ringtonesPath);
+        }
+
+        File tfPath = new File(mContext.getFilesDir(), "tensorflow");
+        Log.w(TAG, "Tensorflow Files path: " + tfPath.getAbsolutePath());
+        if (!tfPath.exists()) {
+            AndroidFileUtils.copyAssetFolder(mContext.getAssets(), "tensorflow", tfPath);
+        }
+    }
+
     @Override
     public void loadNativeLibrary() {
-        mExecutor.submit(() -> {
-            try {
-                mDaemonThreadId = Thread.currentThread().getId();
-                System.loadLibrary("ring");
-                return true;
-            } catch (Exception e) {
-                Log.e(TAG, "Could not load Ring library", e);
-                return false;
-            }
-        });
+
+        try {
+            mExecutor.submit(() -> {
+                    mDaemonThreadId = Thread.currentThread().getId();
+                    copyAssets();
+                    System.loadLibrary("ring");
+            }).get();
+
+        } catch (Exception e) {
+            Log.e(TAG, "Could not load Ring library", e);
+        }
     }
 
 
