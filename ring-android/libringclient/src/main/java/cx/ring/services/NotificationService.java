@@ -54,15 +54,21 @@ public interface NotificationService {
 
     void showMissedCallNotification(SipCall call);
 
-    void cancelFileNotification(long id);
+    void cancelFileNotification(int id, boolean isMigratingToService);
 
     void updateNotification(Object notification, int notificationId);
 
     void startForegroundService(int notificationId, boolean isCallService);
 
-    void stopCallForegroundService();
+    void stopForegroundService(boolean isCallService);
 
     Object getServiceNotification();
 
     void handleCallNotification(Conference conference, boolean remove);
+
+    void handleDataTransferNotification(DataTransfer transfer, CallContact contact, boolean remove);
+
+    void removeTransferNotification(long transferId);
+
+    Object getDataTransferNotification(int notificationId);
 }
