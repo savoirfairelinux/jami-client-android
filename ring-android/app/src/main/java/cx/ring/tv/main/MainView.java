@@ -42,7 +42,7 @@ public interface MainView {
 
     void displayAccountInfos(RingNavigationViewModel viewModel);
 
-    BitmapDrawable prepareAccountQr();
+    BitmapDrawable prepareAccountQr(String account);
 
     void showExportDialog(String pAccountID);
 

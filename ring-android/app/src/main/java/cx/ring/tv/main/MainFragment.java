@@ -168,7 +168,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         List<Card> cards = new ArrayList<>();
         cards.add(IconCardHelper.getAccountAddDeviceCard(getActivity()));
         cards.add(IconCardHelper.getAccountManagementCard(getActivity()));
-        cards.add(IconCardHelper.getAccountShareCard(getActivity(), prepareAccountQr()));
+        cards.add(IconCardHelper.getAccountShareCard(getActivity(), prepareAccountQr(presenter.getAccountId())));
         cards.add(IconCardHelper.getAccountSettingsCard(getActivity()));
 
         return createRow(getString(R.string.ring_account), cards, false);
@@ -251,8 +251,8 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     }
 
     @Override
-    public BitmapDrawable prepareAccountQr() {
-        QRCodeUtils.QRCodeData qrCodeData = QRCodeUtils.encodeStringAsQRCodeData(presenter.getAccountUri(), 0X00000000, 0xFFFFFFFF);
+    public BitmapDrawable prepareAccountQr(String accountId) {
+        QRCodeUtils.QRCodeData qrCodeData = QRCodeUtils.encodeStringAsQRCodeData(accountId, 0X00000000, 0xFFFFFFFF);
         Bitmap bitmap = Bitmap.createBitmap(qrCodeData.getWidth(), qrCodeData.getHeight(), Bitmap.Config.ARGB_8888);
         bitmap.setPixels(qrCodeData.getData(), 0, qrCodeData.getWidth(), 0, 0, qrCodeData.getWidth(), qrCodeData.getHeight());
         return new BitmapDrawable(requireActivity().getResources(), bitmap);

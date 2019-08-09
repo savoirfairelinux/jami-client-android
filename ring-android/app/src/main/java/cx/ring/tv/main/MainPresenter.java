@@ -184,8 +184,8 @@ public class MainPresenter extends RootPresenter<MainView> {
         getView().callContact(account.getAccountID(), ringID);
     }
 
-    public String getAccountUri() {
-        return mAccountService.getCurrentAccount().getUri();
+    public String getAccountId() {
+        return accountSubject.map(a -> a.getAccountID()).blockingFirst();
     }
 
     public void reloadAccountInfos() {
