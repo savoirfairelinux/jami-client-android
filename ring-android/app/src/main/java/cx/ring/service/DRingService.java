@@ -64,7 +64,6 @@ import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.fragments.ConversationFragment;
-import cx.ring.model.Account;
 import cx.ring.model.Codec;
 import cx.ring.model.Settings;
 import cx.ring.model.Uri;
@@ -78,8 +77,6 @@ import cx.ring.services.HardwareService;
 import cx.ring.services.HistoryService;
 import cx.ring.services.NotificationService;
 import cx.ring.services.PreferencesService;
-import cx.ring.tv.call.TVCallActivity;
-import cx.ring.utils.DeviceUtils;
 import io.reactivex.disposables.CompositeDisposable;
 
 public class DRingService extends Service {
@@ -113,7 +110,8 @@ public class DRingService extends Service {
     private static final int NOTIFICATION_ID = 1;
 
     private final ContactsContentObserver contactContentObserver = new ContactsContentObserver();
-    @Inject @Singleton
+    @Inject
+    @Singleton
     protected DaemonService mDaemonService;
     @Inject
     @Singleton
@@ -777,18 +775,10 @@ public class DRingService extends Service {
                 mNotificationService.cancelCallNotification(callId.hashCode());
                 break;
             case ACTION_CALL_VIEW:
-                if (DeviceUtils.isTv(this)) {
-                    startActivity(new Intent(Intent.ACTION_VIEW)
-                            .putExtras(extras)
-                            .setClass(getApplicationContext(), TVCallActivity.class)
-                            .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
-
-                } else {
-                    startActivity(new Intent(Intent.ACTION_VIEW)
-                            .putExtras(extras)
-                            .setClass(getApplicationContext(), CallActivity.class)
-                            .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
-                }
+                startActivity(new Intent(Intent.ACTION_VIEW)
+                        .putExtras(extras)
+                        .setClass(getApplicationContext(), CallActivity.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                 break;
         }
     }

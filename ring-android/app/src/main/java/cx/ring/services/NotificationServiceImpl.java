@@ -71,6 +71,7 @@ import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 import cx.ring.model.Uri;
 import cx.ring.service.DRingService;
+import cx.ring.tv.call.TVCallActivity;
 import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.FileUtils;
 import cx.ring.utils.ResourceMapper;
@@ -200,6 +201,17 @@ public class NotificationServiceImpl implements NotificationService {
         notificationManager.createNotificationChannel(backgroundChannel);
     }
 
+    /**
+     * Starts the call activity directly for Android TV
+     * @param callId the call ID
+     */
+    private void startCallActivity(String callId) {
+        mContext.startActivity(new Intent(Intent.ACTION_VIEW)
+                .putExtra(KEY_CALL_ID, callId)
+                .setClass(mContext.getApplicationContext(), TVCallActivity.class)
+                .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+    }
+
     @Override
     public void showCallNotification(Conference conference) {
         if (conference == null || conference.getParticipants().isEmpty()) {
@@ -207,7 +219,15 @@ public class NotificationServiceImpl implements NotificationService {
         }
 
         SipCall call = conference.getParticipants().get(0);
+
+        if(DeviceUtils.isTv(mContext)) {
+            startCallActivity(call.getCallId());
+            return;
+        }
+
         final int notificationId = call.getCallId().hashCode();
+
+
         notificationManager.cancel(notificationId);
 
         PendingIntent gotoIntent = PendingIntent.getService(mContext,
@@ -215,16 +235,6 @@ public class NotificationServiceImpl implements NotificationService {
                 new Intent(DRingService.ACTION_CALL_VIEW)
                         .setClass(mContext, DRingService.class)
                         .putExtra(KEY_CALL_ID, call.getCallId()), 0);
-
-        if(DeviceUtils.isTv(mContext)) {
-            try {
-                gotoIntent.send();
-            }
-            catch(PendingIntent.CanceledException e) {
-                Log.e(TAG, "Error launching incoming call on Android TV", e);
-            }
-            return;
-        }
 
         CallContact contact = call.getContact();
         NotificationCompat.Builder messageNotificationBuilder;
