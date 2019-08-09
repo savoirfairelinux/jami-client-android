@@ -167,7 +167,14 @@ public class CallPresenter extends RootPresenter<CallView> {
         // if the call is incoming through a full intent, this allows the incoming call to display
         incomingIsFullIntent = actionViewOnly;
 
-        Observable<SipCall> callObservable = mCallService.getCallUpdates(confId).observeOn(mUiScheduler).share();
+        Observable<SipCall> callObservable = mCallService.getCallUpdates(confId);
+
+        if(callObservable == null) {
+            hangupCall();
+            return;
+        }
+
+        callObservable = callObservable.observeOn(mUiScheduler).share();
 
         // Handles the case where the call has been accepted, emits a single so as to only check for permissions and start the call once
         mCompositeDisposable.add(callObservable.firstOrError().subscribe(call -> {
