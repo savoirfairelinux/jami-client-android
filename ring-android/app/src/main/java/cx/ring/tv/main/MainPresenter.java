@@ -184,10 +184,6 @@ public class MainPresenter extends RootPresenter<MainView> {
         getView().callContact(account.getAccountID(), ringID);
     }
 
-    public String getAccountUri() {
-        return mAccountService.getCurrentAccount().getUri();
-    }
-
     public void reloadAccountInfos() {
         if (mAccountService == null) {
             Log.e(TAG, "reloadAccountInfos: No account service available");

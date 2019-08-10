@@ -16,9 +16,14 @@
  */
 package cx.ring.tv.cards;
 
+import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+
 import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 /**
  * This is a generic example of a custom data object, containing info we might want to keep with
@@ -26,8 +31,8 @@ import androidx.annotation.DrawableRes;
  */
 public class Card {
 
-    int mLocalImageResource = -1;
-    BitmapDrawable mBitmapDrawable = null;
+    private int mLocalImageResource = -1;
+    private Drawable mDrawable = null;
     private String mTitle = "";
     private CharSequence mDescription = "";
     /*not used at the moment but will be use in futur*/
@@ -87,22 +92,21 @@ public class Card {
         mDescription = description;
     }
 
-    public
-    @DrawableRes
-    int getLocalImageResource() {
-        return mLocalImageResource;
-    }
-
     public void setLocalImageResource(@DrawableRes int localImageResource) {
         mLocalImageResource = localImageResource;
     }
 
-    public void setBitmapDrawableResource(BitmapDrawable bitmapDrawable) {
-        mBitmapDrawable = bitmapDrawable;
+    public void setDrawable(Drawable bitmapDrawable) {
+        mDrawable = bitmapDrawable;
     }
 
-    public BitmapDrawable getBitmapDrawableResource() {
-        return mBitmapDrawable;
+    public Drawable getDrawable(@NonNull Context context) {
+        if (mDrawable != null)
+            return mDrawable;
+        else if (mLocalImageResource != -1)
+            return ContextCompat.getDrawable(context, mLocalImageResource);
+        else
+            return new ColorDrawable(0x00000000);
     }
 
     /*not used at the moment but will be use in futur*/

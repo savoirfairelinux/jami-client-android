@@ -56,11 +56,7 @@ public class IconCardPresenter extends AbstractCardPresenter<ImageCardView> {
     public void onBindViewHolder(Card card, ImageCardView cardView) {
         cardView.setTitleText(card.getTitle());
         cardView.setContentText(card.getDescription());
-
-        if(card.getBitmapDrawableResource() != null)
-            cardView.setMainImage(card.getBitmapDrawableResource());
-        else
-            cardView.setMainImage(ContextCompat.getDrawable(cardView.getContext(), card.getLocalImageResource()));
+        cardView.setMainImage(card.getDrawable(cardView.getContext()));
     }
 
     private void animateIconBackground(Drawable drawable, boolean hasFocus) {

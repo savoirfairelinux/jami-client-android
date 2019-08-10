@@ -19,6 +19,8 @@
  */
 package cx.ring.tv.main;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -29,12 +31,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.leanback.app.BackgroundManager;
 import androidx.leanback.app.GuidedStepSupportFragment;
 import androidx.leanback.widget.ArrayObjectAdapter;
 import androidx.leanback.widget.HeaderItem;
 import androidx.leanback.widget.ImageCardView;
+import androidx.leanback.widget.ListRow;
 import androidx.leanback.widget.OnItemViewClickedListener;
 import androidx.leanback.widget.Presenter;
 import androidx.leanback.widget.Row;
@@ -78,7 +82,8 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     private static final long HEADER_CONTACTS = 0;
     private static final long HEADER_MISC = 1;
     private static final int TRUST_REQUEST_ROW_POSITION = 1;
-    SpinnerFragment mSpinnerFragment;
+    private static final int QR_ITEM_POSITION = 2;
+    private SpinnerFragment mSpinnerFragment;
     private ArrayObjectAdapter mRowsAdapter;
     private BackgroundManager mBackgroundManager;
     private ArrayObjectAdapter cardRowAdapter;
@@ -86,6 +91,8 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     private CustomTitleView titleView;
     private CardListRow requestsRow;
     private CardPresenterSelector selector;
+    private IconCard qrCard = null;
+    private ListRow myAccountRow;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -96,7 +103,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setupUIElements();
+        setupUIElements(requireActivity());
         titleView = view.findViewById(R.id.browse_title_group);
     }
 
@@ -107,10 +114,10 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         presenter.reloadAccountInfos();
     }
 
-    private void setupUIElements() {
-        selector = new CardPresenterSelector(getActivity());
-        mBackgroundManager = BackgroundManager.getInstance(getActivity());
-        mBackgroundManager.attach(getActivity().getWindow());
+    private void setupUIElements(@NonNull Activity activity) {
+        selector = new CardPresenterSelector(activity);
+        mBackgroundManager = BackgroundManager.getInstance(activity);
+        mBackgroundManager.attach(activity.getWindow());
         // over title
         setHeadersState(HEADERS_ENABLED);
         setHeadersTransitionOnBackEnabled(true);
@@ -135,21 +142,20 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
 
         /* CardPresenter */
         mRowsAdapter.add(contactListRow);
-        mRowsAdapter.add(createMyAccountRow());
-        mRowsAdapter.add(createAboutCardRow());
-
+        myAccountRow = createMyAccountRow(activity);
+        mRowsAdapter.add(myAccountRow);
+        mRowsAdapter.add(createAboutCardRow(activity));
         setAdapter(mRowsAdapter);
 
         // listeners
         setOnSearchClickedListener(view -> {
-            Intent intent = new Intent(getActivity(), SearchActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(getActivity(), SearchActivity.class));
         });
 
         setOnItemViewClickedListener(new ItemViewClickedListener());
     }
 
-    private Row createRow(String titleSection, List<Card> cards, boolean shadow) {
+    private ListRow createRow(String titleSection, List<Card> cards, boolean shadow) {
         CardRow row = new CardRow(
                 CardRow.TYPE_DEFAULT,
                 shadow,
@@ -164,13 +170,13 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         return new CardListRow(new HeaderItem(HEADER_MISC, titleSection), listRowAdapter, row);
     }
 
-    private Row createMyAccountRow() {
-        List<Card> cards = new ArrayList<>();
-        cards.add(IconCardHelper.getAccountAddDeviceCard(getActivity()));
-        cards.add(IconCardHelper.getAccountManagementCard(getActivity()));
-        cards.add(IconCardHelper.getAccountShareCard(getActivity(), prepareAccountQr()));
-        cards.add(IconCardHelper.getAccountSettingsCard(getActivity()));
-
+    private ListRow createMyAccountRow(@NonNull Context context) {
+        qrCard = IconCardHelper.getAccountShareCard(context, null);
+        List<Card> cards = new ArrayList<>(4);
+        cards.add(IconCardHelper.getAccountAddDeviceCard(context));
+        cards.add(IconCardHelper.getAccountManagementCard(context));
+        cards.add(qrCard);
+        cards.add(IconCardHelper.getAccountSettingsCard(context));
         return createRow(getString(R.string.ring_account), cards, false);
     }
 
@@ -188,12 +194,11 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
                 contactRequestRow);
     }
 
-    private Row createAboutCardRow() {
-        List<Card> cards = new ArrayList<>();
-        cards.add(IconCardHelper.getVersionCard(getActivity()));
-        cards.add(IconCardHelper.getLicencesCard(getActivity()));
-        cards.add(IconCardHelper.getContributorCard(getActivity()));
-
+    private Row createAboutCardRow(@NonNull Context context) {
+        List<Card> cards = new ArrayList<>(3);
+        cards.add(IconCardHelper.getVersionCard(context));
+        cards.add(IconCardHelper.getLicencesCard(context));
+        cards.add(IconCardHelper.getContributorCard(context));
         return createRow(getString(R.string.menu_item_about), cards, false);
     }
 
@@ -250,18 +255,18 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         getActivity().startActivity(intent, null);
     }
 
-    @Override
-    public BitmapDrawable prepareAccountQr() {
-        QRCodeUtils.QRCodeData qrCodeData = QRCodeUtils.encodeStringAsQRCodeData(presenter.getAccountUri(), 0X00000000, 0xFFFFFFFF);
+    static private BitmapDrawable prepareAccountQr(Context context, String accountId) {
+        QRCodeUtils.QRCodeData qrCodeData = QRCodeUtils.encodeStringAsQRCodeData(accountId, 0X00000000, 0xFFFFFFFF);
         Bitmap bitmap = Bitmap.createBitmap(qrCodeData.getWidth(), qrCodeData.getHeight(), Bitmap.Config.ARGB_8888);
         bitmap.setPixels(qrCodeData.getData(), 0, qrCodeData.getWidth(), 0, 0, qrCodeData.getWidth(), qrCodeData.getHeight());
-        return new BitmapDrawable(requireActivity().getResources(), bitmap);
+        return new BitmapDrawable(context.getResources(), bitmap);
     }
 
     @Override
     public void displayAccountInfos(final RingNavigationViewModel viewModel) {
-        if (getActivity() == null) {
-            Log.e(TAG, "displayAccountInfos: Not able to get activity");
+        Context context = getContext();
+        if (context == null) {
+            Log.e(TAG, "displayAccountInfos: Not able to get context");
             return;
         }
 
@@ -281,11 +286,14 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
                         titleView.setAlias(address);
                     }
                 })
-                .flatMap(p -> AvatarDrawable.load(getActivity(), account))
+                .flatMap(p -> AvatarDrawable.load(context, account))
                 .subscribe(a -> {
                     titleView.getLogoView().setVisibility(View.VISIBLE);
                     titleView.getLogoView().setImageDrawable(a);
                 });
+
+        qrCard.setDrawable(prepareAccountQr(context, account.getUri()));
+        myAccountRow.getAdapter().notifyItemRangeChanged(QR_ITEM_POSITION, 1);
     }
 
     @Override

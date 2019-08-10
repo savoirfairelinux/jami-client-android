@@ -38,6 +38,6 @@ public class IconCard extends Card {
         setType(pType);
         setTitle(name);
         setDescription(description);
-        setBitmapDrawableResource(bitmapDrawable);
+        setDrawable(bitmapDrawable);
     }
 }
