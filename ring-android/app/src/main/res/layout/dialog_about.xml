@@ -28,6 +28,24 @@
             android:text="@string/credits_developer"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/ringtones_by"
+            android:textColor="@color/color_primary_dark"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:text="@string/credits_ringtones"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
 
     </LinearLayout>
