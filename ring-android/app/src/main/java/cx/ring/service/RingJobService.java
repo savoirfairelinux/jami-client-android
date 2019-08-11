@@ -47,7 +47,6 @@ public class RingJobService extends JobService
         try {
             RingApplication.getInstance().startDaemon();
             new Thread(() -> {
-                RingApplication.getInstance().getHardwareService().connectivityChanged();
                 synchronized (this) {
                     try {
                         wait(JOB_DURATION);

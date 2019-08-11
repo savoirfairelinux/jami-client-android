@@ -62,9 +62,9 @@ public class HomeActivity extends FragmentActivity {
     @Override
     protected void onStart() {
         File path = AndroidFileUtils.ringtonesPath(this);
-        if (!(new File(path, "default.opus")).exists()) {
+        //if (!(new File(path, "default.opus")).exists()) {
             AndroidFileUtils.copyAssetFolder(getAssets(), "ringtones", path);
-        }
+        //}
         super.onStart();
     }
 }

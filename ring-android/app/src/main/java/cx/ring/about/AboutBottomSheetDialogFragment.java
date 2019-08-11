@@ -52,7 +52,7 @@ public class AboutBottomSheetDialogFragment extends BottomSheetDialogFragment {
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) ((View) contentView.getParent()).getLayoutParams();
         CoordinatorLayout.Behavior behavior = params.getBehavior();
 
-        if (behavior != null && behavior instanceof BottomSheetBehavior) {
+        if (behavior instanceof BottomSheetBehavior) {
             ((BottomSheetBehavior) behavior).setBottomSheetCallback(mCallback);
         }
     }
