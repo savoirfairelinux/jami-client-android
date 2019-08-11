@@ -21,6 +21,8 @@
 package cx.ring.tv.main;
 
 import android.os.Bundle;
+
+import androidx.leanback.app.BackgroundManager;
 import androidx.leanback.app.GuidedStepSupportFragment;
 import androidx.fragment.app.FragmentActivity;
 
@@ -31,11 +33,15 @@ import cx.ring.application.RingApplication;
 import cx.ring.utils.AndroidFileUtils;
 
 public class HomeActivity extends FragmentActivity {
+    private BackgroundManager mBackgroundManager;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         RingApplication.getInstance().startDaemon();
         setContentView(R.layout.tv_activity_home);
+        mBackgroundManager = BackgroundManager.getInstance(this);
+        mBackgroundManager.attach(getWindow());
     }
 
     @Override
@@ -45,6 +51,12 @@ public class HomeActivity extends FragmentActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mBackgroundManager.setDrawable(getResources().getDrawable(R.drawable.tv_background));
     }
 
     @Override

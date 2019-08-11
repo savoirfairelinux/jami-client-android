@@ -21,16 +21,13 @@ package cx.ring.tv.search;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.leanback.app.SearchFragment;
+import androidx.leanback.app.SearchSupportFragment;
 import androidx.leanback.widget.ArrayObjectAdapter;
 import androidx.leanback.widget.HeaderItem;
 import androidx.leanback.widget.ListRow;
 import androidx.leanback.widget.ListRowPresenter;
 import androidx.leanback.widget.ObjectAdapter;
-import androidx.leanback.widget.OnItemViewClickedListener;
-import androidx.leanback.widget.Presenter;
-import androidx.leanback.widget.Row;
-import androidx.leanback.widget.RowPresenter;
+import androidx.leanback.widget.SearchBar;
 import androidx.leanback.widget.SearchEditText;
 import androidx.core.content.ContextCompat;
 import android.view.View;
@@ -49,25 +46,28 @@ import cx.ring.tv.cards.contacts.ContactCard;
 import cx.ring.utils.Log;
 
 public class RingSearchFragment extends BaseSearchFragment<RingSearchPresenter>
-        implements SearchFragment.SearchResultProvider, RingSearchView {
+        implements SearchSupportFragment.SearchResultProvider, RingSearchView {
 
     private static final String TAG = RingSearchFragment.class.getSimpleName();
     @BindView(R.id.lb_search_text_editor)
     SearchEditText mTextEditor;
-    private ArrayObjectAdapter mRowsAdapter;
+
+    @BindView(R.id.lb_search_bar)
+    SearchBar mSearchBar;
+
+    private final ArrayObjectAdapter mRowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
     private Unbinder mUnbinder;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mRowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
         setSearchResultProvider(this);
 
         // dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
-        setOnItemViewClickedListener(new ItemViewClickedListener());
-
+        setOnItemViewClickedListener((itemViewHolder, item, rowViewHolder, row) -> presenter.contactClicked(((ContactCard) item).getModel().getContact()));
         setBadgeDrawable(ContextCompat.getDrawable(getActivity(), R.mipmap.ic_launcher));
+        setSearchQuery("", false);
     }
 
     @Override
@@ -75,13 +75,29 @@ public class RingSearchFragment extends BaseSearchFragment<RingSearchPresenter>
         super.onViewCreated(view, savedInstanceState);
         // view injection
         mUnbinder = ButterKnife.bind(this, view);
+        mSearchBar.setSearchBarListener(new SearchBar.SearchBarListener() {
+            @Override
+            public void onSearchQueryChange(String query) {
+                onQueryTextChange(query);
+            }
+
+            @Override
+            public void onSearchQuerySubmit(String query) {
+                onQueryTextSubmit(query);
+            }
+
+            @Override
+            public void onKeyboardDismiss(String query) {
+                mSearchBar.postDelayed(()-> {
+                    getRowsSupportFragment().getVerticalGridView().requestFocus();
+                }, 200);
+            }
+        });
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        //Disable voice recognition, it is not working properly for blockchain usernames
-        setSearchQuery("", false);
         if (mTextEditor != null) {
             mTextEditor.requestFocus();
         }
@@ -89,14 +105,12 @@ public class RingSearchFragment extends BaseSearchFragment<RingSearchPresenter>
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
-        // Butterknife unbinding
         mUnbinder.unbind();
+        super.onDestroyView();
     }
 
     @Override
     public ObjectAdapter getResultsAdapter() {
-        Log.d(TAG, "getResultsAdapter: " + mRowsAdapter.toString());
         return mRowsAdapter;
     }
 
@@ -108,7 +122,7 @@ public class RingSearchFragment extends BaseSearchFragment<RingSearchPresenter>
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        Log.i(TAG, String.format("Search Query Text Submit %s", query));
+        presenter.queryTextChanged(query);
         return true;
     }
 
@@ -123,7 +137,7 @@ public class RingSearchFragment extends BaseSearchFragment<RingSearchPresenter>
 
     @Override
     public void clearSearch() {
-        getActivity().runOnUiThread(() -> mRowsAdapter.clear());
+        mRowsAdapter.clear();
     }
 
     @Override
@@ -134,13 +148,4 @@ public class RingSearchFragment extends BaseSearchFragment<RingSearchPresenter>
         getActivity().startActivity(intent, null);
         getActivity().finish();
     }
-
-    private final class ItemViewClickedListener implements OnItemViewClickedListener {
-        @Override
-        public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item,
-                                  RowPresenter.ViewHolder rowViewHolder, Row row) {
-            presenter.contactClicked(((ContactCard) item).getModel().getContact());
-        }
-    }
-
 }

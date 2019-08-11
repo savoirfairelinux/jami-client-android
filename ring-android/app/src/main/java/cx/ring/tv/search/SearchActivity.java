@@ -19,13 +19,13 @@
  */
 package cx.ring.tv.search;
 
-import android.app.Activity;
 import android.os.Bundle;
+
+import androidx.fragment.app.FragmentActivity;
 
 import cx.ring.R;
 
-public class SearchActivity extends Activity {
-
+public class SearchActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -33,7 +33,6 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityOptionsCompat;
-import androidx.leanback.app.BackgroundManager;
 import androidx.leanback.app.GuidedStepSupportFragment;
 import androidx.leanback.widget.ArrayObjectAdapter;
 import androidx.leanback.widget.HeaderItem;
@@ -85,7 +84,6 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     private static final int QR_ITEM_POSITION = 2;
     private SpinnerFragment mSpinnerFragment;
     private ArrayObjectAdapter mRowsAdapter;
-    private BackgroundManager mBackgroundManager;
     private ArrayObjectAdapter cardRowAdapter;
     private ArrayObjectAdapter contactRequestRowAdapter;
     private CustomTitleView titleView;
@@ -110,14 +108,11 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     @Override
     public void onResume() {
         super.onResume();
-        mBackgroundManager.setDrawable(getResources().getDrawable(R.drawable.tv_background));
         presenter.reloadAccountInfos();
     }
 
     private void setupUIElements(@NonNull Activity activity) {
         selector = new CardPresenterSelector(activity);
-        mBackgroundManager = BackgroundManager.getInstance(activity);
-        mBackgroundManager.attach(activity.getWindow());
         // over title
         setHeadersState(HEADERS_ENABLED);
         setHeadersTransitionOnBackEnabled(true);

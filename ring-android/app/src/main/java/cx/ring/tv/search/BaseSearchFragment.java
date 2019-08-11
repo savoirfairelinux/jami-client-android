@@ -23,6 +23,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.leanback.app.SearchSupportFragment;
+
 import javax.inject.Inject;
 
 import cx.ring.R;
@@ -30,7 +32,7 @@ import cx.ring.model.RingError;
 import cx.ring.mvp.BaseView;
 import cx.ring.mvp.RootPresenter;
 
-public class BaseSearchFragment<T extends RootPresenter> extends androidx.leanback.app.SearchFragment
+public class BaseSearchFragment<T extends RootPresenter> extends SearchSupportFragment
         implements BaseView {
 
     protected static final String TAG = BaseSearchFragment.class.getSimpleName();
