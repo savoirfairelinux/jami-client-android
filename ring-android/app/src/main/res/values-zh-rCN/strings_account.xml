@@ -7,6 +7,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">添加Jami账户</string>
   <string name="add_sip_account_title">添加SIP帐户</string>
+  <string name="ring_account_default_name">Jami 用户%1$s</string>
   <string name="prompt_alias">别名</string>
   <string name="prompt_hostname">主机名</string>
   <string name="prompt_username">用户名</string>
@@ -43,6 +44,9 @@
   <string name="account_device_revocation_wrong_password">密码错误。</string>
   <string name="account_device_revocation_unknown_device">未知设备。</string>
   <string name="account_device_revocation_error_unknown">未知错误。</string>
+  <string name="account_password_change">更改密码</string>
+  <string name="account_password_set">设置密码</string>
+  <string name="account_password_change_wait_message">更改用户密码</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">通用</string>
   <string name="account_basic_category">基本设置</string>
@@ -112,6 +116,7 @@
   <string name="error_password_char_count">最少6字符</string>
   <string name="error_passwords_not_equals">密码不匹配</string>
   <string name="export_account_wait_title">请稍等…</string>
+  <string name="export_account_wait_message">导出用户信息</string>
   <string name="account_export_file">备份帐户</string>
   <string name="account_export_end_decryption_message">使用该密码无法解锁您的帐户。</string>
   <string name="account_export_end_network_title">网络错误</string>
@@ -142,6 +147,8 @@
   <string name="account_sip_success_title">SIP帐户已注册</string>
   <string name="account_sip_success_message">您已成功注册了您的SIP帐户。</string>
   <string name="account_sip_register_anyway">仍然注册</string>
+  <string name="account_link_button">从网络关联</string>
+  <string name="account_link_archive_button">从备份文件关联</string>
   <string name="account_link_prompt_pin">输入PIN</string>
   <string name="account_new_button">创建一个Jami账户</string>
   <string name="account_link_export_button">将另一设备与该帐户进行连接</string>
@@ -154,12 +161,14 @@
   <!--Name registration-->
   <string name="error_username_empty">输入用户名</string>
   <string name="no_registered_name_for_account">该帐户尚未注册用户名</string>
+  <string name="username_available">用户名不可用！</string>
   <string name="register_name">注册名称</string>
   <string name="trying_to_register_name">正在尝试注册用户名</string>
   <string name="registered_username">已注册的用户名</string>
   <string name="register_username">注册公开用户名（推荐）</string>
   <string name="username_already_taken">用户名已被占用</string>
   <string name="invalid_username">非法用户名</string>
+  <string name="unknown_error">未知错误。请检查你的网络连接。</string>
   <string name="looking_for_username_availability">正在检测用户名是否可用…</string>
   <string name="account_status_connecting">正在连接</string>
   <string name="account_status_connection_error">连接错误</string>

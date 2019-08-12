@@ -26,6 +26,7 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_connecting">Connectant</string>
     <string name="call_human_state_current">Parlant</string>
     <string name="call_human_state_busy">Ocupat</string>
+    <string name="call_human_state_failure">Ha fallat</string>
     <string name="call_human_state_hold">En espera</string>
     <!-- Conferences -->
 </resources>

@@ -10,6 +10,8 @@
   <string name="no_browser_app_installed">No s\'ha trobat cap navegador web, instal·leu-ne un per a visualitzar aquesta pàgina</string>
   <string name="email_chooser_title">Envia correu mitjançant...</string>
   <string name="website_chooser_title">Visualitza el lloc web amb...</string>
+  <string name="license">Aquest programari es proporciona \"tal i com es\" sense garantia de cap tipus. Per més detalls, veure la<u> Llicència Pública General GNU versió 3 o posterior</u> </string>
+  <string name="description">Jami és un programari lliure de comunicació universal, que respecta les llibertats i la privacitat dels seus usuaris.</string>
   <string name="credits">Crèdits</string>
   <!--About dialog-->
   <string name="developed_by">Desenvolupat per</string>
@@ -31,6 +33,7 @@
   <string name="menu_item_account">Administració del compte</string>
   <string name="menu_item_settings">Opcions</string>
   <string name="menu_item_share">Comparteix el meu contacte</string>
+  <string name="menu_item_about">Sobre Jami...</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Marca un número</string>
   <!--History Fragment-->
@@ -52,26 +55,37 @@
   <string name="notif_incoming_call">Trucada entrant</string>
   <string name="notif_outgoing_call_title">Trucada sortint de %1$s</string>
   <string name="notif_outgoing_call">Trucada sortint</string>
-  <string name="notif_current_call">Trucada sortint</string>
+  <string name="notif_current_call_title">Trucada en curs amb%1$s</string>
+  <string name="notif_current_call">Trucada en curs</string>
+  <string name="notif_channel_call_in_progress">Trucant...</string>
   <string name="notif_channel_calls">Trucades</string>
+  <string name="notif_channel_missed_calls">Trucades perdudes</string>
+  <string name="notif_channel_incoming_calls">Trucades entrants</string>
   <string name="notif_channel_messages">Missatges</string>
   <string name="notif_channel_requests">Peticions</string>
   <string name="notif_channel_file_transfer">Transferència de fitxers</string>
   <string name="notif_group_calls">Trucades</string>
+  <string name="notif_background_service">Jami s\'està executant en segon pla</string>
   <string name="notif_mark_as_read">Marca com a llegit</string>
   <string name="notif_incoming_file_transfer">Alguna persona us està enviant un fitxer</string>
-  <string name="notif_outgoing_file_transfer">Alguna persona us està enviant un fitxer</string>
+  <string name="notif_outgoing_file_transfer">Algú prova d\'enviar-te un fitxer</string>
   <string name="action_open">Obre</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Usuari:</string>
   <string name="action_call_hangup">Penja</string>
-  <string name="ongoing_call">Trucada sortint</string>
+  <string name="ongoing_call">Trucada en curs</string>
   <string name="hist_in_call">Trucada entrant de %1$s</string>
   <string name="hist_out_call">Trucada sortint a %1$s</string>
+  <string name="start_error_title">Jami no arrenca!</string>
+  <string name="start_error_mic_required">Jami requereix de permís d\'accés al micròfon per funcionar.</string>
   <string name="action_call_accept">Despenja</string>
   <string name="action_call_decline">Rebutja</string>
+  <string name="action_call_mic_mute">Silencia el micròfon</string>
   <string name="ab_action_speakerphone">Activa l\'altaveu</string>
   <string name="ab_action_contact_add">Afegeix als contactes</string>
+  <string name="ab_action_contact_add_question">Afegir als contactes?</string>
+  <string name="hist_contact_added">Contacte afegit</string>
+  <string name="hist_invitation_received">S\'ha rebut una invitació</string>
   <string name="ab_action_audio_call">Trucada de veu</string>
   <string name="ab_action_video_call">Videotrucada </string>
   <string name="ab_action_change_screen_orientation">Canvia l\'orientació de la pantalla</string>
@@ -82,13 +96,17 @@
   <!--Text messages-->
   <string name="send_message">Envia el missatge</string>
   <string name="message_sending">S\'està enviant el missatge</string>
+  <string name="message_failed">Ha fallat</string>
   <string name="time_just_now">Ara mateix</string>
   <string name="send_file">Envia el fitxer</string>
+  <string name="hist_file_sent">Fitxer enviat</string>
+  <string name="hist_file_received">S\'ha rebut un fitxer</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permís de la càmera</string>
   <string name="permission_dialog_camera_message">Habiliteu el permís de la càmera perquè funcionin les trucades de vídeo. </string>
   <string name="ringtone_error_title">Error</string>
   <string name="ringtone_error_format_not_supported">Aquest format no és compatible.</string>
+  <string name="ringtone_error_size_too_big">Aquest arxiu és massa gran. La mida màxima és %1$dkB.</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->
