@@ -2,10 +2,14 @@
   public <init>(android.content.Context);
 }
 
--keepattributes Signature
+-keepattributes InnerClasses
 
 -keep class android.support.v7.widget.LinearLayoutManager { *; }
 -keep,includedescriptorclasses class androidx.core.content.FileProvider { *; }
+
+-keepnames class * implements android.os.Parcelable {
+    public static final ** CREATOR;
+}
 
 -keep,includedescriptorclasses class cx.ring.** { *; }
 -keepclassmembers class cx.ring.** { *; }
