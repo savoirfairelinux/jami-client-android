@@ -396,6 +396,7 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     @Override
     public void initIncomingCallDisplay() {
         binding.callAcceptBtn.setVisibility(View.VISIBLE);
+        binding.callAcceptBtn.requestFocus();
         binding.callRefuseBtn.setVisibility(View.VISIBLE);
         binding.callHangupBtn.setVisibility(View.GONE);
     }
