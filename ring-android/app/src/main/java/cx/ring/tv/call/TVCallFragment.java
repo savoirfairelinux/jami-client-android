@@ -243,6 +243,13 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
         if (mScreenWakeLock != null && mScreenWakeLock.isHeld()) {
             mScreenWakeLock.release();
         }
+        View view = getView();
+        Runnable r = runnable;
+        if (view != null && r != null) {
+            Handler handler = view.getHandler();
+            if (handler != null)
+                handler.removeCallbacks(r);
+        }
     }
 
     @Override
@@ -622,15 +629,4 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
         }
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        View view = getView();
-        Runnable r = runnable;
-        if (view != null && r != null) {
-            Handler handler = view.getHandler();
-            if (handler != null)
-                handler.removeCallbacks(r);
-        }
-    }
 }
