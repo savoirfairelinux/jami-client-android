@@ -18,6 +18,7 @@
   <!--About dialog-->
   <string name="developed_by">Fejlesztők</string>
   <string name="designed_by">Tervezők</string>
+  <string name="ringtones_by">Csengőhangok:</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Jami</string>
   <string name="error_no_network">Nincs hálózati csatlakozás</string>
