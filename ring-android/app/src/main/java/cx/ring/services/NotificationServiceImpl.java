@@ -319,7 +319,8 @@ public class NotificationServiceImpl implements NotificationService {
      */
     @Override
     public void updateNotification(Object notification, int notificationId) {
-        notificationManager.notify(notificationId, (Notification) notification);
+        if(notification != null)
+            notificationManager.notify(notificationId, (Notification) notification);
     }
 
     /**
