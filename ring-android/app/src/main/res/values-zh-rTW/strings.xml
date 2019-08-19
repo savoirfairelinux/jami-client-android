@@ -18,6 +18,7 @@
   <!--About dialog-->
   <string name="developed_by">開發由</string>
   <string name="designed_by">設計由</string>
+  <string name="ringtones_by">鈴聲由</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">沒有網路連接</string>

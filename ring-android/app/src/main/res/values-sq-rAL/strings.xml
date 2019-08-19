@@ -18,6 +18,7 @@
   <!--About dialog-->
   <string name="developed_by">Programuar nga</string>
   <string name="designed_by">Skicuar nga</string>
+  <string name="ringtones_by">Zile nga</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Pa lidhje në rrjet</string>
