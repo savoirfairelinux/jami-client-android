@@ -258,7 +258,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         // prioritize bluetooth by checking for bluetooth device first
         if (mBluetoothWrapper != null && mBluetoothWrapper.canBluetooth() && mBluetoothWrapper.isBTHeadsetConnected()) {
             routeToBTHeadset();
-        } else if (mHasSpeakerPhone && mShouldSpeakerphone) {
+        } else if (!mAudioManager.isWiredHeadsetOn() && mHasSpeakerPhone && mShouldSpeakerphone) {
             routeToSpeaker();
         } else {
             resetAudio();
