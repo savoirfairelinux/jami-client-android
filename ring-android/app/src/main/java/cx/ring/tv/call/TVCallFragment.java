@@ -103,6 +103,7 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     private PowerManager.WakeLock mScreenWakeLock;
 
     private boolean mBackstackLost = false;
+    private boolean mTextureAvailable = false;
 
     private int mVideoWidth = -1;
     private int mVideoHeight = -1;
@@ -171,6 +172,7 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
         public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
             configureTransform(width, height);
             presenter.previewVideoSurfaceCreated(binding.previewSurface);
+            mTextureAvailable = true;
         }
 
         @Override
@@ -181,6 +183,7 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
         @Override
         public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
             presenter.previewVideoSurfaceDestroyed();
+            mTextureAvailable = false;
             return true;
         }
 
@@ -224,6 +227,13 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
         binding.previewSurface.setSurfaceTextureListener(listener);
         binding.shapeRipple.setRippleShape(new Circle());
         runnable = () -> presenter.uiVisibilityChanged(false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(mTextureAvailable)
+            presenter.previewVideoSurfaceCreated(binding.previewSurface);
     }
 
     @Override
