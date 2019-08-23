@@ -21,20 +21,13 @@ along with this program; if not, write to the Free Software
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory android:title="@string/account_ringtone_label">
-        <SwitchPreference
-            android:key="Account.ringtoneEnabled"
-            android:persistent="false"
-            android:title="@string/account_ringtone_enabled_label" />
-
-        <SwitchPreference
-            android:key="Account.ringtoneCustom"
-            android:persistent="true"
-            android:title="@string/account_ringtone_custom_label" />
 
         <Preference
-            android:key="Account.ringtonePath"
-            android:persistent="false"
-            android:title="@string/account_ringtone_path_label" />
+            android:key="ringtone"
+            android:summary="@string/account_ringtone_summary"
+            android:title="Set a ringtone"
+            android:icon="@drawable/baseline_notifications_active_24"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/account_audio_label">
@@ -50,10 +43,10 @@ along with this program; if not, write to the Free Software
             android:persistent="false"
             android:title="@string/account_video_enable" />
         <cx.ring.fragments.CodecPreference
+            android:dependency="Account.videoEnabled"
             android:key="Account.videoCodecs"
             android:layout="@layout/frag_audio_mgmt"
-            android:persistent="false"
-            android:dependency="Account.videoEnabled"/>
+            android:persistent="false" />
     </PreferenceCategory>
 
 
