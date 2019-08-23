@@ -26,13 +26,9 @@ import cx.ring.model.Codec;
 
 public interface MediaPreferenceView {
 
-    void initPreferences(boolean isRingtoneEnabled, boolean isCustomRingtoneEnabled);
-
     void accountChanged(Account account, ArrayList<Codec> audioCodec, ArrayList<Codec> videoCodec);
 
     void displayWrongFileFormatDialog();
-
-    void displayFileTooBigDialog();
 
     void displayPermissionCameraDenied();
 
