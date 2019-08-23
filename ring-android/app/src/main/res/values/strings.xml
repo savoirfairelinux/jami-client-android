@@ -167,9 +167,15 @@ along with this program; if not, write to the Free Software
     <!-- MediaPreferenceFragment -->
     <string name="permission_dialog_camera_title">Camera permission</string>
     <string name="permission_dialog_camera_message">Video conversations require the camera permission to work. Please consider enabling it.</string>
+
+    <!-- Ringtone activity -->
     <string name="ringtone_error_title">Error</string>
     <string name="ringtone_error_format_not_supported">This format is not supported.</string>
     <string name="ringtone_error_size_too_big">This file is too big. The maximum size is %1$dkB.</string>
+    <string name="ringtone_custom_prompt">Set a custom ringtone</string>
+    <string name="ringtone_custom_label">Custom</string>
+    <string name="ringtone_jami_tones">Jami Tones</string>
+    <string name="ringtone_default_name" translatable="false">1 AfroNigeria.opus</string>
 
     <!-- Read contacts permission -->
     <string name="permission_dialog_read_contacts_message">Jami needs the "Read contacts" permission to enable this feature. Please grant it.</string>

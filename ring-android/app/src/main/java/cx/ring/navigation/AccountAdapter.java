@@ -121,11 +121,11 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 break;
             }
             case TYPE_ADD_SIP_ACCOUNT:
-                ((AddAccountView) holder).icon.setImageResource(R.drawable.ic_add_black_24dp);
+                ((AddAccountView) holder).icon.setImageResource(R.drawable.baseline_add_24);
                 ((AddAccountView) holder).title.setText(R.string.add_sip_account_title);
                 break;
             case TYPE_ADD_RING_ACCOUNT:
-                ((AddAccountView) holder).icon.setImageResource(R.drawable.ic_add_black_24dp);
+                ((AddAccountView) holder).icon.setImageResource(R.drawable.baseline_add_24);
                 ((AddAccountView) holder).title.setText(R.string.add_ring_account_title);
                 break;
             default:
