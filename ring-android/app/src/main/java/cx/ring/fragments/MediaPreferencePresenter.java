@@ -38,7 +38,6 @@ import io.reactivex.Scheduler;
 public class MediaPreferencePresenter extends RootPresenter<MediaPreferenceView>
 {
     public static final String TAG = MediaPreferencePresenter.class.getSimpleName();
-    public static final int MAX_SIZE_RINGTONE = 64 * 1024;
 
     protected AccountService mAccountService;
     protected DeviceRuntimeService mDeviceRuntimeService;
@@ -87,34 +86,14 @@ public class MediaPreferencePresenter extends RootPresenter<MediaPreferenceView>
                 .subscribe(l -> {}, e -> Log.e(TAG, "Error loading codec list")));
     }
 
-    void onFileFound(String type, String path) {
-        File myFile = new File(path);
-        if (myFile.length() / 1024 > MAX_SIZE_RINGTONE) {
-            getView().displayFileTooBigDialog();
-        } else {
-            mAccount.setDetail(ConfigKey.RINGTONE_PATH, myFile.getAbsolutePath());
-            updateAccount();
-        }
-    }
 
     void codecChanged(ArrayList<Long> codecs) {
         mAccountService.setActiveCodecList(mAccount.getAccountID(), codecs);
     }
 
-    void audioPreferenceChanged(ConfigKey key, Object newValue) {
-        if (key != null) {
-            mAccount.setDetail(key, newValue.toString());
-            updateAccount();
-        }
-    }
-
     void videoPreferenceChanged(ConfigKey key, Object newValue) {
             mAccount.setDetail(key, newValue.toString());
             updateAccount();
-    }
-
-    void fileSearchClicked() {
-        getView().displayFileSearchDialog();
     }
 
     private void updateAccount() {
