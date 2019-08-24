@@ -31,10 +31,12 @@ import android.content.ServiceConnection;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.IBinder;
+import android.system.Os;
 import android.util.Log;
 
 import com.bumptech.glide.Glide;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Future;
@@ -45,6 +47,7 @@ import javax.inject.Named;
 
 import androidx.annotation.RequiresApi;
 import cx.ring.BuildConfig;
+import cx.ring.R;
 import cx.ring.contacts.AvatarFactory;
 import cx.ring.daemon.Ringservice;
 import cx.ring.dependencyinjection.DaggerRingInjectionComponent;
@@ -62,7 +65,10 @@ import cx.ring.services.DaemonService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.PreferencesService;
+import cx.ring.utils.AndroidFileUtils;
+import io.reactivex.Completable;
 import io.reactivex.plugins.RxJavaPlugins;
+import io.reactivex.schedulers.Schedulers;
 
 public abstract class RingApplication extends Application {
     private static final String TAG = RingApplication.class.getSimpleName();
@@ -223,6 +229,20 @@ public abstract class RingApplication extends Application {
         sInstance = this;
 
         RxJavaPlugins.setErrorHandler(e -> Log.e(TAG, "Unhandled RxJava error", e));
+
+        Completable.fromAction(() -> {
+            File path = AndroidFileUtils.ringtonesPath(this);
+            File defaultRingtone = new File(path, getString(R.string.ringtone_default_name));
+            File defaultLink = new File(path, "default.opus");
+            if (!defaultRingtone.exists()) {
+                AndroidFileUtils.copyAssetFolder(getAssets(), "ringtones", path);
+            }
+            if (!defaultLink.exists()) {
+                Os.symlink(defaultRingtone.getAbsolutePath(), defaultLink.getAbsolutePath());
+            }
+        })
+        .subscribeOn(Schedulers.io())
+        .subscribe();
 
         // building injection dependency tree
         mRingInjectionComponent = DaggerRingInjectionComponent.builder()

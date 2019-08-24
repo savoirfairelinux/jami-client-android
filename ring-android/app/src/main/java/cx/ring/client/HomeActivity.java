@@ -309,15 +309,6 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-    @Override
-    protected void onStart() {
-        File path = AndroidFileUtils.ringtonesPath(this);
-        //if (!(new File(path, "default.opus")).exists()) {
-            AndroidFileUtils.copyAssetFolder(getAssets(), "ringtones", path);
-        //}
-        super.onStart();
-    }
-
     public void setToolbarState(boolean doubleHeight, int titleRes) {
 
         mToolbar.setMinimumHeight((int) mToolbarSize);

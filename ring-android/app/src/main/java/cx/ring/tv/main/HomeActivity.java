@@ -58,13 +58,4 @@ public class HomeActivity extends FragmentActivity {
         super.onResume();
         mBackgroundManager.setDrawable(getResources().getDrawable(R.drawable.tv_background));
     }
-
-    @Override
-    protected void onStart() {
-        File path = AndroidFileUtils.ringtonesPath(this);
-        //if (!(new File(path, "default.opus")).exists()) {
-            AndroidFileUtils.copyAssetFolder(getAssets(), "ringtones", path);
-        //}
-        super.onStart();
-    }
 }
