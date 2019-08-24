@@ -28,8 +28,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
+import cx.ring.model.Interaction.InteractionStatus;
 import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
@@ -91,6 +91,7 @@ public class Account {
         mDetails = new AccountConfig();
         mVolatileDetails = new AccountConfig();
     }
+
     public Account(String bAccountID, final Map<String, String> details,
                    final List<Map<String, String>> credentials,
                    final Map<String, String> volDetails) {
@@ -111,6 +112,7 @@ public class Account {
     public Observable<List<Conversation>> getConversationsSubject() {
         return conversationsSubject;
     }
+
     public Observable<List<SmartListViewModel>> getConversationsViewModels() {
         return conversationsSubject
                 .map(conversations -> {
@@ -124,6 +126,7 @@ public class Account {
     public Observable<Conversation> getConversationSubject() {
         return conversationSubject;
     }
+
     public Observable<SmartListViewModel> getConversationViewModel() {
         return conversationSubject.map(c -> new SmartListViewModel(accountID, c.getContact(), c.getLastEvent()));
     }
@@ -154,10 +157,12 @@ public class Account {
             updateUnreadPending();
         }
     }
+
     private void pendingChanged() {
         pendingsChanged = true;
         pendingRefreshed();
     }
+
     public void pendingUpdated(Conversation conversation) {
         if (!historyLoaded)
             return;
@@ -166,7 +171,7 @@ public class Account {
         } else {
             if (conversation != null)
                 conversation.sortHistory();
-            Collections.sort(sortedPending, (a, b) -> ConversationElement.compare(b.getLastEvent(), a.getLastEvent()));
+            Collections.sort(sortedPending, (a, b) -> Interaction.compare(b.getLastEvent(), a.getLastEvent()));
         }
         pendingSubject.onNext(getSortedPending());
     }
@@ -177,12 +182,14 @@ public class Account {
             updateUnreadConversations();
         }
     }
+
     private void conversationChanged() {
         conversationsChanged = true;
         if (historyLoaded) {
             conversationsSubject.onNext(new ArrayList<>(getSortedConversations()));
         }
     }
+
     public void conversationUpdated(Conversation conversation) {
         if (!historyLoaded)
             return;
@@ -192,7 +199,7 @@ public class Account {
             } else {
                 if (conversation != null)
                     conversation.sortHistory();
-                Collections.sort(sortedConversations, (a, b) -> ConversationElement.compare(b.getLastEvent(), a.getLastEvent()));
+                Collections.sort(sortedConversations, (a, b) -> Interaction.compare(b.getLastEvent(), a.getLastEvent()));
             }
             conversationsSubject.onNext(new ArrayList<>(sortedConversations));
             updateUnreadConversations();
@@ -214,25 +221,44 @@ public class Account {
         unreadPendingSubject.onNext(sortedPending.size());
     }
 
-    public void clearHistory(Uri contact) {
+    /**
+     * Clears a conversation
+     *
+     * @param contact the contact
+     * @param delete  true if you want to remove the conversation
+     */
+    public void clearHistory(Uri contact, boolean delete) {
         Conversation conversation = getByUri(contact);
-        conversation.clearHistory();
+        // if it is a sip account, we do not add a contact event
+        conversation.clearHistory(delete || isSip());
         conversationChanged();
     }
 
+    public void clearAllHistory() {
+        for (Conversation conversation : getConversations()) {
+            // if it is a sip account, we do not add a contact event
+            conversation.clearHistory(isSip());
+        }
+        for (Conversation conversation : pending.values()) {
+            conversation.clearHistory(true);
+        }
+        conversationChanged();
+        pendingChanged();
+    }
+
     public void updated(Conversation conversation) {
-        String key = conversation.getContact().getPrimaryUri().getRawUriString();
+        String key = conversation.getContact().getPrimaryUri().getUri();
         if (conversation == conversations.get(key))
             conversationUpdated(conversation);
         else if (conversation == pending.get(key))
             pendingUpdated(conversation);
         else if (conversation == cache.get(key)) {
-            if (isRing()) {
-                pending.put(key, conversation);
-                pendingChanged();
-            } else {
+            if (mContacts.containsKey(key) || !isRing()) {
                 conversations.put(key, conversation);
                 conversationChanged();
+            } else {
+                pending.put(key, conversation);
+                pendingChanged();
             }
         }
     }
@@ -246,11 +272,12 @@ public class Account {
 
     public void addTextMessage(TextMessage txt) {
         Conversation conversation = null;
-        if (!StringUtils.isEmpty(txt.getCallId())) {
-            conversation = getConversationByCallId(txt.getCallId());
+        String daemonId = txt.getDaemonIdString();
+        if (daemonId != null && !StringUtils.isEmpty(daemonId)) {
+            conversation = getConversationByCallId(daemonId);
         }
         if (conversation == null) {
-            conversation = getByUri(txt.getNumberUri());
+            conversation = getByKey(txt.getConversation().getParticipant());
             txt.setContact(conversation.getContact());
         }
         conversation.addTextMessage(txt);
@@ -259,8 +286,8 @@ public class Account {
 
     public Conversation onDataTransferEvent(DataTransfer transfer) {
         Conversation conversation = getByUri(new Uri(transfer.getPeerId()));
-        DataTransferEventCode transferEventCode = transfer.getEventCode();
-        if (transferEventCode == DataTransferEventCode.CREATED) {
+        InteractionStatus transferEventCode = transfer.getStatus();
+        if (transferEventCode == InteractionStatus.TRANSFER_CREATED) {
             conversation.addFileTransfer(transfer);
         } else {
             conversation.updateFileTransfer(transfer, transferEventCode);
@@ -286,8 +313,9 @@ public class Account {
             return contact;
         }
     }
+
     public CallContact getContactFromCache(Uri uri) {
-        return getContactFromCache(uri.getRawUriString());
+        return getContactFromCache(uri.getUri());
     }
 
     public void dispose() {
@@ -366,6 +394,7 @@ public class Account {
     public boolean isDhtProxyEnabled() {
         return mDetails.getBool(ConfigKey.PROXY_ENABLED);
     }
+
     public void setDhtProxyEnabled(boolean active) {
         mDetails.put(ConfigKey.PROXY_ENABLED, active ? "true" : "false");
     }
@@ -608,7 +637,6 @@ public class Account {
                     CallContact.Status.REQUEST_SENT);
         }
         mContacts.put(contactId, callContact);
-        contactAdded(callContact);
     }
 
     public void setContacts(List<Map<String, String>> contacts) {
@@ -628,8 +656,12 @@ public class Account {
         return requests;
     }
 
+    public Map<String, TrustRequest> getRequestsMigration() {
+        return mRequests;
+    }
+
     public TrustRequest getRequest(Uri uri) {
-        return mRequests.get(uri.getRawUriString());
+        return mRequests.get(uri.getRawRingId());
     }
 
     public void addRequest(TrustRequest request) {
@@ -638,7 +670,7 @@ public class Account {
             //trustRequestSubject.onNext(new RequestEvent(request, true));
             trustRequestsSubject.onNext(mRequests.values());
 
-            String key = new Uri(request.getContactId()).getRawUriString();
+            String key = new Uri(request.getContactId()).getUri();
             Conversation conversation = pending.get(key);
             if (conversation == null) {
                 conversation = getByKey(key);
@@ -654,7 +686,7 @@ public class Account {
         synchronized (pending) {
             for (TrustRequest request : requests) {
                 mRequests.put(request.getContactId(), request);
-                String key = new Uri(request.getContactId()).getRawUriString();
+                String key = new Uri(request.getContactId()).getUri();
                 Conversation conversation = pending.get(key);
                 if (conversation == null) {
                     conversation = getByKey(key);
@@ -670,12 +702,13 @@ public class Account {
 
     public boolean removeRequest(Uri contact) {
         synchronized (pending) {
-            TrustRequest request = mRequests.remove(contact.getRawUriString());
+            String contactUri = contact.getUri();
+            TrustRequest request = mRequests.remove(contactUri);
             if (request != null) {
                 //trustRequestSubject.onNext(new RequestEvent(request, true));
                 trustRequestsSubject.onNext(mRequests.values());
             }
-            if (pending.remove(contact.getRawUriString()) != null) {
+            if (pending.remove(contactUri) != null) {
                 pendingChanged();
                 return true;
             }
@@ -687,7 +720,7 @@ public class Account {
         Uri uri = new Uri(address);
         CallContact contact = getContactFromCache(uri);
         if (contact.setUsername(state == 0 ? name : null)) {
-            String key = uri.getRawUriString();
+            String key = uri.getUri();
             synchronized (conversations) {
                 Conversation conversation = conversations.get(key);
                 if (conversation != null)
@@ -702,16 +735,31 @@ public class Account {
 
     public Conversation getByUri(Uri uri) {
         if (uri != null && !uri.isEmpty()) {
-            return getByKey(uri.getRawUriString());
+            return getByKey(uri.getUri());
         }
         return null;
+    }
+
+    public Conversation getByUri(String uri) {
+        return getByKey(uri);
+    }
+
+    private Conversation getByKey(String key) {
+        Conversation conversation = cache.get(key);
+        if (conversation != null) {
+            return conversation;
+        }
+        CallContact contact = getContactFromCache(key);
+        conversation = new Conversation(getAccountID(), contact);
+        cache.put(key, conversation);
+        return conversation;
     }
 
     public boolean isHistoryLoaded() {
         return historyLoaded;
     }
 
-    public void setHistoryLoaded(Set<Conversation> conversations) {
+    public void setHistoryLoaded(List<Conversation> conversations) {
         if (historyLoaded)
             return;
         Log.w(TAG, "setHistoryLoaded() " + conversations.size());
@@ -759,20 +807,10 @@ public class Account {
         return sortedPending;
     }
 
-    private Conversation getByKey(String key) {
-        Conversation conversation = cache.get(key);
-        if (conversation != null) {
-            return conversation;
-        }
-        CallContact contact = getContactFromCache(key);
-        conversation = new Conversation(getAccountID(), contact);
-        cache.put(key, conversation);
-        return conversation;
-    }
 
     private void contactAdded(CallContact contact) {
         Uri uri = contact.getPrimaryUri();
-        String key = uri.getRawUriString();
+        String key = uri.getUri();
         synchronized (conversations) {
             if (conversations.get(key) != null)
                 return;
@@ -793,7 +831,7 @@ public class Account {
     }
 
     private void contactRemoved(Uri uri) {
-        String key = uri.getRawUriString();
+        String key = uri.getUri();
         synchronized (conversations) {
             synchronized (pending) {
                 if (pending.remove(key) != null)
@@ -815,19 +853,18 @@ public class Account {
     }
 
     public void presenceUpdate(String contactUri, boolean isOnline) {
-        String key = CallContact.PREFIX_RING + contactUri;
-        CallContact contact = getContactFromCache(key);
+        CallContact contact = getContactFromCache(contactUri);
         if (contact.isOnline() == isOnline)
             return;
         contact.setOnline(isOnline);
         synchronized (conversations) {
-            Conversation conversation = conversations.get(key);
+            Conversation conversation = conversations.get(contactUri);
             if (conversation != null) {
                 conversationRefreshed(conversation);
             }
         }
         synchronized (pending) {
-            if (pending.containsKey(key))
+            if (pending.containsKey(contactUri))
                 pendingRefreshed();
         }
     }
@@ -848,6 +885,7 @@ public class Account {
     public Tuple<String, Object> getLoadedProfile() {
         return mLoadedProfile;
     }
+
     public void setLoadedProfile(Tuple<String, Object> profile) {
         mLoadedProfile = profile;
     }
@@ -855,7 +893,7 @@ public class Account {
     private static class ConversationComparator implements Comparator<Conversation> {
         @Override
         public int compare(Conversation a, Conversation b) {
-            return ConversationElement.compare(b.getLastEvent(), a.getLastEvent());
+            return Interaction.compare(b.getLastEvent(), a.getLastEvent());
         }
     }
 
