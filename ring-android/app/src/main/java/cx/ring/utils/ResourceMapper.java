@@ -23,40 +23,37 @@ package cx.ring.utils;
 import android.content.Context;
 
 import cx.ring.R;
-import cx.ring.model.DataTransferEventCode;
+import cx.ring.model.Interaction.InteractionStatus;
 
 public class ResourceMapper {
 
-    public static String getReadableFileTransferStatus(Context context, DataTransferEventCode dataTransferEventCode) {
-        if (dataTransferEventCode == DataTransferEventCode.CREATED) {
+    public static String getReadableFileTransferStatus(Context context, InteractionStatus transferStatus) {
+        if (transferStatus == InteractionStatus.TRANSFER_CREATED) {
             return context.getString(R.string.file_transfer_status_created);
         }
-        if (dataTransferEventCode == DataTransferEventCode.UNSUPPORTED) {
-            return context.getString(R.string.file_transfer_status_unsupported);
-        }
-        if (dataTransferEventCode == DataTransferEventCode.WAIT_PEER_ACCEPTANCE) {
+        if (transferStatus == InteractionStatus.TRANSFER_AWAITING_PEER) {
             return context.getString(R.string.file_transfer_status_wait_peer_acceptance);
         }
-        if (dataTransferEventCode == DataTransferEventCode.WAIT_HOST_ACCEPTANCE) {
+        if (transferStatus == InteractionStatus.TRANSFER_AWAITING_HOST) {
             return context.getString(R.string.file_transfer_status_wait_host_acceptance);
         }
-        if (dataTransferEventCode == DataTransferEventCode.ONGOING) {
+        if (transferStatus == InteractionStatus.TRANSFER_ONGOING) {
             return context.getString(R.string.file_transfer_status_ongoing);
         }
-        if (dataTransferEventCode == DataTransferEventCode.FINISHED) {
+        if (transferStatus == InteractionStatus.TRANSFER_FINISHED) {
             return context.getString(R.string.file_transfer_status_finished);
         }
-        if (dataTransferEventCode == DataTransferEventCode.CLOSED_BY_HOST) {
-            return context.getString(R.string.file_transfer_status_closed_by_host);
+        if (transferStatus == InteractionStatus.TRANSFER_CANCELED) {
+            return context.getString(R.string.file_transfer_status_cancelled);
         }
-        if (dataTransferEventCode == DataTransferEventCode.CLOSED_BY_PEER) {
-            return context.getString(R.string.file_transfer_status_closed_by_peer);
-        }
-        if (dataTransferEventCode == DataTransferEventCode.INVALID_PATHNAME) {
-            return context.getString(R.string.file_transfer_status_invalid_pathname);
-        }
-        if (dataTransferEventCode == DataTransferEventCode.UNJOINABLE_PEER) {
+        if (transferStatus == InteractionStatus.TRANSFER_UNJOINABLE_PEER) {
             return context.getString(R.string.file_transfer_status_unjoinable_peer);
+        }
+        if (transferStatus == InteractionStatus.TRANSFER_ERROR) {
+            return context.getString(R.string.file_transfer_status_error);
+        }
+        if (transferStatus == InteractionStatus.TRANSFER_TIMEOUT_EXPIRED) {
+            return context.getString(R.string.file_transfer_status_timed_out);
         }
         return "";
     }
