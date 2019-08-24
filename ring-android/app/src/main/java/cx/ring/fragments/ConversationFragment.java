@@ -79,7 +79,7 @@ import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.interfaces.Colorable;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
-import cx.ring.model.ConversationElement;
+import cx.ring.model.Interaction;
 import cx.ring.model.DataTransfer;
 import cx.ring.model.Phone;
 import cx.ring.model.RingError;
@@ -145,7 +145,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     @Override
-    public void refreshView(final List<ConversationElement> conversation) {
+    public void refreshView(final List<Interaction> conversation) {
         if (conversation == null) {
             return;
         }
@@ -154,7 +154,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         if (mAdapter != null) {
             mAdapter.updateDataset(conversation);
         }
-        getActivity().invalidateOptionsMenu();
+        requireActivity().invalidateOptionsMenu();
     }
 
     @Override
@@ -525,18 +525,18 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     @Override
-    public void addElement(ConversationElement element) {
+    public void addElement(Interaction element) {
         mAdapter.add(element);
         scrollToEnd();
     }
 
     @Override
-    public void updateElement(ConversationElement element) {
+    public void updateElement(Interaction element) {
         mAdapter.update(element);
     }
 
     @Override
-    public void removeElement(ConversationElement element) {
+    public void removeElement(Interaction element) {
         mAdapter.remove(element);
     }
 

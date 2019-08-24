@@ -145,7 +145,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
             if (currentAccount.isSip()) {
                 // sip search
                 mCallContact = mContactService.findContact(currentAccount, uri);
-                mCompositeDisposable.add(mContactService.loadContactData(mCallContact)
+                mCompositeDisposable.add(mContactService.loadContactData(mCallContact, currentAccount.getAccountID())
                         .observeOn(mUiScheduler)
                         .subscribe(() -> view.displayContact(mCallContact), rt -> view.displayContact(mCallContact)));
             } else {
