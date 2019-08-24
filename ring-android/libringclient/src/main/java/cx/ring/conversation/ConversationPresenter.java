@@ -308,7 +308,6 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         } else {
             getView().displayOnGoingCallPane(false);
         }
-        getView().scrollToEnd();
     }
 
     public void onBlockIncomingContactRequest() {
