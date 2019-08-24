@@ -51,7 +51,7 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
     public MediaPlayer player;
     public TextureView video;
     public Surface surface = null;
-    public long mCid = -1;
+    public String mCid;
     public UiUpdater updater;
     public LinearLayout mCallInfoLayout, mFileInfoLayout, mAudioInfoLayout;
 
