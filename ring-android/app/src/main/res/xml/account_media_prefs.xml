@@ -41,7 +41,8 @@ along with this program; if not, write to the Free Software
         <SwitchPreference
             android:key="Account.videoEnabled"
             android:persistent="false"
-            android:title="@string/account_video_enable" />
+            android:title="@string/account_video_enable"
+            android:icon="@drawable/baseline_videocam_24"/>
         <cx.ring.fragments.CodecPreference
             android:dependency="Account.videoEnabled"
             android:key="Account.videoCodecs"
