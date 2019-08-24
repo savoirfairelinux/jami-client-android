@@ -108,7 +108,7 @@ public class CallContact {
     }
 
     public boolean matches(String query) {
-        return (mDisplayName != null && mDisplayName.contains(query))
+        return (mDisplayName != null && mDisplayName.toLowerCase().contains(query))
                 || (mUsername != null && mUsername.contains(query))
                 || (getPrimaryNumber().contains(query));
     }
