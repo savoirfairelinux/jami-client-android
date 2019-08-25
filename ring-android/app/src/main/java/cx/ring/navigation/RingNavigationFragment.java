@@ -226,6 +226,7 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
         switch (requestCode) {
             case HomeActivity.REQUEST_PERMISSION_CAMERA:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    presenter.cameraPermissionChanged(true);
                     presenter.cameraClicked();
                 }
                 break;

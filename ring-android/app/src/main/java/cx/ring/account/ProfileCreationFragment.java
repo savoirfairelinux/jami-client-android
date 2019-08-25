@@ -146,6 +146,7 @@ public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreation
         switch (requestCode) {
             case ProfileCreationFragment.REQUEST_PERMISSION_CAMERA:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    presenter.cameraPermissionChanged(true);
                     presenter.cameraClick();
                 }
                 break;

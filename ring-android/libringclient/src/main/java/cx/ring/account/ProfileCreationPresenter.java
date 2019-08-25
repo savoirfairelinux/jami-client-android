@@ -25,6 +25,7 @@ import cx.ring.model.Account;
 import cx.ring.mvp.AccountCreationModel;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.DeviceRuntimeService;
+import cx.ring.services.HardwareService;
 import cx.ring.utils.Log;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
@@ -35,13 +36,15 @@ public class ProfileCreationPresenter extends RootPresenter<ProfileCreationView>
     public static final String TAG = ProfileCreationPresenter.class.getSimpleName();
 
     private final DeviceRuntimeService mDeviceRuntimeService;
+    private final HardwareService mHardwareService;
     private final Scheduler mUiScheduler;
 
     private AccountCreationModel mAccountCreationModel;
 
     @Inject
-    public ProfileCreationPresenter(DeviceRuntimeService deviceRuntimeService, Scheduler uiScheduler) {
+    public ProfileCreationPresenter(DeviceRuntimeService deviceRuntimeService, HardwareService hardwareService, Scheduler uiScheduler) {
         mDeviceRuntimeService = deviceRuntimeService;
+        mHardwareService = hardwareService;
         mUiScheduler = uiScheduler;
     }
 
@@ -93,6 +96,12 @@ public class ProfileCreationPresenter extends RootPresenter<ProfileCreationView>
             getView().goToPhotoCapture();
         } else {
             getView().askPhotoPermission();
+        }
+    }
+
+    public void cameraPermissionChanged(boolean isGranted) {
+        if (isGranted && mHardwareService.isVideoAvailable()) {
+            mHardwareService.initVideo();
         }
     }
 

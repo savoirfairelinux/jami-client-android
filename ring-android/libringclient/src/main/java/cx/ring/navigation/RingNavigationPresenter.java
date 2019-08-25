@@ -30,6 +30,7 @@ import cx.ring.model.Account;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
+import cx.ring.services.HardwareService;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
 import cx.ring.utils.VCardUtils;
@@ -46,8 +47,9 @@ public class RingNavigationPresenter extends RootPresenter<RingNavigationView> {
 
     private static final String TAG = RingNavigationPresenter.class.getSimpleName();
 
-    private AccountService mAccountService;
-    private DeviceRuntimeService mDeviceRuntimeService;
+    private final AccountService mAccountService;
+    private final DeviceRuntimeService mDeviceRuntimeService;
+    private final HardwareService mHardwareService;
 
     @Inject
     @Named("UiScheduler")
@@ -55,8 +57,10 @@ public class RingNavigationPresenter extends RootPresenter<RingNavigationView> {
 
     @Inject
     public RingNavigationPresenter(AccountService accountService,
+                                   HardwareService hardwareService,
                                    DeviceRuntimeService deviceRuntimeService) {
         mAccountService = accountService;
+        mHardwareService = hardwareService;
         mDeviceRuntimeService = deviceRuntimeService;
     }
 
@@ -201,6 +205,12 @@ public class RingNavigationPresenter extends RootPresenter<RingNavigationView> {
             getView().goToGallery();
         } else {
             getView().askGalleryPermission();
+        }
+    }
+
+    public void cameraPermissionChanged(boolean isGranted) {
+        if (isGranted && mHardwareService.isVideoAvailable()) {
+            mHardwareService.initVideo();
         }
     }
 }
