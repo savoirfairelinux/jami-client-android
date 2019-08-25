@@ -50,7 +50,7 @@ import cx.ring.viewholders.SmartListViewHolder;
 public class ContactRequestsFragment extends BaseSupportFragment<ContactRequestsPresenter> implements ContactRequestsView,
         SmartListViewHolder.SmartListListeners {
 
-    static final String TAG = ContactRequestsFragment.class.getSimpleName();
+    private  static final String TAG = ContactRequestsFragment.class.getSimpleName();
     public static final String ACCOUNT_ID = TAG + "accountID";
 
     @BindView(R.id.requests_list)
@@ -84,7 +84,9 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
         if (bundle != null && bundle.containsKey(ACCOUNT_ID)) {
             String accountId = bundle.getString(ACCOUNT_ID);
             presenter.updateAccount(accountId);
-            getArguments().putString(ACCOUNT_ID, accountId);
+            Bundle arguments = getArguments();
+            if (arguments != null)
+                arguments.putString(ACCOUNT_ID, accountId);
         }
     }
 
