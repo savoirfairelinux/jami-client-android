@@ -79,4 +79,13 @@ public abstract class PreferencesService {
     public abstract Set<String> loadRequestsPreferences(String accountId);
 
     public abstract void removeRequestPreferences(String accountId, String contactId);
+
+    public abstract int getResolution();
+
+    public abstract int getBitrate();
+
+    public abstract boolean isHardwareAccelerationEnabled();
+
+
+
 }

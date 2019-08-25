@@ -53,7 +53,9 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -63,6 +65,8 @@ import cx.ring.daemon.RingserviceJNI;
 import cx.ring.daemon.UintVect;
 import cx.ring.utils.Log;
 import cx.ring.views.AutoFitTextureView;
+import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 class CameraServiceCamera2 extends CameraService {
@@ -75,44 +79,70 @@ class CameraServiceCamera2 extends CameraService {
     private final CameraManager manager;
     private CameraDevice previewCamera;
     private MediaCodec currentCodec;
+    private static final Set<String> addedDevices = new HashSet<>();
 
     CameraServiceCamera2(@NonNull Context c) {
         manager = (CameraManager) c.getSystemService(Context.CAMERA_SERVICE);
     }
 
-    @Override
-    void init() {
-        mNativeParams.clear();
-        if (manager == null)
-            return;
-        try {
-            cameras.clear();
+    private Single<VideoDevices> loadDevices(CameraManager manager) {
+        return Single.fromCallable(() -> {
+            VideoDevices devices = new VideoDevices();
             for (String id : manager.getCameraIdList()) {
-                currentCamera = id;
+                devices.currentId = id;
                 CameraCharacteristics cc = manager.getCameraCharacteristics(id);
                 int facing = cc.get(CameraCharacteristics.LENS_FACING);
                 if (facing == CameraCharacteristics.LENS_FACING_FRONT) {
-                    cameraFront = id;
+                    devices.cameraFront = id;
                 }
-                cameras.add(id);
-                RingserviceJNI.addVideoDevice(id);
-            }
-            if (!TextUtils.isEmpty(cameraFront))
-                currentCamera = cameraFront;
-            else if (!cameras.isEmpty())
-                currentCamera = cameras.get(0);
+                devices.cameras.add(id);
+                if (!TextUtils.isEmpty(devices.cameraFront))
+                    devices.currentId = devices.cameraFront;
+                else if (!devices.cameras.isEmpty())
+                    devices.currentId = devices.cameras.get(0);
 
-            if (currentCamera != null) {
-                for (int i=0; i<cameras.size(); i++)
-                    if (cameras.get(i) == currentCamera) {
-                        currentCameraIndex = i;
-                        break;
-                    }
-                RingserviceJNI.setDefaultDevice(currentCamera);
+                if (devices.currentId != null) {
+                    for (int i=0; i<devices.cameras.size(); i++)
+                        if (devices.cameras.get(i) == devices.currentId) {
+                            devices.currentIndex = i;
+                            break;
+                        }
+                }
             }
-        } catch (Exception e) {
-            Log.w(TAG, "initVideo: can't enumerate devices", e);
-        }
+            Log.w(TAG, "Loading video devices: found " + devices.cameras.size());
+            return devices;
+        }).subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    void init() {
+        if (manager == null)
+            return;
+        loadDevices(manager)
+                .subscribe(devs -> {
+                    synchronized (addedDevices) {
+                        VideoDevices old = devices;
+                        devices = devs;
+                        // Removed devices
+                        if (old != null) {
+                            for (String oldId : old.cameras) {
+                                if (!devs.cameras.contains(oldId)) {
+                                    if (addedDevices.remove(oldId))
+                                        RingserviceJNI.removeVideoDevice(oldId);
+                                }
+                            }
+                        }
+                        // Added devices
+                        for (String camera : devs.cameras) {
+                            if (addedDevices.add(camera))
+                                RingserviceJNI.addVideoDevice(camera);
+                        }
+                        // New default
+                        if (devs.currentId != null) {
+                            RingserviceJNI.setDefaultDevice(devs.currentId);
+                        }
+                    }
+                }, e-> Log.w(TAG, "initVideo: can't enumerate devices", e));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -164,11 +194,17 @@ class CameraServiceCamera2 extends CameraService {
         }
     }
 
-    private Pair<MediaCodec, Surface> openCameraWithEncoder(VideoParams videoParams, String mimeType, Handler handler, boolean isHd) {
-        final int BITRATE = isHd ? 192 * 8 * 1024 : 100 * 8 * 1024;
+    private Pair<MediaCodec, Surface> openCameraWithEncoder(VideoParams videoParams, String mimeType, Handler handler, int resolution, int bitrate) {
+        Log.d(TAG, "Video with resolution: " + resolution + " Bitrate: " + bitrate);
+        int bitrateValue;
+        if(bitrate == 0)
+            bitrateValue = resolution >= 720 ? 192 * 8 * 1024 : 100 * 8 * 1024;
+        else
+            bitrateValue = bitrate * 8 * 1024;
+
         MediaFormat format = MediaFormat.createVideoFormat(mimeType, videoParams.width, videoParams.height);
         format.setInteger(MediaFormat.KEY_MAX_INPUT_SIZE, 0);
-        format.setInteger(MediaFormat.KEY_BIT_RATE, BITRATE);
+        format.setInteger(MediaFormat.KEY_BIT_RATE, bitrateValue);
         format.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface);
         if (Build.VERSION.SDK_INT != Build.VERSION_CODES.LOLLIPOP)
             format.setInteger(MediaFormat.KEY_FRAME_RATE, 24);
@@ -193,7 +229,7 @@ class CameraServiceCamera2 extends CameraService {
             try {
                 codec = MediaCodec.createByCodecName(codecName);
                 Bundle params = new Bundle();
-                params.putInt(MediaCodec.PARAMETER_KEY_VIDEO_BITRATE, BITRATE);
+                params.putInt(MediaCodec.PARAMETER_KEY_VIDEO_BITRATE, bitrateValue);
                 codec.setParameters(params);
                 codec.configure(format, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
                 encoderInput = codec.createInputSurface();
@@ -329,7 +365,7 @@ class CameraServiceCamera2 extends CameraService {
         return range == null ? new Range<>(FPS_TARGET, FPS_TARGET) : range;
     }
 
-    public void openCamera(@NonNull Context context, VideoParams videoParams, TextureView surface, CameraListener listener, boolean hw_accel, boolean is_hd) {
+    public void openCamera(@NonNull Context context, VideoParams videoParams, TextureView surface, CameraListener listener, boolean hw_accel, int resolution, int bitrate) {
         CameraDevice camera = previewCamera;
         if (camera != null) {
             camera.close();
@@ -358,7 +394,7 @@ class CameraServiceCamera2 extends CameraService {
             SurfaceTexture texture = view.getSurfaceTexture();
             Surface s = new Surface(texture);
 
-            final Pair<MediaCodec, Surface> codec = hw_accel ? openCameraWithEncoder(videoParams, videoParams.getCodec(), handler, is_hd) : null;
+            final Pair<MediaCodec, Surface> codec = hw_accel ? openCameraWithEncoder(videoParams, videoParams.getCodec(), handler, resolution, bitrate) : null;
 
             final List<Surface> targets = new ArrayList<>(2);
             targets.add(s);
@@ -490,10 +526,16 @@ class CameraServiceCamera2 extends CameraService {
                 if (s.getWidth() < s.getHeight()) {
                     continue;
                 }
-                if ((s.getWidth() == minVideoSize.x && s.getHeight() == minVideoSize.y) ||
-                        (newSize.getWidth() < minVideoSize.x
-                                ? s.getWidth() > newSize.getWidth()
-                                : (s.getWidth() >= minVideoSize.x && s.getWidth() < newSize.getWidth()))) {
+                if ((s.getWidth() == minVideoSize.x && s.getHeight() == minVideoSize.y)
+                        // Has height closer but still higher than target
+                        || (newSize.getHeight() < minVideoSize.y
+                            ? s.getHeight() > newSize.getHeight()
+                            : (s.getHeight() >= minVideoSize.y && s.getHeight() < newSize.getHeight()))
+                        // Has width closer but still higher than target
+                        || (s.getHeight() == newSize.getHeight()
+                            && newSize.getWidth() < minVideoSize.x
+                                    ? s.getWidth() > newSize.getWidth()
+                                    : (s.getWidth() >= minVideoSize.x && s.getWidth() < newSize.getWidth()))) {
                     newSize = s;
                 }
             }

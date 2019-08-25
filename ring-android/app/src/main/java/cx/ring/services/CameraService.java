@@ -26,6 +26,7 @@ import android.view.Surface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import cx.ring.daemon.IntVect;
@@ -40,28 +41,37 @@ abstract public class CameraService {
     private final HashMap<String, VideoParams> mParams = new HashMap<>();
     final Map<String, DeviceParams> mNativeParams = new HashMap<>();
 
-    String cameraFront = null;
-    final ArrayList<String> cameras = new ArrayList<>();
+    static class VideoDevices {
+        final List<String> cameras = new ArrayList<>();
+        String currentId;
+        int currentIndex;
+        String cameraFront;
 
-    int currentCameraIndex = 0;
-    String currentCamera = null;
+        public String switchInput(boolean setDefaultCamera) {
+            if(setDefaultCamera && cameraFront != null) {
+                currentId = cameraFront;
+            }
+            else if (!cameras.isEmpty()) {
+                currentIndex = (currentIndex + 1) % cameras.size();
+                currentId = cameras.get(currentIndex);
+            } else {
+                currentId = null;
+            }
+            return currentId;
+        }
+    }
+
+    protected VideoDevices devices = null;
     private VideoParams previewParams = null;
 
     public String switchInput(boolean setDefaultCamera) {
-        if(setDefaultCamera && cameraFront != null) {
-            currentCamera= cameraFront;
-        }
-        else if (!cameras.isEmpty()) {
-            currentCameraIndex = (currentCameraIndex + 1) % cameras.size();
-            currentCamera = cameras.get(currentCameraIndex);
-        } else {
-            currentCamera = null;
-        }
-        return currentCamera;
+        if (devices == null)
+            return null;
+        return devices.switchInput(setDefaultCamera);
     }
 
     public String getCurrentCamera() {
-        return currentCamera;
+        return devices == null ? null : devices.currentId;
     }
 
     public VideoParams getParams(String camId) {
@@ -69,12 +79,12 @@ abstract public class CameraService {
             return mParams.get(camId);
         } else if (previewParams != null) {
             return previewParams;
-        } else if (cameraFront != null) {
-            currentCamera = cameraFront;
-            return mParams.get(cameraFront);
-        } else if (!cameras.isEmpty()) {
-            currentCamera = cameras.get(0);
-            return mParams.get(currentCamera);
+        } else if (devices != null && devices.cameraFront != null) {
+            devices.currentId = devices.cameraFront;
+            return mParams.get(devices.cameraFront);
+        } else if (devices != null && !devices.cameras.isEmpty()) {
+            devices.currentId = devices.cameras.get(0);
+            return mParams.get(devices.currentId);
         }
         return null;
     }
@@ -150,7 +160,7 @@ abstract public class CameraService {
     }
 
     public boolean isPreviewFromFrontCamera() {
-        return mNativeParams.size() == 1 || (currentCamera != null && currentCamera.equals(cameraFront));
+        return mNativeParams.size() == 1 || (devices.currentId != null && devices.currentId.equals(devices.cameraFront));
     }
 
     public Map<String, StringMap> getPreviewSettings() {

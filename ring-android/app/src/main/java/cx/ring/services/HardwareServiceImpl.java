@@ -405,11 +405,29 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     public void getCameraInfo(String camId, IntVect formats, UintVect sizes, UintVect rates) {
         // Use a larger resolution for Android 6.0+, 64 bits devices
         final boolean useLargerSize = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.SUPPORTED_64_BIT_ABIS.length > 0;
-        final boolean useHD = DeviceUtils.isTv(mContext) || mPreferenceService.getSettings().isHD();
         //int MIN_WIDTH = useLargerSize ? (useHD ? VIDEO_WIDTH_HD : VIDEO_WIDTH) : VIDEO_WIDTH_MIN;
-        final Point minVideoSize = useLargerSize ? (useHD ? VIDEO_SIZE_HD : VIDEO_SIZE_DEFAULT) : VIDEO_SIZE_LOW;
+        Point minVideoSize;
+        if (useLargerSize)
+            minVideoSize = parseResolution(mPreferenceService.getResolution());
+        else
+            minVideoSize = VIDEO_SIZE_LOW;
 
         cameraService.getCameraInfo(camId, formats, sizes, rates, minVideoSize);
+    }
+
+    private Point parseResolution(int resolution) {
+        switch(resolution) {
+            case 480:
+                return VIDEO_SIZE_DEFAULT;
+            case 720:
+                return VIDEO_SIZE_HD;
+            case 1080:
+                return VIDEO_SIZE_FULL_HD;
+            case 2160:
+                return VIDEO_SIZE_ULTRA_HD;
+            default:
+                return VIDEO_SIZE_HD;
+        }
     }
 
     @Override
@@ -451,16 +469,20 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         Log.d(TAG, "startCapture: startCapture " + videoParams.id + " " + videoParams.width + "x" + videoParams.height + " rot" + videoParams.rotation);
 
         mUiScheduler.scheduleDirect(() -> {
-            cameraService.openCamera(mContext, videoParams, surface, new CameraService.CameraListener() {
-                @Override
-                public void onOpened() {
-                }
+            cameraService.openCamera(mContext, videoParams, surface,
+                    new CameraService.CameraListener() {
+                        @Override
+                        public void onOpened() {
+                        }
 
-                @Override
-                public void onError() {
-                    stopCapture();
-                }
-            }, mPreferenceService.getUserSettings().isHwEncoding(), mPreferenceService.getUserSettings().isHD());
+                        @Override
+                        public void onError() {
+                            stopCapture();
+                        }
+                    },
+                    mPreferenceService.isHardwareAccelerationEnabled(),
+                    mPreferenceService.getResolution(),
+                    mPreferenceService.getBitrate());
         });
         cameraService.setPreviewParams(videoParams);
         VideoEvent event = new VideoEvent();

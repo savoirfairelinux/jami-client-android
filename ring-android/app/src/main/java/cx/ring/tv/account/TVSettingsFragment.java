@@ -19,11 +19,14 @@
  */
 package cx.ring.tv.account;
 
-import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
-import androidx.preference.PreferenceFragment;
+
+import androidx.fragment.app.Fragment;
+import androidx.leanback.preference.LeanbackSettingsFragmentCompat;
+import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreference;
-import androidx.leanback.preference.LeanbackSettingsFragment;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceScreen;
 import android.util.Log;
@@ -35,8 +38,9 @@ import cx.ring.fragments.GeneralAccountPresenter;
 import cx.ring.fragments.GeneralAccountView;
 import cx.ring.model.Account;
 import cx.ring.model.ConfigKey;
+import cx.ring.services.SharedPreferencesServiceImpl;
 
-public class TVSettingsFragment extends LeanbackSettingsFragment {
+public class TVSettingsFragment extends LeanbackSettingsFragmentCompat {
 
     @Override
     public void onPreferenceStartInitialScreen() {
@@ -44,22 +48,21 @@ public class TVSettingsFragment extends LeanbackSettingsFragment {
     }
 
     @Override
-    public boolean onPreferenceStartFragment(PreferenceFragment preferenceFragment, Preference preference) {
+    public boolean onPreferenceStartFragment(PreferenceFragmentCompat preferenceFragment, Preference preference) {
         return false;
     }
 
     @Override
-    public boolean onPreferenceStartScreen(PreferenceFragment caller, PreferenceScreen pref) {
+    public boolean onPreferenceStartScreen(PreferenceFragmentCompat caller, PreferenceScreen pref) {
         final Fragment prefsFragment = PrefsFragment.newInstance();
         final Bundle args = new Bundle();
-        args.putString(PreferenceFragment.ARG_PREFERENCE_ROOT, pref.getKey());
+        args.putString(PreferenceFragmentCompat.ARG_PREFERENCE_ROOT, pref.getKey());
         prefsFragment.setArguments(args);
         startPreferenceFragment(prefsFragment);
         return true;
     }
 
     public static class PrefsFragment extends RingPreferenceFragment<GeneralAccountPresenter> implements GeneralAccountView {
-
         private boolean autoAnswer;
 
         public static PrefsFragment newInstance() {
@@ -93,12 +96,15 @@ public class TVSettingsFragment extends LeanbackSettingsFragment {
             // load information from account to ui
             autoAnswer = account.getConfig().getBool(ConfigKey.ACCOUNT_AUTOANSWER);
 
-            SwitchPreference pref = (SwitchPreference) findPreference(ConfigKey.ACCOUNT_AUTOANSWER.key());
+            SwitchPreference pref = findPreference(ConfigKey.ACCOUNT_AUTOANSWER.key());
             pref.setChecked(autoAnswer);
         }
 
         @Override
         public void onCreatePreferences(Bundle bundle, String rootKey) {
+            PreferenceManager pm = getPreferenceManager();
+            pm.setSharedPreferencesMode(Context.MODE_PRIVATE);
+            pm.setSharedPreferencesName(SharedPreferencesServiceImpl.PREFS_VIDEO);
             setPreferencesFromResource(R.xml.tv_account_general_pref, rootKey);
         }
 

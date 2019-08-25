@@ -23,6 +23,7 @@ package cx.ring.services;
 import android.content.Context;
 import android.content.SharedPreferences;
 import androidx.annotation.NonNull;
+
 import android.text.TextUtils;
 
 import java.util.HashMap;
@@ -32,6 +33,7 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
+import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.model.Settings;
 import cx.ring.utils.DeviceUtils;
@@ -39,13 +41,15 @@ import cx.ring.utils.NetworkUtils;
 
 public class SharedPreferencesServiceImpl extends PreferencesService {
 
-    private static final String RING_SETTINGS = "ring_settings";
+    public static final String RING_SETTINGS = "ring_settings";
     private static final String RING_REQUESTS = "ring_requests";
+    public static final String PREFS_VIDEO = "video_settings";
     private static final String RING_MOBILE_DATA = "mobile_data";
     private static final String RING_PUSH_NOTIFICATIONS = "push_notifs";
     private static final String RING_PERSISTENT_NOTIFICATION = "persistent_notif";
-    private static final String RING_HD = "hd_upload";
-    private static final String RING_HW_ENCODING = "hw_encoding";
+    private static final String RING_HW_ENCODING = "video_hwenc";
+    public static final String RING_BITRATE = "video_bitrate";
+    public static final String RING_RESOLUTION = "video_resolution";
     private static final String RING_SYSTEM_CONTACTS = "system_contacts";
     private static final String RING_PLACE_CALLS = "place_calls";
     private static final String RING_ON_STARTUP = "on_startup";
@@ -56,7 +60,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
 
     @Override
     protected void saveSettings(Settings settings) {
-        SharedPreferences appPrefs = mContext.getSharedPreferences(RING_SETTINGS, Context.MODE_PRIVATE);
+        SharedPreferences appPrefs = getPreferences();
         SharedPreferences.Editor edit = appPrefs.edit();
         edit.clear();
         edit.putBoolean(RING_MOBILE_DATA, settings.isAllowMobileData());
@@ -65,14 +69,12 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         edit.putBoolean(RING_ON_STARTUP, settings.isAllowRingOnStartup());
         edit.putBoolean(RING_PUSH_NOTIFICATIONS, settings.isAllowPushNotifications());
         edit.putBoolean(RING_PERSISTENT_NOTIFICATION, settings.isAllowPersistentNotification());
-        edit.putBoolean(RING_HD, settings.isHD());
-        edit.putBoolean(RING_HW_ENCODING, settings.isHwEncoding());
         edit.apply();
     }
 
     @Override
     protected Settings loadSettings() {
-        SharedPreferences appPrefs = mContext.getSharedPreferences(RING_SETTINGS, Context.MODE_PRIVATE);
+        SharedPreferences appPrefs = getPreferences();
         Settings settings = getUserSettings();
         if (settings == null) {
             settings = new Settings();
@@ -83,14 +85,12 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         settings.setAllowRingOnStartup(appPrefs.getBoolean(RING_ON_STARTUP, true));
         settings.setAllowPushNotifications(appPrefs.getBoolean(RING_PUSH_NOTIFICATIONS, false));
         settings.setAllowPersistentNotification(appPrefs.getBoolean(RING_PERSISTENT_NOTIFICATION, false));
-        settings.setHD(appPrefs.getBoolean(RING_HD, false));
-        settings.setHwEncoding(appPrefs.getBoolean(RING_HW_ENCODING, true));
         return settings;
     }
 
     private void saveRequests(String accountId, Set<String> requests) {
         SharedPreferences preferences = mContext.getSharedPreferences(RING_REQUESTS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor edit = preferences.edit();
+        SharedPreferences.Editor edit = getPreferences().edit();
         edit.putStringSet(accountId, requests);
         edit.apply();
     }
@@ -130,5 +130,31 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
     public boolean isPushAllowed() {
         String token = RingApplication.getInstance().getPushToken();
         return getSettings().isAllowPushNotifications() && !TextUtils.isEmpty(token) /*&& NetworkUtils.isPushAllowed(mContext, getSettings().isAllowMobileData())*/;
+    }
+
+    @Override
+    public int getResolution() {
+        return Integer.parseInt(getVideoPreferences().getString(RING_RESOLUTION,
+                DeviceUtils.isTv(mContext)
+                        ? mContext.getString(R.string.video_resolution_default_tv)
+                        : mContext.getString(R.string.video_resolution_default)));
+    }
+
+    @Override
+    public int getBitrate() {
+        return Integer.parseInt(getVideoPreferences().getString(RING_BITRATE, mContext.getString(R.string.video_bitrate_default)));
+    }
+
+    @Override
+    public boolean isHardwareAccelerationEnabled() {
+        return getVideoPreferences().getBoolean(RING_HW_ENCODING, true);
+    }
+
+    private SharedPreferences getPreferences() {
+        return mContext.getSharedPreferences(RING_SETTINGS, Context.MODE_PRIVATE);
+    }
+
+    private SharedPreferences getVideoPreferences() {
+        return mContext.getSharedPreferences(PREFS_VIDEO, Context.MODE_PRIVATE);
     }
 }

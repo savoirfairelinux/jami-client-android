@@ -50,6 +50,14 @@ import javax.inject.Inject;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+
+import java.io.File;
+
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.BuildConfig;
@@ -72,6 +80,7 @@ import cx.ring.services.HardwareService;
 import cx.ring.services.NotificationService;
 import cx.ring.services.PreferencesService;
 import cx.ring.settings.SettingsFragment;
+import cx.ring.settings.VideoSettingsFragment;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.DeviceUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -91,6 +100,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
     public static final String ACCOUNTS_TAG = "Accounts";
     public static final String ABOUT_TAG = "About";
     public static final String SETTINGS_TAG = "Prefs";
+    public static final String VIDEO_SETTINGS_TAG = "VideoPrefs";
     static public final String ACTION_PRESENT_TRUST_REQUEST_FRAGMENT = BuildConfig.APPLICATION_ID + "presentTrustRequestFragment";
     static final String TAG = HomeActivity.class.getSimpleName();
     private static final String NAVIGATION_TAG = "Navigation";
@@ -345,14 +355,14 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         mDisposable.clear();
         mDisposable.add(mAccountService.getObservableAccountList()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(accounts ->  {
-                        for (Account account : accounts) {
-                            if (account.needsMigration()) {
-                                showMigrationDialog();
-                                break;
-                            }
+                .subscribe(accounts -> {
+                    for (Account account : accounts) {
+                        if (account.needsMigration()) {
+                            showMigrationDialog();
+                            break;
                         }
-                    }));
+                    }
+                }));
     }
 
     public void startConversationTablet(Bundle bundle) {
@@ -393,12 +403,16 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
             mNavigationDrawer.closeDrawer(GravityCompat.START);
             return;
         }
-        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
-            popCustomBackStack();
-            fNavigation.selectSection(RingNavigationFragment.Section.HOME);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        int fCount = fragmentManager.getBackStackEntryCount();
+        if (fCount > 1) {
+            FragmentManager.BackStackEntry entry = fragmentManager.getBackStackEntryAt(fCount - 2);
+            fContent = fragmentManager.findFragmentById(entry.getId());
+            fragmentManager.popBackStack();
+            if (fCount == 2)
+                fNavigation.selectSection(RingNavigationFragment.Section.HOME);
             return;
         }
-
         finish();
     }
 
@@ -406,7 +420,8 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentManager.BackStackEntry entry = fragmentManager.getBackStackEntryAt(0);
         fContent = fragmentManager.findFragmentById(entry.getId());
-        for (int i = 0; i < fragmentManager.getBackStackEntryCount() - 1; ++i) {
+        int entryCount = fragmentManager.getBackStackEntryCount() - 1;
+        for (int i = 0; i < entryCount; ++i) {
             fragmentManager.popBackStack();
         }
     }
@@ -448,6 +463,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
                     ((ContactRequestsFragment) fContent).presentForAccount(bundle);
                     break;
                 }
+                popCustomBackStack();
                 fContent = new ContactRequestsFragment();
                 fContent.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction()
@@ -459,6 +475,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
                 if (fContent instanceof AccountsManagementFragment) {
                     break;
                 }
+                popCustomBackStack();
                 fContent = new AccountsManagementFragment();
                 getSupportFragmentManager().beginTransaction()
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -469,6 +486,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
                 if (fContent instanceof AboutFragment) {
                     break;
                 }
+                popCustomBackStack();
                 fContent = new AboutFragment();
                 getSupportFragmentManager().beginTransaction()
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -517,12 +535,28 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         if (fContent instanceof SettingsFragment) {
             return;
         }
+        popCustomBackStack();
         fContent = new SettingsFragment();
         getSupportFragmentManager()
                 .beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(R.id.main_frame, fContent, SETTINGS_TAG)
                 .addToBackStack(SETTINGS_TAG).commit();
+    }
+
+    public void goToVideoSettings() {
+        if (mNavigationDrawer != null && !isDrawerLocked) {
+            mNavigationDrawer.closeDrawers();
+        }
+        if (fContent instanceof VideoSettingsFragment) {
+            return;
+        }
+        fContent = new VideoSettingsFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .replace(R.id.main_frame, fContent, VIDEO_SETTINGS_TAG)
+                .addToBackStack(VIDEO_SETTINGS_TAG).commit();
     }
 
     @Override

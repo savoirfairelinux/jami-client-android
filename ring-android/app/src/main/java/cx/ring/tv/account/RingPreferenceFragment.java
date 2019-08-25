@@ -20,14 +20,15 @@
 package cx.ring.tv.account;
 
 import android.os.Bundle;
-import androidx.leanback.preference.LeanbackPreferenceFragment;
+import androidx.leanback.preference.LeanbackPreferenceFragmentCompat;
+
 import android.view.View;
 
 import javax.inject.Inject;
 
 import cx.ring.mvp.RootPresenter;
 
-public abstract class RingPreferenceFragment<T extends RootPresenter> extends LeanbackPreferenceFragment {
+public abstract class RingPreferenceFragment<T extends RootPresenter> extends LeanbackPreferenceFragmentCompat {
 
     protected static final String TAG = RingPreferenceFragment.class.getSimpleName();
 

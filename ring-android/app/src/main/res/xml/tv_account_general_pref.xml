@@ -5,6 +5,37 @@
             android:defaultValue="false"
             android:key="Account.autoAnswer"
             android:persistent="false"
-            android:title="@string/account_autoanswer_label" />
+            android:title="@string/account_autoanswer_label"
+            android:icon="@drawable/baseline_call_24"/>
     </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_category_video">
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:icon="@drawable/baseline_memory_24"
+            android:key="video_hwenc"
+            android:summary="@string/pref_hwEncode_summary"
+            android:title="@string/pref_hwEncode_title" />
+
+        <ListPreference
+            android:defaultValue="@string/video_bitrate_default"
+            android:dependency="video_hwenc"
+            android:entries="@array/video_bitrateStrings"
+            android:entryValues="@array/video_bitrates"
+            android:icon="@drawable/baseline_bitrate_24"
+            android:key="video_bitrate"
+            android:summary="Select default outgoing video bitrate (KB/s)"
+            android:title="Video bitrate" />
+
+        <ListPreference
+            android:defaultValue="@string/video_resolution_default_tv"
+            android:entries="@array/video_resolutionStrings"
+            android:entryValues="@array/video_resolutions"
+            android:icon="@drawable/baseline_hd_24"
+            android:key="video_resolution"
+            android:summary="Select default outgoing video resolution"
+            android:title="Video resolution" />
+    </PreferenceCategory>
+
 </PreferenceScreen>

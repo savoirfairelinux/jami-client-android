@@ -146,7 +146,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </RelativeLayout>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/settings_video"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="@string/pref_category_video"
@@ -154,69 +155,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:textSize="18sp" />
 
             <RelativeLayout
-                android:id="@+id/settings_hd_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <ImageView
-                    android:id="@+id/hd_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="start"
-                    android:contentDescription="@string/pref_hd_summary"
-                    android:tint="@color/black"
-                    app:srcCompat="@drawable/ic_videocam_white" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@id/settings_hd"
-                    android:layout_toEndOf="@id/hd_image"
-                    android:orientation="horizontal"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp">
-
-                    <TextView
-                        style="@style/ListPrimary"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:maxLines="3"
-                        android:singleLine="false"
-                        android:text="@string/pref_hd_summary" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:layout_margin="4dp"
-                        android:background="@drawable/hd_button_background"
-                        android:paddingStart="8dp"
-                        android:paddingTop="3dp"
-                        android:paddingEnd="8dp"
-                        android:paddingBottom="4dp"
-                        android:text="@string/label_hd_720p"
-                        android:textColor="@color/amber_A400"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <Switch
-                    android:id="@+id/settings_hd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:checked="false" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/settings_hwenc_layout"
+                android:id="@+id/settings_video_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -238,7 +177,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toStartOf="@id/settings_hwenc"
                     android:layout_toEndOf="@id/hwenc_image"
                     android:orientation="vertical"
                     android:paddingLeft="16dp"
@@ -251,21 +189,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:layout_weight="1"
                         android:maxLines="3"
                         android:singleLine="false"
-                        android:text="@string/pref_hwEncode_title" />
+                        android:text="@string/pref_video_advanced_title" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/pref_hwEncode_summary" />
+                        android:text="@string/pref_video_advanced_summary" />
 
                 </LinearLayout>
-
-                <Switch
-                    android:id="@+id/settings_hwenc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:checked="false" />
 
             </RelativeLayout>
 

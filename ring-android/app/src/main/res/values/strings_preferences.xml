@@ -12,6 +12,9 @@
     <string name="pref_pushNotifications_title">Push notifications</string>
     <string name="pref_pushNotifications_summary">Use Google servers to allow receiving calls/messages in the background</string>
 
+    <string name="pref_video_advanced_title">Advanced video settings</string>
+    <string name="pref_video_advanced_summary">Change the video bitrate, resolution, as well as access experimental features</string>
+
     <string name="pref_hd_summary">Enable sending HD video</string>
     <string name="label_hd_720p" translatable="false">HD 720P</string>
 

@@ -26,7 +26,6 @@ public class Settings {
     private boolean mAllowSystemContacts;
     private boolean mAllowPlaceSystemCalls;
     private boolean mAllowRingOnStartup;
-    private boolean mHdUpload;
     private boolean mHwEncoding;
 
     public Settings() {
@@ -38,7 +37,6 @@ public class Settings {
         mAllowSystemContacts = s.mAllowSystemContacts;
         mAllowPlaceSystemCalls = s.mAllowPlaceSystemCalls;
         mAllowRingOnStartup = s.mAllowRingOnStartup;
-        mHdUpload = s.mHdUpload;
     }
 
     public boolean isAllowMobileData() {
@@ -78,22 +76,6 @@ public class Settings {
 
     public void setAllowRingOnStartup(boolean allowRingOnStartup) {
         this.mAllowRingOnStartup = allowRingOnStartup;
-    }
-
-    public boolean isHD() {
-        return mHdUpload;
-    }
-
-    public void setHD(boolean hd) {
-        mHdUpload = hd;
-    }
-
-    public void setHwEncoding(boolean hw) {
-        mHwEncoding = hw;
-    }
-
-    public boolean isHwEncoding() {
-        return mHwEncoding;
     }
 
     public void setAllowPersistentNotification(boolean checked) {

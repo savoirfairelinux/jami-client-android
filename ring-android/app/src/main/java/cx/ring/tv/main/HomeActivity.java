@@ -26,11 +26,8 @@ import androidx.leanback.app.BackgroundManager;
 import androidx.leanback.app.GuidedStepSupportFragment;
 import androidx.fragment.app.FragmentActivity;
 
-import java.io.File;
-
 import cx.ring.R;
 import cx.ring.application.RingApplication;
-import cx.ring.utils.AndroidFileUtils;
 
 public class HomeActivity extends FragmentActivity {
     private BackgroundManager mBackgroundManager;
