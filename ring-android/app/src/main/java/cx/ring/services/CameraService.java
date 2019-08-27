@@ -161,7 +161,7 @@ abstract public class CameraService {
     }
 
     public boolean isPreviewFromFrontCamera() {
-        return mNativeParams.size() == 1 || (devices.currentId != null && devices.currentId.equals(devices.cameraFront));
+        return mNativeParams.size() == 1 || (devices != null && devices.currentId != null && devices.currentId.equals(devices.cameraFront));
     }
 
     public Map<String, StringMap> getPreviewSettings() {
