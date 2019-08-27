@@ -45,7 +45,6 @@ public class CallPresenter extends RootPresenter<CallView> {
 
     private AccountService mAccountService;
     private ContactService mContactService;
-    private NotificationService mNotificationService;
     private HardwareService mHardwareService;
     private CallService mCallService;
     private DeviceRuntimeService mDeviceRuntimeService;
@@ -72,12 +71,10 @@ public class CallPresenter extends RootPresenter<CallView> {
     @Inject
     public CallPresenter(AccountService accountService,
                          ContactService contactService,
-                         NotificationService notificationService,
                          HardwareService hardwareService,
                          CallService callService, DeviceRuntimeService deviceRuntimeService) {
         mAccountService = accountService;
         mContactService = contactService;
-        mNotificationService = notificationService;
         mHardwareService = hardwareService;
         mCallService = callService;
         mDeviceRuntimeService = deviceRuntimeService;
@@ -85,7 +82,7 @@ public class CallPresenter extends RootPresenter<CallView> {
 
     public void cameraPermissionChanged(boolean isGranted) {
         if (isGranted && mHardwareService.isVideoAvailable()) {
-            mHardwareService.initVideo();
+            mHardwareService.initVideo().blockingAwait();
             permissionChanged = true;
         }
     }

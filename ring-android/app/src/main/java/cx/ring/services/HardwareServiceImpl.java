@@ -49,9 +49,9 @@ import cx.ring.daemon.StringMap;
 import cx.ring.daemon.UintVect;
 import cx.ring.model.SipCall;
 import cx.ring.utils.BluetoothWrapper;
-import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.Ringer;
+import io.reactivex.Completable;
 
 import static cx.ring.model.SipCall.State;
 
@@ -90,9 +90,9 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         cameraService = new CameraServiceCamera2(mContext);
     }
 
-    public void initVideo() {
+    public Completable initVideo() {
         Log.i(TAG, "initVideo()");
-        mExecutor.submit(cameraService::init);
+        return cameraService.init();
     }
 
     public boolean isVideoAvailable() {

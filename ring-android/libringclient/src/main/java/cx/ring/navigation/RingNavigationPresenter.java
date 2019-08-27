@@ -210,7 +210,7 @@ public class RingNavigationPresenter extends RootPresenter<RingNavigationView> {
 
     public void cameraPermissionChanged(boolean isGranted) {
         if (isGranted && mHardwareService.isVideoAvailable()) {
-            mHardwareService.initVideo();
+            mHardwareService.initVideo().subscribe();
         }
     }
 }

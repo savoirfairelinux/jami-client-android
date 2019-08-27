@@ -34,6 +34,7 @@ import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.UintVect;
 import cx.ring.utils.Log;
+import io.reactivex.Completable;
 
 abstract public class CameraService {
     private static final String TAG = CameraService.class.getName();
@@ -223,7 +224,7 @@ abstract public class CameraService {
         }
     }
 
-    abstract void init();
+    abstract Completable init();
 
     interface CameraListener {
         void onOpened();

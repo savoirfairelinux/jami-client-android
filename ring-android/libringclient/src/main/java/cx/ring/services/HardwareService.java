@@ -34,6 +34,7 @@ import cx.ring.daemon.StringMap;
 import cx.ring.daemon.UintVect;
 import cx.ring.model.SipCall;
 import cx.ring.utils.Log;
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.subjects.BehaviorSubject;
@@ -99,7 +100,7 @@ public abstract class HardwareService {
         return audioStateSubject;
     }
 
-    public abstract void initVideo();
+    public abstract Completable initVideo();
 
     public abstract boolean isVideoAvailable();
 

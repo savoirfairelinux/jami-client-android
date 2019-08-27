@@ -65,6 +65,7 @@ import cx.ring.daemon.RingserviceJNI;
 import cx.ring.daemon.UintVect;
 import cx.ring.utils.Log;
 import cx.ring.views.AutoFitTextureView;
+import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
@@ -115,11 +116,11 @@ class CameraServiceCamera2 extends CameraService {
     }
 
     @Override
-    void init() {
+    Completable init() {
         if (manager == null)
-            return;
-        loadDevices(manager)
-                .subscribe(devs -> {
+            return Completable.error(new IllegalStateException("Video manager not available"));
+        return loadDevices(manager)
+                .map(devs -> {
                     synchronized (addedDevices) {
                         VideoDevices old = devices;
                         devices = devs;
@@ -142,7 +143,11 @@ class CameraServiceCamera2 extends CameraService {
                             RingserviceJNI.setDefaultDevice(devs.currentId);
                         }
                     }
-                }, e-> Log.w(TAG, "initVideo: can't enumerate devices", e));
+                    return devs;
+                })
+                .ignoreElement()
+                .doOnError(e -> Log.e(TAG, "Error initializing video device", e))
+                .onErrorComplete();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
