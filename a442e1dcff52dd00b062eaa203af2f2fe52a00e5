@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c72dec2_7094c738",
+        "filename": "README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 103
+      },
+      "writtenOn": "2019-08-30T18:11:38Z",
+      "side": 1,
+      "message": "Jami",
+      "range": {
+        "startLine": 3,
+        "startChar": 44,
+        "endLine": 3,
+        "endChar": 48
+      },
+      "revId": "a442e1dcff52dd00b062eaa203af2f2fe52a00e5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
