@@ -1,16 +1,16 @@
-# Ring Android
+# Jami Android
 
-This repository is meant for the porting of Ring to Android.
+This repository is meant for the porting of Jami to Android.
 
 | App | CI
 | :-: | :-: |
-| [![Download on the Play Store](https://img.shields.io/badge/download-play%20store-blue.svg)](https://play.google.com/store/apps/details?id=cx.ring) [![Download on F-Droid](https://img.shields.io/badge/download-fdroid-blue.svg)](https://f-droid.org/repository/browse/?fdid=cx.ring) | [![Build Status](https://jenkins.ring.cx/buildStatus/icon?job=client-android)](https://jenkins.ring.cx/job/client-android/)
+| [![Download on the Play Store](https://img.shields.io/badge/download-play%20store-blue.svg)](https://play.google.com/store/apps/details?id=cx.ring) [![Download on F-Droid](https://img.shields.io/badge/download-fdroid-blue.svg)](https://f-droid.org/repository/browse/?fdid=cx.ring) | [![Build Status](https://jenkins.jami.net/buildStatus/icon?job=client-android)](https://jenkins.jami.net/job/client-android/)
 
 ## Environment
 
 Clone this as a submodule of:
-<https://gerrit-ring.savoirfairelinux.com/#/admin/projects/ring-project>
-to obtain the required Ring daemon source.
+<https://review.jami.net/#/admin/projects/ring-project>
+to obtain the required Jami daemon source.
 
 You can also manually clone the daemon and override the DAEMON_DIR
 during compilation
