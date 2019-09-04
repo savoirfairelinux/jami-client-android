@@ -45,6 +45,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
 
     <uses-feature
         android:name="android.hardware.wifi"
@@ -177,11 +178,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <service
             android:name=".service.CallNotificationService"
             android:description="@string/call_service_description"
-            android:exported="false" />
+            android:exported="false"
+            android:foregroundServiceType="phoneCall"/>
         <service
             android:name=".services.DataTransferService"
             android:description="@string/data_transfer_service_description"
-            android:exported="false" />
+            android:exported="false"
+            android:foregroundServiceType="dataSync"/>
 
         <activity
             android:name=".client.CallActivity"
