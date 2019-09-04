@@ -20,9 +20,13 @@
 package cx.ring.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.core.content.ContextCompat;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
@@ -212,10 +216,15 @@ public class SecurityAccountFragment extends BasePreferenceFragment<SecurityAcco
     }
 
     private void setFeedbackIcon(Preference current) {
+        Context c = current.getContext();
         if (!checkCertificate()) {
-            current.setIcon(R.drawable.ic_error_red);
+            Drawable icon = c.getDrawable(R.drawable.baseline_error_24);
+            icon.setTint(c.getResources().getColor(R.color.error_red));
+            current.setIcon(icon);
         } else {
-            current.setIcon(R.drawable.ic_good_green);
+            Drawable icon = c.getDrawable(R.drawable.baseline_check_circle_24);
+            icon.setTint(c.getResources().getColor(R.color.green_500));
+            current.setIcon(icon);
         }
     }
 

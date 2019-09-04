@@ -25,9 +25,10 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -180,7 +181,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
 
     @OnClick(R.id.settings_clear_history)
     public void onClearHistoryClick() {
-        new AlertDialog.Builder(getActivity())
+        new MaterialAlertDialogBuilder(getActivity())
                 .setTitle(getString(R.string.clear_history_dialog_title))
                 .setMessage(getString(R.string.clear_history_dialog_message))
                 .setPositiveButton(android.R.string.ok, (dialog, id) -> {

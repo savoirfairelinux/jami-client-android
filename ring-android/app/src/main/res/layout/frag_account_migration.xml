@@ -67,7 +67,7 @@ along with this program; if not, write to the Free Software
                     android:paddingRight="16dp"
                     android:paddingTop="24dp"
                     android:text="@string/ring_account"
-                    android:textColor="@color/text_color_primary"
+                    android:textColor="@color/textColorPrimary"
                     android:textSize="24sp" />
 
                 <TextView
@@ -81,7 +81,7 @@ along with this program; if not, write to the Free Software
                     android:paddingRight="16dp"
                     android:paddingTop="16dp"
                     android:text="@string/account_migration"
-                    android:textColor="@color/text_color_primary"
+                    android:textColor="@color/textColorPrimary"
                     android:textSize="14sp" />
 
                 <LinearLayout

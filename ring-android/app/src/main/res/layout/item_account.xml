@@ -93,6 +93,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:focusableInTouchMode="false"
         android:tint="@color/error_red"
         android:visibility="gone"
-        app:srcCompat="@drawable/ic_error_white" />
+        app:srcCompat="@drawable/baseline_error_24" />
 
 </RelativeLayout>

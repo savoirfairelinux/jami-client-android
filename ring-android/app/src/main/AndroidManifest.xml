@@ -97,7 +97,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:name=".launch.LaunchActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:label="@string/app_name"
-            android:theme="@style/AppThemeBase">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -110,7 +110,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:label="@string/app_name"
             android:launchMode="singleTask"
-            android:theme="@style/AppThemeBase"
+            android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.DIAL" />
@@ -135,7 +135,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <activity
             android:name=".client.ShareActivity"
             android:parentActivityName=".client.HomeActivity"
-            android:theme="@style/AppThemeBase">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
 
@@ -151,12 +151,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <activity
             android:name=".account.AccountWizardActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
-            android:theme="@style/AppThemeBase" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".account.AccountEditionActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:label="@string/app_name"
-            android:theme="@style/AppThemeBase" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".client.RingtoneActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
@@ -257,8 +257,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:label="@string/app_name"
             android:parentActivityName=".client.HomeActivity"
-            android:theme="@style/AppThemeBase"
-            android:windowSoftInputMode="adjustResize" />
+            android:theme="@style/AppTheme.Fullscreen"
+            android:allowEmbedded="true"
+            android:windowSoftInputMode="adjustResize"
+            android:resizeableActivity="true" />
 
         <service
             android:name=".service.DRingService"
@@ -266,7 +268,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <intent-filter>
                 <action android:name=".service.DRingService" />
             </intent-filter>
-        </service> <!-- AndroidTV section -->
+        </service>
+        <!-- AndroidTV section -->
         <activity
             android:name=".tv.main.HomeActivity"
             android:label="@string/app_name"
@@ -275,7 +278,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <activity
             android:name=".tv.account.TVAccountWizard"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
-            android:theme="@style/AppThemeBase" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".tv.search.SearchActivity"
             android:theme="@style/Theme.Leanback" />
@@ -291,7 +294,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:resizeableActivity="true"
             android:showOnLockScreen="true"
             android:supportsPictureInPicture="true"
-            android:theme="@style/AppThemeBase">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="cx.ring.action.CALL" />
 
@@ -300,7 +303,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </activity>
         <activity
             android:name=".tv.camera.CustomCameraActivity"
-            android:theme="@style/AppThemeBase">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="cx.ring.action.CALL" />
 
@@ -331,7 +334,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:name=".client.QRCodeActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:label="@string/title_activity_qrcode"
-            android:theme="@style/AppThemeBase" />
+            android:theme="@style/AppTheme"
+            android:resizeableActivity="true"/>
         <activity
             android:name=".client.MediaViewerActivity"
             android:exported="false"
@@ -354,7 +358,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:name=".client.ContactDetailsActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:label="@string/conversation_details"
-            android:theme="@style/AppThemeBase" />
+            android:theme="@style/AppTheme.DarkToolbar"
+            android:windowSoftInputMode="adjustResize"
+            android:resizeableActivity="true" />
     </application>
 
 </manifest>

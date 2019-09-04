@@ -1,8 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="background">@color/grey_25</color>
+    <color name="surface">@color/grey_150</color>
 
-    <color name="color_primary_light">#28B1ED</color>
-    <color name="color_primary_dark">#000747</color>
+    <color name="colorPrimary">@color/color_primary_dark</color>
+    <color name="colorOnPrimary">@color/white</color>
+
+    <color name="colorSecondary">@color/color_primary_light</color>
+    <color name="colorOnSecondary">@color/white</color>s
+
+    <color name="textColorPrimary">@color/abc_primary_text_material_light</color>
+    <color name="textColorSecondary">@color/abc_secondary_text_material_light</color>
+    <color name="textColorAccent">@color/color_primary_dark</color>
+
+    <color name="text_color_primary_dark">@color/abc_primary_text_material_dark</color>
+    <color name="text_color_secondary_dark">@color/abc_secondary_text_material_dark</color>
+
+    <color name="conversation_primary_background">@color/blue_600</color>
+    <color name="conversation_secondary_background">@color/grey_200</color>
 
     <color name="darker_gray">#aaaaaa</color>
     <color name="lighter_gray">#d3d3d3</color>
@@ -24,10 +39,5 @@
 
     <color name="transparent_grey">#AACCCCCC</color>
     <color name="transparent_dark_grey">#88424242</color>
-
-    <color name="text_color_primary">@color/abc_primary_text_material_light</color>
-    <color name="text_color_secondary">@color/abc_secondary_text_material_light</color>
-    <color name="text_color_primary_dark">@color/abc_primary_text_material_dark</color>
-    <color name="text_color_secondary_dark">@color/abc_secondary_text_material_dark</color>
 
 </resources>

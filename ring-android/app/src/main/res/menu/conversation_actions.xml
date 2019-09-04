@@ -4,20 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools">
     <item
         android:id="@+id/conv_action_audiocall"
-        android:icon="@drawable/ic_call_white"
+        android:icon="@drawable/baseline_call_24"
         android:title="@string/ab_action_audio_call"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/conv_action_videocall"
-        android:icon="@drawable/ic_videocam_white"
+        android:icon="@drawable/baseline_videocam_24"
         android:title="@string/ab_action_video_call"
         app:showAsAction="always"
         tools:ignore="AlwaysShowAction" />
 
     <item
         android:id="@+id/conv_contact_details"
-        android:icon="@drawable/ic_contact_picture_box_default"
+        android:icon="@drawable/baseline_person_24"
         android:title="@string/conversation_details"
         app:showAsAction="always"
         tools:ignore="AlwaysShowAction" />

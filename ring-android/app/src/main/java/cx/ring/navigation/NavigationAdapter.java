@@ -20,6 +20,8 @@ package cx.ring.navigation;
 
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -74,7 +76,8 @@ class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Navigatio
         } else {
             holder.itemView.setBackgroundColor(Color.TRANSPARENT);
             Drawable wrapDrawable = DrawableCompat.wrap(holder.icon.getDrawable());
-            DrawableCompat.setTint(wrapDrawable, Color.BLACK);
+            //DrawableCompat.setTint(wrapDrawable, ContextCompat.getColor(holder.itemView.getContext(), R.color.text_color_primary));
+            DrawableCompat.setTint(wrapDrawable, ContextCompat.getColor(holder.itemView.getContext(), R.color.textColorPrimary));
         }
     }
 

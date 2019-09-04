@@ -40,7 +40,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="@string/pref_category_network"
-                android:textColor="@color/color_primary_dark"
+                android:textColor="@color/textColorAccent"
                 android:textSize="18sp" />
 
             <RelativeLayout
@@ -58,7 +58,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_centerVertical="true"
                     android:layout_gravity="start"
                     android:contentDescription="@string/pref_mobileData_summary"
-                    app:srcCompat="@drawable/baseline_perm_data_setting_24px" />
+                    app:srcCompat="@drawable/baseline_perm_data_setting_24" />
 
 
                 <LinearLayout
@@ -151,7 +151,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="@string/pref_category_video"
-                android:textColor="@color/color_primary_dark"
+                android:textColor="@color/textColorAccent"
                 android:textSize="18sp" />
 
             <RelativeLayout
@@ -169,7 +169,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_centerVertical="true"
                     android:layout_gravity="start"
                     android:contentDescription="@string/pref_hwEncode_summary"
-                    android:tint="@color/black"
                     app:srcCompat="@drawable/baseline_memory_24" />
 
 
@@ -207,7 +206,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="@string/pref_category_contacts"
-                android:textColor="@color/color_primary_dark"
+                android:textColor="@color/textColorAccent"
                 android:textSize="18sp" />
 
             <RelativeLayout
@@ -229,7 +228,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:contentDescription="@string/pref_systemContacts_summary"
-                        app:srcCompat="@drawable/ic_group_black" />
+                        app:srcCompat="@drawable/baseline_group_24" />
 
                 </LinearLayout>
 
@@ -273,7 +272,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="@string/pref_category_system"
-                android:textColor="@color/color_primary_dark"
+                android:textColor="@color/textColorAccent"
                 android:textSize="18sp" />
 
             <RelativeLayout
@@ -295,7 +294,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:contentDescription="@string/pref_systemDialer_summary"
-                        app:srcCompat="@drawable/ic_dialpad_black" />
+                        app:srcCompat="@drawable/baseline_dialpad_24" />
 
                 </LinearLayout>
 
@@ -353,7 +352,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:contentDescription="@string/pref_startOnBoot_summary"
-                        app:srcCompat="@drawable/ic_android_black" />
+                        app:srcCompat="@drawable/baseline_android_24"/>
 
                 </LinearLayout>
 
@@ -412,7 +411,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:contentDescription="@string/pref_persistNotification_summary"
-                        android:src="@drawable/baseline_notification_important_24" />
+                        android:src="@drawable/baseline_notification_important_24"/>
 
                 </LinearLayout>
 
@@ -455,7 +454,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="@string/pref_category_privacy"
-                android:textColor="@color/color_primary_dark"
+                android:textColor="@color/textColorAccent"
                 android:textSize="18sp" />
 
             <LinearLayout

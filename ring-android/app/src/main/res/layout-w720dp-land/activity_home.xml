@@ -43,15 +43,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:background="@color/color_primary_light"
-            android:elevation="@dimen/toolbar_elevation"
             android:minHeight="?attr/actionBarSize"
-            android:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            android:titleTextAppearance="@style/ToolbarTitle"
             app:contentInsetStart="@dimen/toolbar_content_inset"
-            app:elevation="@dimen/toolbar_elevation"
-            app:titleTextAppearance="@style/ToolbarTitle" />
+            app:elevation="@dimen/toolbar_elevation" />
 
         <LinearLayout
             android:id="@+id/toolbar_spacer"

@@ -1,50 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!-- <declare-styleable name="PagerSlidingTabStrip">
-         <attr name="indicatorColor" format="color" />
-         <attr name="underlineColor" format="color" />
-         <attr name="shouldExpand" format="boolean" />
-      <attr name="dividerColor" format="color" />
-      <attr name="indicatorHeight" format="dimension" />
-      <attr name="underlineHeight" format="dimension" />
-      <attr name="dividerPadding" format="dimension" />
-      <attr name="tabPaddingLeftRight" format="dimension" />
-      <attr name="scrollOffset" format="dimension" />
-      <attr name="tabBackground" format="reference" />
-      <attr name="textAllCaps" format="boolean" />
- </declare-styleable>-->
-    <declare-styleable name="StickyListHeadersListView">
-
-        <attr name="android:clipToPadding" />
-        <attr name="android:padding" />
-        <attr name="android:paddingLeft" />
-        <attr name="android:paddingTop" />
-        <attr name="android:paddingRight" />
-        <attr name="android:paddingBottom" />
-        <attr name="android:fadingEdgeLength" />
-        <attr name="android:requiresFadingEdge" />
-        <attr name="android:cacheColorHint" />
-        <attr name="android:choiceMode" />
-        <attr name="android:drawSelectorOnTop" />
-        <attr name="android:fastScrollEnabled" />
-        <attr name="android:fastScrollAlwaysVisible" />
-        <attr name="android:listSelector" />
-        <attr name="android:scrollingCache" />
-        <attr name="android:scrollbarStyle" />
-        <attr name="android:divider" />
-        <attr name="android:dividerHeight" />
-
-        <!-- StickyListHeaders attributes -->
-        <attr name="hasStickyHeaders" format="boolean" />
-        <attr name="isDrawingListUnderStickyHeader" format="boolean" />
-    </declare-styleable>
-    <declare-styleable name="ParallaxScrollView">
-
-        <!-- gravity -->
-        <attr name="parallexOffset" format="float" />
-    </declare-styleable>
-
     <declare-styleable name="BoundedScrollView">
         <attr name="bounded_width" format="dimension" />
         <attr name="bounded_height" format="dimension" />

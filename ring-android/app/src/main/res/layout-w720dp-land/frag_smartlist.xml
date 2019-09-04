@@ -72,7 +72,7 @@
             app:elevation="6dp"
             app:pressedTranslationZ="12dp"
             app:rippleColor="@color/color_primary_dark"
-            app:srcCompat="@drawable/ic_dialpad_white" />
+            app:srcCompat="@drawable/baseline_dialpad_24" />
 
     </FrameLayout>
 
