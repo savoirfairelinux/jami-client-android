@@ -58,11 +58,11 @@ public final class IconCardHelper {
     }
 
     public static IconCard getAccountAddDeviceCard(Context pContext) {
-        return new IconCard(Card.Type.ACCOUNT_ADD_DEVICE, pContext.getString(R.string.account_link_export_button), "", R.drawable.ic_add_white);
+        return new IconCard(Card.Type.ACCOUNT_ADD_DEVICE, pContext.getString(R.string.account_link_export_button), "", R.drawable.baseline_add_24);
     }
 
     public static IconCard getAccountManagementCard(Context pContext) {
-        return new IconCard(Card.Type.ACCOUNT_EDIT_PROFILE, pContext.getString(R.string.account_edit_profile), "", R.drawable.ic_account_card_details_white);
+        return new IconCard(Card.Type.ACCOUNT_EDIT_PROFILE, pContext.getString(R.string.account_edit_profile), "", R.drawable.baseline_account_card_details);
     }
 
     public static IconCard getAccountSettingsCard(Context pContext) {
@@ -78,11 +78,11 @@ public final class IconCardHelper {
     }
 
     public static IconCard getLicencesCard(Context pContext) {
-        return new IconCard(Card.Type.ABOUT_LICENCES, pContext.getString(R.string.section_license), formatLicence(pContext), R.drawable.ic_description);
+        return new IconCard(Card.Type.ABOUT_LICENCES, pContext.getString(R.string.section_license), formatLicence(pContext), R.drawable.baseline_description_24);
     }
 
     public static IconCard getContributorCard(Context pContext) {
-        return new IconCard(Card.Type.ABOUT_CONTRIBUTOR, pContext.getString(R.string.credits), formatContributors(pContext), R.drawable.ic_face);
+        return new IconCard(Card.Type.ABOUT_CONTRIBUTOR, pContext.getString(R.string.credits), formatContributors(pContext), R.drawable.baseline_face_24);
     }
 
     private static CharSequence formatLicence(Context pContext) {

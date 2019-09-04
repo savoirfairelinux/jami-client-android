@@ -298,12 +298,12 @@ public class TVRingAccountCreationFragment
     }
 
     private void displayErrorIconTitle(GuidedAction action, String title) {
-        action.setIcon(getResources().getDrawable(R.drawable.ic_error_red));
+        action.setIcon(requireContext().getDrawable(R.drawable.ic_error_red));
         action.setTitle(title);
     }
 
     private void displayErrorIconDescription(GuidedAction action, String description) {
-        action.setIcon(getResources().getDrawable(R.drawable.ic_error_red));
+        action.setIcon(requireContext().getDrawable(R.drawable.ic_error_red));
         action.setDescription(description);
     }
 

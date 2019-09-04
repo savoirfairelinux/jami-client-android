@@ -28,6 +28,8 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AlertDialog;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import cx.ring.R;
 import cx.ring.account.AccountWizardActivity;
 import cx.ring.application.RingApplication;
@@ -65,18 +67,6 @@ public class LaunchActivity extends BaseActivity<LaunchPresenter> implements Lau
     public void goToAccountCreation() {
         startActivity(new Intent(LaunchActivity.this, DeviceUtils.isTv(this) ? TVAccountWizard.class : AccountWizardActivity.class));
         finish();
-    }
-
-    @Override
-    public void displayAudioPermissionDialog() {
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.start_error_title)
-                .setMessage(R.string.start_error_mic_required)
-                .setIcon(R.drawable.ic_mic_black)
-                .setCancelable(false)
-                .setPositiveButton(android.R.string.ok, (dialog, which) -> finish()).setOnCancelListener(dialog -> finish())
-                .setOnDismissListener(dialog -> finish())
-                .show();
     }
 
     @Override

@@ -24,6 +24,8 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import androidx.core.view.GravityCompat;
@@ -39,6 +41,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -124,21 +127,28 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
     NavigationView mNavigationView;
     @BindView(R.id.drawer_layout)
     DrawerLayout mNavigationDrawer;
+
     @BindView(R.id.main_toolbar)
     Toolbar mToolbar;
-    @BindView(R.id.toolbar_spacer)
-    LinearLayout mToolbarSpacerView;
-    @BindView(R.id.toolbar_spacer_title)
-    TextView mToolbarSpacerTitle;
+
+    //@BindView(R.id.toolbar_spacer)
+    //LinearLayout mToolbarSpacerView;
+
+    //@BindView(R.id.toolbar_spacer_title)
+    //TextView mToolbarSpacerTitle;
+
     @BindView(R.id.action_button)
     FloatingActionButton actionButton;
+
     @BindView(R.id.content_frame)
-    RelativeLayout mFrameLayout;
+    ViewGroup mFrameLayout;
     private boolean mIsMigrationDialogAlreadyShowed;
     private ActionBarDrawerToggle mDrawerToggle;
     private Boolean isDrawerLocked = false;
     private String mAccountWithPendingrequests = null;
     private float mToolbarSize;
+    private float mToolbarElevation;
+
     private final CompositeDisposable mDisposable = new CompositeDisposable();
 
     /* called before activity is killed, e.g. rotation */
@@ -153,6 +163,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         RingApplication.getInstance().startDaemon();
 
         mToolbarSize = getResources().getDimension(R.dimen.abc_action_bar_default_height_material);
+        mToolbarElevation = getResources().getDimension(R.dimen.toolbar_elevation);
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         if (savedInstanceState != null) {
@@ -298,10 +309,10 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
             return;
         }
         mIsMigrationDialogAlreadyShowed = true;
-        new AlertDialog.Builder(this)
+        new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.account_migration_title_dialog)
                 .setMessage(R.string.account_migration_message_dialog)
-                .setIcon(R.drawable.ic_warning)
+                .setIcon(R.drawable.baseline_warning_24)
                 .setPositiveButton(android.R.string.ok, (dialog, which) -> fNavigation.selectSection(RingNavigationFragment.Section.MANAGE))
                 .setNegativeButton(android.R.string.cancel, null)
                 .show();
@@ -319,10 +330,18 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-    public void setToolbarState(boolean doubleHeight, int titleRes) {
+    public void setToolbarTop(boolean top) {
+        if (top) {
+            mToolbar.setElevation(0);
+        } else {
+            mToolbar.setElevation(mToolbarElevation);
+        }
+    }
 
-        mToolbar.setMinimumHeight((int) mToolbarSize);
-        ViewGroup.LayoutParams toolbarSpacerViewParams = mToolbarSpacerView.getLayoutParams();
+    public void setToolbarState(boolean doubleHeight, int titleRes) {
+        mToolbar.setMinimumHeight(doubleHeight ? (int) (2 * mToolbarSize) : (int) mToolbarSize );
+        mToolbar.setTitle(titleRes);
+        /*ViewGroup.LayoutParams toolbarSpacerViewParams = mToolbarSpacerView.getLayoutParams();
 
         if (doubleHeight) {
             // setting the height of the toolbar spacer with the same height than the toolbar
@@ -341,7 +360,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
             mToolbarSpacerView.setVisibility(View.GONE);
             actionButton.hide();
             mToolbar.setTitle(titleRes);
-        }
+        }*/
     }
 
     public FloatingActionButton getActionButton() {

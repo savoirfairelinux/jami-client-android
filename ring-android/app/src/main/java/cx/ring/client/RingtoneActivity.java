@@ -298,7 +298,7 @@ public class RingtoneActivity extends AppCompatActivity {
             customPlaying.setVisibility(View.VISIBLE);
             Glide.with(this)
                     .load(R.raw.baseline_graphic_eq_black_24dp)
-                    .placeholder(R.drawable.ic_graphic_eq_black_24dp)
+                    .placeholder(R.drawable.baseline_graphic_eq_24)
                     .into(new DrawableImageViewTarget(customPlaying));
             previewRingtone(ringtone);
             setCustomRingtone(ringtone.getAbsolutePath());

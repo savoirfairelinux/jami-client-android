@@ -7,7 +7,7 @@
 
     <item
         android:id="@+id/menu_qr_share"
-        android:icon="@drawable/ic_share_white_24dp"
+        android:icon="@drawable/baseline_share_24"
         android:title="@string/share_your_account_information"
         app:showAsAction="always" />
 

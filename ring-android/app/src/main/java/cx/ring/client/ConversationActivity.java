@@ -21,15 +21,25 @@
 package cx.ring.client;
 
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.View;
+import android.widget.ImageButton;
 
 import androidx.annotation.ColorInt;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.ActionMenuItemView;
+import androidx.appcompat.widget.ActionMenuView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.view.ViewCompat;
+
+import com.google.android.material.appbar.AppBarLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,6 +50,8 @@ import cx.ring.interfaces.Colorable;
 import cx.ring.utils.MediaButtonsHelper;
 
 public class ConversationActivity extends AppCompatActivity implements Colorable {
+    @BindView(R.id.toolbar_layout)
+    AppBarLayout mToolbarLayout;
 
     @BindView(R.id.main_toolbar)
     Toolbar mToolbar;
@@ -57,12 +69,27 @@ public class ConversationActivity extends AppCompatActivity implements Colorable
         RingApplication.getInstance().startDaemon();
 
         setContentView(R.layout.activity_conversation);
-
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
         ActionBar ab = getSupportActionBar();
         if (ab != null)
             ab.setDisplayHomeAsUpEnabled(true);
+
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                decorView.getSystemUiVisibility()
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+
+        ViewCompat.setOnApplyWindowInsetsListener(mToolbarLayout, (v, insets) -> {
+            CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) mToolbarLayout.getLayoutParams();
+            params.topMargin = insets.getSystemWindowInsetTop();
+            mToolbarLayout.setLayoutParams(params);
+            insets.consumeSystemWindowInsets();
+            return insets;
+        });
 
         Intent intent = getIntent();
         String action = intent == null ? null : intent.getAction();
@@ -130,6 +157,43 @@ public class ConversationActivity extends AppCompatActivity implements Colorable
     }
 
     public void setColor(@ColorInt int color) {
-        mToolbar.setBackground(new ColorDrawable(color));
+        colouriseToolbar(mToolbar, color);
+        //mToolbar.setBackground(new ColorDrawable(color));
+        //getWindow().setStatusBarColor(color);
     }
+
+    public static void colouriseToolbar(Toolbar toolbar, @ColorInt int foreground) {
+        final PorterDuffColorFilter colorFilter = new PorterDuffColorFilter(foreground, PorterDuff.Mode.MULTIPLY);
+
+        for (int i = 0; i < toolbar.getChildCount(); i++) {
+            final View view = toolbar.getChildAt(i);
+            if (view instanceof ImageButton) {
+                ((ImageButton)view).getDrawable().setColorFilter(colorFilter);
+            } else if (view instanceof ActionMenuView) {
+                for (int j = 0; j < ((ActionMenuView) view).getChildCount(); j++) {
+                    final View innerView = ((ActionMenuView)view).getChildAt(j);
+                    //Any ActionMenuViews - icons that are not back button, text or overflow menu
+                    if (innerView instanceof ActionMenuItemView) {
+                        final Drawable[] drawables = ((ActionMenuItemView)innerView).getCompoundDrawables();
+                        for (int k = 0; k < drawables.length; k++) {
+                            final Drawable drawable = drawables[k];
+                            if (drawable != null) {
+                                final int drawableIndex = k;
+                                //Set the color filter in separate thread
+                                //by adding it to the message queue - won't work otherwise
+                                innerView.post(() -> ((ActionMenuItemView) innerView).getCompoundDrawables()[drawableIndex].setColorFilter(colorFilter));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        Drawable overflowIcon = toolbar.getOverflowIcon();
+        if (overflowIcon != null) {
+            overflowIcon.setColorFilter(colorFilter);
+            toolbar.setOverflowIcon(overflowIcon);
+        }
+    }
+
 }

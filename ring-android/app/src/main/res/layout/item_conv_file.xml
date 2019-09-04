@@ -48,7 +48,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="4dp"
-            app:srcCompat="@drawable/ic_clip_black" />
+            app:srcCompat="@drawable/baseline_attach_file_24" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -69,7 +69,7 @@
                 android:scrollHorizontally="true"
                 android:singleLine="true"
                 android:textAppearance="@android:style/TextAppearance.Medium"
-                android:textColor="@color/text_color_primary"
+                android:textColor="@color/textColorPrimary"
                 tools:text="test.jpg" />
 
             <TextView
@@ -80,7 +80,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:maxWidth="200dp"
-                android:textColor="@color/text_color_secondary"
+                android:textColor="@color/textColorSecondary"
                 android:textSize="12sp"
                 tools:text="1 mo - 12 mars" />
 

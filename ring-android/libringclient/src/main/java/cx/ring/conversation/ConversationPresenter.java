@@ -206,11 +206,12 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     }
 
     public void openContact() {
-        getView().goToContactActivity(mAccountId, mConversation.getContact().getPrimaryNumber());
+        if (mConversation != null)
+            getView().goToContactActivity(mAccountId, mConversation.getContact().getPrimaryNumber());
     }
 
     public void sendTextMessage(String message) {
-        if (StringUtils.isEmpty(message)) {
+        if (StringUtils.isEmpty(message) || mConversation == null) {
             return;
         }
         Conference conference = mConversation.getCurrentCall();

@@ -75,7 +75,7 @@
             android:scrollHorizontally="true"
             android:singleLine="true"
             android:textAppearance="@android:style/TextAppearance.Medium"
-            android:textColor="@color/text_color_secondary"
+            android:textColor="@color/textColorSecondary"
             tools:text="2:03 / 2:45" />
 
     </LinearLayout>
@@ -87,7 +87,7 @@
         android:layout_marginStart="72dp"
         android:layout_marginEnd="8dp"
         android:maxWidth="200dp"
-        android:textColor="@color/text_color_secondary"
+        android:textColor="@color/textColorSecondary"
         android:textSize="12sp"
         tools:text="1 mo - 12 mars" />
 

@@ -36,22 +36,35 @@ along with this program; if not, write to the Free Software
         android:paddingEnd="0dp"
         android:paddingStart="@dimen/drawer_content_padding">
 
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/main_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:background="@color/color_primary_light"
-            android:elevation="@dimen/toolbar_elevation"
+            android:elevation="0dp"
             android:minHeight="?attr/actionBarSize"
-            android:popupTheme="@style/Theme.MaterialComponents.Light.NoActionBar"
-            android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
-            android:titleTextAppearance="@style/ToolbarTitle"
+            style="@style/Widget.MaterialComponents.Toolbar.Surface"
             app:contentInsetStart="@dimen/toolbar_content_inset"
-            app:elevation="@dimen/toolbar_elevation"
-            app:titleTextAppearance="@style/ToolbarTitle" />
+            app:elevation="0dp"/>
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/action_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/main_toolbar"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/action_button_lpadding"
+            android:layout_marginBottom="@dimen/action_button_bpadding"
+            android:adjustViewBounds="false"
+            android:baselineAlignBottom="false"
+            android:visibility="gone"
+            app:elevation="6dp"
+            app:fabSize="mini"
+            app:pressedTranslationZ="12dp"
+            app:rippleColor="@android:color/white"
+            app:srcCompat="@drawable/baseline_add_24" />
+<!--
         <LinearLayout
             android:id="@+id/toolbar_spacer"
             android:layout_width="match_parent"
@@ -74,31 +87,14 @@ along with this program; if not, write to the Free Software
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
         </LinearLayout>
-
+-->
         <FrameLayout
             android:id="@+id/main_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/toolbar_spacer"
+            android:layout_below="@+id/main_toolbar"
             android:orientation="vertical" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/action_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/toolbar_spacer"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="@dimen/action_button_lpadding"
-            android:layout_marginBottom="@dimen/action_button_bpadding"
-            android:adjustViewBounds="false"
-            android:baselineAlignBottom="false"
-            android:visibility="gone"
-            app:elevation="6dp"
-            app:fabSize="mini"
-            app:pressedTranslationZ="12dp"
-            app:rippleColor="@android:color/white"
-            app:srcCompat="@drawable/ic_add_white" />
 
     </RelativeLayout>
 
@@ -107,10 +103,7 @@ along with this program; if not, write to the Free Software
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        android:theme="@style/AppThemeBase"
-        android:windowBackground="@color/white"
-        app:itemTextColor="?android:textColorPrimary">
+        android:fitsSystemWindows="true">
 
         <FrameLayout
             android:id="@+id/navigation_container"

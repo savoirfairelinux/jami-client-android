@@ -50,6 +50,9 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cx.ring.R;
@@ -324,11 +327,11 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
         mMenuView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         ArrayList<NavigationItem> menu = new ArrayList<>();
-        menu.add(0, new NavigationItem(R.string.menu_item_home, R.drawable.ic_home_black));
-        menu.add(1, new NavigationItem(R.string.menu_item_contact_request, R.drawable.ic_drafts_black));
-        menu.add(2, new NavigationItem(R.string.menu_item_accounts, R.drawable.ic_group_black));
+        menu.add(0, new NavigationItem(R.string.menu_item_home, R.drawable.baseline_home_24));
+        menu.add(1, new NavigationItem(R.string.menu_item_contact_request, R.drawable.baseline_drafts_24));
+        menu.add(2, new NavigationItem(R.string.menu_item_accounts, R.drawable.baseline_group_24));
         menu.add(3, new NavigationItem(R.string.menu_item_settings, R.drawable.ic_settings_black));
-        menu.add(4, new NavigationItem(R.string.menu_item_about, R.drawable.ic_info_black));
+        menu.add(4, new NavigationItem(R.string.menu_item_about, R.drawable.baseline_info_24));
 
         mMenuAdapter = new NavigationAdapter(menu);
         mMenuView.setAdapter(mMenuAdapter);
@@ -343,8 +346,6 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
     public void profileContainerClicked() {
         if (mSelectedAccount == null)
             return;
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(R.string.profile);
 
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         ViewGroup view = (ViewGroup) inflater.inflate(R.layout.dialog_profile, null);
@@ -361,17 +362,19 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
         ImageButton gallery = view.findViewById(R.id.gallery);
         gallery.setOnClickListener(v -> presenter.galleryClicked());
 
-        builder.setView(view);
-        builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> dialog.cancel());
-        builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {
-            if (mSourcePhoto != null) {
-                presenter.saveVCard(mSelectedAccount, editText.getText().toString().trim(), Single.just(mSourcePhoto).map(BitmapUtils::bitmapToPhoto));
-                mSourcePhoto = null;
-            } else {
-                presenter.saveVCardFormattedName(editText.getText().toString().trim());
-            }
-        });
-        builder.show();
+        new MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.profile)
+            .setView(view)
+            .setNegativeButton(android.R.string.cancel, (dialog, which) -> dialog.cancel())
+            .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                if (mSourcePhoto != null) {
+                    presenter.saveVCard(mSelectedAccount, editText.getText().toString().trim(), Single.just(mSourcePhoto).map(BitmapUtils::bitmapToPhoto));
+                    mSourcePhoto = null;
+                } else {
+                    presenter.saveVCardFormattedName(editText.getText().toString().trim());
+                }
+            })
+            .show();
     }
 
     private void updateSelectedAccountView(Account selectedAccount) {
@@ -394,11 +397,11 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
             } else if (selectedAccount.needsMigration()) {
                 mSelectedAccountHost.setText(R.string.account_update_needed);
                 mSelectedAccountHost.setTextColor(Color.RED);
-                mSelectedAccountError.setImageResource(R.drawable.ic_warning);
+                mSelectedAccountError.setImageResource(R.drawable.baseline_warning_24);
                 mSelectedAccountError.setColorFilter(Color.RED);
                 mSelectedAccountError.setVisibility(View.VISIBLE);
             } else if (selectedAccount.isInError() || !selectedAccount.isRegistered()) {
-                mSelectedAccountError.setImageResource(R.drawable.ic_error_white);
+                mSelectedAccountError.setImageResource(R.drawable.baseline_error_24);
                 mSelectedAccountError.setColorFilter(Color.RED);
                 mSelectedAccountError.setVisibility(View.VISIBLE);
                 mSelectedAccountLoading.setVisibility(View.GONE);

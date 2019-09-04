@@ -183,7 +183,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     app:fabSize="normal"
                     app:pressedTranslationZ="12dp"
                     app:rippleColor="@android:color/white"
-                    app:srcCompat="@drawable/ic_call_white"
+                    app:srcCompat="@drawable/baseline_call_24"
                     app:useCompatPadding="true" />
 
             </LinearLayout>

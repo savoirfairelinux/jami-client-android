@@ -196,7 +196,7 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             itemView.setEnabled(account.isEnabled());
             disabled_flag.setVisibility(account.isEnabled() ? View.GONE : View.VISIBLE);
             if (account.isEnabled()) {
-                alias.setTextColor(context.getResources().getColor(R.color.text_color_primary));
+                alias.setTextColor(context.getResources().getColor(R.color.textColorPrimary));
                 if (!account.isActive()) {
                     error.setImageResource(R.drawable.baseline_sync_disabled_24px);
                     error.setColorFilter(Color.BLACK);
@@ -208,11 +208,11 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 } else if (account.needsMigration()) {
                     host.setText(R.string.account_update_needed);
                     host.setTextColor(Color.RED);
-                    error.setImageResource(R.drawable.ic_warning);
+                    error.setImageResource(R.drawable.baseline_warning_24);
                     error.setColorFilter(Color.RED);
                     error.setVisibility(View.VISIBLE);
                 } else if (account.isInError() || !account.isRegistered()) {
-                    error.setImageResource(R.drawable.ic_error_white);
+                    error.setImageResource(R.drawable.baseline_error_24);
                     error.setColorFilter(Color.RED);
                     error.setVisibility(View.VISIBLE);
                     loading.setVisibility(View.GONE);
@@ -221,7 +221,7 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     loading.setVisibility(View.GONE);
                 }
             } else {
-                alias.setTextColor(context.getResources().getColor(R.color.text_color_secondary));
+                alias.setTextColor(context.getResources().getColor(R.color.textColorSecondary));
                 error.setVisibility(View.GONE);
                 loading.setVisibility(View.GONE);
             }
