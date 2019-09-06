@@ -13,6 +13,7 @@
 # Firebase
 -keep class com.firebase.** { *; }
 -keep class com.google.firebase.** { *; }
+-dontwarn com.google.firebase.analytics.connector.AnalyticsConnector
 
 # ORMLite
 -keep class com.j256.**
