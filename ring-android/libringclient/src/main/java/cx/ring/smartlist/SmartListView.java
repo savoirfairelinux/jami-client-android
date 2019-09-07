@@ -70,4 +70,7 @@ public interface SmartListView extends BaseView {
     void goToContact(CallContact callContact);
 
     void scrollToTop();
+
+    void setUnreadConversationCount(int count);
+    void setUnreadPendingCount(int count);
 }

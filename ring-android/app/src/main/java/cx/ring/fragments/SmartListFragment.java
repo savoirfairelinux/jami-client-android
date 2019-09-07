@@ -93,6 +93,9 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     @BindView(R.id.newconv_fab)
     protected ExtendedFloatingActionButton mFloatingActionButton;
 
+    @BindView(R.id.bottom_navigation)
+    protected BottomNavigationView mBottomNavigationView;
+
     @BindView(R.id.confs_list)
     protected RecyclerView mRecyclerView;
 
@@ -262,6 +265,28 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
         if (DeviceUtils.isTablet(getContext())) {
             isTabletMode = true;
         }
+
+        mBottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            Activity activity = getActivity();
+            HomeActivity homeActivity;
+            if (activity instanceof HomeActivity) {
+                homeActivity = (HomeActivity) activity;
+            } else {
+                return false;
+            }
+            switch (item.getItemId()) {
+                case R.id.menu_conversations:
+                    homeActivity.onNavigationSectionSelected(RingNavigationFragment.Section.HOME);
+                    break;
+                case R.id.menu_requests:
+                    homeActivity.onNavigationSectionSelected(RingNavigationFragment.Section.CONTACT_REQUESTS);
+                    break;
+                case R.id.menu_account:
+                    homeActivity.onNavigationSectionSelected(RingNavigationFragment.Section.SETTINGS);
+                    break;
+            }
+            return true;
+        });
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -490,6 +515,25 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     @Override
     public void hideNoConversationMessage() {
         mEmptyTextView.setVisibility(View.GONE);
+    }
+
+    private void setUnreadCount(int menuId, int unread) {
+        if (unread == 0) {
+            mBottomNavigationView.removeBadge(menuId);
+        } else {
+            BadgeDrawable badge = mBottomNavigationView.getOrCreateBadge(menuId);
+            badge.setNumber(unread);
+        }
+    }
+
+    @Override
+    public void setUnreadConversationCount(int count) {
+        setUnreadCount(R.id.menu_conversations, count);
+    }
+
+    @Override
+    public void setUnreadPendingCount(int count) {
+        setUnreadCount(R.id.menu_requests, count);
     }
 
     @Override
