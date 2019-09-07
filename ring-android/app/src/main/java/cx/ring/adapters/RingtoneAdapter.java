@@ -66,7 +66,7 @@ public class RingtoneAdapter extends RecyclerView.Adapter<RingtoneAdapter.Ringto
             ringtoneIcon = view.findViewById(R.id.item_ringtone_icon);
             Glide.with(view.getContext())
                     .load(R.raw.baseline_graphic_eq_black_24dp)
-                    .placeholder(R.drawable.ic_graphic_eq_black_24dp)
+                    .placeholder(R.drawable.baseline_graphic_eq_24)
                     .into(new DrawableImageViewTarget(isPlaying));
         }
     }

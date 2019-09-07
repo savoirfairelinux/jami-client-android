@@ -29,7 +29,7 @@
         android:layout_marginBottom="8dp"
         android:gravity="center"
         android:text="@string/share_message"
-        android:textColor="@color/text_color_primary"
+        android:textColor="@color/textColorPrimary"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/share_button"
         app:layout_constraintEnd_toEndOf="@+id/share_button"

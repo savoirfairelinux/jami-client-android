@@ -52,6 +52,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 
 import java.io.File;
@@ -118,6 +119,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     private ConversationAdapter mAdapter = null;
     private NumberAdapter mNumberAdapter = null;
     private int marginPx;
+    private int marginPxTotal;
     private final ValueAnimator animation = new ValueAnimator();
 
     private SharedPreferences mPreferences;
@@ -166,14 +168,46 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         component.inject(this);
     }
 
+    private static void setBottomPadding(@NonNull View view, int padding) {
+        view.setPadding(
+                view.getPaddingLeft(),
+                view.getPaddingTop(),
+                view.getPaddingRight(),
+                padding);
+    }
+
+    private void updateListPadding() {
+        if (binding.msgInputTxt.getHeight() != 0)
+            setBottomPadding(binding.histList, binding.msgInputTxt.getHeight() + marginPxTotal);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         injectFragment(((RingApplication) getActivity().getApplication()).getRingInjectionComponent());
-        marginPx = getResources().getDimensionPixelSize(R.dimen.margin_message_input);
+        marginPx = getResources().getDimensionPixelSize(R.dimen.conversation_message_input_margin);
+        marginPxTotal = marginPx;
         animation.setDuration(150);
         binding = FragConversationBinding.inflate(inflater, container, false);
         binding.setPresenter(this);
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.histList, (v, insets) -> {
+            marginPxTotal = marginPx + insets.getSystemWindowInsetBottom();
+            updateListPadding();
+            insets.consumeSystemWindowInsets();
+            return insets;
+        });
+        int paddingTop = binding.conversationLayout.getPaddingTop();
+        ViewCompat.setOnApplyWindowInsetsListener(binding.conversationLayout, (v, insets) -> {
+            v.setPadding(
+                    v.getPaddingLeft(),
+                    paddingTop + insets.getSystemWindowInsetTop(),
+                    v.getPaddingRight(),
+                    v.getPaddingBottom());
+            insets.consumeSystemWindowInsets();
+            return insets;
+        });
+
         return binding.getRoot();
     }
 
@@ -220,17 +254,17 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             }
         });
 
-        animation.addUpdateListener(valueAnimator -> binding.histList.setPadding(
-                binding.histList.getPaddingLeft(),
-                binding.histList.getPaddingTop(),
-                binding.histList.getPaddingRight(),
-                Integer.parseInt(valueAnimator.getAnimatedValue().toString())));
+        animation.addUpdateListener(valueAnimator -> setBottomPadding(binding.histList, (Integer)valueAnimator.getAnimatedValue()));
 
         binding.msgInputTxt.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
-            if (animation.isStarted())
-                animation.cancel();
-            animation.setIntValues(binding.histList.getPaddingBottom(), binding.msgInputTxt.getHeight() + marginPx);
-            animation.start();
+            if (oldBottom == 0 && oldTop == 0) {
+                updateListPadding();
+            } else {
+                if (animation.isStarted())
+                    animation.cancel();
+                animation.setIntValues(binding.histList.getPaddingBottom(), binding.msgInputTxt.getHeight() + marginPxTotal);
+                animation.start();
+            }
         });
 
         if (binding != null) {

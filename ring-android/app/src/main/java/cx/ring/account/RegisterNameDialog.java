@@ -30,6 +30,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 
 import javax.inject.Inject;
@@ -117,10 +118,7 @@ public class RegisterNameDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-
         View view = getActivity().getLayoutInflater().inflate(R.layout.frag_register_name, null);
-
         ButterKnife.bind(this, view);
 
         // dependency injection
@@ -145,15 +143,14 @@ public class RegisterNameDialog extends DialogFragment {
             dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         }
 
-        builder.setView(view)
+        AlertDialog result = new MaterialAlertDialogBuilder(requireContext())
+                .setView(view)
                 .setMessage(mRegisterMessage)
                 .setTitle(mRegisterTitle)
                 .setPositiveButton(android.R.string.ok, null) //Set to null. We override the onclick
-                .setNegativeButton(android.R.string.cancel,
-                        (dialog1, whichButton) -> dismiss()
-                );
+                .setNegativeButton(android.R.string.cancel, (d, b) -> dismiss())
+                .create();
 
-        AlertDialog result = builder.create();
         result.setOnShowListener(d -> {
             Button positiveButton = ((AlertDialog) d).getButton(AlertDialog.BUTTON_POSITIVE);
             positiveButton.setOnClickListener(view1 -> {

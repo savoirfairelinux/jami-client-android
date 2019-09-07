@@ -11,30 +11,60 @@
     </style>
 
     <style name="AppThemeBase.Dark" parent="@style/Theme.MaterialComponents.NoActionBar">
-        <item name="colorAccent">@color/color_primary_dark</item>
+        <!--<item name="colorAccent">@color/color_primary_dark</item>
         <item name="colorPrimary">@color/color_primary_light</item>
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorSecondary">@color/red_500</item>
+        <item name="colorSecondaryVariant">@color/yellow_600</item>
+        <item name="colorOnPrimary">@color/text_color_primary_dark</item>
+        <item name="colorOnSecondary">@color/text_color_secondary_dark</item>-->
         <item name="android:windowContentTransitions">true</item>
     </style>
 
-    <style name="AppThemeBase" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorAccent">@color/color_primary_dark</item>
-        <item name="colorPrimary">@color/color_primary_light</item>
-        <item name="colorPrimaryDark">@color/color_primary_dark</item>
-        <item name="android:windowContentTransitions">true</item>
+    <style name="AppThemeBase" parent="@style/Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorSurface">@color/background</item>
+        <item name="colorOnSurface">@color/colorPrimary</item>
+
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorSecondary</item>
+        <item name="colorOnPrimary">@color/background</item>
+
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorOnSecondary">@color/background</item>
+
+        <item name="android:colorBackground">@color/background</item>
+        <item name="colorOnBackground">@color/colorPrimary</item>
+
+        <item name="android:textColorSecondary">@color/colorPrimary</item>
+
+        <item name="colorError">@color/error_red</item>
+        <item name="colorOnError">@color/white</item>
+
+        <item name="colorPrimaryDark">@color/background</item>
+        <!--<item name="android:windowContentTransitions">true</item>-->
     </style>
 
-    <style name="AppTheme" parent="@style/Theme.MaterialComponents.Light">
-        <item name="colorAccent">@color/color_primary_dark</item>
-        <item name="colorPrimary">@color/color_primary_light</item>
-        <item name="colorPrimaryDark">@color/color_primary_dark</item>
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+    <style name="AppTheme" parent="AppThemeBase">
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:statusBarColor">@color/transparent</item>
+        <item name="android:navigationBarColor">@color/surface</item>
     </style>
-    <style name="AppTheme.Dark" parent="@style/Theme.MaterialComponents">
-        <item name="colorAccent">@color/color_primary_dark</item>
-        <item name="colorPrimary">@color/color_primary_light</item>
-        <item name="colorPrimaryDark">@color/color_primary_dark</item>
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+    <style name="AppTheme.DarkToolbar" parent="AppThemeBase">
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:navigationBarColor">@color/surface</item>
+    </style>
+
+    <style name="AppTheme.Fullscreen" parent="AppThemeBase">
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <!--<item name="android:statusBarColor">@color/transparent</item>-->
+        <item name="android:navigationBarColor">@color/transparent</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     </style>
 
     <style name="ActionBar.Transparent" parent="@android:style/Widget.DeviceDefault.Light.ActionBar.Solid.Inverse">
@@ -43,35 +73,29 @@
         <item name="background">@color/transparent_dark_grey</item>
     </style>
 
-    <style name="ToolbarTitle" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"></style>
+    <style name="ToolbarTitle" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
 
     <style name="MenuHeader" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:textColorPrimary">@color/text_color_primary_dark</item>
         <item name="android:textColorSecondary">@color/text_color_secondary_dark</item>
     </style>
 
-    <style name="AccountFormContainer">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:padding">16dp</item>
-    </style>
-
     <style name="Subheader">
         <item name="android:textSize">14sp</item>
         <item name="android:typeface">normal</item>
-        <item name="android:textColor">@color/text_color_secondary</item>
+        <item name="android:textColor">@color/textColorSecondary</item>
     </style>
 
     <style name="ListPrimary">
         <item name="android:textSize">16sp</item>
         <item name="android:typeface">normal</item>
-        <item name="android:textColor">@color/text_color_primary</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
     </style>
 
     <style name="ListSecondary">
         <item name="android:textSize">14sp</item>
         <item name="android:typeface">normal</item>
-        <item name="android:textColor">@color/text_color_secondary</item>
+        <item name="android:textColor">@color/textColorSecondary</item>
     </style>
 
     <style name="Wizard" parent="Theme.MaterialComponents.Light">
@@ -80,16 +104,7 @@
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
     </style>
 
-    <style name="WizardNavButton" parent="Widget.AppCompat.Button.Borderless.Colored">
-        <item name="android:paddingLeft">20dp</item>
-        <item name="android:paddingStart">20dp</item>
-        <item name="android:paddingRight">20dp</item>
-        <item name="android:paddingEnd">20dp</item>
-        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Widget.Button</item>
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="ButtonColoredInverse" parent="Widget.AppCompat.Button.Colored">
+    <style name="ButtonColoredInverse" parent="Widget.MaterialComponents.Button">
         <item name="colorButtonNormal">@color/color_primary_light</item>
         <item name="android:textColor">@color/text_color_primary_dark</item>
         <item name="android:paddingLeft">20dp</item>
@@ -98,17 +113,15 @@
         <item name="android:paddingEnd">20dp</item>
     </style>
 
-    <style name="ButtonColored" parent="Widget.AppCompat.Button.Colored">
-        <item name="colorButtonNormal">@color/color_primary_light</item>
-        <item name="android:textColor">@color/text_color_primary_dark</item>
+    <style name="ButtonColored" parent="Widget.MaterialComponents.Button">
+       <!-- <item name="colorButtonNormal">@color/color_primary_light</item>
+        <item name="android:textColor">@color/text_color_primary_dark</item>-->
     </style>
 
     <!-- AndroidTV Style -->
-    <style name="Theme.Ring.Leanback.GuidedStep" parent="Theme.Leanback.GuidedStep">
-    </style>
+    <style name="Theme.Ring.Leanback.GuidedStep" parent="Theme.Leanback.GuidedStep"></style>
 
-    <style name="Theme.Ring.Leanback.GuidedStep.First">
-    </style>
+    <style name="Theme.Ring.Leanback.GuidedStep.First"></style>
 
     <style name="Theme.Ring.LeanbackBrowse" parent="Theme.Leanback.Browse">
         <item name="defaultSearchColor">@color/color_primary_light</item>
@@ -125,7 +138,7 @@
     </style>
 
     <style name="CustomSearchOrbView" parent="Widget.Leanback.SearchOrbViewStyle">
-        <item name="searchOrbIcon">@drawable/ic_personadd</item>
+        <item name="searchOrbIcon">@drawable/baseline_person_add_24</item>
     </style>
 
     <!-- A default card style. Used in cards example. -->
@@ -151,6 +164,7 @@
     <style name="ContactTitleViewStyle" parent="DefaultCardStyle">
         <item name="lbImageCardViewType">Title</item>
     </style>
+
     <style name="ContactTitleViewOnlineStyle" parent="DefaultCardStyle">
         <item name="lbImageCardViewType">Title|Content|IconOnRight</item>
     </style>
@@ -210,6 +224,7 @@
         <item name="imageCardViewImageStyle">@style/IconCardImageStyle</item>
         <item name="imageCardViewInfoAreaStyle">@style/IconCardInfoAreaStyle</item>
     </style>
+
     <style name="Widget.Leanback.ImageCardView.BadgeStyle">
         <item name="android:id">@id/extra_badge</item>
         <item name="android:layout_width">@dimen/lb_basic_card_info_badge_size</item>
@@ -217,9 +232,11 @@
         <item name="android:contentDescription">@null</item>
         <item name="android:scaleType">fitCenter</item>
     </style>
+
     <style name="OnlineBadgeStyle" parent="Widget.Leanback.ImageCardView.BadgeStyle">
         <item name="android:src">@drawable/ic_tv_online_indicator</item>
     </style>
+
     <style name="ContactCardOnlineTheme" parent="ContactCardTheme">
         <item name="imageCardViewBadgeStyle">@style/OnlineBadgeStyle</item>
         <item name="imageCardViewStyle">@style/ContactCompleteCardViewStyle</item>
@@ -237,15 +254,6 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:backgroundDimEnabled">true</item>
     </style>
-<!--
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light" />
-
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
--->
-    <style name="AppTheme.AppBarOverlay" parent="AppTheme.Dark" />
 
     <style name="AppTheme.PopupOverlay" parent="AppTheme" />
 

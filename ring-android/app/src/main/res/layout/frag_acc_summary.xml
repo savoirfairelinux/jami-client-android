@@ -238,7 +238,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:gravity="center"
                         android:text="@string/empty_account_list"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="@color/text_color_secondary"
+                        android:textColor="@color/textColorSecondary"
                         android:visibility="gone" />
 
                 </FrameLayout>

@@ -28,6 +28,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 
 import androidx.annotation.NonNull;
@@ -70,7 +71,7 @@ public class BackupAccountDialog extends DialogFragment {
             mAccountId = args.getString(AccountEditionActivity.ACCOUNT_ID_KEY);
         }
 
-        final AlertDialog result = new AlertDialog.Builder(requireContext())
+        final AlertDialog result = new MaterialAlertDialogBuilder(requireContext())
                 .setTitle(R.string.account_enter_password)
                 .setMessage(R.string.account_new_device_password)
                 .setView(view)

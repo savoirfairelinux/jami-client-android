@@ -45,8 +45,8 @@ import com.journeyapps.barcodescanner.BarcodeResult;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 import com.journeyapps.barcodescanner.DefaultDecoderFactory;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -72,38 +72,32 @@ public class ScanFragment extends BaseSupportFragment {
     public void injectFragment(RingInjectionComponent component) {
     }
 
+    private boolean hasCameraPermission() {
+        return ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View rootView = inflater.inflate(R.layout.frag_scan, container, false);
 
         barcodeView = rootView.findViewById(R.id.barcode_scanner);
         mErrorMessageTextView = rootView.findViewById(R.id.error_msg_txt);
 
-        if (ContextCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.CAMERA)
-                == PackageManager.PERMISSION_GRANTED) {
+        if (hasCameraPermission()) {
             hideErrorPanel();
             initializeBarcode();
         }
 
-
         return rootView;
     }
-
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-            if (ContextCompat.checkSelfPermission(getActivity(),
-                    Manifest.permission.CAMERA)
-                    != PackageManager.PERMISSION_GRANTED) {
-
+            if (!hasCameraPermission()) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     requestPermissions(new String[]{Manifest.permission.CAMERA}, RingApplication.PERMISSIONS_REQUEST);
-
                 } else {
                     displayNoPermissionsError();
                 }
@@ -115,9 +109,7 @@ public class ScanFragment extends BaseSupportFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (ContextCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.CAMERA)
-                == PackageManager.PERMISSION_GRANTED && barcodeView != null) {
+        if (hasCameraPermission() && barcodeView != null) {
             barcodeView.resume();
         }
 
@@ -127,15 +119,13 @@ public class ScanFragment extends BaseSupportFragment {
     @Override
     public void onPause() {
         super.onPause();
-        if (ContextCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.CAMERA)
-                == PackageManager.PERMISSION_GRANTED && barcodeView != null) {
+        if (hasCameraPermission() && barcodeView != null) {
             barcodeView.pause();
         }
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(Menu menu, @NonNull MenuInflater inflater) {
         menu.clear();
     }
 
@@ -187,10 +177,9 @@ public class ScanFragment extends BaseSupportFragment {
             }
         }
     }
-
     private void initializeBarcode() {
         if (barcodeView != null) {
-            Collection<BarcodeFormat> formats = Arrays.asList(BarcodeFormat.QR_CODE);
+            Collection<BarcodeFormat> formats = Collections.singletonList(BarcodeFormat.QR_CODE);
             barcodeView.getBarcodeView().setDecoderFactory(new DefaultDecoderFactory(formats));
             barcodeView.initializeFromIntent(getActivity().getIntent());
             barcodeView.decodeContinuous(callback);
@@ -200,9 +189,7 @@ public class ScanFragment extends BaseSupportFragment {
     private BarcodeCallback callback = new BarcodeCallback() {
         @Override
         public void barcodeResult(@NonNull BarcodeResult result) {
-            if (result.getText() == null) {
-                return;
-            } else {
+            if (result.getText() != null) {
                 String contact_uri = result.getText();
                 if (contact_uri != null ) {
                     goToConversation(contact_uri);

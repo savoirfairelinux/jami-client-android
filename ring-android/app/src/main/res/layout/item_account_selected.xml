@@ -69,7 +69,7 @@
         android:layout_toStartOf="@+id/account_selected_arrow"
         android:clickable="false"
         android:focusable="false"
-        app:srcCompat="@drawable/ic_error_white" />
+        app:srcCompat="@drawable/baseline_error_24" />
 
     <ImageView
         android:id="@+id/account_selected_arrow"

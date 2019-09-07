@@ -24,7 +24,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.provider.ContactsContract;
+
 import androidx.appcompat.app.AlertDialog;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
 
@@ -46,20 +49,20 @@ public class ActionHelper {
     private ActionHelper() {
     }
 
-    public static AlertDialog launchClearAction(final Context context,
+    public static void launchClearAction(final Context context,
                                                  final CallContact callContact,
                                                  final Conversation.ConversationActionCallback callback) {
         if (context == null) {
             Log.d(TAG, "launchClearAction: activity is null");
-            return null;
+            return;
         }
 
         if (callContact == null) {
             Log.d(TAG, "launchClearAction: conversation is null");
-            return null;
+            return;
         }
 
-        return new AlertDialog.Builder(context)
+        new MaterialAlertDialogBuilder(context)
                 .setTitle(R.string.conversation_action_history_clear_title)
                 .setMessage(R.string.conversation_action_history_clear_message)
                 .setPositiveButton(android.R.string.ok, (dialog, whichButton) -> {
@@ -73,20 +76,20 @@ public class ActionHelper {
                 .show();
     }
 
-    public static AlertDialog launchDeleteAction(final Context context,
+    public static void launchDeleteAction(final Context context,
                                                  final CallContact callContact,
                                                  final Conversation.ConversationActionCallback callback) {
         if (context == null) {
             Log.d(TAG, "launchDeleteAction: activity is null");
-            return null;
+            return;
         }
 
         if (callContact == null) {
             Log.d(TAG, "launchDeleteAction: conversation is null");
-            return null;
+            return;
         }
 
-        return new AlertDialog.Builder(context)
+        new MaterialAlertDialogBuilder(context)
                 .setTitle(R.string.conversation_action_remove_this_title)
                 .setMessage(R.string.conversation_action_remove_this_message)
                 .setPositiveButton(android.R.string.ok, (dialog, whichButton) -> {
@@ -123,7 +126,7 @@ public class ActionHelper {
             callback.copyContactNumberToClipboard(number);
         } else {
             final NumberAdapter adapter = new NumberAdapter(context, callContact, true);
-            AlertDialog alertDialog = new AlertDialog.Builder(context)
+            AlertDialog alertDialog = new MaterialAlertDialogBuilder(context)
                     .setTitle(R.string.conversation_action_select_peer_number)
                     .setAdapter(adapter, (dialog, which) -> {
                         if (callback != null) {

@@ -20,6 +20,8 @@ package cx.ring.account;
 
 import android.app.Dialog;
 import android.os.Bundle;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 
 import androidx.annotation.NonNull;
@@ -61,7 +63,7 @@ public class RenameDeviceDialog extends DialogFragment {
 
         mDeviceNameTxt.setText(getArguments().getString(DEVICENAME_KEY));
 
-        final AlertDialog dialog = new AlertDialog.Builder(requireContext())
+        final AlertDialog dialog = new MaterialAlertDialogBuilder(requireContext())
                 .setView(view)
                 .setTitle(R.string.rename_device_title)
                 .setMessage(R.string.rename_device_message)

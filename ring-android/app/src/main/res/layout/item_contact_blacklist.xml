@@ -29,7 +29,7 @@
         android:gravity="start"
         android:singleLine="true"
         android:textAlignment="viewStart"
-        android:textColor="@color/text_color_primary"
+        android:textColor="@color/textColorPrimary"
         android:textIsSelectable="false"
         android:textSize="16sp"
         tools:text="display name" />
@@ -43,6 +43,6 @@
         android:background="?selectableItemBackgroundBorderless"
         android:contentDescription="@string/contact_unblock"
         android:padding="16dp"
-        app:srcCompat="@drawable/ic_person_add_black" />
+        app:srcCompat="@drawable/baseline_person_add_24" />
 
 </RelativeLayout>
