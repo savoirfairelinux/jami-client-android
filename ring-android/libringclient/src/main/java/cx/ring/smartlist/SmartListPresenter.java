@@ -252,6 +252,13 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
         mConversationDisposable.clear();
         getView().setLoading(true);
 
+        mConversationDisposable.add(accountSubject
+                .switchMap(Account::getUnreadConversations)
+                .subscribe(count -> getView().setUnreadConversationCount(count)));
+        mConversationDisposable.add(accountSubject
+                .switchMap(Account::getUnreadPending)
+                .subscribe(count -> getView().setUnreadPendingCount(count)));
+
         mConversationDisposable.add(mConversationFacade
                 .getSmartList(accountSubject)
                 .switchMap(viewModels -> viewModels.isEmpty()
