@@ -33,6 +33,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
@@ -204,7 +206,7 @@ public class SIPAccountCreationFragment extends BaseSupportFragment<SIPCreationP
         //orientation is locked during the create of account to avoid the destruction of the thread
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
-        new AlertDialog.Builder(getActivity())
+        new MaterialAlertDialogBuilder(requireContext())
                 .setPositiveButton(positive, listenerPositive)
                 .setNegativeButton(negative, listenerNegative)
                 .setTitle(title).setMessage(message)

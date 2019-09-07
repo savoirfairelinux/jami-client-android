@@ -19,6 +19,6 @@
         android:padding="16dp"
         app:backgroundTint="@color/holo_green_dark"
         app:rippleColor="@android:color/white"
-        app:srcCompat="@drawable/ic_photo_camera"
+        app:srcCompat="@drawable/baseline_photo_camera_24"
         app:useCompatPadding="true" />
 </RelativeLayout>

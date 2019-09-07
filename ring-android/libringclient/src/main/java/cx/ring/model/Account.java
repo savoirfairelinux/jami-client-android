@@ -35,6 +35,7 @@ import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
 import cx.ring.utils.Tuple;
 import ezvcard.VCard;
+import ezvcard.property.FormattedName;
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.PublishSubject;
@@ -73,9 +74,14 @@ public class Account {
     private final Subject<Conversation> conversationSubject = PublishSubject.create();
     private final Subject<List<Conversation>> conversationsSubject = BehaviorSubject.create();
     private final Subject<List<Conversation>> pendingSubject = BehaviorSubject.create();
+    private final Subject<Integer> unreadConversationsSubject = BehaviorSubject.create();
+    private final Subject<Integer> unreadPendingSubject = BehaviorSubject.create();
+    private final Observable<Integer> unreadConversationsCount = unreadConversationsSubject.distinct();
+    private final Observable<Integer> unreadPendingCount = unreadPendingSubject.distinct();
 
     private final BehaviorSubject<Collection<CallContact>> contactListSubject = BehaviorSubject.create();
     private final BehaviorSubject<Collection<TrustRequest>> trustRequestsSubject = BehaviorSubject.create();
+
     public Subject<Account> historyLoader;
     private VCard mProfile;
     private Tuple<String, Object> mLoadedProfile;
@@ -134,9 +140,19 @@ public class Account {
         return pending.values();
     }
 
+    public Observable<Integer> getUnreadConversations() {
+        return unreadConversationsCount;
+    }
+
+    public Observable<Integer> getUnreadPending() {
+        return unreadPendingCount;
+    }
+
     private void pendingRefreshed() {
-        if (historyLoaded)
+        if (historyLoaded) {
             pendingSubject.onNext(getSortedPending());
+            updateUnreadPending();
+        }
     }
     private void pendingChanged() {
         pendingsChanged = true;
@@ -156,13 +172,16 @@ public class Account {
     }
 
     private void conversationRefreshed(Conversation conversation) {
-        if (historyLoaded)
+        if (historyLoaded) {
             conversationSubject.onNext(conversation);
+            updateUnreadConversations();
+        }
     }
     private void conversationChanged() {
         conversationsChanged = true;
-        if (historyLoaded)
+        if (historyLoaded) {
             conversationsSubject.onNext(new ArrayList<>(getSortedConversations()));
+        }
     }
     public void conversationUpdated(Conversation conversation) {
         if (!historyLoaded)
@@ -176,7 +195,23 @@ public class Account {
                 Collections.sort(sortedConversations, (a, b) -> ConversationElement.compare(b.getLastEvent(), a.getLastEvent()));
             }
             conversationsSubject.onNext(new ArrayList<>(sortedConversations));
+            updateUnreadConversations();
         }
+    }
+
+    private void updateUnreadConversations() {
+        int unread = 0;
+        for (Conversation model : sortedConversations) {
+            Interaction last = model.getLastEvent();
+            if (last != null && !last.isRead())
+                unread++;
+        }
+        Log.w(TAG, "updateUnreadConversations " + unread);
+        unreadConversationsSubject.onNext(unread);
+    }
+
+    private void updateUnreadPending() {
+        unreadPendingSubject.onNext(sortedPending.size());
     }
 
     public void clearHistory(Uri contact) {
@@ -474,6 +509,9 @@ public class Account {
 
     public String getDisplayUri() {
         return getUri(true);
+    }
+    public String getDisplayUri(CharSequence defaultNameSip) {
+        return isIP2IP() ? defaultNameSip.toString() : getDisplayUri();
     }
 
     public boolean needsMigration() {
@@ -792,6 +830,10 @@ public class Account {
             if (pending.containsKey(key))
                 pendingRefreshed();
         }
+    }
+
+    public String getAccountAlias() {
+        return (mLoadedProfile == null || StringUtils.isEmpty(mLoadedProfile.first)) ? getAlias() : mLoadedProfile.first;
     }
 
     public void setProfile(VCard vcard) {

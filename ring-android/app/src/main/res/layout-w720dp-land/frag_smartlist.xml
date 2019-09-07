@@ -66,13 +66,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_compat_margin"
+            android:layout_margin="@dimen/fab_margin"
             android:elevation="6dp"
             app:backgroundTint="@color/color_primary_light"
             app:elevation="6dp"
             app:pressedTranslationZ="12dp"
             app:rippleColor="@color/color_primary_dark"
-            app:srcCompat="@drawable/ic_dialpad_white" />
+            app:srcCompat="@drawable/baseline_dialpad_24" />
 
     </FrameLayout>
 
@@ -97,7 +97,8 @@
         android:layout_alignParentTop="true"
         android:background="@color/error_pane"
         android:padding="16dp"
-        android:visibility="gone">
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <ImageView
             android:id="@+id/error_image_view"
@@ -106,7 +107,8 @@
             android:layout_alignParentEnd="true"
             android:layout_gravity="end"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_settings_white" />
+            android:tint="@color/colorOnPrimary"
+            app:srcCompat="@drawable/baseline_settings_24" />
 
         <TextView
             android:id="@+id/error_msg_txt"
@@ -117,8 +119,9 @@
             android:layout_marginLeft="26dp"
             android:layout_marginRight="26dp"
             android:gravity="center_vertical|center_horizontal"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:textColor="@color/colorOnPrimary"
+            android:textSize="14sp"
+            tools:text="No connectivity"/>
     </RelativeLayout>
 
 </RelativeLayout>

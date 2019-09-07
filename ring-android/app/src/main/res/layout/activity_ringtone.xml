@@ -89,7 +89,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginEnd="12dp"
-                    android:src="@drawable/ic_graphic_eq_black_24dp"
+                    android:src="@drawable/baseline_graphic_eq_24"
                     android:tint="@color/color_primary_light"
                     android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="parent"

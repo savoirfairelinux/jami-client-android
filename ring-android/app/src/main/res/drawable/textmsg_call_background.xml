@@ -5,7 +5,7 @@
         android:width="0dp"
         android:color="@android:color/transparent" />
 
-    <solid android:color="@color/grey_200" />
+    <solid android:color="@color/conversation_secondary_background" />
 
     <padding
         android:left="1dp"

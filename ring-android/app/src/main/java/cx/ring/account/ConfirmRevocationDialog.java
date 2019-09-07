@@ -21,6 +21,8 @@ package cx.ring.account;
 
 import android.app.Dialog;
 import android.os.Bundle;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 
 import androidx.annotation.NonNull;
@@ -65,7 +67,7 @@ public class ConfirmRevocationDialog extends DialogFragment {
 
         mDeviceId = getArguments().getString(DEVICEID_KEY);
 
-        final AlertDialog result = new AlertDialog.Builder(requireContext())
+        final AlertDialog result = new MaterialAlertDialogBuilder(requireContext())
                 .setView(view)
                 .setMessage(getString(R.string.revoke_device_message, mDeviceId))
                 .setTitle(mRegisterTitle)

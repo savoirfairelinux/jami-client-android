@@ -65,7 +65,7 @@ along with this program; if not, write to the Free Software
         android:layout_alignEnd="@id/msg_txt"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="4dp"
-        android:textColor="@color/text_color_secondary"
+        android:textColor="@color/textColorSecondary"
         android:textSize="14sp"
         tools:text="@string/message_sending" />
 

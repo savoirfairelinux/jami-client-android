@@ -10,22 +10,21 @@
         android:id="@+id/qrAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:elevation="@dimen/toolbar_elevation"
+        style="@style/Widget.MaterialComponents.AppBarLayout.Surface">
 
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/qrToolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_weight="1"
-            android:background="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary" />
+            android:layout_height="wrap_content"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager

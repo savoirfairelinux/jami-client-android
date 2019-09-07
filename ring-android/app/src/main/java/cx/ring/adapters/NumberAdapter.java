@@ -86,7 +86,7 @@ public class NumberAdapter extends BaseAdapter {
         Phone number = mNumbers.get(position);
         ImageView numberIcon = convertView.findViewById(R.id.number_icon);
         numberIcon.setImageResource(number.getNumber().isRingId() ?
-                R.drawable.ic_logo_24 : R.drawable.ic_dialer_sip_black);
+                R.drawable.ic_logo_24 : R.drawable.baseline_dialer_sip_24);
 
         if (longView) {
             TextView numberTxt = convertView.findViewById(R.id.number_txt);

@@ -32,7 +32,7 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="24dp"
                 android:text="@string/account_creation_ring"
-                android:textColor="@color/text_color_primary"
+                android:textColor="@color/textColorPrimary"
                 android:textSize="24sp" />
 
             <Switch
@@ -43,7 +43,7 @@
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
                 android:text="@string/register_username"
-                android:textColor="@color/text_color_primary" />
+                android:textColor="@color/textColorPrimary" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/ring_username_box"
@@ -106,7 +106,7 @@
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
                 android:text="Choose a password for enhanced security"
-                android:textColor="@color/text_color_primary" />
+                android:textColor="@color/textColorPrimary" />
 
             <LinearLayout
                 android:id="@+id/ring_password_box"
@@ -121,7 +121,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:text="@string/help_password_choose"
-                    android:textColor="@color/text_color_primary" />
+                    android:textColor="@color/textColorPrimary" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/password_txt_box"
@@ -164,7 +164,7 @@
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
                 android:text="Use push notifications"
-                android:textColor="@color/text_color_primary" />
+                android:textColor="@color/textColorPrimary" />
 
         </LinearLayout>
 

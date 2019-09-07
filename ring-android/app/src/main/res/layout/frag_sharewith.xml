@@ -7,15 +7,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
+        style="@style/Widget.MaterialComponents.Toolbar.Surface"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:title="Share with..." />
+        android:elevation="0dp"
+        android:minHeight="?attr/actionBarSize" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -34,7 +32,7 @@
             android:background="@null"
             android:inputType="textMultiLine"
             android:singleLine="false"
-            android:textColor="@color/text_color_primary"
+            android:textColor="@color/textColorPrimary"
             android:visibility="gone"
             tools:text="Test text message" />
 
