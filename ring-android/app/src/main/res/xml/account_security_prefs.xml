@@ -23,7 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:key="Account.credentials"
         android:title="@string/account_credentials_label">
         <cx.ring.views.CredentialsPreference
-            android:icon="@drawable/ic_action_new_dark"
+            android:icon="@drawable/baseline_add_24"
             android:key="Add.credentials"
             android:title="@string/account_credentials_add" />
     </androidx.preference.PreferenceCategory>

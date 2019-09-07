@@ -65,7 +65,7 @@ along with this program; if not, write to the Free Software
             android:scrollHorizontally="true"
             android:singleLine="true"
             android:textAlignment="viewStart"
-            android:textColor="@color/text_color_primary"
+            android:textColor="@color/textColorPrimary"
             android:textSize="16sp"
             tools:text="Test test" />
 
@@ -78,7 +78,7 @@ along with this program; if not, write to the Free Software
             android:gravity="start"
             android:maxLines="1"
             android:textAlignment="viewStart"
-            android:textColor="@color/text_color_secondary"
+            android:textColor="@color/textColorSecondary"
             android:textSize="14sp"
             tools:text="Ongoing call of 56 secs" />
 
@@ -88,7 +88,7 @@ along with this program; if not, write to the Free Software
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/conv_participant"
             android:layout_alignParentEnd="true"
-            android:textColor="@color/text_color_secondary"
+            android:textColor="@color/textColorSecondary"
             android:textSize="12sp"
             tools:text="2 days ago" />
 

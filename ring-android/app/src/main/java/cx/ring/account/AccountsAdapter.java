@@ -31,7 +31,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -70,7 +69,7 @@ public class AccountsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         AccountView entryView = (AccountView) holder;
         final Account item = accounts.get(position);
         entryView.alias.setText(item.getAlias());
-        entryView.host.setTextColor(ContextCompat.getColor(entryView.itemView.getContext(), R.color.text_color_secondary));
+        entryView.host.setTextColor(ContextCompat.getColor(entryView.itemView.getContext(), R.color.textColorSecondary));
 
         if (item.isIP2IP()) {
             entryView.host.setText(item.getRegistrationState());
@@ -98,11 +97,11 @@ public class AccountsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             } else if (item.needsMigration()) {
                 entryView.host.setText(R.string.account_update_needed);
                 entryView.host.setTextColor(Color.RED);
-                entryView.errorIndicator.setImageResource(R.drawable.ic_warning);
+                entryView.errorIndicator.setImageResource(R.drawable.baseline_warning_24);
                 entryView.errorIndicator.setColorFilter(Color.RED);
                 entryView.errorIndicator.setVisibility(View.VISIBLE);
             } else if (item.isInError() || !item.isRegistered()) {
-                entryView.errorIndicator.setImageResource(R.drawable.ic_error_white);
+                entryView.errorIndicator.setImageResource(R.drawable.baseline_error_24);
                 entryView.errorIndicator.setColorFilter(Color.RED);
                 entryView.errorIndicator.setVisibility(View.VISIBLE);
                 entryView.loadingIndicator.setVisibility(View.GONE);

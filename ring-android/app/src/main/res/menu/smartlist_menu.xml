@@ -7,14 +7,14 @@
     <item
         android:id="@+id/menu_contact_search"
         android:hint="@string/searchbar_hint"
-        android:icon="@drawable/ic_search_white"
+        android:icon="@drawable/baseline_search_24"
         android:title="@string/searchbar_hint"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="collapseActionView|always" />
 
     <item
         android:id="@+id/menu_contact_dial"
-        android:icon="@drawable/ic_dialpad_white"
+        android:icon="@drawable/baseline_dialpad_24"
         android:title="@string/dial_number"
         android:visible="false"
         app:showAsAction="always" />
@@ -29,6 +29,7 @@
         android:id="@+id/menu_scan_qr"
         android:icon="@drawable/ic_action_scan_qr"
         android:title="@string/scan_qr"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        app:iconTint="?attr/colorControlNormal"/>
 
 </menu>

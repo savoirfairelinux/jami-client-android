@@ -30,6 +30,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.preference.Preference;
 import androidx.preference.TwoStatePreference;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
+import java.io.File;
 import java.util.ArrayList;
 
 import cx.ring.R;
@@ -108,7 +111,7 @@ public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPrefere
 
     @Override
     public void displayWrongFileFormatDialog() {
-        new AlertDialog.Builder(getContext())
+        new MaterialAlertDialogBuilder(requireContext())
                 .setTitle(R.string.ringtone_error_title)
                 .setMessage(R.string.ringtone_error_format_not_supported)
                 .setPositiveButton(android.R.string.ok, null)
@@ -117,7 +120,7 @@ public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPrefere
 
     @Override
     public void displayPermissionCameraDenied() {
-        new AlertDialog.Builder(getContext())
+        new MaterialAlertDialogBuilder(requireContext())
                 .setTitle(R.string.permission_dialog_camera_title)
                 .setMessage(R.string.permission_dialog_camera_message)
                 .setCancelable(false)

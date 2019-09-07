@@ -27,7 +27,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
-        app:srcCompat="@drawable/ic_desktop_windows_black" />
+        app:srcCompat="@drawable/baseline_desktop_windows_24" />
 
     <TextView
         android:id="@+id/txt_device_label"
@@ -78,7 +78,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         android:contentDescription="@string/account_device_revoke"
         android:padding="8dp"
         android:tint="@color/black"
-        app:srcCompat="@drawable/ic_action_edit" />
+        app:srcCompat="@drawable/baseline_edit_24" />
 
     <ImageButton
         android:id="@+id/revoke_button"

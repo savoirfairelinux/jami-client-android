@@ -41,6 +41,9 @@ import java.util.HashMap;
 import javax.inject.Inject;
 
 import androidx.fragment.app.Fragment;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -188,7 +191,7 @@ public class AccountMigrationFragment extends Fragment {
             mProgress.dismiss();
             mProgress = null;
         }
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder dialogBuilder = new MaterialAlertDialogBuilder(requireContext());
         dialogBuilder.setPositiveButton(android.R.string.ok, (dialog, id) -> {
             //do things
         });

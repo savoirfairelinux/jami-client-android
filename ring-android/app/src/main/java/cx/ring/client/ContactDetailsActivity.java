@@ -30,16 +30,17 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
@@ -146,7 +147,8 @@ public class ContactDetailsActivity extends AppCompatActivity {
         public void onBindViewHolder(@NonNull ContactActionView holder, int position) {
             ContactAction action = actions.get(position);
             holder.binding.actionIcon.setImageResource(action.icon);
-            ImageViewCompat.setImageTintList(holder.binding.actionIcon, ColorStateList.valueOf(action.iconTint));
+            if (action.iconTint != Color.BLACK)
+                ImageViewCompat.setImageTintList(holder.binding.actionIcon, ColorStateList.valueOf(action.iconTint));
             holder.binding.actionTitle.setText(action.title);
             holder.callback = action.callback;
         }
@@ -201,6 +203,8 @@ public class ContactDetailsActivity extends AppCompatActivity {
                             collapsingToolbarLayout.setBackgroundColor(color);
                             collapsingToolbarLayout.setTitle(contact.getDisplayName());
                             collapsingToolbarLayout.setContentScrimColor(color);
+                            collapsingToolbarLayout.setStatusBarScrimColor(color);
+                            //collapsingToolbarLayout.setCollapsedTitleTextColor();
                             binding.contactImage.setImageDrawable(new AvatarDrawable(this, contact, false));
                             mConversation = conversation;
                             mContact = contact;
@@ -211,6 +215,7 @@ public class ContactDetailsActivity extends AppCompatActivity {
                     frag.setCallback(color -> {
                         collapsingToolbarLayout.setBackgroundColor(color);
                         collapsingToolbarLayout.setContentScrimColor(color);
+                        collapsingToolbarLayout.setStatusBarScrimColor(color);
                         colorAction.setIconTint(color);
                         adapter.notifyItemChanged(colorActionPosition);
                         mPreferences.edit().putInt(ConversationFragment.KEY_PREFERENCE_CONVERSATION_COLOR, color).apply();
@@ -218,12 +223,12 @@ public class ContactDetailsActivity extends AppCompatActivity {
                     frag.show(getSupportFragmentManager(), "colorChooser");
                 });
                 adapter.actions.add(colorAction);
-                adapter.actions.add(new ContactAction(R.drawable.ic_call_white, getText(R.string.ab_action_audio_call), () ->
+                adapter.actions.add(new ContactAction(R.drawable.baseline_call_24, getText(R.string.ab_action_audio_call), () ->
                         goToCallActivity(mConversation.getAccountId(), mContact.getPrimaryNumber(), true)));
-                adapter.actions.add(new ContactAction(R.drawable.ic_videocam_white, getText(R.string.ab_action_video_call), () ->
+                adapter.actions.add(new ContactAction(R.drawable.baseline_videocam_24, getText(R.string.ab_action_video_call), () ->
                         goToCallActivity(mConversation.getAccountId(), mContact.getPrimaryNumber(), false)));
                 adapter.actions.add(new ContactAction(R.drawable.baseline_clear_all_24, getText(R.string.conversation_action_history_clear), () ->
-                        new AlertDialog.Builder(ContactDetailsActivity.this)
+                        new MaterialAlertDialogBuilder(ContactDetailsActivity.this)
                                 .setTitle(R.string.clear_history_dialog_title)
                                 .setMessage(R.string.clear_history_dialog_message)
                                 .setPositiveButton(R.string.conversation_action_history_clear, (b, i) -> {
@@ -233,8 +238,8 @@ public class ContactDetailsActivity extends AppCompatActivity {
                                 .setNegativeButton(android.R.string.cancel, null)
                                 .create()
                                 .show()));
-                adapter.actions.add(new ContactAction(R.drawable.ic_block_white, getText(R.string.conversation_action_block_this), () ->
-                        new AlertDialog.Builder(ContactDetailsActivity.this)
+                adapter.actions.add(new ContactAction(R.drawable.baseline_block_24, getText(R.string.conversation_action_block_this), () ->
+                        new MaterialAlertDialogBuilder(ContactDetailsActivity.this)
                                 .setTitle(getString(R.string.block_contact_dialog_title, contactAction.title))
                                 .setMessage(getString(R.string.block_contact_dialog_message, contactAction.title))
                                 .setPositiveButton(R.string.conversation_action_block_this, (b, i) -> {
@@ -247,9 +252,10 @@ public class ContactDetailsActivity extends AppCompatActivity {
                                 .show()));
                 contactAction = new ContactAction(R.drawable.ic_contact_picture_box_default, "", () -> {
                     ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                    ClipData clip = ClipData.newPlainText(getText(R.string.clip_contact_uri), contactAction.title);
-                    clipboard.setPrimaryClip(clip);
-                    Snackbar.make(binding.getRoot(), getString(R.string.conversation_action_copied_peer_number_clipboard, contactUri), Snackbar.LENGTH_LONG).show();
+                    if (clipboard != null) {
+                        clipboard.setPrimaryClip(ClipData.newPlainText(getText(R.string.clip_contact_uri), contactAction.title));
+                        Snackbar.make(binding.getRoot(), getString(R.string.conversation_action_copied_peer_number_clipboard, contactUri), Snackbar.LENGTH_LONG).show();
+                    }
                 });
                 adapter.actions.add(contactAction);
                 colorActionPosition = 0;

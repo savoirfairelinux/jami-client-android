@@ -27,6 +27,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 
 import androidx.annotation.NonNull;
@@ -84,7 +85,7 @@ public class ChangePasswordDialog extends DialogFragment {
         int passwordMessage = hasPassword ? R.string.account_password_change : R.string.account_password_set;
         mPasswordTxtBox.setVisibility(hasPassword ? View.VISIBLE : View.GONE);
 
-        final AlertDialog result = new AlertDialog.Builder(requireContext())
+        final AlertDialog result = new MaterialAlertDialogBuilder(requireContext())
                 .setView(view)
                 .setMessage(R.string.help_password_choose)
                 .setTitle(passwordMessage)

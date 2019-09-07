@@ -539,9 +539,9 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         }
 
         if (file.getEventCode().isError()) {
-            viewHolder.icon.setImageResource(R.drawable.ic_warning);
+            viewHolder.icon.setImageResource(R.drawable.baseline_warning_24);
         } else {
-            viewHolder.icon.setImageResource(R.drawable.ic_clip_black);
+            viewHolder.icon.setImageResource(R.drawable.baseline_attach_file_24);
         }
 
         viewHolder.mMsgTxt.setText(file.getDisplayName());
@@ -599,6 +599,10 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         longPressView.getBackground().setTintList(null);
 
         longPressView.setOnCreateContextMenuListener((menu, v, menuInfo) -> {
+            Date date = new Date(interaction.getTimestamp());
+            //DateFormat dateFormat = android.text.format.DateFormat..getDateFormat(v.getContext());
+            DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT);
+            menu.setHeaderTitle(dateFormat.format(date));
             conversationFragment.onCreateContextMenu(menu, v, menuInfo);
             MenuInflater inflater = conversationFragment.getActivity().getMenuInflater();
             inflater.inflate(R.menu.conversation_item_actions_messages, menu);
@@ -609,8 +613,6 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                 menu.findItem(R.id.conv_action_delete).setTitle(R.string.menu_message_delete);
                 menu.removeItem(R.id.conv_action_cancel_message);
             }
-
-
         });
 
         longPressView.setOnLongClickListener((View v) -> {
@@ -752,9 +754,9 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
         if (hc.isMissed()) {
             if (hc.isIncoming()) {
-                pictureResID = R.drawable.ic_call_missed_incoming_black;
+                pictureResID = R.drawable.baseline_call_missed_24;
             } else {
-                pictureResID = R.drawable.ic_call_missed_outgoing_black;
+                pictureResID = R.drawable.baseline_call_missed_outgoing_24;
                 // Flip the photo upside down to show a "missed outgoing call"
                 convViewHolder.mPhoto.setScaleY(-1);
             }
@@ -763,8 +765,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                     context.getString(R.string.notif_missed_outgoing_call);
         } else {
             pictureResID = (hc.isIncoming()) ?
-                    R.drawable.ic_incoming_black :
-                    R.drawable.ic_outgoing_black;
+                    R.drawable.baseline_call_received_24 :
+                    R.drawable.baseline_call_made_24;
             historyTxt = hc.isIncoming() ?
                     context.getString(R.string.notif_incoming_call) :
                     context.getString(R.string.notif_outgoing_call);

@@ -26,7 +26,4 @@ public interface LaunchView {
     void goToHome();
 
     void goToAccountCreation();
-
-    void displayAudioPermissionDialog();
-
 }

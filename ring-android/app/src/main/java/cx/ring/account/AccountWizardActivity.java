@@ -38,6 +38,9 @@ import java.io.File;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
@@ -229,7 +232,7 @@ public class AccountWizardActivity extends BaseActivity<AccountWizardPresenter> 
         if (mAlertDialog != null && mAlertDialog.isShowing()) {
             return;
         }
-        mAlertDialog = new AlertDialog.Builder(AccountWizardActivity.this)
+        mAlertDialog = new MaterialAlertDialogBuilder(AccountWizardActivity.this)
                 .setPositiveButton(android.R.string.ok, null)
                 .setTitle(R.string.account_cannot_be_found_title)
                 .setMessage(R.string.account_export_end_decryption_message)
@@ -241,7 +244,7 @@ public class AccountWizardActivity extends BaseActivity<AccountWizardPresenter> 
         if (mAlertDialog != null && mAlertDialog.isShowing()) {
             return;
         }
-        mAlertDialog = new AlertDialog.Builder(AccountWizardActivity.this)
+        mAlertDialog = new MaterialAlertDialogBuilder(AccountWizardActivity.this)
                 .setPositiveButton(android.R.string.ok, null)
                 .setTitle(R.string.account_no_network_title)
                 .setMessage(R.string.account_no_network_message)
@@ -253,7 +256,7 @@ public class AccountWizardActivity extends BaseActivity<AccountWizardPresenter> 
         if (mAlertDialog != null && mAlertDialog.isShowing()) {
             return;
         }
-        mAlertDialog = new AlertDialog.Builder(AccountWizardActivity.this)
+        mAlertDialog = new MaterialAlertDialogBuilder(AccountWizardActivity.this)
                 .setPositiveButton(android.R.string.ok, null)
                 .setTitle(R.string.account_cannot_be_found_title)
                 .setMessage(R.string.account_cannot_be_found_message)

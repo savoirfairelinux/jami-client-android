@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:textColor="@color/text_color_secondary"
+            android:textColor="@color/textColorSecondary"
             android:textSize="14sp"
             tools:text="@string/message_sending" />
     </LinearLayout>

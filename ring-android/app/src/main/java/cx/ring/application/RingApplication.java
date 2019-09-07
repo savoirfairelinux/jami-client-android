@@ -46,6 +46,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatDelegate;
+
 import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.contacts.AvatarFactory;
@@ -252,6 +254,11 @@ public abstract class RingApplication extends Application {
 
         // we can now inject in our self whatever modules define
         mRingInjectionComponent.inject(this);
+
+        AppCompatDelegate.setDefaultNightMode(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
+                ? AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                : AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
+
     }
 
     public void startDaemon() {
