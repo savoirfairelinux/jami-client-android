@@ -39,6 +39,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -455,8 +456,12 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
 
     @Override
     public void goToGallery() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, HomeActivity.REQUEST_CODE_GALLERY);
+        try {
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, HomeActivity.REQUEST_CODE_GALLERY);
+        } catch (Exception e) {
+            Toast.makeText(requireContext(), R.string.gallery_error_message, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
