@@ -43,10 +43,14 @@
 # EZVcard
 -keep,includedescriptorclasses class ezvcard.** { *; }
 -keepclassmembers class ezvcard.** { *; }
+-keep,includedescriptorclasses class com.github.mangstadt.vinnie.** { *; }
+-keepclassmembers class com.github.mangstadt.vinnie.** { *; }
 
 # barcodescanner
 -keep,includedescriptorclasses class com.journeyapps.barcodescanner.** { *; }
 -keepclassmembers class com.journeyapps.barcodescanner.** { *; }
+-keep,includedescriptorclasses class com.google.zxing.** { *; }
+-keepclassmembers class com.google.zxing.** { *; }
 
 # stickylistheaders
 -keep,includedescriptorclasses class se.emilsjolander.stickylistheaders.** { *; }
@@ -71,3 +75,4 @@
   **[] $VALUES;
   public *;
 }
+
