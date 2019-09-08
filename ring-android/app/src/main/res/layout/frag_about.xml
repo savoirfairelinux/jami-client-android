@@ -58,7 +58,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/version_section"
-                android:textColor="@color/color_primary_dark"
+                android:textColor="@color/textColorAccent"
                 android:textSize="18sp" />
 
             <TextView
@@ -84,7 +84,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/contribute_section"
-                android:textColor="@color/color_primary_dark"
+                android:textColor="@color/textColorAccent"
                 android:textSize="18sp" />
 
             <TextView
@@ -107,7 +107,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/copyright_section"
-                android:textColor="@color/color_primary_dark"
+                android:textColor="@color/textColorAccent"
                 android:textSize="18sp" />
 
             <TextView
@@ -134,7 +134,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/section_license"
-                android:textColor="@color/color_primary_dark"
+                android:textColor="@color/textColorAccent"
                 android:textSize="18sp" />
 
             <TextView
@@ -162,7 +162,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_height="wrap_content"
                 android:clickable="false"
                 android:text="@string/feedback_section"
-                android:textColor="@color/color_primary_dark"
+                android:textColor="@color/textColorAccent"
                 android:textSize="18sp" />
 
             <TextView
@@ -187,7 +187,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:text="@string/sponsor_section"
-                android:textColor="@color/color_primary_dark"
+                android:textColor="@color/textColorAccent"
                 android:textSize="15sp" />
 
             <ImageView
@@ -203,15 +203,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         </LinearLayout>
 
-        <androidx.appcompat.widget.AppCompatButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/credits"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:paddingLeft="24dp"
             android:paddingRight="24dp"
-            android:text="@string/credits"
-            android:theme="@style/ButtonColoredInverse" />
+            android:text="@string/credits" />
 
     </LinearLayout>
 </ScrollView>

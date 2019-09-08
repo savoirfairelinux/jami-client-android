@@ -29,6 +29,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.google.android.material.chip.Chip;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -305,7 +306,7 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     @Override
     public void showNetworkError() {
         dismissWaitDialog();
-        new AlertDialog.Builder(requireActivity())
+        new MaterialAlertDialogBuilder(requireContext())
                 .setTitle(R.string.account_export_end_network_title)
                 .setMessage(R.string.account_export_end_network_message)
                 .setPositiveButton(android.R.string.ok, null)
@@ -322,7 +323,7 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     @Override
     public void showGenericError() {
         dismissWaitDialog();
-        new AlertDialog.Builder(requireActivity())
+        new MaterialAlertDialogBuilder(requireContext())
                 .setTitle(R.string.account_export_end_error_title)
                 .setMessage(R.string.account_export_end_error_message)
                 .setPositiveButton(android.R.string.ok, null)
@@ -455,7 +456,7 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     public void passwordChangeEnded(boolean ok) {
         dismissWaitDialog();
         if (!ok) {
-            new AlertDialog.Builder(requireActivity())
+            new MaterialAlertDialogBuilder(requireContext())
                     .setTitle(R.string.account_device_revocation_wrong_password)
                     .setMessage(R.string.account_export_end_decryption_message)
                     .setPositiveButton(android.R.string.ok, null)
@@ -481,7 +482,7 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
             default:
                 message = R.string.account_device_revocation_error_unknown;
         }
-        new AlertDialog.Builder(requireActivity())
+        new MaterialAlertDialogBuilder(requireContext())
                 .setTitle(title)
                 .setMessage(message)
                 .setPositiveButton(android.R.string.ok, (dialog, which) -> {

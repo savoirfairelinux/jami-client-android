@@ -246,6 +246,7 @@ along with this program; if not, write to the Free Software
     <string name="share_label">Share</string>
     <string name="generic_error_migration">Error</string>
     <string name="generic_error_migration_message">An error occurred during migration</string>
+    <string name="title_share_with">Share with…</string>
 
     <!-- Pending contact requests -->
     <string name="accept">Accept</string>
@@ -269,6 +270,7 @@ along with this program; if not, write to the Free Software
     <!-- Smartlist -->
     <string name="no_contact_request">No contact request sent</string>
     <string name="contact_request_sent">Contact request sent</string>
+    <string name="start_conversation">Start conversation</string>
 
     <string name="search_results">Search Results</string>
     <string name="tv_contact_row_header">Contacts</string>

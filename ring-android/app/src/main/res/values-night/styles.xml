@@ -1,0 +1,33 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="AppTheme" parent="AppThemeBase">
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <style name="AppTheme.Fullscreen" parent="AppThemeBase">
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:statusBarColor">@color/transparent</item>
+    </style>
+
+    <style name="AppTheme.DarkToolbar" parent="AppThemeBase">
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+
+    <!--
+    <style name="AppThemeBase.Dark" parent="@style/Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorAccent">@color/color_primary_light</item>
+    </style>
+
+    <style name="AppThemeBase" parent="@style/Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorAccent">@color/color_primary_light</item>
+    </style>
+
+    <style name="AppTheme" parent="@style/Theme.MaterialComponents.DayNight">
+        <item name="colorAccent">@color/color_primary_light</item>
+    </style>
+-->
+</resources>

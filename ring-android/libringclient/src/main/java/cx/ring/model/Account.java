@@ -35,6 +35,7 @@ import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
 import cx.ring.utils.Tuple;
 import ezvcard.VCard;
+import ezvcard.property.FormattedName;
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.PublishSubject;
@@ -475,6 +476,9 @@ public class Account {
     public String getDisplayUri() {
         return getUri(true);
     }
+    public String getDisplayUri(CharSequence defaultNameSip) {
+        return isIP2IP() ? defaultNameSip.toString() : getDisplayUri();
+    }
 
     public boolean needsMigration() {
         return AccountConfig.STATE_NEED_MIGRATION.equals(getRegistrationState());
@@ -792,6 +796,10 @@ public class Account {
             if (pending.containsKey(key))
                 pendingRefreshed();
         }
+    }
+
+    public String getAccountAlias() {
+        return (mLoadedProfile == null || StringUtils.isEmpty(mLoadedProfile.first)) ? getAlias() : mLoadedProfile.first;
     }
 
     public void setProfile(VCard vcard) {

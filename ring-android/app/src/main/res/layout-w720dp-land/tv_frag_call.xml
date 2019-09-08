@@ -21,7 +21,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="presenter"
             type="cx.ring.tv.call.TVCallFragment" />
@@ -173,7 +172,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         app:elevation="6dp"
                         app:pressedTranslationZ="12dp"
                         app:rippleColor="@android:color/white"
-                        app:srcCompat="@drawable/ic_call_white"
+                        app:srcCompat="@drawable/baseline_call_24"
                         app:useCompatPadding="true" />
 
                 </LinearLayout>

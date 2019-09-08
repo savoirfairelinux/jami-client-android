@@ -174,25 +174,25 @@ public class RingAccountCreationFragment extends BaseSupportFragment<RingAccount
     @Override
     public void updateUsernameAvailability(UsernameAvailabilityStatus status) {
         mUsernameAvailabilitySpinner.setVisibility(View.GONE);
-        mUsernameAvailabilityImageView.setVisibility(View.VISIBLE);
+        //mUsernameAvailabilityImageView.setVisibility(View.VISIBLE);
         switch (status){
             case ERROR:
                 mUsernameTxtBox.setErrorEnabled(true);
                 mUsernameTxtBox.setError(getString(R.string.unknown_error));
-                mUsernameAvailabilityImageView.setImageDrawable(getResources().
-                        getDrawable(R.drawable.ic_error_red));
+                //mUsernameAvailabilityImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_error_red));
+                mUsernameAvailabilityImageView.setVisibility(View.INVISIBLE);
                 break;
             case ERROR_USERNAME_INVALID:
                 mUsernameTxtBox.setErrorEnabled(true);
                 mUsernameTxtBox.setError(getString(R.string.invalid_username));
-                mUsernameAvailabilityImageView.setImageDrawable(getResources().
-                        getDrawable(R.drawable.ic_error_red));
+                //mUsernameAvailabilityImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_error_red));
+                mUsernameAvailabilityImageView.setVisibility(View.INVISIBLE);
                 break;
             case ERROR_USERNAME_TAKEN:
                 mUsernameTxtBox.setErrorEnabled(true);
                 mUsernameTxtBox.setError(getString(R.string.username_already_taken));
-                mUsernameAvailabilityImageView.setImageDrawable(getResources().
-                        getDrawable(R.drawable.ic_error_red));
+                //mUsernameAvailabilityImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_error_red));
+                mUsernameAvailabilityImageView.setVisibility(View.INVISIBLE);
                 break;
             case LOADING:
                 mUsernameTxtBox.setErrorEnabled(false);
@@ -201,8 +201,8 @@ public class RingAccountCreationFragment extends BaseSupportFragment<RingAccount
                 break;
             case AVAILABLE:
                 mUsernameTxtBox.setErrorEnabled(false);
-                mUsernameAvailabilityImageView.setImageDrawable(getResources().
-                        getDrawable(R.drawable.ic_good_green));
+                mUsernameAvailabilityImageView.setVisibility(View.VISIBLE);
+                mUsernameAvailabilityImageView.setImageDrawable(requireContext().getDrawable(R.drawable.ic_good_green));
                 break;
             case RESET:
                 mUsernameTxtBox.setErrorEnabled(false);

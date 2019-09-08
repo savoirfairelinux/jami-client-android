@@ -27,6 +27,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.fragment.app.Fragment;
@@ -208,7 +210,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
 
     @NonNull
     private AlertDialog createDeleteDialog() {
-        AlertDialog alertDialog = new AlertDialog.Builder(AccountEditionActivity.this)
+        AlertDialog alertDialog = new MaterialAlertDialogBuilder(this)
                 .setMessage(R.string.account_delete_dialog_message)
                 .setTitle(R.string.account_delete_dialog_title)
                 .setPositiveButton(android.R.string.ok, (dialog, whichButton) -> mEditionPresenter.removeAccount())

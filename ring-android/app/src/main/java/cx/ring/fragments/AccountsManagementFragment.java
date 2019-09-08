@@ -44,6 +44,7 @@ import cx.ring.account.AccountWizardActivity;
 import cx.ring.account.AccountsAdapter;
 import cx.ring.account.AccountsManagementPresenter;
 import cx.ring.account.AccountsManagementView;
+import cx.ring.adapters.AccountView;
 import cx.ring.application.RingApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.dependencyinjection.RingInjectionComponent;
@@ -52,7 +53,7 @@ import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.utils.ContentUriHandler;
 
 public class AccountsManagementFragment extends BaseSupportFragment<AccountsManagementPresenter> implements AccountsManagementView,
-        AccountsAdapter.AccountListeners {
+        AccountView.OnAccountActionListener {
     public static final int ACCOUNT_CREATE_REQUEST = 1;
     public static final int ACCOUNT_EDIT_REQUEST = 2;
     static final String TAG = AccountsManagementFragment.class.getSimpleName();
@@ -115,6 +116,8 @@ public class AccountsManagementFragment extends BaseSupportFragment<AccountsMana
     public void onStop() {
         super.onStop();
         Log.w(TAG, "onStop()");
+        FloatingActionButton button = ((HomeActivity) getActivity()).getActionButton();
+        button.setOnClickListener(null);
     }
 
     @Override
@@ -176,12 +179,12 @@ public class AccountsManagementFragment extends BaseSupportFragment<AccountsMana
     }
 
     @Override
-    public void onItemClicked(Account account) {
+    public void onAccountSelected(Account account) {
         presenter.clickAccount(account);
     }
 
     @Override
-    public void onAccountEnabled(String accountId, boolean enabled) {
-        presenter.accountEnabled(accountId, enabled);
+    public void onAccountEnabled(Account account) {
+        presenter.accountEnabled(account);
     }
 }

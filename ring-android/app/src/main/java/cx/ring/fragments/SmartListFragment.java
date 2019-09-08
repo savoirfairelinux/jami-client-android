@@ -21,6 +21,7 @@
 package cx.ring.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -28,9 +29,14 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import androidx.appcompat.app.AlertDialog;
+
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.SearchView;
@@ -63,6 +69,7 @@ import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.mvp.BaseSupportFragment;
+import cx.ring.navigation.RingNavigationFragment;
 import cx.ring.smartlist.SmartListPresenter;
 import cx.ring.smartlist.SmartListView;
 import cx.ring.smartlist.SmartListViewModel;
@@ -75,14 +82,17 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
         SmartListViewHolder.SmartListListeners,
         Conversation.ConversationActionCallback,
         ClipboardHelper.ClipboardHelperCallback,
-        SmartListView {
-
-    public static final String TAG = SmartListFragment.class.getSimpleName();
+        SmartListView
+{
+    private static final String TAG = SmartListFragment.class.getSimpleName();
     private static final String STATE_LOADING = TAG + ".STATE_LOADING";
     public static final String KEY_ACCOUNT_ID = "accountId";
 
+    @BindView(R.id.list_coordinator)
+    protected CoordinatorLayout mCoordinator;
+
     @BindView(R.id.newconv_fab)
-    protected FloatingActionButton mFloatingActionButton;
+    protected ExtendedFloatingActionButton mFloatingActionButton;
 
     @BindView(R.id.confs_list)
     protected RecyclerView mRecyclerView;
@@ -116,8 +126,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     @Override
     public void onResume() {
         super.onResume();
-        ((HomeActivity) getActivity()).setToolbarState(false, R.string.app_name);
-
+        ((HomeActivity) requireActivity()).setToolbarState(false, R.string.app_name);
         presenter.refresh();
     }
 
@@ -205,7 +214,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         if (null != mLoader) {
             // if there's another fragment on top of this one, when a rotation is done, this fragment is destroyed and
             // in the process of recreating it, as it is not shown on the top of the screen, the "onCreateView" method is never called, so the mLoader is null
@@ -237,9 +246,34 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
 
         mNewContact.setVisibility(View.GONE);
 
-        if (DeviceUtils.isTablet(getActivity())) {
+        if (DeviceUtils.isTablet(getContext())) {
             isTabletMode = true;
         }
+
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                boolean canScrollUp = recyclerView.canScrollVertically(-1);
+                boolean isExtended = mFloatingActionButton.isExtended();
+
+                if (dy > 0 && isExtended) {
+                    mFloatingActionButton.shrink();
+                } else if ((dy < 0 || !canScrollUp) && !isExtended) {
+                    mFloatingActionButton.extend();
+                }
+
+                Activity activity = getActivity();
+                if (activity instanceof HomeActivity) {
+                    HomeActivity homeActivity = (HomeActivity) activity;
+                    homeActivity.setToolbarTop(!canScrollUp);
+                }
+            }
+        });
     }
 
     @OnClick(R.id.newcontact_element)
@@ -298,16 +332,15 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
 
     @Override
     public void clipBoardDidCopyNumber(String copiedNumber) {
-        if (getView() != null) {
+        if (mCoordinator != null) {
             String snackbarText = getString(R.string.conversation_action_copied_peer_number_clipboard,
                     ActionHelper.getShortenedNumber(copiedNumber));
-            Snackbar.make(getView(), snackbarText, Snackbar.LENGTH_LONG).show();
+            Snackbar.make(mCoordinator, snackbarText, Snackbar.LENGTH_LONG).show();
         }
     }
 
     private void showErrorPanel(final int textResId,
                                 final boolean showImage,
-                                final int imageResId,
                                 @Nullable View.OnClickListener clickListener) {
         if (mErrorMessagePane != null) {
             mErrorMessagePane.setVisibility(View.VISIBLE);
@@ -317,22 +350,19 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
             mErrorMessageTextView.setText(textResId);
         }
         if (mErrorImageView != null) {
-            int visibility = showImage ? View.VISIBLE : View.GONE;
-            mErrorImageView.setVisibility(visibility);
-            mErrorImageView.setImageResource(imageResId);
+            mErrorImageView.setVisibility(showImage ? View.VISIBLE : View.GONE);
         }
     }
 
     @Override
     public void displayNetworkErrorPanel() {
-        showErrorPanel(R.string.error_no_network, false, 0, null);
+        showErrorPanel(R.string.error_no_network, false, null);
     }
 
     @Override
     public void displayMobileDataPanel() {
         showErrorPanel(R.string.error_mobile_network_available_but_disabled,
                 true,
-                R.drawable.ic_settings_white,
                 v -> {
                     Activity activity = getActivity();
                     if (activity instanceof HomeActivity) {
@@ -359,12 +389,13 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
 
     @Override
     public void displayChooseNumberDialog(final CharSequence[] numbers) {
-        new AlertDialog.Builder(getActivity())
+        final Context context = requireContext();
+        new MaterialAlertDialogBuilder(context)
                 .setTitle(R.string.choose_number)
                 .setItems(numbers, (dialog, which) -> {
                     CharSequence selected = numbers[which];
                     Intent intent = new Intent(CallActivity.ACTION_CALL)
-                            .setClass(getActivity(), CallActivity.class)
+                            .setClass(context, CallActivity.class)
                             .setData(Uri.parse(selected.toString()));
                     startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
                 })
@@ -380,7 +411,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
 
     @Override
     public void displayConversationDialog(final SmartListViewModel smartListViewModel) {
-        new AlertDialog.Builder(getActivity())
+        new MaterialAlertDialogBuilder(requireContext())
                 .setItems(R.array.conversation_actions, (dialog, which) -> {
                     switch (which) {
                         case ActionHelper.ACTION_COPY:
@@ -498,7 +529,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
 
         if (!isTabletMode) {
             Intent intent = new Intent()
-                    .setClass(getActivity(), ConversationActivity.class)
+                    .setClass(requireActivity(), ConversationActivity.class)
                     .setAction(Intent.ACTION_VIEW)
                     .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
                     .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactId.toString());
@@ -507,14 +538,14 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
             Bundle bundle = new Bundle();
             bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, contactId.toString());
             bundle.putString(ConversationFragment.KEY_ACCOUNT_ID, accountId);
-            ((HomeActivity) getActivity()).startConversationTablet(bundle);
+            ((HomeActivity) requireActivity()).startConversationTablet(bundle);
         }
     }
 
     @Override
     public void goToCallActivity(String accountId, String contactId) {
         Intent intent = new Intent(CallActivity.ACTION_CALL)
-                .setClass(getActivity(), CallActivity.class)
+                .setClass(requireActivity(), CallActivity.class)
                 .putExtra(CallFragment.KEY_AUDIO_ONLY, false)
                 .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
                 .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
@@ -524,7 +555,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     @Override
     public void goToQRActivity() {
         Intent intent = new Intent(QRCodeActivity.ACTION_SCAN)
-                .setClass(getActivity(), QRCodeActivity.class);
+                .setClass(requireActivity(), QRCodeActivity.class);
         startActivityForResult(intent, HomeActivity.REQUEST_CODE_QR_CONVERSATION);
     }
 

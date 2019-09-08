@@ -21,9 +21,7 @@
             android:minHeight="?attr/actionBarSize"
             android:popupTheme="@style/Theme.MaterialComponents.Light.NoActionBar"
             android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
-            android:titleTextAppearance="@style/ToolbarTitle"
-            app:contentInsetStart="72dp"
-            app:titleTextAppearance="@style/ToolbarTitle" />
+            app:contentInsetStart="72dp" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/sliding_tabs"

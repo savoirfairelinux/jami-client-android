@@ -38,8 +38,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/account_photo"
-        android:layout_toStartOf="@+id/account_disabled"
+        android:layout_toEndOf="@id/account_photo"
+        android:layout_toStartOf="@id/account_disabled"
         android:ellipsize="end"
         android:lines="1"
         android:textAppearance="@style/ListPrimary"
@@ -50,10 +50,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         style="@style/TextAppearance.MaterialComponents.Subtitle2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/account_alias"
+        android:layout_alignBaseline="@id/account_alias"
         android:layout_alignWithParentIfMissing="true"
         android:layout_marginStart="8dp"
-        android:layout_toStartOf="@+id/loading_indicator"
+        android:layout_toStartOf="@id/loading_indicator"
         android:text="@string/account_disabled_indicator"
         android:textStyle="italic" />
 
@@ -62,9 +62,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="false"
-        android:layout_below="@+id/account_alias"
-        android:layout_toEndOf="@+id/account_photo"
-        android:layout_toStartOf="@+id/loading_indicator"
+        android:layout_below="@id/account_alias"
+        android:layout_toEndOf="@id/account_photo"
+        android:layout_toStartOf="@id/loading_indicator"
         android:ellipsize="middle"
         android:singleLine="true"
         android:textAppearance="@style/ListSecondary"
@@ -78,7 +78,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:layout_alignWithParentIfMissing="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="16dp"
-        android:layout_toStartOf="@+id/error_indicator"
+        android:layout_toStartOf="@id/error_indicator"
         android:visibility="gone" />
 
     <ImageView
@@ -93,6 +93,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:focusableInTouchMode="false"
         android:tint="@color/error_red"
         android:visibility="gone"
-        app:srcCompat="@drawable/ic_error_white" />
+        app:srcCompat="@drawable/baseline_error_24" />
 
 </RelativeLayout>

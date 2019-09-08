@@ -29,29 +29,53 @@ along with this program; if not, write to the Free Software
     android:saveEnabled="false"
     tools:context=".client.HomeActivity">
 
-    <RelativeLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingEnd="0dp"
         android:paddingStart="@dimen/drawer_content_padding">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/main_toolbar"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
+            style="@style/Widget.MaterialComponents.AppBarLayout.Surface"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:background="@color/color_primary_light"
-            android:elevation="@dimen/toolbar_elevation"
-            android:minHeight="?attr/actionBarSize"
-            android:popupTheme="@style/Theme.MaterialComponents.Light.NoActionBar"
-            android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
-            android:titleTextAppearance="@style/ToolbarTitle"
-            app:contentInsetStart="@dimen/toolbar_content_inset"
-            app:elevation="@dimen/toolbar_elevation"
-            app:titleTextAppearance="@style/ToolbarTitle" />
+            android:minHeight="?attr/actionBarSize">
 
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/toolbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_scrollFlags="noScroll"
+                app:toolbarId="@id/toolbar"
+                app:collapsedTitleGravity="bottom"
+                app:titleTextColor="@color/textColorPrimary"
+                app:expandedTitleMarginStart="72dp">
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/main_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:contentInsetStart="@dimen/toolbar_content_inset"
+                    app:layout_collapseMode="pin"/>
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/action_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fab_margin_mini"
+            app:elevation="6dp"
+            app:fabSize="mini"
+            app:layout_anchor="@id/app_bar"
+            app:layout_anchorGravity="bottom"
+            app:pressedTranslationZ="12dp"
+            app:rippleColor="@android:color/white"
+            app:srcCompat="@drawable/baseline_add_24" />
+<!--
         <LinearLayout
             android:id="@+id/toolbar_spacer"
             android:layout_width="match_parent"
@@ -74,43 +98,24 @@ along with this program; if not, write to the Free Software
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
         </LinearLayout>
-
+-->
         <FrameLayout
             android:id="@+id/main_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/toolbar_spacer"
-            android:orientation="vertical" />
+            android:layout_below="@+id/main_toolbar"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/action_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/toolbar_spacer"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="@dimen/action_button_lpadding"
-            android:layout_marginBottom="@dimen/action_button_bpadding"
-            android:adjustViewBounds="false"
-            android:baselineAlignBottom="false"
-            android:visibility="gone"
-            app:elevation="6dp"
-            app:fabSize="mini"
-            app:pressedTranslationZ="12dp"
-            app:rippleColor="@android:color/white"
-            app:srcCompat="@drawable/ic_add_white" />
-
-    </RelativeLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/left_drawer"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        android:theme="@style/AppThemeBase"
-        android:windowBackground="@color/white"
-        app:itemTextColor="?android:textColorPrimary">
+        android:fitsSystemWindows="true">
 
         <FrameLayout
             android:id="@+id/navigation_container"

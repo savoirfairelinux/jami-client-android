@@ -24,16 +24,16 @@ along with this program; if not, write to the Free Software
     <dimen name="padding_medium">12dp</dimen>
     <dimen name="padding_large">16dp</dimen>
 
-    <dimen name="radius_message_input">16dp</dimen>
-    <dimen name="margin_message_input">16dp</dimen>
+    <dimen name="conversation_message_input_radius">24dp</dimen>
+    <dimen name="conversation_message_input_margin">16dp</dimen>
+    <dimen name="conversation_message_radius">24dp</dimen>
 
     <dimen name="activity_horizontal_margin">32dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="action_button_lpadding">16dp</dimen>
     <dimen name="action_button_bpadding">-20dp</dimen>
-    <dimen name="fab_compat_margin">16dp</dimen>
-
+s
     <dimen name="alert_dialog_side_padding_list_view">16dp</dimen>
 
     <dimen name="toolbar_content_inset">72dp</dimen>
@@ -51,6 +51,7 @@ along with this program; if not, write to the Free Software
     <dimen name="share_preview_height">120dp</dimen>
     <dimen name="app_bar_height">260dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="fab_margin_mini">12dp</dimen>
     <dimen name="text_margin">16dp</dimen>
 
     <dimen name="qr_code_size">300dp</dimen>
