@@ -119,7 +119,7 @@ public abstract class RingApplication extends Application {
             Log.d(TAG, "onServiceConnected: " + className.getClassName());
             mBound = true;
             // bootstrap Daemon
-            bootstrapDaemon();
+            //bootstrapDaemon();
         }
 
         @Override
@@ -149,6 +149,7 @@ public abstract class RingApplication extends Application {
 
         mExecutor.execute(() -> {
             try {
+                Log.d(TAG, "bootstrapDaemon: START");
                 if (mDaemonService.isStarted()) {
                     return;
                 }
@@ -232,6 +233,19 @@ public abstract class RingApplication extends Application {
 
         RxJavaPlugins.setErrorHandler(e -> Log.e(TAG, "Unhandled RxJava error", e));
 
+        // building injection dependency tree
+        mRingInjectionComponent = DaggerRingInjectionComponent.builder()
+                .ringInjectionModule(new RingInjectionModule(this))
+                .serviceInjectionModule(new ServiceInjectionModule(this))
+                .build();
+
+        // we can now inject in our self whatever modules define
+        mRingInjectionComponent.inject(this);
+
+        bootstrapDaemon();
+
+        mPreferencesService.loadDarkMode();
+
         Completable.fromAction(() -> {
             File path = AndroidFileUtils.ringtonesPath(this);
             File defaultRingtone = new File(path, getString(R.string.ringtone_default_name));
@@ -246,16 +260,6 @@ public abstract class RingApplication extends Application {
         .subscribeOn(Schedulers.io())
         .subscribe();
 
-        // building injection dependency tree
-        mRingInjectionComponent = DaggerRingInjectionComponent.builder()
-                .ringInjectionModule(new RingInjectionModule(this))
-                .serviceInjectionModule(new ServiceInjectionModule(this))
-                .build();
-
-        // we can now inject in our self whatever modules define
-        mRingInjectionComponent.inject(this);
-
-        mPreferencesService.loadDarkMode();
     }
 
     public void startDaemon() {
