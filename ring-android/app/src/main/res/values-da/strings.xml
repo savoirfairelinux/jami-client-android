@@ -99,9 +99,11 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera-tilladelse</string>
   <string name="permission_dialog_camera_message">Video-samtaler kræver kamera-tilladelse for at fungere. Overvej venligst at give denne tilladelse.</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">Fejl</string>
   <string name="ringtone_error_format_not_supported">Dette format understøttes ikke.</string>
   <string name="ringtone_error_size_too_big">Filen er for stor. Maksimumstørrelsen er %1$dkB.</string>
+  <string name="ringtone_custom_label">Brugerdefineret</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->

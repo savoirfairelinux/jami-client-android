@@ -62,7 +62,9 @@
   <string name="message_failed">فشل</string>
   <string name="time_just_now">للتوّ</string>
   <!--MediaPreferenceFragment-->
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">خطأ</string>
+  <string name="ringtone_custom_label">حسب الطلب</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->

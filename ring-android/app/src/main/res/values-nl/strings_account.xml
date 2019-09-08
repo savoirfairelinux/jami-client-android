@@ -7,6 +7,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Jami-account toevoegen</string>
   <string name="add_sip_account_title">SIP-account toevoegen</string>
+  <string name="ring_account_default_name">Jami-account %1$s</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Hostnaam</string>
   <string name="prompt_username">Gebruikersnaam</string>
@@ -17,7 +18,7 @@
   <string name="action_settings">Instellingen</string>
   <string name="error_field_required">Dit veld is verplicht</string>
   <string name="dialog_wait_create">Account wordt toegevoegd</string>
-  <string name="dialog_wait_create_details">Uw nieuwe account wordt toegevoegd, even geduld…</string>
+  <string name="dialog_wait_create_details">Uw nieuw account wordt toegevoegd, even geduld…</string>
   <string name="dialog_wait_update">Account wordt bijgewerkt</string>
   <string name="dialog_wait_update_details">Uw account wordt bijgewerkt, even geduld…</string>
   <string name="dialog_warn_ip2ip_account_title">Leeg SIP-account aanmaken?</string>
@@ -115,6 +116,7 @@ U kunt uw account later bewerken</string>
   <string name="error_password_char_count">Minimaal 6 tekens</string>
   <string name="error_passwords_not_equals">Wachtwoorden komen niet overeen</string>
   <string name="export_account_wait_title">Even geduld…</string>
+  <string name="export_account_wait_message">Accountinformatie wordt geëxporteerd</string>
   <string name="account_export_file">Reservekopie van account maken</string>
   <string name="account_export_end_decryption_message">Kon uw account niet ontgrendelen met het opgegeven wachtwoord.</string>
   <string name="account_export_end_network_title">Netwerkfout</string>
@@ -145,6 +147,8 @@ U kunt uw account later bewerken</string>
   <string name="account_sip_success_title">SIP-account geregistreerd</string>
   <string name="account_sip_success_message">Uw SIP-account is met succes geregistreerd.</string>
   <string name="account_sip_register_anyway">Toch registreren</string>
+  <string name="account_link_button">Verbinden uit netwerk</string>
+  <string name="account_link_archive_button">Verbinden uit back-up</string>
   <string name="account_link_prompt_pin">Voer pincode in</string>
   <string name="account_new_button">Een Jami-account aanmaken</string>
   <string name="account_link_export_button">Een ander apparaat aan dit account koppelen</string>
@@ -157,12 +161,14 @@ U kunt uw account later bewerken</string>
   <!--Name registration-->
   <string name="error_username_empty">Voer een gebruikersnaam in</string>
   <string name="no_registered_name_for_account">Geen geregistreerde naam gevonden voor dit account</string>
+  <string name="username_available">Gebruikersnaam is beschikbaar!</string>
   <string name="register_name">Naam registreren</string>
   <string name="trying_to_register_name">Naam wordt geregistreerd</string>
   <string name="registered_username">Geregistreerde gebruikersnaam</string>
   <string name="register_username">Registreer een openbare gebruikersnaam (aanbevolen)</string>
   <string name="username_already_taken">Gebruikersnaam reeds in gebruik</string>
   <string name="invalid_username">Ongeldige gebruikersnaam</string>
+  <string name="unknown_error">Onbekende fout. Controleer uw netwerkverbinding!</string>
   <string name="looking_for_username_availability">Beschikbaarheid van gebruikersnaam wordt gecontroleerd…</string>
   <string name="account_status_connecting">Verbinden</string>
   <string name="account_status_connection_error">Verbindingsfout</string>

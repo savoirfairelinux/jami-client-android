@@ -111,6 +111,7 @@
   <string name="hist_file_received">Fitxategia jasota</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera-baimena</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">Errorea</string>
   <string name="ringtone_error_format_not_supported">Formatu hau ez da onartzen.</string>
   <!--Read contacts permission-->

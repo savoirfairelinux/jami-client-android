@@ -15,9 +15,11 @@
   <string name="license">Diese Software wird \"wie sie ist\" ohne Gewährleistung irgendwelcher Art zur Verfügung gestellt. Details finden Sie unter <u>GNU General Public License Version 3 oder höher</u></string>
   <string name="description">Jami ist eine freie Software für universelle Kommunikation und respektiert die Freiheiten und Privatsphäre der Benutzer.</string>
   <string name="credits">Würdigung</string>
+  <string name="call_service_description">Dieser Dienst ist notwendig um Anrufe im Vordergrund zu halten. Er läuft nur während eines Anrufs.</string>
   <!--About dialog-->
   <string name="developed_by">Entwickelt von</string>
   <string name="designed_by">Entworfen von</string>
+  <string name="ringtones_by">Klingeltöne von</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Keine Netzwerkverbindung</string>
@@ -113,9 +115,11 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera Berechtigung</string>
   <string name="permission_dialog_camera_message">Für Video-Konversationen benötigt die Anwendung Zugriff auf die Kamera. Bitte erteilen Sie diese Berechtigung.</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">Fehler</string>
   <string name="ringtone_error_format_not_supported">Dieses Format wird nicht unterstützt.</string>
   <string name="ringtone_error_size_too_big">Diese Datei ist zu groß. Die maximale Größe ist %1$dkB.</string>
+  <string name="ringtone_custom_label">Benutzerdefiniert</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring benötigt die Berechtigung \"Kontaktdaten lesen\" für diese Funktion. Bitte erteilen Sie diese.</string>
   <!--Write call log permission-->

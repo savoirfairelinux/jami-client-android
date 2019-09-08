@@ -15,6 +15,7 @@
   <string name="license">Questo software è fornito \"così com\'è\", senza garanzie di alcun tipo. Per dettagli, vedi <u>GNU General Public License versione 3 o successiva</u></string>
   <string name="description">Jami è un software gratuito per la comunicazione universale che rispetta le libertà e la privacy dei suoi utenti.</string>
   <string name="credits">Crediti</string>
+  <string name="call_service_description">Questo servizio è necessario per mantenere le chiamate in esecuzione in primo piano. Funziona solo durante le chiamate.</string>
   <!--About dialog-->
   <string name="developed_by">Sviluppato da</string>
   <string name="designed_by">Progettato da</string>
@@ -114,9 +115,11 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Attivare videocamera</string>
   <string name="permission_dialog_camera_message">Le videochiamate richiedono l\'autorizzazione Fotocamera per funzionare. Per favore attivala.</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">Errore</string>
   <string name="ringtone_error_format_not_supported">Questo formato non è supportato.</string>
   <string name="ringtone_error_size_too_big">Questo file è troppo grande. La dimensione massima è %1$dkB.</string>
+  <string name="ringtone_custom_label">Personalizzato</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Jami ha bisogno dell\'autorizzazione \"Lettura contatti\" per abilitare questa funzionalità. Per favore concedila.</string>
   <!--Write call log permission-->

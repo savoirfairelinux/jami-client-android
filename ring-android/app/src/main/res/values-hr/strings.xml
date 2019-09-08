@@ -95,9 +95,11 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Dozvola kamere</string>
   <string name="permission_dialog_camera_message">Video pozivi zahtjevaju dozvolu korištenja kamere. Molimo dozvolite aplikaciji korištenje kamere.</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">Greška</string>
   <string name="ringtone_error_format_not_supported">Ovaj format nije podržan.</string>
   <string name="ringtone_error_size_too_big">Datoteka je prevelika. Maksimalna veličina je %1$dkB.</string>
+  <string name="ringtone_custom_label">Prilagođeno</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->

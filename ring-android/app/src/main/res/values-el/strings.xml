@@ -75,6 +75,7 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Άδεια πρόσβασης στην κάμερα</string>
   <string name="permission_dialog_camera_message">Οι κλήσεις μέσω βίντεο χρειάζεται την άδεια στην κάμερά  για να δουλέψει. Παρακαλώ σκεφτείτε να την ενεργοποιήσετε.</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">Σφάλμα</string>
   <string name="ringtone_error_format_not_supported">Η μορφή δεν υποστιρίζεται.</string>
   <!--Read contacts permission-->

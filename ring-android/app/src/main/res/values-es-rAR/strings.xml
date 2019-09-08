@@ -92,8 +92,10 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permiso de cámara</string>
   <string name="permission_dialog_camera_message">Las videollamadas requieren el permiso de cámara para funcionar. Considerá activarlo.</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">Error</string>
   <string name="ringtone_error_format_not_supported">Formato no soportado.</string>
+  <string name="ringtone_custom_label">Personalizado</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->

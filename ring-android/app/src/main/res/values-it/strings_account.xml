@@ -119,6 +119,8 @@ Si potra modificare questo account più tardi.</string>
   <string name="ring_account">Account Jami</string>
   <string name="ring_account_identity">Identità</string>
   <string name="account_update_needed">Aggiornamento necessario</string>
+  <string name="account_cannot_be_found_title">Impossibile trovare l\'account</string>
+  <string name="account_no_network_title">Impossibile connettersi alla rete</string>
   <string name="account_sip_success_title">Account SIP registrato</string>
   <string name="account_link_prompt_pin">Inserisci PIN</string>
   <string name="account_new_button">Crea un account Jami</string>

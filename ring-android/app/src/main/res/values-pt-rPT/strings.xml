@@ -113,9 +113,11 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permissão de câmara</string>
   <string name="permission_dialog_camera_message">As conversas de vídeo necessitam de permissão para aceder à câmara. Considere fornecer a permissão.</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">Erro</string>
   <string name="ringtone_error_format_not_supported">Este formato não é suportado.</string>
   <string name="ringtone_error_size_too_big">Este ficheiro é grande demais. O tamanho máximo é %1$dkB.</string>
+  <string name="ringtone_custom_label">Personalizado</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">O Jami necessita da permissão \"Ler contactos\" para ativar esta funcionalidade. Conceda esta permissão.</string>
   <!--Write call log permission-->

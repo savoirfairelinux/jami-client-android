@@ -104,6 +104,7 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permís de la càmera</string>
   <string name="permission_dialog_camera_message">Habiliteu el permís de la càmera perquè funcionin les trucades de vídeo. </string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">Error</string>
   <string name="ringtone_error_format_not_supported">Aquest format no és compatible.</string>
   <string name="ringtone_error_size_too_big">Aquest arxiu és massa gran. La mida màxima és %1$dkB.</string>

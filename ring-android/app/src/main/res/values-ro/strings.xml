@@ -65,6 +65,7 @@
   <string name="send_message">Trimite messajul</string>
   <string name="message_sending">Se transmite mesajul...</string>
   <!--MediaPreferenceFragment-->
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">Eroare</string>
   <string name="ringtone_error_format_not_supported">Acest format nu este suportat</string>
   <!--Read contacts permission-->

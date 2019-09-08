@@ -114,9 +114,11 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamerarättighet</string>
   <string name="permission_dialog_camera_message">Videokonversationer kräver kamerarättigheter. Överväg att aktivera det.</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">Fel</string>
   <string name="ringtone_error_format_not_supported">Detta format saknar stöd.</string>
   <string name="ringtone_error_size_too_big">Denna fil är för stor. Maximal storlek är %1$dkB.</string>
+  <string name="ringtone_custom_label">Anpassad</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring behöver rättighet att läsa kontakter för att aktivera den här funktionen. Överväg att tilldela rättigheter.</string>
   <!--Write call log permission-->

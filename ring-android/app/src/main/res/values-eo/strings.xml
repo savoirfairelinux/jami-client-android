@@ -63,7 +63,9 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permeso je kamerao</string>
   <string name="permission_dialog_camera_message">Video-konversacioj bezonas permeson je kamerao por funkcii. Bonvole pripensu permesi ĝin.</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">Eraro</string>
+  <string name="ringtone_custom_label">Propra</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->

@@ -110,9 +110,11 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Право за използване на камерата</string>
   <string name="permission_dialog_camera_message">Разговорите с видео изискват правото за използване на камерата. Моля, дайте това право на приложението.</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">Грешка</string>
   <string name="ringtone_error_format_not_supported">Този формат не се поддържа.</string>
   <string name="ringtone_error_size_too_big">Този файл е твърде голям. Максималният размер е %1$dkB.</string>
+  <string name="ringtone_custom_label">Персонализиран</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Jami се нуждае от разрешението \"Четене на контакти\", за да активира тази функция. Моля, предоставете го.</string>
   <!--Write call log permission-->

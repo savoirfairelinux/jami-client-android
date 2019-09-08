@@ -112,9 +112,11 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Uprawnienia do aparatu</string>
   <string name="permission_dialog_camera_message">Rozmowy wideo wymagają przyznania uprawnień dla aparatu. Proszę rozważyć udzielenie ich.</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">Błąd</string>
   <string name="ringtone_error_format_not_supported">Ten format nie jest obsługiwany.</string>
   <string name="ringtone_error_size_too_big">Ten plik jest zbyt duży! Maksymalny rozmiar to %1$d kB.</string>
+  <string name="ringtone_custom_label">Wartość własna</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->

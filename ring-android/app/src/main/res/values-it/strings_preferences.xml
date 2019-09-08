@@ -10,6 +10,7 @@
   <string name="pref_pushNotifications_title">Push notifiche</string>
   <string name="pref_pushNotifications_summary">Usa i server Google per ricevere chiamate/messaggi in background</string>
   <string name="pref_hd_summary">Attiva invio video HD</string>
+  <string name="pref_hwEncode_title">Abilita codifica accelerata</string>
   <string name="pref_hwEncode_summary">Funzione sperimentale</string>
   <string name="pref_systemContacts_title">Usare i contatti del dispositivo</string>
   <string name="pref_systemContacts_summary">Usare i contatti del dispositivo per mostrare i dettagli di chi chiama. </string>

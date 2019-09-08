@@ -112,9 +112,11 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Дозволи для камери</string>
   <string name="permission_dialog_camera_message">Для здійснення відерозмови необхідно надати доступ до камери. Будь ласка, розгляньте дану можливість.</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">Помилка</string>
   <string name="ringtone_error_format_not_supported">Цей формат не підтримується</string>
   <string name="ringtone_error_size_too_big">Цей файл надто великий. Максимальний розмір — %1$dкБ. </string>
+  <string name="ringtone_custom_label">Кастомізація</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Для цього Джамі потрібні права «Читати контакти». Будь ласка, надайте їх.</string>
   <!--Write call log permission-->

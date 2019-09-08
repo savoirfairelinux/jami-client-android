@@ -106,6 +106,7 @@
   <string name="hist_file_received">Failas gautas</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kameros leidimas</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">Klaida</string>
   <string name="ringtone_error_format_not_supported">Šis formatas yra nepalaikomas.</string>
   <string name="ringtone_error_size_too_big">Šis failas yra per didelis. Didžiausias dydis yra %1$dkB.</string>
@@ -192,10 +193,12 @@
   <string name="file_transfer_status_unsupported">nepalaikoma</string>
   <string name="file_transfer_status_invalid_pathname">neteisingas kelio pavadinimas</string>
   <string name="file_saved_in">Failas įrašytas į %s</string>
+  <string name="file_saved_successfully">Failas sėkmingai įrašytas</string>
   <string name="no_space_left_on_device">Įrenginyje nebeliko vietos</string>
   <string name="title_media_viewer">Medijos žiūryklė</string>
   <string name="menu_file_open">Atverti failą</string>
   <string name="menu_file_download">Atsisiųsti failą</string>
+  <string name="menu_file_save">Įrašyti failą</string>
   <string name="menu_file_delete">Ištrinti failą</string>
   <string name="menu_file_share">Bendrinti failą</string>
   <string name="menu_message_copy">Kopijuoti</string>

@@ -15,6 +15,7 @@
   <string name="license">本軟體以現狀（\"as is\"）提供，不負任何明示或暗示之擔保責任。詳細資訊請見 <u>GNU通用公共授權條款第三版或更新</u></string>
   <string name="description">Jami 是一套通用通訊的自由軟體，其尊重使用者的自由與隱私。</string>
   <string name="credits">榮譽</string>
+  <string name="call_service_description">此服務是為了讓您的通話保持在前景執行所需。它只會在通話期間執行。</string>
   <!--About dialog-->
   <string name="developed_by">開發由</string>
   <string name="designed_by">設計由</string>
@@ -113,9 +114,11 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">攝影機權限</string>
   <string name="permission_dialog_camera_message">視訊通話需要攝影機權限以正常運作。請考慮啟用它。</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">錯誤</string>
   <string name="ringtone_error_format_not_supported">不支援此格式。</string>
   <string name="ringtone_error_size_too_big">這個檔案太大了。最大的大小為 %1$d kB。</string>
+  <string name="ringtone_custom_label">自訂</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Jami 需要「讀取聯絡人」權限以啟用此功能。請給予它。</string>
   <!--Write call log permission-->

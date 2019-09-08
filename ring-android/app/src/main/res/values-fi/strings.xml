@@ -109,6 +109,7 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera oikeudet</string>
   <string name="permission_dialog_camera_message">Videopuhelut vaativat toimiakseen kameran käyttöoikeudet.</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">Virhe</string>
   <string name="ringtone_error_format_not_supported">Tätä tiedostomuotoa ei tueta.</string>
   <string name="ringtone_error_size_too_big">Tämä tiedosto on liian suuri. Maksimikoko on %1$dkt.</string>

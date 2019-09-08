@@ -112,9 +112,11 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Разрешение на доступ к камере</string>
   <string name="permission_dialog_camera_message">Видеосвязь требует для работы разрешения на доступ к камере. Пожалуйста, предоставьте его.</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">Ошибка</string>
   <string name="ringtone_error_format_not_supported">Этот формат не поддерживается</string>
   <string name="ringtone_error_size_too_big">Этот файл слишком большой. Максимальный размер — %1$dКб.</string>
+  <string name="ringtone_custom_label">Настраиваемый</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Jami требуется разрешение «Чтение контактов», чтобы включить эту функцию. Пожалуйста, предоставьте его.</string>
   <!--Write call log permission-->

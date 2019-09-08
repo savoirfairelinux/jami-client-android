@@ -110,9 +110,11 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">دسترسی دوربین</string>
   <string name="permission_dialog_camera_message">گفت‌وگوی ویدیویی برای کار کردن نیاز به دسترسی دوربین دارد. لطفاً آن را فعّال کنید.</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">خطا</string>
   <string name="ringtone_error_format_not_supported">این قالب پشتیبانی نمی‌شود.</string>
   <string name="ringtone_error_size_too_big">این فایل خیلی بزرگ است.حداکثر اندازه %1$d ک‌.ب. است.</string>
+  <string name="ringtone_custom_label">سفارشی</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">جمی برای فعّال کردن این ویژگی به دسترسی «خواندن مخاطبان» نیاز دارد. لطفاً اعطایش کنید.</string>
   <!--Write call log permission-->

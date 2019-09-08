@@ -110,9 +110,11 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permesso videocamera</string>
   <string name="permission_dialog_camera_message">Le videochiamate hanno bisogna del permesso per accedere alla videocamera. Se lo desideri, attivalo.</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">Errore</string>
   <string name="ringtone_error_format_not_supported">Questo formato non è supportato.</string>
   <string name="ringtone_error_size_too_big">Il file è troppo grande. La dimensione massima consentita è di %1$dkB</string>
+  <string name="ringtone_custom_label">Personalizzato</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Jami necessita dell\'autorizzazione a \"Accedere ai Contatti\" per abilitare questa funzione. Concedere Autorizzazione</string>
   <!--Write call log permission-->

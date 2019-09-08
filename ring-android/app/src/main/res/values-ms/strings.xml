@@ -68,8 +68,10 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Akses kamera</string>
   <string name="permission_dialog_camera_message">Perbualan video memerlukan akses kepada kamera untuk bekerja dengan sempurna. Sila pertimbangkan untuk membenarkan akses tersebut.</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">Gagal</string>
   <string name="ringtone_error_format_not_supported">Format ini tidak disokong.</string>
+  <string name="ringtone_custom_label">Tidak lalai</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->

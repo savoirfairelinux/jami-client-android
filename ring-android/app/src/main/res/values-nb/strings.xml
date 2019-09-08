@@ -110,9 +110,11 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamerarettigheter</string>
   <string name="permission_dialog_camera_message">Videosamtaler krever tilgang til kameraet for å virke.  Vurder å aktivere det.</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">Feil</string>
   <string name="ringtone_error_format_not_supported">Dette formatet støttes ikke</string>
   <string name="ringtone_error_size_too_big">Filen er for stor.  Maksimal størrelse er %1$d kB.</string>
+  <string name="ringtone_custom_label">Tilpasset</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Jami trenger tilgang til å «Lese kontakter» for å aktivere denne egenskapen.  Vær så snill å gi tilgang.</string>
   <!--Write call log permission-->

@@ -110,6 +110,7 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">ਕੈਮਰਾ ਇਜਾਜ਼ਤ</string>
   <string name="permission_dialog_camera_message">ਵੀਡੀਓ ਗੱਲਾਂਬਾਤਾਂ ਕਰਨ ਲਈ ਕੈਮਰਾ ਇਜਾਜ਼ਤ ਦੀ ਲੋੜ ਹੈ। ਇਜਾਜ਼ਤ ਚਾਲੂ ਕਰਨ ਬਾਰੇ ਵਿਚਾਰੋ।</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">ਗੜਬੜ</string>
   <string name="ringtone_error_format_not_supported">ਇਸ ਵੰਨਗੀ ਦੀ ਸੁਵਿਧਾ ਨਹੀਂ ਹੈ।</string>
   <string name="ringtone_error_size_too_big">ਇਹ ਫ਼ਾਈਲ ਬਹੁਤ ਵੱਡੀ ਹੈ। ਵੱਧ ਤੋਂ ਵੱਧ ਆਕਾਰ %1$dkB ਹੋਵੇ।</string>

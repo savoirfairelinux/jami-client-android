@@ -112,9 +112,11 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Povolení ke kameře</string>
   <string name="permission_dialog_camera_message">Video konverzace vyžadují povolení ke kameře. Prosím zvažte jeho povolení.</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">Chyba</string>
   <string name="ringtone_error_format_not_supported">Tento formát je nepodporovaný.</string>
   <string name="ringtone_error_size_too_big">Tento soubor je příliš velký. Největší velikost je %1$dkB.</string>
+  <string name="ringtone_custom_label">Vlastní</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Pro tuto funkci Jami vyžaduje povolení „Číst kontakty“. Povolte jej prosím.</string>
   <!--Write call log permission-->

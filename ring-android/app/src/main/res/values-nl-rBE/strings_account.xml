@@ -7,10 +7,11 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Jami-account toevoegen</string>
   <string name="add_sip_account_title">SIP-account toevoegen</string>
+  <string name="ring_account_default_name">Jami-account %1$s</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Hostnaam</string>
   <string name="prompt_username">Gebruikersnaam</string>
-  <string name="prompt_password">Wachtwoord</string>
+  <string name="prompt_password">Paswoord</string>
   <string name="action_create">Account aanmaken</string>
   <string name="action_create_short">Aanmaken</string>
   <string name="action_register">Registreren</string>
@@ -40,12 +41,12 @@ U kunt uw account later bewerken</string>
   <string name="account_device_revocation_success_title">Klaar</string>
   <string name="account_device_revocation_success">Het apparaat is nu ingetrokken!</string>
   <string name="account_device_revocation_error_title">Kan apparaat niet intrekken</string>
-  <string name="account_device_revocation_wrong_password">Verkeerd wachtwoord.</string>
+  <string name="account_device_revocation_wrong_password">Verkeerd paswoord.</string>
   <string name="account_device_revocation_unknown_device">Onbekend apparaat.</string>
   <string name="account_device_revocation_error_unknown">Onbekende fout.</string>
-  <string name="account_password_change">Wachtwoord wijzigen</string>
-  <string name="account_password_set">Wachtwoord instellen</string>
-  <string name="account_password_change_wait_message">Accountwachtwoord wordt gewijzigd</string>
+  <string name="account_password_change">Paswoord wijzigen</string>
+  <string name="account_password_set">Paswoord instellen</string>
+  <string name="account_password_change_wait_message">Accountpaswoord wordt gewijzigd</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Algemeen</string>
   <string name="account_basic_category">Basisinstellingen</string>
@@ -53,7 +54,7 @@ U kunt uw account later bewerken</string>
   <string name="account_hostname_label">Hostnaam</string>
   <string name="account_bootstrap_label">Bootstrap</string>
   <string name="account_username_label">Gebruikersnaam</string>
-  <string name="account_password_label">Wachtwoord</string>
+  <string name="account_password_label">Paswoord</string>
   <string name="account_optionnal_category">Optionele instellingen</string>
   <string name="account_useragent_label">Gebruikersagent</string>
   <string name="account_autoanswer_label">Automatisch beantwoorden</string>
@@ -80,7 +81,7 @@ U kunt uw account later bewerken</string>
   <string name="account_turn_enable_label">TURN gebruiken</string>
   <string name="account_turn_server_label">TURN-server</string>
   <string name="account_turn_username_label">TURN-gebruikersnaam</string>
-  <string name="account_turn_password_label">TURN-wachtwoord</string>
+  <string name="account_turn_password_label">TURN-paswoord</string>
   <string name="account_published_same_as_local_label">Gepubliceerd gelijk aan lokaal</string>
   <string name="account_published_port_label">Gepubliceerde poort</string>
   <string name="account_published_address_label">Gepubliceerd adres</string>
@@ -100,7 +101,7 @@ U kunt uw account later bewerken</string>
   <string name="account_tls_certificate_list_label">Certificeringsinstanties</string>
   <string name="account_tls_certificate_file_label">Certificaatbestand</string>
   <string name="account_tls_private_key_file_label">Bestand met persoonlijke sleutel</string>
-  <string name="account_tls_password_label">Wachtwoord persoonlijke sleutel</string>
+  <string name="account_tls_password_label">Paswoord persoonlijke sleutel</string>
   <string name="account_tls_method_label">TLS-methode</string>
   <string name="account_tls_ciphers_label">TLS-sleutels</string>
   <string name="account_tls_server_name_label">Servernaam</string>
@@ -111,21 +112,23 @@ U kunt uw account later bewerken</string>
   <string name="account_rtp_min_port">Minimum</string>
   <string name="account_rtp_port_range">Audio RTP-poortenreeks</string>
   <!--restore/backup-->
-  <string name="account_new_device_password">Geef hoofdwachtwoord in om account te ontgrendelen</string>
+  <string name="account_new_device_password">Geef hoofdpaswoord in om account te ontgrendelen</string>
   <string name="error_password_char_count">Minimaal 6 tekens</string>
-  <string name="error_passwords_not_equals">Wachtwoorden komen niet overeen</string>
+  <string name="error_passwords_not_equals">Paswoorden komen niet overeen</string>
   <string name="export_account_wait_title">Even geduld…</string>
-  <string name="account_export_end_decryption_message">Kon uw account niet ontgrendelen met het ingegeven wachtwoord.</string>
+  <string name="export_account_wait_message">Accountinformatie wordt geëxporteerd</string>
+  <string name="account_export_file">Back-up maken van account</string>
+  <string name="account_export_end_decryption_message">Kon uw account niet ontgrendelen met het ingegeven paswoord.</string>
   <string name="account_export_end_network_title">Netwerkfout</string>
   <string name="account_export_end_network_message">Kon account niet exporteren over het netwerk. Controleer uw netwerkverbinding.</string>
   <string name="account_export_end_error_title">Fout</string>
   <string name="account_export_end_error_message">Kon account niet exporteren. Er is een onbekende fout opgetreden.</string>
-  <string name="account_enter_password">Geef wachtwoord in</string>
+  <string name="account_enter_password">Geef paswoord in</string>
   <string name="account_share_body">Contacteer mij met ‘%1$s’ op Jami, het gedistribueerde communicatieplatform: %2$s</string>
   <string name="account_share_body_with_username">Contacteer mij met ‘%1$s’ of mijn openbare gebruikersnaam ‘%2$s’ op Jami, het gedistribueerde communicatieplatform: %3$s</string>
   <string name="account_contact_me">Contacteer mij op Jami!</string>
   <string name="update_account">Account bijwerken</string>
-  <string name="account_migration">Uw Jami-account kan bijgewerkt worden.\nGeef uw wachtwoord in.</string>
+  <string name="account_migration">Uw Jami-account kan bijgewerkt worden.\nGeef uw paswoord in.</string>
   <string name="ring_account">Jami-account</string>
   <string name="ring_account_identity">Identiteit</string>
   <string name="account_migration_title_dialog">Accountmigratie</string>
@@ -140,10 +143,12 @@ U kunt uw account later bewerken</string>
   <string name="account_device_added_message">Uw Jami-account is met succes op dit apparaat ingesteld.</string>
   <string name="account_device_updated_title">Accountapparaat bijgewerkt</string>
   <string name="account_device_updated_message">Uw Jami-account is met succes bijgewerkt.</string>
-  <string name="account_cannot_be_updated_message">Accountapparaat kon niet bijgewerkt worden. Controleer uw wachtwoord.</string>
+  <string name="account_cannot_be_updated_message">Accountapparaat kon niet bijgewerkt worden. Controleer uw paswoord.</string>
   <string name="account_sip_success_title">SIP-account geregistreerd</string>
   <string name="account_sip_success_message">Uw SIP-account is met succes geregistreerd.</string>
   <string name="account_sip_register_anyway">Toch registreren</string>
+  <string name="account_link_button">Verbinden uit netwerk</string>
+  <string name="account_link_archive_button">Verbinden uit back-up</string>
   <string name="account_link_prompt_pin">Geef pincode in</string>
   <string name="account_new_button">Een Jami-account aanmaken</string>
   <string name="account_link_export_button">Een ander apparaat aan deze account koppelen</string>
@@ -156,12 +161,14 @@ U kunt uw account later bewerken</string>
   <!--Name registration-->
   <string name="error_username_empty">Geef een gebruikersnaam in</string>
   <string name="no_registered_name_for_account">Geen geregistreerde naam gevonden voor deze account</string>
+  <string name="username_available">Gebruikersnaam is beschikbaar!</string>
   <string name="register_name">Naam registreren</string>
   <string name="trying_to_register_name">Naam wordt geregistreerd</string>
   <string name="registered_username">Geregistreerde gebruikersnaam</string>
   <string name="register_username">Registreer een openbare gebruikersnaam (aanbevolen)</string>
   <string name="username_already_taken">Gebruikersnaam reeds in gebruik</string>
   <string name="invalid_username">Ongeldige gebruikersnaam</string>
+  <string name="unknown_error">Onbekende fout. Controleer uw netwerkverbinding!</string>
   <string name="looking_for_username_availability">Beschikbaarheid van gebruikersnaam wordt gecontroleerd…</string>
   <string name="account_status_connecting">Verbinden</string>
   <string name="account_status_connection_error">Verbindingsfout</string>
@@ -177,8 +184,8 @@ U kunt uw account later bewerken</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Bewerk uw profiel</string>
   <!--Devices-->
-  <string name="account_revoke_device_hint">Geef wachtwoord in ter bevestiging</string>
-  <string name="enter_password">Geef wachtwoord in</string>
+  <string name="account_revoke_device_hint">Geef paswoord in ter bevestiging</string>
+  <string name="enter_password">Geef paswoord in</string>
   <string name="revoke_device_title">Apparaat intrekken</string>
   <string name="revoke_device_message">Weet u zeker dat u %1$s wilt intrekken?</string>
   <string name="revoke_device_wait_title">Even geduld…</string>

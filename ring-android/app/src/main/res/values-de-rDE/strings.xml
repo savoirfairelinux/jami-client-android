@@ -110,6 +110,7 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera-Berechtigung</string>
   <string name="permission_dialog_camera_message">Video-Konferenzen benötigen Zugriff auf die Kamera. Bitte erlauben Sie diesen Zugriff.</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">Fehler</string>
   <string name="ringtone_error_format_not_supported">Dieses Format wird nicht unterstützt.</string>
   <string name="ringtone_error_size_too_big">Diese Datei ist zu groß. Maximal %1$dkB sind erlaubt.</string>

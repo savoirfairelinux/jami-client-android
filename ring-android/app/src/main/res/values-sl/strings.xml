@@ -77,8 +77,10 @@
   <string name="time_just_now">Ravnokar</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Dovoljenje kamere</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">Napaka</string>
   <string name="ringtone_error_format_not_supported">Format ni podprt.</string>
+  <string name="ringtone_custom_label">Lastno</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->
