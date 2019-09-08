@@ -55,7 +55,7 @@ public class Conversation extends ConversationHistory {
     private final Subject<List<Conference>> callsSubject = BehaviorSubject.create();
     private Subject<Integer> color = BehaviorSubject.create();
 
-    private boolean isLoaded = false;
+    private Single<Conversation> isLoaded = null;
 
     // runtime flag set to true if the user is currently viewing this conversation
     private boolean mVisible = false;
@@ -120,11 +120,11 @@ public class Conversation extends ConversationHistory {
         return mVisible;
     }
 
-    public void setLoaded(boolean loaded) {
+    public void setLoaded(Single<Conversation> loaded) {
         isLoaded = loaded;
     }
 
-    public boolean isLoaded() {
+    public Single<Conversation> getLoaded() {
         return isLoaded;
     }
 
@@ -304,15 +304,41 @@ public class Conversation extends ConversationHistory {
     public void clearHistory(boolean delete) {
         mAggregateHistory.clear();
         mHistory.clear();
-        mDirty = true;
+        mDirty = false;
         if(!delete)
             mAggregateHistory.add(new ContactEvent(mContact));
         clearedSubject.onNext(mAggregateHistory);
     }
 
-    public void addElement(Interaction interaction, CallContact contact) {
+    static private Interaction getTypedInteraction(Interaction interaction) {
+        switch (interaction.getType()) {
+            case TEXT:
+                return new TextMessage(interaction);
+            case CALL:
+                return new SipCall(interaction);
+            case CONTACT:
+                return new ContactEvent(interaction);
+            case DATA_TRANSFER:
+                return new DataTransfer(interaction);
+        }
+        return interaction;
+    }
+
+    public void setHistory(List<Interaction> loadedConversation) {
+        mAggregateHistory.ensureCapacity(loadedConversation.size());
+        for (Interaction i : loadedConversation) {
+            Interaction interaction = getTypedInteraction(i);
+            interaction.setAccount(mAccountId);
+            interaction.setContact(mContact);
+            mAggregateHistory.add(interaction);
+            mHistory.put(interaction.getTimestamp(), interaction);
+        }
+        mDirty = false;
+    }
+
+    public void addElement(Interaction interaction) {
         interaction.setAccount(mAccountId);
-        interaction.setContact(contact);
+        interaction.setContact(mContact);
         if (interaction.getType() == InteractionType.TEXT) {
             TextMessage msg = new TextMessage(interaction);
             addTextMessage(msg);
@@ -324,12 +350,6 @@ public class Conversation extends ConversationHistory {
             addContactEvent(event);
         } else if (interaction.getType() == InteractionType.DATA_TRANSFER) {
             DataTransfer dataTransfer = new DataTransfer(interaction);
-            addFileTransfer(dataTransfer);
-        }
-    }
-
-    public void addDataTransfers(List<DataTransfer> dataTransfers) {
-        for (DataTransfer dataTransfer : dataTransfers) {
             addFileTransfer(dataTransfer);
         }
     }
