@@ -84,7 +84,10 @@ public class AccountView extends RecyclerView.ViewHolder {
                 .subscribe(avatar -> photo.setImageDrawable(avatar)));
         itemView.setOnClickListener(v -> listener.onAccountSelected(account));
 
-        alias.setText(account.getAccountAlias());
+        mDisposable.add(account.getAccountAlias()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(a -> alias.setText(a)));
+
         host.setText(account.getDisplayUri(context.getText(R.string.account_type_ip2ip)));
         itemView.setEnabled(account.isEnabled());
 

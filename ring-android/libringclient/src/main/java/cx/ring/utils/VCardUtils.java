@@ -143,7 +143,9 @@ public final class VCardUtils {
                 if (!"".equals(path)) {
                     File vcardPath = new File(path + File.separator + accountId + ".vcf");
                     if (vcardPath.exists()) {
-                        return loadFromDisk(vcardPath.getAbsolutePath());
+                        VCard vcard = loadFromDisk(vcardPath.getAbsolutePath());
+                        if (vcard != null)
+                            return vcard;
                     }
                 }
             } catch (Exception e) {

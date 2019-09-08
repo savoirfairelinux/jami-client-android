@@ -37,6 +37,7 @@ import cx.ring.utils.Tuple;
 import ezvcard.VCard;
 import ezvcard.property.FormattedName;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
@@ -79,7 +80,7 @@ public class Account {
     private final BehaviorSubject<Collection<TrustRequest>> trustRequestsSubject = BehaviorSubject.create();
     public Subject<Account> historyLoader;
     private VCard mProfile;
-    private Tuple<String, Object> mLoadedProfile;
+    private Single<Tuple<String, Object>> mLoadedProfile = null;
 
     public Account(String bAccountID) {
         accountID = bAccountID;
@@ -798,8 +799,10 @@ public class Account {
         }
     }
 
-    public String getAccountAlias() {
-        return (mLoadedProfile == null || StringUtils.isEmpty(mLoadedProfile.first)) ? getAlias() : mLoadedProfile.first;
+    public Single<String> getAccountAlias() {
+        if (mLoadedProfile == null)
+            return Single.just(getAlias());
+        return mLoadedProfile.map(p -> StringUtils.isEmpty(p.first) ? getAlias() : p.first);
     }
 
     public void setProfile(VCard vcard) {
@@ -811,10 +814,11 @@ public class Account {
         return mProfile;
     }
 
-    public Tuple<String, Object> getLoadedProfile() {
+    public Single<Tuple<String, Object>> getLoadedProfile() {
         return mLoadedProfile;
     }
-    public void setLoadedProfile(Tuple<String, Object> profile) {
+
+    public void setLoadedProfile(Single<Tuple<String, Object>> profile) {
         mLoadedProfile = profile;
     }
 

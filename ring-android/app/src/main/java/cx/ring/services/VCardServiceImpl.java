@@ -35,6 +35,7 @@ import ezvcard.parameter.ImageType;
 import ezvcard.property.Photo;
 import ezvcard.property.RawProperty;
 import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 
 public class VCardServiceImpl extends VCardService {
 
@@ -45,15 +46,16 @@ public class VCardServiceImpl extends VCardService {
     }
 
     public static Single<Tuple<String, Object>> loadProfile(@NonNull Account account) {
-        Tuple<String, Object> ret = account.getLoadedProfile();
-        if (ret == null) {
-            return Single.fromCallable(() -> readData(account.getProfile()))
-                    .map(profile -> {
-                        account.setLoadedProfile(profile);
-                        return profile;
-                    });
+        synchronized (account) {
+            Single<Tuple<String, Object>> ret = account.getLoadedProfile();
+            if (ret == null) {
+                ret = Single.fromCallable(() -> readData(account.getProfile()))
+                        .subscribeOn(Schedulers.computation())
+                        .cache();
+                account.setLoadedProfile(ret);
+            }
+            return ret;
         }
-        return Single.just(ret);
     }
 
     @Override
