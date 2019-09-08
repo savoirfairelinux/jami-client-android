@@ -78,7 +78,8 @@ public class Account {
 
     private final BehaviorSubject<Collection<CallContact>> contactListSubject = BehaviorSubject.create();
     private final BehaviorSubject<Collection<TrustRequest>> trustRequestsSubject = BehaviorSubject.create();
-    public Subject<Account> historyLoader;
+
+    public Single<Account> historyLoader;
     private VCard mProfile;
     private Single<Tuple<String, Object>> mLoadedProfile = null;
 
@@ -733,10 +734,10 @@ public class Account {
         for (Conversation c : conversations)
             updated(c);
         historyLoaded = true;
-        if (historyLoader != null) {
+        /*if (historyLoader != null) {
             historyLoader.onNext(this);
             historyLoader.onComplete();
-        }
+        }*/
         conversationChanged();
         pendingChanged();
     }
