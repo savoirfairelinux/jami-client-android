@@ -24,13 +24,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
     android:layout_gravity="bottom"
     android:clipToPadding="false"
     android:paddingTop="20dp"
-    android:theme="@style/Wizard"
     tools:showIn="@layout/frag_acc_summary">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_primary_dark"
+        android:background="@color/colorPrimary"
         android:elevation="4dp"
         android:orientation="vertical">
 
@@ -41,7 +40,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="@string/account_link_export_button"
-            android:textColor="@color/white" />
+            android:textColor="@color/colorOnPrimary" />
 
         <cx.ring.views.LinkNewDeviceLayout
             android:id="@+id/linkaccount_container"
@@ -66,9 +65,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                         android:paddingLeft="16dp"
                         android:paddingTop="5dp"
                         android:paddingRight="16dp"
-                        android:paddingBottom="0dp"
+                        android:paddingBottom="8dp"
                         android:text="@string/account_link_export_info"
-                        android:textColor="@color/text_color_primary_dark"
+                        android:textColor="@color/colorOnPrimary"
                         android:textIsSelectable="true"
                         android:textSize="14sp" />
 
@@ -76,8 +75,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                         android:id="@+id/password_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColorHint="@color/text_color_secondary_dark"
-                        app:passwordToggleTint="@color/text_color_secondary_dark"
+                        android:textColorHint="@color/colorPrimary"
+                        app:passwordToggleTint="@color/colorPrimary"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
                         app:passwordToggleEnabled="true">
@@ -87,19 +86,21 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/account_enter_password"
-                            android:textColor="@color/text_color_primary_dark"
-                            android:backgroundTint="@color/text_color_secondary_dark"
+                            android:textColor="@color/colorPrimary"
+                            android:backgroundTint="@color/colorOnPrimary"
                             android:imeOptions="actionDone"
                             android:inputType="textPassword" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_start_export"
+                        style="@style/Widget.MaterialComponents.Button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:text="@string/account_start_export_button"
-                        android:textColor="@color/white" />
+                        app:backgroundTint="@color/colorSecondary"
+                        android:textColor="@color/colorOnSecondary"/>
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_end_export"
@@ -108,7 +109,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:text="@string/account_end_export_button"
-                        android:textColor="@color/white"
+                        android:textColor="@color/colorOnPrimary"
                         android:visibility="gone" />
 
                 </LinearLayout>

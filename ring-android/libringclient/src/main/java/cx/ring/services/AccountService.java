@@ -565,16 +565,13 @@ public class AccountService {
     public void setAccountsActive(final boolean active) {
         mExecutor.execute(() -> {
             Log.i(TAG, "setAccountsActive() running... " + active);
-            StringVect list = Ringservice.getAccountList();
-            for (int i = 0, n = list.size(); i < n; i++) {
-                String accountId = list.get(i);
-                Account a = getAccount(accountId);
+            for (Account a : mAccountList) {
                 // If the proxy is enabled we can considered the account
                 // as always active
                 if (a.isDhtProxyEnabled()) {
-                    Ringservice.setAccountActive(accountId, true);
+                    Ringservice.setAccountActive(a.getAccountID(), true);
                 } else {
-                    Ringservice.setAccountActive(accountId, active);
+                    Ringservice.setAccountActive(a.getAccountID(), active);
                 }
             }
         });

@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:theme="@style/Wizard">
+    android:layout_height="match_parent">
 
     <cx.ring.views.BoundedScrollView
         android:id="@+id/scrollview"
@@ -31,7 +30,6 @@
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:gravity="center"
                 android:text="@string/account_creation_profile"
-                android:textColor="@color/text_color_primary"
                 android:textSize="24sp" />
 
             <TextView
@@ -77,7 +75,7 @@
                         android:text="@string/take_a_photo"
                         app:backgroundTint="@color/light"
                         app:rippleColor="@android:color/white"
-                        app:srcCompat="@drawable/ic_photo_camera" />
+                        app:srcCompat="@drawable/baseline_photo_camera_24" />
 
                     <Space
                         android:id="@+id/anchor"
@@ -96,7 +94,7 @@
                         android:text="@string/open_the_gallery"
                         app:backgroundTint="@color/light"
                         app:rippleColor="@android:color/white"
-                        app:srcCompat="@drawable/ic_insert_photo" />
+                        app:srcCompat="@drawable/baseline_insert_photo_24" />
 
                 </RelativeLayout>
 
@@ -116,7 +114,7 @@
                         android:inputType="textCapWords"
                         android:maxLines="1"
                         android:textAlignment="center"
-                        android:textColor="@color/text_color_primary" />
+                        android:textColor="@color/textColorPrimary" />
 
                 </cx.ring.views.BoundedRelativeLayout>
 

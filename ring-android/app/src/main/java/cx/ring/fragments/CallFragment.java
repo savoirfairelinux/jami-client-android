@@ -512,7 +512,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     @Override
     public void switchCameraIcon(boolean isFront) {
-        binding.callCameraFlipBtn.setImageResource(isFront ? R.drawable.ic_camera_front_white : R.drawable.ic_camera_rear_white);
+        binding.callCameraFlipBtn.setImageResource(isFront ? R.drawable.baseline_camera_front_24 : R.drawable.baseline_camera_rear_24);
     }
 
     @Override

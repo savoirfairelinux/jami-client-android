@@ -17,7 +17,7 @@
         android:singleLine="true"
         android:text="@string/contact_request_account"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/text_color_primary"
+        android:textColor="@color/textColorPrimary"
         android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView

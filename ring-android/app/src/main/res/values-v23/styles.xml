@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppThemeBase.Fullscreen" parent="AppThemeBase">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
+
+    <!-- Light themes -->
+
+    <style name="AppTheme" parent="AppThemeBase">
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/transparent</item>
+    </style>
+    <style name="AppTheme.Navigation" parent="AppTheme" />
+
+    <style name="AppTheme.DarkToolbar" parent="AppThemeBase.DarkToolbar" />
+
+    <style name="AppTheme.Fullscreen" parent="AppThemeBase.Fullscreen">
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+</resources>

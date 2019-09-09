@@ -26,18 +26,19 @@ along with this program; if not, write to the Free Software
     tools:context=".account.AccountWizardActivity">
 
     <cx.ring.views.BoundedLinearLayout
-        style="@style/AccountFormContainer"
         android:layout_gravity="center_horizontal"
         android:animateLayoutChanges="false"
         android:descendantFocusability="beforeDescendants"
         android:focusableInTouchMode="true"
         android:orientation="vertical"
-        app:bounded_width="320dp">
+        app:bounded_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_margin="16dp"
             android:animateLayoutChanges="false">
 
             <RelativeLayout
@@ -67,7 +68,7 @@ along with this program; if not, write to the Free Software
                     android:paddingRight="16dp"
                     android:paddingTop="24dp"
                     android:text="@string/ring_account"
-                    android:textColor="@color/text_color_primary"
+                    android:textColor="@color/textColorPrimary"
                     android:textSize="24sp" />
 
                 <TextView
@@ -81,50 +82,39 @@ along with this program; if not, write to the Free Software
                     android:paddingRight="16dp"
                     android:paddingTop="16dp"
                     android:text="@string/account_migration"
-                    android:textColor="@color/text_color_primary"
+                    android:textColor="@color/textColorPrimary"
                     android:textSize="14sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@id/textView"
-                    android:background="@color/color_primary_light"
                     android:orientation="vertical">
 
-                    <LinearLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@color/color_primary_light"
-                        android:orientation="vertical">
+                        android:layout_height="wrap_content"
+                        app:passwordToggleEnabled="true">
 
-                        <com.google.android.material.textfield.TextInputLayout
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/ring_password"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:passwordToggleEnabled="true">
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:hint="@string/prompt_password"
+                            android:imeOptions="actionNext"
+                            android:inputType="textPassword" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/ring_password"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="8dp"
-                                android:layout_marginLeft="12dp"
-                                android:layout_marginRight="12dp"
-                                android:hint="@string/prompt_password"
-                                android:imeOptions="actionNext"
-                                android:inputType="textPassword" />
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                    </LinearLayout>
-
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/ring_migrate_btn"
-                        style="?attr/borderlessButtonStyle"
+                        style="@style/Widget.MaterialComponents.Button.TextButton.Dialog.Flush"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:text="@string/update_account"
-                        android:textColor="@color/text_color_primary_dark" />
+                        android:text="@string/update_account" />
                 </LinearLayout>
 
             </RelativeLayout>

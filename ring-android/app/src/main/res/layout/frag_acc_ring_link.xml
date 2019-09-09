@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:theme="@style/Wizard">
+    android:layout_height="match_parent">
 
     <cx.ring.views.BoundedScrollView
         android:id="@+id/scrollview"
@@ -31,7 +30,6 @@
                 android:layout_marginBottom="24dp"
                 android:paddingStart="4dp"
                 android:text="@string/account_link_title"
-                android:textColor="@color/text_color_primary"
                 android:textSize="24sp" />
 
             <TextView
@@ -42,7 +40,6 @@
                 android:paddingEnd="4dp"
                 android:paddingBottom="8dp"
                 android:text="@string/help_password_enter"
-                android:textColor="@color/text_color_primary"
                 android:textSize="14sp" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -70,7 +67,6 @@
                 android:paddingEnd="16dp"
                 android:paddingBottom="8dp"
                 android:text="@string/help_pin_enter"
-                android:textColor="@color/text_color_primary"
                 android:textSize="14sp" />
 
             <com.google.android.material.textfield.TextInputLayout

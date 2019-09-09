@@ -87,5 +87,9 @@ public abstract class PreferencesService {
     public abstract boolean isHardwareAccelerationEnabled();
 
 
+    public abstract void setDarkMode(boolean enabled);
 
+    public abstract boolean getDarkMode();
+
+    public abstract void loadDarkMode();
 }

@@ -61,6 +61,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.inject.Inject;
 
 import cx.ring.R;
+import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.contactrequests.ContactRequestsFragment;
 import cx.ring.contacts.AvatarFactory;
@@ -276,7 +277,7 @@ public class NotificationServiceImpl implements NotificationService {
                                                 .setClass(mContext, DRingService.class)
                                                 .putExtra(KEY_CALL_ID, call.getCallId()),
                                         PendingIntent.FLAG_ONE_SHOT))
-                        .addAction(R.drawable.ic_action_accept, mContext.getText(R.string.action_call_accept),
+                        .addAction(R.drawable.baseline_call_24, mContext.getText(R.string.action_call_accept),
                                 PendingIntent.getService(mContext, random.nextInt(),
                                         new Intent(DRingService.ACTION_CALL_ACCEPT)
                                                 .setClass(mContext, DRingService.class)
@@ -465,8 +466,9 @@ public class NotificationServiceImpl implements NotificationService {
         String contactId = contactUri.getRawUriString();
 
         String contactName = contact.getDisplayName();
-        if (TextUtils.isEmpty(contactName))
+        if (TextUtils.isEmpty(contactName) || texts.isEmpty())
             return;
+        Bitmap contactPicture = getContactPicture(contact);
 
         TextMessage last = texts.lastEntry().getValue();
         Intent intentConversation = new Intent(DRingService.ACTION_CONV_ACCEPT)
@@ -478,6 +480,7 @@ public class NotificationServiceImpl implements NotificationService {
                 .setClass(mContext, DRingService.class)
                 .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
                 .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
+
 
         NotificationCompat.Builder messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_MESSAGE)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
@@ -493,9 +496,19 @@ public class NotificationServiceImpl implements NotificationService {
                 .setAutoCancel(true)
                 .setColor(ResourcesCompat.getColor(mContext.getResources(), R.color.color_primary_dark, null));
 
-        Bitmap contactPicture = getContactPicture(contact);
-        if (contactPicture != null)
+        if (contactPicture != null) {
             messageNotificationBuilder.setLargeIcon(contactPicture);
+
+            Intent intentBubble = new Intent(mContext, ConversationActivity.class)
+                    .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
+                    .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
+
+            messageNotificationBuilder.setBubbleMetadata(new NotificationCompat.BubbleMetadata.Builder()
+                    .setDesiredHeight(600)
+                    .setIcon(IconCompat.createWithAdaptiveBitmap(contactPicture))
+                    .setIntent(PendingIntent.getActivity(mContext, 0, intentBubble, 0))
+                    .build());
+        }
 
         UnreadConversation.Builder unreadConvBuilder = new UnreadConversation.Builder(contactName)
                 .setLatestTimestamp(last.getDate());
@@ -630,7 +643,7 @@ public class NotificationServiceImpl implements NotificationService {
                                                 .setClass(mContext, DRingService.class)
                                                 .putExtras(info),
                                         PendingIntent.FLAG_ONE_SHOT))
-                        .addAction(R.drawable.ic_close_white, mContext.getText(R.string.block),
+                        .addAction(R.drawable.baseline_block_24, mContext.getText(R.string.block),
                                 PendingIntent.getService(mContext, random.nextInt(),
                                         new Intent(DRingService.ACTION_TRUST_REQUEST_BLOCK)
                                                 .setClass(mContext, DRingService.class)

@@ -1,33 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ebeff0"
     tools:context=".client.ConversationActivity">
 
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/main_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="@color/color_primary_light"
         android:elevation="4dp"
-        android:minHeight="?attr/actionBarSize"
-        android:popupTheme="@style/Theme.MaterialComponents.Light.NoActionBar"
-        android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
+        android:height="?attr/actionBarSize"
+        style="@style/Widget.MaterialComponents.Toolbar.Surface"
         app:contentInsetStart="72dp"
         app:elevation="4dp"
-        app:subtitleTextAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
-        app:titleMarginStart="24dp"
-        app:titleTextAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
+        app:titleMarginStart="24dp"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout
         android:id="@+id/main_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/main_toolbar"
-        android:layout_alignParentStart="true" />
-</RelativeLayout>
+        android:layout_alignParentStart="true"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

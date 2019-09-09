@@ -116,17 +116,10 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
 
     private void refreshConnectivity() {
         boolean isConnected = mPreferencesService.hasNetworkConnected();
-
         if (isConnected) {
             getView().hideErrorPanel();
         } else {
-            boolean isMobileAndNotAllowed = mDeviceRuntimeService.isConnectedMobile()
-                    && !mPreferencesService.getSettings().isAllowMobileData();
-            if (isMobileAndNotAllowed) {
-                getView().displayMobileDataPanel();
-            } else {
-                getView().displayNetworkErrorPanel();
-            }
+            getView().displayNetworkErrorPanel();
         }
     }
 

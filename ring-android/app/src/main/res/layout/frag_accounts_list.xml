@@ -40,7 +40,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="?android:attr/colorBackground"
             android:clipToPadding="false"
             android:elevation="2dp">
 
@@ -49,20 +49,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:dividerHeight="1px"
-                android:visibility="visible"
                 android:focusable="false"
-                android:nestedScrollingEnabled="false"/>
+                android:nestedScrollingEnabled="false"
+                android:visibility="visible"
+                tools:listitem="@layout/item_account_pref" />
 
             <TextView
                 android:id="@+id/empty_account_list"
                 android:layout_width="wrap_content"
                 android:layout_height="72dp"
-                android:layout_centerInParent="true"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/empty_account_list"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/text_color_secondary"
+                android:textColor="@color/textColorSecondary"
                 android:visibility="gone" />
 
         </FrameLayout>

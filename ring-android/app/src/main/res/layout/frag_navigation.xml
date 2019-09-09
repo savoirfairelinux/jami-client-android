@@ -4,8 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:theme="@style/AppThemeBase">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,7 +15,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/color_primary_dark"
-
             android:paddingTop="30dp"
             android:theme="@style/MenuHeader">
 
@@ -48,7 +46,7 @@
                     android:layout_toEndOf="@+id/anchor"
                     app:backgroundTint="@color/transparent_light"
                     app:fabSize="mini"
-                    app:srcCompat="@drawable/ic_action_edit" />
+                    app:srcCompat="@drawable/baseline_edit_24"/>
 
             </RelativeLayout>
 
@@ -69,9 +67,9 @@
 
             </RelativeLayout>
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/addaccount_btn"
-                style="@style/Widget.AppCompat.Button.Borderless"
+                style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="72dp"
                 android:layout_alignParentEnd="true"
@@ -80,7 +78,8 @@
                 android:layout_toEndOf="@+id/profile_container"
                 android:gravity="center"
                 android:text="@string/action_create"
-                android:visibility="gone" />
+                android:visibility="gone"
+                app:backgroundTint="@color/transparent"/>
 
         </RelativeLayout>
 
@@ -94,14 +93,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"
-                tools:targetApi="lollipop" />
+                tools:listitem="@layout/item_menu" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/drawer_accounts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"
-                tools:targetApi="lollipop" />
+                tools:listitem="@layout/item_account" />
 
         </FrameLayout>
 

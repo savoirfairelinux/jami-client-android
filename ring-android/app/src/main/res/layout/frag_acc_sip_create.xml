@@ -24,7 +24,6 @@ along with this program; if not, write to the Free Software
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/Wizard"
     android:orientation="vertical">
 
     <cx.ring.views.BoundedScrollView
@@ -49,7 +48,7 @@ along with this program; if not, write to the Free Software
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="16dp"
                 android:text="@string/help_sip_title"
-                android:textColor="@color/text_color_primary"
+                android:textColor="@color/textColorPrimary"
                 android:textSize="24sp" />
 
             <TextView
@@ -58,7 +57,7 @@ along with this program; if not, write to the Free Software
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:text="@string/help_sip"
-                android:textColor="@color/text_color_primary"
+                android:textColor="@color/textColorPrimary"
                 android:textSize="14sp" />
 
             <com.google.android.material.textfield.TextInputLayout

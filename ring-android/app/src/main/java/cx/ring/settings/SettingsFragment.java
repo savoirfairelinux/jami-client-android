@@ -21,13 +21,16 @@ package cx.ring.settings;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -47,29 +50,31 @@ import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.Settings;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.mvp.GenericView;
+import cx.ring.services.SharedPreferencesServiceImpl;
 
 /**
  * TODO: improvements : handle multiples permissions for feature.
  */
 public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> implements GenericView<Settings> {
 
-    @BindView(R.id.settings_mobile_data)
-    Switch mViewMobileData;
     @BindView(R.id.settings_push_notifications_layout)
     ViewGroup mGroupPushNotifications;
     @BindView(R.id.settings_push_notifications)
     Switch mViewPushNotifications;
-    @BindView(R.id.settings_contacts)
+    /*@BindView(R.id.settings_contacts)
     Switch mViewContacts;
     @BindView(R.id.settings_place_call)
-    Switch mViewPlaceCall;
+    Switch mViewPlaceCall;*/
     @BindView(R.id.settings_startup)
     Switch mViewStartup;
     @BindView(R.id.settings_persistNotification)
     Switch mViewPersistNotif;
-    private boolean mIsRefreshingViewFromPresenter;
     @BindView(R.id.settings_video_layout)
     View settings_video_layout;
+    @BindView(R.id.settings_dark_theme)
+    Switch mDarkTheme;
+
+    private boolean mIsRefreshingViewFromPresenter;
 
     @Override
     public int getLayout() {
@@ -85,18 +90,13 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onViewCreated(view, savedInstanceState);
+        mDarkTheme.setChecked(presenter.getDarkMode());
         if (TextUtils.isEmpty(RingApplication.getInstance().getPushToken())) {
             mGroupPushNotifications.setVisibility(View.GONE);
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_settings);
-
         // loading preferences
         presenter.loadSettings();
+        ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_settings);
     }
 
     @Override
@@ -109,16 +109,22 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         menu.clear();
     }
 
+    @OnCheckedChanged(R.id.settings_dark_theme)
+    public void onDarkThemeChanged(CompoundButton button, boolean isChecked) {
+        presenter.setDarkMode(isChecked);
+    }
+
     @OnCheckedChanged({
-            R.id.settings_mobile_data,
-            R.id.settings_push_notifications,
-            R.id.settings_contacts,
-            R.id.settings_place_call,
-            R.id.settings_startup,
-            R.id.settings_persistNotification
+        R.id.settings_push_notifications,
+        /*R.id.settings_contacts,
+        R.id.settings_place_call,*/
+        R.id.settings_startup,
+        R.id.settings_persistNotification
     })
     public void onSettingsCheckedChanged(CompoundButton button, boolean isChecked) {
-        String neededPermission = null;
+        saveSettings();
+
+        /*String neededPermission = null;
 
         if (isChecked) {
             switch (button.getId()) {
@@ -153,15 +159,14 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
                 // permission is already granted
                 saveSettings();
             }
-        }
+        }*/
     }
 
     private void saveSettings() {
         Settings newSettings = new Settings();
 
-        newSettings.setAllowMobileData(mViewMobileData.isChecked());
-        newSettings.setAllowSystemContacts(mViewContacts.isChecked());
-        newSettings.setAllowPlaceSystemCalls(mViewPlaceCall.isChecked());
+        /*newSettings.setAllowSystemContacts(mViewContacts.isChecked());
+        newSettings.setAllowPlaceSystemCalls(mViewPlaceCall.isChecked());*/
         newSettings.setAllowRingOnStartup(mViewStartup.isChecked());
         newSettings.setAllowPushNotifications(mViewPushNotifications.isChecked());
         newSettings.setAllowPersistentNotification(mViewPersistNotif.isChecked());
@@ -180,7 +185,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
 
     @OnClick(R.id.settings_clear_history)
     public void onClearHistoryClick() {
-        new AlertDialog.Builder(getActivity())
+        new MaterialAlertDialogBuilder(getActivity())
                 .setTitle(getString(R.string.clear_history_dialog_title))
                 .setMessage(getString(R.string.clear_history_dialog_message))
                 .setPositiveButton(android.R.string.ok, (dialog, id) -> {
@@ -198,6 +203,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
                 .show();
     }
 
+    /*
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String permissions[],
@@ -222,6 +228,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
 
         saveSettings();
     }
+    */
 
     /**
      * Presents a Toast explaining why the Read Contacts permission is required to display the devi-
@@ -250,11 +257,10 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
     @Override
     public void showViewModel(Settings viewModel) {
         mIsRefreshingViewFromPresenter = true;
-        mViewMobileData.setChecked(viewModel.isAllowMobileData());
         mViewPushNotifications.setChecked(viewModel.isAllowPushNotifications());
         mViewPersistNotif.setChecked(viewModel.isAllowPersistentNotification());
-        mViewContacts.setChecked(viewModel.isAllowSystemContacts());
-        mViewPlaceCall.setChecked(viewModel.isAllowPlaceSystemCalls());
+        /*mViewContacts.setChecked(viewModel.isAllowSystemContacts());
+        mViewPlaceCall.setChecked(viewModel.isAllowPlaceSystemCalls());*/
         mViewStartup.setChecked(viewModel.isAllowRingOnStartup());
         mIsRefreshingViewFromPresenter = false;
     }

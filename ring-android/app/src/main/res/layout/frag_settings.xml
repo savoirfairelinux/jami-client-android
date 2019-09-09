@@ -31,135 +31,69 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/padding_small">
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp">
+
+            <RelativeLayout
+                android:id="@+id/settings_dark_theme_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/theme_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="start"
+                    android:contentDescription="@string/pref_darkTheme_summary"
+                    android:src="@drawable/baseline_invert_colors_24"
+                    android:layout_marginEnd="32dp"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@id/settings_dark_theme"
+                    android:layout_toEndOf="@id/theme_image"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/ListPrimary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:lines="1"
+                        android:text="@string/pref_darkTheme_title" />
+
+                    <TextView
+                        style="@style/ListSecondary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pref_darkTheme_summary" />
+
+                </LinearLayout>
+
+                <Switch
+                    android:id="@+id/settings_dark_theme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:checked="false"
+                    android:layout_marginStart="16dp"/>
+
+            </RelativeLayout>
+
 
             <!-- Network settings -->
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="@string/pref_category_network"
-                android:textColor="@color/color_primary_dark"
-                android:textSize="18sp" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-
-                <ImageView
-                    android:id="@+id/network_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="start"
-                    android:contentDescription="@string/pref_mobileData_summary"
-                    app:srcCompat="@drawable/baseline_perm_data_setting_24px" />
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@id/settings_mobile_data"
-                    android:layout_toEndOf="@id/network_image"
-                    android:orientation="vertical"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp">
-
-                    <TextView
-                        style="@style/ListPrimary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:lines="1"
-                        android:text="@string/pref_mobileData_title" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/pref_mobileData_summary" />
-
-                </LinearLayout>
-
-                <Switch
-                    android:id="@+id/settings_mobile_data"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:checked="false" />
-
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:id="@+id/settings_push_notifications_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <ImageView
-                    android:id="@+id/push_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="start"
-                    android:contentDescription="@string/pref_pushNotifications_summary"
-                    android:src="@drawable/baseline_notification_important_24" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@id/settings_push_notifications"
-                    android:layout_toEndOf="@id/push_image"
-                    android:orientation="vertical"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp">
-
-                    <TextView
-                        style="@style/ListPrimary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:lines="1"
-                        android:text="@string/pref_pushNotifications_title" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/pref_pushNotifications_summary" />
-
-                </LinearLayout>
-
-                <Switch
-                    android:id="@+id/settings_push_notifications"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:checked="false" />
-
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/settings_video"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="@string/pref_category_video"
-                android:textColor="@color/color_primary_dark"
-                android:textSize="18sp" />
 
             <RelativeLayout
                 android:id="@+id/settings_video_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="8dp">
+                android:padding="16dp">
 
                 <ImageView
                     android:id="@+id/hwenc_image"
@@ -169,9 +103,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_centerVertical="true"
                     android:layout_gravity="start"
                     android:contentDescription="@string/pref_hwEncode_summary"
-                    android:tint="@color/black"
-                    app:srcCompat="@drawable/baseline_memory_24" />
-
+                    app:srcCompat="@drawable/baseline_memory_24"
+                    android:layout_marginEnd="32dp"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -179,8 +112,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@id/hwenc_image"
                     android:orientation="vertical"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp">
+                    android:layout_marginEnd="16dp">
 
                     <TextView
                         style="@style/ListPrimary"
@@ -202,36 +134,32 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
             <!-- Contacts settings -->
 
+            <!--
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="@string/pref_category_contacts"
-                android:textColor="@color/color_primary_dark"
-                android:textSize="18sp" />
+                android:textColor="@color/textColorAccent"
+                android:textSize="18sp"
+                android:layout_marginStart="64dp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="8dp"
-                android:weightSum="1">
+                android:padding="16dp">
 
-                <LinearLayout
+                <ImageView
                     android:id="@+id/contacts_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:contentDescription="@string/pref_systemContacts_summary"
+                    app:srcCompat="@drawable/baseline_group_24"
                     android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:contentDescription="@string/pref_systemContacts_summary"
-                        app:srcCompat="@drawable/ic_group_black" />
-
-                </LinearLayout>
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="32dp"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -239,9 +167,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_centerVertical="true"
                     android:layout_toStartOf="@+id/settings_contacts"
                     android:layout_toEndOf="@+id/contacts_image"
-                    android:orientation="vertical"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp">
+                    android:orientation="vertical">
 
                     <TextView
                         style="@style/ListPrimary"
@@ -262,9 +188,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:checked="false" />
+                    android:checked="false"
+                    android:layout_marginStart="16dp" />
 
-            </RelativeLayout>
+            </RelativeLayout>-->
 
             <!-- System settings -->
 
@@ -273,31 +200,77 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="@string/pref_category_system"
-                android:textColor="@color/color_primary_dark"
-                android:textSize="18sp" />
+                android:textColor="@color/textColorAccent"
+                android:textSize="18sp"
+                android:layout_marginStart="64dp" />
+
+            <RelativeLayout
+                android:id="@+id/settings_push_notifications_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/push_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="start"
+                    android:contentDescription="@string/pref_pushNotifications_summary"
+                    android:src="@drawable/baseline_notification_important_24"
+                    android:layout_marginEnd="32dp"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@id/settings_push_notifications"
+                    android:layout_toEndOf="@id/push_image"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/ListPrimary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:lines="1"
+                        android:text="@string/pref_pushNotifications_title" />
+
+                    <TextView
+                        style="@style/ListSecondary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pref_pushNotifications_summary" />
+
+                </LinearLayout>
+
+                <Switch
+                    android:id="@+id/settings_push_notifications"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:checked="false"
+                    android:layout_marginStart="16dp"/>
+
+            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="8dp"
-                android:weightSum="1">
+                android:padding="16dp">
 
-                <LinearLayout
+                <ImageView
                     android:id="@+id/system_dialer_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:contentDescription="@string/pref_systemDialer_summary"
+                    app:srcCompat="@drawable/baseline_dialpad_24"
                     android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:contentDescription="@string/pref_systemDialer_summary"
-                        app:srcCompat="@drawable/ic_dialpad_black" />
-
-                </LinearLayout>
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="32dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -305,9 +278,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_centerVertical="true"
                     android:layout_toStartOf="@+id/settings_place_call"
                     android:layout_toEndOf="@+id/system_dialer_image"
-                    android:orientation="vertical"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp">
+                    android:orientation="vertical">
 
                     <TextView
                         style="@style/ListPrimary"
@@ -329,7 +300,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:checked="false" />
+                    android:checked="false"
+                    android:layout_marginStart="16dp" />
 
             </RelativeLayout>
 
@@ -337,25 +309,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="8dp"
-                android:weightSum="1">
+                android:padding="16dp">
 
-                <LinearLayout
+                <ImageView
                     android:id="@+id/system_startOnBoot_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:contentDescription="@string/pref_startOnBoot_summary"
+                    app:srcCompat="@drawable/baseline_android_24"
                     android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true">
-
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:contentDescription="@string/pref_startOnBoot_summary"
-                        app:srcCompat="@drawable/ic_android_black" />
-
-                </LinearLayout>
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="32dp"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -363,9 +328,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_centerVertical="true"
                     android:layout_toStartOf="@+id/settings_startup"
                     android:layout_toEndOf="@+id/system_startOnBoot_image"
-                    android:orientation="vertical"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp">
+                    android:orientation="vertical">
 
                     <TextView
                         style="@style/ListPrimary"
@@ -387,7 +350,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:checked="false" />
+                    android:checked="false"
+                    android:layout_marginStart="16dp" />
 
             </RelativeLayout>
 
@@ -397,24 +361,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:padding="8dp"
-                android:weightSum="1">
+                android:padding="16dp">
 
-                <LinearLayout
+                <ImageView
                     android:id="@+id/system_persistNotification_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:contentDescription="@string/pref_persistNotification_summary"
+                    android:src="@drawable/baseline_dns_24"
                     android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:contentDescription="@string/pref_persistNotification_summary"
-                        android:src="@drawable/baseline_notification_important_24" />
-
-                </LinearLayout>
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="32dp"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -422,9 +380,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_centerVertical="true"
                     android:layout_toStartOf="@+id/settings_persistNotification"
                     android:layout_toEndOf="@+id/system_persistNotification_image"
-                    android:orientation="vertical"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp">
+                    android:orientation="vertical">
 
                     <TextView
                         style="@style/ListPrimary"
@@ -446,7 +402,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:checked="false" />
+                    android:checked="false"
+                    android:layout_marginStart="16dp"/>
 
             </RelativeLayout>
 
@@ -454,32 +411,49 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
+                android:layout_marginStart="64dp"
                 android:text="@string/pref_category_privacy"
-                android:textColor="@color/color_primary_dark"
+                android:textColor="@color/textColorAccent"
                 android:textSize="18sp" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/settings_clear_history"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="1"
                 android:background="?attr/selectableItemBackground"
-                android:orientation="vertical"
-                android:padding="8dp">
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/system_clear_history_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:contentDescription="@string/pref_clearHistory_summary"
+                    android:src="@drawable/baseline_clear_all_24"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="32dp" />
 
                 <TextView
                     style="@style/ListPrimary"
+                    android:id="@+id/system_clear_history_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:lines="1"
-                    android:text="@string/pref_clearHistory_title" />
+                    android:text="@string/pref_clearHistory_title"
+                    android:layout_toEndOf="@+id/system_clear_history_image"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/pref_clearHistory_summary" />
+                    android:text="@string/pref_clearHistory_summary"
+                    android:layout_toEndOf="@+id/system_clear_history_image"
+                    android:layout_below="@id/system_clear_history_title"/>
 
-            </LinearLayout>
+            </RelativeLayout>
 
         </LinearLayout>
     </cx.ring.views.BoundedScrollView>

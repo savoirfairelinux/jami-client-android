@@ -190,7 +190,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             app:fabSize="normal"
                             app:pressedTranslationZ="12dp"
                             app:rippleColor="@android:color/white"
-                            app:srcCompat="@drawable/ic_call_white"
+                            app:srcCompat="@drawable/baseline_call_24"
                             app:useCompatPadding="true" />
 
                     </LinearLayout>
@@ -221,7 +221,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:onClick="@{() -> presenter.cameraFlip()}"
                     android:padding="16dp"
                     android:tint="@color/white"
-                    app:srcCompat="@drawable/ic_camera_front_white" />
+                    app:srcCompat="@drawable/baseline_camera_front_24" />
 
                 <cx.ring.views.CheckableImageButton
                     android:id="@+id/call_mic_btn"

@@ -23,7 +23,9 @@ package cx.ring.services;
 import android.content.Context;
 import android.content.SharedPreferences;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
 
+import android.os.Build;
 import android.text.TextUtils;
 
 import java.util.HashMap;
@@ -44,7 +46,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
     public static final String RING_SETTINGS = "ring_settings";
     private static final String RING_REQUESTS = "ring_requests";
     public static final String PREFS_VIDEO = "video_settings";
-    private static final String RING_MOBILE_DATA = "mobile_data";
+    public static final String PREFS_THEME = "theme";
     private static final String RING_PUSH_NOTIFICATIONS = "push_notifs";
     private static final String RING_PERSISTENT_NOTIFICATION = "persistent_notif";
     private static final String RING_HW_ENCODING = "video_hwenc";
@@ -53,6 +55,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
     private static final String RING_SYSTEM_CONTACTS = "system_contacts";
     private static final String RING_PLACE_CALLS = "place_calls";
     private static final String RING_ON_STARTUP = "on_startup";
+    public static final String PREF_DARK_MODE= "darkMode";
     private final Map<String, Set<String>> mNotifiedRequests = new HashMap<>();
 
     @Inject
@@ -63,7 +66,6 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         SharedPreferences appPrefs = getPreferences();
         SharedPreferences.Editor edit = appPrefs.edit();
         edit.clear();
-        edit.putBoolean(RING_MOBILE_DATA, settings.isAllowMobileData());
         edit.putBoolean(RING_SYSTEM_CONTACTS, settings.isAllowSystemContacts());
         edit.putBoolean(RING_PLACE_CALLS, settings.isAllowPlaceSystemCalls());
         edit.putBoolean(RING_ON_STARTUP, settings.isAllowRingOnStartup());
@@ -79,7 +81,6 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         if (settings == null) {
             settings = new Settings();
         }
-        settings.setAllowMobileData(appPrefs.getBoolean(RING_MOBILE_DATA, false));
         settings.setAllowSystemContacts(appPrefs.getBoolean(RING_SYSTEM_CONTACTS, false));
         settings.setAllowPlaceSystemCalls(appPrefs.getBoolean(RING_PLACE_CALLS, false));
         settings.setAllowRingOnStartup(appPrefs.getBoolean(RING_ON_STARTUP, true));
@@ -123,7 +124,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
 
     @Override
     public boolean hasNetworkConnected() {
-        return NetworkUtils.isConnectivityAllowed(mContext, getSettings().isAllowMobileData());
+        return NetworkUtils.isConnectivityAllowed(mContext);
     }
 
     @Override
@@ -150,6 +151,33 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         return getVideoPreferences().getBoolean(RING_HW_ENCODING, true);
     }
 
+    @Override
+    public void setDarkMode(boolean enabled) {
+        SharedPreferences.Editor edit = getThemePreferences().edit();
+        edit.clear();
+        edit.putBoolean(PREF_DARK_MODE, enabled);
+        edit.apply();
+        applyDarkMode(enabled);
+    }
+
+    @Override
+    public boolean getDarkMode() {
+        return getThemePreferences().getBoolean(PREF_DARK_MODE, false);
+    }
+
+    @Override
+    public void loadDarkMode() {
+        applyDarkMode(getDarkMode());
+    }
+
+    private void applyDarkMode(boolean enabled) {
+        AppCompatDelegate.setDefaultNightMode(
+                enabled ? AppCompatDelegate.MODE_NIGHT_YES
+                        : Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
+                            ? AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                            : AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
+    }
+
     private SharedPreferences getPreferences() {
         return mContext.getSharedPreferences(RING_SETTINGS, Context.MODE_PRIVATE);
     }
@@ -157,4 +185,9 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
     private SharedPreferences getVideoPreferences() {
         return mContext.getSharedPreferences(PREFS_VIDEO, Context.MODE_PRIVATE);
     }
+
+    private SharedPreferences getThemePreferences() {
+        return mContext.getSharedPreferences(PREFS_VIDEO, Context.MODE_PRIVATE);
+    }
+
 }

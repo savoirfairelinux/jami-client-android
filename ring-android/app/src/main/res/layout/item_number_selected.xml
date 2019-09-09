@@ -34,6 +34,6 @@ along with this program; if not, write to the Free Software
         android:layout_alignParentTop="false"
         android:layout_centerVertical="true"
         android:layout_marginEnd="8dp"
-        app:srcCompat="@drawable/ic_dialer_sip_black" />
+        app:srcCompat="@drawable/baseline_dialer_sip_24" />
 
 </RelativeLayout>

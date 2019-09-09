@@ -7,28 +7,36 @@
     android:minHeight="72dp"
     android:background="?android:attr/selectableItemBackground">
 
+    <ImageView
+        android:id="@+id/account_photo"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_alignParentStart="true"
+        tools:src="@drawable/ic_contact_picture_fallback" />
+
     <TextView
         android:id="@+id/account_alias"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_toEndOf="@id/account_photo"
         android:layout_toStartOf="@id/error_indicator"
         android:focusable="false"
         android:gravity="start"
         android:textAlignment="viewStart"
         android:textAppearance="@style/ListPrimary"
-        tools:text="Ring account" />
+        tools:text="Jami account" />
 
     <TextView
         android:id="@+id/account_host"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/account_alias"
-        android:layout_marginStart="16dp"
+        android:layout_below="@id/account_alias"
+        android:layout_toEndOf="@id/account_photo"
         android:layout_toStartOf="@id/error_indicator"
         android:ellipsize="middle"
         android:focusable="false"
@@ -44,13 +52,13 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_margin="16dp"
-        android:layout_toStartOf="@+id/account_checked"
+        android:layout_toStartOf="@id/account_checked"
         android:clickable="false"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:tint="@color/error_red"
         android:visibility="gone"
-        app:srcCompat="@drawable/ic_error_white" />
+        app:srcCompat="@drawable/baseline_error_24" />
 
     <ProgressBar
         android:id="@+id/loading_indicator"
@@ -59,9 +67,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="16dp"
-        android:layout_toStartOf="@+id/account_checked"
-        android:visibility="gone" />
+        android:layout_toStartOf="@id/account_checked"
+        android:layout_marginStart="16dp"
+        android:visibility="gone"
+        tools:visibility="visible"/>
 
     <CheckBox
         android:id="@+id/account_checked"
@@ -69,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_margin="16dp"
+        android:layout_marginStart="16dp"
         android:focusable="false" />
 
 </RelativeLayout>

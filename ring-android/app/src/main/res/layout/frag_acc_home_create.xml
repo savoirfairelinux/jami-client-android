@@ -35,26 +35,25 @@
                 android:paddingRight="16dp"
                 android:paddingBottom="24dp"
                 android:text="@string/help_ring"
-                android:textColor="@color/text_color_primary"
                 android:textSize="14sp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/ring_create_btn"
+                style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
-                android:text="@string/account_new_button"
-                android:theme="@style/ButtonColored" />
+                android:text="@string/account_new_button" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/ring_add_account"
+                style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
-                android:text="@string/account_link_button"
-                android:theme="@style/ButtonColored" />
+                android:text="@string/account_link_button" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/ring_import_account"

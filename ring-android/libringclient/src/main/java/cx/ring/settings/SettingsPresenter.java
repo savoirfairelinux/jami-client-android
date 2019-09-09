@@ -47,7 +47,7 @@ public class SettingsPresenter extends RootPresenter<GenericView<Settings>>  {
     public void bindView(GenericView<Settings> view) {
         super.bindView(view);
         mCompositeDisposable.add(mPreferencesService.getSettingsSubject()
-                .observeOn(mUiScheduler)
+                .subscribeOn(mUiScheduler)
                 .subscribe(settings -> getView().showViewModel(settings)));
     }
 
@@ -63,5 +63,13 @@ public class SettingsPresenter extends RootPresenter<GenericView<Settings>>  {
         mCompositeDisposable.add(mHistoryService
                 .clearHistory()
                 .subscribe(()->{}, e -> {}));
+    }
+
+    public void setDarkMode(boolean isChecked) {
+        mPreferencesService.setDarkMode(isChecked);
+    }
+
+    public boolean getDarkMode() {
+        return mPreferencesService.getDarkMode();
     }
 }

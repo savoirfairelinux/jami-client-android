@@ -46,6 +46,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatDelegate;
+
 import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.contacts.AvatarFactory;
@@ -252,6 +254,8 @@ public abstract class RingApplication extends Application {
 
         // we can now inject in our self whatever modules define
         mRingInjectionComponent.inject(this);
+
+        mPreferencesService.loadDarkMode();
     }
 
     public void startDaemon() {
