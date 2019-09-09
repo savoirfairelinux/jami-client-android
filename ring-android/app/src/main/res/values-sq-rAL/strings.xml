@@ -15,6 +15,8 @@
   <string name="license">Ky software jepet \"siç është\", pa asnjë garanci të çfarëdo lloji. Për hollësi, shihni <u>GNU General Public License, version 3 ose më të re</u></string>
   <string name="description">Jami është software i lirë për komunikim universal që respekton privatësinë e përdoruesve të tij.</string>
   <string name="credits">Kredite</string>
+  <string name="call_service_description">Ky shërbim është i nevojshëm për t\’i mbajtur thirrjet tuaja në funksionim në pjesën e përparme. Ai xhiron vetëm gjatë thirrjesh.</string>
+  <string name="data_transfer_service_description">Ky shërbim është i domosdoshëm për të shfaqur mesazhe gjatë shpërnguljesh kartelash. Xhiron vetëm gjatë shpërnguljesh kartelash.</string>
   <!--About dialog-->
   <string name="developed_by">Programuar nga</string>
   <string name="designed_by">Skicuar nga</string>
@@ -114,9 +116,13 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Leje për kamerën</string>
   <string name="permission_dialog_camera_message">Që të funksionojnë, bisedat me video lypin doemos leje për kamerën. Ju lutemi, shihni mundësinë e akordimit të saj.</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">Gabim</string>
   <string name="ringtone_error_format_not_supported">Ky format nuk mbulohet.</string>
   <string name="ringtone_error_size_too_big">Kjo kartelë është shumë e madhe. Madhësia maksimum është %1$dkB.</string>
+  <string name="ringtone_custom_prompt">Caktoni një zile vetjake</string>
+  <string name="ringtone_custom_label">Vetjake</string>
+  <string name="ringtone_jami_tones">Tone Jami</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Jami-t i duhet leja \"Lexo në kontakte\" që të aktivizojë këtë veçori. Ju lutemi, akordojani.</string>
   <!--Write call log permission-->

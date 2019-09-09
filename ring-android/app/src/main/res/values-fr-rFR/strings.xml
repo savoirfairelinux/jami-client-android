@@ -66,6 +66,7 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Autoriser la caméra</string>
   <string name="permission_dialog_camera_message">Les conversations en mode vidéo demandent à ce que les permissions soient accordées. Merci d\'activer les permissions.</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">Erreur</string>
   <string name="ringtone_error_format_not_supported">Ce format n\'est pas supporté</string>
   <!--Read contacts permission-->

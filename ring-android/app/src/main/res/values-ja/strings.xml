@@ -78,8 +78,10 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">カメラのアクセス許可</string>
   <string name="permission_dialog_camera_message">ビデオ会話ではカメラが動作するためにアクセス許可が必要です。 有効にすることを検討してください。</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">エラー</string>
   <string name="ringtone_error_format_not_supported">この形式はサポートされていません。</string>
+  <string name="ringtone_custom_label">カスタム</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->

@@ -15,6 +15,7 @@
   <string name="license">Ez a szoftver a „jelen állapotában” kerül kiadásra, mindenféle garanciavállalás nélkül. A részletekért lásd a<u>GNU általános nyilvános engedély 3-as vagy újabb verzióját</u></string>
   <string name="description">A Jami (GNU csomag, korábban Ring) egy univerzális és elosztott közlés emelvény, amely tiszteletben tartja a felhasználók szabadságait és magánéletét.</string>
   <string name="credits">Készítők</string>
+  <string name="call_service_description">Ez a szolgáltatás szükséges a hívások előtérben történő futtatásához. Csak hívások alatt fut.</string>
   <!--About dialog-->
   <string name="developed_by">Fejlesztők</string>
   <string name="designed_by">Tervezők</string>
@@ -114,9 +115,11 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kameraengedély</string>
   <string name="permission_dialog_camera_message">A videótársalgások működéséhez szükséges a kamera engedély. Fontolja meg az engedélyezését!</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">Hiba</string>
   <string name="ringtone_error_format_not_supported">Ez a formátum nem támogatott</string>
   <string name="ringtone_error_size_too_big">Ez a fájl túl nagy. A maximum méret %1$d kB.</string>
+  <string name="ringtone_custom_label">Szokás</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">A Jaminak szüksége van a „Kapcsolatok olvasása” engedélyre. Kérjük, engedélyezze.</string>
   <!--Write call log permission-->

@@ -31,7 +31,7 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_ringing">Gaat over</string>
     <string name="call_human_state_current">Praten</string>
     <string name="call_human_state_hungup">Opgehangen</string>
-    <string name="call_human_state_busy">Bezig</string>
+    <string name="call_human_state_busy">Bezet</string>
     <string name="call_human_state_failure">Mislukt</string>
     <string name="call_human_state_hold">In wacht zetten</string>
     <string name="call_human_state_unhold">Uit wacht halen</string>

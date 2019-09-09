@@ -112,9 +112,11 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">摄像头使用权限</string>
   <string name="permission_dialog_camera_message">视频会话需要使用摄像头，请设置相应权限。</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">错误</string>
   <string name="ringtone_error_format_not_supported">不支持的文件格式。</string>
   <string name="ringtone_error_size_too_big">文件过大。最大支持%1$dKB。</string>
+  <string name="ringtone_custom_label">自定义</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Jami需要“读取通讯录”权限来启用此功能，请批准。</string>
   <!--Write call log permission-->

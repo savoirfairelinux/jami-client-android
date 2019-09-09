@@ -15,9 +15,11 @@
   <string name="license">Deze software wordt ‘als zodanig’ aangeboden zonder enige garantie. Bekijk voor meer informatie de <u>GNU General Public License versie 3 of later</u></string>
   <string name="description">Jami is vrije software voor universele communicatie, die de vrijheden en privacy van haar gebruikers eerbiedigt.</string>
   <string name="credits">Met dank aan</string>
+  <string name="call_service_description">Deze dienst is vereist om uw oproepen op de voorgrond te blijven uitvoeren. Ze draait enkel tijdens oproepen.</string>
   <!--About dialog-->
   <string name="developed_by">Ontwikkeld door</string>
   <string name="designed_by">Ontworpen door</string>
+  <string name="ringtones_by">Beltonen door</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Geen netwerkverbinding</string>
@@ -57,9 +59,12 @@
   <string name="notif_incoming_call">Inkomende oproep</string>
   <string name="notif_outgoing_call_title">Uitgaande oproep naar %1$s</string>
   <string name="notif_outgoing_call">Uitgaande oproep</string>
+  <string name="notif_current_call_title">Oproep met %1$s bezig</string>
   <string name="notif_current_call">Lopende oproep</string>
+  <string name="notif_channel_call_in_progress">Oproep bezig</string>
   <string name="notif_channel_calls">Oproepen</string>
   <string name="notif_channel_missed_calls">Gemiste oproepen</string>
+  <string name="notif_channel_incoming_calls">Inkomende oproepen</string>
   <string name="notif_channel_messages">Berichten</string>
   <string name="notif_channel_requests">Verzoeken</string>
   <string name="notif_channel_file_transfer">Bestandsoverdracht</string>
@@ -110,15 +115,21 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Cameramachtiging</string>
   <string name="permission_dialog_camera_message">Videogesprekken vereisen machtiging voor gebruik van de camera. Gelieve te overwegen deze machtiging alsnog toe te kennen.</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">Fout</string>
   <string name="ringtone_error_format_not_supported">Dit formaat wordt niet ondersteund.</string>
   <string name="ringtone_error_size_too_big">Dit bestand is te groot. De maximale grootte is %1$dkB.</string>
+  <string name="ringtone_custom_label">Aangepast</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Jami vereist de ‘Contacten lezen’-machtiging voor deze functie. Gelieve deze machtiging toe te kennen.</string>
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami vereist de ‘Oproepgeschiedenis’-machtiging voor deze functie. Gelieve deze machtiging toe te kennen.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Scan de QR-code van het toe te voegen account.</string>
+  <string name="title_activity_qrcode">Mijn account delen</string>
+  <string name="error_scan_no_camera_permissions">De QR-codescanner vereist toestemming om de camera te kunnen gebruiken</string>
+  <string name="tab_code">Mijn code</string>
+  <string name="tab_scan">Code scannen</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Geschiedenis wissen?</string>
   <string name="clear_history_dialog_message">Deze handeling kan niet ongedaan gemaakt worden.</string>
@@ -139,6 +150,7 @@
   <string name="conversation_action_select_peer_number">Kies een nummer</string>
   <string name="conversation_action_block_this">Contact blokkeren</string>
   <string name="conversation_action_go_to_call">Terug naar lopende oproep</string>
+  <string name="conversation_open_file_error">Er is geen toepassing geïnstalleerd om dit bestandstype te openen.</string>
   <string name="clip_contact_uri">Contactadres</string>
   <string name="block_contact_dialog_title">%1$s blokkeren?</string>
   <string name="block_contact_dialog_message">%1$s zal u niet meer kunnen contacteren totdat u hem/haar deblokkeert.</string>
@@ -207,12 +219,16 @@
   <string name="file_transfer_status_invalid_pathname">ongeldige padnaam</string>
   <string name="file_transfer_status_unjoinable_peer">peer kan niet deelnemen</string>
   <string name="file_saved_in">Bestand opgeslagen in %s</string>
+  <string name="file_saved_successfully">Bestand opgeslagen</string>
   <string name="no_space_left_on_device">Geen vrije ruimte resterend op apparaat</string>
   <string name="title_media_viewer">Mediaweergave</string>
   <string name="menu_file_open">Bestand openen</string>
   <string name="menu_file_download">Bestand downloaden</string>
+  <string name="menu_file_save">Bestand opslaan</string>
   <string name="menu_file_delete">Bestand verwijderen</string>
   <string name="menu_file_share">Bestand delen</string>
   <string name="menu_message_copy">Kopiëren</string>
+  <string name="menu_message_delete">Bericht verwijderen</string>
+  <string name="menu_message_cancel">Bericht annuleren</string>
   <string name="menu_delete">Verwijderen</string>
 </resources>

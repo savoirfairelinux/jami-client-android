@@ -9,6 +9,8 @@
   <string name="pref_mobileData_summary">Lejoni Jami në rrjete 3G/LTE, si shtesë ndaj atyre Wi-Fi</string>
   <string name="pref_pushNotifications_title">Njoftime push</string>
   <string name="pref_pushNotifications_summary">Përdorni shërbyesit Google që të lejoni marrje thirrjesh/mesazhesh në prapaskenë</string>
+  <string name="pref_video_advanced_title">Rregullime të mëtejshme për video</string>
+  <string name="pref_video_advanced_summary">Ndryshimi bitrate-in, qartësinë e videove, si dhe përdorni veçori eksperimentale</string>
   <string name="pref_hd_summary">Aktivizoni dërgim videosh HD</string>
   <string name="pref_hwEncode_title">Aktivizo kodim të përshpejtuar</string>
   <string name="pref_hwEncode_summary">Veçori eksperimentale</string>

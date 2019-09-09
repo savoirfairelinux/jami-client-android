@@ -9,15 +9,17 @@
   <string name="contribute_section">Bijdragen</string>
   <string name="version_section">Versie</string>
   <string name="no_email_app_installed">Geen e-mailapp gevonden, installeer er een om ons een rapport te kunnen sturen</string>
-  <string name="no_browser_app_installed">Geen webbrowserapp gevonden, installeer er een om deze pagina te bekijken</string>
+  <string name="no_browser_app_installed">Geen webbrowserapp gevonden, installeer er een om dit blad te bekijken</string>
   <string name="email_chooser_title">E-mail versturen met…</string>
   <string name="website_chooser_title">Website bekijken met…</string>
   <string name="license">Deze software wordt ‘als zodanig’ aangeboden zonder enige garantie. Bekijk voor meer informatie de <u>GNU General Public License versie 3 of later</u></string>
   <string name="description">Jami is vrije software voor universele communicatie, die de vrijheden en privacy van zijn gebruikers eerbiedigt.</string>
   <string name="credits">Met dank aan</string>
+  <string name="call_service_description">Deze dienst is vereist om uw oproepen op de voorgrond te blijven uitvoeren. Hij draait enkel tijdens oproepen.</string>
   <!--About dialog-->
   <string name="developed_by">Ontwikkeld door</string>
   <string name="designed_by">Ontworpen door</string>
+  <string name="ringtones_by">Beltonen door</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Geen netwerkverbinding</string>
@@ -57,9 +59,12 @@
   <string name="notif_incoming_call">Inkomende oproep</string>
   <string name="notif_outgoing_call_title">Uitgaande oproep naar %1$s</string>
   <string name="notif_outgoing_call">Uitgaande oproep</string>
+  <string name="notif_current_call_title">Oproep met %1$s bezig</string>
   <string name="notif_current_call">Lopende oproep</string>
+  <string name="notif_channel_call_in_progress">Oproep bezig</string>
   <string name="notif_channel_calls">Oproepen</string>
   <string name="notif_channel_missed_calls">Gemiste oproepen</string>
+  <string name="notif_channel_incoming_calls">Inkomende oproepen</string>
   <string name="notif_channel_messages">Berichten</string>
   <string name="notif_channel_requests">Verzoeken</string>
   <string name="notif_channel_file_transfer">Bestandsoverdracht</string>
@@ -83,7 +88,7 @@
   <string name="hist_in_call">Inkomende oproep van %1$s</string>
   <string name="hist_out_call">Uitgaande oproep van %1$s</string>
   <string name="start_error_title">Jami kan niet opgestart worden!</string>
-  <string name="start_error_mic_required">Jami vereist toestemming om de microfoon te kunnen gebruiken.</string>
+  <string name="start_error_mic_required">Jami vereist toegang tot de microfoon.</string>
   <string name="action_call_accept">Oproep aannemen</string>
   <string name="action_call_decline">Weigeren</string>
   <string name="action_call_mic_mute">Microfoon dempen</string>
@@ -109,16 +114,22 @@
   <string name="hist_file_received">Bestand ontvangen</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Cameramachtiging</string>
-  <string name="permission_dialog_camera_message">Videogesprekken vereisen machtiging voor gebruik van de camera. Gelieve te overwegen deze machtiging alsnog toe te kennen.</string>
+  <string name="permission_dialog_camera_message">Videogesprekken vereisen toegang tot de camera. Gelieve te overwegen deze machtiging alsnog toe te kennen.</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">Fout</string>
   <string name="ringtone_error_format_not_supported">Dit formaat wordt niet ondersteund.</string>
   <string name="ringtone_error_size_too_big">Dit bestand is te groot. De maximale grootte is %1$dkB.</string>
+  <string name="ringtone_custom_label">Aangepast</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jami vereist de ‘Contacten lezen’-machtiging voor deze functie. Gelieve deze machtiging toe te kennen.</string>
+  <string name="permission_dialog_read_contacts_message">Jami vereist toegang tot uw contacten om deze functie in te schakelen. Gelieve deze machtiging toe te kennen.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami vereist de ‘Oproepgeschiedenis’-machtiging voor deze functie. Gelieve deze machtiging toe te kennen.</string>
+  <string name="permission_dialog_write_call_log_message">Jami vereist toegang tot uw oproepgeschiedenis om deze functie in te schakelen. Gelieve deze machtiging toe te kennen.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Scan de QR-code van de toe te voegen account.</string>
+  <string name="title_activity_qrcode">Mijn account delen</string>
+  <string name="error_scan_no_camera_permissions">De QR-codescanner vereist toegang tot de camera</string>
+  <string name="tab_code">Mijn code</string>
+  <string name="tab_scan">Code scannen</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Geschiedenis wissen?</string>
   <string name="clear_history_dialog_message">Deze handeling kan niet ongedaan gemaakt worden.</string>
@@ -139,19 +150,20 @@
   <string name="conversation_action_select_peer_number">Kies een nummer</string>
   <string name="conversation_action_block_this">Contact blokkeren</string>
   <string name="conversation_action_go_to_call">Terug naar lopende oproep</string>
+  <string name="conversation_open_file_error">Er is geen app geïnstalleerd om dit bestandstype mee te openen.</string>
   <string name="clip_contact_uri">Contactadres</string>
   <string name="block_contact_dialog_title">%1$s blokkeren?</string>
   <string name="block_contact_dialog_message">%1$s zal u niet meer kunnen contacteren totdat u hem/haar deblokkeert.</string>
   <string name="block_contact_completed">%1$s is geblokkeerd.</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s toevoegen?</string>
-  <string name="prompt_new_password">Nieuw wachtwoord</string>
-  <string name="prompt_new_password_optional">Nieuw wachtwoord (optioneel)</string>
-  <string name="prompt_new_password_repeat">Herhaal nieuw wachtwoord</string>
+  <string name="prompt_new_password">Nieuw paswoord</string>
+  <string name="prompt_new_password_optional">Nieuw paswoord (optioneel)</string>
+  <string name="prompt_new_password_repeat">Herhaal nieuw paswoord</string>
   <string name="account_create_title">Een Jami-account aanmaken</string>
   <string name="prompt_new_username">Geef nieuwe gebruikersnaam in</string>
-  <string name="help_password_choose">Kies een sterk wachtwoord om uw Jami-account te beschermen.</string>
-  <string name="help_password_enter">Geef het hoofdwachtwoord van uw Jami-account in</string>
+  <string name="help_password_choose">Kies een sterk paswoord om uw Jami-account te beschermen.</string>
+  <string name="help_password_enter">Geef het hoofdpaswoord van uw Jami-account in</string>
   <string name="help_pin_enter">Geef de pincode in vanuit uw Jami-account die al is geconfigureerd op een ander apparaat. Gebruik de functie ‘Jami-account exporteren’ om een pincode te verkrijgen.</string>
   <string name="wizard_next">Volgende</string>
   <string name="wizard_back">Terug</string>
@@ -207,12 +219,16 @@
   <string name="file_transfer_status_invalid_pathname">ongeldige padnaam</string>
   <string name="file_transfer_status_unjoinable_peer">peer kan niet deelnemen</string>
   <string name="file_saved_in">Bestand opgeslagen in %s</string>
+  <string name="file_saved_successfully">Bestand opgeslagen</string>
   <string name="no_space_left_on_device">Geen vrije ruimte resterend op apparaat</string>
   <string name="title_media_viewer">Mediaweergave</string>
   <string name="menu_file_open">Bestand openen</string>
   <string name="menu_file_download">Bestand downloaden</string>
+  <string name="menu_file_save">Bestand opslaan</string>
   <string name="menu_file_delete">Bestand verwijderen</string>
   <string name="menu_file_share">Bestand delen</string>
   <string name="menu_message_copy">Kopiëren</string>
+  <string name="menu_message_delete">Bericht verwijderen</string>
+  <string name="menu_message_cancel">Bericht annuleren</string>
   <string name="menu_delete">Verwijderen</string>
 </resources>

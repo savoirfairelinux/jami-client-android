@@ -34,7 +34,9 @@
   <string name="send_message">שלח הודעה</string>
   <string name="message_failed">של</string>
   <!--MediaPreferenceFragment-->
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">שגיאה</string>
+  <string name="ringtone_custom_label">מותאם</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->

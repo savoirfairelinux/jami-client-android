@@ -113,9 +113,11 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera izni</string>
   <string name="permission_dialog_camera_message">Görüntülü görüşmelerin çalışması için kamera izni gerekir. Lütfen etkinleştirmeyi göz ardı etmeyin.</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">Hata</string>
   <string name="ringtone_error_format_not_supported">Bu biçim desteklenmiyor.</string>
   <string name="ringtone_error_size_too_big">Bu dosya çok büyük. En büyük boyut %1$dkB.</string>
+  <string name="ringtone_custom_label">Özel</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Jami\'nin bu özelliğini etkinleştirmek için \"Rehberi oku\" izni gerekli. Lütfen izin verin.</string>
   <!--Write call log permission-->

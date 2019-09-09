@@ -72,7 +72,9 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Разрешение на использование камеры</string>
   <string name="permission_dialog_camera_message">Необходимо доступ к камере для работы с видеозвонками. Пожалуйста, предоставьте их.</string>
+  <!--Ringtone activity-->
   <string name="ringtone_error_title">Ошибка</string>
+  <string name="ringtone_custom_label">Своё</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->

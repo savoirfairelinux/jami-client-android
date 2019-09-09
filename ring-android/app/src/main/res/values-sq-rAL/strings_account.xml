@@ -67,6 +67,8 @@
   <string name="account_ringtone_enabled_label">Aktivizo zilen</string>
   <string name="account_ringtone_path_label">Shteg zileje</string>
   <string name="account_ringtone_custom_label">Përdor zile vetjake</string>
+  <string name="account_ringtone_title">Zgjidhni një zile</string>
+  <string name="account_ringtone_summary">Përzgjidhni një zile ose zgjidhni një tuajën</string>
   <!--Video Details-->
   <string name="account_video_label">Video</string>
   <string name="account_video_enable">Aktivizo Video</string>
