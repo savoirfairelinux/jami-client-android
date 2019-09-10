@@ -30,6 +30,7 @@ import io.reactivex.subjects.Subject;
 
 public abstract class AccountCreationModel {
 
+    private String mManagementServer = null;
     private String mFullName = "";
     private String mUsername = "";
     private String mPassword = "";
@@ -37,7 +38,7 @@ public abstract class AccountCreationModel {
     private File mArchive = null;
 
     private boolean link = false;
-    private boolean mPush = false;
+    private boolean mPush = true;
     private Account newAccount = null;
     private Object photo = null;
 
@@ -111,6 +112,14 @@ public abstract class AccountCreationModel {
 
     public File getArchive() {
         return mArchive;
+    }
+
+    public void setManagementServer(String server) {
+        mManagementServer = server;
+    }
+
+    public String getManagementServer() {
+        return mManagementServer;
     }
 
     public void setNewAccount(Account account) {

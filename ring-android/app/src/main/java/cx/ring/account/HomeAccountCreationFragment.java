@@ -81,6 +81,11 @@ public class HomeAccountCreationFragment extends BaseSupportFragment<HomeAccount
         presenter.clickOnCreateAccount();
     }
 
+    @OnClick(R.id.account_connect_server)
+    public void connectAccountClicked() {
+        presenter.clickOnConnectAccount();
+    }
+
     @Override
     public void goToAccountCreation() {
         AccountCreationModelImpl ringAccountViewModel = new AccountCreationModelImpl();
@@ -93,6 +98,14 @@ public class HomeAccountCreationFragment extends BaseSupportFragment<HomeAccount
         AccountCreationModelImpl ringAccountViewModel = new AccountCreationModelImpl();
         ringAccountViewModel.setLink(true);
         Fragment fragment = RingLinkAccountFragment.newInstance(ringAccountViewModel);
+        replaceFragmentWithSlide(fragment, R.id.wizard_container);
+    }
+
+    @Override
+    public void goToAccountConnect() {
+        AccountCreationModelImpl ringAccountViewModel = new AccountCreationModelImpl();
+        ringAccountViewModel.setLink(true);
+        Fragment fragment = JamiAccountConnectFragment.newInstance(ringAccountViewModel);
         replaceFragmentWithSlide(fragment, R.id.wizard_container);
     }
 

@@ -17,14 +17,15 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
 package cx.ring.account;
 
-public interface HomeAccountCreationView {
+import cx.ring.mvp.AccountCreationModel;
 
-    void goToAccountCreation();
+public interface JamiConnectAccountView {
 
-    void goToAccountLink();
+    void enableConnectButton(boolean enable);
 
-    void goToAccountConnect();
+    void createAccount(AccountCreationModel accountCreationModel);
+
+    void cancel();
 }

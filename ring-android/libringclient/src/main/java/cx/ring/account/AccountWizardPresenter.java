@@ -71,6 +71,26 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
         }
     }
 
+    public void initJamiAccountConnect(AccountCreationModel accountCreationModel, String defaultAccountName) {
+        Single<Map<String, String>> newAccount = initRingAccountDetails(defaultAccountName)
+                .map(accountDetails -> {
+                    if (!StringUtils.isEmpty(accountCreationModel.getManagementServer())) {
+                        accountDetails.put(ConfigKey.MANAGER_URI.key(), accountCreationModel.getManagementServer());
+                    }
+                    if (!StringUtils.isEmpty(accountCreationModel.getPassword())) {
+                        accountDetails.put(ConfigKey.ARCHIVE_PASSWORD.key(), accountCreationModel.getPassword());
+                    }
+                    if (!StringUtils.isEmpty(accountCreationModel.getPassword())) {
+                        accountDetails.put(ConfigKey.ACCOUNT_USERNAME.key(), accountCreationModel.getUsername());
+                    }
+                    if (accountCreationModel.isPush()) {
+                        accountDetails.put(ConfigKey.PROXY_ENABLED.key(), AccountConfig.TRUE_STR);
+                    }
+                    return accountDetails;
+                });
+        createAccount(accountCreationModel, newAccount);
+    }
+
     public void initRingAccountCreation(AccountCreationModel accountCreationModel, String defaultAccountName) {
         Single<Map<String, String>> newAccount = initRingAccountDetails(defaultAccountName)
                 .map(accountDetails -> {

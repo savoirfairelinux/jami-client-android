@@ -62,6 +62,11 @@ public class TVHomeAccountCreationFragment
     }
 
     @Override
+    public void goToAccountConnect() {
+        //TODO
+    }
+
+    @Override
     public int onProvideTheme() {
         return R.style.Theme_Ring_Leanback_GuidedStep_First;
     }

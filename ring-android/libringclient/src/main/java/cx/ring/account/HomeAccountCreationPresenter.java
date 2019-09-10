@@ -38,4 +38,7 @@ public class HomeAccountCreationPresenter extends RootPresenter<HomeAccountCreat
         getView().goToAccountLink();
     }
 
+    public void clickOnConnectAccount() {
+        getView().goToAccountConnect();
+    }
 }

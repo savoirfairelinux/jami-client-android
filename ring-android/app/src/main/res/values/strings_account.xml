@@ -191,6 +191,7 @@ along with this program; if not, write to the Free Software
     <string name="account_sip_success_message">You have successfully registered your Sip account.</string>
     <string name="account_sip_register_anyway">Register anyway</string>
 
+    <string name="account_link_device">Connect from other device</string>
     <string name="account_link_button">Connect from network</string>
     <string name="account_link_archive_button">Connect from backup</string>
     <string name="account_link_prompt_pin">Enter PIN</string>
@@ -202,6 +203,12 @@ along with this program; if not, write to the Free Software
     <string name="account_end_export_infos">Your PIN is:\n\n%%\n\nTo complete the process, you need to open Jami on the new device. Create a new account with \"Link this device to an account\". Your PIN is valid for 10 minutes.</string>
     <string name="account_link_export_info_light">To use this account on other devices, you must first expose it on Jami. This will generate a PIN code that you must enter on the new device to set up the account. The PIN is valid for 10 minutes.</string>
     <string name="account_export_title">Add devices</string>
+    <string name="account_connect_server_button">Connect to management server</string>
+    <string name="account_connect_button">Connect</string>
+    <string name="prompt_server">Jami management server URL</string>
+    <string name="help_credentials_enter">Enter your organisation credentials</string>
+    <string name="help_connect_password_enter">Enter your organisation password</string>
+    <string name="account_connect_prompt_username">Username</string>
 
     <!-- Name registration -->
     <string name="error_username_empty">Enter a username</string>

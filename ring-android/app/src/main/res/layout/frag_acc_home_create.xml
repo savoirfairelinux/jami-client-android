@@ -40,7 +40,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/ring_create_btn"
                 style="@style/Widget.MaterialComponents.Button"
-                android:layout_width="300dp"
+                android:layout_width="260dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
@@ -49,19 +49,26 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/ring_add_account"
                 style="@style/Widget.MaterialComponents.Button"
-                android:layout_width="300dp"
+                android:layout_width="260dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="16dp"
-                android:text="@string/account_link_button" />
+                android:text="@string/account_link_device" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/ring_import_account"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="300dp"
+                android:layout_width="260dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/account_link_archive_button" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/account_connect_server"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/account_connect_server_button" />
 
         </LinearLayout>
 

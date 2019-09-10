@@ -97,7 +97,8 @@ public enum ConfigKey {
     DHT_PUBLIC_IN("DHT.PublicInCalls"),
     PROXY_ENABLED("Account.proxyEnabled"),
     PROXY_SERVER("Account.proxyServer"),
-    PROXY_PUSH_TOKEN("Account.proxyPushToken");
+    PROXY_PUSH_TOKEN("Account.proxyPushToken"),
+    MANAGER_URI("Account.managerUri");
 
     private static final Set<ConfigKey> TWO_STATES = new HashSet<>(Arrays.asList(
             ACCOUNT_ENABLE,

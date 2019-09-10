@@ -33,39 +33,36 @@ import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 import cx.ring.R;
 import cx.ring.dependencyinjection.RingInjectionComponent;
-import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.mvp.AccountCreationModel;
+import cx.ring.mvp.BaseSupportFragment;
 
-public class RingLinkAccountFragment extends BaseSupportFragment<RingLinkAccountPresenter> implements RingLinkAccountView {
+public class JamiAccountConnectFragment extends BaseSupportFragment<JamiAccountConnectPresenter> implements JamiConnectAccountView {
 
-    public static final String TAG = RingLinkAccountFragment.class.getSimpleName();
+    public static final String TAG = JamiAccountConnectFragment.class.getSimpleName();
 
-    @BindView(R.id.pin_box)
-    protected ViewGroup mPinBox;
+    @BindView(R.id.prompt_server)
+    protected EditText mServerTxt;
 
-    @BindView(R.id.pin_help_message)
-    protected View mPinMessage;
+    @BindView(R.id.username_txt)
+    protected EditText mUsernameTxt;
 
-    @BindView(R.id.ring_add_pin)
-    protected EditText mPinTxt;
-
-    @BindView(R.id.ring_existing_password)
+    @BindView(R.id.password_txt)
     protected EditText mPasswordTxt;
 
-    @BindView(R.id.link_button)
-    protected Button mLinkAccountBtn;
+    @BindView(R.id.connect_button)
+    protected Button mConnectAccountBtn;
 
     private AccountCreationModel model;
 
-    public static RingLinkAccountFragment newInstance(AccountCreationModelImpl ringAccountViewModel) {
-        RingLinkAccountFragment fragment = new RingLinkAccountFragment();
+    public static JamiAccountConnectFragment newInstance(AccountCreationModelImpl ringAccountViewModel) {
+        JamiAccountConnectFragment fragment = new JamiAccountConnectFragment();
         fragment.model = ringAccountViewModel;
         return fragment;
     }
 
     @Override
     public int getLayout() {
-        return R.layout.frag_acc_ring_link;
+        return R.layout.frag_acc_jami_connect;
     }
 
     @Override
@@ -74,43 +71,41 @@ public class RingLinkAccountFragment extends BaseSupportFragment<RingLinkAccount
     }
 
     @Override
-    protected void initPresenter(RingLinkAccountPresenter presenter) {
+    protected void initPresenter(JamiAccountConnectPresenter presenter) {
         presenter.init(model);
     }
 
-    @OnClick(R.id.link_button)
-    public void onLinkClick() {
-        presenter.linkClicked();
+    @OnClick(R.id.connect_button)
+    public void onConnectClick() {
+        presenter.connectClicked();
     }
 
-    @OnTextChanged(value = R.id.ring_existing_password, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterPasswordChanged(Editable txt) {
+    @OnTextChanged(value = R.id.username_txt, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    void afterUsernameChanged(Editable txt) {
+        presenter.usernameChanged(txt.toString());
+    }
+
+    @OnTextChanged(value = R.id.password_txt, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    void afterPasswordChanged(Editable txt) {
         presenter.passwordChanged(txt.toString());
     }
 
-    @OnTextChanged(value = R.id.ring_add_pin, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterPinChanged(Editable txt) {
-        presenter.pinChanged(txt.toString());
+    @OnTextChanged(value = R.id.prompt_server, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    void afterServerChanged(Editable txt) {
+        presenter.serverChanged(txt.toString());
     }
 
-    @OnEditorAction(value = R.id.ring_add_pin)
+    @OnEditorAction(value = R.id.password_txt)
     public boolean onPasswordConfirmDone(int keyCode) {
         if (keyCode == EditorInfo.IME_ACTION_DONE) {
-            presenter.linkClicked();
+            presenter.connectClicked();
         }
         return false;
     }
 
     @Override
-    public void enableLinkButton(boolean enable) {
-        mLinkAccountBtn.setEnabled(enable);
-    }
-
-    @Override
-    public void showPin(boolean show) {
-        mPinBox.setVisibility(show ? View.VISIBLE : View.GONE);
-        mPinMessage.setVisibility(show ? View.VISIBLE : View.GONE);
-        mLinkAccountBtn.setText(show ? R.string.account_link_device : R.string.account_link_archive_button);
+    public void enableConnectButton(boolean enable) {
+        mConnectAccountBtn.setEnabled(enable);
     }
 
     @Override

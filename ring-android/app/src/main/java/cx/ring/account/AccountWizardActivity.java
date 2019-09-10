@@ -31,6 +31,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -142,7 +143,10 @@ public class AccountWizardActivity extends BaseActivity<AccountWizardPresenter> 
     }
 
     public void createAccount(AccountCreationModel accountCreationModel) {
-        if (accountCreationModel.isLink()) {
+        if (TextUtils.isEmpty(accountCreationModel.getManagementServer())) {
+            presenter.initJamiAccountConnect(accountCreationModel,
+                    getText(R.string.ring_account_default_name).toString());
+        } else if (accountCreationModel.isLink()) {
             presenter.initRingAccountLink(accountCreationModel,
                     getText(R.string.ring_account_default_name).toString());
         } else {

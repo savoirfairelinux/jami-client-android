@@ -31,7 +31,7 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="24dp"
                 android:text="@string/account_creation_ring"
-                android:textSize="24sp" />
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
 
             <Switch
                 android:id="@+id/switch_ring_username"

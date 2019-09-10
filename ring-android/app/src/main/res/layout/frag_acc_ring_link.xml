@@ -29,8 +29,8 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="24dp"
                 android:paddingStart="4dp"
-                android:text="@string/account_link_title"
-                android:textSize="24sp" />
+                android:text="@string/account_link_device"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4" />
 
             <TextView
                 android:layout_width="match_parent"

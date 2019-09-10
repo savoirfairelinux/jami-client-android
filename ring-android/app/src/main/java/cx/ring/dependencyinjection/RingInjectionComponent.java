@@ -24,6 +24,7 @@ import javax.inject.Singleton;
 import cx.ring.account.AccountEditionActivity;
 import cx.ring.account.AccountWizardActivity;
 import cx.ring.account.HomeAccountCreationFragment;
+import cx.ring.account.JamiAccountConnectFragment;
 import cx.ring.account.ProfileCreationFragment;
 import cx.ring.account.RegisterNameDialog;
 import cx.ring.account.RingAccountCreationFragment;
@@ -169,6 +170,8 @@ public interface RingInjectionComponent {
     void inject(HomeAccountCreationFragment fragment);
 
     void inject(RingLinkAccountFragment fragment);
+
+    void inject(JamiAccountConnectFragment fragment);
 
     void inject(LaunchActivity activity);
 
