@@ -143,7 +143,7 @@ public class AccountWizardActivity extends BaseActivity<AccountWizardPresenter> 
     }
 
     public void createAccount(AccountCreationModel accountCreationModel) {
-        if (TextUtils.isEmpty(accountCreationModel.getManagementServer())) {
+        if (!TextUtils.isEmpty(accountCreationModel.getManagementServer())) {
             presenter.initJamiAccountConnect(accountCreationModel,
                     getText(R.string.ring_account_default_name).toString());
         } else if (accountCreationModel.isLink()) {
