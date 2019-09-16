@@ -586,8 +586,6 @@ public class DRingService extends Service {
         updateConnectivityState();
 
         mDisposableBag.add(mPreferencesService.getSettingsSubject().subscribe(s -> {
-            //refreshContacts();
-            updateConnectivityState();
             showSystemNotification(s);
         }));
 
