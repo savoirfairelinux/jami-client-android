@@ -19,7 +19,6 @@
   <string name="pref_startOnBoot_title">Запускать Jami при старте системы</string>
   <string name="pref_startOnBoot_summary">Запускать Jami в фоновом режиме во время старта системы.</string>
   <string name="pref_clearHistory_title">Очистить историю</string>
-  <string name="pref_clearHistory_summary">Очистить всю историю разговоров. Это действие нельзя отменить.</string>
   <string name="pref_persistNotification_title">Работа в фоновом режиме</string>
   <string name="pref_persistNotification_summary">Разрешить работу в фоновом режиме для принятия звонков и сообщений.</string>
 </resources>

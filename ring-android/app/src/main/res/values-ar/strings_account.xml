@@ -72,6 +72,7 @@
   <string name="account_rtp_port_range">نطاق المنفذ RTP الصوتي</string>
   <!--restore/backup-->
   <string name="account_export_end_error_title">خطأ</string>
+  <string name="account_connect_prompt_username">اسم المستخدم</string>
   <!--Name registration-->
   <string name="account_status_unknown">مجهول</string>
   <!--Create account-->

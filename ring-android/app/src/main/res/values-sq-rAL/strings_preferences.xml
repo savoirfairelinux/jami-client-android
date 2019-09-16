@@ -21,7 +21,6 @@
   <string name="pref_startOnBoot_title">Nise Jami-n kur niset sistemi</string>
   <string name="pref_startOnBoot_summary">Xhirojeni Jami-n në prapaskenë, kur niset sistemi.</string>
   <string name="pref_clearHistory_title">Pastroje historikun</string>
-  <string name="pref_clearHistory_summary">Pastroni krejt historikun e bisedave, Ky veprim nuk mund të zhbëhet.</string>
   <string name="pref_persistNotification_title">Xhiro në prapaskenë</string>
   <string name="pref_persistNotification_summary">Lejoni xhirimin në prapaskenë që të merrni thirrje dhe mesazhe.</string>
 </resources>

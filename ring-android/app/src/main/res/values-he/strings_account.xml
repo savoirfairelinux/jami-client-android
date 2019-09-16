@@ -63,6 +63,7 @@
   <string name="account_rtp_min_port">נומינלי</string>
   <!--restore/backup-->
   <string name="account_export_end_error_title">שגיאה</string>
+  <string name="account_connect_prompt_username">שם משתמש</string>
   <!--Name registration-->
   <string name="account_status_connecting">מתחבר</string>
   <string name="account_status_unknown">לא מוכר</string>

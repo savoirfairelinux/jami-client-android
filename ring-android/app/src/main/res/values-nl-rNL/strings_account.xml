@@ -34,6 +34,7 @@
   <!--SIP-->
   <!--TLS Details-->
   <!--restore/backup-->
+  <string name="account_connect_prompt_username">Gebruikersnaam</string>
   <!--Name registration-->
   <!--Create account-->
   <!--Edit profile-->

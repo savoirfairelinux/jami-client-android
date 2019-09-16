@@ -158,6 +158,7 @@
   <string name="account_end_export_infos">您的PIN码是：\n\n%%\n\n要完成此过程，您需要在新设备上打开Jami。 使用“将此设备链接到帐户”创建一个新帐户。你的PIN码有效期为10分钟。</string>
   <string name="account_link_export_info_light">要在其他设备上使用此帐户，您必须先在Jami上公开它。这将生成一个PIN码，您必须在新设备上输入该PIN码才能设置帐户。PIN有效期为10分钟。</string>
   <string name="account_export_title">添加设备</string>
+  <string name="account_connect_prompt_username">用户名</string>
   <!--Name registration-->
   <string name="error_username_empty">输入用户名</string>
   <string name="no_registered_name_for_account">该帐户尚未注册用户名</string>

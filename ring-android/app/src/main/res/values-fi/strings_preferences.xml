@@ -9,5 +9,4 @@
   <string name="pref_systemContacts_title">Käytä järjestelmän yhteystietoja</string>
   <string name="pref_systemContacts_summary">Käytä järjestelmän yhteystietoja soittajan tietojen esittämisessä</string>
   <string name="pref_clearHistory_title">Tyhjennä historia</string>
-  <string name="pref_clearHistory_summary">Tyhjennä kaikki keskusteluhistoria. Tätä toimintoa ei voi perua.</string>
 </resources>

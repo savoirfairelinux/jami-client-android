@@ -82,6 +82,7 @@
   <string name="account_no_network_title">Verkkoon ei saada yhteyttä</string>
   <string name="account_link_prompt_pin">Syötä PIN-koodi</string>
   <string name="account_new_button">Tee Jami-tili</string>
+  <string name="account_connect_prompt_username">Käyttäjänimi</string>
   <!--Name registration-->
   <string name="invalid_username">Käyttäjätunnus ei kelpaa</string>
   <string name="account_status_connecting">Yhdistää</string>

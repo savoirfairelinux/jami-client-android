@@ -129,6 +129,7 @@
   <string name="account_link_prompt_pin">PINを入力してください</string>
   <string name="account_link_export_button">別のデバイスをこのアカウントへリンク</string>
   <string name="account_end_export_button">閉じる</string>
+  <string name="account_connect_prompt_username">ユーザー名</string>
   <!--Name registration-->
   <string name="error_username_empty">ユーザー名を入力してください</string>
   <string name="no_registered_name_for_account">このアカウントの登録名が見つかりません</string>

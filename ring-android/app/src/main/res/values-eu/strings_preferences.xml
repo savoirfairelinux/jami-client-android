@@ -19,7 +19,6 @@
   <string name="pref_startOnBoot_title">Hasi Jami abioan</string>
   <string name="pref_startOnBoot_summary">Hasi Jami bigarren planoan sistema abiatzean.</string>
   <string name="pref_clearHistory_title">Garbitu historiala</string>
-  <string name="pref_clearHistory_summary">Garbitu dei guztien historiala. Ekintza hau ezin da desegin.</string>
   <string name="pref_persistNotification_title">Aritu bigarren planoan</string>
   <string name="pref_persistNotification_summary">Baimendu bigarren planoan aritzea deiak eta mezuak jasotzeko.</string>
 </resources>

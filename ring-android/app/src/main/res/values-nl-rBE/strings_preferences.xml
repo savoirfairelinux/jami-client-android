@@ -9,6 +9,8 @@
   <string name="pref_mobileData_summary">Sta Jami toe om 3G/LTE-netwerken te gebruiken naast wifi</string>
   <string name="pref_pushNotifications_title">Pushmeldingen</string>
   <string name="pref_pushNotifications_summary">Gebruik de servers van Google om oproepen/berichten in de achtergrond te kunnen ontvangen</string>
+  <string name="pref_video_advanced_title">Geavanceerde video-instellingen</string>
+  <string name="pref_video_advanced_summary">Wijzig de videobitrate en -resolutie, evenals de toegang tot experimentele functies</string>
   <string name="pref_hd_summary">Versturen van video in HD inschakelen</string>
   <string name="pref_hwEncode_title">Versnelde codering inschakelen</string>
   <string name="pref_hwEncode_summary">Experimentele functie</string>
@@ -19,7 +21,6 @@
   <string name="pref_startOnBoot_title">Jami automatisch starten</string>
   <string name="pref_startOnBoot_summary">Voer Jami in de achtergrond uit wanneer het systeem gestart wordt.</string>
   <string name="pref_clearHistory_title">Geschiedenis wissen</string>
-  <string name="pref_clearHistory_summary">Wis de geschiedenis van alle gesprekken. Deze handeling kan niet ongedaan gemaakt worden.</string>
   <string name="pref_persistNotification_title">Uitvoeren in achtergrond</string>
   <string name="pref_persistNotification_summary">Maakt het mogelijk om in de achtergrond oproepen en berichten te ontvangen.</string>
 </resources>

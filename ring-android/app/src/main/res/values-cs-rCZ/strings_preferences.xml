@@ -18,7 +18,6 @@
   <string name="pref_startOnBoot_title">Spustit Jami po zapnutí</string>
   <string name="pref_startOnBoot_summary">Spustit Jami na pozadí systému po jeho spuštění.</string>
   <string name="pref_clearHistory_title">Vymazat historii</string>
-  <string name="pref_clearHistory_summary">Vymaže celou historii konverzací. Tuto činnost nelze vrátit zpět.</string>
   <string name="pref_persistNotification_title">Běžet na pozadí</string>
   <string name="pref_persistNotification_summary">Umožnit běh na pozadí pro příjem hovorů a zpráv.</string>
 </resources>

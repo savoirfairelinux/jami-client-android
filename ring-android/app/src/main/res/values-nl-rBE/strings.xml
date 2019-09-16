@@ -16,6 +16,7 @@
   <string name="description">Jami is vrije software voor universele communicatie, die de vrijheden en privacy van zijn gebruikers eerbiedigt.</string>
   <string name="credits">Met dank aan</string>
   <string name="call_service_description">Deze dienst is vereist om uw oproepen op de voorgrond te blijven uitvoeren. Hij draait enkel tijdens oproepen.</string>
+  <string name="data_transfer_service_description">Deze dienst is vereist om blijvende meldingen weer te geven tijdens bestandsoverdrachten. Hij draait enkel tijdens bestandsoverdrachten.</string>
   <!--About dialog-->
   <string name="developed_by">Ontwikkeld door</string>
   <string name="designed_by">Ontworpen door</string>
@@ -119,7 +120,9 @@
   <string name="ringtone_error_title">Fout</string>
   <string name="ringtone_error_format_not_supported">Dit formaat wordt niet ondersteund.</string>
   <string name="ringtone_error_size_too_big">Dit bestand is te groot. De maximale grootte is %1$dkB.</string>
+  <string name="ringtone_custom_prompt">Stel een aangepaste beltoon in</string>
   <string name="ringtone_custom_label">Aangepast</string>
+  <string name="ringtone_jami_tones">Jami-beltonen</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Jami vereist toegang tot uw contacten om deze functie in te schakelen. Gelieve deze machtiging toe te kennen.</string>
   <!--Write call log permission-->

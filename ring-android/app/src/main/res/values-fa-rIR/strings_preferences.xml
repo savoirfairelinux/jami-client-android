@@ -19,7 +19,6 @@
   <string name="pref_startOnBoot_title">به کار انداختن جمی هنگام شروع به کار</string>
   <string name="pref_startOnBoot_summary">اجرای جمی در پس‌زمینه هنگام آغاز به کار سامانه.</string>
   <string name="pref_clearHistory_title">پاک‌سازی تاریخچه</string>
-  <string name="pref_clearHistory_summary">پاک‌سازی تمام تاریخچهٔ گفت‌وگوها. این کار قابل بازگشت نیست.</string>
   <string name="pref_persistNotification_title">اجرا در پس‌زمینه</string>
   <string name="pref_persistNotification_summary">برای گرفتن تماس‌ها و پیام‌ها، اجرا در پس‌زمینه را مجاز کنید.</string>
 </resources>

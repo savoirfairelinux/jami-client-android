@@ -15,7 +15,6 @@
   <string name="pref_startOnBoot_title">Lancer Jami au démarrage</string>
   <string name="pref_startOnBoot_summary">Exécuter Jami en tâche de fond au démarrage du système.</string>
   <string name="pref_clearHistory_title">Vider l\'historique</string>
-  <string name="pref_clearHistory_summary">Supprimer l\'historique de toutes les conversations. Cette action est irréversible.</string>
   <string name="pref_persistNotification_title">Exécuter en tâche de fond</string>
   <string name="pref_persistNotification_summary">Autorisé l\'exécution en tâche de fond pour recevoir les appels et les messages.</string>
 </resources>

@@ -107,6 +107,7 @@
   <string name="account_start_export_button">Sortu PIN-a</string>
   <string name="account_end_export_button">itxi</string>
   <string name="account_export_title">Gehitu gailuak</string>
+  <string name="account_connect_prompt_username">Erabiltzaile-izena</string>
   <!--Name registration-->
   <string name="error_username_empty">Sartu erabiltzaile-izen bat</string>
   <string name="username_available">Erabiltzaile-izena eskuragarri dago!</string>

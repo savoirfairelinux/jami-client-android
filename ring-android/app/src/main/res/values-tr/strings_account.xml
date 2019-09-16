@@ -152,6 +152,7 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="account_end_export_infos">Pin\'iniz:\n\n%%\n\nSüreci tamamlamak için yeni aygıtta Ring\'i açmanız gerekiyor. \"Bu aygıtı bir hesaba bağla\" ile yeni hesap oluşturun. Pin\'iniz 10 dakikalığına geçerlidir.</string>
   <string name="account_link_export_info_light">Bu hesabı başka aygıtlarda kullanmak için önce Jami\'de açmalısınız. Bu, hesabı kurmak için yeni aygıtta girmeniz gereken bir PIN kodu oluşturacak. PIN 10 dakikalığına geçerlidir.</string>
   <string name="account_export_title">Aygıtlar ekle</string>
+  <string name="account_connect_prompt_username">Kullanıcı adı</string>
   <!--Name registration-->
   <string name="error_username_empty">Bir kullanıcı adı gir</string>
   <string name="no_registered_name_for_account">Bu hesap için kaydedilmiş ad bulunamadı</string>

@@ -19,7 +19,6 @@
   <string name="pref_startOnBoot_title">Paleisti Jami paleisties metu</string>
   <string name="pref_startOnBoot_summary">Sistemos paleidimo metu, paleisti Jami fone.</string>
   <string name="pref_clearHistory_title">Išvalyti istoriją</string>
-  <string name="pref_clearHistory_summary">Išvalyti visą pokalbių istoriją. Šio veiksmo negalima bus atšaukti.</string>
   <string name="pref_persistNotification_title">Paleisti fone</string>
   <string name="pref_persistNotification_summary">Leisti veikti fone, kad būtų priimami skambučiai ir žinutės.</string>
 </resources>

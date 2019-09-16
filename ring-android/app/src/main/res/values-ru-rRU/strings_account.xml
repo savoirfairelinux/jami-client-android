@@ -90,6 +90,7 @@
   <string name="error_passwords_not_equals">Пароли не совпадают</string>
   <string name="export_account_wait_title">Пожалуйста, подождите...</string>
   <string name="account_export_end_error_title">Ошибка</string>
+  <string name="account_connect_prompt_username">Имя пользователя</string>
   <!--Name registration-->
   <string name="username_already_taken">Имя пользователя уже занято</string>
   <string name="invalid_username">Недопустимое имя пользователя</string>

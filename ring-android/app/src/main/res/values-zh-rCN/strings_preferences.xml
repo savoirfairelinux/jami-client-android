@@ -19,7 +19,6 @@
   <string name="pref_startOnBoot_title">启动时运行Jami</string>
   <string name="pref_startOnBoot_summary">系统启动时在后台运行Jami。</string>
   <string name="pref_clearHistory_title">清除历史记录</string>
-  <string name="pref_clearHistory_summary">清除所有会话历史记录。该操作无法撤销。</string>
   <string name="pref_persistNotification_title">后台运行</string>
   <string name="pref_persistNotification_summary">允许在后台运行以接收电话和消息。</string>
 </resources>

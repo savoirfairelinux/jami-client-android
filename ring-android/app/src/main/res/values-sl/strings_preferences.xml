@@ -9,5 +9,4 @@
   <string name="pref_systemContacts_title">Uporabi sistemske stike</string>
   <string name="pref_systemContacts_summary">Uporabi sistemske stike za prikaz podatkov klicatelja.</string>
   <string name="pref_clearHistory_title">Pobriši zgodovino</string>
-  <string name="pref_clearHistory_summary">Pobriši vso zgodovino pogovorov. Ta funkcija ne more biti preklicana.</string>
 </resources>

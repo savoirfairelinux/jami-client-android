@@ -39,6 +39,7 @@
   <string name="account_link_prompt_pin">Saisissez le code PIN</string>
   <string name="account_new_button">Créer un compte Jami</string>
   <string name="account_link_export_button">Connecter un autre appareil à ce compte</string>
+  <string name="account_connect_prompt_username">nom d\'utilisateur</string>
   <!--Name registration-->
   <string name="account_status_unknown">Inconnu</string>
   <!--Create account-->

@@ -132,6 +132,7 @@
   <string name="account_start_export_button">Генериране на PIN код</string>
   <string name="account_end_export_button">затваряне</string>
   <string name="account_export_title">Добавяне на устройства</string>
+  <string name="account_connect_prompt_username">Потребителско име</string>
   <!--Name registration-->
   <string name="error_username_empty">Въведете потребителско име</string>
   <string name="no_registered_name_for_account">Няма открито регистрирано име за този профил</string>

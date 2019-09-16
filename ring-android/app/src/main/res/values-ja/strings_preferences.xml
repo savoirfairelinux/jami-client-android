@@ -9,5 +9,4 @@
   <string name="pref_systemContacts_title">システムの連絡先を使用する</string>
   <string name="pref_systemContacts_summary">システムの連絡先を使用して通話先の詳細を表示します。</string>
   <string name="pref_clearHistory_title">履歴をクリア</string>
-  <string name="pref_clearHistory_summary">会話の履歴をすべてクリアします。 この操作を元に戻すことはできません。</string>
 </resources>

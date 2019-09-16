@@ -16,6 +16,7 @@
   <string name="description">A Jami (GNU csomag, korábban Ring) egy univerzális és elosztott közlés emelvény, amely tiszteletben tartja a felhasználók szabadságait és magánéletét.</string>
   <string name="credits">Készítők</string>
   <string name="call_service_description">Ez a szolgáltatás szükséges a hívások előtérben történő futtatásához. Csak hívások alatt fut.</string>
+  <string name="data_transfer_service_description">Ez a szolgáltatás szükséges az állandó értesítések megjelenítéséhez fájlátvitel közben. Csak fájlátvitelek alatt fut.</string>
   <!--About dialog-->
   <string name="developed_by">Fejlesztők</string>
   <string name="designed_by">Tervezők</string>
@@ -67,7 +68,7 @@
   <string name="notif_channel_incoming_calls">Bejövő hívások</string>
   <string name="notif_channel_messages">Üzenetek</string>
   <string name="notif_channel_requests">Kérések</string>
-  <string name="notif_channel_file_transfer">Fájl átvitel</string>
+  <string name="notif_channel_file_transfer">Fájlátvitel</string>
   <string name="notif_channel_background_service">Háttérben futó szolgáltatás</string>
   <string name="notif_channel_background_service_descr">Bejövő hívások és üzenetek engedélyezése bármikor.</string>
   <string name="notif_group_calls">Hívások</string>
@@ -119,7 +120,9 @@
   <string name="ringtone_error_title">Hiba</string>
   <string name="ringtone_error_format_not_supported">Ez a formátum nem támogatott</string>
   <string name="ringtone_error_size_too_big">Ez a fájl túl nagy. A maximum méret %1$d kB.</string>
+  <string name="ringtone_custom_prompt">Egyéni csengőhang beállítása</string>
   <string name="ringtone_custom_label">Szokás</string>
+  <string name="ringtone_jami_tones">Jami hangok</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">A Jaminak szüksége van a „Kapcsolatok olvasása” engedélyre. Kérjük, engedélyezze.</string>
   <!--Write call log permission-->

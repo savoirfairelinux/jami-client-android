@@ -154,6 +154,7 @@ Prověřte, prosím, své heslo.</string>
   <string name="account_end_export_infos">Váš PIN je:\n\n%%\n\nK dokončení tohoto procesu otevřete Jami na novém zařízení. Přihlaste se k účtu pomocí „Připojit toto zařízení k účtu“. Váš PIN zůstává platný 10 minut.</string>
   <string name="account_link_export_info_light">Pro použití tohoto účtu na dalších zařízeních jej musíte nejdříve vystavit na Jami. Tím se vytvoří kód PIN, který musíte pro nastavení účtu zadat na novém zařízení. PIN zůstává platný po 0 minut.</string>
   <string name="account_export_title">Přidat zařízení</string>
+  <string name="account_connect_prompt_username">Uživatelské jméno</string>
   <!--Name registration-->
   <string name="error_username_empty">Zadejte uživatelské jméno</string>
   <string name="no_registered_name_for_account">Pro tento účet nenalezeno žádné registrované jméno</string>

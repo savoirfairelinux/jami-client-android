@@ -19,7 +19,6 @@
   <string name="pref_startOnBoot_title">Uruchamiaj Jami przy starcie</string>
   <string name="pref_startOnBoot_summary">Uruchom Jami w tle, podczas uruchamiania systemu.</string>
   <string name="pref_clearHistory_title">Wyczyść historię</string>
-  <string name="pref_clearHistory_summary">Wyczyść całą historię konwersacji. Ta czynność nie może być cofnięta.</string>
   <string name="pref_persistNotification_title">Zezwalaj na pracę w tle</string>
   <string name="pref_persistNotification_summary">Zezwalaj na pracę w tle, aby odbierać rozmowy i wiadomości</string>
 </resources>

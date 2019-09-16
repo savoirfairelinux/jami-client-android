@@ -156,6 +156,7 @@
   <string name="account_end_export_infos">Ваш PIN:\n\n%%\n\nДля завершения процесса нужно открыть Jami на новом устройстве и выбрать \"Привязать это устройство к аккаунту\". Ваш PIN действителен в течение 10 минут.</string>
   <string name="account_link_export_info_light">Чтобы использовать этот аккаунт на других устройствах, вам необходимо сначала скопировать его в сеть Jami. При этом будет сгенерирован PIN-код, который вы должны будете ввести на новом устройстве для установки аккаунта. PIN-код действителен в течение 10 минут.</string>
   <string name="account_export_title">Добавить устройства</string>
+  <string name="account_connect_prompt_username">Имя пользователя</string>
   <!--Name registration-->
   <string name="error_username_empty">Введите имя пользователя</string>
   <string name="no_registered_name_for_account">Не найдено зарегистрированного имени для этого аккаунта</string>

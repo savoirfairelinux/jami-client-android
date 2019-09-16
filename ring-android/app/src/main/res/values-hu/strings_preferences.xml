@@ -9,6 +9,8 @@
   <string name="pref_mobileData_summary">A Jami engedélyezése 3G/LTE és Wi-Fi hálózatokon</string>
   <string name="pref_pushNotifications_title">Leküldéses értesítések</string>
   <string name="pref_pushNotifications_summary">Használja a Google kiszolgálóit a háttérben lévő hívások és üzenetek fogadásához</string>
+  <string name="pref_video_advanced_title">Részletes videó beállításai</string>
+  <string name="pref_video_advanced_summary">Videó bitsebesség és felbontás módosítása. Kísérleti jellemzők elérése.</string>
   <string name="pref_hd_summary">Engedélyezze a HD videó küldését</string>
   <string name="pref_hwEncode_title">Gyorsított kódolás engedélyezése</string>
   <string name="pref_hwEncode_summary">Kísérleti jellemző</string>
@@ -19,7 +21,6 @@
   <string name="pref_startOnBoot_title">Indítása bejelentkezéskor</string>
   <string name="pref_startOnBoot_summary">Indítása bejelentkezéskor</string>
   <string name="pref_clearHistory_title">Előzmények törlése</string>
-  <string name="pref_clearHistory_summary">Minden társalgás előzményének törlése. Ez a művelet nem vonható vissza.</string>
   <string name="pref_persistNotification_title">Fut a háttérben</string>
   <string name="pref_persistNotification_summary">A háttérben futó hívások és üzenetek fogadása engedélyezett.</string>
 </resources>

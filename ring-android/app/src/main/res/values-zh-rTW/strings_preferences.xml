@@ -19,7 +19,6 @@
   <string name="pref_startOnBoot_title">開機時啟動 Jami</string>
   <string name="pref_startOnBoot_summary">開機時在背景啟動 Jami</string>
   <string name="pref_clearHistory_title">清除記錄</string>
-  <string name="pref_clearHistory_summary">清除所有的對話記錄，這個動作無法被復原。</string>
   <string name="pref_persistNotification_title">在背景執行</string>
   <string name="pref_persistNotification_summary">允許在背景中執行以接收通話與訊息。</string>
 </resources>

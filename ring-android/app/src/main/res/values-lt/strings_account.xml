@@ -151,6 +151,7 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_end_export_button">užverti</string>
   <string name="account_end_export_infos">Jūsų PIN yra:\n\n%%\n\nNorėdami užbaigti procesą, turite atverti Jami naujame įrenginyje. Susikurkite paskyrą, naudodami \"Susieti šį įrenginį su paskyra\". Jūsų PIN galioja 10 minučių.</string>
   <string name="account_export_title">Pridėti įrenginius</string>
+  <string name="account_connect_prompt_username">Naudotojo vardas</string>
   <!--Name registration-->
   <string name="error_username_empty">Įveskite naudotojo vardą</string>
   <string name="no_registered_name_for_account">Šiai paskyrai nerasta jokio registruoto vardo</string>

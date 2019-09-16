@@ -148,6 +148,7 @@
   <string name="account_end_export_infos">Ваш PIN-код:\n\n%%\n\nЩоб завершити, відкрийте Джамі на іншому пристрої. Створіть обліковий запис через «Прив\'язати інший пристрій до облікового запису». Ваш PIN-код дійсний протягом 10 хвилин.</string>
   <string name="account_link_export_info_light">Для використання цього облікового запису на інших пристроях, вам необхідно надати доступ до нього в Джамі. При цьому буде згенеровано PIN-код, який вам необхідно буде ввести на іншому пристрої, щоб налаштувати обліковий запис. PIN-код дійсний протягом 10 хвилин.</string>
   <string name="account_export_title">Додати пристрої</string>
+  <string name="account_connect_prompt_username">Ім’я</string>
   <!--Name registration-->
   <string name="error_username_empty">Ввести ім\'я користувача</string>
   <string name="no_registered_name_for_account">Не знайдено зареєстрованого імені для цього облікового запису</string>

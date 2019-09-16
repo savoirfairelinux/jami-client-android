@@ -158,6 +158,7 @@ Du kan ändra kontot senare.</string>
   <string name="account_end_export_infos">Din PIN-kod är:\n\n%%\n\nFör att slutföra processen måste du starta Jami på den nya enheten. Skapa ett nytt konto med \"Koppla denna enhet till ett konto\". Din PIN-kod är giltig i 10 minuter.</string>
   <string name="account_link_export_info_light">För att använda detta konto på en annan enhet, måste du först exponera det på Jami. Detta genererar en PIN-kod som du måste ange på den nya enheten för att öppna kontot. Pin-koden är giltig i 10 minuter.</string>
   <string name="account_export_title">Lägg till enheter</string>
+  <string name="account_connect_prompt_username">Användarnamn</string>
   <!--Name registration-->
   <string name="error_username_empty">Ange ett användarnamn</string>
   <string name="no_registered_name_for_account">Inget registrerat namn hittades för detta konto</string>

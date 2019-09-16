@@ -19,7 +19,6 @@
   <string name="pref_startOnBoot_title">Avvia Jami all\'avvio</string>
   <string name="pref_startOnBoot_summary">Esegui Jami in background all\'avvio del sistema.</string>
   <string name="pref_clearHistory_title">Elimina cronologia</string>
-  <string name="pref_clearHistory_summary">Elimina la cronologia delle conversazioni. Questa operazione non può essere annullata.</string>
   <string name="pref_persistNotification_title">Esegui in background</string>
   <string name="pref_persistNotification_summary">Consenti l\'esecuzione in background per ricevere chiamate e messaggi.</string>
 </resources>
