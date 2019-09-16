@@ -61,10 +61,6 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
     ViewGroup mGroupPushNotifications;
     @BindView(R.id.settings_push_notifications)
     Switch mViewPushNotifications;
-    /*@BindView(R.id.settings_contacts)
-    Switch mViewContacts;
-    @BindView(R.id.settings_place_call)
-    Switch mViewPlaceCall;*/
     @BindView(R.id.settings_startup)
     Switch mViewStartup;
     @BindView(R.id.settings_persistNotification)
@@ -115,58 +111,17 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
     }
 
     @OnCheckedChanged({
-        R.id.settings_push_notifications,
-        /*R.id.settings_contacts,
-        R.id.settings_place_call,*/
         R.id.settings_startup,
         R.id.settings_persistNotification
     })
     public void onSettingsCheckedChanged(CompoundButton button, boolean isChecked) {
-        saveSettings();
-
-        /*String neededPermission = null;
-
-        if (isChecked) {
-            switch (button.getId()) {
-                case R.id.settings_contacts:
-                    neededPermission = Manifest.permission.READ_CONTACTS;
-                    break;
-                case R.id.settings_place_call:
-                    neededPermission = Manifest.permission.WRITE_CALL_LOG;
-                    break;
-                default:
-                    neededPermission = null;
-                    break;
-            }
-        }
-
-        // No specific permission needed but we known that user as triggered un settings change
-        if (TextUtils.isEmpty(neededPermission) && !mIsRefreshingViewFromPresenter) {
+        if (!mIsRefreshingViewFromPresenter)
             saveSettings();
-            return;
-        }
-
-        // Some specific permissions are required, we must check for them
-        if (!TextUtils.isEmpty(neededPermission)) {
-            if (ContextCompat.checkSelfPermission(getActivity(), neededPermission) != PackageManager.PERMISSION_GRANTED) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    //~ Ask permission to use the contacts of the device
-                    if (((RingApplication) getActivity().getApplication()).canAskForPermission(neededPermission)) {
-                        requestPermissions(new String[]{neededPermission}, RingApplication.PERMISSIONS_REQUEST);
-                    }
-                }
-            } else if (!mIsRefreshingViewFromPresenter) {
-                // permission is already granted
-                saveSettings();
-            }
-        }*/
     }
 
     private void saveSettings() {
         Settings newSettings = new Settings();
 
-        /*newSettings.setAllowSystemContacts(mViewContacts.isChecked());
-        newSettings.setAllowPlaceSystemCalls(mViewPlaceCall.isChecked());*/
         newSettings.setAllowRingOnStartup(mViewStartup.isChecked());
         newSettings.setAllowPushNotifications(mViewPushNotifications.isChecked());
         newSettings.setAllowPersistentNotification(mViewPersistNotif.isChecked());
@@ -182,53 +137,6 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
             activity.goToVideoSettings();
         }
     }
-
-    @OnClick(R.id.settings_clear_history)
-    public void onClearHistoryClick() {
-        new MaterialAlertDialogBuilder(getActivity())
-                .setTitle(getString(R.string.clear_history_dialog_title))
-                .setMessage(getString(R.string.clear_history_dialog_message))
-                .setPositiveButton(android.R.string.ok, (dialog, id) -> {
-
-                    // ask the presenter to clear history
-                    presenter.clearHistory();
-
-                    Snackbar.make(getView(),
-                            getString(R.string.clear_history_completed),
-                            Snackbar.LENGTH_SHORT).show();
-                })
-                .setNegativeButton(android.R.string.cancel, (dialog, id) -> {
-                    //~ Empty
-                })
-                .show();
-    }
-
-    /*
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String permissions[],
-                                           @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        for (int i = 0, n = permissions.length; i < n; ++i) {
-            if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-                String permission = permissions[i];
-                ((RingApplication) getActivity().getApplication()).permissionHasBeenAsked(permission);
-                switch (permission) {
-                    case Manifest.permission.READ_CONTACTS:
-                        mViewContacts.setChecked(false);
-                        presentReadContactPermissionExplanationToast();
-                        break;
-                    case Manifest.permission.WRITE_CALL_LOG:
-                        mViewPlaceCall.setChecked(false);
-                        presentWriteCallLogPermissionExplanationToast();
-                        break;
-                }
-            }
-        }
-
-        saveSettings();
-    }
-    */
 
     /**
      * Presents a Toast explaining why the Read Contacts permission is required to display the devi-
@@ -259,8 +167,6 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         mIsRefreshingViewFromPresenter = true;
         mViewPushNotifications.setChecked(viewModel.isAllowPushNotifications());
         mViewPersistNotif.setChecked(viewModel.isAllowPersistentNotification());
-        /*mViewContacts.setChecked(viewModel.isAllowSystemContacts());
-        mViewPlaceCall.setChecked(viewModel.isAllowPlaceSystemCalls());*/
         mViewStartup.setChecked(viewModel.isAllowRingOnStartup());
         mIsRefreshingViewFromPresenter = false;
     }
