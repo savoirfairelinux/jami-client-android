@@ -98,7 +98,8 @@ public enum ConfigKey {
     PROXY_ENABLED("Account.proxyEnabled"),
     PROXY_SERVER("Account.proxyServer"),
     PROXY_PUSH_TOKEN("Account.proxyPushToken"),
-    MANAGER_URI("Account.managerUri");
+    MANAGER_URI("Account.managerUri"),
+    MANAGER_USERNAME("Account.managerUsername");
 
     private static final Set<ConfigKey> TWO_STATES = new HashSet<>(Arrays.asList(
             ACCOUNT_ENABLE,
