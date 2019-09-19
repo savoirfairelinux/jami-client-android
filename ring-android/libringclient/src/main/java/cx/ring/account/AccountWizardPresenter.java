@@ -76,12 +76,14 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
                 .map(accountDetails -> {
                     if (!StringUtils.isEmpty(accountCreationModel.getManagementServer())) {
                         accountDetails.put(ConfigKey.MANAGER_URI.key(), accountCreationModel.getManagementServer());
+                        if (!StringUtils.isEmpty(accountCreationModel.getUsername())) {
+                            accountDetails.put(ConfigKey.MANAGER_USERNAME.key(), accountCreationModel.getUsername());
+                        }
+                    } else if (!StringUtils.isEmpty(accountCreationModel.getUsername())) {
+                        accountDetails.put(ConfigKey.ACCOUNT_USERNAME.key(), accountCreationModel.getUsername());
                     }
                     if (!StringUtils.isEmpty(accountCreationModel.getPassword())) {
                         accountDetails.put(ConfigKey.ARCHIVE_PASSWORD.key(), accountCreationModel.getPassword());
-                    }
-                    if (!StringUtils.isEmpty(accountCreationModel.getPassword())) {
-                        accountDetails.put(ConfigKey.ACCOUNT_USERNAME.key(), accountCreationModel.getUsername());
                     }
                     if (accountCreationModel.isPush()) {
                         accountDetails.put(ConfigKey.PROXY_ENABLED.key(), AccountConfig.TRUE_STR);
