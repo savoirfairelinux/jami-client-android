@@ -27,6 +27,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
     tools:showIn="@layout/frag_acc_summary">
 
     <LinearLayout
+        android:id="@+id/layout_add_device"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"

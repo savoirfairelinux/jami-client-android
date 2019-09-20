@@ -99,6 +99,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     tools:text="ring:8F29045378ACA68F2ACA2346078ACA68F2ACA290" />
 
                 <LinearLayout
+                    android:id="@+id/layout_account_options"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

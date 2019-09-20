@@ -52,6 +52,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.LinearLayout;
 
 import java.io.File;
 import java.util.Map;
@@ -110,8 +111,17 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     @BindView(R.id.account_id_txt)
     TextView mAccountIdTxt;
 
+    @BindView(R.id.layout_account_options)
+    LinearLayout mAccountOptionsLayout;
+
     @BindView(R.id.change_password_btn)
     Button mChangePasswordBtn;
+
+    @BindView(R.id.layout_add_device)
+    LinearLayout mAddAccountLayout;
+
+    @BindView(R.id.export_account_btn)
+    Button mExportButton;
 
     @BindView(R.id.registered_name_txt)
     TextView mAccountUsernameTxt;
@@ -146,6 +156,7 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     private DeviceAdapter mDeviceAdapter;
     private ProgressDialog mWaitDialog;
     private boolean mAccountHasPassword = true;
+    private boolean mAccountHasManager = true;
     private String mBestName = "";
     private String mAccountId = "";
     private File mCacheArchive = null;
@@ -207,6 +218,7 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
         mDeviceList.setLayoutParams(par);
         mDeviceList.requestLayout();
         mAccountHasPassword = account.hasPassword();
+        mAccountHasManager = account.hasManager();
 
         mChangePasswordBtn.setText(mAccountHasPassword ? R.string.account_password_change : R.string.account_password_set);
 
@@ -258,6 +270,8 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
         mAccountStatus.setChipBackgroundColorResource(color);
 
         mPasswordLayout.setVisibility(mAccountHasPassword ? View.VISIBLE : View.GONE);
+        mAddAccountLayout.setVisibility(mAccountHasManager ? View.GONE : View.VISIBLE);
+        mAccountOptionsLayout.setVisibility(mAccountHasManager ? View.GONE : View.VISIBLE);
     }
 
     /*

@@ -402,6 +402,10 @@ public class Account {
         return mDetails.getBool(ConfigKey.ARCHIVE_HAS_PASSWORD);
     }
 
+    public boolean hasManager() {
+        return !mDetails.get(ConfigKey.MANAGER_URI).isEmpty();
+    }
+
     public HashMap<String, String> getDetails() {
         return mDetails.getAll();
     }
