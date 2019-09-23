@@ -22,18 +22,18 @@ along with this program; if not, write to the Free Software
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context=".account.AccountWizardActivity">
 
     <cx.ring.views.BoundedLinearLayout
-        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|center_vertical"
         android:animateLayoutChanges="false"
         android:descendantFocusability="beforeDescendants"
         android:focusableInTouchMode="true"
         android:orientation="vertical"
-        app:bounded_width="320dp"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content">
+        app:bounded_width="320dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -51,39 +51,11 @@ along with this program; if not, write to the Free Software
                     android:id="@+id/imageView6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_margin="16dp"
                     android:contentDescription="@string/app_name"
                     app:srcCompat="@drawable/ic_logo_48" />
-
-                <TextView
-                    android:id="@+id/ring_acc_title_txt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_toStartOf="@+id/imageView6"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:paddingTop="24dp"
-                    android:text="@string/ring_account"
-                    android:textColor="@color/textColorPrimary"
-                    android:textSize="24sp" />
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/ring_acc_title_txt"
-                    android:paddingBottom="24dp"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:paddingTop="16dp"
-                    android:text="@string/account_migration"
-                    android:textColor="@color/textColorPrimary"
-                    android:textSize="14sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -94,28 +66,54 @@ along with this program; if not, write to the Free Software
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
                         app:passwordToggleEnabled="true">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/ring_password"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
-                            android:hint="@string/prompt_password"
-                            android:imeOptions="actionNext"
-                            android:inputType="textPassword" />
+                            android:hint="@string/account_enter_password"
+                            android:imeOptions="actionDone"
+                            android:inputType="textPassword"  />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/ring_migrate_btn"
                         style="@style/Widget.MaterialComponents.Button.TextButton.Dialog.Flush"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:text="@string/update_account" />
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/update_account"/>
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ring_acc_title_txt"
+                    android:layout_alignParentStart="true"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="24dp"
+                    android:text="@string/account_migration"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/ring_acc_title_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_toStartOf="@+id/imageView6"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="24dp"
+                    android:paddingRight="16dp"
+                    android:text="@string/ring_account"
+                    android:textSize="24sp" />
 
             </RelativeLayout>
 
