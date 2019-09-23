@@ -105,6 +105,7 @@ public class AccountView extends RecyclerView.ViewHolder {
 
         if (account.isEnabled()) {
             alias.setTextColor(context.getResources().getColor(R.color.textColorPrimary));
+            host.setTextColor(context.getResources().getColor(R.color.textColorPrimary));
             if (!account.isActive()) {
                 error.setImageResource(R.drawable.baseline_sync_disabled_24);
                 error.setColorFilter(Color.BLACK);
