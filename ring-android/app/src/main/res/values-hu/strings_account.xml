@@ -67,6 +67,8 @@
   <string name="account_ringtone_enabled_label">Csengőhangok aktiválása</string>
   <string name="account_ringtone_path_label">Csengőhang útvonal</string>
   <string name="account_ringtone_custom_label">Egyéni csengőhang használata</string>
+  <string name="account_ringtone_title">Csengőhang kiválasztása</string>
+  <string name="account_ringtone_summary">Csengőhang tallózása</string>
   <!--Video Details-->
   <string name="account_video_label">Videó</string>
   <string name="account_video_enable">Videó engedélyezése</string>
@@ -158,6 +160,8 @@
   <string name="account_end_export_infos">A PIN-kódja:\n\n%%\n\nA folyamat befejezéséhez meg kell nyitnia a Jami-t az új eszközön. Hozzon létre egy új fiókot az „Eszköz összekapcsolása egy fiókhoz” opcióval. A PIN-kódja 10 percig érvényes.</string>
   <string name="account_link_export_info_light">Ha ezt a fiókot más eszközökön szeretné használni, először meg kell jeleníteni a Jami-n. Ez létrehoz egy PIN-kódot, amelyet meg kell adnia az új eszközön a fiók beállításához. A PIN-kód 10 percig érvényes.</string>
   <string name="account_export_title">Eszközök hozzáadása</string>
+  <string name="account_connect_button">Kapcsolódás</string>
+  <string name="account_connect_prompt_username">Felhasználónév</string>
   <!--Name registration-->
   <string name="error_username_empty">Felhasználónév megadása</string>
   <string name="no_registered_name_for_account">Nincs bejegyzett név talált erre a fiókra</string>

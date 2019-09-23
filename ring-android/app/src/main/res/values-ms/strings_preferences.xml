@@ -9,5 +9,4 @@
   <string name="pref_systemContacts_title">Gunakan buku kenalan sistem</string>
   <string name="pref_systemContacts_summary">Gunakan buku kenalan sistem untuk memaparkan maklumat pemanggil</string>
   <string name="pref_clearHistory_title">Padamkan sejarah</string>
-  <string name="pref_clearHistory_summary">Padamkan semua sejarah perbualan. Aksi ini tidak akan dapat dibuat ulang.</string>
 </resources>

@@ -67,6 +67,8 @@
   <string name="account_ringtone_enabled_label">啟用鈴聲</string>
   <string name="account_ringtone_path_label">鈴聲路徑</string>
   <string name="account_ringtone_custom_label">使用自訂鈴聲</string>
+  <string name="account_ringtone_title">變更鈴聲</string>
+  <string name="account_ringtone_summary">選取鈴聲或選擇您自己的</string>
   <!--Video Details-->
   <string name="account_video_label">視訊</string>
   <string name="account_video_enable">啟用視訊</string>
@@ -147,6 +149,7 @@
   <string name="account_sip_success_title">SIP 帳號已註冊</string>
   <string name="account_sip_success_message">您已成功註冊您的 SIP 帳號。</string>
   <string name="account_sip_register_anyway">無論如何都要註冊</string>
+  <string name="account_link_device">從其他裝置連線</string>
   <string name="account_link_button">從網路連線</string>
   <string name="account_link_archive_button">從備份連線</string>
   <string name="account_link_prompt_pin">輸入 PIN 碼</string>
@@ -158,6 +161,12 @@
   <string name="account_end_export_infos">您的 PIN 碼是：\n\n%%\n\n要完成過程，您需要在新裝置上開啟 Jami。以「連結這個裝置到一個帳號」來建立新帳號。您的 PIN 碼在 10 分鐘內有效。</string>
   <string name="account_link_export_info_light">要在其他裝置上使用這個帳號，您必須先在 Jami 上揭露它。這將會生成一個您必須在新裝置上輸入以設定帳號的 PIN 碼。PIN 碼在 10 分鐘內有效。</string>
   <string name="account_export_title">新增裝置</string>
+  <string name="account_connect_server_button">連線到管理伺服器</string>
+  <string name="account_connect_button">連線</string>
+  <string name="prompt_server">Jami 管理伺服器 URL</string>
+  <string name="help_credentials_enter">輸入您的組織憑證</string>
+  <string name="help_connect_password_enter">輸入您的組織密碼</string>
+  <string name="account_connect_prompt_username">使用者名稱</string>
   <!--Name registration-->
   <string name="error_username_empty">輸入使用者名稱</string>
   <string name="no_registered_name_for_account">找不到這個帳號已註冊的名稱</string>

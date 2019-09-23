@@ -7,6 +7,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Добавить аккаунт Jami</string>
   <string name="add_sip_account_title">Добавить аккаунт SIP </string>
+  <string name="ring_account_default_name">Учетная запись Jami %1$s</string>
   <string name="prompt_alias">Псевдоним</string>
   <string name="prompt_hostname">Имя узла</string>
   <string name="prompt_username">Имя пользователя</string>
@@ -66,6 +67,8 @@
   <string name="account_ringtone_enabled_label">Активировать мелодии звонка</string>
   <string name="account_ringtone_path_label">Путь к мелодиям звонка</string>
   <string name="account_ringtone_custom_label">Использовать другую мелодию звонка</string>
+  <string name="account_ringtone_title">Выбор мелодии звонка</string>
+  <string name="account_ringtone_summary">Выберите мелодию звонка или установите собственную</string>
   <!--Video Details-->
   <string name="account_video_label">Видео</string>
   <string name="account_video_enable">Включить видео</string>
@@ -146,16 +149,24 @@
   <string name="account_sip_success_title">SIP-аккаунт зарегистрирован</string>
   <string name="account_sip_success_message">Вы успешно зарегистрировали свой SIP-аккаунт.</string>
   <string name="account_sip_register_anyway">Все равно зарегистрироваться</string>
+  <string name="account_link_device">Подключиться с другого устройства</string>
   <string name="account_link_button">Подключение из сети</string>
+  <string name="account_link_archive_button">Подключиться из резервной копии</string>
   <string name="account_link_prompt_pin">Введите PIN</string>
   <string name="account_new_button">Создать учётную запись Jami</string>
   <string name="account_link_export_button">Привязать другое устройство к этому аккаунту</string>
   <string name="account_link_export_info">Чтобы использовать этот аккаунт на других устройствах, вам необходимо сначала скопировать его в сеть Jami. При этом будет сгенерирован PIN-код, который вы должны будете ввести на новом устройстве для установки аккаунта. PIN-код действителен в течение 10 минут.</string>
   <string name="account_start_export_button">Сгенерировать PIN</string>
   <string name="account_end_export_button">закрыть</string>
-  <string name="account_end_export_infos">Ваш PIN:\n\n%%\n\nДля завершения процесса нужно открыть Jami на новом устройстве и выбрать \"Привязать это устройство к аккаунту\". Ваш PIN действителен в течение 10 минут.</string>
+  <string name="account_end_export_infos">Ваш PIN:\n\n%%\n\nДля завершения процесса откройте Jami на новом устройстве и выберите «Привязать это устройство к аккаунту». Ваш PIN действителен в течение 10 минут.</string>
   <string name="account_link_export_info_light">Чтобы использовать этот аккаунт на других устройствах, вам необходимо сначала скопировать его в сеть Jami. При этом будет сгенерирован PIN-код, который вы должны будете ввести на новом устройстве для установки аккаунта. PIN-код действителен в течение 10 минут.</string>
   <string name="account_export_title">Добавить устройства</string>
+  <string name="account_connect_server_button">Подключиться к управляющему серверу</string>
+  <string name="account_connect_button">Соединение</string>
+  <string name="prompt_server">URL управляющего сервера Jami</string>
+  <string name="help_credentials_enter">Введите учетные данные вашей организации</string>
+  <string name="help_connect_password_enter">Введите пароль вашей организации</string>
+  <string name="account_connect_prompt_username">Имя пользователя</string>
   <!--Name registration-->
   <string name="error_username_empty">Введите имя пользователя</string>
   <string name="no_registered_name_for_account">Не найдено зарегистрированного имени для этого аккаунта</string>

@@ -9,6 +9,8 @@
   <string name="pref_mobileData_summary">除了 Wi-Fi 之外，允許 Jami 在 3G/LTE 網路上使用</string>
   <string name="pref_pushNotifications_title">推播通知</string>
   <string name="pref_pushNotifications_summary">使用 Google 的伺服器以讓您可以在背景收到通話／訊息</string>
+  <string name="pref_video_advanced_title">進階視訊設定</string>
+  <string name="pref_video_advanced_summary">變更視訊位元率、解析度並存取實驗性功能</string>
   <string name="pref_hd_summary">啟用傳送高畫質視訊</string>
   <string name="pref_hwEncode_title">啟用加速編碼</string>
   <string name="pref_hwEncode_summary">實驗性功能</string>
@@ -19,7 +21,7 @@
   <string name="pref_startOnBoot_title">開機時啟動 Jami</string>
   <string name="pref_startOnBoot_summary">開機時在背景啟動 Jami</string>
   <string name="pref_clearHistory_title">清除記錄</string>
-  <string name="pref_clearHistory_summary">清除所有的對話記錄，這個動作無法被復原。</string>
+  <string name="pref_clearHistory_summary">清除所有對話歷史。此動作無法復原。</string>
   <string name="pref_persistNotification_title">在背景執行</string>
   <string name="pref_persistNotification_summary">允許在背景中執行以接收通話與訊息。</string>
 </resources>

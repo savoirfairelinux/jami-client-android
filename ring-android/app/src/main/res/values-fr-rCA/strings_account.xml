@@ -134,6 +134,7 @@ Vous pourrez modifier votre compte plus tard.</string>
   <string name="account_start_export_button">Générer le NIP</string>
   <string name="account_end_export_button">fermer</string>
   <string name="account_export_title">ajouter un périphérique </string>
+  <string name="account_connect_prompt_username">Nom d\'utilisateur</string>
   <!--Name registration-->
   <string name="error_username_empty">Entrer le nom d\'utilisateur</string>
   <string name="no_registered_name_for_account">Aucun nom enregistré trouvé pour ce compte</string>

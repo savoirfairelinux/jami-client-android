@@ -108,6 +108,7 @@ Anda masih akan dapat mengubah maklumat akaun anda pada masa hadapan</string>
   <string name="account_link_prompt_pin">Masukkan PIN</string>
   <string name="account_link_export_button">Sambungkan perangkat lain dengan akaun ini</string>
   <string name="account_end_export_button">tutup</string>
+  <string name="account_connect_prompt_username">Nama pengguna</string>
   <!--Name registration-->
   <string name="error_username_empty">Masukkan nama pengguna</string>
   <string name="no_registered_name_for_account">Tiada nama berdaftar dengan akaun ini ditemui</string>

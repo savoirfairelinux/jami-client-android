@@ -127,6 +127,7 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_start_export_button">Genera PIN</string>
   <string name="account_end_export_button">chiudi</string>
   <string name="account_export_title">Aggiungi dispositivi</string>
+  <string name="account_connect_prompt_username">Nome utente</string>
   <!--Name registration-->
   <string name="error_username_empty">Inserisci un nome utente</string>
   <string name="username_already_taken">Nome utente già utilizzato</string>

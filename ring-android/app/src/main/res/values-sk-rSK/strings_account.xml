@@ -158,6 +158,7 @@
   <string name="account_end_export_infos">Váš PIN je:\n\n%%\n\nNa dokončenie procesu je potrebné otvoriť aplikáciu Jami na novom zariadení. Vytvorte nový účet pomocou \"Prepojiť toto zariadenie s iným účtom\". Váš PIN bude funkčný 10 minút.</string>
   <string name="account_link_export_info_light">Aby ste mohli tento účet používať na viacerých zariadeniach, musíte ho najprv sprístupniť na Jami. Vygeneruje sa PIN kód, ktorý je potrebný zadať na novom zariadení. Tento kód bude funkčný 10 minút.</string>
   <string name="account_export_title">Pridať zariadenia</string>
+  <string name="account_connect_prompt_username">Používateľské meno</string>
   <!--Name registration-->
   <string name="error_username_empty">Zadajte používateľské meno</string>
   <string name="no_registered_name_for_account">Pre tento účet nebolo nájdené zaregistrované meno</string>

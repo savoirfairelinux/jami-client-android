@@ -135,6 +135,7 @@ Du kan rette din konto senere</string>
   <string name="account_start_export_button">Generer PIN</string>
   <string name="account_end_export_button">luk</string>
   <string name="account_export_title">Tilføj enheder</string>
+  <string name="account_connect_prompt_username">Brugernavn</string>
   <!--Name registration-->
   <string name="error_username_empty">Indtast et brugernavn</string>
   <string name="no_registered_name_for_account">Intet registreret navn fundet for denne konto</string>

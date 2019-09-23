@@ -15,9 +15,12 @@
   <string name="license">Ce logiciel est offert \"tel quel\", sans aucune garantie. Pour plus d\'informations,  voir <u>GNU General Public License version 3 or later</u></string>
   <string name="description">Jami est un logiciel libre de communication universel qui respecte la vie privée et l\'intimité de ses utilisateurs.</string>
   <string name="credits">Crédits</string>
+  <string name="call_service_description">Ce service est nécessaire pour que vos appels continuent de fonctionner en arrière-plan. Il ne fonctionne que pendant les appels.</string>
+  <string name="data_transfer_service_description">Ce service est nécessaire pour afficher les notifications persistantes pendant un transfert de fichier. Il ne fonctionne que pendant le transfert de fichiers.</string>
   <!--About dialog-->
   <string name="developed_by">Développé par</string>
   <string name="designed_by">Conçu par</string>
+  <string name="ringtones_by">Sonneries d\'appels réalisées par </string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Jami</string>
   <string name="error_no_network">Pas d\'accès au réseau</string>
@@ -117,7 +120,9 @@
   <string name="ringtone_error_title">Erreur</string>
   <string name="ringtone_error_format_not_supported">Ce format de fichier n\'est pas supporté.</string>
   <string name="ringtone_error_size_too_big">Le fichier est trop grand. La taille maximum est %1$d kB.</string>
+  <string name="ringtone_custom_prompt">Choisir une sonnerie d\'appel</string>
   <string name="ringtone_custom_label">Personnalisé</string>
+  <string name="ringtone_jami_tones">Sonneries Jami</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Jami a besoin de votre autorisation pour lire vos contacts. Autorisez Jami, svp.</string>
   <!--Write call log permission-->

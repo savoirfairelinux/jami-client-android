@@ -52,6 +52,7 @@
   <string name="account_export_end_network_title">Σφάλμα δικτύου</string>
   <string name="account_export_end_error_title">Σφάλμα</string>
   <string name="account_link_export_button">Σύνδεση μιας άλλης συσκευής σε αυτόν το λογαριασμό</string>
+  <string name="account_connect_prompt_username">Όνομα χρήστη</string>
   <!--Name registration-->
   <string name="username_already_taken">Το όνομα χρήστη ήδη χρησιμοποιείται</string>
   <string name="invalid_username">Μη έγκυρο όνομα χρήστη</string>

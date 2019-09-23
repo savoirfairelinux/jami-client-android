@@ -11,5 +11,4 @@
   <string name="pref_systemContacts_title">Usar contactos del sistema</string>
   <string name="pref_systemContacts_summary">Usar contactos del sistema para mostrar detalles del interlocutor</string>
   <string name="pref_clearHistory_title">Borrar historial</string>
-  <string name="pref_clearHistory_summary">Borra todo el historial de conversaciones. Esta acción no se puede deshacer.</string>
 </resources>

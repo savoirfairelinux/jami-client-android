@@ -126,6 +126,7 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="account_sip_register_anyway">Registre de totes maneres</string>
   <string name="account_link_prompt_pin">Introdueix PIN</string>
   <string name="account_end_export_button">tanca</string>
+  <string name="account_connect_prompt_username">Nom d\'usuari</string>
   <!--Name registration-->
   <string name="register_name">Registrar nom</string>
   <string name="username_already_taken">Nom d\'usuari ja registrat.</string>

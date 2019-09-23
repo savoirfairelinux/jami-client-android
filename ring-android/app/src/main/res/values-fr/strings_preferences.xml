@@ -9,6 +9,8 @@
   <string name="pref_mobileData_summary">Autoriser Jami sur les réseaux mobiles en plus du Wi-fi.</string>
   <string name="pref_pushNotifications_title">Notifications poussées</string>
   <string name="pref_pushNotifications_summary">Utiliser les serveurs Google pour permettre de recevoir des appels et des messages en arrière plan.</string>
+  <string name="pref_video_advanced_title">Paramètres vidéos avancés</string>
+  <string name="pref_video_advanced_summary">Modifier le débit vidéo, la résolution et d\'autres fonctionnalités expérimentales</string>
   <string name="pref_hd_summary">Activer l\'envoi de vidéo HD</string>
   <string name="pref_hwEncode_title">Activer l\'encodage matériel</string>
   <string name="pref_hwEncode_summary">Fonctionnalité expérimentale</string>
@@ -19,7 +21,7 @@
   <string name="pref_startOnBoot_title">Lancer Jami au démarrage de la session</string>
   <string name="pref_startOnBoot_summary">Lancer Jami en arrière plan au démarrage de l\'appareil.</string>
   <string name="pref_clearHistory_title">Effacer l\'historique</string>
-  <string name="pref_clearHistory_summary">Effacer les historiques de conversation. L\'action est irréversible.</string>
+  <string name="pref_clearHistory_summary">Effacer tous les historiques de conversation. L\'action est irréversible.</string>
   <string name="pref_persistNotification_title">Fonctionne en arrière-plan</string>
   <string name="pref_persistNotification_summary">Permet de fonctionner en arrière-plan pour recevoir des appels ou des messages</string>
 </resources>

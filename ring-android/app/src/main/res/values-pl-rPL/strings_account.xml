@@ -139,6 +139,7 @@ Możesz edytować swoje konto później</string>
   <string name="account_start_export_button">Generuj PIN</string>
   <string name="account_end_export_button">zamknij</string>
   <string name="account_export_title">Dodaj urządzenia</string>
+  <string name="account_connect_prompt_username">Nazwa użytkownika</string>
   <!--Name registration-->
   <string name="error_username_empty">Wprowadź nazwę użytkownika</string>
   <string name="no_registered_name_for_account">Nie znaleziono żadnej nazwy zarejestrowanej dla tego konta </string>

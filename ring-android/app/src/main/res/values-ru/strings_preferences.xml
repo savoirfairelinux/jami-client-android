@@ -9,6 +9,8 @@
   <string name="pref_mobileData_summary">Разрешить Jami использовать 3G/LTE сети в дополнение к Wi-Fi</string>
   <string name="pref_pushNotifications_title">Push-уведомления</string>
   <string name="pref_pushNotifications_summary">Использовать серверы Google для получения вызовов/сообщений в фоновом режиме</string>
+  <string name="pref_video_advanced_title">Дополнительные настройки видео</string>
+  <string name="pref_video_advanced_summary">Изменение разрешения и битрейта видео, доступ к экспериментальным функциям</string>
   <string name="pref_hd_summary">Разрешить отправку видео высокого разрешения</string>
   <string name="pref_hwEncode_title">Включить аппаратное кодирование</string>
   <string name="pref_hwEncode_summary">Экспериментальная опция</string>

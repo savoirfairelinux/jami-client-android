@@ -8,5 +8,4 @@
   <string name="pref_mobileData_title">Données mobiles</string>
   <string name="pref_systemContacts_title">Utiliser les contacts du système</string>
   <string name="pref_clearHistory_title">Effacer l\'historique</string>
-  <string name="pref_clearHistory_summary">Effacer l\'historique des conversations. L\'action est irréversible.</string>
 </resources>

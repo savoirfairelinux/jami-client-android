@@ -12,5 +12,4 @@
   <string name="pref_systemContacts_title">Brug systemkontakter</string>
   <string name="pref_systemContacts_summary">Brug systemkontakter til at vise opkaldsdetaljer</string>
   <string name="pref_clearHistory_title">Ryd historiken</string>
-  <string name="pref_clearHistory_summary">Ryd al samtale-historik. Denne handling kan ikke fortrydes.</string>
 </resources>

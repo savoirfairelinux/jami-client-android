@@ -152,6 +152,7 @@
   <string name="account_end_export_infos">پین شما:\n\n%%\n\nبرای کامل کردن فرایند، باید جمی را روی افزارهٔ نو گشوده و حساب جدیدی را با انتخاب «پیوند این افزاره به یک حساب» ایجاد کنید. پینتان برای ۱۰ دقیقه معتبر است.</string>
   <string name="account_link_export_info_light">برای استفاده از این حساب روی افزاره‌های دیگر، باید نخست آن را روی جمی آشکار کنید. این کار یک رمز پین تولید خواهد کرد که باید برای برپایی حساب، روی افزارهٔ نو وارد کنید. پین تا ۱۰ دقیقه معتبر است.</string>
   <string name="account_export_title">اضافه کردن دستگاه ها</string>
+  <string name="account_connect_prompt_username">نام کاربری</string>
   <!--Name registration-->
   <string name="error_username_empty">یک نام کاربری وارد کنید</string>
   <string name="no_registered_name_for_account">هیچ نام ثبت‌شده‌ای برای این حساب پیدا نشد</string>

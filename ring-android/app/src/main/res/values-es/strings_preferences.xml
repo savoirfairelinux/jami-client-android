@@ -19,7 +19,6 @@
   <string name="pref_startOnBoot_title">Ejecutar Jami al inicio</string>
   <string name="pref_startOnBoot_summary">Ejecutar Jami en segundo plano cuando se inicie el sistema.</string>
   <string name="pref_clearHistory_title">Limpiar historial</string>
-  <string name="pref_clearHistory_summary">Limpiar todo el historial de conversaciones. Esta acción no se puede deshacer.</string>
   <string name="pref_persistNotification_title">Ejecutar en segundo plano</string>
   <string name="pref_persistNotification_summary">Permite ejecutar en segundo plano para recibir llamadas y mensajes.</string>
 </resources>

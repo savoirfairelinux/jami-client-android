@@ -89,6 +89,7 @@
   <string name="export_account_wait_title">Bonvole atendu…</string>
   <string name="account_export_end_network_title">Reta eraro</string>
   <string name="account_export_end_error_title">Eraro</string>
+  <string name="account_connect_prompt_username">Uzantnomo</string>
   <!--Name registration-->
   <string name="username_already_taken">Uzantnomo jam prenita</string>
   <string name="invalid_username">Nevalida uzantnomo</string>

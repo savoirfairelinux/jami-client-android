@@ -138,6 +138,7 @@ Du kan endre kontoen din senere</string>
   <string name="account_start_export_button">Oppretter PIN</string>
   <string name="account_end_export_button">lukk</string>
   <string name="account_export_title">Legg til enheter</string>
+  <string name="account_connect_prompt_username">Brukernavn</string>
   <!--Name registration-->
   <string name="error_username_empty">Skriv inn et brukernavn</string>
   <string name="no_registered_name_for_account">Fant inget registrert navn for denne kontoen</string>

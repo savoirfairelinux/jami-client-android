@@ -9,6 +9,8 @@
   <string name="pref_mobileData_summary">A Jami engedélyezése 3G/LTE és Wi-Fi hálózatokon</string>
   <string name="pref_pushNotifications_title">Leküldéses értesítések</string>
   <string name="pref_pushNotifications_summary">Használja a Google kiszolgálóit a háttérben lévő hívások és üzenetek fogadásához</string>
+  <string name="pref_video_advanced_title">Részletes videó beállításai</string>
+  <string name="pref_video_advanced_summary">Videó bitsebesség és felbontás módosítása. Kísérleti jellemzők elérése.</string>
   <string name="pref_hd_summary">Engedélyezze a HD videó küldését</string>
   <string name="pref_hwEncode_title">Gyorsított kódolás engedélyezése</string>
   <string name="pref_hwEncode_summary">Kísérleti jellemző</string>

@@ -154,6 +154,7 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_end_export_infos">Il tuo PIN è: \ n \ n%%\ n\nPer completare la procedura, è necessario aprire Jami sul nuovo dispositivo. Crea un nuovo account con \"Collega questo dispositivo a un account\". Il tuo PIN è valido per 10 minuti.</string>
   <string name="account_link_export_info_light">Per utilizzare questo account su altri dispositivi, devi prima esporlo su Jami. Questo sarà un codice che devi configurare. Il PIN è valido per 10 minuti.</string>
   <string name="account_export_title">Aggiungi dispositivi</string>
+  <string name="account_connect_prompt_username">Utente</string>
   <!--Name registration-->
   <string name="error_username_empty">Inserire un nome utente</string>
   <string name="no_registered_name_for_account">Nessun nome registrato è stato trovato per questo account</string>

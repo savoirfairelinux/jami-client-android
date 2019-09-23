@@ -88,6 +88,7 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_no_network_title">No se puede conectar a la red</string>
   <string name="account_link_prompt_pin">Introducir PIN</string>
   <string name="account_link_export_button">Vincular otro dispositivo a esta cuenta</string>
+  <string name="account_connect_prompt_username">Nombre de usuario</string>
   <!--Name registration-->
   <string name="account_status_connecting">Conectando</string>
   <string name="account_status_unknown">Desconocido</string>

@@ -36,6 +36,7 @@
   <!--SIP-->
   <!--TLS Details-->
   <!--restore/backup-->
+  <string name="account_connect_prompt_username">使用者名</string>
   <!--Name registration-->
   <string name="account_status_unknown">未知</string>
   <!--Create account-->

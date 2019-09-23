@@ -90,6 +90,7 @@ Moćete urediti vaš račun kasnije</string>
   <string name="account_no_network_title">Ne mogu se spojiti na mrežu</string>
   <string name="account_link_prompt_pin">Unesite PIN</string>
   <string name="account_new_button">Napravite Jami račun</string>
+  <string name="account_connect_prompt_username">Korisničko ime</string>
   <!--Name registration-->
   <string name="account_status_connecting">Spajanje</string>
   <string name="account_status_unknown">Nepoznato</string>

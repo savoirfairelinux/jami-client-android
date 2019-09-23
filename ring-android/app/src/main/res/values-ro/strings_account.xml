@@ -52,6 +52,7 @@
   <!--restore/backup-->
   <string name="export_account_wait_title">Așteptați vă rog...</string>
   <string name="account_export_end_error_title">Eroare</string>
+  <string name="account_connect_prompt_username">Nume de utilizator</string>
   <!--Name registration-->
   <string name="account_status_unknown">Necunoscut</string>
   <!--Create account-->

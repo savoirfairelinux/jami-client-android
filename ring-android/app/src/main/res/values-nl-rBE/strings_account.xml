@@ -67,6 +67,8 @@ U kunt uw account later bewerken</string>
   <string name="account_ringtone_enabled_label">Beltonen inschakelen</string>
   <string name="account_ringtone_path_label">Beltoonpad</string>
   <string name="account_ringtone_custom_label">Eigen beltoon gebruiken</string>
+  <string name="account_ringtone_title">Kies een beltoon</string>
+  <string name="account_ringtone_summary">Selecteer een beltoon of kies uw eigen beltoon</string>
   <!--Video Details-->
   <string name="account_video_label">Video</string>
   <string name="account_video_enable">Video inschakelen</string>
@@ -158,6 +160,7 @@ U kunt uw account later bewerken</string>
   <string name="account_end_export_infos">Uw pincode is:\n\n%%\n\nOm het proces te voltooien opent u Jami op het nieuwe apparaat. Maak een nieuwe account aan met ‘Dit apparaat aan een account koppelen’. Uw pincode is 10 minuten geldig.</string>
   <string name="account_link_export_info_light">Om deze account op andere apparaten te gebruiken moet u deze eerst op Ring blootstellen. Er zal een pincode gegenereerd worden die u op het nieuwe apparaat ingeeft om de account in te stellen. De pincode is 10 minuten geldig.</string>
   <string name="account_export_title">Apparaten toevoegen</string>
+  <string name="account_connect_prompt_username">Gebruikersnaam</string>
   <!--Name registration-->
   <string name="error_username_empty">Geef een gebruikersnaam in</string>
   <string name="no_registered_name_for_account">Geen geregistreerde naam gevonden voor deze account</string>

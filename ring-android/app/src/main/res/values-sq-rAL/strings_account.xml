@@ -160,6 +160,7 @@
   <string name="account_end_export_infos">PIN-i juaj është:\n\n%%\n\nQë të plotësohet procesi, lypset të hapni Jami-n në pajisjen e re. Krijoni një llogari të re përmes \"Lidhe këtë pajisje te një llogari\". PIN-i juaj është i vlefshëm për 10 minuta.</string>
   <string name="account_link_export_info_light">Që të përdorni këtë llogari në pajisje të tjera, së pari duhet t\ia ekspozoni atë Jami-t. Kështu do të prodhohet një kod PIN që duhet ta jepni te pajisja e re për të rregulluar llogarinë. PIN-i vlen për 10 minuta.</string>
   <string name="account_export_title">Shtoni pajisje</string>
+  <string name="account_connect_prompt_username">Emër përdoruesi</string>
   <!--Name registration-->
   <string name="error_username_empty">Jepni një emër përdoruesi</string>
   <string name="no_registered_name_for_account">S\’u gjet emër i regjistruar për këtë llogari</string>

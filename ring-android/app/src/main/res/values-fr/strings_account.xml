@@ -67,6 +67,8 @@ Vous pouvez modifier le compte plus tard.</string>
   <string name="account_ringtone_enabled_label">Activer les sonneries</string>
   <string name="account_ringtone_path_label">Sonnerie</string>
   <string name="account_ringtone_custom_label">Utiliser une sonnerie personnalisée</string>
+  <string name="account_ringtone_title">Choisissez une sonnerie</string>
+  <string name="account_ringtone_summary">Sélectionnez une sonnerie ou choisissez une sonnerie personnelle</string>
   <!--Video Details-->
   <string name="account_video_label">Vidéo</string>
   <string name="account_video_enable">Activer la vidéo</string>
@@ -147,6 +149,7 @@ Vous pouvez modifier le compte plus tard.</string>
   <string name="account_sip_success_title">Compte SIP enregistré</string>
   <string name="account_sip_success_message">Compte SIP enregistré avec succès</string>
   <string name="account_sip_register_anyway">Poursuivre l\'inscription</string>
+  <string name="account_link_device">Se connecter à partir d\'un autre appareil</string>
   <string name="account_link_button">Se connecter à partir d\'un réseau</string>
   <string name="account_link_archive_button">Se Connecter à partir d\'une sauvegarde</string>
   <string name="account_link_prompt_pin">Entrer votre NIP</string>
@@ -158,6 +161,12 @@ Vous pouvez modifier le compte plus tard.</string>
   <string name="account_end_export_infos">Votre NIP est:\n\n%%\n\nPour terminer le processus, vous devez ouvrir Ring sur un autre appareil puis créer un nouveau compte avec \"Lier cet appareil à un compte\".  Votre NIP est utilisable pendant 10 minutes.</string>
   <string name="account_link_export_info_light">Pour utiliser ce compte sur un autre appareil, vous devez d\'abord l\'exposer sur Jami. Ceci générera un NIP que vous devrez entrer sur le nouvel appareil pour configurer le compte. Le NIP sera valable pendant 10 minutes. </string>
   <string name="account_export_title">Ajoutez des appareils</string>
+  <string name="account_connect_server_button">Se connecter à partir d\'un serveur d\'entreprise</string>
+  <string name="account_connect_button">Se connecter</string>
+  <string name="prompt_server">Adresse du serveur de gestion de parc Jami</string>
+  <string name="help_credentials_enter">Entrer votre nom d\'utilisateur d\'entreprise</string>
+  <string name="help_connect_password_enter">Entrer le mot de passe</string>
+  <string name="account_connect_prompt_username">Nom d\'utilisateur</string>
   <!--Name registration-->
   <string name="error_username_empty">Entrer un nom d\'utilisateur</string>
   <string name="no_registered_name_for_account">Aucun nom n\'a été trouvé pour ce compte.</string>

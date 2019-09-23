@@ -19,7 +19,6 @@
   <string name="pref_startOnBoot_title">ਸਿਸਟਮ ਸ਼ੁਰੂ ਹੋਣ \'ਤੇ Jami ਸ਼ੁਰੂ ਕਰੋ</string>
   <string name="pref_startOnBoot_summary">ਸਿਸਟਮ ਸ਼ੁਰੂ ਹੋਣ \'ਤੇ Jami ਨੂੰ ਬੈਕਗ੍ਰਾਊਂਡ ਵਿੱਚ ਚਲਾਓ।</string>
   <string name="pref_clearHistory_title">ਇਤਿਹਾਸ ਮਿਟਾਓ</string>
-  <string name="pref_clearHistory_summary">ਸਾਰਾ ਗੱਲਬਾਤ ਇਤਿਹਾਸ ਮਿਟਾਓ। ਇਸ ਕਾਰਵਾਈ ਨੂੰ ਅਣਕੀਤਾ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ।</string>
   <string name="pref_persistNotification_title">ਬੈਕਗ੍ਰਾਊਂਡ ਵਿੱਚ ਚਲਾਓ</string>
   <string name="pref_persistNotification_summary">ਕਾਲਾਂ ਅਤੇ ਸੁਨੇਹੇ ਲੈਣ ਲਈ ਬੈਕਗ੍ਰਾਊਂਡ ਵਿੱਚ ਚੱਲਣ ਦਿਓ।</string>
 </resources>

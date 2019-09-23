@@ -11,5 +11,4 @@
   <string name="pref_systemContacts_title">Usa contactes del sistema</string>
   <string name="pref_systemContacts_summary">Usa contactes del sistema per mostrar detalls del que truca</string>
   <string name="pref_clearHistory_title">Neteja historial</string>
-  <string name="pref_clearHistory_summary">Neteja totes les converses de l\'historial. Aquesta acció no pot desfer-se.</string>
 </resources>

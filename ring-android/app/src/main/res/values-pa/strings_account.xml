@@ -158,6 +158,7 @@
   <string name="account_end_export_infos">ਤੁਹਾਡਾ ਪਿੰਨ:\n\n%%\n\nਸੈੱਟਅੱਪ ਪੂਰਾ ਕਰਨ ਲਈ, ਤੁਹਾਨੂੰ ਨਵੇਂ ਡੀਵਾਈਸ \'ਤੇ Jami ਖੋਲ੍ਹਣ ਦੀ ਲੋੜ ਹੈ। \"ਇਸ ਡੀਵਾਈਸ ਨੂੰ ਕਿਸੇ ਖਾਤੇ ਨਾਲ ਲਿੰਕ ਕਰੋ\" ਨਾਲ ਨਵਾਂ ਖਾਤਾ ਬਣਾਓ। ਤੁਹਾਡਾ ਪਿੰਨ 10 ਮਿੰਟਾਂ ਲਈ ਵੈਧ ਰਹਿੰਦਾ ਹੈ।</string>
   <string name="account_link_export_info_light">ਹੋਰਾਂ ਡੀਵਾਈਸਾਂ \'ਤੇ ਇਹ ਖਾਤਾ ਵਰਤਣ ਲਈ, ਤੁਹਾਨੂੰ ਪਹਿਲਾਂ Jami \'ਤੇ ਇਸਨੂੰ ਨਿਰਯਾਤ ਕਰਨਾ ਪਵੇਗਾ। ਇੰਝ ਕਰਨ ਨਾਲ ਪਿੰਨ ਕੋਡ ਸਿਰਜਿਆ ਜਾਵੇਗਾ ਜਿਸਨੂੰ ਤੁਹਾਨੂੰ ਖਾਤੇ ਦੇ ਸੈੱਟਅੱਪ ਵੇਲੇ ਨਵੇਂ ਡੀਵਾਈਸ \'ਤੇ ਦਾਖਲ ਕਰਨਾ ਪਵੇਗਾ। ਪਿੰਨ 10 ਮਿੰਟਾਂ ਲਈ ਵੈਧ ਰਹਿੰਦਾ ਹੈ।</string>
   <string name="account_export_title">ਡੀਵਾਈਸ ਸ਼ਾਮਲ ਕਰੋ</string>
+  <string name="account_connect_prompt_username">ਵਰਤੋਂਕਾਰ ਨਾਂ</string>
   <!--Name registration-->
   <string name="error_username_empty">ਵਰਤੋਂਕਾਰ ਨਾਂ ਦਾਖਲ ਕਰੋ</string>
   <string name="no_registered_name_for_account">ਇਸ ਖਾਤੇ ਲਈ ਕੋਈ ਪੰਜੀਕਿਰਤ ਨਾਂ ਨਹੀਂ ਮਿਲਿਆ</string>

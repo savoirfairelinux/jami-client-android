@@ -9,5 +9,4 @@
   <string name="pref_systemContacts_title">استخدام جهات إتصال النظام</string>
   <string name="pref_systemContacts_summary">استخدام جهات إتصال النظام لإظهار تفاصيل المتصل</string>
   <string name="pref_clearHistory_title">مسح السجل</string>
-  <string name="pref_clearHistory_summary">مسح كل سجل المحادثات، هذا الإختيار لايمكن التراجع عنه</string>
 </resources>

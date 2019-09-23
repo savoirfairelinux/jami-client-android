@@ -16,6 +16,7 @@
   <string name="description">Jami 是一套通用通訊的自由軟體，其尊重使用者的自由與隱私。</string>
   <string name="credits">榮譽</string>
   <string name="call_service_description">此服務是為了讓您的通話保持在前景執行所需。它只會在通話期間執行。</string>
+  <string name="data_transfer_service_description">此服務是在檔案傳輸期間顯示持續通知所必須。其僅在檔案傳輸時執行。</string>
   <!--About dialog-->
   <string name="developed_by">開發由</string>
   <string name="designed_by">設計由</string>
@@ -118,7 +119,9 @@
   <string name="ringtone_error_title">錯誤</string>
   <string name="ringtone_error_format_not_supported">不支援此格式。</string>
   <string name="ringtone_error_size_too_big">這個檔案太大了。最大的大小為 %1$d kB。</string>
+  <string name="ringtone_custom_prompt">設定自訂鈴聲</string>
   <string name="ringtone_custom_label">自訂</string>
+  <string name="ringtone_jami_tones">Jami 鈴聲</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Jami 需要「讀取聯絡人」權限以啟用此功能。請給予它。</string>
   <!--Write call log permission-->
@@ -163,6 +166,7 @@
   <string name="prompt_new_username">輸入新使用者名稱</string>
   <string name="help_password_choose">選擇您可以記住用來保護您的 Jami 帳號的強式密碼。</string>
   <string name="help_password_enter">輸入您的主要 Jami 帳號密碼</string>
+  <string name="help_server_enter">輸入管理伺服器的 URL</string>
   <string name="help_pin_enter">輸入從其他已設定 Jami 帳號的 PIN 碼。使用「在 Jami 上匯出帳號」功能來取得 PIN 碼。</string>
   <string name="wizard_next">下一個</string>
   <string name="wizard_back">前一個</string>
@@ -180,6 +184,7 @@
   <string name="share_label">分享</string>
   <string name="generic_error_migration">錯誤</string>
   <string name="generic_error_migration_message">在導入時遇到錯誤</string>
+  <string name="title_share_with">分享於……</string>
   <!--Pending contact requests-->
   <string name="accept">接聽</string>
   <string name="refuse">拒覺</string>
@@ -199,6 +204,7 @@
   <!--Smartlist-->
   <string name="no_contact_request">未有送出的聯絡人請求</string>
   <string name="contact_request_sent">聯絡人請求已傳送</string>
+  <string name="start_conversation">開啟對話</string>
   <string name="search_results">搜尋結果</string>
   <string name="tv_contact_row_header">聯絡人</string>
   <string name="gallery_error_title">找不到相簿應用程式</string>
@@ -230,4 +236,6 @@
   <string name="menu_message_delete">刪除訊息</string>
   <string name="menu_message_cancel">取消訊息</string>
   <string name="menu_delete">刪除</string>
+  <string name="pref_darkTheme_title">深色主題</string>
+  <string name="pref_darkTheme_summary">總是啟用深色主題而非系統行為</string>
 </resources>

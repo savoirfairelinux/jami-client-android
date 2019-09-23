@@ -19,7 +19,6 @@
   <string name="pref_startOnBoot_title">Jami\'yi başlangıçta başlat</string>
   <string name="pref_startOnBoot_summary">Sistem başladığında Jami\'yi arkaplanda çalıştır.</string>
   <string name="pref_clearHistory_title">Geçmişi temizle</string>
-  <string name="pref_clearHistory_summary">Konuşma geçmişini temizle. Bu eylem geri alınamaz.</string>
   <string name="pref_persistNotification_title">Arkaplanda çalıştır</string>
   <string name="pref_persistNotification_summary">Arka planda çalışan çağrı  ve iletileri almak için izin ver</string>
 </resources>
