@@ -718,8 +718,10 @@ public class CameraService {
                 tmpReader = ImageReader.newInstance(videoParams.width, videoParams.height, ImageFormat.YUV_420_888, 8);
                 tmpReader.setOnImageAvailableListener(r -> {
                     Image image = r.acquireLatestImage();
-                    if (image != null)
+                    if (image != null) {
                         RingserviceJNI.captureVideoFrame(image, videoParams.rotation);
+                        image.close();
+                    }
                 }, handler);
                 targets.add(tmpReader.getSurface());
             }
