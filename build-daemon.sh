@@ -164,9 +164,6 @@ mkdir -p contrib/${TARGET_TUPLE}/lib/pkgconfig
 cd $DAEMON_DIR/contrib/native-${TARGET_TUPLE}
 ../bootstrap --host=${TARGET_TUPLE} --disable-libav --enable-ffmpeg --disable-speexdsp
 
-# Always strip symbols for libring.so remove it if you want to debug the daemon
-STRIP_ARG="-s "
-
 EXTRA_CFLAGS="${EXTRA_CFLAGS} -DNDEBUG -fPIC -fno-integrated-as"
 EXTRA_CXXFLAGS="${EXTRA_CXXFLAGS} -DNDEBUG -fPIC"
 EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${SYSROOT}/usr/${LIBDIR}"
@@ -250,7 +247,7 @@ STATIC_LIBS_ALL="-llog -lOpenSLES -landroid \
                 -lssl -lcrypto \
                 -lavformat -lavdevice -lavfilter -lavcodec -lswresample -lswscale -lavutil \
                 -lyaml-cpp -ljsoncpp -lhttp_parser -lfmt\
-                -luuid -lz \
+                -luuid -lz -ldl \
                 -lvpx -lopus -lspeex -lx264 \
                 -largon2 \
                 -liconv"
@@ -260,6 +257,10 @@ LIBRING_JNI_DIR=${ANDROID_APP_DIR}/app/src/main/libs/${ANDROID_ABI}
 echo "Building Ring JNI library for Android to ${LIBRING_JNI_DIR}"
 mkdir -p ${LIBRING_JNI_DIR}
 
+# Always strip symbols for libring.so remove it if you want to debug the daemon
+#STRIP_ARG="-s "
+
+# Use a shared libc++_shared.so (shared by jami and all other plugins)
 ${NDK_TOOLCHAIN_PATH}/clang++ \
                 --shared \
                 -Wall -Wextra \
@@ -268,7 +269,6 @@ ${NDK_TOOLCHAIN_PATH}/clang++ \
                 -Wno-unused-parameter \
                 ${JNIDIR}/ring_wrapper.cpp \
                 ${RING_BUILD_DIR}/src/.libs/libring.a \
-                -static-libstdc++ \
                 -isystem ${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/include \
                 -I${RING_SRC_DIR}/src \
                 -L${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/lib \

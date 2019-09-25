@@ -237,6 +237,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     tools:visibility="visible" />
 
                 <cx.ring.views.CheckableImageButton
+                    android:id="@+id/call_plugin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:background="@drawable/call_button_background"
+                    android:contentDescription="@string/action_load_plugin"
+                    android:onClick="@{() -> presenter.loadPlugin()}"
+                    android:padding="16dp"
+                    android:tint="@color/white"
+                    app:srcCompat="@drawable/baseline_android_24"
+                    tools:visibility="visible" />
+
+                <cx.ring.views.CheckableImageButton
                     android:id="@+id/call_speaker_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
