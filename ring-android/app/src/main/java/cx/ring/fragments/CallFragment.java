@@ -1094,6 +1094,10 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                         .putExtra(KEY_CONF_ID, conferenceId),
                 CallFragment.REQUEST_CODE_ADD_PARTICIPANT);
     }
+    public void loadPlugin() {
+        presenter.loadPlugin();
+
+    }
 
     @Override
     public void positiveMediaButtonClicked() {
