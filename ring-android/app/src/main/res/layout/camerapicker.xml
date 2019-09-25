@@ -17,7 +17,7 @@
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/action_call_decline"
         android:padding="16dp"
-        app:backgroundTint="@color/holo_green_dark"
+        app:backgroundTint="@color/green_500"
         app:rippleColor="@android:color/white"
         app:srcCompat="@drawable/baseline_photo_camera_24"
         app:useCompatPadding="true" />

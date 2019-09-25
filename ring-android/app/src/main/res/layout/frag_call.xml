@@ -178,7 +178,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:contentDescription="@string/action_call_accept"
                     android:onClick="@{() -> presenter.acceptClicked()}"
                     android:visibility="gone"
-                    app:backgroundTint="#4caf50"
+                    app:backgroundTint="@color/green_500"
                     app:elevation="6dp"
                     app:fabSize="normal"
                     app:pressedTranslationZ="12dp"

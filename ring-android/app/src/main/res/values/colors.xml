@@ -32,11 +32,6 @@
 
     <color name="transparent_light">#AAFFFFFF</color>
 
-    <!-- A light Holo shade of red -->
-    <color name="holo_red_light">#ffff4444</color>
-    <!-- A dark Holo shade of green -->
-    <color name="holo_green_dark">#ff669900</color>
-
     <color name="transparent_grey">#AACCCCCC</color>
     <color name="transparent_dark_grey">#88424242</color>
 
