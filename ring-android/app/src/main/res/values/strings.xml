@@ -142,6 +142,7 @@ along with this program; if not, write to the Free Software
     <string name="action_call_accept">Take call</string>
     <string name="action_call_decline">Decline</string>
     <string name="action_call_mic_mute">Mute microphone</string>
+    <string name="action_load_plugin">Load Plugin</string>
     <string name="ab_action_speakerphone">Enable speaker</string>
     <string name="ab_action_contact_add">Add to contacts</string>
     <string name="ab_action_contact_add_question">Add to contacts?</string>
