@@ -208,7 +208,7 @@ STATIC_LIBS_ALL="-llog -lOpenSLES -landroid \
                 -lssl -lcrypto \
                 -lavformat -lavdevice -lavfilter -lavcodec -lswresample -lswscale -lavutil \
                 -lyaml-cpp -ljsoncpp -lhttp_parser -lfmt\
-                -luuid -lz \
+                -luuid -lz -ldl \
                 -lvpx -lopus -lspeex -lspeexdsp -lx264 \
                 -largon2 \
                 -liconv -larchive"
@@ -218,6 +218,7 @@ LIBRING_JNI_DIR=${ANDROID_APP_DIR}/app/src/main/libs/${ANDROID_ABI}
 echo "Building Jami JNI library for Android to ${LIBRING_JNI_DIR}"
 mkdir -p ${LIBRING_JNI_DIR}
 
+# Use a shared libc++_shared.so (shared by jami and all other plugins)
 ${NDK_TOOLCHAIN_PATH}/clang++ \
                 --shared \
                 -Wall -Wextra \
@@ -226,7 +227,6 @@ ${NDK_TOOLCHAIN_PATH}/clang++ \
                 -Wno-unused-parameter \
                 ${JNIDIR}/ring_wrapper.cpp \
                 ${DAEMON_BUILD_DIR}/src/.libs/libring.a \
-                -static-libstdc++ \
                 -isystem ${DAEMON_DIR}/contrib/${TARGET_TUPLE}/include \
                 -I${DAEMON_DIR}/src \
                 -L${DAEMON_DIR}/contrib/${TARGET_TUPLE}/lib \
