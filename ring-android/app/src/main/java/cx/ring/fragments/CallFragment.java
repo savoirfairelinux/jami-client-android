@@ -818,6 +818,10 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         presenter.switchVideoInputClick();
     }
 
+    public void loadPlugin() {
+        presenter.loadPlugin();
+    }
+
     @Override
     public void positiveMediaButtonClicked() {
         presenter.positiveButtonClicked();

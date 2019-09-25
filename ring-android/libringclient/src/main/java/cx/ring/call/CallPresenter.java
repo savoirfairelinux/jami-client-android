@@ -25,6 +25,7 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import cx.ring.daemon.RingserviceJNI;
 import cx.ring.model.SipCall;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
@@ -61,6 +62,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     private int videoHeight = -1;
     private int previewWidth = -1;
     private int previewHeight = -1;
+    private boolean plugin = false;
 
     private Disposable timeUpdateTask = null;
 
@@ -228,6 +230,18 @@ public class CallPresenter extends RootPresenter<CallView> {
 
         mHardwareService.switchInput(mSipCall.getCallId(), false);
         getView().switchCameraIcon(mHardwareService.isPreviewFromFrontCamera());
+    }
+
+    public void loadPlugin() {
+        plugin = !plugin;
+
+        String path = "/data/user/0/cx.ring/files/plugins/libmmotplugin.so";
+        if(plugin) {
+            RingserviceJNI.loadPlugin(path);
+        } else {
+
+            RingserviceJNI.unloadPlugin(path);
+        }
     }
 
     public void configurationChanged(int rotation) {
