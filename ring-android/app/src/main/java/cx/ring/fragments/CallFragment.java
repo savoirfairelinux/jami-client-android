@@ -997,6 +997,10 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                         .setClass(requireActivity(), ConversationSelectionActivity.class)
                         .putExtra(KEY_CONF_ID, conferenceId),
                 CallFragment.REQUEST_CODE_ADD_PARTICIPANT);
+                
+    public void loadPlugin() {
+        presenter.loadPlugin();
+
     }
 
     @Override

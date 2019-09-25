@@ -31,6 +31,7 @@ import javax.inject.Named;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
+import cx.ring.daemon.RingserviceJNI;
 import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
@@ -75,7 +76,9 @@ public class CallPresenter extends RootPresenter<CallView> {
     private int videoHeight = -1;
     private int previewWidth = -1;
     private int previewHeight = -1;
+
     private String currentSurfaceId = null;
+    private boolean plugin = false;
 
     private Disposable timeUpdateTask = null;
 
@@ -258,12 +261,17 @@ public class CallPresenter extends RootPresenter<CallView> {
         getView().switchCameraIcon(mHardwareService.isPreviewFromFrontCamera());
     }
 
-    /*public void addParticipantClick() {
-        if(mSipCall == null)
-            return;
+    public void loadPlugin() {
+        plugin = !plugin;
 
-        getView().launchAddParti
-    }*/
+        String path = "/data/user/0/cx.ring/files/plugins/libmmotplugin.so";
+        if(plugin) {
+            RingserviceJNI.loadPlugin(path);
+        } else {
+
+            RingserviceJNI.unloadPlugin(path);
+        }
+    }
 
     public void configurationChanged(int rotation) {
         mHardwareService.setDeviceOrientation(rotation);
