@@ -116,6 +116,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     private MenuItem mAudioCallBtn = null;
     private MenuItem mVideoCallBtn = null;
 
+    private View currentBottomView = null;
     private ConversationAdapter mAdapter = null;
     private NumberAdapter mNumberAdapter = null;
     private int marginPx;
@@ -177,8 +178,8 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     private void updateListPadding() {
-        if (binding.msgInputTxt.getHeight() != 0)
-            setBottomPadding(binding.histList, binding.msgInputTxt.getHeight() + marginPxTotal);
+        if (currentBottomView != null && currentBottomView.getHeight() != 0)
+            setBottomPadding(binding.histList, currentBottomView.getHeight() + marginPxTotal);
     }
 
     @Nullable
@@ -262,7 +263,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             } else {
                 if (animation.isStarted())
                     animation.cancel();
-                animation.setIntValues(binding.histList.getPaddingBottom(), binding.msgInputTxt.getHeight() + marginPxTotal);
+                animation.setIntValues(binding.histList.getPaddingBottom(), (currentBottomView == null ? 0 : currentBottomView.getHeight()) + marginPxTotal);
                 animation.start();
             }
         });
@@ -731,7 +732,9 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         binding.trustRequestPrompt.setVisibility(View.GONE);
         binding.tvTrustRequestMessage.setText(String.format(getString(R.string.message_contact_not_trusted), contactDisplayName));
         binding.trustRequestMessageLayout.setVisibility(View.VISIBLE);
+        currentBottomView = binding.unknownContactPrompt;
         requireActivity().invalidateOptionsMenu();
+        updateListPadding();
     }
 
     @Override
@@ -741,7 +744,9 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         binding.trustRequestPrompt.setVisibility(View.VISIBLE);
         binding.tvTrustRequestMessage.setText(String.format(getString(R.string.message_contact_not_trusted_yet), contactDisplayName));
         binding.trustRequestMessageLayout.setVisibility(View.VISIBLE);
+        currentBottomView = binding.trustRequestPrompt;
         requireActivity().invalidateOptionsMenu();
+        updateListPadding();
     }
 
     @Override
@@ -750,7 +755,9 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         binding.unknownContactPrompt.setVisibility(View.GONE);
         binding.trustRequestPrompt.setVisibility(View.GONE);
         binding.trustRequestMessageLayout.setVisibility(View.GONE);
+        currentBottomView = binding.cvMessageInput;
         requireActivity().invalidateOptionsMenu();
+        updateListPadding();
     }
 
     @Override
