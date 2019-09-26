@@ -208,6 +208,23 @@ public class AndroidFileUtils {
         return File.createTempFile(imageFileName, ".jpg", context.getExternalCacheDir());
     }
 
+    public static File createAudioFile(@NonNull Context context) throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
+        String imageFileName = "audio_" + timeStamp + "_";
+
+        // Save a file: path for use with ACTION_VIEW intents
+        return File.createTempFile(imageFileName, ".mp3", context.getExternalCacheDir());
+    }
+    public static File createVideoFile(@NonNull Context context) throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
+        String imageFileName = "video_" + timeStamp + "_";
+
+        // Save a file: path for use with ACTION_VIEW intents
+        return File.createTempFile(imageFileName, ".webm", context.getExternalCacheDir());
+    }
+
     public static @NonNull Single<File> getCacheFile(@NonNull Context context, @NonNull Uri uri) {
         ContentResolver contentResolver = context.getContentResolver();
         File cacheDir = context.getCacheDir();

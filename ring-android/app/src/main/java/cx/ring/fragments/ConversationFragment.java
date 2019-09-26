@@ -21,7 +21,6 @@ package cx.ring.fragments;
 
 import android.Manifest;
 import android.animation.ValueAnimator;
-import android.app.DownloadManager;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.Context;
@@ -51,6 +50,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.MenuBuilder;
+import androidx.appcompat.view.menu.MenuPopupHelper;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.core.content.FileProvider;
 import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -89,6 +91,7 @@ import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.MediaButtonsHelper;
 import io.reactivex.Completable;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -111,6 +114,8 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     private static final int REQUEST_PERMISSION_CAMERA = 1001;
     private static final int REQUEST_CODE_TAKE_PICTURE = 1002;
     private static final int REQUEST_CODE_SAVE_FILE = 1003;
+    private static final int REQUEST_CODE_CAPTURE_AUDIO = 1004;
+    private static final int REQUEST_CODE_CAPTURE_VIDEO = 1005;
 
     private FragConversationBinding binding;
     private MenuItem mAudioCallBtn = null;
@@ -324,6 +329,55 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         presenter.selectFile();
     }
 
+    public void expandMenu(View v) {
+        Context context = requireContext();
+        PopupMenu popup = new PopupMenu(context, v);
+        popup.inflate(R.menu.conversation_share_actions);
+        popup.setOnMenuItemClickListener(item -> {
+            switch(item.getItemId()) {
+                case R.id.conv_send_audio: {
+                    Intent intent = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
+                    if (intent.resolveActivity(context.getPackageManager()) != null) {
+                        try {
+                            mCurrentPhoto = AndroidFileUtils.createAudioFile(context);
+                        } catch (IOException ex) {
+                            Log.e(TAG, "takePicture: error creating temporary file", ex);
+                            break;
+                        }
+                        //intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, mCurrentPhoto));
+                        startActivityForResult(intent, REQUEST_CODE_CAPTURE_AUDIO);
+                    } else {
+                        Toast.makeText(getActivity(), "Can't find audio recorder app", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                }
+                case R.id.conv_send_video: {
+                    Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+                    if (intent.resolveActivity(context.getPackageManager()) != null) {
+                        try {
+                            mCurrentPhoto = AndroidFileUtils.createVideoFile(context);
+                        } catch (IOException ex) {
+                            Log.e(TAG, "takePicture: error creating temporary file", ex);
+                            break;
+                        }
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, mCurrentPhoto));
+                        startActivityForResult(intent, REQUEST_CODE_CAPTURE_VIDEO);
+                    } else {
+                        Toast.makeText(getActivity(), "Can't find video recorder app", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                }
+                case R.id.conv_send_file:
+                    selectFile();
+                    break;
+            }
+            return false;
+        });
+        MenuPopupHelper menuHelper = new MenuPopupHelper(context, (MenuBuilder) popup.getMenu(), v);
+        menuHelper.setForceShowIcon(true);
+        menuHelper.show();
+    }
+
     /**
      * Used to update with the past adapter position when a long click was registered
      * @param position
@@ -402,18 +456,29 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             startFileSend(AndroidFileUtils.getCacheFile(requireContext(), uri)
                     .observeOn(AndroidSchedulers.mainThread())
                     .flatMapCompletable(this::sendFile));
-        } else if (requestCode == REQUEST_CODE_TAKE_PICTURE) {
+        } else if (requestCode == REQUEST_CODE_TAKE_PICTURE
+                || requestCode == REQUEST_CODE_CAPTURE_AUDIO
+                || requestCode == REQUEST_CODE_CAPTURE_VIDEO) {
             if (resultCode != RESULT_OK) {
                 mCurrentPhoto = null;
                 return;
             }
             Log.w(TAG, "onActivityResult: mCurrentPhoto " + mCurrentPhoto.getAbsolutePath() + " " + mCurrentPhoto.exists() + " " + mCurrentPhoto.length());
+            Single<File> file = null;
             if (mCurrentPhoto == null || !mCurrentPhoto.exists() || mCurrentPhoto.length() == 0) {
-                Toast.makeText(getActivity(), "Can't find picture", Toast.LENGTH_SHORT).show();
+                android.net.Uri createdUri = resultData.getData();
+                if (createdUri != null) {
+                    file = AndroidFileUtils.getCacheFile(requireContext(), createdUri);
+                }
+            } else {
+                file = Single.just(mCurrentPhoto);
             }
-            File file = mCurrentPhoto;
             mCurrentPhoto = null;
-            startFileSend(sendFile(file));
+            if (file == null) {
+                Toast.makeText(getActivity(), "Can't find picture", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            startFileSend(file.flatMapCompletable(this::sendFile));
         }
         // File download trough SAF
         else if(requestCode == ConversationFragment.REQUEST_CODE_SAVE_FILE
@@ -780,11 +845,9 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             return;
         if (isLoading) {
             binding.btnTakePicture.setVisibility(View.GONE);
-            binding.sendData.setVisibility(View.GONE);
             binding.pbDataTransfer.setVisibility(View.VISIBLE);
         } else {
             binding.btnTakePicture.setVisibility(View.VISIBLE);
-            binding.sendData.setVisibility(View.VISIBLE);
             binding.pbDataTransfer.setVisibility(View.GONE);
         }
     }

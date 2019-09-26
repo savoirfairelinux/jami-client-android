@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item
+        android:id="@+id/conv_send_audio"
+        android:icon="@drawable/baseline_mic_24"
+        android:title="@string/conversation_send_audio"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/conv_send_video"
+        android:icon="@drawable/baseline_videocam_24"
+        android:title="@string/conversation_send_video"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+
+    <item
+        android:id="@+id/conv_send_file"
+        android:icon="@drawable/baseline_attach_file_24"
+        android:title="@string/send_file"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+</menu>
