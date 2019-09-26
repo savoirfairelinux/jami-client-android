@@ -124,6 +124,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:text="@string/pref_video_advanced_title" />
 
                     <TextView
+                        style="@style/ListSecondary"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/pref_video_advanced_summary" />
@@ -289,6 +290,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:text="@string/pref_systemDialer_title" />
 
                     <TextView
+                        style="@style/ListSecondary"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/pref_systemDialer_summary" />
@@ -339,6 +341,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:text="@string/pref_startOnBoot_title" />
 
                     <TextView
+                        style="@style/ListSecondary"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/pref_startOnBoot_summary" />
@@ -391,6 +394,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:text="@string/pref_persistNotification_title" />
 
                     <TextView
+                        style="@style/ListSecondary"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/pref_persistNotification_summary" />
@@ -447,6 +451,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_toEndOf="@+id/system_clear_history_image"/>
 
                 <TextView
+                    style="@style/ListSecondary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/pref_clearHistory_summary"
