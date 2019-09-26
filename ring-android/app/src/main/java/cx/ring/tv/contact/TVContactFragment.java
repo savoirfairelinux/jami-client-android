@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2019 Savoir-faire Linux Inc.
  *
  *  Author: Hadrien De Sousa <hadrien.desousa@savoirfairelinux.com>
  *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
@@ -20,6 +20,8 @@
  */
 package cx.ring.tv.contact;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -82,8 +84,9 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
     }
 
     private void prepareBackgroundManager() {
-        BackgroundManager mBackgroundManager = BackgroundManager.getInstance(getActivity());
-        mBackgroundManager.attach(getActivity().getWindow());
+        Activity activity = requireActivity();
+        BackgroundManager mBackgroundManager = BackgroundManager.getInstance(activity);
+        mBackgroundManager.attach(activity.getWindow());
     }
 
     private void setupAdapter() {
@@ -93,15 +96,18 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
                         new TVContactDetailPresenter(),
                         new DetailsOverviewLogoPresenter());
 
-        detailsPresenter.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.color_primary_dark));
+        detailsPresenter.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.color_primary_dark));
         detailsPresenter.setInitialState(FullWidthDetailsOverviewRowPresenter.STATE_HALF);
 
         // Hook up transition element.
-        FullWidthDetailsOverviewSharedElementHelper mHelper = new FullWidthDetailsOverviewSharedElementHelper();
-        mHelper.setSharedElementEnterTransition(getActivity(), TVContactActivity.SHARED_ELEMENT_NAME);
-        detailsPresenter.setListener(mHelper);
-        detailsPresenter.setParticipatingEntranceTransition(false);
-        prepareEntranceTransition();
+        Activity activity = getActivity();
+        if (activity != null) {
+            FullWidthDetailsOverviewSharedElementHelper mHelper = new FullWidthDetailsOverviewSharedElementHelper();
+            mHelper.setSharedElementEnterTransition(activity, TVContactActivity.SHARED_ELEMENT_NAME);
+            detailsPresenter.setListener(mHelper);
+            detailsPresenter.setParticipatingEntranceTransition(false);
+            prepareEntranceTransition();
+        }
 
         detailsPresenter.setOnActionClickedListener(action -> {
             if (action.getId() == ACTION_CALL) {
@@ -134,14 +140,18 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
 
     @Override
     public void callContact(String accountID, Uri uri) {
-        Intent intent = new Intent(getActivity(), TVCallActivity.class);
+        Context context = requireContext();
+        Intent intent = new Intent(context, TVCallActivity.class);
         intent.putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountID);
         intent.putExtra(ConversationFragment.KEY_CONTACT_RING_ID, uri.getRawUriString());
-        getActivity().startActivity(intent, null);
+        context.startActivity(intent, null);
     }
 
     @Override
     public void finishView() {
-        getActivity().finish();
+        Activity activity = getActivity();
+        if (activity != null) {
+            activity.finish();
+        }
     }
 }

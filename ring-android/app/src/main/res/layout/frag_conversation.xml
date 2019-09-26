@@ -200,16 +200,16 @@
                     android:orientation="horizontal"
                     android:paddingStart="4dp">
 
-                    <ImageButton
-                        android:id="@+id/send_data"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:background="?selectableItemBackgroundBorderless"
-                        android:contentDescription="@string/send_file"
-                        android:onClick="@{() -> presenter.selectFile()}"
-                        android:padding="8dp"
-                        android:tint="@android:color/darker_gray"
-                        app:srcCompat="@drawable/baseline_upload_24" />
+	                <ImageButton
+	                    android:id="@+id/btn_menu"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="match_parent"
+	                    android:background="?selectableItemBackgroundBorderless"
+	                    android:contentDescription="@string/share_label"
+	                    android:onClick="@{v -> presenter.expandMenu(v)}"
+	                    android:padding="8dp"
+	                    android:tint="@android:color/darker_gray"
+	                    app:srcCompat="@drawable/baseline_expand_less_24" />
 
                     <ImageButton
                         android:id="@+id/btn_take_picture"

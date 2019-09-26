@@ -163,6 +163,8 @@ along with this program; if not, write to the Free Software
     <string name="send_file">Send file</string>
     <string name="hist_file_sent">File sent</string>
     <string name="hist_file_received">File received</string>
+    <string name="conversation_send_audio">Record audio clip</string>
+    <string name="conversation_send_video">Record video clip</string>
 
     <!-- MediaPreferenceFragment -->
     <string name="permission_dialog_camera_title">Camera permission</string>
