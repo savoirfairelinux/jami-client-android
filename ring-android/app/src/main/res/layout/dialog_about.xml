@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -7,47 +7,41 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/padding_small">
+        android:padding="@dimen/padding_large">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
             android:text="@string/developed_by"
-            android:textColor="@color/color_primary_dark"
-            android:textSize="18sp" />
+            android:textColor="@color/textColorAccent"
+            android:textSize="18sp"
+            android:layout_margin="@dimen/padding_small"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:text="@string/credits_developer"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_margin="@dimen/padding_small"
+            android:textColor="@color/textColorPrimary" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
             android:text="@string/ringtones_by"
-            android:textColor="@color/color_primary_dark"
-            android:textSize="18sp" />
+            android:textColor="@color/textColorAccent"
+            android:textSize="18sp"
+            android:layout_margin="@dimen/padding_small" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:text="@string/credits_ringtones"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_margin="@dimen/padding_small"
+            android:textColor="@color/textColorPrimary" />
 
 
     </LinearLayout>
 
-</ScrollView>
+</androidx.core.widget.NestedScrollView>
