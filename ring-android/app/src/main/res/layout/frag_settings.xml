@@ -38,8 +38,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:id="@+id/settings_dark_theme_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="16dp">
+                android:padding="@dimen/padding_large">
 
                 <ImageView
                     android:id="@+id/theme_image"
@@ -52,28 +51,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:src="@drawable/baseline_invert_colors_24"
                     android:layout_marginEnd="32dp"/>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/theme_title"
+                    style="@style/ListPrimary"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
+                    android:lines="1"
+                    android:text="@string/pref_darkTheme_title"
+                    android:layout_toStartOf="@id/settings_dark_theme"
+                    android:layout_toEndOf="@id/theme_image" />
+
+                <TextView
+                    style="@style/ListSecondary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pref_darkTheme_summary"
                     android:layout_toStartOf="@id/settings_dark_theme"
                     android:layout_toEndOf="@id/theme_image"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/ListPrimary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:lines="1"
-                        android:text="@string/pref_darkTheme_title" />
-
-                    <TextView
-                        style="@style/ListSecondary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/pref_darkTheme_summary" />
-
-                </LinearLayout>
+                    android:layout_below="@id/theme_title" />
 
                 <Switch
                     android:id="@+id/settings_dark_theme"
@@ -81,10 +76,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:checked="false"
-                    android:layout_marginStart="16dp"/>
+                    android:layout_marginStart="16dp"
+                    android:layout_centerVertical="true"/>
 
             </RelativeLayout>
-
 
             <!-- Network settings -->
 
@@ -92,8 +87,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:id="@+id/settings_video_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="16dp">
+                android:padding="@dimen/padding_large">
 
                 <ImageView
                     android:id="@+id/hwenc_image"
@@ -101,35 +95,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:layout_gravity="start"
                     android:contentDescription="@string/pref_hwEncode_summary"
                     app:srcCompat="@drawable/baseline_memory_24"
                     android:layout_marginEnd="32dp"/>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/hwenc_title"
+                    style="@style/ListPrimary"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
+                    android:maxLines="3"
+                    android:singleLine="false"
+                    android:text="@string/pref_video_advanced_title"
                     android:layout_toEndOf="@id/hwenc_image"
-                    android:orientation="vertical"
-                    android:layout_marginEnd="16dp">
+                    android:layout_marginEnd="16dp" />
 
-                    <TextView
-                        style="@style/ListPrimary"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:maxLines="3"
-                        android:singleLine="false"
-                        android:text="@string/pref_video_advanced_title" />
-
-                    <TextView
-                        style="@style/ListSecondary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/pref_video_advanced_summary" />
-
-                </LinearLayout>
+                <TextView
+                    style="@style/ListSecondary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pref_video_advanced_summary"
+                    android:layout_toEndOf="@id/hwenc_image"
+                    android:layout_marginEnd="16dp"
+                    android:layout_below="@id/hwenc_title"/>
 
             </RelativeLayout>
 
@@ -148,14 +136,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:padding="16dp">
 
                 <ImageView
                     android:id="@+id/contacts_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start"
                     android:contentDescription="@string/pref_systemContacts_summary"
                     app:srcCompat="@drawable/baseline_group_24"
                     android:layout_alignParentStart="true"
@@ -209,8 +195,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:id="@+id/settings_push_notifications_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="16dp">
+                android:padding="@dimen/padding_large">
 
                 <ImageView
                     android:id="@+id/push_image"
@@ -218,7 +203,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:layout_gravity="start"
                     android:contentDescription="@string/pref_pushNotifications_summary"
                     android:src="@drawable/baseline_notification_important_24"
                     android:layout_marginEnd="32dp"/>
@@ -252,21 +236,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:checked="false"
-                    android:layout_marginStart="16dp"/>
+                    android:layout_marginStart="16dp"
+                    android:layout_centerVertical="true"/>
 
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="16dp">
+                android:padding="@dimen/padding_large">
 
                 <ImageView
                     android:id="@+id/system_dialer_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start"
                     android:contentDescription="@string/pref_systemDialer_summary"
                     app:srcCompat="@drawable/baseline_dialpad_24"
                     android:layout_alignParentStart="true"
@@ -303,21 +286,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:checked="false"
-                    android:layout_marginStart="16dp" />
+                    android:layout_marginStart="16dp"
+                    android:layout_centerVertical="true"/>
 
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="16dp">
+                android:padding="@dimen/padding_large">
 
                 <ImageView
                     android:id="@+id/system_startOnBoot_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start"
                     android:contentDescription="@string/pref_startOnBoot_summary"
                     app:srcCompat="@drawable/baseline_android_24"
                     android:layout_alignParentStart="true"
@@ -354,7 +336,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:checked="false"
-                    android:layout_marginStart="16dp" />
+                    android:layout_marginStart="16dp"
+                    android:layout_centerVertical="true"/>
 
             </RelativeLayout>
 
@@ -363,14 +346,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:padding="16dp">
+                android:padding="@dimen/padding_large">
 
                 <ImageView
                     android:id="@+id/system_persistNotification_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start"
                     android:contentDescription="@string/pref_persistNotification_summary"
                     android:src="@drawable/baseline_dns_24"
                     android:layout_alignParentStart="true"
@@ -407,7 +388,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:checked="false"
-                    android:layout_marginStart="16dp"/>
+                    android:layout_marginStart="16dp"
+                    android:layout_centerVertical="true"/>
 
             </RelativeLayout>
 
@@ -424,10 +406,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:id="@+id/settings_clear_history"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="1"
                 android:background="?attr/selectableItemBackground"
-                android:padding="16dp">
+                android:padding="@dimen/padding_large">
 
                 <ImageView
                     android:id="@+id/system_clear_history_image"

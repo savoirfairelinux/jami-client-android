@@ -17,167 +17,253 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<cx.ring.views.BoundedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
+    android:layout_gravity="center_horizontal"
+    app:bounded_width="600dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp">
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp">
 
         <ImageView
             android:id="@+id/logo"
             android:layout_width="wrap_content"
             android:layout_height="80dp"
-            android:layout_gravity="center_horizontal"
             android:layout_marginTop="5dp"
             android:contentDescription="@string/app_name"
-            android:maxWidth="250dp"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_jami_full_logo" />
+            android:layout_gravity="center_horizontal"
+            app:srcCompat="@drawable/ic_jami" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="@string/description"
-            android:textAlignment="center" />
+            android:layout_marginStart="72dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/description" />
 
-        <LinearLayout
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/credits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/credits"
+            android:layout_marginBottom="16dp" />
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/padding_small"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
+            android:padding="@dimen/padding_large">
 
-            <TextView
+            <ImageView
+                android:id="@+id/version_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/version_section"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="start"
+                android:contentDescription="@string/version_section"
+                app:srcCompat="@drawable/ic_ring_logo_white"
+                android:tint="@color/colorPrimary"
+                android:layout_marginEnd="32dp"/>
+
+            <TextView
+                android:id="@+id/version_title"
+                style="@style/ListPrimary"
                 android:textColor="@color/textColorAccent"
-                android:textSize="18sp" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="3"
+                android:singleLine="false"
+                android:text="@string/version_section"
+                android:layout_toEndOf="@id/version_image"
+                android:layout_marginEnd="16dp" />
 
             <TextView
                 android:id="@+id/release"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:layout_toEndOf="@id/version_image"
+                android:layout_marginEnd="16dp"
+                android:layout_below="@id/version_title"
+                tools:text="2.0"/>
 
-        </LinearLayout>
+        </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/contribute_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/padding_small"
+            android:padding="@dimen/padding_large"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/contribute_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="start"
+                android:contentDescription="@string/contribute_section"
+                app:srcCompat="@drawable/baseline_person_add_24"
+                android:layout_marginEnd="32dp"/>
 
             <TextView
+                android:id="@+id/contribute_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/contribute_section"
+                style="@style/ListPrimary"
                 android:textColor="@color/textColorAccent"
-                android:textSize="18sp" />
+                android:layout_toEndOf="@id/contribute_image" />
 
             <TextView
                 android:id="@+id/web_site"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/app_website_contribute"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_toEndOf="@id/contribute_image"
+                android:layout_below="@id/contribute_title" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/padding_small"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
+            android:padding="@dimen/padding_large">
+
+            <ImageView
+                android:id="@+id/copyright_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="start"
+                android:contentDescription="@string/copyright_section"
+                app:srcCompat="@drawable/baseline_copyright_24"
+                android:layout_marginEnd="32dp"/>
 
             <TextView
+                android:id="@+id/copyright_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/copyright_section"
+                style="@style/ListPrimary"
                 android:textColor="@color/textColorAccent"
-                android:textSize="18sp" />
+                android:layout_toEndOf="@id/copyright_image" />
 
             <TextView
                 android:id="@+id/copyright"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/copyright"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_toEndOf="@id/copyright_image"
+                android:layout_below="@id/copyright_title"/>
 
-        </LinearLayout>
+        </RelativeLayout>
 
-        <LinearLayout
+
+        <RelativeLayout
             android:id="@+id/license_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/padding_small"
+            android:padding="@dimen/padding_large"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
-            android:focusable="true"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
+            android:focusable="true">
+
+            <ImageView
+                android:id="@+id/license_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="start"
+                android:contentDescription="@string/copyright_section"
+                app:srcCompat="@drawable/baseline_insert_drive_file_24"
+                android:layout_marginEnd="32dp"/>
 
             <TextView
+                android:id="@+id/license_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/section_license"
+                style="@style/ListPrimary"
                 android:textColor="@color/textColorAccent"
-                android:textSize="18sp" />
+                android:layout_toEndOf="@id/license_image" />
 
             <TextView
                 android:id="@+id/license"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="false"
-                android:text="@string/license" />
+                android:text="@string/license"
+                android:layout_toEndOf="@id/license_image"
+                android:layout_below="@id/license_title"/>
 
-        </LinearLayout>
+        </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/email_report_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/padding_small"
+            android:padding="@dimen/padding_large"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
-            android:focusable="true"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
+            android:focusable="true">
+
+            <ImageView
+                android:id="@+id/feedback_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="start"
+                android:contentDescription="@string/copyright_section"
+                app:srcCompat="@drawable/baseline_feedback_24"
+                android:layout_marginEnd="32dp"/>
 
             <TextView
+                android:id="@+id/feedback_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="false"
                 android:text="@string/feedback_section"
+                style="@style/ListPrimary"
                 android:textColor="@color/textColorAccent"
-                android:textSize="18sp" />
+                android:layout_toEndOf="@id/feedback_image" />
 
             <TextView
                 android:id="@+id/email_report"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="false"
-                android:text="@string/report" />
+                android:text="@string/report"
+                android:layout_toEndOf="@id/feedback_image"
+                android:layout_below="@id/feedback_title" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/padding_small"
+            android:padding="@dimen/padding_large"
+            android:layout_marginStart="56dp"
             android:gravity="center_vertical"
             android:orientation="vertical">
 
@@ -185,34 +271,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:id="@+id/developped_by"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
                 android:text="@string/sponsor_section"
                 android:textColor="@color/textColorAccent"
                 android:textSize="15sp" />
 
             <ImageView
                 android:id="@+id/sfl_logo"
-                android:layout_width="200dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:layout_marginTop="16dp"
                 android:contentDescription="@string/app_author"
-                android:maxWidth="250dp"
-                android:scaleType="fitCenter"
+                android:scaleType="fitStart"
                 android:src="@drawable/logo_sfl_coul_rgb" />
 
         </LinearLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/credits"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:paddingLeft="24dp"
-            android:paddingRight="24dp"
-            android:text="@string/credits" />
-
     </LinearLayout>
-</ScrollView>
+</cx.ring.views.BoundedScrollView>
 
 
