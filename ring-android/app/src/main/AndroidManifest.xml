@@ -46,6 +46,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-sdk android:minSdkVersion="14" tools:overrideLibrary="com.google.zxing.client.android" />
 
     <uses-feature
         android:name="android.hardware.wifi"
