@@ -70,8 +70,8 @@ dependencies {
     def android_support_core_version = '1.1.0'
     def android_support_version = '1.0.0'
     def material_version = '1.1.0-alpha10'
-    def butterknife_version = '10.1.0'
-    def dagger_version = '2.22.1'
+    def butterknife_version = '10.2.0'
+    def dagger_version = '2.24'
 
     implementation fileTree(include: '*.jar', dir: 'libs')
     implementation project(':libringclient')
@@ -92,7 +92,8 @@ dependencies {
     implementation 'com.j256.ormlite:ormlite-android:5.1'
 
     // Barcode scanning
-    implementation 'com.journeyapps:zxing-android-embedded:3.6.0@aar'
+    implementation ('com.journeyapps:zxing-android-embedded:4.0.2@aar') { transitive = false }
+    implementation 'com.google.zxing:core:3.3.3'
 
     // Butterknife
     implementation "com.jakewharton:butterknife:$butterknife_version"
@@ -105,8 +106,8 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
 
     // Glide
-    implementation 'com.github.bumptech.glide:glide:4.9.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
 
     // RxAndroid
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
