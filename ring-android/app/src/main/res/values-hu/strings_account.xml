@@ -149,6 +149,7 @@
   <string name="account_sip_success_title">SIP-fiók bejegyzett</string>
   <string name="account_sip_success_message">Sikeresen bejegyezte a SIP-fiókját.</string>
   <string name="account_sip_register_anyway">Bejegyeztetés egyébként</string>
+  <string name="account_link_device">Csatlakozás más eszközről</string>
   <string name="account_link_button">Csatlakozás a hálózatról</string>
   <string name="account_link_archive_button">Csatlakozás a biztonsági mentésből</string>
   <string name="account_link_prompt_pin">PIN-kód megadása</string>
@@ -160,7 +161,11 @@
   <string name="account_end_export_infos">A PIN-kódja:\n\n%%\n\nA folyamat befejezéséhez meg kell nyitnia a Jami-t az új eszközön. Hozzon létre egy új fiókot az „Eszköz összekapcsolása egy fiókhoz” opcióval. A PIN-kódja 10 percig érvényes.</string>
   <string name="account_link_export_info_light">Ha ezt a fiókot más eszközökön szeretné használni, először meg kell jeleníteni a Jami-n. Ez létrehoz egy PIN-kódot, amelyet meg kell adnia az új eszközön a fiók beállításához. A PIN-kód 10 percig érvényes.</string>
   <string name="account_export_title">Eszközök hozzáadása</string>
+  <string name="account_connect_server_button">Csatlakozás a felügyeleti kiszolgálóhoz</string>
   <string name="account_connect_button">Kapcsolódás</string>
+  <string name="prompt_server">A Jami felügyeleti kiszolgáló URL-je</string>
+  <string name="help_credentials_enter">Írja be a szervezet hitelesítő adatait</string>
+  <string name="help_connect_password_enter">Írja be a szervezet jelszavát</string>
   <string name="account_connect_prompt_username">Felhasználónév</string>
   <!--Name registration-->
   <string name="error_username_empty">Felhasználónév megadása</string>

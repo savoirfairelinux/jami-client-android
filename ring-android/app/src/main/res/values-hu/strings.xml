@@ -46,7 +46,7 @@
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d beszélgetés</item>
-    <item quantity="other">%d társalgás</item>
+    <item quantity="other">%dtársalgás</item>
   </plurals>
   <!--ContactList Fragment-->
   <string name="searchbar_hint">Név vagy telefonszám megadása…</string>
@@ -167,6 +167,7 @@
   <string name="prompt_new_username">Új felhasználónév megadása</string>
   <string name="help_password_choose">Válasszon erős jelszót, amelyre emlékezni fog, hogy megvédje a Jami fiókját.</string>
   <string name="help_password_enter">Adja meg a fő Jami fiókja jelszót</string>
+  <string name="help_server_enter">Adja meg a felügyeleti kiszolgáló URL-jét</string>
   <string name="help_pin_enter">Adja meg egy másik beállított Jami fiók PIN-jét! Használja a „Fiók exportálása a Jami-n” működést a PIN eléréséhez!</string>
   <string name="wizard_next">Tovább</string>
   <string name="wizard_back">Vissza</string>
@@ -204,6 +205,7 @@
   <!--Smartlist-->
   <string name="no_contact_request">Nincs elküldött kapcsolatkérelem</string>
   <string name="contact_request_sent">Kapcsolatkérelem elküldve</string>
+  <string name="start_conversation">Társalgás indítása</string>
   <string name="search_results">Keresési eredmények</string>
   <string name="tv_contact_row_header">Kapcsolatok</string>
   <string name="gallery_error_title">Nem található Galéria alkalmazás</string>
@@ -236,4 +238,5 @@
   <string name="menu_message_cancel">Üzenet érvénytelenítése</string>
   <string name="menu_delete">Törlés</string>
   <string name="pref_darkTheme_title">Sötét téma</string>
+  <string name="pref_darkTheme_summary">A rendszer viselkedése helyett mindig engedélyezze a sötét témát</string>
 </resources>
