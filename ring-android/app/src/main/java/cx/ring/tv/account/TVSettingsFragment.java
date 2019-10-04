@@ -104,7 +104,6 @@ public class TVSettingsFragment extends LeanbackSettingsFragmentCompat {
         public void onCreatePreferences(Bundle bundle, String rootKey) {
             PreferenceManager pm = getPreferenceManager();
             pm.setSharedPreferencesMode(Context.MODE_PRIVATE);
-            pm.setSharedPreferencesName(SharedPreferencesServiceImpl.PREFS_VIDEO);
             setPreferencesFromResource(R.xml.tv_account_general_pref, rootKey);
         }
 

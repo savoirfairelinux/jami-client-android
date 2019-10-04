@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.preference.PreferenceManager;
 
 import android.os.Build;
 import android.text.TextUtils;
@@ -45,7 +46,6 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
 
     public static final String RING_SETTINGS = "ring_settings";
     private static final String RING_REQUESTS = "ring_requests";
-    public static final String PREFS_VIDEO = "video_settings";
     public static final String PREFS_THEME = "theme";
     private static final String RING_PUSH_NOTIFICATIONS = "push_notifs";
     private static final String RING_PERSISTENT_NOTIFICATION = "persistent_notif";
@@ -183,11 +183,11 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
     }
 
     private SharedPreferences getVideoPreferences() {
-        return mContext.getSharedPreferences(PREFS_VIDEO, Context.MODE_PRIVATE);
+        return PreferenceManager.getDefaultSharedPreferences(mContext);
     }
 
     private SharedPreferences getThemePreferences() {
-        return mContext.getSharedPreferences(PREFS_VIDEO, Context.MODE_PRIVATE);
+        return PreferenceManager.getDefaultSharedPreferences(mContext);
     }
 
 }

@@ -18,7 +18,6 @@ public class VideoSettingsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         PreferenceManager pm = getPreferenceManager();
         pm.setSharedPreferencesMode(Context.MODE_PRIVATE);
-        pm.setSharedPreferencesName(SharedPreferencesServiceImpl.PREFS_VIDEO);
         setPreferencesFromResource(R.xml.video_prefs, rootKey);
         Preference resolutionPref = findPreference(SharedPreferencesServiceImpl.RING_RESOLUTION);
         handleResolutionIcon(pm.getSharedPreferences().getString(SharedPreferencesServiceImpl.RING_RESOLUTION, "720"));
