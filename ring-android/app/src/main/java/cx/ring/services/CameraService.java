@@ -37,7 +37,7 @@ import cx.ring.utils.Log;
 import io.reactivex.Completable;
 
 abstract public class CameraService {
-    private static final String TAG = CameraService.class.getName();
+    private static final String TAG = CameraService.class.getSimpleName();
 
     private final HashMap<String, VideoParams> mParams = new HashMap<>();
     final Map<String, DeviceParams> mNativeParams = new HashMap<>();
@@ -98,12 +98,22 @@ abstract public class CameraService {
         DeviceParams deviceParams = mNativeParams.get(camId);
         if (deviceParams == null)
             return;
-        CameraService.VideoParams newParams = new CameraService.VideoParams(camId, format, deviceParams.size.x, deviceParams.size.y, rate);
-        if (deviceParams.infos != null) {
-            newParams.rotation = getCameraDisplayRotation(deviceParams, rotation);
+
+        CameraService.VideoParams params = mParams.get(camId);
+        if (params == null) {
+            params = new CameraService.VideoParams(camId, format, deviceParams.size.x, deviceParams.size.y, rate);
+            mParams.put(camId, params);
+        } else {
+            params.id = camId;
+            params.format = format;
+            params.width = deviceParams.size.x;
+            params.height = deviceParams.size.y;
+            params.rate = rate;
         }
-        Ringservice.setDeviceOrientation(camId, newParams.rotation);
-        mParams.put(camId, newParams);
+        if (deviceParams.infos != null) {
+            params.rotation = getCameraDisplayRotation(deviceParams, rotation);
+        }
+        Ringservice.setDeviceOrientation(camId, params.rotation);
     }
 
     public void setOrientation(int rotation) {
