@@ -21,6 +21,7 @@
   <string name="pref_startOnBoot_title">Jami automatisch starten</string>
   <string name="pref_startOnBoot_summary">Voer Jami in de achtergrond uit wanneer het systeem gestart wordt.</string>
   <string name="pref_clearHistory_title">Geschiedenis wissen</string>
+  <string name="pref_clearHistory_summary">Wis de geschiedenis van alle gesprekken. Deze handeling kan niet ongedaan gemaakt worden.</string>
   <string name="pref_persistNotification_title">Uitvoeren in achtergrond</string>
   <string name="pref_persistNotification_summary">Maakt het mogelijk om in de achtergrond oproepen en berichten te ontvangen.</string>
 </resources>

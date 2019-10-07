@@ -9,6 +9,8 @@
   <string name="pref_mobileData_summary">Permetti a Jami su reti 3G / LTE in aggiunta al Wi-Fi</string>
   <string name="pref_pushNotifications_title">Invia notifiche</string>
   <string name="pref_pushNotifications_summary">Utilizza i server di Google per consentire la ricezione di chiamate / messaggi in background</string>
+  <string name="pref_video_advanced_title">Impostazioni video avanzate</string>
+  <string name="pref_video_advanced_summary">Modifica il bitrate del video, la risoluzione e accedi alle funzioni sperimentali</string>
   <string name="pref_hd_summary">Abilita l\'invio di video HD</string>
   <string name="pref_hwEncode_title">Attiva la codifica accelerata</string>
   <string name="pref_hwEncode_summary">Funzioni sperimentali</string>
@@ -19,6 +21,7 @@
   <string name="pref_startOnBoot_title">Avvia Jami all\'avvio</string>
   <string name="pref_startOnBoot_summary">Esegui Jami in background all\'avvio del sistema.</string>
   <string name="pref_clearHistory_title">Elimina cronologia</string>
+  <string name="pref_clearHistory_summary">Cancella tutta la cronologia delle conversazioni. Questa azione non può essere annullata.</string>
   <string name="pref_persistNotification_title">Esegui in background</string>
   <string name="pref_persistNotification_summary">Consenti l\'esecuzione in background per ricevere chiamate e messaggi.</string>
 </resources>

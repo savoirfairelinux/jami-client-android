@@ -133,7 +133,7 @@
   <string name="account_migration">Jami fiókja frissíthető.\ nKérjük hogy, adja meg a jelszót.</string>
   <string name="ring_account">Jami fiók</string>
   <string name="ring_account_identity">Személyazonosság</string>
-  <string name="account_migration_title_dialog">Fiók átvitel</string>
+  <string name="account_migration_title_dialog">Fiók áttelepítés</string>
   <string name="account_migration_message_dialog">A fiókjait frissíteni kell. Szeretne a fiók kezelési lapra menni a művelet elvégzéséhez?</string>
   <string name="account_update_needed">Frissítés szükséges</string>
   <string name="account_cannot_be_found_title">A fiók nem található</string>

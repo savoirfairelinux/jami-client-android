@@ -112,6 +112,8 @@
   <string name="send_file">傳送檔案</string>
   <string name="hist_file_sent">檔案已傳送</string>
   <string name="hist_file_received">檔案已收到</string>
+  <string name="conversation_send_audio">錄製音訊片段</string>
+  <string name="conversation_send_video">錄製視訊片段</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">攝影機權限</string>
   <string name="permission_dialog_camera_message">視訊通話需要攝影機權限以正常運作。請考慮啟用它。</string>

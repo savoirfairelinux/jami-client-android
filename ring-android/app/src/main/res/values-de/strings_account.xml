@@ -67,6 +67,8 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_ringtone_enabled_label">Klingelton benutzen</string>
   <string name="account_ringtone_path_label">Klingeltonpfad</string>
   <string name="account_ringtone_custom_label">Eigenen Klingelton benutzen</string>
+  <string name="account_ringtone_title">Klingelton auswählen</string>
+  <string name="account_ringtone_summary">Wählen Sie einen Klingelton oder nehmen Sie Ihren eigenen</string>
   <!--Video Details-->
   <string name="account_video_label">Video</string>
   <string name="account_video_enable">Video aktivieren</string>
@@ -147,8 +149,9 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_sip_success_title">SIP-Konto registriert</string>
   <string name="account_sip_success_message">Sie haben erfolgreich Ihr SIP-Konto registriert.</string>
   <string name="account_sip_register_anyway">Trotzdem registieren</string>
-  <string name="account_link_button">Durch Netzwerk verbinden</string>
-  <string name="account_link_archive_button">Durch Backup verbinden</string>
+  <string name="account_link_device">Verbindung von einem anderen Gerät</string>
+  <string name="account_link_button">Verbindung vom Netzwerk</string>
+  <string name="account_link_archive_button">Verbindung vom Backup</string>
   <string name="account_link_prompt_pin">PIN eingeben</string>
   <string name="account_new_button">Ein Jami-Konto erstellen</string>
   <string name="account_link_export_button">Weiteres Gerät mit diesem Konto verknüpfen</string>
@@ -158,6 +161,11 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_end_export_infos">Ihre PIN lautet:\n\n%%\n\nUm den Vorgang abzuschließen öffnen Sie Jami auf dem neuen Gerät. Erstellen Sie ein neues Konto mit \"Dieses Gerät mit einem Konto verknüpfen\". Ihre PIN ist 10 Minuten gültig.</string>
   <string name="account_link_export_info_light">Um dieses Konto auf weiteren Geräten zu verwenden, müssen Sie zuerst eine PIN generieren. Diese muss auf dem neuen Gerät eingeben werden, um das Konto zu importieren. Die PIN ist für 10 Minuten gültig.</string>
   <string name="account_export_title">Gerät hinzufügen</string>
+  <string name="account_connect_server_button">Verbindung zum Management-Server</string>
+  <string name="account_connect_button">Verbinden</string>
+  <string name="prompt_server">Jami Management-Server-URL</string>
+  <string name="help_credentials_enter">Geben Sie die Anmeldedaten für Ihr Unternehmen ein</string>
+  <string name="help_connect_password_enter">Geben Sie das Passwort für Ihr Unternehmen ein</string>
   <string name="account_connect_prompt_username">Benutzername</string>
   <!--Name registration-->
   <string name="error_username_empty">Benutzername eingeben</string>

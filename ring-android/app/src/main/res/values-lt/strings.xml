@@ -63,6 +63,7 @@
   <string name="notif_channel_messages">Žinutės</string>
   <string name="notif_channel_requests">Užklausos</string>
   <string name="notif_channel_file_transfer">Failų persiuntimas</string>
+  <string name="notif_channel_background_service">Foninė tarnyba</string>
   <string name="notif_channel_background_service_descr">Leidžia bet kuriuo metu priimti skambučius ir gauti žinutes.</string>
   <string name="notif_group_calls">Skambučiai</string>
   <string name="notif_background_service">Šiuo metu Jami veikia fone</string>
@@ -182,6 +183,7 @@
   <!--Smartlist-->
   <string name="no_contact_request">Jokia adresato užklausa neišsiųsta</string>
   <string name="contact_request_sent">Adresato užklausa išsiųsta</string>
+  <string name="start_conversation">Pradėti pokalbį</string>
   <string name="search_results">Paieškos rezultatai</string>
   <string name="tv_contact_row_header">Adresatai</string>
   <string name="gallery_error_title">Nerasta jokios Galerijos programėlės</string>
@@ -189,6 +191,7 @@
   <string name="generic_error">Įvyko nežinoma klaida</string>
   <!--File Transfer-->
   <string name="invalid_file">Neteisingas failas</string>
+  <string name="not_able_to_write_file">Nepavyko rašyti failo</string>
   <string name="file_transfer_status_created">inicijuojamas persiuntimas</string>
   <string name="file_transfer_status_unsupported">nepalaikoma</string>
   <string name="file_transfer_status_invalid_pathname">neteisingas kelio pavadinimas</string>

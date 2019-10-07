@@ -113,6 +113,8 @@
   <string name="send_file">Fájl küldése</string>
   <string name="hist_file_sent">Fájl elküldve</string>
   <string name="hist_file_received">Fájl érkezett</string>
+  <string name="conversation_send_audio">Hangüzenet felvétele</string>
+  <string name="conversation_send_video">Videóüzenet felvétele</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kameraengedély</string>
   <string name="permission_dialog_camera_message">A videótársalgások működéséhez szükséges a kamera engedély. Fontolja meg az engedélyezését!</string>
@@ -184,7 +186,7 @@
   <string name="share_your_account_information">Kapcsolati adatok megosztása</string>
   <string name="share_label">Megosztás </string>
   <string name="generic_error_migration">Hiba</string>
-  <string name="generic_error_migration_message">Hiba történt az átvitel során</string>
+  <string name="generic_error_migration_message">Hiba történt az áttelepítés során</string>
   <string name="title_share_with">Megosztás…</string>
   <!--Pending contact requests-->
   <string name="accept">Elfogadás</string>

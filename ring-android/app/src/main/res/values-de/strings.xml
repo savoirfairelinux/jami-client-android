@@ -15,7 +15,8 @@
   <string name="license">Diese Software wird \"wie sie ist\" ohne Gewährleistung irgendwelcher Art zur Verfügung gestellt. Details finden Sie unter <u>GNU General Public License Version 3 oder höher</u></string>
   <string name="description">Jami ist eine freie Software für universelle Kommunikation und respektiert die Freiheiten und Privatsphäre der Benutzer.</string>
   <string name="credits">Würdigung</string>
-  <string name="call_service_description">Dieser Dienst ist notwendig um Anrufe im Vordergrund zu halten. Er läuft nur während eines Anrufs.</string>
+  <string name="call_service_description">Dieser Dienst ist notwendig, um Anrufe im Vordergrund zu halten. Er läuft nur während eines Anrufs.</string>
+  <string name="data_transfer_service_description">Dieser Dienst ist notwendig, um permanente Benachrichtigungen während der Dateiübertragung anzuzeigen. Es läuft nur während der Dateiübertragung.</string>
   <!--About dialog-->
   <string name="developed_by">Entwickelt von</string>
   <string name="designed_by">Entworfen von</string>
@@ -112,6 +113,8 @@
   <string name="send_file">Datei senden</string>
   <string name="hist_file_sent">Datei gesendet</string>
   <string name="hist_file_received">Datei erhalten</string>
+  <string name="conversation_send_audio">Audioaufzeichnung starten</string>
+  <string name="conversation_send_video">Videoaufzeichnung starten</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera Berechtigung</string>
   <string name="permission_dialog_camera_message">Für Video-Konversationen benötigt die Anwendung Zugriff auf die Kamera. Bitte erteilen Sie diese Berechtigung.</string>
@@ -119,7 +122,9 @@
   <string name="ringtone_error_title">Fehler</string>
   <string name="ringtone_error_format_not_supported">Dieses Format wird nicht unterstützt.</string>
   <string name="ringtone_error_size_too_big">Diese Datei ist zu groß. Die maximale Größe ist %1$dkB.</string>
+  <string name="ringtone_custom_prompt">Eigenen Klingelton festlegen</string>
   <string name="ringtone_custom_label">Benutzerdefiniert</string>
+  <string name="ringtone_jami_tones">Jami Töne</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring benötigt die Berechtigung \"Kontaktdaten lesen\" für diese Funktion. Bitte erteilen Sie diese.</string>
   <!--Write call log permission-->
@@ -164,6 +169,7 @@
   <string name="prompt_new_username">Neuen Benutzernamen eingeben</string>
   <string name="help_password_choose">Wählen Sie ein sicheres Passwort, an das Sie sich erinnern können, um ihr Jami-Konto zu schützen.</string>
   <string name="help_password_enter">Geben Sie ihr Haupt-Jami-Kontopasswort ein</string>
+  <string name="help_server_enter">URL des Management-Servers eingeben</string>
   <string name="help_pin_enter">Geben Sie die PIN eines anderen konfigurierten Jami-Kontos ein. Benutzen Sie die Funktion \"Exportiere Konto\",bei Jami, um die PIN zu erhalten.</string>
   <string name="wizard_next">Weiter</string>
   <string name="wizard_back">Zurück</string>
@@ -181,6 +187,7 @@
   <string name="share_label">Teilen</string>
   <string name="generic_error_migration">Fehler</string>
   <string name="generic_error_migration_message">Während der Migration ist ein Fehler aufgetreten</string>
+  <string name="title_share_with">Teilen mit...</string>
   <!--Pending contact requests-->
   <string name="accept">Akzeptieren</string>
   <string name="refuse">Verweigern</string>
@@ -200,6 +207,7 @@
   <!--Smartlist-->
   <string name="no_contact_request">Keine Kontaktanfrage gesendet</string>
   <string name="contact_request_sent">Kontaktanfrage gesendet</string>
+  <string name="start_conversation">Unterhaltung starten</string>
   <string name="search_results">Suchergebnisse</string>
   <string name="tv_contact_row_header">Kontakte</string>
   <string name="gallery_error_title">Keine Galerie-App gefunden</string>
@@ -231,4 +239,6 @@
   <string name="menu_message_delete">Nachricht löschen</string>
   <string name="menu_message_cancel">Nachricht abbrechen</string>
   <string name="menu_delete">Löschen</string>
+  <string name="pref_darkTheme_title">Dunkles Design</string>
+  <string name="pref_darkTheme_summary">Aktivieren Sie immer das dunkle Design, anstatt das Systemverhalten zu verwenden</string>
 </resources>

@@ -113,6 +113,8 @@
   <string name="send_file">Bestand versturen</string>
   <string name="hist_file_sent">Bestand verstuurd</string>
   <string name="hist_file_received">Bestand ontvangen</string>
+  <string name="conversation_send_audio">Geluidsbericht opnemen</string>
+  <string name="conversation_send_video">Videobericht opnemen</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Cameramachtiging</string>
   <string name="permission_dialog_camera_message">Videogesprekken vereisen machtiging voor gebruik van de camera. Gelieve te overwegen deze machtiging alsnog toe te kennen.</string>
@@ -167,6 +169,7 @@
   <string name="prompt_new_username">Voer nieuwe gebruikersnaam in</string>
   <string name="help_password_choose">Kies een sterk wachtwoord om uw Jami-account te beschermen.</string>
   <string name="help_password_enter">Voer het hoofdwachtwoord van uw Jami-account in</string>
+  <string name="help_server_enter">Voer URL van beheerserver in</string>
   <string name="help_pin_enter">Voer de pincode in vanuit uw Jami-account dat al is geconfigureerd op een ander apparaat. Gebruik de functie ‘Jami-account exporteren’ om een pincode te verkrijgen.</string>
   <string name="wizard_next">Volgende</string>
   <string name="wizard_back">Terug</string>
@@ -184,6 +187,7 @@
   <string name="share_label">Delen</string>
   <string name="generic_error_migration">Fout</string>
   <string name="generic_error_migration_message">Er trad een fout op tijdens het migratieproces</string>
+  <string name="title_share_with">Delen met…</string>
   <!--Pending contact requests-->
   <string name="accept">Accepteren</string>
   <string name="refuse">Afwijzen</string>
@@ -203,6 +207,7 @@
   <!--Smartlist-->
   <string name="no_contact_request">Geen contactverzoek verstuurd</string>
   <string name="contact_request_sent">Contactverzoek verstuurd</string>
+  <string name="start_conversation">Gesprek beginnen</string>
   <string name="search_results">Zoekresultaten</string>
   <string name="tv_contact_row_header">Contacten</string>
   <string name="gallery_error_title">Geen Galerij-app gevonden</string>
@@ -234,4 +239,6 @@
   <string name="menu_message_delete">Bericht verwijderen</string>
   <string name="menu_message_cancel">Bericht annuleren</string>
   <string name="menu_delete">Verwijderen</string>
+  <string name="pref_darkTheme_title">Donker thema</string>
+  <string name="pref_darkTheme_summary">Donker thema altijd gebruiken in plaats van systeemgedrag volgen</string>
 </resources>

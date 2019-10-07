@@ -113,6 +113,8 @@
   <string name="send_file">Dërgo kartelë</string>
   <string name="hist_file_sent">Kartela u dërgua</string>
   <string name="hist_file_received">Kartela u mor</string>
+  <string name="conversation_send_audio">Incizoni copëz zanore</string>
+  <string name="conversation_send_video">Regjistroni copës video</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Leje për kamerën</string>
   <string name="permission_dialog_camera_message">Që të funksionojnë, bisedat me video lypin doemos leje për kamerën. Ju lutemi, shihni mundësinë e akordimit të saj.</string>
@@ -167,6 +169,7 @@
   <string name="prompt_new_username">Jepni emër përdoruesi të ri</string>
   <string name="help_password_choose">Për të mbrojtur llogarinë tuaj Jami, zgjidhni fjalëkalim të fuqishëm që do ta mbani mend.</string>
   <string name="help_password_enter">Jepni fjalëkalimin e llogarisë suaj kryesore Jami</string>
+  <string name="help_server_enter">Jepni URL-në e shërbyesit të administrimeve</string>
   <string name="help_pin_enter">Jepni PIN-in prej një llogarie tjetër Jami të formësuar. Përdorni veçorinë \"eksportoje llogarinë në Jami\" që të merrni një PIN.</string>
   <string name="wizard_next">Pasuesi</string>
   <string name="wizard_back">Mbrapsht</string>
@@ -184,6 +187,7 @@
   <string name="share_label">Ndajeni me të tjerë</string>
   <string name="generic_error_migration">Gabim</string>
   <string name="generic_error_migration_message">Ndodhi një gabim gjatë migrimit</string>
+  <string name="title_share_with">Ndajeni me…</string>
   <!--Pending contact requests-->
   <string name="accept">Pranoje</string>
   <string name="refuse">Hidhe tej</string>
@@ -203,6 +207,7 @@
   <!--Smartlist-->
   <string name="no_contact_request">S\’është dërguar ndonjë kërkesë kontakti</string>
   <string name="contact_request_sent">Kërkesa e kontaktit u dërgua</string>
+  <string name="start_conversation">Nisni bisedë</string>
   <string name="search_results">Përfundime Kërkimi</string>
   <string name="tv_contact_row_header">Kontakte</string>
   <string name="gallery_error_title">S\’u gjet aplikacion galerie</string>
@@ -234,4 +239,6 @@
   <string name="menu_message_delete">Fshije mesazhin</string>
   <string name="menu_message_cancel">Anuloje mesazhin</string>
   <string name="menu_delete">Fshije</string>
+  <string name="pref_darkTheme_title">Temë e errët</string>
+  <string name="pref_darkTheme_summary">Aktivizo përherë temën e errët, në vend të përdorimit të sjelljes së sistemit</string>
 </resources>
