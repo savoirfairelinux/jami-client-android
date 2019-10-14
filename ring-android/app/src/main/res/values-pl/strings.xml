@@ -200,6 +200,7 @@
   <!--Smartlist-->
   <string name="no_contact_request">Brak wysłanych zaproszeń</string>
   <string name="contact_request_sent">Wysłano zaproszenie</string>
+  <string name="start_conversation">Rozpocznij rozmowę</string>
   <string name="search_results">Wyniki wyszukiwania</string>
   <string name="tv_contact_row_header">Kontakty</string>
   <string name="gallery_error_title">Nie znaleziono aplikacji Galeria</string>
@@ -231,4 +232,6 @@
   <string name="menu_message_delete">Usuń wiadomość</string>
   <string name="menu_message_cancel">Anuluj wiadomość</string>
   <string name="menu_delete">Usuń</string>
+  <string name="pref_darkTheme_title">Ciemny motyw</string>
+  <string name="pref_darkTheme_summary">Zawsze używaj ciemnego motywu bez względu na ustawienia systemu</string>
 </resources>
