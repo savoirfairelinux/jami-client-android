@@ -46,6 +46,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
 
     <uses-feature
         android:name="android.hardware.wifi"
@@ -167,7 +168,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <activity
             android:name=".client.RingtoneActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
-            android:theme="@style/AppThemeBase" />
+            android:theme="@style/Theme.MaterialComponents.DayNight.Dialog.MinWidth"
+            android:label="@string/account_ringtone_title" />
+
         <receiver android:name=".service.OutgoingCallHandler">
             <intent-filter>
                 <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
@@ -368,6 +371,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:theme="@style/AppTheme.DarkToolbar"
             android:windowSoftInputMode="adjustResize"
             android:resizeableActivity="true" />
+
+        <activity
+            android:name=".client.ConversationSelectionActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
+            android:theme="@style/Theme.MaterialComponents.DayNight.Dialog.Alert"
+            android:windowSoftInputMode="adjustResize"
+            android:label="Choose a contact or conversation" />
     </application>
 
 </manifest>
