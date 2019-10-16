@@ -27,11 +27,10 @@ import java.util.concurrent.ScheduledExecutorService;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
-import cx.ring.services.ConferenceService;
 import cx.ring.services.ContactService;
 import cx.ring.services.ContactServiceImpl;
 import cx.ring.services.DaemonService;
@@ -58,17 +57,17 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 @Module
 public class ServiceInjectionModule {
 
-    RingApplication mRingApplication;
+    private final JamiApplication mJamiApplication;
 
-    public ServiceInjectionModule(RingApplication app) {
-        mRingApplication = app;
+    public ServiceInjectionModule(JamiApplication app) {
+        mJamiApplication = app;
     }
 
     @Provides
     @Singleton
     PreferencesService provideSettingsService() {
         SharedPreferencesServiceImpl settingsService = new SharedPreferencesServiceImpl();
-        mRingApplication.getRingInjectionComponent().inject(settingsService);
+        mJamiApplication.getRingInjectionComponent().inject(settingsService);
         return settingsService;
     }
 
@@ -76,7 +75,7 @@ public class ServiceInjectionModule {
     @Singleton
     HistoryService provideHistoryService() {
         HistoryServiceImpl historyService = new HistoryServiceImpl();
-        mRingApplication.getRingInjectionComponent().inject(historyService);
+        mJamiApplication.getRingInjectionComponent().inject(historyService);
         historyService.initHelper();
         return historyService;
     }
@@ -93,7 +92,7 @@ public class ServiceInjectionModule {
     @Singleton
     NotificationService provideNotificationService() {
         NotificationServiceImpl service = new NotificationServiceImpl();
-        mRingApplication.getRingInjectionComponent().inject(service);
+        mJamiApplication.getRingInjectionComponent().inject(service);
         service.initHelper();
         return service;
     }
@@ -102,7 +101,7 @@ public class ServiceInjectionModule {
     @Singleton
     DeviceRuntimeService provideDeviceRuntimeService(LogService logService) {
         DeviceRuntimeServiceImpl runtimeService = new DeviceRuntimeServiceImpl();
-        mRingApplication.getRingInjectionComponent().inject(runtimeService);
+        mJamiApplication.getRingInjectionComponent().inject(runtimeService);
         runtimeService.loadNativeLibrary();
         return runtimeService;
     }
@@ -111,7 +110,7 @@ public class ServiceInjectionModule {
     @Singleton
     DaemonService provideDaemonService(DeviceRuntimeService deviceRuntimeService) {
         DaemonService daemonService = new DaemonService(deviceRuntimeService);
-        mRingApplication.getRingInjectionComponent().inject(daemonService);
+        mJamiApplication.getRingInjectionComponent().inject(daemonService);
         return daemonService;
     }
 
@@ -119,23 +118,15 @@ public class ServiceInjectionModule {
     @Singleton
     CallService provideCallService() {
         CallService callService = new CallService();
-        mRingApplication.getRingInjectionComponent().inject(callService);
+        mJamiApplication.getRingInjectionComponent().inject(callService);
         return callService;
-    }
-
-    @Provides
-    @Singleton
-    ConferenceService provideConferenceService() {
-        ConferenceService conferenceService = new ConferenceService();
-        mRingApplication.getRingInjectionComponent().inject(conferenceService);
-        return conferenceService;
     }
 
     @Provides
     @Singleton
     AccountService provideAccountService() {
         AccountService accountService = new AccountService();
-        mRingApplication.getRingInjectionComponent().inject(accountService);
+        mJamiApplication.getRingInjectionComponent().inject(accountService);
         return accountService;
     }
 
@@ -143,7 +134,7 @@ public class ServiceInjectionModule {
     @Singleton
     HardwareService provideHardwareService(Context context) {
         HardwareServiceImpl hardwareService = new HardwareServiceImpl(context);
-        mRingApplication.getRingInjectionComponent().inject(hardwareService);
+        mJamiApplication.getRingInjectionComponent().inject(hardwareService);
         return hardwareService;
     }
 
@@ -151,7 +142,7 @@ public class ServiceInjectionModule {
     @Singleton
     ContactService provideContactService(PreferencesService sharedPreferencesService) {
         ContactServiceImpl contactService = new ContactServiceImpl();
-        mRingApplication.getRingInjectionComponent().inject(contactService);
+        mJamiApplication.getRingInjectionComponent().inject(contactService);
         return contactService;
     }
 
@@ -162,7 +153,7 @@ public class ServiceInjectionModule {
             CallService callService,
             AccountService accountService) {
         ConversationFacade conversationFacade = new ConversationFacade(historyService, callService, accountService);
-        mRingApplication.getRingInjectionComponent().inject(conversationFacade);
+        mJamiApplication.getRingInjectionComponent().inject(conversationFacade);
         return conversationFacade;
     }
 

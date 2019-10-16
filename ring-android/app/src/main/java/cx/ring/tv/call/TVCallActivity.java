@@ -18,10 +18,6 @@
  */
 package cx.ring.tv.call;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -30,14 +26,19 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.WindowManager;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import cx.ring.R;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.call.CallView;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.services.NotificationService;
 import cx.ring.utils.Log;
 
-public class TVCallActivity extends Activity {
+public class TVCallActivity extends FragmentActivity {
 
     static final String TAG = TVCallActivity.class.getSimpleName();
     private static final String CALL_FRAGMENT_TAG = "CALL_FRAGMENT_TAG";
@@ -59,14 +60,14 @@ public class TVCallActivity extends Activity {
         setVolumeControlStream(AudioManager.STREAM_VOICE_CALL);
 
         // dependency injection
-        RingApplication.getInstance().getRingInjectionComponent().inject(this);
-        RingApplication.getInstance().startDaemon();
+        JamiApplication.getInstance().getRingInjectionComponent().inject(this);
+        JamiApplication.getInstance().startDaemon();
 
         boolean audioOnly = false;
         String accountId = getIntent().getStringExtra(ConversationFragment.KEY_ACCOUNT_ID);
         String ringId = getIntent().getStringExtra(ConversationFragment.KEY_CONTACT_RING_ID);
 
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         if (!TextUtils.isEmpty(ringId)) {
@@ -91,7 +92,7 @@ public class TVCallActivity extends Activity {
 
     @Override
     public void onUserLeaveHint () {
-        Fragment fragment = getFragmentManager().findFragmentByTag(CALL_FRAGMENT_TAG);
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(CALL_FRAGMENT_TAG);
         if (fragment instanceof CallView) {
             CallView callFragment = (CallView) fragment;
             callFragment.onUserLeave();

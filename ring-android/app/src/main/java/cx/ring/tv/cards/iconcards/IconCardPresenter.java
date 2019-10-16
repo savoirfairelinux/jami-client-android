@@ -23,13 +23,13 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import androidx.leanback.widget.ImageCardView;
-import androidx.core.content.ContextCompat;
+
 import android.view.ContextThemeWrapper;
 import android.widget.ImageView;
 
 
 import cx.ring.R;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.tv.cards.AbstractCardPresenter;
 import cx.ring.tv.cards.Card;
 
@@ -43,7 +43,7 @@ public class IconCardPresenter extends AbstractCardPresenter<ImageCardView> {
 
     @Override
     protected ImageCardView onCreateView() {
-        RingApplication.getInstance().getRingInjectionComponent().inject(this);
+        JamiApplication.getInstance().getRingInjectionComponent().inject(this);
         ImageCardView imageCardView = new ImageCardView(getContext());
         final ImageView image = imageCardView.getMainImageView();
         image.setBackgroundResource(R.drawable.icon_focused);

@@ -29,7 +29,6 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -58,7 +57,7 @@ import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.about.AboutFragment;
 import cx.ring.account.AccountWizardActivity;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.contactrequests.ContactRequestsFragment;
 import cx.ring.fragments.AccountsManagementFragment;
 import cx.ring.fragments.ConversationFragment;
@@ -69,17 +68,16 @@ import cx.ring.model.AccountConfig;
 import cx.ring.navigation.RingNavigationFragment;
 import cx.ring.service.DRingService;
 import cx.ring.services.AccountService;
-import cx.ring.services.DeviceRuntimeService;
-import cx.ring.services.HardwareService;
 import cx.ring.services.NotificationService;
-import cx.ring.services.PreferencesService;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.settings.VideoSettingsFragment;
+import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
 public class HomeActivity extends AppCompatActivity implements RingNavigationFragment.OnNavigationSectionSelected, Colorable {
+    static final String TAG = HomeActivity.class.getSimpleName();
 
     public static final int REQUEST_CODE_CALL = 3;
     public static final int REQUEST_CODE_CONVERSATION = 4;
@@ -88,34 +86,24 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
     public static final int REQUEST_CODE_QR_CONVERSATION = 7;
     public static final int REQUEST_PERMISSION_CAMERA = 113;
     public static final int REQUEST_PERMISSION_READ_STORAGE = 114;
+
     public static final String HOME_TAG = "Home";
     public static final String CONTACT_REQUESTS_TAG = "Trust request";
     public static final String ACCOUNTS_TAG = "Accounts";
     public static final String ABOUT_TAG = "About";
     public static final String SETTINGS_TAG = "Prefs";
     public static final String VIDEO_SETTINGS_TAG = "VideoPrefs";
-    static public final String ACTION_PRESENT_TRUST_REQUEST_FRAGMENT = BuildConfig.APPLICATION_ID + "presentTrustRequestFragment";
-    static final String TAG = HomeActivity.class.getSimpleName();
+    public static final String ACTION_PRESENT_TRUST_REQUEST_FRAGMENT = BuildConfig.APPLICATION_ID + "presentTrustRequestFragment";
     private static final String NAVIGATION_TAG = "Navigation";
+
     protected Fragment fContent;
     protected RingNavigationFragment fNavigation;
     protected ConversationFragment fConversation;
 
     @Inject
-    DeviceRuntimeService mDeviceRuntimeService;
-
-    @Inject
-    PreferencesService mPreferencesService;
-
-    @Inject
-    HardwareService mHardwareService;
-
-    @Inject
     AccountService mAccountService;
     @Inject
     NotificationService mNotificationService;
-    @BindView(R.id.left_drawer)
-    NavigationView mNavigationView;
     @BindView(R.id.drawer_layout)
     DrawerLayout mNavigationDrawer;
 
@@ -150,7 +138,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        RingApplication.getInstance().startDaemon();
+        JamiApplication.getInstance().startDaemon();
         mToolbarSize = getResources().getDimension(R.dimen.abc_action_bar_default_height_material);
         mToolbarElevation = getResources().getDimension(R.dimen.toolbar_elevation);
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -163,7 +151,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         ButterKnife.bind(this);
 
         // dependency injection
-        RingApplication.getInstance().getRingInjectionComponent().inject(this);
+        JamiApplication.getInstance().getRingInjectionComponent().inject(this);
 
         setSupportActionBar(mToolbar);
 
@@ -252,9 +240,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         if (Intent.ACTION_SEND.equals(action) || Intent.ACTION_SEND_MULTIPLE.equals(action)) {
             Bundle extra = intent.getExtras();
             if (extra != null) {
-                String accountId = extra.getString(ConversationFragment.KEY_ACCOUNT_ID);
-                String uri = extra.getString(ConversationFragment.KEY_CONTACT_RING_ID);
-                if (!TextUtils.isEmpty(accountId) && !TextUtils.isEmpty(uri)) {
+                if (ConversationPath.fromBundle(extra) != null) {
                     intent.setClass(this, ConversationActivity.class);
                     startActivity(intent);
                 }

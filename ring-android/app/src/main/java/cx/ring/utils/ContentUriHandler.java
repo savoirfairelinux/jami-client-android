@@ -19,9 +19,14 @@
  */
 package cx.ring.utils;
 
+import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
+
+import java.util.List;
 
 import cx.ring.BuildConfig;
+import cx.ring.fragments.ConversationFragment;
 
 /**
  * This class distributes content uri used to pass along data in the app
@@ -33,7 +38,7 @@ public class ContentUriHandler {
 
     private static final Uri AUTHORITY_URI = Uri.parse("content://" + AUTHORITY);
 
-    public static final Uri CONVERSATION_CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "conversations");
+    public static final Uri CONVERSATION_CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "conversation");
     public static final Uri ACCOUNTS_CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "accounts");
     public static final Uri CONTACT_CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "contact");
 

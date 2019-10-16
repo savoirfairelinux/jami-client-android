@@ -54,9 +54,6 @@ public class DaemonService {
     protected CallService mCallService;
 
     @Inject
-    protected ConferenceService mConferenceService;
-
-    @Inject
     protected HardwareService mHardwareService;
 
     @Inject
@@ -250,17 +247,17 @@ public class DaemonService {
 
         @Override
         public void conferenceCreated(final String confId) {
-            mConferenceService.conferenceCreated(confId);
+            mCallService.conferenceCreated(confId);
         }
 
         @Override
         public void conferenceRemoved(String confId) {
-            mConferenceService.conferenceRemoved(confId);
+            mCallService.conferenceRemoved(confId);
         }
 
         @Override
         public void conferenceChanged(String confId, String state) {
-            mConferenceService.conferenceChanged(confId, state);
+            mCallService.conferenceChanged(confId, state);
         }
 
         @Override

@@ -64,20 +64,22 @@ import androidx.databinding.DataBindingUtil;
 import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
 import javax.inject.Inject;
 
 import cx.ring.R;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.call.CallPresenter;
 import cx.ring.call.CallView;
 import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
+import cx.ring.client.ConversationSelectionActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.databinding.FragCallBinding;
-import cx.ring.dependencyinjection.RingInjectionComponent;
+import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
 import cx.ring.mvp.BaseSupportFragment;
@@ -86,6 +88,7 @@ import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.NotificationService;
 import cx.ring.utils.ActionHelper;
+import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.KeyboardVisibilityManager;
 import cx.ring.utils.Log;
@@ -105,8 +108,10 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     public static final String KEY_CONF_ID = "confId";
     public static final String KEY_AUDIO_ONLY = "AUDIO_ONLY";
 
+    private static final int REQUEST_CODE_ADD_PARTICIPANT = 6;
     private static final int REQUEST_PERMISSION_INCOMING = 1003;
     private static final int REQUEST_PERMISSION_OUTGOING = 1004;
+
     private FragCallBinding binding;
     private OrientationEventListener mOrientationListener;
 
@@ -120,6 +125,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     private int mVideoHeight = -1;
     private int mPreviewWidth = 720, mPreviewHeight = 1280;
     private int mPreviewSurfaceWidth = 0, mPreviewSurfaceHeight = 0;
+    private int mCurrentSurfaceId = -1;
 
     private boolean mBackstackLost = false;
 
@@ -198,7 +204,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     @Override
-    public void enterPipMode(SipCall sipCall) {
+    public void enterPipMode(String callId) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             return;
         }
@@ -224,7 +230,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                     PendingIntent.getService(context, new Random().nextInt(),
                             new Intent(DRingService.ACTION_CALL_END)
                                     .setClass(context, DRingService.class)
-                                    .putExtra(NotificationService.KEY_CALL_ID, sipCall.getCallId()), PendingIntent.FLAG_ONE_SHOT)));
+                                    .putExtra(NotificationService.KEY_CALL_ID, callId), PendingIntent.FLAG_ONE_SHOT)));
             paramBuilder.setActions(actions);
             requireActivity().enterPictureInPictureMode(paramBuilder.build());
         } else if (DeviceUtils.isTv(context)) {
@@ -238,7 +244,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     @Override
-    public void injectFragment(RingInjectionComponent component) {
+    public void injectFragment(JamiInjectionComponent component) {
         component.inject(this);
     }
 
@@ -269,7 +275,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        injectFragment(((RingApplication) requireActivity().getApplication()).getRingInjectionComponent());
+        injectFragment(((JamiApplication) requireActivity().getApplication()).getRingInjectionComponent());
         binding = DataBindingUtil.inflate(inflater, R.layout.frag_call, container, false);
         binding.setPresenter(this);
         return binding.getRoot();
@@ -307,11 +313,12 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         mCurrentOrientation = getResources().getConfiguration().orientation;
         requireActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         PowerManager powerManager = (PowerManager) requireContext().getSystemService(Context.POWER_SERVICE);
-        mScreenWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "ring:callLock");
-        mScreenWakeLock.setReferenceCounted(false);
-
-        if (mScreenWakeLock != null && !mScreenWakeLock.isHeld()) {
-            mScreenWakeLock.acquire();
+        if (powerManager != null) {
+            mScreenWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "ring:callLock");
+            mScreenWakeLock.setReferenceCounted(false);
+            if (mScreenWakeLock != null && !mScreenWakeLock.isHeld()) {
+                mScreenWakeLock.acquire();
+            }
         }
 
         binding.videoSurface.getHolder().setFormat(PixelFormat.RGBA_8888);
@@ -339,18 +346,20 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                 resetVideoSize(mVideoWidth, mVideoHeight));
 
         WindowManager windowManager = (WindowManager) requireContext().getSystemService(Context.WINDOW_SERVICE);
-        mOrientationListener = new OrientationEventListener(getContext()) {
-            @Override
-            public void onOrientationChanged(int orientation) {
-                int rot = windowManager.getDefaultDisplay().getRotation();
-                if (mCurrentOrientation != rot) {
-                    mCurrentOrientation = rot;
-                    presenter.configurationChanged(rot);
+        if (windowManager != null) {
+            mOrientationListener = new OrientationEventListener(getContext()) {
+                @Override
+                public void onOrientationChanged(int orientation) {
+                    int rot = windowManager.getDefaultDisplay().getRotation();
+                    if (mCurrentOrientation != rot) {
+                        mCurrentOrientation = rot;
+                        presenter.configurationChanged(rot);
+                    }
                 }
+            };
+            if (mOrientationListener.canDetectOrientation()) {
+                mOrientationListener.enable();
             }
-        };
-        if (mOrientationListener.canDetectOrientation()) {
-            mOrientationListener.enable();
         }
 
         binding.shapeRipple.setRippleShape(new Circle());
@@ -387,11 +396,13 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                 mScreenWakeLock.release();
             }
             PowerManager powerManager = (PowerManager) requireContext().getSystemService(Context.POWER_SERVICE);
-            mScreenWakeLock = powerManager.newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "ring:callLock");
-            mScreenWakeLock.setReferenceCounted(false);
+            if (powerManager != null) {
+                mScreenWakeLock = powerManager.newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "ring:callLock");
+                mScreenWakeLock.setReferenceCounted(false);
 
-            if (mScreenWakeLock != null && !mScreenWakeLock.isHeld()) {
-                mScreenWakeLock.acquire();
+                if (mScreenWakeLock != null && !mScreenWakeLock.isHeld()) {
+                    mScreenWakeLock.acquire();
+                }
             }
         }
     }
@@ -434,20 +445,32 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu m, MenuInflater inf) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_CODE_ADD_PARTICIPANT) {
+            if (resultCode == Activity.RESULT_OK && data != null) {
+                ConversationPath path = ConversationPath.fromUri(data.getData());
+                if (path != null) {
+                    presenter.addConferenceParticipant(path.getAccountId(), path.getContactId());
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu m, @NonNull MenuInflater inf) {
         super.onCreateOptionsMenu(m, inf);
         inf.inflate(R.menu.ac_call, m);
         dialPadBtn = m.findItem(R.id.menuitem_dialpad);
     }
 
     @Override
-    public void onPrepareOptionsMenu(Menu menu) {
+    public void onPrepareOptionsMenu(@NonNull Menu menu) {
         super.onPrepareOptionsMenu(menu);
         presenter.prepareOptionMenu();
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -501,6 +524,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     @Override
     public void displayHangupButton(boolean display) {
+        Log.w(TAG, "displayHangupButton " + display);
         binding.callControlGroup.setVisibility(display ? View.VISIBLE : View.GONE);
         binding.callHangupBtn.setVisibility(display ? View.VISIBLE : View.GONE);
     }
@@ -532,12 +556,12 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     @Override
-    public void updateContactBubble(@NonNull final CallContact contact) {
-        String username = contact.getRingUsername();
-        String displayName = contact.getDisplayName();
+    public void updateContactBubble(@NonNull final List<CallContact> contacts) {
+        String username = contacts.size() == 1 ? contacts.get(0).getRingUsername() : "...";
+        String displayName = contacts.size() == 1 ? contacts.get(0).getDisplayName() : "...";;//contact.getDisplayName();
 
-        String ringId = contact.getIds().get(0);
-        Log.d(TAG, "updateContactBubble: contact=" + contact + " username=" + username + ", ringId=" + ringId);
+        //String ringId = contact.getIds().get(0);
+        //Log.d(TAG, "updateContactBubble: contact=" + contact + " username=" + username + ", ringId=" + ringId);
 
         boolean hasProfileName = displayName != null && !displayName.contentEquals(username);
 
@@ -565,7 +589,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             binding.contactBubbleTxt.setText(username);
         }
 
-        binding.contactBubble.setImageDrawable(new AvatarDrawable(getActivity(), contact));
+        binding.contactBubble.setImageDrawable(new AvatarDrawable(getActivity(), contacts.get(0)));
     }
 
     @Override
@@ -581,7 +605,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     @Override
-    public void initMenu(boolean isSpeakerOn, boolean hasContact, boolean displayFlip, boolean canDial, boolean onGoingCall) {
+    public void initMenu(boolean isSpeakerOn, boolean displayFlip, boolean canDial, boolean onGoingCall) {
         if (binding.callCameraFlipBtn != null) {
             binding.callCameraFlipBtn.setVisibility(displayFlip ? View.VISIBLE : View.GONE);
         }
@@ -592,6 +616,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     @Override
     public void initNormalStateDisplay(final boolean audioOnly, boolean isMuted) {
+        Log.w(TAG, "initNormalStateDisplay");
         binding.shapeRipple.stopRipple();
 
         binding.callAcceptBtn.setVisibility(View.GONE);
@@ -607,6 +632,8 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     @Override
     public void initIncomingCallDisplay() {
+        Log.w(TAG, "initIncomingCallDisplay");
+
         binding.callAcceptBtn.setVisibility(View.VISIBLE);
         binding.callRefuseBtn.setVisibility(View.VISIBLE);
         binding.callControlGroup.setVisibility(View.GONE);
@@ -618,6 +645,8 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     @Override
     public void initOutGoingCallDisplay() {
+        Log.w(TAG, "initOutGoingCallDisplay");
+
         binding.callAcceptBtn.setVisibility(View.GONE);
         binding.callRefuseBtn.setVisibility(View.VISIBLE);
         binding.callControlGroup.setVisibility(View.GONE);
@@ -691,19 +720,13 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     @Override
     public void goToConversation(String accountId, String conversationId) {
-        Intent intent = new Intent();
         if (DeviceUtils.isTablet(requireActivity())) {
-            intent.setClass(requireActivity(), HomeActivity.class)
+            startActivity(new Intent().setClass(requireActivity(), HomeActivity.class)
                     .setAction(DRingService.ACTION_CONV_ACCEPT)
-                    .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, conversationId);
-            startActivity(intent);
+                    .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, conversationId));
         } else {
-            intent.setClass(requireActivity(), ConversationActivity.class)
-                    .setAction(Intent.ACTION_VIEW)
-                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                    .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
-                    .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, conversationId);
-            startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
+            startActivityForResult(new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, conversationId), requireActivity(), ConversationActivity.class)
+                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP), HomeActivity.REQUEST_CODE_CONVERSATION);
         }
     }
 
@@ -722,7 +745,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
      */
     @Override
     public void prepareCall(boolean isIncoming) {
-        Bundle args = getArguments();
         boolean audioGranted = mDeviceRuntimeService.hasAudioPermission();
         boolean audioOnly;
         int permissionType;
@@ -730,9 +752,9 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         if (isIncoming) {
             audioOnly = presenter.isAudioOnly();
             permissionType = REQUEST_PERMISSION_INCOMING;
-
         } else {
-            audioOnly = args.getBoolean(KEY_AUDIO_ONLY);
+            Bundle args = getArguments();
+            audioOnly = args != null && args.getBoolean(KEY_AUDIO_ONLY);
             permissionType = REQUEST_PERMISSION_OUTGOING;
         }
         if (!audioOnly) {
@@ -764,7 +786,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
      *
      * @param isIncoming true if call is incoming, false for outgoing
      */
-    public void initializeCall(boolean isIncoming) {
+    private void initializeCall(boolean isIncoming) {
         if (isIncoming) {
             presenter.acceptCall();
         } else {
@@ -816,6 +838,19 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     public void cameraFlip() {
         presenter.switchVideoInputClick();
+    }
+
+    public void addParticipant() {
+        presenter.startAddParticipant();
+    }
+
+    @Override
+    public void startAddParticipant(String conferenceId) {
+        startActivityForResult(
+                new Intent(Intent.ACTION_PICK)
+                        .setClass(requireActivity(), ConversationSelectionActivity.class)
+                        .putExtra(KEY_CONF_ID, conferenceId),
+                CallFragment.REQUEST_CODE_ADD_PARTICIPANT);
     }
 
     @Override

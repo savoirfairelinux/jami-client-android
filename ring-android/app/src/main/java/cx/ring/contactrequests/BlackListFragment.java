@@ -36,7 +36,7 @@ import java.util.Collection;
 import butterknife.BindView;
 import cx.ring.R;
 import cx.ring.account.AccountEditionActivity;
-import cx.ring.dependencyinjection.RingInjectionComponent;
+import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.model.CallContact;
 import cx.ring.mvp.BaseSupportFragment;
 
@@ -59,7 +59,7 @@ public class BlackListFragment extends BaseSupportFragment<BlackListPresenter> i
     }
 
     @Override
-    public void injectFragment(RingInjectionComponent component) {
+    public void injectFragment(JamiInjectionComponent component) {
         component.inject(this);
     }
 

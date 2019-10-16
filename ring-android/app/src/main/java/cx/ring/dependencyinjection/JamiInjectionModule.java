@@ -21,29 +21,29 @@ package cx.ring.dependencyinjection;
 
 import android.content.Context;
 
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import dagger.Module;
 import dagger.Provides;
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 @Module
-public class RingInjectionModule {
+public class JamiInjectionModule {
 
-    private final RingApplication mRingApplication;
+    private final JamiApplication mJamiApplication;
 
-    public RingInjectionModule(RingApplication app) {
-        mRingApplication = app;
+    public JamiInjectionModule(JamiApplication app) {
+        mJamiApplication = app;
     }
 
     @Provides
-    RingApplication provideRingApplication() {
-        return mRingApplication;
+    JamiApplication provideRingApplication() {
+        return mJamiApplication;
     }
 
     @Provides
     Context provideContext() {
-        return mRingApplication;
+        return mJamiApplication;
     }
 
     @Provides

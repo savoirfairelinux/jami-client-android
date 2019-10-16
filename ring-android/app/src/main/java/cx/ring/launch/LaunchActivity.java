@@ -26,13 +26,10 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
-import androidx.appcompat.app.AlertDialog;
-
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import cx.ring.R;
 import cx.ring.account.AccountWizardActivity;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.mvp.BaseActivity;
 import cx.ring.tv.account.TVAccountWizard;
@@ -43,9 +40,9 @@ public class LaunchActivity extends BaseActivity<LaunchPresenter> implements Lau
     @Override
     public void onCreate(Bundle savedInstanceState) {
         // dependency injection
-        RingApplication.getInstance().getRingInjectionComponent().inject(this);
+        JamiApplication.getInstance().getRingInjectionComponent().inject(this);
         super.onCreate(savedInstanceState);
-        RingApplication.getInstance().startDaemon();
+        JamiApplication.getInstance().startDaemon();
 
         setContentView(R.layout.activity_launch);
 
@@ -54,7 +51,7 @@ public class LaunchActivity extends BaseActivity<LaunchPresenter> implements Lau
 
     @Override
     public void askPermissions(String[] permissionsWeCanAsk) {
-        ActivityCompat.requestPermissions(this, permissionsWeCanAsk, RingApplication.PERMISSIONS_REQUEST);
+        ActivityCompat.requestPermissions(this, permissionsWeCanAsk, JamiApplication.PERMISSIONS_REQUEST);
     }
 
     @Override
@@ -72,13 +69,13 @@ public class LaunchActivity extends BaseActivity<LaunchPresenter> implements Lau
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
-            case RingApplication.PERMISSIONS_REQUEST: {
+            case JamiApplication.PERMISSIONS_REQUEST: {
                 if (grantResults.length == 0) {
                     return;
                 }
                 for (int i = 0, n = permissions.length; i < n; i++) {
                     String permission = permissions[i];
-                    RingApplication.getInstance().permissionHasBeenAsked(permission);
+                    JamiApplication.getInstance().permissionHasBeenAsked(permission);
                     switch (permission) {
                         case Manifest.permission.READ_CONTACTS:
                             presenter.contactPermissionChanged(grantResults[i] == PackageManager.PERMISSION_GRANTED);

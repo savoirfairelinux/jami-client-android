@@ -23,8 +23,6 @@ package cx.ring.model;
 import java.util.HashMap;
 import java.util.Map;
 
-import cx.ring.daemon.StringMap;
-import cx.ring.daemon.StringVect;
 import cx.ring.utils.ProfileChunk;
 import cx.ring.utils.VCardUtils;
 import ezvcard.Ezvcard;
@@ -42,11 +40,13 @@ public class SipCall {
     public final static String KEY_VIDEO_MUTED = "VIDEO_MUTED";
     public final static String KEY_AUDIO_CODEC = "AUDIO_CODEC";
     public final static String KEY_VIDEO_CODEC = "VIDEO_CODEC";
+    public final static String KEY_CONF_ID = "CONF_ID";
 
     private final String mCallID;
     private final String mAccount;
     private CallContact mContact = null;
     private Uri mNumber = null;
+    private String mConfId = null;
     private boolean isPeerHolding = false;
     private boolean isAudioMuted = false;
     private boolean isVideoMuted = false;
@@ -58,20 +58,20 @@ public class SipCall {
     private String mAudioCodec;
     private String mVideoCodec;
 
-    private int mCallType;
+    private Direction mCallType;
     private State mCallState = State.NONE;
 
     private ProfileChunk mProfileChunk = null;
 
 
-    public SipCall(String id, String account, Uri number, int direction) {
+    public SipCall(String id, String account, Uri number, Direction direction) {
         mCallID = id;
         mAccount = account;
         mNumber = number;
         mCallType = direction;
     }
 
-    public SipCall(String id, String account, String number, int direction) {
+    public SipCall(String id, String account, String number, Direction direction) {
         this(id, account, new Uri(number), direction);
     }
 
@@ -85,8 +85,8 @@ public class SipCall {
         this(callId,
                 call_details.get(KEY_ACCOUNT_ID),
                 call_details.get(KEY_PEER_NUMBER),
-                Integer.parseInt(call_details.get(KEY_CALL_TYPE)));
-        mCallState = stateFromString(call_details.get(KEY_CALL_STATE));
+                Direction.fromInt(Integer.parseInt(call_details.get(KEY_CALL_TYPE))));
+        mCallState = State.fromString(call_details.get(KEY_CALL_STATE));
         setDetails(call_details);
     }
 
@@ -94,10 +94,9 @@ public class SipCall {
         return "";
     }
 
-    public int getCallType() {
+    public Direction getCallType() {
         return mCallType;
     }
-
 
     public State getCallState() {
         return mCallState;
@@ -110,6 +109,11 @@ public class SipCall {
         isAudioOnly = "true".equals(details.get(KEY_AUDIO_ONLY));
         mAudioCodec = details.get(KEY_AUDIO_CODEC);
         mVideoCodec = details.get(KEY_VIDEO_CODEC);
+        mConfId = details.get(KEY_CONF_ID);
+    }
+
+    public boolean isConferenceParticipant() {
+        return mConfId != null;
     }
 
     public long getDuration() {
@@ -127,29 +131,78 @@ public class SipCall {
     public String getAudioCodec() {
         return mAudioCodec;
     }
-    public interface Direction {
-        int INCOMING = 0;
-        int OUTGOING = 1;
+
+    public String getConfId() {
+        return mConfId;
+    }
+
+    public void setConfId(String confId) {
+        mConfId = confId;
+    }
+
+    public enum Direction {
+        INCOMING(0),
+        OUTGOING(1);
+
+        private int value;
+        Direction(int v) {
+            value = v;
+        }
+
+        int getValue() {
+            return value;
+        }
+
+        public static Direction fromInt(int i) {
+            return i == INCOMING.value ? INCOMING : OUTGOING;
+        }
     }
 
     public enum State {
-        NONE(0),
-        SEARCHING(1),
-        CONNECTING(2),
-        RINGING(3),
-        CURRENT(4),
-        HUNGUP(5),
-        BUSY(6),
-        FAILURE(7),
-        HOLD(8),
-        UNHOLD(9),
-        INACTIVE(10),
-        OVER(11);
+        NONE,
+        SEARCHING,
+        CONNECTING,
+        RINGING,
+        CURRENT,
+        HUNGUP,
+        BUSY,
+        FAILURE,
+        HOLD,
+        UNHOLD,
+        INACTIVE,
+        OVER;
 
-        private final int value;
-        State(int value){
-            this.value = value;
+        public static State fromString(String state) {
+            switch (state) {
+                case "SEARCHING":
+                    return SEARCHING;
+                case "CONNECTING":
+                    return CONNECTING;
+                case "INCOMING":
+                case "RINGING":
+                    return RINGING;
+                case "CURRENT":
+                    return CURRENT;
+                case "HUNGUP":
+                    return HUNGUP;
+                case "BUSY":
+                    return BUSY;
+                case "FAILURE":
+                    return FAILURE;
+                case "HOLD":
+                    return HOLD;
+                case "UNHOLD":
+                    return UNHOLD;
+                case "INACTIVE":
+                    return INACTIVE;
+                case "OVER":
+                    return OVER;
+                case "NONE":
+                default:
+                    return NONE;
+            }
         }
+
     }
 
     public String getCallId() {
@@ -212,37 +265,6 @@ public class SipCall {
 
     public Uri getNumberUri() {
         return mNumber;
-    }
-
-    public static State stateFromString(String state) {
-        switch (state) {
-            case "SEARCHING":
-                return State.SEARCHING;
-            case "CONNECTING":
-                return State.CONNECTING;
-            case "INCOMING":
-            case "RINGING":
-                return State.RINGING;
-            case "CURRENT":
-                return State.CURRENT;
-            case "HUNGUP":
-                return State.HUNGUP;
-            case "BUSY":
-                return State.BUSY;
-            case "FAILURE":
-                return State.FAILURE;
-            case "HOLD":
-                return State.HOLD;
-            case "UNHOLD":
-                return State.UNHOLD;
-            case "INACTIVE":
-                return State.INACTIVE;
-            case "OVER":
-                return State.OVER;
-            case "NONE":
-            default:
-                return State.NONE;
-        }
     }
 
     /**

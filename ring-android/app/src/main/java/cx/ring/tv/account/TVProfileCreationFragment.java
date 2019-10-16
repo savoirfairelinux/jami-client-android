@@ -25,7 +25,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import androidx.annotation.NonNull;
@@ -34,7 +33,6 @@ import androidx.leanback.widget.GuidanceStylist;
 import androidx.leanback.widget.GuidedAction;
 import androidx.appcompat.app.AlertDialog;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import java.util.List;
@@ -44,14 +42,13 @@ import cx.ring.account.AccountCreationModelImpl;
 import cx.ring.account.ProfileCreationFragment;
 import cx.ring.account.ProfileCreationPresenter;
 import cx.ring.account.ProfileCreationView;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.model.Account;
 import cx.ring.mvp.AccountCreationModel;
 import cx.ring.tv.camera.CustomCameraActivity;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.Single;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCreationPresenter>
         implements ProfileCreationView {
@@ -108,7 +105,7 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
         super.onViewCreated(view, savedInstanceState);
 
         if (mModel == null) {

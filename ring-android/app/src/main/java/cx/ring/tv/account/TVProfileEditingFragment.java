@@ -27,7 +27,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import androidx.annotation.NonNull;
-import androidx.leanback.app.GuidedStepSupportFragment;
 import androidx.leanback.widget.GuidanceStylist;
 import androidx.leanback.widget.GuidedAction;
 import androidx.appcompat.app.AlertDialog;
@@ -39,7 +38,7 @@ import java.util.List;
 
 import cx.ring.R;
 import cx.ring.account.ProfileCreationFragment;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.model.Account;
 import cx.ring.navigation.RingNavigationPresenter;
 import cx.ring.navigation.RingNavigationView;
@@ -107,7 +106,7 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
         super.onViewCreated(view, savedInstanceState);
         iconSize = (int) getResources().getDimension(R.dimen.tv_avatar_size);
     }

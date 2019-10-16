@@ -21,7 +21,7 @@ package cx.ring.mvp;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import androidx.annotation.IdRes;
+
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -34,9 +34,8 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cx.ring.R;
-import cx.ring.account.RingAccountCreationFragment;
-import cx.ring.application.RingApplication;
-import cx.ring.dependencyinjection.RingInjectionComponent;
+import cx.ring.application.JamiApplication;
+import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.model.RingError;
 
 public abstract class BaseFragment<T extends RootPresenter> extends Fragment implements BaseView {
@@ -51,14 +50,14 @@ public abstract class BaseFragment<T extends RootPresenter> extends Fragment imp
     @LayoutRes
     public abstract int getLayout();
 
-    public abstract void injectFragment(RingInjectionComponent component);
+    public abstract void injectFragment(JamiInjectionComponent component);
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         final View inflatedView = inflater.inflate(getLayout(), container, false);
         // dependency injection
-        injectFragment(((RingApplication) getActivity().getApplication()).getRingInjectionComponent());
+        injectFragment(((JamiApplication) getActivity().getApplication()).getRingInjectionComponent());
         //Butterknife
         mUnbinder = ButterKnife.bind(this, inflatedView);
         return inflatedView;

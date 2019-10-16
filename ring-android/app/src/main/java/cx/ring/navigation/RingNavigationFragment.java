@@ -59,7 +59,7 @@ import cx.ring.R;
 import cx.ring.account.AccountWizardActivity;
 import cx.ring.client.CallActivity;
 import cx.ring.client.HomeActivity;
-import cx.ring.dependencyinjection.RingInjectionComponent;
+import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.model.Account;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.services.VCardServiceImpl;
@@ -160,7 +160,7 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
     }
 
     @Override
-    public void injectFragment(RingInjectionComponent component) {
+    public void injectFragment(JamiInjectionComponent component) {
         component.inject(this);
     }
 

@@ -75,7 +75,7 @@ public class HistoryCall implements ConversationElement, Serializable {
         accountID = call.getAccount();
         number = call.getNumber();
         missed = call.isMissed();
-        direction = call.getCallType();
+        direction = call.getCallType().getValue();
         recordPath = call.getRecordPath();
         contactID = call.getContact().getId();
         contactKey = call.getContact().getKey();
@@ -133,7 +133,7 @@ public class HistoryCall implements ConversationElement, Serializable {
     }
 
     public boolean isIncoming() {
-        return direction == SipCall.Direction.INCOMING;
+        return direction == SipCall.Direction.INCOMING.getValue();
     }
 
     public boolean isMissed() {

@@ -59,18 +59,16 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import cx.ring.BuildConfig;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.fragments.ConversationFragment;
-import cx.ring.model.Account;
 import cx.ring.model.Codec;
 import cx.ring.model.Settings;
 import cx.ring.model.Uri;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
-import cx.ring.services.ConferenceService;
 import cx.ring.services.ContactService;
 import cx.ring.services.DaemonService;
 import cx.ring.services.DeviceRuntimeService;
@@ -79,6 +77,7 @@ import cx.ring.services.HistoryService;
 import cx.ring.services.NotificationService;
 import cx.ring.services.PreferencesService;
 import cx.ring.tv.call.TVCallActivity;
+import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -119,9 +118,6 @@ public class DRingService extends Service {
     @Inject
     @Singleton
     protected CallService mCallService;
-    @Inject
-    @Singleton
-    protected ConferenceService mConferenceService;
     @Inject
     @Singleton
     protected AccountService mAccountService;
@@ -296,72 +292,72 @@ public class DRingService extends Service {
 
         @Override
         public void removeConference(final String confID) throws RemoteException {
-            mConferenceService.removeConference(confID);
+            mCallService.removeConference(confID);
         }
 
         @Override
         public void joinParticipant(final String selCallID, final String dragCallID) throws RemoteException {
-            mConferenceService.joinParticipant(selCallID, dragCallID);
+            mCallService.joinParticipant(selCallID, dragCallID);
         }
 
         @Override
         public void addParticipant(final String callID, final String confID) throws RemoteException {
-            mConferenceService.addParticipant(callID, confID);
+            mCallService.addParticipant(callID, confID);
         }
 
         @Override
         public void addMainParticipant(final String confID) throws RemoteException {
-            mConferenceService.addMainParticipant(confID);
+            mCallService.addMainParticipant(confID);
         }
 
         @Override
         public void detachParticipant(final String callID) throws RemoteException {
-            mConferenceService.detachParticipant(callID);
+            mCallService.detachParticipant(callID);
         }
 
         @Override
         public void joinConference(final String selConfID, final String dragConfID) throws RemoteException {
-            mConferenceService.joinConference(selConfID, dragConfID);
+            mCallService.joinConference(selConfID, dragConfID);
         }
 
         @Override
         public void hangUpConference(final String confID) throws RemoteException {
-            mConferenceService.hangUpConference(confID);
+            mCallService.hangUpConference(confID);
         }
 
         @Override
         public void holdConference(final String confID) throws RemoteException {
-            mConferenceService.holdConference(confID);
+            mCallService.holdConference(confID);
         }
 
         @Override
         public void unholdConference(final String confID) throws RemoteException {
-            mConferenceService.unholdConference(confID);
+            mCallService.unholdConference(confID);
         }
 
         @Override
         public boolean isConferenceParticipant(final String callID) throws RemoteException {
-            return mConferenceService.isConferenceParticipant(callID);
+            return mCallService.isConferenceParticipant(callID);
         }
 
         @Override
         public Map<String, ArrayList<String>> getConferenceList() throws RemoteException {
-            return mConferenceService.getConferenceList();
+            return mCallService.getConferenceList();
         }
 
         @Override
         public List<String> getParticipantList(final String confID) throws RemoteException {
-            return mConferenceService.getParticipantList(confID);
+            return mCallService.getParticipantList(confID);
         }
 
         @Override
         public String getConferenceId(String callID) throws RemoteException {
-            return mConferenceService.getConferenceId(callID);
+            return mCallService.getConferenceId(callID);
         }
 
         @Override
         public String getConferenceDetails(final String callID) throws RemoteException {
-            return mConferenceService.getConferenceDetails(callID);
+            return mCallService.getConferenceState(callID);
         }
 
         @Override
@@ -436,7 +432,7 @@ public class DRingService extends Service {
 
         @Override
         public Map<String, String> getConference(final String id) throws RemoteException {
-            return mConferenceService.getConference(id);
+            return mCallService.getConferenceDetails(id);
         }
 
         @Override
@@ -568,7 +564,7 @@ public class DRingService extends Service {
         super.onCreate();
 
         // dependency injection
-        RingApplication.getInstance().getRingInjectionComponent().inject(this);
+        JamiApplication.getInstance().getRingInjectionComponent().inject(this);
         isRunning = true;
 
         if (mDeviceRuntimeService.hasContactPermission()) {
@@ -589,8 +585,8 @@ public class DRingService extends Service {
             showSystemNotification(s);
         }));
 
-        RingApplication.getInstance().bindDaemon();
-        RingApplication.getInstance().bootstrapDaemon();
+        JamiApplication.getInstance().bindDaemon();
+        JamiApplication.getInstance().bootstrapDaemon();
     }
 
     @Override
@@ -820,9 +816,7 @@ public class DRingService extends Service {
                 break;
             }
             case ACTION_CONV_ACCEPT:
-                startActivity(new Intent(Intent.ACTION_VIEW)
-                        .putExtras(extras)
-                        .setClass(getApplicationContext(), ConversationActivity.class)
+                startActivity(new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, ringId), getApplicationContext(), ConversationActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 break;
             default:

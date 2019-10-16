@@ -32,6 +32,7 @@ import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.RingserviceJNI;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.UintVect;
+import cx.ring.model.Conference;
 import cx.ring.model.SipCall;
 import cx.ring.utils.Log;
 import io.reactivex.Completable;
@@ -135,8 +136,9 @@ public abstract class HardwareService {
     public abstract void requestKeyFrame();
 
     public abstract void addVideoSurface(String id, Object holder);
+    public abstract void updateVideoSurfaceId(String currentId, String newId);
 
-    public abstract void addPreviewVideoSurface(Object holder, SipCall call);
+    public abstract void addPreviewVideoSurface(Object holder, Conference conference);
 
     public abstract void removeVideoSurface(String id);
 

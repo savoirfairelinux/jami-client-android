@@ -20,8 +20,12 @@
  */
 package cx.ring.services;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ScheduledExecutorService;
 
 import javax.inject.Inject;
@@ -30,8 +34,11 @@ import javax.inject.Named;
 import cx.ring.daemon.Blob;
 import cx.ring.daemon.IntegerMap;
 import cx.ring.daemon.Ringservice;
+import cx.ring.daemon.RingserviceJNI;
 import cx.ring.daemon.StringMap;
+import cx.ring.daemon.StringVect;
 import cx.ring.model.CallContact;
+import cx.ring.model.Conference;
 import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
 import cx.ring.utils.Log;
@@ -64,15 +71,76 @@ public class CallService {
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
 
-    private Map<String, SipCall> currentCalls = new HashMap<>();
-    private final PublishSubject<SipCall> callSubject = PublishSubject.create();
+    private final Map<String, SipCall> currentCalls = new HashMap<>();
+    private final Map<String, Conference> currentConferences = new HashMap<>();
 
-    public Subject<SipCall> getCallSubject() {
-        return callSubject;
+    private final PublishSubject<SipCall> callSubject = PublishSubject.create();
+    private final PublishSubject<Conference> conferenceSubject = PublishSubject.create();
+
+
+    public Observable<Conference> getConfsUpdates() {
+        return conferenceSubject;
     }
 
+    public Observable<Conference> getConfCallUpdates(final Conference conf) {
+        Log.w(TAG, "getConfCallUpdates " + conf.getId());
+
+        return conferenceSubject
+                .filter(c -> c == conf)
+                .startWith(conf)
+                .map(Conference::getParticipants)
+                .switchMap(list -> Observable.fromIterable(list)
+                        .flatMap(call -> callSubject.filter(c -> c == call)))
+                .map(call -> conf)
+                .startWith(conf);
+    }
+
+    public Observable<Conference> getConfUpdates(final String confId) {
+        SipCall call = getCurrentCallForId(confId);
+        return call == null ? Observable.error(new IllegalArgumentException()) : getConfUpdates(call);
+        /*Conference call = currentConferences.get(confId);
+        return call == null ? Observable.error(new IllegalArgumentException()) : conferenceSubject
+                .filter(c -> c.getId().equals(confId));//getConfUpdates(call);*/
+    }
+
+    private class ConferenceEntity {
+        Conference conference;
+
+        ConferenceEntity(Conference conf) {
+            conference = conf;
+        }
+    }
+
+    public Observable<Conference> getConfUpdates(final SipCall call) {
+        return getConfUpdates(getConference(call));
+    }
+    public Observable<Conference> getConfUpdates(final Conference conference) {
+        Log.w(TAG, "getConfUpdates " + conference.getId());
+
+        ConferenceEntity conferenceEntity = new ConferenceEntity(conference);
+        return conferenceSubject
+                .startWith(conference)
+                .filter(conf -> {
+                    Log.w(TAG, "getConfUpdates filter " + conf.getId());
+                    if (conf == conferenceEntity.conference) {
+                        return true;
+                    }
+                    if (conf.contains(conferenceEntity.conference.getId())) {
+                        Log.w(TAG, "Switching tracked conference to " + conf.getId());
+                        conferenceEntity.conference = conf;
+                        return true;
+                    }
+                    return false;
+                })
+                .switchMap(this::getConfCallUpdates);
+    }
+
+    public Observable<SipCall> getCallsUpdates() {
+        return callSubject;
+    }
     public Observable<SipCall> getCallUpdates(final SipCall call) {
-        return callSubject.filter(c -> c == call).startWith(call);
+        return callSubject.filter(c -> c == call)
+                .startWith(call);
     }
     public Observable<SipCall> getCallUpdates(final String callId) {
         SipCall call = getCurrentCallForId(callId);
@@ -81,7 +149,9 @@ public class CallService {
 
     public Observable<SipCall> placeCallObservable(final String accountId, final String number, final boolean audioOnly) {
         return placeCall(accountId, number, audioOnly)
+                //.map(this::addConference)
                 .flatMapObservable(this::getCallUpdates);
+                //.map(this::addConference);
     }
 
     public Single<SipCall> placeCall(final String account, final String number, final boolean audioOnly) {
@@ -101,6 +171,7 @@ public class CallService {
             SipCall call = addCall(account, callId, number, SipCall.Direction.OUTGOING);
             call.muteVideo(audioOnly);
             call.setContact(contact);
+            //return addConference(call);
             return call;
         }).subscribeOn(Schedulers.from(mExecutor));
     }
@@ -280,7 +351,7 @@ public class CallService {
                 .subscribeOn(Schedulers.from(mExecutor));
     }
 
-    public SipCall getCurrentCallForId(String callId) {
+    private SipCall getCurrentCallForId(String callId) {
         return currentCalls.get(callId);
     }
 
@@ -295,9 +366,10 @@ public class CallService {
 
     public void removeCallForId(String callId) {
         currentCalls.remove(callId);
+        currentConferences.remove(callId);
     }
 
-    private SipCall addCall(String accountId, String callId, String from, int direction) {
+    private SipCall addCall(String accountId, String callId, String from, SipCall.Direction direction) {
         SipCall call = currentCalls.get(callId);
         if (call == null) {
             call = new SipCall(callId, accountId, new Uri(from), direction);
@@ -308,8 +380,23 @@ public class CallService {
         return call;
     }
 
+    private Conference addConference(SipCall call) {
+        String confId = call.getConfId();
+        if (confId == null) {
+            confId = call.getCallId();
+        }
+        Conference conference = currentConferences.get(confId);
+        if (conference == null) {
+            conference = new Conference(call);
+            currentConferences.put(confId, conference);
+        } else {
+            Log.w(TAG, "Conference already existed ! " + conference.getId());
+        }
+        return conference;
+    }
+
     private SipCall parseCallState(String callId, String newState) {
-        SipCall.State callState = SipCall.stateFromString(newState);
+        SipCall.State callState = SipCall.State.fromString(newState);
         SipCall sipCall = currentCalls.get(callId);
         if (sipCall != null) {
             sipCall.setCallState(callState);
@@ -341,6 +428,7 @@ public class CallService {
                 callSubject.onNext(call);
                 if (call.getCallState() == SipCall.State.OVER) {
                     currentCalls.remove(call.getCallId());
+                    currentConferences.remove(call.getCallId());
                 }
             }
         } catch (Exception e) {
@@ -377,6 +465,201 @@ public class CallService {
 
     void onRtcpReportReceived(String callId, IntegerMap stats) {
         Log.i(TAG, "on RTCP report received: " + callId);
+    }
+
+    public void removeConference(final String confId) {
+        mExecutor.execute(() -> Ringservice.removeConference(confId));
+    }
+
+    public void joinParticipant(final String selCallId, final String dragCallId) {
+        mExecutor.execute(() -> Ringservice.joinParticipant(selCallId, dragCallId));
+    }
+
+    public void addParticipant(final String callId, final String confId) {
+        mExecutor.execute(() -> Ringservice.addParticipant(callId, confId));
+    }
+
+    public void addMainParticipant(final String confId) {
+        mExecutor.execute(() -> Ringservice.addMainParticipant(confId));
+    }
+
+    public void detachParticipant(final String callId) {
+        mExecutor.execute(() -> Ringservice.detachParticipant(callId));
+    }
+
+    public void joinConference(final String selConfId, final String dragConfId) {
+        mExecutor.execute(() -> Ringservice.joinConference(selConfId, dragConfId));
+    }
+
+    public void hangUpConference(final String confId) {
+        mExecutor.execute(() -> Ringservice.hangUpConference(confId));
+    }
+
+    public void holdConference(final String confId) {
+        mExecutor.execute(() -> Ringservice.holdConference(confId));
+    }
+
+    public void unholdConference(final String confId) {
+        mExecutor.execute(() -> Ringservice.unholdConference(confId));
+    }
+
+    public boolean isConferenceParticipant(final String callId) {
+        try {
+            return mExecutor.submit(() -> {
+                Log.i(TAG, "isConferenceParticipant() running...");
+                return Ringservice.isConferenceParticipant(callId);
+            }).get();
+        } catch (Exception e) {
+            Log.e(TAG, "Error running isConferenceParticipant()", e);
+        }
+        return false;
+    }
+
+    public Map<String, ArrayList<String>> getConferenceList() {
+        try {
+            return mExecutor.submit(() -> {
+                Log.i(TAG, "getConferenceList() running...");
+                StringVect callIds = Ringservice.getCallList();
+                HashMap<String, ArrayList<String>> confs = new HashMap<>(callIds.size());
+                for (int i = 0; i < callIds.size(); i++) {
+                    String callId = callIds.get(i);
+                    String confId = Ringservice.getConferenceId(callId);
+                    Map<String, String> callDetails = Ringservice.getCallDetails(callId).toNative();
+
+                    //todo remove condition when callDetails does not contains sips ids anymore
+                    if (!callDetails.get("PEER_NUMBER").contains("sips")) {
+                        if (confId == null || confId.isEmpty()) {
+                            confId = callId;
+                        }
+                        ArrayList<String> calls = confs.get(confId);
+                        if (calls == null) {
+                            calls = new ArrayList<>();
+                            confs.put(confId, calls);
+                        }
+                        calls.add(callId);
+                    }
+                }
+                return confs;
+            }).get();
+        } catch (Exception e) {
+            Log.e(TAG, "Error running isConferenceParticipant()", e);
+        }
+        return null;
+    }
+
+    public List<String> getParticipantList(final String confId) {
+        try {
+            return mExecutor.submit(() -> {
+                Log.i(TAG, "getParticipantList() running...");
+                return new ArrayList<>(Ringservice.getParticipantList(confId));
+            }).get();
+        } catch (Exception e) {
+            Log.e(TAG, "Error running getParticipantList()", e);
+        }
+        return null;
+    }
+
+    public Conference getConference(SipCall call) {
+        return addConference(call);
+    }
+
+    public String getConferenceId(String callId) {
+        return Ringservice.getConferenceId(callId);
+    }
+
+    public String getConferenceState(final String callId) {
+        try {
+            return mExecutor.submit(() -> {
+                Log.i(TAG, "getConferenceDetails() thread running...");
+                return Ringservice.getConferenceDetails(callId).get("CONF_STATE");
+            }).get();
+        } catch (Exception e) {
+            Log.e(TAG, "Error running getParticipantList()", e);
+        }
+        return null;
+    }
+
+    public Conference getConference(final String id) {
+        return currentConferences.get(id);
+    }
+
+    public Map<String, String> getConferenceDetails(final String id) {
+        try {
+            return mExecutor.submit(() -> {
+                Log.i(TAG, "getCredentials() thread running...");
+                return Ringservice.getConferenceDetails(id).toNative();
+            }).get();
+        } catch (Exception e) {
+            Log.e(TAG, "Error running getParticipantList()", e);
+        }
+        return null;
+    }
+
+    void conferenceCreated(final String confId) {
+        Log.d(TAG, "conference created: " + confId);
+
+        Conference conf = currentConferences.get(confId);
+        if (conf == null) {
+            conf = new Conference(confId);
+            currentConferences.put(confId, conf);
+        }
+        StringVect participants = Ringservice.getParticipantList(confId);
+        for (String callId : participants) {
+            SipCall call = getCurrentCallForId(callId);
+            if (call != null) {
+                Log.d(TAG, "conference created: adding participant " + callId + " " + call.getContact().getDisplayName());
+                call.setConfId(confId);
+                conf.addParticipant(call);
+            }
+            currentConferences.remove(callId);
+        }
+        conferenceSubject.onNext(conf);
+    }
+
+    void conferenceRemoved(String confId) {
+        Log.d(TAG, "conference removed: " + confId);
+
+        Conference conf = currentConferences.remove(confId);
+        if (conf != null) {
+            for (SipCall call : conf.getParticipants()) {
+                call.setConfId(null);
+            }
+            conf.removeParticipants();
+            conferenceSubject.onNext(conf);
+        }
+    }
+
+    void conferenceChanged(String confId, String state) {
+        Log.d(TAG, "conference changed: " + confId + ", " + state);
+
+        Conference conf = currentConferences.get(confId);
+        if (conf == null) {
+            conf = new Conference(confId);
+            currentConferences.put(confId, conf);
+        }
+        Set<String> participants = new HashSet<>(Ringservice.getParticipantList(confId));
+        // Add new participants
+        for (String callId : participants) {
+            if (!conf.contains(callId)) {
+                SipCall call = getCurrentCallForId(callId);
+                if (call != null) {
+                    Log.d(TAG, "conference changed: adding participant " + callId + " " + call.getContact().getDisplayName());
+                    call.setConfId(confId);
+                    conf.addParticipant(call);
+                }
+                currentConferences.remove(callId);
+            }
+        }
+        // Remove participants
+        for (SipCall call : conf.getParticipants()) {
+            if (!participants.contains(call.getCallId())) {
+                Log.d(TAG, "conference changed: removing participant " + call.getCallId() + " " + call.getContact().getDisplayName());
+                conf.removeParticipant(call);
+                call.setConfId(null);
+                addConference(call);
+            }
+        }
+        conferenceSubject.onNext(conf);
     }
 
 }

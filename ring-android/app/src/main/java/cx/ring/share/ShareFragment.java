@@ -36,7 +36,7 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cx.ring.R;
-import cx.ring.dependencyinjection.RingInjectionComponent;
+import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.mvp.GenericView;
 import cx.ring.utils.QRCodeUtils;
@@ -73,7 +73,7 @@ public class ShareFragment extends BaseSupportFragment<SharePresenter> implement
     }
 
     @Override
-    public void injectFragment(RingInjectionComponent component) {
+    public void injectFragment(JamiInjectionComponent component) {
         component.inject(this);
     }
 

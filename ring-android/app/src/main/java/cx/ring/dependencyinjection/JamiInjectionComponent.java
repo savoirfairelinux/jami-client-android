@@ -30,7 +30,7 @@ import cx.ring.account.RegisterNameDialog;
 import cx.ring.account.RingAccountCreationFragment;
 import cx.ring.account.RingAccountSummaryFragment;
 import cx.ring.account.RingLinkAccountFragment;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.client.ContactDetailsActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.client.RingtoneActivity;
@@ -42,6 +42,7 @@ import cx.ring.fragments.AccountsManagementFragment;
 import cx.ring.fragments.AdvancedAccountFragment;
 import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.ConversationFragment;
+import cx.ring.client.ConversationSelectionActivity;
 import cx.ring.fragments.GeneralAccountFragment;
 import cx.ring.fragments.MediaPreferenceFragment;
 import cx.ring.fragments.SIPAccountCreationFragment;
@@ -87,9 +88,9 @@ import cx.ring.tv.search.RingSearchFragment;
 import dagger.Component;
 
 @Singleton
-@Component(modules = {RingInjectionModule.class, ServiceInjectionModule.class})
-public interface RingInjectionComponent {
-    void inject(RingApplication app);
+@Component(modules = {JamiInjectionModule.class, ServiceInjectionModule.class})
+public interface JamiInjectionComponent {
+    void inject(JamiApplication app);
 
     void inject(RingNavigationFragment view);
 
@@ -112,6 +113,8 @@ public interface RingInjectionComponent {
     void inject(CallFragment fragment);
 
     void inject(SmartListFragment fragment);
+
+    void inject(ConversationSelectionActivity fragment);
 
     void inject(RingAccountCreationFragment fragment);
 
