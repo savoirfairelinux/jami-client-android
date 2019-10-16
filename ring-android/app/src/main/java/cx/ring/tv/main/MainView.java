@@ -19,11 +19,9 @@
  */
 package cx.ring.tv.main;
 
-import android.graphics.drawable.BitmapDrawable;
-
 import java.util.List;
 
-import cx.ring.navigation.RingNavigationViewModel;
+import cx.ring.navigation.HomeNavigationViewModel;
 import cx.ring.tv.model.TVListViewModel;
 
 public interface MainView {
@@ -40,7 +38,7 @@ public interface MainView {
 
     void displayErrorToast(int error);
 
-    void displayAccountInfos(RingNavigationViewModel viewModel);
+    void displayAccountInfos(HomeNavigationViewModel viewModel);
 
     void showExportDialog(String pAccountID);
 

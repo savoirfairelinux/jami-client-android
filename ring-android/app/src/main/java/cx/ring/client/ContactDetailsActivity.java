@@ -40,7 +40,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
@@ -54,7 +53,7 @@ import androidx.core.widget.ImageViewCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import cx.ring.R;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.databinding.ActivityContactDetailsBinding;
 import cx.ring.databinding.ItemContactActionBinding;
 import cx.ring.facades.ConversationFacade;
@@ -66,6 +65,8 @@ import cx.ring.model.Conversation;
 import cx.ring.model.SipCall;
 import cx.ring.services.AccountService;
 import cx.ring.services.NotificationService;
+import cx.ring.utils.ContentUriHandler;
+import cx.ring.utils.ConversationPath;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -171,7 +172,7 @@ public class ContactDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_contact_details);
-        RingApplication.getInstance().getRingInjectionComponent().inject(this);
+        JamiApplication.getInstance().getRingInjectionComponent().inject(this);
 
         CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.toolbar_layout);
         collapsingToolbarLayout.setTitle("");
@@ -297,10 +298,6 @@ public class ContactDetailsActivity extends AppCompatActivity {
     }
 
     private void goToConversationActivity(String accountId, String contactRingId) {
-        Intent intent = new Intent(Intent.ACTION_VIEW)
-                .setClass(getApplicationContext(), ConversationActivity.class)
-                .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
-                .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactRingId);
-        startActivity(intent, null);
+        startActivity(new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, contactRingId), getApplicationContext(), ConversationActivity.class));
     }
 }

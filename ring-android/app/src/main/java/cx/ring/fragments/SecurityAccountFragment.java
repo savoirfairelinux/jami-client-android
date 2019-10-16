@@ -26,7 +26,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.core.content.ContextCompat;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
@@ -39,7 +38,7 @@ import java.util.ArrayList;
 
 import cx.ring.R;
 import cx.ring.account.AccountEditionActivity;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.AccountCredentials;
 import cx.ring.model.ConfigKey;
@@ -101,7 +100,7 @@ public class SecurityAccountFragment extends BasePreferenceFragment<SecurityAcco
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
         // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
         super.onCreatePreferences(bundle, s);
 
         addPreferencesFromResource(R.xml.account_security_prefs);

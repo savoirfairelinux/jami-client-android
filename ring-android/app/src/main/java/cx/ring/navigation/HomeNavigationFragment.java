@@ -21,6 +21,7 @@ package cx.ring.navigation;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -59,7 +60,7 @@ import cx.ring.R;
 import cx.ring.account.AccountWizardActivity;
 import cx.ring.client.CallActivity;
 import cx.ring.client.HomeActivity;
-import cx.ring.dependencyinjection.RingInjectionComponent;
+import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.model.Account;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.services.VCardServiceImpl;
@@ -72,10 +73,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPresenter> implements NavigationAdapter.OnNavigationItemClicked,
-        AccountAdapter.OnAccountActionClicked, RingNavigationView {
+public class HomeNavigationFragment extends BaseSupportFragment<HomeNavigationPresenter> implements NavigationAdapter.OnNavigationItemClicked,
+        AccountAdapter.OnAccountActionClicked, HomeNavigationView {
 
-    public static final String TAG = RingNavigationFragment.class.getSimpleName();
+    public static final String TAG = HomeNavigationFragment.class.getSimpleName();
 
     /***************
      * Header views
@@ -160,7 +161,7 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
     }
 
     @Override
-    public void injectFragment(RingInjectionComponent component) {
+    public void injectFragment(JamiInjectionComponent component) {
         component.inject(this);
     }
 
@@ -177,15 +178,15 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
                 selectSection(Section.CONTACT_REQUESTS);
             } else if (fm.findFragmentByTag(HomeActivity.ACCOUNTS_TAG) != null &&
                     fm.findFragmentByTag(HomeActivity.ACCOUNTS_TAG).isAdded()) {
-                selectSection(RingNavigationFragment.Section.MANAGE);
+                selectSection(HomeNavigationFragment.Section.MANAGE);
             } else if (fm.findFragmentByTag(HomeActivity.SETTINGS_TAG) != null &&
                     fm.findFragmentByTag(HomeActivity.SETTINGS_TAG).isAdded()) {
-                selectSection(RingNavigationFragment.Section.SETTINGS);
+                selectSection(HomeNavigationFragment.Section.SETTINGS);
             } else if (fm.findFragmentByTag(HomeActivity.ABOUT_TAG) != null &&
                     fm.findFragmentByTag(HomeActivity.ABOUT_TAG).isAdded()) {
-                selectSection(RingNavigationFragment.Section.ABOUT);
+                selectSection(HomeNavigationFragment.Section.ABOUT);
             } else {
-                selectSection(RingNavigationFragment.Section.HOME);
+                selectSection(HomeNavigationFragment.Section.HOME);
             }
         }
     }
@@ -415,7 +416,7 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
     }
 
     @Override
-    public void showViewModel(final RingNavigationViewModel viewModel) {
+    public void showViewModel(final HomeNavigationViewModel viewModel) {
         mAccountAdapter.replaceAll(viewModel.getAccounts());
         updateUserView(viewModel.getAccount());
         updateSelectedAccountView(viewModel.getAccount());
@@ -439,12 +440,13 @@ public class RingNavigationFragment extends BaseSupportFragment<RingNavigationPr
     public void gotToImageCapture() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         try {
-            File file = AndroidFileUtils.createImageFile(getContext());
-            Uri uri = FileProvider.getUriForFile(getContext(), ContentUriHandler.AUTHORITY_FILES, file);
+            Context context = requireContext();
+            File file = AndroidFileUtils.createImageFile(context);
+            Uri uri = FileProvider.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, file);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
             intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             tmpProfilePhotoUri = uri;
-        } catch (IOException e) {
+        } catch (Exception e) {
             Log.e(TAG, "Can't create temp file", e);
         }
         startActivityForResult(intent, HomeActivity.REQUEST_CODE_PHOTO);

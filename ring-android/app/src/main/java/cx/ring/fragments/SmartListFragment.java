@@ -30,8 +30,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.google.android.material.badge.BadgeDrawable;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -65,16 +63,16 @@ import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.client.QRCodeActivity;
 import cx.ring.contacts.AvatarFactory;
-import cx.ring.dependencyinjection.RingInjectionComponent;
+import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.mvp.BaseSupportFragment;
-import cx.ring.navigation.RingNavigationFragment;
 import cx.ring.smartlist.SmartListPresenter;
 import cx.ring.smartlist.SmartListView;
 import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ClipboardHelper;
+import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
 import cx.ring.viewholders.SmartListViewHolder;
 
@@ -235,7 +233,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     }
 
     @Override
-    public void injectFragment(RingInjectionComponent component) {
+    public void injectFragment(JamiInjectionComponent component) {
         component.inject(this);
     }
 
@@ -528,17 +526,9 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
         }
 
         if (!isTabletMode) {
-            Intent intent = new Intent()
-                    .setClass(requireActivity(), ConversationActivity.class)
-                    .setAction(Intent.ACTION_VIEW)
-                    .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
-                    .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactId.toString());
-            startActivity(intent);
+            startActivity(new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, contactId.toString()), requireContext(), ConversationActivity.class));
         } else {
-            Bundle bundle = new Bundle();
-            bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, contactId.toString());
-            bundle.putString(ConversationFragment.KEY_ACCOUNT_ID, accountId);
-            ((HomeActivity) requireActivity()).startConversationTablet(bundle);
+            ((HomeActivity) requireActivity()).startConversationTablet(ConversationPath.toBundle(accountId, contactId.toString()));
         }
     }
 

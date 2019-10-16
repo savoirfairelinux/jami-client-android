@@ -19,18 +19,13 @@
  */
 package cx.ring.settings;
 
-import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
-import androidx.core.content.ContextCompat;
+
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,13 +39,12 @@ import butterknife.BindView;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import cx.ring.R;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
-import cx.ring.dependencyinjection.RingInjectionComponent;
+import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.model.Settings;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.mvp.GenericView;
-import cx.ring.services.SharedPreferencesServiceImpl;
 
 /**
  * TODO: improvements : handle multiples permissions for feature.
@@ -78,7 +72,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
     }
 
     @Override
-    public void injectFragment(RingInjectionComponent component) {
+    public void injectFragment(JamiInjectionComponent component) {
         component.inject(this);
     }
 
@@ -87,7 +81,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         setHasOptionsMenu(true);
         super.onViewCreated(view, savedInstanceState);
         mDarkTheme.setChecked(presenter.getDarkMode());
-        if (TextUtils.isEmpty(RingApplication.getInstance().getPushToken())) {
+        if (TextUtils.isEmpty(JamiApplication.getInstance().getPushToken())) {
             mGroupPushNotifications.setVisibility(View.GONE);
         }
         // loading preferences

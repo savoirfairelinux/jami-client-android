@@ -22,7 +22,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
     tools:ignore="ImpliedTouchscreenHardware,MissingLeanbackLauncher,MissingLeanbackSupport">
 
     <application
-        android:name=".application.RingApplicationNoPush"
+        android:name=".application.JamiApplicationNoPush"
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute" />
 
 </manifest>

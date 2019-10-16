@@ -14,9 +14,8 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package cx.ring.model;
 
@@ -28,6 +27,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import cx.ring.utils.ProfileChunk;
+import cx.ring.utils.StringUtils;
 import cx.ring.utils.VCardUtils;
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
@@ -45,13 +45,13 @@ public class SipCall extends Interaction {
     public final static String KEY_AUDIO_CODEC = "AUDIO_CODEC";
     public final static String KEY_VIDEO_CODEC = "VIDEO_CODEC";
     public final static String KEY_DURATION = "duration";
+    public final static String KEY_CONF_ID = "CONF_ID";
 
     private boolean isPeerHolding = false;
     private boolean isAudioMuted = false;
     private boolean isVideoMuted = false;
     private boolean isRecording = false;
     private boolean isAudioOnly = false;
-
 
     private CallStatus mCallStatus = CallStatus.NONE;
 
@@ -60,10 +60,11 @@ public class SipCall extends Interaction {
     private String mAudioCodec;
     private String mVideoCodec;
     private String mContactNumber;
+    private String mConfId;
 
     private ProfileChunk mProfileChunk = null;
 
-    public SipCall(String daemonId, String author, String account, ConversationHistory conversation, CallContact contact, int direction) {
+    public SipCall(String daemonId, String author, String account, ConversationHistory conversation, CallContact contact, Direction direction) {
         mDaemonId = daemonId == null ? null : Long.parseLong(daemonId);
         mAuthor = direction == Direction.INCOMING ? author : null;
         mAccount = account;
@@ -92,7 +93,7 @@ public class SipCall extends Interaction {
         mContact = interaction.getContact();
     }
 
-    public SipCall(String daemonId, String account, String contactNumber, int direction) {
+    public SipCall(String daemonId, String account, String contactNumber, Direction direction) {
         mDaemonId = daemonId == null ? null : Long.parseLong(daemonId);
         mIsIncoming = direction == Direction.INCOMING;
         mAccount = account;
@@ -104,40 +105,9 @@ public class SipCall extends Interaction {
     }
 
     public SipCall(String daemonId, Map<String, String> call_details) {
-        this(daemonId, call_details.get(KEY_ACCOUNT_ID), call_details.get(KEY_PEER_NUMBER), Integer.parseInt(call_details.get(KEY_CALL_TYPE)));
+        this(daemonId, call_details.get(KEY_ACCOUNT_ID), call_details.get(KEY_PEER_NUMBER), Direction.fromInt(Integer.parseInt(call_details.get(KEY_CALL_TYPE))));
         setCallState(CallStatus.fromString(call_details.get(KEY_CALL_STATE)));
         setDetails(call_details);
-    }
-
-    public static CallStatus stateFromString(String state) {
-        switch (state) {
-            case "SEARCHING":
-                return CallStatus.SEARCHING;
-            case "CONNECTING":
-                return CallStatus.CONNECTING;
-            case "INCOMING":
-            case "RINGING":
-                return CallStatus.RINGING;
-            case "CURRENT":
-                return CallStatus.CURRENT;
-            case "HUNGUP":
-                return CallStatus.HUNGUP;
-            case "BUSY":
-                return CallStatus.BUSY;
-            case "FAILURE":
-                return CallStatus.FAILURE;
-            case "HOLD":
-                return CallStatus.HOLD;
-            case "UNHOLD":
-                return CallStatus.UNHOLD;
-            case "INACTIVE":
-                return CallStatus.INACTIVE;
-            case "OVER":
-                return CallStatus.OVER;
-            case "NONE":
-            default:
-                return CallStatus.NONE;
-        }
     }
 
     public void setDetails(Map<String, String> details) {
@@ -147,6 +117,12 @@ public class SipCall extends Interaction {
         isAudioOnly = "true".equals(details.get(KEY_AUDIO_ONLY));
         mAudioCodec = details.get(KEY_AUDIO_CODEC);
         mVideoCodec = details.get(KEY_VIDEO_CODEC);
+        String confId = details.get(KEY_CONF_ID);
+        mConfId = StringUtils.isEmpty(confId) ? null : confId;
+    }
+
+    public boolean isConferenceParticipant() {
+        return mConfId != null;
     }
 
     public String getContactNumber() {
@@ -207,6 +183,14 @@ public class SipCall extends Interaction {
         return mAudioCodec;
     }
 
+    public String getConfId() {
+        return mConfId;
+    }
+
+    public void setConfId(String confId) {
+        mConfId = confId;
+    }
+
     public void setCallState(CallStatus callStatus) {
         mCallStatus = callStatus;
         if (callStatus == CallStatus.CURRENT) {
@@ -235,7 +219,7 @@ public class SipCall extends Interaction {
         return mCallStatus == CallStatus.CURRENT || mCallStatus == CallStatus.HOLD || mCallStatus == CallStatus.UNHOLD;
     }
 
-    public void setIsIncoming(int direction) {
+    public void setIsIncoming(Direction direction) {
         mIsIncoming = (direction == Direction.INCOMING);
     }
 
@@ -275,20 +259,51 @@ public class SipCall extends Interaction {
         INACTIVE,
         OVER;
 
-        static CallStatus fromString(String str) {
-            for (CallStatus status : values()) {
-                if (status.name().equals(str)) {
-                    return status;
-                }
+        public static CallStatus fromString(String state) {
+            switch (state) {
+                case "SEARCHING":
+                    return SEARCHING;
+                case "CONNECTING":
+                    return CONNECTING;
+                case "INCOMING":
+                case "RINGING":
+                    return RINGING;
+                case "CURRENT":
+                    return CURRENT;
+                case "HUNGUP":
+                    return HUNGUP;
+                case "BUSY":
+                    return BUSY;
+                case "FAILURE":
+                    return FAILURE;
+                case "HOLD":
+                    return HOLD;
+                case "UNHOLD":
+                    return UNHOLD;
+                case "INACTIVE":
+                    return INACTIVE;
+                case "OVER":
+                    return OVER;
+                case "NONE":
+                default:
+                    return NONE;
             }
-            return NONE;
         }
     }
 
-    public interface Direction {
-        int INCOMING = 0;
-        int OUTGOING = 1;
+    public enum  Direction {
+        INCOMING(0),
+        OUTGOING(1);
+
+        private final int value;
+        Direction(int v) {
+            value = v;
+        }
+        int getValue() {
+            return value;
+        }
+        static Direction fromInt(int value) {
+            return value == INCOMING.value ? INCOMING : OUTGOING;
+        }
     }
-
-
 }

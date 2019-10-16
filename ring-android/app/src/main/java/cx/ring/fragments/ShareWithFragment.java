@@ -47,12 +47,13 @@ import javax.inject.Singleton;
 
 import cx.ring.R;
 import cx.ring.adapters.SmartListAdapter;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.client.ConversationActivity;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Account;
 import cx.ring.services.ContactService;
 import cx.ring.smartlist.SmartListViewModel;
+import cx.ring.utils.ConversationPath;
 import cx.ring.viewholders.SmartListViewHolder;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -82,7 +83,7 @@ public class ShareWithFragment extends Fragment {
      * fragment (e.g. upon screen orientation changes).
      */
     public ShareWithFragment() {
-        RingApplication.getInstance().getRingInjectionComponent().inject(this);
+        JamiApplication.getInstance().getRingInjectionComponent().inject(this);
     }
 
     public static ShareWithFragment newInstance() {
@@ -142,12 +143,12 @@ public class ShareWithFragment extends Fragment {
                     Intent intent = mPendingIntent;
                     mPendingIntent = null;
                     String type = intent.getType();
-                    if (type.startsWith("text/")) {
+                    if (type != null && type.startsWith("text/")) {
                         intent.putExtra(Intent.EXTRA_TEXT, previewText.getText().toString());
                     }
                     intent.putExtra(ConversationFragment.KEY_ACCOUNT_ID, smartListViewModel.getAccountId());
                     intent.putExtra(ConversationFragment.KEY_CONTACT_RING_ID, smartListViewModel.getContact().getPrimaryNumber());
-                    intent.setClass(getActivity(), ConversationActivity.class);
+                    intent.setClass(requireActivity(), ConversationActivity.class);
                     startActivity(intent);
                 }
             }
@@ -192,9 +193,7 @@ public class ShareWithFragment extends Fragment {
         Intent intent = getActivity().getIntent();
         Bundle extra = intent.getExtras();
         if (extra != null) {
-            String accountId = extra.getString(ConversationFragment.KEY_ACCOUNT_ID);
-            String uri = extra.getString(ConversationFragment.KEY_CONTACT_RING_ID);
-            if (!TextUtils.isEmpty(accountId) && !TextUtils.isEmpty(uri)) {
+            if (ConversationPath.fromBundle(extra) != null) {
                 intent.setClass(getActivity(), ConversationActivity.class);
                 startActivity(intent);
                 return;

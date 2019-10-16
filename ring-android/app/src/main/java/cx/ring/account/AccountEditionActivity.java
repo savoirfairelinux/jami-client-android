@@ -51,7 +51,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.contactrequests.BlackListFragment;
 import cx.ring.fragments.AdvancedAccountFragment;
 import cx.ring.fragments.GeneralAccountFragment;
@@ -89,7 +89,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         ButterKnife.bind(this);
 
         // dependency injection
-        RingApplication.getInstance().getRingInjectionComponent().inject(this);
+        JamiApplication.getInstance().getRingInjectionComponent().inject(this);
         mEditionPresenter.bindView(this);
         String accountId = getIntent().getData().getLastPathSegment();
         mEditionPresenter.init(accountId);

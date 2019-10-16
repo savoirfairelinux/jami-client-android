@@ -52,8 +52,6 @@ public class RingtoneAdapter extends RecyclerView.Adapter<RingtoneAdapter.Ringto
     private Subject<Ringtone> ringtoneSubject = PublishSubject.create();
 
     class RingtoneViewHolder extends RecyclerView.ViewHolder {
-
-
         private TextView name;
         private ImageView isSelected, isPlaying, ringtoneIcon;
 

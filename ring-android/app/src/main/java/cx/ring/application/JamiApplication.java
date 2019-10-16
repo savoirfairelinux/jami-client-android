@@ -46,22 +46,20 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatDelegate;
 
 import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.contacts.AvatarFactory;
 import cx.ring.daemon.Ringservice;
-import cx.ring.dependencyinjection.DaggerRingInjectionComponent;
-import cx.ring.dependencyinjection.RingInjectionComponent;
-import cx.ring.dependencyinjection.RingInjectionModule;
+import cx.ring.dependencyinjection.DaggerJamiInjectionComponent;
+import cx.ring.dependencyinjection.JamiInjectionComponent;
+import cx.ring.dependencyinjection.JamiInjectionModule;
 import cx.ring.dependencyinjection.ServiceInjectionModule;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.service.DRingService;
 import cx.ring.service.RingJobService;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
-import cx.ring.services.ConferenceService;
 import cx.ring.services.ContactService;
 import cx.ring.services.DaemonService;
 import cx.ring.services.DeviceRuntimeService;
@@ -72,12 +70,12 @@ import io.reactivex.Completable;
 import io.reactivex.plugins.RxJavaPlugins;
 import io.reactivex.schedulers.Schedulers;
 
-public abstract class RingApplication extends Application {
-    private static final String TAG = RingApplication.class.getSimpleName();
+public abstract class JamiApplication extends Application {
+    private static final String TAG = JamiApplication.class.getSimpleName();
     public static final String DRING_CONNECTION_CHANGED = BuildConfig.APPLICATION_ID + ".event.DRING_CONNECTION_CHANGE";
     public static final int PERMISSIONS_REQUEST = 57;
     private static final IntentFilter RINGER_FILTER = new IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION);
-    private static RingApplication sInstance = null;
+    private static JamiApplication sInstance = null;
 
     @Inject
     @Named("DaemonExecutor")
@@ -88,8 +86,8 @@ public abstract class RingApplication extends Application {
     AccountService mAccountService;
     @Inject
     CallService mCallService;
-    @Inject
-    ConferenceService mConferenceService;
+    //@Inject
+    //ConferenceService mConferenceService;
     @Inject
     HardwareService mHardwareService;
     @Inject
@@ -101,7 +99,7 @@ public abstract class RingApplication extends Application {
     @Inject
     ConversationFacade mConversationFacade;
 
-    private RingInjectionComponent mRingInjectionComponent;
+    private JamiInjectionComponent mJamiInjectionComponent;
     private final Map<String, Boolean> mPermissionsBeingAsked = new HashMap<>();;
     private final BroadcastReceiver ringerModeListener = new BroadcastReceiver() {
         @Override
@@ -234,13 +232,13 @@ public abstract class RingApplication extends Application {
         RxJavaPlugins.setErrorHandler(e -> Log.e(TAG, "Unhandled RxJava error", e));
 
         // building injection dependency tree
-        mRingInjectionComponent = DaggerRingInjectionComponent.builder()
-                .ringInjectionModule(new RingInjectionModule(this))
+        mJamiInjectionComponent = DaggerJamiInjectionComponent.builder()
+                .jamiInjectionModule(new JamiInjectionModule(this))
                 .serviceInjectionModule(new ServiceInjectionModule(this))
                 .build();
 
         // we can now inject in our self whatever modules define
-        mRingInjectionComponent.inject(this);
+        mJamiInjectionComponent.inject(this);
 
         bootstrapDaemon();
 
@@ -259,7 +257,6 @@ public abstract class RingApplication extends Application {
         })
         .subscribeOn(Schedulers.io())
         .subscribe();
-
     }
 
     public void startDaemon() {
@@ -288,7 +285,7 @@ public abstract class RingApplication extends Application {
         }
     }
 
-    public static RingApplication getInstance() {
+    public static JamiApplication getInstance() {
         return sInstance;
     }
 
@@ -301,8 +298,8 @@ public abstract class RingApplication extends Application {
         sInstance = null;
     }
 
-    public RingInjectionComponent getRingInjectionComponent() {
-        return mRingInjectionComponent;
+    public JamiInjectionComponent getRingInjectionComponent() {
+        return mJamiInjectionComponent;
     }
 
     public boolean canAskForPermission(String permission) {

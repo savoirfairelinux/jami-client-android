@@ -399,7 +399,7 @@ class CameraServiceCamera2 extends CameraService {
             SurfaceTexture texture = view.getSurfaceTexture();
             Surface s = new Surface(texture);
 
-            final Pair<MediaCodec, Surface> codec = hw_accel ? openCameraWithEncoder(videoParams, videoParams.getCodec(), handler, resolution, bitrate) : null;
+            final Pair<MediaCodec, Surface> codec = (hw_accel && videoParams.getCodec() != null) ? openCameraWithEncoder(videoParams, videoParams.getCodec(), handler, resolution, bitrate) : null;
 
             final List<Surface> targets = new ArrayList<>(2);
             targets.add(s);
