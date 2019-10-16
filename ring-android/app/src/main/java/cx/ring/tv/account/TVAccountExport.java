@@ -45,7 +45,7 @@ import java.util.Map;
 import cx.ring.R;
 import cx.ring.account.RingAccountSummaryPresenter;
 import cx.ring.account.RingAccountSummaryView;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.model.Account;
 import cx.ring.utils.AndroidFileUtils;
 
@@ -65,7 +65,7 @@ public class TVAccountExport
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         super.onViewCreated(view, savedInstanceState);
         presenter.setAccountId(mIdAccount);

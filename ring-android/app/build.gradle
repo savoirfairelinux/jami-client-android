@@ -87,6 +87,7 @@ dependencies {
     implementation "androidx.leanback:leanback-preference:1.1.0-alpha02"
     implementation "androidx.media:media:$android_support_core_version"
     implementation "com.google.android.material:material:$material_version"
+    implementation 'com.google.android:flexbox:1.1.1'
 
     // ORM
     implementation 'com.j256.ormlite:ormlite-android:5.1'

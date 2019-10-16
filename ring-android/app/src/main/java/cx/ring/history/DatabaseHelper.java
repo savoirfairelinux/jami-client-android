@@ -35,7 +35,7 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.model.ConversationHistory;
 import cx.ring.model.DataTransfer;
 import cx.ring.model.Interaction;
@@ -65,7 +65,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public DatabaseHelper(Context context, String dbDirectory) {
         super(context, dbDirectory, null, DATABASE_VERSION);
         Log.d(TAG, "Helper initialized for " + dbDirectory);
-        ((RingApplication) context.getApplicationContext()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) context.getApplicationContext()).getRingInjectionComponent().inject(this);
     }
 
     /**

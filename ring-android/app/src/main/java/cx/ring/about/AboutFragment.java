@@ -38,7 +38,7 @@ import butterknife.OnClick;
 import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.client.HomeActivity;
-import cx.ring.dependencyinjection.RingInjectionComponent;
+import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.mvp.RootPresenter;
 
@@ -53,7 +53,7 @@ public class AboutFragment extends BaseSupportFragment<RootPresenter> {
     }
 
     @Override
-    public void injectFragment(RingInjectionComponent component) {
+    public void injectFragment(JamiInjectionComponent component) {
     }
 
     @Override

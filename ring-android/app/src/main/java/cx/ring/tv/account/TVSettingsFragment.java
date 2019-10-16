@@ -33,12 +33,11 @@ import android.util.Log;
 import android.view.View;
 
 import cx.ring.R;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.fragments.GeneralAccountPresenter;
 import cx.ring.fragments.GeneralAccountView;
 import cx.ring.model.Account;
 import cx.ring.model.ConfigKey;
-import cx.ring.services.SharedPreferencesServiceImpl;
 
 public class TVSettingsFragment extends LeanbackSettingsFragmentCompat {
 
@@ -71,7 +70,7 @@ public class TVSettingsFragment extends LeanbackSettingsFragmentCompat {
 
         @Override
         public void onViewCreated(View view, Bundle savedInstanceState) {
-            ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+            ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
             super.onViewCreated(view, savedInstanceState);
             presenter.init();
         }

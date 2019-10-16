@@ -1,7 +1,7 @@
 /*
  *  Copyright (C) 2004-2019 Savoir-faire Linux Inc.
  *
- *  Author: Hadrien De Sousa <hadrien.desousa@savoirfairelinux.com>
+ *  Author: Aline Bonnet <aline.bonnet@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,22 +17,27 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
+
 package cx.ring.navigation;
+
+import java.util.List;
 
 import cx.ring.model.Account;
 
-public interface RingNavigationView {
+public class HomeNavigationViewModel {
+    final private Account mAccount;
+    final private List<Account> mAccounts;
 
-    void showViewModel(RingNavigationViewModel viewModel);
+    public HomeNavigationViewModel(Account account, List<Account> accounts) {
+        mAccount = account;
+        mAccounts = accounts;
+    }
 
-    void updateModel(Account account);
+    public Account getAccount() {
+        return mAccount;
+    }
 
-    void gotToImageCapture();
-
-    void askCameraPermission();
-
-    void goToGallery();
-
-    void askGalleryPermission();
-
+    public List<Account> getAccounts() {
+        return mAccounts;
+    }
 }

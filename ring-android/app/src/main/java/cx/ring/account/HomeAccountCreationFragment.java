@@ -23,7 +23,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -32,17 +31,13 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.snackbar.Snackbar;
 
-import java.io.File;
-import java.io.IOException;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 import cx.ring.R;
-import cx.ring.dependencyinjection.RingInjectionComponent;
+import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.utils.AndroidFileUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 public class HomeAccountCreationFragment extends BaseSupportFragment<HomeAccountCreationPresenter> implements HomeAccountCreationView {
     private static final int ARCHIVE_REQUEST_CODE = 42;
@@ -61,7 +56,7 @@ public class HomeAccountCreationFragment extends BaseSupportFragment<HomeAccount
     }
 
     @Override
-    public void injectFragment(RingInjectionComponent component) {
+    public void injectFragment(JamiInjectionComponent component) {
         component.inject(this);
     }
 

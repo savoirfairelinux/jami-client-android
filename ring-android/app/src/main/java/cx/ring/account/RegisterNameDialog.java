@@ -43,7 +43,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnEditorAction;
 import cx.ring.R;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.services.AccountService;
 import cx.ring.utils.RegisteredNameFilter;
 import cx.ring.utils.RegisteredNameTextWatcher;
@@ -122,7 +122,7 @@ public class RegisterNameDialog extends DialogFragment {
         ButterKnife.bind(this, view);
 
         // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         String accountId = "";
         boolean hasPassword = true;

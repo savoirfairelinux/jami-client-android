@@ -37,7 +37,7 @@ import cx.ring.R;
 import cx.ring.account.AccountCreationModelImpl;
 import cx.ring.account.AccountWizardPresenter;
 import cx.ring.account.AccountWizardView;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.mvp.AccountCreationModel;
@@ -61,10 +61,10 @@ public class TVAccountWizard
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        RingApplication.getInstance().getRingInjectionComponent().inject(this);
+        JamiApplication.getInstance().getRingInjectionComponent().inject(this);
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        RingApplication.getInstance().startDaemon();
+        JamiApplication.getInstance().startDaemon();
 
         Intent intent = getIntent();
         if (intent != null) {
