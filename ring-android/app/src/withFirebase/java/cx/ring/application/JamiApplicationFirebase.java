@@ -26,8 +26,8 @@ import com.google.firebase.iid.FirebaseInstanceId;
 
 import cx.ring.service.DRingService;
 
-public class RingApplicationFirebase extends RingApplication {
-    static private String TAG = RingApplicationFirebase.class.getSimpleName();
+public class JamiApplicationFirebase extends JamiApplication {
+    static private String TAG = JamiApplicationFirebase.class.getSimpleName();
 
     static private String pushToken = "";
 

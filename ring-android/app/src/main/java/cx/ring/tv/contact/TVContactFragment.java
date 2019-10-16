@@ -41,7 +41,7 @@ import androidx.leanback.widget.FullWidthDetailsOverviewSharedElementHelper;
 import androidx.leanback.widget.ListRow;
 import androidx.leanback.widget.ListRowPresenter;
 import cx.ring.R;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.Uri;
 import cx.ring.tv.call.TVCallActivity;
@@ -60,7 +60,7 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
         super.onCreate(savedInstanceState);
         mContactUri = (Uri) getActivity().getIntent().getSerializableExtra(TVContactActivity.CONTACT_REQUEST);
     }

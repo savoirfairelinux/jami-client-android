@@ -27,7 +27,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import androidx.annotation.NonNull;
-import androidx.leanback.app.GuidedStepSupportFragment;
 import androidx.leanback.widget.GuidanceStylist;
 import androidx.leanback.widget.GuidedAction;
 import androidx.appcompat.app.AlertDialog;
@@ -39,11 +38,11 @@ import java.util.List;
 
 import cx.ring.R;
 import cx.ring.account.ProfileCreationFragment;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.model.Account;
-import cx.ring.navigation.RingNavigationPresenter;
-import cx.ring.navigation.RingNavigationView;
-import cx.ring.navigation.RingNavigationViewModel;
+import cx.ring.navigation.HomeNavigationPresenter;
+import cx.ring.navigation.HomeNavigationView;
+import cx.ring.navigation.HomeNavigationViewModel;
 import cx.ring.tv.camera.CustomCameraActivity;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.BitmapUtils;
@@ -52,8 +51,8 @@ import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigationPresenter>
-        implements RingNavigationView {
+public class TVProfileEditingFragment extends RingGuidedStepFragment<HomeNavigationPresenter>
+        implements HomeNavigationView {
 
     private static final int USER_NAME = 1;
     private static final int GALLERY = 2;
@@ -107,7 +106,7 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
         super.onViewCreated(view, savedInstanceState);
         iconSize = (int) getResources().getDimension(R.dimen.tv_avatar_size);
     }
@@ -157,7 +156,7 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
     }
 
     @Override
-    public void showViewModel(RingNavigationViewModel viewModel) {
+    public void showViewModel(HomeNavigationViewModel viewModel) {
         Account account = viewModel.getAccount();
         if (account == null) {
             Log.e(TAG, "Not able to get current account");

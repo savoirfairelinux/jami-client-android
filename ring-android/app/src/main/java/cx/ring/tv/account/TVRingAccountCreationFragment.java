@@ -35,7 +35,7 @@ import cx.ring.R;
 import cx.ring.account.AccountCreationModelImpl;
 import cx.ring.account.RingAccountCreationPresenter;
 import cx.ring.account.RingAccountCreationView;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.mvp.AccountCreationModel;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
@@ -84,7 +84,7 @@ public class TVRingAccountCreationFragment
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         // Bind the presenter to the view
         super.onViewCreated(view, savedInstanceState);

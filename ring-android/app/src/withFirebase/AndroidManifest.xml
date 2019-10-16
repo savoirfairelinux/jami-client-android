@@ -21,11 +21,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
     package="cx.ring">
 
     <application
-        android:name=".application.RingApplicationFirebase"
+        android:name=".application.JamiApplicationFirebase"
         tools:ignore="UnusedAttribute">
 
         <service
-            android:name=".services.RingFirebaseMessagingService"
+            android:name=".services.JamiFirebaseMessagingService"
             android:stopWithTask="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

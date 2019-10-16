@@ -31,7 +31,7 @@ import cx.ring.R;
 import cx.ring.account.AccountCreationModelImpl;
 import cx.ring.account.RingLinkAccountPresenter;
 import cx.ring.account.RingLinkAccountView;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.mvp.AccountCreationModel;
 import cx.ring.utils.StringUtils;
 
@@ -53,7 +53,7 @@ public class TVRingLinkAccountFragment extends RingGuidedStepFragment<RingLinkAc
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
         super.onViewCreated(view, savedInstanceState);
 
         presenter.init(model);

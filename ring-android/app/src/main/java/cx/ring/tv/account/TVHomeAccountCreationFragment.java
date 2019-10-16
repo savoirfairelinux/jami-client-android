@@ -31,7 +31,7 @@ import cx.ring.R;
 import cx.ring.account.AccountCreationModelImpl;
 import cx.ring.account.HomeAccountCreationPresenter;
 import cx.ring.account.HomeAccountCreationView;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 
 public class TVHomeAccountCreationFragment
         extends RingGuidedStepFragment<HomeAccountCreationPresenter>
@@ -42,7 +42,7 @@ public class TVHomeAccountCreationFragment
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         super.onViewCreated(view, savedInstanceState);
     }

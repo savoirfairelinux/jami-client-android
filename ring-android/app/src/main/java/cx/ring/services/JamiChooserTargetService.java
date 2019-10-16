@@ -37,7 +37,7 @@ import java.util.concurrent.Future;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.contacts.AvatarFactory;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.fragments.ConversationFragment;
@@ -46,7 +46,7 @@ import cx.ring.model.Conversation;
 import io.reactivex.schedulers.Schedulers;
 
 @RequiresApi(api = Build.VERSION_CODES.M)
-public class RingChooserTargetService extends ChooserTargetService {
+public class JamiChooserTargetService extends ChooserTargetService {
 
     @Inject
     @Singleton
@@ -57,8 +57,8 @@ public class RingChooserTargetService extends ChooserTargetService {
     @Override
     public void onCreate() {
         super.onCreate();
-        RingApplication.getInstance().startDaemon();
-        RingApplication.getInstance().getRingInjectionComponent().inject(this);
+        JamiApplication.getInstance().startDaemon();
+        JamiApplication.getInstance().getRingInjectionComponent().inject(this);
         targetSize = (int) (AvatarFactory.SIZE_NOTIF * getResources().getDisplayMetrics().density);
     }
 
