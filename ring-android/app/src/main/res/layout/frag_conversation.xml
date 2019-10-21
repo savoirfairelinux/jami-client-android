@@ -17,38 +17,14 @@
             android:paddingTop="?attr/actionBarSize">
 
             <LinearLayout
-                android:id="@+id/trustRequestMessageLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:orientation="vertical"
-                android:visibility="visible">
-
-                <TextView
-                    android:id="@+id/tvTrustRequestMessage"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/surface"
-                    android:textColor="@color/textColorPrimary"
-                    android:gravity="center"
-                    android:padding="30dp"
-                    tools:text="Jean is not in your contacts yet" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/lighter_gray" />
-
-            </LinearLayout>
-
-            <LinearLayout
                 android:id="@+id/ongoingcall_pane"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:background="#e3c1c1"
+                android:background="@color/red_300"
                 android:gravity="center"
                 android:onClick="@{() -> presenter.onClick()}"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -57,6 +33,33 @@
                     android:text="@string/conversation_action_go_to_call"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/textColorPrimary" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/trustRequestMessageLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ongoingcall_pane"
+                android:layout_alignParentTop="false"
+                android:orientation="vertical"
+                android:visibility="visible"
+                tools:visibility="visible">
+
+                <TextView
+                    android:id="@+id/tvTrustRequestMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/surface"
+                    android:gravity="center"
+                    android:padding="24dp"
+                    android:textColor="@color/textColorPrimary"
+                    tools:text="Jean is not in your contacts yet" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lighter_gray" />
+
             </LinearLayout>
 
             <ProgressBar

@@ -89,8 +89,8 @@ public class RingtoneActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mAccount = mAccountService.getAccount(getIntent().getExtras().getString(AccountEditionActivity.ACCOUNT_ID_KEY));
 
-        Toolbar toolbar = findViewById(R.id.ringtoneToolbar);
-        toolbar.setNavigationOnClickListener(view -> finish());
+        /*Toolbar toolbar = findViewById(R.id.ringtoneToolbar);
+        toolbar.setNavigationOnClickListener(view -> finish());*/
 
         RecyclerView recycler = findViewById(R.id.ringToneRecycler);
         ConstraintLayout customRingtoneLayout = findViewById(R.id.customRingtoneLayout);
