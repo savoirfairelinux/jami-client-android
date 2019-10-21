@@ -47,6 +47,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
     public static final String RING_SETTINGS = "ring_settings";
     private static final String RING_REQUESTS = "ring_requests";
     public static final String PREFS_THEME = "theme";
+    public static final String PREFS_VIDEO = "videoPrefs";
     private static final String RING_PUSH_NOTIFICATIONS = "push_notifs";
     private static final String RING_PERSISTENT_NOTIFICATION = "persistent_notif";
     private static final String RING_HW_ENCODING = "video_hwenc";
@@ -91,7 +92,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
 
     private void saveRequests(String accountId, Set<String> requests) {
         SharedPreferences preferences = mContext.getSharedPreferences(RING_REQUESTS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor edit = getPreferences().edit();
+        SharedPreferences.Editor edit = preferences.edit();
         edit.putStringSet(accountId, requests);
         edit.apply();
     }
@@ -154,9 +155,8 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
     @Override
     public void setDarkMode(boolean enabled) {
         SharedPreferences.Editor edit = getThemePreferences().edit();
-        edit.clear();
-        edit.putBoolean(PREF_DARK_MODE, enabled);
-        edit.apply();
+        edit.putBoolean(PREF_DARK_MODE, enabled)
+                .apply();
         applyDarkMode(enabled);
     }
 
@@ -183,7 +183,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
     }
 
     private SharedPreferences getVideoPreferences() {
-        return PreferenceManager.getDefaultSharedPreferences(mContext);
+        return mContext.getSharedPreferences(PREFS_VIDEO, Context.MODE_PRIVATE);
     }
 
     private SharedPreferences getThemePreferences() {
