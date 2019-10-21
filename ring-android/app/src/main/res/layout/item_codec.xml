@@ -29,7 +29,7 @@ along with this program; if not, write to the Free Software
         android:layout_width="wrap_content"
         android:layout_height="?android:attr/listPreferredItemHeight"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="72dp"
         android:gravity="center_vertical"
         android:textColor="@color/textColorPrimary"
         android:textSize="16sp"
@@ -54,8 +54,6 @@ along with this program; if not, write to the Free Software
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:clickable="false"
         android:focusable="false" />
 

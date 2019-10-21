@@ -20,7 +20,7 @@ Please specify the following:
 -   Ring version: 
 -   Device model: 
 -   Android version: 
--   What build you are using: [ring.cx | F-droid | Play Store | App store | your own (please specify commit id + ring daemon version or commit id)...]
+-   What build you are using: [jami.net | F-droid | Play Store | App store | your own (please specify commit id + ring daemon version or commit id)...]
 
 ## Steps to reproduce
 

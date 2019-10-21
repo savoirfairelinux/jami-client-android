@@ -21,6 +21,7 @@ package cx.ring.navigation;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -39,12 +40,11 @@ import butterknife.ButterKnife;
 import cx.ring.R;
 
 class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.NavigationItemView> {
-
     private List<RingNavigationFragment.NavigationItem> mDataset;
     private OnNavigationItemClicked mListener;
     private int mItemSelected;
 
-    NavigationAdapter(ArrayList<RingNavigationFragment.NavigationItem> menu) {
+    NavigationAdapter(@NonNull ArrayList<RingNavigationFragment.NavigationItem> menu) {
         mDataset = menu;
     }
 
@@ -57,15 +57,13 @@ class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Navigatio
         mListener = listener;
     }
 
-    @Override
-    public NavigationItemView onCreateViewHolder(ViewGroup parent,
-                                                 int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_menu, parent, false);
-        return new NavigationItemView(v);
+    @Override @NonNull
+    public NavigationItemView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new NavigationItemView(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_menu, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(NavigationItemView holder, int position) {
+    public void onBindViewHolder(@NonNull NavigationItemView holder, int position) {
         holder.title.setText(mDataset.get(position).mResTitleId);
         holder.icon.setImageResource(mDataset.get(position).mResImageId);
 
@@ -98,13 +96,13 @@ class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Navigatio
         @BindView(R.id.navigation_item_title)
         TextView title;
 
-        @BindColor(R.color.color_primary_light)
+        @BindColor(R.color.color_primary_dark)
         int tintColor;
 
         @BindColor(R.color.transparent_grey)
         int backgroundHighlightColor;
 
-        NavigationItemView(View view) {
+        NavigationItemView(@NonNull View view) {
             super(view);
             ButterKnife.bind(this, view);
             view.setOnClickListener(this);
