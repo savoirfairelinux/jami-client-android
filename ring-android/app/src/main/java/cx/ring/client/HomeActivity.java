@@ -328,6 +328,10 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
     }
 
     public void setToolbarState(boolean doubleHeight, int titleRes) {
+        ActionBar ab = getSupportActionBar();
+        if (ab != null)
+            ab.setIcon(null);
+        mToolbar.setLogo(null);
         if (doubleHeight) {
             mAppBar.setElevation(mToolbarElevation);
             mToolbarLayout.setTitleEnabled(true);
@@ -560,7 +564,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
 
     @Override
     public void setColor(int color) {
-        mToolbar.setBackground(new ColorDrawable(color));
+        //mToolbar.setBackground(new ColorDrawable(color));
     }
 
     public interface Refreshable {

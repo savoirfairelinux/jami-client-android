@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,7 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginStart="16dp"
-        android:alpha="0.54"
         tools:src="@drawable/baseline_home_24"/>
 
     <TextView
@@ -25,7 +23,7 @@
         android:layout_marginStart="72dp"
         android:fontFamily="sans-serif-medium"
         android:gravity="center_vertical"
-        android:textColor="@color/textColorSecondary"
+        android:textColor="@color/textColorPrimary"
         android:textSize="14sp"
         tools:text="Home" />
 
