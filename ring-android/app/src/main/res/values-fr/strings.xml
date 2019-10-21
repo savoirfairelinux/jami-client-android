@@ -113,6 +113,8 @@
   <string name="send_file">Envoyez un fichier</string>
   <string name="hist_file_sent">Fichier envoyé</string>
   <string name="hist_file_received">Fichier reçu</string>
+  <string name="conversation_send_audio">Envoyer un message vocal</string>
+  <string name="conversation_send_video">Envoyer un message vidéo</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permission d\'accès à la caméra</string>
   <string name="permission_dialog_camera_message">Les conversation vidéo nécessitent la permission d\'utiliser l\'objectif. Merci de l\'autoriser.</string>
@@ -167,6 +169,7 @@
   <string name="prompt_new_username">Entrez un nouveau nom d\'utilisateur</string>
   <string name="help_password_choose">Pour protéger votre compte Jami, choisissez un mot de passe fort dont vous vous souviendrez.</string>
   <string name="help_password_enter">Saisissez le mot de passe du compte Jami de référence </string>
+  <string name="help_server_enter">Entrer l\'URL du serveur d\'entreprise</string>
   <string name="help_pin_enter">Entrez le NIP obtenu en configurant un autre compte Jami . Utilisez la fonction \"exportez un compte sur Jami\" pour obtenir un NIP.</string>
   <string name="wizard_next">Suivant</string>
   <string name="wizard_back">Précédent</string>
@@ -184,6 +187,7 @@
   <string name="share_label">Partager</string>
   <string name="generic_error_migration">Erreur</string>
   <string name="generic_error_migration_message">Une erreur est survenue pendant la migration</string>
+  <string name="title_share_with">Partager avec ...</string>
   <!--Pending contact requests-->
   <string name="accept">Accepter</string>
   <string name="refuse">Refuser</string>
@@ -203,6 +207,7 @@
   <!--Smartlist-->
   <string name="no_contact_request">Aucune invitation envoyée</string>
   <string name="contact_request_sent">Invitation envoyée</string>
+  <string name="start_conversation">Démarrer une conversation</string>
   <string name="search_results">Résultats de la recherche</string>
   <string name="tv_contact_row_header">Contacts</string>
   <string name="gallery_error_title">Aucune application Gallery sur l\'appareil</string>
@@ -234,4 +239,6 @@
   <string name="menu_message_delete">Supprimer le message</string>
   <string name="menu_message_cancel">Annuler le message</string>
   <string name="menu_delete">Supprimer</string>
+  <string name="pref_darkTheme_title">Thème sombre</string>
+  <string name="pref_darkTheme_summary">Toujours utiliser le thème sombre à la place du comportement système</string>
 </resources>

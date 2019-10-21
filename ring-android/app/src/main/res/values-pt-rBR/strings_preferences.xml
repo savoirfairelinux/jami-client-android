@@ -9,6 +9,8 @@
   <string name="pref_mobileData_summary">Permitir o Jami em redes 3G/LTE além do Wi-Fi</string>
   <string name="pref_pushNotifications_title">Notificações via push</string>
   <string name="pref_pushNotifications_summary">Use os servidores do Google para permitir o recebimento de chamadas/mensagens em segundo plano</string>
+  <string name="pref_video_advanced_title">Configurações avançadas de vídeo</string>
+  <string name="pref_video_advanced_summary">Altere a taxa de bits do vídeo, a resolução e acesse os recursos experimentais</string>
   <string name="pref_hd_summary">Habilitar envio de vídeo em HD</string>
   <string name="pref_hwEncode_title">Ativar codificação acelerada</string>
   <string name="pref_hwEncode_summary">Função experimental</string>
@@ -19,6 +21,7 @@
   <string name="pref_startOnBoot_title">Inicializar o Jami automaticamente com o sistema</string>
   <string name="pref_startOnBoot_summary">Executar o Jami em segundo-plano ao inicializar o sistema.</string>
   <string name="pref_clearHistory_title">Limpar histórico</string>
+  <string name="pref_clearHistory_summary">Limpar todo o histórico de conversas. Esta ação não pode ser desfeita.</string>
   <string name="pref_persistNotification_title">Executar em segundo-plano</string>
   <string name="pref_persistNotification_summary">Permitir execução em segundo-plano para receber chamadas e mensagens.</string>
 </resources>
