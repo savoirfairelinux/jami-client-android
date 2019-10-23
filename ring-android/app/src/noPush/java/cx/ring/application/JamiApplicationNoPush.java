@@ -18,7 +18,7 @@
  */
 package cx.ring.application;
 
-public class RingApplicationNoPush extends RingApplication {
+public class JamiApplicationNoPush extends JamiApplication {
 
     @Override
     public String getPushToken() {

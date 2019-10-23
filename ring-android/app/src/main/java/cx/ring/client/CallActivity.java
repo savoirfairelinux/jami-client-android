@@ -21,22 +21,23 @@
  */
 package cx.ring.client;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+
 import cx.ring.BuildConfig;
 import cx.ring.R;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.call.CallView;
 import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.ConversationFragment;
@@ -59,7 +60,7 @@ public class CallActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        RingApplication.getInstance().startDaemon();
+        JamiApplication.getInstance().startDaemon();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             setTurnScreenOn(true);
@@ -85,10 +86,8 @@ public class CallActivity extends AppCompatActivity {
         });
 
         Intent intent = getIntent();
-
         if(intent != null)
             handleNewIntent(intent);
-
     }
 
     @Override

@@ -20,6 +20,8 @@ package cx.ring.services;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.legacy.content.WakefulBroadcastReceiver;
 import android.util.Log;
 
@@ -28,14 +30,14 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
 
-import cx.ring.application.RingApplicationFirebase;
+import cx.ring.application.JamiApplicationFirebase;
 import cx.ring.service.DRingService;
 
-public class RingFirebaseMessagingService extends FirebaseMessagingService {
-    private static final String TAG = RingFirebaseMessagingService.class.getSimpleName();
+public class JamiFirebaseMessagingService extends FirebaseMessagingService {
+    private static final String TAG = JamiFirebaseMessagingService.class.getSimpleName();
 
     @Override
-    public void onMessageReceived(RemoteMessage remoteMessage) {
+    public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         try {
             // Log.d(TAG, "onMessageReceived: " + remoteMessage.getFrom());
             Map<String, String> data = remoteMessage.getData();
@@ -54,10 +56,10 @@ public class RingFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     @Override
-    public void onNewToken(String refreshedToken) {
+    public void onNewToken(@NonNull String refreshedToken) {
         try {
             Log.d(TAG, "onTokenRefresh: refreshed token: " + refreshedToken);
-            RingApplicationFirebase.setPushToken(refreshedToken);
+            JamiApplicationFirebase.setPushToken(refreshedToken);
             startService(new Intent(DRingService.ACTION_PUSH_TOKEN_CHANGED)
                     .setClass(this, DRingService.class)
                     .putExtra(DRingService.PUSH_TOKEN_FIELD_TOKEN, refreshedToken));

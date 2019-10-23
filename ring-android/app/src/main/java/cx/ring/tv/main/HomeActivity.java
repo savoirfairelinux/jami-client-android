@@ -27,7 +27,7 @@ import androidx.leanback.app.GuidedStepSupportFragment;
 import androidx.fragment.app.FragmentActivity;
 
 import cx.ring.R;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 
 public class HomeActivity extends FragmentActivity {
     private BackgroundManager mBackgroundManager;
@@ -35,7 +35,7 @@ public class HomeActivity extends FragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        RingApplication.getInstance().startDaemon();
+        JamiApplication.getInstance().startDaemon();
         setContentView(R.layout.tv_activity_home);
         mBackgroundManager = BackgroundManager.getInstance(this);
         mBackgroundManager.attach(getWindow());

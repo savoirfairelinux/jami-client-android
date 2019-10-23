@@ -25,7 +25,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -34,7 +33,6 @@ import androidx.appcompat.app.AlertDialog;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import androidx.fragment.app.Fragment;
@@ -44,7 +42,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import butterknife.ButterKnife;
 import cx.ring.R;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.fragments.AccountMigrationFragment;
 import cx.ring.fragments.SIPAccountCreationFragment;
@@ -55,12 +53,6 @@ import cx.ring.mvp.AccountCreationModel;
 import cx.ring.utils.Log;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
-import ezvcard.parameter.ImageType;
-import ezvcard.property.FormattedName;
-import ezvcard.property.Photo;
-import ezvcard.property.RawProperty;
-import ezvcard.property.Uid;
-import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
@@ -74,10 +66,10 @@ public class AccountWizardActivity extends BaseActivity<AccountWizardPresenter> 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         // dependency injection
-        RingApplication.getInstance().getRingInjectionComponent().inject(this);
+        JamiApplication.getInstance().getRingInjectionComponent().inject(this);
         super.onCreate(savedInstanceState);
 
-        RingApplication.getInstance().startDaemon();
+        JamiApplication.getInstance().startDaemon();
 
         setContentView(R.layout.activity_wizard);
         ButterKnife.bind(this);

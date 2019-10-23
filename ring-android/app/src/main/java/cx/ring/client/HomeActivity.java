@@ -29,7 +29,6 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -40,7 +39,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -58,7 +56,7 @@ import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.about.AboutFragment;
 import cx.ring.account.AccountWizardActivity;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.contactrequests.ContactRequestsFragment;
 import cx.ring.fragments.AccountsManagementFragment;
 import cx.ring.fragments.ConversationFragment;
@@ -66,20 +64,19 @@ import cx.ring.fragments.SmartListFragment;
 import cx.ring.interfaces.Colorable;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
-import cx.ring.navigation.RingNavigationFragment;
+import cx.ring.navigation.HomeNavigationFragment;
 import cx.ring.service.DRingService;
 import cx.ring.services.AccountService;
-import cx.ring.services.DeviceRuntimeService;
-import cx.ring.services.HardwareService;
 import cx.ring.services.NotificationService;
-import cx.ring.services.PreferencesService;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.settings.VideoSettingsFragment;
+import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class HomeActivity extends AppCompatActivity implements RingNavigationFragment.OnNavigationSectionSelected, Colorable {
+public class HomeActivity extends AppCompatActivity implements HomeNavigationFragment.OnNavigationSectionSelected, Colorable {
+    static final String TAG = HomeActivity.class.getSimpleName();
 
     public static final int REQUEST_CODE_CALL = 3;
     public static final int REQUEST_CODE_CONVERSATION = 4;
@@ -88,34 +85,24 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
     public static final int REQUEST_CODE_QR_CONVERSATION = 7;
     public static final int REQUEST_PERMISSION_CAMERA = 113;
     public static final int REQUEST_PERMISSION_READ_STORAGE = 114;
+
     public static final String HOME_TAG = "Home";
     public static final String CONTACT_REQUESTS_TAG = "Trust request";
     public static final String ACCOUNTS_TAG = "Accounts";
     public static final String ABOUT_TAG = "About";
     public static final String SETTINGS_TAG = "Prefs";
     public static final String VIDEO_SETTINGS_TAG = "VideoPrefs";
-    static public final String ACTION_PRESENT_TRUST_REQUEST_FRAGMENT = BuildConfig.APPLICATION_ID + "presentTrustRequestFragment";
-    static final String TAG = HomeActivity.class.getSimpleName();
+    public static final String ACTION_PRESENT_TRUST_REQUEST_FRAGMENT = BuildConfig.APPLICATION_ID + "presentTrustRequestFragment";
     private static final String NAVIGATION_TAG = "Navigation";
+
     protected Fragment fContent;
-    protected RingNavigationFragment fNavigation;
+    protected HomeNavigationFragment fNavigation;
     protected ConversationFragment fConversation;
-
-    @Inject
-    DeviceRuntimeService mDeviceRuntimeService;
-
-    @Inject
-    PreferencesService mPreferencesService;
-
-    @Inject
-    HardwareService mHardwareService;
 
     @Inject
     AccountService mAccountService;
     @Inject
     NotificationService mNotificationService;
-    @BindView(R.id.left_drawer)
-    NavigationView mNavigationView;
     @BindView(R.id.drawer_layout)
     DrawerLayout mNavigationDrawer;
 
@@ -150,20 +137,20 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        RingApplication.getInstance().startDaemon();
+        JamiApplication.getInstance().startDaemon();
         mToolbarSize = getResources().getDimension(R.dimen.abc_action_bar_default_height_material);
         mToolbarElevation = getResources().getDimension(R.dimen.toolbar_elevation);
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         if (savedInstanceState != null) {
-            fNavigation = (RingNavigationFragment) fragmentManager.findFragmentByTag(NAVIGATION_TAG);
+            fNavigation = (HomeNavigationFragment) fragmentManager.findFragmentByTag(NAVIGATION_TAG);
         }
         setContentView(R.layout.activity_home);
 
         ButterKnife.bind(this);
 
         // dependency injection
-        RingApplication.getInstance().getRingInjectionComponent().inject(this);
+        JamiApplication.getInstance().getRingInjectionComponent().inject(this);
 
         setSupportActionBar(mToolbar);
 
@@ -203,7 +190,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         }
 
         if (fNavigation == null && savedInstanceState == null) {
-            fNavigation = new RingNavigationFragment();
+            fNavigation = new HomeNavigationFragment();
             fragmentManager.beginTransaction()
                     .replace(R.id.navigation_container, fNavigation, NAVIGATION_TAG)
                     .commit();
@@ -252,9 +239,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         if (Intent.ACTION_SEND.equals(action) || Intent.ACTION_SEND_MULTIPLE.equals(action)) {
             Bundle extra = intent.getExtras();
             if (extra != null) {
-                String accountId = extra.getString(ConversationFragment.KEY_ACCOUNT_ID);
-                String uri = extra.getString(ConversationFragment.KEY_CONTACT_RING_ID);
-                if (!TextUtils.isEmpty(accountId) && !TextUtils.isEmpty(uri)) {
+                if (ConversationPath.fromBundle(extra) != null) {
                     intent.setClass(this, ConversationActivity.class);
                     startActivity(intent);
                 }
@@ -283,8 +268,8 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         }
 
         if (!getSupportFragmentManager().findFragmentByTag(HOME_TAG).isVisible()) {
-            fNavigation.selectSection(RingNavigationFragment.Section.HOME);
-            onNavigationSectionSelected(RingNavigationFragment.Section.HOME);
+            fNavigation.selectSection(HomeNavigationFragment.Section.HOME);
+            onNavigationSectionSelected(HomeNavigationFragment.Section.HOME);
         }
         if (fContent instanceof SmartListFragment) {
             Bundle bundle = new Bundle();
@@ -302,7 +287,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
                 .setTitle(R.string.account_migration_title_dialog)
                 .setMessage(R.string.account_migration_message_dialog)
                 .setIcon(R.drawable.baseline_warning_24)
-                .setPositiveButton(android.R.string.ok, (dialog, which) -> fNavigation.selectSection(RingNavigationFragment.Section.MANAGE))
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> fNavigation.selectSection(HomeNavigationFragment.Section.MANAGE))
                 .setNegativeButton(android.R.string.cancel, null)
                 .show();
     }
@@ -387,7 +372,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         }
         fContent = new ContactRequestsFragment();
         fContent.setArguments(bundle);
-        fNavigation.selectSection(RingNavigationFragment.Section.CONTACT_REQUESTS);
+        fNavigation.selectSection(HomeNavigationFragment.Section.CONTACT_REQUESTS);
         getSupportFragmentManager().beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(R.id.main_frame, fContent, CONTACT_REQUESTS_TAG)
@@ -413,7 +398,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
             fContent = fragmentManager.findFragmentById(entry.getId());
             fragmentManager.popBackStack();
             if (fCount == 2)
-                fNavigation.selectSection(RingNavigationFragment.Section.HOME);
+                fNavigation.selectSection(HomeNavigationFragment.Section.HOME);
             return;
         }
         finish();
@@ -441,7 +426,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
     }
 
     @Override
-    public void onNavigationSectionSelected(RingNavigationFragment.Section section) {
+    public void onNavigationSectionSelected(HomeNavigationFragment.Section section) {
         if (!isDrawerLocked) {
             mNavigationDrawer.closeDrawers();
         }

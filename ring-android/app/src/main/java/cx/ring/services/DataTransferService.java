@@ -30,7 +30,7 @@ import androidx.annotation.Nullable;
 
 import javax.inject.Inject;
 
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.utils.Log;
 
 public class DataTransferService extends Service {
@@ -84,7 +84,7 @@ public class DataTransferService extends Service {
     @Override
     public void onCreate() {
         Log.d(TAG, "OnCreate(), Service has been initialized");
-        ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) getApplication()).getRingInjectionComponent().inject(this);
         super.onCreate();
     }
 

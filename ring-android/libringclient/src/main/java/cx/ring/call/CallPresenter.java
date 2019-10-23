@@ -20,24 +20,34 @@
  */
 package cx.ring.call;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import cx.ring.facades.ConversationFacade;
+import cx.ring.model.Conference;
+import cx.ring.model.Conversation;
 import cx.ring.model.SipCall;
+import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ContactService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
-import cx.ring.services.NotificationService;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
+import io.reactivex.Maybe;
 import io.reactivex.Observable;
+import io.reactivex.Observer;
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.Subject;
 
 public class CallPresenter extends RootPresenter<CallView> {
 
@@ -48,8 +58,12 @@ public class CallPresenter extends RootPresenter<CallView> {
     private HardwareService mHardwareService;
     private CallService mCallService;
     private DeviceRuntimeService mDeviceRuntimeService;
+    private ConversationFacade mConversationFacade;
 
-    private SipCall mSipCall;
+    private Conference mSipCall;
+    private final List<SipCall> mPendingCalls = new ArrayList<>();
+    private final Subject<List<SipCall>> mPendingSubject = BehaviorSubject.createDefault(mPendingCalls);
+
     private boolean mOnGoingCall = false;
     private boolean mAudioOnly = true;
     private boolean permissionChanged = false;
@@ -61,6 +75,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     private int videoHeight = -1;
     private int previewWidth = -1;
     private int previewHeight = -1;
+    private String currentSurfaceId = null;
 
     private Disposable timeUpdateTask = null;
 
@@ -72,12 +87,15 @@ public class CallPresenter extends RootPresenter<CallView> {
     public CallPresenter(AccountService accountService,
                          ContactService contactService,
                          HardwareService hardwareService,
-                         CallService callService, DeviceRuntimeService deviceRuntimeService) {
+                         CallService callService,
+                         DeviceRuntimeService deviceRuntimeService,
+                         ConversationFacade conversationFacade) {
         mAccountService = accountService;
         mContactService = contactService;
         mHardwareService = hardwareService;
         mCallService = callService;
         mDeviceRuntimeService = deviceRuntimeService;
+        mConversationFacade = conversationFacade;
     }
 
     public void cameraPermissionChanged(boolean isGranted) {
@@ -105,13 +123,13 @@ public class CallPresenter extends RootPresenter<CallView> {
     @Override
     public void bindView(CallView view) {
         super.bindView(view);
-        mCompositeDisposable.add(mAccountService.getRegisteredNames()
+        /*mCompositeDisposable.add(mAccountService.getRegisteredNames()
                 .observeOn(mUiScheduler)
                 .subscribe(r -> {
                     if (mSipCall != null && mSipCall.getContact() != null) {
                         getView().updateContactBubble(mSipCall.getContact());
                     }
-                }));
+                }));*/
         mCompositeDisposable.add(mHardwareService.getVideoEvents()
                 .observeOn(mUiScheduler)
                 .subscribe(this::onVideoEvent));
@@ -140,17 +158,18 @@ public class CallPresenter extends RootPresenter<CallView> {
         //getView().blockScreenRotation();
 
         mCompositeDisposable.add(mCallService
-                .placeCallObservable(accountId, StringUtils.toNumber(contactRingId), audioOnly)
+                .placeCall(accountId, StringUtils.toNumber(contactRingId), audioOnly)
+                //.map(mCallService::getConference)
+                .flatMapObservable(call -> mCallService.getConfUpdates(call))
                 .observeOn(mUiScheduler)
-                .subscribe(call -> {
-                    contactUpdate(call);
-                    confUpdate(call);
+                .subscribe(conference -> {
+                    contactUpdate(conference);
+                    confUpdate(conference);
                 }, e -> {
                     hangupCall();
                     Log.e(TAG, "Error with initOutgoing: " + e.getMessage());
                 }));
     }
-
 
     /**
      * Returns to or starts an incoming call
@@ -164,49 +183,58 @@ public class CallPresenter extends RootPresenter<CallView> {
         // if the call is incoming through a full intent, this allows the incoming call to display
         incomingIsFullIntent = actionViewOnly;
 
-        Observable<SipCall> callObservable = mCallService.getCallUpdates(confId).observeOn(mUiScheduler).share();
+        Observable<Conference> callObservable = mCallService.getConfUpdates(confId)
+                .observeOn(mUiScheduler)
+                .share();
 
         // Handles the case where the call has been accepted, emits a single so as to only check for permissions and start the call once
-        mCompositeDisposable.add(callObservable.firstOrError().subscribe(call -> {
-            if (!actionViewOnly) {
-                contactUpdate(call);
-                confUpdate(call);
-                callInitialized = true;
-                getView().prepareCall(true);
-            }
-        }, e -> {
-            hangupCall();
-            Log.e(TAG, "Error with initIncoming, preparing call flow :" , e);
-        }));
+        mCompositeDisposable.add(callObservable
+                .firstOrError()
+                .subscribe(call -> {
+                    if (!actionViewOnly) {
+                        contactUpdate(call);
+                        confUpdate(call);
+                        callInitialized = true;
+                        getView().prepareCall(true);
+                    }
+                }, e -> {
+                    hangupCall();
+                    Log.e(TAG, "Error with initIncoming, preparing call flow :" , e);
+                }));
 
         // Handles retrieving call updates. Items emitted are only used if call is already in process or if user is returning to a call.
-        mCompositeDisposable.add(callObservable.subscribe(call -> {
-            if (callInitialized || actionViewOnly) {
-                contactUpdate(call);
-                confUpdate(call);
-            }
-        }, e -> {
-            hangupCall();
-            Log.e(TAG, "Error with initIncoming, action view flow: ", e);
-        }));
+        mCompositeDisposable.add(callObservable
+                .subscribe(call -> {
+                    if (callInitialized || actionViewOnly) {
+                        contactUpdate(call);
+                        confUpdate(call);
+                    }
+                }, e -> {
+                    hangupCall();
+                    Log.e(TAG, "Error with initIncoming, action view flow: ", e);
+                }));
     }
 
     public void prepareOptionMenu() {
         boolean isSpeakerOn = mHardwareService.isSpeakerPhoneOn();
-        boolean hasContact = mSipCall != null && null != mSipCall.getContact() && mSipCall.getContact().isUnknown();
+        //boolean hasContact = mSipCall != null && null != mSipCall.getContact() && mSipCall.getContact().isUnknown();
         boolean canDial = mOnGoingCall && mSipCall != null && !mSipCall.isIncoming();
         boolean hasMultipleCamera = mHardwareService.getCameraCount() > 1 && mOnGoingCall && !mAudioOnly;
-        getView().initMenu(isSpeakerOn, hasContact, hasMultipleCamera, canDial, mOnGoingCall);
+        getView().initMenu(isSpeakerOn, hasMultipleCamera, canDial, mOnGoingCall);
     }
 
     public void chatClick() {
-        if (mSipCall == null
-                || mSipCall.getContact() == null
-                || mSipCall.getContact().getIds() == null
-                || mSipCall.getContact().getIds().isEmpty()) {
+        if (mSipCall == null || mSipCall.getParticipants().isEmpty()) {
             return;
         }
-        getView().goToConversation(mSipCall.getAccount(), mSipCall.getContact().getIds().get(0));
+        SipCall firstCall = mSipCall.getParticipants().get(0);
+        if (firstCall == null
+                || firstCall.getContact() == null
+                || firstCall.getContact().getIds() == null
+                || firstCall.getContact().getIds().isEmpty()) {
+            return;
+        }
+        getView().goToConversation(firstCall.getAccount(), firstCall.getContact().getIds().get(0));
     }
 
     public void speakerClick(boolean checked) {
@@ -226,9 +254,16 @@ public class CallPresenter extends RootPresenter<CallView> {
         if(mSipCall == null)
             return;
 
-        mHardwareService.switchInput(mSipCall.getDaemonIdString(), false);
+        mHardwareService.switchInput(mSipCall.getId(), false);
         getView().switchCameraIcon(mHardwareService.isPreviewFromFrontCamera());
     }
+
+    /*public void addParticipantClick() {
+        if(mSipCall == null)
+            return;
+
+        getView().launchAddParti
+    }*/
 
     public void configurationChanged(int rotation) {
         mHardwareService.setDeviceOrientation(rotation);
@@ -242,20 +277,26 @@ public class CallPresenter extends RootPresenter<CallView> {
         if (mSipCall == null) {
             return;
         }
-        mCallService.accept(mSipCall.getDaemonIdString());
+        mCallService.accept(mSipCall.getId());
     }
 
     public void hangupCall() {
         if (mSipCall != null) {
-            mCallService.hangUp(mSipCall.getDaemonIdString());
+            if (mSipCall.isConference())
+                mCallService.hangUpConference(mSipCall.getId());
+            else
+                mCallService.hangUp(mSipCall.getId());
+        }
+        for (SipCall call : mPendingCalls) {
+            mCallService.hangUp(call.getDaemonIdString());
         }
         finish();
     }
 
     public void refuseCall() {
-        final SipCall call = mSipCall;
+        final Conference call = mSipCall;
         if (call != null) {
-            mCallService.refuse(call.getDaemonIdString());
+            mCallService.refuse(call.getId());
         }
         finish();
     }
@@ -264,8 +305,20 @@ public class CallPresenter extends RootPresenter<CallView> {
         if (mSipCall == null) {
             return;
         }
-        mHardwareService.addVideoSurface(mSipCall.getDaemonIdString(), holder);
+        String newId = mSipCall.getId();
+        if (!newId.equals(currentSurfaceId)) {
+            mHardwareService.removeVideoSurface(currentSurfaceId);
+            currentSurfaceId = newId;
+        }
+        mHardwareService.addVideoSurface(mSipCall.getId(), holder);
         getView().displayContactBubble(false);
+    }
+
+    public void videoSurfaceUpdateId(String newId) {
+        if (!Objects.equals(newId, currentSurfaceId)) {
+            mHardwareService.updateVideoSurfaceId(currentSurfaceId, newId);
+            currentSurfaceId = newId;
+        }
     }
 
     public void previewVideoSurfaceCreated(Object holder) {
@@ -274,10 +327,10 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void videoSurfaceDestroyed() {
-        if (mSipCall == null) {
-            return;
+        if (currentSurfaceId != null) {
+            mHardwareService.removeVideoSurface(currentSurfaceId);
+            currentSurfaceId = null;
         }
-        mHardwareService.removeVideoSurface(mSipCall.getDaemonIdString());
     }
 
     public void previewVideoSurfaceDestroyed() {
@@ -286,7 +339,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void displayChanged() {
-        mHardwareService.switchInput(mSipCall.getDaemonIdString(), false);
+        mHardwareService.switchInput(mSipCall.getId(), false);
     }
 
     public void layoutChanged() {
@@ -311,30 +364,77 @@ public class CallPresenter extends RootPresenter<CallView> {
             view.finish();
     }
 
-    private void contactUpdate(final SipCall call) {
-        if (mSipCall != call) {
-            mSipCall = call;
-            mCompositeDisposable.add(mContactService.observeContact(call.getAccount(), call.getContact())
+    private Disposable contactDisposable = null;
+
+    private void contactUpdate(final Conference conference) {
+        if (mSipCall != conference) {
+            mSipCall = conference;
+            if (contactDisposable != null && !contactDisposable.isDisposed()) {
+                contactDisposable.dispose();
+            }
+            if (conference.getParticipants().isEmpty())
+                return;
+
+            // Updates of participant (and  pending participant) list
+            Observable<List<SipCall>> callsObservable = mPendingSubject
+                    .map(pendingList -> {
+                        Log.w(TAG, "mPendingSubject onNext " + pendingList.size() + " " + conference.getParticipants().size());
+                        if (pendingList.isEmpty())
+                            return conference.getParticipants();
+                        List<SipCall> newList = new ArrayList<>(conference.getParticipants().size() + pendingList.size());
+                        newList.addAll(conference.getParticipants());
+                        newList.addAll(pendingList);
+                        return newList;
+                    });
+
+            // Updates of individual contacts
+            Observable<List<Observable<SipCall>>> contactsObservable = callsObservable
+                    .flatMapSingle(calls -> Observable
+                            .fromIterable(calls)
+                            .map(call -> mContactService.observeContact(call.getAccount(), call.getContact())
+                                    .map(contact -> call))
+                            .toList(calls.size()));
+
+            // Combined updates of contacts as participant list updates
+            Observable<List<SipCall>> contactUpdates = contactsObservable
+                    .switchMap(list -> Observable
+                            .combineLatest(list, objects -> {
+                                Log.w(TAG, "flatMapObservable " + objects.length);
+                                ArrayList<SipCall> calls = new ArrayList<>(objects.length);
+                                for (Object call : objects)
+                                    calls.add((SipCall)call);
+                                return (List<SipCall>)calls;
+                            }))
+                    .filter(list -> !list.isEmpty());
+
+            contactDisposable = contactUpdates
                     .observeOn(mUiScheduler)
-                    .subscribe(c -> getView().updateContactBubble(c), e -> Log.e(TAG, e.getMessage())));
+                    .subscribe(cs -> getView().updateContactBubble(cs), e -> Log.e(TAG, "Error updating contact data", e));
+            mCompositeDisposable.add(contactDisposable);
         }
     }
 
-    private void confUpdate(SipCall call) {
-        mAudioOnly = call.isAudioOnly();
+    private void confUpdate(Conference call) {
+        Log.w(TAG, "confUpdate " + call.getId());
+
+        mSipCall = call;
+        mAudioOnly = !call.hasVideo();
         CallView view = getView();
         if (view == null)
             return;
         view.updateMenu();
         if (call.isOnGoing()) {
+            Log.w(TAG, "confUpdate call.isOnGoing");
+
             mOnGoingCall = true;
             view.initNormalStateDisplay(mAudioOnly, isMicrophoneMuted());
             view.updateMenu();
             if (!mAudioOnly) {
                 mHardwareService.setPreviewSettings();
+                videoSurfaceUpdateId(call.getId());
                 view.displayVideoSurface(true, mDeviceRuntimeService.hasVideoPermission());
                 if (permissionChanged) {
-                    mHardwareService.switchInput(mSipCall.getDaemonIdString(), permissionChanged);
+                    mHardwareService.switchInput(mSipCall.getId(), permissionChanged);
                     permissionChanged = false;
                 }
             }
@@ -342,17 +442,19 @@ public class CallPresenter extends RootPresenter<CallView> {
                 timeUpdateTask.dispose();
             timeUpdateTask = mUiScheduler.schedulePeriodicallyDirect(this::updateTime, 0, 1, TimeUnit.SECONDS);
         } else if (call.isRinging()) {
+            Log.w(TAG, "confUpdate call.isRinging");
+
             view.handleCallWakelock(mAudioOnly);
             if (call.isIncoming()) {
-                if (mAccountService.getAccount(call.getAccount()).isAutoanswerEnabled()) {
-                    mCallService.accept(call.getDaemonIdString());
+                if (mAccountService.getAccount(call.getCall().getAccount()).isAutoanswerEnabled()) {
+                    mCallService.accept(call.getId());
                     // only display the incoming call screen if the notification is a full screen intent
                 } else if (incomingIsFullIntent) {
                     view.initIncomingCallDisplay();
                 }
             } else {
                 mOnGoingCall = false;
-                view.updateCallStatus(call.getCallStatus());
+                //view.updateCallStatus(call.getCallStatus());
                 view.initOutGoingCallDisplay();
             }
         } else {
@@ -363,7 +465,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     private void updateTime() {
         CallView view = getView();
         if (view != null && mSipCall != null) {
-            long duration = System.currentTimeMillis() - mSipCall.getTimestamp();
+            long duration = System.currentTimeMillis() - mSipCall.getTimestampStart();
             duration = duration / 1000;
             if (mSipCall.isOnGoing()) {
                 view.updateTime(duration);
@@ -376,7 +478,7 @@ public class CallPresenter extends RootPresenter<CallView> {
 
         if (event.start) {
             getView().displayVideoSurface(true, !isPipMode() && mDeviceRuntimeService.hasVideoPermission());
-        } else if (mSipCall != null && mSipCall.getDaemonIdString().equals(event.callId)) {
+        } else if (mSipCall != null && mSipCall.getId().equals(event.callId)) {
             getView().displayVideoSurface(event.started, event.started && !isPipMode() && mDeviceRuntimeService.hasVideoPermission());
             if (event.started) {
                 videoWidth = event.w;
@@ -422,8 +524,8 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void requestPipMode() {
-        if (mSipCall != null && mSipCall.isOnGoing() && !mSipCall.isAudioOnly()) {
-            getView().enterPipMode(mSipCall);
+        if (mSipCall != null && mSipCall.isOnGoing() && mSipCall.hasVideo()) {
+            getView().enterPipMode(mSipCall.getId());
         }
     }
 
@@ -449,5 +551,80 @@ public class CallPresenter extends RootPresenter<CallView> {
 
     public void sendDtmf(CharSequence s) {
         mCallService.playDtmf(s.toString());
+    }
+
+    public void addConferenceParticipant(String accountId, String contactId) {
+        String destCallId = mSipCall.getId();
+
+        mCompositeDisposable.add(mConversationFacade.startConversation(accountId, new Uri(contactId))
+                .map(Conversation::getCurrentCalls)
+                .subscribe(calls -> {
+                    if (calls.isEmpty()) {
+                        final Observer<SipCall>  pendingObserver = new Observer<SipCall>() {
+                            private SipCall call = null;
+                            @Override
+                            public void onSubscribe(Disposable d) {}
+
+                            @Override
+                            public void onNext(SipCall sipCall) {
+                                Log.w(TAG, "placeCallObservable onNext " + sipCall.getCallStatus());
+                                if (call == null) {
+                                    call = sipCall;
+                                    mPendingCalls.add(sipCall);
+                                }
+                                mPendingSubject.onNext(mPendingCalls);
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {}
+
+                            @Override
+                            public void onComplete() {
+                                Log.w(TAG, "placeCallObservable onComplete " + call);
+                                if (call != null) {
+                                    mPendingCalls.remove(call);
+                                    mPendingSubject.onNext(mPendingCalls);
+                                    call = null;
+                                }
+                            }
+                        };
+
+                        // Place new call, join to conference when answered
+                        Maybe<SipCall> newCall = mCallService.placeCallObservable(accountId, contactId, mAudioOnly)
+                                .doOnEach(pendingObserver)
+                                .filter(SipCall::isOnGoing)
+                                .firstElement()
+                                .delay(1, TimeUnit.SECONDS)
+                                .doOnEvent((v, e) -> pendingObserver.onComplete());
+                        if (mSipCall.getParticipants().size() > 1) {
+                            mCompositeDisposable.add(newCall.subscribe(call -> mCallService.joinConference(destCallId, call.getDaemonIdString())));
+                        } else {
+                            mCompositeDisposable.add(newCall.subscribe(call -> mCallService.joinParticipant(destCallId, call.getDaemonIdString())));
+                        }
+
+                    } else {
+                        // Selected contact already in call or conference, join it to current conference
+                        Conference call = calls.get(0);
+                        if (call != mSipCall) {
+                            if (mSipCall.getParticipants().size() > 1) {
+                                mCallService.joinConference(destCallId, call.getId());
+                            } else {
+                                mCallService.joinParticipant(destCallId, call.getId());
+                            }
+                        }
+                    }
+                }));
+    }
+
+    public void startAddParticipant() {
+        getView().startAddParticipant(mSipCall.getId());
+    }
+
+    public void hangupParticipant(SipCall call) {
+        mCallService.hangUp(call.getDaemonIdString());
+    }
+
+    public void openParticipantContact(SipCall call) {
+        getView().goToContact(call.getAccount(), call.getContact());
     }
 }

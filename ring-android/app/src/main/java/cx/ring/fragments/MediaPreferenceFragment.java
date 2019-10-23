@@ -26,18 +26,16 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.preference.Preference;
 import androidx.preference.TwoStatePreference;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import cx.ring.R;
 import cx.ring.account.AccountEditionActivity;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.client.RingtoneActivity;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
@@ -76,7 +74,7 @@ public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPrefere
 
     @Override
     public void onCreatePreferences(Bundle bundle, String rootKey) {
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
         super.onCreatePreferences(bundle, rootKey);
 
         String accountId = getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY);

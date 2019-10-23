@@ -31,7 +31,7 @@ import java.util.ArrayList;
 
 import cx.ring.R;
 import cx.ring.account.AccountEditionActivity;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.ConfigKey;
 import cx.ring.mvp.BasePreferenceFragment;
@@ -45,7 +45,7 @@ public class AdvancedAccountFragment extends BasePreferenceFragment<AdvancedAcco
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
         super.onCreatePreferences(bundle, s);
 
         // Load the preferences from an XML resource
