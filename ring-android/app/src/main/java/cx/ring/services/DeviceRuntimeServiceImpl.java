@@ -58,10 +58,6 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
     private long mDaemonThreadId = -1;
 
     private void copyAssets() {
-        File dataPath = new File(mContext.getFilesDir(), "data");
-        Log.w(TAG, "data: " + dataPath.getAbsolutePath());
-        // Overwrite existing plugins folder in order to use newer plugins
-        AndroidFileUtils.copyAssetFolder(mContext.getAssets(), "data", dataPath);
         File pluginsPath = new File(mContext.getFilesDir(), "plugins");
         Log.w(TAG, "Plugins: " + pluginsPath.getAbsolutePath());
         // Overwrite existing plugins folder in order to use newer plugins

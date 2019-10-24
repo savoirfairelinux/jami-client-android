@@ -63,6 +63,8 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
     View settings_video_layout;
     @BindView(R.id.settings_dark_theme)
     Switch mDarkTheme;
+    @BindView(R.id.settings_plugins_layout)
+    View settings_plugins_layout;
 
     private boolean mIsRefreshingViewFromPresenter;
 
@@ -130,6 +132,14 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         HomeActivity activity = (HomeActivity) getActivity();
         if (activity != null) {
             activity.goToVideoSettings();
+        }
+    }
+
+    @OnClick(R.id.settings_plugins_layout)
+    void onPluginSettings(){
+        HomeActivity activity = (HomeActivity) getActivity();
+        if (activity != null) {
+            activity.goToPluginsListSettings();
         }
     }
 
