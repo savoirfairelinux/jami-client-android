@@ -243,6 +243,9 @@ public abstract class JamiApplication extends Application {
         // we can now inject in our self whatever modules define
         mJamiInjectionComponent.inject(this);
 
+        // we can now inject in our self whatever modules define
+        mJamiInjectionComponent.inject(this);
+
         bootstrapDaemon();
 
         mPreferencesService.loadDarkMode();
