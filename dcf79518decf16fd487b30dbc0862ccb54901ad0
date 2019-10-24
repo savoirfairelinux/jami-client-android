@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8089f96d_9eec669f",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/Account.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2019-10-24T18:38:45Z",
+      "side": 1,
+      "message": "you can remove that section",
+      "range": {
+        "startLine": 742,
+        "startChar": 8,
+        "endLine": 745,
+        "endChar": 11
+      },
+      "revId": "dcf79518decf16fd487b30dbc0862ccb54901ad0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
