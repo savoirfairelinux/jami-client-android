@@ -52,7 +52,6 @@ import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.contacts.AvatarFactory;
 import cx.ring.daemon.Ringservice;
-import cx.ring.dependencyinjection.DaggerJamiInjectionComponent;
 import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.dependencyinjection.JamiInjectionModule;
 import cx.ring.dependencyinjection.ServiceInjectionModule;
@@ -233,12 +232,6 @@ public abstract class JamiApplication extends Application {
         sInstance = this;
 
         RxJavaPlugins.setErrorHandler(e -> Log.e(TAG, "Unhandled RxJava error", e));
-
-        // building injection dependency tree
-        mJamiInjectionComponent = DaggerJamiInjectionComponent.builder()
-                .jamiInjectionModule(new JamiInjectionModule(this))
-                .serviceInjectionModule(new ServiceInjectionModule(this))
-                .build();
 
         // we can now inject in our self whatever modules define
         mJamiInjectionComponent.inject(this);
