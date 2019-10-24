@@ -146,10 +146,6 @@ public class DRingService extends Service {
     @Inject
     @Singleton
     protected ConversationFacade mConversationFacade;
-    @Inject
-    @Singleton
-    @Named("DaemonExecutor")
-    protected ScheduledExecutorService mExecutor;
 
     private final Handler mHandler = new Handler();
     private final CompositeDisposable mDisposableBag = new CompositeDisposable();
