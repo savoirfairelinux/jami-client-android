@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3fa8e43_61ccadb1",
+        "filename": "ring-android/app/src/main/java/cx/ring/application/RingApplication.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2019-10-24T18:42:02Z",
+      "side": 1,
+      "message": "log",
+      "range": {
+        "startLine": 121,
+        "startChar": 31,
+        "endLine": 122,
+        "endChar": 32
+      },
+      "revId": "27235e5c64e5114ed600f5a08307998233870313",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f550605_befbdc50",
+        "filename": "ring-android/app/src/main/java/cx/ring/application/RingApplication.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2019-10-24T18:42:02Z",
+      "side": 1,
+      "message": "to rm",
+      "range": {
+        "startLine": 151,
+        "startChar": 17,
+        "endLine": 152,
+        "endChar": 53
+      },
+      "revId": "27235e5c64e5114ed600f5a08307998233870313",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
