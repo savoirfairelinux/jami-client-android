@@ -79,8 +79,6 @@ import cx.ring.model.TextMessage;
 import cx.ring.service.DRingService;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
-import cx.ring.utils.GlideApp;
-import cx.ring.utils.GlideOptions;
 import cx.ring.utils.ResourceMapper;
 import cx.ring.utils.StringUtils;
 import io.reactivex.Observable;
@@ -97,7 +95,6 @@ public class TvConversationAdapter extends RecyclerView.Adapter<TvConversationVi
     private final int hPadding;
     private final int vPadding;
     private final int mPictureMaxSize;
-    private final GlideOptions PICTURE_OPTIONS;
     private RecyclerViewContextMenuInfo mCurrentLongItem = null;
     private int convColor = 0;
 
@@ -125,11 +122,6 @@ public class TvConversationAdapter extends RecyclerView.Adapter<TvConversationVi
         vPadding = res.getDimensionPixelSize(R.dimen.padding_small);
         mPictureMaxSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200, res.getDisplayMetrics());
         int corner = (int) res.getDimension(R.dimen.conversation_message_radius);
-        PICTURE_OPTIONS = new GlideOptions()
-                .transform(new CenterInside())
-                .fitCenter()
-                .override(mPictureMaxSize)
-                .transform(new RoundedCorners(corner));
         timestampUpdateTimer = Observable.interval(10, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -462,11 +454,6 @@ public class TvConversationAdapter extends RecyclerView.Adapter<TvConversationVi
                     viewHolder.mAnswerLayout.animate().scaleY(hasFocus? 1.1f : 1f).scaleX(hasFocus? 1.1f : 1f);
                 }
             });
-
-            GlideApp.with(context)
-                    .load(path)
-                    .apply(PICTURE_OPTIONS)
-                    .into(new DrawableImageViewTarget(viewHolder.mImage).waitForLayout());
 
             viewHolder.itemView.setOnClickListener(v -> {
                 Uri contentUri = ContentUriHandler.getUriForFile(v.getContext(), ContentUriHandler.AUTHORITY_FILES, path);

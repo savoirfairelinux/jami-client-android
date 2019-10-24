@@ -40,4 +40,7 @@
     <string name="pref_persistNotification_title">Run in background</string>
     <string name="pref_persistNotification_summary">Allow running in background to receive calls and messages.</string>
 
+    <string name="pref_plugins_title">Plugins</string>
+    <string name="pref_plugins_summary">Enable plugins and set their parameters</string>
+
 </resources>
