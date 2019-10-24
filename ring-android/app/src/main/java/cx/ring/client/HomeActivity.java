@@ -22,7 +22,6 @@ package cx.ring.client;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import com.google.android.material.appbar.AppBarLayout;
@@ -73,6 +72,7 @@ import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.NotificationService;
 import cx.ring.services.PreferencesService;
+import cx.ring.settings.PluginsListSettingsFragment;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.settings.VideoSettingsFragment;
 import cx.ring.utils.DeviceUtils;
@@ -94,6 +94,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
     public static final String ABOUT_TAG = "About";
     public static final String SETTINGS_TAG = "Prefs";
     public static final String VIDEO_SETTINGS_TAG = "VideoPrefs";
+    public static final String PLUGINS_SETTINGS_TAG = "PluginsPrefs";
     static public final String ACTION_PRESENT_TRUST_REQUEST_FRAGMENT = BuildConfig.APPLICATION_ID + "presentTrustRequestFragment";
     static final String TAG = HomeActivity.class.getSimpleName();
     private static final String NAVIGATION_TAG = "Navigation";
@@ -560,6 +561,21 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(R.id.main_frame, fContent, VIDEO_SETTINGS_TAG)
                 .addToBackStack(VIDEO_SETTINGS_TAG).commit();
+    }
+
+    public void goToPluginsListSettings() {
+        if (mNavigationDrawer != null && !isDrawerLocked) {
+            mNavigationDrawer.closeDrawers();
+        }
+        if (fContent instanceof PluginsListSettingsFragment) {
+            return;
+        }
+        fContent = new PluginsListSettingsFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .replace(R.id.main_frame, fContent, PLUGINS_SETTINGS_TAG)
+                .addToBackStack(PLUGINS_SETTINGS_TAG).commit();
     }
 
     @Override
