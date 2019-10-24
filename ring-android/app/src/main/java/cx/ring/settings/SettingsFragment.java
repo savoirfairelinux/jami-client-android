@@ -19,18 +19,13 @@
  */
 package cx.ring.settings;
 
-import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
-import androidx.core.content.ContextCompat;
+
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -50,7 +45,6 @@ import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.Settings;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.mvp.GenericView;
-import cx.ring.services.SharedPreferencesServiceImpl;
 
 /**
  * TODO: improvements : handle multiples permissions for feature.
@@ -69,6 +63,8 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
     View settings_video_layout;
     @BindView(R.id.settings_dark_theme)
     Switch mDarkTheme;
+    @BindView(R.id.settings_plugins_layout)
+    View settings_plugins_layout;
 
     private boolean mIsRefreshingViewFromPresenter;
 
@@ -136,6 +132,14 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         HomeActivity activity = (HomeActivity) getActivity();
         if (activity != null) {
             activity.goToVideoSettings();
+        }
+    }
+
+    @OnClick(R.id.settings_plugins_layout)
+    void onPluginSettings(){
+        HomeActivity activity = (HomeActivity) getActivity();
+        if (activity != null) {
+            activity.goToPluginsListSettings();
         }
     }
 
