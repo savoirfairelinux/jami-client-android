@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item
+        android:id="@+id/conv_contact_details"
+        android:icon="@drawable/baseline_person_24"
+        android:title="@string/conversation_details"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+    <item
+        android:id="@+id/conv_contact_hangup"
+        android:icon="@drawable/baseline_call_end_24"
+        android:title="@string/action_call_hangup"
+        app:showAsAction="always"
+        android:iconTint="@color/red_500" />
+</menu>

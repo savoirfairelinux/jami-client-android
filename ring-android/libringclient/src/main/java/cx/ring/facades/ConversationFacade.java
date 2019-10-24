@@ -92,9 +92,13 @@ public class ConversationFacade {
                 .getCurrentAccountSubject()
                 .switchMapSingle(this::loadSmartlist);
 
-        mDisposableBag.add(mCallService.getCallSubject()
+        mDisposableBag.add(mCallService.getCallsUpdates()
                 .observeOn(Schedulers.io())
                 .subscribe(this::onCallStateChange));
+
+        mDisposableBag.add(mCallService.getConfsUpdates()
+                .observeOn(Schedulers.io())
+                .subscribe(this::onConfStateChange));
 
         mDisposableBag.add(currentAccountSubject
                 .switchMap(a -> a.getPendingSubject()
@@ -415,8 +419,12 @@ public class ConversationFacade {
         mNotificationService.handleDataTransferNotification(transfer, conversation.getContact(), conversation.isVisible());
     }
 
+    private void onConfStateChange(Conference conference) {
+        Log.d(TAG, "onConfStateChange Thread id: " + Thread.currentThread().getId());
+    }
+
     private void onCallStateChange(SipCall call) {
-        Log.d(TAG, "Thread id: " + Thread.currentThread().getId());
+        Log.d(TAG, "onCallStateChange Thread id: " + Thread.currentThread().getId());
         SipCall.CallStatus newState = call.getCallStatus();
         boolean incomingCall = newState == SipCall.CallStatus.RINGING && call.isIncoming();
         mHardwareService.updateAudioState(newState, incomingCall, !call.isAudioOnly());
@@ -440,6 +448,13 @@ public class ConversationFacade {
         if ((call.isRinging() || newState == SipCall.CallStatus.CURRENT) && call.getTimestamp() == 0) {
             call.setTimestamp(System.currentTimeMillis());
         }
+
+        if (call.isIncoming()) {
+            if (mAccountService.getAccount(call.getAccount()).isAutoanswerEnabled()) {
+                mCallService.accept(call.getDaemonIdString());
+            }
+        }
+
         if (incomingCall) {
             mNotificationService.handleCallNotification(conference, false);
             mHardwareService.setPreviewSettings();

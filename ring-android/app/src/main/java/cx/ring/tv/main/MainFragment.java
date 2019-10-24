@@ -47,10 +47,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cx.ring.R;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.Account;
-import cx.ring.navigation.RingNavigationViewModel;
+import cx.ring.navigation.HomeNavigationViewModel;
 import cx.ring.services.VCardServiceImpl;
 import cx.ring.tv.about.AboutActivity;
 import cx.ring.tv.account.TVAccountExport;
@@ -94,7 +94,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -258,7 +258,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     }
 
     @Override
-    public void displayAccountInfos(final RingNavigationViewModel viewModel) {
+    public void displayAccountInfos(final HomeNavigationViewModel viewModel) {
         Context context = getContext();
         if (context == null) {
             Log.e(TAG, "displayAccountInfos: Not able to get context");

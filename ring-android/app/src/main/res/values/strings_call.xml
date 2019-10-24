@@ -36,6 +36,6 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_hold">Hold</string>
     <string name="call_human_state_unhold">Unhold</string>
     <string name="call_human_state_over">Over</string>
-    <string name="call_human_state_none">None</string>
+    <string name="call_human_state_none" translatable="false" />
     <!-- Conferences -->
 </resources>

@@ -30,7 +30,7 @@ import androidx.annotation.NonNull;
 import butterknife.BindString;
 import butterknife.BindView;
 import cx.ring.R;
-import cx.ring.dependencyinjection.RingInjectionComponent;
+import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.model.Account;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.mvp.GenericView;
@@ -65,7 +65,7 @@ public class TVShareFragment extends BaseFragment<SharePresenter> implements Gen
     }
 
     @Override
-    public void injectFragment(RingInjectionComponent component) {
+    public void injectFragment(JamiInjectionComponent component) {
         component.inject(this);
     }
 

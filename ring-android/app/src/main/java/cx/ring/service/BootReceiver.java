@@ -24,7 +24,7 @@ import android.util.Log;
 
 import javax.inject.Inject;
 
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.services.PreferencesService;
 
 public class BootReceiver extends BroadcastReceiver {
@@ -42,7 +42,7 @@ public class BootReceiver extends BroadcastReceiver {
         final String action = intent.getAction();
         if (Intent.ACTION_BOOT_COMPLETED.equals(action) || Intent.ACTION_REBOOT.equals(action)) {
             try {
-                ((RingApplication) context.getApplicationContext()).getRingInjectionComponent().inject(this);
+                ((JamiApplication) context.getApplicationContext()).getRingInjectionComponent().inject(this);
                 boolean isAllowRingOnStartup = mPreferencesService.getSettings().isAllowRingOnStartup();
 
                 if (isAllowRingOnStartup) {

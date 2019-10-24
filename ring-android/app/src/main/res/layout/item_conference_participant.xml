@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+
+Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+        Adrien Beraud <adrien.beraud@savoirfairelinux.com>
+        Romain Bertozzi <romain.bertozzi@savoirfairelinux.com>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+-->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:descendantFocusability="blocksDescendants"
+        android:gravity="center_vertical|end"
+        android:minHeight="72dp"
+        android:paddingLeft="16dp"
+        android:paddingTop="8dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="8dp">
+
+        <TextView
+            android:id="@+id/display_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/padding_large"
+            android:background="@drawable/background_conference_participant"
+            android:elevation="4dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp"
+            android:textColor="@color/grey_800"
+            android:textIsSelectable="false"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            tools:text="Thomas\nConnecting..." />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/photo"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:contentDescription="@string/contact_picture_description"
+            android:tintMode="multiply"
+            app:maxImageSize="56dp"
+            tools:src="@drawable/ic_contact_picture_fallback"/>
+
+    </LinearLayout>
+</layout>

@@ -47,6 +47,7 @@ import cx.ring.daemon.IntVect;
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.UintVect;
+import cx.ring.model.Conference;
 import cx.ring.model.SipCall;
 import cx.ring.model.SipCall.CallStatus;
 import cx.ring.utils.BluetoothWrapper;
@@ -65,7 +66,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
 
     private static final String TAG = HardwareServiceImpl.class.getSimpleName();
     private static WeakReference<TextureView> mCameraPreviewSurface = new WeakReference<>(null);
-    private static WeakReference<SipCall> mCameraPreviewCall = new WeakReference<>(null);
+    private static WeakReference<Conference> mCameraPreviewCall = new WeakReference<>(null);
 
     private static final Map<String, WeakReference<SurfaceHolder>> videoSurfaces = Collections.synchronizedMap(new HashMap<>());
     private final Map<String, Shm> videoInputs = new HashMap<>();
@@ -457,10 +458,15 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
             videoEvents.onNext(event);
             return;
         }
-        final SipCall call = mCameraPreviewCall.get();
-        if (call != null) {
-            call.setDetails(Ringservice.getCallDetails(call.getDaemonIdString()).toNative());
-            videoParams.codec = call.getVideoCodec();
+        final Conference conf = mCameraPreviewCall.get();
+        if (conf != null) {
+            SipCall call = conf.getCall();
+            if (call != null) {
+                call.setDetails(Ringservice.getCallDetails(call.getDaemonIdString()).toNative());
+                videoParams.codec = call.getVideoCodec();
+            } else {
+                videoParams.codec = null;
+            }
         }
         Log.w(TAG, "startCapture: call " + camId + " " + videoParams.codec);
 
@@ -523,7 +529,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
             return;
         }
 
-        Log.w(TAG, "addVideoSurface " + id + holder.hashCode());
+        Log.w(TAG, "addVideoSurface " + id);
 
         Shm shm = videoInputs.get(id);
         WeakReference<SurfaceHolder> surfaceHolder = new WeakReference<>((SurfaceHolder) holder);
@@ -547,11 +553,36 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         event.w = shm.w;
         event.h = shm.h;
         videoEvents.onNext(event);
-
     }
 
     @Override
-    public void addPreviewVideoSurface(Object oholder, SipCall call) {
+    public void updateVideoSurfaceId(String currentId, String newId)
+    {
+        Log.w(TAG, "updateVideoSurfaceId " + currentId + " " + newId);
+
+        WeakReference<SurfaceHolder> surfaceHolder = videoSurfaces.get(currentId);
+        if (surfaceHolder == null) {
+            return;
+        }
+        SurfaceHolder surface = surfaceHolder.get();
+
+        Shm shm = videoInputs.get(currentId);
+        if (shm != null && shm.window != 0) {
+            try {
+                stopVideo(shm.id, shm.window);
+            } catch (Exception e) {
+                Log.e(TAG, "removeVideoSurface error" + e);
+            }
+            shm.window = 0;
+        }
+        videoSurfaces.remove(currentId);
+        if (surface != null) {
+            addVideoSurface(newId, surface);
+        }
+    }
+
+    @Override
+    public void addPreviewVideoSurface(Object oholder, Conference conference) {
         if (!(oholder instanceof TextureView)) {
             return;
         }
@@ -560,7 +591,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         if (mCameraPreviewSurface.get() == oholder)
             return;
         mCameraPreviewSurface = new WeakReference<>(holder);
-        mCameraPreviewCall = new WeakReference<>(call);
+        mCameraPreviewCall = new WeakReference<>(conference);
         if (mShouldCapture && !mIsCapturing) {
             startCapture(mCapturingId);
         }
@@ -569,6 +600,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     @Override
     public void removeVideoSurface(String id) {
         Log.i(TAG, "removeVideoSurface " + id);
+        videoSurfaces.remove(id);
         Shm shm = videoInputs.get(id);
         if (shm == null) {
             return;

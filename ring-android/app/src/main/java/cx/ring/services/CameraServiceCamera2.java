@@ -71,7 +71,7 @@ import io.reactivex.schedulers.Schedulers;
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 class CameraServiceCamera2 extends CameraService {
-    private static final String TAG = CameraServiceCamera2.class.getName();
+    private static final String TAG = CameraServiceCamera2.class.getSimpleName();
     private static final int FPS_MAX = 30;
     private static final int FPS_TARGET = 15;
 
@@ -399,7 +399,7 @@ class CameraServiceCamera2 extends CameraService {
             SurfaceTexture texture = view.getSurfaceTexture();
             Surface s = new Surface(texture);
 
-            final Pair<MediaCodec, Surface> codec = hw_accel ? openCameraWithEncoder(videoParams, videoParams.getCodec(), handler, resolution, bitrate) : null;
+            final Pair<MediaCodec, Surface> codec = (hw_accel && videoParams.getCodec() != null) ? openCameraWithEncoder(videoParams, videoParams.getCodec(), handler, resolution, bitrate) : null;
 
             final List<Surface> targets = new ArrayList<>(2);
             targets.add(s);
