@@ -68,6 +68,9 @@ import cx.ring.model.AccountConfig;
 import cx.ring.service.DRingService;
 import cx.ring.services.AccountService;
 import cx.ring.services.NotificationService;
+import cx.ring.services.PreferencesService;
+import cx.ring.settings.PluginsListSettingsFragment;
+
 import cx.ring.settings.SettingsFragment;
 import cx.ring.settings.VideoSettingsFragment;
 import cx.ring.utils.ContentUriHandler;
@@ -99,7 +102,14 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     public static final String ABOUT_TAG = "About";
     public static final String SETTINGS_TAG = "Prefs";
     public static final String VIDEO_SETTINGS_TAG = "VideoPrefs";
+
     public static final String ACTION_PRESENT_TRUST_REQUEST_FRAGMENT = BuildConfig.APPLICATION_ID + "presentTrustRequestFragment";
+
+    public static final String PLUGINS_SETTINGS_TAG = "PluginsPrefs";
+    static public final String ACTION_PRESENT_TRUST_REQUEST_FRAGMENT = BuildConfig.APPLICATION_ID + "presentTrustRequestFragment";
+    static final String TAG = HomeActivity.class.getSimpleName();
+
+    private static final String NAVIGATION_TAG = "Navigation";
 
     protected Fragment fContent;
     protected ConversationFragment fConversation;
@@ -646,6 +656,26 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
     public void setAccountFragmentOnBackPressedListener(BackHandlerInterface backPressedListener) {
         mAccountFragmentBackHandlerInterface = backPressedListener;
+    }
+
+    public void goToPluginsListSettings() {
+        if (mNavigationDrawer != null && !isDrawerLocked) {
+            mNavigationDrawer.closeDrawers();
+        }
+        if (fContent instanceof PluginsListSettingsFragment) {
+            return;
+        }
+        fContent = new PluginsListSettingsFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .replace(R.id.main_frame, fContent, PLUGINS_SETTINGS_TAG)
+                .addToBackStack(PLUGINS_SETTINGS_TAG).commit();
+    }
+
+    @Override
+    public void setColor(int color) {
+        //mToolbar.setBackground(new ColorDrawable(color));
     }
 
     public void setToolbarElevation(boolean enable) {
