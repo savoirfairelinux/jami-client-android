@@ -34,6 +34,8 @@ import androidx.core.util.Pair;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.text.TextUtils;
+>>>>>>> settings: display the list of available plugins
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,10 +48,28 @@ import android.widget.TextView;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.about.AboutFragment;
@@ -69,6 +89,8 @@ import cx.ring.service.DRingService;
 import cx.ring.services.AccountService;
 import cx.ring.services.NotificationService;
 import cx.ring.services.PreferencesService;
+import cx.ring.settings.PluginDetails;
+import cx.ring.settings.PluginSettingsFragment;
 import cx.ring.settings.PluginsListSettingsFragment;
 
 import cx.ring.settings.SettingsFragment;
@@ -106,6 +128,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     public static final String ACTION_PRESENT_TRUST_REQUEST_FRAGMENT = BuildConfig.APPLICATION_ID + "presentTrustRequestFragment";
 
     public static final String PLUGINS_SETTINGS_TAG = "PluginsPrefs";
+    public static final String PLUGIN_SETTINGS_TAG = "PluginPrefs";
     static public final String ACTION_PRESENT_TRUST_REQUEST_FRAGMENT = BuildConfig.APPLICATION_ID + "presentTrustRequestFragment";
     static final String TAG = HomeActivity.class.getSimpleName();
 
@@ -658,6 +681,9 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         mAccountFragmentBackHandlerInterface = backPressedListener;
     }
 
+    /**
+     * Changes the current main fragment to a plugins list settings fragment
+     */
     public void goToPluginsListSettings() {
         if (mNavigationDrawer != null && !isDrawerLocked) {
             mNavigationDrawer.closeDrawers();
@@ -671,6 +697,25 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(R.id.main_frame, fContent, PLUGINS_SETTINGS_TAG)
                 .addToBackStack(PLUGINS_SETTINGS_TAG).commit();
+    }
+
+    /**
+     * Changes the current main fragment to a plugin settings fragment
+     * @param pluginDetails
+     */
+    public void gotToPluginSettings(PluginDetails pluginDetails){
+        if (mNavigationDrawer != null && !isDrawerLocked) {
+            mNavigationDrawer.closeDrawers();
+        }
+        if (fContent instanceof PluginSettingsFragment) {
+            return;
+        }
+        fContent = PluginSettingsFragment.newInstance(pluginDetails);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .replace(R.id.main_frame, fContent, PLUGIN_SETTINGS_TAG)
+                .addToBackStack(PLUGIN_SETTINGS_TAG).commit();
     }
 
     @Override
