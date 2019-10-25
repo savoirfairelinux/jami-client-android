@@ -78,7 +78,8 @@ public class Account {
 
     private final BehaviorSubject<Collection<CallContact>> contactListSubject = BehaviorSubject.create();
     private final BehaviorSubject<Collection<TrustRequest>> trustRequestsSubject = BehaviorSubject.create();
-    public Subject<Account> historyLoader;
+
+    public Single<Account> historyLoader;
     private VCard mProfile;
     private Single<Tuple<String, Object>> mLoadedProfile = null;
 
@@ -149,7 +150,7 @@ public class Account {
         pendingRefreshed();
     }
 
-    public void pendingUpdated(Conversation conversation) {
+    private void pendingUpdated(Conversation conversation) {
         if (!historyLoaded)
             return;
         if (pendingsChanged) {
@@ -370,14 +371,6 @@ public class Account {
         return mVolatileDetails.get(ConfigKey.ACCOUNT_REGISTRATION_STATUS);
     }
 
-    public int getRegistrationStateCode() {
-        String codeStr = mVolatileDetails.get(ConfigKey.ACCOUNT_REGISTRATION_STATE_CODE);
-        if (codeStr == null || codeStr.isEmpty()) {
-            return 0;
-        }
-        return Integer.parseInt(codeStr);
-    }
-
     public void setRegistrationState(String registeredState, int code) {
         mVolatileDetails.put(ConfigKey.ACCOUNT_REGISTRATION_STATUS, registeredState);
         mVolatileDetails.put(ConfigKey.ACCOUNT_REGISTRATION_STATE_CODE, Integer.toString(code));
@@ -490,10 +483,6 @@ public class Account {
         return result;
     }
 
-    public boolean useSecureLayer() {
-        return mDetails.getBool(ConfigKey.SRTP_ENABLE) || mDetails.getBool(ConfigKey.TLS_ENABLE);
-    }
-
     private String getUri(boolean display) {
         String username = display ? getDisplayUsername() : getUsername();
         if (isRing()) {
@@ -597,13 +586,13 @@ public class Account {
         }
         String addedStr = contact.get(CONTACT_ADDED);
         if (!StringUtils.isEmpty(addedStr)) {
-            long added = Long.valueOf(contact.get(CONTACT_ADDED));
+            long added = Long.parseLong(contact.get(CONTACT_ADDED));
             callContact.setAddedDate(new Date(added * 1000));
         }
         if (contact.containsKey(CONTACT_BANNED) && contact.get(CONTACT_BANNED).equals("true")) {
             callContact.setStatus(CallContact.Status.BANNED);
         } else if (contact.containsKey(CONTACT_CONFIRMED)) {
-            callContact.setStatus(Boolean.valueOf(contact.get(CONTACT_CONFIRMED)) ?
+            callContact.setStatus(Boolean.parseBoolean(contact.get(CONTACT_CONFIRMED)) ?
                     CallContact.Status.CONFIRMED :
                     CallContact.Status.REQUEST_SENT);
         }
@@ -727,10 +716,6 @@ public class Account {
         return conversation;
     }
 
-    public boolean isHistoryLoaded() {
-        return historyLoaded;
-    }
-
     public void setHistoryLoaded(List<Conversation> conversations) {
         if (historyLoaded)
             return;
@@ -738,10 +723,6 @@ public class Account {
         for (Conversation c : conversations)
             updated(c);
         historyLoaded = true;
-        if (historyLoader != null) {
-            historyLoader.onNext(this);
-            historyLoader.onComplete();
-        }
         conversationChanged();
         pendingChanged();
     }
