@@ -88,7 +88,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:visibility="visible"
                 app:flexDirection="column"
                 app:flexWrap="wrap"
-                tools:visibility="gone">
+                tools:visibility="visible">
 
                 <RelativeLayout
                     android:layout_width="230dp"
@@ -129,7 +129,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:paddingEnd="32dp"
                         android:singleLine="true"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="@color/text_color_primary_dark"
                         tools:text="Contact Name" />
 
                     <TextView
@@ -142,7 +141,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:paddingEnd="32dp"
                         android:singleLine="true"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="@color/text_color_secondary_dark"
                         android:visibility="gone"
                         tools:text="ring:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
                         tools:visibility="visible" />
@@ -154,7 +152,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:gravity="center_horizontal"
                         android:paddingStart="32dp"
                         android:paddingEnd="32dp"
-                        android:textColor="@color/text_color_primary_dark"
                         android:textSize="16sp"
                         tools:text="Connecting" />
 
