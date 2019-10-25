@@ -31,6 +31,7 @@ import android.content.ServiceConnection;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.IBinder;
+import android.system.ErrnoException;
 import android.system.Os;
 import android.util.Log;
 
@@ -229,7 +230,12 @@ public abstract class JamiApplication extends Application {
         super.onCreate();
         sInstance = this;
 
-        RxJavaPlugins.setErrorHandler(e -> Log.e(TAG, "Unhandled RxJava error", e));
+        try {
+            // Os.setenv("SIPLOGLEVEL", "6", true);
+            Os.setenv("DHTLOGLEVEL", "3", true);
+        } catch (ErrnoException e) {
+            e.printStackTrace();
+        }
 
         // building injection dependency tree
         mJamiInjectionComponent = DaggerJamiInjectionComponent.builder()
