@@ -139,7 +139,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
             <meta-data
                 android:name="android.service.chooser.chooser_target_service"
-                android:value=".services.RingChooserTargetService" />
+                android:value=".services.JamiChooserTargetService" />
         </activity>
         <activity
             android:name=".account.AccountWizardActivity"
@@ -342,7 +342,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:theme="@style/AppThemeBase.Dark" />
 
         <service
-            android:name=".services.RingChooserTargetService"
+            android:name=".services.JamiChooserTargetService"
             android:label="ChooserTargetService"
             android:permission="android.permission.BIND_CHOOSER_TARGET_SERVICE">
             <intent-filter>

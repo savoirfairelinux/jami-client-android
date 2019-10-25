@@ -3,12 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menuitem_chat"
-        app:showAsAction="ifRoom"
-        android:icon="@drawable/baseline_chat_24"
-        android:title="@string/ab_action_chat"/>
-
-    <item
         android:id="@+id/menuitem_dialpad"
         app:showAsAction="ifRoom"
         android:icon="@drawable/baseline_dialpad_24"

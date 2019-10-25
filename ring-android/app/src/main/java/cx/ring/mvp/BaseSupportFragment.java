@@ -36,8 +36,8 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cx.ring.R;
 import cx.ring.account.RingAccountCreationFragment;
-import cx.ring.application.RingApplication;
-import cx.ring.dependencyinjection.RingInjectionComponent;
+import cx.ring.application.JamiApplication;
+import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.model.RingError;
 
 public abstract class BaseSupportFragment<T extends RootPresenter> extends Fragment implements BaseView {
@@ -52,14 +52,14 @@ public abstract class BaseSupportFragment<T extends RootPresenter> extends Fragm
     @LayoutRes
     public abstract int getLayout();
 
-    public abstract void injectFragment(RingInjectionComponent component);
+    public abstract void injectFragment(JamiInjectionComponent component);
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View inflatedView = inflater.inflate(getLayout(), container, false);
         // dependency injection
-        injectFragment(((RingApplication) getActivity().getApplication()).getRingInjectionComponent());
+        injectFragment(((JamiApplication) getActivity().getApplication()).getRingInjectionComponent());
         //Butterknife
         mUnbinder = ButterKnife.bind(this, inflatedView);
         return inflatedView;

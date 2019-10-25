@@ -40,10 +40,10 @@ import cx.ring.R;
 import cx.ring.adapters.SmartListAdapter;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
-import cx.ring.dependencyinjection.RingInjectionComponent;
-import cx.ring.fragments.ConversationFragment;
+import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.smartlist.SmartListViewModel;
+import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
 import cx.ring.viewholders.SmartListViewHolder;
 
@@ -70,7 +70,7 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
     }
 
     @Override
-    public void injectFragment(RingInjectionComponent component) {
+    public void injectFragment(JamiInjectionComponent component) {
         component.inject(this);
     }
 
@@ -148,19 +148,12 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
     public void goToConversation(String accountId, String contactId) {
         Context context = requireContext();
         if (DeviceUtils.isTablet(context)) {
-            Bundle bundle = new Bundle();
-            bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
-            bundle.putString(ConversationFragment.KEY_ACCOUNT_ID, accountId);
             Activity activity = getActivity();
-            if (activity instanceof HomeActivity)
-                ((HomeActivity) activity).startConversationTablet(bundle);
+            if (activity instanceof HomeActivity) {
+                ((HomeActivity) activity).startConversationTablet(ConversationPath.toBundle(accountId, contactId));
+            }
         } else {
-            Intent intent = new Intent()
-                    .setClass(context, ConversationActivity.class)
-                    .setAction(Intent.ACTION_VIEW)
-                    .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
-                    .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
-            startActivity(intent);
+            startActivity(new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, contactId), context, ConversationActivity.class));
         }
     }
 

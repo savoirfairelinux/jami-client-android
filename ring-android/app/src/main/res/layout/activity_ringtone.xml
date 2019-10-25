@@ -6,16 +6,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
+    <!--<com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/ringtoneToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:elevation="@dimen/toolbar_elevation"
-        android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
+        style="@style/Widget.MaterialComponents.Toolbar.Surface"
         app:navigationIcon="?attr/homeAsUpIndicator"
-        app:title="@string/account_ringtone_title" />
+        app:title="@string/account_ringtone_title" />-->
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

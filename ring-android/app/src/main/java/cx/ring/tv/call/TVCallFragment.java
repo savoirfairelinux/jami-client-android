@@ -27,7 +27,6 @@ import android.app.PictureInPictureParams;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.graphics.Matrix;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
@@ -57,27 +56,32 @@ import android.widget.RelativeLayout;
 import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import javax.inject.Inject;
 
 import cx.ring.R;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.call.CallPresenter;
 import cx.ring.call.CallView;
+import cx.ring.client.ContactDetailsActivity;
+import cx.ring.client.ConversationSelectionActivity;
 import cx.ring.databinding.TvFragCallBinding;
-import cx.ring.dependencyinjection.RingInjectionComponent;
+import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.fragments.CallFragment;
 import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
-import cx.ring.mvp.BaseFragment;
+import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.tv.main.HomeActivity;
+import cx.ring.utils.ContentUriHandler;
+import cx.ring.utils.ConversationPath;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class TVCallFragment extends BaseFragment<CallPresenter> implements CallView {
+public class TVCallFragment extends BaseSupportFragment<CallPresenter> implements CallView {
 
     public static final String TAG = TVCallFragment.class.getSimpleName();
 
@@ -90,6 +94,7 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     public static final String KEY_CONTACT_RING_ID = "CONTACT_RING_ID";
     public static final String KEY_AUDIO_ONLY = "AUDIO_ONLY";
 
+    private static final int REQUEST_CODE_ADD_PARTICIPANT = 6;
     private static final int REQUEST_PERMISSION_INCOMING = 1003;
     private static final int REQUEST_PERMISSION_OUTGOING = 1004;
 
@@ -154,14 +159,14 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     public void handleCallWakelock(boolean isAudioOnly) { }
 
     @Override
-    public void injectFragment(RingInjectionComponent component) {
+    public void injectFragment(JamiInjectionComponent component) {
         component.inject(this);
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        injectFragment(((RingApplication) getActivity().getApplication()).getRingInjectionComponent());
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        injectFragment(((JamiApplication) getActivity().getApplication()).getRingInjectionComponent());
         binding = TvFragCallBinding.inflate(inflater, container, false);
         binding.setPresenter(this);
         return binding.getRoot();
@@ -193,7 +198,7 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     };
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         PowerManager powerManager = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
         mScreenWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "ring:callLock");
@@ -286,7 +291,19 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     }
 
     @Override
-    public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode, Configuration newConfig) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_CODE_ADD_PARTICIPANT) {
+            if (resultCode == Activity.RESULT_OK && data != null) {
+                ConversationPath path = ConversationPath.fromUri(data.getData());
+                if (path != null) {
+                    presenter.addConferenceParticipant(path.getAccountId(), path.getContactId());
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode) {
         if(!isInPictureInPictureMode) {
             mBackstackLost = true;
         }
@@ -359,7 +376,8 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     }
 
     @Override
-    public void updateContactBubble(@NonNull final CallContact contact) {
+    public void updateContactBubble(@NonNull final List<SipCall> calls) {
+        CallContact contact = calls.get(0).getContact();
         String username = contact.getRingUsername();
         String ringId = contact.getIds().get(0);
         Log.d(TAG, "updateContactBubble: username=" + username + ", ringId=" + ringId + " photo:" + contact.getPhoto());
@@ -391,7 +409,7 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     }
 
     @Override
-    public void initMenu(boolean isSpeakerOn, boolean hasContact, boolean displayFlip, boolean canDial, boolean onGoingCall) {
+    public void initMenu(boolean isSpeakerOn, boolean displayFlip, boolean canDial, boolean onGoingCall) {
 
     }
 
@@ -557,6 +575,12 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     }
 
     @Override
+    public void goToContact(String accountId, CallContact contact) {
+        startActivity(new Intent(Intent.ACTION_VIEW, android.net.Uri.withAppendedPath(android.net.Uri.withAppendedPath(ContentUriHandler.CONTACT_CONTENT_URI, accountId), contact.getPrimaryNumber()))
+                .setClass(requireContext(), ContactDetailsActivity.class));
+    }
+
+    @Override
     public void goToConversation(String accountId, String conversationId) {
 
     }
@@ -564,6 +588,15 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     @Override
     public void goToAddContact(CallContact callContact) {
 
+    }
+
+    @Override
+    public void startAddParticipant(String conferenceId) {
+        startActivityForResult(
+                new Intent(Intent.ACTION_PICK)
+                        .setClass(requireActivity(), ConversationSelectionActivity.class)
+                        .putExtra(KEY_CONF_ID, conferenceId),
+                REQUEST_CODE_ADD_PARTICIPANT);
     }
 
     public void hangUpClicked() {
@@ -599,7 +632,7 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     }
 
     @Override
-    public void enterPipMode(SipCall sipCall) {
+    public void enterPipMode(String callId) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             return;
         }
@@ -616,9 +649,9 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
                 paramBuilder.setAspectRatio(new Rational(w, h));
                 paramBuilder.setSourceRectHint(videoBounds);
             }
-            getActivity().enterPictureInPictureMode(paramBuilder.build());
+            requireActivity().enterPictureInPictureMode(paramBuilder.build());
         } else {
-            getActivity().enterPictureInPictureMode();
+            requireActivity().enterPictureInPictureMode();
         }
     }
 

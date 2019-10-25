@@ -54,7 +54,7 @@ import javax.inject.Singleton;
 import cx.ring.R;
 import cx.ring.account.AccountEditionActivity;
 import cx.ring.adapters.RingtoneAdapter;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.model.Account;
 import cx.ring.model.ConfigKey;
 import cx.ring.model.Ringtone;
@@ -84,7 +84,7 @@ public class RingtoneActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        RingApplication.getInstance().getRingInjectionComponent().inject(this);
+        JamiApplication.getInstance().getRingInjectionComponent().inject(this);
         setContentView(R.layout.activity_ringtone);
         super.onCreate(savedInstanceState);
         mAccount = mAccountService.getAccount(getIntent().getExtras().getString(AccountEditionActivity.ACCOUNT_ID_KEY));

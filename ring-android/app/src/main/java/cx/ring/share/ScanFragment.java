@@ -51,8 +51,8 @@ import java.util.List;
 
 
 import cx.ring.R;
-import cx.ring.application.RingApplication;
-import cx.ring.dependencyinjection.RingInjectionComponent;
+import cx.ring.application.JamiApplication;
+import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.mvp.BaseSupportFragment;
 
@@ -69,7 +69,7 @@ public class ScanFragment extends BaseSupportFragment {
     }
 
     @Override
-    public void injectFragment(RingInjectionComponent component) {
+    public void injectFragment(JamiInjectionComponent component) {
     }
 
     private boolean hasCameraPermission() {
@@ -97,7 +97,7 @@ public class ScanFragment extends BaseSupportFragment {
         if (isVisibleToUser) {
             if (!hasCameraPermission()) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    requestPermissions(new String[]{Manifest.permission.CAMERA}, RingApplication.PERMISSIONS_REQUEST);
+                    requestPermissions(new String[]{Manifest.permission.CAMERA}, JamiApplication.PERMISSIONS_REQUEST);
                 } else {
                     displayNoPermissionsError();
                 }

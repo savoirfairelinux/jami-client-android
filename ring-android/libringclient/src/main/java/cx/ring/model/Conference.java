@@ -22,29 +22,24 @@
 package cx.ring.model;
 
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.List;
 
 public class Conference {
 
     private String mId;
     private SipCall.CallStatus mConfState;
-    private ArrayList<SipCall> mParticipants;
+    private final ArrayList<SipCall> mParticipants;
     private boolean mRecording;
-    private int uuid;
-
-    private static String DEFAULT_ID = "-1";
 
     public Conference(SipCall call) {
-        this(DEFAULT_ID);
+        this(call.getDaemonIdString());
         mParticipants.add(call);
-        uuid = new Random().nextInt();
     }
 
     public Conference(String cID) {
         mId = cID;
         mParticipants = new ArrayList<>();
         mRecording = false;
-        uuid = new Random().nextInt();
     }
 
     public Conference(Conference c) {
@@ -52,15 +47,21 @@ public class Conference {
         mConfState = c.mConfState;
         mParticipants = new ArrayList<>(c.mParticipants);
         mRecording = c.mRecording;
-        uuid = c.getUuid();
     }
 
     public boolean isRinging() {
         return !mParticipants.isEmpty() && mParticipants.get(0).isRinging();
     }
 
-    public int getUuid() {
-        return uuid;
+    public boolean isConference() {
+        return mParticipants.size() > 1;
+    }
+
+    public SipCall getCall() {
+        if (!isConference() && !mParticipants.isEmpty()) {
+            return mParticipants.get(0);
+        }
+        return null;
     }
 
     public String getId() {
@@ -71,13 +72,17 @@ public class Conference {
         }
     }
 
+    public String getConfId() {
+        return mId;
+    }
+
     public SipCall.CallStatus getState() {
         if (mParticipants.size() == 1) {
             return mParticipants.get(0).getCallStatus();
         }
         return mConfState;
     }
-    public ArrayList<SipCall> getParticipants() {
+    public List<SipCall> getParticipants() {
         return mParticipants;
     }
 
@@ -89,7 +94,7 @@ public class Conference {
         return mParticipants.remove(toRemove);
     }
 
-    boolean contains(String callID) {
+    public boolean contains(String callID) {
         for (SipCall participant : mParticipants) {
             if (participant.getDaemonIdString().contentEquals(callID))
                 return true;
@@ -105,28 +110,6 @@ public class Conference {
         return null;
     }
 
-    /**
-     * Compare conferences based on confID/participants
-     */
-    @Override
-    public boolean equals(Object c) {
-        if (c instanceof Conference) {
-            if (((Conference) c).mId.contentEquals(mId) && !mId.contentEquals("-1")) {
-                return true;
-            } else {
-                if (((Conference) c).mId.contentEquals(mId)) {
-                    for (SipCall participant : mParticipants) {
-                        if (!((Conference) c).contains(participant.getDaemonIdString())) {
-                            return false;
-                        }
-                    }
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
     public boolean isIncoming() {
         return mParticipants.size() == 1 && mParticipants.get(0).isIncoming();
     }
@@ -135,4 +118,21 @@ public class Conference {
         return mParticipants.size() == 1 && mParticipants.get(0).isOnGoing() || mParticipants.size() > 1;
     }
 
+    public boolean hasVideo() {
+        for (SipCall call : mParticipants)
+            if (!call.isAudioOnly())
+                return true;
+        return false;
+    }
+
+    public long getTimestampStart() {
+        long t = Long.MAX_VALUE;
+        for (SipCall call : mParticipants)
+            t = Math.min(call.getTimestamp(), t);
+        return t;
+    }
+
+    public void removeParticipants() {
+        mParticipants.clear();
+    }
 }

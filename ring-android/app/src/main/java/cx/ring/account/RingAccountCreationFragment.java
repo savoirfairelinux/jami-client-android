@@ -45,7 +45,7 @@ import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 import cx.ring.R;
-import cx.ring.dependencyinjection.RingInjectionComponent;
+import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.mvp.AccountCreationModel;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.utils.RegisteredNameFilter;
@@ -103,7 +103,7 @@ public class RingAccountCreationFragment extends BaseSupportFragment<RingAccount
     }
 
     @Override
-    public void injectFragment(RingInjectionComponent component) {
+    public void injectFragment(JamiInjectionComponent component) {
         component.inject(this);
     }
 
