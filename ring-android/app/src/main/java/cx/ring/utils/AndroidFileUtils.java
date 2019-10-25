@@ -63,27 +63,111 @@ public class AndroidFileUtils {
     private final static int ORIENTATION_RIGHT = 90;
     private final static int MAX_IMAGE_DIMENSION = 1024;
 
+    /**
+     * Copy assets from a folder recursively ( files and subfolder)
+     * @param assetManager Asset Manager ( you can get it from Context.getAssets() )
+     * @param fromAssetPath path to the assets folder we want to copy
+     * @param toPath a directory in internal storage
+     * @return
+     */
     public static boolean copyAssetFolder(AssetManager assetManager, String fromAssetPath, File toPath) {
         try {
-            String[] files = assetManager.list(fromAssetPath);
-            if (!toPath.exists()) {
-                toPath.mkdirs();
-            }
             boolean res = true;
-            for (String file : files) {
-                File newFile = new File(toPath, file);
-                if (file.contains("")) {
-                    Log.d(TAG, "Copying file :" + fromAssetPath + File.separator + file + " to " + newFile);
-                    res &= copyAsset(assetManager, fromAssetPath + File.separator + file, newFile);
-                } else {
-                    Log.d(TAG, "Copying folder :" + fromAssetPath + File.separator + file + " to " + newFile);
-                    res &= copyAssetFolder(assetManager, fromAssetPath + File.separator + file, newFile);
+
+            // mkdirs checks if the folder exists and if not creates it
+            toPath.mkdirs();
+
+            // List the files of this asset directory
+            String[] files = assetManager.list(fromAssetPath);
+
+            if(files != null){
+                for (String file : files) {
+
+                    String subAsset = fromAssetPath + File.separator + file;
+
+                    if(isAssetDirectory(assetManager, subAsset)){
+                        String destination = toPath.getAbsolutePath() + File.separator + file;
+                        File newDir = new File(destination);
+                        copyAssetFolder(assetManager, subAsset, newDir);
+                        Log.d(TAG, "Copied folder: " + subAsset + " to " + newDir);
+                    } else {
+                        File newFile = new File(toPath, file);
+                        res &= copyAsset(assetManager, fromAssetPath + File.separator + file, newFile);
+                        Log.d(TAG, "Copied file: " + subAsset + " to " + newFile);
+                    }
                 }
             }
+
             return res;
         } catch (IOException e) {
             Log.e(TAG, "Error while copying asset folder", e);
             return false;
+        }
+    }
+
+    /**
+     * Checks whether an asset is a file or a directory
+     * @param assetManager Asset Manager ( you can get it from Context.getAssets() )
+     * @param fromAssetPath  asset path, if just a file in  assets root folder then it should be
+     *                       the file name, otherwise, folder/filename
+     * @return boolean directory or not
+     */
+    public static boolean isAssetDirectory(AssetManager assetManager, String fromAssetPath) {
+        boolean res = false;
+        try{
+            String[] files = assetManager.list(fromAssetPath);
+            if(files !=null) {
+                if(files.length > 0) {
+                    res = true;
+                }
+            }
+        } catch (IOException e) {
+            Log.e(TAG, "Error while reading an asset ", e);
+        }
+        return res;
+    }
+
+    /**
+     * Prints assets tree
+     * E.g :
+     * |-- root-folder
+     * |	|-- my-file-in-root-folder.txt
+     * |	|-- sub-folder-1
+     * |	|	|-- sub-folder-1-1
+     * |	|	|	|-- file-in-sub-folder-1-1.txt
+     * |	|	|	|-- file-in-sub-folder-1-1.txt
+     * |	|	|-- file-in-sub-folder-1.txt
+     * |	|-- sub-folder-2
+     * |	|	|-- file-in-sub-folder-2.txt
+     *
+     * @param assetManager Asset Manager ( you can get it from Context.getAssets() )
+     * @param rootPath default empty, sub folder otherwise
+     * @param fileName the name of the file or folder
+     * @param level default 0, should be 0
+     */
+    public static void assetTree(AssetManager assetManager, String rootPath, String fileName,  int level) {
+        try {
+            String fromAssetPath;
+            if(rootPath.isEmpty()) {
+                fromAssetPath = fileName;
+            } else {
+                fromAssetPath = rootPath + File.separator+ fileName;
+            }
+
+            String repeated = new String(new char[level]).replace("\0", "\t|");
+
+            String[] files = assetManager.list(fromAssetPath);
+
+
+            if (files != null) {
+                Log.d(TAG, "|"+ repeated + "-- " + fileName);
+                for(String file : files) {
+                    assetTree(assetManager,fromAssetPath,file,level+1);
+                }
+
+            }
+        } catch (IOException e) {
+            Log.e(TAG, "Error while reading asset ", e);
         }
     }
 
