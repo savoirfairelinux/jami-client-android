@@ -79,7 +79,7 @@ import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.interfaces.Colorable;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
-import cx.ring.model.ConversationElement;
+import cx.ring.model.Interaction;
 import cx.ring.model.DataTransfer;
 import cx.ring.model.Phone;
 import cx.ring.model.RingError;
@@ -145,7 +145,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     @Override
-    public void refreshView(final List<ConversationElement> conversation) {
+    public void refreshView(final List<Interaction> conversation) {
         if (conversation == null) {
             return;
         }
@@ -154,7 +154,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         if (mAdapter != null) {
             mAdapter.updateDataset(conversation);
         }
-        getActivity().invalidateOptionsMenu();
+        requireActivity().invalidateOptionsMenu();
     }
 
     @Override
@@ -247,7 +247,8 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             @Override
             public void afterTextChanged(Editable s) {
                 String message = s.toString();
-                if (TextUtils.isEmpty(message)) {
+                boolean hasMessage = !TextUtils.isEmpty(message);
+                if (hasMessage) {
                     binding.msgSend.setVisibility(View.GONE);
                     binding.emojiSend.setVisibility(View.VISIBLE);
                 } else {
@@ -255,7 +256,10 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
                     binding.emojiSend.setVisibility(View.GONE);
                 }
                 if (mPreferences != null) {
-                    mPreferences.edit().putString(KEY_PREFERENCE_PENDING_MESSAGE, message).apply();
+                    if (hasMessage)
+                        mPreferences.edit().putString(KEY_PREFERENCE_PENDING_MESSAGE, message).apply();
+                    else
+                        mPreferences.edit().remove(KEY_PREFERENCE_PENDING_MESSAGE).apply();
                 }
             }
         });
@@ -273,10 +277,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             }
         });
 
-        if (binding != null) {
-            binding.ongoingcallPane.setVisibility(View.GONE);
-        }
-
+        binding.ongoingcallPane.setVisibility(View.GONE);
         DefaultItemAnimator animator = (DefaultItemAnimator) binding.histList.getItemAnimator();
         if (animator != null)
             animator.setSupportsChangeAnimations(false);
@@ -525,18 +526,18 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     @Override
-    public void addElement(ConversationElement element) {
+    public void addElement(Interaction element) {
         mAdapter.add(element);
         scrollToEnd();
     }
 
     @Override
-    public void updateElement(ConversationElement element) {
+    public void updateElement(Interaction element) {
         mAdapter.update(element);
     }
 
     @Override
-    public void removeElement(ConversationElement element) {
+    public void removeElement(Interaction element) {
         mAdapter.remove(element);
     }
 
