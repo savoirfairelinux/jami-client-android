@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f5e777f_8781119d",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/AndroidFileUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-10-25T16:17:17Z",
+      "side": 1,
+      "message": "add @NonNull annotation from androidx",
+      "range": {
+        "startLine": 73,
+        "startChar": 55,
+        "endLine": 73,
+        "endChar": 67
+      },
+      "revId": "dfbba62de1f3f7fd382052a87ef7cf286f208da2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba7108a9_d0e271aa",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/AndroidFileUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-10-25T16:17:17Z",
+      "side": 1,
+      "message": "unecessary example",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 39
+      },
+      "revId": "dfbba62de1f3f7fd382052a87ef7cf286f208da2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d0a6668_3bb2708a",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/AndroidFileUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-10-25T16:17:17Z",
+      "side": 1,
+      "message": "add @NonNull annotation from androidx",
+      "range": {
+        "startLine": 148,
+        "startChar": 46,
+        "endLine": 148,
+        "endChar": 58
+      },
+      "revId": "dfbba62de1f3f7fd382052a87ef7cf286f208da2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6a43b1d_7aab8561",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/AndroidFileUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-10-25T16:17:17Z",
+      "side": 1,
+      "message": "use TextUtils.isEmpty() to allow passing null or empty rootPath",
+      "range": {
+        "startLine": 151,
+        "startChar": 15,
+        "endLine": 151,
+        "endChar": 33
+      },
+      "revId": "dfbba62de1f3f7fd382052a87ef7cf286f208da2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a59302ad_59a3a8c3",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/AndroidFileUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-10-25T16:17:17Z",
+      "side": 1,
+      "message": "unneeded new line",
+      "revId": "dfbba62de1f3f7fd382052a87ef7cf286f208da2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
