@@ -66,7 +66,7 @@ import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.adapters.ConversationAdapter;
 import cx.ring.adapters.NumberAdapter;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.client.CallActivity;
 import cx.ring.client.ContactDetailsActivity;
 import cx.ring.client.ConversationActivity;
@@ -75,7 +75,7 @@ import cx.ring.contacts.AvatarFactory;
 import cx.ring.conversation.ConversationPresenter;
 import cx.ring.conversation.ConversationView;
 import cx.ring.databinding.FragConversationBinding;
-import cx.ring.dependencyinjection.RingInjectionComponent;
+import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.interfaces.Colorable;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
@@ -170,7 +170,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     @Override
-    public void injectFragment(RingInjectionComponent component) {
+    public void injectFragment(JamiInjectionComponent component) {
         component.inject(this);
     }
 
@@ -190,7 +190,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        injectFragment(((RingApplication) getActivity().getApplication()).getRingInjectionComponent());
+        injectFragment(((JamiApplication) getActivity().getApplication()).getRingInjectionComponent());
         marginPx = getResources().getDimensionPixelSize(R.dimen.conversation_message_input_margin);
         marginPxTotal = marginPx;
         animation.setDuration(150);
@@ -392,7 +392,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
 
     public void takePicture() {
         if (!presenter.getDeviceRuntimeService().hasVideoPermission()) {
-            requestPermissions(new String[]{Manifest.permission.CAMERA}, RingApplication.PERMISSIONS_REQUEST);
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, JamiApplication.PERMISSIONS_REQUEST);
         } else {
             Context c = getContext();
             if (c == null)
@@ -418,7 +418,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
 
     @Override
     public void askWriteExternalStoragePermission() {
-        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, RingApplication.PERMISSIONS_REQUEST);
+        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, JamiApplication.PERMISSIONS_REQUEST);
     }
 
     @Override

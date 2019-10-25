@@ -34,7 +34,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -45,9 +44,9 @@ import cx.ring.account.AccountsAdapter;
 import cx.ring.account.AccountsManagementPresenter;
 import cx.ring.account.AccountsManagementView;
 import cx.ring.adapters.AccountView;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
-import cx.ring.dependencyinjection.RingInjectionComponent;
+import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.model.Account;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.utils.ContentUriHandler;
@@ -72,7 +71,7 @@ public class AccountsManagementFragment extends BaseSupportFragment<AccountsMana
         Log.d(TAG, "onCreate: Create Account Management Fragment");
 
         // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         mAccountsAdapter = new AccountsAdapter(this);
     }
@@ -83,7 +82,7 @@ public class AccountsManagementFragment extends BaseSupportFragment<AccountsMana
     }
 
     @Override
-    public void injectFragment(RingInjectionComponent component) {
+    public void injectFragment(JamiInjectionComponent component) {
         component.inject(this);
     }
 

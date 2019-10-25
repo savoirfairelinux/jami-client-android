@@ -23,7 +23,7 @@ import android.app.job.JobService;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.utils.Log;
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -45,7 +45,7 @@ public class RingJobService extends JobService
             return false;
         Log.w(TAG, "onStartJob() " + params);
         try {
-            RingApplication.getInstance().startDaemon();
+            JamiApplication.getInstance().startDaemon();
             new Thread(() -> {
                 synchronized (this) {
                     try {

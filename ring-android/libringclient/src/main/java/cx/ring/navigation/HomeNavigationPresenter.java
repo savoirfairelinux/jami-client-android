@@ -43,9 +43,9 @@ import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
-public class RingNavigationPresenter extends RootPresenter<RingNavigationView> {
+public class HomeNavigationPresenter extends RootPresenter<HomeNavigationView> {
 
-    private static final String TAG = RingNavigationPresenter.class.getSimpleName();
+    private static final String TAG = HomeNavigationPresenter.class.getSimpleName();
 
     private final AccountService mAccountService;
     private final DeviceRuntimeService mDeviceRuntimeService;
@@ -56,7 +56,7 @@ public class RingNavigationPresenter extends RootPresenter<RingNavigationView> {
     protected Scheduler mUiScheduler;
 
     @Inject
-    public RingNavigationPresenter(AccountService accountService,
+    public HomeNavigationPresenter(AccountService accountService,
                                    HardwareService hardwareService,
                                    DeviceRuntimeService deviceRuntimeService) {
         mAccountService = accountService;
@@ -65,19 +65,19 @@ public class RingNavigationPresenter extends RootPresenter<RingNavigationView> {
     }
 
     @Override
-    public void bindView(RingNavigationView view) {
+    public void bindView(HomeNavigationView view) {
         super.bindView(view);
         mCompositeDisposable.add(mAccountService.getProfileAccountList()
                 .observeOn(mUiScheduler)
                 .subscribe(accounts -> {
-                    RingNavigationView v = getView();
+                    HomeNavigationView v = getView();
                     if (v != null)
-                        v.showViewModel(new RingNavigationViewModel(accounts.isEmpty() ? null : accounts.get(0), accounts));
+                        v.showViewModel(new HomeNavigationViewModel(accounts.isEmpty() ? null : accounts.get(0), accounts));
                 }, e ->  Log.e(TAG, "Error loading account list !", e)));
         mCompositeDisposable.add(mAccountService.getObservableAccounts()
                 .observeOn(mUiScheduler)
                 .subscribe(account -> {
-                    RingNavigationView v = getView();
+                    HomeNavigationView v = getView();
                     if (v != null)
                         v.updateModel(account);
                 }, e ->  Log.e(TAG, "Error loading account list !", e)));

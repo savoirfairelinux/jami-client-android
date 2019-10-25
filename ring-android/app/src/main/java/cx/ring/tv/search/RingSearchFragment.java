@@ -36,14 +36,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cx.ring.R;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.CallContact;
 import cx.ring.tv.call.TVCallActivity;
 import cx.ring.tv.cards.Card;
 import cx.ring.tv.cards.CardPresenterSelector;
 import cx.ring.tv.cards.contacts.ContactCard;
-import cx.ring.utils.Log;
 
 public class RingSearchFragment extends BaseSearchFragment<RingSearchPresenter>
         implements SearchSupportFragment.SearchResultProvider, RingSearchView {
@@ -64,7 +63,7 @@ public class RingSearchFragment extends BaseSearchFragment<RingSearchPresenter>
         setSearchResultProvider(this);
 
         // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
         setOnItemViewClickedListener((itemViewHolder, item, rowViewHolder, row) -> presenter.contactClicked(((ContactCard) item).getModel().getContact()));
         setBadgeDrawable(ContextCompat.getDrawable(getActivity(), R.mipmap.ic_launcher));
         setSearchQuery("", false);

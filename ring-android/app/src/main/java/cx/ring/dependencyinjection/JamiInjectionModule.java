@@ -1,7 +1,7 @@
 /*
  *  Copyright (C) 2004-2019 Savoir-faire Linux Inc.
  *
- *  Author: Aline Bonnet <aline.bonnet@savoirfairelinux.com>
+ *  Author: Thibault Wittemberg <thibault.wittemberg@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,27 +17,38 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
+package cx.ring.dependencyinjection;
 
-package cx.ring.navigation;
+import android.content.Context;
 
-import java.util.List;
+import cx.ring.application.JamiApplication;
+import dagger.Module;
+import dagger.Provides;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
-import cx.ring.model.Account;
+@Module
+public class JamiInjectionModule {
 
-public class RingNavigationViewModel {
-    final private Account mAccount;
-    final private List<Account> mAccounts;
+    private final JamiApplication mJamiApplication;
 
-    public RingNavigationViewModel(Account account, List<Account> accounts) {
-        mAccount = account;
-        mAccounts = accounts;
+    public JamiInjectionModule(JamiApplication app) {
+        mJamiApplication = app;
     }
 
-    public Account getAccount() {
-        return mAccount;
+    @Provides
+    JamiApplication provideRingApplication() {
+        return mJamiApplication;
     }
 
-    public List<Account> getAccounts() {
-        return mAccounts;
+    @Provides
+    Context provideContext() {
+        return mJamiApplication;
     }
+
+    @Provides
+    Scheduler provideMainSchedulers() {
+        return AndroidSchedulers.mainThread();
+    }
+
 }

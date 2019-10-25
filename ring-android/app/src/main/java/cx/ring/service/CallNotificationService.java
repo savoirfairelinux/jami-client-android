@@ -30,7 +30,7 @@ import androidx.annotation.Nullable;
 
 import javax.inject.Inject;
 
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.services.NotificationService;
 
 public class CallNotificationService extends Service {
@@ -67,7 +67,7 @@ public class CallNotificationService extends Service {
 
     @Override
     public void onCreate() {
-        ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) getApplication()).getRingInjectionComponent().inject(this);
         super.onCreate();
     }
 

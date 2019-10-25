@@ -19,6 +19,8 @@
  */
 package cx.ring.call;
 
+import java.util.List;
+
 import cx.ring.model.CallContact;
 import cx.ring.model.SipCall.CallStatus;
 import cx.ring.model.SipCall;
@@ -44,11 +46,11 @@ public interface CallView {
 
     void updateTime(long duration);
 
-    void updateContactBubble(CallContact contact);
+    void updateContactBubble(List<SipCall> contact);
 
     void updateCallStatus(CallStatus callState);
 
-    void initMenu(boolean isSpeakerOn, boolean hasContact, boolean displayFlip, boolean canDial, boolean onGoingCall);
+    void initMenu(boolean isSpeakerOn, boolean displayFlip, boolean canDial, boolean onGoingCall);
 
     void initNormalStateDisplay(boolean audioOnly, boolean muted);
 
@@ -63,13 +65,17 @@ public interface CallView {
 
     void goToAddContact(CallContact callContact);
 
+    void startAddParticipant(String conferenceId);
+
     void finish();
 
     void onUserLeave();
 
-    void enterPipMode(SipCall sipCall);
+    void enterPipMode(String callId);
 
     void prepareCall(boolean isIncoming);
 
     void handleCallWakelock(boolean isAudioOnly);
+
+    void goToContact(String accountId, CallContact contact);
 }

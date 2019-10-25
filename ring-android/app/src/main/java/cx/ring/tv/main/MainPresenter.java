@@ -32,11 +32,10 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.model.RingError;
 import cx.ring.mvp.RootPresenter;
-import cx.ring.navigation.RingNavigationViewModel;
+import cx.ring.navigation.HomeNavigationViewModel;
 import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.services.HardwareService;
-import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.tv.model.TVListViewModel;
 import cx.ring.utils.Log;
 import io.reactivex.Observable;
@@ -193,7 +192,7 @@ public class MainPresenter extends RootPresenter<MainView> {
                 .observeOn(mUiScheduler)
                 .subscribe(accounts -> {
                     Account account = accounts.isEmpty() ? null : accounts.get(0);
-                    RingNavigationViewModel viewModel = new RingNavigationViewModel(account, accounts);
+                    HomeNavigationViewModel viewModel = new HomeNavigationViewModel(account, accounts);
                     getView().displayAccountInfos(viewModel);
                 }, e-> Log.d(TAG, "reloadAccountInfos getProfileAccountList onError", e)));
     }

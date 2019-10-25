@@ -21,7 +21,6 @@
 
 package cx.ring.contacts;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -34,15 +33,11 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.RequestManager;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.views.AvatarDrawable;
-import ezvcard.VCard;
-import ezvcard.property.FormattedName;
 import io.reactivex.Single;
-import io.reactivex.schedulers.Schedulers;
 
 public class AvatarFactory {
 

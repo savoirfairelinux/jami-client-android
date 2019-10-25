@@ -40,7 +40,7 @@ abstract public class CameraService {
     private static final String TAG = CameraService.class.getSimpleName();
 
     private final HashMap<String, VideoParams> mParams = new HashMap<>();
-    final Map<String, DeviceParams> mNativeParams = new HashMap<>();
+    private final Map<String, DeviceParams> mNativeParams = new HashMap<>();
 
     static class VideoDevices {
         final List<String> cameras = new ArrayList<>();
@@ -228,7 +228,7 @@ abstract public class CameraService {
 
         StringMap toMap() {
             StringMap map = new StringMap();
-            map.set("size", Integer.toString(size.x) + "x" + Integer.toString(size.y));
+            map.set("size", size.x + "x" + size.y);
             map.set("rate", Long.toString(rate));
             return map;
         }

@@ -31,6 +31,7 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.ActionMenuItemView;
@@ -44,9 +45,10 @@ import com.google.android.material.appbar.AppBarLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
-import cx.ring.application.RingApplication;
+import cx.ring.application.JamiApplication;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.interfaces.Colorable;
+import cx.ring.utils.ConversationPath;
 import cx.ring.utils.MediaButtonsHelper;
 
 public class ConversationActivity extends AppCompatActivity implements Colorable {
@@ -57,8 +59,9 @@ public class ConversationActivity extends AppCompatActivity implements Colorable
     Toolbar mToolbar;
 
     private ConversationFragment mConversationFragment;
-    private String contactUri = null;
-    private String accountId = null;
+    /*private String contactUri = null;
+    private String accountId = null;*/
+    private ConversationPath conversationPath = null;
 
     private Intent mPendingIntent = null;
 
@@ -66,7 +69,7 @@ public class ConversationActivity extends AppCompatActivity implements Colorable
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        RingApplication.getInstance().startDaemon();
+        JamiApplication.getInstance().startDaemon();
 
         setContentView(R.layout.activity_conversation);
         ButterKnife.bind(this);
@@ -95,19 +98,13 @@ public class ConversationActivity extends AppCompatActivity implements Colorable
         String action = intent == null ? null : intent.getAction();
 
         if (intent != null) {
-            contactUri = intent.getStringExtra(ConversationFragment.KEY_CONTACT_RING_ID);
-            accountId = intent.getStringExtra(ConversationFragment.KEY_ACCOUNT_ID);
+            conversationPath = ConversationPath.fromIntent(intent);
         } else if (savedInstanceState != null) {
-            contactUri = savedInstanceState.getString(ConversationFragment.KEY_CONTACT_RING_ID);
-            accountId = savedInstanceState.getString(ConversationFragment.KEY_ACCOUNT_ID);
+            conversationPath = ConversationPath.fromBundle(savedInstanceState);
         }
         if (mConversationFragment == null) {
-            Bundle bundle = new Bundle();
-            bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, contactUri);
-            bundle.putString(ConversationFragment.KEY_ACCOUNT_ID, accountId);
-
             mConversationFragment = new ConversationFragment();
-            mConversationFragment.setArguments(bundle);
+            mConversationFragment.setArguments(conversationPath.toBundle());
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.main_frame, mConversationFragment, null)
                     .commit();
@@ -118,7 +115,7 @@ public class ConversationActivity extends AppCompatActivity implements Colorable
     }
 
     @Override
-    public void onContextMenuClosed(Menu menu) {
+    public void onContextMenuClosed(@NonNull Menu menu) {
         mConversationFragment.updateAdapterItem();
         super.onContextMenuClosed(menu);
     }
@@ -144,9 +141,8 @@ public class ConversationActivity extends AppCompatActivity implements Colorable
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putString(ConversationFragment.KEY_CONTACT_RING_ID, contactUri);
-        outState.putString(ConversationFragment.KEY_ACCOUNT_ID, accountId);
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        conversationPath.toBundle(outState);
         super.onSaveInstanceState(outState);
     }
 

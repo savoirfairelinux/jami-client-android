@@ -40,11 +40,11 @@ import butterknife.ButterKnife;
 import cx.ring.R;
 
 class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.NavigationItemView> {
-    private List<RingNavigationFragment.NavigationItem> mDataset;
+    private List<HomeNavigationFragment.NavigationItem> mDataset;
     private OnNavigationItemClicked mListener;
     private int mItemSelected;
 
-    NavigationAdapter(@NonNull ArrayList<RingNavigationFragment.NavigationItem> menu) {
+    NavigationAdapter(@NonNull ArrayList<HomeNavigationFragment.NavigationItem> menu) {
         mDataset = menu;
     }
 
