@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f0535cbd_64b74cef",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/AndroidFileUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 644
+      },
+      "writtenOn": "2019-10-25T17:54:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f5e777f_8781119d",
+      "range": {
+        "startLine": 73,
+        "startChar": 55,
+        "endLine": 73,
+        "endChar": 67
+      },
+      "revId": "dfbba62de1f3f7fd382052a87ef7cf286f208da2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba7108a9_d0e271aa",
         "filename": "ring-android/app/src/main/java/cx/ring/utils/AndroidFileUtils.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "dfbba62de1f3f7fd382052a87ef7cf286f208da2",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "091639e1_77ca71a3",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/AndroidFileUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 644
+      },
+      "writtenOn": "2019-10-25T17:54:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba7108a9_d0e271aa",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 39
+      },
+      "revId": "dfbba62de1f3f7fd382052a87ef7cf286f208da2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ab9053af_b0884676",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/AndroidFileUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 644
+      },
+      "writtenOn": "2019-10-25T17:54:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d0a6668_3bb2708a",
+      "range": {
+        "startLine": 148,
+        "startChar": 46,
+        "endLine": 148,
+        "endChar": 58
+      },
+      "revId": "dfbba62de1f3f7fd382052a87ef7cf286f208da2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6a43b1d_7aab8561",
         "filename": "ring-android/app/src/main/java/cx/ring/utils/AndroidFileUtils.java",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "738ee56a_b3b8eadd",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/AndroidFileUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 644
+      },
+      "writtenOn": "2019-10-25T17:54:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6a43b1d_7aab8561",
+      "range": {
+        "startLine": 151,
+        "startChar": 15,
+        "endLine": 151,
+        "endChar": 33
+      },
+      "revId": "dfbba62de1f3f7fd382052a87ef7cf286f208da2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a59302ad_59a3a8c3",
         "filename": "ring-android/app/src/main/java/cx/ring/utils/AndroidFileUtils.java",
         "patchSetId": 3
@@ -108,6 +204,24 @@
       "revId": "dfbba62de1f3f7fd382052a87ef7cf286f208da2",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f87b75fe_7d3f9e21",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/AndroidFileUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 644
+      },
+      "writtenOn": "2019-10-25T17:54:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a59302ad_59a3a8c3",
+      "revId": "dfbba62de1f3f7fd382052a87ef7cf286f208da2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
