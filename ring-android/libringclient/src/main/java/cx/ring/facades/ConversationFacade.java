@@ -90,9 +90,7 @@ public class ConversationFacade {
 
         currentAccountSubject = mAccountService
                 .getCurrentAccountSubject()
-                .switchMapSingle(this::loadSmartlist)
-                .replay(1)
-                .refCount();
+                .switchMapSingle(this::loadSmartlist);
 
         mDisposableBag.add(mCallService.getCallSubject()
                 .observeOn(Schedulers.io())
@@ -275,18 +273,11 @@ public class ConversationFacade {
      */
     private Single<Account> loadSmartlist(final Account account) {
         synchronized (account) {
-            if (account.isHistoryLoaded()) {
-                Log.d(TAG, "loadSmartlist(): just");
-                return Single.just(account);
-            }
             if (account.historyLoader == null) {
                 Log.d(TAG, "loadSmartlist(): start loading");
-                account.historyLoader = AsyncSubject.create();
-                getSmartlist(account);
-            } else {
-                Log.d(TAG, "loadSmartlist(): already loading");
+                account.historyLoader = getSmartlist(account);
             }
-            return account.historyLoader.singleOrError();
+            return account.historyLoader;
         }
     }
 
@@ -299,12 +290,16 @@ public class ConversationFacade {
      */
     public Single<Conversation> loadConversationHistory(final Account account, final Uri contactUri) {
         Conversation conversation = account.getByUri(contactUri);
-        if (conversation.isLoaded() || conversation.getId() == null) {
-            Log.d(TAG, "loadConversationHistory(): Already loaded, returning from cache");
-            return Single.just(conversation);
-        } else {
-            Log.d(TAG, "loadConversationHistory(): loading");
-            return getConversationHistory(account, conversation);
+        synchronized (conversation) {
+            if (conversation.getId() == null) {
+                return Single.just(conversation);
+            }
+            Single<Conversation> ret = conversation.getLoaded();
+            if (ret == null) {
+                ret = getConversationHistory(account, conversation);
+                conversation.setLoaded(ret);
+            }
+            return ret;
         }
     }
 
@@ -313,20 +308,23 @@ public class ConversationFacade {
      *
      * @param account the user account
      */
-    private void getSmartlist(final Account account) {
+    private Single<Account> getSmartlist(final Account account) {
         Log.d(TAG, "getSmartlist()");
-        mDisposableBag.add(mHistoryService.getSmartlist(account.getAccountID()).subscribe(conversationHistoryList -> {
-            List<Conversation> conversations = new ArrayList<>();
-            for (Interaction e : conversationHistoryList) {
-                Conversation conversation = account.getByUri(e.getConversation().getParticipant());
-                if (conversation == null)
-                    continue;
-                conversation.setId(e.getConversation().getId());
-                conversation.addElement(e, conversation.getContact());
-                conversations.add(conversation);
-            }
-            account.setHistoryLoaded(conversations);
-        }));
+        return mHistoryService.getSmartlist(account.getAccountID())
+                .map(conversationHistoryList -> {
+                    List<Conversation> conversations = new ArrayList<>();
+                    for (Interaction e : conversationHistoryList) {
+                        Conversation conversation = account.getByUri(e.getConversation().getParticipant());
+                        if (conversation == null)
+                            continue;
+                        conversation.setId(e.getConversation().getId());
+                        conversation.addElement(e);
+                        conversations.add(conversation);
+                    }
+                    account.setHistoryLoaded(conversations);
+                    return account;
+                })
+                .cache();
     }
 
     /**
@@ -339,21 +337,16 @@ public class ConversationFacade {
     private Single<Conversation> getConversationHistory(final Account account, final Conversation conversation) {
         Log.d(TAG, "getConversationHistory()");
 
-        return mHistoryService.getConversationHistory(account.getAccountID(), conversation.getId()).map(loadedConversation -> {
-            if (loadedConversation == null || loadedConversation.isEmpty())
-                return null;
-
-            conversation.clearHistory(true);
-
-            for (Interaction interaction : loadedConversation) {
-                conversation.addElement(interaction, conversation.getContact());
-            }
-            conversation.setLoaded(true);
-
-            return conversation;
-        });
+        return mHistoryService.getConversationHistory(account.getAccountID(), conversation.getId())
+                .map(loadedConversation -> {
+                    if (loadedConversation.isEmpty())
+                        return null;
+                    conversation.clearHistory(true);
+                    conversation.setHistory(loadedConversation);
+                    return conversation;
+                })
+                .cache();
     }
-
 
     public Completable clearHistory(final String accountId, final Uri contact) {
         return mHistoryService
