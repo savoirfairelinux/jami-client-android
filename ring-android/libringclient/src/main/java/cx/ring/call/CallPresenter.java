@@ -76,9 +76,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     private int videoHeight = -1;
     private int previewWidth = -1;
     private int previewHeight = -1;
-
     private String currentSurfaceId = null;
-    private boolean plugin = false;
 
     private Disposable timeUpdateTask = null;
 
@@ -261,16 +259,12 @@ public class CallPresenter extends RootPresenter<CallView> {
         getView().switchCameraIcon(mHardwareService.isPreviewFromFrontCamera());
     }
 
-    public void loadPlugin() {
-        plugin = !plugin;
+    public void loadPlugin(String path) {
+        //RingserviceJNI.loadPlugin(path);
+    }
 
-        String path = "/data/user/0/cx.ring/files/plugins/libmmotplugin.so";
-        if(plugin) {
-            RingserviceJNI.loadPlugin(path);
-        } else {
-
-            RingserviceJNI.unloadPlugin(path);
-        }
+    public void unloadPlugin(String path) {
+        //RingserviceJNI.unloadPlugin(path);
     }
 
     public void configurationChanged(int rotation) {

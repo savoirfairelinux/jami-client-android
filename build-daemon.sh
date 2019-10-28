@@ -258,7 +258,10 @@ echo "Building Ring JNI library for Android to ${LIBRING_JNI_DIR}"
 mkdir -p ${LIBRING_JNI_DIR}
 
 # Always strip symbols for libring.so remove it if you want to debug the daemon
-#STRIP_ARG="-s "
+STRIP_ARG="-s "
+
+# Use a shared stl
+cp $ANDROID_NDK/sources/cxx-stl/llvm-libc++/libs/${ANDROID_ABI}/libc++_shared.so $LIBRING_JNI_DIR
 
 # Use a shared libc++_shared.so (shared by jami and all other plugins)
 ${NDK_TOOLCHAIN_PATH}/clang++ \
