@@ -6,6 +6,14 @@
         android:id="@+id/menuitem_dialpad"
         app:showAsAction="ifRoom"
         android:icon="@drawable/baseline_dialpad_24"
-        android:title="@string/dial_numeric_pad"/>
+        android:title="@string/dial_numeric_pad"
+        android:orderInCategory="2"/>
+
+    <item
+        android:id="@+id/menuitem_video_plugins"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/baseline_android_24"
+        android:title="@string/video_plugins"
+        android:orderInCategory="3"/>
 
 </menu>

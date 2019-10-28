@@ -218,6 +218,9 @@ LIBRING_JNI_DIR=${ANDROID_APP_DIR}/app/src/main/libs/${ANDROID_ABI}
 echo "Building Jami JNI library for Android to ${LIBRING_JNI_DIR}"
 mkdir -p ${LIBRING_JNI_DIR}
 
+# Use a shared stl
+cp $ANDROID_NDK/sources/cxx-stl/llvm-libc++/libs/${ANDROID_ABI}/libc++_shared.so $LIBRING_JNI_DIR
+
 # Use a shared libc++_shared.so (shared by jami and all other plugins)
 ${NDK_TOOLCHAIN_PATH}/clang++ \
                 --shared \
