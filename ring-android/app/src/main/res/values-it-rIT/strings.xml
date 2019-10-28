@@ -18,6 +18,7 @@
   <!--About dialog-->
   <string name="developed_by">Sviluppato da</string>
   <string name="designed_by">Progettato da</string>
+  <string name="ringtones_by">Suoneria di</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Assenza di connessione di rete</string>
@@ -57,6 +58,7 @@
   <string name="notif_incoming_call">Chiamata in arrivo</string>
   <string name="notif_outgoing_call_title">Sto chiamando %1$s</string>
   <string name="notif_outgoing_call">Chiamata in uscita</string>
+  <string name="notif_current_call_title">Sto chiamando %1$s</string>
   <string name="notif_current_call">Chiamata in corso</string>
   <string name="notif_channel_calls">Chiamate</string>
   <string name="notif_channel_missed_calls">Chiamate perse</string>

@@ -16,6 +16,7 @@
   <string name="description">Jami è un software gratuito per la comunicazione universale che rispetta le libertà e la privacy dei suoi utenti.</string>
   <string name="credits">Crediti</string>
   <string name="call_service_description">Questo servizio è necessario per mantenere le chiamate in esecuzione in primo piano. Funziona solo durante le chiamate.</string>
+  <string name="data_transfer_service_description">Questo servizio è necessario per mantenere visibili le notifiche durante il trasferimento di files. Questa opzione si applica esclusivamente all\'invio dei files.</string>
   <!--About dialog-->
   <string name="developed_by">Sviluppato da</string>
   <string name="designed_by">Progettato da</string>
@@ -112,6 +113,8 @@
   <string name="send_file">Invia file</string>
   <string name="hist_file_sent">File inviato</string>
   <string name="hist_file_received">File ricevuto</string>
+  <string name="conversation_send_audio">Registra un messaggio audio</string>
+  <string name="conversation_send_video">Registra un messaggio video</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Attivare videocamera</string>
   <string name="permission_dialog_camera_message">Le videochiamate richiedono l\'autorizzazione Fotocamera per funzionare. Per favore attivala.</string>
@@ -119,7 +122,9 @@
   <string name="ringtone_error_title">Errore</string>
   <string name="ringtone_error_format_not_supported">Questo formato non è supportato.</string>
   <string name="ringtone_error_size_too_big">Questo file è troppo grande. La dimensione massima è %1$dkB.</string>
+  <string name="ringtone_custom_prompt">Seleziona una suoneria personalizzata</string>
   <string name="ringtone_custom_label">Personalizzato</string>
+  <string name="ringtone_jami_tones">Suoni Jami</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Jami ha bisogno dell\'autorizzazione \"Lettura contatti\" per abilitare questa funzionalità. Per favore concedila.</string>
   <!--Write call log permission-->
@@ -164,6 +169,7 @@
   <string name="prompt_new_username">Inserisci il nuovo nome utente</string>
   <string name="help_password_choose">Scegli una password sicura che ricorderai per proteggere il tuo account Jami.</string>
   <string name="help_password_enter">Inserisci la password principale del tuo account Jami</string>
+  <string name="help_server_enter">Inserisci l\'URL del server di gestione</string>
   <string name="help_pin_enter">Inserire il PIN da un altro account Jami configurato. Utilizzare la funzione \"Esporta account Jami\" per ottenere un PIN.</string>
   <string name="wizard_next">Seguente</string>
   <string name="wizard_back">Indietro</string>
@@ -181,6 +187,7 @@
   <string name="share_label">Condividi</string>
   <string name="generic_error_migration">Errore</string>
   <string name="generic_error_migration_message">Si è verificato un errore durante il trasferimento</string>
+  <string name="title_share_with">Condividi con ...</string>
   <!--Pending contact requests-->
   <string name="accept">Accetta</string>
   <string name="refuse">Rifiuta</string>
@@ -200,6 +207,7 @@
   <!--Smartlist-->
   <string name="no_contact_request">Nessuna richiesta di contatto inviata</string>
   <string name="contact_request_sent">Richiesta di contatto inviata</string>
+  <string name="start_conversation">Inizia una conversazione</string>
   <string name="search_results">Risultati Ricerca</string>
   <string name="tv_contact_row_header">Contatti</string>
   <string name="gallery_error_title">Nessuna app Galleria trovata</string>
@@ -231,4 +239,6 @@
   <string name="menu_message_delete">Elimina messaggio</string>
   <string name="menu_message_cancel">Cancella messaggio</string>
   <string name="menu_delete">Elimina</string>
+  <string name="pref_darkTheme_title">Tema scuro</string>
+  <string name="pref_darkTheme_summary">Abilita sempre il tema scuro al posto di quello di sistema</string>
 </resources>

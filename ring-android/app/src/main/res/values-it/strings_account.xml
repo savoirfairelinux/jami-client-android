@@ -63,11 +63,14 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_ringtone_enabled_label">Attivare le suonerie</string>
   <string name="account_ringtone_path_label">Percorso suonerie</string>
   <string name="account_ringtone_custom_label">Usa suoneria personalizzata</string>
+  <string name="account_ringtone_title">Scegli una suoneria personalizzata</string>
+  <string name="account_ringtone_summary">Seleziona una suoneria o sceglie tra le tue</string>
   <!--Video Details-->
   <string name="account_video_label">Video</string>
   <string name="account_video_enable">Attivare Video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avanzato</string>
+  <string name="account_dht_public_in_calls_label">Abilita tutte le chiamate/messaggi</string>
   <string name="account_registration_exp_label">Registrazione scaduta</string>
   <string name="account_local_interface_label">Interfaccia locale</string>
   <string name="account_local_port_label">Porto locale</string>
@@ -111,13 +114,21 @@ Si potra modificare questo account più tardi.</string>
   <string name="error_password_char_count">6 caratteri minimo</string>
   <string name="error_passwords_not_equals">Le password no corrispondono</string>
   <string name="export_account_wait_title">Aspettare</string>
+  <string name="export_account_wait_message">Esportazione informazioni account in corso</string>
+  <string name="account_export_file">Backup account</string>
+  <string name="account_export_end_decryption_message">Impossibile sbloccare il tuo account con la password inserita</string>
   <string name="account_export_end_network_title">Errore di rete</string>
+  <string name="account_export_end_network_message">Impossibile esportare l\'account sulla rete. Verifica la connettività.</string>
   <string name="account_export_end_error_title">Errore</string>
+  <string name="account_export_end_error_message">Impossibile esportare l\'account. Errore sconosciuto.</string>
   <string name="account_enter_password">Inserisci la password</string>
+  <string name="account_share_body">Contattami con \'%1$s\' sulla piattaforma di comunicazione distribuita Jami: %2$s</string>
+  <string name="account_share_body_with_username">Contattami con \'%1$s\' o utilizzando il mio nome pubblico \'%2$s\' disponibile sulla piattaforma di comunicazione distribuita Jami: %3$s</string>
   <string name="account_contact_me">Contattami su Jami !</string>
   <string name="update_account">Aggiorna account</string>
   <string name="ring_account">Account Jami</string>
   <string name="ring_account_identity">Identità</string>
+  <string name="account_migration_title_dialog">Migrazione account</string>
   <string name="account_update_needed">Aggiornamento necessario</string>
   <string name="account_cannot_be_found_title">Impossibile trovare l\'account</string>
   <string name="account_no_network_title">Impossibile connettersi alla rete</string>
