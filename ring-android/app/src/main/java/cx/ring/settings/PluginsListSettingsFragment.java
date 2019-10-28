@@ -21,8 +21,8 @@ import cx.ring.R;
 import cx.ring.client.HomeActivity;
 
 import static android.content.Context.MODE_PRIVATE;
-import static cx.ring.settings.PluginUtils.PLUGIN_ENABLED;
-import static cx.ring.settings.PluginUtils.listPlugins;
+import static cx.ring.Plugins.PluginUtils.PLUGIN_ENABLED;
+import static cx.ring.Plugins.PluginUtils.listPlugins;
 
 public class PluginsListSettingsFragment extends Fragment implements PluginsListAdapter.PluginListItemListener {
 
