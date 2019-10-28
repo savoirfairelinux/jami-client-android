@@ -409,7 +409,8 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
     }
 
     @Override
-    public void initMenu(boolean isSpeakerOn, boolean displayFlip, boolean canDial, boolean onGoingCall) {
+    public void initMenu(boolean isSpeakerOn, boolean displayFlip, boolean canDial,
+                         boolean showPluginBtn, boolean onGoingCall) {
 
     }
 
