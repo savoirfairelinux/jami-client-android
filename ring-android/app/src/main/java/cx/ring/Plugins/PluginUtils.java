@@ -1,13 +1,15 @@
-package cx.ring.settings;
+package cx.ring.Plugins;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import cx.ring.settings.PluginDetails;
 import cx.ring.utils.Log;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -24,7 +26,7 @@ public class PluginUtils {
      */
     public static List<PluginDetails> listPlugins(Context mContext){
         List<PluginDetails> pluginsList = new ArrayList<>();
-        File pluginsDir = new File(mContext.getFilesDir(),"plugins");
+        File pluginsDir = new File(mContext.getFilesDir(),"plugins/"+getABI());
         Log.i(TAG, "Plugins dir: " + pluginsDir.getAbsolutePath());
         if(pluginsDir.isDirectory()) {
             File[] pluginsFolders = pluginsDir.listFiles();
@@ -45,6 +47,10 @@ public class PluginUtils {
             }
         }
         return pluginsList;
+    }
+
+    public static String getABI(){
+        return Build.SUPPORTED_ABIS[0];
     }
 
     public static Drawable getPluginIcon(PluginDetails pluginDetails) {
