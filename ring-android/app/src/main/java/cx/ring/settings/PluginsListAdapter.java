@@ -15,7 +15,7 @@ import java.util.List;
 
 import cx.ring.R;
 
-import static cx.ring.settings.PluginUtils.getPluginIcon;
+import static cx.ring.Plugins.PluginUtils.getPluginIcon;
 
 
 public class PluginsListAdapter extends RecyclerView.Adapter<PluginsListAdapter.PluginViewHolder> {

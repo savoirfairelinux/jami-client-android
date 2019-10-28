@@ -76,9 +76,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     private int videoHeight = -1;
     private int previewWidth = -1;
     private int previewHeight = -1;
-
     private String currentSurfaceId = null;
-    private boolean plugin = false;
 
     private Disposable timeUpdateTask = null;
 
@@ -222,8 +220,9 @@ public class CallPresenter extends RootPresenter<CallView> {
         boolean isSpeakerOn = mHardwareService.isSpeakerPhoneOn();
         //boolean hasContact = mSipCall != null && null != mSipCall.getContact() && mSipCall.getContact().isUnknown();
         boolean canDial = mOnGoingCall && mSipCall != null && !mSipCall.isIncoming();
+        boolean showPluginBtn = mOnGoingCall && mSipCall != null;
         boolean hasMultipleCamera = mHardwareService.getCameraCount() > 1 && mOnGoingCall && !mAudioOnly;
-        getView().initMenu(isSpeakerOn, hasMultipleCamera, canDial, mOnGoingCall);
+        getView().initMenu(isSpeakerOn, hasMultipleCamera, canDial, showPluginBtn, mOnGoingCall);
     }
 
     public void chatClick() {
@@ -261,16 +260,12 @@ public class CallPresenter extends RootPresenter<CallView> {
         getView().switchCameraIcon(mHardwareService.isPreviewFromFrontCamera());
     }
 
-    public void loadPlugin() {
-        plugin = !plugin;
+    public void loadPlugin(String path) {
+//        RingserviceJNI.loadPlugin(path);
+    }
 
-        String path = "/data/user/0/cx.ring/files/plugins/libmmotplugin.so";
-        if(plugin) {
-            RingserviceJNI.loadPlugin(path);
-        } else {
-
-            RingserviceJNI.unloadPlugin(path);
-        }
+    public void unloadPlugin(String path) {
+//        RingserviceJNI.unloadPlugin(path);
     }
 
     public void configurationChanged(int rotation) {

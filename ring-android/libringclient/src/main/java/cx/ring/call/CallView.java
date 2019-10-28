@@ -50,7 +50,7 @@ public interface CallView {
 
     void updateCallStatus(CallStatus callState);
 
-    void initMenu(boolean isSpeakerOn, boolean displayFlip, boolean canDial, boolean onGoingCall);
+    void initMenu(boolean isSpeakerOn, boolean displayFlip, boolean canDial, boolean showPluginBtn, boolean onGoingCall);
 
     void initNormalStateDisplay(boolean audioOnly, boolean muted);
 
