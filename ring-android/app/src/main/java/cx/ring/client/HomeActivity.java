@@ -65,7 +65,6 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
 
 import javax.inject.Inject;
 
@@ -87,11 +86,9 @@ import cx.ring.model.AccountConfig;
 import cx.ring.service.DRingService;
 import cx.ring.services.AccountService;
 import cx.ring.services.NotificationService;
-import cx.ring.services.PreferencesService;
 import cx.ring.settings.PluginDetails;
 import cx.ring.settings.PluginSettingsFragment;
 import cx.ring.settings.PluginsListSettingsFragment;
-
 import cx.ring.settings.SettingsFragment;
 import cx.ring.settings.VideoSettingsFragment;
 import cx.ring.utils.ContentUriHandler;
@@ -127,7 +124,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     public static final String ACTION_PRESENT_TRUST_REQUEST_FRAGMENT = BuildConfig.APPLICATION_ID + "presentTrustRequestFragment";
 
     public static final String PLUGINS_SETTINGS_TAG = "PluginsPrefs";
-    public static final String PLUGIN_SETTINGS_TAG = "PluginPrefs";
 
     private static final String NAVIGATION_TAG = "Navigation";
 
@@ -684,8 +680,8 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         getSupportFragmentManager()
                 .beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.main_frame, fContent, PLUGIN_SETTINGS_TAG)
-                .addToBackStack(PLUGIN_SETTINGS_TAG).commit();
+                .replace(R.id.main_frame, fContent, PLUGINS_SETTINGS_TAG)
+                .addToBackStack(PLUGINS_SETTINGS_TAG).commit();
     }
 
     @Override
