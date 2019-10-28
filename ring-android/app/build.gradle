@@ -24,12 +24,21 @@ android {
             minifyEnabled true
             debuggable true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            packagingOptions{
+                doNotStrip "*/armeabi/*.so"
+                doNotStrip "*/armeabi-v7a/*.so"
+                doNotStrip "*/arm64-v8a/*.so"
+                doNotStrip "*/x86/*.so"
+                doNotStrip "*/x86_64/*.so"
+            }
         }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     flavorDimensions "push"
     productFlavors {
         noPush {
@@ -114,9 +123,6 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
 
     implementation 'com.jsibbold:zoomage:1.2.0'
-
-    // GSON
-    implementation 'com.google.code.gson:gson:2.8.6'
 
     withFirebaseImplementation('com.google.firebase:firebase-messaging:20.0.0') {
         exclude group: 'com.google.firebase', module: 'firebase-core'
