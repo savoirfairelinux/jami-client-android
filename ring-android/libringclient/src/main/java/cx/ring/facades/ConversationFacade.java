@@ -31,7 +31,6 @@ import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
-import cx.ring.model.ConversationHistory;
 import cx.ring.model.DataTransfer;
 import cx.ring.model.Interaction;
 import cx.ring.model.Interaction.InteractionStatus;
@@ -41,11 +40,13 @@ import cx.ring.model.TextMessage;
 import cx.ring.model.Uri;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
+import cx.ring.services.ContactService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.HistoryService;
 import cx.ring.services.NotificationService;
 import cx.ring.services.PreferencesService;
+import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.FileUtils;
 import cx.ring.utils.Log;
 import io.reactivex.Completable;
@@ -53,7 +54,6 @@ import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subjects.AsyncSubject;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
@@ -64,6 +64,7 @@ public class ConversationFacade {
     private final AccountService mAccountService;
     private final HistoryService mHistoryService;
     private final CallService mCallService;
+    private final ContactService mContactService;
 
     @Inject
     HardwareService mHardwareService;
@@ -83,10 +84,11 @@ public class ConversationFacade {
 
     private final Subject<Conversation> conversationSubject = PublishSubject.create();
 
-    public ConversationFacade(HistoryService historyService, CallService callService, AccountService accountService) {
+    public ConversationFacade(HistoryService historyService, CallService callService, AccountService accountService, ContactService contactService) {
         mHistoryService = historyService;
         mCallService = callService;
         mAccountService = accountService;
+        mContactService = contactService;
 
         currentAccountSubject = mAccountService
                 .getCurrentAccountSubject()
@@ -307,13 +309,29 @@ public class ConversationFacade {
         }
     }
 
+    private Observable<SmartListViewModel> observeConversation(Account account, Conversation conversation) {
+        return account.getConversationSubject()
+                .filter(c -> c == conversation)
+                .startWith(conversation)
+                .switchMap(c -> mContactService
+                        .observeContact(conversation.getAccountId(), conversation.getContact())
+                        .map(contact -> new SmartListViewModel(conversation.getAccountId(), contact, conversation.getLastEvent())));
+    }
+
+    public Observable<List<Observable<SmartListViewModel>>> getSmartList(Observable<Account> currentAccount) {
+        return currentAccount
+                .switchMap(account -> account.getConversationsSubject()
+                        .switchMapSingle(conversations -> Observable.fromIterable(conversations)
+                                .map(conv -> observeConversation(account, conv))
+                                .toList()));
+    }
+
     /**
      * Loads the smartlist from the database and updates the view
      *
      * @param account the user account
      */
     private Single<Account> getSmartlist(final Account account) {
-        Log.d(TAG, "getSmartlist()");
         return mHistoryService.getSmartlist(account.getAccountID())
                 .map(conversationHistoryList -> {
                     List<Conversation> conversations = new ArrayList<>();
