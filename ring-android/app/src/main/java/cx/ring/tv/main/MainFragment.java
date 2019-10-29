@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,6 +74,7 @@ import cx.ring.tv.search.SearchActivity;
 import cx.ring.tv.views.CustomTitleView;
 import cx.ring.utils.QRCodeUtils;
 import cx.ring.views.AvatarDrawable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class MainFragment extends BaseBrowseFragment<MainPresenter> implements MainView {
 
@@ -251,6 +253,9 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     }
 
     static private BitmapDrawable prepareAccountQr(Context context, String accountId) {
+        Log.w(TAG, "prepareAccountQr " + accountId);
+        if (TextUtils.isEmpty(accountId))
+            return null;
         QRCodeUtils.QRCodeData qrCodeData = QRCodeUtils.encodeStringAsQRCodeData(accountId, 0X00000000, 0xFFFFFFFF);
         Bitmap bitmap = Bitmap.createBitmap(qrCodeData.getWidth(), qrCodeData.getHeight(), Bitmap.Config.ARGB_8888);
         bitmap.setPixels(qrCodeData.getData(), 0, qrCodeData.getWidth(), 0, 0, qrCodeData.getWidth(), qrCodeData.getHeight());
@@ -259,6 +264,8 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
 
     @Override
     public void displayAccountInfos(final HomeNavigationViewModel viewModel) {
+        Log.w(TAG, "displayAccountInfos " + viewModel.getAccount());
+
         Context context = getContext();
         if (context == null) {
             Log.e(TAG, "displayAccountInfos: Not able to get context");
@@ -266,29 +273,31 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         }
 
         Account account = viewModel.getAccount();
-        String address = account.getDisplayUsername();
-        VCardServiceImpl
-                .loadProfile(account)
-                .doOnSuccess(profile -> {
-                    if (profile.first != null && !profile.first.isEmpty()) {
-                        titleView.setAlias(profile.first);
-                        if (address != null) {
-                            setTitle(address);
+        if (account != null) {
+            String address = account.getDisplayUsername();
+            VCardServiceImpl
+                    .loadProfile(account)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnSuccess(profile -> {
+                        if (profile.first != null && !profile.first.isEmpty()) {
+                            titleView.setAlias(profile.first);
+                            if (address != null) {
+                                setTitle(address);
+                            } else {
+                                setTitle("");
+                            }
                         } else {
-                            setTitle("");
+                            titleView.setAlias(address);
                         }
-                    } else {
-                        titleView.setAlias(address);
-                    }
-                })
-                .flatMap(p -> AvatarDrawable.load(context, account))
-                .subscribe(a -> {
-                    titleView.getLogoView().setVisibility(View.VISIBLE);
-                    titleView.getLogoView().setImageDrawable(a);
-                });
-
-        qrCard.setDrawable(prepareAccountQr(context, account.getUri()));
-        myAccountRow.getAdapter().notifyItemRangeChanged(QR_ITEM_POSITION, 1);
+                    })
+                    .flatMap(p -> AvatarDrawable.load(context, account))
+                    .subscribe(a -> {
+                        titleView.getLogoView().setVisibility(View.VISIBLE);
+                        titleView.getLogoView().setImageDrawable(a);
+                    });
+            qrCard.setDrawable(prepareAccountQr(context, account.getUri()));
+            myAccountRow.getAdapter().notifyItemRangeChanged(QR_ITEM_POSITION, 1);
+        }
     }
 
     @Override

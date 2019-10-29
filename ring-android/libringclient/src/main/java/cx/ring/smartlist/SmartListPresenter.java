@@ -36,7 +36,6 @@ import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
-import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.PreferencesService;
 import cx.ring.utils.Log;
@@ -56,7 +55,6 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
     private final ContactService mContactService;
     private final ConversationFacade mConversationFacade;
     private final PreferencesService mPreferencesService;
-    private final DeviceRuntimeService mDeviceRuntimeService;
     private final HardwareService mHardwareService;
 
     private Disposable mQueryDisposable;
@@ -68,36 +66,27 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
 
     private final PublishSubject<String> contactQuery = PublishSubject.create();
     private final Observable<Account> accountSubject;
-    private final Observable<List<SmartListViewModel>> conversationViews;
 
     private final Scheduler mUiScheduler;
 
     private final CompositeDisposable mConversationDisposable = new CompositeDisposable();
-    private final CompositeDisposable mContactDisposable = new CompositeDisposable();
 
     @Inject
     public SmartListPresenter(AccountService accountService, ContactService contactService,
                               ConversationFacade conversationFacade,
                               PreferencesService sharedPreferencesService,
-                              DeviceRuntimeService deviceRuntimeService,
                               HardwareService hardwareService,
                               @Named("UiScheduler") Scheduler uiScheduler) {
         mAccountService = accountService;
         mContactService = contactService;
         mConversationFacade = conversationFacade;
         mPreferencesService = sharedPreferencesService;
-        mDeviceRuntimeService = deviceRuntimeService;
         mHardwareService = hardwareService;
         mUiScheduler = uiScheduler;
 
         accountSubject = mConversationFacade
                 .getCurrentAccountSubject()
                 .doOnNext(a -> mAccount = a);
-
-        conversationViews = accountSubject
-                .switchMap(Account::getConversationsViewModels)
-                .subscribeOn(Schedulers.computation())
-                .observeOn(mUiScheduler);
     }
 
     @Override
@@ -105,7 +94,6 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
         super.bindView(view);
         mCompositeDisposable.clear();
         mCompositeDisposable.add(mConversationDisposable);
-        mCompositeDisposable.add(mContactDisposable);
         loadConversations();
     }
 
@@ -264,44 +252,30 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
         mConversationDisposable.clear();
         getView().setLoading(true);
 
-        mConversationDisposable.add(conversationViews
-                        .subscribe(viewModels -> {
-                            final SmartListView view = getView();
-                            view.setLoading(false);
-                            mSmartListViewModels = viewModels;
-                            if (viewModels.size() > 0) {
-                                view.updateList(filter(viewModels, mCurrentQuery));
-                                view.hideNoConversationMessage();
-                            } else {
-                                view.hideList();
-                                view.displayNoConversationMessage();
-                            }
-                            CompositeDisposable cd = new CompositeDisposable();
-                            for (SmartListViewModel vm : viewModels) {
-                                cd.add(mContactService.observeContact(vm.getAccountId(), vm.getContact())
-                                        .subscribeOn(Schedulers.computation())
-                                        .observeOn(mUiScheduler)
-                                        .subscribe(c -> getView().update(vm)));
-                            }
-                            mContactDisposable.clear();
-                            mContactDisposable.add(cd);
-                        }, e -> {
-                            getView().setLoading(false);
-                            Log.d(TAG, "loadConversations subscribe onError", e);
-                        }));
-
-        Log.w(TAG, "loadConversations() subscribe");
-        mConversationDisposable.add(accountSubject
-                        .switchMap(Account::getConversationViewModel)
-                        .observeOn(mUiScheduler)
-                        .subscribe(vm -> {
-                            if (mSmartListViewModels == null)
-                                return;
-                            for (int i=0; i<mSmartListViewModels.size(); i++)
-                                if (mSmartListViewModels.get(i).getContact() == vm.getContact())
-                                    mSmartListViewModels.set(i, vm);
-                            getView().update(vm);
-                        }, e -> Log.d(TAG, "loadConversations accountSubject onError", e)));
+        mConversationDisposable.add(mConversationFacade
+                .getSmartList(accountSubject)
+                .switchMap(viewModels -> viewModels.isEmpty()
+                        ? Observable.just(new ArrayList<SmartListViewModel>())
+                        : Observable.combineLatest(viewModels, obs -> {
+                            List<SmartListViewModel> vms = new ArrayList<>(obs.length);
+                            for (Object ob : obs)
+                                vms.add((SmartListViewModel) ob);
+                            mSmartListViewModels = vms;
+                            return vms;
+                        }))
+                .throttleLatest(150, TimeUnit.MILLISECONDS, mUiScheduler)
+                .observeOn(mUiScheduler)
+                .subscribe(viewModels -> {
+                    final SmartListView view = getView();
+                    view.setLoading(false);
+                    if (viewModels.isEmpty()) {
+                        view.hideList();
+                        view.displayNoConversationMessage();
+                        return;
+                    }
+                    view.updateList(filter(viewModels, mCurrentQuery));
+                    view.hideNoConversationMessage();
+                }));
     }
 
     private List<SmartListViewModel> filter(List<SmartListViewModel> list, String query) {

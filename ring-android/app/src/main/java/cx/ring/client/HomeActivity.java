@@ -342,8 +342,12 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
         super.onResume();
         mDisposable.clear();
         mDisposable.add(mAccountService.getObservableAccountList()
+                .firstElement()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(accounts -> {
+                    if (accounts.isEmpty()) {
+                        startActivity(new Intent(this, AccountWizardActivity.class));
+                    }
                     for (Account account : accounts) {
                         if (account.needsMigration()) {
                             showMigrationDialog();
