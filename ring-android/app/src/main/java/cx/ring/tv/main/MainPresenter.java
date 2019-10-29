@@ -184,17 +184,12 @@ public class MainPresenter extends RootPresenter<MainView> {
     }
 
     public void reloadAccountInfos() {
-        if (mAccountService == null) {
-            Log.e(TAG, "reloadAccountInfos: No account service available");
-            return;
-        }
         mCompositeDisposable.add(mAccountService.getProfileAccountList()
                 .observeOn(mUiScheduler)
-                .subscribe(accounts -> {
-                    Account account = accounts.isEmpty() ? null : accounts.get(0);
-                    HomeNavigationViewModel viewModel = new HomeNavigationViewModel(account, accounts);
-                    getView().displayAccountInfos(viewModel);
-                }, e-> Log.d(TAG, "reloadAccountInfos getProfileAccountList onError", e)));
+                .subscribe(
+                        accounts -> getView().displayAccountInfos(
+                                new HomeNavigationViewModel(accounts.isEmpty() ? null : accounts.get(0), accounts)),
+                        e-> Log.d(TAG, "reloadAccountInfos getProfileAccountList onError", e)));
     }
 
     public void onExportClicked() {

@@ -165,7 +165,8 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
             }
         }
 
-        Intent intent = getActivity().getIntent();
+        Activity  activity = getActivity();
+        Intent intent = activity == null ? null : activity.getIntent();
         if (intent != null && intent.getAction() != null) {
             switch (intent.getAction()) {
                 case Intent.ACTION_VIEW:

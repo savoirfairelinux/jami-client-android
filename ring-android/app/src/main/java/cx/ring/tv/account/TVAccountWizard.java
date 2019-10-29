@@ -228,18 +228,9 @@ public class TVAccountWizard
         if (mAlertDialog != null && mAlertDialog.isShowing()) {
             return;
         }
-        mAlertDialog = new AlertDialog.Builder(TVAccountWizard.this)
-                .setPositiveButton(android.R.string.ok, null)
-                .setTitle(R.string.account_device_added_title)
-                .setMessage(R.string.account_device_added_message)
-                .setOnDismissListener(dialogInterface -> {
-                    setResult(Activity.RESULT_OK, new Intent());
-                    //unlock the screen orientation
-                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-                    startActivity(new Intent(TVAccountWizard.this, HomeActivity.class));
-                    finish();
-                })
-                .show();
+        setResult(Activity.RESULT_OK, new Intent());
+        //startActivity(new Intent(this, HomeActivity.class));
+        finish();
     }
 
     public void profileCreated(AccountCreationModel accountCreationModel, boolean saveProfile) {

@@ -19,6 +19,7 @@ package cx.ring.tv.account;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -29,7 +30,6 @@ import android.provider.MediaStore;
 import androidx.annotation.NonNull;
 import androidx.leanback.widget.GuidanceStylist;
 import androidx.leanback.widget.GuidedAction;
-import androidx.appcompat.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -220,7 +220,7 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<HomeNavigat
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(intent, ProfileCreationFragment.REQUEST_CODE_GALLERY);
         } catch (ActivityNotFoundException e) {
-            new AlertDialog.Builder(getActivity())
+            new AlertDialog.Builder(requireContext())
                     .setPositiveButton(android.R.string.ok, null)
                     .setTitle(R.string.gallery_error_title)
                     .setMessage(R.string.gallery_error_message)

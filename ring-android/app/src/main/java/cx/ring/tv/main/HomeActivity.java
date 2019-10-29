@@ -20,22 +20,33 @@
  */
 package cx.ring.tv.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.leanback.app.BackgroundManager;
 import androidx.leanback.app.GuidedStepSupportFragment;
 import androidx.fragment.app.FragmentActivity;
 
+import javax.inject.Inject;
+
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
+import cx.ring.services.AccountService;
+import cx.ring.tv.account.TVAccountWizard;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class HomeActivity extends FragmentActivity {
     private BackgroundManager mBackgroundManager;
+    private final CompositeDisposable mDisposable = new CompositeDisposable();
+    @Inject
+    AccountService mAccountService;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         JamiApplication.getInstance().startDaemon();
+        JamiApplication.getInstance().getRingInjectionComponent().inject(this);
         setContentView(R.layout.tv_activity_home);
         mBackgroundManager = BackgroundManager.getInstance(this);
         mBackgroundManager.attach(getWindow());
@@ -54,5 +65,14 @@ public class HomeActivity extends FragmentActivity {
     protected void onResume() {
         super.onResume();
         mBackgroundManager.setDrawable(getResources().getDrawable(R.drawable.tv_background));
+        mDisposable.clear();
+        mDisposable.add(mAccountService.getObservableAccountList()
+                .observeOn(AndroidSchedulers.mainThread())
+                .firstElement()
+                .subscribe(accounts -> {
+                    if (accounts.isEmpty()) {
+                        startActivity(new Intent(this, TVAccountWizard.class));
+                    }
+                }));
     }
 }

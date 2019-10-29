@@ -150,8 +150,9 @@ public class ServiceInjectionModule {
     ConversationFacade provideConversationFacade(
             HistoryService historyService,
             CallService callService,
+            ContactService contactService,
             AccountService accountService) {
-        ConversationFacade conversationFacade = new ConversationFacade(historyService, callService, accountService);
+        ConversationFacade conversationFacade = new ConversationFacade(historyService, callService, accountService, contactService);
         mJamiApplication.getRingInjectionComponent().inject(conversationFacade);
         return conversationFacade;
     }
