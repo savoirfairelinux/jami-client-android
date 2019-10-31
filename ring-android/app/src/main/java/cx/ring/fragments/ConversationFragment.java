@@ -193,9 +193,12 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         injectFragment(((JamiApplication) getActivity().getApplication()).getRingInjectionComponent());
         marginPx = getResources().getDimensionPixelSize(R.dimen.conversation_message_input_margin);
         marginPxTotal = marginPx;
-        animation.setDuration(150);
+
         binding = FragConversationBinding.inflate(inflater, container, false);
         binding.setPresenter(this);
+
+        animation.setDuration(150);
+        animation.addUpdateListener(valueAnimator -> setBottomPadding(binding.histList, (Integer)valueAnimator.getAnimatedValue()));
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.histList, (v, insets) -> {
             marginPxTotal = marginPx + insets.getSystemWindowInsetBottom();
@@ -214,26 +217,11 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             return insets;
         });
 
-        return binding.getRoot();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
+        binding.ongoingcallPane.setVisibility(View.GONE);
         binding.msgInputTxt.setMediaListener(contentInfo -> startFileSend(AndroidFileUtils
-                        .getCacheFile(requireContext(), contentInfo.getContentUri())
-                        .flatMapCompletable(this::sendFile)
-                        .doFinally(contentInfo::releasePermission)));
-
-        if (mPreferences != null) {
-            String pendingMessage = mPreferences.getString(KEY_PREFERENCE_PENDING_MESSAGE, null);
-            if (!TextUtils.isEmpty(pendingMessage)) {
-                binding.msgInputTxt.setText(pendingMessage);
-                binding.msgSend.setVisibility(View.VISIBLE);
-                binding.emojiSend.setVisibility(View.GONE);
-            }
-        }
+                .getCacheFile(requireContext(), contentInfo.getContentUri())
+                .flatMapCompletable(this::sendFile)
+                .doFinally(contentInfo::releasePermission)));
         binding.msgInputTxt.setOnEditorActionListener((v, actionId, event) -> actionSendMsgText(actionId));
         binding.msgInputTxt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -247,7 +235,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             @Override
             public void afterTextChanged(Editable s) {
                 String message = s.toString();
-                boolean hasMessage = !TextUtils.isEmpty(message);
+                boolean hasMessage = TextUtils.isEmpty(message);
                 if (hasMessage) {
                     binding.msgSend.setVisibility(View.GONE);
                     binding.emojiSend.setVisibility(View.VISIBLE);
@@ -264,7 +252,22 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             }
         });
 
-        animation.addUpdateListener(valueAnimator -> setBottomPadding(binding.histList, (Integer)valueAnimator.getAnimatedValue()));
+        setHasOptionsMenu(true);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        if (mPreferences != null) {
+            String pendingMessage = mPreferences.getString(KEY_PREFERENCE_PENDING_MESSAGE, null);
+            if (!TextUtils.isEmpty(pendingMessage)) {
+                binding.msgInputTxt.setText(pendingMessage);
+                binding.msgSend.setVisibility(View.VISIBLE);
+                binding.emojiSend.setVisibility(View.GONE);
+            }
+        }
 
         binding.msgInputTxt.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
             if (oldBottom == 0 && oldTop == 0) {
@@ -277,12 +280,10 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             }
         });
 
-        binding.ongoingcallPane.setVisibility(View.GONE);
         DefaultItemAnimator animator = (DefaultItemAnimator) binding.histList.getItemAnimator();
         if (animator != null)
             animator.setSupportsChangeAnimations(false);
         binding.histList.setAdapter(mAdapter);
-        setHasOptionsMenu(true);
     }
 
     @Override
@@ -303,7 +304,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     @Override
-    public boolean onContextItemSelected(MenuItem item) {
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
         if (mAdapter.onContextItemSelected(item))
             return true;
         return super.onContextItemSelected(item);
