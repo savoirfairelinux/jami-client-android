@@ -15,6 +15,8 @@
   <string name="license">Questo software è fornito \"così come è\", senza alcuna garanzia di sorta. Per dettagli consultare la GNU General Public License versione 3 o successiva</string>
   <string name="description">Jami è un software gratuito per la comunicazione universale che rispetta le libertà e la privacy dei suoi utenti.</string>
   <string name="credits">Crediti</string>
+  <string name="call_service_description">Questo servizio è necessario per mantenere le chiamate in esecuzione in primo piano. Funziona solo durante le chiamate.</string>
+  <string name="data_transfer_service_description">Questo servizio è necessario per visualizzare notifiche persistenti durante i trasferimenti di file. Funziona solo durante i trasferimenti di file.</string>
   <!--About dialog-->
   <string name="developed_by">Sviluppato da</string>
   <string name="designed_by">Progettato da</string>
@@ -60,8 +62,10 @@
   <string name="notif_outgoing_call">Chiamata in uscita</string>
   <string name="notif_current_call_title">Sto chiamando %1$s</string>
   <string name="notif_current_call">Chiamata in corso</string>
+  <string name="notif_channel_call_in_progress">Chiamata in corso</string>
   <string name="notif_channel_calls">Chiamate</string>
   <string name="notif_channel_missed_calls">Chiamate perse</string>
+  <string name="notif_channel_incoming_calls">Chiamate in entrata</string>
   <string name="notif_channel_messages">Messaggi</string>
   <string name="notif_channel_requests">Richieste</string>
   <string name="notif_channel_file_transfer">trasferimento file</string>
@@ -109,6 +113,8 @@
   <string name="send_file">Invia File</string>
   <string name="hist_file_sent">File inviato</string>
   <string name="hist_file_received">File recevuto</string>
+  <string name="conversation_send_audio">Registra clip audio</string>
+  <string name="conversation_send_video">Registra video</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permesso videocamera</string>
   <string name="permission_dialog_camera_message">Le videochiamate hanno bisogna del permesso per accedere alla videocamera. Se lo desideri, attivalo.</string>
@@ -116,13 +122,19 @@
   <string name="ringtone_error_title">Errore</string>
   <string name="ringtone_error_format_not_supported">Questo formato non è supportato.</string>
   <string name="ringtone_error_size_too_big">Il file è troppo grande. La dimensione massima consentita è di %1$dkB</string>
+  <string name="ringtone_custom_prompt">Imposta una suoneria personalizzata</string>
   <string name="ringtone_custom_label">Personalizzato</string>
+  <string name="ringtone_jami_tones">Toni Jami </string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Jami necessita dell\'autorizzazione a \"Accedere ai Contatti\" per abilitare questa funzione. Concedere Autorizzazione</string>
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami necessita dell\'autorizzazione a \"Accedere al Registro Chiamate\" per abilitare questa funzione. Concedere Autorizzazione</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Scansiona il codice QR dell\'account che vuoi aggiungere.</string>
+  <string name="title_activity_qrcode">Condividi il mio account</string>
+  <string name="error_scan_no_camera_permissions">Lo scanner QR richiede le autorizzazioni della fotocamera per funzionare</string>
+  <string name="tab_code">Il mio codice</string>
+  <string name="tab_scan"> Scansiona Codice</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Azzerate la cronologia?</string>
   <string name="clear_history_dialog_message">Questa azione non può essere annullata</string>
@@ -143,6 +155,7 @@
   <string name="conversation_action_select_peer_number">Seleziona un numero</string>
   <string name="conversation_action_block_this">Blocca contatto</string>
   <string name="conversation_action_go_to_call">Torna a chiamata in corso</string>
+  <string name="conversation_open_file_error">Non esiste un\'applicazione installata in grado di aprire questo tipo di file.</string>
   <string name="clip_contact_uri">Indirizzo di contatto</string>
   <string name="block_contact_dialog_title">Blocca %1$s?</string>
   <string name="block_contact_dialog_message">%1$s non sara\' in grado di contattare l\'utente fino a sbloccarlo.</string>
@@ -156,6 +169,7 @@
   <string name="prompt_new_username">Inserisci il nuovo nome utente</string>
   <string name="help_password_choose">Scegliere una password facile da ricordare per proteggere il tuo account Jami.</string>
   <string name="help_password_enter">Inserire la password dell\'account principale Jami</string>
+  <string name="help_server_enter">Immettere l\'URL del server di gestione</string>
   <string name="help_pin_enter">Jami configurato per inserire il PIN da un altro account. Utilizzare la funzione di \"esporta account Jami\" per ottenere un PIN.</string>
   <string name="wizard_next">Prossimo</string>
   <string name="wizard_back">Indietro</string>
@@ -173,6 +187,7 @@
   <string name="share_label">Condividi</string>
   <string name="generic_error_migration">Errore</string>
   <string name="generic_error_migration_message">Si è verificato un errore durante la migrazione</string>
+  <string name="title_share_with">Condividi con…</string>
   <!--Pending contact requests-->
   <string name="accept">Accetta</string>
   <string name="refuse">Rifiuto</string>
@@ -192,6 +207,7 @@
   <!--Smartlist-->
   <string name="no_contact_request">Nessuna richiesta di contatto inviata</string>
   <string name="contact_request_sent">Richiesta di contatto inviata</string>
+  <string name="start_conversation">Inizia la conversazione</string>
   <string name="search_results">Risultati della ricerca</string>
   <string name="tv_contact_row_header">Contatti</string>
   <string name="gallery_error_title">Nessuna galleria app trovata</string>
@@ -210,12 +226,18 @@
   <string name="file_transfer_status_closed_by_peer">chiuso dal peer</string>
   <string name="file_transfer_status_invalid_pathname">percorso non valido</string>
   <string name="file_saved_in">File salvato in %s</string>
+  <string name="file_saved_successfully">File salvato con successo</string>
   <string name="no_space_left_on_device">Nessuno spazio lasciato sul dispositivo</string>
   <string name="title_media_viewer">Visualizzatore di media</string>
   <string name="menu_file_open">Apri file</string>
   <string name="menu_file_download">Scarica file</string>
+  <string name="menu_file_save">Salva file</string>
   <string name="menu_file_delete">Cancella file</string>
   <string name="menu_file_share">Condividi file</string>
   <string name="menu_message_copy">Copia</string>
+  <string name="menu_message_delete">Cancella messaggio</string>
+  <string name="menu_message_cancel">Annulla messaggio</string>
   <string name="menu_delete">Elimina</string>
+  <string name="pref_darkTheme_title">Tema scuro</string>
+  <string name="pref_darkTheme_summary">Abilita sempre il tema scuro invece di utilizzare il comportamento del sistema</string>
 </resources>

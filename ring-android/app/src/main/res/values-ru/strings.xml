@@ -22,7 +22,7 @@
   <string name="designed_by">Оформлено</string>
   <string name="ringtones_by">Мелодии звонка</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Ring</string>
+  <string name="title_activity_sflphone_home">Звонить</string>
   <string name="error_no_network">Нет подключения к сети</string>
   <string name="error_mobile_network_available_but_disabled">Пожалуйста, предоставьте доступ к сотовой сети в настройках.</string>
   <!--AB menus-->
@@ -115,6 +115,8 @@
   <string name="send_file">Отправить файл</string>
   <string name="hist_file_sent">Файл отправлен</string>
   <string name="hist_file_received">Файл получен</string>
+  <string name="conversation_send_audio">Запись аудиоклипа</string>
+  <string name="conversation_send_video">Запись видиоклипа</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Разрешение на доступ к камере</string>
   <string name="permission_dialog_camera_message">Видеосвязь требует для работы разрешения на доступ к камере. Пожалуйста, предоставьте его.</string>

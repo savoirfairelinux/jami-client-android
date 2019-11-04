@@ -29,6 +29,5 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_hold">Laita pitoon</string>
     <string name="call_human_state_unhold">Poista pidosta</string>
     <string name="call_human_state_over">Loppu</string>
-    <string name="call_human_state_none">Ei mitään</string>
     <!-- Conferences -->
 </resources>

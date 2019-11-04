@@ -32,6 +32,5 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_hold">Čakanje</string>
     <string name="call_human_state_unhold">Vrnjen</string>
     <string name="call_human_state_over">Končano</string>
-    <string name="call_human_state_none">Neznano</string>
     <!-- Conferences -->
 </resources>

@@ -83,6 +83,7 @@
   <string name="hist_out_call">%1$s išsiunčiamasis skambutis</string>
   <string name="start_error_title">Nepavyksta paleisti Jami!</string>
   <string name="start_error_mic_required">Jami darbui, reikalingas leidimas naudoti mikrofoną.</string>
+  <string name="action_call_accept">Atsiliepti</string>
   <string name="action_call_decline">Atmesti</string>
   <string name="action_call_mic_mute">Išjungti mikrofoną</string>
   <string name="ab_action_speakerphone">Įjungti garsiakalbį</string>
@@ -205,5 +206,7 @@
   <string name="menu_file_delete">Ištrinti failą</string>
   <string name="menu_file_share">Bendrinti failą</string>
   <string name="menu_message_copy">Kopijuoti</string>
+  <string name="menu_message_delete">Ištrinti žinutę</string>
+  <string name="menu_message_cancel">Atsisakyti žinutės</string>
   <string name="menu_delete">Ištrinti</string>
 </resources>

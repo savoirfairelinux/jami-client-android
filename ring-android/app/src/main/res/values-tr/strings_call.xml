@@ -36,6 +36,5 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_hold">Beklet</string>
     <string name="call_human_state_unhold">Bekletmeyi kaldır</string>
     <string name="call_human_state_over">Bitti</string>
-    <string name="call_human_state_none">Hiçbiri</string>
     <!-- Conferences -->
 </resources>

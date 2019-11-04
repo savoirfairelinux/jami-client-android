@@ -36,6 +36,5 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_hold">ਰੋਕ ਕੇ ਰੱਖੀ</string>
     <string name="call_human_state_unhold">ਰੋਕ ਨੇ ਨਹੀਂ ਰੱਖੀ</string>
     <string name="call_human_state_over">ਸਮਾਪਤ ਹੋਈ</string>
-    <string name="call_human_state_none">ਕੋਈ ਨਹੀਂ</string>
     <!-- Conferences -->
 </resources>

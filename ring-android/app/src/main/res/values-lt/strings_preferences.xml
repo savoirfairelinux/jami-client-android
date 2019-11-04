@@ -9,6 +9,8 @@
   <string name="pref_mobileData_summary">Leisti Jami 3G/LTE tinkluose, papildomai prie belaidžio tinklo (Wi-Fi)</string>
   <string name="pref_pushNotifications_title">\"Push\" pranešimai</string>
   <string name="pref_pushNotifications_summary">Naudoti Google serverius, kad būtų leista fone gauti skambučius/žinutes</string>
+  <string name="pref_video_advanced_title">Išplėstiniai vaizdo nustatymai</string>
+  <string name="pref_video_advanced_summary">Keisti vaizdo pralaidumą, raišką, o taip pat eksperimentines ypatybes</string>
   <string name="pref_hd_summary">Įjungti aukštos raiškos (HD) vaizdo siuntimą</string>
   <string name="pref_hwEncode_title">Įjungti paspartintą kodavimą</string>
   <string name="pref_hwEncode_summary">Eksperimentinė ypatybė</string>
@@ -19,6 +21,7 @@
   <string name="pref_startOnBoot_title">Paleisti Jami paleisties metu</string>
   <string name="pref_startOnBoot_summary">Sistemos paleidimo metu, paleisti Jami fone.</string>
   <string name="pref_clearHistory_title">Išvalyti istoriją</string>
+  <string name="pref_clearHistory_summary">Išvalyti visą pokalbių istoriją. Šio veiksmo negalima bus atšaukti.</string>
   <string name="pref_persistNotification_title">Paleisti fone</string>
   <string name="pref_persistNotification_summary">Leisti veikti fone, kad būtų priimami skambučiai ir žinutės.</string>
 </resources>

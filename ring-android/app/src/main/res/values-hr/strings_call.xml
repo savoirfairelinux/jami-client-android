@@ -26,6 +26,5 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_busy">Zauzeto</string>
     <string name="call_human_state_failure">Neuspjelo</string>
     <string name="call_human_state_hold">Na čekanje</string>
-    <string name="call_human_state_none">Nema</string>
     <!-- Conferences -->
 </resources>

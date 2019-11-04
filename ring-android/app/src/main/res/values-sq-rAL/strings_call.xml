@@ -36,6 +36,5 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_hold">Mbaje</string>
     <string name="call_human_state_unhold">Mos e mbaj</string>
     <string name="call_human_state_over">Mbaroi</string>
-    <string name="call_human_state_none">Asnjë</string>
     <!-- Conferences -->
 </resources>

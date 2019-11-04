@@ -155,12 +155,14 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <!--Name registration-->
   <string name="error_username_empty">Įveskite naudotojo vardą</string>
   <string name="no_registered_name_for_account">Šiai paskyrai nerasta jokio registruoto vardo</string>
+  <string name="username_available">Naudotojo vardas prieinamas!</string>
   <string name="register_name">Registruoti vardą</string>
   <string name="trying_to_register_name">Bandoma užregistruoti vardą</string>
   <string name="registered_username">Registruotas naudotojo vardas</string>
   <string name="register_username">Registruoti viešąjį naudotojo vardą (rekomenduojama)</string>
   <string name="username_already_taken">Naudotojo vardas jau užimtas</string>
   <string name="invalid_username">Neteisingas naudotojo vardas</string>
+  <string name="unknown_error">Nežinoma klaida. Patikrinkite savo tinklo ryšį!</string>
   <string name="looking_for_username_availability">Tikrinamas naudotojo vardo prieinamumas...</string>
   <string name="account_status_connecting">Sujungiama</string>
   <string name="account_status_connection_error">Ryšio klaida</string>

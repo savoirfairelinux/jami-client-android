@@ -36,6 +36,5 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_hold">Pausa</string>
     <string name="call_human_state_unhold">Riprendi</string>
     <string name="call_human_state_over">Over</string>
-    <string name="call_human_state_none">Nessuno</string>
     <!-- Conferences -->
 </resources>
