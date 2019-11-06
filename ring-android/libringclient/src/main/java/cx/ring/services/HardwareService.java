@@ -44,7 +44,7 @@ import io.reactivex.subjects.Subject;
 
 public abstract class HardwareService {
 
-    private static final String TAG = HardwareService.class.getName();
+    private static final String TAG = HardwareService.class.getSimpleName();
 
     @Inject
     @Named("DaemonExecutor")
@@ -62,20 +62,20 @@ public abstract class HardwareService {
     @Named("UiScheduler")
     protected Scheduler mUiScheduler;
 
-    public class VideoEvent {
+    public static class VideoEvent {
         public boolean start = false;
         public boolean started = false;
         public int w = 0, h = 0;
         public int rot = 0;
         public String callId = null;
     }
-    public class BluetoothEvent {
+    public static class BluetoothEvent {
         public boolean connected;
     }
     public enum AudioOutput {
         INTERNAL, SPEAKERS, BLUETOOTH
     }
-    public class AudioState {
+    public static class AudioState {
         private final AudioOutput outputType;
         private final String outputName;
 
@@ -146,8 +146,6 @@ public abstract class HardwareService {
 
     public abstract void switchInput(String id, boolean setDefaultCamera);
 
-    public abstract void restartCamera(String callId);
-
     public abstract void setPreviewSettings();
 
     public abstract int getCameraCount();
@@ -161,12 +159,9 @@ public abstract class HardwareService {
         mExecutor.execute(Ringservice::connectivityChanged);
     }
 
-    public void switchInput(final String id, final String uri, final StringMap map) {
-        mExecutor.execute(() -> {
-            Log.i(TAG, "switchInput() running..." + uri);
-            Ringservice.applySettings(id, map);
-            Ringservice.switchInput(id, uri);
-        });
+    void switchInput(final String id, final String uri) {
+        Log.i(TAG, "switchInput() " + uri);
+        mExecutor.execute(() -> Ringservice.switchInput(id, uri));
     }
 
     public void setPreviewSettings(final Map<String, StringMap> cameraMaps) {
@@ -196,26 +191,6 @@ public abstract class HardwareService {
         }
         RingserviceJNI.unregisterVideoCallback(inputId, inputWindow);
         RingserviceJNI.releaseNativeWindow(inputWindow);
-    }
-
-    public void setVideoFrame(final byte[] data, final int width, final int height, final int rotation) {
-        mVideoExecutor.execute(() -> {
-            long frame = RingserviceJNI.obtainFrame(data.length);
-            if (frame != 0) {
-                RingserviceJNI.setVideoFrame(data, data.length, frame, width, height, rotation);
-            }
-            RingserviceJNI.releaseFrame(frame);
-        });
-    }
-
-    public void addVideoDevice(String deviceId) {
-        Log.d(TAG, "addVideoDevice: " + deviceId);
-        RingserviceJNI.addVideoDevice(deviceId);
-    }
-
-    public void setDefaultVideoDevice(String deviceId) {
-        Log.d(TAG, "setDefaultVideoDevice: " + deviceId);
-        RingserviceJNI.setDefaultDevice(deviceId);
     }
 
     public abstract void setDeviceOrientation(int rotation);

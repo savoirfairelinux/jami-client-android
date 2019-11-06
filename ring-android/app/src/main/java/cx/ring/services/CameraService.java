@@ -71,10 +71,6 @@ abstract public class CameraService {
         return devices.switchInput(setDefaultCamera);
     }
 
-    public String getCurrentCamera() {
-        return devices == null ? null : devices.currentId;
-    }
-
     public VideoParams getParams(String camId) {
         if (camId != null) {
             return mParams.get(camId);

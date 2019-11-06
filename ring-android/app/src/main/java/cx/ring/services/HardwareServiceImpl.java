@@ -97,7 +97,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     }
 
     public boolean isVideoAvailable() {
-        return mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA) || cameraService.hasCamera();
+        return mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY) || cameraService.hasCamera();
     }
 
     public boolean hasMicrophone() {
@@ -474,22 +474,20 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         mCapturingId = videoParams.id;
         Log.d(TAG, "startCapture: startCapture " + videoParams.id + " " + videoParams.width + "x" + videoParams.height + " rot" + videoParams.rotation);
 
-        mUiScheduler.scheduleDirect(() -> {
-            cameraService.openCamera(mContext, videoParams, surface,
-                    new CameraService.CameraListener() {
-                        @Override
-                        public void onOpened() {
-                        }
+        mUiScheduler.scheduleDirect(() -> cameraService.openCamera(mContext, videoParams, surface,
+                new CameraService.CameraListener() {
+                    @Override
+                    public void onOpened() {
+                    }
 
-                        @Override
-                        public void onError() {
-                            stopCapture();
-                        }
-                    },
-                    mPreferenceService.isHardwareAccelerationEnabled(),
-                    mPreferenceService.getResolution(),
-                    mPreferenceService.getBitrate());
-        });
+                    @Override
+                    public void onError() {
+                        stopCapture();
+                    }
+                },
+                mPreferenceService.isHardwareAccelerationEnabled(),
+                mPreferenceService.getResolution(),
+                mPreferenceService.getBitrate()));
         cameraService.setPreviewParams(videoParams);
         VideoEvent event = new VideoEvent();
         event.started = true;
@@ -630,25 +628,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     @Override
     public void switchInput(String id, boolean setDefaultCamera) {
         Log.w(TAG, "switchInput " + id);
-        String camId = cameraService.switchInput(setDefaultCamera);
-        try {
-            final StringMap map = cameraService.getNativeParams(camId).toMap();
-            final String uri = "camera://" + camId;
-            switchInput(id, uri, map);
-        } catch (Exception e) {
-            Log.e(TAG, "Error with hardware service, switchInput: " + e.getMessage());
-        }
-    }
-
-    @Override
-    public void restartCamera(String id) {
-        Log.w(TAG, "restartCamera " + id);
-        endCapture();
-        setPreviewSettings();
-        String currentCamera = cameraService.getCurrentCamera();
-        final String uri = "camera://" + currentCamera;
-        final StringMap map = cameraService.getNativeParams(currentCamera).toMap();
-        switchInput(id, uri, map);
+        switchInput(id, "camera://" + cameraService.switchInput(setDefaultCamera));
     }
 
     @Override
