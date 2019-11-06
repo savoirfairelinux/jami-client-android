@@ -11,7 +11,6 @@ android {
         versionCode 198
         versionName "20191109-01"
     }
-
     sourceSets {
         main {
             aidl.srcDirs = ['src/main/java']
@@ -19,6 +18,7 @@ android {
             jni.srcDirs = []
         }
     }
+
     buildTypes {
         debug {
             minifyEnabled true
@@ -82,7 +82,7 @@ dependencies {
     implementation "androidx.legacy:legacy-support-core-utils:$android_support_version"
     implementation "androidx.cardview:cardview:$android_support_version"
     implementation "androidx.preference:preference:$android_support_core_version"
-    implementation "androidx.recyclerview:recyclerview:1.1.0-beta05"
+    implementation "androidx.recyclerview:recyclerview:1.1.0-rc01"
     implementation "androidx.leanback:leanback:1.1.0-alpha02"
     implementation "androidx.leanback:leanback-preference:1.1.0-alpha02"
     implementation "androidx.media:media:$android_support_core_version"
