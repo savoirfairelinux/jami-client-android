@@ -60,7 +60,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     private DeviceRuntimeService mDeviceRuntimeService;
     private ConversationFacade mConversationFacade;
 
-    private Conference mSipCall;
+    private Conference mConference;
     private final List<SipCall> mPendingCalls = new ArrayList<>();
     private final Subject<List<SipCall>> mPendingSubject = BehaviorSubject.createDefault(mPendingCalls);
 
@@ -218,16 +218,16 @@ public class CallPresenter extends RootPresenter<CallView> {
     public void prepareOptionMenu() {
         boolean isSpeakerOn = mHardwareService.isSpeakerPhoneOn();
         //boolean hasContact = mSipCall != null && null != mSipCall.getContact() && mSipCall.getContact().isUnknown();
-        boolean canDial = mOnGoingCall && mSipCall != null && !mSipCall.isIncoming();
+        boolean canDial = mOnGoingCall && mConference != null && !mConference.isIncoming();
         boolean hasMultipleCamera = mHardwareService.getCameraCount() > 1 && mOnGoingCall && !mAudioOnly;
         getView().initMenu(isSpeakerOn, hasMultipleCamera, canDial, mOnGoingCall);
     }
 
     public void chatClick() {
-        if (mSipCall == null || mSipCall.getParticipants().isEmpty()) {
+        if (mConference == null || mConference.getParticipants().isEmpty()) {
             return;
         }
-        SipCall firstCall = mSipCall.getParticipants().get(0);
+        SipCall firstCall = mConference.getParticipants().get(0);
         if (firstCall == null
                 || firstCall.getContact() == null
                 || firstCall.getContact().getIds() == null
@@ -251,10 +251,9 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void switchVideoInputClick() {
-        if(mSipCall == null)
+        if(mConference == null)
             return;
-
-        mHardwareService.switchInput(mSipCall.getId(), false);
+        mHardwareService.switchInput(mConference.getId(), false);
         getView().switchCameraIcon(mHardwareService.isPreviewFromFrontCamera());
     }
 
@@ -274,18 +273,18 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void acceptCall() {
-        if (mSipCall == null) {
+        if (mConference == null) {
             return;
         }
-        mCallService.accept(mSipCall.getId());
+        mCallService.accept(mConference.getId());
     }
 
     public void hangupCall() {
-        if (mSipCall != null) {
-            if (mSipCall.isConference())
-                mCallService.hangUpConference(mSipCall.getId());
+        if (mConference != null) {
+            if (mConference.isConference())
+                mCallService.hangUpConference(mConference.getId());
             else
-                mCallService.hangUp(mSipCall.getId());
+                mCallService.hangUp(mConference.getId());
         }
         for (SipCall call : mPendingCalls) {
             mCallService.hangUp(call.getDaemonIdString());
@@ -294,7 +293,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void refuseCall() {
-        final Conference call = mSipCall;
+        final Conference call = mConference;
         if (call != null) {
             mCallService.refuse(call.getId());
         }
@@ -302,15 +301,15 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void videoSurfaceCreated(Object holder) {
-        if (mSipCall == null) {
+        if (mConference == null) {
             return;
         }
-        String newId = mSipCall.getId();
+        String newId = mConference.getId();
         if (!newId.equals(currentSurfaceId)) {
             mHardwareService.removeVideoSurface(currentSurfaceId);
             currentSurfaceId = newId;
         }
-        mHardwareService.addVideoSurface(mSipCall.getId(), holder);
+        mHardwareService.addVideoSurface(mConference.getId(), holder);
         getView().displayContactBubble(false);
     }
 
@@ -322,7 +321,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void previewVideoSurfaceCreated(Object holder) {
-        mHardwareService.addPreviewVideoSurface(holder, mSipCall);
+        mHardwareService.addPreviewVideoSurface(holder, mConference);
         //mHardwareService.startCapture(null);
     }
 
@@ -339,7 +338,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void displayChanged() {
-        mHardwareService.switchInput(mSipCall.getId(), false);
+        mHardwareService.switchInput(mConference.getId(), false);
     }
 
     public void layoutChanged() {
@@ -358,7 +357,7 @@ public class CallPresenter extends RootPresenter<CallView> {
             timeUpdateTask.dispose();
             timeUpdateTask = null;
         }
-        mSipCall = null;
+        mConference = null;
         CallView view = getView();
         if (view != null)
             view.finish();
@@ -367,8 +366,8 @@ public class CallPresenter extends RootPresenter<CallView> {
     private Disposable contactDisposable = null;
 
     private void contactUpdate(final Conference conference) {
-        if (mSipCall != conference) {
-            mSipCall = conference;
+        if (mConference != conference) {
+            mConference = conference;
             if (contactDisposable != null && !contactDisposable.isDisposed()) {
                 contactDisposable.dispose();
             }
@@ -417,7 +416,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     private void confUpdate(Conference call) {
         Log.w(TAG, "confUpdate " + call.getId());
 
-        mSipCall = call;
+        mConference = call;
         mAudioOnly = !call.hasVideo();
         CallView view = getView();
         if (view == null)
@@ -434,7 +433,7 @@ public class CallPresenter extends RootPresenter<CallView> {
                 videoSurfaceUpdateId(call.getId());
                 view.displayVideoSurface(true, mDeviceRuntimeService.hasVideoPermission());
                 if (permissionChanged) {
-                    mHardwareService.switchInput(mSipCall.getId(), permissionChanged);
+                    mHardwareService.switchInput(mConference.getId(), permissionChanged);
                     permissionChanged = false;
                 }
             }
@@ -465,9 +464,9 @@ public class CallPresenter extends RootPresenter<CallView> {
 
     private void updateTime() {
         CallView view = getView();
-        if (view != null && mSipCall != null) {
-            if (mSipCall.isOnGoing()) {
-                long start = mSipCall.getTimestampStart();
+        if (view != null && mConference != null) {
+            if (mConference.isOnGoing()) {
+                long start = mConference.getTimestampStart();
                 if (start != Long.MAX_VALUE) {
                     view.updateTime((System.currentTimeMillis() - start) / 1000);
                 } else {
@@ -482,7 +481,7 @@ public class CallPresenter extends RootPresenter<CallView> {
 
         if (event.start) {
             getView().displayVideoSurface(true, !isPipMode() && mDeviceRuntimeService.hasVideoPermission());
-        } else if (mSipCall != null && mSipCall.getId().equals(event.callId)) {
+        } else if (mConference != null && mConference.getId().equals(event.callId)) {
             getView().displayVideoSurface(event.started, event.started && !isPipMode() && mDeviceRuntimeService.hasVideoPermission());
             if (event.started) {
                 videoWidth = event.w;
@@ -502,7 +501,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void positiveButtonClicked() {
-        if (mSipCall.isRinging() && mSipCall.isIncoming()) {
+        if (mConference.isRinging() && mConference.isIncoming()) {
             acceptCall();
         } else {
             hangupCall();
@@ -510,7 +509,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void negativeButtonClicked() {
-        if (mSipCall.isRinging() && mSipCall.isIncoming()) {
+        if (mConference.isRinging() && mConference.isIncoming()) {
             refuseCall();
         } else {
             hangupCall();
@@ -518,7 +517,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void toggleButtonClicked() {
-        if (!(mSipCall.isRinging() && mSipCall.isIncoming())) {
+        if (!(mConference.isRinging() && mConference.isIncoming())) {
             hangupCall();
         }
     }
@@ -528,8 +527,8 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void requestPipMode() {
-        if (mSipCall != null && mSipCall.isOnGoing() && mSipCall.hasVideo()) {
-            getView().enterPipMode(mSipCall.getId());
+        if (mConference != null && mConference.isOnGoing() && mConference.hasVideo()) {
+            getView().enterPipMode(mConference.getId());
         }
     }
 
@@ -558,7 +557,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void addConferenceParticipant(String accountId, String contactId) {
-        String destCallId = mSipCall.getId();
+        String destCallId = mConference.getId();
 
         mCompositeDisposable.add(mConversationFacade.startConversation(accountId, new Uri(contactId))
                 .map(Conversation::getCurrentCalls)
@@ -600,7 +599,7 @@ public class CallPresenter extends RootPresenter<CallView> {
                                 .firstElement()
                                 .delay(1, TimeUnit.SECONDS)
                                 .doOnEvent((v, e) -> pendingObserver.onComplete());
-                        if (mSipCall.getParticipants().size() > 1) {
+                        if (mConference.getParticipants().size() > 1) {
                             mCompositeDisposable.add(newCall.subscribe(call -> mCallService.joinConference(destCallId, call.getDaemonIdString())));
                         } else {
                             mCompositeDisposable.add(newCall.subscribe(call -> mCallService.joinParticipant(destCallId, call.getDaemonIdString())));
@@ -609,8 +608,8 @@ public class CallPresenter extends RootPresenter<CallView> {
                     } else {
                         // Selected contact already in call or conference, join it to current conference
                         Conference call = calls.get(0);
-                        if (call != mSipCall) {
-                            if (mSipCall.getParticipants().size() > 1) {
+                        if (call != mConference) {
+                            if (mConference.getParticipants().size() > 1) {
                                 mCallService.joinConference(destCallId, call.getId());
                             } else {
                                 mCallService.joinParticipant(destCallId, call.getId());
@@ -621,7 +620,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void startAddParticipant() {
-        getView().startAddParticipant(mSipCall.getId());
+        getView().startAddParticipant(mConference.getId());
     }
 
     public void hangupParticipant(SipCall call) {
