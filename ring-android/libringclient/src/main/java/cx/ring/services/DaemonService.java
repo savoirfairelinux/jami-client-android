@@ -322,6 +322,11 @@ public class DaemonService {
         }
 
         @Override
+        public void setBitrate(String device, int bitrate) {
+            mHardwareService.setBitrate(device, bitrate);
+        }
+
+        @Override
         public void startCapture(String camId) {
             Log.d(TAG, "startCapture: " + camId);
             mHardwareService.startCapture(camId);

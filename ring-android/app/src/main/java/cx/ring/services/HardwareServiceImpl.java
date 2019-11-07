@@ -508,6 +508,10 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         cameraService.requestKeyFrame();
     }
 
+    public void setBitrate(String device, int bitrate) {
+        cameraService.setBitrate(bitrate);
+    }
+
     public void endCapture() {
         if (cameraService.isOpen()) {
             //final CameraService.VideoParams params = previewParams;

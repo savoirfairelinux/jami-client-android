@@ -134,6 +134,7 @@ public abstract class HardwareService {
     public abstract void stopCapture();
     public abstract void endCapture();
     public abstract void requestKeyFrame();
+    public abstract void setBitrate(String device, int bitrate);
 
     public abstract void addVideoSurface(String id, Object holder);
     public abstract void updateVideoSurfaceId(String currentId, String newId);
