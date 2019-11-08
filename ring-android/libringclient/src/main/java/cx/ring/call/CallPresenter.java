@@ -260,11 +260,15 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void loadPlugin(String path) {
-//        RingserviceJNI.loadPlugin(path);
+        RingserviceJNI.loadPlugin(path);
     }
 
     public void unloadPlugin(String path) {
-//        RingserviceJNI.unloadPlugin(path);
+        RingserviceJNI.unloadPlugin(path);
+    }
+
+    public void togglePlugin(String path, boolean toggle){
+        RingserviceJNI.togglePlugin(path, toggle);
     }
 
     public void configurationChanged(int rotation) {
