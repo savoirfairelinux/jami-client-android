@@ -79,8 +79,10 @@ import androidx.fragment.app.FragmentActivity;
 import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
 
 import javax.inject.Inject;
@@ -156,8 +158,9 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     private ConfParticipantAdapter confAdapter = null;
     private boolean mConferenceMode = false;
-    
+    private boolean pluginsModeFirst = true;
     private List<PluginDetails> videoPluginsDetails;
+    private Map<String, Boolean> videoPluginsStatus;
     private int previousPluginPosition = -1;
     private RecyclerPicker rp;
     private boolean pluginsMode = false;
@@ -1078,6 +1081,8 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         presenter.unloadPlugin(path);
     }
 
+    public void togglePlugin(String path, boolean toggle) { presenter.togglePlugin(path, toggle);}
+
     @Override
     public void positiveMediaButtonClicked() {
         presenter.positiveButtonClicked();
@@ -1113,13 +1118,18 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     public void displayVideoPluginsCarousel() {
         pluginsMode  = !pluginsMode;
+        Context context = requireActivity();
+
+        // Create videoPluginsDetails and videoPluginsStatus in a lazy manner
+        if(pluginsModeFirst) {
+            videoPluginsDetails = PluginUtils.listPlugins(context);
+            videoPluginsStatus = new HashMap<>();
+            pluginsModeFirst = false;
+        }
 
         if(pluginsMode) {
-            Context context = requireActivity();
             binding.recyclerPicker.setVisibility(View.VISIBLE);
             displayHangupButton(false);
-
-            videoPluginsDetails = PluginUtils.listPlugins(context);
             List<Drawable> videoPluginsItems = new ArrayList<>();
 
             // Search for plugin icons
@@ -1136,13 +1146,15 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
         } else {
             if(previousPluginPosition != -1) {
-                PluginDetails previouspluginDetails = videoPluginsDetails.get(previousPluginPosition);
-                unloadPlugin(previouspluginDetails.getRootPath()+"/lib"+previouspluginDetails.getName()+".so");
+                PluginDetails previouspluginDetails = videoPluginsDetails.
+                        get(previousPluginPosition);
+
+                togglePlugin(previouspluginDetails.getRootPath()+"/lib"+
+                        previouspluginDetails.getName()+".so", false);
             }
             binding.recyclerPicker.setVisibility(View.GONE);
             displayHangupButton(true);
         }
-
     }
 
     @Override
@@ -1154,12 +1166,20 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
              */
             if(previousPluginPosition != -1) {
                 PluginDetails previouspluginDetails = videoPluginsDetails.get(previousPluginPosition);
-                unloadPlugin(previouspluginDetails.getRootPath() + "/lib" + previouspluginDetails.getName() + ".so");
+                togglePlugin(previouspluginDetails.getRootPath() + "/lib" + previouspluginDetails.getName() + ".so", false);
             }
 
             previousPluginPosition = position;
             PluginDetails pluginDetails = videoPluginsDetails.get(position);
-            loadPlugin(pluginDetails.getRootPath()+"/lib"+pluginDetails.getName()+".so");
+            Boolean loaded = videoPluginsStatus.get(pluginDetails.getName());
+            String pluginSoPath = pluginDetails.getRootPath()+"/lib"+pluginDetails.getName()+".so";
+            if(loaded != null) {
+                togglePlugin(pluginSoPath, true);
+            } else {
+                loadPlugin(pluginSoPath);
+                videoPluginsStatus.put(pluginDetails.getName(), true);
+            }
+
         }
     }
 }
