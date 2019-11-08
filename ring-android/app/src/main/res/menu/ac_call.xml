@@ -12,7 +12,7 @@
     <item
         android:id="@+id/menuitem_video_plugins"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/baseline_android_24"
+        android:icon="@drawable/ic_plugin"
         android:title="@string/video_plugins"
         android:orderInCategory="3"/>
 
