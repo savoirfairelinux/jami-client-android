@@ -103,12 +103,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.DIAL" />
                 <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.SEARCH" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
@@ -124,7 +124,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:pathPrefix="/id/"
                     android:scheme="http" />
                 <data android:scheme="ring" />
+                <data android:scheme="jami" />
             </intent-filter>
+            <meta-data android:name="android.app.searchable" android:resource="@xml/searchable"/>
         </activity>
         <activity
             android:name=".client.ShareActivity"
