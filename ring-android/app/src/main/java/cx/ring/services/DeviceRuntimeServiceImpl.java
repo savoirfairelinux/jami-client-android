@@ -70,7 +70,6 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
         mExecutor.submit(() -> {
             try {
                 mDaemonThreadId = Thread.currentThread().getId();
-                copyAssets();
                 System.loadLibrary("ring");
                 return true;
             } catch (Exception e) {
