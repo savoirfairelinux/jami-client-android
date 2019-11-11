@@ -1,4 +1,4 @@
-package cx.ring.Plugins;
+package cx.ring.plugins;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -8,7 +8,9 @@ import android.os.Build;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import cx.ring.daemon.Ringservice;
 import cx.ring.settings.PluginDetails;
 import cx.ring.utils.Log;
 
@@ -26,7 +28,7 @@ public class PluginUtils {
      */
     public static List<PluginDetails> listPlugins(Context mContext){
         List<PluginDetails> pluginsList = new ArrayList<>();
-        File pluginsDir = new File(mContext.getFilesDir(),"plugins/"+getABI());
+        File pluginsDir = new File(mContext.getFilesDir(),"plugins"+ File.separator +getABI());
         Log.i(TAG, "Plugins dir: " + pluginsDir.getAbsolutePath());
         if(pluginsDir.isDirectory()) {
             File[] pluginsFolders = pluginsDir.listFiles();
@@ -54,9 +56,7 @@ public class PluginUtils {
     }
 
     public static Drawable getPluginIcon(PluginDetails pluginDetails) {
-        String iconPath = pluginDetails.getRootPath() + File.separator + "data"+
-                File.separator + "icon.png";
-
+        String iconPath = pluginDetails.getPluginIconPath();
         Drawable icon = null;
 
         File file = new File(iconPath);
@@ -68,5 +68,9 @@ public class PluginUtils {
         }
 
         return icon;
+    }
+
+    public static List<Map<String,String>> getPluginPreferences(String path) {
+        return Ringservice.getPluginPreferences(path).toNative();
     }
 }
