@@ -7,4 +7,5 @@
   <string name="pref_mobileData_title">Мобильные данные</string>
   <string name="pref_systemContacts_title">Использовать системные контакты</string>
   <string name="pref_systemContacts_summary">Использовать системные контакты для входящих.</string>
+  <string name="pref_clearHistory_title">Очистить историю</string>
 </resources>

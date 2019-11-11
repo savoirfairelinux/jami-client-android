@@ -226,6 +226,9 @@
   <string name="file_transfer_status_closed_by_peer">fermé par l\'interlocuteur</string>
   <string name="file_transfer_status_invalid_pathname">Chemin d\'accès invalide</string>
   <string name="file_transfer_status_unjoinable_peer">interlocuteur injoignable</string>
+  <string name="file_transfer_status_cancelled">annulé</string>
+  <string name="file_transfer_status_error">a échoué en raison d\'une erreur</string>
+  <string name="file_transfer_status_timed_out">délai dépassé</string>
   <string name="file_saved_in">Fichier sauvegardé dans %s</string>
   <string name="file_saved_successfully">Le fichier a été sauvegardé</string>
   <string name="no_space_left_on_device">Espace de stockage insuffisant sur l\'appareil</string>

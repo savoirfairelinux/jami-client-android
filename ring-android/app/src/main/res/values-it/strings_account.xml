@@ -26,6 +26,7 @@
 Sara solo possibile fare e ricevere chiamate ip dirette.
 Si potra modificare questo account più tardi.</string>
   <string name="account_type_ip2ip">account IP</string>
+  <string name="help_ring">Un account Jami ti permette di raggiungere persone in modo sicuro in peer to peer attraverso una rete completamente distribuita.</string>
   <string name="help_sip_title">Aggiungere il suo account SIP</string>
   <string name="help_sip">Importare un account SIP esistente</string>
   <string name="create_sip_account">Aggiungi account SIP</string>
@@ -135,12 +136,16 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_sip_success_title">Account SIP registrato</string>
   <string name="account_link_prompt_pin">Inserisci PIN</string>
   <string name="account_new_button">Crea un account Jami</string>
+  <string name="account_link_export_button">Collega un altro dispositivo a questo account</string>
   <string name="account_start_export_button">Genera PIN</string>
   <string name="account_end_export_button">chiudi</string>
   <string name="account_export_title">Aggiungi dispositivi</string>
   <string name="account_connect_prompt_username">Nome utente</string>
   <!--Name registration-->
   <string name="error_username_empty">Inserisci un nome utente</string>
+  <string name="username_available">Nome utente disponibile !</string>
+  <string name="register_name">Registra nome</string>
+  <string name="registered_username">Nome utente registrato</string>
   <string name="username_already_taken">Nome utente già utilizzato</string>
   <string name="invalid_username">Nome utente non valido</string>
   <string name="account_status_connecting">Connessione in corso </string>
@@ -160,6 +165,7 @@ Si potra modificare questo account più tardi.</string>
   <string name="revoke_device_title">Revoca dispositivo</string>
   <string name="revoke_device_wait_title">Aspettare</string>
   <string name="rename_device_title">Rinomina questo dispositivo</string>
+  <string name="rename_device_message">Scegli un nuovo nome per identificare questo dispositivo nel tuo account Jami</string>
   <string name="rename_device_button">Rinomina dispositivo</string>
   <string name="account_rename_device_hint">Scegli il nuovo nome del dispositivo</string>
   <string name="account_device_name_empty">Il nome del dispositivo non può essere vuoto</string>

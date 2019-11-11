@@ -1,13 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="feedback_section">Обратная связь</string>
+  <string name="report">Отправьте нам email</string>
+  <string name="section_license">Лицензия</string>
+  <string name="sponsor_section">Jami это бесплатное программное обеспечение, разработанное и поддерживаемое </string>
   <string name="copyright_section">Авторское право</string>
   <string name="contribute_section">Помочь проекту</string>
   <string name="version_section">Версия</string>
   <string name="no_email_app_installed">Не найдено приложение электронной почты. Пожалуйста, установите его для отправки нам отчета.</string>
+  <string name="no_browser_app_installed">Приложение для веб-браузера не найдено, установите его для просмотра этой страницы</string>
   <string name="email_chooser_title">Отправить почту, используя...</string>
+  <string name="website_chooser_title">Просмотр веб-сайта с помощью…</string>
   <string name="description">Jami — свободная программа для связи, уважающая свободу и конфиденциальность пользователей.</string>
-  <string name="credits">Кредиты</string>
+  <string name="credits">Авторы</string>
   <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Звонок</string>
@@ -21,9 +27,12 @@
   <string name="drawer_close">Закрыть навигацию</string>
   <!--Sections-->
   <string name="menu_item_home">Домой</string>
-  <string name="menu_item_contact_request">Запросы на добавление в контакты</string>
-  <string name="menu_item_accounts">Управление учетными записями</string>
+  <string name="menu_item_contact_request">Запросы в контакты</string>
+  <string name="menu_item_accounts">Учетные записи</string>
+  <string name="menu_item_account">Учетные записи</string>
   <string name="menu_item_settings">Настройки</string>
+  <string name="menu_item_share">Поделиться моей контактной информацией</string>
+  <string name="menu_item_about">О Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Набрать номер</string>
   <!--History Fragment-->
@@ -41,23 +50,46 @@
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">Пропущенный входящий</string>
+  <string name="notif_missed_outgoing_call">Пропущенный исходящий</string>
   <string name="notif_incoming_call_title">Входящий вызов от %1$s</string>
   <string name="notif_incoming_call">Входящий вызов</string>
   <string name="notif_outgoing_call_title">Исходящий вызов на %1$s</string>
   <string name="notif_outgoing_call">Исходящий вызов</string>
   <string name="notif_current_call">Текущий вызов</string>
+  <string name="notif_channel_call_in_progress">Идёт вызов</string>
   <string name="notif_channel_calls">Звонки</string>
+  <string name="notif_channel_missed_calls">Пропущенные звонки</string>
+  <string name="notif_channel_incoming_calls">Входящие звонки</string>
+  <string name="notif_channel_messages">Сообщения</string>
+  <string name="notif_channel_requests">Запросы</string>
+  <string name="notif_channel_file_transfer">Передача файлов</string>
+  <string name="notif_channel_background_service">Работа в фоновом режиме</string>
+  <string name="notif_channel_background_service_descr">Принимать звонки в любое время</string>
   <string name="notif_group_calls">Звонки</string>
+  <string name="notif_background_service">Jami в настоящее время работает в фоновом режиме</string>
+  <string name="notif_mark_as_read">Пометить как прочитанное</string>
+  <string name="notif_dismiss">Сбросить</string>
+  <string name="notif_reply">Ответить</string>
+  <string name="notif_incoming_file_transfer">Кто-то хочет отправить вам файл</string>
+  <string name="notif_outgoing_file_transfer">Кто-то хочет отправить вам файл</string>
+  <string name="action_open">Открыть</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Вы</string>
   <string name="action_call_hangup">Завершить</string>
   <string name="ongoing_call">Текущий вызов</string>
   <string name="hist_in_call">Входящий вызов от %1$s</string>
   <string name="hist_out_call">Исходящий вызов от %1$s</string>
+  <string name="start_error_title">Не удаётся запустить Jami !</string>
+  <string name="start_error_mic_required">Для Jami необходимо разрешить доступ к микрофону.</string>
   <string name="action_call_accept">Совершить звонок</string>
   <string name="action_call_decline">Отказаться</string>
+  <string name="action_call_mic_mute">Отключить микрофон</string>
   <string name="ab_action_speakerphone">Включить звук</string>
   <string name="ab_action_contact_add">Добавить контакт</string>
+  <string name="ab_action_contact_add_question">Добавить в контакты? </string>
+  <string name="hist_contact_added">Контакт добавлен</string>
+  <string name="hist_invitation_received">Получено приглашение</string>
   <string name="ab_action_audio_call">Аудиовызов</string>
   <string name="ab_action_video_call">Видеозвонок</string>
   <string name="share_via">Поделится</string>
@@ -69,43 +101,118 @@
   <string name="message_sending">Отправка сообщения...</string>
   <string name="message_failed">Сбой</string>
   <string name="time_just_now">В данный момент</string>
+  <string name="send_file">Отправить файл</string>
+  <string name="hist_file_sent">Файл отправлен</string>
+  <string name="hist_file_received">Файл получен</string>
+  <string name="conversation_send_audio">Записать аудиоклип</string>
+  <string name="conversation_send_video">Записать видеоклип </string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Разрешение на использование камеры</string>
   <string name="permission_dialog_camera_message">Необходимо доступ к камере для работы с видеозвонками. Пожалуйста, предоставьте их.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Ошибка</string>
+  <string name="ringtone_error_format_not_supported">Этот формат не поддерживается.</string>
+  <string name="ringtone_error_size_too_big">Этот файл очень большой. Максимальный размар %1$dКб</string>
+  <string name="ringtone_custom_prompt">Установить свой рингтон</string>
   <string name="ringtone_custom_label">Своё</string>
+  <string name="ringtone_jami_tones">Рингтоны Jami</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Чтобы включить эту функцию Jami необходимо получить доступ к \"Чтению контактов\". </string>
   <!--Write call log permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Сканировать QR код аккаунта, который хотите добавить</string>
+  <string name="title_activity_qrcode">Поделиться своей контактной информацией</string>
+  <string name="error_scan_no_camera_permissions">Для сканера QR кодов необходим доступ к вашей камере</string>
+  <string name="tab_code">Мой код</string>
+  <string name="tab_scan">Сканировать код</string>
   <!--Settings-->
+  <string name="clear_history_dialog_title">Очистить историю?</string>
+  <string name="clear_history_dialog_message">Это действие нельзя будет отменить.</string>
   <string name="clear_history_completed">История очищена.</string>
   <!--Conversation-->
+  <string name="conversation_details">Контактная информация</string>
   <string name="conversation_action_delete_this">Удалить беседу</string>
   <string name="conversation_action_delete_this_title">Удалить беседу?</string>
   <string name="conversation_action_delete_this_message">Это действие не может быть отменено</string>
+  <string name="conversation_action_history_clear">Очистить историю</string>
+  <string name="conversation_action_history_clear_title">Очистить историю переписки?</string>
+  <string name="conversation_action_history_clear_message">Это очистит историю разговора.</string>
   <string name="conversation_action_remove_this">Удалить контакт</string>
+  <string name="conversation_action_remove_this_title">Удалить этот контакт? </string>
+  <string name="conversation_action_remove_this_message">Это удалит контакт и историю переписки.</string>
   <string name="conversation_action_copy_peer_number">Скопировать номер</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s скопировано в буфер обмена</string>
   <string name="conversation_action_select_peer_number">Выберите номер</string>
+  <string name="conversation_action_block_this">Заблокировать контакт</string>
+  <string name="conversation_action_go_to_call">Вернуться к текущему вызову</string>
+  <string name="conversation_open_file_error">Нет приложение. которое способно открыть файл с таким типом. </string>
+  <string name="clip_contact_uri">Контактный адрес</string>
+  <string name="block_contact_dialog_title">Заблокировать %1$s?</string>
+  <string name="block_contact_dialog_message">%1$sне сможет связаться с вами, пока вы его не разблокируете. </string>
+  <string name="block_contact_completed">%1$sбыл заблокирован. </string>
   <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">Добавить %1$s?</string>
   <string name="prompt_new_password">Новый пароль</string>
+  <string name="prompt_new_password_optional">Новый пароль (необязательно)</string>
+  <string name="prompt_new_password_repeat">Повторите новый пароль</string>
+  <string name="account_create_title">Создать учётную запись Jami</string>
+  <string name="prompt_new_username">Введите новое имя пользователя</string>
+  <string name="help_password_choose">Выберите надежный пароль, который вы запомните, чтобы защитить свою учетную запись Jami.</string>
+  <string name="help_password_enter">Введите ваш основной пароль учётной записи Jami </string>
   <string name="wizard_next">Далее</string>
+  <string name="wizard_back">Назад</string>
+  <string name="wizard_skip">Пропустить</string>
   <!--MenuHeaderView-->
+  <string name="profile">Мой профиль</string>
+  <string name="profile_message_warning">Ваш профиль доступен только для ваших контактов</string>
+  <string name="open_the_gallery">Открыть галерею</string>
+  <string name="take_a_photo">Сфотографировать</string>
+  <string name="profile_name_hint">Введите ваше имя (необязательно) </string>
   <!--Share fragment-->
+  <string name="share_message">Отсканируйте код с помощью Jami</string>
+  <string name="share_message_no_account">Выберите контакт, чтобы поделиться</string>
+  <string name="share_your_account_information">Поделиться своей контактной информацией</string>
   <string name="share_label">Поделится</string>
   <string name="generic_error_migration">Ошибка</string>
+  <string name="title_share_with">Поделиться с...</string>
   <!--Pending contact requests-->
   <string name="accept">Принять</string>
   <string name="refuse">Отказать</string>
+  <string name="block">Заблокировать</string>
+  <string name="contact_request_title">Запрос на добавление в контакты</string>
+  <string name="contact_request_msg">У вас %1$sзапросов на добавление в контакты</string>
+  <string name="contact_request_account">Для %1$s</string>
+  <string name="no_requests">0 запросов на добавление в контакты</string>
   <!--Send contact requests-->
   <string name="send_request_button">Отправть</string>
+  <string name="send_request_title">Отправить запрос на добавление в контакты</string>
   <!--Blacklist-->
   <!--Smartlist-->
+  <string name="start_conversation">Начать беседу</string>
+  <string name="search_results">Результаты Поиска</string>
   <string name="tv_contact_row_header">Контакты</string>
+  <string name="gallery_error_title">Нет приложения Галереи</string>
+  <string name="gallery_error_message">Не найдено приложений чтобы открыть Галерею</string>
+  <string name="generic_error">Произошла неизвестная ошибка</string>
   <!--File Transfer-->
+  <string name="invalid_file">Файл повреждён </string>
+  <string name="file_transfer_status_created">инициализация передачи</string>
+  <string name="file_transfer_status_unsupported">не поддерживается</string>
+  <string name="file_transfer_status_finished">завершено</string>
+  <string name="file_transfer_status_invalid_pathname">неправильный путь к файлу</string>
+  <string name="file_transfer_status_timed_out">истекло время</string>
+  <string name="file_saved_in">Файл сохранён в %s</string>
+  <string name="file_saved_successfully">Файл успешно сохранён</string>
+  <string name="no_space_left_on_device">На устройстве не осталось места</string>
+  <string name="title_media_viewer">Просмотр медиа</string>
+  <string name="menu_file_open">Открыть файл</string>
+  <string name="menu_file_download">Скачать файл</string>
+  <string name="menu_file_save">Сохранить файл</string>
+  <string name="menu_file_delete">Удалить файл</string>
   <string name="menu_file_share">Поделится файлом</string>
   <string name="menu_message_copy">Копировать</string>
+  <string name="menu_message_delete">Удалить сообщение</string>
+  <string name="menu_message_cancel">Отменить сообщение</string>
   <string name="menu_delete">Удалить</string>
+  <string name="pref_darkTheme_title">Тёмная тема</string>
 </resources>

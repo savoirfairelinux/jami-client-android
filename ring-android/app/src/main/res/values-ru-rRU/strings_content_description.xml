@@ -2,4 +2,7 @@
 <resources>
   <!--Strings for xml content description of images-->
   <string name="contact_quick_call_description">Быстрый вызов</string>
+  <string name="contact_picture_description">Изображение Контакта</string>
+  <string name="dial_numeric_pad">Цифровая клавиатура</string>
+  <string name="contact_unblock">Разблокировать</string>
 </resources>

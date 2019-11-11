@@ -226,6 +226,8 @@
   <string name="file_transfer_status_closed_by_peer">chiuso dal peer</string>
   <string name="file_transfer_status_invalid_pathname">percorso non valido</string>
   <string name="file_transfer_status_unjoinable_peer">peer non collegabile</string>
+  <string name="file_transfer_status_cancelled">annullato</string>
+  <string name="file_transfer_status_error">fallito a causa di un errore</string>
   <string name="file_saved_in">File salvato in %s</string>
   <string name="file_saved_successfully">File salvato con successo</string>
   <string name="no_space_left_on_device">Spazio sul dispositivo esaurito</string>

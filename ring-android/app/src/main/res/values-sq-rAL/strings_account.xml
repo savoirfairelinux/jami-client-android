@@ -147,8 +147,9 @@
   <string name="account_device_updated_message">E përditësuat me sukses llogarinë tuaj Jami.</string>
   <string name="account_cannot_be_updated_message">Pajisja juaj e llogarisë s\’u përditësua dot. Ju lutemi, kontrolloni fjalëkalimin tuaj.</string>
   <string name="account_sip_success_title">Llogaria SIP u regjistrua</string>
-  <string name="account_sip_success_message">E regjistruat me sukses llogarinë tuaj SIP</string>
+  <string name="account_sip_success_message">E regjistruat me sukses llogarinë tuaj SIP.</string>
   <string name="account_sip_register_anyway">Regjistroje sido qoftë</string>
+  <string name="account_link_device">Lidhuni prej pajisje tjetër</string>
   <string name="account_link_button">Lidhu prej rrjeti</string>
   <string name="account_link_archive_button">Lidhje prej kopjeruajtjeje</string>
   <string name="account_link_prompt_pin">Jepni PIN-in</string>
@@ -160,6 +161,11 @@
   <string name="account_end_export_infos">PIN-i juaj është:\n\n%%\n\nQë të plotësohet procesi, lypset të hapni Jami-n në pajisjen e re. Krijoni një llogari të re përmes \"Lidhe këtë pajisje te një llogari\". PIN-i juaj është i vlefshëm për 10 minuta.</string>
   <string name="account_link_export_info_light">Që të përdorni këtë llogari në pajisje të tjera, së pari duhet t\ia ekspozoni atë Jami-t. Kështu do të prodhohet një kod PIN që duhet ta jepni te pajisja e re për të rregulluar llogarinë. PIN-i vlen për 10 minuta.</string>
   <string name="account_export_title">Shtoni pajisje</string>
+  <string name="account_connect_server_button">Lidhu me shërbyesin e administrimit</string>
+  <string name="account_connect_button">Lidhu</string>
+  <string name="prompt_server">URL shërbyesi administrimi Jami</string>
+  <string name="help_credentials_enter">Jepni kredencialet e hyrjes për entin tuaj</string>
+  <string name="help_connect_password_enter">Jepni fjalëkalimin e entit tuaj</string>
   <string name="account_connect_prompt_username">Emër përdoruesi</string>
   <!--Name registration-->
   <string name="error_username_empty">Jepni një emër përdoruesi</string>
