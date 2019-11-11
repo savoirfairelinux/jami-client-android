@@ -211,7 +211,8 @@ STATIC_LIBS_ALL="-llog -lOpenSLES -landroid \
                 -luuid -lz -ldl \
                 -lvpx -lopus -lspeex -lspeexdsp -lx264 \
                 -largon2 \
-                -liconv -larchive"
+                -liconv	\
+				-larchive"
 
 LIBRING_JNI_DIR=${ANDROID_APP_DIR}/app/src/main/libs/${ANDROID_ABI}
 

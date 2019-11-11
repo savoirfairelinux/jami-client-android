@@ -1,4 +1,4 @@
-package cx.ring.Plugins.RecyclerPicker;
+package cx.ring.plugins.RecyclerPicker;
 
 import android.content.Context;
 import android.util.DisplayMetrics;

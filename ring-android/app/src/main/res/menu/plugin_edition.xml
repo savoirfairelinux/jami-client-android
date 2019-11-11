@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menuitem_delete"
+        android:icon="@drawable/baseline_delete_24"
+        android:title="@string/ic_delete_menu"
+        app:showAsAction="always" />
+</menu>

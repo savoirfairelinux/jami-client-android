@@ -40,8 +40,17 @@
     <string name="pref_persistNotification_title">Run in background</string>
     <string name="pref_persistNotification_summary">Allow running in background to receive calls and messages.</string>
 
-    <string name="pref_plugins_title">Plugins</string>
+    <!-- Plugin -->
+    <string name="pref_plugins_title">Plugins (experimental)</string>
     <string name="pref_plugins_summary">Enable plugins and set their parameters</string>
     <string name="fab_plugins_add">Add a new plugin</string>
-
+    <string name="plugin_uninstall_title">Uninstall Plugin ?</string>
+    <string name="plugin_reset_preferences">Reset plugin preferences</string>
+    <string name="plugin_reset_preferences_summary">Your plugin settings will be defaulted</string>
+    <string name="plugin_reset_preferences_ask">Do you want to reset the plugin settings ?</string>
+    <string name="plugin_successfully_installed">Plugin <b>%1$s</b> successfully installed</string>
+    <string name="plugin_install_failure">Failed to install plugin: <b>%1$s</b></string>
+    <string name="plugin_recent_version_exception">You have a more recent version of: <b>%1$s</b></string>
+    <string name="plugin_same_version_exception">You have the same version of <b>%1$s</b> installed</string>
+    <string name="plugin_force_install">force \n install</string>
 </resources>
