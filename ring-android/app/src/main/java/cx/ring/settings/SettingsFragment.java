@@ -20,12 +20,8 @@
 package cx.ring.settings;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.snackbar.Snackbar;
-
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,6 +30,12 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.preference.PreferenceManager;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 
 import butterknife.BindView;
 import butterknife.OnCheckedChanged;
@@ -65,6 +67,8 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
     Switch mDarkTheme;
     @BindView(R.id.settings_plugins_layout)
     View settings_plugins_layout;
+    @BindView(R.id.settings_plugins_switch)
+    Switch settings_plugins_switch;
 
     private boolean mIsRefreshingViewFromPresenter;
 
@@ -88,6 +92,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         }
         // loading preferences
         presenter.loadSettings();
+        settings_plugins_switch.setChecked(presenter.getPluginsEnabled());
         ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_settings);
     }
 
@@ -138,9 +143,14 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
     @OnClick(R.id.settings_plugins_layout)
     void onPluginSettings(){
         HomeActivity activity = (HomeActivity) getActivity();
-        if (activity != null) {
+        if (activity != null && settings_plugins_switch.isChecked()) {
             activity.goToPluginsListSettings();
         }
+    }
+
+    @OnClick(R.id.settings_plugins_switch)
+    void onPluginsToggle(){
+        presenter.togglePlugins(settings_plugins_switch.isChecked());
     }
 
     @OnClick(R.id.settings_clear_history)

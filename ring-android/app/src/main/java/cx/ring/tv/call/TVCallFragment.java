@@ -640,6 +640,11 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
     }
 
     @Override
+    public boolean displayPluginsButton() {
+        return false;
+    }
+
+    @Override
     public void goToConversation(String accountId, String conversationId) {
 
     }
