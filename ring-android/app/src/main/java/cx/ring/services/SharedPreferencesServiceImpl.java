@@ -59,6 +59,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
     private static final String PREF_PLACE_CALLS = "place_calls";
     private static final String PREF_ON_STARTUP = "on_startup";
     public static final String PREF_DARK_MODE= "darkMode";
+    public static final String PREF_PLUGINS = "plugins";
     private  static final String PREF_ACCEPT_IN_MAX_SIZE = "acceptIncomingFilesMaxSize";
 
     private final Map<String, Set<String>> mNotifiedRequests = new HashMap<>();
@@ -172,12 +173,6 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
     @Override
     public void loadDarkMode() {
         applyDarkMode(getDarkMode());
-    }
-
-    @Override
-    public int getMaxFileAutoAccept(String accountId) {
-        return mContext.getSharedPreferences(PREFS_ACCOUNT+accountId, Context.MODE_PRIVATE)
-                .getInt(PREF_ACCEPT_IN_MAX_SIZE, 30) * 1024 * 1024;
     }
 
     private void applyDarkMode(boolean enabled) {
