@@ -26,6 +26,14 @@ public class PluginDetails {
         return rootPath;
     }
 
+    /**
+     * getSoPath
+     * @return String: absolute path to the so file
+     */
+    public String getSoPath() {
+        return rootPath + "/lib" + name + ".so";
+    }
+
     public void setRootPath(String rootPath) {
         this.rootPath = rootPath;
     }
