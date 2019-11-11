@@ -57,19 +57,11 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
     ScheduledExecutorService mExecutor;
     private long mDaemonThreadId = -1;
 
-    private void copyAssets() {
-        File pluginsPath = new File(mContext.getFilesDir(), "plugins");
-        Log.w(TAG, "Plugins: " + pluginsPath.getAbsolutePath());
-        // Overwrite existing plugins folder in order to use newer plugins
-        AndroidFileUtils.copyAssetFolder(mContext.getAssets(), "plugins", pluginsPath);
-    }
-
     @Override
     public void loadNativeLibrary() {
         try {
             mExecutor.submit(() -> {
                 mDaemonThreadId = Thread.currentThread().getId();
-                copyAssets();
                 System.loadLibrary("ring");
             }).get();
 
