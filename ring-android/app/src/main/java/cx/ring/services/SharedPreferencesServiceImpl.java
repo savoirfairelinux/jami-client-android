@@ -57,6 +57,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
     private static final String RING_PLACE_CALLS = "place_calls";
     private static final String RING_ON_STARTUP = "on_startup";
     public static final String PREF_DARK_MODE= "darkMode";
+    public static final String PREF_PLUGINS = "plugins";
     private final Map<String, Set<String>> mNotifiedRequests = new HashMap<>();
 
     @Inject
@@ -168,6 +169,20 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
     @Override
     public void loadDarkMode() {
         applyDarkMode(getDarkMode());
+    }
+
+    @Override
+    public void togglePlugins(boolean isChecked) {
+        SharedPreferences preferences = getThemePreferences();
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(PREF_PLUGINS, isChecked);
+        editor.apply();
+    }
+
+    @Override
+    public boolean getPluginsEnabled() {
+        SharedPreferences preferences = getThemePreferences();
+        return preferences.getBoolean(PREF_PLUGINS, false);
     }
 
     private void applyDarkMode(boolean enabled) {
