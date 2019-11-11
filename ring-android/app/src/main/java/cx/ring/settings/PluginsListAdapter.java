@@ -1,12 +1,14 @@
 package cx.ring.settings;
 
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,8 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import cx.ring.R;
-
-import static cx.ring.Plugins.PluginUtils.getPluginIcon;
 
 
 public class PluginsListAdapter extends RecyclerView.Adapter<PluginsListAdapter.PluginViewHolder> {
@@ -48,6 +48,11 @@ public class PluginsListAdapter extends RecyclerView.Adapter<PluginsListAdapter.
         return mList.size();
     }
 
+    public void updatePluginsList(List<PluginDetails> listPlugins) {
+        mList = listPlugins;
+        notifyDataSetChanged();
+    }
+
     class PluginViewHolder extends RecyclerView.ViewHolder{
         private ImageView pluginIcon;
         private TextView pluginNameTextView;
@@ -63,6 +68,7 @@ public class PluginsListAdapter extends RecyclerView.Adapter<PluginsListAdapter.
 
             // Set listeners, we set the listeners on creation so details can be null
             itemView.setOnClickListener(v -> {
+                Log.i(TAG, "CLICK");
                 if (details != null) {
                     listener.onPluginItemClicked(details);
                 }
@@ -87,7 +93,7 @@ public class PluginsListAdapter extends RecyclerView.Adapter<PluginsListAdapter.
             pluginNameTextView.setText(details.getName());
             pluginItemEnableCheckbox.setChecked(details.isEnabled());
             // Set the plugin icon
-            Drawable icon = getPluginIcon(details);
+            Drawable icon = details.getIcon();
             if(icon != null) {
                 pluginIcon.setImageDrawable(icon);
             }

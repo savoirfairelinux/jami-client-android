@@ -1,4 +1,4 @@
-package cx.ring.Plugins.RecyclerPicker;
+package cx.ring.plugins.RecyclerPicker;
 
 
 import android.content.Context;
@@ -54,7 +54,13 @@ public class RecyclerPicker implements RecyclerPickerAdapter.ItemClickListener{
     @Override
     public void onItemClicked(View view) {
         int position = mRecyclerView.getChildLayoutPosition(view);
-        mRecyclerView.smoothScrollToPosition(position);
+        int currentPos = mLayoutManager.findFirstVisibleItemPosition();
+        if(position != currentPos) {
+            mRecyclerView.smoothScrollToPosition(position);
+        } else {
+            mItemSelectedListener.onItemSelected(position);
+        }
+
     }
 
     public void setFirstLastElementsWidths(int first, int last){

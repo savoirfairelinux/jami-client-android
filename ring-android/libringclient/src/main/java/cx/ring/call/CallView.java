@@ -78,4 +78,6 @@ public interface CallView {
     void handleCallWakelock(boolean isAudioOnly);
 
     void goToContact(String accountId, CallContact contact);
+
+    boolean displayPluginsButton();
 }

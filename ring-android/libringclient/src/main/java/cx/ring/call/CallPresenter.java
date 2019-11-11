@@ -28,10 +28,10 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import cx.ring.daemon.Ringservice;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
-import cx.ring.daemon.RingserviceJNI;
 import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
@@ -220,7 +220,9 @@ public class CallPresenter extends RootPresenter<CallView> {
         boolean isSpeakerOn = mHardwareService.isSpeakerPhoneOn();
         //boolean hasContact = mSipCall != null && null != mSipCall.getContact() && mSipCall.getContact().isUnknown();
         boolean canDial = mOnGoingCall && mConference != null && !mConference.isIncoming();
-        boolean showPluginBtn = mOnGoingCall && mConference != null;
+        // get the preferences
+        boolean displayPluginsButton = getView().displayPluginsButton();
+        boolean showPluginBtn = displayPluginsButton && mOnGoingCall && mConference != null;
         boolean hasMultipleCamera = mHardwareService.getCameraCount() > 1 && mOnGoingCall && !mAudioOnly;
         getView().initMenu(isSpeakerOn, hasMultipleCamera, canDial, showPluginBtn, mOnGoingCall);
     }
@@ -259,16 +261,30 @@ public class CallPresenter extends RootPresenter<CallView> {
         getView().switchCameraIcon(mHardwareService.isPreviewFromFrontCamera());
     }
 
+    /**
+     * Loads the so file and instantiates the plugin init function (toggle on)
+     * @param path absolute path to the so file
+     */
     public void loadPlugin(String path) {
-        RingserviceJNI.loadPlugin(path);
+        Ringservice.loadPlugin(path);
     }
 
+    /**
+     * Toggles the plugin off (destroying any objects created by the plugin)
+     * then unloads the so file
+     * @param path absolute path to the so file
+     */
     public void unloadPlugin(String path) {
-        RingserviceJNI.unloadPlugin(path);
+        Ringservice.unloadPlugin(path);
     }
 
+    /**
+     * Creates/Destroys plugin objects
+     * @param path absolute path to the so file
+     * @param toggle boolean on/off
+     */
     public void togglePlugin(String path, boolean toggle){
-        RingserviceJNI.togglePlugin(path, toggle);
+        Ringservice.togglePlugin(path, toggle);
     }
 
     public void configurationChanged(int rotation) {

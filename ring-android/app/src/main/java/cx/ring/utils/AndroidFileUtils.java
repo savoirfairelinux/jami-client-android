@@ -304,6 +304,12 @@ public class AndroidFileUtils {
         return File.createTempFile(imageFileName, ".webm", getTempShareDir(context));
     }
 
+    /**
+     * Copies a file from a uri whether locally on a remote location to the local cache
+     * @param context Context to get access to cache directory
+     * @param uri uri of the
+     * @return Single<File> which points to the newly created copy in the cache
+     */
     public static @NonNull Single<File> getCacheFile(@NonNull Context context, @NonNull Uri uri) {
         ContentResolver contentResolver = context.getContentResolver();
         File cacheDir = context.getCacheDir();
