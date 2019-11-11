@@ -15,8 +15,6 @@ import java.util.List;
 
 import cx.ring.R;
 
-import static cx.ring.Plugins.PluginUtils.getPluginIcon;
-
 
 public class PluginsListAdapter extends RecyclerView.Adapter<PluginsListAdapter.PluginViewHolder> {
     private List<PluginDetails> mList;
@@ -87,7 +85,7 @@ public class PluginsListAdapter extends RecyclerView.Adapter<PluginsListAdapter.
             pluginNameTextView.setText(details.getName());
             pluginItemEnableCheckbox.setChecked(details.isEnabled());
             // Set the plugin icon
-            Drawable icon = getPluginIcon(details);
+            Drawable icon = details.getPluginIcon();
             if(icon != null) {
                 pluginIcon.setImageDrawable(icon);
             }
