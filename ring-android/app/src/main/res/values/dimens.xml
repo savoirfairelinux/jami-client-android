@@ -38,7 +38,6 @@ along with this program; if not, write to the Free Software
 
     <dimen name="action_button_lpadding">16dp</dimen>
     <dimen name="action_button_bpadding">-20dp</dimen>
-s
     <dimen name="alert_dialog_side_padding_list_view">16dp</dimen>
 
     <dimen name="toolbar_content_inset">72dp</dimen>
