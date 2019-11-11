@@ -122,9 +122,8 @@ public class CallActivity extends AppCompatActivity {
 
     @Override
     public void onUserLeaveHint () {
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(CALL_FRAGMENT_TAG);
-        if (fragment instanceof CallView) {
-            CallView callFragment = (CallView) fragment;
+        CallFragment callFragment = getCallFragment();
+        if (callFragment != null) {
             callFragment.onUserLeave();
         }
     }
@@ -156,6 +155,11 @@ public class CallActivity extends AppCompatActivity {
                             | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
                             | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
                             | View.SYSTEM_UI_FLAG_IMMERSIVE);
+
+            CallFragment callFragment = getCallFragment();
+            if(callFragment != null) {
+                callFragment.toggleVideoPluginsCarousel(false);
+            }
         }
     }
 
@@ -166,6 +170,11 @@ public class CallActivity extends AppCompatActivity {
                             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                             | View.SYSTEM_UI_FLAG_IMMERSIVE);
+
+            CallFragment callFragment = getCallFragment();
+            if(callFragment != null) {
+                callFragment.toggleVideoPluginsCarousel(true);
+            }
         }
     }
 
@@ -181,14 +190,22 @@ public class CallActivity extends AppCompatActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(CALL_FRAGMENT_TAG);
-        if (fragment instanceof CallFragment) {
-            CallFragment callFragment = (CallFragment) fragment;
-
+        CallFragment callFragment = getCallFragment();
+        if (callFragment != null) {
             return MediaButtonsHelper.handleMediaKeyCode(keyCode, callFragment)
                     || super.onKeyDown(keyCode, event);
         }
 
         return super.onKeyDown(keyCode, event);
+    }
+
+    private CallFragment getCallFragment() {
+        CallFragment callFragment = null;
+        // Get the call Fragment
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(CALL_FRAGMENT_TAG);
+        if (fragment instanceof CallFragment) {
+            callFragment = (CallFragment) fragment;
+        }
+        return callFragment;
     }
 }
