@@ -125,7 +125,8 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
     public static final String ACTION_PRESENT_TRUST_REQUEST_FRAGMENT = BuildConfig.APPLICATION_ID + "presentTrustRequestFragment";
 
-    public static final String PLUGINS_SETTINGS_TAG = "PluginsPrefs";
+    public static final String PLUGINS_LIST_SETTINGS_TAG = "PluginsListSettings";
+    public static final String PLUGIN_SETTINGS_TAG = "PluginSettings";
 
     private static final String NAVIGATION_TAG = "Navigation";
 
@@ -674,8 +675,8 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         getSupportFragmentManager()
                 .beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.main_frame, fContent, PLUGINS_SETTINGS_TAG)
-                .addToBackStack(PLUGINS_SETTINGS_TAG).commit();
+                .replace(R.id.main_frame, fContent, PLUGINS_LIST_SETTINGS_TAG)
+                .addToBackStack(PLUGINS_LIST_SETTINGS_TAG).commit();
     }
 
     /**
@@ -693,8 +694,8 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         getSupportFragmentManager()
                 .beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.main_frame, fContent, PLUGINS_SETTINGS_TAG)
-                .addToBackStack(PLUGINS_SETTINGS_TAG).commit();
+                .replace(R.id.main_frame, fContent, PLUGIN_SETTINGS_TAG)
+                .addToBackStack(PLUGIN_SETTINGS_TAG).commit();
     }
 
     @Override
@@ -715,6 +716,17 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 binding.appBar.setOutlineProvider(mOutlineProvider);
             }
         }
+	}
+	
+    public void popFragmentImmediate() {
+        FragmentManager fm = getSupportFragmentManager();
+        fm.popBackStackImmediate();
+        FragmentManager.BackStackEntry entry = fm.getBackStackEntryAt(fm.getBackStackEntryCount()-1);
+        fContent = fm.findFragmentById(entry.getId());
+    }
+
+    public interface Refreshable {
+        void refresh();
     }
 
     public void selectNavigationItem(int id) {
