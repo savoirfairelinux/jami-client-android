@@ -30,6 +30,7 @@ import android.app.RemoteAction;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Matrix;
@@ -77,6 +78,7 @@ import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
+import androidx.preference.PreferenceManager;
 
 import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 
@@ -89,9 +91,6 @@ import java.util.Random;
 
 import javax.inject.Inject;
 
-import cx.ring.Plugins.PluginUtils;
-import cx.ring.Plugins.RecyclerPicker.RecyclerPicker;
-import cx.ring.Plugins.RecyclerPicker.RecyclerPickerLayoutManager;
 import cx.ring.R;
 import cx.ring.adapters.ConfParticipantAdapter;
 import cx.ring.application.JamiApplication;
@@ -106,6 +105,9 @@ import cx.ring.databinding.FragCallBinding;
 import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
 import cx.ring.mvp.BaseSupportFragment;
+import cx.ring.plugins.PluginUtils;
+import cx.ring.plugins.RecyclerPicker.RecyclerPicker;
+import cx.ring.plugins.RecyclerPicker.RecyclerPickerLayoutManager;
 import cx.ring.service.DRingService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
@@ -165,6 +167,9 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     private int previousPluginPosition = -1;
     private RecyclerPicker rp;
     private boolean pluginsMode = false;
+    private boolean toggleVideoPluginsCarousel = true;
+    private final ValueAnimator animation = new ValueAnimator();
+
 
     private PointF previewDrag = null;
     private final ValueAnimator previewSnapAnimation = new ValueAnimator();
@@ -313,9 +318,9 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         binding.setPresenter(this);
         rp = new RecyclerPicker(requireActivity(),
                 binding.recyclerPicker,
-                R.layout.recycler_item_view,
+                R.layout.item_picker,
                 LinearLayout.HORIZONTAL, this);
-        rp.setFirstLastElementsWidths(112,112);
+        rp.setFirstLastElementsWidths(112, 112);
         return binding.getRoot();
     }
 
@@ -359,6 +364,15 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         setHasOptionsMenu(true);
         super.onViewCreated(view, savedInstanceState);
         mCurrentOrientation = getResources().getConfiguration().orientation;
+        float dpRatio = requireActivity().getResources().getDisplayMetrics().density;
+
+        animation.setDuration(150);
+        animation.addUpdateListener(valueAnimator -> {
+            int upBy = (int) valueAnimator.getAnimatedValue();
+            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) binding.previewContainer.getLayoutParams();
+            layoutParams.setMargins(0, 0, 0, (int) (upBy * dpRatio));
+            binding.previewContainer.setLayoutParams(layoutParams);
+        });
 
         FragmentActivity activity = getActivity();
         if (activity != null) {
@@ -576,6 +590,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     /**
      * Releases current wakelock and acquires a new proximity wakelock if current call is audio only.
+     *
      * @param isAudioOnly true if it is an audio call
      */
     @Override
@@ -608,6 +623,11 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             mScreenWakeLock.release();
         }
         binding = null;
+
+        if(previousPluginPosition != -1) {
+            unloadAllVideoPlugins();
+        }
+
     }
 
     @Override
@@ -811,7 +831,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             binding.confControlGroup.setVisibility(View.GONE);
         } else {
             binding.confControlGroup.setVisibility(View.VISIBLE);
-            if (confAdapter  == null) {
+            if (confAdapter == null) {
                 confAdapter = new ConfParticipantAdapter((view, call) -> {
                     PopupMenu popup = new PopupMenu(view.getContext(), view);
                     popup.inflate(R.menu.conference_participant_actions);
@@ -855,7 +875,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             dialPadBtn.setVisible(canDial);
         }
 
-        if(pluginsMenuBtn != null) {
+        if (pluginsMenuBtn != null) {
             pluginsMenuBtn.setVisible(showPluginBtn);
         }
         updateMenu();
@@ -1134,7 +1154,25 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         presenter.unloadPlugin(path);
     }
 
-    public void togglePlugin(String path, boolean toggle) { presenter.togglePlugin(path, toggle);}
+    public void loadOrToggle(PluginDetails pluginDetails){
+        if(videoPluginsStatus != null) {
+            Boolean loaded = videoPluginsStatus.get(pluginDetails.getName());
+            String pluginSoPath = pluginDetails.getSoPath();
+
+            if (loaded != null && loaded) {
+                Log.i(TAG, "toggling already loaded plugin" + pluginSoPath);
+                togglePlugin(pluginSoPath, true);
+            } else {
+                Log.i(TAG, "loading plugin" + pluginSoPath);
+                loadPlugin(pluginSoPath);
+                videoPluginsStatus.put(pluginDetails.getName(), true);
+            }
+        }
+    }
+
+    public void togglePlugin(String path, boolean toggle) {
+        presenter.togglePlugin(path, toggle);
+    }
 
     @Override
     public void positiveMediaButtonClicked() {
@@ -1151,88 +1189,144 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         presenter.toggleButtonClicked();
     }
 
+    public boolean displayPluginsButton() {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(requireActivity());
+        return sharedPref.getBoolean("plugins", false);
+    }
+
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         // Reset the padding of the RecyclerPicker on each configurationChange
-        rp.setFirstLastElementsWidths(112,112);
+        rp.setFirstLastElementsWidths(112, 112);
         binding.recyclerPicker.setVisibility(View.GONE);
-
-        if(pluginsMode) {
+        Log.i("ZZZ", "Height: " + binding.recyclerPicker.getHeight());
+        if (pluginsMode) {
             displayHangupButton(false);
             binding.recyclerPicker.setVisibility(View.VISIBLE);
-            if(previousPluginPosition != -1) {
+            movePreview(true);
+            if (previousPluginPosition != -1) {
                 rp.scrollToPosition(previousPluginPosition);
             }
         } else {
+            movePreview(false);
             displayHangupButton(true);
         }
     }
 
+    public void toggleVideoPluginsCarousel(boolean toggle) {
+        toggleVideoPluginsCarousel = toggle;
+        if (pluginsMode) {
+            if (toggleVideoPluginsCarousel) {
+                binding.recyclerPicker.setVisibility(View.VISIBLE);
+                movePreview(true);
+            } else {
+                binding.recyclerPicker.setVisibility(View.INVISIBLE);
+                movePreview(false);
+            }
+        }
+
+    }
+
+    public void movePreview(boolean up) {
+        // Move the preview container (cardview) by a certain margin
+        if(up) {
+            animation.setIntValues(12, 128);
+        } else {
+            animation.setIntValues(128, 12);
+        }
+        animation.start();
+    }
+
+    /**
+     * Function that is called to show/hide the plugins recycler viewer and update UI
+     */
     public void displayVideoPluginsCarousel() {
-        pluginsMode  = !pluginsMode;
+        pluginsMode = !pluginsMode;
         Context context = requireActivity();
 
         // Create videoPluginsDetails and videoPluginsStatus in a lazy manner
-        if(pluginsModeFirst) {
-            videoPluginsDetails = PluginUtils.listPlugins(context);
+        if (pluginsModeFirst) {
+            // Init
             videoPluginsStatus = new HashMap<>();
-            pluginsModeFirst = false;
-        }
-
-        if(pluginsMode) {
-            binding.recyclerPicker.setVisibility(View.VISIBLE);
-            displayHangupButton(false);
+            videoPluginsDetails = new ArrayList<>();
             List<Drawable> videoPluginsItems = new ArrayList<>();
 
             // Search for plugin icons
             // If a plugin doesn't have an icon use a standard android icon
-            for(PluginDetails pluginDetails : videoPluginsDetails) {
-                Drawable d = PluginUtils.getPluginIcon(pluginDetails);
-                if(d == null) {
-                    d = context.getDrawable(R.drawable.ic_jami);
+            for (PluginDetails pluginDetails : PluginUtils.listPlugins(context)) {
+                if (pluginDetails.isEnabled()) {
+                    Drawable d = pluginDetails.getIcon();
+                    if (d == null) {
+                        d = context.getDrawable(R.drawable.ic_jami);
+                    }
+                    videoPluginsItems.add(d);
+                    videoPluginsDetails.add(pluginDetails);
                 }
-                videoPluginsItems.add(d);
             }
 
             rp.updateData(videoPluginsItems);
 
+            pluginsModeFirst = false;
+        }
+
+        if (pluginsMode) {
+            // hide hang up button and other call buttons
+            displayHangupButton(false);
+            // Display the plugins recyclerpicker
+            binding.recyclerPicker.setVisibility(View.VISIBLE);
+            movePreview(true);
+
+            // Start loading the first or previous plugin if one was active
+            if(videoPluginsDetails.size() > 0) {
+                // If no previous plugin was active, take the first, else previous
+                int position = (previousPluginPosition == -1)? 0 :previousPluginPosition;
+                PluginDetails pluginDetails = videoPluginsDetails.get(position);
+                loadOrToggle(pluginDetails);
+                previousPluginPosition = position;
+            }
+
         } else {
-            if(previousPluginPosition != -1) {
+            if (previousPluginPosition != -1) {
                 PluginDetails previouspluginDetails = videoPluginsDetails.
                         get(previousPluginPosition);
 
-                togglePlugin(previouspluginDetails.getRootPath()+"/lib"+
-                        previouspluginDetails.getName()+".so", false);
+                togglePlugin(previouspluginDetails.getSoPath(), false);
             }
             binding.recyclerPicker.setVisibility(View.GONE);
+            movePreview(false);
             displayHangupButton(true);
         }
     }
 
+    /**
+     * Called whenever a plugin drawable in the recycler picker is clicked or scrolled to
+     * @param position
+     */
     @Override
     public void onItemSelected(int position) {
         Log.i(TAG, "selected position: " + position);
-        if(previousPluginPosition != position) {
+        if (previousPluginPosition != position) {
             /** If there was a different plugin before, unload it
              * If previsouPluginPosition = -1, there was no plugin
              */
-            if(previousPluginPosition != -1) {
+            if (previousPluginPosition != -1) {
                 PluginDetails previouspluginDetails = videoPluginsDetails.get(previousPluginPosition);
-                togglePlugin(previouspluginDetails.getRootPath() + "/lib" + previouspluginDetails.getName() + ".so", false);
+                togglePlugin(previouspluginDetails.getSoPath(), false);
             }
 
             previousPluginPosition = position;
             PluginDetails pluginDetails = videoPluginsDetails.get(position);
-            Boolean loaded = videoPluginsStatus.get(pluginDetails.getName());
-            String pluginSoPath = pluginDetails.getRootPath()+"/lib"+pluginDetails.getName()+".so";
-            if(loaded != null) {
-                togglePlugin(pluginSoPath, true);
-            } else {
-                loadPlugin(pluginSoPath);
-                videoPluginsStatus.put(pluginDetails.getName(), true);
-            }
+            loadOrToggle(pluginDetails);
+        }
+    }
 
+    private void unloadAllVideoPlugins() {
+        for(PluginDetails pluginDetails : videoPluginsDetails) {
+            Boolean loaded = videoPluginsStatus.get(pluginDetails.getName());
+            if(loaded != null && loaded) {
+                unloadPlugin(pluginDetails.getSoPath());
+            }
         }
     }
 }
