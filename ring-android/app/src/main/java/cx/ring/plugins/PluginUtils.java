@@ -1,4 +1,4 @@
-package cx.ring.Plugins;
+package cx.ring.plugins;
 
 import android.content.Context;
 import android.content.SharedPreferences;
