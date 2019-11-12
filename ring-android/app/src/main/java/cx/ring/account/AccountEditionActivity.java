@@ -53,26 +53,29 @@ import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.contactrequests.BlackListFragment;
+import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.fragments.AdvancedAccountFragment;
 import cx.ring.fragments.GeneralAccountFragment;
 import cx.ring.fragments.MediaPreferenceFragment;
 import cx.ring.fragments.SecurityAccountFragment;
+import cx.ring.mvp.BaseSupportFragment;
 
-public class AccountEditionActivity extends AppCompatActivity implements AccountEditionView {
+public class AccountEditionActivity extends BaseSupportFragment<AccountEditionPresenter> implements AccountEditionView {
 
     public static final String ACCOUNT_ID_KEY = AccountEditionActivity.class.getCanonicalName() + "accountid";
     public static final String ACCOUNT_HAS_PASSWORD_KEY = AccountEditionActivity.class.getCanonicalName() + "hasPassword";
 
     public static final String TAG = AccountEditionActivity.class.getSimpleName();
+    public static final String ACCOUNT_ID = TAG + "accountID";
 
-    @Inject
-    protected AccountEditionPresenter mEditionPresenter;
+//    @Inject
+//    protected AccountEditionPresenter mEditionPresenter;
 
     @BindView(R.id.pager)
     protected ViewPager mViewPager;
 
-    @BindView(R.id.sliding_tabs)
-    protected TabLayout mSlidingTabLayout;
+//    @BindView(R.id.sliding_tabs)
+//    protected TabLayout mSlidingTabLayout;
 
     @BindView(R.id.fragment_container)
     protected FrameLayout frameLayout;
@@ -81,29 +84,39 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
     private MenuItem mItemBlacklist;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onViewCreated(view, savedInstanceState);
 
-        setContentView(R.layout.activity_account_settings);
+        String accountId = getArguments().getString(ACCOUNT_ID);
 
-        ButterKnife.bind(this);
-
-        // dependency injection
-        JamiApplication.getInstance().getRingInjectionComponent().inject(this);
-        mEditionPresenter.bindView(this);
-        String accountId = getIntent().getData().getLastPathSegment();
-        mEditionPresenter.init(accountId);
+        presenter.init(accountId);
     }
+
+    //    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//
+//        setContentView(R.layout.activity_account_settings);
+//
+//        ButterKnife.bind(this);
+//
+//        // dependency injection
+//        JamiApplication.getInstance().getRingInjectionComponent().inject(this);
+//        mEditionPresenter.bindView(this);
+//        String accountId = getIntent().getData().getLastPathSegment();
+//        mEditionPresenter.init(accountId);
+//    }
 
     @Override
     public void displaySummary(String accountId) {
-        mSlidingTabLayout.setVisibility(View.GONE);
+//        mSlidingTabLayout.setVisibility(View.GONE);
         mViewPager.setVisibility(View.GONE);
         RingAccountSummaryFragment ringAccountSummaryFragment = new RingAccountSummaryFragment();
         Bundle args = new Bundle();
         args.putString(ACCOUNT_ID_KEY, accountId);
         ringAccountSummaryFragment.setArguments(args);
-        getSupportFragmentManager().beginTransaction()
+        getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, ringAccountSummaryFragment, RingAccountSummaryFragment.TAG)
                 .commit();
     }
@@ -111,9 +124,9 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
     @Override
     public void initViewPager(String accountId, boolean isRing) {
         mViewPager.setOffscreenPageLimit(4);
-        mViewPager.setAdapter(new PreferencesPagerAdapter(getSupportFragmentManager(), AccountEditionActivity.this, accountId, isRing));
+        mViewPager.setAdapter(new PreferencesPagerAdapter(getActivity().getSupportFragmentManager(), getActivity(), accountId, isRing));
 
-        mSlidingTabLayout.setupWithViewPager(mViewPager);
+//        mSlidingTabLayout.setupWithViewPager(mViewPager);
     }
 
     @Override
@@ -136,72 +149,72 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         Bundle args = new Bundle();
         args.putString(ACCOUNT_ID_KEY, accountId);
         blackListFragment.setArguments(args);
-        getSupportFragmentManager().beginTransaction()
+        getActivity().getSupportFragmentManager().beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .addToBackStack(BlackListFragment.TAG)
                 .replace(R.id.fragment_container, blackListFragment, BlackListFragment.TAG)
                 .commit();
-        mSlidingTabLayout.setVisibility(View.GONE);
+//        mSlidingTabLayout.setVisibility(View.GONE);
         mViewPager.setVisibility(View.GONE);
         frameLayout.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.account_edition, menu);
         mItemAdvanced = menu.findItem(R.id.menuitem_advanced);
         mItemBlacklist = menu.findItem(R.id.menuitem_blacklist);
-        return true;
+//        return true;
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
+    public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        mEditionPresenter.prepareOptionsMenu();
-        return true;
+        presenter.prepareOptionsMenu();
+//        return true;
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
-        mEditionPresenter.bindView(this);
+        presenter.bindView(this);
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
-        mEditionPresenter.unbindView();
+        presenter.unbindView();
     }
 
-    @Override
-    public void onBackPressed() {
-        if (frameLayout.getVisibility() == View.VISIBLE) {
-            super.onBackPressed();
-        } else {
-            frameLayout.setVisibility(View.VISIBLE);
-            mViewPager.setVisibility(View.GONE);
-            mSlidingTabLayout.setVisibility(View.GONE);
-        }
-    }
+//    @Override
+//    public void onBackPressed() {
+//        if (frameLayout.getVisibility() == View.VISIBLE) {
+//            super.onBackPressed();
+//        } else {
+//            frameLayout.setVisibility(View.VISIBLE);
+//            mViewPager.setVisibility(View.GONE);
+//            mSlidingTabLayout.setVisibility(View.GONE);
+//        }
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                onBackPressed();
+//                onBackPressed();
                 return true;
             case R.id.menuitem_delete:
                 AlertDialog deleteDialog = createDeleteDialog();
                 deleteDialog.show();
                 break;
             case R.id.menuitem_advanced:
-                mSlidingTabLayout.setVisibility(View.VISIBLE);
+//                mSlidingTabLayout.setVisibility(View.VISIBLE);
                 mViewPager.setVisibility(View.VISIBLE);
                 frameLayout.setVisibility(View.GONE);
                 break;
             case R.id.menuitem_blacklist:
-                mEditionPresenter.goToBlackList();
+                presenter.goToBlackList();
             default:
                 break;
         }
@@ -210,19 +223,19 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
 
     @NonNull
     private AlertDialog createDeleteDialog() {
-        AlertDialog alertDialog = new MaterialAlertDialogBuilder(this)
+        AlertDialog alertDialog = new MaterialAlertDialogBuilder(getActivity())
                 .setMessage(R.string.account_delete_dialog_message)
                 .setTitle(R.string.account_delete_dialog_title)
-                .setPositiveButton(android.R.string.ok, (dialog, whichButton) -> mEditionPresenter.removeAccount())
+                .setPositiveButton(android.R.string.ok, (dialog, whichButton) -> presenter.removeAccount())
                 .setNegativeButton(android.R.string.cancel, null)
                 .create();
-        alertDialog.setOwnerActivity(AccountEditionActivity.this);
+        alertDialog.setOwnerActivity(getActivity());
         return alertDialog;
     }
 
     @Override
     public void goToWizardActivity() {
-        Intent intent = new Intent(this, AccountWizardActivity.class);
+        Intent intent = new Intent(getActivity(), AccountWizardActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
@@ -230,18 +243,28 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
 
     @Override
     public void exit() {
-        finish();
+//        finish();
     }
 
     @Override
     public void displayAccountName(final String name) {
-        Toolbar toolbar = findViewById(R.id.main_toolbar);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(name);
-        }
+//        Toolbar toolbar = findViewById(R.id.main_toolbar);
+//        setSupportActionBar(toolbar);
+//        ActionBar actionBar = getSupportActionBar();
+//        if (actionBar != null) {
+//            actionBar.setDisplayHomeAsUpEnabled(true);
+//            actionBar.setTitle(name);
+//        }
+    }
+
+    @Override
+    public int getLayout() {
+        return R.layout.activity_account_settings;
+    }
+
+    @Override
+    public void injectFragment(JamiInjectionComponent component) {
+        component.inject(this);
     }
 
     private static class PreferencesPagerAdapter extends FragmentPagerAdapter {

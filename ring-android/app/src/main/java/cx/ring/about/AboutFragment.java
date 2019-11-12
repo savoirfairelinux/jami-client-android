@@ -70,7 +70,7 @@ public class AboutFragment extends BaseSupportFragment<RootPresenter> {
     @Override
     public void onResume() {
         super.onResume();
-        ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_about);
+//        ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_about);
     }
 
     @Override

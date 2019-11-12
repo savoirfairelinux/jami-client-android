@@ -102,7 +102,7 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
     @Override
     public void onResume() {
         super.onResume();
-        ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_contact_request);
+//        ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_contact_request);
     }
 
     @Override

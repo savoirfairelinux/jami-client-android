@@ -192,4 +192,25 @@ public class TVAccountExport
                     true);
         }
     }
+
+    @Override
+    public void gotToImageCapture() {
+
+    }
+
+    @Override
+    public void askCameraPermission() {
+
+    }
+
+    @Override
+    public void goToGallery() {
+
+    }
+
+    @Override
+    public void askGalleryPermission() {
+
+    }
+
 }

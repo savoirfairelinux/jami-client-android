@@ -102,7 +102,7 @@ public class AccountsManagementFragment extends BaseSupportFragment<AccountsMana
         Log.w(TAG, "onResume()");
         FloatingActionButton button = ((HomeActivity) getActivity()).getActionButton();
         button.setOnClickListener(v -> presenter.addClicked());
-        ((HomeActivity) getActivity()).setToolbarState(true, R.string.menu_item_accounts);
+//        ((HomeActivity) getActivity()).setToolbarState(true, R.string.menu_item_accounts);
     }
 
     @Override

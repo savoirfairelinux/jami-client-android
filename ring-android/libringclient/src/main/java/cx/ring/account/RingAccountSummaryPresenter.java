@@ -30,8 +30,17 @@ import javax.inject.Named;
 import cx.ring.model.Account;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
+import cx.ring.services.DeviceRuntimeService;
+import cx.ring.services.HardwareService;
 import cx.ring.utils.FileUtils;
 import cx.ring.utils.Log;
+import cx.ring.utils.StringUtils;
+import cx.ring.utils.VCardUtils;
+import ezvcard.VCard;
+import ezvcard.property.FormattedName;
+import ezvcard.property.Photo;
+import ezvcard.property.RawProperty;
+import ezvcard.property.Uid;
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
@@ -40,6 +49,8 @@ public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummar
 
     private static final String TAG = RingAccountSummaryPresenter.class.getSimpleName();
 
+    private final DeviceRuntimeService mDeviceRuntimeService;
+    private final HardwareService mHardwareService;
     private AccountService mAccountService;
     private String mAccountID;
 
@@ -48,8 +59,12 @@ public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummar
     protected Scheduler mUiScheduler;
 
     @Inject
-    public RingAccountSummaryPresenter(AccountService accountService) {
-        this.mAccountService = accountService;
+    public RingAccountSummaryPresenter(AccountService accountService,
+                                        HardwareService hardwareService,
+                                        DeviceRuntimeService deviceRuntimeService) {
+        mAccountService = accountService;
+        mHardwareService = hardwareService;
+        mDeviceRuntimeService = deviceRuntimeService;
     }
 
     public void registerName(String name, String password) {
@@ -150,4 +165,87 @@ public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummar
             .subscribe(() -> getView().displayCompleteArchive(dest),
                     error -> getView().passwordChangeEnded(false)));
     }
+
+    public void saveVCardFormattedName(String username) {
+        Account account = mAccountService.getCurrentAccount();
+        String accountId = account.getAccountID();
+        File filesDir = mDeviceRuntimeService.provideFilesDir();
+
+        mCompositeDisposable.add(VCardUtils
+                .loadLocalProfileFromDisk(filesDir, accountId)
+                .doOnSuccess(vcard -> {
+                    vcard.setFormattedName(username);
+                    vcard.removeProperties(RawProperty.class);
+                })
+                .flatMap(vcard -> VCardUtils.saveLocalProfileToDisk(vcard, accountId, filesDir))
+                .subscribeOn(Schedulers.io())
+                .subscribe(vcard -> {
+                    account.setProfile(vcard);
+                    mAccountService.refreshAccounts();
+                }, e -> Log.e(TAG, "Error saving vCard !", e)));
+    }
+
+    public void saveVCard(Account account, String username, Single<Photo> photo) {
+        String accountId = account.getAccountID();
+        String ringId = account.getUsername();
+        File filesDir = mDeviceRuntimeService.provideFilesDir();
+        mCompositeDisposable.add(Single.zip(
+                VCardUtils.loadLocalProfileFromDisk(filesDir, accountId).subscribeOn(Schedulers.io()),
+                photo, (vcard, pic) -> {
+                    vcard.setUid(new Uid(ringId));
+                    if (!StringUtils.isEmpty(username)) {
+                        vcard.setFormattedName(username);
+                    }
+                    if (photo != null) {
+                        vcard.removeProperties(Photo.class);
+                        vcard.addPhoto(pic);
+                    }
+                    vcard.removeProperties(RawProperty.class);
+                    return vcard;
+                })
+                .flatMap(vcard -> VCardUtils.saveLocalProfileToDisk(vcard, accountId, filesDir))
+                .subscribeOn(Schedulers.io())
+                .subscribe(vcard -> {
+                    account.setProfile(vcard);
+                    mAccountService.refreshAccounts();
+                }, e -> Log.e(TAG, "Error saving vCard !", e)));
+    }
+
+    public void cameraClicked() {
+        boolean hasPermission = mDeviceRuntimeService.hasVideoPermission() &&
+                mDeviceRuntimeService.hasWriteExternalStoragePermission();
+        if (hasPermission) {
+            getView().gotToImageCapture();
+        } else {
+            getView().askCameraPermission();
+        }
+    }
+
+    public void galleryClicked() {
+        boolean hasPermission = mDeviceRuntimeService.hasGalleryPermission();
+        if (hasPermission) {
+            getView().goToGallery();
+        } else {
+            getView().askGalleryPermission();
+        }
+    }
+
+    public String getAlias(Account account) {
+        if (account == null) {
+            Log.e(TAG, "Not able to get alias");
+            return null;
+        }
+        VCard vcard = account.getProfile();
+        if (vcard != null) {
+            FormattedName name = vcard.getFormattedName();
+            if (name != null) {
+                String name_value = name.getValue();
+                if (name_value != null && !name_value.isEmpty()) {
+                    return name_value;
+                }
+            }
+        }
+        return null;
+    }
+
 }

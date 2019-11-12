@@ -86,7 +86,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         }
         // loading preferences
         presenter.loadSettings();
-        ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_settings);
+//        ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_settings);
     }
 
     @Override

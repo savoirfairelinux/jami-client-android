@@ -48,4 +48,12 @@ public interface RingAccountSummaryView {
     void passwordChangeEnded(boolean ok);
 
     void displayCompleteArchive(File dest);
+
+    void gotToImageCapture();
+
+    void askCameraPermission();
+
+    void goToGallery();
+
+    void askGalleryPermission();
 }

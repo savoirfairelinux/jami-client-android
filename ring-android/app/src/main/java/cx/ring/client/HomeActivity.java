@@ -19,19 +19,23 @@
  */
 package cx.ring.client;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.util.Pair;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBar;
@@ -40,9 +44,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -55,6 +63,7 @@ import butterknife.ButterKnife;
 import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.about.AboutFragment;
+import cx.ring.account.AccountEditionActivity;
 import cx.ring.account.AccountWizardActivity;
 import cx.ring.application.JamiApplication;
 import cx.ring.contactrequests.ContactRequestsFragment;
@@ -68,14 +77,20 @@ import cx.ring.navigation.HomeNavigationFragment;
 import cx.ring.service.DRingService;
 import cx.ring.services.AccountService;
 import cx.ring.services.NotificationService;
+import cx.ring.services.VCardServiceImpl;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.settings.VideoSettingsFragment;
+import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
+import cx.ring.views.AvatarDrawable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
-public class HomeActivity extends AppCompatActivity implements HomeNavigationFragment.OnNavigationSectionSelected, Colorable {
+public class HomeActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,
+//        HomeNavigationFragment.OnNavigationSectionSelected,
+        Colorable {
     static final String TAG = HomeActivity.class.getSimpleName();
 
     public static final int REQUEST_CODE_CALL = 3;
@@ -96,37 +111,41 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
     private static final String NAVIGATION_TAG = "Navigation";
 
     protected Fragment fContent;
-    protected HomeNavigationFragment fNavigation;
+//    protected HomeNavigationFragment fNavigation;
     protected ConversationFragment fConversation;
 
     @Inject
     AccountService mAccountService;
     @Inject
     NotificationService mNotificationService;
-    @BindView(R.id.drawer_layout)
-    DrawerLayout mNavigationDrawer;
+//    @BindView(R.id.drawer_layout)
+//    DrawerLayout mNavigationDrawer;
 
     @BindView(R.id.main_toolbar)
     Toolbar mToolbar;
-    @BindView(R.id.app_bar)
-    AppBarLayout mAppBar;
-    @BindView(R.id.toolbar_layout)
-    CollapsingToolbarLayout mToolbarLayout;
+//    @BindView(R.id.app_bar)
+//    AppBarLayout mAppBar;
+//    @BindView(R.id.toolbar_layout)
+//    CollapsingToolbarLayout mToolbarLayout;
+//
+//    @BindView(R.id.action_button)
+//    FloatingActionButton actionButton;
 
-    @BindView(R.id.action_button)
-    FloatingActionButton actionButton;
+//    @BindView(R.id.content_frame)
+//    ViewGroup mFrameLayout;
 
-    @BindView(R.id.content_frame)
-    ViewGroup mFrameLayout;
+    @BindView(R.id.navigation_view)
+    BottomNavigationView mBottomNavigationView;
 
     private boolean mIsMigrationDialogAlreadyShowed;
-    private ActionBarDrawerToggle mDrawerToggle;
-    private Boolean isDrawerLocked = false;
+//    private ActionBarDrawerToggle mDrawerToggle;
+//    private Boolean isDrawerLocked = false;
     private String mAccountWithPendingrequests = null;
     private float mToolbarSize;
     private float mToolbarElevation;
 
     private final CompositeDisposable mDisposable = new CompositeDisposable();
+    private final CompositeDisposable mAccountCheckDisposable = new CompositeDisposable();
 
     /* called before activity is killed, e.g. rotation */
     @Override
@@ -137,14 +156,16 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mDisposable.add(mAccountCheckDisposable);
+
         JamiApplication.getInstance().startDaemon();
         mToolbarSize = getResources().getDimension(R.dimen.abc_action_bar_default_height_material);
         mToolbarElevation = getResources().getDimension(R.dimen.toolbar_elevation);
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        if (savedInstanceState != null) {
-            fNavigation = (HomeNavigationFragment) fragmentManager.findFragmentByTag(NAVIGATION_TAG);
-        }
+//        if (savedInstanceState != null) {
+//            fNavigation = (HomeNavigationFragment) fragmentManager.findFragmentByTag(NAVIGATION_TAG);
+//        }
         setContentView(R.layout.activity_home);
 
         ButterKnife.bind(this);
@@ -154,47 +175,70 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
 
         setSupportActionBar(mToolbar);
 
-        mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
-                mNavigationDrawer, /* DrawerLayout object */
-                //  R.drawable.ic_drawer, /* nav drawer image to replace 'Up' caret */
-                R.string.drawer_open, /* "open drawer" description for accessibility */
-                R.string.drawer_close /* "close drawer" description for accessibility */
-        ) {
-            @Override
-            public void onDrawerClosed(View view) {
-                invalidateOptionsMenu();
-                if (fNavigation != null) {
-                    fNavigation.displayNavigation();
-                }
-            }
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                invalidateOptionsMenu();
-            }
-        };
-
-        if (mFrameLayout.getPaddingLeft() == (int) getResources().getDimension(R.dimen.drawer_size)) {
-            mNavigationDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
-            mNavigationDrawer.setScrimColor(Color.TRANSPARENT);
-            isDrawerLocked = true;
+        ActionBar ab = getSupportActionBar();
+        if (ab != null) {
+            ab.setTitle("");
         }
 
-        if (!isDrawerLocked) {
-            mNavigationDrawer.addDrawerListener(mDrawerToggle);
-            ActionBar supportActionBar = getSupportActionBar();
-            if (supportActionBar != null) {
-                supportActionBar.setDisplayHomeAsUpEnabled(true);
-                supportActionBar.setHomeButtonEnabled(true);
-            }
-        }
+        mBottomNavigationView.setOnNavigationItemSelectedListener(this);
+        mBottomNavigationView.getMenu().getItem(1).setChecked(true);
 
-        if (fNavigation == null && savedInstanceState == null) {
-            fNavigation = new HomeNavigationFragment();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.navigation_container, fNavigation, NAVIGATION_TAG)
-                    .commit();
-        }
+        mDisposable.add(mAccountService
+                .getCurrentAccountSubject()
+                .switchMapSingle(account -> AvatarDrawable.load(HomeActivity.this, account)
+                        .map(avatar -> new Pair<>(account, avatar)))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(d -> {
+                    mToolbar.setLogo(d.second);
+                    String displayName = d.first.getDisplayUsername();
+                    String identity = d.first.getUsername();
+                    mToolbar.setTitle(displayName);
+                    if (identity != null && !identity.equals(displayName)) {
+                        mToolbar.setSubtitle(identity);
+                    }
+                }, e -> Log.e(TAG, "Error loading avatar", e)));
+
+//        mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
+//                mNavigationDrawer, /* DrawerLayout object */
+//                //  R.drawable.ic_drawer, /* nav drawer image to replace 'Up' caret */
+//                R.string.drawer_open, /* "open drawer" description for accessibility */
+//                R.string.drawer_close /* "close drawer" description for accessibility */
+//        ) {
+//            @Override
+//            public void onDrawerClosed(View view) {
+//                invalidateOptionsMenu();
+//                if (fNavigation != null) {
+//                    fNavigation.displayNavigation();
+//                }
+//            }
+//
+//            @Override
+//            public void onDrawerOpened(View drawerView) {
+//                invalidateOptionsMenu();
+//            }
+//        };
+//
+//        if (mFrameLayout.getPaddingLeft() == (int) getResources().getDimension(R.dimen.drawer_size)) {
+//            mNavigationDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+//            mNavigationDrawer.setScrimColor(Color.TRANSPARENT);
+//            isDrawerLocked = true;
+//        }
+//
+//        if (!isDrawerLocked) {
+//            mNavigationDrawer.addDrawerListener(mDrawerToggle);
+//            ActionBar supportActionBar = getSupportActionBar();
+//            if (supportActionBar != null) {
+//                supportActionBar.setDisplayHomeAsUpEnabled(true);
+//                supportActionBar.setHomeButtonEnabled(true);
+//            }
+//        }
+
+//        if (fNavigation == null && savedInstanceState == null) {
+//            fNavigation = new HomeNavigationFragment();
+//            fragmentManager.beginTransaction()
+//                    .replace(R.id.navigation_container, fNavigation, NAVIGATION_TAG)
+//                    .commit();
+//        }
 
         // if app opened from notification display trust request fragment when mService will connected
         Intent intent = getIntent();
@@ -211,9 +255,9 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
 
 
         fContent = fragmentManager.findFragmentById(R.id.main_frame);
-        if (fNavigation != null) {
-            onNavigationViewReady();
-        }
+//        if (fNavigation != null) {
+//            onNavigationViewReady();
+//        }
         if (fContent == null) {
             fContent = new SmartListFragment();
             fragmentManager.beginTransaction().replace(R.id.main_frame, fContent, HOME_TAG).addToBackStack(HOME_TAG).commitAllowingStateLoss();
@@ -267,10 +311,10 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
             return;
         }
 
-        if (!getSupportFragmentManager().findFragmentByTag(HOME_TAG).isVisible()) {
-            fNavigation.selectSection(HomeNavigationFragment.Section.HOME);
-            onNavigationSectionSelected(HomeNavigationFragment.Section.HOME);
-        }
+//        if (!getSupportFragmentManager().findFragmentByTag(HOME_TAG).isVisible()) {
+//            fNavigation.selectSection(HomeNavigationFragment.Section.HOME);
+//            onNavigationSectionSelected(HomeNavigationFragment.Section.HOME);
+//        }
         if (fContent instanceof SmartListFragment) {
             Bundle bundle = new Bundle();
             bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, intent.getStringExtra(ConversationFragment.KEY_CONTACT_RING_ID));
@@ -287,61 +331,71 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
                 .setTitle(R.string.account_migration_title_dialog)
                 .setMessage(R.string.account_migration_message_dialog)
                 .setIcon(R.drawable.baseline_warning_24)
-                .setPositiveButton(android.R.string.ok, (dialog, which) -> fNavigation.selectSection(HomeNavigationFragment.Section.MANAGE))
+                // todo fix this
+//                .setPositiveButton(android.R.string.ok, (dialog, which) -> fNavigation.selectSection(HomeNavigationFragment.Section.MANAGE))
                 .setNegativeButton(android.R.string.cancel, null)
                 .show();
     }
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
-    }
+//    @Override
+//    protected void onPostCreate(Bundle savedInstanceState) {
+//        super.onPostCreate(savedInstanceState);
+//        mDrawerToggle.syncState();
+//    }
+//
+//    @Override
+//    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+//        super.onConfigurationChanged(newConfig);
+//        mDrawerToggle.onConfigurationChanged(newConfig);
+//    }
 
-    @Override
-    public void onConfigurationChanged(@NonNull Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
-    }
+//    public void setToolbarTop(boolean top) {
+//        if (top) {
+//            mAppBar.setElevation(0);
+//        } else {
+//            mAppBar.setElevation(mToolbarElevation);
+//        }
+//    }
 
-    public void setToolbarTop(boolean top) {
-        if (top) {
-            mAppBar.setElevation(0);
-        } else {
-            mAppBar.setElevation(mToolbarElevation);
-        }
-    }
+//    public void setToolbarState(boolean doubleHeight, int titleRes) {
+//        setToolbarState(doubleHeight, getString(titleRes) , null);
+//    }
 
-    public void setToolbarState(boolean doubleHeight, int titleRes) {
-        ActionBar ab = getSupportActionBar();
-        if (ab != null)
-            ab.setIcon(null);
-        mToolbar.setLogo(null);
-        if (doubleHeight) {
-            mAppBar.setElevation(mToolbarElevation);
-            mToolbarLayout.setTitleEnabled(true);
-            mToolbarLayout.setTitle(getString(titleRes));
-        } else {
-            mAppBar.setElevation(0);
-            mToolbarLayout.setTitleEnabled(false);
-            mToolbar.setTitle(getString(titleRes));
-        }
-        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) mAppBar.getLayoutParams();
-        params.height = doubleHeight ? (int) (2.01 * mToolbarSize) : CoordinatorLayout.LayoutParams.WRAP_CONTENT;
-        mAppBar.setLayoutParams(params);
-        mAppBar.setExpanded(doubleHeight);
-    }
+//    public void setToolbarState(boolean doubleHeight, String title, String subtitle) {
+//        ActionBar ab = getSupportActionBar();
+//        if (ab != null)
+//            ab.setIcon(null);
+//        mToolbar.setLogo(null);
+//        if (doubleHeight) {
+//            mAppBar.setElevation(mToolbarElevation);
+//            mToolbarLayout.setTitleEnabled(true);
+//            mToolbarLayout.setTitle(title);
+//        } else {
+//            mAppBar.setElevation(0);
+//            mToolbarLayout.setTitleEnabled(false);
+//            mToolbar.setTitle(title);
+//        }
+//        if (subtitle != null) {
+//            mToolbar.setSubtitle(subtitle);
+//        }
+//        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) mAppBar.getLayoutParams();
+//        params.height = doubleHeight ? (int) (2.01 * mToolbarSize) : CoordinatorLayout.LayoutParams.WRAP_CONTENT;
+//        mAppBar.setLayoutParams(params);
+//        mAppBar.setExpanded(doubleHeight);
+//
+//    }
 
     public FloatingActionButton getActionButton() {
-        return actionButton;
+//        return actionButton;
+        return null;
     }
 
     /* activity gets back to the foreground and user input */
     @Override
     protected void onResume() {
         super.onResume();
-        mDisposable.clear();
-        mDisposable.add(mAccountService.getObservableAccountList()
+        mAccountCheckDisposable.clear();
+        mAccountCheckDisposable.add(mAccountService.getObservableAccountList()
                 .firstElement()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(accounts -> {
@@ -376,7 +430,7 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
         }
         fContent = new ContactRequestsFragment();
         fContent.setArguments(bundle);
-        fNavigation.selectSection(HomeNavigationFragment.Section.CONTACT_REQUESTS);
+//        fNavigation.selectSection(HomeNavigationFragment.Section.CONTACT_REQUESTS);
         getSupportFragmentManager().beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(R.id.main_frame, fContent, CONTACT_REQUESTS_TAG)
@@ -391,10 +445,10 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
 
     @Override
     public void onBackPressed() {
-        if (mNavigationDrawer.isDrawerVisible(GravityCompat.START) && !isDrawerLocked) {
-            mNavigationDrawer.closeDrawer(GravityCompat.START);
-            return;
-        }
+//        if (mNavigationDrawer.isDrawerVisible(GravityCompat.START) && !isDrawerLocked) {
+//            mNavigationDrawer.closeDrawer(GravityCompat.START);
+//            return;
+//        }
         FragmentManager fragmentManager = getSupportFragmentManager();
         int fCount = fragmentManager.getBackStackEntryCount();
         if (fCount > 1) {
@@ -402,7 +456,8 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
             fContent = fragmentManager.findFragmentById(entry.getId());
             fragmentManager.popBackStack();
             if (fCount == 2)
-                fNavigation.selectSection(HomeNavigationFragment.Section.HOME);
+//                fNavigation.selectSection(HomeNavigationFragment.Section.HOME);
+                mBottomNavigationView.getMenu().getItem(1).setChecked(true);
             return;
         }
         finish();
@@ -418,102 +473,102 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
         }
     }
 
-    public void onNavigationViewReady() {
-        if (fNavigation != null) {
-            fNavigation.setNavigationSectionSelectedListener(this);
-        }
-    }
+//    public void onNavigationViewReady() {
+//        if (fNavigation != null) {
+//            fNavigation.setNavigationSectionSelectedListener(this);
+//        }
+//    }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        return mDrawerToggle.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        return mDrawerToggle.onOptionsItemSelected(item);
+//    }
 
-    @Override
-    public void onNavigationSectionSelected(HomeNavigationFragment.Section section) {
-        if (!isDrawerLocked) {
-            mNavigationDrawer.closeDrawers();
-        }
+//    @Override
+//    public void onNavigationSectionSelected(HomeNavigationFragment.Section section) {
+//        if (!isDrawerLocked) {
+//            mNavigationDrawer.closeDrawers();
+//        }
+//
+//        switch (section) {
+//            case HOME:
+//                if (fContent instanceof SmartListFragment) {
+//                    break;
+//                }
+//                FragmentManager manager = getSupportFragmentManager();
+//                if (manager.getBackStackEntryCount() == 1) {
+//                    break;
+//                }
+//
+//                popCustomBackStack();
+//                fContent = manager.findFragmentByTag(HOME_TAG);
+//                break;
+//            case CONTACT_REQUESTS:
+//                Bundle bundle = new Bundle();
+//                bundle.putString(ContactRequestsFragment.ACCOUNT_ID, mAccountService.getCurrentAccount().getAccountID());
+//                if (fContent instanceof ContactRequestsFragment) {
+//                    ((ContactRequestsFragment) fContent).presentForAccount(bundle);
+//                    break;
+//                }
+//                popCustomBackStack();
+//                fContent = new ContactRequestsFragment();
+//                fContent.setArguments(bundle);
+//                getSupportFragmentManager().beginTransaction()
+//                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+//                        .replace(R.id.main_frame, fContent, CONTACT_REQUESTS_TAG)
+//                        .addToBackStack(CONTACT_REQUESTS_TAG).commit();
+//                break;
+//            case MANAGE:
+//                if (fContent instanceof AccountsManagementFragment) {
+//                    break;
+//                }
+//                popCustomBackStack();
+//                fContent = new AccountsManagementFragment();
+//                getSupportFragmentManager().beginTransaction()
+//                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+//                        .replace(R.id.main_frame, fContent, ACCOUNTS_TAG)
+//                        .addToBackStack(ACCOUNTS_TAG).commit();
+//                break;
+//            case ABOUT:
+//                if (fContent instanceof AboutFragment) {
+//                    break;
+//                }
+//                popCustomBackStack();
+//                fContent = new AboutFragment();
+//                getSupportFragmentManager().beginTransaction()
+//                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+//                        .replace(R.id.main_frame, fContent, ABOUT_TAG)
+//                        .addToBackStack(ABOUT_TAG).commit();
+//                break;
+//            case SETTINGS:
+//                this.goToSettings();
+//                break;
+//            default:
+//                break;
+//        }
+//    }
 
-        switch (section) {
-            case HOME:
-                if (fContent instanceof SmartListFragment) {
-                    break;
-                }
-                FragmentManager manager = getSupportFragmentManager();
-                if (manager.getBackStackEntryCount() == 1) {
-                    break;
-                }
+//    public void onAccountSelected() {
+//        if (!isDrawerLocked) {
+//            mNavigationDrawer.closeDrawers();
+//        }
+//    }
 
-                popCustomBackStack();
-                fContent = manager.findFragmentByTag(HOME_TAG);
-                break;
-            case CONTACT_REQUESTS:
-                Bundle bundle = new Bundle();
-                bundle.putString(ContactRequestsFragment.ACCOUNT_ID, mAccountService.getCurrentAccount().getAccountID());
-                if (fContent instanceof ContactRequestsFragment) {
-                    ((ContactRequestsFragment) fContent).presentForAccount(bundle);
-                    break;
-                }
-                popCustomBackStack();
-                fContent = new ContactRequestsFragment();
-                fContent.setArguments(bundle);
-                getSupportFragmentManager().beginTransaction()
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .replace(R.id.main_frame, fContent, CONTACT_REQUESTS_TAG)
-                        .addToBackStack(CONTACT_REQUESTS_TAG).commit();
-                break;
-            case MANAGE:
-                if (fContent instanceof AccountsManagementFragment) {
-                    break;
-                }
-                popCustomBackStack();
-                fContent = new AccountsManagementFragment();
-                getSupportFragmentManager().beginTransaction()
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .replace(R.id.main_frame, fContent, ACCOUNTS_TAG)
-                        .addToBackStack(ACCOUNTS_TAG).commit();
-                break;
-            case ABOUT:
-                if (fContent instanceof AboutFragment) {
-                    break;
-                }
-                popCustomBackStack();
-                fContent = new AboutFragment();
-                getSupportFragmentManager().beginTransaction()
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .replace(R.id.main_frame, fContent, ABOUT_TAG)
-                        .addToBackStack(ABOUT_TAG).commit();
-                break;
-            case SETTINGS:
-                this.goToSettings();
-                break;
-            default:
-                break;
-        }
-    }
-
-    public void onAccountSelected() {
-        if (!isDrawerLocked) {
-            mNavigationDrawer.closeDrawers();
-        }
-    }
-
-    @Override
+//    @Override
     public void onAddSipAccountSelected() {
-        if (!isDrawerLocked) {
-            mNavigationDrawer.closeDrawers();
-        }
+//        if (!isDrawerLocked) {
+//            mNavigationDrawer.closeDrawers();
+//        }
         Intent intent = new Intent(HomeActivity.this, AccountWizardActivity.class);
         intent.setAction(AccountConfig.ACCOUNT_TYPE_SIP);
         startActivityForResult(intent, AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
     }
 
-    @Override
+//    @Override
     public void onAddRingAccountSelected() {
-        if (!isDrawerLocked) {
-            mNavigationDrawer.closeDrawers();
-        }
+//        if (!isDrawerLocked) {
+//            mNavigationDrawer.closeDrawers();
+//        }
         Intent intent = new Intent(HomeActivity.this, AccountWizardActivity.class);
         intent.setAction(AccountConfig.ACCOUNT_TYPE_RING);
         startActivityForResult(intent, AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
@@ -521,9 +576,9 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
 
 
     public void goToSettings() {
-        if (mNavigationDrawer != null && !isDrawerLocked) {
-            mNavigationDrawer.closeDrawers();
-        }
+//        if (mNavigationDrawer != null && !isDrawerLocked) {
+//            mNavigationDrawer.closeDrawers();
+//        }
         if (fContent instanceof SettingsFragment) {
             return;
         }
@@ -537,9 +592,9 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
     }
 
     public void goToVideoSettings() {
-        if (mNavigationDrawer != null && !isDrawerLocked) {
-            mNavigationDrawer.closeDrawers();
-        }
+//        if (mNavigationDrawer != null && !isDrawerLocked) {
+//            mNavigationDrawer.closeDrawers();
+//        }
         if (fContent instanceof VideoSettingsFragment) {
             return;
         }
@@ -554,6 +609,77 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
     @Override
     public void setColor(int color) {
         //mToolbar.setBackground(new ColorDrawable(color));
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Bundle bundle = new Bundle();
+
+        switch (item.getItemId()) {
+            case R.id.navigation_requests:
+                bundle.putString(ContactRequestsFragment.ACCOUNT_ID, mAccountService.getCurrentAccount().getAccountID());
+                if (fContent instanceof ContactRequestsFragment) {
+                    ((ContactRequestsFragment) fContent).presentForAccount(bundle);
+                    break;
+                }
+                popCustomBackStack();
+                fContent = new ContactRequestsFragment();
+                fContent.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction()
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .replace(R.id.main_frame, fContent, CONTACT_REQUESTS_TAG)
+                        .addToBackStack(CONTACT_REQUESTS_TAG).commit();
+                break;
+            case R.id.navigation_home:
+                if (fContent instanceof SmartListFragment) {
+                    break;
+                }
+                popCustomBackStack();
+                fContent = new SmartListFragment();
+                getSupportFragmentManager().beginTransaction()
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .replace(R.id.main_frame, fContent, HOME_TAG)
+                        .addToBackStack(HOME_TAG).commit();
+                break;
+            case R.id.navigation_settings:
+                Account account = mAccountService.getCurrentAccount();
+
+                if (account.needsMigration()) {
+                    Log.d(TAG, "launchAccountMigrationActivity: Launch account migration activity");
+
+                    Intent intent = new Intent()
+                            .setClass(this, AccountWizardActivity.class)
+                            .setData(Uri.withAppendedPath(ContentUriHandler.ACCOUNTS_CONTENT_URI, account.getAccountID()));
+                    startActivityForResult(intent, 1);
+                } else {
+//                    Log.d(TAG, "launchAccountEditActivity: Launch account edit activity");
+//
+//                    Intent intent = new Intent(this, AccountEditionActivity.class)
+//                            .setAction(Intent.ACTION_EDIT)
+//                            .setData(Uri.withAppendedPath(ContentUriHandler.ACCOUNTS_CONTENT_URI, account.getAccountID()));
+//                    startActivityForResult(intent, 1);
+                    bundle.putString(AccountEditionActivity.ACCOUNT_ID, account.getAccountID());
+
+                    if (fContent instanceof AccountEditionActivity) {
+                        break;
+                    }
+                    popCustomBackStack();
+                    fContent = new AccountEditionActivity();
+                    fContent.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction()
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                            .replace(R.id.main_frame, fContent, SETTINGS_TAG)
+                            .addToBackStack(SETTINGS_TAG).commit();
+                    break;
+                }
+
+//                this.goToSettings();
+                break;
+            default:
+                break;
+        }
+
+        return true;
     }
 
     public interface Refreshable {

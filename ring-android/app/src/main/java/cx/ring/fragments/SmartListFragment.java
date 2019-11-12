@@ -54,6 +54,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cx.ring.R;
@@ -67,6 +69,7 @@ import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.mvp.BaseSupportFragment;
+import cx.ring.services.AccountService;
 import cx.ring.smartlist.SmartListPresenter;
 import cx.ring.smartlist.SmartListView;
 import cx.ring.smartlist.SmartListViewModel;
@@ -113,6 +116,9 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     @BindView(R.id.error_image_view)
     protected ImageView mErrorImageView;
 
+    @Inject
+    AccountService mAccountService;
+
     private SmartListAdapter mSmartListAdapter;
 
     private SearchView mSearchView = null;
@@ -124,7 +130,19 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     @Override
     public void onResume() {
         super.onResume();
-        ((HomeActivity) requireActivity()).setToolbarState(false, R.string.app_name);
+//        ((HomeActivity) requireActivity()).setToolbarState(false, R.string.app_name);
+
+//        if (mAccountService.getCurrentAccount() != null) {
+//            String displayName = mAccountService.getCurrentAccount().getDisplayUsername();
+//            String identity = mAccountService.getCurrentAccount().getUsername();
+//
+//            if (identity != null && !identity.equals(displayName)) {
+//                ((HomeActivity) requireActivity()).setToolbarState(false, displayName, identity);
+//            } else {
+//                ((HomeActivity) requireActivity()).setToolbarState(false, displayName, null);
+//            }
+//        }
+        
         presenter.refresh();
     }
 
@@ -269,7 +287,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
                 Activity activity = getActivity();
                 if (activity instanceof HomeActivity) {
                     HomeActivity homeActivity = (HomeActivity) activity;
-                    homeActivity.setToolbarTop(!canScrollUp);
+//                    homeActivity.setToolbarTop(!canScrollUp);
                 }
             }
         });

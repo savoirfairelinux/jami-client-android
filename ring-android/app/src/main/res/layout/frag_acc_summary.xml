@@ -16,6 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -62,6 +63,42 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true" />
+
+                <RelativeLayout
+                    android:id="@+id/profile_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/account_alias_txt"
+                    android:layout_toEndOf="@+id/account_status">
+
+                    <ImageView
+                        android:id="@+id/user_photo"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:src="@drawable/ic_contact_picture_fallback" />
+
+                    <View
+                        android:id="@+id/anchor"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignBottom="@id/user_photo"
+                        android:layout_centerHorizontal="true" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/user_profile_edit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/anchor"
+                        android:layout_toEndOf="@+id/anchor"
+
+                        app:fabSize="mini"
+                        app:srcCompat="@drawable/baseline_edit_24"/>
+
+<!--                    app:backgroundTint="@color/transparent_light"-->
+
+                </RelativeLayout>
 
             </RelativeLayout>
 

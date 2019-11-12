@@ -19,63 +19,70 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.          
 -->
 
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
+    android:orientation="vertical"
+    android:id="@+id/relative_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:saveEnabled="false"
     tools:context=".client.HomeActivity">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/content_frame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingEnd="0dp"
-        android:paddingStart="@dimen/drawer_content_padding">
+<!--    <androidx.coordinatorlayout.widget.CoordinatorLayout-->
+<!--        android:id="@+id/content_frame"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:paddingEnd="0dp"-->
+<!--        android:paddingStart="@dimen/drawer_content_padding"-->
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/app_bar"
-            style="@style/Widget.MaterialComponents.AppBarLayout.Surface"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize">
+<!--        android:layout_above="@+id/navigation_bar"-->
+<!--        >-->
 
-            <com.google.android.material.appbar.CollapsingToolbarLayout
-                android:id="@+id/toolbar_layout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_scrollFlags="noScroll"
-                app:toolbarId="@id/toolbar"
-                app:collapsedTitleGravity="bottom"
-                app:titleTextColor="@color/textColorPrimary"
-                app:expandedTitleMarginStart="72dp"
-                app:expandedTitleTextAppearance="@style/TextAppearance.MaterialComponents.Headline6">
+<!--        <com.google.android.material.appbar.AppBarLayout-->
+<!--            android:id="@+id/app_bar"-->
+<!--            style="@style/Widget.MaterialComponents.AppBarLayout.Surface"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:minHeight="?attr/actionBarSize">-->
+
+<!--            <com.google.android.material.appbar.CollapsingToolbarLayout-->
+<!--                android:id="@+id/toolbar_layout"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                app:layout_scrollFlags="noScroll"-->
+<!--                app:toolbarId="@id/toolbar"-->
+<!--                app:collapsedTitleGravity="bottom"-->
+<!--                app:titleTextColor="@color/textColorPrimary"-->
+<!--                app:expandedTitleMarginStart="72dp"-->
+<!--                app:expandedTitleTextAppearance="@style/TextAppearance.MaterialComponents.Headline6">-->
 
                 <com.google.android.material.appbar.MaterialToolbar
                     android:id="@+id/main_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    app:contentInsetStart="@dimen/toolbar_content_inset"
-                    app:layout_collapseMode="pin"/>
-            </com.google.android.material.appbar.CollapsingToolbarLayout>
+                    app:contentInsetEnd="0dp"
+                    app:contentInsetLeft="0dp"
+                    app:contentInsetRight="0dp"
+                    app:contentInsetStart="0dp"
+                    />
+<!--            </com.google.android.material.appbar.CollapsingToolbarLayout>-->
 
-        </com.google.android.material.appbar.AppBarLayout>
+<!--        </com.google.android.material.appbar.AppBarLayout>-->
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/action_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/fab_margin_mini"
-            app:elevation="6dp"
-            app:fabSize="mini"
-            app:layout_anchor="@id/app_bar"
-            app:layout_anchorGravity="bottom"
-            app:pressedTranslationZ="12dp"
-            app:rippleColor="@android:color/white"
-            app:srcCompat="@drawable/baseline_add_24" />
+<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--            android:id="@+id/action_button"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="@dimen/fab_margin_mini"-->
+<!--            app:elevation="6dp"-->
+<!--            app:fabSize="mini"-->
+<!--            app:layout_anchor="@id/app_bar"-->
+<!--            app:layout_anchorGravity="bottom"-->
+<!--            app:pressedTranslationZ="12dp"-->
+<!--            app:rippleColor="@android:color/white"-->
+<!--            app:srcCompat="@drawable/baseline_add_24" />-->
 
         <FrameLayout
             android:id="@+id/main_frame"
@@ -83,23 +90,34 @@ along with this program; if not, write to the Free Software
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:layout_below="@id/main_toolbar"
+            android:layout_above="@id/navigation_view"
             android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+<!--    </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/left_drawer"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true">
+<!--    <com.google.android.material.navigation.NavigationView-->
+<!--        android:id="@+id/left_drawer"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_gravity="start"-->
+<!--        android:fitsSystemWindows="true">-->
 
-        <FrameLayout
-            android:id="@+id/navigation_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+<!--        <FrameLayout-->
+<!--            android:id="@+id/navigation_container"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content" />-->
 
-    </com.google.android.material.navigation.NavigationView>
+<!--    </com.google.android.material.navigation.NavigationView>-->
 
-</androidx.drawerlayout.widget.DrawerLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:menu="@menu/navigation_bar"
+        app:labelVisibilityMode="unlabeled"
+
+        android:layout_alignParentBottom="true"
+        />
+
+</RelativeLayout>
