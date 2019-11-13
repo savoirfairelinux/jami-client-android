@@ -180,6 +180,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:description="@string/data_transfer_service_description"
             android:exported="false"
             android:foregroundServiceType="dataSync"/>
+        <service
+            android:name=".services.SyncService"
+            android:description="@string/data_transfer_service_description"
+            android:exported="false"
+            android:foregroundServiceType="dataSync"/>
 
         <activity
             android:name=".client.CallActivity"

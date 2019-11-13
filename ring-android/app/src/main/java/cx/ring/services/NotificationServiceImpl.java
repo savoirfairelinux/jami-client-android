@@ -100,6 +100,7 @@ public class NotificationServiceImpl implements NotificationService {
     private static final String NOTIF_CHANNEL_MESSAGE = "messages";
     private static final String NOTIF_CHANNEL_REQUEST = "requests";
     private static final String NOTIF_CHANNEL_FILE_TRANSFER = "file_transfer";
+    public static final String NOTIF_CHANNEL_SYNC = "sync";
     private static final String NOTIF_CHANNEL_SERVICE = "service";
 
     // old channel codes that were replaced or split
@@ -204,6 +205,15 @@ public class NotificationServiceImpl implements NotificationService {
         fileTransferChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
         fileTransferChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), soundAttributes);
         notificationManager.createNotificationChannel(fileTransferChannel);
+
+        // File transfer requests
+        NotificationChannel syncChannel = new NotificationChannel(NOTIF_CHANNEL_SYNC, mContext.getString(R.string.notif_channel_sync), NotificationManager.IMPORTANCE_DEFAULT);
+        syncChannel.setLockscreenVisibility(Notification.VISIBILITY_SECRET);
+        syncChannel.enableLights(false);
+        syncChannel.enableVibration(false);
+        syncChannel.setShowBadge(false);
+        syncChannel.setSound(null, null);
+        notificationManager.createNotificationChannel(syncChannel);
 
         // Background service channel
         NotificationChannel backgroundChannel = new NotificationChannel(NOTIF_CHANNEL_SERVICE, mContext.getString(R.string.notif_channel_background_service), NotificationManager.IMPORTANCE_LOW);
@@ -331,19 +341,11 @@ public class NotificationServiceImpl implements NotificationService {
      * Starts a service (data transfer or call)
      *
      * @param id            the notification id
-     * @param isCallService true if the intended service is a call service
      */
     @Override
-    public void startForegroundService(int id, boolean isCallService) {
-        Intent serviceIntent;
-        if (isCallService)
-            serviceIntent = new Intent(mContext, CallNotificationService.class);
-        else
-            serviceIntent = new Intent(mContext, DataTransferService.class);
-
-
+    public void startForegroundService(int id, Class serviceClass) {
+        Intent serviceIntent = new Intent(mContext, serviceClass);
         serviceIntent.putExtra(KEY_NOTIFICATION_ID, id);
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
             mContext.startForegroundService(serviceIntent);
         else
@@ -352,17 +354,10 @@ public class NotificationServiceImpl implements NotificationService {
 
     /**
      * Kills a foreground service.
-     *
-     * @param isCallService true if the service in question is for calls, false if it is for data transfers
      */
     @Override
-    public void stopForegroundService(boolean isCallService) {
-        Intent serviceIntent;
-        if (isCallService)
-            serviceIntent = new Intent(mContext, CallNotificationService.class);
-        else
-            serviceIntent = new Intent(mContext, DataTransferService.class);
-        mContext.stopService(serviceIntent);
+    public void stopForegroundService(Class serviceClass) {
+        mContext.stopService(new Intent(mContext, serviceClass));
     }
 
     /**
@@ -383,9 +378,9 @@ public class NotificationServiceImpl implements NotificationService {
         currentCalls.remove(id);
         if (!remove) {
             currentCalls.put(id, conference);
-            startForegroundService(id, true);
+            startForegroundService(id, CallNotificationService.class);
         } else if (currentCalls.isEmpty())
-            stopForegroundService(true);
+            stopForegroundService(CallNotificationService.class);
             // this is a temporary solution until we have direct support for concurrent calls and the call state will exclusively update notifications
         else {
             int key = -1;
@@ -394,6 +389,25 @@ public class NotificationServiceImpl implements NotificationService {
                 key = iterator.next();
             }
             updateNotification(showCallNotification(key), NOTIF_CALL_ID);
+        }
+    }
+
+
+    @Override
+    public void onConnectionUpdate(Boolean b) {
+        Log.i(TAG, "onConnectionUpdate " + b);
+        if (b) {
+            Intent serviceIntent = new Intent(SyncService.ACTION_START).setClass(mContext, SyncService.class);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                mContext.startForegroundService(serviceIntent);
+            else
+                mContext.startService(serviceIntent);
+        } else {
+            try {
+                mContext.startService(new Intent(SyncService.ACTION_STOP).setClass(mContext, SyncService.class));
+            } catch (IllegalStateException e) {
+                Log.i(TAG, "Error stopping service. Not running ?s", e);
+            }
         }
     }
 
@@ -428,9 +442,9 @@ public class NotificationServiceImpl implements NotificationService {
         dataTransferNotifications.remove(id);
         cancelFileNotification(id, false);
         if (dataTransferNotifications.isEmpty())
-            stopForegroundService(false);
+            stopForegroundService(DataTransferService.class);
         else {
-            startForegroundService(dataTransferNotifications.keySet().iterator().next(), false);
+            startForegroundService(dataTransferNotifications.keySet().iterator().next(), DataTransferService.class);
         }
     }
 
@@ -785,7 +799,7 @@ public class NotificationServiceImpl implements NotificationService {
         mNotificationBuilders.put(notificationId, messageNotificationBuilder);
         dataTransferNotifications.remove(notificationId);
         dataTransferNotifications.put(notificationId, messageNotificationBuilder.build());
-        startForegroundService(notificationId, false);
+        startForegroundService(notificationId, DataTransferService.class);
     }
 
     @Override

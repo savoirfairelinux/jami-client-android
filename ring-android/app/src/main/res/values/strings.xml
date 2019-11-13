@@ -117,6 +117,7 @@ along with this program; if not, write to the Free Software
     <string name="notif_channel_messages">Messages</string>
     <string name="notif_channel_requests">Requests</string>
     <string name="notif_channel_file_transfer">File transfer</string>
+    <string name="notif_channel_sync">Data sync</string>
     <string name="notif_channel_background_service">Background service</string>
     <string name="notif_channel_background_service_descr">Allows receiving calls and messages anytime.</string>
     <string name="notif_group_calls">Calls</string>
@@ -130,6 +131,7 @@ along with this program; if not, write to the Free Software
     <string name="notif_outgoing_file_transfer">Someone wants to send you a file</string>
     <string name="notif_incoming_picture">Picture from %1$s</string>
     <string name="action_open">Open</string>
+    <string name="notif_sync_title">Syncing data…</string>
 
     <!-- Call Fragment -->
     <string name="you_txt_prefix">You:</string>

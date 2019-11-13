@@ -65,12 +65,10 @@ public class ConversationFacade {
     private final HistoryService mHistoryService;
     private final CallService mCallService;
     private final ContactService mContactService;
+    private final NotificationService mNotificationService;
 
     @Inject
     HardwareService mHardwareService;
-
-    @Inject
-    NotificationService mNotificationService;
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
@@ -84,11 +82,16 @@ public class ConversationFacade {
 
     private final Subject<Conversation> conversationSubject = PublishSubject.create();
 
-    public ConversationFacade(HistoryService historyService, CallService callService, AccountService accountService, ContactService contactService) {
+    public ConversationFacade(HistoryService historyService,
+                              CallService callService,
+                              AccountService accountService,
+                              ContactService contactService,
+                              NotificationService notificationService) {
         mHistoryService = historyService;
         mCallService = callService;
         mAccountService = accountService;
         mContactService = contactService;
+        mNotificationService = notificationService;
 
         currentAccountSubject = mAccountService
                 .getCurrentAccountSubject()
@@ -97,6 +100,9 @@ public class ConversationFacade {
         mDisposableBag.add(mCallService.getCallsUpdates()
                 .observeOn(Schedulers.io())
                 .subscribe(this::onCallStateChange));
+
+        mDisposableBag.add(mCallService.getConnectionUpdates()
+                .subscribe(mNotificationService::onConnectionUpdate));
 
         mDisposableBag.add(mCallService.getConfsUpdates()
                 .observeOn(Schedulers.io())
