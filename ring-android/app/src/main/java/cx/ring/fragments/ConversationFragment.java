@@ -411,6 +411,9 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
                 mCurrentPhoto = photoFile;
                 android.net.Uri photoURI = FileProvider.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                takePictureIntent.putExtra("android.intent.extras.CAMERA_FACING", 1);
+                takePictureIntent.putExtra("android.intent.extras.LENS_FACING_FRONT", 1);
+                takePictureIntent.putExtra("android.intent.extra.USE_FRONT_CAMERA", true);
                 startActivityForResult(takePictureIntent, REQUEST_CODE_TAKE_PICTURE);
             }
         }
