@@ -165,7 +165,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     }
 
     @Override
-    public void updateAudioState(final SipCall.CallStatus state, final boolean incomingCall, final boolean isOngoingVideo) {
+    synchronized public void updateAudioState(final SipCall.CallStatus state, final boolean incomingCall, final boolean isOngoingVideo) {
         Log.d(TAG, "updateAudioState: Call state updated to " + state + " Call is incoming: " + incomingCall + " Call is video: " + isOngoingVideo);
         boolean callEnded = state.equals(CallStatus.HUNGUP) || state.equals(CallStatus.FAILURE) || state.equals(CallStatus.OVER);
         if (mBluetoothWrapper == null && !callEnded) {
@@ -215,7 +215,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     }
 
     @Override
-    public void closeAudioState() {
+    synchronized public void closeAudioState() {
         stopRinging();
         abandonAudioFocus();
     }
@@ -236,7 +236,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     }
 
     @Override
-    public void abandonAudioFocus() {
+    synchronized public void abandonAudioFocus() {
         if (currentFocus != null) {
             AudioManagerCompat.abandonAudioFocusRequest(mAudioManager, currentFocus);
             currentFocus = null;
