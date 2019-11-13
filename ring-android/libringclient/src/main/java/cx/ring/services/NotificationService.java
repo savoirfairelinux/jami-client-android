@@ -58,10 +58,6 @@ public interface NotificationService {
 
     void updateNotification(Object notification, int notificationId);
 
-    void startForegroundService(int notificationId, Class serviceClass);
-
-    void stopForegroundService(Class serviceClass);
-
     Object getServiceNotification();
 
     void handleCallNotification(Conference conference, boolean remove);
