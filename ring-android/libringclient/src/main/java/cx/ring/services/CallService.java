@@ -48,6 +48,7 @@ import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.PublishSubject;
 
 public class CallService {
@@ -77,6 +78,8 @@ public class CallService {
     private final PublishSubject<SipCall> callSubject = PublishSubject.create();
     private final PublishSubject<Conference> conferenceSubject = PublishSubject.create();
 
+    private final Set<String> currentConnections = new HashSet<>();
+    private final BehaviorSubject<Integer> connectionSubject = BehaviorSubject.createDefault(0);
 
     public Observable<Conference> getConfsUpdates() {
         return conferenceSubject;
@@ -101,6 +104,16 @@ public class CallService {
         /*Conference call = currentConferences.get(confId);
         return call == null ? Observable.error(new IllegalArgumentException()) : conferenceSubject
                 .filter(c -> c.getId().equals(confId));//getConfUpdates(call);*/
+    }
+
+    public Observable<Boolean> getConnectionUpdates() {
+        return connectionSubject
+                .map(i -> i > 0)
+                .distinctUntilChanged();
+    }
+
+    private void updateConnectionCount() {
+        connectionSubject.onNext(currentConnections.size() - 2*currentCalls.size());
     }
 
     private static class ConferenceEntity {
@@ -175,6 +188,7 @@ public class CallService {
             }
             SipCall call = addCall(account, callId, number, SipCall.Direction.OUTGOING);
             call.muteVideo(audioOnly);
+            updateConnectionCount();
             return call;
         }).subscribeOn(Schedulers.from(mExecutor));
     }
@@ -428,8 +442,24 @@ public class CallService {
             sipCall.setConversation(account.getByUri(contact.getPrimaryUri()));
 
             currentCalls.put(callId, sipCall);
+            updateConnectionCount();
         }
         return sipCall;
+    }
+
+
+    public void connectionUpdate(String id, int state) {
+        Log.d(TAG, "connectionUpdate: " + id + " " + state);
+        switch(state) {
+            case 0:
+                currentConnections.add(id);
+                break;
+            case 1:
+            case 2:
+                currentConnections.remove(id);
+                break;
+        }
+        updateConnectionCount();
     }
 
     void callStateChanged(String callId, String newState, int detailCode) {
@@ -441,6 +471,7 @@ public class CallService {
                 if (call.getCallStatus() == SipCall.CallStatus.OVER) {
                     currentCalls.remove(call.getDaemonIdString());
                     currentConferences.remove(call.getDaemonIdString());
+                    updateConnectionCount();
                 }
             }
         } catch (Exception e) {
@@ -453,6 +484,7 @@ public class CallService {
 
         SipCall call = addCall(accountId, callId, from, SipCall.Direction.INCOMING);
         callSubject.onNext(call);
+        updateConnectionCount();
     }
 
     public void incomingMessage(String callId, String from, Map<String, String> messages) {

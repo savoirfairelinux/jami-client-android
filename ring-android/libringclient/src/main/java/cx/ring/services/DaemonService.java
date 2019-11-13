@@ -238,6 +238,11 @@ public class DaemonService {
         }
 
         @Override
+        public void connectionUpdate(String id, int state) {
+            mCallService.connectionUpdate(id, state);
+        }
+
+        @Override
         public void incomingMessage(String callId, String from, StringMap messages) {
             if (messages == null || messages.empty())
                 return;

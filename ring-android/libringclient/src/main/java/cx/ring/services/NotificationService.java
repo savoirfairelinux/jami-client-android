@@ -58,9 +58,9 @@ public interface NotificationService {
 
     void updateNotification(Object notification, int notificationId);
 
-    void startForegroundService(int notificationId, boolean isCallService);
+    void startForegroundService(int notificationId, Class serviceClass);
 
-    void stopForegroundService(boolean isCallService);
+    void stopForegroundService(Class serviceClass);
 
     Object getServiceNotification();
 
@@ -71,4 +71,6 @@ public interface NotificationService {
     void removeTransferNotification(long transferId);
 
     Object getDataTransferNotification(int notificationId);
+
+    void onConnectionUpdate(Boolean b);
 }
