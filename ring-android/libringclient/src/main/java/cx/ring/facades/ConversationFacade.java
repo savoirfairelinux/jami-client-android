@@ -98,7 +98,6 @@ public class ConversationFacade {
                 .switchMapSingle(this::loadSmartlist);
 
         mDisposableBag.add(mCallService.getCallsUpdates()
-                .observeOn(Schedulers.io())
                 .subscribe(this::onCallStateChange));
 
         mDisposableBag.add(mCallService.getConnectionUpdates()

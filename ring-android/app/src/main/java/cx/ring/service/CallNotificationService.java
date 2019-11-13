@@ -27,6 +27,7 @@ import android.os.Build;
 import android.os.IBinder;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationManagerCompat;
 
 import javax.inject.Inject;
 
@@ -37,6 +38,7 @@ public class CallNotificationService extends Service {
 
     private boolean isFirst = true;
     private static final int NOTIF_CALL_ID = 1001;
+    private NotificationManagerCompat notificationManager;
 
     @Inject
     NotificationService mNotificationService;
@@ -44,10 +46,7 @@ public class CallNotificationService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
-
         Notification notification = (Notification) mNotificationService.showCallNotification(intent.getIntExtra(NotificationService.KEY_NOTIFICATION_ID, -1));
-
-
         if (notification == null) {
             return START_NOT_STICKY;
         }
@@ -58,16 +57,16 @@ public class CallNotificationService extends Service {
                 startForeground(NOTIF_CALL_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL);
             else
                 startForeground(NOTIF_CALL_ID, notification);
-
         }
 
-        mNotificationService.updateNotification(notification, NOTIF_CALL_ID);
+        notificationManager.notify(NOTIF_CALL_ID, notification);
         return START_NOT_STICKY;
     }
 
     @Override
     public void onCreate() {
         ((JamiApplication) getApplication()).getRingInjectionComponent().inject(this);
+        notificationManager = NotificationManagerCompat.from(this);
         super.onCreate();
     }
 

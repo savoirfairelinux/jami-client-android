@@ -229,12 +229,14 @@ public class DaemonService {
 
         @Override
         public void callStateChanged(String callId, String newState, int detailCode) {
-            mExecutor.submit(() -> mCallService.callStateChanged(callId, newState, detailCode));
+            //mExecutor.submit(() -> mCallService.callStateChanged(callId, newState, detailCode));
+            mCallService.callStateChanged(callId, newState, detailCode);
         }
 
         @Override
         public void incomingCall(String accountId, String callId, String from) {
-            mExecutor.submit(() -> mCallService.incomingCall(accountId, callId, from));
+            //mExecutor.submit(() -> mCallService.incomingCall(accountId, callId, from));
+            mCallService.incomingCall(accountId, callId, from);
         }
 
         @Override
