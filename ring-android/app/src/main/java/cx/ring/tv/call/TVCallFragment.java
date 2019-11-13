@@ -70,12 +70,14 @@ import cx.ring.client.ConversationSelectionActivity;
 import cx.ring.databinding.TvFragCallBinding;
 import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.fragments.CallFragment;
+import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.tv.main.HomeActivity;
+import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.ConversationPath;
 import cx.ring.views.AvatarDrawable;
@@ -337,6 +339,7 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
     public void displayHangupButton(boolean display) {
         if (display) {
             binding.callHangupBtn.setVisibility(View.VISIBLE);
+            binding.callAddBtn.setVisibility(View.VISIBLE);
         } else {
             AlphaAnimation fadeOutAnimation = new AlphaAnimation(1, 0);
             fadeOutAnimation.setInterpolator(new AccelerateInterpolator());
@@ -346,7 +349,9 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
             AnimationSet animationSet = new AnimationSet(false);
             animationSet.addAnimation(fadeOutAnimation);
             binding.callHangupBtn.setAnimation(animationSet);
+            binding.callAddBtn.setAnimation(animationSet);
             binding.callHangupBtn.setVisibility(View.GONE);
+            binding.callAddBtn.setVisibility(View.GONE);
         }
     }
 
@@ -587,7 +592,8 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
 
     @Override
     public void goToAddContact(CallContact callContact) {
-
+        startActivityForResult(ActionHelper.getAddNumberIntentForContact(callContact),
+                ConversationFragment.REQ_ADD_CONTACT);
     }
 
     @Override
@@ -597,6 +603,10 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
                         .setClass(requireActivity(), ConversationSelectionActivity.class)
                         .putExtra(KEY_CONF_ID, conferenceId),
                 REQUEST_CODE_ADD_PARTICIPANT);
+    }
+
+    public void addParticipant() {
+        presenter.startAddParticipant();
     }
 
     public void hangUpClicked() {
