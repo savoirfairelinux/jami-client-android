@@ -34,7 +34,6 @@ import java.util.Random;
 
 import cx.ring.R;
 import cx.ring.client.HomeActivity;
-import cx.ring.utils.Log;
 
 public class SyncService extends Service {
     private static final String TAG = SyncService.class.getSimpleName();
@@ -47,12 +46,8 @@ public class SyncService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        super.onStartCommand(intent, flags, startId);
-        Log.d(TAG, "onStartCommand " + intent);
-
         String action = intent.getAction();
         if (ACTION_START.equals(action)) {
-            Log.i(TAG, "Received Start Foreground Intent ");
             if (isFirst) {
                 isFirst = false;
                 final Intent deleteIntent = new Intent(ACTION_STOP)
@@ -66,7 +61,7 @@ public class SyncService extends Service {
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                         .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
                         .setAutoCancel(false)
-                        .setOngoing(true)
+                        .setOngoing(false)
                         .setVibrate(null)
                         .setSmallIcon(R.drawable.ic_ring_logo_white)
                         .setCategory(NotificationCompat.CATEGORY_PROGRESS)
@@ -81,7 +76,6 @@ public class SyncService extends Service {
             }
         }
         else if (ACTION_STOP.equals(action)) {
-            Log.i(TAG, "Received Stop Foreground Intent");
             stopForeground(true);
             stopSelf();
             isFirst = true;
