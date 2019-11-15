@@ -22,7 +22,6 @@ package cx.ring.client;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import com.google.android.material.appbar.AppBarLayout;
@@ -208,13 +207,11 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
         } else if (Intent.ACTION_SEND.equals(action) || Intent.ACTION_SEND_MULTIPLE.equals(action)) {
             handleShareIntent(intent);
         }
-
-
         fContent = fragmentManager.findFragmentById(R.id.main_frame);
         if (fNavigation != null) {
             onNavigationViewReady();
         }
-        if (fContent == null) {
+        if (fContent == null || Intent.ACTION_SEARCH.equals(action)) {
             fContent = new SmartListFragment();
             fragmentManager.beginTransaction().replace(R.id.main_frame, fContent, HOME_TAG).addToBackStack(HOME_TAG).commitAllowingStateLoss();
         } else if (fContent instanceof Refreshable) {
@@ -225,7 +222,6 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
             presentTrustRequestFragment(mAccountWithPendingrequests);
             mAccountWithPendingrequests = null;
         }
-
     }
 
     @Override
@@ -262,6 +258,11 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
         } else if (Intent.ACTION_SEND.equals(action) || Intent.ACTION_SEND_MULTIPLE.equals(action)) {
             handleShareIntent(intent);
             return;
+        } else if (Intent.ACTION_SEARCH.equals(action)) {
+            goToHome();
+            if (fContent instanceof SmartListFragment) {
+                ((SmartListFragment)fContent).handleIntent(intent);
+            }
         }
         if (!DeviceUtils.isTablet(this) || !DRingService.ACTION_CONV_ACCEPT.equals(action)) {
             return;
@@ -429,6 +430,19 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
         return mDrawerToggle.onOptionsItemSelected(item);
     }
 
+    private void goToHome() {
+        if (fContent instanceof SmartListFragment) {
+            return;
+        }
+        FragmentManager manager = getSupportFragmentManager();
+        if (manager.getBackStackEntryCount() == 1) {
+            return;
+        }
+
+        popCustomBackStack();
+        fContent = manager.findFragmentByTag(HOME_TAG);
+    }
+
     @Override
     public void onNavigationSectionSelected(HomeNavigationFragment.Section section) {
         if (!isDrawerLocked) {
@@ -437,16 +451,7 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
 
         switch (section) {
             case HOME:
-                if (fContent instanceof SmartListFragment) {
-                    break;
-                }
-                FragmentManager manager = getSupportFragmentManager();
-                if (manager.getBackStackEntryCount() == 1) {
-                    break;
-                }
-
-                popCustomBackStack();
-                fContent = manager.findFragmentByTag(HOME_TAG);
+                goToHome();
                 break;
             case CONTACT_REQUESTS:
                 Bundle bundle = new Bundle();

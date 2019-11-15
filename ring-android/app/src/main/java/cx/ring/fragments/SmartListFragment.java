@@ -21,6 +21,7 @@
 package cx.ring.fragments;
 
 import android.app.Activity;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -164,10 +165,19 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
                 editText.setAutofillHints(View.AUTOFILL_HINT_USERNAME);
             }
         }
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
         Activity  activity = getActivity();
         Intent intent = activity == null ? null : activity.getIntent();
-        if (intent != null && intent.getAction() != null) {
+        if (intent != null)
+            handleIntent(intent);
+    }
+
+    public void handleIntent(@NonNull Intent intent) {
+        if (mSearchView != null && intent.getAction() != null) {
             switch (intent.getAction()) {
                 case Intent.ACTION_VIEW:
                 case Intent.ACTION_CALL:
@@ -176,6 +186,10 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
                 case Intent.ACTION_DIAL:
                     mSearchMenuItem.expandActionView();
                     mSearchView.setQuery(intent.getDataString(), false);
+                    break;
+                case Intent.ACTION_SEARCH:
+                    mSearchMenuItem.expandActionView();
+                    mSearchView.setQuery(intent.getStringExtra(SearchManager.QUERY), true);
                     break;
                 default:
                     break;
