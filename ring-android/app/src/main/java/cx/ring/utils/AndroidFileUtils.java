@@ -190,12 +190,14 @@ public class AndroidFileUtils {
     }
 
     public static String getMimeTypeFromExtension(String ext) {
+        if (!TextUtils.isEmpty(ext)) {
             String mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(ext.toLowerCase());
             if (!TextUtils.isEmpty(mimeType))
                 return mimeType;
             if (ext.contentEquals("gz")) {
                 return "application/gzip";
             }
+        }
         return "application/octet-stream";
     }
 
