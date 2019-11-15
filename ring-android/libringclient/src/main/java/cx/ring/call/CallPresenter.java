@@ -411,6 +411,7 @@ public class CallPresenter extends RootPresenter<CallView> {
                     .subscribe(cs -> getView().updateContactBubble(cs), e -> Log.e(TAG, "Error updating contact data", e));
             mCompositeDisposable.add(contactDisposable);
         }
+        mPendingSubject.onNext(mPendingCalls);
     }
 
     private void confUpdate(Conference call) {
@@ -423,8 +424,6 @@ public class CallPresenter extends RootPresenter<CallView> {
             return;
         view.updateMenu();
         if (call.isOnGoing()) {
-            Log.w(TAG, "confUpdate call.isOnGoing");
-
             mOnGoingCall = true;
             view.initNormalStateDisplay(mAudioOnly, isMicrophoneMuted());
             view.updateMenu();
@@ -441,7 +440,6 @@ public class CallPresenter extends RootPresenter<CallView> {
                 timeUpdateTask.dispose();
             timeUpdateTask = mUiScheduler.schedulePeriodicallyDirect(this::updateTime, 0, 1, TimeUnit.SECONDS);
         } else if (call.isRinging()) {
-            Log.w(TAG, "confUpdate call.isRinging");
             SipCall scall = call.getCall();
 
             view.handleCallWakelock(mAudioOnly);
@@ -557,20 +555,17 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void addConferenceParticipant(String accountId, String contactId) {
-        String destCallId = mConference.getId();
-
         mCompositeDisposable.add(mConversationFacade.startConversation(accountId, new Uri(contactId))
                 .map(Conversation::getCurrentCalls)
                 .subscribe(calls -> {
                     if (calls.isEmpty()) {
-                        final Observer<SipCall>  pendingObserver = new Observer<SipCall>() {
+                        final Observer<SipCall> pendingObserver = new Observer<SipCall>() {
                             private SipCall call = null;
                             @Override
                             public void onSubscribe(Disposable d) {}
 
                             @Override
                             public void onNext(SipCall sipCall) {
-                                Log.w(TAG, "placeCallObservable onNext " + sipCall.getCallStatus());
                                 if (call == null) {
                                     call = sipCall;
                                     mPendingCalls.add(sipCall);
@@ -583,7 +578,6 @@ public class CallPresenter extends RootPresenter<CallView> {
 
                             @Override
                             public void onComplete() {
-                                Log.w(TAG, "placeCallObservable onComplete " + call);
                                 if (call != null) {
                                     mPendingCalls.remove(call);
                                     mPendingSubject.onNext(mPendingCalls);
@@ -599,20 +593,22 @@ public class CallPresenter extends RootPresenter<CallView> {
                                 .firstElement()
                                 .delay(1, TimeUnit.SECONDS)
                                 .doOnEvent((v, e) -> pendingObserver.onComplete());
-                        if (mConference.getParticipants().size() > 1) {
-                            mCompositeDisposable.add(newCall.subscribe(call -> mCallService.joinConference(destCallId, call.getDaemonIdString())));
-                        } else {
-                            mCompositeDisposable.add(newCall.subscribe(call -> mCallService.joinParticipant(destCallId, call.getDaemonIdString())));
-                        }
-
+                        mCompositeDisposable.add(newCall.subscribe(call ->  {
+                            String id = mConference.getId();
+                            if (mConference.getParticipants().size() > 1) {
+                                mCallService.addParticipant(call.getDaemonIdString(), id);
+                            } else {
+                                mCallService.joinParticipant(id, call.getDaemonIdString());
+                            }
+                        }));
                     } else {
                         // Selected contact already in call or conference, join it to current conference
                         Conference call = calls.get(0);
                         if (call != mConference) {
                             if (mConference.getParticipants().size() > 1) {
-                                mCallService.joinConference(destCallId, call.getId());
+                                mCallService.joinConference(mConference.getId(), call.getId());
                             } else {
-                                mCallService.joinParticipant(destCallId, call.getId());
+                                mCallService.joinParticipant(mConference.getId(), call.getId());
                             }
                         }
                     }
