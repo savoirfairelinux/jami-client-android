@@ -133,8 +133,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     private File mCurrentPhoto = null;
     private String mCurrentFileAbsolutePath = null;
     private Disposable actionbarTarget = null;
-    private static int position;
-
+    private int mSelectedPosition;
 
     private static int getIndex(Spinner spinner, Uri myString) {
         for (int i = 0, n = spinner.getCount(); i < n; i++)
@@ -311,9 +310,9 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     public void updateAdapterItem() {
-        if(position != -1) {
-            mAdapter.notifyItemChanged(position);
-            position = -1;
+        if (mSelectedPosition != -1) {
+            mAdapter.notifyItemChanged(mSelectedPosition);
+            mSelectedPosition = -1;
         }
     }
 
@@ -388,7 +387,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
      * @param position
      */
     public void updatePosition(int position) {
-        this.position = position;
+        mSelectedPosition = position;
     }
 
     public void takePicture() {
