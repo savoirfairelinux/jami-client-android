@@ -278,22 +278,17 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         notifyDataSetChanged();
     }
 
-    public static class RecyclerViewContextMenuInfo implements ContextMenu.ContextMenuInfo {
-        public RecyclerViewContextMenuInfo(int position, long id) {
+    private static class RecyclerViewContextMenuInfo implements ContextMenu.ContextMenuInfo {
+        RecyclerViewContextMenuInfo(int position, long id) {
             this.position = position;
             this.id = id;
         }
-
         final public int position;
         final public long id;
     }
 
-    public RecyclerViewContextMenuInfo getCurrentLongItem() {
-        return mCurrentLongItem;
-    }
-
     public boolean onContextItemSelected(MenuItem item) {
-        ConversationAdapter.RecyclerViewContextMenuInfo info = getCurrentLongItem();
+        ConversationAdapter.RecyclerViewContextMenuInfo info = mCurrentLongItem;
         Interaction interaction = null;
         if (info == null) {
             return false;
@@ -503,34 +498,40 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         } else if (type == MessageType.AUDIO) {
             Context context = viewHolder.itemView.getContext();
             try {
+                ((ImageView) viewHolder.btnAccept).setImageResource(R.drawable.baseline_play_arrow_24);
                 final MediaPlayer player = MediaPlayer.create(context, getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path));
                 viewHolder.player = player;
-                player.setOnCompletionListener(mp -> {
-                    player.seekTo(0);
-                    ((ImageView) viewHolder.btnAccept).setImageResource(R.drawable.baseline_play_arrow_24);
-                });
-                ((ImageView) viewHolder.btnAccept).setImageResource(R.drawable.baseline_play_arrow_24);
-                viewHolder.btnAccept.setOnClickListener((b) -> {
-                    if (player.isPlaying()) {
-                        player.pause();
+                if (player != null) {
+                    player.setOnCompletionListener(mp -> {
+                        player.seekTo(0);
                         ((ImageView) viewHolder.btnAccept).setImageResource(R.drawable.baseline_play_arrow_24);
-                    } else {
-                        player.start();
-                        ((ImageView) viewHolder.btnAccept).setImageResource(R.drawable.baseline_pause_24);
-                    }
-                });
-                viewHolder.btnRefuse.setOnClickListener((b) -> {
-                    if (player.isPlaying())
-                        player.pause();
-                    player.seekTo(0);
-                    ((ImageView) viewHolder.btnAccept).setImageResource(R.drawable.baseline_play_arrow_24);
-                });
-                viewHolder.updater = new UiUpdater(() -> {
-                    int pS = player.getCurrentPosition() / 1000;
-                    int dS = player.getDuration() / 1000;
-                    viewHolder.mMsgTxt.setText(String.format("%02d:%02d / %02d:%02d", pS / 60, pS % 60, dS / 60, dS % 60));
-                });
-                viewHolder.updater.start();
+                    });
+                    viewHolder.btnAccept.setOnClickListener((b) -> {
+                        if (player.isPlaying()) {
+                            player.pause();
+                            ((ImageView) viewHolder.btnAccept).setImageResource(R.drawable.baseline_play_arrow_24);
+                        } else {
+                            player.start();
+                            ((ImageView) viewHolder.btnAccept).setImageResource(R.drawable.baseline_pause_24);
+                        }
+                    });
+                    viewHolder.btnRefuse.setOnClickListener((b) -> {
+                        if (player.isPlaying())
+                            player.pause();
+                        player.seekTo(0);
+                        ((ImageView) viewHolder.btnAccept).setImageResource(R.drawable.baseline_play_arrow_24);
+                    });
+                    viewHolder.updater = new UiUpdater(() -> {
+                        int pS = player.getCurrentPosition() / 1000;
+                        int dS = player.getDuration() / 1000;
+                        viewHolder.mMsgTxt.setText(String.format("%02d:%02d / %02d:%02d", pS / 60, pS % 60, dS / 60, dS % 60));
+                    });
+                    viewHolder.updater.start();
+                } else {
+                    viewHolder.btnAccept.setOnClickListener(null);
+                    viewHolder.btnRefuse.setOnClickListener(null);
+                    viewHolder.updater = null;
+                }
             } catch (IllegalStateException | NullPointerException e) {
                 Log.e(TAG, "Error initializing player, it may have already been released: " + e.getMessage());
             }
@@ -623,8 +624,6 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             }
             mCurrentLongItem = new RecyclerViewContextMenuInfo(convViewHolder.getAdapterPosition(), v.getId());
             return false;
-
-
         });
 
 
@@ -679,9 +678,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                         convViewHolder.mPhoto.setImageResource(R.drawable.baseline_check_circle_24);
                     }
                     if (!isLast) {
-                        convViewHolder.updater = new UiUpdater(() -> {
-                            convViewHolder.mMsgDetailTxt.setText(timestampToDetailString(context, textMessage.getTimestamp()));
-                        }, 10000);
+                        convViewHolder.updater = new UiUpdater(() -> convViewHolder.mMsgDetailTxt.setText(timestampToDetailString(context, textMessage.getTimestamp())), 10000);
                         convViewHolder.updater.start();
                         convViewHolder.mMsgDetailTxt.setVisibility(View.VISIBLE);
                     } else {
