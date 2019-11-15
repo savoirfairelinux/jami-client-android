@@ -234,13 +234,13 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             @Override
             public void afterTextChanged(Editable s) {
                 String message = s.toString();
-                boolean hasMessage = TextUtils.isEmpty(message);
+                boolean hasMessage = !TextUtils.isEmpty(message);
                 if (hasMessage) {
-                    binding.msgSend.setVisibility(View.GONE);
-                    binding.emojiSend.setVisibility(View.VISIBLE);
-                } else {
                     binding.msgSend.setVisibility(View.VISIBLE);
                     binding.emojiSend.setVisibility(View.GONE);
+                } else {
+                    binding.msgSend.setVisibility(View.GONE);
+                    binding.emojiSend.setVisibility(View.VISIBLE);
                 }
                 if (mPreferences != null) {
                     if (hasMessage)
