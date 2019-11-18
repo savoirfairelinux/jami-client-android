@@ -44,9 +44,11 @@ import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.Uri;
+import cx.ring.services.NotificationService;
 import cx.ring.tv.call.TVCallActivity;
 import cx.ring.tv.main.BaseDetailFragment;
 import cx.ring.tv.model.TVListViewModel;
+import cx.ring.utils.ConversationPath;
 import cx.ring.views.AvatarDrawable;
 
 public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> implements TVContactView {
@@ -54,7 +56,6 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
     private static final int ACTION_CALL = 0;
     private static final int ACTION_DELETE = 1;
 
-    private Uri mContactUri;
     private ArrayObjectAdapter mAdapter;
     private int iconSize = -1;
 
@@ -62,25 +63,22 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
     public void onCreate(Bundle savedInstanceState) {
         ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
         super.onCreate(savedInstanceState);
-        mContactUri = (Uri) getActivity().getIntent().getSerializableExtra(TVContactActivity.CONTACT_REQUEST);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        BrowseFrameLayout layout = (BrowseFrameLayout) view;
-
         // Override down navigation as we do not use it in this screen
         // Only the detailPresenter will be displayed
+        BrowseFrameLayout layout = (BrowseFrameLayout) view;
         layout.setOnDispatchKeyListener((v, keyCode, event) -> event.getKeyCode() == KeyEvent.KEYCODE_DPAD_DOWN);
+
         prepareBackgroundManager();
-        if (mContactUri != null) {
-            setupAdapter();
-        }
+        setupAdapter();
         Resources res = getResources();
         iconSize = res.getDimensionPixelSize(R.dimen.tv_avatar_size);
-        presenter.setContact(mContactUri);
+        presenter.setContact(ConversationPath.fromIntent(getActivity().getIntent()));
     }
 
     private void prepareBackgroundManager() {
@@ -111,9 +109,9 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
 
         detailsPresenter.setOnActionClickedListener(action -> {
             if (action.getId() == ACTION_CALL) {
-                presenter.contactClicked(mContactUri);
+                presenter.contactClicked();
             } else if (action.getId() == ACTION_DELETE) {
-                presenter.removeContact(mContactUri);
+                presenter.removeContact();
             }
         });
 
@@ -144,6 +142,14 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
         Intent intent = new Intent(context, TVCallActivity.class);
         intent.putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountID);
         intent.putExtra(ConversationFragment.KEY_CONTACT_RING_ID, uri.getRawUriString());
+        context.startActivity(intent, null);
+    }
+
+    @Override
+    public void goToCallActivity(String id) {
+        Context context = requireContext();
+        Intent intent = new Intent(context, TVCallActivity.class);
+        intent.putExtra(NotificationService.KEY_CALL_ID, id);
         context.startActivity(intent, null);
     }
 

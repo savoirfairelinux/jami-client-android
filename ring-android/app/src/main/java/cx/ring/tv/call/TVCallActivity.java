@@ -18,6 +18,7 @@
  */
 package cx.ring.tv.call;
 
+import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -48,6 +49,11 @@ public class TVCallActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        if (intent == null) {
+            finish();
+            return;
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             setTurnScreenOn(true);
@@ -83,8 +89,7 @@ public class TVCallActivity extends FragmentActivity {
             String confId = getIntent().getStringExtra(NotificationService.KEY_CALL_ID);
             Log.d(TAG, "onCreate: conf " + confId);
 
-            callFragment = TVCallFragment.newInstance(TVCallFragment.ACTION_GET_CALL,
-                    confId);
+            callFragment = TVCallFragment.newInstance(TVCallFragment.ACTION_GET_CALL, confId);
             fragmentTransaction.replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit();
         }
     }
