@@ -41,8 +41,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.text.TextUtils;
-import android.util.Pair;
 import android.util.Range;
 import android.util.Size;
 import android.view.Surface;
@@ -60,12 +58,16 @@ import java.util.Set;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.core.util.Pair;
+
 import cx.ring.daemon.IntVect;
 import cx.ring.daemon.RingserviceJNI;
 import cx.ring.daemon.UintVect;
 import cx.ring.utils.Log;
 import cx.ring.views.AutoFitTextureView;
 import io.reactivex.Completable;
+import io.reactivex.Maybe;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
@@ -85,31 +87,46 @@ class CameraServiceCamera2 extends CameraService {
     CameraServiceCamera2(@NonNull Context c) {
         manager = (CameraManager) c.getSystemService(Context.CAMERA_SERVICE);
     }
+    static private Observable<Pair<String, CameraCharacteristics>> filterCompatibleCamera(String[] cameraIds, CameraManager cameraManager) {
+        return Observable.fromArray(cameraIds)
+                .map(id -> new Pair<>(id, cameraManager.getCameraCharacteristics(id)))
+                .filter(camera -> {
+                    try {
+                        for (int c : camera.second.get(CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES))
+                            if (c == CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES_BACKWARD_COMPATIBLE)
+                                return true;
+                    } catch (Exception e) {
+                        return false;
+                    }
+                    return false;
+                });
+    }
+
+    static private Observable<String> filterCameraIdsFacing(List<Pair<String, CameraCharacteristics>> cameras, int facing) {
+        return Observable.fromIterable(cameras)
+                .filter(camera -> camera.second.get(CameraCharacteristics.LENS_FACING) == facing)
+                .map(camera -> camera.first);
+    }
 
     private Single<VideoDevices> loadDevices(CameraManager manager) {
         return Single.fromCallable(() -> {
             VideoDevices devices = new VideoDevices();
-            for (String id : manager.getCameraIdList()) {
-                devices.currentId = id;
-                CameraCharacteristics cc = manager.getCameraCharacteristics(id);
-                int facing = cc.get(CameraCharacteristics.LENS_FACING);
-                if (facing == CameraCharacteristics.LENS_FACING_FRONT) {
-                    devices.cameraFront = id;
-                }
-                devices.cameras.add(id);
-                if (!TextUtils.isEmpty(devices.cameraFront))
-                    devices.currentId = devices.cameraFront;
-                else if (!devices.cameras.isEmpty())
-                    devices.currentId = devices.cameras.get(0);
-
-                if (devices.currentId != null) {
-                    for (int i=0; i<devices.cameras.size(); i++)
-                        if (devices.cameras.get(i) == devices.currentId) {
-                            devices.currentIndex = i;
-                            break;
-                        }
-                }
+            List<Pair<String, CameraCharacteristics>> cameras = filterCompatibleCamera(manager.getCameraIdList(), manager).toList().blockingGet();
+            Maybe<String> backCamera = filterCameraIdsFacing(cameras, CameraCharacteristics.LENS_FACING_BACK).firstElement();
+            Maybe<String> frontCamera = filterCameraIdsFacing(cameras, CameraCharacteristics.LENS_FACING_FRONT).firstElement();
+            Observable<String> externalCameras;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                externalCameras = filterCameraIdsFacing(cameras, CameraCharacteristics.LENS_FACING_EXTERNAL);
+            } else  {
+                externalCameras = Observable.empty();
             }
+            Observable.concat(
+                    frontCamera.toObservable(),
+                    backCamera.toObservable(),
+                    externalCameras).subscribe(devices.cameras::add);
+            if (!devices.cameras.isEmpty())
+                devices.currentId = devices.cameras.get(0);
+            devices.cameraFront = frontCamera.blockingGet();
             Log.w(TAG, "Loading video devices: found " + devices.cameras.size());
             return devices;
         }).subscribeOn(Schedulers.io());
