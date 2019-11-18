@@ -36,7 +36,6 @@
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Introdu numele sau numărul de telefon</string>
   <string name="choose_number">Alege un număr</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->

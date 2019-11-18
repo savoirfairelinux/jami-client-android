@@ -48,7 +48,6 @@
     <item quantity="other">%d pokalbių</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Įrašykite vardą ar telefono numerį...</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->

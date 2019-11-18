@@ -32,7 +32,6 @@
     <item quantity="other">%d Perbualan</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Masukkan nama atau nombor telefon</string>
   <string name="choose_number">Pilih nombor</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->

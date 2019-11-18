@@ -19,7 +19,6 @@
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">הזן שם או מספר טלפון…</string>
   <string name="choose_number">בחר מספר</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->

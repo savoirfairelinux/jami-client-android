@@ -36,7 +36,6 @@
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Εισάγετε ένα όνομα ή αριθμό τηλεφώνου</string>
   <string name="choose_number">Επιλέξτε αριθμό</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->

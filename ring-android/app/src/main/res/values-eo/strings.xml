@@ -27,7 +27,6 @@
     <item quantity="other">%d Konversacioj</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Entajpu nomon aŭ telefonnumeron…</string>
   <string name="choose_number">Elektu numeron</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->

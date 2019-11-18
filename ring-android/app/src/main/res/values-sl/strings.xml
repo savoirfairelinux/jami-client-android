@@ -39,7 +39,6 @@
     <item quantity="other">%d pogovorov</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Vnesi ime ali telefonsko številko...</string>
   <string name="choose_number">Izberi številko</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->

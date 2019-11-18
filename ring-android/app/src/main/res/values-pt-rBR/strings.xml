@@ -47,7 +47,6 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
     <item quantity="other">%d Conversas</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Digite nome ou número de telefone…</string>
   <string name="choose_number">Escolhe um número</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->

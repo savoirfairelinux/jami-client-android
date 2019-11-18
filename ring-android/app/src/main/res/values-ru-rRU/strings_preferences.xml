@@ -4,8 +4,24 @@
   <string name="pref_category_contacts">Контакты</string>
   <string name="pref_category_video">Видео</string>
   <string name="pref_category_system">Система</string>
+  <string name="pref_category_privacy">Приватность</string>
   <string name="pref_mobileData_title">Мобильные данные</string>
+  <string name="pref_mobileData_summary">Разрешить Jami использовать 3G / LTE в дополнение к Wi-Fi</string>
+  <string name="pref_pushNotifications_title">Всплывающие уведомления</string>
+  <string name="pref_pushNotifications_summary">Использовать сервера Google, чтобы разрешить прием звонков/сообщений в фоновом режиме</string>
+  <string name="pref_video_advanced_title">Расширенные настройки видео</string>
+  <string name="pref_video_advanced_summary">Изменить битрейт видео, разрешение, а также получите доступ к экспериментальным функциям</string>
+  <string name="pref_hd_summary">Включить отправку HD-видео</string>
+  <string name="pref_hwEncode_title">Включить ускоренное кодирование</string>
+  <string name="pref_hwEncode_summary">Экспериментальная возможность</string>
   <string name="pref_systemContacts_title">Использовать системные контакты</string>
   <string name="pref_systemContacts_summary">Использовать системные контакты для входящих.</string>
+  <string name="pref_systemDialer_title">Выполнение системных вызовов с помощью Jami</string>
+  <string name="pref_systemDialer_summary">Использовать Jami для системных вызовов, когда это возможно.</string>
+  <string name="pref_startOnBoot_title">Автозапуск Jami</string>
+  <string name="pref_startOnBoot_summary">Запускать Jami в фоновом режиме при запуске системы.</string>
   <string name="pref_clearHistory_title">Очистить историю</string>
+  <string name="pref_clearHistory_summary">Очистить всю историю переписки. Это действие нельзя будет отменить.</string>
+  <string name="pref_persistNotification_title">Запустить в фоновом режиме</string>
+  <string name="pref_persistNotification_summary">Разрешить работать в фоновом режиме для приема звонков и сообщений.</string>
 </resources>

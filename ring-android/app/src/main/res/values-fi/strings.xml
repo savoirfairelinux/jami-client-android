@@ -46,7 +46,6 @@
     <item quantity="other">%d Keskustelut</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Syötä nimi tai puhelinnumero...</string>
   <string name="choose_number">Valitse numero</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->

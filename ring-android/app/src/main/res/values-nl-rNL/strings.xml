@@ -19,7 +19,6 @@
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Voer een naam of telefoonnummer in...</string>
   <string name="choose_number">Kies een nummer</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->

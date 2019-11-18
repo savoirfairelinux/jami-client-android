@@ -12,9 +12,15 @@
   <string name="no_browser_app_installed">Приложение для веб-браузера не найдено, установите его для просмотра этой страницы</string>
   <string name="email_chooser_title">Отправить почту, используя...</string>
   <string name="website_chooser_title">Просмотр веб-сайта с помощью…</string>
+  <string name="license">Это программное обеспечение предоставляется \"как есть\", без каких-либо гарантий. Дополнительные сведения смотрите <u>GNU General Public License версии 3 или позднее</u></string>
   <string name="description">Jami — свободная программа для связи, уважающая свободу и конфиденциальность пользователей.</string>
   <string name="credits">Авторы</string>
+  <string name="call_service_description">Этот сервис необходима для того, чтобы ваши звонки продолжали работать поверх приложений. Это работает только во время звонков.</string>
+  <string name="data_transfer_service_description">Этот сервис необходим для отображения уведомлений во время передачи файлов. Это работает только при передаче файлов. </string>
   <!--About dialog-->
+  <string name="developed_by">Разработано </string>
+  <string name="designed_by">Дизайнер </string>
+  <string name="ringtones_by">Рингтоны от </string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Звонок</string>
   <string name="error_no_network">Отсутствует сетевое подключение</string>
@@ -45,7 +51,6 @@
     <item quantity="other">%d беседы</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Введите имя или номер телефона</string>
   <string name="choose_number">Выбор номера</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -56,6 +61,7 @@
   <string name="notif_incoming_call">Входящий вызов</string>
   <string name="notif_outgoing_call_title">Исходящий вызов на %1$s</string>
   <string name="notif_outgoing_call">Исходящий вызов</string>
+  <string name="notif_current_call_title">Текущий вызов с %1$s</string>
   <string name="notif_current_call">Текущий вызов</string>
   <string name="notif_channel_call_in_progress">Идёт вызов</string>
   <string name="notif_channel_calls">Звонки</string>
@@ -71,8 +77,11 @@
   <string name="notif_mark_as_read">Пометить как прочитанное</string>
   <string name="notif_dismiss">Сбросить</string>
   <string name="notif_reply">Ответить</string>
+  <string name="notif_incoming_file_transfer_title">Входящий файл от %1$s</string>
   <string name="notif_incoming_file_transfer">Кто-то хочет отправить вам файл</string>
+  <string name="notif_outgoing_file_transfer_title">Отправка файла %1$s</string>
   <string name="notif_outgoing_file_transfer">Кто-то хочет отправить вам файл</string>
+  <string name="notif_incoming_picture">Изображение от %1$s</string>
   <string name="action_open">Открыть</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Вы</string>
@@ -92,6 +101,7 @@
   <string name="hist_invitation_received">Получено приглашение</string>
   <string name="ab_action_audio_call">Аудиовызов</string>
   <string name="ab_action_video_call">Видеозвонок</string>
+  <string name="ab_action_change_screen_orientation">Изменить ориентацию экрана</string>
   <string name="share_via">Поделится</string>
   <string name="write_a_message">Написать сообщение</string>
   <string name="scan_qr">Сканировать QR код</string>
@@ -119,6 +129,7 @@
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Чтобы включить эту функцию Jami необходимо получить доступ к \"Чтению контактов\". </string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Для включения этой функции Jami необходимо разрешение \"запись журнала вызовов\". Пожалуйста, предоставьте это разрешение.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Сканировать QR код аккаунта, который хотите добавить</string>
   <string name="title_activity_qrcode">Поделиться своей контактной информацией</string>
@@ -159,6 +170,8 @@
   <string name="prompt_new_username">Введите новое имя пользователя</string>
   <string name="help_password_choose">Выберите надежный пароль, который вы запомните, чтобы защитить свою учетную запись Jami.</string>
   <string name="help_password_enter">Введите ваш основной пароль учётной записи Jami </string>
+  <string name="help_server_enter">Введите URL-адрес управляющего сервера</string>
+  <string name="help_pin_enter">Введите PIN-код из другой учетной записи Jami. Используйте функцию \"экспорт учетной записи Jami\" для получения PIN-кода.</string>
   <string name="wizard_next">Далее</string>
   <string name="wizard_back">Назад</string>
   <string name="wizard_skip">Пропустить</string>
@@ -174,6 +187,7 @@
   <string name="share_your_account_information">Поделиться своей контактной информацией</string>
   <string name="share_label">Поделится</string>
   <string name="generic_error_migration">Ошибка</string>
+  <string name="generic_error_migration_message">Во время миграции произошла ошибка</string>
   <string name="title_share_with">Поделиться с...</string>
   <!--Pending contact requests-->
   <string name="accept">Принять</string>
@@ -183,11 +197,17 @@
   <string name="contact_request_msg">У вас %1$sзапросов на добавление в контакты</string>
   <string name="contact_request_account">Для %1$s</string>
   <string name="no_requests">0 запросов на добавление в контакты</string>
+  <string name="message_contact_not_trusted_yet">%sеще нет в ваших контактах.\nВы хотите принять или отклонить запрос?</string>
+  <string name="message_contact_not_trusted">%sеще нет в ваших контактах.\nДобавить его в контакты?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Отправть</string>
   <string name="send_request_title">Отправить запрос на добавление в контакты</string>
+  <string name="send_request_msg">Для связи с этим пользователем необходимо отправить запрос на добавление в контакты. Пока ваш контакт не принял запрос, вы можете отправлять сообщения, но он не может отвечать.</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">0 заблокированных контактов</string>
   <!--Smartlist-->
+  <string name="no_contact_request">Нет запросов на добавление в контакты</string>
+  <string name="contact_request_sent">Запрос на добавление в контакты отправлен</string>
   <string name="start_conversation">Начать беседу</string>
   <string name="search_results">Результаты Поиска</string>
   <string name="tv_contact_row_header">Контакты</string>
@@ -196,10 +216,19 @@
   <string name="generic_error">Произошла неизвестная ошибка</string>
   <!--File Transfer-->
   <string name="invalid_file">Файл повреждён </string>
+  <string name="not_able_to_write_file">Не удаётся записать файл</string>
   <string name="file_transfer_status_created">инициализация передачи</string>
   <string name="file_transfer_status_unsupported">не поддерживается</string>
+  <string name="file_transfer_status_wait_peer_acceptance">ожидание принятия пира</string>
+  <string name="file_transfer_status_wait_host_acceptance">ожидание подтверждения</string>
+  <string name="file_transfer_status_ongoing">выполняется</string>
   <string name="file_transfer_status_finished">завершено</string>
+  <string name="file_transfer_status_closed_by_host">прервано принимающей стороной</string>
+  <string name="file_transfer_status_closed_by_peer">прервано пиром</string>
   <string name="file_transfer_status_invalid_pathname">неправильный путь к файлу</string>
+  <string name="file_transfer_status_unjoinable_peer">недоступный пир</string>
+  <string name="file_transfer_status_cancelled">отменено</string>
+  <string name="file_transfer_status_error">произошла ошибка</string>
   <string name="file_transfer_status_timed_out">истекло время</string>
   <string name="file_saved_in">Файл сохранён в %s</string>
   <string name="file_saved_successfully">Файл успешно сохранён</string>
@@ -215,4 +244,5 @@
   <string name="menu_message_cancel">Отменить сообщение</string>
   <string name="menu_delete">Удалить</string>
   <string name="pref_darkTheme_title">Тёмная тема</string>
+  <string name="pref_darkTheme_summary">Всегда включать темную тему вместо использования системных параметров.</string>
 </resources>

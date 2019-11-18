@@ -51,7 +51,6 @@
     <item quantity="other">%d диалогов</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Введите имя или номер телефона...</string>
   <string name="choose_number">Выберите номер</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->

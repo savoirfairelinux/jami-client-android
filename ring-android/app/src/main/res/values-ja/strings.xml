@@ -39,7 +39,6 @@
     <item quantity="other">%d 会話</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">相手の名前か電話番号を入力してください...</string>
   <string name="choose_number">番号を選んでください</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->

@@ -41,7 +41,6 @@
     <item quantity="other">%d samtaler</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Indtast navn eller telefonnummer...</string>
   <string name="choose_number">Vælg et nummer</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->

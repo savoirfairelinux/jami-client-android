@@ -48,7 +48,6 @@
     <item quantity="other">%d групові чати</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Введіть ім’я або телефонний номер...</string>
   <string name="choose_number">Оберіть номер</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
