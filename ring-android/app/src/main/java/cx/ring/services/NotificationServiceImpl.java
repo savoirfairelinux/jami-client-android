@@ -177,7 +177,7 @@ public class NotificationServiceImpl implements NotificationService {
         NotificationChannel callInProgressChannel = new NotificationChannel(NOTIF_CHANNEL_CALL_IN_PROGRESS, mContext.getString(R.string.notif_channel_call_in_progress), NotificationManager.IMPORTANCE_DEFAULT);
         callInProgressChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
         callInProgressChannel.setSound(null, null);
-        missedCallsChannel.enableVibration(false);
+        callInProgressChannel.enableVibration(false);
         callInProgressChannel.setGroup(NOTIF_CALL_GROUP);
         notificationManager.createNotificationChannel(callInProgressChannel);
 
