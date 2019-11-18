@@ -640,10 +640,10 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
                 startActivity(new Intent(getActivity(), HomeActivity.class));
                 return true;
             case R.id.conv_action_audiocall:
-                presenter.callWithAudioOnly(true);
+                presenter.goToCall(true);
                 return true;
             case R.id.conv_action_videocall:
-                presenter.callWithAudioOnly(false);
+                presenter.goToCall(false);
                 return true;
             case R.id.conv_contact_details:
                 presenter.openContact();

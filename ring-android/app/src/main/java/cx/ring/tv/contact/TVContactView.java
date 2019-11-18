@@ -25,7 +25,11 @@ import cx.ring.mvp.BaseView;
 import cx.ring.tv.model.TVListViewModel;
 
 public interface TVContactView extends BaseView {
-     void showContact(TVListViewModel model);
-     void callContact(String accountID, Uri uri);
-     void finishView();
+    void showContact(TVListViewModel model);
+
+    void callContact(String accountID, Uri uri);
+
+    void goToCallActivity(String id);
+
+    void finishView();
 }

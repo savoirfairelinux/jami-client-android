@@ -72,9 +72,11 @@ import cx.ring.tv.contactrequest.TVContactRequestActivity;
 import cx.ring.tv.model.TVListViewModel;
 import cx.ring.tv.search.SearchActivity;
 import cx.ring.tv.views.CustomTitleView;
+import cx.ring.utils.ConversationPath;
 import cx.ring.utils.QRCodeUtils;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class MainFragment extends BaseBrowseFragment<MainPresenter> implements MainView {
 
@@ -93,6 +95,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     private CardPresenterSelector selector;
     private IconCard qrCard = null;
     private ListRow myAccountRow;
+    private final CompositeDisposable mDisposable = new CompositeDisposable();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -105,12 +108,13 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         super.onViewCreated(view, savedInstanceState);
         setupUIElements(requireActivity());
         titleView = view.findViewById(R.id.browse_title_group);
+        presenter.reloadAccountInfos();
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        presenter.reloadAccountInfos();
+    public void onDestroyView() {
+        super.onDestroyView();
+        mDisposable.clear();
     }
 
     private void setupUIElements(@NonNull Activity activity) {
@@ -275,7 +279,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         Account account = viewModel.getAccount();
         if (account != null) {
             String address = account.getDisplayUsername();
-            VCardServiceImpl
+            mDisposable.add(VCardServiceImpl
                     .loadProfile(account)
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSuccess(profile -> {
@@ -294,7 +298,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
                     .subscribe(a -> {
                         titleView.getLogoView().setVisibility(View.VISIBLE);
                         titleView.getLogoView().setImageDrawable(a);
-                    });
+                    }));
             qrCard.setDrawable(prepareAccountQr(context, account.getUri()));
             myAccountRow.getAdapter().notifyItemRangeChanged(QR_ITEM_POSITION, 1);
         }
@@ -347,8 +351,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
                             TVContactRequestActivity.SHARED_ELEMENT_NAME).toBundle();
                     getActivity().startActivity(intent, bundle);
                 } else {
-                    Intent intent = new Intent(getActivity(), TVContactActivity.class);
-                    intent.putExtra(TVContactActivity.CONTACT_REQUEST, model.getContact().getPrimaryUri());
+                    Intent intent = new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(model.getAccountId(), model.getContact().getPrimaryUri()), getActivity(), TVContactActivity.class);
 
                     Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
                             ((ImageCardView) itemViewHolder.view).getMainImageView(),

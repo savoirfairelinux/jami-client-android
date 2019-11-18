@@ -30,6 +30,12 @@ public class ConversationPath {
         builder = builder.appendEncodedPath(contactId);
         return builder.build();
     }
+    public static Uri toUri(String accountId, cx.ring.model.Uri contactUri) {
+        Uri.Builder builder = ContentUriHandler.CONVERSATION_CONTENT_URI.buildUpon();
+        builder = builder.appendEncodedPath(accountId);
+        builder = builder.appendEncodedPath(contactUri.getUri());
+        return builder.build();
+    }
 
     public Bundle toBundle() {
         return toBundle(accountId, contactId);

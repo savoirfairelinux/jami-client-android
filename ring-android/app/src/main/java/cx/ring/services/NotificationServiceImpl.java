@@ -79,6 +79,7 @@ import cx.ring.model.Uri;
 import cx.ring.service.CallNotificationService;
 import cx.ring.service.DRingService;
 import cx.ring.tv.call.TVCallActivity;
+import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.FileUtils;
 import cx.ring.utils.ResourceMapper;
@@ -479,6 +480,7 @@ public class NotificationServiceImpl implements NotificationService {
     private void textNotification(String accountId, TreeMap<Long, TextMessage> texts, CallContact contact) {
         Uri contactUri = contact.getPrimaryUri();
         String contactId = contactUri.getRawUriString();
+        android.net.Uri path = ConversationPath.toUri(accountId, contactId);
 
         String contactName = contact.getDisplayName();
         if (TextUtils.isEmpty(contactName) || texts.isEmpty())
@@ -486,16 +488,8 @@ public class NotificationServiceImpl implements NotificationService {
         Bitmap contactPicture = getContactPicture(contact);
 
         TextMessage last = texts.lastEntry().getValue();
-        Intent intentConversation = new Intent(DRingService.ACTION_CONV_ACCEPT)
-                .setClass(mContext, DRingService.class)
-                .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
-                .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
-
-        Intent intentDelete = new Intent(DRingService.ACTION_CONV_DISMISS)
-                .setClass(mContext, DRingService.class)
-                .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
-                .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
-
+        Intent intentConversation = new Intent(DRingService.ACTION_CONV_ACCEPT, path, mContext, DRingService.class);
+        Intent intentDelete = new Intent(DRingService.ACTION_CONV_DISMISS, path, mContext, DRingService.class);
 
         NotificationCompat.Builder messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_MESSAGE)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
@@ -513,11 +507,7 @@ public class NotificationServiceImpl implements NotificationService {
 
         if (contactPicture != null) {
             messageNotificationBuilder.setLargeIcon(contactPicture);
-
-            Intent intentBubble = new Intent(mContext, ConversationActivity.class)
-                    .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
-                    .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
-
+            Intent intentBubble = new Intent(Intent.ACTION_VIEW, path, mContext, ConversationActivity.class);
             messageNotificationBuilder.setBubbleMetadata(new NotificationCompat.BubbleMetadata.Builder()
                     .setDesiredHeight(600)
                     .setIcon(IconCompat.createWithAdaptiveBitmap(contactPicture))
@@ -568,21 +558,12 @@ public class NotificationServiceImpl implements NotificationService {
                 .setLabel(replyLabel)
                 .build();
 
-        Intent intentReply = new Intent(DRingService.ACTION_CONV_REPLY_INLINE)
-                .setClass(mContext, DRingService.class)
-                .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
-                .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
-
         PendingIntent replyPendingIntent = PendingIntent.getService(mContext, replyId,
-                intentReply,
+                new Intent(DRingService.ACTION_CONV_REPLY_INLINE, path, mContext, DRingService.class),
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Intent intentRead = new Intent(DRingService.ACTION_CONV_READ)
-                .setClass(mContext, DRingService.class)
-                .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
-                .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
-
-        PendingIntent readPendingIntent = PendingIntent.getService(mContext, markAsReadId, intentRead, 0);
+        PendingIntent readPendingIntent = PendingIntent.getService(mContext, markAsReadId,
+                new Intent(DRingService.ACTION_CONV_READ, path, mContext, DRingService.class), 0);
 
         messageNotificationBuilder
                 .addAction(new NotificationCompat.Action.Builder(R.drawable.baseline_reply_24, replyLabel, replyPendingIntent)

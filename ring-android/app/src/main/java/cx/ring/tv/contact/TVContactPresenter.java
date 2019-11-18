@@ -24,12 +24,14 @@ import javax.inject.Inject;
 
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Account;
-import cx.ring.model.RingError;
+import cx.ring.model.Conference;
+import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.HardwareService;
 import cx.ring.tv.model.TVListViewModel;
+import cx.ring.utils.ConversationPath;
 import io.reactivex.Scheduler;
 
 public class TVContactPresenter extends RootPresenter<TVContactView> {
@@ -38,6 +40,9 @@ public class TVContactPresenter extends RootPresenter<TVContactView> {
     private final ConversationFacade mConversationService;
     private final HardwareService mHardwareService;
     private final Scheduler mUiScheduler;
+
+    private String mAccountId;
+    private Uri mUri;
 
     @Inject
     public TVContactPresenter(AccountService accountService,
@@ -50,23 +55,35 @@ public class TVContactPresenter extends RootPresenter<TVContactView> {
         mUiScheduler = uiScheduler;
     }
 
-    public void setContact(Uri uri) {
+    public void setContact(ConversationPath path) {
+        mAccountId = path.getAccountId();
+        mUri = new Uri(path.getContactId());
+        mCompositeDisposable.clear();
         mCompositeDisposable.add(mConversationService
-                .getCurrentAccountSubject()
-                .map(a -> new TVListViewModel(a.getAccountID(), a.getByUri(uri).getContact()))
+                .getAccountSubject(path.getAccountId())
+                .map(a -> new TVListViewModel(a.getAccountID(), a.getByUri(mUri).getContact()))
                 .observeOn(mUiScheduler)
                 .subscribe(c -> getView().showContact(c)));
     }
 
-    public void removeContact(Uri viewModel) {
-        String accountId = mAccountService.getCurrentAccount().getAccountID();
-        mConversationService.removeConversation(accountId, viewModel).subscribe();
+    public void removeContact() {
+        mConversationService.removeConversation(mAccountId, mUri).subscribe();
         getView().finishView();
     }
 
-    public void contactClicked(Uri uri) {
-        Account account = mAccountService.getCurrentAccount();
-        getView().callContact(account.getAccountID(), uri);
+    public void contactClicked() {
+        Account account = mAccountService.getAccount(mAccountId);
+        if (account != null) {
+            Conference conf = account.getByUri(mUri).getCurrentCall();
+            if (conf != null
+                    && !conf.getParticipants().isEmpty()
+                    && conf.getParticipants().get(0).getCallStatus() != SipCall.CallStatus.INACTIVE
+                    && conf.getParticipants().get(0).getCallStatus() != SipCall.CallStatus.FAILURE) {
+                getView().goToCallActivity(conf.getId());
+            } else {
+                getView().callContact(mAccountId, mUri);
+            }
+        }
     }
 
 }
