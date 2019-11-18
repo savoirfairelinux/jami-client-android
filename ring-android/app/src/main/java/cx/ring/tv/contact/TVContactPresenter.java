@@ -29,7 +29,6 @@ import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
-import cx.ring.services.HardwareService;
 import cx.ring.tv.model.TVListViewModel;
 import cx.ring.utils.ConversationPath;
 import io.reactivex.Scheduler;
@@ -38,7 +37,6 @@ public class TVContactPresenter extends RootPresenter<TVContactView> {
 
     private final AccountService mAccountService;
     private final ConversationFacade mConversationService;
-    private final HardwareService mHardwareService;
     private final Scheduler mUiScheduler;
 
     private String mAccountId;
@@ -47,11 +45,9 @@ public class TVContactPresenter extends RootPresenter<TVContactView> {
     @Inject
     public TVContactPresenter(AccountService accountService,
                               ConversationFacade conversationService,
-                              HardwareService hardwareService,
                               Scheduler uiScheduler) {
         mAccountService = accountService;
         mConversationService = conversationService;
-        mHardwareService = hardwareService;
         mUiScheduler = uiScheduler;
     }
 
