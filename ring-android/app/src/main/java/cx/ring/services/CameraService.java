@@ -49,8 +49,8 @@ abstract public class CameraService {
         String cameraFront;
 
         public String switchInput(boolean setDefaultCamera) {
-            if(setDefaultCamera && cameraFront != null) {
-                currentId = cameraFront;
+            if(setDefaultCamera && !cameras.isEmpty()) {
+                currentId = cameras.get(0);
             }
             else if (!cameras.isEmpty()) {
                 currentIndex = (currentIndex + 1) % cameras.size();
@@ -76,9 +76,6 @@ abstract public class CameraService {
             return mParams.get(camId);
         } else if (previewParams != null) {
             return previewParams;
-        } else if (devices != null && devices.cameraFront != null) {
-            devices.currentId = devices.cameraFront;
-            return mParams.get(devices.cameraFront);
         } else if (devices != null && !devices.cameras.isEmpty()) {
             devices.currentId = devices.cameras.get(0);
             return mParams.get(devices.currentId);
