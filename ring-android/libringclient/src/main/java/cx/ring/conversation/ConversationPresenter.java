@@ -137,7 +137,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                 .firstOrError()
                 .subscribe(conversation -> {
                     conversation.setVisible(true);
-                    updateOngoingCallView();
+                    updateOngoingCallView(conversation);
                     mConversationFacade.readMessages(mAccountService.getAccount(mAccountId), conversation);
                 }, e -> Log.e(TAG, "Error loading conversation", e)));
     }
@@ -208,7 +208,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                 }, e -> Log.e(TAG, "Can't update element", e)));
         mConversationDisposable.add(c.getCalls()
                 .observeOn(mUiScheduler)
-                .subscribe(calls -> updateOngoingCallView(), e -> Log.e(TAG, "Can't update call view", e)));
+                .subscribe(calls -> updateOngoingCallView(mConversation), e -> Log.e(TAG, "Can't update call view", e)));
         mConversationDisposable.add(c.getColor()
                 .observeOn(mUiScheduler)
                 .subscribe(view::setConversationColor, e -> Log.e(TAG, "Can't update conversation color", e)));
@@ -273,7 +273,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         mConversationFacade.cancelMessage(message);
     }
 
-    public void sendTrustRequest() {
+    private void sendTrustRequest() {
         final String accountId = mAccountId;
         final Uri contactId = mContactRingId;
         mVCardService.loadSmallVCard(accountId, VCardService.MAX_SIZE_REQUEST)
@@ -298,25 +298,32 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         }
     }
 
-    public void callWithAudioOnly(boolean audioOnly) {
+    public void goToCall(boolean audioOnly) {
         if (audioOnly && !mHardwareService.hasMicrophone()) {
             getView().displayErrorToast(RingError.NO_MICROPHONE);
             return;
         }
 
-        Conference conf = mConversation.getCurrentCall();
-        if (conf != null
-                && !conf.getParticipants().isEmpty()
-                && conf.getParticipants().get(0).getCallStatus() != SipCall.CallStatus.INACTIVE
-                && conf.getParticipants().get(0).getCallStatus() != SipCall.CallStatus.FAILURE) {
-            getView().goToCallActivity(conf.getId());
-        } else {
-            getView().goToCallActivityWithResult(mAccountId, mContactRingId.getRawUriString(), audioOnly);
-        }
+        mCompositeDisposable.add(mConversationSubject
+                .firstElement()
+                .subscribe(conversation -> {
+                    ConversationView view = getView();
+                    if (view != null) {
+                        Conference conf = mConversation.getCurrentCall();
+                        if (conf != null
+                                && !conf.getParticipants().isEmpty()
+                                && conf.getParticipants().get(0).getCallStatus() != SipCall.CallStatus.INACTIVE
+                                && conf.getParticipants().get(0).getCallStatus() != SipCall.CallStatus.FAILURE) {
+                            view.goToCallActivity(conf.getId());
+                        } else {
+                            view.goToCallActivityWithResult(mAccountId, mContactRingId.getRawUriString(), audioOnly);
+                        }
+                    }
+                }));
     }
 
-    private void updateOngoingCallView() {
-        Conference conf = mConversation.getCurrentCall();
+    private void updateOngoingCallView(Conversation conversation) {
+        Conference conf = conversation == null ? null : conversation.getCurrentCall();
         if (conf != null && (conf.getState() == SipCall.CallStatus.CURRENT || conf.getState() == SipCall.CallStatus.HOLD || conf.getState() == SipCall.CallStatus.RINGING)) {
             getView().displayOnGoingCallPane(true);
         } else {

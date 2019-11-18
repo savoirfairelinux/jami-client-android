@@ -784,35 +784,35 @@ public class DRingService extends Service {
     }
 
     private void handleConvAction(Intent intent, String action, Bundle extras) {
-        String accountId = extras.getString(ConversationFragment.KEY_ACCOUNT_ID);
-        String ringId = extras.getString(ConversationFragment.KEY_CONTACT_RING_ID);
+        ConversationPath path = ConversationPath.fromIntent(intent);
 
-        if (ringId == null || ringId.isEmpty()) {
+        if (path == null || path.getContactId().isEmpty()) {
             return;
         }
 
         switch (action) {
             case ACTION_CONV_READ:
-                mConversationFacade.readMessages(accountId, new Uri(ringId));
+                mConversationFacade.readMessages(path.getAccountId(), new Uri(path.getContactId()));
                 break;
             case ACTION_CONV_DISMISS:
                 break;
-            case ACTION_CONV_REPLY_INLINE: { Bundle remoteInput = RemoteInput.getResultsFromIntent(intent);
+            case ACTION_CONV_REPLY_INLINE: {
+                Bundle remoteInput = RemoteInput.getResultsFromIntent(intent);
                 if (remoteInput != null) {
                     CharSequence reply = remoteInput.getCharSequence(KEY_TEXT_REPLY);
                     if (!TextUtils.isEmpty(reply)) {
-                        Uri uri = new Uri(ringId);
+                        Uri uri = new Uri(path.getContactId());
                         String message = reply.toString();
-                        mConversationFacade.startConversation(accountId, uri)
-                                .flatMap(c -> mConversationFacade.sendTextMessage(accountId, c, uri, message)
-                                        .doOnSuccess(msg -> mNotificationService.showTextNotification(accountId, c)))
+                        mConversationFacade.startConversation(path.getAccountId(), uri)
+                                .flatMap(c -> mConversationFacade.sendTextMessage(path.getAccountId(), c, uri, message)
+                                        .doOnSuccess(msg -> mNotificationService.showTextNotification(path.getAccountId(), c)))
                                 .subscribe();
                     }
                 }
                 break;
             }
             case ACTION_CONV_ACCEPT:
-                startActivity(new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, ringId), getApplicationContext(), ConversationActivity.class)
+                startActivity(new Intent(Intent.ACTION_VIEW, path.toUri(), getApplicationContext(), ConversationActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 break;
             default:
@@ -827,7 +827,7 @@ public class DRingService extends Service {
         mContactService.loadContacts(mAccountService.hasRingAccount(), mAccountService.hasSipAccount(), mAccountService.getCurrentAccount());
     }
 
-    private class ContactsContentObserver extends ContentObserver {
+    private static class ContactsContentObserver extends ContentObserver {
 
         ContactsContentObserver() {
             super(null);
