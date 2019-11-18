@@ -557,8 +557,8 @@ public class CallPresenter extends RootPresenter<CallView> {
     public void addConferenceParticipant(String accountId, String contactId) {
         mCompositeDisposable.add(mConversationFacade.startConversation(accountId, new Uri(contactId))
                 .map(Conversation::getCurrentCalls)
-                .subscribe(calls -> {
-                    if (calls.isEmpty()) {
+                .subscribe(confs -> {
+                    if (confs.isEmpty()) {
                         final Observer<SipCall> pendingObserver = new Observer<SipCall>() {
                             private SipCall call = null;
                             @Override
@@ -595,20 +595,26 @@ public class CallPresenter extends RootPresenter<CallView> {
                                 .doOnEvent((v, e) -> pendingObserver.onComplete());
                         mCompositeDisposable.add(newCall.subscribe(call ->  {
                             String id = mConference.getId();
-                            if (mConference.getParticipants().size() > 1) {
+                            if (mConference.isConference()) {
                                 mCallService.addParticipant(call.getDaemonIdString(), id);
                             } else {
-                                mCallService.joinParticipant(id, call.getDaemonIdString());
+                                mCallService.joinParticipant(id, call.getDaemonIdString()).subscribe();
                             }
                         }));
                     } else {
                         // Selected contact already in call or conference, join it to current conference
-                        Conference call = calls.get(0);
-                        if (call != mConference) {
-                            if (mConference.getParticipants().size() > 1) {
-                                mCallService.joinConference(mConference.getId(), call.getId());
+                        Conference selectedConf = confs.get(0);
+                        if (selectedConf != mConference) {
+                            if (mConference.isConference()) {
+                                if (selectedConf.isConference())
+                                    mCallService.joinConference(mConference.getId(), selectedConf.getId());
+                                else
+                                    mCallService.addParticipant(selectedConf.getId(), mConference.getId());
                             } else {
-                                mCallService.joinParticipant(mConference.getId(), call.getId());
+                                if (selectedConf.isConference())
+                                    mCallService.addParticipant(mConference.getId(), selectedConf.getId());
+                                else
+                                    mCallService.joinParticipant(mConference.getId(), selectedConf.getId()).subscribe();
                             }
                         }
                     }
