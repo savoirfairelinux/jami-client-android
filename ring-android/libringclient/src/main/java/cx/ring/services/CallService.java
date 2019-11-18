@@ -46,6 +46,7 @@ import cx.ring.utils.Log;
 import ezvcard.VCard;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
+import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.BehaviorSubject;
@@ -515,8 +516,9 @@ public class CallService {
         mExecutor.execute(() -> Ringservice.removeConference(confId));
     }
 
-    public void joinParticipant(final String selCallId, final String dragCallId) {
-        mExecutor.execute(() -> Ringservice.joinParticipant(selCallId, dragCallId));
+    public Single<Boolean> joinParticipant(final String selCallId, final String dragCallId) {
+        return Single.fromCallable(() -> Ringservice.joinParticipant(selCallId, dragCallId))
+                .subscribeOn(Schedulers.from(mExecutor));
     }
 
     public void addParticipant(final String callId, final String confId) {

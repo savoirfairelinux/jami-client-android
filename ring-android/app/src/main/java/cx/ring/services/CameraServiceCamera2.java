@@ -324,7 +324,7 @@ class CameraServiceCamera2 extends CameraService {
                 currentCodec.setParameters(params);
             }
         } catch (IllegalStateException e) {
-            Log.w(TAG, "Can't send keyframe request", e);
+            Log.w(TAG, "Can't set bitrate", e);
         }
     }
 
