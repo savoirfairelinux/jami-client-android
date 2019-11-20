@@ -254,7 +254,7 @@ public class ContactDetailsActivity extends AppCompatActivity {
                 contactAction = new ContactAction(R.drawable.baseline_person_24, "", () -> {
                     ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                     if (clipboard != null) {
-                        clipboard.setPrimaryClip(ClipData.newPlainText(getText(R.string.clip_contact_uri), contactAction.title));
+                        clipboard.setPrimaryClip(ClipData.newPlainText(getText(R.string.clip_contact_uri), contactUri));
                         Snackbar.make(binding.getRoot(), getString(R.string.conversation_action_copied_peer_number_clipboard, contactUri), Snackbar.LENGTH_LONG).show();
                     }
                 });
