@@ -140,7 +140,7 @@ public class ShareFragment extends BaseSupportFragment<SharePresenter> implement
             mQrImage.setVisibility(View.VISIBLE);
         }
 
-        mUriToShow = viewModel.getAccountShareUri();
+        mUriToShow = viewModel.getAccountDisplayUri();
         isShareLocked = TextUtils.isEmpty(mUriToShow);
     }
 }
