@@ -38,7 +38,7 @@ import cx.ring.R;
 import cx.ring.account.RingAccountCreationFragment;
 import cx.ring.application.JamiApplication;
 import cx.ring.dependencyinjection.JamiInjectionComponent;
-import cx.ring.model.RingError;
+import cx.ring.model.Error;
 
 public abstract class BaseSupportFragment<T extends RootPresenter> extends Fragment implements BaseView {
 
@@ -87,19 +87,19 @@ public abstract class BaseSupportFragment<T extends RootPresenter> extends Fragm
         }
     }
 
-    public void displayErrorToast(int error) {
+    public void displayErrorToast(Error error) {
         String errorString;
         switch (error) {
-            case RingError.NO_INPUT:
+            case NO_INPUT:
                 errorString = getString(R.string.call_error_no_camera_no_microphone);
                 break;
-            case RingError.INVALID_FILE:
+            case INVALID_FILE:
                 errorString = getString(R.string.invalid_file);
                 break;
-            case RingError.NOT_ABLE_TO_WRITE_FILE:
+            case NOT_ABLE_TO_WRITE_FILE:
                 errorString = getString(R.string.not_able_to_write_file);
                 break;
-            case RingError.NO_SPACE_LEFT:
+            case NO_SPACE_LEFT:
                 errorString = getString(R.string.no_space_left_on_device);
                 break;
             default:

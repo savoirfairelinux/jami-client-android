@@ -31,7 +31,7 @@ import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Phone;
-import cx.ring.model.RingError;
+import cx.ring.model.Error;
 import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
@@ -191,7 +191,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
                 getView().displayChooseNumberDialog(numbers);
             } else {
                 if (!mHardwareService.isVideoAvailable() && !mHardwareService.hasMicrophone()) {
-                    getView().displayErrorToast(RingError.NO_INPUT);
+                    getView().displayErrorToast(Error.NO_INPUT);
                     return;
                 }
 
