@@ -159,7 +159,7 @@ public class NotificationServiceImpl implements NotificationService {
 
         // Missed calls channel
         NotificationChannel missedCallsChannel = new NotificationChannel(NOTIF_CHANNEL_MISSED_CALL, mContext.getString(R.string.notif_channel_missed_calls), NotificationManager.IMPORTANCE_DEFAULT);
-        missedCallsChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+        missedCallsChannel.setLockscreenVisibility(Notification.VISIBILITY_SECRET);
         missedCallsChannel.setSound(null, null);
         missedCallsChannel.enableVibration(false);
         missedCallsChannel.setGroup(NOTIF_CALL_GROUP);
@@ -189,21 +189,21 @@ public class NotificationServiceImpl implements NotificationService {
 
         NotificationChannel messageChannel = new NotificationChannel(NOTIF_CHANNEL_MESSAGE, mContext.getString(R.string.notif_channel_messages), NotificationManager.IMPORTANCE_HIGH);
         messageChannel.enableVibration(true);
-        messageChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+        messageChannel.setLockscreenVisibility(Notification.VISIBILITY_SECRET);
         messageChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), soundAttributes);
         notificationManager.createNotificationChannel(messageChannel);
 
         // Contact requests
         NotificationChannel requestsChannel = new NotificationChannel(NOTIF_CHANNEL_REQUEST, mContext.getString(R.string.notif_channel_requests), NotificationManager.IMPORTANCE_DEFAULT);
         requestsChannel.enableVibration(true);
-        requestsChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+        requestsChannel.setLockscreenVisibility(Notification.VISIBILITY_SECRET);
         requestsChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), soundAttributes);
         notificationManager.createNotificationChannel(requestsChannel);
 
         // File transfer requests
         NotificationChannel fileTransferChannel = new NotificationChannel(NOTIF_CHANNEL_FILE_TRANSFER, mContext.getString(R.string.notif_channel_file_transfer), NotificationManager.IMPORTANCE_DEFAULT);
         fileTransferChannel.enableVibration(true);
-        fileTransferChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+        fileTransferChannel.setLockscreenVisibility(Notification.VISIBILITY_SECRET);
         fileTransferChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), soundAttributes);
         notificationManager.createNotificationChannel(fileTransferChannel);
 
