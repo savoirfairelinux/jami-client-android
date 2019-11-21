@@ -85,7 +85,7 @@ import cx.ring.tv.cards.iconcards.IconCardPresenter;
 import cx.ring.tv.contact.TVContactFragment;
 import cx.ring.tv.contactrequest.TVContactRequestFragment;
 import cx.ring.tv.main.MainFragment;
-import cx.ring.tv.search.RingSearchFragment;
+import cx.ring.tv.search.ContactSearchFragment;
 import dagger.Component;
 
 @Singleton
@@ -186,7 +186,7 @@ public interface JamiInjectionComponent {
 
     void inject(MainFragment fragment);
 
-    void inject(RingSearchFragment fragment);
+    void inject(ContactSearchFragment fragment);
 
     void inject(cx.ring.tv.main.HomeActivity activity);
 

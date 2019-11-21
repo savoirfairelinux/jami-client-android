@@ -1,5 +1,3 @@
-package cx.ring.mvp;
-
 /*
  *  Copyright (C) 2004-2019 Savoir-faire Linux Inc.
  *
@@ -19,9 +17,11 @@ package cx.ring.mvp;
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
+package cx.ring.mvp;
+import cx.ring.model.Error;
 
 public interface BaseView {
 
-    void displayErrorToast(int error);
+    void displayErrorToast(Error error);
 
 }

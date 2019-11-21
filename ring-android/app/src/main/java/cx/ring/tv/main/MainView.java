@@ -23,6 +23,7 @@ import java.util.List;
 
 import cx.ring.navigation.HomeNavigationViewModel;
 import cx.ring.tv.model.TVListViewModel;
+import cx.ring.model.Error;
 
 public interface MainView {
 
@@ -36,7 +37,7 @@ public interface MainView {
 
     void callContact(String accountID, String ringID);
 
-    void displayErrorToast(int error);
+    void displayErrorToast(Error error);
 
     void displayAccountInfos(HomeNavigationViewModel viewModel);
 

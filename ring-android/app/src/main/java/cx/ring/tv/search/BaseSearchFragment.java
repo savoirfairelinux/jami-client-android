@@ -28,7 +28,7 @@ import androidx.leanback.app.SearchSupportFragment;
 import javax.inject.Inject;
 
 import cx.ring.R;
-import cx.ring.model.RingError;
+import cx.ring.model.Error;
 import cx.ring.mvp.BaseView;
 import cx.ring.mvp.RootPresenter;
 
@@ -56,11 +56,14 @@ public class BaseSearchFragment<T extends RootPresenter> extends SearchSupportFr
     }
 
     @Override
-    public void displayErrorToast(int error) {
+    public void displayErrorToast(Error error) {
         String errorString;
         switch (error) {
-            case RingError.NO_MICROPHONE:
+            case NO_MICROPHONE:
                 errorString = getString(R.string.call_error_no_microphone);
+                break;
+            case NO_INPUT:
+                errorString = getString(R.string.call_error_no_camera_no_microphone);
                 break;
             default:
                 errorString = getString(R.string.generic_error);

@@ -20,6 +20,8 @@
  */
 package cx.ring.tv.main;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,14 +32,13 @@ import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
-import cx.ring.model.RingError;
+import cx.ring.model.Error;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.navigation.HomeNavigationViewModel;
 import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.services.HardwareService;
 import cx.ring.tv.model.TVListViewModel;
-import cx.ring.utils.Log;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
@@ -174,7 +175,7 @@ public class MainPresenter extends RootPresenter<MainView> {
 
     public void contactClicked(TVListViewModel item) {
         if (!mHardwareService.isVideoAvailable() && !mHardwareService.hasMicrophone()) {
-            getView().displayErrorToast(RingError.NO_INPUT);
+            getView().displayErrorToast(Error.NO_INPUT);
             return;
         }
 

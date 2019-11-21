@@ -1,7 +1,9 @@
+package cx.ring.model;
+
 /*
  *  Copyright (C) 2004-2019 Savoir-faire Linux Inc.
  *
- *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ *  Author: Hadrien De Sousa <hadrien.desousa@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,17 +19,12 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.tv.search;
 
-import cx.ring.model.CallContact;
-
-public interface RingSearchView {
-
-    void displayContact(String accountId, CallContact contact);
-
-    void clearSearch();
-
-    void displayErrorToast(int error);
-
-    void startCall(String accountID, String number);
+public enum Error {
+    GENERIC_ERROR,
+    NO_MICROPHONE,
+    NO_INPUT,
+    INVALID_FILE,
+    NOT_ABLE_TO_WRITE_FILE,
+    NO_SPACE_LEFT
 }

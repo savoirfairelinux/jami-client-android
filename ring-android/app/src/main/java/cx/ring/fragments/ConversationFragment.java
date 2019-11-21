@@ -82,7 +82,7 @@ import cx.ring.model.Conversation;
 import cx.ring.model.Interaction;
 import cx.ring.model.DataTransfer;
 import cx.ring.model.Phone;
-import cx.ring.model.RingError;
+import cx.ring.model.Error;
 import cx.ring.model.Uri;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.services.NotificationService;
@@ -443,7 +443,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
                 .doFinally(() -> setLoading(false))
                 .subscribe(() -> {}, e -> {
                     Log.e(TAG, "startFileSend: not able to create cache file", e);
-                    displayErrorToast(RingError.INVALID_FILE);
+                    displayErrorToast(Error.INVALID_FILE);
                 });
     }
 
