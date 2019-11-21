@@ -13,6 +13,7 @@ import java.util.List;
 
 import cx.ring.contacts.AvatarFactory;
 import cx.ring.databinding.ItemConferenceParticipantBinding;
+import cx.ring.fragments.CallFragment;
 import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
 import cx.ring.views.ParticipantView;
@@ -41,7 +42,7 @@ public class ConfParticipantAdapter extends RecyclerView.Adapter<ParticipantView
             holder.binding.displayName.setText(contact.getDisplayName());
             holder.binding.photo.setAlpha(1f);
         } else {
-            //holder.binding.displayName.setText(String.format("%s\n%s", contact.getDisplayName(), context.getText(callStateToHumanState(status))));
+            holder.binding.displayName.setText(String.format("%s\n%s", contact.getDisplayName(), context.getText(CallFragment.callStateToHumanState(status))));
             holder.binding.photo.setAlpha(.5f);
         }
         if (holder.disposable != null)
