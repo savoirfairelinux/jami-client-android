@@ -49,20 +49,22 @@ along with this program; if not, write to the Free Software
             android:paddingTop="8dp"
             android:paddingEnd="16dp"
             android:paddingBottom="8dp"
+            android:textAlignment="center"
             android:textColor="@color/grey_800"
             android:textIsSelectable="false"
             android:textSize="16sp"
-            android:textAlignment="center"
             tools:text="Thomas\nConnecting..." />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/photo"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:backgroundTint="@color/transparent"
             android:contentDescription="@string/contact_picture_description"
             android:tintMode="multiply"
+            android:enabled="false"
             app:maxImageSize="56dp"
-            tools:src="@drawable/ic_contact_picture_fallback"/>
+            tools:src="@drawable/ic_contact_picture_fallback" />
 
     </LinearLayout>
 </layout>

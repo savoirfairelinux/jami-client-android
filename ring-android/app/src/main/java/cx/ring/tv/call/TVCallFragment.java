@@ -39,6 +39,9 @@ import android.os.PowerManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.view.menu.MenuBuilder;
+import androidx.appcompat.view.menu.MenuPopupHelper;
+import androidx.appcompat.widget.PopupMenu;
 
 import android.util.Log;
 import android.util.Rational;
@@ -50,7 +53,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
-import android.view.animation.AnimationSet;
 import android.widget.RelativeLayout;
 
 import com.rodolfonavalon.shaperipplelibrary.model.Circle;
@@ -70,12 +72,15 @@ import cx.ring.client.ConversationSelectionActivity;
 import cx.ring.databinding.TvFragCallBinding;
 import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.fragments.CallFragment;
+import cx.ring.adapters.ConfParticipantAdapter;
+import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.tv.main.HomeActivity;
+import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.ConversationPath;
 import cx.ring.views.AvatarDrawable;
@@ -109,9 +114,13 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
 
     private boolean mBackstackLost = false;
     private boolean mTextureAvailable = false;
+    private ConfParticipantAdapter confAdapter = null;
+    private boolean mConferenceMode = false;
 
     private int mVideoWidth = -1;
     private int mVideoHeight = -1;
+
+    private final AlphaAnimation fadeOutAnimation = new AlphaAnimation(1, 0);
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
@@ -134,6 +143,12 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
         TVCallFragment countDownFragment = new TVCallFragment();
         countDownFragment.setArguments(bundle);
         return countDownFragment;
+    }
+
+    public TVCallFragment() {
+        fadeOutAnimation.setInterpolator(new AccelerateInterpolator());
+        fadeOutAnimation.setStartOffset(1000);
+        fadeOutAnimation.setDuration(1000);
     }
 
     @Override
@@ -335,18 +350,21 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
 
     @Override
     public void displayHangupButton(boolean display) {
+        binding.confControlGroup.setVisibility((mConferenceMode && display) ? View.VISIBLE : View.GONE);
+
         if (display) {
             binding.callHangupBtn.setVisibility(View.VISIBLE);
+            binding.callAddBtn.setVisibility(View.VISIBLE);
         } else {
-            AlphaAnimation fadeOutAnimation = new AlphaAnimation(1, 0);
-            fadeOutAnimation.setInterpolator(new AccelerateInterpolator());
-            fadeOutAnimation.setStartOffset(1000);
-            fadeOutAnimation.setDuration(1000);
-
-            AnimationSet animationSet = new AnimationSet(false);
-            animationSet.addAnimation(fadeOutAnimation);
-            binding.callHangupBtn.setAnimation(animationSet);
+            binding.callHangupBtn.startAnimation(fadeOutAnimation);
+            binding.callAddBtn.startAnimation(fadeOutAnimation);
             binding.callHangupBtn.setVisibility(View.GONE);
+            binding.callAddBtn.setVisibility(View.GONE);
+        }
+        if (mConferenceMode && display) {
+            binding.confControlGroup.setVisibility(View.VISIBLE);
+        } else {
+            binding.confControlGroup.startAnimation(fadeOutAnimation);
         }
     }
 
@@ -377,12 +395,15 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
 
     @Override
     public void updateContactBubble(@NonNull final List<SipCall> calls) {
+
+        mConferenceMode = calls.size() > 1;
+        String username = mConferenceMode ? "Conference with " + calls.size() + " people" : calls.get(0).getContact().getRingUsername();
+        String displayName = mConferenceMode ? null : calls.get(0).getContact().getDisplayName();
+
         CallContact contact = calls.get(0).getContact();
-        String username = contact.getRingUsername();
         String ringId = contact.getIds().get(0);
         Log.d(TAG, "updateContactBubble: username=" + username + ", ringId=" + ringId + " photo:" + contact.getPhoto());
 
-        String displayName = contact.getDisplayName();
         boolean hasProfileName = displayName != null && !displayName.contentEquals(username);
 
         if (hasProfileName) {
@@ -394,6 +415,38 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
             binding.contactBubbleTxt.setText(username);
         }
         binding.contactBubble.setImageDrawable(new AvatarDrawable(getActivity(), contact));
+
+        if (!mConferenceMode) {
+            binding.confControlGroup.setVisibility(View.GONE);
+        } else {
+            binding.confControlGroup.setVisibility(View.VISIBLE);
+            if (confAdapter  == null) {
+                confAdapter = new ConfParticipantAdapter((view, call) -> {
+                    Context context = requireContext();
+                    PopupMenu popup = new PopupMenu(context, view);
+                    popup.inflate(R.menu.conference_participant_actions);
+                    popup.setOnMenuItemClickListener(item -> {
+                        switch (item.getItemId()) {
+                            case R.id.conv_contact_details:
+                                presenter.openParticipantContact(call);
+                                break;
+                            case R.id.conv_contact_hangup:
+                                presenter.hangupParticipant(call);
+                                break;
+                            default:
+                                return false;
+                        }
+                        return true;
+                    });
+                    MenuPopupHelper menuHelper = new MenuPopupHelper(context, (MenuBuilder) popup.getMenu(), view);
+                    menuHelper.setForceShowIcon(true);
+                    menuHelper.show();
+                });
+            }
+            confAdapter.updateFromCalls(calls);
+            if (binding.confControlGroup.getAdapter() == null)
+                binding.confControlGroup.setAdapter(confAdapter);
+        }
     }
 
     @Override
@@ -587,7 +640,8 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
 
     @Override
     public void goToAddContact(CallContact callContact) {
-
+        startActivityForResult(ActionHelper.getAddNumberIntentForContact(callContact),
+                ConversationFragment.REQ_ADD_CONTACT);
     }
 
     @Override
@@ -597,6 +651,10 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
                         .setClass(requireActivity(), ConversationSelectionActivity.class)
                         .putExtra(KEY_CONF_ID, conferenceId),
                 REQUEST_CODE_ADD_PARTICIPANT);
+    }
+
+    public void addParticipant() {
+        presenter.startAddParticipant();
     }
 
     public void hangUpClicked() {
