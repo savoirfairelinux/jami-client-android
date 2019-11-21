@@ -65,8 +65,6 @@ import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
-import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 
@@ -78,6 +76,7 @@ import java.util.Random;
 import javax.inject.Inject;
 
 import cx.ring.R;
+import cx.ring.adapters.ConfParticipantAdapter;
 import cx.ring.application.JamiApplication;
 import cx.ring.call.CallPresenter;
 import cx.ring.call.CallView;
@@ -86,9 +85,7 @@ import cx.ring.client.ContactDetailsActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.ConversationSelectionActivity;
 import cx.ring.client.HomeActivity;
-import cx.ring.contacts.AvatarFactory;
 import cx.ring.databinding.FragCallBinding;
-import cx.ring.databinding.ItemConferenceParticipantBinding;
 import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
@@ -106,7 +103,6 @@ import cx.ring.utils.Log;
 import cx.ring.utils.MediaButtonsHelper;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 
 public class CallFragment extends BaseSupportFragment<CallPresenter> implements CallView, MediaButtonsHelper.MediaButtonsHelperCallback {
 
@@ -142,88 +138,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     private ConfParticipantAdapter confAdapter = null;
     private boolean mConferenceMode = false;
-
-    static class ParticipantView extends RecyclerView.ViewHolder {
-        final ItemConferenceParticipantBinding binding;
-        Disposable disposable = null;
-        ParticipantView(@NonNull ItemConferenceParticipantBinding b) {
-            super(b.getRoot());
-            binding = b;
-        }
-    }
-
-    public static class ConfParticipantAdapter extends RecyclerView.Adapter<ParticipantView> {
-        private List<SipCall> calls = null;
-        public interface ConfParticipantSelected {
-            void onParticipantSelected(View view, SipCall contact);
-        }
-        private final ConfParticipantSelected onSelectedCallback;
-
-        ConfParticipantAdapter(@NonNull ConfParticipantSelected cb) {
-            onSelectedCallback = cb;
-        }
-
-        @NonNull
-        @Override
-        public ParticipantView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            return new ParticipantView(ItemConferenceParticipantBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull ParticipantView holder, int position) {
-            final SipCall call = calls.get(position);
-            final CallContact contact = call.getContact();
-            final Context context = holder.itemView.getContext();
-            SipCall.CallStatus status = call.getCallStatus();
-            if (status == SipCall.CallStatus.CURRENT)  {
-                holder.binding.displayName.setText(contact.getDisplayName());
-                holder.binding.photo.setAlpha(1f);
-            } else {
-                holder.binding.displayName.setText(String.format("%s\n%s", contact.getDisplayName(), context.getText(callStateToHumanState(status))));
-                holder.binding.photo.setAlpha(.5f);
-            }
-            if (holder.disposable != null)
-                holder.disposable.dispose();
-            holder.disposable = AvatarFactory.getAvatar(context, contact)
-                    .subscribe(holder.binding.photo::setImageDrawable);
-            holder.itemView.setOnClickListener(view -> onSelectedCallback.onParticipantSelected(view, call));
-        }
-
-        @Override
-        public int getItemCount() {
-            return calls == null ? 0 : calls.size();
-        }
-
-        void updateFromCalls(@NonNull final List<SipCall> contacts) {
-            final List<SipCall> oldCalls = calls;
-            calls = contacts;
-            if (oldCalls != null) {
-                DiffUtil.calculateDiff(new DiffUtil.Callback() {
-                    @Override
-                    public int getOldListSize() {
-                        return oldCalls.size();
-                    }
-
-                    @Override
-                    public int getNewListSize() {
-                        return contacts.size();
-                    }
-
-                    @Override
-                    public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                        return oldCalls.get(oldItemPosition) == contacts.get(newItemPosition);
-                    }
-
-                    @Override
-                    public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                        return false;
-                    }
-                }).dispatchUpdatesTo(this);
-            } else {
-                notifyDataSetChanged();
-            }
-        }
-    }
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
@@ -906,7 +820,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         if (!audioOnly) {
             boolean videoGranted = mDeviceRuntimeService.hasVideoPermission();
 
-            if ((!audioGranted || !videoGranted) && android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if ((!audioGranted || !videoGranted) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 ArrayList<String> perms = new ArrayList<>();
                 if (!videoGranted) {
                     perms.add(Manifest.permission.CAMERA);
@@ -919,7 +833,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                 initializeCall(isIncoming);
             }
         } else {
-            if (!audioGranted && android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!audioGranted && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, permissionType);
             } else if (audioGranted) {
                 initializeCall(isIncoming);

@@ -27,7 +27,7 @@ import javax.inject.Inject;
 
 import androidx.leanback.app.DetailsSupportFragment;
 import cx.ring.R;
-import cx.ring.model.RingError;
+import cx.ring.model.Error;
 import cx.ring.mvp.BaseView;
 import cx.ring.mvp.RootPresenter;
 
@@ -53,10 +53,10 @@ public class BaseDetailFragment<T extends RootPresenter> extends DetailsSupportF
         presenter.unbindView();
     }
 
-    public void displayErrorToast(int error) {
+    public void displayErrorToast(Error error) {
         String errorString;
         switch (error) {
-            case RingError.NO_INPUT:
+            case NO_INPUT:
                 errorString = getString(R.string.call_error_no_camera_no_microphone);
                 break;
             default:

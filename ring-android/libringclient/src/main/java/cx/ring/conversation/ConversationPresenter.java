@@ -33,7 +33,7 @@ import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.DataTransfer;
 import cx.ring.model.Interaction;
-import cx.ring.model.RingError;
+import cx.ring.model.Error;
 import cx.ring.model.SipCall;
 import cx.ring.model.TrustRequest;
 import cx.ring.model.Uri;
@@ -300,7 +300,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
 
     public void goToCall(boolean audioOnly) {
         if (audioOnly && !mHardwareService.hasMicrophone()) {
-            getView().displayErrorToast(RingError.NO_MICROPHONE);
+            getView().displayErrorToast(Error.NO_MICROPHONE);
             return;
         }
 
@@ -362,7 +362,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
 
     public void noSpaceLeft() {
         Log.e(TAG, "configureForFileInfoTextMessage: no space left on device");
-        getView().displayErrorToast(RingError.NO_SPACE_LEFT);
+        getView().displayErrorToast(Error.NO_SPACE_LEFT);
     }
 
     public void setConversationColor(int color) {

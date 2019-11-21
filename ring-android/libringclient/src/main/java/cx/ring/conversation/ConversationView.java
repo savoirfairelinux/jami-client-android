@@ -24,6 +24,7 @@ import java.util.List;
 
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
+import cx.ring.model.Error;
 import cx.ring.model.Interaction;
 import cx.ring.model.DataTransfer;
 import cx.ring.model.Uri;
@@ -41,7 +42,7 @@ public interface ConversationView extends BaseView {
 
     void displayNumberSpinner(Conversation conversation, Uri number);
 
-    void displayErrorToast(int error);
+    void displayErrorToast(Error error);
 
     void hideNumberSpinner();
 

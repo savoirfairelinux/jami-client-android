@@ -28,7 +28,7 @@ import javax.inject.Named;
 import cx.ring.daemon.Blob;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
-import cx.ring.model.RingError;
+import cx.ring.model.Error;
 import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
@@ -38,7 +38,7 @@ import cx.ring.utils.VCardUtils;
 import io.reactivex.Scheduler;
 import io.reactivex.subjects.PublishSubject;
 
-public class RingSearchPresenter extends RootPresenter<RingSearchView> {
+public class ContactSearchPresenter extends RootPresenter<ContactSearchView> {
 
     private final AccountService mAccountService;
     private final HardwareService mHardwareService;
@@ -52,16 +52,16 @@ public class RingSearchPresenter extends RootPresenter<RingSearchView> {
     private final PublishSubject<String> contactQuery = PublishSubject.create();
 
     @Inject
-    public RingSearchPresenter(AccountService accountService,
-                               HardwareService hardwareService,
-                               VCardService vCardService) {
+    public ContactSearchPresenter(AccountService accountService,
+                                  HardwareService hardwareService,
+                                  VCardService vCardService) {
         mAccountService = accountService;
         mHardwareService = hardwareService;
         mVCardService = vCardService;
     }
 
     @Override
-    public void bindView(RingSearchView view) {
+    public void bindView(ContactSearchView view) {
         super.bindView(view);
         mCompositeDisposable.add(contactQuery
                 .debounce(350, TimeUnit.MILLISECONDS)
@@ -128,7 +128,7 @@ public class RingSearchPresenter extends RootPresenter<RingSearchView> {
 
     public void contactClicked(CallContact contact) {
         if (!mHardwareService.isVideoAvailable() && !mHardwareService.hasMicrophone()) {
-            getView().displayErrorToast(RingError.NO_INPUT);
+            getView().displayErrorToast(Error.NO_INPUT);
             return;
         }
 
