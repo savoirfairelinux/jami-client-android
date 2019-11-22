@@ -343,22 +343,13 @@ public class NotificationServiceImpl implements NotificationService {
      *
      * @param id            the notification id
      */
-    @Override
-    public void startForegroundService(int id, Class serviceClass) {
+    private void startForegroundService(int id, Class serviceClass) {
         Intent serviceIntent = new Intent(mContext, serviceClass);
         serviceIntent.putExtra(KEY_NOTIFICATION_ID, id);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
             mContext.startForegroundService(serviceIntent);
         else
             mContext.startService(serviceIntent);
-    }
-
-    /**
-     * Kills a foreground service.
-     */
-    @Override
-    public void stopForegroundService(Class serviceClass) {
-        mContext.stopService(new Intent(mContext, serviceClass));
     }
 
     /**
@@ -381,7 +372,7 @@ public class NotificationServiceImpl implements NotificationService {
             currentCalls.put(id, conference);
             startForegroundService(id, CallNotificationService.class);
         } else if (currentCalls.isEmpty())
-            stopForegroundService(CallNotificationService.class);
+            mContext.stopService(new Intent(mContext, CallNotificationService.class));
             // this is a temporary solution until we have direct support for concurrent calls and the call state will exclusively update notifications
         else {
             int key = -1;
@@ -446,7 +437,7 @@ public class NotificationServiceImpl implements NotificationService {
         dataTransferNotifications.remove(id);
         cancelFileNotification(id, false);
         if (dataTransferNotifications.isEmpty())
-            stopForegroundService(DataTransferService.class);
+            mContext.stopService(new Intent(mContext, DataTransferService.class));
         else {
             startForegroundService(dataTransferNotifications.keySet().iterator().next(), DataTransferService.class);
         }
