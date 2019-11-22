@@ -20,6 +20,7 @@
  */
 package cx.ring.services;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -138,17 +139,17 @@ public abstract class HardwareService {
 
     public abstract void addVideoSurface(String id, Object holder);
     public abstract void updateVideoSurfaceId(String currentId, String newId);
-
-    public abstract void addPreviewVideoSurface(Object holder, Conference conference);
-
     public abstract void removeVideoSurface(String id);
 
+    public abstract void addPreviewVideoSurface(Object holder, Conference conference);
+    public abstract void updatePreviewVideoSurface(Conference conference);
     public abstract void removePreviewVideoSurface();
 
     public abstract void switchInput(String id, boolean setDefaultCamera);
 
     public abstract void setPreviewSettings();
 
+    public abstract boolean hasCamera();
     public abstract int getCameraCount();
 
     public abstract boolean isPreviewFromFrontCamera();
@@ -196,5 +197,5 @@ public abstract class HardwareService {
 
     public abstract void setDeviceOrientation(int rotation);
 
-    protected abstract String[] getVideoDevices();
+    protected abstract List<String> getVideoDevices();
 }

@@ -238,7 +238,7 @@ abstract public class CameraService {
 
     abstract boolean isOpen();
 
-    abstract String[] getCameraIds();
+    abstract List<String> getCameraIds();
     abstract int getCameraCount();
 
     abstract void fillCameraInfo(DeviceParams p, String camId, IntVect formats, UintVect sizes, UintVect rates, Point minVideoSize);

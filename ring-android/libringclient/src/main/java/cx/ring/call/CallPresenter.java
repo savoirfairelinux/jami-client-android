@@ -152,7 +152,7 @@ public class CallPresenter extends RootPresenter<CallView> {
             hangupCall();
             return;
         }
-        if (mHardwareService.getCameraCount() == 0) {
+        if (!mHardwareService.hasCamera()) {
             audioOnly = true;
         }
         //getView().blockScreenRotation();
@@ -429,6 +429,7 @@ public class CallPresenter extends RootPresenter<CallView> {
             view.updateMenu();
             if (!mAudioOnly) {
                 mHardwareService.setPreviewSettings();
+                mHardwareService.updatePreviewVideoSurface(mConference);
                 videoSurfaceUpdateId(call.getId());
                 view.displayVideoSurface(true, mDeviceRuntimeService.hasVideoPermission());
                 if (permissionChanged) {
