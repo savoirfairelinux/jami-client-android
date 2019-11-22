@@ -191,6 +191,13 @@ public class MainPresenter extends RootPresenter<MainView> {
                         accounts -> getView().displayAccountInfos(
                                 new HomeNavigationViewModel(accounts.isEmpty() ? null : accounts.get(0), accounts)),
                         e-> Log.d(TAG, "reloadAccountInfos getProfileAccountList onError", e)));
+        mCompositeDisposable.add(mAccountService.getObservableAccounts()
+                .observeOn(mUiScheduler)
+                .subscribe(account -> {
+                    MainView v = getView();
+                    if (v != null)
+                        v.updateModel(account);
+                }, e ->  cx.ring.utils.Log.e(TAG, "Error loading account list !", e)));
     }
 
     public void onExportClicked() {

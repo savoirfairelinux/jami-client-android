@@ -268,40 +268,43 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
 
     @Override
     public void displayAccountInfos(final HomeNavigationViewModel viewModel) {
-        Log.w(TAG, "displayAccountInfos " + viewModel.getAccount());
+        Account account = viewModel.getAccount();
+        if (account != null)
+            updateModel(account);
+    }
 
+    @Override
+    public void updateModel(Account account) {
         Context context = getContext();
         if (context == null) {
-            Log.e(TAG, "displayAccountInfos: Not able to get context");
+            Log.e(TAG, "updateModel: not able to get context");
             return;
         }
 
-        Account account = viewModel.getAccount();
-        if (account != null) {
-            String address = account.getDisplayUsername();
-            mDisposable.add(VCardServiceImpl
-                    .loadProfile(account)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSuccess(profile -> {
-                        if (profile.first != null && !profile.first.isEmpty()) {
-                            titleView.setAlias(profile.first);
-                            if (address != null) {
-                                setTitle(address);
-                            } else {
-                                setTitle("");
-                            }
+        mDisposable.clear();
+        String address = account.getDisplayUsername();
+        mDisposable.add(VCardServiceImpl
+                .loadProfile(account)
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSuccess(profile -> {
+                    if (profile.first != null && !profile.first.isEmpty()) {
+                        titleView.setAlias(profile.first);
+                        if (address != null) {
+                            setTitle(address);
                         } else {
-                            titleView.setAlias(address);
+                            setTitle("");
                         }
-                    })
-                    .flatMap(p -> AvatarDrawable.load(context, account))
-                    .subscribe(a -> {
-                        titleView.getLogoView().setVisibility(View.VISIBLE);
-                        titleView.getLogoView().setImageDrawable(a);
-                    }));
-            qrCard.setDrawable(prepareAccountQr(context, account.getUri()));
-            myAccountRow.getAdapter().notifyItemRangeChanged(QR_ITEM_POSITION, 1);
-        }
+                    } else {
+                        titleView.setAlias(address);
+                    }
+                })
+                .flatMap(p -> AvatarDrawable.load(context, account))
+                .subscribe(a -> {
+                    titleView.getLogoView().setVisibility(View.VISIBLE);
+                    titleView.getLogoView().setImageDrawable(a);
+                }));
+        qrCard.setDrawable(prepareAccountQr(context, account.getUri()));
+        myAccountRow.getAdapter().notifyItemRangeChanged(QR_ITEM_POSITION, 1);
     }
 
     @Override
