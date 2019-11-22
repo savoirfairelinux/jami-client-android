@@ -399,15 +399,18 @@ public class NotificationServiceImpl implements NotificationService {
         Log.i(TAG, "onConnectionUpdate " + b);
         if (b) {
             Intent serviceIntent = new Intent(SyncService.ACTION_START).setClass(mContext, SyncService.class);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
                 mContext.startForegroundService(serviceIntent);
             else
                 mContext.startService(serviceIntent);
+            } catch (IllegalStateException e) {
+                Log.e(TAG, "Error starting service", e);
+            }
         } else {
             try {
                 mContext.startService(new Intent(SyncService.ACTION_STOP).setClass(mContext, SyncService.class));
-            } catch (IllegalStateException e) {
-                Log.i(TAG, "Error stopping service. Not running ?s", e);
+            } catch (IllegalStateException ignored) {
             }
         }
     }
