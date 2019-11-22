@@ -41,6 +41,7 @@ import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import cx.ring.daemon.IntVect;
@@ -444,6 +445,9 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         if (mIsCapturing && mCapturingId != null && mCapturingId.equals(camId)) {
             return;
         }
+        if (camId == null) {
+            camId = mCapturingId != null ? mCapturingId : cameraService.switchInput(true);
+        }
         CameraService.VideoParams videoParams = cameraService.getParams(camId);
         if (videoParams == null) {
             Log.w(TAG, "startCapture: no video parameters ");
@@ -459,7 +463,8 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
             return;
         }
         final Conference conf = mCameraPreviewCall.get();
-        if (conf != null) {
+        boolean useHardwareCodec = mPreferenceService.isHardwareAccelerationEnabled() && (conf == null || !conf.isConference());
+        if (conf != null && useHardwareCodec) {
             SipCall call = conf.getCall();
             if (call != null) {
                 call.setDetails(Ringservice.getCallDetails(call.getDaemonIdString()).toNative());
@@ -468,7 +473,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                 videoParams.codec = null;
             }
         }
-        Log.w(TAG, "startCapture: call " + camId + " " + videoParams.codec);
+        Log.w(TAG, "startCapture: call " + camId + " " + videoParams.codec + " useHardwareCodec:" + useHardwareCodec + " bitrate:" + mPreferenceService.getBitrate());
 
         mIsCapturing = true;
         mCapturingId = videoParams.id;
@@ -485,7 +490,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                         stopCapture();
                     }
                 },
-                mPreferenceService.isHardwareAccelerationEnabled(),
+                useHardwareCodec,
                 mPreferenceService.getResolution(),
                 mPreferenceService.getBitrate()));
         cameraService.setPreviewParams(videoParams);
@@ -600,6 +605,17 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     }
 
     @Override
+    public void updatePreviewVideoSurface(Conference conference)  {
+        Conference old = mCameraPreviewCall.get();
+        mCameraPreviewCall = new WeakReference<>(conference);
+        if (old != conference && mIsCapturing) {
+            String id = mCapturingId;
+            stopCapture();
+            startCapture(id);
+        }
+    }
+
+    @Override
     public void removeVideoSurface(String id) {
         Log.i(TAG, "removeVideoSurface " + id);
         videoSurfaces.remove(id);
@@ -632,7 +648,8 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     @Override
     public void switchInput(String id, boolean setDefaultCamera) {
         Log.w(TAG, "switchInput " + id);
-        switchInput(id, "camera://" + cameraService.switchInput(setDefaultCamera));
+        mCapturingId = cameraService.switchInput(setDefaultCamera);
+        switchInput(id, "camera://" + mCapturingId);
     }
 
     @Override
@@ -643,6 +660,11 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     @Override
     public int getCameraCount() {
         return cameraService.getCameraCount();
+    }
+
+    @Override
+    public boolean hasCamera() {
+        return cameraService.hasCamera();
     }
 
     @Override
@@ -665,7 +687,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     }
 
     @Override
-    protected String[] getVideoDevices() {
+    protected List<String> getVideoDevices() {
         return cameraService.getCameraIds();
     }
 

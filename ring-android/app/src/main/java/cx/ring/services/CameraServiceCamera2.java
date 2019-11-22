@@ -531,6 +531,8 @@ class CameraServiceCamera2 extends CameraService {
                         if (codecStarted[0])
                             codec.first.signalEndOfInputStream();
                         codec.first.release();
+                        if (codec.first == currentCodec)
+                            currentCodec = null;
                     }
                 }
             }, handler);
@@ -597,23 +599,19 @@ class CameraServiceCamera2 extends CameraService {
         if (camera != null) {
             previewCamera = null;
             camera.close();
+            currentCodec = null;
         }
     }
 
     @Override
-    String[] getCameraIds() {
-        try {
-            return manager.getCameraIdList();
-        } catch (Exception e) {
-            Log.w(TAG, "getCameraIds: can't enumerate devices", e);
-            return new String[0];
-        }
+    List<String> getCameraIds() {
+        return devices == null ? new ArrayList<>() : devices.cameras;
     }
 
     @Override
     public int getCameraCount() {
         try {
-            return manager.getCameraIdList().length;
+            return devices == null ? manager.getCameraIdList().length : devices.cameras.size();
         } catch (CameraAccessException e) {
             return 0;
         }
