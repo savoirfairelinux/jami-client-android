@@ -42,44 +42,43 @@
             tools:text="No connectivity"/>
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/newcontact_element"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/error_msg_pane"
-        android:background="?android:attr/selectableItemBackground"
-        android:orientation="vertical"
-        android:visibility="gone"
-        tools:visibility="visible">
-
-        <include
-            layout="@layout/item_contact"
-            android:layout_width="match_parent"
-            android:layout_height="72dp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="?android:attr/listDivider" />
-
-    </LinearLayout>
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/list_coordinator"
         android:layout_width="320dp"
         android:layout_height="match_parent"
-        android:layout_below="@id/newcontact_element">
+        android:layout_below="@id/error_msg_pane">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/confs_list"
+        <LinearLayout
+            android:id="@+id/newcontact_element"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="0dp"
-            android:clipToPadding="false"
-            android:divider="@null"
-            android:elevation="2dp"
-            android:paddingBottom="8dp"
-            tools:listitem="@layout/item_smartlist" />
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <include
+                layout="@layout/item_contact"
+                android:layout_width="match_parent"
+                android:layout_height="72dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/confs_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="0dp"
+                android:clipToPadding="false"
+                android:divider="@null"
+                android:elevation="2dp"
+                android:paddingBottom="8dp"
+                tools:listitem="@layout/item_smartlist" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/empty_text_view"
