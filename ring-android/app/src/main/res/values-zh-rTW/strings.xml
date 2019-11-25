@@ -48,6 +48,7 @@
     <item quantity="other">%d 個對話</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">搜尋名字或電話號碼……</string>
   <string name="choose_number">選擇號碼</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -67,6 +68,7 @@
   <string name="notif_channel_messages">訊息</string>
   <string name="notif_channel_requests">請求</string>
   <string name="notif_channel_file_transfer">檔案傳輸</string>
+  <string name="notif_channel_sync">資料同步</string>
   <string name="notif_channel_background_service">背景服務</string>
   <string name="notif_channel_background_service_descr">允許隨時接聽通話與訊息。</string>
   <string name="notif_group_calls">通話</string>
@@ -80,6 +82,7 @@
   <string name="notif_outgoing_file_transfer">有人想要傳送檔案給您</string>
   <string name="notif_incoming_picture">圖片從 %1$s</string>
   <string name="action_open">開啟</string>
+  <string name="notif_sync_title">正在同步資料……</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">你：</string>
   <string name="action_call_hangup">掛斷</string>

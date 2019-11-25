@@ -49,6 +49,7 @@
     <item quantity="other">%d Biseda</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Kërkoni për emër ose numër telefoni…</string>
   <string name="choose_number">Zgjidhni një numër</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -68,6 +69,7 @@
   <string name="notif_channel_messages">Mesazhe</string>
   <string name="notif_channel_requests">Kërkesa</string>
   <string name="notif_channel_file_transfer">Shpërngulje kartelash</string>
+  <string name="notif_channel_sync">Njëkohësim të dhënash</string>
   <string name="notif_channel_background_service">Shërbim në prapaskenë</string>
   <string name="notif_channel_background_service_descr">Lejon marrje thirrjesh dhe mesazhesh në çfarëdo kohe.</string>
   <string name="notif_group_calls">Thirrje</string>
@@ -81,6 +83,7 @@
   <string name="notif_outgoing_file_transfer">Dikush dëshiron t\’ju dërgojë një kartelë</string>
   <string name="notif_incoming_picture">Foto nga %1$s</string>
   <string name="action_open">Hape</string>
+  <string name="notif_sync_title">Po njëkohësohen të dhëna…</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ju:</string>
   <string name="action_call_hangup">Mbylle thirrjen</string>

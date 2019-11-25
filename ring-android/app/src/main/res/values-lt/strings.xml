@@ -74,6 +74,7 @@
   <string name="notif_outgoing_file_transfer">Kažkas nori išsiųsti jums failą</string>
   <string name="notif_incoming_picture">Paveikslas nuo %1$s</string>
   <string name="action_open">Atverti</string>
+  <string name="notif_sync_title">Sinchronizuojami duomenys…</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Jūs:</string>
   <string name="action_call_hangup">Padėti ragelį</string>
@@ -195,6 +196,8 @@
   <string name="file_transfer_status_created">inicijuojamas persiuntimas</string>
   <string name="file_transfer_status_unsupported">nepalaikoma</string>
   <string name="file_transfer_status_invalid_pathname">neteisingas kelio pavadinimas</string>
+  <string name="file_transfer_status_cancelled">atsisakyta</string>
+  <string name="file_transfer_status_error">nepavyko dėl klaidos</string>
   <string name="file_saved_in">Failas įrašytas į %s</string>
   <string name="file_saved_successfully">Failas sėkmingai įrašytas</string>
   <string name="no_space_left_on_device">Įrenginyje nebeliko vietos</string>
