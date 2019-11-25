@@ -49,6 +49,7 @@
     <item quantity="other">%dtársalgás</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Név vagy telefonszám keresése…</string>
   <string name="choose_number">Válasszon egy számot</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -68,6 +69,7 @@
   <string name="notif_channel_messages">Üzenetek</string>
   <string name="notif_channel_requests">Kérések</string>
   <string name="notif_channel_file_transfer">Fájlátvitel</string>
+  <string name="notif_channel_sync">Adatok összehangolása</string>
   <string name="notif_channel_background_service">Háttérben futó szolgáltatás</string>
   <string name="notif_channel_background_service_descr">Bejövő hívások és üzenetek engedélyezése bármikor.</string>
   <string name="notif_group_calls">Hívások</string>
@@ -81,6 +83,7 @@
   <string name="notif_outgoing_file_transfer">Valaki szeretne küldeni egy fájlt Önnek</string>
   <string name="notif_incoming_picture">%1$sképe</string>
   <string name="action_open">Megnyitás</string>
+  <string name="notif_sync_title">Adatok összehangolása…</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ön:</string>
   <string name="action_call_hangup">Letétel</string>

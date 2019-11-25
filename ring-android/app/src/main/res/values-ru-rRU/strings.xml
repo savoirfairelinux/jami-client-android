@@ -51,6 +51,7 @@
     <item quantity="other">%d беседы</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Поиск по имени или номеру телефона...</string>
   <string name="choose_number">Выбор номера</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -70,6 +71,7 @@
   <string name="notif_channel_messages">Сообщения</string>
   <string name="notif_channel_requests">Запросы</string>
   <string name="notif_channel_file_transfer">Передача файлов</string>
+  <string name="notif_channel_sync">Синхронизация данных</string>
   <string name="notif_channel_background_service">Работа в фоновом режиме</string>
   <string name="notif_channel_background_service_descr">Принимать звонки в любое время</string>
   <string name="notif_group_calls">Звонки</string>
@@ -83,6 +85,7 @@
   <string name="notif_outgoing_file_transfer">Кто-то хочет отправить вам файл</string>
   <string name="notif_incoming_picture">Изображение от %1$s</string>
   <string name="action_open">Открыть</string>
+  <string name="notif_sync_title">Синхронизация данных...</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Вы</string>
   <string name="action_call_hangup">Завершить</string>
