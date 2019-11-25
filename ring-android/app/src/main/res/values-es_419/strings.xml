@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <string name="feedback_section">Retroalimentación</string>
+  <string name="report"><u>Envianos un email</u></string>
+  <string name="section_license">Licencia</string>
+  <string name="sponsor_section">Jami es un software libre desarrollado y mantenido por</string>
+  <string name="contribute_section">Contribuye</string>
+  <string name="version_section">Versión</string>
+  <string name="no_email_app_installed">No se ha encontrado app de mensajería, instala una para enviarnos un reporte</string>
+  <string name="no_browser_app_installed">No se ha encontrado Navegador Web, instala uno para ver esta página</string>
+  <string name="email_chooser_title">Envía el mail usando...</string>
+  <string name="website_chooser_title">Mira la pagina web usando...</string>
+  <!--About dialog-->
+  <!--RingActivity-->
+  <!--AB menus-->
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <!--Sections-->
+  <!--Dialing Fragment-->
+  <!--History Fragment-->
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <!--ContactList Fragment-->
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <!--Call Fragment-->
+  <!--Text messages-->
+  <!--MediaPreferenceFragment-->
+  <!--Ringtone activity-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
+  <!--Conversation-->
+  <!--Contacts-->
+  <!--MenuHeaderView-->
+  <!--Share fragment-->
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
+  <!--Blacklist-->
+  <!--Smartlist-->
+  <!--File Transfer-->
+</resources>
