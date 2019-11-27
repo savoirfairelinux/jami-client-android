@@ -275,14 +275,9 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
 
     @Override
     public void updateModel(Account account) {
-        Context context = getContext();
-        if (context == null) {
-            Log.e(TAG, "updateModel: not able to get context");
-            return;
-        }
-
-        mDisposable.clear();
+        Context context = requireContext();
         String address = account.getDisplayUsername();
+        mDisposable.clear();
         mDisposable.add(VCardServiceImpl
                 .loadProfile(account)
                 .observeOn(AndroidSchedulers.mainThread())
