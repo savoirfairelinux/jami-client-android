@@ -473,7 +473,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     private void textNotification(String accountId, TreeMap<Long, TextMessage> texts, CallContact contact) {
         Uri contactUri = contact.getPrimaryUri();
-        String contactId = contactUri.getRawUriString();
+        String contactId = contactUri.getUri();
         android.net.Uri path = ConversationPath.toUri(accountId, contactId);
 
         String contactName = contact.getDisplayName();
@@ -674,21 +674,19 @@ public class NotificationServiceImpl implements NotificationService {
         long dataTransferId = info.getDaemonId();
         int notificationId = getFileTransferNotificationId(dataTransferId);
 
-        String contactUri = new Uri(info.getPeerId()).getRawUriString();
-        Intent intentConversation = new Intent(DRingService.ACTION_CONV_ACCEPT)
-                .setClass(mContext, DRingService.class)
-                .putExtra(ConversationFragment.KEY_ACCOUNT_ID, mAccountService.getCurrentAccount().getAccountID())
-                .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactUri);
+        android.net.Uri path = ConversationPath.toUri(info.getAccount(), new Uri(info.getConversation().getParticipant()));
+
+        Intent intentConversation = new Intent(DRingService.ACTION_CONV_ACCEPT, path, mContext, DRingService.class);
 
         if (event.isOver()) {
             removeTransferNotification(dataTransferId);
 
             if (!info.isOutgoing() && info.showPicture()) {
-                File path = mDeviceRuntimeService.getConversationPath(info.getPeerId(), info.getStoragePath());
+                File filePath = mDeviceRuntimeService.getConversationPath(info.getPeerId(), info.getStoragePath());
                 Bitmap img;
                 try {
                     BitmapDrawable d = (BitmapDrawable) Glide.with(mContext)
-                            .load(path)
+                            .load(filePath)
                             .submit()
                             .get();
                     img = d.getBitmap();
@@ -785,11 +783,9 @@ public class NotificationServiceImpl implements NotificationService {
             messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_MISSED_CALL);
         }
 
-        String contactUri = call.getConversation().getParticipant();
-        Intent intentConversation = new Intent(DRingService.ACTION_CONV_ACCEPT)
-                .setClass(mContext, DRingService.class)
-                .putExtra(ConversationFragment.KEY_ACCOUNT_ID, mAccountService.getCurrentAccount().getAccountID())
-                .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactUri);
+        android.net.Uri path = ConversationPath.toUri(call);
+
+        Intent intentConversation = new Intent(DRingService.ACTION_CONV_ACCEPT, path, mContext, DRingService.class);
 
         messageNotificationBuilder.setContentTitle(mContext.getText(R.string.notif_missed_incoming_call))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)

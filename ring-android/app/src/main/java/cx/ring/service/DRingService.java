@@ -662,9 +662,7 @@ public class DRingService extends Service {
             case ACTION_CONV_ACCEPT:
             case ACTION_CONV_DISMISS:
             case ACTION_CONV_REPLY_INLINE:
-                if (extras != null) {
-                    handleConvAction(intent, action, extras);
-                }
+                handleConvAction(intent, action, extras);
                 break;
             case ACTION_FILE_ACCEPT:
             case ACTION_FILE_CANCEL:

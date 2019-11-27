@@ -7,6 +7,7 @@ import android.os.Bundle;
 import java.util.List;
 
 import cx.ring.fragments.ConversationFragment;
+import cx.ring.model.Interaction;
 
 public class ConversationPath {
     private final String accountId;
@@ -35,6 +36,9 @@ public class ConversationPath {
         builder = builder.appendEncodedPath(accountId);
         builder = builder.appendEncodedPath(contactUri.getUri());
         return builder.build();
+    }
+    public static Uri toUri(Interaction interaction) {
+        return toUri(interaction.getAccount(), new cx.ring.model.Uri(interaction.getAuthor()));
     }
 
     public Bundle toBundle() {
