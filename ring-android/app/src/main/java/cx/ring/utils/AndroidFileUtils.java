@@ -118,7 +118,7 @@ public class AndroidFileUtils {
             } else if (isDownloadsDocument(uri)) {
                 final String id = DocumentsContract.getDocumentId(uri);
                 final Uri contentUri = ContentUris.withAppendedId(
-                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+                        Uri.parse("content://downloads/public_downloads"), Long.parseLong(id));
                 path = getDataColumn(context, contentUri, null, null);
             } else if (isMediaDocument(uri)) {
                 final String docId = DocumentsContract.getDocumentId(uri);
@@ -144,7 +144,7 @@ public class AndroidFileUtils {
         return path;
     }
 
-    public static String getFilename(ContentResolver cr, Uri uri) {
+    private static String getFilename(ContentResolver cr, Uri uri) {
         String result = null;
         if (ContentResolver.SCHEME_CONTENT.equals(uri.getScheme())) {
             try (Cursor cursor = cr.query(uri, null, null, null, null)) {
@@ -170,7 +170,7 @@ public class AndroidFileUtils {
         return result;
     }
 
-    public static String getMimeType(ContentResolver cr, Uri uri) {
+    private static String getMimeType(ContentResolver cr, Uri uri) {
         String mimeType;
         if (ContentResolver.SCHEME_CONTENT.equals(uri.getScheme())) {
             mimeType = cr.getType(uri);
@@ -276,17 +276,8 @@ public class AndroidFileUtils {
      */
     public static Completable copyFileToUri(ContentResolver cr, File input, Uri outUri){
         return Completable.fromAction(() -> {
-            InputStream inputStream = null;
-            OutputStream outputStream = null;
-            try {
-                inputStream = new FileInputStream(input);
-                outputStream = cr.openOutputStream(outUri);
+            try (InputStream inputStream = new FileInputStream(input); OutputStream outputStream = cr.openOutputStream(outUri)) {
                 FileUtils.copyFile(inputStream, outputStream);
-            } finally {
-                if (outputStream != null)
-                    outputStream.close();
-                if (inputStream != null)
-                    inputStream.close();
             }
         }).subscribeOn(Schedulers.io());
     }
@@ -406,11 +397,12 @@ public class AndroidFileUtils {
 
     public static Single<Bitmap> loadBitmap(Context context, Uri uriImage) {
         return Single.fromCallable(() -> {
-            InputStream is = context.getContentResolver().openInputStream(uriImage);
             BitmapFactory.Options dbo = new BitmapFactory.Options();
             dbo.inJustDecodeBounds = true;
-            BitmapFactory.decodeStream(is, null, dbo);
-            is.close();
+
+            try  (InputStream is = context.getContentResolver().openInputStream(uriImage)) {
+                BitmapFactory.decodeStream(is, null, dbo);
+            }
 
             int rotatedWidth, rotatedHeight;
             int orientation = getOrientation(context, uriImage);
@@ -424,20 +416,20 @@ public class AndroidFileUtils {
             }
 
             Bitmap srcBitmap;
-            is = context.getContentResolver().openInputStream(uriImage);
-            if (rotatedWidth > MAX_IMAGE_DIMENSION || rotatedHeight > MAX_IMAGE_DIMENSION) {
-                float widthRatio = ((float) rotatedWidth) / ((float) MAX_IMAGE_DIMENSION);
-                float heightRatio = ((float) rotatedHeight) / ((float) MAX_IMAGE_DIMENSION);
-                float maxRatio = Math.max(widthRatio, heightRatio);
+            try (InputStream is = context.getContentResolver().openInputStream(uriImage)) {
+                if (rotatedWidth > MAX_IMAGE_DIMENSION || rotatedHeight > MAX_IMAGE_DIMENSION) {
+                    float widthRatio = ((float) rotatedWidth) / ((float) MAX_IMAGE_DIMENSION);
+                    float heightRatio = ((float) rotatedHeight) / ((float) MAX_IMAGE_DIMENSION);
+                    float maxRatio = Math.max(widthRatio, heightRatio);
 
-                // Create the bitmap from file
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = (int) maxRatio;
-                srcBitmap = BitmapFactory.decodeStream(is, null, options);
-            } else {
-                srcBitmap = BitmapFactory.decodeStream(is);
+                    // Create the bitmap from file
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inSampleSize = (int) maxRatio;
+                    srcBitmap = BitmapFactory.decodeStream(is, null, options);
+                } else {
+                    srcBitmap = BitmapFactory.decodeStream(is);
+                }
             }
-            is.close();
 
             if (orientation > 0) {
                 Matrix matrix = new Matrix();
@@ -450,7 +442,7 @@ public class AndroidFileUtils {
         }).subscribeOn(Schedulers.io());
     }
 
-    public static int getOrientation(@NonNull Context context, Uri photoUri) {
+    private static int getOrientation(@NonNull Context context, @NonNull Uri photoUri) {
         ContentResolver resolver = context.getContentResolver();
         if (resolver == null)
             return 0;
@@ -471,7 +463,7 @@ public class AndroidFileUtils {
         }
     }
 
-    private static int getExifOrientation(@NonNull ContentResolver resolver, Uri photoUri) {
+    private static int getExifOrientation(@NonNull ContentResolver resolver, @NonNull Uri photoUri) {
         if (Build.VERSION.SDK_INT > 23) {
             try (InputStream input = resolver.openInputStream(photoUri)) {
                 return new ExifInterface(input)
