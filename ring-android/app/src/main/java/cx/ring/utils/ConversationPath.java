@@ -38,7 +38,7 @@ public class ConversationPath {
         return builder.build();
     }
     public static Uri toUri(Interaction interaction) {
-        return toUri(interaction.getAccount(), new cx.ring.model.Uri(interaction.getAuthor()));
+        return toUri(interaction.getAccount(), new cx.ring.model.Uri(interaction.getConversation().getParticipant()));
     }
 
     public Bundle toBundle() {
