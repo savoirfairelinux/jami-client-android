@@ -11,7 +11,7 @@ fi
 
 major_version=$(sed -En -e 's/^Pkg.Revision[ \t]*=[ \t]*([0-9a-f]+).*/\1/p' ${source_properties})
 numerical_minor_version=$(sed -En -e 's/^Pkg.Revision[ \t]*=[ \t]*[0-9a-f]+\.([0-9]+).*/\1/p' ${source_properties})
-minor_version=$(echo ${numerical_minor_version} | tr 0123456789 abcdefghij)
+minor_version=$(echo ${numerical_minor_version} | tr 0123456789 " bcdefghij" | tr -d '[:space:]')
 ndk_version=r${major_version}${minor_version}
 
 echo ${ndk_version}
