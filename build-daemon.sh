@@ -1,11 +1,5 @@
 #! /bin/bash
-# Build Ring daemon for architecture specified by ANDROID_ABI
-
-#for OSX/BSD
-realpath() {
-    [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
-}
-
+# Build Jami daemon for architecture specified by ANDROID_ABI
 set -e
 
 if [ -z "$ANDROID_NDK" -o -z "$ANDROID_SDK" ]; then
@@ -13,18 +7,16 @@ if [ -z "$ANDROID_NDK" -o -z "$ANDROID_SDK" ]; then
    echo "They must point to your NDK and SDK directories."
    exit 1
 fi
-
 if [ -z "$ANDROID_ABI" ]; then
    echo "Please set ANDROID_ABI to your architecture: armeabi-v7a, x86."
    exit 1
 fi
 
 ANDROID_TOPLEVEL_DIR="`pwd`"
-ANDROID_APP_DIR="$(pwd)/ring-android"
+ANDROID_APP_DIR="${ANDROID_TOPLEVEL_DIR}/ring-android"
 
 HAVE_ARM=0
 HAVE_X86=0
-HAVE_MIPS=0
 HAVE_64=0
 
 # Set up ABI variables
@@ -41,12 +33,6 @@ elif [ ${ANDROID_ABI} = "x86_64" ] ; then
     HAVE_X86=1
     HAVE_64=1
     PLATFORM_SHORT_ARCH="x86_64"
-elif [ ${ANDROID_ABI} = "mips" ] ; then
-    TARGET_TUPLE="mipsel-linux-android"
-    PJ_TARGET_TUPLE="mips-unknown-linux-androideabi"
-    PATH_HOST=$TARGET_TUPLE
-    HAVE_MIPS=1
-    PLATFORM_SHORT_ARCH="mips"
 elif [ ${ANDROID_ABI} = "arm64-v8a" ] ; then
     TARGET_TUPLE="aarch64-linux-android"
     PJ_TARGET_TUPLE="aarch64-unknown-linux-android"
@@ -79,25 +65,19 @@ if [ ! -d "$ANDROID_TOOLCHAIN" ]; then
         --install-dir=$ANDROID_TOOLCHAIN
 fi
 
-GCCVER=clang
-CXXSTL="/"${GCCVER}
-
-export GCCVER
-export CXXSTL
 export ANDROID_API
 export TARGET_TUPLE
-export PATH_HOST
 export HAVE_ARM
 export HAVE_X86
-export HAVE_MIPS
 export HAVE_64
-export PLATFORM_SHORT_ARCH
 
 # Add the NDK toolchain to the PATH, needed both for contribs and for building
 # stub libraries
-NDK_TOOLCHAIN_PATH=`echo ${ANDROID_TOOLCHAIN}/bin`
-export NDK_TOOLCHAIN_PATH=${NDK_TOOLCHAIN_PATH}
+NDK_TOOLCHAIN_PATH="${ANDROID_TOOLCHAIN}/bin"
+CROSS_COMPILE=${NDK_TOOLCHAIN_PATH}/${TARGET_TUPLE}-
 export PATH=${NDK_TOOLCHAIN_PATH}:${PATH}
+export CROSS_COMPILE="${CROSS_COMPILE}"
+export SYSROOT=$ANDROID_TOOLCHAIN/sysroot
 
 if [ -z "$DAEMON_DIR" ]; then
     DAEMON_DIR="$(pwd)/../daemon"
@@ -109,18 +89,34 @@ if [ ! -d "$DAEMON_DIR" ]; then
     echo 'If you cloned the daemon in a custom location override' \
             'DAEMON_DIR to point to it'
     echo "You can also use our meta repo which contains both:
-          https://gerrit-ring.savoirfairelinux.com/#/admin/projects/ring-project"
+          https://review.jami.net/#/admin/projects/ring-project"
     exit 1
 fi
+export DAEMON_DIR
 
 # Setup LDFLAGS
 if [ ${ANDROID_ABI} = "armeabi-v7a" ] ; then
     EXTRA_CFLAGS="${EXTRA_CFLAGS} -march=armv7-a -mthumb -mfpu=vfpv3-d16"
     EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -march=armv7-a -mthumb -mfpu=vfpv3-d16"
 elif [ ${ANDROID_ABI} = "arm64-v8a" ] ; then
-    EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${ANDROID_TOOLCHAIN}/sysroot/usr/lib -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/lib"
+    EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${SYSROOT}/usr/lib -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/lib"
 fi
 EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/${LIBDIR}/${ANDROID_ABI} -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/${LIBDIR}"
+EXTRA_CFLAGS="${EXTRA_CFLAGS} -fPIC"
+EXTRA_CXXFLAGS="${EXTRA_CXXFLAGS} -fPIC"
+EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${SYSROOT}/usr/${LIBDIR}"
+echo "EXTRA_CFLAGS= ${EXTRA_CFLAGS}" >> config.mak
+echo "EXTRA_CXXFLAGS= ${EXTRA_CXXFLAGS}" >> config.mak
+echo "EXTRA_LDFLAGS= ${EXTRA_LDFLAGS}" >> config.mak
+
+if [ "${RELEASE}" -eq 1 ]; then
+    echo "Daemon in release mode."
+    OPTS=""
+    STRIP_ARG="-s "
+else
+    echo "Daemon in debug mode."
+    OPTS="--enable-debug"
+fi
 
 # Make in //
 UNAMES=$(uname -s)
@@ -135,7 +131,7 @@ fi
 
 # Build buildsystem tools
 cd $DAEMON_DIR/extras/tools
-export PATH=`pwd`/extras/tools/build/bin:$PATH
+export PATH=`pwd`/build/bin:$PATH
 echo "Building tools"
 ./bootstrap
 make $MAKEFLAGS
@@ -152,63 +148,30 @@ PACKAGEDIR=$PACKAGEDIR $JNIDIR/make-swig.sh
 ############
 # Contribs #
 ############
-cd $DAEMON_DIR
 echo "Building the contribs"
-mkdir -p contrib/native-${TARGET_TUPLE}
+CONTRIB_DIR=${DAEMON_DIR}/contrib/native-${TARGET_TUPLE}
+CONTRIB_SYSROOT=${DAEMON_DIR}/contrib/${TARGET_TUPLE}
+mkdir -p ${CONTRIB_DIR}
+mkdir -p ${CONTRIB_SYSROOT}/lib/pkgconfig
 
-CROSS_COMPILE=${NDK_TOOLCHAIN_PATH}/${TARGET_TUPLE}-
-export CROSS_COMPILE="${CROSS_COMPILE}"
-
-mkdir -p contrib/${TARGET_TUPLE}/lib/pkgconfig
-
-cd $DAEMON_DIR/contrib/native-${TARGET_TUPLE}
-../bootstrap --host=${TARGET_TUPLE} --disable-libav --enable-ffmpeg --disable-speexdsp
-
-# Always strip symbols for libring.so remove it if you want to debug the daemon
-STRIP_ARG="-s "
-
-EXTRA_CFLAGS="${EXTRA_CFLAGS} -DNDEBUG -fPIC -fno-integrated-as"
-EXTRA_CXXFLAGS="${EXTRA_CXXFLAGS} -DNDEBUG -fPIC"
-EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${SYSROOT}/usr/${LIBDIR}"
-
-if [ "${RELEASE}" -eq 1 ]; then
-    echo "Daemon in release mode."
-    OPTS=""
-else
-    echo "Daemon in debug mode."
-    OPTS="--enable-debug"
-fi
-
-export SYSROOT=$ANDROID_TOOLCHAIN/sysroot
-echo "EXTRA_CFLAGS= ${EXTRA_CFLAGS}" >> config.mak
-echo "EXTRA_CXXFLAGS= ${EXTRA_CXXFLAGS}" >> config.mak
-echo "EXTRA_LDFLAGS= ${EXTRA_LDFLAGS}" >> config.mak
-export RING_EXTRA_CFLAGS="${EXTRA_CFLAGS}"
-export RING_EXTRA_CXXFLAGS="${EXTRA_CXXFLAGS}"
-export RING_EXTRA_LDFLAGS="${EXTRA_LDFLAGS}"
+cd ${CONTRIB_DIR}
+../bootstrap --host=${TARGET_TUPLE} --enable-ffmpeg --disable-speexdsp
 
 make list
 make fetch
-export PATH="$PATH:$PWD/../$TARGET_TUPLE/bin"
+export PATH="$PATH:$CONTRIB_SYSROOT/bin"
 make $MAKEFLAGS
 
 ############
-# Make Ring #
+# Make Jami daemon #
 ############
-cd $DAEMON_DIR
-RING_SRC_DIR="${DAEMON_DIR}"
-RING_BUILD_DIR="`realpath build-android-${TARGET_TUPLE}`"
-export RING_SRC_DIR="${RING_SRC_DIR}"
-export RING_BUILD_DIR="${RING_BUILD_DIR}"
-
-mkdir -p build-android-${TARGET_TUPLE}
-cd ${ANDROID_APP_DIR}
+DAEMON_BUILD_DIR="${DAEMON_DIR}/build-android-${TARGET_TUPLE}"
+mkdir -p ${DAEMON_BUILD_DIR}
 
 if [ ! -f config.h ]; then
-    echo "Bootstraping"
     cd ${DAEMON_DIR}
     ./autogen.sh
-    cd "${DAEMON_DIR}/build-android-${TARGET_TUPLE}"
+    cd "${DAEMON_BUILD_DIR}"
     echo "Configuring with ${OPTS}"
     CFLAGS="${EXTRA_CFLAGS}" \
     CXXFLAGS="${EXTRA_CXXFLAGS}" \
@@ -220,11 +183,6 @@ if [ ${ANDROID_API} = "android-21" ] ; then
     # android-21 has empty sys/shm.h headers that triggers shm detection but it
     # doesn't have any shm functions and/or symbols. */
     export ac_cv_header_sys_shm_h=no
-fi
-if [ ${ANDROID_ABI} = "x86" -a ${ANDROID_API} != "android-21" ] ; then
-    # NDK x86 libm.so has nanf symbol but no nanf definition, we don't known if
-    # intel devices has nanf. Assume they don't have it.
-    export ac_cv_lib_m_nanf=no
 fi
 
 echo "Building dring ${MAKEFLAGS}"
@@ -257,7 +215,7 @@ STATIC_LIBS_ALL="-llog -lOpenSLES -landroid \
 
 LIBRING_JNI_DIR=${ANDROID_APP_DIR}/app/src/main/libs/${ANDROID_ABI}
 
-echo "Building Ring JNI library for Android to ${LIBRING_JNI_DIR}"
+echo "Building Jami JNI library for Android to ${LIBRING_JNI_DIR}"
 mkdir -p ${LIBRING_JNI_DIR}
 
 ${NDK_TOOLCHAIN_PATH}/clang++ \
@@ -267,11 +225,11 @@ ${NDK_TOOLCHAIN_PATH}/clang++ \
                 -Wno-unused-function \
                 -Wno-unused-parameter \
                 ${JNIDIR}/ring_wrapper.cpp \
-                ${RING_BUILD_DIR}/src/.libs/libring.a \
+                ${DAEMON_BUILD_DIR}/src/.libs/libring.a \
                 -static-libstdc++ \
-                -isystem ${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/include \
-                -I${RING_SRC_DIR}/src \
-                -L${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/lib \
+                -isystem ${DAEMON_DIR}/contrib/${TARGET_TUPLE}/include \
+                -I${DAEMON_DIR}/src \
+                -L${DAEMON_DIR}/contrib/${TARGET_TUPLE}/lib \
                 ${STATIC_LIBS_ALL} \
                 ${STRIP_ARG} --std=c++14 -O3 -fPIC \
                 -o ${LIBRING_JNI_DIR}/libring.so
