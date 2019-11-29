@@ -274,7 +274,11 @@ public class AvatarDrawable extends Drawable {
     }
 
     private String convertNameToAvatarText(String name) {
-        return TextUtils.isEmpty(name) ? null : name.substring(0, 1).toUpperCase();
+        if (TextUtils.isEmpty(name)) {
+            return null;
+        } else {
+            return new String(Character.toChars(name.codePointAt(0))).toUpperCase();
+        }
     }
 
     private static int getAvatarColor(String id) {
