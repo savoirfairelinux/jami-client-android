@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d3455570_7be35fac",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2019-12-02T21:10:12Z",
+      "side": 1,
+      "message": "This change is sensible and fixes missing avatars for incoming messages across devices. Can this be in a separate patch?",
+      "range": {
+        "startLine": 867,
+        "startChar": 16,
+        "endLine": 869,
+        "endChar": 78
+      },
+      "revId": "8e004e9f57cb3414b49848fe4f54c0c5401a8a3b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b894d4d2_ced8eb32",
         "filename": "ring-android/app/src/main/res/layout-w720dp-land/frag_conversation.xml",
         "patchSetId": 1
