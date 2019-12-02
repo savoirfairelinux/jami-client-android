@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b894d4d2_ced8eb32",
+        "filename": "ring-android/app/src/main/res/layout-w720dp-land/frag_conversation.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-12-02T20:49:40Z",
+      "side": 1,
+      "message": "dedicated xml ressource should not be needed",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 23
+      },
+      "revId": "8e004e9f57cb3414b49848fe4f54c0c5401a8a3b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
