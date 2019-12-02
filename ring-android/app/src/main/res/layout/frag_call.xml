@@ -261,6 +261,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:tint="@color/white"
                     app:srcCompat="@drawable/baseline_volume_up_24" />
 
+                <cx.ring.views.CheckableImageButton
+                    android:id="@+id/call_screenshare_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:background="@drawable/call_button_background"
+                    android:contentDescription="@string/ab_action_speakerphone"
+                    android:onClick="@{(v) -> presenter.shareScreenClicked(((android.widget.Checkable)v).isChecked())}"
+                    android:padding="16dp"
+                    android:tint="@color/white"
+                    app:srcCompat="@drawable/baseline_mobile_screen_share_24" />
+
             </com.google.android.flexbox.FlexboxLayout>
 
             <androidx.recyclerview.widget.RecyclerView
