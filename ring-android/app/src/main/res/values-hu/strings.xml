@@ -86,7 +86,7 @@
   <string name="notif_sync_title">Adatok összehangolása…</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ön:</string>
-  <string name="action_call_hangup">Letétel</string>
+  <string name="action_call_hangup">Hívás befejezése</string>
   <string name="ongoing_call">Folyamatban lévő hívás</string>
   <string name="hist_in_call">Bejövő hívás ennyi ideje: %1$s</string>
   <string name="hist_out_call">Kimenő hívás ennyi ideje: %1$s</string>

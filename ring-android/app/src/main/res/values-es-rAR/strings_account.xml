@@ -5,7 +5,9 @@
   <string name="ic_advanced_menu">Opciones avanzadas</string>
   <string name="ic_blacklist_menu">Contactos bloqueados</string>
   <!--Strings related to account creation-->
+  <string name="add_ring_account_title">Agregar cuenta de Jami</string>
   <string name="add_sip_account_title">Añadir cuenta SIP</string>
+  <string name="ring_account_default_name">Cuenta Jami %1$s</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Nombre del anfitrión</string>
   <string name="prompt_username">Nombre de usuario</string>
@@ -24,6 +26,7 @@
 Solo podrá realizar y recibir llamadas de ip directas.
 Podrá editar su cuenta más tarde.</string>
   <string name="account_type_ip2ip">Cuenta IP</string>
+  <string name="help_ring">Una cuenta Jami permite contactarte con otras personas de manera segura utilizando P2P a través de una red totalmente distribuida.</string>
   <string name="help_sip_title">Añada su cuenta SIP</string>
   <string name="help_sip">Configure una cuenta SIP existente.</string>
   <string name="create_sip_account">Añadir cuenta SIP</string>
@@ -33,6 +36,7 @@ Podrá editar su cuenta más tarde.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">No hay cuenta registrada</string>
   <string name="normal_accounts_titles">Cuentas</string>
+  <string name="normal_devices_titles">Dispositivos conocidos conectados a esta cuenta de Jami</string>
   <string name="account_device_revoke">Revocar dispositivo</string>
   <string name="account_device_revocation_success_title">Éxito</string>
   <string name="account_device_revocation_success">¡Se ha revocado el dispositivo!</string>
@@ -41,6 +45,7 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_device_revocation_unknown_device">Dispositivo desconocido.</string>
   <string name="account_device_revocation_error_unknown">Error desconocido.</string>
   <string name="account_password_change">Cambiar contraseña</string>
+  <string name="account_password_set">Establecer contraseña</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">General</string>
   <string name="account_basic_category">Parámetros básicos</string>
@@ -51,6 +56,7 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_password_label">Contraseña</string>
   <string name="account_optionnal_category">Parámetros Opcionales</string>
   <string name="account_useragent_label">Agente de usuario</string>
+  <string name="account_autoanswer_label">Responder automáticamente</string>
   <string name="account_upnp_label">Activar UPnP</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Audio Details-->
@@ -60,6 +66,8 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_ringtone_enabled_label">Activar tonos de llamada</string>
   <string name="account_ringtone_path_label">Ubicación del tono</string>
   <string name="account_ringtone_custom_label">Usar tono de llamada personalizado</string>
+  <string name="account_ringtone_title">Elegir tono de llamada</string>
+  <string name="account_ringtone_summary">Seleccioná un tono de llamada o elegí uno personalizado</string>
   <!--Video Details-->
   <string name="account_video_label">Video</string>
   <string name="account_video_enable">Permitir video</string>
@@ -80,12 +88,48 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_preferences_security_tab">Seguridad</string>
   <!--SIP-->
   <!--TLS Details-->
+  <string name="account_tls_transport_switch_label">Usar TLS</string>
+  <string name="account_tls_server_name_label">Nombre del servidor</string>
+  <string name="account_tls_verify_server_label">Verificar servidor</string>
+  <string name="account_tls_verify_client_label">Verificar cliente</string>
+  <string name="account_rtp_max_port">Máximo</string>
+  <string name="account_rtp_min_port">Mínimo</string>
   <!--restore/backup-->
+  <string name="account_new_device_password">Indroduzca la contraseña principal para desbloquear su cuenta</string>
   <string name="error_password_char_count">6 carateres mínimo</string>
+  <string name="error_passwords_not_equals">Las contraseñas no coinciden</string>
+  <string name="export_account_wait_title">Por favor espere...</string>
+  <string name="export_account_wait_message">Exportando la información de la cuenta</string>
+  <string name="account_export_file">Crear copia de seguridad de la cuenta</string>
+  <string name="account_export_end_decryption_message">No se pudo desbloquear la cuenta con la contraseña ingresada.</string>
+  <string name="account_export_end_network_title">Error de red</string>
+  <string name="account_export_end_network_message">No se pudo exportar su cuenta. Compruebe su conexión a internet.</string>
   <string name="account_export_end_error_title">Error</string>
+  <string name="account_export_end_error_message">No se pudo exportar su cuenta. Error desconocido.</string>
   <string name="account_enter_password">Ingresar contraseña</string>
+  <string name="account_share_body">Contactame usando \"%1$s\" en Jami, plataforma de comunicación distribuida: %2$s</string>
+  <string name="account_share_body_with_username">Contactame usando \"%1$s\" o mi usuario público \"%2$s\" en Jami, plataforma de comunicación distribuida: %3$s</string>
+  <string name="account_contact_me">¡Contactame en Jami!</string>
+  <string name="update_account">Actualizar cuenta</string>
+  <string name="account_migration">Tu cuenta de Jami ya puede actualizarse.\nPor favor, ingresá tu contraseña.</string>
+  <string name="ring_account">Cuenta de Jami</string>
+  <string name="ring_account_identity">Identidad</string>
+  <string name="account_migration_title_dialog">Migración de cuenta</string>
+  <string name="account_migration_message_dialog">Es necesario actualizar tu cuenta. ¿Te gustaría ir al administrador de cuentas para realizar esta acción?</string>
+  <string name="account_update_needed">Actualización necesaria</string>
   <string name="account_cannot_be_found_title">No se pudo encontrar la cuenta</string>
+  <string name="account_cannot_be_found_message">La cuenta no pudo ser encontrada en la red Jami.\nAsegurate de que haya sido exportada desde un dispositivo registrado en Jami y de que las credenciales proporcionadas sean correctas.</string>
+  <string name="account_sip_cannot_be_registered_message">Podés continuar con el proceso de creación de la cuenta o editar tu información aquí mismo. También podrás editarla luego ingresando a la configuración de la cuenta.</string>
   <string name="account_no_network_title">No se puede conectar a la red</string>
+  <string name="account_no_network_message">No se pudo añadir la cuenta debido a que Jami no ha podido conectarse a la red. Revisa la conectividad de tu dispositivo.</string>
+  <string name="account_device_added_title">Cuenta del dispositivo añadida</string>
+  <string name="account_device_added_message">Has configurado con éxito tu cuenta de Jami en este dispositivo.</string>
+  <string name="account_device_updated_title">Cuenta del dispositivo actualizada</string>
+  <string name="account_device_updated_message">Has actualizado con éxito tu cuenta de Jami.</string>
+  <string name="account_cannot_be_updated_message">La cuenta del dispositivo no se ha podido actualizar. Por favor, compruebe su contraseña.</string>
+  <string name="account_sip_success_title">Cuenta SIP registrada</string>
+  <string name="account_sip_success_message">Has registrado con éxito tu cuenta SIP.</string>
+  <string name="account_sip_register_anyway">Registrarse de todas maneras</string>
   <string name="account_link_prompt_pin">Introducir PIN</string>
   <string name="account_link_export_button">Vincular otro dispositivo a esta cuenta</string>
   <string name="account_connect_prompt_username">Nombre de usuario</string>
@@ -99,4 +143,5 @@ Podrá editar su cuenta más tarde.</string>
   <!--Devices-->
   <string name="enter_password">Ingresar contraseña</string>
   <string name="revoke_device_title">Revocar dispositivo</string>
+  <string name="revoke_device_wait_title">Por favor espere...</string>
 </resources>

@@ -51,6 +51,7 @@
     <item quantity="other">%d диалогов</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Поиск по имени или номеру телефона</string>
   <string name="choose_number">Выберите номер</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -70,6 +71,7 @@
   <string name="notif_channel_messages">Сообщения</string>
   <string name="notif_channel_requests">Запросы</string>
   <string name="notif_channel_file_transfer">Передача файла</string>
+  <string name="notif_channel_sync">Синхронизация данных</string>
   <string name="notif_channel_background_service">Фоновая служба</string>
   <string name="notif_channel_background_service_descr">Позволяет принимать звонки и сообщения в любое время.</string>
   <string name="notif_group_calls">Звонки</string>
@@ -83,6 +85,7 @@
   <string name="notif_outgoing_file_transfer">Кто-то хочет отправить вам файл</string>
   <string name="notif_incoming_picture">Изображение от %1$s</string>
   <string name="action_open">Открыть</string>
+  <string name="notif_sync_title">Синхронизация данных...</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Вы:</string>
   <string name="action_call_hangup">Повесить трубку</string>
@@ -227,6 +230,7 @@
   <string name="file_transfer_status_closed_by_peer">остановлено пиром</string>
   <string name="file_transfer_status_invalid_pathname">Некорректный путь</string>
   <string name="file_transfer_status_unjoinable_peer">пир недоступен</string>
+  <string name="file_transfer_status_cancelled">отменено</string>
   <string name="file_transfer_status_error">не удалось из-за ошибки</string>
   <string name="file_transfer_status_timed_out">время вышло</string>
   <string name="file_saved_in">Файл сохранён в %s</string>
