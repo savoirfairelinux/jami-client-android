@@ -36,6 +36,8 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.SurfaceTexture;
 import android.graphics.drawable.Icon;
+import android.media.projection.MediaProjection;
+import android.media.projection.MediaProjectionManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
@@ -119,6 +121,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     private static final int REQUEST_CODE_ADD_PARTICIPANT = 6;
     private static final int REQUEST_PERMISSION_INCOMING = 1003;
     private static final int REQUEST_PERMISSION_OUTGOING = 1004;
+    private static final int REQUEST_CODE_SCREEN_SHARE = 7;
 
     private FragCallBinding binding;
     private OrientationEventListener mOrientationListener;
@@ -133,6 +136,8 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     private int mVideoHeight = -1;
     private int mPreviewWidth = 720, mPreviewHeight = 1280;
     private int mPreviewSurfaceWidth = 0, mPreviewSurfaceHeight = 0;
+
+    private MediaProjectionManager mProjectionManager;
 
     private boolean mBackstackLost = false;
 
@@ -335,6 +340,8 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             }
         }
 
+        mProjectionManager = (MediaProjectionManager) requireContext().getSystemService(Context.MEDIA_PROJECTION_SERVICE);
+
         PowerManager powerManager = (PowerManager) requireContext().getSystemService(Context.POWER_SERVICE);
         if (powerManager != null) {
             mScreenWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "ring:callLock");
@@ -475,6 +482,12 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                 if (path != null) {
                     presenter.addConferenceParticipant(path.getAccountId(), path.getContactId());
                 }
+            }
+        } else if (requestCode == REQUEST_CODE_SCREEN_SHARE) {
+            if (resultCode == Activity.RESULT_OK && data != null) {
+                startScreenShare(mProjectionManager.getMediaProjection(resultCode, data));
+            } else {
+                binding.callScreenshareBtn.setChecked(false);
             }
         }
     }
@@ -878,6 +891,24 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     public void speakerClicked() {
         presenter.speakerClick(binding.callSpeakerBtn.isChecked());
+    }
+
+    private void startScreenShare(MediaProjection mediaProjection) {
+        presenter.startScreenShare(mediaProjection);
+        binding.previewSurface.setVisibility(View.GONE);
+    }
+
+    private void stopShareScreen() {
+        binding.previewSurface.setVisibility(View.VISIBLE);
+        presenter.stopScreenShare();
+    }
+
+    public void shareScreenClicked(boolean checked) {
+        if (!checked) {
+            stopShareScreen();
+        } else {
+            startActivityForResult(mProjectionManager.createScreenCaptureIntent(), REQUEST_CODE_SCREEN_SHARE);
+        }
     }
 
     public void micClicked() {

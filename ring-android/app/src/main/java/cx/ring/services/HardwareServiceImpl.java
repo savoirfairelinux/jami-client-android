@@ -27,6 +27,7 @@ import android.graphics.Point;
 import android.media.AudioDeviceInfo;
 import android.media.AudioManager;
 import android.media.MediaRecorder;
+import android.media.projection.MediaProjection;
 import android.os.Build;
 import android.view.SurfaceHolder;
 import android.view.TextureView;
@@ -46,7 +47,6 @@ import java.util.Map;
 
 import cx.ring.daemon.IntVect;
 import cx.ring.daemon.Ringservice;
-import cx.ring.daemon.StringMap;
 import cx.ring.daemon.UintVect;
 import cx.ring.model.Conference;
 import cx.ring.model.SipCall;
@@ -72,7 +72,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     private static final Map<String, WeakReference<SurfaceHolder>> videoSurfaces = Collections.synchronizedMap(new HashMap<>());
     private final Map<String, Shm> videoInputs = new HashMap<>();
     private final Context mContext;
-    private final CameraServiceCamera2 cameraService;
+    private final CameraService cameraService;
     private final Ringer mRinger;
     private final AudioManager mAudioManager;
     private BluetoothWrapper mBluetoothWrapper;
@@ -80,6 +80,8 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
 
     private String mCapturingId = null;
     private boolean mIsCapturing = false;
+    private boolean mIsScreenSharing = false;
+
     private boolean mShouldCapture = false;
     private boolean mShouldSpeakerphone = false;
     private final boolean mHasSpeakerPhone;
@@ -89,7 +91,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
         mHasSpeakerPhone = hasSpeakerphone();
         mRinger = new Ringer(mContext);
-        cameraService = new CameraServiceCamera2(mContext);
+        cameraService = new CameraService(mContext);
     }
 
     public Completable initVideo() {
@@ -439,6 +441,32 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         cameraService.setParameters(camId, format, width, height, rate, windowManager.getDefaultDisplay().getRotation());
     }
 
+    public void startScreenShare(Object projection) {
+        MediaProjection mediaProjection = (MediaProjection) projection;
+        if (mIsCapturing) {
+            endCapture();
+        }
+        if (!mIsScreenSharing) {
+            mIsScreenSharing = true;
+            mediaProjection.registerCallback(new MediaProjection.Callback(){
+                @Override
+                public void onStop() {
+                    stopScreenShare();
+                }
+            }, cameraService.getVideoHandler());
+            cameraService.startScreenSharing(mediaProjection, mContext.getResources().getDisplayMetrics());
+        }
+    }
+
+    public void stopScreenShare() {
+        if (mIsScreenSharing) {
+            cameraService.stopScreenSharing();
+            mIsScreenSharing = false;
+            if (mShouldCapture)
+                startCapture(mCapturingId);
+        }
+    }
+
     @Override
     public void startCapture(@Nullable String camId) {
         mShouldCapture = true;
@@ -479,7 +507,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         mCapturingId = videoParams.id;
         Log.d(TAG, "startCapture: startCapture " + videoParams.id + " " + videoParams.width + "x" + videoParams.height + " rot" + videoParams.rotation);
 
-        mUiScheduler.scheduleDirect(() -> cameraService.openCamera(mContext, videoParams, surface,
+        mUiScheduler.scheduleDirect(() -> cameraService.openCamera(videoParams, surface,
                 new CameraService.CameraListener() {
                     @Override
                     public void onOpened() {

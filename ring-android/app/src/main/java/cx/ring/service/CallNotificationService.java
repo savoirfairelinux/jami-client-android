@@ -54,7 +54,7 @@ public class CallNotificationService extends Service {
         if (isFirst) {
             isFirst = false;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
-                startForeground(NOTIF_CALL_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL);
+                startForeground(NOTIF_CALL_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL | ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION);
             else
                 startForeground(NOTIF_CALL_ID, notification);
         }
@@ -69,7 +69,6 @@ public class CallNotificationService extends Service {
         notificationManager = NotificationManagerCompat.from(this);
         super.onCreate();
     }
-
 
     @Override
     public void onDestroy() {
