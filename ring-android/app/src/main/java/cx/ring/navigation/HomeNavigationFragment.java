@@ -43,7 +43,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
@@ -310,8 +309,16 @@ public class HomeNavigationFragment extends BaseSupportFragment<HomeNavigationPr
         if (mSelectedAccount == null)
             return;
         mSourcePhoto = image;
+        boolean isOnline = mSelectedAccount.isRegistered();
         mDisposableBag.add(VCardServiceImpl.loadProfile(mSelectedAccount)
-                .map(profile -> new AvatarDrawable(getContext(), image, profile.first, mSelectedAccount.getRegisteredName(), mSelectedAccount.getUri(), true))
+                .map(profile -> {
+                    return new AvatarDrawable.Builder()
+                            .withPhoto(image)
+                            .withNames(profile.first, mSelectedAccount.getRegisteredName())
+                            .withId(mSelectedAccount.getUri())
+                            .doCrop(true)
+                            .build(getContext());
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(avatar -> mProfilePhoto.setImageDrawable(avatar), e-> Log.e(TAG, "Error loading image", e)));

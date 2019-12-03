@@ -90,10 +90,13 @@ import cx.ring.utils.ActionHelper;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.MediaButtonsHelper;
+import cx.ring.views.AvatarDrawable;
 import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.internal.operators.single.SingleFromCallable;
 import io.reactivex.schedulers.Schedulers;
 
 import static android.app.Activity.RESULT_OK;
@@ -133,7 +136,11 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     private File mCurrentPhoto = null;
     private String mCurrentFileAbsolutePath = null;
     private Disposable actionbarTarget = null;
+    private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     private int mSelectedPosition;
+
+    private AvatarDrawable mConversationAvatar;
+    //private List<AvatarDrawable> mParticipantAvatars;
 
     private static int getIndex(Spinner spinner, Uri myString) {
         for (int i = 0, n = spinner.getCount(); i < n; i++)
@@ -299,6 +306,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             mPreferences.unregisterOnSharedPreferenceChangeListener(this);
         animation.removeAllUpdateListeners();
         binding.histList.setAdapter(null);
+        mCompositeDisposable.clear();
         super.onDestroyView();
     }
 
@@ -610,6 +618,10 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
 
     @Override
     public void onPause() {
+        if (actionbarTarget != null) {
+            actionbarTarget.dispose();
+        }
+        mCompositeDisposable.clear();
         super.onPause();
         presenter.pause();
     }
@@ -622,10 +634,6 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
 
     @Override
     public void onDetach() {
-        if (actionbarTarget != null) {
-            actionbarTarget.dispose();
-            actionbarTarget = null;
-        }
         super.onDetach();
     }
 
@@ -685,28 +693,20 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
 
     @Override
     public void displayContact(final CallContact contact) {
-        ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
-        if (actionBar == null) {
-            return;
-        }
-        Context context = actionBar.getThemedContext();
-        String displayName = contact.getDisplayName();
-        actionBar.setTitle(displayName);
-
-        if (actionbarTarget != null) {
-            actionbarTarget.dispose();
-            actionbarTarget = null;
-        }
-        int targetSize = (int) (AvatarFactory.SIZE_AB * context.getResources().getDisplayMetrics().density);
-        actionbarTarget = AvatarFactory.getBitmapAvatar(context, contact, targetSize)
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(b -> actionBar.setLogo(new BitmapDrawable(context.getResources(), b)));
-
-        String identity = contact.getRingUsername();
-        if (identity != null && !identity.equals(displayName)) {
-            actionBar.setSubtitle(identity);
-        }
+        mCompositeDisposable.clear();
+        mCompositeDisposable.add(AvatarFactory.getAvatar(requireContext(), contact)
+                .subscribe(d -> {
+                    mConversationAvatar = (AvatarDrawable) d;
+                    mCompositeDisposable.add(contact.getUpdatesSubject()
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .startWith(contact)
+                            .subscribe(c -> {
+                                mConversationAvatar.setOnline(c.isOnline());
+                                setupActionbar(contact);
+                            })
+                    );
+                })
+        );
 
         mAdapter.setPhoto();
     }
@@ -769,6 +769,29 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
                 .putExtra(CallFragment.KEY_AUDIO_ONLY, audioOnly)
                 .putExtra(KEY_CONTACT_RING_ID, contactRingId);
         startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
+    }
+
+    private void setupActionbar(CallContact contact) {
+        ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        if (actionBar == null) {
+            return;
+        }
+        Context context = actionBar.getThemedContext();
+        String displayName = contact.getDisplayName();
+        String identity = contact.getRingUsername();
+        if (identity != null && !identity.equals(displayName)) {
+            actionBar.setSubtitle(identity);
+        }
+        actionBar.setTitle(displayName);
+        if (actionbarTarget != null) {
+            actionbarTarget.dispose();
+            actionbarTarget = null;
+        }
+        int targetSize = (int) (AvatarFactory.SIZE_AB * context.getResources().getDisplayMetrics().density);
+        actionbarTarget = Single.fromCallable(() -> AvatarFactory.drawableToBitmap(mConversationAvatar, targetSize))
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(b -> actionBar.setLogo(new BitmapDrawable(context.getResources(), b)));
     }
 
     public void blockContactRequest() {

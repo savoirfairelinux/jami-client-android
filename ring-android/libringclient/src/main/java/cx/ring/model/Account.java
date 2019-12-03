@@ -83,6 +83,12 @@ public class Account {
     private VCard mProfile;
     private Single<Tuple<String, Object>> mLoadedProfile = null;
 
+    private final Subject<Tuple<CallContact, Boolean>> onlineStatesSubject = PublishSubject.create();
+
+    public Observable<Tuple<CallContact, Boolean>> getOnlineStatesObservable() {
+        return onlineStatesSubject;
+    }
+
     public Account(String bAccountID) {
         accountID = bAccountID;
         mDetails = new AccountConfig();
@@ -810,16 +816,17 @@ public class Account {
         if (contact.isOnline() == isOnline)
             return;
         contact.setOnline(isOnline);
-        synchronized (conversations) {
-            Conversation conversation = conversations.get(contactUri);
-            if (conversation != null) {
-                conversationRefreshed(conversation);
-            }
-        }
+//        synchronized (conversations) {
+//            Conversation conversation = conversations.get(contactUri);
+//            if (conversation != null) {
+//                conversationRefreshed(conversation);
+//            }
+//        }
         synchronized (pending) {
             if (pending.containsKey(contactUri))
                 pendingRefreshed();
         }
+        onlineStatesSubject.onNext(new Tuple<CallContact, Boolean>(contact, isOnline));
     }
 
     public Single<String> getAccountAlias() {
