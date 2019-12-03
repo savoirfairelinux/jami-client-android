@@ -46,6 +46,7 @@ import io.reactivex.Single;
 
 import android.graphics.drawable.VectorDrawable;
 import android.text.TextUtils;
+import android.text.TextPaint;
 import android.util.Log;
 import android.util.TypedValue;
 
@@ -80,12 +81,17 @@ public class AvatarDrawable extends Drawable {
     private int color;
 
     private final Paint clipPaint = new Paint();
-    private final Paint textPaint = new Paint();
+    private final TextPaint textPaint = new TextPaint();
     private static final Paint drawPaint = new Paint();
     static {
         drawPaint.setAntiAlias(true);
         drawPaint.setFilterBitmap(true);
     }
+
+    private boolean online;
+    //private final Drawable onlineIndicator;
+    private float onlineIndicatorStrokeWidth;
+    private int onlineIndicatorColor;
 
     public AvatarDrawable(Context context, CallContact contact) {
         this(context, (Bitmap)contact.getPhoto(), contact.getProfileName(), contact.getUsername(), contact.getPrimaryNumber(), true);
@@ -112,9 +118,11 @@ public class AvatarDrawable extends Drawable {
     }
 
     public AvatarDrawable(Context context, Bitmap photo, String name, String id, boolean crop) {
-        //Log.w("AvatarDrawable", photo + " " + name + " " + id);
         cropCircle = crop;
         Resources res = context.getResources();
+        //onlineIndicator =  ContextCompat.getDrawable(context, R.drawable.ic_online_indicator);
+        onlineIndicatorStrokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, res.getDisplayMetrics());
+        onlineIndicatorColor = ContextCompat.getColor(context, R.color.green_A700);
         minSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, SIZE_AB, res.getDisplayMetrics());
         clipPaint.setAntiAlias(true);
         if (photo != null) {
@@ -146,27 +154,61 @@ public class AvatarDrawable extends Drawable {
             int d = Math.min(getBounds().width(), getBounds().height());
             int r = d / 2;
             finalCanvas.drawCircle(getBounds().centerX(), getBounds().centerY(), r, clipPaint);
+            drawPresence(finalCanvas);
         } else {
             finalCanvas.drawBitmap(workspace, null, getBounds(), drawPaint);
         }
     }
 
+    private void drawPresence(@NonNull Canvas canvas) {
+        int oldColor = drawPaint.getColor();
+        Paint.Style oldStyle = drawPaint.getStyle();
+
+        Rect avatarBounds = getBounds();
+        int radius = (int) (0.29289321881 * (double) (avatarBounds.width()) * 0.5);
+        int cx = avatarBounds.right - radius;
+        int cy = avatarBounds.bottom - radius;
+        radius -= onlineIndicatorStrokeWidth * 0.5;
+
+        drawPaint.setColor(onlineIndicatorColor);
+        drawPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        canvas.drawCircle(cx, cy, radius, drawPaint);
+
+        drawPaint.setColor(Color.WHITE);
+        drawPaint.setStyle(Paint.Style.STROKE);
+        drawPaint.setStrokeWidth(onlineIndicatorStrokeWidth);
+        canvas.drawCircle(cx, cy, radius, drawPaint);
+
+        drawPaint.setColor(oldColor);
+        drawPaint.setStyle(oldStyle);
+
+        // can't seem to change the fill color independently
+//        int presenceSize = (int) (0.29289321881 * (double) (getBounds().width()));
+//        onlineIndicator.setBounds(new Rect(
+//                getBounds().right - presenceSize,
+//                getBounds().bottom - presenceSize,
+//                getBounds().right,
+//                getBounds().bottom
+//        ));
+//        onlineIndicator.draw(canvas);
+    }
+
     private void drawActual(@NonNull Canvas canvas) {
         if (bitmap != null) {
             canvas.drawBitmap(bitmap, null, backgroundBounds, drawPaint);
-        } else if (placeholder == null) {
-            canvas.drawColor(color);
-            canvas.drawText(avatarText, textStartXPoint, textStartYPoint, textPaint);
         } else {
             canvas.drawColor(color);
-            placeholder.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
-            placeholder.draw(canvas);
+            if (placeholder == null) {
+                canvas.drawText(avatarText, textStartXPoint, textStartYPoint, textPaint);
+            } else {
+                placeholder.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+                placeholder.draw(canvas);
+            }
         }
     }
 
     @Override
     protected void onBoundsChange(Rect bounds) {
-        //Log.w("AvatarDrawable", this + "onBoundsChange " + bounds.width() + " " + bounds.height());
         setAvatarTextValues();
         int d = Math.min(bounds.width(), bounds.height());
         if (placeholder != null) {
