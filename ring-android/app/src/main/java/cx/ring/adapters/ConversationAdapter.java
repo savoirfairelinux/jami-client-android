@@ -864,6 +864,9 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         boolean sameConfig = false;
         Interaction previousMessage = getPreviousMessageFromPosition(position);
         if (previousMessage != null &&
+                textMessage.getAuthor() != null &&
+                previousMessage.getAuthor() != null &&
+                textMessage.getAuthor().equals(previousMessage.getAuthor()) &&
                 textMessage.getType() == (previousMessage.getType()) &&
                 textMessage.isIncoming() &&
                 previousMessage.getConversation().getParticipant().equals(textMessage.getConversation().getParticipant())) {
