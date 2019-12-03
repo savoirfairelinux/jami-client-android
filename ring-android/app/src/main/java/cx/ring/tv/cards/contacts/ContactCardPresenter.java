@@ -69,6 +69,11 @@ public class ContactCardPresenter extends AbstractCardPresenter<ImageCardView> {
         }
 
         cardView.setBackgroundColor(cardView.getResources().getColor(R.color.color_primary_dark));
-        cardView.setMainImage(new AvatarDrawable(getContext(), model, false));
+        cardView.setMainImage(
+                new AvatarDrawable.Builder()
+                        .withContact(model)
+                        .doCrop(false)
+                        .build(getContext())
+        );
     }
 }

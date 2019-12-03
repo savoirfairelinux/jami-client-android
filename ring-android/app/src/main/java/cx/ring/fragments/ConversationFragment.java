@@ -703,6 +703,13 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(b -> actionBar.setLogo(new BitmapDrawable(context.getResources(), b)));
 
+//        actionbarTarget = AvatarFactory.getAvatar(context, contact)
+//                .subscribeOn(Schedulers.computation())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(d -> {
+//                    actionBar.setLogo(d);
+//                });
+
         String identity = contact.getRingUsername();
         if (identity != null && !identity.equals(displayName)) {
             actionBar.setSubtitle(identity);
