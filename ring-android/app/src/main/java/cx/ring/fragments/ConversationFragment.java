@@ -89,6 +89,7 @@ import cx.ring.services.NotificationService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
+import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.MediaButtonsHelper;
 import io.reactivex.Completable;
 import io.reactivex.Single;
@@ -205,8 +206,16 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             insets.consumeSystemWindowInsets();
             return insets;
         });
-        int paddingTop = binding.conversationLayout.getPaddingTop();
-        ViewCompat.setOnApplyWindowInsetsListener(binding.conversationLayout, (v, insets) -> {
+
+        View layout = binding.conversationLayout;
+
+        // remove action bar height for tablet layout
+        if (DeviceUtils.isTablet(getContext())) {
+            layout.setPadding(layout.getPaddingLeft(),0,layout.getPaddingRight(),layout.getPaddingBottom());
+        }
+
+        int paddingTop = layout.getPaddingTop();
+        ViewCompat.setOnApplyWindowInsetsListener(layout, (v, insets) -> {
             v.setPadding(
                     v.getPaddingLeft(),
                     paddingTop + insets.getSystemWindowInsetTop(),
