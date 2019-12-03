@@ -90,6 +90,11 @@ public abstract class ContactService {
             if (contact.getUpdates() == null) {
                 contact.setUpdates(contact.getUpdatesSubject()
                         .doOnSubscribe(d -> {
+//                            mAccountService.getAccount(accountId).getOnlineStatesObservable()
+//                                    .filter(os -> os.first == contact)
+//                                    .subscribe(os -> {
+//                                        Log.e(TAG, "onlineState change for: " + os.first + " to: " + os.second);
+//                                    });
                             mAccountService.subscribeBuddy(accountId, uriString, true);
                             if (!contact.isUsernameLoaded())
                                 mAccountService.lookupAddress(accountId, "", uri.getRawRingId());
