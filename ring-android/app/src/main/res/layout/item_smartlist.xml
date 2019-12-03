@@ -39,14 +39,6 @@ along with this program; if not, write to the Free Software
         android:scaleType="fitCenter"
         tools:src="@drawable/ic_contact_picture_fallback" />
 
-    <ImageView
-        android:id="@+id/online"
-        android:layout_width="20dp"
-        android:layout_height="22dp"
-        android:layout_alignBottom="@+id/photo"
-        android:layout_alignEnd="@+id/photo"
-        android:src="@drawable/ic_online_indicator" />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
