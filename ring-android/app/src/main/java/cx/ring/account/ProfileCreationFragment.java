@@ -107,7 +107,7 @@ public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreation
             return;
         }
         if (mPhotoView.getDrawable() == null) {
-            mPhotoView.setImageDrawable(new AvatarDrawable(view.getContext(), (Bitmap) null, model.getFullName(), model.getUsername(), null, true));
+            mPhotoView.setImageDrawable(new AvatarDrawable(view.getContext(), (Bitmap) null, model.getFullName(), model.getUsername(), null, true, false));
         }
         presenter.initPresenter(model);
     }
@@ -228,7 +228,7 @@ public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreation
     public void setProfile(AccountCreationModel accountCreationModel) {
         AccountCreationModelImpl model = ((AccountCreationModelImpl) accountCreationModel);
         Account newAccount = model.getNewAccount();
-        mPhotoView.setImageDrawable(new AvatarDrawable(getContext(), model.getPhoto(), accountCreationModel.getFullName(), accountCreationModel.getUsername(), newAccount == null ? null : newAccount.getUsername(), true));
+        mPhotoView.setImageDrawable(new AvatarDrawable(getContext(), model.getPhoto(), accountCreationModel.getFullName(), accountCreationModel.getUsername(), newAccount == null ? null : newAccount.getUsername(), true, false));
     }
 
     @OnTextChanged(value = R.id.user_name, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)

@@ -123,7 +123,8 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
         String title = getString(R.string.account_create_title);
         String breadcrumb = "";
         String description = getString(R.string.profile_message_warning);
-        return new GuidanceStylist.Guidance(title, description, breadcrumb, new AvatarDrawable(getContext(), (Bitmap) null, mModel == null ? null : mModel.getFullName(), mModel == null ? null : mModel.getUsername(), null, true));
+        return new GuidanceStylist.Guidance(title, description, breadcrumb,
+                new AvatarDrawable(getContext(), (Bitmap) null, mModel == null ? null : mModel.getFullName(), mModel == null ? null : mModel.getUsername(), null, true, false));
     }
 
     @Override
@@ -201,7 +202,7 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
     public void setProfile(AccountCreationModel accountCreationModel) {
         AccountCreationModelImpl model = ((AccountCreationModelImpl) accountCreationModel);
         Account newAccount = model.getNewAccount();
-        AvatarDrawable avatar = new AvatarDrawable(getContext(), model.getPhoto(), accountCreationModel.getFullName(), accountCreationModel.getUsername(), newAccount == null ? null : newAccount.getUsername(), true);
+        AvatarDrawable avatar = new AvatarDrawable(getContext(), model.getPhoto(), accountCreationModel.getFullName(), accountCreationModel.getUsername(), newAccount == null ? null : newAccount.getUsername(), true, false);
         avatar.setInSize(iconSize);
         getGuidanceStylist().getIconView().setImageDrawable(avatar);
     }

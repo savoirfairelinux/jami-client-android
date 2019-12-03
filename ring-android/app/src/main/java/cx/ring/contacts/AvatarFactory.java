@@ -46,20 +46,37 @@ public class AvatarFactory {
 
     private AvatarFactory() {}
 
-    private static Drawable getDrawable(Context context, Bitmap photo, String profileName, String username, String id) {
-        return new AvatarDrawable(context, photo, TextUtils.isEmpty(profileName) ? username : profileName, id, true);
-    }
-
-    private static <T> RequestBuilder<T> getGlideRequest(Context context, RequestBuilder<T> request, Bitmap photo, String profileName, String username, String id) {
-        return request.load(getDrawable(context, photo, profileName, username, id));
-    }
-
-    private static RequestBuilder<Drawable> getGlideAvatar(Context context, RequestManager manager, CallContact contact) {
-        return getGlideRequest(context, manager.asDrawable(), (Bitmap)contact.getPhoto(), contact.getProfileName(), contact.getUsername(), contact.getPrimaryNumber());
+    public static void loadGlideAvatar(ImageView view, CallContact contact) {
+        getGlideAvatar(view.getContext(), contact).into(view);
     }
 
     public static Single<Drawable> getAvatar(Context context, CallContact contact) {
         return Single.fromCallable(() -> new AvatarDrawable(context, contact));
+    }
+
+    public static Single<Bitmap> getBitmapAvatar(Context context, CallContact contact, int size) {
+        return getAvatar(context, contact)
+                .map(d -> drawableToBitmap(d, size));
+    }
+
+    public static Single<Bitmap> getBitmapAvatar(Context context, Account account, int size) {
+        return AvatarDrawable.load(context, account)
+                .map(d -> drawableToBitmap(d, size));
+    }
+
+    public static void clearCache() {
+    }
+
+    private static Drawable getDrawable(Context context, Bitmap photo, String profileName, String username, String id, boolean isOnline) {
+        return new AvatarDrawable(context, photo, TextUtils.isEmpty(profileName) ? username : profileName, id, true, isOnline);
+    }
+
+    private static <T> RequestBuilder<T> getGlideRequest(Context context, RequestBuilder<T> request, Bitmap photo, String profileName, String username, String id, boolean isOnline) {
+        return request.load(getDrawable(context, photo, profileName, username, id, isOnline));
+    }
+
+    private static RequestBuilder<Drawable> getGlideAvatar(Context context, RequestManager manager, CallContact contact) {
+        return getGlideRequest(context, manager.asDrawable(), (Bitmap)contact.getPhoto(), contact.getProfileName(), contact.getUsername(), contact.getPrimaryNumber(), contact.isOnline());
     }
 
     private static Bitmap drawableToBitmap(Drawable drawable, int size) {
@@ -80,24 +97,7 @@ public class AvatarFactory {
         return bitmap;
     }
 
-    public static Single<Bitmap> getBitmapAvatar(Context context, CallContact contact, int size) {
-        return getAvatar(context, contact)
-                .map(d -> drawableToBitmap(d, size));
-    }
-
-    public static Single<Bitmap> getBitmapAvatar(Context context, Account account, int size) {
-        return AvatarDrawable.load(context, account)
-                .map(d -> drawableToBitmap(d, size));
-    }
-
     private static RequestBuilder<Drawable> getGlideAvatar(Context context, CallContact contact) {
         return getGlideAvatar(context, Glide.with(context), contact);
-    }
-
-    public static void loadGlideAvatar(ImageView view, CallContact contact) {
-        getGlideAvatar(view.getContext(), contact).into(view);
-    }
-
-    public static void clearCache() {
     }
 }
