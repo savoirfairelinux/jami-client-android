@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "721bd70c_448a4cd6",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2019-12-03T15:28:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3455570_7be35fac",
+      "range": {
+        "startLine": 867,
+        "startChar": 16,
+        "endLine": 869,
+        "endChar": 78
+      },
+      "revId": "8e004e9f57cb3414b49848fe4f54c0c5401a8a3b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b894d4d2_ced8eb32",
         "filename": "ring-android/app/src/main/res/layout-w720dp-land/frag_conversation.xml",
         "patchSetId": 1
