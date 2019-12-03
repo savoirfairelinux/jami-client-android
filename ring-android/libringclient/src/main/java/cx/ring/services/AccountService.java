@@ -49,7 +49,6 @@ import cx.ring.model.Codec;
 import cx.ring.model.ConfigKey;
 import cx.ring.model.ContactEvent;
 import cx.ring.model.Conversation;
-import cx.ring.model.ConversationHistory;
 import cx.ring.model.DataTransfer;
 import cx.ring.model.DataTransferError;
 import cx.ring.model.Interaction;
@@ -1266,7 +1265,6 @@ public class AccountService {
                 lookupAddress(accountId, "", from);
             incomingRequestsSubject.onNext(request);
         }
-
     }
 
     void contactAdded(String accountId, String uri, boolean confirmed) {

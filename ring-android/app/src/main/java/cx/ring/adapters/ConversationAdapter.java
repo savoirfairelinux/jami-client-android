@@ -64,7 +64,6 @@ import java.util.List;
 
 import cx.ring.R;
 import cx.ring.client.MediaViewerActivity;
-import cx.ring.contacts.AvatarFactory;
 import cx.ring.conversation.ConversationPresenter;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.CallContact;
@@ -653,7 +652,9 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         final Context context = convViewHolder.itemView.getContext();
 
         if (textMessage.isIncoming() && !sameAsPreviousMsg) {
-            AvatarFactory.loadGlideAvatar(convViewHolder.mPhoto, contact);
+            convViewHolder.mPhoto.setImageDrawable(
+                    conversationFragment.getConversationAvatar(contact.getPrimaryNumber())
+            );
         }
 
         switch (textMessage.getStatus()) {
