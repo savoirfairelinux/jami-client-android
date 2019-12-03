@@ -310,8 +310,9 @@ public class HomeNavigationFragment extends BaseSupportFragment<HomeNavigationPr
         if (mSelectedAccount == null)
             return;
         mSourcePhoto = image;
+        boolean isOnline = mSelectedAccount.isRegistered();
         mDisposableBag.add(VCardServiceImpl.loadProfile(mSelectedAccount)
-                .map(profile -> new AvatarDrawable(getContext(), image, profile.first, mSelectedAccount.getRegisteredName(), mSelectedAccount.getUri(), true))
+                .map(profile -> new AvatarDrawable(getContext(), image, profile.first, mSelectedAccount.getRegisteredName(), mSelectedAccount.getUri(), true, isOnline))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(avatar -> mProfilePhoto.setImageDrawable(avatar), e-> Log.e(TAG, "Error loading image", e)));
