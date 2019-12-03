@@ -66,7 +66,6 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
     public void onBindViewHolder(@NonNull SmartListViewHolder holder, int position) {
         final SmartListViewModel smartListViewModel = mSmartListViewModels.get(position);
         CallContact contact = smartListViewModel.getContact();
-        //Log.w("SmartListAdapter", "onBindViewHolder " + position + " " + holder.hasUnreadTextMessage());
 
         holder.convParticipants.setText(smartListViewModel.getContactName());
 
@@ -93,9 +92,11 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
             holder.convStatus.setTypeface(null, Typeface.NORMAL);
         }
 
-        holder.photo.setImageDrawable(new AvatarDrawable(holder.photo.getContext(), contact));
-        //AvatarFactory.loadGlideAvatar(holder.photo, contact);
-        holder.online.setVisibility(smartListViewModel.isOnline() ? View.VISIBLE : View.GONE);
+        holder.photo.setImageDrawable(
+                new AvatarDrawable.Builder()
+                        .withContact(contact)
+                        .withCircleCrop(true)
+                        .build(holder.photo.getContext()));
         holder.bind(listener, smartListViewModel);
     }
 
