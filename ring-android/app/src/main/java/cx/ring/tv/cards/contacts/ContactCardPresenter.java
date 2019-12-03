@@ -60,7 +60,7 @@ public class ContactCardPresenter extends AbstractCardPresenter<ImageCardView> {
             username = model.getIds().get(0);
         }
 
-        if (username!=null&&(username.isEmpty() || model.getDisplayName().equals(username))) {
+        if (username != null && (username.isEmpty() || model.getDisplayName().equals(username))) {
             cardView.setTitleText(username);
             cardView.setContentText("");
         } else {
@@ -69,6 +69,12 @@ public class ContactCardPresenter extends AbstractCardPresenter<ImageCardView> {
         }
 
         cardView.setBackgroundColor(cardView.getResources().getColor(R.color.color_primary_dark));
-        cardView.setMainImage(new AvatarDrawable(getContext(), model, false));
+        cardView.setMainImage(
+                new AvatarDrawable.Builder()
+                        .withContact(model)
+                        .withPresence(false)
+                        .withCircleCrop(false)
+                        .build(getContext())
+        );
     }
 }
