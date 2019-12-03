@@ -138,6 +138,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                 .subscribe(conversation -> {
                     conversation.setVisible(true);
                     updateOngoingCallView(conversation);
+                    getView().displayContact(conversation.getContact());
                     mConversationFacade.readMessages(mAccountService.getAccount(mAccountId), conversation);
                 }, e -> Log.e(TAG, "Error loading conversation", e)));
     }
