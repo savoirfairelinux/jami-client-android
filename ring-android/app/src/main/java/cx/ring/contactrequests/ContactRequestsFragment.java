@@ -26,6 +26,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -139,6 +141,7 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
 
     @Override
     public void updateItem(SmartListViewModel item) {
+        Log.d("CRF", "contact update item");
         if (mAdapter != null) {
             mAdapter.update(item);
         }

@@ -84,7 +84,10 @@ import cx.ring.utils.GlideOptions;
 import cx.ring.utils.ResourceMapper;
 import cx.ring.utils.StringUtils;
 import cx.ring.utils.UiUpdater;
+import cx.ring.views.AvatarDrawable;
 import cx.ring.views.ConversationViewHolder;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 import static androidx.core.content.FileProvider.getUriForFile;
 
@@ -653,7 +656,12 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         final Context context = convViewHolder.itemView.getContext();
 
         if (textMessage.isIncoming() && !sameAsPreviousMsg) {
-            AvatarFactory.loadGlideAvatar(convViewHolder.mPhoto, contact);
+            convViewHolder.disposable = AvatarFactory.getAvatar(context, contact)
+                    .subscribeOn(Schedulers.computation())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(d -> {
+                        convViewHolder.mPhoto.setImageDrawable(d);
+                    });
         }
 
         switch (textMessage.getStatus()) {
