@@ -46,8 +46,38 @@ public class AvatarFactory {
 
     private AvatarFactory() {}
 
+    public static void loadGlideAvatar(ImageView view, CallContact contact) {
+        getGlideAvatar(view.getContext(), contact).into(view);
+    }
+
+    public static Single<Drawable> getAvatar(Context context, CallContact contact) {
+        return Single.fromCallable(() ->
+                new AvatarDrawable.Builder()
+                        .withContact(contact)
+                        .withCircleCrop(true)
+                        .build(context));
+    }
+
+    public static Single<Bitmap> getBitmapAvatar(Context context, CallContact contact, int size) {
+        return getAvatar(context, contact)
+                .map(d -> drawableToBitmap(d, size));
+    }
+
+    public static Single<Bitmap> getBitmapAvatar(Context context, Account account, int size) {
+        return AvatarDrawable.load(context, account)
+                .map(d -> drawableToBitmap(d, size));
+    }
+
+    public static void clearCache() {
+    }
+
     private static Drawable getDrawable(Context context, Bitmap photo, String profileName, String username, String id) {
-        return new AvatarDrawable(context, photo, TextUtils.isEmpty(profileName) ? username : profileName, id, true);
+        return new AvatarDrawable.Builder()
+                .withPhoto(photo)
+                .withName(TextUtils.isEmpty(profileName) ? username : profileName)
+                .withId(id)
+                .withCircleCrop(true)
+                .build(context);
     }
 
     private static <T> RequestBuilder<T> getGlideRequest(Context context, RequestBuilder<T> request, Bitmap photo, String profileName, String username, String id) {
@@ -58,11 +88,7 @@ public class AvatarFactory {
         return getGlideRequest(context, manager.asDrawable(), (Bitmap)contact.getPhoto(), contact.getProfileName(), contact.getUsername(), contact.getPrimaryNumber());
     }
 
-    public static Single<Drawable> getAvatar(Context context, CallContact contact) {
-        return Single.fromCallable(() -> new AvatarDrawable(context, contact));
-    }
-
-    private static Bitmap drawableToBitmap(Drawable drawable, int size) {
+    public static Bitmap drawableToBitmap(Drawable drawable, int size) {
         if (drawable instanceof BitmapDrawable) {
             return ((BitmapDrawable)drawable).getBitmap();
         }
@@ -80,24 +106,7 @@ public class AvatarFactory {
         return bitmap;
     }
 
-    public static Single<Bitmap> getBitmapAvatar(Context context, CallContact contact, int size) {
-        return getAvatar(context, contact)
-                .map(d -> drawableToBitmap(d, size));
-    }
-
-    public static Single<Bitmap> getBitmapAvatar(Context context, Account account, int size) {
-        return AvatarDrawable.load(context, account)
-                .map(d -> drawableToBitmap(d, size));
-    }
-
     private static RequestBuilder<Drawable> getGlideAvatar(Context context, CallContact contact) {
         return getGlideAvatar(context, Glide.with(context), contact);
-    }
-
-    public static void loadGlideAvatar(ImageView view, CallContact contact) {
-        getGlideAvatar(view.getContext(), contact).into(view);
-    }
-
-    public static void clearCache() {
     }
 }

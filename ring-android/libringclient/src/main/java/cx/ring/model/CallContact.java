@@ -119,6 +119,7 @@ public class CallContact {
 
     public void setOnline(boolean present) {
         mOnline = present;
+        mContactUpdates.onNext(this);
     }
 
     public void setContactInfos(String k, String displayName, long photo_id) {

@@ -617,7 +617,13 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             binding.contactBubbleTxt.setText(username);
         }
 
-        binding.contactBubble.setImageDrawable(new AvatarDrawable(getActivity(), contacts.get(0).getContact()));
+        binding.contactBubble.setImageDrawable(
+                new AvatarDrawable.Builder()
+                        .withContact(contacts.get(0).getContact())
+                        .withCircleCrop(true)
+                        .withOnlineState(false)
+                        .build(getActivity())
+        );
 
         if (!mConferenceMode) {
             binding.confControlGroup.setVisibility(View.GONE);

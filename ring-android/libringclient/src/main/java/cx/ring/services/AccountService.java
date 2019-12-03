@@ -60,6 +60,7 @@ import cx.ring.model.Uri;
 import cx.ring.utils.FileUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.SwigNativeConverter;
+import cx.ring.utils.Tuple;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import io.reactivex.Completable;
@@ -1266,7 +1267,6 @@ public class AccountService {
                 lookupAddress(accountId, "", from);
             incomingRequestsSubject.onNext(request);
         }
-
     }
 
     void contactAdded(String accountId, String uri, boolean confirmed) {
