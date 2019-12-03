@@ -298,7 +298,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
                         titleView.setAlias(address);
                     }
                 })
-                .flatMap(p -> AvatarDrawable.load(context, account))
+                .flatMap(p -> AvatarDrawable.loadFromProfile(context, account))
                 .subscribe(a -> {
                     titleView.getLogoView().setVisibility(View.VISIBLE);
                     titleView.getLogoView().setImageDrawable(a);

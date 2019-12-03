@@ -182,7 +182,7 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<HomeNavigat
         else
             getGuidanceStylist().getTitleView().setText(alias);
 
-        AvatarDrawable.load(getContext(), account)
+        AvatarDrawable.loadFromProfile(getContext(), account)
                 .map(avatar -> {
                     avatar.setInSize(iconSize);
                     return avatar;

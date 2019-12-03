@@ -78,7 +78,7 @@ public class AccountView extends RecyclerView.ViewHolder {
     public void update(final Account account) {
         final Context context = itemView.getContext();
         mDisposable.clear();
-        mDisposable.add(AvatarDrawable.load(context, account)
+        mDisposable.add(AvatarDrawable.loadFromProfile(context, account)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(avatar -> photo.setImageDrawable(avatar)));

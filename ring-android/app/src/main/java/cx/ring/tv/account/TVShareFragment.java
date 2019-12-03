@@ -106,7 +106,7 @@ public class TVShareFragment extends BaseFragment<SharePresenter> implements Gen
                         mShareUri.setText(account.getDisplayUri());
                     }
                 })
-                .flatMap(p -> AvatarDrawable.load(getActivity(), account))
+                .flatMap(p -> AvatarDrawable.loadFromProfile(getActivity(), account))
                 .subscribe(a -> {
                     mUserPhoto.setVisibility(View.VISIBLE);
                     mUserPhoto.setImageDrawable(a);

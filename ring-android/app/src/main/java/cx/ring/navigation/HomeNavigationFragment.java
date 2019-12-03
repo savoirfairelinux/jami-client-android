@@ -294,7 +294,7 @@ public class HomeNavigationFragment extends BaseSupportFragment<HomeNavigationPr
             return;
         }
 
-        mDisposableBag.add(AvatarDrawable.load(getActivity(), account)
+        mDisposableBag.add(AvatarDrawable.loadFromProfile(getActivity(), account)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(avatar -> mUserImage.setImageDrawable(avatar), e -> Log.e(TAG, "Error loading avatar", e)));
@@ -310,8 +310,16 @@ public class HomeNavigationFragment extends BaseSupportFragment<HomeNavigationPr
         if (mSelectedAccount == null)
             return;
         mSourcePhoto = image;
+        boolean isOnline = mSelectedAccount.isRegistered();
         mDisposableBag.add(VCardServiceImpl.loadProfile(mSelectedAccount)
-                .map(profile -> new AvatarDrawable(getContext(), image, profile.first, mSelectedAccount.getRegisteredName(), mSelectedAccount.getUri(), true))
+                .map(profile -> {
+                    return new AvatarDrawable.Builder()
+                            .withPhoto(image)
+                            .withNames(profile.first, mSelectedAccount.getRegisteredName())
+                            .withId(mSelectedAccount.getUri())
+                            .doCrop(true)
+                            .build(getContext());
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(avatar -> mProfilePhoto.setImageDrawable(avatar), e-> Log.e(TAG, "Error loading image", e)));
@@ -353,7 +361,7 @@ public class HomeNavigationFragment extends BaseSupportFragment<HomeNavigationPr
         final EditText editText = view.findViewById(R.id.user_name);
         editText.setText(presenter.getAlias(mSelectedAccount));
         mProfilePhoto = view.findViewById(R.id.profile_photo);
-        mDisposableBag.add(AvatarDrawable.load(inflater.getContext(), mSelectedAccount)
+        mDisposableBag.add(AvatarDrawable.loadFromProfile(inflater.getContext(), mSelectedAccount)
                 .subscribe(a -> mProfilePhoto.setImageDrawable(a)));
 
         ImageButton cameraView = view.findViewById(R.id.camera);
