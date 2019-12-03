@@ -414,7 +414,12 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
             binding.contactBubbleNumTxt.setVisibility(View.GONE);
             binding.contactBubbleTxt.setText(username);
         }
-        binding.contactBubble.setImageDrawable(new AvatarDrawable(getActivity(), contact));
+        binding.contactBubble.setImageDrawable(
+                new AvatarDrawable.Builder()
+                        .withContact(contact)
+                        .withCircleCrop(true)
+                        .build(getActivity())
+        );
 
         if (!mConferenceMode) {
             binding.confControlGroup.setVisibility(View.GONE);
