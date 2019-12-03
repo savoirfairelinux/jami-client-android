@@ -59,7 +59,9 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.OnEditorAction;
 import cx.ring.BuildConfig;
@@ -90,9 +92,11 @@ import cx.ring.utils.ActionHelper;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.MediaButtonsHelper;
+import cx.ring.views.AvatarDrawable;
 import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -132,8 +136,15 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
 
     private File mCurrentPhoto = null;
     private String mCurrentFileAbsolutePath = null;
-    private Disposable actionbarTarget = null;
+    private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     private int mSelectedPosition;
+
+    private AvatarDrawable mConversationAvatar;
+    private Map<String, AvatarDrawable> mParticipantAvatars = new HashMap();
+
+    public AvatarDrawable getConversationAvatar(String uri) {
+        return mParticipantAvatars.get(uri);
+    }
 
     private static int getIndex(Spinner spinner, Uri myString) {
         for (int i = 0, n = spinner.getCount(); i < n; i++)
@@ -299,6 +310,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             mPreferences.unregisterOnSharedPreferenceChangeListener(this);
         animation.removeAllUpdateListeners();
         binding.histList.setAdapter(null);
+        mCompositeDisposable.clear();
         super.onDestroyView();
     }
 
@@ -621,12 +633,9 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     @Override
-    public void onDetach() {
-        if (actionbarTarget != null) {
-            actionbarTarget.dispose();
-            actionbarTarget = null;
-        }
-        super.onDetach();
+    public void onDestroy() {
+        mCompositeDisposable.dispose();
+        super.onDestroy();
     }
 
     @Override
@@ -685,30 +694,24 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
 
     @Override
     public void displayContact(final CallContact contact) {
-        ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
-        if (actionBar == null) {
-            return;
-        }
-        Context context = actionBar.getThemedContext();
-        String displayName = contact.getDisplayName();
-        actionBar.setTitle(displayName);
-
-        if (actionbarTarget != null) {
-            actionbarTarget.dispose();
-            actionbarTarget = null;
-        }
-        int targetSize = (int) (AvatarFactory.SIZE_AB * context.getResources().getDisplayMetrics().density);
-        actionbarTarget = AvatarFactory.getBitmapAvatar(context, contact, targetSize)
-                .subscribeOn(Schedulers.computation())
+        mCompositeDisposable.clear();
+        mCompositeDisposable.add(AvatarFactory.getAvatar(requireContext(), contact)
+                .doOnSuccess(d -> {
+                    mConversationAvatar = (AvatarDrawable) d;
+                    mParticipantAvatars.put(contact.getPrimaryNumber(),
+                                            new AvatarDrawable((AvatarDrawable) d));
+                })
+                .flatMapObservable(d -> contact.getUpdatesSubject())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(b -> actionBar.setLogo(new BitmapDrawable(context.getResources(), b)));
-
-        String identity = contact.getRingUsername();
-        if (identity != null && !identity.equals(displayName)) {
-            actionBar.setSubtitle(identity);
-        }
-
-        mAdapter.setPhoto();
+                .subscribe(c -> {
+                    mConversationAvatar.update(c);
+                    String uri = contact.getPrimaryNumber();
+                    if (mParticipantAvatars.containsKey(uri)) {
+                        mParticipantAvatars.get(uri).update(c);
+                    }
+                    setupActionbar(contact);
+                    mAdapter.setPhoto();
+                }));
     }
 
     @Override
@@ -769,6 +772,24 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
                 .putExtra(CallFragment.KEY_AUDIO_ONLY, audioOnly)
                 .putExtra(KEY_CONTACT_RING_ID, contactRingId);
         startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
+    }
+
+    private void setupActionbar(CallContact contact) {
+        ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        if (actionBar == null) {
+            return;
+        }
+        Context context = actionBar.getThemedContext();
+        String displayName = contact.getDisplayName();
+        String identity = contact.getRingUsername();
+        if (identity != null && !identity.equals(displayName)) {
+            actionBar.setSubtitle(identity);
+        }
+        actionBar.setTitle(displayName);
+        int targetSize = (int) (AvatarFactory.SIZE_AB * context.getResources().getDisplayMetrics().density);
+        mConversationAvatar.setInSize(targetSize);
+        actionBar.setLogo(null);
+        actionBar.setLogo(mConversationAvatar);
     }
 
     public void blockContactRequest() {

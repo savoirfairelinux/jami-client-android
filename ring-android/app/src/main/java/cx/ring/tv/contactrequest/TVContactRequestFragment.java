@@ -124,7 +124,12 @@ public class TVContactRequestFragment extends BaseDetailFragment<TVContactReques
 
     public void showRequest(TVListViewModel model) {
         final DetailsOverviewRow row = new DetailsOverviewRow(model);
-        AvatarDrawable avatar = new AvatarDrawable(getActivity(), model.getContact(), false);
+        AvatarDrawable avatar =
+                new AvatarDrawable.Builder()
+                        .withContact(model.getContact())
+                        .withPresence(false)
+                        .withCircleCrop(false)
+                        .build(getActivity());
         avatar.setInSize(iconSize);
         row.setImageDrawable(avatar);
         row.setImageScaleUpAllowed(false);

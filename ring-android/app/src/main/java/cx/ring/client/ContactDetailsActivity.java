@@ -206,7 +206,13 @@ public class ContactDetailsActivity extends AppCompatActivity {
                             collapsingToolbarLayout.setContentScrimColor(color);
                             collapsingToolbarLayout.setStatusBarScrimColor(color);
                             //collapsingToolbarLayout.setCollapsedTitleTextColor();
-                            binding.contactImage.setImageDrawable(new AvatarDrawable(this, contact, false));
+                            binding.contactImage.setImageDrawable(
+                                    new AvatarDrawable.Builder()
+                                            .withContact(contact)
+                                            .withPresence(false)
+                                            .withCircleCrop(false)
+                                            .build(this)
+                            );
                             mConversation = conversation;
                             mContact = contact;
                         }));
