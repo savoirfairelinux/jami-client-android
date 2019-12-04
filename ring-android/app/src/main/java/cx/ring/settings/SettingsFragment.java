@@ -77,6 +77,13 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
     }
 
     @Override
+    public void onResume() {
+        ((HomeActivity) requireActivity()).
+                setToolbarState(false, R.string.menu_item_settings);
+        super.onResume();
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onViewCreated(view, savedInstanceState);
@@ -86,7 +93,6 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         }
         // loading preferences
         presenter.loadSettings();
-        ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_settings);
     }
 
     @Override
