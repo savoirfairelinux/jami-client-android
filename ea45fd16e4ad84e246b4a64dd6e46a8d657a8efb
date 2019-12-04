@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0be62a66_becf374c",
+        "filename": "ring-android/app/src/main/java/cx/ring/settings/SettingsFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-12-04T20:01:53Z",
+      "side": 1,
+      "message": "this logic should be in HomeActivity (HomeActivity should restore the previous state on resume if necessary)",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 5
+      },
+      "revId": "ea45fd16e4ad84e246b4a64dd6e46a8d657a8efb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
