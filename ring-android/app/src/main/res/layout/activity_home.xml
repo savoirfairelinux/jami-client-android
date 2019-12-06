@@ -71,7 +71,7 @@ along with this program; if not, write to the Free Software
             android:layout_marginStart="@dimen/fab_margin_mini"
             app:elevation="6dp"
             app:fabSize="mini"
-            app:layout_anchor="@id/app_bar"
+            app:layout_anchor="@id/toolbar_layout"
             app:layout_anchorGravity="bottom"
             app:pressedTranslationZ="12dp"
             app:rippleColor="@android:color/white"
