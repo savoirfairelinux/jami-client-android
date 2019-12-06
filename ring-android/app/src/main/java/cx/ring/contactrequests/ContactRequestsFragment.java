@@ -77,6 +77,7 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
+        ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_contact_request);
         return super.onCreateView(inflater, parent, savedInstanceState);
     }
 
@@ -102,7 +103,6 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
     @Override
     public void onResume() {
         super.onResume();
-        ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_contact_request);
     }
 
     @Override

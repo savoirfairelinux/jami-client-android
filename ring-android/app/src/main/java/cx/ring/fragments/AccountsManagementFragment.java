@@ -93,6 +93,7 @@ public class AccountsManagementFragment extends BaseSupportFragment<AccountsMana
         mDnDListView.setHasFixedSize(true);
         mDnDListView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mDnDListView.setAdapter(mAccountsAdapter);
+        ((HomeActivity) getActivity()).setToolbarState(true, R.string.menu_item_accounts);
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -102,7 +103,6 @@ public class AccountsManagementFragment extends BaseSupportFragment<AccountsMana
         Log.w(TAG, "onResume()");
         FloatingActionButton button = ((HomeActivity) getActivity()).getActionButton();
         button.setOnClickListener(v -> presenter.addClicked());
-        ((HomeActivity) getActivity()).setToolbarState(true, R.string.menu_item_accounts);
     }
 
     @Override

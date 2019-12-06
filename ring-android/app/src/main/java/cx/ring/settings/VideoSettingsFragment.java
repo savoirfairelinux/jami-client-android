@@ -3,12 +3,18 @@ package cx.ring.settings;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
 import cx.ring.R;
+import cx.ring.client.HomeActivity;
 import cx.ring.services.SharedPreferencesServiceImpl;
 
 public class VideoSettingsFragment extends PreferenceFragmentCompat {
@@ -37,4 +43,9 @@ public class VideoSettingsFragment extends PreferenceFragmentCompat {
             getPreferenceScreen().findPreference(SharedPreferencesServiceImpl.RING_RESOLUTION).setIcon(R.drawable.baseline_hd_24);
     }
 
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        ((HomeActivity) requireActivity()).setToolbarState(false, R.string.menu_item_settings);
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
 }
