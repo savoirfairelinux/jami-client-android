@@ -101,8 +101,9 @@ public class AccountsManagementFragment extends BaseSupportFragment<AccountsMana
     public void onResume() {
         super.onResume();
         Log.w(TAG, "onResume()");
-        FloatingActionButton button = ((HomeActivity) getActivity()).getActionButton();
+        FloatingActionButton button = ((HomeActivity) requireActivity()).getActionButton();
         button.setOnClickListener(v -> presenter.addClicked());
+        button.show();
     }
 
     @Override
@@ -115,8 +116,9 @@ public class AccountsManagementFragment extends BaseSupportFragment<AccountsMana
     public void onStop() {
         super.onStop();
         Log.w(TAG, "onStop()");
-        FloatingActionButton button = ((HomeActivity) getActivity()).getActionButton();
+        FloatingActionButton button = ((HomeActivity) requireActivity()).getActionButton();
         button.setOnClickListener(null);
+        button.hide();
     }
 
     @Override

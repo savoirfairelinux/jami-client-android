@@ -155,6 +155,8 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
         mToolbar.setTitle("Jami");
         setSupportActionBar(mToolbar);
 
+        actionButton.hide();
+
         mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
                 mNavigationDrawer, /* DrawerLayout object */
                 //  R.drawable.ic_drawer, /* nav drawer image to replace 'Up' caret */
