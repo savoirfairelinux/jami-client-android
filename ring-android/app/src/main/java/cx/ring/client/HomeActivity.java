@@ -153,6 +153,8 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
 
         setSupportActionBar(mToolbar);
 
+        actionButton.hide();
+
         mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
                 mNavigationDrawer, /* DrawerLayout object */
                 //  R.drawable.ic_drawer, /* nav drawer image to replace 'Up' caret */
@@ -333,7 +335,13 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
         mAppBar.setExpanded(doubleHeight);
     }
 
-    public FloatingActionButton getActionButton() {
+    public FloatingActionButton toggleActionButton(Boolean b) {
+        if (b) {
+            actionButton.show();
+        } else {
+            actionButton.hide();
+        }
+
         return actionButton;
     }
 
