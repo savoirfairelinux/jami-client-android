@@ -125,7 +125,6 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     @Override
     public void onResume() {
         super.onResume();
-        ((HomeActivity) requireActivity()).setToolbarState(false, R.string.app_name);
         presenter.refresh();
     }
 
@@ -256,7 +255,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onViewCreated(view, savedInstanceState);
-
+        ((HomeActivity) requireActivity()).setToolbarState(false, R.string.app_name);
         mNewContact.setVisibility(View.GONE);
 
         if (DeviceUtils.isTablet(getContext())) {

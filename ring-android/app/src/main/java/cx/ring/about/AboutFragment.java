@@ -58,6 +58,7 @@ public class AboutFragment extends BaseSupportFragment<RootPresenter> {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+        ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_about);
         return super.onCreateView(inflater, parent, savedInstanceState);
     }
 
@@ -70,7 +71,6 @@ public class AboutFragment extends BaseSupportFragment<RootPresenter> {
     @Override
     public void onResume() {
         super.onResume();
-        ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_about);
     }
 
     @Override

@@ -151,6 +151,8 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
         // dependency injection
         JamiApplication.getInstance().getRingInjectionComponent().inject(this);
 
+        // Add a default title to make sure that the title is enabled for the actionbar
+        mToolbar.setTitle("Jami");
         setSupportActionBar(mToolbar);
 
         mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
