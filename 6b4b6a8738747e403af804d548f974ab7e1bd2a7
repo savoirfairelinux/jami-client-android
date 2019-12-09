@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c21512b2_28233f23",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-12-09T21:11:29Z",
+      "side": 1,
+      "message": "Activity or fragment can still be visible after onPause, for instance:\n* if the task switcher is used\n* if a translucent activity (popup) is displayed on top of the activity\n* on ChromeOS, if the window lose selection but is still visible on screen \n* etc.\n\nUsually stuff (video, anumations, UI updates etc) is stopped in onStop and destroyed in onDestroy.",
+      "range": {
+        "startLine": 626,
+        "startChar": 1,
+        "endLine": 629,
+        "endChar": 37
+      },
+      "revId": "6b4b6a8738747e403af804d548f974ab7e1bd2a7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aa49491_7b12ade3",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-12-09T21:11:29Z",
+      "side": 1,
+      "message": "Can be called outside of the subscription",
+      "range": {
+        "startLine": 717,
+        "startChar": 32,
+        "endLine": 717,
+        "endChar": 56
+      },
+      "revId": "6b4b6a8738747e403af804d548f974ab7e1bd2a7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62f28e52_1787ccea",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/AvatarDrawable.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-12-09T21:11:29Z",
+      "side": 1,
+      "message": "Expensive IO + Vector loading operation that\u0027s not needed if a picture is provided",
+      "range": {
+        "startLine": 184,
+        "startChar": 8,
+        "endLine": 184,
+        "endChar": 77
+      },
+      "revId": "6b4b6a8738747e403af804d548f974ab7e1bd2a7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a9f4c7d_2f30de9f",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/AvatarDrawable.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-12-09T21:11:29Z",
+      "side": 1,
+      "message": "Resource lookup not needed if a picture is provided",
+      "range": {
+        "startLine": 185,
+        "startChar": 8,
+        "endLine": 185,
+        "endChar": 68
+      },
+      "revId": "6b4b6a8738747e403af804d548f974ab7e1bd2a7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
