@@ -67,13 +67,15 @@
   <string name="account_ringtone_enabled_label">启用铃声</string>
   <string name="account_ringtone_path_label">铃声目录</string>
   <string name="account_ringtone_custom_label">使用自定义铃声</string>
+  <string name="account_ringtone_title">选择铃声</string>
+  <string name="account_ringtone_summary">选择一个铃声或挑选你自己的铃声</string>
   <!--Video Details-->
   <string name="account_video_label">视频</string>
   <string name="account_video_enable">启用视频</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">高级</string>
   <string name="account_dht_public_in_calls_label">允许所有通话/消息</string>
-  <string name="account_registration_exp_label">录音过期</string>
+  <string name="account_registration_exp_label">注册过期</string>
   <string name="account_local_interface_label">本地接口</string>
   <string name="account_local_port_label">本地端口</string>
   <string name="account_stun_enable_label">使用STUN</string>
@@ -147,6 +149,7 @@
   <string name="account_sip_success_title">SIP帐户已注册</string>
   <string name="account_sip_success_message">您已成功注册了您的SIP帐户。</string>
   <string name="account_sip_register_anyway">仍然注册</string>
+  <string name="account_link_device">从其他设备关联</string>
   <string name="account_link_button">从网络关联</string>
   <string name="account_link_archive_button">从备份文件关联</string>
   <string name="account_link_prompt_pin">输入PIN</string>
@@ -158,6 +161,11 @@
   <string name="account_end_export_infos">您的PIN码是：\n\n%%\n\n要完成此过程，您需要在新设备上打开Jami。 使用“将此设备链接到帐户”创建一个新帐户。你的PIN码有效期为10分钟。</string>
   <string name="account_link_export_info_light">要在其他设备上使用此帐户，您必须先在Jami上公开它。这将生成一个PIN码，您必须在新设备上输入该PIN码才能设置帐户。PIN有效期为10分钟。</string>
   <string name="account_export_title">添加设备</string>
+  <string name="account_connect_server_button">连接到管理服务器</string>
+  <string name="account_connect_button">连接</string>
+  <string name="prompt_server">Jami管理服务器URL</string>
+  <string name="help_credentials_enter">输入您的组织凭据</string>
+  <string name="help_connect_password_enter">输入您的组织密码</string>
   <string name="account_connect_prompt_username">用户名</string>
   <!--Name registration-->
   <string name="error_username_empty">输入用户名</string>

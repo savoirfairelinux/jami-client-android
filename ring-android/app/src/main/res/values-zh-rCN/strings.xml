@@ -20,6 +20,7 @@
   <!--About dialog-->
   <string name="developed_by">开发者</string>
   <string name="designed_by">设计者</string>
+  <string name="ringtones_by">铃声来自</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">无网络连接</string>
@@ -113,6 +114,8 @@
   <string name="send_file">发送文件</string>
   <string name="hist_file_sent">文件已发送</string>
   <string name="hist_file_received">文件已接收</string>
+  <string name="conversation_send_audio">录制音频片段</string>
+  <string name="conversation_send_video">录制视频片段</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">摄像头使用权限</string>
   <string name="permission_dialog_camera_message">视频会话需要使用摄像头，请设置相应权限。</string>
@@ -122,6 +125,7 @@
   <string name="ringtone_error_size_too_big">文件过大。最大支持%1$dKB。</string>
   <string name="ringtone_custom_prompt">设置一个自定义铃声</string>
   <string name="ringtone_custom_label">自定义</string>
+  <string name="ringtone_jami_tones">Jami铃声</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Jami需要“读取通讯录”权限来启用此功能，请批准。</string>
   <!--Write call log permission-->
@@ -166,6 +170,7 @@
   <string name="prompt_new_username">输入新用户名</string>
   <string name="help_password_choose">为了保护您的Jami帐户，请使用一个强密码并牢记。</string>
   <string name="help_password_enter">输入您的Jami主帐户密码</string>
+  <string name="help_server_enter">输入管理服务器的URL</string>
   <string name="help_pin_enter">从其他已配置的Jami帐户输入PIN。使用“导出Jami帐户”功能获取PIN。</string>
   <string name="wizard_next">下一步</string>
   <string name="wizard_back">上一步</string>
