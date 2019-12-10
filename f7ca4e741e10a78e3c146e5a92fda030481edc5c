@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67905529_a95b8338",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/AccountsManagementFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2019-12-10T22:00:23Z",
+      "side": 1,
+      "message": "Not sure I like a toggle function that accepts a parameter. Plus I\u0027m not sure this needs to get the button either.\nCan we just do something like: ((HomeActivity) getActivity()).setActionButtonListener(v -\u003e presenter.addClicked()); ? Then: actionButton.setVisibility(listener \u003d\u003d null ? View.INVISIBLE : View.VISIBLE); in Home activity?",
+      "range": {
+        "startLine": 103,
+        "startChar": 8,
+        "endLine": 103,
+        "endChar": 94
+      },
+      "revId": "f7ca4e741e10a78e3c146e5a92fda030481edc5c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
