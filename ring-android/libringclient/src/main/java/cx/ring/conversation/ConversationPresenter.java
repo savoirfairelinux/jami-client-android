@@ -104,7 +104,6 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         mAccountId = accountId;
         Account account = mAccountService.getAccount(accountId);
         if (account != null) {
-            initContact(account, contactRingId, getView());
             mCompositeDisposable.add(mConversationFacade.loadConversationHistory(account, contactRingId)
                     .observeOn(mUiScheduler)
                     .subscribe(this::setConversation, e -> getView().goToHome()));
