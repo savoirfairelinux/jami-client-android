@@ -6,3 +6,4 @@ android-toolchain-*/
 .DS_Store
 .gradle
 **/.settings
+config.mak
