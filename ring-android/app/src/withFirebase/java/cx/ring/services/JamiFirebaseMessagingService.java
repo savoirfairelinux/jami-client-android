@@ -18,53 +18,26 @@
  */
 package cx.ring.services;
 
-import android.content.Intent;
-import android.os.Bundle;
-
 import androidx.annotation.NonNull;
-import androidx.legacy.content.WakefulBroadcastReceiver;
-import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import java.util.Map;
-
+import cx.ring.application.JamiApplication;
 import cx.ring.application.JamiApplicationFirebase;
-import cx.ring.service.DRingService;
 
 public class JamiFirebaseMessagingService extends FirebaseMessagingService {
-    private static final String TAG = JamiFirebaseMessagingService.class.getSimpleName();
-
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
-        try {
-            // Log.d(TAG, "onMessageReceived: " + remoteMessage.getFrom());
-            Map<String, String> data = remoteMessage.getData();
-            Bundle bundle = new Bundle();
-            for (Map.Entry<String, String> entry : data.entrySet()) {
-                bundle.putString(entry.getKey(), entry.getValue());
-            }
-            Intent serviceIntent = new Intent(DRingService.ACTION_PUSH_RECEIVED)
-                    .setClass(this, DRingService.class)
-                    .putExtra(DRingService.PUSH_RECEIVED_FIELD_FROM, remoteMessage.getFrom())
-                    .putExtra(DRingService.PUSH_RECEIVED_FIELD_DATA, bundle);
-            WakefulBroadcastReceiver.startWakefulService(this, serviceIntent);
-        } catch (Exception e) {
-            Log.w(TAG, "Error handling push notification", e);
-        }
+        JamiApplicationFirebase app = (JamiApplicationFirebase)JamiApplication.getInstance();
+        if (app != null)
+            app.onMessageReceived(remoteMessage);
     }
 
     @Override
     public void onNewToken(@NonNull String refreshedToken) {
-        try {
-            Log.d(TAG, "onTokenRefresh: refreshed token: " + refreshedToken);
-            JamiApplicationFirebase.setPushToken(refreshedToken);
-            startService(new Intent(DRingService.ACTION_PUSH_TOKEN_CHANGED)
-                    .setClass(this, DRingService.class)
-                    .putExtra(DRingService.PUSH_TOKEN_FIELD_TOKEN, refreshedToken));
-        } catch (Exception e) {
-            Log.w(TAG, "Error handling token refresh", e);
-        }
+        JamiApplicationFirebase app = (JamiApplicationFirebase)JamiApplication.getInstance();
+        if (app != null)
+            app.setPushToken(refreshedToken);
     }
 }

@@ -103,12 +103,6 @@ public class DRingService extends Service {
     static public final String KEY_TRANSFER_ID = "transferId";
     static public final String KEY_TEXT_REPLY = "textReply";
 
-    public static final String ACTION_PUSH_RECEIVED = BuildConfig.APPLICATION_ID + ".action.PUSH_RECEIVED";
-    public static final String ACTION_PUSH_TOKEN_CHANGED = BuildConfig.APPLICATION_ID + ".push.PUSH_TOKEN_CHANGED";
-    public static final String PUSH_RECEIVED_FIELD_FROM = "from";
-    public static final String PUSH_RECEIVED_FIELD_DATA = "data";
-    public static final String PUSH_TOKEN_FIELD_TOKEN = "token";
-
     private static final int NOTIFICATION_ID = 1;
 
     private final ContactsContentObserver contactContentObserver = new ContactsContentObserver();
@@ -670,16 +664,6 @@ public class DRingService extends Service {
                     handleFileAction(action, extras);
                 }
                 break;
-            case ACTION_PUSH_TOKEN_CHANGED:
-                if (extras != null) {
-                    handlePushTokenChanged(extras);
-                }
-                break;
-            case ACTION_PUSH_RECEIVED:
-                if (extras != null) {
-                    handlePushReceived(extras);
-                }
-                break;
             default:
                 break;
         }
@@ -692,32 +676,6 @@ public class DRingService extends Service {
         } else if (action.equals(ACTION_FILE_CANCEL)) {
             mConversationFacade.cancelFileTransfer(id);
         }
-    }
-
-    private void handlePushReceived(Bundle extras) {
-        try {
-            PowerManager pm = (PowerManager)getSystemService(Context.POWER_SERVICE);
-            PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "wake:push");
-            wl.setReferenceCounted(false);
-            wl.acquire(20 * 1000);
-        } catch (Exception e) {
-            Log.w(TAG, "Can't acquire wake lock", e);
-        }
-
-        String from = extras.getString(PUSH_RECEIVED_FIELD_FROM);
-        Bundle data = extras.getBundle(PUSH_RECEIVED_FIELD_DATA);
-        if (from == null || data == null) {
-            return;
-        }
-        Map<String, String> map = new HashMap<>(data.size());
-        for (String key : data.keySet()) {
-            map.put(key, data.get(key).toString());
-        }
-        mAccountService.pushNotificationReceived(from, map);
-    }
-
-    private void handlePushTokenChanged(Bundle extras) {
-        mAccountService.setPushNotificationToken(extras.getString(PUSH_TOKEN_FIELD_TOKEN, ""));
     }
 
     private void handleTrustRequestAction(String action, Bundle extras) {
