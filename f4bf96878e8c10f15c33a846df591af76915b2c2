@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c6a98de_ed6c3eb6",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-12-16T23:26:31Z",
+      "side": 1,
+      "message": "remove if empty",
+      "range": {
+        "startLine": 636,
+        "startChar": 1,
+        "endLine": 639,
+        "endChar": 5
+      },
+      "revId": "f4bf96878e8c10f15c33a846df591af76915b2c2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c5fc620_76f77594",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-12-16T23:26:31Z",
+      "side": 1,
+      "message": "clear() in onStop() or onDestroyView() (can be restarted but no more UI for now),\ndispose() in onDestroy()",
+      "range": {
+        "startLine": 647,
+        "startChar": 29,
+        "endLine": 647,
+        "endChar": 37
+      },
+      "revId": "f4bf96878e8c10f15c33a846df591af76915b2c2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a5a981a_4fbdef98",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/AvatarDrawable.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-12-16T23:26:31Z",
+      "side": 1,
+      "message": "Use another Paint instance ?\n\nPaint might look like a simple, static object but it actually internally holds many stuff used to optimize the graphic pipeline (maybe handles to GPU stuff etc.) so try to use paint.set* as less as possible and used multiple instance if you\u0027re always gonna draw the same stuff,\nalso to make the code clearer",
+      "revId": "f4bf96878e8c10f15c33a846df591af76915b2c2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
