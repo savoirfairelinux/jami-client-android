@@ -170,7 +170,9 @@ public abstract class JamiApplication extends Application {
 
                 if (mPreferencesService.getSettings().isAllowPushNotifications()) {
                     String token = getPushToken();
-                    Ringservice.setPushNotificationToken(token);
+                    if (token != null) {
+                        Ringservice.setPushNotificationToken(token);
+                    }
                 } else {
                     Ringservice.setPushNotificationToken("");
                 }
