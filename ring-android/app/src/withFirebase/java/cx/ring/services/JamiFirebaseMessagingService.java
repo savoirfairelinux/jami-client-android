@@ -31,6 +31,7 @@ import com.google.firebase.messaging.RemoteMessage;
 import java.util.Map;
 
 import cx.ring.application.JamiApplicationFirebase;
+import cx.ring.daemon.Ringservice;
 import cx.ring.service.DRingService;
 
 public class JamiFirebaseMessagingService extends FirebaseMessagingService {
@@ -57,6 +58,7 @@ public class JamiFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onNewToken(@NonNull String refreshedToken) {
+        Ringservice.setPushNotificationToken(refreshedToken);
         try {
             Log.d(TAG, "onTokenRefresh: refreshed token: " + refreshedToken);
             JamiApplicationFirebase.setPushToken(refreshedToken);

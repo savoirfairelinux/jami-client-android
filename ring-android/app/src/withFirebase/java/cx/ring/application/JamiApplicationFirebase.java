@@ -29,7 +29,7 @@ import cx.ring.service.DRingService;
 public class JamiApplicationFirebase extends JamiApplication {
     static private String TAG = JamiApplicationFirebase.class.getSimpleName();
 
-    static private String pushToken = "";
+    static private String pushToken = null;
 
     @Override
     public void onCreate() {
