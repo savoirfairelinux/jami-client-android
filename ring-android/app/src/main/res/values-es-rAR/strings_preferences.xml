@@ -6,9 +6,22 @@
   <string name="pref_category_system">Sistema</string>
   <string name="pref_category_privacy">Privacidad</string>
   <string name="pref_mobileData_title">Datos móviles</string>
+  <string name="pref_mobileData_summary">Habilitar Jami incluso en redes móviles 3G/LTE, además de WiFi</string>
   <string name="pref_pushNotifications_title">Notificaciones push</string>
   <string name="pref_pushNotifications_summary">Usar servidores de Google para recibir llamadas/mensajes en segundo plano</string>
+  <string name="pref_video_advanced_title">Configuraciones de video avanzadas</string>
+  <string name="pref_video_advanced_summary">Cambiá la tasa de bits y la resolución de video y accedé a características experimentales</string>
+  <string name="pref_hd_summary">Permitir enviar video en HD</string>
+  <string name="pref_hwEncode_title">Habilitar cifrado acelerado</string>
+  <string name="pref_hwEncode_summary">Característica experimental</string>
   <string name="pref_systemContacts_title">Usar contactos del sistema</string>
   <string name="pref_systemContacts_summary">Usar contactos del sistema para mostrar detalles del interlocutor</string>
+  <string name="pref_systemDialer_title">Realizar llamadas del sistema mediante Jami</string>
+  <string name="pref_systemDialer_summary">Usar Jami para realizar llamadas del sistema cuando sea posible.</string>
+  <string name="pref_startOnBoot_title">Ejecutar Jami al inicio</string>
+  <string name="pref_startOnBoot_summary">Ejecutar Jami en segundo plano al iniciar el sistema</string>
   <string name="pref_clearHistory_title">Borrar historial</string>
+  <string name="pref_clearHistory_summary">Borrar todo el historial de conversaciones. Esta operación no se puede deshacer.</string>
+  <string name="pref_persistNotification_title">Ejecutar en segundo plano</string>
+  <string name="pref_persistNotification_summary">Permitir ejecutar en segundo plano para recibir llamadas y mensajes.</string>
 </resources>
