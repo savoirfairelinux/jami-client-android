@@ -18,38 +18,32 @@
  */
 package cx.ring.application;
 
-import android.content.Intent;
 import android.util.Log;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
-
-import cx.ring.service.DRingService;
+import com.google.firebase.messaging.RemoteMessage;
 
 public class JamiApplicationFirebase extends JamiApplication {
     static private String TAG = JamiApplicationFirebase.class.getSimpleName();
-
-    static private String pushToken = null;
+    private String pushToken = null;
 
     @Override
     public void onCreate() {
+        super.onCreate();
         try {
             FirebaseApp.initializeApp(this);
             FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(c -> {
                 Log.w(TAG, "Found push token");
                 try {
-                    pushToken = c.getResult().getToken();
-                    startService(new Intent(DRingService.ACTION_PUSH_TOKEN_CHANGED)
-                            .setClass(this, DRingService.class)
-                            .putExtra(DRingService.PUSH_TOKEN_FIELD_TOKEN, pushToken));
+                    setPushToken(c.getResult().getToken());
                 } catch (Exception e) {
-                    Log.e(TAG, "Can't start service", e);
+                    Log.e(TAG, "Can't set push token", e);
                 }
             });
         } catch (Exception e) {
             Log.e(TAG, "Can't start service", e);
         }
-        super.onCreate();
     }
 
     @Override
@@ -57,8 +51,16 @@ public class JamiApplicationFirebase extends JamiApplication {
         return pushToken;
     }
 
-    public static void setPushToken(String token) {
+    public void setPushToken(String token) {
+        Log.d(TAG, "setPushToken: " + token);
         pushToken = token;
+        if (mAccountService != null)
+            mAccountService.setPushNotificationToken(token);
     }
 
+    public void onMessageReceived(RemoteMessage remoteMessage) {
+        Log.d(TAG, "onMessageReceived: " + remoteMessage.getFrom());
+        if (mAccountService != null)
+            mAccountService.pushNotificationReceived(remoteMessage.getFrom(), remoteMessage.getData());
+    }
 }
