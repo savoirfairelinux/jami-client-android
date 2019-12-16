@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd15d43f_8c6a8ac5",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2019-12-16T23:26:31Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 636,
+        "startChar": 0,
+        "endLine": 639,
+        "endChar": 5
+      },
+      "revId": "6d21596183e821df7157e5363f72689866c451b8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
