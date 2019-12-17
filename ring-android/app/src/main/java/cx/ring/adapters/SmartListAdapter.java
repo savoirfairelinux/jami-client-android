@@ -54,6 +54,12 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
     }
 
     @Override
+    public void onViewRecycled(@NonNull SmartListViewHolder holder) {
+        super.onViewRecycled(holder);
+        holder.unbind();
+    }
+
+    @Override
     public void onBindViewHolder(@NonNull SmartListViewHolder holder, int position) {
         final SmartListViewModel smartListViewModel = mSmartListViewModels.get(position);
         holder.bind(listener, smartListViewModel);
