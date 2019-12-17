@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "98de57be_b72e79e0",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2019-12-17T19:15:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c6a98de_ed6c3eb6",
+      "range": {
+        "startLine": 636,
+        "startChar": 1,
+        "endLine": 639,
+        "endChar": 5
+      },
+      "revId": "f4bf96878e8c10f15c33a846df591af76915b2c2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c5fc620_76f77594",
         "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
         "patchSetId": 19
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "cf8fbe2c_6a0c2dd4",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2019-12-17T19:15:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c5fc620_76f77594",
+      "range": {
+        "startLine": 647,
+        "startChar": 29,
+        "endLine": 647,
+        "endChar": 37
+      },
+      "revId": "f4bf96878e8c10f15c33a846df591af76915b2c2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a5a981a_4fbdef98",
         "filename": "ring-android/app/src/main/java/cx/ring/views/AvatarDrawable.java",
         "patchSetId": 19
@@ -62,6 +110,24 @@
       "revId": "f4bf96878e8c10f15c33a846df591af76915b2c2",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b45f9b22_38c5d5b9",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/AvatarDrawable.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2019-12-17T19:15:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a5a981a_4fbdef98",
+      "revId": "f4bf96878e8c10f15c33a846df591af76915b2c2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
