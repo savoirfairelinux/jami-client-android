@@ -27,6 +27,7 @@ import cx.ring.model.Interaction;
 import cx.ring.model.SipCall;
 import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.views.AvatarDrawable;
+import io.reactivex.disposables.CompositeDisposable;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -36,8 +37,14 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.jakewharton.rxbinding3.view.RxView;
+
+import java.util.concurrent.TimeUnit;
+
 public class SmartListViewHolder extends RecyclerView.ViewHolder {
     public ItemSmartlistBinding binding;
+
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     public SmartListViewHolder(@NonNull ItemSmartlistBinding b) {
         super(b.getRoot());
@@ -45,11 +52,12 @@ public class SmartListViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(final SmartListListeners clickListener, final SmartListViewModel smartListViewModel) {
-        itemView.setOnClickListener(v -> clickListener.onItemClick(smartListViewModel));
-        itemView.setOnLongClickListener(v -> {
-            clickListener.onItemLongClick(smartListViewModel);
-            return true;
-        });
+        compositeDisposable.clear();
+        compositeDisposable.add(RxView.clicks(itemView)
+                .throttleFirst(1000, TimeUnit.MILLISECONDS)
+                .subscribe(v -> clickListener.onItemClick(smartListViewModel)));
+        compositeDisposable.add(RxView.longClicks(itemView)
+                .subscribe(u -> clickListener.onItemLongClick(smartListViewModel)));
 
         CallContact contact = smartListViewModel.getContact();
 
@@ -83,7 +91,10 @@ public class SmartListViewHolder extends RecyclerView.ViewHolder {
                         .withContact(contact)
                         .withCircleCrop(true)
                         .build(binding.photo.getContext()));
+    }
 
+    public void unbind() {
+        compositeDisposable.clear();
     }
 
     private String getLastEventSummary(Interaction e, Context context) {
@@ -122,6 +133,7 @@ public class SmartListViewHolder extends RecyclerView.ViewHolder {
 
     public interface SmartListListeners {
         void onItemClick(SmartListViewModel smartListViewModel);
+
         void onItemLongClick(SmartListViewModel smartListViewModel);
     }
 
