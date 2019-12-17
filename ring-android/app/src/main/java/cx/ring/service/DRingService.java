@@ -717,7 +717,9 @@ public class DRingService extends Service {
     }
 
     private void handlePushTokenChanged(Bundle extras) {
-        mAccountService.setPushNotificationToken(extras.getString(PUSH_TOKEN_FIELD_TOKEN, ""));
+        if (mPreferencesService.getSettings().isAllowPushNotifications()) {
+            mAccountService.setPushNotificationToken(extras.getString(PUSH_TOKEN_FIELD_TOKEN, ""));
+        }
     }
 
     private void handleTrustRequestAction(String action, Bundle extras) {
