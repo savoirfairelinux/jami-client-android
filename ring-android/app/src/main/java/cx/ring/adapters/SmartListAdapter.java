@@ -20,11 +20,11 @@
  */
 package cx.ring.adapters;
 
-import android.content.Context;
-import android.graphics.Typeface;
-import android.text.format.DateUtils;
+import cx.ring.databinding.ItemSmartlistBinding;
+import cx.ring.smartlist.SmartListViewModel;
+import cx.ring.viewholders.SmartListViewHolder;
+
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -33,16 +33,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import cx.ring.R;
-import cx.ring.model.CallContact;
-import cx.ring.model.ContactEvent;
-import cx.ring.model.Interaction;
-import cx.ring.model.Interaction.InteractionType;
-import cx.ring.model.SipCall;
-import cx.ring.smartlist.SmartListViewModel;
-import cx.ring.viewholders.SmartListViewHolder;
-import cx.ring.views.AvatarDrawable;
 
 public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> {
 
@@ -58,45 +48,14 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
     @NonNull
     @Override
     public SmartListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_smartlist, parent, false);
-        return new SmartListViewHolder(v);
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        ItemSmartlistBinding itemBinding = ItemSmartlistBinding.inflate(layoutInflater, parent, false);
+        return new SmartListViewHolder(itemBinding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull SmartListViewHolder holder, int position) {
         final SmartListViewModel smartListViewModel = mSmartListViewModels.get(position);
-        CallContact contact = smartListViewModel.getContact();
-
-        holder.convParticipants.setText(smartListViewModel.getContactName());
-
-        long lastInteraction = smartListViewModel.getLastInteractionTime();
-        String lastInteractionStr = lastInteraction == 0 ?
-                "" : DateUtils.getRelativeTimeSpanString(lastInteraction, System.currentTimeMillis(), 0L, DateUtils.FORMAT_ABBREV_ALL).toString();
-
-        holder.convTime.setText(lastInteractionStr);
-        if (smartListViewModel.hasOngoingCall()) {
-            holder.convStatus.setText(holder.itemView.getContext().getString(R.string.ongoing_call));
-        } else if (smartListViewModel.getLastEvent() != null) {
-            holder.convStatus.setText(getLastEventSummary(smartListViewModel.getLastEvent(), holder.itemView.getContext()));
-        } else {
-            holder.convStatus.setVisibility(View.GONE);
-        }
-
-        if (smartListViewModel.hasUnreadTextMessage()) {
-            holder.convParticipants.setTypeface(null, Typeface.BOLD);
-            holder.convTime.setTypeface(null, Typeface.BOLD);
-            holder.convStatus.setTypeface(null, Typeface.BOLD);
-        } else {
-            holder.convParticipants.setTypeface(null, Typeface.NORMAL);
-            holder.convTime.setTypeface(null, Typeface.NORMAL);
-            holder.convStatus.setTypeface(null, Typeface.NORMAL);
-        }
-
-        holder.photo.setImageDrawable(
-                new AvatarDrawable.Builder()
-                        .withContact(contact)
-                        .withCircleCrop(true)
-                        .build(holder.photo.getContext()));
         holder.bind(listener, smartListViewModel);
     }
 
@@ -123,40 +82,5 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
                 notifyItemChanged(i);
             }
         }
-    }
-
-
-    private String getLastEventSummary(Interaction e, Context context) {
-        if (e.getType() == (InteractionType.TEXT)) {
-            if (e.isIncoming()) {
-                return e.getBody();
-            } else {
-                return context.getText(R.string.you_txt_prefix) + " " + e.getBody();
-            }
-        } else if (e.getType() == (InteractionType.CALL)) {
-            SipCall call = (SipCall) e;
-            if (call.isMissed())
-                return call.isIncoming() ?
-                        context.getString(R.string.notif_missed_incoming_call) :
-                        context.getString(R.string.notif_missed_outgoing_call);
-            else
-                return call.isIncoming() ?
-                        String.format(context.getString(R.string.hist_in_call), call.getDurationString()) :
-                        String.format(context.getString(R.string.hist_out_call), call.getDurationString());
-        } else if (e.getType() == (InteractionType.CONTACT)) {
-            ContactEvent contactEvent = (ContactEvent) e;
-            if (contactEvent.event == ContactEvent.Event.ADDED) {
-                return context.getString(R.string.hist_contact_added);
-            } else if (contactEvent.event == ContactEvent.Event.INCOMING_REQUEST) {
-                return context.getString(R.string.hist_invitation_received);
-            }
-        } else if (e.getType() == (InteractionType.DATA_TRANSFER)) {
-            if (!e.isIncoming()) {
-                return context.getString(R.string.hist_file_sent);
-            } else {
-                return context.getString(R.string.hist_file_received);
-            }
-        }
-        return null;
     }
 }
