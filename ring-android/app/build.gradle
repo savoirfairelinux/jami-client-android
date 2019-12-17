@@ -100,6 +100,9 @@ dependencies {
     implementation "com.jakewharton:butterknife:$butterknife_version"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife_version"
 
+    // RxBindings
+    implementation 'com.jakewharton.rxbinding3:rxbinding:3.1.0'
+
     implementation 'com.rodolfonavalon:ShapeRippleLibrary:1.0.0'
 
     // Dagger dependency injection
