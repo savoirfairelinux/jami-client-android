@@ -16,23 +16,33 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
     android:clipToPadding="false"
-    android:paddingTop="20dp"
     tools:showIn="@layout/frag_acc_summary">
 
-    <LinearLayout
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/layout_add_device"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        app:cardCornerRadius="15dp"
+        android:layout_marginBottom="-15dp"
         android:elevation="4dp"
-        android:orientation="vertical">
+        app:behavior_hideable="false"
+        app:behavior_peekHeight="50dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:paddingBottom="15dp"
+            android:orientation="vertical">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_add_device"
@@ -43,13 +53,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
             android:text="@string/account_link_export_button"
             android:textColor="@color/colorOnPrimary" />
 
-        <cx.ring.views.LinkNewDeviceLayout
-            android:id="@+id/linkaccount_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <ScrollView
+        <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -116,6 +120,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                 </LinearLayout>
             </ScrollView>
 
-        </cx.ring.views.LinkNewDeviceLayout>
-    </LinearLayout>
-</FrameLayout>
+        </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
