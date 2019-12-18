@@ -24,11 +24,14 @@ import cx.ring.databinding.ItemSmartlistBinding;
 import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.viewholders.SmartListViewHolder;
 
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.ListUpdateCallback;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -38,6 +41,7 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
 
     private List<SmartListViewModel> mSmartListViewModels = new ArrayList<>();
     private SmartListViewHolder.SmartListListeners listener;
+    private RecyclerView recyclerView;
 
     public SmartListAdapter(List<SmartListViewModel> smartListViewModels, SmartListViewHolder.SmartListListeners listener) {
         this.listener = listener;
@@ -70,11 +74,20 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
         return mSmartListViewModels.size();
     }
 
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        this.recyclerView = recyclerView;
+    }
+
     public void update(List<SmartListViewModel> viewModels) {
         final List<SmartListViewModel> old = mSmartListViewModels;
         mSmartListViewModels = viewModels == null ? new ArrayList<>() : viewModels;
         if (old != null && viewModels != null) {
-            DiffUtil.calculateDiff(new SmartListDiffUtil(old, viewModels)).dispatchUpdatesTo(this);
+            Parcelable recyclerViewState = recyclerView.getLayoutManager().onSaveInstanceState();
+            DiffUtil.calculateDiff(new SmartListDiffUtil(old, viewModels))
+                    .dispatchUpdatesTo(this);
+            recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
         } else {
             notifyDataSetChanged();
         }
