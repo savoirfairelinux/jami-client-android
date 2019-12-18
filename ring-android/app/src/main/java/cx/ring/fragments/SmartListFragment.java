@@ -36,10 +36,12 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+
 import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
@@ -287,6 +289,11 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
                 }
             }
         });
+
+        DefaultItemAnimator animator = (DefaultItemAnimator) mRecyclerView.getItemAnimator();
+        if (animator != null) {
+            animator.setSupportsChangeAnimations(false);
+        }
     }
 
     @OnClick(R.id.newcontact_element)
