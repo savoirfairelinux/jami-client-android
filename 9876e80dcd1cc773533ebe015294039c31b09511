@@ -22,6 +22,30 @@
       "revId": "9876e80dcd1cc773533ebe015294039c31b09511",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b6e502b_0bc67c6b",
+        "filename": "ring-android/app/src/main/res/layout/item_smartlist.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2019-12-18T21:45:44Z",
+      "side": 1,
+      "message": "Seems unnecessary but I can\u0027t get databindings to work without a top-level layout element.\nAnd the usages of databindings in the client have that structure for items.",
+      "parentUuid": "2676557d_91316aaf",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 21
+      },
+      "revId": "9876e80dcd1cc773533ebe015294039c31b09511",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
     }
   ]
 }
