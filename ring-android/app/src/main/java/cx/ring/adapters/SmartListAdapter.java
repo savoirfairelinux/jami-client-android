@@ -29,6 +29,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.ListUpdateCallback;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -38,6 +40,8 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
 
     private List<SmartListViewModel> mSmartListViewModels = new ArrayList<>();
     private SmartListViewHolder.SmartListListeners listener;
+    private SmartListUpdateCallback updateCallback;
+    private RecyclerView recyclerView;
 
     public SmartListAdapter(List<SmartListViewModel> smartListViewModels, SmartListViewHolder.SmartListListeners listener) {
         this.listener = listener;
@@ -70,11 +74,50 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
         return mSmartListViewModels.size();
     }
 
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        this.recyclerView = recyclerView;
+        updateCallback = new SmartListUpdateCallback(this);
+    }
+
+    class SmartListUpdateCallback implements ListUpdateCallback {
+        SmartListAdapter adapter;
+        SmartListUpdateCallback(SmartListAdapter adapter) {
+            this.adapter = adapter;
+        }
+        private LinearLayoutManager getLayoutManager() {
+            return (LinearLayoutManager)adapter.recyclerView.getLayoutManager();
+        }
+        @Override
+        public void onChanged(int position, int count, Object payload) {
+            adapter.notifyItemRangeChanged(position, count, payload);
+        }
+        @Override
+        public void onInserted(int position, int count) {
+            adapter.notifyItemRangeInserted(position, count);
+            getLayoutManager().scrollToPositionWithOffset(position, 0);
+        }
+        @Override
+        public void onMoved(int fromPosition, int toPosition) {
+            LinearLayoutManager llm = getLayoutManager();
+            int visible = llm.findFirstVisibleItemPosition();
+            int offset = llm.getChildAt(visible).getTop();
+            adapter.notifyItemMoved(fromPosition, toPosition);
+            llm.scrollToPositionWithOffset(visible, offset);
+        }
+        @Override
+        public void onRemoved(int position, int count) {
+            adapter.notifyItemRangeRemoved(position, count);
+        }
+    }
+
     public void update(List<SmartListViewModel> viewModels) {
         final List<SmartListViewModel> old = mSmartListViewModels;
         mSmartListViewModels = viewModels == null ? new ArrayList<>() : viewModels;
         if (old != null && viewModels != null) {
-            DiffUtil.calculateDiff(new SmartListDiffUtil(old, viewModels)).dispatchUpdatesTo(this);
+            DiffUtil.calculateDiff(new SmartListDiffUtil(old, viewModels))
+                    .dispatchUpdatesTo(updateCallback);
         } else {
             notifyDataSetChanged();
         }
