@@ -57,6 +57,7 @@ import cx.ring.fragments.AdvancedAccountFragment;
 import cx.ring.fragments.GeneralAccountFragment;
 import cx.ring.fragments.MediaPreferenceFragment;
 import cx.ring.fragments.SecurityAccountFragment;
+import cx.ring.interfaces.BackHandlerInterface;
 
 public class AccountEditionActivity extends AppCompatActivity implements AccountEditionView {
 
@@ -79,6 +80,8 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
 
     private MenuItem mItemAdvanced;
     private MenuItem mItemBlacklist;
+
+    private BackHandlerInterface mBackHandlerInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,6 +179,9 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
 
     @Override
     public void onBackPressed() {
+        if (mBackHandlerInterface.onBackPressed()) {
+            return;
+        }
         if (frameLayout.getVisibility() == View.VISIBLE) {
             super.onBackPressed();
         } else {
@@ -183,6 +189,12 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
             mViewPager.setVisibility(View.GONE);
             mSlidingTabLayout.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mBackHandlerInterface = null;
     }
 
     @Override
@@ -339,4 +351,9 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
             return result;
         }
     }
+
+    public void setOnBackPressedListener(BackHandlerInterface backPressedListener) {
+        mBackHandlerInterface = backPressedListener;
+    }
+
 }
