@@ -28,6 +28,8 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
@@ -69,7 +71,6 @@ import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.services.AccountService;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.KeyboardVisibilityManager;
-import cx.ring.views.LinkNewDeviceLayout;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountSummaryPresenter> implements BackHandlerInterface,
@@ -89,8 +90,6 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     /*
     UI Bindings
      */
-    @BindView(R.id.linkaccount_container)
-    LinkNewDeviceLayout mLinkAccountView;
 
     @BindView(R.id.ring_password)
     EditText mRingPassword;
@@ -117,7 +116,7 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     Button mChangePasswordBtn;
 
     @BindView(R.id.layout_add_device)
-    LinearLayout mAddAccountLayout;
+    MaterialCardView mAddAccountLayout;
 
     @BindView(R.id.export_account_btn)
     Button mExportButton;
@@ -159,6 +158,7 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     private String mBestName = "";
     private String mAccountId = "";
     private File mCacheArchive = null;
+    private BottomSheetBehavior mSheetBehavior;
 
     @Inject
     AccountService mAccountService;
@@ -166,7 +166,8 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mLinkAccountView.setContainer(this);
+        mSheetBehavior = BottomSheetBehavior.from(mAddAccountLayout);
+
         hidePopWizard();
         if (getArguments() != null) {
             String accountId = getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY);
@@ -174,6 +175,25 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
                 presenter.setAccountId(accountId);
             }
         }
+
+        ((AccountEditionActivity) getActivity()).setOnBackPressedListener(this);
+
+        mSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View view, int i) {
+                if (mSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED){
+                    mPasswordLayout.setVisibility(mAccountHasPassword ? View.VISIBLE : View.GONE);
+                    mEndBtn.setVisibility(View.GONE);
+                    mStartBtn.setVisibility(View.VISIBLE);
+                    mExportInfos.setText(R.string.account_link_export_info);
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View view, float v) {
+
+            }
+        });
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
@@ -277,10 +297,13 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     BackHandlerInterface
     */
     @Override
-    public void onBackPressed() {
+    public boolean onBackPressed() {
         if (isDisplayingWizard()) {
             hideWizard();
+            return true;
         }
+
+        return false;
     }
 
     /*
@@ -297,22 +320,17 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     }
 
     private void showWizard() {
-        mLinkAccountView.setVisibility(View.VISIBLE);
-        mPasswordLayout.setVisibility(mAccountHasPassword ? View.VISIBLE : View.GONE);
-        mEndBtn.setVisibility(View.GONE);
-        mStartBtn.setVisibility(View.VISIBLE);
-        mExportInfos.setText(R.string.account_link_export_info);
+        mSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
     @OnClick(R.id.btn_end_export)
     @SuppressWarnings("unused")
     public void hidePopWizard() {
-        mLinkAccountView.setVisibility(View.GONE);
+        mSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
     public void hideWizard() {
-        mLinkAccountView.setVisibility(View.GONE);
-        mRingPassword.setText("");
+        mSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         KeyboardVisibilityManager.hideKeyboard(getActivity(), 0);
     }
 
@@ -344,7 +362,7 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     }
 
     public boolean isDisplayingWizard() {
-        return mLinkAccountView.getVisibility() == View.VISIBLE;
+        return mSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED;
     }
 
     @OnEditorAction(R.id.ring_password)
@@ -439,8 +457,8 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
 
     @Override
     public void showPIN(final String pin) {
-        hideWizard();
-        mLinkAccountView.setVisibility(View.VISIBLE);
+        mRingPassword.setText("");
+        mSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         mPasswordLayout.setVisibility(View.GONE);
         mEndBtn.setVisibility(View.VISIBLE);
         mStartBtn.setVisibility(View.GONE);

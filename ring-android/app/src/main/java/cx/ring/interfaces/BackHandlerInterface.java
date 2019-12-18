@@ -19,5 +19,5 @@
 package cx.ring.interfaces;
 
 public interface BackHandlerInterface {
-    void onBackPressed();
+    boolean onBackPressed();
 }
