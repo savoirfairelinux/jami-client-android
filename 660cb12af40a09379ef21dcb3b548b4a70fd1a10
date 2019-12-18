@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8d718f0a_89aa4804",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/AvatarDrawable.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2019-12-18T22:10:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39aa8c33_0a12a4dc",
+      "range": {
+        "startLine": 240,
+        "startChar": 8,
+        "endLine": 240,
+        "endChar": 33
+      },
+      "revId": "660cb12af40a09379ef21dcb3b548b4a70fd1a10",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "499d4dbc_7122b305",
         "filename": "ring-android/app/src/main/java/cx/ring/views/AvatarDrawable.java",
         "patchSetId": 22
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "100e8819_5fe05134",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/AvatarDrawable.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2019-12-18T22:10:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "499d4dbc_7122b305",
+      "range": {
+        "startLine": 295,
+        "startChar": 8,
+        "endLine": 295,
+        "endChar": 33
+      },
+      "revId": "660cb12af40a09379ef21dcb3b548b4a70fd1a10",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "127e1fd4_98124583",
         "filename": "ring-android/app/src/main/java/cx/ring/views/AvatarDrawable.java",
         "patchSetId": 22
@@ -68,6 +116,30 @@
       "revId": "660cb12af40a09379ef21dcb3b548b4a70fd1a10",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c04fd38_e2cb1b99",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/AvatarDrawable.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2019-12-18T22:10:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "127e1fd4_98124583",
+      "range": {
+        "startLine": 339,
+        "startChar": 0,
+        "endLine": 341,
+        "endChar": 1
+      },
+      "revId": "660cb12af40a09379ef21dcb3b548b4a70fd1a10",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
