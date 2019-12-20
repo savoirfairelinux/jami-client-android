@@ -19,11 +19,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <SwitchPreference
-        android:defaultValue="false"
-        android:key="DHT.PublicInCalls"
+    <EditTextPreference
+        android:key="Account.hostname"
         android:persistent="false"
-        android:title="@string/account_dht_public_in_calls_label" />
+        android:summary=""
+        android:title="@string/account_bootstrap_label" />
 
     <cx.ring.views.EditTextIntegerPreference
         android:defaultValue="60"
@@ -41,6 +41,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:key="Account.localPort"
         android:persistent="false"
         android:title="@string/account_local_port_label" />
+
+    <SwitchPreference
+        android:key="Account.upnpEnabled"
+        android:persistent="false"
+        android:title="@string/account_upnp_label" />
 
     <PreferenceCategory android:title="@string/account_proxy_label">
         <SwitchPreference

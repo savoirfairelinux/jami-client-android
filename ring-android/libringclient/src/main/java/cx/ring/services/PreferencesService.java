@@ -92,4 +92,6 @@ public abstract class PreferencesService {
     public abstract boolean getDarkMode();
 
     public abstract void loadDarkMode();
+
+    public abstract int getMaxFileAutoAccept(String accountId);
 }

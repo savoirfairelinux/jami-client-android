@@ -19,14 +19,17 @@
  */
 package cx.ring.fragments;
 
+import androidx.annotation.NonNull;
+
 import cx.ring.model.Account;
 
 public interface GeneralAccountView {
 
-    void addRingPreferences();
+    void addJamiPreferences();
 
-    void addSIPPreferences();
+    void addSipPreferences();
 
-    void accountChanged(Account account);
+    void accountChanged(@NonNull Account account);
 
+    void finish();
 }

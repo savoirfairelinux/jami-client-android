@@ -19,12 +19,18 @@
  */
 package cx.ring.fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
+import androidx.preference.PreferenceManager;
+import androidx.preference.SeekBarPreference;
 import androidx.preference.SwitchPreference;
 import androidx.preference.TwoStatePreference;
+
 import android.view.inputmethod.EditorInfo;
 
 import cx.ring.R;
@@ -34,6 +40,7 @@ import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.ConfigKey;
 import cx.ring.mvp.BasePreferenceFragment;
+import cx.ring.services.SharedPreferencesServiceImpl;
 import cx.ring.utils.Log;
 import cx.ring.views.EditTextIntegerPreference;
 import cx.ring.views.EditTextPreferenceDialog;
@@ -78,15 +85,14 @@ public class GeneralAccountFragment extends BasePreferenceFragment<GeneralAccoun
     }
 
     @Override
-    public void accountChanged(Account account) {
-        if (account == null) {
-            Log.d(TAG, "accountChanged: Null account");
-            return;
-        }
+    public void accountChanged(@NonNull Account account) {
+        PreferenceManager pm = getPreferenceManager();
+        pm.setSharedPreferencesMode(Context.MODE_PRIVATE);
+        pm.setSharedPreferencesName(SharedPreferencesServiceImpl.PREFS_ACCOUNT+account.getAccountID());
 
         setPreferenceDetails(account.getConfig());
 
-        SwitchPreference pref = (SwitchPreference) findPreference("Account.status");
+        SwitchPreference pref = findPreference("Account.status");
         if (account.isSip() && pref != null) {
             String status;
             pref.setTitle(account.getAlias());
@@ -118,27 +124,56 @@ public class GeneralAccountFragment extends BasePreferenceFragment<GeneralAccoun
     }
 
     @Override
+    public void finish() {
+        Activity activity = getActivity();
+        if (activity != null)
+            activity.onBackPressed();
+    }
+
+    private CharSequence getFileSizeSummary(int size, int maxSize) {
+        if (size == 0)  {
+            return getText(R.string.account_accept_files_never);
+        } else if (size == maxSize) {
+            return getText(R.string.account_accept_files_always);
+        } else {
+            return getString(R.string.size_mb, size);
+        }
+    }
+
+    @Override
     public void onCreatePreferences(Bundle bundle, String rootKey) {
-        ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) requireActivity().getApplication()).getRingInjectionComponent().inject(this);
         super.onCreatePreferences(bundle, rootKey);
 
-        presenter.init(getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY));
+        Bundle args = getArguments();
+        presenter.init(args == null  ? null : args.getString(AccountEditionActivity.ACCOUNT_ID_KEY));
+
+        SeekBarPreference filePref = findPreference("acceptIncomingFilesMaxSize");
+        if (filePref != null) {
+            filePref.setOnPreferenceChangeListener((p, v) ->  {
+                SeekBarPreference pref = (SeekBarPreference)p;
+                p.setSummary(getFileSizeSummary((Integer) v, pref.getMax()));
+                return true;
+            });
+            filePref.setSummary(getFileSizeSummary(filePref.getValue(), filePref.getMax()));
+        }
     }
 
     @Override
     public void onDisplayPreferenceDialog(Preference preference) {
-        if (getFragmentManager().findFragmentByTag(DIALOG_FRAGMENT_TAG) != null) {
+        FragmentManager fragmentManager = requireFragmentManager();
+        if (fragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) != null) {
             return;
         }
 
         if (preference instanceof EditTextIntegerPreference) {
             EditTextPreferenceDialog f = EditTextPreferenceDialog.newInstance(preference.getKey(), EditorInfo.TYPE_CLASS_NUMBER);
             f.setTargetFragment(this, 0);
-            f.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
+            f.show(fragmentManager, DIALOG_FRAGMENT_TAG);
         } else if (preference instanceof PasswordPreference) {
             EditTextPreferenceDialog f = EditTextPreferenceDialog.newInstance(preference.getKey(), EditorInfo.TYPE_CLASS_TEXT | EditorInfo.TYPE_TEXT_VARIATION_PASSWORD);
             f.setTargetFragment(this, 0);
-            f.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
+            f.show(fragmentManager, DIALOG_FRAGMENT_TAG);
         } else {
             super.onDisplayPreferenceDialog(preference);
         }
@@ -178,12 +213,13 @@ public class GeneralAccountFragment extends BasePreferenceFragment<GeneralAccoun
     }
 
     @Override
-    public void addRingPreferences() {
-        addPreferencesFromResource(R.xml.account_prefs_ring);
+    public void addJamiPreferences() {
+        addPreferencesFromResource(R.xml.account_prefs_jami);
+
     }
 
     @Override
-    public void addSIPPreferences() {
+    public void addSipPreferences() {
         addPreferencesFromResource(R.xml.account_general_prefs);
     }
 }

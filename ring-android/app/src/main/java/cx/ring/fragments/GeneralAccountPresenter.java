@@ -43,7 +43,7 @@ public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> {
     protected Scheduler mUiScheduler;
 
     @Inject
-    public GeneralAccountPresenter(AccountService accountService) {
+    GeneralAccountPresenter(AccountService accountService) {
         this.mAccountService = accountService;
     }
 
@@ -61,14 +61,17 @@ public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> {
         mAccount = mAccountService.getAccount(accountId);
         if (mAccount != null) {
             if (mAccount.isRing()) {
-                getView().addRingPreferences();
+                getView().addJamiPreferences();
             } else {
-                getView().addSIPPreferences();
+                getView().addSipPreferences();
             }
+            getView().accountChanged(mAccount);
             mCompositeDisposable.clear();
             mCompositeDisposable.add(mAccountService.getObservableAccount(accountId)
-                .observeOn(mUiScheduler)
-                .subscribe(account -> getView().accountChanged(account)));
+                    .observeOn(mUiScheduler)
+                    .subscribe(account -> getView().accountChanged(account)));
+        } else {
+            getView().finish();
         }
     }
 

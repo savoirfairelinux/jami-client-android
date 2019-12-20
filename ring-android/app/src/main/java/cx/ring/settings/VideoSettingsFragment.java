@@ -27,8 +27,8 @@ public class VideoSettingsFragment extends PreferenceFragmentCompat {
         pm.setSharedPreferencesName(SharedPreferencesServiceImpl.PREFS_VIDEO);
 
         setPreferencesFromResource(R.xml.video_prefs, rootKey);
-        Preference resolutionPref = findPreference(SharedPreferencesServiceImpl.RING_RESOLUTION);
-        handleResolutionIcon(pm.getSharedPreferences().getString(SharedPreferencesServiceImpl.RING_RESOLUTION, "720"));
+        Preference resolutionPref = findPreference(SharedPreferencesServiceImpl.PREF_RESOLUTION);
+        handleResolutionIcon(pm.getSharedPreferences().getString(SharedPreferencesServiceImpl.PREF_RESOLUTION, "720"));
         resolutionPref.setOnPreferenceChangeListener((preference, newValue) -> {
             Log.w(TAG, "onPreferenceChange " + preference.getKey() + " " + newValue);
             handleResolutionIcon((String) newValue);
@@ -38,9 +38,9 @@ public class VideoSettingsFragment extends PreferenceFragmentCompat {
 
     private void handleResolutionIcon(String resolution) {
         if (resolution.equals("480"))
-            getPreferenceScreen().findPreference(SharedPreferencesServiceImpl.RING_RESOLUTION).setIcon(R.drawable.baseline_videocam_24);
+            getPreferenceScreen().findPreference(SharedPreferencesServiceImpl.PREF_RESOLUTION).setIcon(R.drawable.baseline_videocam_24);
         else
-            getPreferenceScreen().findPreference(SharedPreferencesServiceImpl.RING_RESOLUTION).setIcon(R.drawable.baseline_hd_24);
+            getPreferenceScreen().findPreference(SharedPreferencesServiceImpl.PREF_RESOLUTION).setIcon(R.drawable.baseline_hd_24);
     }
 
     @Override

@@ -36,7 +36,7 @@ public class DataTransfer extends Interaction {
     private static final Set<String> AUDIO_EXTENSIONS = HashUtils.asSet("ogg", "mp3", "aac", "flac", "m4a");
     private static final Set<String> VIDEO_EXTENSIONS = HashUtils.asSet("webm", "mp4", "mkv");
     private static final int MAX_SIZE = 32 * 1024 * 1024;
-
+    private static final int UNLIMITED_SIZE = 256 * 1024 * 1024;
 
     public DataTransfer(ConversationHistory conversation, String account, String displayName, boolean isOutgoing, long totalSize, long bytesProgress, long daemonId) {
         mAuthor = isOutgoing ? null : conversation.getParticipant();
@@ -134,8 +134,8 @@ public class DataTransfer extends Interaction {
         return getStatus().isError();
     }
 
-    public boolean canAutoAccept() {
-        return getTotalSize() <= MAX_SIZE;
+    public boolean canAutoAccept(int maxSize) {
+        return maxSize == UNLIMITED_SIZE || getTotalSize() <= maxSize;
     }
 
 
