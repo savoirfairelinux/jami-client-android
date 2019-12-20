@@ -55,7 +55,7 @@ import cx.ring.navigation.HomeNavigationFragment;
 import cx.ring.service.BootReceiver;
 import cx.ring.service.CallNotificationService;
 import cx.ring.service.DRingService;
-import cx.ring.service.RingJobService;
+import cx.ring.service.JamiJobService;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ConferenceService;
@@ -220,7 +220,7 @@ public interface JamiInjectionComponent {
 
     void inject(ShareWithFragment fragment);
 
-    void inject(RingJobService fragment);
+    void inject(JamiJobService fragment);
 
     void inject(ContactDetailsActivity fragment);
 
