@@ -52,7 +52,7 @@ public class JamiApplicationFirebase extends JamiApplication {
     }
 
     public void setPushToken(String token) {
-        Log.d(TAG, "setPushToken: " + token);
+        // Log.d(TAG, "setPushToken: " + token);
         pushToken = token;
         if (mAccountService != null && mPreferencesService != null) {
             if (mPreferencesService.getSettings().isAllowPushNotifications()) {
@@ -62,7 +62,7 @@ public class JamiApplicationFirebase extends JamiApplication {
     }
 
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        Log.d(TAG, "onMessageReceived: " + remoteMessage.getFrom());
+        // Log.d(TAG, "onMessageReceived: " + remoteMessage.getFrom());
         if (mAccountService != null)
             mAccountService.pushNotificationReceived(remoteMessage.getFrom(), remoteMessage.getData());
     }
