@@ -20,23 +20,26 @@ package cx.ring.service;
 
 import android.app.job.JobParameters;
 import android.app.job.JobService;
+import android.content.Intent;
 import android.os.Build;
+import android.os.Handler;
 
 import androidx.annotation.RequiresApi;
 import cx.ring.application.JamiApplication;
+import cx.ring.services.SyncService;
 import cx.ring.utils.Log;
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-public class RingJobService extends JobService
+public class JamiJobService extends JobService
 {
-    private static final String TAG = RingJobService.class.getName();
+    private static final String TAG = JamiJobService.class.getName();
 
     private static final int SECOND = 1000;
     private static final int MINUTE = SECOND * 60;
 
-    public static final int JOB_INTERVAL = 20 * MINUTE;
-    public static final int JOB_FLEX = 10 * MINUTE;
-    public static final int JOB_DURATION = 30 * SECOND;
+    public static final int JOB_INTERVAL = 120 * MINUTE;
+    public static final int JOB_FLEX = 20 * MINUTE;
+    public static final int JOB_DURATION = 15 * SECOND;
     public static final int JOB_ID = 3905;
 
     @Override
@@ -46,17 +49,23 @@ public class RingJobService extends JobService
         Log.w(TAG, "onStartJob() " + params);
         try {
             JamiApplication.getInstance().startDaemon();
-            new Thread(() -> {
-                synchronized (this) {
-                    try {
-                        wait(JOB_DURATION);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
+            Intent serviceIntent = new Intent(SyncService.ACTION_START).setClass(this, SyncService.class);
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                    startForegroundService(serviceIntent);
+                else
+                    startService(serviceIntent);
+            } catch (IllegalStateException e) {
+                android.util.Log.e(TAG, "Error starting service", e);
+            }
+            new Handler(getMainLooper()).postDelayed(() -> {
                 Log.w(TAG, "jobFinished() " + params);
+                try {
+                    startService(new Intent(SyncService.ACTION_STOP).setClass(this, SyncService.class));
+                } catch (IllegalStateException ignored) {
+                }
                 jobFinished(params, false);
-            }).start();
+            }, JOB_DURATION);
         } catch (Exception e) {
             Log.e(TAG, "onStartJob failed", e);
         }
@@ -69,6 +78,10 @@ public class RingJobService extends JobService
         try {
             synchronized (this) {
                 notify();
+            }
+            try {
+                startService(new Intent(SyncService.ACTION_STOP).setClass(this, SyncService.class));
+            } catch (IllegalStateException ignored) {
             }
         } catch (Exception e) {
             Log.e(TAG, "onStopJob failed", e);

@@ -57,7 +57,7 @@ import cx.ring.dependencyinjection.JamiInjectionModule;
 import cx.ring.dependencyinjection.ServiceInjectionModule;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.service.DRingService;
-import cx.ring.service.RingJobService;
+import cx.ring.service.JamiJobService;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ContactService;
@@ -197,13 +197,13 @@ public abstract class JamiApplication extends Application {
             Log.e(TAG, "JobScheduler: can't retrieve service");
             return;
         }
-        JobInfo.Builder jobBuilder = new JobInfo.Builder(RingJobService.JOB_ID, new ComponentName(this, RingJobService.class))
+        JobInfo.Builder jobBuilder = new JobInfo.Builder(JamiJobService.JOB_ID, new ComponentName(this, JamiJobService.class))
                 .setPersisted(true)
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            jobBuilder.setPeriodic(RingJobService.JOB_INTERVAL, RingJobService.JOB_FLEX);
+            jobBuilder.setPeriodic(JamiJobService.JOB_INTERVAL, JamiJobService.JOB_FLEX);
         else
-            jobBuilder.setPeriodic(RingJobService.JOB_INTERVAL);
+            jobBuilder.setPeriodic(JamiJobService.JOB_INTERVAL);
         Log.w(TAG, "JobScheduler: scheduling job");
         scheduler.schedule(jobBuilder.build());
     }
