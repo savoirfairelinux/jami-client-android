@@ -289,7 +289,8 @@ public class Conversation extends ConversationHistory {
         Iterator<Interaction> it = mAggregateHistory.iterator();
         while (it.hasNext()) {
             Interaction interaction = it.next();
-            if (interaction != null && interactionId == interaction.getId()) {
+            Integer id = interaction == null ? null : interaction.getId();
+            if (id != null && interactionId == id) {
                 it.remove();
                 return true;
             }
