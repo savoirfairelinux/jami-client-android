@@ -41,7 +41,7 @@ import cx.ring.views.PasswordPreference;
 
 public class AdvancedAccountFragment extends BasePreferenceFragment<AdvancedAccountPresenter> implements AdvancedAccountView, Preference.OnPreferenceChangeListener {
 
-    private static final String DIALOG_FRAGMENT_TAG = "android.support.v14.preference.PreferenceFragment.DIALOG";
+    private static final String DIALOG_FRAGMENT_TAG = "androidx.preference.PreferenceFragment.DIALOG";
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
@@ -104,8 +104,6 @@ public class AdvancedAccountFragment extends BasePreferenceFragment<AdvancedAcco
         final ConfigKey key = ConfigKey.fromString(preference.getKey());
 
         presenter.preferenceChanged(key, newValue);
-
-
         if (preference instanceof TwoStatePreference) {
             presenter.twoStatePreferenceChanged(key, newValue);
         } else if (preference instanceof PasswordPreference) {

@@ -58,6 +58,7 @@ import cx.ring.model.TrustRequest;
 import cx.ring.model.Uri;
 import cx.ring.utils.FileUtils;
 import cx.ring.utils.Log;
+import cx.ring.utils.StringUtils;
 import cx.ring.utils.SwigNativeConverter;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
@@ -395,10 +396,12 @@ public class AccountService {
      * @return the Account from the local cache that matches the accountId
      */
     public Account getAccount(String accountId) {
-        for (Account account : mAccountList) {
-            String accountID = account.getAccountID();
-            if (accountID.equals(accountId)) {
-                return account;
+        if (!StringUtils.isEmpty(accountId)) {
+            for (Account account : mAccountList) {
+                String accountID = account.getAccountID();
+                if (accountID.equals(accountId)) {
+                    return account;
+                }
             }
         }
         return null;
