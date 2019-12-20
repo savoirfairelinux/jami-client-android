@@ -131,6 +131,10 @@ along with this program; if not, write to the Free Software
     <string name="account_proxy_enable_label">Use DHT proxy</string>
     <string name="account_proxy_server_label">DHT proxy address</string>
 
+    <string name="account_peer_discovery_label">Local peer discovery</string>
+    <string name="account_peer_discovery_enable_label">Enable local peer discovery</string>
+    <string name="account_peer_discovery_enable_summary">Connect to other DHT nodes advertising on our local network</string>
+
     <!-- Security Details -->
     <string name="account_credentials_label">Credentials</string>
     <string name="account_credentials_edit">Edit credentials</string>

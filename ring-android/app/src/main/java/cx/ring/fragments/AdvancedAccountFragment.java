@@ -20,6 +20,8 @@
 package cx.ring.fragments;
 
 import android.os.Bundle;
+
+import androidx.fragment.app.FragmentManager;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
@@ -41,32 +43,34 @@ import cx.ring.views.PasswordPreference;
 
 public class AdvancedAccountFragment extends BasePreferenceFragment<AdvancedAccountPresenter> implements AdvancedAccountView, Preference.OnPreferenceChangeListener {
 
-    private static final String DIALOG_FRAGMENT_TAG = "android.support.v14.preference.PreferenceFragment.DIALOG";
+    private static final String DIALOG_FRAGMENT_TAG = "androidx.preference.PreferenceFragment.DIALOG";
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
-        ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) requireActivity().getApplication()).getRingInjectionComponent().inject(this);
         super.onCreatePreferences(bundle, s);
 
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.account_advanced_prefs);
 
-        presenter.init(getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY));
+        Bundle args = getArguments();
+        presenter.init(args == null  ? null : args.getString(AccountEditionActivity.ACCOUNT_ID_KEY));
     }
 
     @Override
     public void onDisplayPreferenceDialog(Preference preference) {
-        if (getFragmentManager().findFragmentByTag(DIALOG_FRAGMENT_TAG) != null) {
+        FragmentManager fragmentManager = requireFragmentManager();
+        if (fragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) != null) {
             return;
         }
         if (preference instanceof EditTextIntegerPreference) {
             EditTextPreferenceDialog f = EditTextPreferenceDialog.newInstance(preference.getKey(), EditorInfo.TYPE_CLASS_NUMBER);
             f.setTargetFragment(this, 0);
-            f.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
+            f.show(fragmentManager, DIALOG_FRAGMENT_TAG);
         } else if (preference instanceof PasswordPreference) {
             EditTextPreferenceDialog f = EditTextPreferenceDialog.newInstance(preference.getKey(), EditorInfo.TYPE_CLASS_TEXT | EditorInfo.TYPE_TEXT_VARIATION_PASSWORD);
             f.setTargetFragment(this, 0);
-            f.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
+            f.show(fragmentManager, DIALOG_FRAGMENT_TAG);
         } else {
             super.onDisplayPreferenceDialog(preference);
         }
@@ -104,8 +108,6 @@ public class AdvancedAccountFragment extends BasePreferenceFragment<AdvancedAcco
         final ConfigKey key = ConfigKey.fromString(preference.getKey());
 
         presenter.preferenceChanged(key, newValue);
-
-
         if (preference instanceof TwoStatePreference) {
             presenter.twoStatePreferenceChanged(key, newValue);
         } else if (preference instanceof PasswordPreference) {

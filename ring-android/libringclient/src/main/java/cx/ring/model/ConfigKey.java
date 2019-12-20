@@ -60,6 +60,9 @@ public enum ConfigKey {
     ACCOUNT_ACTIVE("Account.active"),
     ACCOUNT_DEVICE_ID("Account.deviceID"),
     ACCOUNT_DEVICE_NAME("Account.deviceName"),
+    ACCOUNT_PEER_DISCOVERY("Account.peerDiscovery"),
+    ACCOUNT_DISCOVERY("Account.accountDiscovery"),
+    ACCOUNT_PUBLISH("Account.accountPublish"),
     VIDEO_ENABLED("Account.videoEnabled"),
     VIDEO_PORT_MIN("Account.videoPortMin"),
     VIDEO_PORT_MAX("Account.videoPortMax"),
@@ -112,7 +115,10 @@ public enum ConfigKey {
             ACCOUNT_AUTOANSWER,
             ACCOUNT_UPNP_ENABLE,
             DHT_PUBLIC_IN,
-            PROXY_ENABLED));
+            PROXY_ENABLED,
+            ACCOUNT_PEER_DISCOVERY,
+            ACCOUNT_DISCOVERY,
+            ACCOUNT_PUBLISH));
 
     private final String mKey;
 
