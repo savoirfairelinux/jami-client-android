@@ -22,6 +22,7 @@ package cx.ring.tv.account;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.leanback.preference.LeanbackSettingsFragmentCompat;
 import androidx.preference.PreferenceFragmentCompat;
@@ -76,27 +77,27 @@ public class TVSettingsFragment extends LeanbackSettingsFragmentCompat {
         }
 
         @Override
-        public void addRingPreferences() {
+        public void addJamiPreferences() {
 
         }
 
         @Override
-        public void addSIPPreferences() {
+        public void addSipPreferences() {
 
         }
 
         @Override
-        public void accountChanged(Account account) {
-            if (account == null) {
-                Log.d(TAG, "accountChanged: Null account");
-                return;
-            }
-
+        public void accountChanged(@NonNull Account account) {
             // load information from account to ui
             autoAnswer = account.getConfig().getBool(ConfigKey.ACCOUNT_AUTOANSWER);
 
             SwitchPreference pref = findPreference(ConfigKey.ACCOUNT_AUTOANSWER.key());
             pref.setChecked(autoAnswer);
+        }
+
+        @Override
+        public void finish() {
+            getActivity().onBackPressed();
         }
 
         @Override

@@ -433,8 +433,8 @@ public class ConversationFacade {
 
     private void handleDataTransferEvent(DataTransfer transfer) {
         Conversation conversation = mAccountService.getAccount(transfer.getAccount()).onDataTransferEvent(transfer);
-        if (transfer.getStatus() == (InteractionStatus.TRANSFER_CREATED) && !transfer.isOutgoing()) {
-            if (transfer.canAutoAccept()) {
+        if (transfer.getStatus() == InteractionStatus.TRANSFER_CREATED && !transfer.isOutgoing()) {
+            if (transfer.canAutoAccept(mPreferencesService.getMaxFileAutoAccept(transfer.getAccount()))) {
                 mAccountService.acceptFileTransfer(transfer);
             }
         }

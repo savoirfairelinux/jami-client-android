@@ -44,19 +44,23 @@ import cx.ring.utils.NetworkUtils;
 
 public class SharedPreferencesServiceImpl extends PreferencesService {
 
-    public static final String RING_SETTINGS = "ring_settings";
-    private static final String RING_REQUESTS = "ring_requests";
+    public static final String PREFS_SETTINGS = "ring_settings";
+    private static final String PREFS_REQUESTS = "ring_requests";
     public static final String PREFS_THEME = "theme";
     public static final String PREFS_VIDEO = "videoPrefs";
-    private static final String RING_PUSH_NOTIFICATIONS = "push_notifs";
-    private static final String RING_PERSISTENT_NOTIFICATION = "persistent_notif";
-    private static final String RING_HW_ENCODING = "video_hwenc";
-    public static final String RING_BITRATE = "video_bitrate";
-    public static final String RING_RESOLUTION = "video_resolution";
-    private static final String RING_SYSTEM_CONTACTS = "system_contacts";
-    private static final String RING_PLACE_CALLS = "place_calls";
-    private static final String RING_ON_STARTUP = "on_startup";
+    public static final String PREFS_ACCOUNT = "account_";
+
+    private static final String PREF_PUSH_NOTIFICATIONS = "push_notifs";
+    private static final String PREF_PERSISTENT_NOTIFICATION = "persistent_notif";
+    private static final String PREF_HW_ENCODING = "video_hwenc";
+    public static final String PREF_BITRATE = "video_bitrate";
+    public static final String PREF_RESOLUTION = "video_resolution";
+    private static final String PREF_SYSTEM_CONTACTS = "system_contacts";
+    private static final String PREF_PLACE_CALLS = "place_calls";
+    private static final String PREF_ON_STARTUP = "on_startup";
     public static final String PREF_DARK_MODE= "darkMode";
+    private  static final String PREF_ACCEPT_IN_MAX_SIZE = "acceptIncomingFilesMaxSize";
+
     private final Map<String, Set<String>> mNotifiedRequests = new HashMap<>();
 
     @Inject
@@ -67,11 +71,11 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         SharedPreferences appPrefs = getPreferences();
         SharedPreferences.Editor edit = appPrefs.edit();
         edit.clear();
-        edit.putBoolean(RING_SYSTEM_CONTACTS, settings.isAllowSystemContacts());
-        edit.putBoolean(RING_PLACE_CALLS, settings.isAllowPlaceSystemCalls());
-        edit.putBoolean(RING_ON_STARTUP, settings.isAllowRingOnStartup());
-        edit.putBoolean(RING_PUSH_NOTIFICATIONS, settings.isAllowPushNotifications());
-        edit.putBoolean(RING_PERSISTENT_NOTIFICATION, settings.isAllowPersistentNotification());
+        edit.putBoolean(PREF_SYSTEM_CONTACTS, settings.isAllowSystemContacts());
+        edit.putBoolean(PREF_PLACE_CALLS, settings.isAllowPlaceSystemCalls());
+        edit.putBoolean(PREF_ON_STARTUP, settings.isAllowRingOnStartup());
+        edit.putBoolean(PREF_PUSH_NOTIFICATIONS, settings.isAllowPushNotifications());
+        edit.putBoolean(PREF_PERSISTENT_NOTIFICATION, settings.isAllowPersistentNotification());
         edit.apply();
     }
 
@@ -82,16 +86,16 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         if (settings == null) {
             settings = new Settings();
         }
-        settings.setAllowSystemContacts(appPrefs.getBoolean(RING_SYSTEM_CONTACTS, false));
-        settings.setAllowPlaceSystemCalls(appPrefs.getBoolean(RING_PLACE_CALLS, false));
-        settings.setAllowRingOnStartup(appPrefs.getBoolean(RING_ON_STARTUP, true));
-        settings.setAllowPushNotifications(appPrefs.getBoolean(RING_PUSH_NOTIFICATIONS, false));
-        settings.setAllowPersistentNotification(appPrefs.getBoolean(RING_PERSISTENT_NOTIFICATION, false));
+        settings.setAllowSystemContacts(appPrefs.getBoolean(PREF_SYSTEM_CONTACTS, false));
+        settings.setAllowPlaceSystemCalls(appPrefs.getBoolean(PREF_PLACE_CALLS, false));
+        settings.setAllowRingOnStartup(appPrefs.getBoolean(PREF_ON_STARTUP, true));
+        settings.setAllowPushNotifications(appPrefs.getBoolean(PREF_PUSH_NOTIFICATIONS, false));
+        settings.setAllowPersistentNotification(appPrefs.getBoolean(PREF_PERSISTENT_NOTIFICATION, false));
         return settings;
     }
 
     private void saveRequests(String accountId, Set<String> requests) {
-        SharedPreferences preferences = mContext.getSharedPreferences(RING_REQUESTS, Context.MODE_PRIVATE);
+        SharedPreferences preferences = mContext.getSharedPreferences(PREFS_REQUESTS, Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = preferences.edit();
         edit.putStringSet(accountId, requests);
         edit.apply();
@@ -109,7 +113,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
     public Set<String> loadRequestsPreferences(@NonNull String accountId) {
         Set<String> requests = mNotifiedRequests.get(accountId);
         if (requests == null) {
-            SharedPreferences preferences = mContext.getSharedPreferences(RING_REQUESTS, Context.MODE_PRIVATE);
+            SharedPreferences preferences = mContext.getSharedPreferences(PREFS_REQUESTS, Context.MODE_PRIVATE);
             requests = new HashSet<>(preferences.getStringSet(accountId, new HashSet<>()));
             mNotifiedRequests.put(accountId, requests);
         }
@@ -136,7 +140,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
 
     @Override
     public int getResolution() {
-        return Integer.parseInt(getVideoPreferences().getString(RING_RESOLUTION,
+        return Integer.parseInt(getVideoPreferences().getString(PREF_RESOLUTION,
                 DeviceUtils.isTv(mContext)
                         ? mContext.getString(R.string.video_resolution_default_tv)
                         : mContext.getString(R.string.video_resolution_default)));
@@ -144,12 +148,12 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
 
     @Override
     public int getBitrate() {
-        return Integer.parseInt(getVideoPreferences().getString(RING_BITRATE, mContext.getString(R.string.video_bitrate_default)));
+        return Integer.parseInt(getVideoPreferences().getString(PREF_BITRATE, mContext.getString(R.string.video_bitrate_default)));
     }
 
     @Override
     public boolean isHardwareAccelerationEnabled() {
-        return getVideoPreferences().getBoolean(RING_HW_ENCODING, true);
+        return getVideoPreferences().getBoolean(PREF_HW_ENCODING, true);
     }
 
     @Override
@@ -170,6 +174,12 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         applyDarkMode(getDarkMode());
     }
 
+    @Override
+    public int getMaxFileAutoAccept(String accountId) {
+        return mContext.getSharedPreferences(PREFS_ACCOUNT+accountId, Context.MODE_PRIVATE)
+                .getInt(PREF_ACCEPT_IN_MAX_SIZE, 30) * 1024 * 1024;
+    }
+
     private void applyDarkMode(boolean enabled) {
         AppCompatDelegate.setDefaultNightMode(
                 enabled ? AppCompatDelegate.MODE_NIGHT_YES
@@ -179,7 +189,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
     }
 
     private SharedPreferences getPreferences() {
-        return mContext.getSharedPreferences(RING_SETTINGS, Context.MODE_PRIVATE);
+        return mContext.getSharedPreferences(PREFS_SETTINGS, Context.MODE_PRIVATE);
     }
 
     private SharedPreferences getVideoPreferences() {
