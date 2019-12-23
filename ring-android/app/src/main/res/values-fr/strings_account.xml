@@ -74,7 +74,6 @@ Vous pouvez modifier le compte plus tard.</string>
   <string name="account_video_enable">Activer la vidéo</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avancé</string>
-  <string name="account_dht_public_in_calls_label">Accepter tous les appels/messages</string>
   <string name="account_registration_exp_label">Expiration d\'enregistrement</string>
   <string name="account_local_interface_label">Interface locale</string>
   <string name="account_local_port_label">Port local</string>

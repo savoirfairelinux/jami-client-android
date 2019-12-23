@@ -74,7 +74,6 @@
   <string name="account_video_enable">Aktivizo Video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Të mëtejshme</string>
-  <string name="account_dht_public_in_calls_label">Lejoji krejt thirrjet/mesazhet</string>
   <string name="account_registration_exp_label">Skadim Regjistrimi</string>
   <string name="account_local_interface_label">Ndërfaqe Vendore</string>
   <string name="account_local_port_label">Portë Vendore</string>

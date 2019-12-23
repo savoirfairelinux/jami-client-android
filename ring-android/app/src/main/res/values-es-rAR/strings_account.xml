@@ -74,7 +74,6 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_video_enable">Permitir video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avanzadas</string>
-  <string name="account_dht_public_in_calls_label">Recibir toda llamada/mensaje</string>
   <string name="account_registration_exp_label">Caducidad del registro</string>
   <string name="account_local_interface_label">Interfaz Local</string>
   <string name="account_local_port_label">Puerto Local</string>

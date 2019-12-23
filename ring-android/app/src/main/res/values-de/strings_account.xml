@@ -74,7 +74,6 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_video_enable">Video aktivieren</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Erweitert</string>
-  <string name="account_dht_public_in_calls_label">Erlaube alle Anrufe/Nachrichten</string>
   <string name="account_registration_exp_label">Registrierung abgelaufen</string>
   <string name="account_local_interface_label">Lokale Schnittstelle</string>
   <string name="account_local_port_label">Lokaler Port</string>

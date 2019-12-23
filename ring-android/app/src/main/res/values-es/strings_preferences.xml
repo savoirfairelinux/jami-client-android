@@ -9,6 +9,8 @@
   <string name="pref_mobileData_summary">Permitir a Ring usar redes 3G/LTE a demás del Wi-Fi</string>
   <string name="pref_pushNotifications_title">Notificaciones push</string>
   <string name="pref_pushNotifications_summary">Usar servidores de Google para recibir llamadas/mensajes en segundo plano</string>
+  <string name="pref_video_advanced_title">Configuraciones avanzadas de video</string>
+  <string name="pref_video_advanced_summary">Cambia la tasa de bits, la resolución de video y accede a características experimentales</string>
   <string name="pref_hd_summary">Permitir el envío de vídeo en HD</string>
   <string name="pref_hwEncode_title">Activar cifrado acelerado</string>
   <string name="pref_hwEncode_summary">Característica experimental</string>
@@ -19,6 +21,7 @@
   <string name="pref_startOnBoot_title">Ejecutar Jami al inicio</string>
   <string name="pref_startOnBoot_summary">Ejecutar Jami en segundo plano cuando se inicie el sistema.</string>
   <string name="pref_clearHistory_title">Limpiar historial</string>
+  <string name="pref_clearHistory_summary">Limpiar el historial de todas las conversaciones. Esta acción no se puede deshacer.</string>
   <string name="pref_persistNotification_title">Ejecutar en segundo plano</string>
   <string name="pref_persistNotification_summary">Permite ejecutar en segundo plano para recibir llamadas y mensajes.</string>
 </resources>

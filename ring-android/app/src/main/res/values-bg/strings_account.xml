@@ -68,7 +68,6 @@
   <string name="account_video_enable">Активиране на видео</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Разширени</string>
-  <string name="account_dht_public_in_calls_label">Разрешаване на всички обаждания/съобщения</string>
   <string name="account_registration_exp_label">Срок на регистрацията</string>
   <string name="account_local_interface_label">Местен интерфейс</string>
   <string name="account_local_port_label">Местен порт</string>

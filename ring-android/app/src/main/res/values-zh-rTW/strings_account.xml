@@ -74,7 +74,6 @@
   <string name="account_video_enable">啟用視訊</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">進階</string>
-  <string name="account_dht_public_in_calls_label">允許所有通話／訊息</string>
   <string name="account_registration_exp_label">註冊過期</string>
   <string name="account_local_interface_label">本機介面</string>
   <string name="account_local_port_label">本機連接埠</string>
