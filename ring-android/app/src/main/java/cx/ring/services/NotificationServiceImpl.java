@@ -681,7 +681,16 @@ public class NotificationServiceImpl implements NotificationService {
         if (event.isOver()) {
             removeTransferNotification(dataTransferId);
 
-            if (!info.isOutgoing() && info.showPicture()) {
+            if (info.isOutgoing()) {
+                return;
+            }
+
+            NotificationCompat.Builder notif = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_FILE_TRANSFER)
+                    .setSmallIcon(R.drawable.ic_ring_logo_white)
+                    .setContentIntent(PendingIntent.getService(mContext, random.nextInt(), intentConversation, 0))
+                    .setAutoCancel(true);
+
+            if (info.isPicture()) {
                 File filePath = mDeviceRuntimeService.getConversationPath(info.getPeerId(), info.getStoragePath());
                 Bitmap img;
                 try {
@@ -690,20 +699,20 @@ public class NotificationServiceImpl implements NotificationService {
                             .submit()
                             .get();
                     img = d.getBitmap();
+                    notif.setContentTitle(mContext.getString(R.string.notif_incoming_picture, contact.getDisplayName()));
+                    notif.setStyle(new NotificationCompat.BigPictureStyle()
+                            .bigPicture(img));
                 } catch (Exception e) {
                     Log.w(TAG, "Can't load image for notification", e);
                     return;
                 }
-                NotificationCompat.Builder notif = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_FILE_TRANSFER)
-                        .setContentTitle(mContext.getString(R.string.notif_incoming_picture, contact.getDisplayName()))
-                        .setSmallIcon(R.drawable.ic_ring_logo_white)
-                        .setContentIntent(PendingIntent.getService(mContext, random.nextInt(), intentConversation, 0))
-                        .setAutoCancel(true)
-                        .setStyle(new NotificationCompat.BigPictureStyle()
-                                .bigPicture(img));
-                setContactPicture(contact, notif);
-                notificationManager.notify(random.nextInt(), notif.build());
+            } else {
+                notif.setContentTitle(mContext.getString(R.string.notif_incoming_file_transfer_title, contact.getDisplayName()));
+                notif.setStyle(null);
             }
+
+            setContactPicture(contact, notif);
+            notificationManager.notify(random.nextInt(), notif.build());
             return;
         }
         NotificationCompat.Builder messageNotificationBuilder = mNotificationBuilders.get(notificationId);
