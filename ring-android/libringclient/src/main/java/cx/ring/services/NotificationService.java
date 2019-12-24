@@ -36,7 +36,7 @@ public interface NotificationService {
 
     Object showCallNotification(int callId);
 
-    void showTextNotification(String accountId, Conversation conversation);
+    void showTextNotifications(String accountId, Conversation conversation);
 
     void cancelCallNotification();
 

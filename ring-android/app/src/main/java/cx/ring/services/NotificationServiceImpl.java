@@ -453,7 +453,7 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public void showTextNotification(String accountId, Conversation conversation) {
+    public void showTextNotifications(String accountId, Conversation conversation) {
         TreeMap<Long, TextMessage> texts = conversation.getUnreadTextMessages();
 
         CallContact contact = conversation.getContact();
@@ -465,7 +465,7 @@ public class NotificationServiceImpl implements NotificationService {
             return;
         }
 
-        Log.w(TAG, "showTextNotification " + accountId + " " + contact.getPrimaryNumber());
+        Log.w(TAG, "showTextNotifications " + accountId + " " + contact.getPrimaryNumber());
         mContactService.getLoadedContact(accountId, contact)
                 .subscribe(c -> textNotification(accountId, texts, c),
                         e -> Log.w(TAG, "Can't load contact", e));
