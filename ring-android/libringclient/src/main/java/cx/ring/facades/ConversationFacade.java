@@ -399,23 +399,20 @@ public class ConversationFacade {
                 });
     }
 
-    public void updateTextNotifications(String accountId, List<Conversation> conversations) {
-        Log.d(TAG, "updateTextNotifications()");
-
-        for (Conversation conversation : conversations) {
-            mNotificationService.showTextNotification(accountId, conversation);
-        }
-    }
-
     private void parseNewMessage(final TextMessage txt) {
         if (txt.isRead()) {
             mHistoryService.updateInteraction(txt, txt.getAccount()).subscribe();
         }
         getAccountSubject(txt.getAccount())
                 .flatMapObservable(Account::getConversationsSubject)
+                .flatMap(Observable::fromIterable)
+                .filter(c -> c.getId() == txt.getConversation().getId())
                 .firstOrError()
                 .subscribeOn(Schedulers.io())
-                .subscribe(c -> updateTextNotifications(txt.getAccount(), c), e -> Log.e(TAG, e.getMessage()));
+                .subscribe(conversation -> {
+                    Log.d(TAG, "showTextNotification");
+                    mNotificationService.showTextNotifications(txt.getAccount(), conversation);
+                }, e -> Log.e(TAG, e.getMessage()));
     }
 
     public void acceptRequest(String accountId, Uri contactUri) {
