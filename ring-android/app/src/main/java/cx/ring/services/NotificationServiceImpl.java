@@ -699,9 +699,11 @@ public class NotificationServiceImpl implements NotificationService {
                             .submit()
                             .get();
                     img = d.getBitmap();
-                    notif.setContentTitle(mContext.getString(R.string.notif_incoming_picture, contact.getDisplayName()));
-                    notif.setStyle(new NotificationCompat.BigPictureStyle()
-                            .bigPicture(img));
+                    notif.setContentTitle(mContext.getString(R.string.notif_incoming_picture, contact.getDisplayName()))
+                            .setLargeIcon(img)
+                            .setStyle(new NotificationCompat.BigPictureStyle()
+                                    .bigPicture(img)
+                                    .bigLargeIcon(null));
                 } catch (Exception e) {
                     Log.w(TAG, "Can't load image for notification", e);
                     return;
@@ -709,9 +711,9 @@ public class NotificationServiceImpl implements NotificationService {
             } else {
                 notif.setContentTitle(mContext.getString(R.string.notif_incoming_file_transfer_title, contact.getDisplayName()));
                 notif.setStyle(null);
+                setContactPicture(contact, notif);
             }
 
-            setContactPicture(contact, notif);
             notificationManager.notify(random.nextInt(), notif.build());
             return;
         }
