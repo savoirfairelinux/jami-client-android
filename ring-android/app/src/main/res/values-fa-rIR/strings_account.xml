@@ -7,6 +7,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">افزدن حساب جمی</string>
   <string name="add_sip_account_title">افزودن حساب کاربری سیپ</string>
+  <string name="ring_account_default_name">حساب جمی %1$s</string>
   <string name="prompt_alias">نام مستعار</string>
   <string name="prompt_hostname">نام میزبان</string>
   <string name="prompt_username">نام کاربری</string>
@@ -44,6 +45,8 @@
   <string name="account_device_revocation_unknown_device">دستگاه ناشناس.</string>
   <string name="account_device_revocation_error_unknown">خطای ناشناخته.</string>
   <string name="account_password_change">تغییر رمز عبور</string>
+  <string name="account_password_set">تعیین گذرواژه</string>
+  <string name="account_password_change_wait_message">تغییر گذرواژه حساب</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">عمومی</string>
   <string name="account_basic_category">تنظیمات پایه</string>
@@ -64,16 +67,24 @@
   <string name="account_ringtone_enabled_label">فعّال کردن صداهای زنگ</string>
   <string name="account_ringtone_path_label">مسیر صدای زنگ</string>
   <string name="account_ringtone_custom_label">استفاده از صدای زنگ سفارشی</string>
+  <string name="account_ringtone_title">انتخاب یک صدای زنگ</string>
+  <string name="account_ringtone_summary">یک صدای زنگ انتخاب کرده یا صدای زنگ خود را برگزینید</string>
   <!--Video Details-->
   <string name="account_video_label">ویدیو</string>
   <string name="account_video_enable">فعّال کردن ویدیو</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">پیش‌رفته</string>
+  <string name="account_dht_public_in_calls_label">اجازه تماس ورودی به مخاطبین ناشناخته</string>
   <string name="account_registration_exp_label">ثبت‌نام منقضی شد</string>
   <string name="account_local_interface_label">اینترفیس محلی</string>
   <string name="account_local_port_label">پرت محلی</string>
   <string name="account_stun_enable_label">استفاده از Stun</string>
   <string name="account_stun_server_label">سرور Stun</string>
+  <string name="account_accept_files">پذیرش خودکار فایل‌های دریافتی</string>
+  <string name="account_accept_files_max_size">بیشینه اندازه فایل برای پذیرش خودکار</string>
+  <string name="account_accept_files_never">هرگز به صورت خودکار قبول نکن</string>
+  <string name="account_accept_files_always">همواره پذیرش خودکار</string>
+  <string name="size_mb">%1$d مگابایت</string>
   <string name="account_turn_enable_label">استفاده از TURN</string>
   <string name="account_turn_server_label">سرور TURN</string>
   <string name="account_turn_username_label">نام کاربری TURN</string>
@@ -84,6 +95,9 @@
   <string name="account_proxy_label">پروکسی DHT</string>
   <string name="account_proxy_enable_label"> استفاده از پروکسی DHT</string>
   <string name="account_proxy_server_label">آدرس پروکسی DHT</string>
+  <string name="account_peer_discovery_label">کاوش همتای محلی</string>
+  <string name="account_peer_discovery_enable_label">فعال‌سازی کاوش همتای محلی</string>
+  <string name="account_peer_discovery_enable_summary">اتصال به دیگر گره‌های DHT که در شبکه محلی ما تبلیغ می‌کنند</string>
   <!--Security Details-->
   <string name="account_credentials_label">دسترسی ها</string>
   <string name="account_credentials_edit">ویرایش دسترسی ها</string>
@@ -112,6 +126,7 @@
   <string name="error_password_char_count">حداقل ۶ کاراکتر</string>
   <string name="error_passwords_not_equals">گذرواژه‌ها یکسان نیستند</string>
   <string name="export_account_wait_title">لطفاً صبر کنید…</string>
+  <string name="export_account_wait_message">برون‌برد (ذخیره) اطلاعات حساب</string>
   <string name="account_export_file">حساب کاربری پشتیبان</string>
   <string name="account_export_end_decryption_message">نمی‌توان قفل حسابتان را با گذرواژه  فراهم شده گشود.</string>
   <string name="account_export_end_network_title">خطای شبکه</string>
@@ -142,6 +157,9 @@
   <string name="account_sip_success_title">حساب سیپ ثبت شد</string>
   <string name="account_sip_success_message">حساب سیپتان را با موفّقیت ثبت کردید</string>
   <string name="account_sip_register_anyway">به هر حال ثبت کنید</string>
+  <string name="account_link_device">اتصال از دستگاه دیگر</string>
+  <string name="account_link_button">اتصال از طریق شبکه</string>
+  <string name="account_link_archive_button">اتصال از طریق پشتیبان</string>
   <string name="account_link_prompt_pin">پین را وارد کنید</string>
   <string name="account_new_button">ایجاد یک حساب جمی</string>
   <string name="account_link_export_button">پیوند دستگاه دیگر به این حساب</string>
@@ -151,16 +169,23 @@
   <string name="account_end_export_infos">پین شما:\n\n%%\n\nبرای کامل کردن فرایند، باید جمی را روی افزارهٔ نو گشوده و حساب جدیدی را با انتخاب «پیوند این افزاره به یک حساب» ایجاد کنید. پینتان برای ۱۰ دقیقه معتبر است.</string>
   <string name="account_link_export_info_light">برای استفاده از این حساب روی افزاره‌های دیگر، باید نخست آن را روی جمی آشکار کنید. این کار یک رمز پین تولید خواهد کرد که باید برای برپایی حساب، روی افزارهٔ نو وارد کنید. پین تا ۱۰ دقیقه معتبر است.</string>
   <string name="account_export_title">اضافه کردن دستگاه ها</string>
+  <string name="account_connect_server_button">اتصال یه سرور مدیریت</string>
+  <string name="account_connect_button">اتصال</string>
+  <string name="prompt_server">آدرس URL سرور مدیریت جمی</string>
+  <string name="help_credentials_enter">اعتبار‌نامه سازمانی خود را وارد کنید</string>
+  <string name="help_connect_password_enter">گذرواژه سازمانی خود را وارد کنید</string>
   <string name="account_connect_prompt_username">نام کاربری</string>
   <!--Name registration-->
   <string name="error_username_empty">یک نام کاربری وارد کنید</string>
   <string name="no_registered_name_for_account">هیچ نام ثبت‌شده‌ای برای این حساب پیدا نشد</string>
+  <string name="username_available">نام کاربری در‌دسترس است!</string>
   <string name="register_name">ثبت نام</string>
   <string name="trying_to_register_name">در حال تلاش برای ثبت نام</string>
   <string name="registered_username">نام کاربری ثبت شد</string>
   <string name="register_username">ثبت نام کاربری عمومی (توصیه شده)</string>
   <string name="username_already_taken">نام کاربری قبلاً برداشته شده</string>
   <string name="invalid_username">نام کاربری نامعتبر</string>
+  <string name="unknown_error">خطای نامشخص. لطفا اتصال شبکه خود را بررسی کنید!</string>
   <string name="looking_for_username_availability">در حال جستجو برای در دسترس بودن نام کاربری ...</string>
   <string name="account_status_connecting">در حال اتّصال</string>
   <string name="account_status_connection_error">خطای ارتباط</string>

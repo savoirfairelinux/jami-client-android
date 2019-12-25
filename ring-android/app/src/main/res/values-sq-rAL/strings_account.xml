@@ -74,11 +74,17 @@
   <string name="account_video_enable">Aktivizo Video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Të mëtejshme</string>
+  <string name="account_dht_public_in_calls_label">Lejo thirrje ardhëse prej personash të panjohur</string>
   <string name="account_registration_exp_label">Skadim Regjistrimi</string>
   <string name="account_local_interface_label">Ndërfaqe Vendore</string>
   <string name="account_local_port_label">Portë Vendore</string>
   <string name="account_stun_enable_label">Përdor Stun</string>
   <string name="account_stun_server_label">Shërbyes Stun</string>
+  <string name="account_accept_files">Lejo automatikisht kartela ardhëse </string>
+  <string name="account_accept_files_max_size">Madhësi maksimum kartelash për t’u pranuar automatikisht</string>
+  <string name="account_accept_files_never">Mos i prano kurrë automatikisht</string>
+  <string name="account_accept_files_always">Pranoji përherë automatikisht</string>
+  <string name="size_mb">%1$d MB</string>
   <string name="account_turn_enable_label">Përdor TURN</string>
   <string name="account_turn_server_label">Shërbyes TURN</string>
   <string name="account_turn_username_label">Emër përdoruesi TURN</string>
@@ -89,6 +95,9 @@
   <string name="account_proxy_label">Ndërmjetës DHT</string>
   <string name="account_proxy_enable_label">Përdor ndërmjetës DHT</string>
   <string name="account_proxy_server_label">Adresë ndërmjetësi DHT</string>
+  <string name="account_peer_discovery_label">Pikasje ortakësh vendorë</string>
+  <string name="account_peer_discovery_enable_label">Aktivizo pikasje ortakësh vendorë</string>
+  <string name="account_peer_discovery_enable_summary">Lidhu me nyje të tjera DHT që reklamohen në rrjetin tonë vendor</string>
   <!--Security Details-->
   <string name="account_credentials_label">Kredenciale</string>
   <string name="account_credentials_edit">Përpunoni kredenciale</string>

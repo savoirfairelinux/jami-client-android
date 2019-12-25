@@ -74,11 +74,17 @@
   <string name="account_video_enable">Videó engedélyezése</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Haladó</string>
+  <string name="account_dht_public_in_calls_label">Engedélyezze az ismeretlen kapcsolatok bejövő hívásait</string>
   <string name="account_registration_exp_label">Bejegyeztetés lejárta</string>
   <string name="account_local_interface_label">Helyi felület</string>
   <string name="account_local_port_label">Helyi kikötő</string>
   <string name="account_stun_enable_label">STUN használata</string>
   <string name="account_stun_server_label">STUN kiszolgáló</string>
+  <string name="account_accept_files">A bejövő fájlok önműködő elfogadása</string>
+  <string name="account_accept_files_max_size">A maximális fájlméret az önműködő elfogadáshoz</string>
+  <string name="account_accept_files_never">Soha sem elfogadja önműködően</string>
+  <string name="account_accept_files_always">Mindig elfogadja önműködően</string>
+  <string name="size_mb">%1$d MB</string>
   <string name="account_turn_enable_label">TURN használata</string>
   <string name="account_turn_server_label">TURN kiszolgáló</string>
   <string name="account_turn_username_label">TURN felhasználónév</string>
@@ -89,6 +95,9 @@
   <string name="account_proxy_label">DHT-meghatalmazott</string>
   <string name="account_proxy_enable_label">DHT-meghatalmazott használata</string>
   <string name="account_proxy_server_label">DHT-meghatalmazott címe</string>
+  <string name="account_peer_discovery_label">Helyi egyenrangú felfedezés</string>
+  <string name="account_peer_discovery_enable_label">Helyi egyenrangú felfedezés engedélyezése</string>
+  <string name="account_peer_discovery_enable_summary">Csatlakozzon más DHT-csomópontokhoz, amelyek a helyi hálózaton hirdetik</string>
   <!--Security Details-->
   <string name="account_credentials_label">Hitelesítő adatok</string>
   <string name="account_credentials_edit">Hitelesítő adatok szerkesztése</string>

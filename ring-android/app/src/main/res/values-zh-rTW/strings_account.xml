@@ -74,11 +74,17 @@
   <string name="account_video_enable">啟用視訊</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">進階</string>
+  <string name="account_dht_public_in_calls_label">允許未知聯絡人的來電</string>
   <string name="account_registration_exp_label">註冊過期</string>
   <string name="account_local_interface_label">本機介面</string>
   <string name="account_local_port_label">本機連接埠</string>
   <string name="account_stun_enable_label">使用 Stun</string>
   <string name="account_stun_server_label">Stun 伺服器</string>
+  <string name="account_accept_files">自動接受傳入的檔案</string>
+  <string name="account_accept_files_max_size">自動接受的最大檔案大小</string>
+  <string name="account_accept_files_never">永不自動接受</string>
+  <string name="account_accept_files_always">永遠自動接受</string>
+  <string name="size_mb">%1$d MB</string>
   <string name="account_turn_enable_label">使用 TURN</string>
   <string name="account_turn_server_label">TURN 伺服器</string>
   <string name="account_turn_username_label">TURN 使用者名稱</string>
@@ -89,6 +95,9 @@
   <string name="account_proxy_label">DHT 代理伺服器</string>
   <string name="account_proxy_enable_label">使用 DHT 代理伺服器</string>
   <string name="account_proxy_server_label">DHT 代理伺服器位置</string>
+  <string name="account_peer_discovery_label">區域夥伴探索</string>
+  <string name="account_peer_discovery_enable_label">啟用區域夥伴探索</string>
+  <string name="account_peer_discovery_enable_summary">連線到我們的區域網路上發佈的其他 DHT 節點</string>
   <!--Security Details-->
   <string name="account_credentials_label">憑證</string>
   <string name="account_credentials_edit">編輯憑證</string>

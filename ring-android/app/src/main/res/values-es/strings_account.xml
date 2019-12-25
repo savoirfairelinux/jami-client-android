@@ -74,11 +74,17 @@ Puedes editar tu cuenta luego</string>
   <string name="account_video_enable">Habilitar vídeo</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avanzado</string>
+  <string name="account_dht_public_in_calls_label">Permitir llamadas entrantes de contactos desconocidos</string>
   <string name="account_registration_exp_label">Expiración del registro</string>
   <string name="account_local_interface_label">Interfaz local</string>
   <string name="account_local_port_label">Puerto local</string>
   <string name="account_stun_enable_label">Usar STUN</string>
   <string name="account_stun_server_label">Servidor STUN</string>
+  <string name="account_accept_files">Aceptar archivos entrantes automáticamente</string>
+  <string name="account_accept_files_max_size">Tamaño máximo de archivo para aceptar automáticamente</string>
+  <string name="account_accept_files_never">Nunca aceptar automáticamente</string>
+  <string name="account_accept_files_always">Siempre aceptar automáticamente</string>
+  <string name="size_mb">%1$d MB</string>
   <string name="account_turn_enable_label">Usar TURN</string>
   <string name="account_turn_server_label">Servidor TURN</string>
   <string name="account_turn_username_label">Nombre de usuario en TURN</string>
@@ -89,6 +95,9 @@ Puedes editar tu cuenta luego</string>
   <string name="account_proxy_label">Proxy DHT</string>
   <string name="account_proxy_enable_label">Usar proxy DHT</string>
   <string name="account_proxy_server_label">Dirección proxy DHT</string>
+  <string name="account_peer_discovery_label">Descubrimiento local de pares</string>
+  <string name="account_peer_discovery_enable_label">Habilitar descubrimiento local de pares</string>
+  <string name="account_peer_discovery_enable_summary">Conectarse a otros nodos DHT que se anuncian en nuestra red local</string>
   <!--Security Details-->
   <string name="account_credentials_label">Credenciales</string>
   <string name="account_credentials_edit">Editar credenciales</string>

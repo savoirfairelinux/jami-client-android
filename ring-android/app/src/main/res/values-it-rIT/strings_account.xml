@@ -74,11 +74,17 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_video_enable">Attiva Video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avanzato</string>
+  <string name="account_dht_public_in_calls_label">Consenti chiamate in arrivo da contatti sconosciuti</string>
   <string name="account_registration_exp_label">Scadenza registrazione</string>
   <string name="account_local_interface_label">Interfaccia locale</string>
   <string name="account_local_port_label">Porta locale</string>
   <string name="account_stun_enable_label">Usa Stun</string>
   <string name="account_stun_server_label">Server Stun</string>
+  <string name="account_accept_files">Accetta i file in arrivo automaticamente</string>
+  <string name="account_accept_files_max_size">Dimensione massima del file da accettare automaticamente</string>
+  <string name="account_accept_files_never">Non accettare mai automaticamente</string>
+  <string name="account_accept_files_always">Accetta sempre automaticamente</string>
+  <string name="size_mb">%1$d MB</string>
   <string name="account_turn_enable_label">Utilizza TURN</string>
   <string name="account_turn_server_label">Server TURN</string>
   <string name="account_turn_username_label">Nome utente TURN</string>
@@ -89,6 +95,9 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_proxy_label">DHT proxy</string>
   <string name="account_proxy_enable_label">Usa il proxy DHT</string>
   <string name="account_proxy_server_label">Indirizzo proxy DHT</string>
+  <string name="account_peer_discovery_label">Rilevamento peer locali</string>
+  <string name="account_peer_discovery_enable_label">Abilita rilevamento peer locale</string>
+  <string name="account_peer_discovery_enable_summary">Connettiti ad altri nodi DHT pubblicizzati sulla nostra rete locale</string>
   <!--Security Details-->
   <string name="account_credentials_label">Credenziali</string>
   <string name="account_credentials_edit">Modifica credenziali</string>

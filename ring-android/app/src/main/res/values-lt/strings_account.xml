@@ -77,6 +77,11 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_local_port_label">Vietinis prievadas</string>
   <string name="account_stun_enable_label">Naudoti Stun</string>
   <string name="account_stun_server_label">Stun serveris</string>
+  <string name="account_accept_files">Automatiškai priimti gaunamuosius failus</string>
+  <string name="account_accept_files_max_size">Didžiausias failo, kurį automatiškai priimti, dydis</string>
+  <string name="account_accept_files_never">Niekada nepriimti automatiškai</string>
+  <string name="account_accept_files_always">Visada priimti automatiškai</string>
+  <string name="size_mb">%1$d MB</string>
   <string name="account_turn_enable_label">Naudoti TURN</string>
   <string name="account_turn_server_label">TURN serveris</string>
   <string name="account_turn_username_label">TURN naudotojo vardas</string>
@@ -150,6 +155,7 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_end_export_button">užverti</string>
   <string name="account_end_export_infos">Jūsų PIN yra:\n\n%%\n\nNorėdami užbaigti procesą, turite atverti Jami naujame įrenginyje. Susikurkite paskyrą, naudodami \"Susieti šį įrenginį su paskyra\". Jūsų PIN galioja 10 minučių.</string>
   <string name="account_export_title">Pridėti įrenginius</string>
+  <string name="account_connect_button">Prisijungti</string>
   <string name="account_connect_prompt_username">Naudotojo vardas</string>
   <!--Name registration-->
   <string name="error_username_empty">Įveskite naudotojo vardą</string>

@@ -49,6 +49,7 @@
     <item quantity="other">%d Conversazioni</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Cerca nome o numero di telefono ...</string>
   <string name="choose_number">Seleziona un numero</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -68,6 +69,7 @@
   <string name="notif_channel_messages">Messaggi</string>
   <string name="notif_channel_requests">Richieste</string>
   <string name="notif_channel_file_transfer">trasferimento file</string>
+  <string name="notif_channel_sync">Sincronizzazione dei dati</string>
   <string name="notif_channel_background_service">Servizio in background</string>
   <string name="notif_channel_background_service_descr">Consenti sempre di ricevere chiamate e messaggi</string>
   <string name="notif_group_calls">Chiamate</string>
@@ -81,6 +83,7 @@
   <string name="notif_outgoing_file_transfer">Qualcuno vuole inviarti un file</string>
   <string name="notif_incoming_picture">Immagine da %1$s</string>
   <string name="action_open">Apri</string>
+  <string name="notif_sync_title">Sincronizzazione dei dati ...</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Tu:</string>
   <string name="action_call_hangup">Chiudi</string>
