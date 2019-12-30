@@ -542,6 +542,7 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
         ConfirmRevocationDialog dialog = new ConfirmRevocationDialog();
         Bundle args = new Bundle();
         args.putString(ConfirmRevocationDialog.DEVICEID_KEY, deviceId);
+        args.putBoolean(ConfirmRevocationDialog.HAS_PASSWORD_KEY, mAccountHasPassword);
         dialog.setArguments(args);
         dialog.setListener(this);
         dialog.show(requireFragmentManager(), FRAGMENT_DIALOG_REVOCATION);
