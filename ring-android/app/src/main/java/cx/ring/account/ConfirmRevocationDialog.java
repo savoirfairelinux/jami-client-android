@@ -43,6 +43,7 @@ import cx.ring.R;
 
 public class ConfirmRevocationDialog extends DialogFragment {
     public static final String DEVICEID_KEY = "deviceid_key";
+    public static final String HAS_PASSWORD_KEY = "has_password_key";
     static final String TAG = ConfirmRevocationDialog.class.getSimpleName();
     @BindView(R.id.password_txt_box)
     protected TextInputLayout mPasswordTxtBox;
@@ -53,6 +54,7 @@ public class ConfirmRevocationDialog extends DialogFragment {
     @BindString(R.string.revoke_device_title)
     protected String mRegisterTitle;
     private String mDeviceId;
+    private Boolean mHasPassword = true;
     private ConfirmRevocationListener mListener = null;
 
     public void setListener(ConfirmRevocationListener listener) {
@@ -65,7 +67,8 @@ public class ConfirmRevocationDialog extends DialogFragment {
         View view = requireActivity().getLayoutInflater().inflate(R.layout.dialog_confirm_revocation, null);
         ButterKnife.bind(this, view);
 
-        mDeviceId = getArguments().getString(DEVICEID_KEY);
+        mDeviceId = requireArguments().getString(DEVICEID_KEY);
+        mHasPassword = requireArguments().getBoolean(HAS_PASSWORD_KEY);
 
         final AlertDialog result = new MaterialAlertDialogBuilder(requireContext())
                 .setView(view)
@@ -84,12 +87,18 @@ public class ConfirmRevocationDialog extends DialogFragment {
                 }
             });
         });
-        result.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
+        if(mHasPassword) {
+            result.getWindow().setSoftInputMode(WindowManager.LayoutParams.
+                    SOFT_INPUT_STATE_VISIBLE);
+        } else {
+            mPasswordTxtBox.setVisibility(View.GONE);
+        }
         return result;
     }
 
     private boolean checkInput() {
-        if (mPasswordTxt.getText().toString().isEmpty()) {
+        if (mHasPassword && mPasswordTxt.getText().toString().isEmpty()) {
             mPasswordTxtBox.setErrorEnabled(true);
             mPasswordTxtBox.setError(mPromptPassword);
             return false;
