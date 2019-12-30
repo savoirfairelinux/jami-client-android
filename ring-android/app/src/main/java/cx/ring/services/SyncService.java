@@ -33,6 +33,7 @@ import androidx.core.app.NotificationCompat;
 import java.util.Random;
 
 import cx.ring.R;
+import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
 
 public class SyncService extends Service {
@@ -73,6 +74,8 @@ public class SyncService extends Service {
                     startForeground(NOTIF_SYNC_SERVICE_ID, notif, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
                 else
                     startForeground(NOTIF_SYNC_SERVICE_ID, notif);
+
+                JamiApplication.getInstance().startDaemon();
             }
         }
         else if (ACTION_STOP.equals(action)) {
