@@ -26,6 +26,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.SurfaceTexture;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.text.format.DateUtils;
@@ -639,6 +640,16 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             convViewHolder.mMsgTxt.getBackground().setAlpha(255);
             convViewHolder.mMsgTxt.setTextSize(16.f);
             convViewHolder.mMsgTxt.setPadding(hPadding, vPadding, hPadding, vPadding);
+
+//            GradientDrawable drawable = (GradientDrawable) convViewHolder.mMsgTxt.getBackground();
+//            int r = (int) convViewHolder.itemView.getContext().getResources().getDimension(R.dimen.conversation_message_radius);
+//            float[] cornerRadii;
+//            if (textMessage.isIncoming()) {
+//                cornerRadii = new float[]{0, 0, r, r, r, r, 0, 0};
+//            } else {
+//                cornerRadii = new float[]{r, r, 0, 0, 0, 0, r, r};
+//            }
+//            drawable.setCornerRadii(cornerRadii);
         }
 
         convViewHolder.mMsgTxt.setText(message);
@@ -692,6 +703,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                     convViewHolder.mMsgDetailTxt.setVisibility(View.GONE);
                 }
         }
+
+
     }
 
     private void configureForContactEvent(@NonNull final ConversationViewHolder viewHolder, @NonNull final Interaction interaction) {
