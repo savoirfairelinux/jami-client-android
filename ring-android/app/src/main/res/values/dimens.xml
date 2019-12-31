@@ -26,7 +26,9 @@ along with this program; if not, write to the Free Software
 
     <dimen name="conversation_message_input_radius">24dp</dimen>
     <dimen name="conversation_message_input_margin">16dp</dimen>
-    <dimen name="conversation_message_radius">24dp</dimen>
+    <dimen name="conversation_avatar_size">36dp</dimen>
+    <dimen name="conversation_message_radius">18dp</dimen>
+    <dimen name="conversation_message_minor_radius">3dp</dimen>
 
     <dimen name="activity_horizontal_margin">32dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
