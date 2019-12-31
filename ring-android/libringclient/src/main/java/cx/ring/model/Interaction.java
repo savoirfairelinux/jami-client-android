@@ -288,6 +288,4 @@ public class Interaction {
         }
 
     }
-
-
 }
