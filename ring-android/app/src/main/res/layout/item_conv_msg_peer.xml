@@ -18,62 +18,64 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/txt_entry"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingBottom="3dp"
     android:background="@android:color/transparent"
-    android:focusable="false"
-    android:paddingStart="@dimen/padding_large"
-    android:paddingLeft="@dimen/padding_large"
-    android:paddingTop="4dp"
-    android:paddingEnd="@dimen/padding_large"
-    android:paddingRight="@dimen/padding_large"
-    android:paddingBottom="4dp">
-
-    <ImageView
-        android:id="@+id/photo"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="16dp"
-        android:background="@null"
-        android:scaleType="centerCrop" />
-
-    <TextView
-        android:id="@+id/msg_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="48dp"
-        android:layout_toEndOf="@+id/photo"
-        android:autoLink="all"
-        android:background="@drawable/textmsg_background"
-        android:ellipsize="marquee"
-        android:focusable="true"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:paddingLeft="@dimen/padding_medium"
-        android:paddingTop="5dp"
-        android:paddingRight="@dimen/padding_medium"
-        android:paddingBottom="@dimen/padding_small"
-        android:scrollHorizontally="true"
-        android:singleLine="false"
-        android:textColor="@color/textColorPrimary"
-        android:textIsSelectable="true"
-        android:textSize="16sp"
-        tools:text="yo" />
+    android:orientation="vertical"
+    android:gravity="center">
 
     <TextView
         android:id="@+id/msg_details_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/msg_txt"
-        android:layout_marginBottom="4dp"
-        android:layout_toEndOf="@id/photo"
+        android:visibility="gone"
         android:textColor="@color/textColorSecondary"
         android:textSize="14sp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
         tools:text="@string/time_just_now" />
 
-</RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/padding_medium"
+        android:paddingEnd="@dimen/padding_large">
+
+        <ImageView
+            android:id="@+id/photo"
+            android:layout_width="@dimen/conversation_avatar_size"
+            android:layout_height="@dimen/conversation_avatar_size"
+            android:background="@null"
+            android:layout_alignBottom="@id/msg_txt"
+            android:scaleType="centerCrop"/>
+
+        <TextView
+            android:id="@+id/msg_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/photo"
+            android:layout_marginStart="@dimen/padding_medium"
+            android:layout_marginEnd="20dp"
+            android:minWidth="@dimen/conversation_avatar_size"
+            android:minHeight="@dimen/conversation_avatar_size"
+            android:autoLink="all"
+            android:background="@drawable/textmsg_background"
+            android:ellipsize="marquee"
+            android:focusable="false"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:padding="@dimen/padding_medium"
+            android:scrollHorizontally="true"
+            android:singleLine="false"
+            android:textColor="@color/textColorPrimary"
+            android:textIsSelectable="true"
+            android:textSize="16sp"
+            tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod" />
+
+    </RelativeLayout>
+
+</LinearLayout>
