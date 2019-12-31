@@ -41,6 +41,7 @@ public class Interaction {
     protected String mAccount;
     boolean mIsIncoming;
     CallContact mContact = null;
+    SequenceType sequenceType = SequenceType.SINGLE;
 
     @DatabaseField(generatedId = true, columnName = COLUMN_ID, index = true)
     Integer mId;
@@ -197,6 +198,14 @@ public class Interaction {
         mContact = contact;
     }
 
+    public void setSequenceType(SequenceType sequenceType) {
+        this.sequenceType = sequenceType;
+    }
+
+    public SequenceType getSequenceType() {
+        return sequenceType;
+    }
+
     public enum InteractionStatus {
         UNKNOWN, SENDING, SUCCESS, INVALID, FAILURE,
 
@@ -289,5 +298,10 @@ public class Interaction {
 
     }
 
-
+    public enum SequenceType {
+        SINGLE,
+        START,
+        MIDDLE,
+        END;
+    }
 }
