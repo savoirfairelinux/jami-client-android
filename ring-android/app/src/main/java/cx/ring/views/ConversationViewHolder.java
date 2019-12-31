@@ -35,11 +35,11 @@ import android.widget.TextView;
 import cx.ring.R;
 import cx.ring.adapters.ConversationAdapter;
 import cx.ring.utils.UiUpdater;
-import io.reactivex.disposables.Disposable;
 
 public class ConversationViewHolder extends RecyclerView.ViewHolder {
     public TextView mMsgTxt;
     public TextView mMsgDetailTxt;
+    public TextView mMsgDetailTxtPerm;
     public ImageView mPhoto;
     public TextView mHistTxt;
     public TextView mHistDetailTxt;
@@ -55,17 +55,18 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
     public String mCid;
     public UiUpdater updater;
     public LinearLayout mCallInfoLayout, mFileInfoLayout, mAudioInfoLayout;
-    public Disposable disposable = null;
 
     public ConversationViewHolder(ViewGroup v, ConversationAdapter.MessageType type) {
         super(v);
         if (type == ConversationAdapter.MessageType.INCOMING_TEXT_MESSAGE) {
             mMsgTxt = v.findViewById(R.id.msg_txt);
             mMsgDetailTxt = v.findViewById(R.id.msg_details_txt);
+            mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm);
             mPhoto = v.findViewById(R.id.photo);
         } else if (type == ConversationAdapter.MessageType.OUTGOING_TEXT_MESSAGE) {
             mMsgTxt = v.findViewById(R.id.msg_txt);
             mMsgDetailTxt = v.findViewById(R.id.msg_details_txt);
+            mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm);
             mPhoto = v.findViewById(R.id.status_icon);
         } else if (type == ConversationAdapter.MessageType.CALL_INFORMATION) {
             mHistTxt = v.findViewById(R.id.call_hist_txt);
