@@ -289,5 +289,10 @@ public class Interaction {
 
     }
 
-
+    public enum SequenceType {
+        FIRST,
+        MIDDLE,
+        LAST,
+        SINGLE;
+    }
 }
