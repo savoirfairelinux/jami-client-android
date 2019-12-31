@@ -9,9 +9,9 @@ public class UiUpdater {
         // Create a Handler that uses the Main Looper to run in
         private final Handler mHandler = new Handler(Looper.getMainLooper());
         private final Runnable mStatusChecker;
-        private final int UPDATE_INTERVAL;
+        private final long UPDATE_INTERVAL;
 
-        public UiUpdater(final Runnable uiUpdater, int interval) {
+        public UiUpdater(final Runnable uiUpdater, long interval) {
             UPDATE_INTERVAL = interval;
             mStatusChecker = new Runnable() {
                 @Override
@@ -29,7 +29,7 @@ public class UiUpdater {
         }
 
         public UiUpdater(Runnable uiUpdater){
-            this(uiUpdater, 1000);
+            this(uiUpdater, 1000L);
         }
 
         /**
