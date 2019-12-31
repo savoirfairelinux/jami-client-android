@@ -26,6 +26,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.SurfaceTexture;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.text.format.DateUtils;
@@ -72,6 +73,7 @@ import cx.ring.model.DataTransfer;
 import cx.ring.model.Interaction;
 import cx.ring.model.Interaction.InteractionStatus;
 import cx.ring.model.Interaction.InteractionType;
+import cx.ring.model.Interaction.SequenceType;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 import cx.ring.service.DRingService;
@@ -576,7 +578,6 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         }
     }
 
-
     /**
      * Configures the viewholder to display a classic text message, ie. not a call info text message
      *
@@ -639,6 +640,26 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             convViewHolder.mMsgTxt.getBackground().setAlpha(255);
             convViewHolder.mMsgTxt.setTextSize(16.f);
             convViewHolder.mMsgTxt.setPadding(hPadding, vPadding, hPadding, vPadding);
+
+            GradientDrawable drawable = (GradientDrawable) convViewHolder.mMsgTxt.getBackground();
+            int r = (int) convViewHolder.itemView.getContext().getResources().getDimension(R.dimen.conversation_message_radius);
+            switch(textMessage.getSequenceType())
+            {
+                case SINGLE:
+                    drawable.setCornerRadii(new float[]{r, r, r, r, r, r, r, r});
+                    break;
+                case START:
+                    break;
+                case MIDDLE:
+                    if (textMessage.isIncoming()) {
+                        drawable.setCornerRadii(new float[]{0, 0, r, r, r, r, 0, 0});
+                    } else {
+                        drawable.setCornerRadii(new float[]{r, r, 0, 0, 0, 0, r, r});
+                    }
+                    break;
+                case END:
+                    break;
+            }
         }
 
         convViewHolder.mMsgTxt.setText(message);
@@ -692,6 +713,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                     convViewHolder.mMsgDetailTxt.setVisibility(View.GONE);
                 }
         }
+
+
     }
 
     private void configureForContactEvent(@NonNull final ConversationViewHolder viewHolder, @NonNull final Interaction interaction) {
