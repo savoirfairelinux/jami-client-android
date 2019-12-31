@@ -20,6 +20,9 @@
  */
 package cx.ring.adapters;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -61,6 +64,7 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import cx.ring.R;
 import cx.ring.client.MediaViewerActivity;
@@ -90,20 +94,32 @@ import static androidx.core.content.FileProvider.getUriForFile;
 public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHolder> {
     private final static String TAG = ConversationAdapter.class.getSimpleName();
 
-    private static final double MINUTE = 60L * 1000L;
-    private static final double HOUR = 3600L * 1000L;
-
     private final ArrayList<Interaction> mInteractions = new ArrayList<>();
+
+    private final long TIMESTAMP_UPDATE_INTERVAL = 10 * DateUtils.SECOND_IN_MILLIS;
 
     private final ConversationPresenter presenter;
     private final ConversationFragment conversationFragment;
     private final int hPadding;
     private final int vPadding;
-    private final int vPaddingEmoticon;
     private final int mPictureMaxSize;
     private final GlideOptions PICTURE_OPTIONS;
     private RecyclerViewContextMenuInfo mCurrentLongItem = null;
     private int convColor = 0;
+
+    private int expandedItemPosition = -1;
+    private int lastDeliveredPosition = -1;
+
+    private static int[] msgBGLayouts = new int[] {
+            R.drawable.textmsg_bg_out_first,
+            R.drawable.textmsg_bg_out_middle,
+            R.drawable.textmsg_bg_out_last,
+            R.drawable.textmsg_bg_out,
+            R.drawable.textmsg_bg_in_first,
+            R.drawable.textmsg_bg_in_middle,
+            R.drawable.textmsg_bg_in_last,
+            R.drawable.textmsg_bg_in
+    };
 
     public ConversationAdapter(ConversationFragment conversationFragment, ConversationPresenter presenter) {
         this.conversationFragment = conversationFragment;
@@ -112,7 +128,6 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         Resources res = context.getResources();
         hPadding = res.getDimensionPixelSize(R.dimen.padding_medium);
         vPadding = res.getDimensionPixelSize(R.dimen.padding_small);
-        vPaddingEmoticon = res.getDimensionPixelSize(R.dimen.padding_xsmall);
         mPictureMaxSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200, res.getDisplayMetrics());
         int corner = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, res.getDisplayMetrics());
         PICTURE_OPTIONS = new GlideOptions()
@@ -148,6 +163,9 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     }
 
     public void update(Interaction e) {
+        if (!e.isIncoming() && e.getStatus() == InteractionStatus.SUCCESS) {
+            notifyItemChanged(lastDeliveredPosition);
+        }
         for (int i = mInteractions.size() - 1; i >= 0; i--) {
             Interaction element = mInteractions.get(i);
             if (e == element) {
@@ -163,6 +181,12 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             if (e.getId().equals(element.getId())) {
                 mInteractions.remove(i);
                 notifyItemRemoved(i);
+                if (i > 0) {
+                    notifyItemChanged(i - 1);
+                }
+                if (i != mInteractions.size()) {
+                    notifyItemChanged(i);
+                }
                 break;
             }
         }
@@ -268,6 +292,14 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             holder.player.reset();
             holder.player.release();
             holder.player = null;
+        }
+        if (holder.mMsgTxt != null) {
+            holder.mMsgTxt.setOnClickListener(null);
+            holder.mMsgTxt.setOnLongClickListener(null);
+        }
+        if (expandedItemPosition == holder.getLayoutPosition()) {
+            holder.mMsgDetailTxt.setVisibility(View.GONE);
+            expandedItemPosition = -1;
         }
         super.onViewRecycled(holder);
     }
@@ -576,7 +608,6 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         }
     }
 
-
     /**
      * Configures the viewholder to display a classic text message, ie. not a call info text message
      *
@@ -587,6 +618,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     private void configureForTextMessage(@NonNull final ConversationViewHolder convViewHolder,
                                          @NonNull final Interaction interaction,
                                          int position) {
+        final Context context = convViewHolder.itemView.getContext();
         TextMessage textMessage = (TextMessage)interaction;
         CallContact contact = textMessage.getContact();
         if (contact == null) {
@@ -594,12 +626,14 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             return;
         }
 
+        convViewHolder.mCid = textMessage.getConversation().getParticipant();
+        String message = textMessage.getBody().trim();
+
         View longPressView = convViewHolder.mMsgTxt;
         longPressView.getBackground().setTintList(null);
 
         longPressView.setOnCreateContextMenuListener((menu, v, menuInfo) -> {
             Date date = new Date(interaction.getTimestamp());
-            //DateFormat dateFormat = android.text.format.DateFormat..getDateFormat(v.getContext());
             DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT);
             menu.setHeaderTitle(dateFormat.format(date));
             conversationFragment.onCreateContextMenu(menu, v, menuInfo);
@@ -615,6 +649,9 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         });
 
         longPressView.setOnLongClickListener((View v) -> {
+            if (expandedItemPosition == position) {
+                expandedItemPosition = -1;
+            }
             conversationFragment.updatePosition(convViewHolder.getAdapterPosition());
             if (textMessage.isIncoming()) {
                 longPressView.getBackground().setTint(conversationFragment.getResources().getColor(R.color.grey_500));
@@ -625,14 +662,15 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             return false;
         });
 
-
-        convViewHolder.mCid = textMessage.getConversation().getParticipant();
-        String message = textMessage.getBody().trim();
+        final boolean isTimeShown = hasPermanentTimeString(textMessage, position);
+        final SequenceType msgSequenceType = getMsgSequencing(position, isTimeShown);
         if (StringUtils.isOnlyEmoji(message)) {
             convViewHolder.mMsgTxt.getBackground().setAlpha(0);
-            convViewHolder.mMsgTxt.setTextSize(24.f);
-            convViewHolder.mMsgTxt.setPadding(hPadding, vPaddingEmoticon, hPadding, vPaddingEmoticon);
+            convViewHolder.mMsgTxt.setTextSize(32.0f);
+            convViewHolder.mMsgTxt.setPadding(0, 0, 0, 0);
         } else {
+            int resIndex = msgSequenceType.ordinal() + (textMessage.isIncoming() ? 1 : 0) * 4;
+            convViewHolder.mMsgTxt.setBackground(ContextCompat.getDrawable(context, msgBGLayouts[resIndex]));
             if (convColor != 0 && !textMessage.isIncoming()) {
                 convViewHolder.mMsgTxt.getBackground().setTint(convColor);
             }
@@ -646,51 +684,67 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             convViewHolder.mPhoto.setImageBitmap(null);
         }
 
-        boolean separateByDetails = shouldSeparateByDetails(textMessage, position);
-        boolean isLast = position == mInteractions.size() - 1;
-        boolean sameAsPreviousMsg = isMessageConfigSameAsPrevious(textMessage, position);
-        final Context context = convViewHolder.itemView.getContext();
-
-        if (textMessage.isIncoming() && !sameAsPreviousMsg) {
-            convViewHolder.mPhoto.setImageDrawable(
-                    conversationFragment.getConversationAvatar(contact.getPrimaryNumber())
-            );
+        if (msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE) {
+            setBottomMargin(convViewHolder.mMsgTxt, 8);
+            if (textMessage.isIncoming()) {
+                convViewHolder.mPhoto.setImageDrawable(
+                        conversationFragment.getConversationAvatar(contact.getPrimaryNumber())
+                );
+            }
+        } else {
+            setBottomMargin(convViewHolder.mMsgTxt, 0);
         }
 
-        switch (textMessage.getStatus()) {
-            case SENDING:
-                if (!textMessage.isIncoming()) {
+        if (!textMessage.isIncoming()) {
+            switch (textMessage.getStatus()) {
+                case SENDING:
                     convViewHolder.mPhoto.setVisibility(View.VISIBLE);
                     convViewHolder.mPhoto.setImageResource(R.drawable.baseline_circle_24);
-                    convViewHolder.mMsgDetailTxt.setVisibility(View.GONE);
-                }
-                break;
-            case FAILURE:
-                if (!textMessage.isIncoming()) {
+                    break;
+                case FAILURE:
                     convViewHolder.mPhoto.setVisibility(View.VISIBLE);
                     convViewHolder.mPhoto.setImageResource(R.drawable.round_highlight_off_24);
-                    convViewHolder.mMsgDetailTxt.setVisibility(View.GONE);
-                }
-                break;
-            default:
-                if (separateByDetails) {
-                    if (!textMessage.isIncoming()) {
+                    break;
+                default:
+                    if (shouldSeparateByDetails(textMessage, position) && position == lastOutgoingIndex()) {
                         convViewHolder.mPhoto.setVisibility(View.VISIBLE);
                         convViewHolder.mPhoto.setImageResource(R.drawable.baseline_check_circle_24);
-                    }
-                    if (!isLast) {
-                        convViewHolder.updater = new UiUpdater(() -> convViewHolder.mMsgDetailTxt.setText(timestampToDetailString(context, textMessage.getTimestamp())), 10000);
-                        convViewHolder.updater.start();
-                        convViewHolder.mMsgDetailTxt.setVisibility(View.VISIBLE);
+                        lastDeliveredPosition = position;
                     } else {
-                        convViewHolder.mMsgDetailTxt.setVisibility(View.GONE);
-                    }
-                } else {
-                    if (!textMessage.isIncoming()) {
                         convViewHolder.mPhoto.setVisibility(View.GONE);
                     }
-                    convViewHolder.mMsgDetailTxt.setVisibility(View.GONE);
+            }
+        }
+
+        if (isTimeShown) {
+            convViewHolder.updater = new UiUpdater(() -> {
+                String timeSeparationString = timestampToDetailString(context, textMessage.getTimestamp());
+                convViewHolder.mMsgDetailTxtPerm.setText(timeSeparationString);
+            }, TIMESTAMP_UPDATE_INTERVAL);
+            convViewHolder.updater.start();
+            convViewHolder.mMsgDetailTxtPerm.setVisibility(View.VISIBLE);
+        } else {
+            convViewHolder.mMsgDetailTxtPerm.setVisibility(View.GONE);
+            final boolean isExpanded = position == expandedItemPosition;
+            if (isExpanded) {
+                convViewHolder.updater = new UiUpdater(() -> {
+                    String timeSeparationString = timestampToDetailString(context, textMessage.getTimestamp());
+                    convViewHolder.mMsgDetailTxt.setText(timeSeparationString);
+                }, TIMESTAMP_UPDATE_INTERVAL);
+                convViewHolder.updater.start();
+            }
+            setItemViewExpansionState(convViewHolder, isExpanded);
+            convViewHolder.mMsgTxt.setOnClickListener((View v) -> {
+                if (convViewHolder.animator != null && convViewHolder.animator.isRunning()) {
+                    return;
                 }
+                if (expandedItemPosition >= 0) {
+                    int prev = expandedItemPosition;
+                    notifyItemChanged(prev);
+                }
+                expandedItemPosition = isExpanded ? -1 : position;
+                notifyItemChanged(expandedItemPosition);
+            });
         }
     }
 
@@ -704,7 +758,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         viewHolder.updater = new UiUpdater(() -> {
             String timeSeparationString = timestampToDetailString(viewHolder.itemView.getContext(), event.getTimestamp());
             viewHolder.mMsgDetailTxt.setText(timeSeparationString);
-        }, 10000);
+        }, TIMESTAMP_UPDATE_INTERVAL);
         viewHolder.updater.start();
     }
 
@@ -782,15 +836,27 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
      * @return The string to display in the text details between messages.
      */
     private String timestampToDetailString(Context context, long timestamp) {
-        long now = new Date().getTime();
-        if (now - timestamp < MINUTE) {
-            return context.getString(R.string.time_just_now);
-        } else if (now - timestamp < HOUR) {
-            return DateUtils.getRelativeTimeSpanString(timestamp, now, 0, 0).toString();
+        long diff = new Date().getTime() - timestamp;
+        String timeStr;
+        if (diff < DateUtils.WEEK_IN_MILLIS) {
+            if (diff < DateUtils.DAY_IN_MILLIS && DateUtils.isToday(timestamp)) { // 11:32 A.M.
+                timeStr = DateUtils.formatDateTime(context, timestamp, DateUtils.FORMAT_SHOW_TIME);
+            } else {
+                timeStr = DateUtils.formatDateTime(context, timestamp,
+                        DateUtils.FORMAT_SHOW_WEEKDAY | DateUtils.FORMAT_NO_YEAR |
+                                DateUtils.FORMAT_ABBREV_ALL | DateUtils.FORMAT_SHOW_TIME);
+            }
+        } else if (diff < DateUtils.YEAR_IN_MILLIS) { // JAN. 7, 11:02 A.M.
+            timeStr = DateUtils.formatDateTime(context, timestamp,
+                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NO_YEAR |
+                            DateUtils.FORMAT_ABBREV_ALL | DateUtils.FORMAT_SHOW_TIME);
         } else {
-            return DateUtils.formatSameDayTime(timestamp, now, DateFormat.SHORT, DateFormat.SHORT)
-                    .toString();
+            timeStr = DateUtils.formatDateTime(context, timestamp,
+                    DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE |
+                            DateUtils.FORMAT_SHOW_YEAR | DateUtils.FORMAT_SHOW_WEEKDAY |
+                            DateUtils.FORMAT_ABBREV_ALL);
         }
+        return timeStr.toUpperCase(Locale.getDefault());
     }
 
     /**
@@ -822,15 +888,15 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     }
 
     /**
-     * Helper used to determine if a text details string should be displayed under a message at a
+     * Helper used to determine if a text details string should be displayed for a message at a
      * certain position.
      *
-     * @param ht       The conversationElement at the given position
+     * @param msg       The Interaction at the given position
      * @param position The position of the current message
      * @return true if a text details string should be displayed under the message
      */
-    private boolean shouldSeparateByDetails(final Interaction ht, int position) {
-        if (ht == null) {
+    private boolean shouldSeparateByDetails(final Interaction msg, int position) {
+        if (msg == null) {
             return false;
         }
         boolean shouldSeparateMsg = false;
@@ -839,8 +905,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             shouldSeparateMsg = true;
             Interaction nextTextMessage = getNextMessageFromPosition(position);
             if (nextTextMessage != null) {
-                long diff = nextTextMessage.getTimestamp() - ht.getTimestamp();
-                if (diff < MINUTE) {
+                long diff = nextTextMessage.getTimestamp() - msg.getTimestamp();
+                if (diff < DateUtils.MINUTE_IN_MILLIS) {
                     shouldSeparateMsg = false;
                 }
             }
@@ -848,32 +914,131 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         return shouldSeparateMsg;
     }
 
-    /**
-     * Helper method determining if a given conversationElement should be distinguished from the
-     * previous ie. if their configuration is not the same.
-     *
-     * @param textMessage The conversationElement at the given position
-     * @param position    The position of the current message
-     * @return true if the configuration is the same as the previous message, false otherwise.
-     */
-    private boolean isMessageConfigSameAsPrevious(final Interaction textMessage,
-                                                  int position) {
-        if (textMessage == null) {
+    private boolean isSeqBreak(@NonNull Interaction first, @NonNull Interaction second) {
+        return StringUtils.isOnlyEmoji(first.getBody()) != StringUtils.isOnlyEmoji(second.getBody())
+                || first.isIncoming() != second.isIncoming()
+                || first.getType() == InteractionType.CONTACT
+                || first.getType() == InteractionType.CALL
+                || second.getType() == InteractionType.CONTACT
+                || second.getType() == InteractionType.CALL;
+    }
+
+    private boolean isAlwaysSingleMsg(@NonNull Interaction msg) {
+        return msg.getType() == InteractionType.CONTACT
+                || msg.getType() == InteractionType.CALL
+                || StringUtils.isOnlyEmoji(msg.getBody());
+    }
+
+    private SequenceType getMsgSequencing(final int i, final boolean isTimeShown) {
+        Interaction msg = mInteractions.get(i);
+        if (isAlwaysSingleMsg(msg)) {
+            return SequenceType.SINGLE;
+        }
+        if (mInteractions.size() == 1 || i == 0) {
+            if (mInteractions.size() == i + 1) {
+                return SequenceType.SINGLE;
+            }
+            Interaction nextMsg = getNextMessageFromPosition(i);
+            if (nextMsg != null) {
+                if (isSeqBreak(msg, nextMsg)) {
+                    return SequenceType.SINGLE;
+                } else {
+                    return SequenceType.FIRST;
+                }
+            }
+        } else if (mInteractions.size() == i + 1) {
+            Interaction prevMsg = getPreviousMessageFromPosition(i);
+            if (prevMsg != null) {
+                if (isSeqBreak(msg, prevMsg) || isTimeShown) {
+                    return SequenceType.SINGLE;
+                } else {
+                    return SequenceType.LAST;
+                }
+            }
+        }
+        Interaction prevMsg = getPreviousMessageFromPosition(i);
+        Interaction nextMsg = getNextMessageFromPosition(i);
+        if (prevMsg != null && nextMsg != null) {
+            if (((isSeqBreak(msg, prevMsg) || isTimeShown) && !isSeqBreak(msg, nextMsg))) {
+                return SequenceType.FIRST;
+            } else if (!isSeqBreak(msg, prevMsg) && !isTimeShown && isSeqBreak(msg, nextMsg)) {
+                return SequenceType.LAST;
+            } else if (!isSeqBreak(msg, prevMsg) && !isTimeShown && !isSeqBreak(msg, nextMsg)) {
+                return SequenceType.MIDDLE;
+            }
+        }
+        return SequenceType.SINGLE;
+    }
+
+    private void setItemViewExpansionState(ConversationViewHolder viewHolder, boolean expanded) {
+        View view = viewHolder.mMsgDetailTxt;
+        if (viewHolder.animator == null) {
+            if (view.getHeight() == 0 && !expanded) {
+                return;
+            }
+            viewHolder.animator = new ValueAnimator();
+        }
+        if (viewHolder.animator.isRunning()) {
+            viewHolder.animator.reverse();
+            return;
+        }
+        view.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        viewHolder.animator.setIntValues(0, view.getMeasuredHeight());
+        if (expanded) {
+            view.setVisibility(View.VISIBLE);
+        }
+        viewHolder.animator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                ValueAnimator va = (ValueAnimator) animation;
+                if ((Integer) va.getAnimatedValue() == 0) {
+                    view.setVisibility(View.GONE);
+                }
+                viewHolder.animator = null;
+            }
+        });
+        viewHolder.animator.setDuration(200);
+        viewHolder.animator.addUpdateListener(animation -> {
+            view.getLayoutParams().height = (Integer) animation.getAnimatedValue();
+            view.requestLayout();
+        });
+        if (!expanded) {
+            viewHolder.animator.reverse();
+        } else {
+            viewHolder.animator.start();
+        }
+    }
+
+    private static void setBottomMargin(View view, int value) {
+        int targetSize = (int) (value * view.getContext().getResources().getDisplayMetrics().density);
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+        params.bottomMargin = targetSize;
+    }
+
+    private boolean hasPermanentTimeString(final Interaction msg, int position) {
+        if (msg == null) {
             return false;
         }
+        Interaction prevMsg = getPreviousMessageFromPosition(position);
+        return (prevMsg != null &&
+                (msg.getTimestamp() - prevMsg.getTimestamp()) > 10 * DateUtils.MINUTE_IN_MILLIS);
+    }
 
-        boolean sameConfig = false;
-        Interaction previousMessage = getPreviousMessageFromPosition(position);
-        if (previousMessage != null &&
-                textMessage.getAuthor() != null &&
-                previousMessage.getAuthor() != null &&
-                textMessage.getAuthor().equals(previousMessage.getAuthor()) &&
-                textMessage.getType() == (previousMessage.getType()) &&
-                textMessage.isIncoming() &&
-                previousMessage.getConversation().getParticipant().equals(textMessage.getConversation().getParticipant())) {
-            sameConfig = true;
+    private int lastOutgoingIndex() {
+        int i;
+        for (i = mInteractions.size() - 1; i >= 0; i--) {
+            if (!mInteractions.get(i).isIncoming()) {
+                break;
+            }
         }
-        return sameConfig;
+        return i;
+    }
+
+    private enum SequenceType {
+        FIRST,
+        MIDDLE,
+        LAST,
+        SINGLE;
     }
 
     public enum MessageType {
