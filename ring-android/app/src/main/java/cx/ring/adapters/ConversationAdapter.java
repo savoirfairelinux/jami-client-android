@@ -20,12 +20,15 @@
  */
 package cx.ring.adapters;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.SurfaceTexture;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.text.format.DateUtils;
@@ -104,6 +107,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     private final GlideOptions PICTURE_OPTIONS;
     private RecyclerViewContextMenuInfo mCurrentLongItem = null;
     private int convColor = 0;
+    private int expandedItemPosition;
 
     public ConversationAdapter(ConversationFragment conversationFragment, ConversationPresenter presenter) {
         this.conversationFragment = conversationFragment;
@@ -576,7 +580,6 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         }
     }
 
-
     /**
      * Configures the viewholder to display a classic text message, ie. not a call info text message
      *
@@ -587,6 +590,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     private void configureForTextMessage(@NonNull final ConversationViewHolder convViewHolder,
                                          @NonNull final Interaction interaction,
                                          int position) {
+        final Context context = convViewHolder.itemView.getContext();
         TextMessage textMessage = (TextMessage)interaction;
         CallContact contact = textMessage.getContact();
         if (contact == null) {
@@ -599,7 +603,6 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
         longPressView.setOnCreateContextMenuListener((menu, v, menuInfo) -> {
             Date date = new Date(interaction.getTimestamp());
-            //DateFormat dateFormat = android.text.format.DateFormat..getDateFormat(v.getContext());
             DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT);
             menu.setHeaderTitle(dateFormat.format(date));
             conversationFragment.onCreateContextMenu(menu, v, menuInfo);
@@ -639,6 +642,26 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             convViewHolder.mMsgTxt.getBackground().setAlpha(255);
             convViewHolder.mMsgTxt.setTextSize(16.f);
             convViewHolder.mMsgTxt.setPadding(hPadding, vPadding, hPadding, vPadding);
+
+            GradientDrawable drawable = (GradientDrawable) convViewHolder.mMsgTxt.getBackground();
+            int r = (int) context.getResources().getDimension(R.dimen.conversation_message_radius);
+            switch(textMessage.getSequenceType())
+            {
+                case SINGLE:
+                    drawable.setCornerRadii(new float[]{r, r, r, r, r, r, r, r});
+                    break;
+                case START:
+                    break;
+                case MIDDLE:
+                    if (textMessage.isIncoming()) {
+                        drawable.setCornerRadii(new float[]{0, 0, r, r, r, r, 0, 0});
+                    } else {
+                        drawable.setCornerRadii(new float[]{r, r, 0, 0, 0, 0, r, r});
+                    }
+                    break;
+                case END:
+                    break;
+            }
         }
 
         convViewHolder.mMsgTxt.setText(message);
@@ -649,7 +672,6 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         boolean separateByDetails = shouldSeparateByDetails(textMessage, position);
         boolean isLast = position == mInteractions.size() - 1;
         boolean sameAsPreviousMsg = isMessageConfigSameAsPrevious(textMessage, position);
-        final Context context = convViewHolder.itemView.getContext();
 
         if (textMessage.isIncoming() && !sameAsPreviousMsg) {
             convViewHolder.mPhoto.setImageDrawable(
@@ -681,17 +703,69 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                     if (!isLast) {
                         convViewHolder.updater = new UiUpdater(() -> convViewHolder.mMsgDetailTxt.setText(timestampToDetailString(context, textMessage.getTimestamp())), 10000);
                         convViewHolder.updater.start();
+                        Log.d(TAG, "mMsgDetailTxt VISIBLE1");
                         convViewHolder.mMsgDetailTxt.setVisibility(View.VISIBLE);
                     } else {
+                        Log.d(TAG, "mMsgDetailTxt GONE1");
                         convViewHolder.mMsgDetailTxt.setVisibility(View.GONE);
                     }
                 } else {
                     if (!textMessage.isIncoming()) {
                         convViewHolder.mPhoto.setVisibility(View.GONE);
                     }
-                    convViewHolder.mMsgDetailTxt.setVisibility(View.GONE);
+//                    Log.d(TAG, "mMsgDetailTxt GONE2");
+//                    convViewHolder.mMsgDetailTxt.setVisibility(View.GONE);
                 }
         }
+
+        //convViewHolder.mMsgDetailTxt.setVisibility(View.VISIBLE);
+
+        int state = convViewHolder.mMsgDetailTxt.getVisibility();
+        if (expandedItemPosition != position && state == View.VISIBLE) {
+            convViewHolder.mMsgDetailTxt.setTranslationY(0);
+            convViewHolder.mMsgDetailTxt
+                    .animate()
+                    .translationY(convViewHolder.mMsgDetailTxt.getHeight())
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            convViewHolder.mMsgDetailTxt.setVisibility(View.GONE);
+                        }
+                    });
+        }
+
+        convViewHolder.mMsgTxt.setOnClickListener((View v) -> {
+            if (expandedItemPosition == position) {
+                convViewHolder.mMsgDetailTxt.setTranslationY(0);
+                convViewHolder.mMsgDetailTxt
+                        .animate()
+                        .translationY(convViewHolder.mMsgDetailTxt.getHeight())
+                        .setListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                convViewHolder.mMsgDetailTxt.setVisibility(View.GONE);
+                            }
+                        });
+                //.translationY(0);
+                expandedItemPosition = -1;
+            } else {
+                convViewHolder.updater = new UiUpdater(() -> convViewHolder.mMsgDetailTxt.setText(timestampToDetailString(context, textMessage.getTimestamp())), 10000);
+                convViewHolder.updater.start();
+                convViewHolder.mMsgDetailTxt.setVisibility(View.VISIBLE);
+                convViewHolder.mMsgDetailTxt.setTranslationY(convViewHolder.mMsgDetailTxt.getHeight());
+                convViewHolder.mMsgDetailTxt
+                        .animate()
+                        .translationY(0)
+                        .setListener(null);
+                if (expandedItemPosition != -1) {
+                    notifyItemChanged(expandedItemPosition);
+                }
+                expandedItemPosition = position;
+            }
+        });
+
     }
 
     private void configureForContactEvent(@NonNull final ConversationViewHolder viewHolder, @NonNull final Interaction interaction) {
