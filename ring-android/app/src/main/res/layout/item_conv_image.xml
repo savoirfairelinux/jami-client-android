@@ -47,7 +47,7 @@
             android:adjustViewBounds="true"
             android:maxHeight="200dp"
             android:transitionName="picture"
-            tools:src="@drawable/banner" />
+            tools:src="@drawable/logo_sfl_coul_rgb" />
 
         <TextView
             android:id="@+id/msg_details_txt"

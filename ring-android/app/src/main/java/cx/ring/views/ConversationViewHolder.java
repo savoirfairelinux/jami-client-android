@@ -38,6 +38,7 @@ import cx.ring.utils.UiUpdater;
 import io.reactivex.disposables.Disposable;
 
 public class ConversationViewHolder extends RecyclerView.ViewHolder {
+    public LinearLayout mMsgDetailsLayout;
     public TextView mMsgTxt;
     public TextView mMsgDetailTxt;
     public ImageView mPhoto;
@@ -60,10 +61,12 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
     public ConversationViewHolder(ViewGroup v, ConversationAdapter.MessageType type) {
         super(v);
         if (type == ConversationAdapter.MessageType.INCOMING_TEXT_MESSAGE) {
+            mMsgDetailsLayout = v.findViewById(R.id.ll_msg_details);
             mMsgTxt = v.findViewById(R.id.msg_txt);
             mMsgDetailTxt = v.findViewById(R.id.msg_details_txt);
             mPhoto = v.findViewById(R.id.photo);
         } else if (type == ConversationAdapter.MessageType.OUTGOING_TEXT_MESSAGE) {
+            mMsgDetailsLayout = v.findViewById(R.id.ll_msg_details);
             mMsgTxt = v.findViewById(R.id.msg_txt);
             mMsgDetailTxt = v.findViewById(R.id.msg_details_txt);
             mPhoto = v.findViewById(R.id.status_icon);

@@ -20,12 +20,16 @@
  */
 package cx.ring.adapters;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.SurfaceTexture;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.text.format.DateUtils;
@@ -104,6 +108,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     private final GlideOptions PICTURE_OPTIONS;
     private RecyclerViewContextMenuInfo mCurrentLongItem = null;
     private int convColor = 0;
+    private int expandedItemPosition = -1;
 
     public ConversationAdapter(ConversationFragment conversationFragment, ConversationPresenter presenter) {
         this.conversationFragment = conversationFragment;
@@ -576,6 +581,9 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         }
     }
 
+    private void expandView() {
+        
+    }
 
     /**
      * Configures the viewholder to display a classic text message, ie. not a call info text message
@@ -587,6 +595,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     private void configureForTextMessage(@NonNull final ConversationViewHolder convViewHolder,
                                          @NonNull final Interaction interaction,
                                          int position) {
+        final Context context = convViewHolder.itemView.getContext();
         TextMessage textMessage = (TextMessage)interaction;
         CallContact contact = textMessage.getContact();
         if (contact == null) {
@@ -599,7 +608,6 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
         longPressView.setOnCreateContextMenuListener((menu, v, menuInfo) -> {
             Date date = new Date(interaction.getTimestamp());
-            //DateFormat dateFormat = android.text.format.DateFormat..getDateFormat(v.getContext());
             DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT);
             menu.setHeaderTitle(dateFormat.format(date));
             conversationFragment.onCreateContextMenu(menu, v, menuInfo);
@@ -639,6 +647,26 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             convViewHolder.mMsgTxt.getBackground().setAlpha(255);
             convViewHolder.mMsgTxt.setTextSize(16.f);
             convViewHolder.mMsgTxt.setPadding(hPadding, vPadding, hPadding, vPadding);
+
+            GradientDrawable drawable = (GradientDrawable) convViewHolder.mMsgTxt.getBackground();
+            int r = (int) context.getResources().getDimension(R.dimen.conversation_message_radius);
+            switch(textMessage.getSequenceType())
+            {
+                case SINGLE:
+                    drawable.setCornerRadii(new float[]{r, r, r, r, r, r, r, r});
+                    break;
+                case START:
+                    break;
+                case MIDDLE:
+                    if (textMessage.isIncoming()) {
+                        drawable.setCornerRadii(new float[]{0, 0, r, r, r, r, 0, 0});
+                    } else {
+                        drawable.setCornerRadii(new float[]{r, r, 0, 0, 0, 0, r, r});
+                    }
+                    break;
+                case END:
+                    break;
+            }
         }
 
         convViewHolder.mMsgTxt.setText(message);
@@ -649,7 +677,6 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         boolean separateByDetails = shouldSeparateByDetails(textMessage, position);
         boolean isLast = position == mInteractions.size() - 1;
         boolean sameAsPreviousMsg = isMessageConfigSameAsPrevious(textMessage, position);
-        final Context context = convViewHolder.itemView.getContext();
 
         if (textMessage.isIncoming() && !sameAsPreviousMsg) {
             convViewHolder.mPhoto.setImageDrawable(
@@ -692,6 +719,42 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                     convViewHolder.mMsgDetailTxt.setVisibility(View.GONE);
                 }
         }
+
+        final boolean isExpanded = position == expandedItemPosition;
+
+        View view = convViewHolder.mMsgDetailTxt;
+        convViewHolder.mMsgDetailTxt.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        int msgDetailHeight = convViewHolder.mMsgDetailTxt.getMeasuredHeight();
+        if (!isExpanded) {
+            ValueAnimator anim = ValueAnimator.ofInt(msgDetailHeight, 0).setDuration(100);
+            anim.addUpdateListener(animation -> {
+                Integer value = (Integer) animation.getAnimatedValue();
+                view.getLayoutParams().height = value.intValue();
+                view.requestLayout();
+            });
+            anim.start();
+        } else {
+            convViewHolder.updater = new UiUpdater(() -> convViewHolder.mMsgDetailTxt.setText(timestampToDetailString(context, textMessage.getTimestamp())), 10000);
+            convViewHolder.updater.start();
+            ValueAnimator anim = ValueAnimator.ofInt(0, msgDetailHeight).setDuration(100);
+            anim.addUpdateListener(animation -> {
+                Integer value = (Integer) animation.getAnimatedValue();
+                view.getLayoutParams().height = value.intValue();
+                view.requestLayout();
+            });
+            anim.start();
+        }
+
+        convViewHolder.mMsgTxt.setOnClickListener((View v) -> {
+            if (expandedItemPosition >= 0) {
+                int prev = expandedItemPosition;
+                notifyItemChanged(prev);
+            }
+            //expandedItemPosition = isExpanded ? -1 : position;
+            expandedItemPosition = position;
+            notifyItemChanged(expandedItemPosition);
+        });
+
     }
 
     private void configureForContactEvent(@NonNull final ConversationViewHolder viewHolder, @NonNull final Interaction interaction) {
