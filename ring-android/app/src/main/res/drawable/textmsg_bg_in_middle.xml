@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <stroke
+        android:width="0dp"
+        android:color="@android:color/transparent" />
+
+    <solid android:color="@color/conversation_secondary_background" />
+
+    <padding
+        android:left="@dimen/padding_medium"
+        android:right="@dimen/padding_medium"
+        android:top="@dimen/conversation_message_padding_top"
+        android:bottom="@dimen/conversation_message_padding_bottom"
+        />
+
+    <corners
+        android:topLeftRadius="@dimen/conversation_message_minor_radius"
+        android:topRightRadius="@dimen/conversation_message_radius"
+        android:bottomRightRadius="@dimen/conversation_message_radius"
+        android:bottomLeftRadius="@dimen/conversation_message_minor_radius"
+        />
+
+</shape>
