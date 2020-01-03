@@ -10,7 +10,7 @@
         <item name="colorOnPrimary">@color/background</item>
 
         <item name="colorSecondary">@color/colorSecondary</item>
-        <item name="colorOnSecondary">@color/background</item>
+        <item name="colorOnSecondary">@color/colorOnSecondary</item>
 
         <item name="android:colorBackground">@color/background</item>
         <item name="colorOnBackground">@color/colorPrimary</item>
