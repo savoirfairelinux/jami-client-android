@@ -74,11 +74,17 @@
   <string name="account_video_enable">Включить видео</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Дополнительно</string>
+  <string name="account_dht_public_in_calls_label">Разрешить входящие звонки от неизвестных контактов</string>
   <string name="account_registration_exp_label">Срок регистрации истекает</string>
   <string name="account_local_interface_label">Локальный интерфейс</string>
   <string name="account_local_port_label">Локальный порт</string>
   <string name="account_stun_enable_label">Использовать STUN</string>
   <string name="account_stun_server_label">Сервер STUN</string>
+  <string name="account_accept_files">Принимать входящие файлы автоматически</string>
+  <string name="account_accept_files_max_size">Максимальный размер файла для автоматической загрузки</string>
+  <string name="account_accept_files_never">Никогда не принимать автоматически</string>
+  <string name="account_accept_files_always">Всегда принимать автоматически</string>
+  <string name="size_mb">%1$dМб</string>
   <string name="account_turn_enable_label">Использовать TURN </string>
   <string name="account_turn_server_label">Сервер TURN</string>
   <string name="account_turn_username_label">Имя пользователя TURN</string>
@@ -89,6 +95,9 @@
   <string name="account_proxy_label">DHT прокси</string>
   <string name="account_proxy_enable_label">Использовать DHT прокси</string>
   <string name="account_proxy_server_label">Адрес DHT прокси</string>
+  <string name="account_peer_discovery_label">Обнаружение локальных пиров</string>
+  <string name="account_peer_discovery_enable_label">Включить обнаружение локальных пиров</string>
+  <string name="account_peer_discovery_enable_summary">Подключаться к другим DHT узлам в локальной сети</string>
   <!--Security Details-->
   <string name="account_credentials_label">Идентификационные данные</string>
   <string name="account_credentials_edit">Изменить идентификационные данные</string>

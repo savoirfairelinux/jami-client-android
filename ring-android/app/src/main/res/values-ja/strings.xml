@@ -2,7 +2,7 @@
 <resources>
   <!--About-->
   <string name="feedback_section">フィードバック</string>
-  <string name="report">チームにメールを送信する</string>
+  <string name="report"><u>チームにメールを送信する</u></string>
   <string name="section_license">ライセンス</string>
   <string name="sponsor_section">Jamiは以下によって開発、サポートされているフリーソフトウェアです</string>
   <string name="copyright_section">著作権表示</string>
@@ -12,7 +12,7 @@
   <string name="no_browser_app_installed">Webブラウザーアプリが見つかりませんでした。このページを表示するためにインストールしてください</string>
   <string name="email_chooser_title">メール送信に使用するアプリ...</string>
   <string name="website_chooser_title">Webサイトを表示…</string>
-  <string name="license">このソフトウェアは、いかなる保証もなしに現状のまま提供されます。詳細については、GNU General Public Licenseのversion 3以降を参照してください。</string>
+  <string name="license">このソフトウェアは、いかなる保証もなしに現状のまま提供されます。詳細については、<u>GNU General Public Licenseのversion 3以降</u>を参照してください。</string>
   <string name="description">Jamiは、世界中のユーザーと繋がることができるユーザーの自由とプライバシーを尊重したフリーソフトウェアです。</string>
   <string name="credits">クレジット</string>
   <string name="call_service_description">このサービスは、呼び出しのコールをフォアグラウンドで実行し続けるために必要です。通話中にのみ実行されます。</string>

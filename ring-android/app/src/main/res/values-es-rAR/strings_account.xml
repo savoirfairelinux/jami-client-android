@@ -125,7 +125,7 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_export_end_error_title">Error</string>
   <string name="account_export_end_error_message">No se pudo exportar su cuenta. Error desconocido.</string>
   <string name="account_enter_password">Ingresar contraseña</string>
-  <string name="account_share_body">Contactame usando \"%1$s\" en Jami, plataforma de comunicación distribuida: %2$s</string>
+  <string name="account_share_body">Contactame buscándome como \"%1$s\" en Jami, plataforma de comunicación distribuida. Más info en %2$s</string>
   <string name="account_share_body_with_username">Contactame usando \"%1$s\" o mi usuario público \"%2$s\" en Jami, plataforma de comunicación distribuida: %3$s</string>
   <string name="account_contact_me">¡Contactame en Jami!</string>
   <string name="update_account">Actualizar cuenta</string>

@@ -74,11 +74,17 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_video_enable">Video aktivieren</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Erweitert</string>
+  <string name="account_dht_public_in_calls_label">Erlaube eingehende Anrufe von unbekannten Kontakten</string>
   <string name="account_registration_exp_label">Registrierung abgelaufen</string>
   <string name="account_local_interface_label">Lokale Schnittstelle</string>
   <string name="account_local_port_label">Lokaler Port</string>
   <string name="account_stun_enable_label">STUN benutzen</string>
   <string name="account_stun_server_label">STUN-Server</string>
+  <string name="account_accept_files">Erlaube automatisches empfangen von Dateien</string>
+  <string name="account_accept_files_max_size">Maximale Dateigröße für den automatischen Empfang</string>
+  <string name="account_accept_files_never">Niemals automatisch empfangen</string>
+  <string name="account_accept_files_always">Immer automatisch empfangen</string>
+  <string name="size_mb">%1$d MB</string>
   <string name="account_turn_enable_label">TURN benutzen</string>
   <string name="account_turn_server_label">TURN-Server</string>
   <string name="account_turn_username_label">TURN-Benutzer</string>
@@ -89,6 +95,9 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_proxy_label">DHT Proxy</string>
   <string name="account_proxy_enable_label">Nutze DHT Proxy</string>
   <string name="account_proxy_server_label">DHT Proxy Adresse</string>
+  <string name="account_peer_discovery_label">Lokale Peer Erkennung</string>
+  <string name="account_peer_discovery_enable_label">Erlaube das finden von lokalen Peers</string>
+  <string name="account_peer_discovery_enable_summary">Verbinde zu anderen sich meldenden DHT Knoten in unserem lokalen Netzwerk</string>
   <!--Security Details-->
   <string name="account_credentials_label">Anmeldeinformationen</string>
   <string name="account_credentials_edit">Anmeldedaten bearbeiten</string>
