@@ -34,7 +34,7 @@ import androidx.preference.TwoStatePreference;
 import android.view.inputmethod.EditorInfo;
 
 import cx.ring.R;
-import cx.ring.account.AccountEditionActivity;
+import cx.ring.account.AccountEditionFragment;
 import cx.ring.application.JamiApplication;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
@@ -78,7 +78,7 @@ public class GeneralAccountFragment extends BasePreferenceFragment<GeneralAccoun
 
     public static GeneralAccountFragment newInstance(@NonNull String accountId) {
         Bundle bundle = new Bundle();
-        bundle.putString(AccountEditionActivity.ACCOUNT_ID_KEY, accountId);
+        bundle.putString(AccountEditionFragment.ACCOUNT_ID_KEY, accountId);
         GeneralAccountFragment generalAccountFragment = new GeneralAccountFragment();
         generalAccountFragment.setArguments(bundle);
         return generalAccountFragment;
@@ -146,7 +146,7 @@ public class GeneralAccountFragment extends BasePreferenceFragment<GeneralAccoun
         super.onCreatePreferences(bundle, rootKey);
 
         Bundle args = getArguments();
-        presenter.init(args == null  ? null : args.getString(AccountEditionActivity.ACCOUNT_ID_KEY));
+        presenter.init(args == null  ? null : args.getString(AccountEditionFragment.ACCOUNT_ID_KEY));
 
         SeekBarPreference filePref = findPreference("acceptIncomingFilesMaxSize");
         if (filePref != null) {
