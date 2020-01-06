@@ -24,8 +24,6 @@ public interface AccountEditionView {
 
     void exit();
 
-    void displayAccountName(String name);
-
     void displaySummary(String accountId);
 
     void initViewPager(String accountId, boolean isRing);
@@ -35,4 +33,7 @@ public interface AccountEditionView {
     void showBlacklistOption(boolean show);
 
     void goToBlackList(String accountId);
+
+    void displaySIPView(String accountID);
+
 }
