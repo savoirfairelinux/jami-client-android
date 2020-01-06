@@ -79,8 +79,8 @@ public class ChangePasswordDialog extends DialogFragment {
         boolean hasPassword = true;
         Bundle args = getArguments();
         if (args != null) {
-            accountId = args.getString(AccountEditionActivity.ACCOUNT_ID_KEY, accountId);
-            hasPassword = args.getBoolean(AccountEditionActivity.ACCOUNT_HAS_PASSWORD_KEY, true);
+            accountId = args.getString(AccountEditionFragment.ACCOUNT_ID_KEY, accountId);
+            hasPassword = args.getBoolean(AccountEditionFragment.ACCOUNT_HAS_PASSWORD_KEY, true);
         }
         int passwordMessage = hasPassword ? R.string.account_password_change : R.string.account_password_set;
         mPasswordTxtBox.setVisibility(hasPassword ? View.VISIBLE : View.GONE);

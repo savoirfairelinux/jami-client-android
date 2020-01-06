@@ -34,6 +34,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import cx.ring.R;
@@ -53,6 +54,8 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
     private  static final String TAG = ContactRequestsFragment.class.getSimpleName();
     public static final String ACCOUNT_ID = TAG + "accountID";
 
+    private static final int SCROLL_DIRECTION_UP = -1;
+
     @BindView(R.id.requests_list)
     protected RecyclerView mRequestsList;
 
@@ -62,7 +65,7 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
     @BindView(R.id.emptyTextView)
     protected TextView mEmptyTextView;
 
-    private SmartListAdapter mAdapter;
+    public SmartListAdapter mAdapter;
 
     @Override
     public int getLayout() {
@@ -77,7 +80,6 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_contact_request);
         return super.onCreateView(inflater, parent, savedInstanceState);
     }
 
@@ -98,11 +100,6 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
         if (arguments != null && arguments.containsKey(ACCOUNT_ID)) {
             presenter.updateAccount(getArguments().getString(ACCOUNT_ID));
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     @Override
@@ -135,6 +132,20 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
             LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
             mRequestsList.setLayoutManager(mLayoutManager);
         }
+
+        mRequestsList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                ((HomeActivity) getActivity()).setToolbarElevation(mRequestsList.canScrollVertically(SCROLL_DIRECTION_UP) ? 25f : 0f);
+            }
+        });
+
+        updateBadge();
     }
 
     @Override
@@ -165,5 +176,9 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
     @Override
     public void onItemLongClick(SmartListViewModel smartListViewModel) {
 
+    }
+
+    private void updateBadge() {
+        ((HomeActivity) Objects.requireNonNull(getActivity())).setBadge(R.id.navigation_requests, mAdapter.getItemCount());
     }
 }
