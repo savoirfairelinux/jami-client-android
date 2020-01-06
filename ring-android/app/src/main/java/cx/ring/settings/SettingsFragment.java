@@ -20,8 +20,12 @@
 package cx.ring.settings;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
@@ -31,25 +35,34 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import cx.ring.R;
+import cx.ring.account.RingAccountSummaryFragment;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.model.Settings;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.mvp.GenericView;
+import cx.ring.utils.DeviceUtils;
+import cx.ring.views.BoundedScrollView;
 
 /**
  * TODO: improvements : handle multiples permissions for feature.
  */
-public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> implements GenericView<Settings> {
+public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> implements GenericView<Settings>, ViewTreeObserver.OnScrollChangedListener {
+
+    private static final int SCROLL_DIRECTION_UP = -1;
 
     @BindView(R.id.settings_push_notifications_layout)
     ViewGroup mGroupPushNotifications;
@@ -63,6 +76,8 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
     View settings_video_layout;
     @BindView(R.id.settings_dark_theme)
     Switch mDarkTheme;
+    @BindView(R.id.scrollview)
+    BoundedScrollView mScrollView;
 
     private boolean mIsRefreshingViewFromPresenter;
 
@@ -86,7 +101,35 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         }
         // loading preferences
         presenter.loadSettings();
-        ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_settings);
+        if (DeviceUtils.isTablet(getContext())) {
+            Toolbar toolbar = getActivity().findViewById(R.id.main_toolbar);
+            TextView title = toolbar.findViewById(R.id.contact_title);
+            ImageView logo = toolbar.findViewById(R.id.contact_image);
+
+            logo.setVisibility(View.GONE);
+            title.setText(R.string.menu_item_settings);
+            title.setTextSize(19);
+            title.setTypeface(null, Typeface.BOLD);
+
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) title.getLayoutParams();
+            params.removeRule(RelativeLayout.ALIGN_TOP);
+            params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+            title.setLayoutParams(params);
+        } else {
+            ((HomeActivity) getActivity()).setToolbarState(R.string.menu_item_settings);
+        }
+
+        mScrollView.getViewTreeObserver().addOnScrollChangedListener(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        Fragment existingFragment = fragmentManager.findFragmentByTag(SettingsFragment.TAG);
+        if (existingFragment == null) {
+            ((HomeActivity) getActivity()).goToSettings();
+        }
     }
 
     @Override
@@ -183,4 +226,12 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         mViewStartup.setChecked(viewModel.isAllowRingOnStartup());
         mIsRefreshingViewFromPresenter = false;
     }
+
+    @Override
+    public void onScrollChanged() {
+        if (mScrollView != null) {
+            ((HomeActivity) getActivity()).setToolbarElevation(mScrollView.canScrollVertically(SCROLL_DIRECTION_UP));
+        }
+    }
+
 }

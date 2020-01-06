@@ -20,10 +20,13 @@
  */
 package cx.ring.account;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -38,6 +41,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
 
+import android.provider.MediaStore;
 import android.text.Layout;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -46,39 +50,61 @@ import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.Map;
 
 import javax.inject.Inject;
 
+import androidx.core.content.FileProvider;
+import androidx.core.util.Pair;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import cx.ring.R;
+import cx.ring.client.HomeActivity;
 import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.model.Account;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.services.AccountService;
+import cx.ring.services.VCardServiceImpl;
 import cx.ring.utils.AndroidFileUtils;
+import cx.ring.utils.BitmapUtils;
+import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.KeyboardVisibilityManager;
+import cx.ring.views.AvatarDrawable;
+import ezvcard.VCard;
+import ezvcard.property.FormattedName;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
-public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountSummaryPresenter> implements BackHandlerInterface,
+public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountSummaryPresenter> implements
+        BackHandlerInterface,
         RegisterNameDialog.RegisterNameDialogListener,
         RenameDeviceDialog.RenameDeviceListener,
         DeviceAdapter.DeviceRevocationListener,
         ConfirmRevocationDialog.ConfirmRevocationListener,
-        RingAccountSummaryView, ChangePasswordDialog.PasswordChangedListener, BackupAccountDialog.UnlockAccountListener {
+        RingAccountSummaryView, ChangePasswordDialog.PasswordChangedListener,
+        BackupAccountDialog.UnlockAccountListener,
+        ViewTreeObserver.OnScrollChangedListener {
 
     public static final String TAG = RingAccountSummaryFragment.class.getSimpleName();
     private static final String FRAGMENT_DIALOG_REVOCATION = TAG + ".dialog.deviceRevocation";
@@ -86,6 +112,10 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     private static final String FRAGMENT_DIALOG_PASSWORD = TAG + ".dialog.changePassword";
     private static final String FRAGMENT_DIALOG_BACKUP = TAG + ".dialog.backup";
     private static final int WRITE_REQUEST_CODE = 43;
+
+    private static final int SCROLL_DIRECTION_UP = -1;
+
+    private boolean mIsVisible = true;
 
     /*
     UI Bindings
@@ -96,6 +126,15 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
 
     @BindView(R.id.btn_end_export)
     Button mEndBtn;
+
+    @BindView(R.id.user_photo)
+    ImageView mUserImage;
+
+    @BindView(R.id.username)
+    TextView mUsername;
+
+    @BindView(R.id.subtitle)
+    TextView mSubtitle;
 
     @BindView(R.id.btn_start_export)
     Button mStartBtn;
@@ -148,6 +187,9 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     @BindView(R.id.account_status)
     Chip mAccountStatus;
 
+    @BindView(R.id.scrollview)
+    ScrollView mScrollView;
+
     /*
     Declarations
     */
@@ -160,6 +202,12 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     private File mCacheArchive = null;
     private BottomSheetBehavior mSheetBehavior;
 
+    private ImageView mProfilePhoto;
+    private Bitmap mSourcePhoto;
+    private Uri tmpProfilePhotoUri;
+
+    private final CompositeDisposable mDisposableBag = new CompositeDisposable();
+
     @Inject
     AccountService mAccountService;
 
@@ -170,13 +218,11 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
 
         hidePopWizard();
         if (getArguments() != null) {
-            String accountId = getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY);
+            String accountId = getArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY);
             if (accountId != null) {
                 presenter.setAccountId(accountId);
             }
         }
-
-        ((AccountEditionActivity) getActivity()).setOnBackPressedListener(this);
 
         mSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
@@ -194,24 +240,68 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
 
             }
         });
+
+        updateUserView();
+        mScrollView.getViewTreeObserver().addOnScrollChangedListener(this);
+    }
+
+    @Override
+    public void updateUserView() {
+        if (getActivity() == null || mAccountService.getCurrentAccount() == null) {
+            Log.e(TAG, "Not able to update navigation view");
+            return;
+        }
+
+        mDisposableBag.add(mAccountService
+                .getCurrentAccountSubject()
+                .switchMapSingle(account -> AvatarDrawable.load(getActivity(), account)
+                        .map(avatar -> new Pair<>(account, avatar)))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(d -> {
+                    mUsername.setText(getAccountAlias(d.first));
+                    mSubtitle.setText(getUri(d.first,  getActivity().getString(R.string.account_type_ip2ip)));
+                    mUserImage.setImageDrawable(d.second);
+                    accountChanged(d.first);
+                }, e -> Log.e(TAG, "Error loading avatar", e)));
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
-        if (requestCode == WRITE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            if (resultData != null) {
-                Uri uri = resultData.getData();
-                if (uri != null) {
-                    if (mCacheArchive != null) {
-                        AndroidFileUtils.moveToUri(requireContext().getContentResolver(), mCacheArchive, uri)
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(() -> {}, e -> {
-                                View v = getView();
-                                if (v != null)
-                                    Snackbar.make(v, "Can't export archive: " + e.getMessage(), Snackbar.LENGTH_LONG).show();
-                            });
+        switch (requestCode) {
+            case WRITE_REQUEST_CODE:
+                if (resultCode == Activity.RESULT_OK) {
+                    if (resultData != null) {
+                        Uri uri = resultData.getData();
+                        if (uri != null) {
+                            if (mCacheArchive != null) {
+                                AndroidFileUtils.moveToUri(requireContext().getContentResolver(), mCacheArchive, uri)
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(() -> {
+                                        }, e -> {
+                                            View v = getView();
+                                            if (v != null)
+                                                Snackbar.make(v, "Can't export archive: " + e.getMessage(), Snackbar.LENGTH_LONG).show();
+                                        });
+                            }
+                        }
                     }
                 }
-            }
+            break;
+            case HomeActivity.REQUEST_CODE_PHOTO:
+                if (resultCode == Activity.RESULT_OK) {
+                    if (tmpProfilePhotoUri == null) {
+                        if (resultData != null)
+                            updatePhoto((Bitmap) resultData.getExtras().get("data"));
+                    } else {
+                        updatePhoto(tmpProfilePhotoUri);
+                    }
+                }
+                tmpProfilePhotoUri = null;
+                break;
+            case HomeActivity.REQUEST_CODE_GALLERY:
+                if (resultCode == Activity.RESULT_OK && resultData != null) {
+                    updatePhoto(resultData.getData());
+                }
+                break;
         }
     }
 
@@ -242,7 +332,7 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
         mChangePasswordBtn.setText(mAccountHasPassword ? R.string.account_password_change : R.string.account_password_set);
 
         mAccountSwitch.setChecked(account.isEnabled());
-        mAccountNameTxt.setText(account.getAlias());
+        mAccountNameTxt.setText(getString(R.string.profile));
         mAccountIdTxt.setText(account.getUsername());
         mAccountId = account.getAccountID();
         mBestName = account.getRegisteredName();
@@ -291,6 +381,18 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
         mPasswordLayout.setVisibility(mAccountHasPassword ? View.VISIBLE : View.GONE);
         mAddAccountLayout.setVisibility(mAccountHasManager ? View.GONE : View.VISIBLE);
         mAccountOptionsLayout.setVisibility(mAccountHasManager ? View.GONE : View.VISIBLE);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((HomeActivity) getActivity()).setBottomSheetOnBackPressedListener(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        ((HomeActivity) getActivity()).setBottomSheetOnBackPressedListener(null);
     }
 
     /*
@@ -379,6 +481,38 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
         return false;
     }
 
+    @OnClick({R.id.profile_container, R.id.user_profile_edit})
+    public void profileContainerClicked() {
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        ViewGroup view = (ViewGroup) inflater.inflate(R.layout.dialog_profile, null);
+
+        final EditText editText = view.findViewById(R.id.user_name);
+        editText.setText(presenter.getAlias(mAccountService.getCurrentAccount()));
+        mProfilePhoto = view.findViewById(R.id.profile_photo);
+        mDisposableBag.add(AvatarDrawable.load(inflater.getContext(), mAccountService.getCurrentAccount())
+                .subscribe(a -> mProfilePhoto.setImageDrawable(a)));
+
+        ImageButton cameraView = view.findViewById(R.id.camera);
+        cameraView.setOnClickListener(v -> presenter.cameraClicked());
+
+        ImageButton gallery = view.findViewById(R.id.gallery);
+        gallery.setOnClickListener(v -> presenter.galleryClicked());
+
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.profile)
+                .setView(view)
+                .setNegativeButton(android.R.string.cancel, (dialog, which) -> dialog.cancel())
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                    if (mSourcePhoto != null) {
+                        presenter.saveVCard(mAccountService.getCurrentAccount(), editText.getText().toString().trim(), Single.just(mSourcePhoto).map(BitmapUtils::bitmapToPhoto));
+                        mSourcePhoto = null;
+                    } else {
+                        presenter.saveVCardFormattedName(editText.getText().toString().trim());
+                    }
+                })
+                .show();
+    }
+
     @OnClick(R.id.btn_start_export)
     void onClickStart() {
         mPasswordLayout.setError(null);
@@ -403,8 +537,8 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     @OnClick(R.id.register_name_btn)
     void showUsernameRegistrationPopup() {
         Bundle args = new Bundle();
-        args.putString(AccountEditionActivity.ACCOUNT_ID_KEY, getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY));
-        args.putBoolean(AccountEditionActivity.ACCOUNT_HAS_PASSWORD_KEY, mAccountHasPassword);
+        args.putString(AccountEditionFragment.ACCOUNT_ID_KEY, getArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY));
+        args.putBoolean(AccountEditionFragment.ACCOUNT_HAS_PASSWORD_KEY, mAccountHasPassword);
         RegisterNameDialog registrationDialog = new RegisterNameDialog();
         registrationDialog.setArguments(args);
         registrationDialog.setListener(this);
@@ -549,7 +683,7 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     public void onBackupAccount() {
         BackupAccountDialog dialog = new BackupAccountDialog();
         Bundle args = new Bundle();
-        args.putString(AccountEditionActivity.ACCOUNT_ID_KEY, getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY));
+        args.putString(AccountEditionFragment.ACCOUNT_ID_KEY, getArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY));
         dialog.setArguments(args);
         dialog.setListener(this);
         dialog.show(requireFragmentManager(), FRAGMENT_DIALOG_BACKUP);
@@ -581,8 +715,8 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     public void onPasswordChangeAsked() {
         ChangePasswordDialog dialog = new ChangePasswordDialog();
         Bundle args = new Bundle();
-        args.putString(AccountEditionActivity.ACCOUNT_ID_KEY, getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY));
-        args.putBoolean(AccountEditionActivity.ACCOUNT_HAS_PASSWORD_KEY, mAccountHasPassword);
+        args.putString(AccountEditionFragment.ACCOUNT_ID_KEY, getArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY));
+        args.putBoolean(AccountEditionFragment.ACCOUNT_HAS_PASSWORD_KEY, mAccountHasPassword);
         dialog.setArguments(args);
         dialog.setListener(this);
         dialog.show(requireFragmentManager(), FRAGMENT_DIALOG_PASSWORD);
@@ -611,4 +745,128 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
             dest.delete();
         presenter.downloadAccountsArchive(dest, password);
     }
+
+    @Override
+    public void gotToImageCapture() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        try {
+            Context context = requireContext();
+            File file = AndroidFileUtils.createImageFile(context);
+            Uri uri = FileProvider.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, file);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            tmpProfilePhotoUri = uri;
+        } catch (Exception e) {
+            Log.e(TAG, "Can't create temp file", e);
+        }
+        startActivityForResult(intent, HomeActivity.REQUEST_CODE_PHOTO);
+    }
+
+    @Override
+    public void askCameraPermission() {
+        requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, HomeActivity.REQUEST_PERMISSION_CAMERA);
+    }
+
+    @Override
+    public void goToGallery() {
+        try {
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, HomeActivity.REQUEST_CODE_GALLERY);
+        } catch (Exception e) {
+            Toast.makeText(requireContext(), R.string.gallery_error_message, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void askGalleryPermission() {
+        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, HomeActivity.REQUEST_PERMISSION_READ_STORAGE);
+    }
+
+    public void updatePhoto(Uri uriImage) {
+        mDisposableBag.add(AndroidFileUtils.loadBitmap(getActivity(), uriImage)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::updatePhoto, e -> Log.e(TAG, "Error loading image " + uriImage, e)));
+
+        updateUserView();
+    }
+
+    public void updatePhoto(Bitmap image) {
+        mSourcePhoto = image;
+        AvatarDrawable avatarDrawable = new AvatarDrawable.Builder()
+                        .withPhoto(image)
+                        .withNameData(null, mAccountService.getCurrentAccount().getRegisteredName())
+                        .withId(mAccountService.getCurrentAccount().getUri())
+                        .withCircleCrop(true)
+                        .build(getContext());
+        mDisposableBag.add(VCardServiceImpl.loadProfile(mAccountService.getCurrentAccount())
+                .map(profile -> avatarDrawable)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(avatar -> mProfilePhoto.setImageDrawable(avatar), e-> Log.e(TAG, "Error loading image", e)));
+
+        updateUserView();
+    }
+
+    public String getAccountAlias(Account account) {
+        if (account == null) {
+            cx.ring.utils.Log.e(TAG, "Not able to get account alias");
+            return null;
+        }
+        String alias = getAlias(account);
+        return (alias == null) ? account.getAlias() : alias;
+    }
+
+    public String getAlias(Account account) {
+        if (account == null) {
+            cx.ring.utils.Log.e(TAG, "Not able to get alias");
+            return null;
+        }
+        VCard vcard = account.getProfile();
+        if (vcard != null) {
+            FormattedName name = vcard.getFormattedName();
+            if (name != null) {
+                String name_value = name.getValue();
+                if (name_value != null && !name_value.isEmpty()) {
+                    return name_value;
+                }
+            }
+        }
+        return null;
+    }
+
+    public String getUri(Account account, CharSequence defaultNameSip) {
+        if (account.isIP2IP()) {
+            return defaultNameSip.toString();
+        }
+        return account.getDisplayUri();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case HomeActivity.REQUEST_PERMISSION_CAMERA:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    presenter.cameraClicked();
+                }
+                break;
+            case HomeActivity.REQUEST_PERMISSION_READ_STORAGE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    presenter.galleryClicked();
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onScrollChanged() {
+        if (mIsVisible && mScrollView != null) {
+            ((HomeActivity) getActivity()).setToolbarElevation(mScrollView.canScrollVertically(SCROLL_DIRECTION_UP));
+        }
+    }
+
+    public void setFragmentVisibility(boolean isVisible) {
+        mIsVisible = isVisible;
+    }
+
 }
