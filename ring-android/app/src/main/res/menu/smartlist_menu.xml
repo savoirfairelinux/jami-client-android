@@ -32,4 +32,26 @@
         app:showAsAction="always"
         app:iconTint="?attr/colorControlNormal"/>
 
+    <item
+        android:id="@+id/empty"
+        android:orderInCategory="101"
+        app:showAsAction="always"
+        android:title=""
+        android:icon="@drawable/ic_baseline_more_vert"
+        app:iconTint="?attr/colorControlNormal">
+
+        <menu>
+
+            <item android:id="@+id/menu_settings"
+                app:showAsAction="ifRoom"
+                android:title="@string/menu_item_settings" />
+
+            <item android:id="@+id/menu_about"
+                app:showAsAction="ifRoom"
+                android:title="@string/menu_item_about" />
+
+        </menu>
+
+    </item>
+
 </menu>

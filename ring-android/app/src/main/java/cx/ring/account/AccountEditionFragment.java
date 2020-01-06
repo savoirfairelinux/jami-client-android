@@ -23,6 +23,7 @@ package cx.ring.account;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,42 +32,42 @@ import androidx.annotation.StringRes;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.tabs.TabLayout;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
-
-import javax.inject.Inject;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import cx.ring.R;
-import cx.ring.application.JamiApplication;
+import cx.ring.client.HomeActivity;
 import cx.ring.contactrequests.BlackListFragment;
+import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.fragments.AdvancedAccountFragment;
 import cx.ring.fragments.GeneralAccountFragment;
 import cx.ring.fragments.MediaPreferenceFragment;
 import cx.ring.fragments.SecurityAccountFragment;
+import cx.ring.mvp.BaseSupportFragment;
+import cx.ring.utils.DeviceUtils;
 
-public class AccountEditionActivity extends AppCompatActivity implements AccountEditionView {
+public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPresenter> implements AccountEditionView {
 
-    public static final String ACCOUNT_ID_KEY = AccountEditionActivity.class.getCanonicalName() + "accountid";
-    public static final String ACCOUNT_HAS_PASSWORD_KEY = AccountEditionActivity.class.getCanonicalName() + "hasPassword";
+    public static final String ACCOUNT_ID_KEY = AccountEditionFragment.class.getCanonicalName() + "accountid";
+    public static final String ACCOUNT_HAS_PASSWORD_KEY = AccountEditionFragment.class.getCanonicalName() + "hasPassword";
 
-    public static final String TAG = AccountEditionActivity.class.getSimpleName();
-
-    @Inject
-    protected AccountEditionPresenter mEditionPresenter;
+    public static final String TAG = AccountEditionFragment.class.getSimpleName();
+    public static final String ACCOUNT_ID = TAG + "accountID";
 
     @BindView(R.id.pager)
     protected ViewPager mViewPager;
@@ -81,18 +82,31 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
     private MenuItem mItemBlacklist;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onViewCreated(view, savedInstanceState);
 
-        setContentView(R.layout.activity_account_settings);
+        String accountId = getArguments().getString(ACCOUNT_ID);
 
-        ButterKnife.bind(this);
+        presenter.init(accountId);
 
-        // dependency injection
-        JamiApplication.getInstance().getRingInjectionComponent().inject(this);
-        mEditionPresenter.bindView(this);
-        String accountId = getIntent().getData().getLastPathSegment();
-        mEditionPresenter.init(accountId);
+        if (DeviceUtils.isTablet(requireContext())) {
+            Toolbar toolbar = getActivity().findViewById(R.id.main_toolbar);
+            TextView title = toolbar.findViewById(R.id.contact_title);
+            ImageView logo = toolbar.findViewById(R.id.contact_image);
+
+            logo.setVisibility(View.GONE);
+            title.setText(R.string.menu_item_settings);
+            title.setTextSize(19);
+            title.setTypeface(null, Typeface.BOLD);
+
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) title.getLayoutParams();
+            params.removeRule(RelativeLayout.ALIGN_TOP);
+            params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+            title.setLayoutParams(params);
+        } else {
+            ((HomeActivity) getActivity()).setToolbarState(R.string.menu_item_settings);
+        }
     }
 
     @Override
@@ -103,7 +117,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         Bundle args = new Bundle();
         args.putString(ACCOUNT_ID_KEY, accountId);
         ringAccountSummaryFragment.setArguments(args);
-        getSupportFragmentManager().beginTransaction()
+        getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, ringAccountSummaryFragment, RingAccountSummaryFragment.TAG)
                 .commit();
     }
@@ -111,9 +125,8 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
     @Override
     public void initViewPager(String accountId, boolean isRing) {
         mViewPager.setOffscreenPageLimit(4);
-        mViewPager.setAdapter(new PreferencesPagerAdapter(getSupportFragmentManager(), AccountEditionActivity.this, accountId, isRing));
-
         mSlidingTabLayout.setupWithViewPager(mViewPager);
+        mViewPager.setAdapter(new PreferencesPagerAdapter(getActivity().getSupportFragmentManager(), getActivity(), accountId, isRing));
     }
 
     @Override
@@ -136,7 +149,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         Bundle args = new Bundle();
         args.putString(ACCOUNT_ID_KEY, accountId);
         blackListFragment.setArguments(args);
-        getSupportFragmentManager().beginTransaction()
+        getActivity().getSupportFragmentManager().beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .addToBackStack(BlackListFragment.TAG)
                 .replace(R.id.fragment_container, blackListFragment, BlackListFragment.TAG)
@@ -147,49 +160,48 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
         inflater.inflate(R.menu.account_edition, menu);
         mItemAdvanced = menu.findItem(R.id.menuitem_advanced);
         mItemBlacklist = menu.findItem(R.id.menuitem_blacklist);
-        return true;
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
+    public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        mEditionPresenter.prepareOptionsMenu();
-        return true;
+        presenter.prepareOptionsMenu();
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
-        mEditionPresenter.bindView(this);
+        presenter.bindView(this);
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
-        mEditionPresenter.unbindView();
+        presenter.unbindView();
     }
 
-    @Override
-    public void onBackPressed() {
-        if (frameLayout.getVisibility() == View.VISIBLE) {
-            super.onBackPressed();
-        } else {
-            frameLayout.setVisibility(View.VISIBLE);
-            mViewPager.setVisibility(View.GONE);
-            mSlidingTabLayout.setVisibility(View.GONE);
-        }
-    }
+//    @Override
+//    public void onBackPressed() {
+//        if (frameLayout.getVisibility() == View.VISIBLE) {
+//            super.onBackPressed();
+//        } else {
+//            frameLayout.setVisibility(View.VISIBLE);
+//            mViewPager.setVisibility(View.GONE);
+//            mSlidingTabLayout.setVisibility(View.GONE);
+//        }
+//        presenter.unbindView();
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                onBackPressed();
+//                onBackPressed();
                 return true;
             case R.id.menuitem_delete:
                 AlertDialog deleteDialog = createDeleteDialog();
@@ -201,7 +213,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
                 frameLayout.setVisibility(View.GONE);
                 break;
             case R.id.menuitem_blacklist:
-                mEditionPresenter.goToBlackList();
+                presenter.goToBlackList();
             default:
                 break;
         }
@@ -210,19 +222,19 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
 
     @NonNull
     private AlertDialog createDeleteDialog() {
-        AlertDialog alertDialog = new MaterialAlertDialogBuilder(this)
+        AlertDialog alertDialog = new MaterialAlertDialogBuilder(getActivity())
                 .setMessage(R.string.account_delete_dialog_message)
                 .setTitle(R.string.account_delete_dialog_title)
-                .setPositiveButton(android.R.string.ok, (dialog, whichButton) -> mEditionPresenter.removeAccount())
+                .setPositiveButton(android.R.string.ok, (dialog, whichButton) -> presenter.removeAccount())
                 .setNegativeButton(android.R.string.cancel, null)
                 .create();
-        alertDialog.setOwnerActivity(AccountEditionActivity.this);
+        alertDialog.setOwnerActivity(getActivity());
         return alertDialog;
     }
 
     @Override
     public void goToWizardActivity() {
-        Intent intent = new Intent(this, AccountWizardActivity.class);
+        Intent intent = new Intent(getActivity(), AccountWizardActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
@@ -230,18 +242,22 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
 
     @Override
     public void exit() {
-        finish();
+//        finish();
     }
 
     @Override
     public void displayAccountName(final String name) {
-        Toolbar toolbar = findViewById(R.id.main_toolbar);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(name);
-        }
+        //todo
+    }
+
+    @Override
+    public int getLayout() {
+        return R.layout.fragment_account_settings;
+    }
+
+    @Override
+    public void injectFragment(JamiInjectionComponent component) {
+        component.inject(this);
     }
 
     private static class PreferencesPagerAdapter extends FragmentPagerAdapter {
