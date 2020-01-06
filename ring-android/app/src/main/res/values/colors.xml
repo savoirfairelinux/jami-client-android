@@ -2,6 +2,7 @@
 <resources>
     <color name="background">@color/grey_25</color>
     <color name="surface">@color/grey_150</color>
+    <color name="bt">@color/white</color>
 
     <color name="colorPrimary">@color/color_primary_dark</color>
     <color name="colorOnPrimary">@color/white</color>
@@ -21,7 +22,7 @@
     <color name="conversation_primary_selection">@color/grey_700</color>
     <color name="conversation_primary_selection_handles">@color/blue_grey_500</color>
 
-    <color name="darker_gray">#aaaaaa</color>
+    <color name="darker_gray">#c4c4c4</color>
     <color name="lighter_gray">#d3d3d3</color>
     <color name="light">#eee</color>
     <color name="transparent">#00000000</color>
