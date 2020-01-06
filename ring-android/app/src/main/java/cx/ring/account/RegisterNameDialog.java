@@ -128,8 +128,8 @@ public class RegisterNameDialog extends DialogFragment {
         boolean hasPassword = true;
         Bundle args = getArguments();
         if (args != null) {
-            accountId = args.getString(AccountEditionActivity.ACCOUNT_ID_KEY, accountId);
-            hasPassword = args.getBoolean(AccountEditionActivity.ACCOUNT_HAS_PASSWORD_KEY, true);
+            accountId = args.getString(AccountEditionFragment.ACCOUNT_ID_KEY, accountId);
+            hasPassword = args.getBoolean(AccountEditionFragment.ACCOUNT_HAS_PASSWORD_KEY, true);
         }
 
         mUsernameTxt.setFilters(new InputFilter[]{new RegisteredNameFilter()});

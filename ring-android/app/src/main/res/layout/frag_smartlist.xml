@@ -125,13 +125,13 @@ along with this program; if not, write to the Free Software
             android:layout_height="wrap_content"
             android:layout_alignWithParentIfMissing="false"
             android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
+            android:layout_margin="@dimen/fab_margin_mini"
             android:elevation="6dp"
             android:text="@string/start_conversation"
             app:elevation="6dp"
             app:icon="@drawable/baseline_add_24"
             app:pressedTranslationZ="12dp"
-            app:layout_anchorGravity="bottom|right|end"/>
+            app:layout_anchorGravity="bottom|end" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </RelativeLayout>
