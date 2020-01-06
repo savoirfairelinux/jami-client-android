@@ -37,7 +37,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import cx.ring.R;
-import cx.ring.account.AccountEditionActivity;
+import cx.ring.account.AccountEditionFragment;
 import cx.ring.application.JamiApplication;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.AccountCredentials;
@@ -108,7 +108,7 @@ public class SecurityAccountFragment extends BasePreferenceFragment<SecurityAcco
         credentialsCategory.findPreference("Add.credentials").setOnPreferenceChangeListener(addCredentialListener);
         tlsCategory = (PreferenceCategory) findPreference("TLS.category");
 
-        presenter.init(getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY));
+        presenter.init(getArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY));
     }
 
     @Override

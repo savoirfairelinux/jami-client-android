@@ -21,9 +21,11 @@ package cx.ring.contactrequests;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -31,9 +33,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import cx.ring.R;
@@ -77,7 +82,6 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_contact_request);
         return super.onCreateView(inflater, parent, savedInstanceState);
     }
 
@@ -98,11 +102,6 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
         if (arguments != null && arguments.containsKey(ACCOUNT_ID)) {
             presenter.updateAccount(getArguments().getString(ACCOUNT_ID));
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     @Override
@@ -135,6 +134,8 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
             LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
             mRequestsList.setLayoutManager(mLayoutManager);
         }
+
+        updateBadge();
     }
 
     @Override
@@ -165,5 +166,9 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
     @Override
     public void onItemLongClick(SmartListViewModel smartListViewModel) {
 
+    }
+
+    private void updateBadge() {
+        ((HomeActivity) Objects.requireNonNull(getActivity())).setBadge(R.id.navigation_requests, mAdapter.getItemCount());
     }
 }

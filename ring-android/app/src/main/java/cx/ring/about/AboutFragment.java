@@ -21,6 +21,7 @@ package cx.ring.about;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -30,9 +31,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cx.ring.BuildConfig;
@@ -41,6 +46,7 @@ import cx.ring.client.HomeActivity;
 import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.mvp.RootPresenter;
+import cx.ring.utils.DeviceUtils;
 
 public class AboutFragment extends BaseSupportFragment<RootPresenter> {
 
@@ -58,7 +64,6 @@ public class AboutFragment extends BaseSupportFragment<RootPresenter> {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_about);
         return super.onCreateView(inflater, parent, savedInstanceState);
     }
 
@@ -71,6 +76,23 @@ public class AboutFragment extends BaseSupportFragment<RootPresenter> {
     @Override
     public void onResume() {
         super.onResume();
+        if (DeviceUtils.isTablet(getContext())) {
+            Toolbar toolbar = getActivity().findViewById(R.id.main_toolbar);
+            TextView title = toolbar.findViewById(R.id.contact_title);
+            ImageView logo = toolbar.findViewById(R.id.contact_image);
+
+            logo.setVisibility(View.GONE);
+            title.setText(R.string.menu_item_about);
+            title.setTextSize(19);
+            title.setTypeface(null, Typeface.BOLD);
+
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) title.getLayoutParams();
+            params.removeRule(RelativeLayout.ALIGN_TOP);
+            params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+            title.setLayoutParams(params);
+        } else {
+            ((HomeActivity) getActivity()).setToolbarState(R.string.menu_item_about);
+        }
     }
 
     @Override
