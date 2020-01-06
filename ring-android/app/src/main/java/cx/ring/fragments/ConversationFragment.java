@@ -27,7 +27,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -41,7 +41,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -53,6 +56,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.FileProvider;
 import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 
@@ -90,6 +95,7 @@ import cx.ring.services.NotificationService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
+import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.MediaButtonsHelper;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.Completable;
@@ -213,8 +219,15 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             insets.consumeSystemWindowInsets();
             return insets;
         });
-        int paddingTop = binding.conversationLayout.getPaddingTop();
-        ViewCompat.setOnApplyWindowInsetsListener(binding.conversationLayout, (v, insets) -> {
+        View layout = binding.conversationLayout;
+
+        // remove action bar height for tablet layout
+        if (DeviceUtils.isTablet(getContext())) {
+            layout.setPadding(layout.getPaddingLeft(), 0, layout.getPaddingRight(), layout.getPaddingBottom());
+        }
+
+        int paddingTop = layout.getPaddingTop();
+        ViewCompat.setOnApplyWindowInsetsListener(layout, (v, insets) -> {
             v.setPadding(
                     v.getPaddingLeft(),
                     paddingTop + insets.getSystemWindowInsetTop(),
@@ -695,7 +708,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
                 .doOnSuccess(d -> {
                     mConversationAvatar = (AvatarDrawable) d;
                     mParticipantAvatars.put(contact.getPrimaryNumber(),
-                                            new AvatarDrawable((AvatarDrawable) d));
+                            new AvatarDrawable((AvatarDrawable) d));
                 })
                 .flatMapObservable(d -> contact.getUpdatesSubject())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -775,17 +788,56 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         if (actionBar == null) {
             return;
         }
+
         Context context = actionBar.getThemedContext();
         String displayName = contact.getDisplayName();
         String identity = contact.getRingUsername();
-        if (identity != null && !identity.equals(displayName)) {
-            actionBar.setSubtitle(identity);
+
+        if (DeviceUtils.isTablet(getContext())) {
+            Toolbar toolbar = getActivity().findViewById(R.id.main_toolbar);
+            TextView title = toolbar.findViewById(R.id.contact_title);
+            TextView subtitle = toolbar.findViewById(R.id.contact_subtitle);
+            ImageView logo = toolbar.findViewById(R.id.contact_image);
+
+            if (!((HomeActivity) getActivity()).isConversationSelected()) {
+                title.setText("");
+                subtitle.setText("");
+                logo.setImageDrawable(null);
+
+                return;
+            }
+
+            logo.setVisibility(View.VISIBLE);
+            title.setText(displayName);
+            title.setTextSize(15);
+            title.setTypeface(null, Typeface.NORMAL);
+
+            if (identity != null && !identity.equals(displayName)) {
+                subtitle.setText(identity);
+
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) title.getLayoutParams();
+                params.addRule(RelativeLayout.ALIGN_TOP, R.id.contact_image);
+                title.setLayoutParams(params);
+            } else {
+                subtitle.setText("");
+
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) title.getLayoutParams();
+                params.removeRule(RelativeLayout.ALIGN_TOP);
+                params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+                title.setLayoutParams(params);
+            }
+
+            logo.setImageDrawable(mConversationAvatar);
+        } else {
+            if (identity != null && !identity.equals(displayName)) {
+                actionBar.setSubtitle(identity);
+            }
+            actionBar.setTitle(displayName);
+            int targetSize = (int) (AvatarFactory.SIZE_AB * context.getResources().getDisplayMetrics().density);
+            mConversationAvatar.setInSize(targetSize);
+            actionBar.setLogo(null);
+            actionBar.setLogo(mConversationAvatar);
         }
-        actionBar.setTitle(displayName);
-        int targetSize = (int) (AvatarFactory.SIZE_AB * context.getResources().getDisplayMetrics().density);
-        mConversationAvatar.setInSize(targetSize);
-        actionBar.setLogo(null);
-        actionBar.setLogo(mConversationAvatar);
     }
 
     public void blockContactRequest() {
