@@ -21,7 +21,7 @@ package cx.ring.dependencyinjection;
 
 import javax.inject.Singleton;
 
-import cx.ring.account.AccountEditionActivity;
+import cx.ring.account.AccountEditionFragment;
 import cx.ring.account.AccountWizardActivity;
 import cx.ring.account.HomeAccountCreationFragment;
 import cx.ring.account.JamiAccountConnectFragment;
@@ -51,7 +51,6 @@ import cx.ring.fragments.ShareWithFragment;
 import cx.ring.fragments.SmartListFragment;
 import cx.ring.history.DatabaseHelper;
 import cx.ring.launch.LaunchActivity;
-import cx.ring.navigation.HomeNavigationFragment;
 import cx.ring.service.BootReceiver;
 import cx.ring.service.CallNotificationService;
 import cx.ring.service.DRingService;
@@ -93,15 +92,13 @@ import dagger.Component;
 public interface JamiInjectionComponent {
     void inject(JamiApplication app);
 
-    void inject(HomeNavigationFragment view);
-
     void inject(HomeActivity activity);
 
     void inject(DatabaseHelper helper);
 
     void inject(AccountWizardActivity activity);
 
-    void inject(AccountEditionActivity activity);
+    void inject(AccountEditionFragment activity);
 
     void inject(RingtoneActivity activity);
 
