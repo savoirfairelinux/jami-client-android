@@ -35,4 +35,7 @@ public interface AccountEditionView {
     void showBlacklistOption(boolean show);
 
     void goToBlackList(String accountId);
+
+    void displaySIPView(String accountID);
+
 }

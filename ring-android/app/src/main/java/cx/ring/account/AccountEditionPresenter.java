@@ -41,7 +41,7 @@ public class AccountEditionPresenter extends RootPresenter<AccountEditionView> {
 
     public void init(String accountId) {
         final AccountEditionView view = getView();
-        mAccount = accountId == null ? null : mAccountService.getAccount(accountId);
+        mAccount = getAccount(accountId);
         if (mAccount == null) {
             if (view != null)
                 view.exit();
@@ -50,11 +50,24 @@ public class AccountEditionPresenter extends RootPresenter<AccountEditionView> {
         view.displayAccountName(mAccount.getAlias());
         if (mAccount.isRing()) {
             view.displaySummary(mAccount.getAccountID());
+        } else {
+            view.displaySIPView(mAccount.getAccountID());
         }
         view.initViewPager(mAccount.getAccountID(), mAccount.isRing());
         mCompositeDisposable.add(mAccountService.getObservableAccount(accountId)
                 .observeOn(mUiScheduler)
                 .subscribe(account -> getView().displayAccountName(account.getAlias())));
+
+    }
+
+    public void onAccountChanged() {
+        mCompositeDisposable.add(mAccountService.getCurrentAccountSubject()
+                .observeOn(mUiScheduler)
+                .subscribe(account -> {
+                    if (mAccount.getAccountID() != account.getAccountID()) {
+                        init(account.getAccountID());
+                    }
+                }));
     }
 
     public void goToBlackList() {
@@ -77,4 +90,9 @@ public class AccountEditionPresenter extends RootPresenter<AccountEditionView> {
             getView().showBlacklistOption(mAccount.isRing());
         }
     }
+
+    public Account getAccount(String accountId) {
+        return accountId == null ? null : mAccountService.getAccount(accountId);
+    }
+
 }
