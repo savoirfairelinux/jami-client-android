@@ -57,9 +57,8 @@ public class ContactRequestsPresenter extends RootPresenter<ContactRequestsView>
     @Override
     public void bindView(ContactRequestsView view) {
         super.bindView(view);
-        mCompositeDisposable.add(mAccount
-                .distinctUntilChanged()
-                .flatMapSingle(mConversationFacade::getAccountSubject)
+        mCompositeDisposable.add(mConversationFacade
+                .getCurrentAccountSubject()
                 .switchMap(a -> a
                         .getPendingSubject()
                         .map(pending -> {
