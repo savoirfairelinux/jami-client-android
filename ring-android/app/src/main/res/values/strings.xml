@@ -238,7 +238,7 @@ along with this program; if not, write to the Free Software
     <string name="wizard_skip">Skip</string>
 
     <!-- MenuHeaderView -->
-    <string name="profile">My profile</string>
+    <string name="profile">Profile</string>
     <string name="profile_message_warning">Your profile is only shared with your contacts</string>
     <string name="open_the_gallery">Open the gallery</string>
     <string name="take_a_photo">Take a photo</string>
@@ -315,5 +315,10 @@ along with this program; if not, write to the Free Software
     <string name="menu_delete">Delete</string>
     <string name="pref_darkTheme_title">Dark theme</string>
     <string name="pref_darkTheme_summary">Always enable dark theme instead of using system behavior</string>
+
+    <!-- Bottom Navigation -->
+    <string name="navigation_item_conversation">Conversations</string>
+    <string name="navigation_item_contact_request">Contact requests</string>
+    <string name="navigation_item_account">Account</string>
 
 </resources>

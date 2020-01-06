@@ -33,7 +33,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -52,7 +51,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import cx.ring.R;
-import cx.ring.account.AccountEditionActivity;
+import cx.ring.account.AccountEditionFragment;
 import cx.ring.adapters.RingtoneAdapter;
 import cx.ring.application.JamiApplication;
 import cx.ring.model.Account;
@@ -87,7 +86,7 @@ public class RingtoneActivity extends AppCompatActivity {
         JamiApplication.getInstance().getRingInjectionComponent().inject(this);
         setContentView(R.layout.activity_ringtone);
         super.onCreate(savedInstanceState);
-        mAccount = mAccountService.getAccount(getIntent().getExtras().getString(AccountEditionActivity.ACCOUNT_ID_KEY));
+        mAccount = mAccountService.getAccount(getIntent().getExtras().getString(AccountEditionFragment.ACCOUNT_ID_KEY));
 
         /*Toolbar toolbar = findViewById(R.id.ringtoneToolbar);
         toolbar.setNavigationOnClickListener(view -> finish());*/
