@@ -68,7 +68,7 @@ public class BackupAccountDialog extends DialogFragment {
 
         Bundle args = getArguments();
         if (args != null) {
-            mAccountId = args.getString(AccountEditionActivity.ACCOUNT_ID_KEY);
+            mAccountId = args.getString(AccountEditionFragment.ACCOUNT_ID_KEY);
         }
 
         final AlertDialog result = new MaterialAlertDialogBuilder(requireContext())
