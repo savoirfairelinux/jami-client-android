@@ -20,30 +20,30 @@
 package cx.ring.client;
 
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 
-import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.annotation.NonNull;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.core.util.Pair;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -54,27 +54,30 @@ import butterknife.ButterKnife;
 import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.about.AboutFragment;
+import cx.ring.account.AccountEditionFragment;
 import cx.ring.account.AccountWizardActivity;
 import cx.ring.application.JamiApplication;
 import cx.ring.contactrequests.ContactRequestsFragment;
-import cx.ring.fragments.AccountsManagementFragment;
+import cx.ring.contacts.AvatarFactory;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.fragments.SmartListFragment;
+import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.interfaces.Colorable;
 import cx.ring.model.Account;
-import cx.ring.model.AccountConfig;
-import cx.ring.navigation.HomeNavigationFragment;
 import cx.ring.service.DRingService;
 import cx.ring.services.AccountService;
 import cx.ring.services.NotificationService;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.settings.VideoSettingsFragment;
+import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
+import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class HomeActivity extends AppCompatActivity implements HomeNavigationFragment.OnNavigationSectionSelected, Colorable {
+public class HomeActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,
+        Spinner.OnItemSelectedListener, Colorable {
     static final String TAG = HomeActivity.class.getSimpleName();
 
     public static final int REQUEST_CODE_CALL = 3;
@@ -92,40 +95,39 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
     public static final String SETTINGS_TAG = "Prefs";
     public static final String VIDEO_SETTINGS_TAG = "VideoPrefs";
     public static final String ACTION_PRESENT_TRUST_REQUEST_FRAGMENT = BuildConfig.APPLICATION_ID + "presentTrustRequestFragment";
-    private static final String NAVIGATION_TAG = "Navigation";
 
     protected Fragment fContent;
-    protected HomeNavigationFragment fNavigation;
     protected ConversationFragment fConversation;
+
+    private ToolbarSpinnerAdapter mAccountAdapter;
+    private BackHandlerInterface mBottomSheetBackHandlerInterface;
+    private BackHandlerInterface mAccountFragmentBackHandlerInterface;
 
     @Inject
     AccountService mAccountService;
     @Inject
     NotificationService mNotificationService;
-    @BindView(R.id.drawer_layout)
-    DrawerLayout mNavigationDrawer;
 
     @BindView(R.id.main_toolbar)
     Toolbar mToolbar;
-    @BindView(R.id.app_bar)
-    AppBarLayout mAppBar;
-    @BindView(R.id.toolbar_layout)
-    CollapsingToolbarLayout mToolbarLayout;
 
-    @BindView(R.id.action_button)
-    FloatingActionButton actionButton;
+    @BindView(R.id.spinner_toolbar)
+    Spinner mToolbarSpinner;
 
-    @BindView(R.id.content_frame)
-    ViewGroup mFrameLayout;
+    @BindView(R.id.navigation_view)
+    BottomNavigationView mBottomNavigationView;
+
+    @Inject
+    @Named("UiScheduler")
+    protected Scheduler mUiScheduler;
 
     private boolean mIsMigrationDialogAlreadyShowed;
-    private ActionBarDrawerToggle mDrawerToggle;
-    private Boolean isDrawerLocked = false;
     private String mAccountWithPendingrequests = null;
-    private float mToolbarSize;
-    private float mToolbarElevation;
 
     private final CompositeDisposable mDisposable = new CompositeDisposable();
+    private final CompositeDisposable mAccountCheckDisposable = new CompositeDisposable();
+
+    private boolean conversationSelected = false;
 
     /* called before activity is killed, e.g. rotation */
     @Override
@@ -136,14 +138,11 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mDisposable.add(mAccountCheckDisposable);
+
         JamiApplication.getInstance().startDaemon();
-        mToolbarSize = getResources().getDimension(R.dimen.abc_action_bar_default_height_material);
-        mToolbarElevation = getResources().getDimension(R.dimen.toolbar_elevation);
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        if (savedInstanceState != null) {
-            fNavigation = (HomeNavigationFragment) fragmentManager.findFragmentByTag(NAVIGATION_TAG);
-        }
         setContentView(R.layout.activity_home);
 
         ButterKnife.bind(this);
@@ -151,53 +150,26 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
         // dependency injection
         JamiApplication.getInstance().getRingInjectionComponent().inject(this);
 
-        // Add a default title to make sure that the title is enabled for the actionbar
-        mToolbar.setTitle("Jami");
         setSupportActionBar(mToolbar);
 
-        actionButton.hide();
-
-        mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
-                mNavigationDrawer, /* DrawerLayout object */
-                //  R.drawable.ic_drawer, /* nav drawer image to replace 'Up' caret */
-                R.string.drawer_open, /* "open drawer" description for accessibility */
-                R.string.drawer_close /* "close drawer" description for accessibility */
-        ) {
-            @Override
-            public void onDrawerClosed(View view) {
-                invalidateOptionsMenu();
-                if (fNavigation != null) {
-                    fNavigation.displayNavigation();
-                }
-            }
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                invalidateOptionsMenu();
-            }
-        };
-
-        if (mFrameLayout.getPaddingLeft() == (int) getResources().getDimension(R.dimen.drawer_size)) {
-            mNavigationDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
-            mNavigationDrawer.setScrimColor(Color.TRANSPARENT);
-            isDrawerLocked = true;
+        ActionBar ab = getSupportActionBar();
+        if (ab != null) {
+            ab.setTitle("");
         }
 
-        if (!isDrawerLocked) {
-            mNavigationDrawer.addDrawerListener(mDrawerToggle);
-            ActionBar supportActionBar = getSupportActionBar();
-            if (supportActionBar != null) {
-                supportActionBar.setDisplayHomeAsUpEnabled(true);
-                supportActionBar.setHomeButtonEnabled(true);
-            }
-        }
+        mBottomNavigationView.setOnNavigationItemSelectedListener(this);
+        mBottomNavigationView.getMenu().getItem(1).setChecked(true);
 
-        if (fNavigation == null && savedInstanceState == null) {
-            fNavigation = new HomeNavigationFragment();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.navigation_container, fNavigation, NAVIGATION_TAG)
-                    .commit();
-        }
+        showProfileInfo();
+
+        mDisposable.add(mAccountService.getProfileAccountList()
+                .observeOn(mUiScheduler)
+                .subscribe(accounts -> {
+                    mAccountAdapter = new ToolbarSpinnerAdapter(HomeActivity.this, R.layout.item_toolbar_spinner, accounts);
+                    mToolbarSpinner.setAdapter(mAccountAdapter);
+                }, e ->  cx.ring.utils.Log.e(TAG, "Error loading account list !", e)));
+
+        mToolbarSpinner.setOnItemSelectedListener(this);
 
         // if app opened from notification display trust request fragment when mService will connected
         Intent intent = getIntent();
@@ -212,9 +184,6 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
             handleShareIntent(intent);
         }
         fContent = fragmentManager.findFragmentById(R.id.main_frame);
-        if (fNavigation != null) {
-            onNavigationViewReady();
-        }
         if (fContent == null || Intent.ACTION_SEARCH.equals(action)) {
             fContent = new SmartListFragment();
             fragmentManager.beginTransaction().replace(R.id.main_frame, fContent, HOME_TAG).addToBackStack(HOME_TAG).commitAllowingStateLoss();
@@ -232,6 +201,7 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
     protected void onDestroy() {
         super.onDestroy();
         fContent = null;
+        mBottomSheetBackHandlerInterface = null;
     }
 
     private void handleShareIntent(Intent intent) {
@@ -263,19 +233,15 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
             handleShareIntent(intent);
             return;
         } else if (Intent.ACTION_SEARCH.equals(action)) {
-            goToHome();
             if (fContent instanceof SmartListFragment) {
                 ((SmartListFragment)fContent).handleIntent(intent);
             }
         }
+
         if (!DeviceUtils.isTablet(this) || !DRingService.ACTION_CONV_ACCEPT.equals(action)) {
             return;
         }
 
-        if (!getSupportFragmentManager().findFragmentByTag(HOME_TAG).isVisible()) {
-            fNavigation.selectSection(HomeNavigationFragment.Section.HOME);
-            onNavigationSectionSelected(HomeNavigationFragment.Section.HOME);
-        }
         if (fContent instanceof SmartListFragment) {
             Bundle bundle = new Bundle();
             bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, intent.getStringExtra(ConversationFragment.KEY_CONTACT_RING_ID));
@@ -292,61 +258,49 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
                 .setTitle(R.string.account_migration_title_dialog)
                 .setMessage(R.string.account_migration_message_dialog)
                 .setIcon(R.drawable.baseline_warning_24)
-                .setPositiveButton(android.R.string.ok, (dialog, which) -> fNavigation.selectSection(HomeNavigationFragment.Section.MANAGE))
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> mBottomNavigationView.setSelectedItemId(R.id.navigation_settings))
                 .setNegativeButton(android.R.string.cancel, null)
                 .show();
     }
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
+    public void setToolbarState(int titleRes) {
+        setToolbarState(getString(titleRes) , null);
     }
 
-    @Override
-    public void onConfigurationChanged(@NonNull Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
-    }
-
-    public void setToolbarTop(boolean top) {
-        if (top) {
-            mAppBar.setElevation(0);
-        } else {
-            mAppBar.setElevation(mToolbarElevation);
-        }
-    }
-
-    public void setToolbarState(boolean doubleHeight, int titleRes) {
-        ActionBar ab = getSupportActionBar();
-        if (ab != null)
-            ab.setIcon(null);
+    public void setToolbarState(String title, String subtitle) {
         mToolbar.setLogo(null);
-        if (doubleHeight) {
-            mAppBar.setElevation(mToolbarElevation);
-            mToolbarLayout.setTitleEnabled(true);
-            mToolbarLayout.setTitle(getString(titleRes));
+        mToolbar.setTitle(title);
+
+        if (subtitle != null) {
+            mToolbar.setSubtitle(subtitle);
         } else {
-            mAppBar.setElevation(0);
-            mToolbarLayout.setTitleEnabled(false);
-            mToolbar.setTitle(getString(titleRes));
+            mToolbar.setSubtitle(null);
         }
-        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) mAppBar.getLayoutParams();
-        params.height = doubleHeight ? (int) (2.01 * mToolbarSize) : CoordinatorLayout.LayoutParams.WRAP_CONTENT;
-        mAppBar.setLayoutParams(params);
-        mAppBar.setExpanded(doubleHeight);
     }
 
-    public FloatingActionButton getActionButton() {
-        return actionButton;
+    private void showProfileInfo() {
+        mToolbarSpinner.setVisibility(View.VISIBLE);
+        mToolbar.setTitle(null);
+        mToolbar.setSubtitle(null);
+
+        int targetSize = (int) (AvatarFactory.SIZE_AB * getResources().getDisplayMetrics().density);
+
+        mDisposable.add(mAccountService
+                .getCurrentAccountSubject()
+                .switchMapSingle(account -> AvatarFactory.getBitmapAvatar(HomeActivity.this, account, targetSize)
+                        .map(avatar -> new Pair<>(account, avatar)))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(d -> {
+                    mToolbar.setLogo(new BitmapDrawable(getResources(), d.second));
+                }, e -> Log.e(TAG, "Error loading avatar", e)));
     }
 
     /* activity gets back to the foreground and user input */
     @Override
     protected void onResume() {
         super.onResume();
-        mDisposable.clear();
-        mDisposable.add(mAccountService.getObservableAccountList()
+        mAccountCheckDisposable.clear();
+        mAccountCheckDisposable.add(mAccountService.getObservableAccountList()
                 .firstElement()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(accounts -> {
@@ -360,11 +314,29 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
                         }
                     }
                 }));
+
+        mDisposable.add((mAccountService
+                .getCurrentAccountSubject()
+                .switchMap(Account::getUnreadPending)
+                .subscribe(count -> setBadge(R.id.navigation_requests, count))));
+
+        mDisposable.add((mAccountService
+                .getCurrentAccountSubject()
+                .switchMap(Account::getUnreadConversations)
+                .subscribe(count -> setBadge(R.id.navigation_home, count))));
     }
 
     public void startConversationTablet(Bundle bundle) {
         fConversation = new ConversationFragment();
         fConversation.setArguments(bundle);
+
+        if (!(fContent instanceof ContactRequestsFragment)) {
+            mBottomNavigationView.setSelectedItemId(R.id.navigation_home);
+        }
+
+        showTabletToolbar();
+
+        conversationSelected = true;
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.conversation_container, fConversation, ConversationFragment.class.getName())
@@ -381,7 +353,7 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
         }
         fContent = new ContactRequestsFragment();
         fContent.setArguments(bundle);
-        fNavigation.selectSection(HomeNavigationFragment.Section.CONTACT_REQUESTS);
+        mBottomNavigationView.getMenu().getItem(0).setChecked(true);
         getSupportFragmentManager().beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(R.id.main_frame, fContent, CONTACT_REQUESTS_TAG)
@@ -396,18 +368,36 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
 
     @Override
     public void onBackPressed() {
-        if (mNavigationDrawer.isDrawerVisible(GravityCompat.START) && !isDrawerLocked) {
-            mNavigationDrawer.closeDrawer(GravityCompat.START);
+        if (mAccountFragmentBackHandlerInterface != null && mAccountFragmentBackHandlerInterface.onBackPressed()) {
+            return;
+        }
+        if (mBottomSheetBackHandlerInterface != null && mBottomSheetBackHandlerInterface.onBackPressed()) {
             return;
         }
         FragmentManager fragmentManager = getSupportFragmentManager();
         int fCount = fragmentManager.getBackStackEntryCount();
         if (fCount > 1) {
+            fContent = fragmentManager.findFragmentById(R.id.main_frame);
+            if (fContent instanceof ContactRequestsFragment) {
+                conversationSelected = false;
+            } else {
+                conversationSelected = true;
+            }
             FragmentManager.BackStackEntry entry = fragmentManager.getBackStackEntryAt(fCount - 2);
             fContent = fragmentManager.findFragmentById(entry.getId());
             fragmentManager.popBackStack();
-            if (fCount == 2)
-                fNavigation.selectSection(HomeNavigationFragment.Section.HOME);
+            if (fCount == 2) {
+                mBottomNavigationView.getMenu().getItem(1).setChecked(true);
+                mBottomNavigationView.setVisibility(View.VISIBLE);
+                showProfileInfo();
+                showToolbarSpinner();
+                if (!conversationSelected) {
+                    hideTabletToolbar();
+                }
+            } else {
+                conversationSelected = false;
+                hideTabletToolbar();
+            }
             return;
         }
         finish();
@@ -421,44 +411,60 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
         for (int i = 0; i < entryCount; ++i) {
             fragmentManager.popBackStack();
         }
+        hideTabletToolbar();
     }
 
-    public void onNavigationViewReady() {
-        if (fNavigation != null) {
-            fNavigation.setNavigationSectionSelectedListener(this);
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        return mDrawerToggle.onOptionsItemSelected(item);
-    }
-
-    private void goToHome() {
-        if (fContent instanceof SmartListFragment) {
+    public void goToSettings() {
+        if (fContent instanceof SettingsFragment) {
             return;
         }
-        FragmentManager manager = getSupportFragmentManager();
-        if (manager.getBackStackEntryCount() == 1) {
-            return;
-        }
-
         popCustomBackStack();
-        fContent = manager.findFragmentByTag(HOME_TAG);
+        hideToolbarSpinner();
+        fContent = new SettingsFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .replace(getFragmentContainerId(), fContent, SETTINGS_TAG)
+                .addToBackStack(SETTINGS_TAG).commit();
+    }
+
+    public void goToAbout() {
+        if (fContent instanceof AboutFragment) {
+            return;
+        }
+        popCustomBackStack();
+        hideToolbarSpinner();
+        fContent = new AboutFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .replace(getFragmentContainerId(), fContent, ABOUT_TAG)
+                .addToBackStack(ABOUT_TAG).commit();
+    }
+
+    public void goToVideoSettings() {
+        if (fContent instanceof VideoSettingsFragment) {
+            return;
+        }
+        fContent = new VideoSettingsFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .replace(getFragmentContainerId(), fContent, VIDEO_SETTINGS_TAG)
+                .addToBackStack(VIDEO_SETTINGS_TAG).commit();
     }
 
     @Override
-    public void onNavigationSectionSelected(HomeNavigationFragment.Section section) {
-        if (!isDrawerLocked) {
-            mNavigationDrawer.closeDrawers();
-        }
+    public void setColor(int color) {
+//        mToolbar.setBackground(new ColorDrawable(color));
+    }
 
-        switch (section) {
-            case HOME:
-                goToHome();
-                break;
-            case CONTACT_REQUESTS:
-                Bundle bundle = new Bundle();
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Bundle bundle = new Bundle();
+
+        switch (item.getItemId()) {
+            case R.id.navigation_requests:
                 bundle.putString(ContactRequestsFragment.ACCOUNT_ID, mAccountService.getCurrentAccount().getAccountID());
                 if (fContent instanceof ContactRequestsFragment) {
                     ((ContactRequestsFragment) fContent).presentForAccount(bundle);
@@ -471,101 +477,140 @@ public class HomeActivity extends AppCompatActivity implements HomeNavigationFra
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         .replace(R.id.main_frame, fContent, CONTACT_REQUESTS_TAG)
                         .addToBackStack(CONTACT_REQUESTS_TAG).commit();
+                conversationSelected = false;
                 break;
-            case MANAGE:
-                if (fContent instanceof AccountsManagementFragment) {
+            case R.id.navigation_home:
+                if (fContent instanceof SmartListFragment) {
                     break;
                 }
                 popCustomBackStack();
-                fContent = new AccountsManagementFragment();
+                fContent = new SmartListFragment();
                 getSupportFragmentManager().beginTransaction()
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .replace(R.id.main_frame, fContent, ACCOUNTS_TAG)
-                        .addToBackStack(ACCOUNTS_TAG).commit();
+                        .replace(R.id.main_frame, fContent, HOME_TAG)
+                        .addToBackStack(HOME_TAG).commit();
+                conversationSelected = false;
+                showProfileInfo();
+                showToolbarSpinner();
                 break;
-            case ABOUT:
-                if (fContent instanceof AboutFragment) {
+            case R.id.navigation_settings:
+                Account account = mAccountService.getCurrentAccount();
+
+                if (account.needsMigration()) {
+                    Log.d(TAG, "launchAccountMigrationActivity: Launch account migration activity");
+
+                    Intent intent = new Intent()
+                            .setClass(this, AccountWizardActivity.class)
+                            .setData(Uri.withAppendedPath(ContentUriHandler.ACCOUNTS_CONTENT_URI, account.getAccountID()));
+                    startActivityForResult(intent, 1);
+                } else {
+                    Log.d(TAG, "launchAccountEditFragment: Launch account edit fragment");
+                    bundle.putString(AccountEditionFragment.ACCOUNT_ID, account.getAccountID());
+
+                    if (fContent instanceof AccountEditionFragment) {
+                        break;
+                    }
+                    popCustomBackStack();
+                    fContent = new AccountEditionFragment();
+                    fContent.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction()
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                            .replace(getFragmentContainerId(), fContent, ACCOUNTS_TAG)
+                            .addToBackStack(ACCOUNTS_TAG).commit();
+                    conversationSelected = false;
                     break;
                 }
-                popCustomBackStack();
-                fContent = new AboutFragment();
-                getSupportFragmentManager().beginTransaction()
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .replace(R.id.main_frame, fContent, ABOUT_TAG)
-                        .addToBackStack(ABOUT_TAG).commit();
-                break;
-            case SETTINGS:
-                this.goToSettings();
+
                 break;
             default:
                 break;
         }
+
+        return true;
     }
 
-    public void onAccountSelected() {
-        if (!isDrawerLocked) {
-            mNavigationDrawer.closeDrawers();
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if (mAccountAdapter.getItemViewType(position) == ToolbarSpinnerAdapter.TYPE_CREATE){
+            startActivity(new Intent(HomeActivity.this, AccountWizardActivity.class));
+
+            Account account = mAccountService.getCurrentAccount();
+            if (account != null) {
+                mToolbarSpinner.setSelection(mAccountService.getAccountList().indexOf(account.getAccountID()));
+            }
+        } else {
+            mAccountService.setCurrentAccount(mAccountAdapter.getItem(position));
         }
     }
 
     @Override
-    public void onAddSipAccountSelected() {
-        if (!isDrawerLocked) {
-            mNavigationDrawer.closeDrawers();
-        }
-        Intent intent = new Intent(HomeActivity.this, AccountWizardActivity.class);
-        intent.setAction(AccountConfig.ACCOUNT_TYPE_SIP);
-        startActivityForResult(intent, AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
-    }
+    public void onNothingSelected(AdapterView<?> parent) {
 
-    @Override
-    public void onAddRingAccountSelected() {
-        if (!isDrawerLocked) {
-            mNavigationDrawer.closeDrawers();
-        }
-        Intent intent = new Intent(HomeActivity.this, AccountWizardActivity.class);
-        intent.setAction(AccountConfig.ACCOUNT_TYPE_RING);
-        startActivityForResult(intent, AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
-    }
-
-
-    public void goToSettings() {
-        if (mNavigationDrawer != null && !isDrawerLocked) {
-            mNavigationDrawer.closeDrawers();
-        }
-        if (fContent instanceof SettingsFragment) {
-            return;
-        }
-        popCustomBackStack();
-        fContent = new SettingsFragment();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.main_frame, fContent, SETTINGS_TAG)
-                .addToBackStack(SETTINGS_TAG).commit();
-    }
-
-    public void goToVideoSettings() {
-        if (mNavigationDrawer != null && !isDrawerLocked) {
-            mNavigationDrawer.closeDrawers();
-        }
-        if (fContent instanceof VideoSettingsFragment) {
-            return;
-        }
-        fContent = new VideoSettingsFragment();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.main_frame, fContent, VIDEO_SETTINGS_TAG)
-                .addToBackStack(VIDEO_SETTINGS_TAG).commit();
-    }
-
-    @Override
-    public void setColor(int color) {
-        //mToolbar.setBackground(new ColorDrawable(color));
     }
 
     public interface Refreshable {
         void refresh();
     }
+
+    public void setBadge(int menuId, int number) {
+        if (number == 0) {
+            mBottomNavigationView.removeBadge(menuId);
+            return;
+        }
+
+        mBottomNavigationView.getOrCreateBadge(menuId);
+        BadgeDrawable badgeDrawable = mBottomNavigationView.getBadge(menuId);
+        if (badgeDrawable != null) {
+            badgeDrawable.setNumber(number);
+        }
+    }
+
+    private void hideTabletToolbar() {
+        if (DeviceUtils.isTablet(this)) {
+            TextView title = mToolbar.findViewById(R.id.contact_title);
+            TextView subtitle = mToolbar.findViewById(R.id.contact_subtitle);
+            ImageView logo = mToolbar.findViewById(R.id.contact_image);
+
+            title.setText("");
+            subtitle.setText("");
+            logo.setImageDrawable(null);
+        }
+    }
+
+    private void showTabletToolbar() {
+        if (DeviceUtils.isTablet(this)) {
+            mToolbar.findViewById(R.id.tablet_toolbar).setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void showToolbarSpinner() {
+        mToolbarSpinner.setVisibility(View.VISIBLE);
+    }
+
+    private void hideToolbarSpinner() {
+        if (!DeviceUtils.isTablet(HomeActivity.this)) {
+            mToolbarSpinner.setVisibility(View.GONE);
+        }
+    }
+
+    public boolean isConversationSelected(){
+        return conversationSelected;
+    }
+
+    private int getFragmentContainerId() {
+        if (DeviceUtils.isTablet(HomeActivity.this)) {
+            return R.id.conversation_container;
+        }
+
+        return R.id.main_frame;
+    }
+
+    public void setBottomSheetOnBackPressedListener(BackHandlerInterface backPressedListener) {
+        mBottomSheetBackHandlerInterface = backPressedListener;
+    }
+
+    public void setAccountFragmentOnBackPressedListener(BackHandlerInterface backPressedListener) {
+        mAccountFragmentBackHandlerInterface = backPressedListener;
+    }
+
 }

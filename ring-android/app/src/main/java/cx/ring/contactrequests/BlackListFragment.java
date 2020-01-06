@@ -35,7 +35,7 @@ import java.util.Collection;
 
 import butterknife.BindView;
 import cx.ring.R;
-import cx.ring.account.AccountEditionActivity;
+import cx.ring.account.AccountEditionFragment;
 import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.model.CallContact;
 import cx.ring.mvp.BaseSupportFragment;
@@ -74,10 +74,10 @@ public class BlackListFragment extends BaseSupportFragment<BlackListPresenter> i
     public void onResume() {
         super.onResume();
 
-        if (getArguments() == null || getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY) == null) {
+        if (getArguments() == null || getArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY) == null) {
             return;
         }
-        presenter.setAccountId(getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY));
+        presenter.setAccountId(getArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY));
     }
 
     @Override
