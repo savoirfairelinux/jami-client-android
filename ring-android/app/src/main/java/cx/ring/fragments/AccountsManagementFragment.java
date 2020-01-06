@@ -38,7 +38,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import cx.ring.R;
-import cx.ring.account.AccountEditionActivity;
+import cx.ring.account.AccountEditionFragment;
 import cx.ring.account.AccountWizardActivity;
 import cx.ring.account.AccountsAdapter;
 import cx.ring.account.AccountsManagementPresenter;
@@ -93,7 +93,7 @@ public class AccountsManagementFragment extends BaseSupportFragment<AccountsMana
         mDnDListView.setHasFixedSize(true);
         mDnDListView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mDnDListView.setAdapter(mAccountsAdapter);
-        ((HomeActivity) getActivity()).setToolbarState(true, R.string.menu_item_accounts);
+        ((HomeActivity) getActivity()).setToolbarState(R.string.menu_item_accounts);
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -101,9 +101,6 @@ public class AccountsManagementFragment extends BaseSupportFragment<AccountsMana
     public void onResume() {
         super.onResume();
         Log.w(TAG, "onResume()");
-        FloatingActionButton button = ((HomeActivity) requireActivity()).getActionButton();
-        button.setOnClickListener(v -> presenter.addClicked());
-        button.show();
     }
 
     @Override
@@ -116,9 +113,6 @@ public class AccountsManagementFragment extends BaseSupportFragment<AccountsMana
     public void onStop() {
         super.onStop();
         Log.w(TAG, "onStop()");
-        FloatingActionButton button = ((HomeActivity) requireActivity()).getActionButton();
-        button.setOnClickListener(null);
-        button.hide();
     }
 
     @Override
@@ -135,7 +129,7 @@ public class AccountsManagementFragment extends BaseSupportFragment<AccountsMana
     public void launchAccountEditActivity(Account account) {
         Log.d(TAG, "launchAccountEditActivity: Launch account edit activity");
 
-        Intent intent = new Intent(getActivity(), AccountEditionActivity.class)
+        Intent intent = new Intent(getActivity(), AccountEditionFragment.class)
                 .setAction(Intent.ACTION_EDIT)
                 .setData(Uri.withAppendedPath(ContentUriHandler.ACCOUNTS_CONTENT_URI, account.getAccountID()));
         startActivityForResult(intent, ACCOUNT_EDIT_REQUEST);

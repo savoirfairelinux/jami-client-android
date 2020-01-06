@@ -20,8 +20,10 @@
 package cx.ring.settings;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
@@ -32,7 +34,10 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.BindView;
@@ -45,6 +50,7 @@ import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.model.Settings;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.mvp.GenericView;
+import cx.ring.utils.DeviceUtils;
 
 /**
  * TODO: improvements : handle multiples permissions for feature.
@@ -86,7 +92,23 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         }
         // loading preferences
         presenter.loadSettings();
-        ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_settings);
+        if (DeviceUtils.isTablet(getContext())) {
+            Toolbar toolbar = getActivity().findViewById(R.id.main_toolbar);
+            TextView title = toolbar.findViewById(R.id.contact_title);
+            ImageView logo = toolbar.findViewById(R.id.contact_image);
+
+            logo.setVisibility(View.GONE);
+            title.setText(R.string.menu_item_settings);
+            title.setTextSize(19);
+            title.setTypeface(null, Typeface.BOLD);
+
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) title.getLayoutParams();
+            params.removeRule(RelativeLayout.ALIGN_TOP);
+            params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+            title.setLayoutParams(params);
+        } else {
+            ((HomeActivity) getActivity()).setToolbarState(R.string.menu_item_settings);
+        }
     }
 
     @Override
