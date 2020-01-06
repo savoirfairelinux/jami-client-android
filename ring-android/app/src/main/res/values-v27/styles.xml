@@ -3,7 +3,7 @@
 
     <style name="AppThemeBase.Fullscreen" parent="AppThemeBase">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:navigationBarColor">@color/transparent</item>
+        <item name="android:navigationBarColor">@color/background</item>
     </style>
 
     <style name="AppThemeBase.DarkToolbar" parent="AppThemeBase">
