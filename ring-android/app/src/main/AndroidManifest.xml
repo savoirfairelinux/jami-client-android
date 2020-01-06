@@ -148,11 +148,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:name=".account.AccountWizardActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:theme="@style/AppThemeBase.Light" />
-        <activity
-            android:name=".account.AccountEditionActivity"
-            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme" />
+<!--        <activity-->
+<!--            android:name=".account.AccountEditionFragment"-->
+<!--            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"-->
+<!--            android:label="@string/app_name"-->
+<!--            android:theme="@style/AppTheme" />-->
         <activity
             android:name=".client.RingtoneActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"

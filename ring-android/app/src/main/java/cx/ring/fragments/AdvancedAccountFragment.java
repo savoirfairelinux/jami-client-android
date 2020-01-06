@@ -32,7 +32,7 @@ import android.view.inputmethod.EditorInfo;
 import java.util.ArrayList;
 
 import cx.ring.R;
-import cx.ring.account.AccountEditionActivity;
+import cx.ring.account.AccountEditionFragment;
 import cx.ring.application.JamiApplication;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.ConfigKey;
@@ -54,7 +54,7 @@ public class AdvancedAccountFragment extends BasePreferenceFragment<AdvancedAcco
         addPreferencesFromResource(R.xml.account_advanced_prefs);
 
         Bundle args = getArguments();
-        presenter.init(args == null  ? null : args.getString(AccountEditionActivity.ACCOUNT_ID_KEY));
+        presenter.init(args == null  ? null : args.getString(AccountEditionFragment.ACCOUNT_ID_KEY));
     }
 
     @Override
