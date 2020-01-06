@@ -73,6 +73,7 @@ Możesz edytować swoje konto później</string>
   <string name="account_local_port_label">Port Lokalny</string>
   <string name="account_stun_enable_label">Użyj Stun</string>
   <string name="account_stun_server_label">Serwer Stun</string>
+  <string name="size_mb">%1$d MB</string>
   <string name="account_turn_enable_label">Użyj TURN</string>
   <string name="account_turn_server_label">Serwer TURN</string>
   <string name="account_turn_username_label">Nazwa użytkownika TURN</string>
@@ -134,10 +135,13 @@ Możesz edytować swoje konto później</string>
   <string name="account_sip_success_message">Pomyślnie zarejestrowałeś swoje konto SIP.</string>
   <string name="account_sip_register_anyway">Zarejestruj mimo to</string>
   <string name="account_link_prompt_pin">Wprowadź PIN</string>
+  <string name="account_new_button">Utwórz konto Jami</string>
   <string name="account_link_export_button">Połącz kolejne urządzenie z tym kontem</string>
   <string name="account_start_export_button">Generuj PIN</string>
   <string name="account_end_export_button">zamknij</string>
   <string name="account_export_title">Dodaj urządzenia</string>
+  <string name="account_connect_button">Połącz</string>
+  <string name="prompt_server">Adres serwera zarządzającego Jami</string>
   <string name="account_connect_prompt_username">Nazwa użytkownika</string>
   <!--Name registration-->
   <string name="error_username_empty">Wprowadź nazwę użytkownika</string>
@@ -155,6 +159,7 @@ Możesz edytować swoje konto później</string>
   <string name="account_status_unknown">Nieznane</string>
   <string name="account_status_offline">Offline</string>
   <!--Create account-->
+  <string name="account_creation_home">Witaj w Jami</string>
   <string name="account_creation_profile">Stwórz swój profil</string>
   <string name="account_link_title">Połącz to urządzenie</string>
   <string name="account_sip_cannot_be_registered">Nie można zarejestrować konta</string>
