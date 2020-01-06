@@ -34,7 +34,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import java.util.ArrayList;
 
 import cx.ring.R;
-import cx.ring.account.AccountEditionActivity;
+import cx.ring.account.AccountEditionFragment;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.RingtoneActivity;
 import cx.ring.model.Account;
@@ -66,7 +66,7 @@ public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPrefere
 
     public static MediaPreferenceFragment newInstance(@NonNull String accountId) {
         Bundle bundle = new Bundle();
-        bundle.putString(AccountEditionActivity.ACCOUNT_ID_KEY, accountId);
+        bundle.putString(AccountEditionFragment.ACCOUNT_ID_KEY, accountId);
         MediaPreferenceFragment mediaPreferenceFragment = new MediaPreferenceFragment();
         mediaPreferenceFragment.setArguments(bundle);
         return mediaPreferenceFragment;
@@ -77,7 +77,7 @@ public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPrefere
         ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
         super.onCreatePreferences(bundle, rootKey);
 
-        String accountId = getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY);
+        String accountId = getArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY);
 
         addPreferencesFromResource(R.xml.account_media_prefs);
         audioCodecsPref = (CodecPreference) findPreference("Account.audioCodecs");
@@ -85,7 +85,7 @@ public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPrefere
         Preference ringtonePref = findPreference("ringtone");
         ringtonePref.setOnPreferenceClickListener(preference -> {
             Intent i = new Intent(requireActivity(), RingtoneActivity.class);
-            i.putExtra(AccountEditionActivity.ACCOUNT_ID_KEY, accountId);
+            i.putExtra(AccountEditionFragment.ACCOUNT_ID_KEY, accountId);
             requireActivity().startActivity(i);
             return true;
         });
