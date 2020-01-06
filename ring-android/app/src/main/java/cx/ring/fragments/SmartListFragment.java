@@ -53,9 +53,12 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -70,6 +73,7 @@ import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.mvp.BaseSupportFragment;
+import cx.ring.services.AccountService;
 import cx.ring.smartlist.SmartListPresenter;
 import cx.ring.smartlist.SmartListView;
 import cx.ring.smartlist.SmartListViewModel;
@@ -116,6 +120,9 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     @BindView(R.id.error_image_view)
     protected ImageView mErrorImageView;
 
+    @Inject
+    AccountService mAccountService;
+
     private SmartListAdapter mSmartListAdapter;
 
     private SearchView mSearchView = null;
@@ -143,6 +150,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
                 mDialpadMenuItem.setVisible(false);
                 mFloatingActionButton.show();
                 setOverflowMenuVisible(menu, true);
+                changeSeparatorHeight(false);
                 return true;
             }
 
@@ -151,6 +159,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
                 mDialpadMenuItem.setVisible(true);
                 mFloatingActionButton.hide();
                 setOverflowMenuVisible(menu, false);
+                changeSeparatorHeight(true);
                 return true;
             }
         });
@@ -158,7 +167,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
         mSearchView = (SearchView) mSearchMenuItem.getActionView();
         mSearchView.setOnQueryTextListener(this);
         mSearchView.setQueryHint(getString(R.string.searchbar_hint));
-        mSearchView.setLayoutParams(new Toolbar.LayoutParams(Toolbar.LayoutParams.MATCH_PARENT, Toolbar.LayoutParams.MATCH_PARENT));
+        mSearchView.setLayoutParams(new Toolbar.LayoutParams(Toolbar.LayoutParams.WRAP_CONTENT, Toolbar.LayoutParams.MATCH_PARENT));
         mSearchView.setImeOptions(EditorInfo.IME_ACTION_GO);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             EditText editText = mSearchView.findViewById(R.id.search_src_text);
@@ -216,6 +225,12 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
             case R.id.menu_scan_qr:
                 presenter.clickQRSearch();
                 return true;
+            case R.id.menu_settings:
+                ((HomeActivity) getActivity()).goToSettings();
+                return true;
+            case R.id.menu_about:
+                ((HomeActivity) getActivity()).goToAbout();
+                return true;
             default:
                 return false;
         }
@@ -257,7 +272,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onViewCreated(view, savedInstanceState);
-        ((HomeActivity) requireActivity()).setToolbarState(false, R.string.app_name);
+
         mNewContact.setVisibility(View.GONE);
 
         if (DeviceUtils.isTablet(getContext())) {
@@ -279,12 +294,6 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
                     mFloatingActionButton.shrink();
                 } else if ((dy < 0 || !canScrollUp) && !isExtended) {
                     mFloatingActionButton.extend();
-                }
-
-                Activity activity = getActivity();
-                if (activity instanceof HomeActivity) {
-                    HomeActivity homeActivity = (HomeActivity) activity;
-                    homeActivity.setToolbarTop(!canScrollUp);
                 }
             }
         });
@@ -327,9 +336,13 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     private void setOverflowMenuVisible(final Menu menu, boolean visible) {
         if (null != menu) {
             MenuItem scanQrMenuItem = menu.findItem(R.id.menu_scan_qr);
+            MenuItem overflowMenuItem = menu.findItem(R.id.menu_overflow);
 
             if (null != scanQrMenuItem) {
                 scanQrMenuItem.setVisible(visible);
+            }
+            if (null != overflowMenuItem) {
+                overflowMenuItem.setVisible(visible);
             }
         }
     }
@@ -356,6 +369,10 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
                     ActionHelper.getShortenedNumber(copiedNumber));
             Snackbar.make(mCoordinator, snackbarText, Snackbar.LENGTH_LONG).show();
         }
+    }
+
+    public void onFabButtonClicked() {
+        presenter.fabButtonClicked();
     }
 
     private void showErrorPanel(final int textResId,
@@ -589,5 +606,23 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     @Override
     public void onItemLongClick(SmartListViewModel smartListViewModel) {
         presenter.conversationLongClicked(smartListViewModel);
+    }
+
+    private void changeSeparatorHeight(boolean open) {
+        if (DeviceUtils.isTablet(getActivity())) {
+            int margin;
+
+            View separator = getView().findViewById(R.id.separator);
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) separator.getLayoutParams();
+            if (open) {
+                Toolbar toolbar = getActivity().findViewById(R.id.main_toolbar);
+                margin = toolbar.getHeight();
+            } else {
+                margin = 0;
+            }
+
+            params.topMargin = margin;
+            separator.setLayoutParams(params);
+        }
     }
 }
