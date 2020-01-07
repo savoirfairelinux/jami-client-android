@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0bd7f06_5647900b",
+        "filename": "ring-android/app/src/withFirebase/java/cx/ring/services/JamiFirebaseMessagingService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-01-07T21:24:08Z",
+      "side": 1,
+      "message": "not used here",
+      "range": {
+        "startLine": 21,
+        "startChar": 31,
+        "endLine": 22,
+        "endChar": 0
+      },
+      "revId": "64406ebbe4257441f9ea68c639a5ad0098370fb7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
