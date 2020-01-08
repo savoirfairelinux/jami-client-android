@@ -105,7 +105,7 @@ dependencies {
     implementation 'com.j256.ormlite:ormlite-android:5.1'
 
     // Barcode scanning
-    implementation ('com.journeyapps:zxing-android-embedded:4.0.2@aar') { transitive = false }
+    implementation('com.journeyapps:zxing-android-embedded:4.0.2@aar') { transitive = false }
     implementation 'com.google.zxing:core:3.3.3'
 
     // Butterknife
