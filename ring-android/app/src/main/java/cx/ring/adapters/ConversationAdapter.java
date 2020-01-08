@@ -269,8 +269,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     @Override
     public void onViewRecycled(@NonNull ConversationViewHolder holder) {
         holder.itemView.setOnLongClickListener(null);
-        if (holder.mPhoto != null)
-            holder.mPhoto.setOnLongClickListener(null);
+        if (holder.mImage != null)
+            holder.mImage.setOnLongClickListener(null);
         if (holder.updater != null) {
             holder.updater.stop();
             holder.updater = null;
@@ -401,7 +401,10 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         } else {
             type = MessageType.FILE_TRANSFER;
         }
-        View longPressView = type == MessageType.IMAGE ? viewHolder.mPhoto : (type == MessageType.VIDEO) ? viewHolder.video : (type == MessageType.AUDIO) ? viewHolder.mAudioInfoLayout : viewHolder.mFileInfoLayout;
+        View longPressView = type == MessageType.IMAGE ?
+                viewHolder.mImage : (type == MessageType.VIDEO) ?
+                viewHolder.video : (type == MessageType.AUDIO) ?
+                viewHolder.mAudioInfoLayout : viewHolder.mFileInfoLayout;
         if (type == MessageType.AUDIO || type == MessageType.FILE_TRANSFER) {
             longPressView.getBackground().setTintList(null);
         }
@@ -427,28 +430,28 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         });
 
         if (type == MessageType.IMAGE) {
-            Context context = viewHolder.mPhoto.getContext();
+            Context context = viewHolder.mImage.getContext();
 
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) viewHolder.mAnswerLayout.getLayoutParams();
             params.gravity = (file.isOutgoing() ? Gravity.END : Gravity.START) | Gravity.BOTTOM;
             viewHolder.mAnswerLayout.setLayoutParams(params);
 
-            LinearLayout.LayoutParams imageParams = (LinearLayout.LayoutParams) viewHolder.mPhoto.getLayoutParams();
+            LinearLayout.LayoutParams imageParams = (LinearLayout.LayoutParams) viewHolder.mImage.getLayoutParams();
             imageParams.height = mPictureMaxSize;
-            viewHolder.mPhoto.setLayoutParams(imageParams);
+            viewHolder.mImage.setLayoutParams(imageParams);
 
             GlideApp.with(context)
                     .load(path)
                     .apply(PICTURE_OPTIONS)
-                    .into(new DrawableImageViewTarget(viewHolder.mPhoto).waitForLayout());
+                    .into(new DrawableImageViewTarget(viewHolder.mImage).waitForLayout());
 
             ((LinearLayout) viewHolder.mAnswerLayout).setGravity(file.isOutgoing() ? Gravity.END : Gravity.START);
-            viewHolder.mPhoto.setOnClickListener(v -> {
+            viewHolder.mImage.setOnClickListener(v -> {
                 Uri contentUri = getUriForFile(v.getContext(), ContentUriHandler.AUTHORITY_FILES, path);
                 Intent i = new Intent(context, MediaViewerActivity.class);
                 i.setAction(Intent.ACTION_VIEW).setDataAndType(contentUri, "image/*").setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 ActivityOptionsCompat options = ActivityOptionsCompat.
-                        makeSceneTransitionAnimation(conversationFragment.getActivity(), viewHolder.mPhoto, "picture");
+                        makeSceneTransitionAnimation(conversationFragment.getActivity(), viewHolder.mImage, "picture");
                 conversationFragment.startActivityForResult(i, 3006, options.toBundle());
             });
             return;
@@ -567,9 +570,9 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         }
 
         if (file.getStatus().isError()) {
-            viewHolder.icon.setImageResource(R.drawable.baseline_warning_24);
+            viewHolder.mIcon.setImageResource(R.drawable.baseline_warning_24);
         } else {
-            viewHolder.icon.setImageResource(R.drawable.baseline_attach_file_24);
+            viewHolder.mIcon.setImageResource(R.drawable.baseline_attach_file_24);
         }
 
         viewHolder.mMsgTxt.setText(file.getDisplayName());
@@ -674,14 +677,14 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         }
 
         convViewHolder.mMsgTxt.setText(message);
-        if (convViewHolder.mPhoto != null) {
-            convViewHolder.mPhoto.setImageBitmap(null);
+        if (convViewHolder.mAvatar != null) {
+            convViewHolder.mAvatar.setImageBitmap(null);
         }
 
         if (msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE) {
             setBottomMargin(convViewHolder.mMsgTxt, 8);
             if (textMessage.isIncoming()) {
-                convViewHolder.mPhoto.setImageDrawable(
+                convViewHolder.mAvatar.setImageDrawable(
                         conversationFragment.getConversationAvatar(contact.getPrimaryNumber())
                 );
             }
@@ -689,23 +692,25 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             setBottomMargin(convViewHolder.mMsgTxt, 0);
         }
 
-        if (!textMessage.isIncoming()) {
+        if (textMessage.isIncoming()) {
+            convViewHolder.mAvatar.setVisibility(View.VISIBLE);
+        } else {
             switch (textMessage.getStatus()) {
                 case SENDING:
-                    convViewHolder.mPhoto.setVisibility(View.VISIBLE);
-                    convViewHolder.mPhoto.setImageResource(R.drawable.baseline_circle_24);
+                    convViewHolder.mStatusIcon.setVisibility(View.VISIBLE);
+                    convViewHolder.mStatusIcon.setImageResource(R.drawable.baseline_circle_24);
                     break;
                 case FAILURE:
-                    convViewHolder.mPhoto.setVisibility(View.VISIBLE);
-                    convViewHolder.mPhoto.setImageResource(R.drawable.round_highlight_off_24);
+                    convViewHolder.mStatusIcon.setVisibility(View.VISIBLE);
+                    convViewHolder.mStatusIcon.setImageResource(R.drawable.round_highlight_off_24);
                     break;
                 default:
                     if (shouldSeparateByDetails(textMessage, position) && position == lastOutgoingIndex()) {
-                        convViewHolder.mPhoto.setVisibility(View.VISIBLE);
-                        convViewHolder.mPhoto.setImageResource(R.drawable.baseline_check_circle_24);
+                        convViewHolder.mStatusIcon.setVisibility(View.VISIBLE);
+                        convViewHolder.mStatusIcon.setImageResource(R.drawable.baseline_check_circle_24);
                         lastDeliveredPosition = position;
                     } else {
-                        convViewHolder.mPhoto.setVisibility(View.GONE);
+                        convViewHolder.mStatusIcon.setVisibility(View.GONE);
                     }
             }
         }
@@ -768,7 +773,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                                                  @NonNull final Interaction interaction) {
         int pictureResID;
         String historyTxt;
-        convViewHolder.mPhoto.setScaleY(1);
+        convViewHolder.mIcon.setScaleY(1);
         Context context = convViewHolder.itemView.getContext();
 
 
@@ -803,7 +808,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             } else {
                 pictureResID = R.drawable.baseline_call_missed_outgoing_24;
                 // Flip the photo upside down to show a "missed outgoing call"
-                convViewHolder.mPhoto.setScaleY(-1);
+                convViewHolder.mIcon.setScaleY(-1);
             }
             historyTxt = call.isIncoming() ?
                     context.getString(R.string.notif_missed_incoming_call) :
@@ -818,7 +823,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         }
 
         convViewHolder.mCid = call.getConversation().getParticipant();
-        convViewHolder.mPhoto.setImageResource(pictureResID);
+        convViewHolder.mIcon.setImageResource(pictureResID);
         convViewHolder.mHistTxt.setText(historyTxt);
         convViewHolder.mHistDetailTxt.setText(DateFormat.getDateTimeInstance()
                 .format(call.getTimestamp())); // start date
