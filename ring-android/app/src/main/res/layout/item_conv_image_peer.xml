@@ -17,45 +17,69 @@
   ~ along with this program; if not, write to the Free Software
   ~  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
   -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
-    android:layout_marginTop="8dp"
+    android:paddingBottom="8dp"
     android:clickable="true"
     android:descendantFocusability="blocksDescendants"
     android:focusable="true"
     android:orientation="vertical"
-    android:paddingEnd="@dimen/padding_large"
-    android:paddingLeft="@dimen/padding_large"
-    android:paddingRight="@dimen/padding_large"
-    android:paddingStart="@dimen/padding_large">
+    android:gravity="center">
 
-    <LinearLayout
-        android:id="@+id/imageLayout"
+    <TextView
+        android:id="@+id/msg_details_txt_perm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:orientation="vertical"
-        android:paddingStart="56dp">
+        android:visibility="gone"
+        android:textColor="@color/textColorSecondary"
+        android:textSize="14sp"
+        android:paddingTop="4dp"
+        tools:text="@string/time_just_now" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingStart="@dimen/padding_medium"
+        android:paddingEnd="@dimen/padding_large">
+
+        <ImageView
+            android:id="@+id/photo"
+            android:layout_width="@dimen/conversation_avatar_size"
+            android:layout_height="@dimen/conversation_avatar_size"
+            android:background="@null"
+            android:gravity="start"
+            android:layout_alignBottom="@id/image"
+            android:scaleType="centerCrop"/>
 
         <cx.ring.views.ConversationImageView
             android:id="@+id/image"
             android:layout_width="wrap_content"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/photo"
+            android:layout_marginStart="@dimen/padding_medium"
+            android:layout_marginEnd="20dp"
             android:adjustViewBounds="true"
             android:maxHeight="200dp"
+            android:minWidth="@dimen/conversation_avatar_size"
+            android:minHeight="@dimen/conversation_avatar_size"
             android:transitionName="picture"
-            tools:src="@drawable/logo_sfl_coul_rgb" />
+            tools:src="@drawable/ic_jami" />
 
         <TextView
             android:id="@+id/msg_details_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
+            android:layout_alignStart="@+id/image"
+            android:layout_below="@+id/image"
+            android:layout_marginStart="@dimen/conversation_message_radius"
             android:textColor="@color/textColorSecondary"
-            android:textSize="14sp"
-            tools:text="@string/message_sending" />
-    </LinearLayout>
+            android:textSize="12sp"
+            tools:text="@string/time_just_now" />
+
+    </RelativeLayout>
+
 </LinearLayout>
