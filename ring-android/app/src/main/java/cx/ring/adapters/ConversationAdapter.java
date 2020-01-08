@@ -212,14 +212,16 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
         if (interaction != null) {
             switch (interaction.getType()) {
+                case CONTACT:
+                    return MessageType.CONTACT_EVENT.ordinal();
+                case CALL:
+                    return MessageType.CALL_INFORMATION.ordinal();
                 case TEXT:
                     if (interaction.isIncoming()) {
                         return MessageType.INCOMING_TEXT_MESSAGE.ordinal();
                     } else {
                         return MessageType.OUTGOING_TEXT_MESSAGE.ordinal();
                     }
-                case CALL:
-                    return MessageType.CALL_INFORMATION.ordinal();
                 case DATA_TRANSFER:
                     DataTransfer file = (DataTransfer) interaction;
                     if (file.isComplete()) {
@@ -230,12 +232,19 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                         } else if (file.isVideo()) {
                             return MessageType.VIDEO.ordinal();
                         } else {
-                            return MessageType.FILE_TRANSFER.ordinal();
+                            if (interaction.isIncoming()) {
+                                return MessageType.INCOMING_FILE.ordinal();
+                            } else {
+                                return MessageType.OUTGOING_FILE.ordinal();
+                            }
                         }
-                    } else
-                        return MessageType.FILE_TRANSFER.ordinal();
-                case CONTACT:
-                    return MessageType.CONTACT_EVENT.ordinal();
+                    } else {
+                        if (interaction.isIncoming()) {
+                            return MessageType.INCOMING_FILE.ordinal();
+                        } else {
+                            return MessageType.OUTGOING_FILE.ordinal();
+                        }
+                    }
             }
         }
         return MessageType.CALL_INFORMATION.ordinal();
@@ -269,8 +278,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     @Override
     public void onViewRecycled(@NonNull ConversationViewHolder holder) {
         holder.itemView.setOnLongClickListener(null);
-        if (holder.mPhoto != null)
-            holder.mPhoto.setOnLongClickListener(null);
+        if (holder.mImage != null)
+            holder.mImage.setOnLongClickListener(null);
         if (holder.updater != null) {
             holder.updater.stop();
             holder.updater = null;
@@ -389,20 +398,23 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                     ResourceMapper.getReadableFileTransferStatus(conversationFragment.getActivity(), file.getStatus())));
         }
 
-        MessageType type;
+        TransferMsgType type;
         if (!file.isComplete()) {
-            type = MessageType.FILE_TRANSFER;
+            type = TransferMsgType.FILE;
         } else if (file.isPicture()) {
-            type = MessageType.IMAGE;
+            type = TransferMsgType.IMAGE;
         } else if (file.isAudio()) {
-            type = MessageType.AUDIO;
+            type = TransferMsgType.AUDIO;
         } else if (file.isVideo()) {
-            type = MessageType.VIDEO;
+            type = TransferMsgType.VIDEO;
         } else {
-            type = MessageType.FILE_TRANSFER;
+            type = TransferMsgType.FILE;
         }
-        View longPressView = type == MessageType.IMAGE ? viewHolder.mPhoto : (type == MessageType.VIDEO) ? viewHolder.video : (type == MessageType.AUDIO) ? viewHolder.mAudioInfoLayout : viewHolder.mFileInfoLayout;
-        if (type == MessageType.AUDIO || type == MessageType.FILE_TRANSFER) {
+        View longPressView = type == TransferMsgType.IMAGE ?
+                viewHolder.mImage : (type == TransferMsgType.VIDEO) ?
+                viewHolder.video : (type == TransferMsgType.AUDIO) ?
+                viewHolder.mAudioInfoLayout : viewHolder.mFileInfoLayout;
+        if (type == TransferMsgType.AUDIO || type == TransferMsgType.FILE) {
             longPressView.getBackground().setTintList(null);
         }
 
@@ -417,7 +429,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             }
         });
         longPressView.setOnLongClickListener(v -> {
-            if (type == MessageType.AUDIO || type == MessageType.FILE_TRANSFER) {
+            if (type == TransferMsgType.AUDIO || type == TransferMsgType.FILE) {
                 conversationFragment.updatePosition(viewHolder.getAdapterPosition());
                 longPressView.getBackground().setTint(conversationFragment.getResources().getColor(R.color.grey_500));
             }
@@ -426,33 +438,33 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
         });
 
-        if (type == MessageType.IMAGE) {
-            Context context = viewHolder.mPhoto.getContext();
+        if (type == TransferMsgType.IMAGE) {
+            Context context = viewHolder.mImage.getContext();
 
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) viewHolder.mAnswerLayout.getLayoutParams();
             params.gravity = (file.isOutgoing() ? Gravity.END : Gravity.START) | Gravity.BOTTOM;
             viewHolder.mAnswerLayout.setLayoutParams(params);
 
-            LinearLayout.LayoutParams imageParams = (LinearLayout.LayoutParams) viewHolder.mPhoto.getLayoutParams();
+            LinearLayout.LayoutParams imageParams = (LinearLayout.LayoutParams) viewHolder.mImage.getLayoutParams();
             imageParams.height = mPictureMaxSize;
-            viewHolder.mPhoto.setLayoutParams(imageParams);
+            viewHolder.mImage.setLayoutParams(imageParams);
 
             GlideApp.with(context)
                     .load(path)
                     .apply(PICTURE_OPTIONS)
-                    .into(new DrawableImageViewTarget(viewHolder.mPhoto).waitForLayout());
+                    .into(new DrawableImageViewTarget(viewHolder.mImage).waitForLayout());
 
             ((LinearLayout) viewHolder.mAnswerLayout).setGravity(file.isOutgoing() ? Gravity.END : Gravity.START);
-            viewHolder.mPhoto.setOnClickListener(v -> {
+            viewHolder.mImage.setOnClickListener(v -> {
                 Uri contentUri = getUriForFile(v.getContext(), ContentUriHandler.AUTHORITY_FILES, path);
                 Intent i = new Intent(context, MediaViewerActivity.class);
                 i.setAction(Intent.ACTION_VIEW).setDataAndType(contentUri, "image/*").setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 ActivityOptionsCompat options = ActivityOptionsCompat.
-                        makeSceneTransitionAnimation(conversationFragment.getActivity(), viewHolder.mPhoto, "picture");
+                        makeSceneTransitionAnimation(conversationFragment.getActivity(), viewHolder.mImage, "picture");
                 conversationFragment.startActivityForResult(i, 3006, options.toBundle());
             });
             return;
-        } else if (type == MessageType.VIDEO) {
+        } else if (type == TransferMsgType.VIDEO) {
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) viewHolder.mAnswerLayout.getLayoutParams();
             params.gravity = file.isOutgoing() ? Gravity.END : Gravity.START;
             viewHolder.mAnswerLayout.setLayoutParams(params);
@@ -523,7 +535,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             });
             player.seekTo(1);
             return;
-        } else if (type == MessageType.AUDIO) {
+        } else if (type == TransferMsgType.AUDIO) {
             Context context = viewHolder.itemView.getContext();
             try {
                 ((ImageView) viewHolder.btnAccept).setImageResource(R.drawable.baseline_play_arrow_24);
@@ -567,9 +579,9 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         }
 
         if (file.getStatus().isError()) {
-            viewHolder.icon.setImageResource(R.drawable.baseline_warning_24);
+            viewHolder.mIcon.setImageResource(R.drawable.baseline_warning_24);
         } else {
-            viewHolder.icon.setImageResource(R.drawable.baseline_attach_file_24);
+            viewHolder.mIcon.setImageResource(R.drawable.baseline_attach_file_24);
         }
 
         viewHolder.mMsgTxt.setText(file.getDisplayName());
@@ -674,14 +686,14 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         }
 
         convViewHolder.mMsgTxt.setText(message);
-        if (convViewHolder.mPhoto != null) {
-            convViewHolder.mPhoto.setImageBitmap(null);
+        if (convViewHolder.mAvatar != null) {
+            convViewHolder.mAvatar.setImageBitmap(null);
         }
 
         if (msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE) {
             setBottomMargin(convViewHolder.mMsgTxt, 8);
             if (textMessage.isIncoming()) {
-                convViewHolder.mPhoto.setImageDrawable(
+                convViewHolder.mAvatar.setImageDrawable(
                         conversationFragment.getConversationAvatar(contact.getPrimaryNumber())
                 );
             }
@@ -689,23 +701,25 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             setBottomMargin(convViewHolder.mMsgTxt, 0);
         }
 
-        if (!textMessage.isIncoming()) {
+        if (textMessage.isIncoming()) {
+            convViewHolder.mAvatar.setVisibility(View.VISIBLE);
+        } else {
             switch (textMessage.getStatus()) {
                 case SENDING:
-                    convViewHolder.mPhoto.setVisibility(View.VISIBLE);
-                    convViewHolder.mPhoto.setImageResource(R.drawable.baseline_circle_24);
+                    convViewHolder.mStatusIcon.setVisibility(View.VISIBLE);
+                    convViewHolder.mStatusIcon.setImageResource(R.drawable.baseline_circle_24);
                     break;
                 case FAILURE:
-                    convViewHolder.mPhoto.setVisibility(View.VISIBLE);
-                    convViewHolder.mPhoto.setImageResource(R.drawable.round_highlight_off_24);
+                    convViewHolder.mStatusIcon.setVisibility(View.VISIBLE);
+                    convViewHolder.mStatusIcon.setImageResource(R.drawable.round_highlight_off_24);
                     break;
                 default:
                     if (shouldSeparateByDetails(textMessage, position) && position == lastOutgoingIndex()) {
-                        convViewHolder.mPhoto.setVisibility(View.VISIBLE);
-                        convViewHolder.mPhoto.setImageResource(R.drawable.baseline_check_circle_24);
+                        convViewHolder.mStatusIcon.setVisibility(View.VISIBLE);
+                        convViewHolder.mStatusIcon.setImageResource(R.drawable.baseline_check_circle_24);
                         lastDeliveredPosition = position;
                     } else {
-                        convViewHolder.mPhoto.setVisibility(View.GONE);
+                        convViewHolder.mStatusIcon.setVisibility(View.GONE);
                     }
             }
         }
@@ -768,7 +782,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                                                  @NonNull final Interaction interaction) {
         int pictureResID;
         String historyTxt;
-        convViewHolder.mPhoto.setScaleY(1);
+        convViewHolder.mIcon.setScaleY(1);
         Context context = convViewHolder.itemView.getContext();
 
 
@@ -803,7 +817,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             } else {
                 pictureResID = R.drawable.baseline_call_missed_outgoing_24;
                 // Flip the photo upside down to show a "missed outgoing call"
-                convViewHolder.mPhoto.setScaleY(-1);
+                convViewHolder.mIcon.setScaleY(-1);
             }
             historyTxt = call.isIncoming() ?
                     context.getString(R.string.notif_missed_incoming_call) :
@@ -818,7 +832,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         }
 
         convViewHolder.mCid = call.getConversation().getParticipant();
-        convViewHolder.mPhoto.setImageResource(pictureResID);
+        convViewHolder.mIcon.setImageResource(pictureResID);
         convViewHolder.mHistTxt.setText(historyTxt);
         convViewHolder.mHistDetailTxt.setText(DateFormat.getDateTimeInstance()
                 .format(call.getTimestamp())); // start date
@@ -1045,19 +1059,27 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     }
 
     public enum MessageType {
+        CONTACT_EVENT(R.layout.item_conv_contact),
+        CALL_INFORMATION(R.layout.item_conv_call),
         INCOMING_TEXT_MESSAGE(R.layout.item_conv_msg_peer),
         OUTGOING_TEXT_MESSAGE(R.layout.item_conv_msg_me),
-        CALL_INFORMATION(R.layout.item_conv_call),
-        FILE_TRANSFER(R.layout.item_conv_file),
+        INCOMING_FILE(R.layout.item_conv_file_peer),
+        OUTGOING_FILE(R.layout.item_conv_file_me),
         IMAGE(R.layout.item_conv_image),
         AUDIO(R.layout.item_conv_audio),
-        VIDEO(R.layout.item_conv_video),
-        CONTACT_EVENT(R.layout.item_conv_contact);
+        VIDEO(R.layout.item_conv_video);
 
         private final int layout;
 
         MessageType(int l) {
             layout = l;
         }
+    }
+
+    private enum TransferMsgType {
+        FILE,
+        IMAGE,
+        AUDIO,
+        VIDEO;
     }
 }

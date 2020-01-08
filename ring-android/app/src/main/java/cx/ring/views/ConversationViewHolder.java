@@ -40,14 +40,16 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
     public TextView mMsgTxt;
     public TextView mMsgDetailTxt;
     public TextView mMsgDetailTxtPerm;
-    public ImageView mPhoto;
+    public ImageView mAvatar;
+    public ImageView mImage;
+    public ImageView mStatusIcon;
+    public ImageView mIcon;
     public TextView mHistTxt;
     public TextView mHistDetailTxt;
     public View mLayout;
     public ViewGroup mAnswerLayout;
     public View btnAccept;
     public View btnRefuse;
-    public ImageView icon;
     public ProgressBar progress;
     public MediaPlayer player;
     public TextureView video;
@@ -58,50 +60,74 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
 
     public ConversationViewHolder(ViewGroup v, ConversationAdapter.MessageType type) {
         super(v);
-        if (type == ConversationAdapter.MessageType.INCOMING_TEXT_MESSAGE) {
-            mMsgTxt = v.findViewById(R.id.msg_txt);
-            mMsgDetailTxt = v.findViewById(R.id.msg_details_txt);
-            mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm);
-            mPhoto = v.findViewById(R.id.photo);
-        } else if (type == ConversationAdapter.MessageType.OUTGOING_TEXT_MESSAGE) {
-            mMsgTxt = v.findViewById(R.id.msg_txt);
-            mMsgDetailTxt = v.findViewById(R.id.msg_details_txt);
-            mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm);
-            mPhoto = v.findViewById(R.id.status_icon);
-        } else if (type == ConversationAdapter.MessageType.CALL_INFORMATION) {
-            mHistTxt = v.findViewById(R.id.call_hist_txt);
-            mHistDetailTxt = v.findViewById(R.id.call_details_txt);
-            mPhoto = v.findViewById(R.id.call_icon);
-            mCallInfoLayout = v.findViewById(R.id.callInfoLayout);
-
-        } else if (type == ConversationAdapter.MessageType.FILE_TRANSFER) {
-            mMsgTxt = v.findViewById(R.id.call_hist_filename);
-            mMsgDetailTxt = v.findViewById(R.id.file_details_txt);
-            mLayout = v.findViewById(R.id.file_layout);
-            mFileInfoLayout = v.findViewById(R.id.fileInfoLayout);
-            mAnswerLayout = v.findViewById(R.id.llAnswer);
-            btnAccept = v.findViewById(R.id.btnAccept);
-            btnRefuse = v.findViewById(R.id.btnRefuse);
-            progress = v.findViewById(R.id.progress);
-            icon = v.findViewById(R.id.file_icon);
-        } else if (type == ConversationAdapter.MessageType.IMAGE) {
-            mPhoto = v.findViewById(R.id.image);
-            mAnswerLayout = v.findViewById(R.id.imageLayout);
-            mMsgDetailTxt = v.findViewById(R.id.msg_details_txt);
-        } else if (type == ConversationAdapter.MessageType.VIDEO) {
-            mLayout = v.findViewById(R.id.video_frame);
-            video = v.findViewById(R.id.video);
-            mAnswerLayout = v.findViewById(R.id.imageLayout);
-            mMsgDetailTxt = v.findViewById(R.id.msg_details_txt);
-        } else if (type == ConversationAdapter.MessageType.AUDIO) {
-            btnAccept = v.findViewById(R.id.play);
-            btnRefuse = v.findViewById(R.id.replay);
-            mMsgTxt = v.findViewById(R.id.msg_txt);
-            mAudioInfoLayout = v.findViewById(R.id.audioInfoLayout);
-            mMsgDetailTxt = v.findViewById(R.id.file_details_txt);
-        } else if (type == ConversationAdapter.MessageType.CONTACT_EVENT) {
-            mMsgTxt = v.findViewById(R.id.contact_event_txt);
-            mMsgDetailTxt = v.findViewById(R.id.contact_event_details_txt);
+        switch (type) {
+            case CONTACT_EVENT:
+                mMsgTxt = v.findViewById(R.id.contact_event_txt);
+                mMsgDetailTxt = v.findViewById(R.id.contact_event_details_txt);
+                break;
+            case CALL_INFORMATION:
+                mHistTxt = v.findViewById(R.id.call_hist_txt);
+                mHistDetailTxt = v.findViewById(R.id.call_details_txt);
+                mIcon = v.findViewById(R.id.call_icon);
+                mCallInfoLayout = v.findViewById(R.id.callInfoLayout);
+                break;
+            case INCOMING_TEXT_MESSAGE:
+            case OUTGOING_TEXT_MESSAGE:
+                mMsgTxt = v.findViewById(R.id.msg_txt);
+                mMsgDetailTxt = v.findViewById(R.id.msg_details_txt);
+                mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm);
+                break;
+            case INCOMING_FILE:
+            case OUTGOING_FILE:
+                mMsgTxt = v.findViewById(R.id.call_hist_filename);
+                mMsgDetailTxt = v.findViewById(R.id.file_details_txt);
+                mLayout = v.findViewById(R.id.file_layout);
+                mFileInfoLayout = v.findViewById(R.id.fileInfoLayout);
+                mIcon = v.findViewById(R.id.file_icon);
+                progress = v.findViewById(R.id.progress);
+                mAnswerLayout = v.findViewById(R.id.llAnswer);
+                break;
+            case IMAGE:
+                mImage = v.findViewById(R.id.image);
+                mAnswerLayout = v.findViewById(R.id.imageLayout);
+                mMsgDetailTxt = v.findViewById(R.id.msg_details_txt);
+                break;
+            case AUDIO:
+                btnAccept = v.findViewById(R.id.play);
+                btnRefuse = v.findViewById(R.id.replay);
+                mMsgTxt = v.findViewById(R.id.msg_txt);
+                mAudioInfoLayout = v.findViewById(R.id.audioInfoLayout);
+                mMsgDetailTxt = v.findViewById(R.id.file_details_txt);
+                break;
+            case VIDEO:
+                mLayout = v.findViewById(R.id.video_frame);
+                video = v.findViewById(R.id.video);
+                mAnswerLayout = v.findViewById(R.id.imageLayout);
+                mMsgDetailTxt = v.findViewById(R.id.msg_details_txt);
+                break;
+            default:
+                break;
+        }
+        // direction-specific UI
+        switch (type) {
+            case INCOMING_TEXT_MESSAGE:
+                mAvatar = v.findViewById(R.id.photo);
+                break;
+            case OUTGOING_TEXT_MESSAGE:
+                mStatusIcon = v.findViewById(R.id.status_icon);
+                break;
+            case INCOMING_FILE:
+                btnAccept = v.findViewById(R.id.btnAccept);
+                btnRefuse = v.findViewById(R.id.btnRefuse);
+                mAvatar = v.findViewById(R.id.photo);
+                break;
+            case OUTGOING_FILE:
+                btnAccept = v.findViewById(R.id.btnAccept);
+                btnRefuse = v.findViewById(R.id.btnRefuse);
+                mStatusIcon = v.findViewById(R.id.status_icon);
+                break;
+            default:
+                break;
         }
     }
 }
