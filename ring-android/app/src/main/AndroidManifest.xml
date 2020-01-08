@@ -81,10 +81,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <application
         android:allowBackup="false"
         android:banner="@drawable/jami_banner"
+        android:hasFragileUserData="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:resizeableActivity="true"
-        android:hasFragileUserData="true"
         android:supportsRtl="true"
         tools:ignore="UnusedAttribute"
         tools:replace="android:allowBackup">
@@ -108,6 +108,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
@@ -131,16 +132,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <data android:scheme="ring" />
                 <data android:scheme="jami" />
             </intent-filter>
-            <meta-data android:name="android.app.searchable" android:resource="@xml/searchable"/>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
         </activity>
         <activity
             android:name=".client.ShareActivity"
+            android:label="@string/title_share_with"
             android:parentActivityName=".client.HomeActivity"
-            android:theme="@style/AppTheme"
-            android:label="@string/title_share_with">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="*/*" />
             </intent-filter>
 
@@ -160,8 +166,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <activity
             android:name=".client.RingtoneActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
-            android:theme="@style/Theme.MaterialComponents.DayNight.Dialog.MinWidth"
-            android:label="@string/account_ringtone_title" />
+            android:label="@string/account_ringtone_title"
+            android:theme="@style/Theme.MaterialComponents.DayNight.Dialog.MinWidth" />
 
         <receiver android:name=".service.OutgoingCallHandler">
             <intent-filter>
@@ -181,12 +187,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:name=".service.CallNotificationService"
             android:description="@string/call_service_description"
             android:exported="false"
-            android:foregroundServiceType="phoneCall|mediaProjection"/>
+            android:foregroundServiceType="phoneCall|mediaProjection" />
         <service
             android:name=".services.DataTransferService"
             android:description="@string/data_transfer_service_description"
             android:exported="false"
-            android:foregroundServiceType="dataSync"/>
+            android:foregroundServiceType="dataSync" />
         <service
             android:name=".services.SyncService"
             android:description="@string/data_transfer_service_description"
@@ -265,13 +271,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </activity>
         <activity
             android:name=".client.ConversationActivity"
+            android:allowEmbedded="true"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:label="@string/app_name"
             android:parentActivityName=".client.HomeActivity"
+            android:resizeableActivity="true"
             android:theme="@style/AppTheme.Fullscreen"
-            android:allowEmbedded="true"
-            android:windowSoftInputMode="adjustResize"
-            android:resizeableActivity="true" />
+            android:windowSoftInputMode="adjustResize" />
 
         <service
             android:name=".service.DRingService"
@@ -280,6 +286,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <action android:name=".service.DRingService" />
             </intent-filter>
         </service>
+
         <!-- AndroidTV section -->
         <activity
             android:name=".tv.main.HomeActivity"
@@ -287,6 +294,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:theme="@style/Theme.Ring.Leanback.CustomTitle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
         </activity>
@@ -349,8 +357,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:name=".client.QRCodeActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:label="@string/title_activity_qrcode"
-            android:theme="@style/AppTheme"
-            android:resizeableActivity="true"/>
+            android:resizeableActivity="true"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".client.MediaViewerActivity"
             android:exported="false"
@@ -365,6 +373,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <action android:name="android.service.chooser.ChooserTargetService" />
             </intent-filter>
         </service>
+
         <service
             android:name=".service.JamiJobService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
@@ -373,16 +382,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:name=".client.ContactDetailsActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:label="@string/conversation_details"
+            android:resizeableActivity="true"
             android:theme="@style/AppTheme.DarkToolbar"
-            android:windowSoftInputMode="adjustResize"
-            android:resizeableActivity="true" />
-
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".client.ConversationSelectionActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
+            android:label="Choose a contact or conversation"
             android:theme="@style/Theme.MaterialComponents.DayNight.Dialog.Alert"
-            android:windowSoftInputMode="adjustResize"
-            android:label="Choose a contact or conversation" />
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
