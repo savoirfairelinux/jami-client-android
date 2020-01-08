@@ -41,14 +41,16 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
     public TextView mMsgTxt;
     public TextView mMsgDetailTxt;
     public TextView mMsgDetailTxtPerm;
-    public ImageView mPhoto;
+    public ImageView mAvatar;
+    public ImageView mImage;
+    public ImageView mStatusIcon;
+    public ImageView mIcon;
     public TextView mHistTxt;
     public TextView mHistDetailTxt;
     public View mLayout;
     public ViewGroup mAnswerLayout;
     public View btnAccept;
     public View btnRefuse;
-    public ImageView icon;
     public ProgressBar progress;
     public MediaPlayer player;
     public TextureView video;
@@ -63,18 +65,17 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
             mMsgTxt = v.findViewById(R.id.msg_txt);
             mMsgDetailTxt = v.findViewById(R.id.msg_details_txt);
             mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm);
-            mPhoto = v.findViewById(R.id.photo);
+            mAvatar = v.findViewById(R.id.photo);
         } else if (type == ConversationAdapter.MessageType.OUTGOING_TEXT_MESSAGE) {
             mMsgTxt = v.findViewById(R.id.msg_txt);
             mMsgDetailTxt = v.findViewById(R.id.msg_details_txt);
             mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm);
-            mPhoto = v.findViewById(R.id.status_icon);
+            mStatusIcon = v.findViewById(R.id.status_icon);
         } else if (type == ConversationAdapter.MessageType.CALL_INFORMATION) {
             mHistTxt = v.findViewById(R.id.call_hist_txt);
             mHistDetailTxt = v.findViewById(R.id.call_details_txt);
-            mPhoto = v.findViewById(R.id.call_icon);
+            mIcon = v.findViewById(R.id.call_icon);
             mCallInfoLayout = v.findViewById(R.id.callInfoLayout);
-
         } else if (type == ConversationAdapter.MessageType.FILE_TRANSFER) {
             mMsgTxt = v.findViewById(R.id.call_hist_filename);
             mMsgDetailTxt = v.findViewById(R.id.file_details_txt);
@@ -84,9 +85,9 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
             btnAccept = v.findViewById(R.id.btnAccept);
             btnRefuse = v.findViewById(R.id.btnRefuse);
             progress = v.findViewById(R.id.progress);
-            icon = v.findViewById(R.id.file_icon);
+            mIcon = v.findViewById(R.id.file_icon);
         } else if (type == ConversationAdapter.MessageType.IMAGE) {
-            mPhoto = v.findViewById(R.id.image);
+            mImage = v.findViewById(R.id.image);
             mAnswerLayout = v.findViewById(R.id.imageLayout);
             mMsgDetailTxt = v.findViewById(R.id.msg_details_txt);
         } else if (type == ConversationAdapter.MessageType.VIDEO) {
