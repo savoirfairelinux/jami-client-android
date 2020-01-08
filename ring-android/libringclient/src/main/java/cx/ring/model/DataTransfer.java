@@ -42,7 +42,6 @@ public class DataTransfer extends Interaction {
         mAuthor = isOutgoing ? null : conversation.getParticipant();
         mAccount = account;
         mConversation = conversation;
-        mIsIncoming = !isOutgoing;
         mPeerId = conversation.getParticipant();
         mTotalSize = totalSize;
         mBytesProgress = bytesProgress;
@@ -52,6 +51,7 @@ public class DataTransfer extends Interaction {
         mTimestamp = System.currentTimeMillis();
         mIsRead = 1;
         mDaemonId = daemonId;
+        mIsIncoming = mAuthor != null;
     }
 
 
@@ -60,7 +60,6 @@ public class DataTransfer extends Interaction {
         mDaemonId = interaction.getDaemonId();
         mAuthor = interaction.getAuthor();
         mConversation = interaction.getConversation();
-        mIsIncoming = interaction.isIncoming();
         mPeerId = interaction.getConversation().getParticipant();
         mBody = interaction.getBody();
         mStatus = interaction.getStatus().toString();
@@ -69,6 +68,7 @@ public class DataTransfer extends Interaction {
         mAccount = interaction.getAccount();
         mContact = interaction.getContact();
         mIsRead = 1;
+        mIsIncoming = mAuthor != null;
     }
 
     public String getExtension() {
