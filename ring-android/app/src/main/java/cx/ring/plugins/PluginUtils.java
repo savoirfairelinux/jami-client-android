@@ -2,8 +2,8 @@ package cx.ring.plugins;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cx.ring.daemon.Ringservice;
-import cx.ring.settings.PluginDetails;
+import cx.ring.settings.pluginssettings.PluginDetails;
 import cx.ring.utils.Log;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -28,7 +28,7 @@ public class PluginUtils {
      * Gathers the details of each plugin in a PluginDetails instance
      * @return List of PluginDetails
      */
-    public static List<PluginDetails> listPlugins(Context mContext){
+    public static List<PluginDetails> listAvailablePlugins(Context mContext){
         tree(mContext.getFilesDir() + File.separator+ "plugins",0);
         tree(mContext.getCacheDir().getAbsolutePath(),0);
 
@@ -55,6 +55,57 @@ public class PluginUtils {
 
     public static String getABI(){
         return Build.SUPPORTED_ABIS[0];
+    }
+
+    /**
+     * Checks if there is a file at the indicated path and converts if to a drawable if possible
+     * @param iconPath String representing the absolute icon path
+     * @return Drawable of the icon
+     */
+    public static Drawable getIcon(String iconPath) {
+        Drawable icon = null;
+        File file = new File(iconPath);
+        Log.i(TAG, "Icon path: " + iconPath);
+        if(file.exists()) {
+            icon = Drawable.createFromPath(iconPath);
+        }
+        return icon;
+    }
+
+    /**
+     * Loads the so file and instantiates the plugin init function (toggle on)
+     * @param path root path of the plugin
+     * @return true if loaded
+     */
+    public static boolean loadPlugin(String path) {
+        return Ringservice.loadPlugin(path);
+    }
+
+    /**
+     * Toggles the plugin off (destroying any objects created by the plugin)
+     * then unloads the so file
+     * @param path root path of the plugin
+     * @return true if unloaded
+     */
+    public static boolean unloadPlugin(String path) {
+        return Ringservice.unloadPlugin(path);
+    }
+
+    /**
+     * Creates/Destroys plugin objects
+     * @param path root path of the plugin
+     * @param toggle boolean on/off
+     */
+    public static void togglePlugin(String path, boolean toggle) {
+        Ringservice.togglePlugin(path, toggle);
+    }
+
+    /**
+     * Lists the root paths of the loaded plugins
+     * @return list of path
+     */
+    public static List<String> listLoadedPlugins() {
+        return Ringservice.listLoadedPlugins();
     }
 
     /**
