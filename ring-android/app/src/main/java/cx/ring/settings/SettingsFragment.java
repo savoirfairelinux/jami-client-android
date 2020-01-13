@@ -92,6 +92,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         setHasOptionsMenu(true);
         super.onViewCreated(view, savedInstanceState);
         binding.settingsDarkTheme.setChecked(presenter.getDarkMode());
+        binding.settingsPluginsSwitch.setChecked(presenter.getPluginsEnabled());
         if (TextUtils.isEmpty(JamiApplication.getInstance().getPushToken())) {
             binding.settingsPushNotificationsLayout.setVisibility(View.GONE);
         }
@@ -101,6 +102,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
 
         binding.scrollview.getViewTreeObserver().addOnScrollChangedListener(this);
         binding.settingsDarkTheme.setOnCheckedChangeListener((buttonView, isChecked) -> presenter.setDarkMode(isChecked));
+        binding.settingsPluginsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> presenter.togglePlugins(isChecked));
 
         CompoundButton.OnCheckedChangeListener save = (buttonView, isChecked) -> {
             if (!mIsRefreshingViewFromPresenter)
@@ -130,6 +132,11 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
                     //~ Empty
                 })
                 .show());
+        binding.settingsPluginsLayout.setOnClickListener(v -> {
+            HomeActivity activity = (HomeActivity) getActivity();
+            if (activity != null && presenter.getPluginsEnabled())
+                activity.goToPluginsListSettings();
+        });
     }
 
     @Override
@@ -140,6 +147,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         if (existingFragment == null) {
             ((HomeActivity) getActivity()).goToSettings();
         }
+        ((HomeActivity) getActivity()).setToolbarState(R.string.menu_item_settings);
     }
 
     @Override
