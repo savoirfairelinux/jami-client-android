@@ -50,7 +50,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <uses-feature
         android:name="android.hardware.wifi"
-        android:required="true" />
+        android:required="false" />
     <uses-feature
         android:name="android.hardware.telephony"
         android:required="false" />
