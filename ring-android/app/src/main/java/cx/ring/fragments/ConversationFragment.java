@@ -27,7 +27,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -76,6 +75,7 @@ import cx.ring.client.HomeActivity;
 import cx.ring.contacts.AvatarFactory;
 import cx.ring.conversation.ConversationPresenter;
 import cx.ring.conversation.ConversationView;
+import cx.ring.daemon.Ringservice;
 import cx.ring.databinding.FragConversationBinding;
 import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.interfaces.Colorable;
@@ -87,7 +87,9 @@ import cx.ring.model.Phone;
 import cx.ring.model.Error;
 import cx.ring.model.Uri;
 import cx.ring.mvp.BaseSupportFragment;
+import cx.ring.plugins.PluginUtils;
 import cx.ring.services.NotificationService;
+import cx.ring.settings.pluginssettings.PluginDetails;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
@@ -97,8 +99,6 @@ import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -269,7 +269,6 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         if (mPreferences != null) {
             String pendingMessage = mPreferences.getString(KEY_PREFERENCE_PENDING_MESSAGE, null);
             if (!TextUtils.isEmpty(pendingMessage)) {
