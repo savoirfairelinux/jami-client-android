@@ -77,7 +77,7 @@ public class TVSettingsFragment extends LeanbackSettingsFragmentCompat {
         }
 
         @Override
-        public void addJamiPreferences() {
+        public void addJamiPreferences(String acccouontId) {
 
         }
 

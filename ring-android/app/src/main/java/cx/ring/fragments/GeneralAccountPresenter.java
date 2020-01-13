@@ -61,7 +61,7 @@ public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> {
         mAccount = mAccountService.getAccount(accountId);
         if (mAccount != null) {
             if (mAccount.isRing()) {
-                getView().addJamiPreferences();
+                getView().addJamiPreferences(mAccount.getAccountID());
             } else {
                 getView().addSipPreferences();
             }

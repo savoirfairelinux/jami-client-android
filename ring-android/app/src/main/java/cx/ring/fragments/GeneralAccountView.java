@@ -25,7 +25,7 @@ import cx.ring.model.Account;
 
 public interface GeneralAccountView {
 
-    void addJamiPreferences();
+    void addJamiPreferences(String accountId);
 
     void addSipPreferences();
 

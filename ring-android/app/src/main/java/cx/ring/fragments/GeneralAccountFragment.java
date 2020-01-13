@@ -213,9 +213,11 @@ public class GeneralAccountFragment extends BasePreferenceFragment<GeneralAccoun
     }
 
     @Override
-    public void addJamiPreferences() {
+    public void addJamiPreferences(String accountId) {
+        PreferenceManager pm = getPreferenceManager();
+        pm.setSharedPreferencesMode(Context.MODE_PRIVATE);
+        pm.setSharedPreferencesName(SharedPreferencesServiceImpl.PREFS_ACCOUNT+accountId);
         addPreferencesFromResource(R.xml.account_prefs_jami);
-
     }
 
     @Override
