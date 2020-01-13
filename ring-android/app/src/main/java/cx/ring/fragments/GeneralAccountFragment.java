@@ -31,6 +31,7 @@ import androidx.preference.SeekBarPreference;
 import androidx.preference.SwitchPreference;
 import androidx.preference.TwoStatePreference;
 
+import android.text.format.Formatter;
 import android.view.inputmethod.EditorInfo;
 
 import cx.ring.R;
@@ -136,7 +137,7 @@ public class GeneralAccountFragment extends BasePreferenceFragment<GeneralAccoun
         } else if (size == maxSize) {
             return getText(R.string.account_accept_files_always);
         } else {
-            return getString(R.string.size_mb, size);
+            return Formatter.formatFileSize(requireContext(), size * 1024 * 1024);
         }
     }
 
