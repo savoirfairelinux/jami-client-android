@@ -288,8 +288,8 @@ public class AvatarDrawable extends Drawable {
 
     @Override
     protected void onBoundsChange(Rect bounds) {
-        setAvatarTextValues();
-        setupPresenceIndicator(bounds);
+        if (showPresence)
+            setupPresenceIndicator(bounds);
         int d = Math.min(bounds.width(), bounds.height());
         if (placeholder != null) {
             int cx = (bounds.width()-d)/2;
@@ -313,6 +313,8 @@ public class AvatarDrawable extends Drawable {
             int cx = (iw - w)/2;
             int cy = (ih - h)/2;
             backgroundBounds.set(cx, cy, cx + w, h + cy);
+        } else {
+            setAvatarTextValues(bounds);
         }
         if (cropCircle) {
             if (d > 0) {
@@ -380,21 +382,13 @@ public class AvatarDrawable extends Drawable {
         return PixelFormat.TRANSLUCENT;
     }
 
-    private void setAvatarTextValues() {
+    private void setAvatarTextValues(Rect bounds) {
         if (avatarText != null) {
-            textPaint.setTextSize(getBounds().height() * DEFAULT_TEXT_SIZE_PERCENTAGE);
-            textStartXPoint = calculateTextStartXPoint();
-            textStartYPoint = calculateTextStartYPoint();
+            textPaint.setTextSize(bounds.height() * DEFAULT_TEXT_SIZE_PERCENTAGE);
+            float stringWidth = textPaint.measureText(avatarText);
+            textStartXPoint = (bounds.width() / 2f) - (stringWidth / 2f);
+            textStartYPoint = (bounds.height() / 2f) - ((textPaint.ascent() + textPaint.descent()) / 2f);
         }
-    }
-
-    private float calculateTextStartXPoint() {
-        float stringWidth = textPaint.measureText(avatarText);
-        return (getBounds().width() / 2f) - (stringWidth / 2f);
-    }
-
-    private float calculateTextStartYPoint() {
-        return (getBounds().height() / 2f) - ((textPaint.ascent() + textPaint.descent()) / 2f);
     }
 
     private String convertNameToAvatarText(String name) {
