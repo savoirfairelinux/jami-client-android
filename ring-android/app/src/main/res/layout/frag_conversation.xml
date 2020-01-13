@@ -62,6 +62,14 @@
 
             </LinearLayout>
 
+            <FrameLayout
+                android:id="@+id/mapLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/trustRequestMessageLayout"
+                android:layout_alignParentTop="false"
+                android:visibility="gone" />
+
             <ProgressBar
                 android:id="@+id/pb_loading"
                 android:layout_width="64dp"

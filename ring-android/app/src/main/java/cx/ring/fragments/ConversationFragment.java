@@ -27,7 +27,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -55,6 +54,8 @@ import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.core.content.FileProvider;
 import androidx.core.view.ViewCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 
 import java.io.File;
@@ -91,21 +92,20 @@ import cx.ring.services.NotificationService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
+import cx.ring.utils.ConversationPath;
 import cx.ring.utils.MediaButtonsHelper;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 import static android.app.Activity.RESULT_OK;
 
 public class ConversationFragment extends BaseSupportFragment<ConversationPresenter> implements
         MediaButtonsHelper.MediaButtonsHelperCallback,
         ConversationView, SharedPreferences.OnSharedPreferenceChangeListener {
-    protected static final String TAG = ConversationFragment.class.getSimpleName();
+    private static final String TAG = ConversationFragment.class.getSimpleName();
 
     public static final int REQ_ADD_CONTACT = 42;
 
@@ -113,6 +113,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     public static final String KEY_ACCOUNT_ID = BuildConfig.APPLICATION_ID + ".ACCOUNT_ID";
     public static final String KEY_PREFERENCE_PENDING_MESSAGE = "pendingMessage";
     public static final String KEY_PREFERENCE_CONVERSATION_COLOR = "color";
+    public static final String EXTRA_SHOW_MAP = "showMap";
 
     private static final int REQUEST_CODE_FILE_PICKER = 1000;
     private static final int REQUEST_PERMISSION_CAMERA = 1001;
@@ -140,7 +141,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     private int mSelectedPosition;
 
     private AvatarDrawable mConversationAvatar;
-    private Map<String, AvatarDrawable> mParticipantAvatars = new HashMap();
+    private Map<String, AvatarDrawable> mParticipantAvatars = new HashMap<>();
 
     public AvatarDrawable getConversationAvatar(String uri) {
         return mParticipantAvatars.get(uri);
@@ -386,6 +387,9 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
                 case R.id.conv_send_file:
                     selectFile();
                     break;
+                case R.id.conv_share_location:
+                    presenter.sharePosition();
+                    break;
             }
             return false;
         });
@@ -394,12 +398,39 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         menuHelper.show();
     }
 
+    @Override
+    public void startShareLocation(String accountId, String conversationId) {
+        LocationSharingFragment.newInstance(accountId, conversationId)
+                .show(requireFragmentManager(), "fragment_location_share");
+    }
+
     /**
      * Used to update with the past adapter position when a long click was registered
      * @param position
      */
     public void updatePosition(int position) {
         mSelectedPosition = position;
+    }
+
+    @Override
+    public void showMap(String accountId, String contactId)  {
+        FragmentManager fragmentManager = getChildFragmentManager();
+        LocationSharingFragment fragment = LocationSharingFragment.newInstance(accountId, contactId);
+        fragmentManager.beginTransaction()
+                .add(R.id.mapLayout, fragment, "map")
+                .commit();
+    }
+
+    @Override
+    public void hideMap() {
+        FragmentManager fragmentManager = getChildFragmentManager();
+        Fragment fragment = fragmentManager.findFragmentById(R.id.mapLayout);
+
+        if (fragment != null) {
+            fragmentManager.beginTransaction()
+                    .remove(fragment)
+                    .commit();
+        }
     }
 
     public void takePicture() {
@@ -881,21 +912,31 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     public void handleShareIntent(Intent intent) {
-        String type = intent.getType();
-        if (type == null) {
-            Log.w(TAG, "Can't share with no type");
-            return;
-        }
-        if (type.startsWith("text/plain")) {
-            binding.msgInputTxt.setText(intent.getStringExtra(Intent.EXTRA_TEXT));
-        } else {
-            android.net.Uri uri = intent.getData();
-            ClipData clip = intent.getClipData();
-            if (uri == null && clip != null && clip.getItemCount() > 0)
-                uri = clip.getItemAt(0).getUri();
-            if (uri == null)
+        Log.w(TAG, "handleShareIntent " + intent);
+
+        String action = intent.getAction();
+        if (Intent.ACTION_SEND.equals(action) || Intent.ACTION_SEND_MULTIPLE.equals(action)) {
+            String type = intent.getType();
+            if (type == null) {
+                Log.w(TAG, "Can't share with no type");
                 return;
-            startFileSend(AndroidFileUtils.getCacheFile(requireContext(), uri).flatMapCompletable(this::sendFile));
+            }
+            if (type.startsWith("text/plain")) {
+                binding.msgInputTxt.setText(intent.getStringExtra(Intent.EXTRA_TEXT));
+            } else {
+                android.net.Uri uri = intent.getData();
+                ClipData clip = intent.getClipData();
+                if (uri == null && clip != null && clip.getItemCount() > 0)
+                    uri = clip.getItemAt(0).getUri();
+                if (uri == null)
+                    return;
+                startFileSend(AndroidFileUtils.getCacheFile(requireContext(), uri).flatMapCompletable(this::sendFile));
+            }
+        } else if (Intent.ACTION_VIEW.equals(action)) {
+            ConversationPath path = ConversationPath.fromIntent(intent);
+            if (path != null && intent.getBooleanExtra(EXTRA_SHOW_MAP, false)) {
+                presenter.sharePosition();
+            }
         }
     }
 

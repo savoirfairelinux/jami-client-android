@@ -26,16 +26,18 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import cx.ring.model.Interaction.InteractionStatus;
+import cx.ring.services.AccountService;
 import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
 import cx.ring.utils.Tuple;
 import ezvcard.VCard;
-import ezvcard.property.FormattedName;
+import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.subjects.BehaviorSubject;
@@ -49,6 +51,7 @@ public class Account {
     private static final String CONTACT_CONFIRMED = "confirmed";
     private static final String CONTACT_BANNED = "banned";
     private static final String CONTACT_ID = "id";
+    private static final int LOCATION_SHARING_EXPIRATION_MS = 1000 * 60 * 2;
 
     private final String accountID;
 
@@ -78,6 +81,20 @@ public class Account {
 
     private final BehaviorSubject<Collection<CallContact>> contactListSubject = BehaviorSubject.create();
     private final BehaviorSubject<Collection<TrustRequest>> trustRequestsSubject = BehaviorSubject.create();
+
+    public static class ContactLocation {
+        public double latitude;
+        public double longitude;
+        public Date timestamp;
+        public Date receivedDate;
+    }
+    public static class ContactLocationEntry {
+        public CallContact contact;
+        public Observable<ContactLocation> location;
+    }
+    private final Map<CallContact, Observable<ContactLocation>> contactLocations = new HashMap<>();
+    private final Subject<Map<CallContact, Observable<ContactLocation>>> mLocationSubject = BehaviorSubject.createDefault(contactLocations);
+    private final Subject<ContactLocationEntry> mLocationStartedSubject = PublishSubject.create();
 
     public Single<Account> historyLoader;
     private VCard mProfile;
@@ -820,6 +837,72 @@ public class Account {
             if (pending.containsKey(contactUri))
                 pendingRefreshed();
         }
+    }
+
+    synchronized public long onLocationUpdate(AccountService.Location location) {
+        Log.w(TAG, "onLocationUpdate " + location.getPeer() + " " + location.getLatitude() + ",  " + location.getLongitude());
+        CallContact contact = getContactFromCache(location.getPeer());
+
+        ContactLocation cl = new ContactLocation();
+        cl.timestamp = location.getDate();
+        cl.latitude = location.getLatitude();
+        cl.longitude = location.getLongitude();
+        cl.receivedDate = new Date();
+
+        Observable<ContactLocation> ls = contactLocations.get(contact);
+        if (ls == null) {
+            ls = BehaviorSubject.createDefault(cl);
+            contactLocations.put(contact, ls);
+            mLocationSubject.onNext(contactLocations);
+            ContactLocationEntry entry = new ContactLocationEntry();
+            entry.contact = contact;
+            entry.location = ls;
+            mLocationStartedSubject.onNext(entry);
+        } else {
+            if (ls.blockingFirst().timestamp.compareTo(cl.timestamp) < 0)
+                ((Subject<ContactLocation>) ls).onNext(cl);
+        }
+        return cl.receivedDate.getTime() + LOCATION_SHARING_EXPIRATION_MS;
+    }
+
+    synchronized public void maintainLocation() {
+        Log.w(TAG, "maintainLocation " + contactLocations.size());
+        if (contactLocations.isEmpty())
+            return;
+        boolean changed = false;
+
+        final Date expiration = new Date(System.currentTimeMillis() - LOCATION_SHARING_EXPIRATION_MS);
+        Iterator<Map.Entry<CallContact, Observable<ContactLocation>>> it = contactLocations.entrySet().iterator();
+        while (it.hasNext())  {
+            Map.Entry<CallContact, Observable<ContactLocation>> e = it.next();
+            if (e.getValue().blockingFirst().receivedDate.before(expiration)) {
+                Log.w(TAG, "maintainLocation clearing " + e.getKey().getDisplayName());
+                ((Subject<ContactLocation>) e.getValue()).onComplete();
+                changed = true;
+                it.remove();
+            }
+        }
+
+        if (changed)
+            mLocationSubject.onNext(contactLocations);
+    }
+
+    public Observable<ContactLocationEntry> getLocationUpdates() {
+        return mLocationStartedSubject;
+    }
+
+    public Observable<Map<CallContact, Observable<ContactLocation>>> getLocationsUpdates() {
+        return mLocationSubject;
+    }
+
+    public Observable<Observable<ContactLocation>> getLocationUpdates(Uri contactId) {
+        CallContact contact = getContactFromCache(contactId);
+        return mLocationSubject
+                .flatMapMaybe(locations -> {
+                    Observable<ContactLocation> r = locations.get(contact);
+                    return r == null ? Maybe.empty() : Maybe.just(r);
+                })
+                .distinctUntilChanged();
     }
 
     public Single<String> getAccountAlias() {

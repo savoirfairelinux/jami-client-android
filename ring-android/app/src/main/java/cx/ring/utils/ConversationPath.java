@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+
 import java.util.List;
+import java.util.Objects;
 
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.Interaction;
@@ -84,5 +87,21 @@ public class ConversationPath {
             return fromBundle(intent.getExtras());
         }
         return null;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj == this)
+            return true;
+        if (obj == null || obj.getClass() != getClass())
+            return false;
+        ConversationPath o = (ConversationPath) obj;
+        return Objects.equals(o.accountId, accountId)
+                && Objects.equals(o.contactId, contactId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(accountId, contactId);
     }
 }
