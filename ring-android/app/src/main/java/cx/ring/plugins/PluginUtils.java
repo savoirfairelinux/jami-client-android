@@ -58,6 +58,32 @@ public class PluginUtils {
     }
 
     /**
+     * Loads the so file and instantiates the plugin init function (toggle on)
+     * @param path absolute path to the so file
+     */
+    public static void loadPlugin(String path) {
+        Ringservice.loadPlugin(path);
+    }
+
+    /**
+     * Toggles the plugin off (destroying any objects created by the plugin)
+     * then unloads the so file
+     * @param path absolute path to the so file
+     */
+    public static void unloadPlugin(String path) {
+        Ringservice.unloadPlugin(path);
+    }
+
+    /**
+     * Creates/Destroys plugin objects
+     * @param path absolute path to the so file
+     * @param toggle boolean on/off
+     */
+    public static void togglePlugin(String path, boolean toggle) {
+        Ringservice.togglePlugin(path, toggle);
+    }
+
+    /**
      * Displays the content of any directory
      * @param dirPath directory to display
      * @param level default 0, exists because the function is recursive

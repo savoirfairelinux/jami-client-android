@@ -76,6 +76,7 @@ import cx.ring.client.HomeActivity;
 import cx.ring.contacts.AvatarFactory;
 import cx.ring.conversation.ConversationPresenter;
 import cx.ring.conversation.ConversationView;
+import cx.ring.daemon.Ringservice;
 import cx.ring.databinding.FragConversationBinding;
 import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.interfaces.Colorable;
@@ -87,7 +88,9 @@ import cx.ring.model.Phone;
 import cx.ring.model.Error;
 import cx.ring.model.Uri;
 import cx.ring.mvp.BaseSupportFragment;
+import cx.ring.plugins.PluginUtils;
 import cx.ring.services.NotificationService;
+import cx.ring.settings.PluginDetails;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
@@ -269,7 +272,6 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         if (mPreferences != null) {
             String pendingMessage = mPreferences.getString(KEY_PREFERENCE_PENDING_MESSAGE, null);
             if (!TextUtils.isEmpty(pendingMessage)) {
@@ -294,6 +296,15 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         if (animator != null)
             animator.setSupportsChangeAnimations(false);
         binding.histList.setAdapter(mAdapter);
+
+        List<PluginDetails> pluginDetailsList = PluginUtils.listPlugins(requireContext());
+        for(PluginDetails pluginDetails : pluginDetailsList) {
+            if (pluginDetails.isEnabled()) {
+                if(pluginDetails.getName().equals("chatplugin")) {
+                    Ringservice.loadPlugin(pluginDetails.getRootPath());
+                }
+            }
+        }
     }
 
     @Override
