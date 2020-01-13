@@ -1,6 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="section_license">الرخصة</string>
+  <string name="sponsor_section">جامي هو برنامج حر طور و دعم من قبل</string>
   <string name="copyright_section">الحقوق محفوظة</string>
   <string name="contribute_section">مساهمة</string>
   <string name="version_section">الإصدار</string>

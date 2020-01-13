@@ -77,6 +77,7 @@
   <string name="notif_outgoing_file_transfer">Norbaitek fitxategi bat bidali nahi dizu</string>
   <string name="notif_incoming_picture">%1$s erabiltzaileak bidalitako irudia</string>
   <string name="action_open">Ireki</string>
+  <string name="notif_sync_title">Datuak sinkronizatzen...</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Zuk:</string>
   <string name="action_call_hangup">Eseki</string>
@@ -113,6 +114,7 @@
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Errorea</string>
   <string name="ringtone_error_format_not_supported">Formatu hau ez da onartzen.</string>
+  <string name="ringtone_custom_prompt">Ezarri dei-doinu pertsonalizatua</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->
@@ -196,4 +198,5 @@
   <string name="menu_message_delete">Ezabatu mezua</string>
   <string name="menu_message_cancel">Ezeztatu mezua</string>
   <string name="menu_delete">Ezabatu</string>
+  <string name="pref_darkTheme_title">Gai iluna</string>
 </resources>

@@ -66,6 +66,9 @@
   <string name="account_local_port_label">Ataka lokala</string>
   <string name="account_published_port_label">Argitaratutako ataka</string>
   <string name="account_published_address_label">Argitaratutako helbidea</string>
+  <string name="account_proxy_label">DHT proxya</string>
+  <string name="account_proxy_enable_label">Erabili DHT proxya</string>
+  <string name="account_proxy_server_label">DHT proxyaren helbidea</string>
   <!--Security Details-->
   <string name="account_credentials_label">Kredentzialak</string>
   <string name="account_credentials_edit">Editatu kredentzialak</string>
@@ -77,6 +80,8 @@
   <string name="account_tls_certificate_file_label">Ziurtagiri fitxategia</string>
   <string name="account_tls_private_key_file_label">Gako pribatuaren fitxategia</string>
   <string name="account_tls_password_label">Gako pribatuaren pasahitza</string>
+  <string name="account_tls_server_name_label">Zerbitzari-izena</string>
+  <string name="account_tls_verify_server_label">Egiaztatu zerbitzaria</string>
   <string name="account_tls_verify_client_label">Egiaztatu bezeroa</string>
   <string name="account_rtp_max_port">Maximoa</string>
   <string name="account_rtp_min_port">Minimoa</string>
