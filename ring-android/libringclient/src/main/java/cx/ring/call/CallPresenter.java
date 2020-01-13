@@ -261,32 +261,6 @@ public class CallPresenter extends RootPresenter<CallView> {
         getView().switchCameraIcon(mHardwareService.isPreviewFromFrontCamera());
     }
 
-    /**
-     * Loads the so file and instantiates the plugin init function (toggle on)
-     * @param path absolute path to the so file
-     */
-    public void loadPlugin(String path) {
-        Ringservice.loadPlugin(path);
-    }
-
-    /**
-     * Toggles the plugin off (destroying any objects created by the plugin)
-     * then unloads the so file
-     * @param path absolute path to the so file
-     */
-    public void unloadPlugin(String path) {
-        Ringservice.unloadPlugin(path);
-    }
-
-    /**
-     * Creates/Destroys plugin objects
-     * @param path absolute path to the so file
-     * @param toggle boolean on/off
-     */
-    public void togglePlugin(String path, boolean toggle){
-        Ringservice.togglePlugin(path, toggle);
-    }
-
     public void configurationChanged(int rotation) {
         mHardwareService.setDeviceOrientation(rotation);
     }
