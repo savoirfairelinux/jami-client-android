@@ -66,6 +66,8 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import cx.ring.BuildConfig;
@@ -83,12 +85,13 @@ import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.interfaces.Colorable;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
+import cx.ring.plugins.PluginUtils;
 import cx.ring.service.DRingService;
 import cx.ring.services.AccountService;
 import cx.ring.services.NotificationService;
-import cx.ring.settings.PluginDetails;
-import cx.ring.settings.PluginSettingsFragment;
-import cx.ring.settings.PluginsListSettingsFragment;
+import cx.ring.settings.pluginssettings.PluginDetails;
+import cx.ring.settings.pluginssettings.PluginSettingsFragment;
+import cx.ring.settings.pluginssettings.PluginsListSettingsFragment;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.settings.VideoSettingsFragment;
 import cx.ring.utils.ContentUriHandler;
@@ -228,6 +231,14 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         if (mAccountWithPendingrequests != null) {
             presentTrustRequestFragment(mAccountWithPendingrequests);
             mAccountWithPendingrequests = null;
+        }
+
+        List<PluginDetails> plugins = PluginUtils.listAvailablePlugins(this);
+
+        for(PluginDetails pluginDetails : plugins) {
+            if(pluginDetails.isEnabled()) {
+                PluginUtils.loadPlugin(pluginDetails.getRootPath());
+            }
         }
     }
 
