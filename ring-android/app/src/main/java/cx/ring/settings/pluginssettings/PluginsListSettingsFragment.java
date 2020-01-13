@@ -1,4 +1,4 @@
-package cx.ring.settings;
+package cx.ring.settings.pluginssettings;
 
 import android.app.Activity;
 import android.content.Context;
@@ -28,6 +28,7 @@ import java.io.IOException;
 import cx.ring.R;
 import cx.ring.client.HomeActivity;
 import cx.ring.daemon.Ringservice;
+import cx.ring.plugins.PluginUtils;
 import cx.ring.utils.AndroidFileUtils;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -36,7 +37,7 @@ import io.reactivex.disposables.Disposable;
 
 import static android.content.Context.MODE_PRIVATE;
 import static cx.ring.plugins.PluginUtils.PLUGIN_ENABLED;
-import static cx.ring.plugins.PluginUtils.listPlugins;
+import static cx.ring.plugins.PluginUtils.listAvailablePlugins;
 
 public class PluginsListSettingsFragment extends Fragment implements PluginsListAdapter.PluginListItemListener {
 
@@ -71,7 +72,7 @@ public class PluginsListSettingsFragment extends Fragment implements PluginsList
 
         // specify an adapter (see also next example)
 
-        mAdapter = new PluginsListAdapter(listPlugins(mContext), this);
+        mAdapter = new PluginsListAdapter(listAvailablePlugins(mContext), this);
         mRecyclerView.setAdapter(mAdapter);
 
         //Fab
@@ -116,7 +117,13 @@ public class PluginsListSettingsFragment extends Fragment implements PluginsList
 
         SharedPreferences.Editor preferencesEditor = sp.edit();
         preferencesEditor.putBoolean(PLUGIN_ENABLED, pluginDetails.isEnabled());
-        preferencesEditor.apply();
+        if(pluginDetails.isEnabled()) {
+            PluginUtils.loadPlugin(pluginDetails.getRootPath());
+            preferencesEditor.apply();
+        } else {
+            preferencesEditor.apply();
+            PluginUtils.unloadPlugin(pluginDetails.getRootPath());
+        }
         String status = pluginDetails.isEnabled()?"ON":"OFF";
         Toast.makeText(mContext,pluginDetails.getName() + " " + status,
                 Toast.LENGTH_SHORT).show();
@@ -175,7 +182,7 @@ public class PluginsListSettingsFragment extends Fragment implements PluginsList
                     @Override
                     public void onSuccess(String filename) {
                         ((PluginsListAdapter) mAdapter)
-                                .updatePluginsList(listPlugins(mContext));
+                                .updatePluginsList(listAvailablePlugins(mContext));
                         Toast.makeText(mContext, "Plugin: " + filename +
                                 " successfully installed", Toast.LENGTH_LONG).show();
                         mCompositeDisposable.dispose();
