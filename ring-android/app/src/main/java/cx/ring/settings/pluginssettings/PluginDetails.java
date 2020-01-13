@@ -1,4 +1,4 @@
-package cx.ring.settings;
+package cx.ring.settings.pluginssettings;
 
 import android.graphics.drawable.Drawable;
 
