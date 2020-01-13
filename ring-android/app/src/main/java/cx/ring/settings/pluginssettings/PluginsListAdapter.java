@@ -1,4 +1,4 @@
-package cx.ring.settings;
+package cx.ring.settings.pluginssettings;
 
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;

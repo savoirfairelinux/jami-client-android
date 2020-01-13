@@ -1,4 +1,4 @@
-package cx.ring.settings;
+package cx.ring.settings.pluginssettings;
 
 import androidx.annotation.Nullable;
 import androidx.preference.PreferenceDataStore;

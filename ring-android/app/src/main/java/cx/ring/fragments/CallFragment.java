@@ -83,7 +83,6 @@ import androidx.preference.PreferenceManager;
 import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -101,6 +100,7 @@ import cx.ring.client.ContactDetailsActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.ConversationSelectionActivity;
 import cx.ring.client.HomeActivity;
+import cx.ring.daemon.Ringservice;
 import cx.ring.databinding.FragCallBinding;
 import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
@@ -112,7 +112,7 @@ import cx.ring.service.DRingService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.NotificationService;
-import cx.ring.settings.PluginDetails;
+import cx.ring.settings.pluginssettings.PluginDetails;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.ConversationPath;
@@ -122,6 +122,8 @@ import cx.ring.utils.Log;
 import cx.ring.utils.MediaButtonsHelper;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.disposables.CompositeDisposable;
+
+import static cx.ring.plugins.PluginUtils.loadPlugin;
 
 public class CallFragment extends BaseSupportFragment<CallPresenter> implements CallView, MediaButtonsHelper.MediaButtonsHelperCallback, RecyclerPickerLayoutManager.ItemSelectedListener {
 
@@ -162,8 +164,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     private ConfParticipantAdapter confAdapter = null;
     private boolean mConferenceMode = false;
     private boolean pluginsModeFirst = true;
-    private List<PluginDetails> videoPluginsDetails;
-    private Map<String, Boolean> videoPluginsStatus;
+    private List<String> callMediaHandlers;
     private int previousPluginPosition = -1;
     private RecyclerPicker rp;
     private boolean pluginsMode = false;
@@ -623,11 +624,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             mScreenWakeLock.release();
         }
         binding = null;
-
-        if(previousPluginPosition != -1) {
-            unloadAllVideoPlugins();
-        }
-
     }
 
     @Override
@@ -1145,33 +1141,12 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                         .putExtra(KEY_CONF_ID, conferenceId),
                 CallFragment.REQUEST_CODE_ADD_PARTICIPANT);
     }
-
-    public void loadPlugin(String path) {
-        presenter.loadPlugin(path);
+    public void toggleCallMediaHandler(String id, boolean toggle) {
+        Ringservice.toggleCallMediaHandler(id, toggle);
     }
 
-    public void unloadPlugin(String path) {
-        presenter.unloadPlugin(path);
-    }
-
-    public void loadOrToggle(PluginDetails pluginDetails){
-        if(videoPluginsStatus != null) {
-            Boolean loaded = videoPluginsStatus.get(pluginDetails.getName());
-            String pluginSoPath = pluginDetails.getSoPath();
-
-            if (loaded != null && loaded) {
-                Log.i(TAG, "toggling already loaded plugin" + pluginSoPath);
-                togglePlugin(pluginSoPath, true);
-            } else {
-                Log.i(TAG, "loading plugin" + pluginSoPath);
-                loadPlugin(pluginSoPath);
-                videoPluginsStatus.put(pluginDetails.getName(), true);
-            }
-        }
-    }
-
-    public void togglePlugin(String path, boolean toggle) {
-        presenter.togglePlugin(path, toggle);
+    public Map<String, String> getCallMediaHandlerDetails(String id) {
+        return Ringservice.getCallMediaHandlerDetails(id).toNative();
     }
 
     @Override
@@ -1245,24 +1220,24 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         pluginsMode = !pluginsMode;
         Context context = requireActivity();
 
-        // Create videoPluginsDetails and videoPluginsStatus in a lazy manner
+        // Create callMediaHandlers and videoPluginsItems in a lazy manner
         if (pluginsModeFirst) {
             // Init
-            videoPluginsStatus = new HashMap<>();
-            videoPluginsDetails = new ArrayList<>();
+            callMediaHandlers = Ringservice.listCallMediaHandlers();
             List<Drawable> videoPluginsItems = new ArrayList<>();
 
-            // Search for plugin icons
-            // If a plugin doesn't have an icon use a standard android icon
-            for (PluginDetails pluginDetails : PluginUtils.listPlugins(context)) {
-                if (pluginDetails.isEnabled()) {
-                    Drawable d = pluginDetails.getIcon();
-                    if (d == null) {
-                        d = context.getDrawable(R.drawable.ic_jami);
+            // Search for plugin call media handlers icons
+            // If a call media handler doesn't have an icon use a standard android icon
+            for (String callMediaHandler : callMediaHandlers) {
+                Map<String, String> details = getCallMediaHandlerDetails(callMediaHandler);
+                Drawable d = context.getDrawable(R.drawable.ic_jami);
+                if(details.containsKey("icoPath")){
+                     Drawable cd = PluginUtils.getIcon(details.get("icoPath"));
+                    if(cd != null) {
+                        d = cd;
                     }
-                    videoPluginsItems.add(d);
-                    videoPluginsDetails.add(pluginDetails);
                 }
+                videoPluginsItems.add(d);
             }
 
             rp.updateData(videoPluginsItems);
@@ -1278,20 +1253,20 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             movePreview(true);
 
             // Start loading the first or previous plugin if one was active
-            if(videoPluginsDetails.size() > 0) {
+            if(callMediaHandlers.size() > 0) {
                 // If no previous plugin was active, take the first, else previous
                 int position = (previousPluginPosition == -1)? 0 :previousPluginPosition;
-                PluginDetails pluginDetails = videoPluginsDetails.get(position);
-                loadOrToggle(pluginDetails);
+                String callMediaId = callMediaHandlers.get(position);
+                toggleCallMediaHandler(callMediaId, true);
                 previousPluginPosition = position;
             }
 
         } else {
             if (previousPluginPosition != -1) {
-                PluginDetails previouspluginDetails = videoPluginsDetails.
+                String callMediaId = callMediaHandlers.
                         get(previousPluginPosition);
 
-                togglePlugin(previouspluginDetails.getSoPath(), false);
+                toggleCallMediaHandler(callMediaId, false);
             }
             binding.recyclerPicker.setVisibility(View.GONE);
             movePreview(false);
@@ -1308,25 +1283,16 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         Log.i(TAG, "selected position: " + position);
         if (previousPluginPosition != position) {
             /** If there was a different plugin before, unload it
-             * If previsouPluginPosition = -1, there was no plugin
+             * If previousPluginPosition = -1, there was no plugin
              */
             if (previousPluginPosition != -1) {
-                PluginDetails previouspluginDetails = videoPluginsDetails.get(previousPluginPosition);
-                togglePlugin(previouspluginDetails.getSoPath(), false);
+                String callMediaId = callMediaHandlers.get(previousPluginPosition);
+                toggleCallMediaHandler(callMediaId, false);
             }
 
             previousPluginPosition = position;
-            PluginDetails pluginDetails = videoPluginsDetails.get(position);
-            loadOrToggle(pluginDetails);
-        }
-    }
-
-    private void unloadAllVideoPlugins() {
-        for(PluginDetails pluginDetails : videoPluginsDetails) {
-            Boolean loaded = videoPluginsStatus.get(pluginDetails.getName());
-            if(loaded != null && loaded) {
-                unloadPlugin(pluginDetails.getSoPath());
-            }
+            String callMediaId = callMediaHandlers.get(position);
+            toggleCallMediaHandler(callMediaId, true);
         }
     }
 }
