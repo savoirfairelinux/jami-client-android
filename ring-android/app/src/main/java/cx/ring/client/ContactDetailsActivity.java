@@ -292,13 +292,15 @@ public class ContactDetailsActivity extends AppCompatActivity {
                 && conf.getParticipants().get(0).getCallStatus() != SipCall.CallStatus.FAILURE) {
             startActivity(new Intent(Intent.ACTION_VIEW)
                     .setClass(getApplicationContext(), CallActivity.class)
-                    .putExtra(NotificationService.KEY_CALL_ID, conf.getId()));
+                    .putExtra(NotificationService.KEY_CALL_ID, conf.getId())
+                    .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
         } else {
             Intent intent = new Intent(Intent.ACTION_CALL)
                     .setClass(getApplicationContext(), CallActivity.class)
                     .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
                     .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactRingId)
-                    .putExtra(CallFragment.KEY_AUDIO_ONLY, audioOnly);
+                    .putExtra(CallFragment.KEY_AUDIO_ONLY, audioOnly)
+                    .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
         }
     }

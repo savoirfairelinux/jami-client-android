@@ -426,6 +426,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
                 takePictureIntent.putExtra("android.intent.extras.CAMERA_FACING", 1);
                 takePictureIntent.putExtra("android.intent.extras.LENS_FACING_FRONT", 1);
                 takePictureIntent.putExtra("android.intent.extra.USE_FRONT_CAMERA", true);
+                takePictureIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivityForResult(takePictureIntent, REQUEST_CODE_TAKE_PICTURE);
             }
         }
@@ -755,13 +756,15 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     public void goToCallActivity(String conferenceId) {
         startActivity(new Intent(Intent.ACTION_VIEW)
                 .setClass(requireActivity().getApplicationContext(), CallActivity.class)
-                .putExtra(NotificationService.KEY_CALL_ID, conferenceId));
+                .putExtra(NotificationService.KEY_CALL_ID, conferenceId)
+                .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
     }
 
     @Override
     public void goToContactActivity(String accountId, String contactRingId) {
         startActivity(new Intent(Intent.ACTION_VIEW, android.net.Uri.withAppendedPath(android.net.Uri.withAppendedPath(ContentUriHandler.CONTACT_CONTENT_URI, accountId), contactRingId))
-                .setClass(requireActivity().getApplicationContext(), ContactDetailsActivity.class));
+                .setClass(requireActivity().getApplicationContext(), ContactDetailsActivity.class)
+                .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
     }
 
     @Override
@@ -770,7 +773,8 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
                 .setClass(requireActivity().getApplicationContext(), CallActivity.class)
                 .putExtra(KEY_ACCOUNT_ID, accountId)
                 .putExtra(CallFragment.KEY_AUDIO_ONLY, audioOnly)
-                .putExtra(KEY_CONTACT_RING_ID, contactRingId);
+                .putExtra(KEY_CONTACT_RING_ID, contactRingId)
+                .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
     }
 

@@ -54,7 +54,7 @@ public class SmartListViewHolder extends RecyclerView.ViewHolder {
     public void bind(final SmartListListeners clickListener, final SmartListViewModel smartListViewModel) {
         compositeDisposable.clear();
         compositeDisposable.add(RxView.clicks(itemView)
-                .throttleFirst(1000, TimeUnit.MILLISECONDS)
+                //.throttleFirst(1000, TimeUnit.MILLISECONDS)
                 .subscribe(v -> clickListener.onItemClick(smartListViewModel)));
         compositeDisposable.add(RxView.longClicks(itemView)
                 .subscribe(u -> clickListener.onItemLongClick(smartListViewModel)));

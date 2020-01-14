@@ -153,7 +153,8 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
                 ((HomeActivity) activity).startConversationTablet(ConversationPath.toBundle(accountId, contactId));
             }
         } else {
-            startActivity(new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, contactId), context, ConversationActivity.class));
+            startActivity(new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, contactId), context, ConversationActivity.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
         }
     }
 
