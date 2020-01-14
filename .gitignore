@@ -7,3 +7,4 @@ android-toolchain-*/
 .gradle
 **/.settings
 config.mak
+ring-android/captures/
