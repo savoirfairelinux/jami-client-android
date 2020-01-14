@@ -799,7 +799,9 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                     .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, conversationId));
         } else {
             startActivityForResult(new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, conversationId), context, ConversationActivity.class)
-                    .setFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT), HomeActivity.REQUEST_CODE_CONVERSATION);
+                    .setFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
+                    .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),
+                    HomeActivity.REQUEST_CODE_CONVERSATION);
         }
     }
 
