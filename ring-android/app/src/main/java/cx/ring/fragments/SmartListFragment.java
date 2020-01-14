@@ -547,7 +547,8 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
         }
 
         if (!isTabletMode) {
-            startActivity(new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, contactId.toString()), requireContext(), ConversationActivity.class));
+            startActivity(new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, contactId.toString()), requireContext(), ConversationActivity.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
         } else {
             ((HomeActivity) requireActivity()).startConversationTablet(ConversationPath.toBundle(accountId, contactId.toString()));
         }
@@ -566,7 +567,8 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     @Override
     public void goToQRActivity() {
         Intent intent = new Intent(QRCodeActivity.ACTION_SCAN)
-                .setClass(requireActivity(), QRCodeActivity.class);
+                .setClass(requireActivity(), QRCodeActivity.class)
+                .addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivityForResult(intent, HomeActivity.REQUEST_CODE_QR_CONVERSATION);
     }
 

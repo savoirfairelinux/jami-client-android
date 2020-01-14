@@ -117,7 +117,8 @@ public class ShareFragment extends BaseSupportFragment<SharePresenter> implement
             sharingIntent.setType("text/plain");
             sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mAccountCountactMe);
             sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.account_share_body, mUriToShow, getText(R.string.app_website)));
-            startActivity(Intent.createChooser(sharingIntent, mShareVia));
+            startActivity(Intent.createChooser(sharingIntent, mShareVia)
+                    .addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
         }
     }
 
