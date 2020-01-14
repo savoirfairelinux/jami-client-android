@@ -84,6 +84,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                         app:passwordToggleTint="@color/colorPrimary"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
+                        android:layout_marginBottom="8dp"
                         app:passwordToggleEnabled="true">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -103,6 +104,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="8dp"
                         android:text="@string/account_start_export_button"
                         app:backgroundTint="@color/colorSecondary"
                         android:textColor="@color/colorOnSecondary"/>

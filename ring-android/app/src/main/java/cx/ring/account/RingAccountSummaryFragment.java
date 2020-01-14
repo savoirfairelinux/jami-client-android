@@ -440,7 +440,7 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
 
     @Override
     public void showPIN(final String pin) {
-        hideWizard();
+        mRingPassword.setText("");
         mSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         mPasswordLayout.setVisibility(View.GONE);
         mEndBtn.setVisibility(View.VISIBLE);
