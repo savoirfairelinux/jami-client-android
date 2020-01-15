@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3250b679_0323661d",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountSummaryFragment.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-01-15T17:06:58Z",
+      "side": 1,
+      "message": "The removal of this code requires the user to restart the AccountEditionActivity in order to generate another PIN. I think that closing and reopening the BottomSheet should reset the UI to allow new PIN generation.",
+      "range": {
+        "startLine": 302,
+        "startChar": 8,
+        "endLine": 316,
+        "endChar": 34
+      },
+      "revId": "3416117d7deb456104f8f10d7af32a4fae458c43",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
