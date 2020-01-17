@@ -119,7 +119,8 @@ public class CallPresenter extends RootPresenter<CallView> {
     @Override
     public void unbindView() {
         if (!mAudioOnly) {
-            mHardwareService.endCapture();
+            mHardwareService.stopCapture();
+            mHardwareService.stopScreenShare();
         }
         super.unbindView();
     }
