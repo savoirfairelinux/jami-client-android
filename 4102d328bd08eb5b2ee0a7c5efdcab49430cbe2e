@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80442a35_c2583855",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-01-17T21:16:31Z",
+      "side": 1,
+      "message": "10, TimeUnit.SECONDS",
+      "range": {
+        "startLine": 138,
+        "startChar": 51,
+        "endLine": 138,
+        "endChar": 105
+      },
+      "revId": "4102d328bd08eb5b2ee0a7c5efdcab49430cbe2e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83729682_0d4281b6",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-01-17T21:16:31Z",
+      "side": 1,
+      "message": "use tertiary condition (3 lines instead of 5):\n\nreturn interaction.isIncoming()\n         ? MessageType.INCOMING_IMAGE.ordinal()\n         : MessageType.OUTGOING_IMAGE.ordinal();\n\nsame for bellow",
+      "range": {
+        "startLine": 237,
+        "startChar": 28,
+        "endLine": 241,
+        "endChar": 29
+      },
+      "revId": "4102d328bd08eb5b2ee0a7c5efdcab49430cbe2e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
