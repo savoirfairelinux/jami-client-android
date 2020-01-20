@@ -2,7 +2,7 @@
 <resources>
   <!--About-->
   <string name="feedback_section">بازخورد</string>
-  <string name="report"><u>رایانامه‌ای به ما بفرستید</u></string>
+  <string name="report"><u>ایمیلی به ما بفرستید</u></string>
   <string name="section_license">مجوز</string>
   <string name="sponsor_section">جمی نرم‌افزار آزادیست که به دست جامعه توسعه داده و پشتیبانی می‌شود</string>
   <string name="copyright_section">حق رونوشت</string>

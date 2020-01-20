@@ -15,6 +15,7 @@
   <string name="dialog_wait_create_details">الرجاء الإنتظار في حين نظيف حسابك</string>
   <string name="help_sip">ترتيب حساب SIP موجود</string>
   <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_message">لا يمكن التراجع عن هذا الإجراء.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">لا حساب مسجل</string>
   <string name="normal_accounts_titles">حسابات</string>
@@ -72,8 +73,10 @@
   <string name="account_rtp_port_range">نطاق المنفذ RTP الصوتي</string>
   <!--restore/backup-->
   <string name="account_export_end_error_title">خطأ</string>
+  <string name="account_new_button">كوّن حساب جامي</string>
   <string name="account_connect_prompt_username">اسم المستخدم</string>
   <!--Name registration-->
+  <string name="account_status_connecting">يتم الإتصال</string>
   <string name="account_status_unknown">مجهول</string>
   <!--Create account-->
   <!--Edit profile-->

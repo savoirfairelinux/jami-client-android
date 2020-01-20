@@ -139,6 +139,7 @@
   <string name="clip_contact_uri">Adresato adresas</string>
   <string name="block_contact_dialog_title">Blokuoti %1$s?</string>
   <string name="block_contact_dialog_message">%1$s negalės su jumis susisiekti tol, kol neatblokuosite.</string>
+  <string name="block_contact_completed">Adresatas %1$s buvo užblokuotas.</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Pridėti %1$s?</string>
   <string name="prompt_new_password">Naujas slaptažodis</string>
@@ -211,4 +212,6 @@
   <string name="menu_message_delete">Ištrinti žinutę</string>
   <string name="menu_message_cancel">Atsisakyti žinutės</string>
   <string name="menu_delete">Ištrinti</string>
+  <string name="pref_darkTheme_title">Tamsus apipavidalinimas</string>
+  <string name="pref_darkTheme_summary">Vietoj sistemos elgsenos, visada naudoti tamsų apipavidalinimą</string>
 </resources>
