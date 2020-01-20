@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a2cf0619_b0f804c6",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-01-20T19:24:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80442a35_c2583855",
+      "range": {
+        "startLine": 138,
+        "startChar": 51,
+        "endLine": 138,
+        "endChar": 105
+      },
+      "revId": "4102d328bd08eb5b2ee0a7c5efdcab49430cbe2e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83729682_0d4281b6",
         "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.java",
         "patchSetId": 15
@@ -45,6 +69,30 @@
       "revId": "4102d328bd08eb5b2ee0a7c5efdcab49430cbe2e",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea777117_b9d0f796",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-01-20T19:24:48Z",
+      "side": 1,
+      "message": "What if I reorder the enum and remove the branching like:\n    return MessageType.INCOMING_IMAGE.ordinal() + interaction.isIncoming() ? 0 : 4;\nLess code and branching at the cost of clarity?",
+      "parentUuid": "83729682_0d4281b6",
+      "range": {
+        "startLine": 237,
+        "startChar": 28,
+        "endLine": 241,
+        "endChar": 29
+      },
+      "revId": "4102d328bd08eb5b2ee0a7c5efdcab49430cbe2e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
