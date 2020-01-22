@@ -706,7 +706,7 @@ public class AccountService {
         mExecutor.execute(() -> {
             Log.i(TAG, "renameDevice() thread running... " + newName);
             StringMap details = Ringservice.getAccountDetails(accountId);
-            details.set(ConfigKey.ACCOUNT_DEVICE_NAME.key(), newName);
+            details.put(ConfigKey.ACCOUNT_DEVICE_NAME.key(), newName);
             Ringservice.setAccountDetails(accountId, details);
             account.setDetail(ConfigKey.ACCOUNT_DEVICE_NAME, newName);
             account.setDevices(Ringservice.getKnownRingDevices(accountId).toNative());
@@ -736,7 +736,8 @@ public class AccountService {
      */
     public void setActiveCodecList(final String accountId, final List<Long> codecs) {
         mExecutor.execute(() -> {
-            UintVect list = new UintVect(codecs.size());
+            UintVect list = new UintVect();
+            list.reserve(codecs.size());
             for (Long codec : codecs) {
                 list.add(codec);
             }
@@ -1473,7 +1474,7 @@ public class AccountService {
                     Log.d(TAG, (enabled ? "Enabling" : "Disabling") + " proxy for account " + acc.getAccountID());
                     acc.setDhtProxyEnabled(enabled);
                     StringMap details = Ringservice.getAccountDetails(acc.getAccountID());
-                    details.set(ConfigKey.PROXY_ENABLED.key(), enabled ? "true" : "false");
+                    details.put(ConfigKey.PROXY_ENABLED.key(), enabled ? "true" : "false");
                     Ringservice.setAccountDetails(acc.getAccountID(), details);
                 }
             }
