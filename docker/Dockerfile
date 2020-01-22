@@ -28,13 +28,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	pkg-config \
 	software-properties-common \
 	ssh \
-	swig \
 	unzip \
 	wget \
 	curl \
 	yasm \
 	nasm \
 	zip \
+	libpcre3 \
+	libpcre3-dev \
+	bison \
+	flex \
 	&& locale-gen $LANG $LC_ALL && update-locale $LANG $LC_ALL
 
 # Android SDK tools
@@ -43,6 +46,12 @@ RUN wget -O /tmp/android-tools.zip https://dl.google.com/android/repository/sdk-
 	unzip -q -d /opt/android-sdk /tmp/android-tools.zip && \
 	rm -f /tmp/android-tools.zip && \
 	chown -R root:root /opt/android-sdk
+
+# Swig 4.0.1
+RUN wget -O /tmp/swig.tar.gz https://github.com/swig/swig/archive/rel-4.0.1.tar.gz && \
+    tar xzf  /tmp/swig.tar.gz -C /opt && \
+    cd /opt/swig-rel-4.0.1/ && ./autogen.sh && ./configure && make install
+
 ENV ANDROID_HOME=/opt/android-sdk
 ENV PATH=${PATH}:${ANDROID_HOME}/tools/bin
 RUN (while sleep 1; do echo "y"; done) | sdkmanager --update

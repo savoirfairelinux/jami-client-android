@@ -38,7 +38,8 @@ public class ProfileChunk {
         Log.d(TAG, "Create ProfileChink of size " + numberOfParts);
         this.mInsertedParts = 0;
         this.mNumberOfParts = numberOfParts;
-        this.mParts = new StringVect(mNumberOfParts + 1);
+        this.mParts = new StringVect();
+        this.mParts.reserve(mNumberOfParts + 1);
     }
 
     /**
