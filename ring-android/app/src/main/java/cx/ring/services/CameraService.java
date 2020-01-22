@@ -216,10 +216,10 @@ public class CameraService {
         rates.clear();
 
         fillCameraInfo(p, camId, formats, sizes, rates, minVideoSize);
-        sizes.add(p.size.x);
-        sizes.add(p.size.y);
-        sizes.add(p.size.y);
-        sizes.add(p.size.x);
+        sizes.add((long) p.size.x);
+        sizes.add((long) p.size.y);
+        sizes.add((long) p.size.y);
+        sizes.add((long) p.size.x);
 
         mNativeParams.put(camId, p);
     }
@@ -286,8 +286,8 @@ public class CameraService {
 
         StringMap toMap() {
             StringMap map = new StringMap();
-            map.set("size", size.x + "x" + size.y);
-            map.set("rate", Long.toString(rate));
+            map.put("size", size.x + "x" + size.y);
+            map.put("rate", Long.toString(rate));
             return map;
         }
     }
