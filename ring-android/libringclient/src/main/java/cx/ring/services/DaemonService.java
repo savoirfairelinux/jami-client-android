@@ -146,7 +146,7 @@ public class DaemonService {
 
         @Override
         public void incomingAccountMessage(String accountId, String from, StringMap messages) {
-            if (messages == null || messages.empty())
+            if (messages == null || messages.isEmpty())
                 return;
             Map<String, String> jmessages = messages.toNativeFromUtf8();
             mExecutor.submit(() -> mAccountService.incomingAccountMessage(accountId, null, from, jmessages));
@@ -244,7 +244,7 @@ public class DaemonService {
 
         @Override
         public void incomingMessage(String callId, String from, StringMap messages) {
-            if (messages == null || messages.empty())
+            if (messages == null || messages.isEmpty())
                 return;
             Map<String, String> jmessages = messages.toNativeFromUtf8();
             mExecutor.submit(() -> mCallService.incomingMessage(callId, from, jmessages));
