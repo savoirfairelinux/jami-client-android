@@ -939,7 +939,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             }
             Interaction nextMsg = getNextMessageFromPosition(i);
             if (nextMsg != null) {
-                if (isSeqBreak(msg, nextMsg)) {
+                if (isSeqBreak(msg, nextMsg) || hasPermanentTimeString(nextMsg, i + 1)) {
                     return SequenceType.SINGLE;
                 } else {
                     return SequenceType.FIRST;
@@ -958,12 +958,13 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         Interaction prevMsg = getPreviousMessageFromPosition(i);
         Interaction nextMsg = getNextMessageFromPosition(i);
         if (prevMsg != null && nextMsg != null) {
-            if (((isSeqBreak(msg, prevMsg) || isTimeShown) && !isSeqBreak(msg, nextMsg))) {
+            boolean nextMsgHasTime = hasPermanentTimeString(nextMsg, i + 1);
+            if (((isSeqBreak(msg, prevMsg) || isTimeShown) && !(isSeqBreak(msg, nextMsg) || nextMsgHasTime))) {
                 return SequenceType.FIRST;
             } else if (!isSeqBreak(msg, prevMsg) && !isTimeShown && isSeqBreak(msg, nextMsg)) {
                 return SequenceType.LAST;
             } else if (!isSeqBreak(msg, prevMsg) && !isTimeShown && !isSeqBreak(msg, nextMsg)) {
-                return SequenceType.MIDDLE;
+                return nextMsgHasTime ? SequenceType.LAST : SequenceType.MIDDLE;
             }
         }
         return SequenceType.SINGLE;
