@@ -33,18 +33,18 @@ import java.util.List;
 
 import cx.ring.R;
 import cx.ring.account.AccountCreationModelImpl;
-import cx.ring.account.RingAccountCreationPresenter;
-import cx.ring.account.RingAccountCreationView;
+import cx.ring.account.JamiAccountCreationPresenter;
+import cx.ring.account.JamiAccountCreationView;
 import cx.ring.application.JamiApplication;
 import cx.ring.mvp.AccountCreationModel;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
 
-public class TVRingAccountCreationFragment
-        extends RingGuidedStepFragment<RingAccountCreationPresenter>
-        implements RingAccountCreationView {
+public class TVJamiAccountCreationFragment
+        extends RingGuidedStepFragment<JamiAccountCreationPresenter>
+        implements JamiAccountCreationView {
 
-    private static final String TAG = TVRingAccountCreationFragment.class.getSimpleName();
+    private static final String TAG = TVJamiAccountCreationFragment.class.getSimpleName();
     private static final int USERNAME = 0;
     private static final int PASSWORD = 1;
     private static final int PASSWORD_CONFIRMATION = 2;
@@ -73,11 +73,11 @@ public class TVRingAccountCreationFragment
         }
     };
 
-    public TVRingAccountCreationFragment() {
+    public TVJamiAccountCreationFragment() {
     }
 
-    public static TVRingAccountCreationFragment newInstance(AccountCreationModelImpl ringAccountViewModel) {
-        TVRingAccountCreationFragment fragment = new TVRingAccountCreationFragment();
+    public static TVJamiAccountCreationFragment newInstance(AccountCreationModelImpl ringAccountViewModel) {
+        TVJamiAccountCreationFragment fragment = new TVJamiAccountCreationFragment();
         fragment.model = ringAccountViewModel;
         return fragment;
     }

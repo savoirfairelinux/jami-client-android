@@ -31,9 +31,9 @@ import cx.ring.services.AccountService;
 import io.reactivex.Scheduler;
 import io.reactivex.subjects.PublishSubject;
 
-public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreationView> {
+public class JamiAccountCreationPresenter extends RootPresenter<JamiAccountCreationView> {
 
-    public static final String TAG = RingAccountCreationPresenter.class.getSimpleName();
+    public static final String TAG = JamiAccountCreationPresenter.class.getSimpleName();
     private static final int PASSWORD_MIN_LENGTH = 6;
     private static final long TYPING_DELAY = 350L;
     private final PublishSubject<String> contactQuery = PublishSubject.create();
@@ -50,12 +50,12 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
     private String mPasswordConfirm = "";
 
     @Inject
-    public RingAccountCreationPresenter(AccountService accountService) {
+    public JamiAccountCreationPresenter(AccountService accountService) {
         this.mAccountService = accountService;
     }
 
     @Override
-    public void bindView(RingAccountCreationView view) {
+    public void bindView(JamiAccountCreationView view) {
         super.bindView(view);
         mCompositeDisposable.add(contactQuery
                 .debounce(TYPING_DELAY, TimeUnit.MILLISECONDS)
@@ -79,14 +79,15 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
      * @param userName
      */
     public void userNameChanged(String userName) {
-        mAccountCreationModel.setUsername(userName);
+        if (mAccountCreationModel != null)
+            mAccountCreationModel.setUsername(userName);
         contactQuery.onNext(userName);
         isRingUserNameCorrect = false;
-        RingAccountCreationView view = getView();
 
         if (startUsernameAvailabitlityProgressBarAnimation) {
-            view.updateUsernameAvailability(RingAccountCreationView.
-                    UsernameAvailabilityStatus.LOADING);
+            JamiAccountCreationView view = getView();
+            if (view != null)
+                view.updateUsernameAvailability(JamiAccountCreationView.UsernameAvailabilityStatus.LOADING);
             startUsernameAvailabitlityProgressBarAnimation = false;
         }
     }
@@ -135,7 +136,7 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
 
     public void createAccount() {
         if (isInputValid()) {
-            RingAccountCreationView view = getView();
+            JamiAccountCreationView view = getView();
             view.enableNextButton(false);
             view.goToAccountCreation(mAccountCreationModel);
         }
@@ -151,12 +152,12 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
         boolean valid = isInputValid();
         getView().enableNextButton(valid);
         if(valid && isRingUserNameCorrect)
-            getView().updateUsernameAvailability(RingAccountCreationView.
+            getView().updateUsernameAvailability(JamiAccountCreationView.
                     UsernameAvailabilityStatus.AVAILABLE);
     }
 
     private void handleBlockchainResult(String name, String address, int state) {
-        RingAccountCreationView view = getView();
+        JamiAccountCreationView view = getView();
         //Once we get the result, we can show the loading animation again when the user types
         startUsernameAvailabitlityProgressBarAnimation = true;
         if (view == null) {
@@ -164,33 +165,33 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
         }
         if (name == null || name.isEmpty()) {
 
-            view.updateUsernameAvailability(RingAccountCreationView.
+            view.updateUsernameAvailability(JamiAccountCreationView.
                     UsernameAvailabilityStatus.RESET);
             isRingUserNameCorrect = false;
         } else {
             switch (state) {
                 case 0:
                     // on found
-                    view.updateUsernameAvailability(RingAccountCreationView.
+                    view.updateUsernameAvailability(JamiAccountCreationView.
                             UsernameAvailabilityStatus.ERROR_USERNAME_TAKEN);
                     isRingUserNameCorrect = false;
                     break;
                 case 1:
                     // invalid name
-                    view.updateUsernameAvailability(RingAccountCreationView.
+                    view.updateUsernameAvailability(JamiAccountCreationView.
                             UsernameAvailabilityStatus.ERROR_USERNAME_INVALID);
                     isRingUserNameCorrect = false;
                     break;
                 case 2:
                     // available
-                    view.updateUsernameAvailability(RingAccountCreationView.
+                    view.updateUsernameAvailability(JamiAccountCreationView.
                             UsernameAvailabilityStatus.AVAILABLE);
                     mAccountCreationModel.setUsername(name);
                     isRingUserNameCorrect = true;
                     break;
                 default:
                     // on error
-                    view.updateUsernameAvailability(RingAccountCreationView.
+                    view.updateUsernameAvailability(JamiAccountCreationView.
                             UsernameAvailabilityStatus.ERROR);
                     isRingUserNameCorrect = false;
                     break;

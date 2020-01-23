@@ -50,8 +50,8 @@ import cx.ring.mvp.AccountCreationModel;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.utils.RegisteredNameFilter;
 
-public class RingAccountCreationFragment extends BaseSupportFragment<RingAccountCreationPresenter>
-        implements RingAccountCreationView {
+public class JamiAccountCreationFragment extends BaseSupportFragment<JamiAccountCreationPresenter>
+        implements JamiAccountCreationView {
 
     @BindView(R.id.switch_ring_username)
     protected Switch mUsernameSwitch;
@@ -91,8 +91,8 @@ public class RingAccountCreationFragment extends BaseSupportFragment<RingAccount
 
     private AccountCreationModel model;
 
-    public static RingAccountCreationFragment newInstance(AccountCreationModelImpl ringAccountViewModel) {
-        RingAccountCreationFragment fragment = new RingAccountCreationFragment();
+    public static JamiAccountCreationFragment newInstance(AccountCreationModelImpl ringAccountViewModel) {
+        JamiAccountCreationFragment fragment = new JamiAccountCreationFragment();
         fragment.model = ringAccountViewModel;
         return fragment;
     }
