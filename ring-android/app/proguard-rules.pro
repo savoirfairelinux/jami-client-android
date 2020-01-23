@@ -52,10 +52,6 @@
 -keep,includedescriptorclasses class com.google.zxing.** { *; }
 -keepclassmembers class com.google.zxing.** { *; }
 
-# stickylistheaders
--keep,includedescriptorclasses class se.emilsjolander.stickylistheaders.** { *; }
--keepclassmembers class se.emilsjolander.stickylistheaders.** { *; }
-
 # Butterknife
 -keep class butterknife.** { *; }
 -dontwarn butterknife.**
