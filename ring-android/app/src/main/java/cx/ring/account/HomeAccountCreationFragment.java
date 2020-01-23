@@ -84,7 +84,7 @@ public class HomeAccountCreationFragment extends BaseSupportFragment<HomeAccount
     @Override
     public void goToAccountCreation() {
         AccountCreationModelImpl ringAccountViewModel = new AccountCreationModelImpl();
-        Fragment fragment = RingAccountCreationFragment.newInstance(ringAccountViewModel);
+        Fragment fragment = JamiAccountCreationFragment.newInstance(ringAccountViewModel);
         replaceFragmentWithSlide(fragment, R.id.wizard_container);
     }
 
