@@ -53,7 +53,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.appcompat.widget.PopupMenu;
-import androidx.core.content.FileProvider;
 import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 
@@ -97,8 +96,6 @@ import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -357,7 +354,6 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
                             Log.e(TAG, "takePicture: error creating temporary file", ex);
                             break;
                         }
-                        //intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, mCurrentPhoto));
                         startActivityForResult(intent, REQUEST_CODE_CAPTURE_AUDIO);
                     } else {
                         Toast.makeText(getActivity(), "Can't find audio recorder app", Toast.LENGTH_SHORT).show();
@@ -376,7 +372,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
                             Log.e(TAG, "takePicture: error creating temporary file", ex);
                             break;
                         }
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, mCurrentPhoto));
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, ContentUriHandler.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, mCurrentPhoto));
                         startActivityForResult(intent, REQUEST_CODE_CAPTURE_VIDEO);
                     } else {
                         Toast.makeText(getActivity(), "Can't find video recorder app", Toast.LENGTH_SHORT).show();
@@ -421,7 +417,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
                 }
                 Log.i(TAG, "takePicture: trying to save to " + photoFile);
                 mCurrentPhoto = photoFile;
-                android.net.Uri photoURI = FileProvider.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, photoFile);
+                android.net.Uri photoURI = ContentUriHandler.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 takePictureIntent.putExtra("android.intent.extras.CAMERA_FACING", 1);
                 takePictureIntent.putExtra("android.intent.extras.LENS_FACING_FRONT", 1);
@@ -563,7 +559,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             return;
         android.net.Uri fileUri = null;
         try {
-            fileUri = FileProvider.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path);
+            fileUri = ContentUriHandler.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path);
         } catch (IllegalArgumentException e) {
             Log.e("File Selector", "The selected file can't be shared: " + path.getName());
         }
@@ -585,7 +581,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             return;
         android.net.Uri fileUri = null;
         try {
-            fileUri = FileProvider.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path);
+            fileUri = ContentUriHandler.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path);
         } catch (IllegalArgumentException e) {
             Log.e("File Selector", "The selected file can't be shared: " + path.getName());
         }

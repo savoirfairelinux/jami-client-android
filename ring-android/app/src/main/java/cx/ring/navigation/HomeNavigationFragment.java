@@ -46,7 +46,6 @@ import java.io.File;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.FileProvider;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -448,7 +447,7 @@ public class HomeNavigationFragment extends BaseSupportFragment<HomeNavigationPr
         try {
             Context context = requireContext();
             File file = AndroidFileUtils.createImageFile(context);
-            Uri uri = FileProvider.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, file);
+            Uri uri = ContentUriHandler.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, file);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
             intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             tmpProfilePhotoUri = uri;

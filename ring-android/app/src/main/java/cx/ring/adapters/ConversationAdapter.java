@@ -90,8 +90,6 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-import static androidx.core.content.FileProvider.getUriForFile;
-
 public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHolder> {
     private final static String TAG = ConversationAdapter.class.getSimpleName();
 
@@ -480,7 +478,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                     .into(new DrawableImageViewTarget(viewHolder.mImage).waitForLayout());
 
             viewHolder.mImage.setOnClickListener(v -> {
-                Uri contentUri = getUriForFile(v.getContext(), ContentUriHandler.AUTHORITY_FILES, path);
+                Uri contentUri = ContentUriHandler.getUriForFile(v.getContext(), ContentUriHandler.AUTHORITY_FILES, path);
                 Intent i = new Intent(context, MediaViewerActivity.class);
                 i.setAction(Intent.ACTION_VIEW).setDataAndType(contentUri, "image/*").setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 ActivityOptionsCompat options = ActivityOptionsCompat.
@@ -493,7 +491,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             if (viewHolder.player != null) {
                 viewHolder.player.release();
             }
-            final MediaPlayer player = MediaPlayer.create(context, getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path));
+            final MediaPlayer player = MediaPlayer.create(context,
+                    ContentUriHandler.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path));
             if (player == null)
                 return;
             viewHolder.player = player;
@@ -559,7 +558,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             Context context = viewHolder.itemView.getContext();
             try {
                 ((ImageView) viewHolder.btnAccept).setImageResource(R.drawable.baseline_play_arrow_24);
-                final MediaPlayer player = MediaPlayer.create(context, getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path));
+                final MediaPlayer player = MediaPlayer.create(context,
+                        ContentUriHandler.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path));
                 viewHolder.player = player;
                 if (player != null) {
                     player.setOnCompletionListener(mp -> {
