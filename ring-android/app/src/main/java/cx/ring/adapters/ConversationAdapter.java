@@ -32,6 +32,7 @@ import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.text.format.DateUtils;
+import android.text.format.Formatter;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.ContextMenu;
@@ -384,10 +385,10 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe(t -> {
             if (file.getStatus() == InteractionStatus.TRANSFER_FINISHED) {
                 viewHolder.mMsgDetailTxt.setText(String.format("%s - %s",
-                        timeString, FileUtils.readableFileSize(file.getTotalSize())));
+                        timeString, Formatter.formatFileSize(viewHolder.itemView.getContext(), file.getTotalSize())));
             } else {
                 viewHolder.mMsgDetailTxt.setText(String.format("%s - %s - %s",
-                        timeString, FileUtils.readableFileSize(file.getTotalSize()),
+                        timeString, Formatter.formatFileSize(viewHolder.itemView.getContext(), file.getTotalSize()),
                         ResourceMapper.getReadableFileTransferStatus(conversationFragment.getActivity(), file.getStatus())));
             }
         }));

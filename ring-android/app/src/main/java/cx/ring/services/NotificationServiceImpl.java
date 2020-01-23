@@ -35,6 +35,7 @@ import android.media.RingtoneManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.format.Formatter;
 import android.util.Log;
 import android.util.SparseArray;
 
@@ -731,7 +732,7 @@ public class NotificationServiceImpl implements NotificationService {
                 .setCategory(NotificationCompat.CATEGORY_PROGRESS)
                 .setOnlyAlertOnce(true)
                 .setContentText(event == Interaction.InteractionStatus.TRANSFER_ONGOING ?
-                        FileUtils.readableFileProgress(info.getBytesProgress(), info.getTotalSize()) :
+                        Formatter.formatFileSize(mContext, info.getBytesProgress()) + " / " + Formatter.formatFileSize(mContext, info.getTotalSize()) :
                         info.getDisplayName() + ": " + ResourceMapper.getReadableFileTransferStatus(mContext, event))
                 .setContentIntent(PendingIntent.getService(mContext, random.nextInt(), intentConversation, 0))
                 .setColor(ResourcesCompat.getColor(mContext.getResources(), R.color.color_primary_dark, null));
