@@ -448,7 +448,7 @@ public class HomeNavigationFragment extends BaseSupportFragment<HomeNavigationPr
         try {
             Context context = requireContext();
             File file = AndroidFileUtils.createImageFile(context);
-            Uri uri = FileProvider.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, file);
+            Uri uri = ContentUriHandler.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, file);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
             intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             tmpProfilePhotoUri = uri;
