@@ -137,7 +137,7 @@ public class GeneralAccountFragment extends BasePreferenceFragment<GeneralAccoun
         } else if (size == maxSize) {
             return getText(R.string.account_accept_files_always);
         } else {
-            return Formatter.formatFileSize(requireContext(), size * 1024 * 1024);
+            return Formatter.formatFileSize(requireContext(), size * 1000 * 1000);
         }
     }
 

@@ -41,12 +41,12 @@ along with this program; if not, write to the Free Software
         <androidx.preference.SeekBarPreference
             android:icon="@drawable/baseline_attach_file_24"
             android:key="acceptIncomingFilesMaxSize"
-            android:max="256"
+            android:max="100"
             android:persistent="true"
             android:title="@string/account_accept_files_max_size"
             app:defaultValue="32"
             app:min="0"
-            app:seekBarIncrement="1"
+            app:seekBarIncrement="2"
             app:updatesContinuously="true"
             tools:summary="@string/account_accept_files_never" />
 
