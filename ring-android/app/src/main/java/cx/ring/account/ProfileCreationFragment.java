@@ -22,6 +22,7 @@ package cx.ring.account;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -203,10 +204,12 @@ public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreation
             intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
             intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             tmpProfilePhotoUri = uri;
+            startActivityForResult(intent, REQUEST_CODE_PHOTO);
         } catch (IOException e) {
             Log.e(TAG, "Can't create temp file", e);
+        } catch (ActivityNotFoundException e) {
+            Log.e(TAG, "Could not start activity");
         }
-        startActivityForResult(intent, REQUEST_CODE_PHOTO);
     }
 
     @Override
