@@ -179,7 +179,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
 
     @Override
     public void onBackPressed() {
-        if (mBackHandlerInterface.onBackPressed()) {
+        if (mBackHandlerInterface != null && mBackHandlerInterface.onBackPressed()) {
             return;
         }
         if (frameLayout.getVisibility() == View.VISIBLE) {
@@ -303,6 +303,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
             return isRing ? 3 : 4;
         }
 
+        @NonNull
         @Override
         public Fragment getItem(int position) {
             return isRing ? getRingPanel(position) : getSIPPanel(position);
