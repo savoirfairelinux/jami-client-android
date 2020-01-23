@@ -124,6 +124,7 @@ dependencies {
         exclude group: 'com.google.firebase', module: 'firebase-analytics'
         exclude group: 'com.google.firebase', module: 'firebase-measurement-connector'
     }
+    implementation 'org.apache.directory.studio:org.apache.commons.io:2.4'
 }
 
 if (buildFirebase) {
