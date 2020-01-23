@@ -35,7 +35,7 @@ import androidx.fragment.app.Fragment;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cx.ring.R;
-import cx.ring.account.RingAccountCreationFragment;
+import cx.ring.account.JamiAccountCreationFragment;
 import cx.ring.application.JamiApplication;
 import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.model.Error;
@@ -118,16 +118,16 @@ public abstract class BaseSupportFragment<T extends RootPresenter> extends Fragm
                 .beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_right,
                         R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
-                .replace(content, fragment, RingAccountCreationFragment.TAG)
-                .addToBackStack(RingAccountCreationFragment.TAG)
+                .replace(content, fragment, JamiAccountCreationFragment.TAG)
+                .addToBackStack(JamiAccountCreationFragment.TAG)
                 .commit();
     }
 
     protected void replaceFragment(Fragment fragment, @IdRes int content) {
         getFragmentManager()
                 .beginTransaction()
-                .replace(content, fragment, RingAccountCreationFragment.TAG)
-                .addToBackStack(RingAccountCreationFragment.TAG)
+                .replace(content, fragment, JamiAccountCreationFragment.TAG)
+                .addToBackStack(JamiAccountCreationFragment.TAG)
                 .commit();
     }
 }

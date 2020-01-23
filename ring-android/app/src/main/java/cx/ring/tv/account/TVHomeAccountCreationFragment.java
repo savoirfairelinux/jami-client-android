@@ -51,7 +51,7 @@ public class TVHomeAccountCreationFragment
     public void goToAccountCreation() {
         AccountCreationModelImpl ringAccountViewModel = new AccountCreationModelImpl();
         ringAccountViewModel.setLink(false);
-        GuidedStepSupportFragment.add(getFragmentManager(), TVRingAccountCreationFragment.newInstance(ringAccountViewModel));
+        GuidedStepSupportFragment.add(getFragmentManager(), TVJamiAccountCreationFragment.newInstance(ringAccountViewModel));
     }
 
     @Override

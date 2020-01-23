@@ -21,7 +21,7 @@ package cx.ring.account;
 
 import cx.ring.mvp.AccountCreationModel;
 
-public interface RingAccountCreationView {
+public interface JamiAccountCreationView {
 
     enum UsernameAvailabilityStatus {
         ERROR_USERNAME_TAKEN,

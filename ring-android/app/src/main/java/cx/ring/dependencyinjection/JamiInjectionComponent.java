@@ -27,7 +27,7 @@ import cx.ring.account.HomeAccountCreationFragment;
 import cx.ring.account.JamiAccountConnectFragment;
 import cx.ring.account.ProfileCreationFragment;
 import cx.ring.account.RegisterNameDialog;
-import cx.ring.account.RingAccountCreationFragment;
+import cx.ring.account.JamiAccountCreationFragment;
 import cx.ring.account.RingAccountSummaryFragment;
 import cx.ring.account.RingLinkAccountFragment;
 import cx.ring.application.JamiApplication;
@@ -75,7 +75,7 @@ import cx.ring.tv.account.TVAccountWizard;
 import cx.ring.tv.account.TVHomeAccountCreationFragment;
 import cx.ring.tv.account.TVProfileCreationFragment;
 import cx.ring.tv.account.TVProfileEditingFragment;
-import cx.ring.tv.account.TVRingAccountCreationFragment;
+import cx.ring.tv.account.TVJamiAccountCreationFragment;
 import cx.ring.tv.account.TVRingLinkAccountFragment;
 import cx.ring.tv.account.TVSettingsFragment;
 import cx.ring.tv.account.TVShareFragment;
@@ -119,7 +119,7 @@ public interface JamiInjectionComponent {
 
     void inject(ConversationSelectionActivity fragment);
 
-    void inject(RingAccountCreationFragment fragment);
+    void inject(JamiAccountCreationFragment fragment);
 
     void inject(MediaPreferenceFragment fragment);
 
@@ -198,7 +198,7 @@ public interface JamiInjectionComponent {
 
     void inject(TVProfileCreationFragment fragment);
 
-    void inject(TVRingAccountCreationFragment fragment);
+    void inject(TVJamiAccountCreationFragment fragment);
 
     void inject(TVRingLinkAccountFragment fragment);
 
