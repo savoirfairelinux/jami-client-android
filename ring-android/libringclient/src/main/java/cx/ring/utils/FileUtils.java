@@ -39,12 +39,9 @@ public class FileUtils {
     }
 
     public static boolean copyFile(File src, File dest) {
-        try {
-            InputStream inputStream = new FileInputStream(src);
-            FileOutputStream outputStream = new FileOutputStream(dest);
+        try (InputStream inputStream = new FileInputStream(src);
+             FileOutputStream outputStream = new FileOutputStream(dest)) {
             copyFile(inputStream, outputStream);
-            inputStream.close();
-            outputStream.close();
         } catch (IOException e) {
             Log.w(TAG, "Can't copy file", e);
             return false;
