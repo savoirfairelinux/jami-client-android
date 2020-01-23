@@ -53,10 +53,10 @@ ENV ANDROID_DEPS=\
  platforms;android-29 \
  extras;android;m2repository \
  extras;google;m2repository \
- ndk;20.0.5594570'
+ ndk;21.0.6113669'
 RUN (while sleep 1; do echo "y"; done) | sdkmanager $ANDROID_DEPS
 ENV ANDROID_SDK=/opt/android-sdk
-ENV ANDROID_NDK=/opt/android-sdk/ndk/20.0.5594570
+ENV ANDROID_NDK=/opt/android-sdk/ndk/21.0.6113669
 
 WORKDIR /home/builder/src
 VOLUME /home/builder/src

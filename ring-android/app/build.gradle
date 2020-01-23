@@ -5,6 +5,7 @@ def buildFirebase = project.hasProperty('buildFirebase') || getGradle().getStart
 android {
     compileSdkVersion 29
     buildToolsVersion '29.0.2'
+    ndkVersion "21.0.6113669"
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 29
@@ -69,8 +70,8 @@ android {
 dependencies {
     def android_support_core_version = '1.1.0'
     def android_support_version = '1.0.0'
-    def material_version = '1.1.0-rc01'
-    def butterknife_version = '10.2.0'
+    def material_version = '1.1.0-rc02'
+    def butterknife_version = '10.2.1'
     def dagger_version = '2.24'
 
     implementation fileTree(include: '*.jar', dir: 'libs')

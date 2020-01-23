@@ -17,13 +17,13 @@ dependencies {
     compile 'com.j256.ormlite:ormlite-core:5.1'
 
     // Required -- JUnit 4 framework
-    testCompile 'junit:junit:4.12'
+    testCompile 'junit:junit:4.13'
 
     // RxJava
     compile "io.reactivex.rxjava2:rxjava:2.2.16"
 
     // gson
-    compile 'com.google.code.gson:gson:2.8.5'
+    compile 'com.google.code.gson:gson:2.8.6'
 
 }
 
