@@ -43,6 +43,8 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -107,6 +109,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     private int expandedItemPosition = -1;
     private int lastDeliveredPosition = -1;
     private Observable<Long> timestampUpdateTimer;
+    private int lastMsgPos = -1;
 
     private static int[] msgBGLayouts = new int[] {
             R.drawable.textmsg_bg_out_first,
@@ -261,6 +264,14 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             return;
 
         conversationViewHolder.compositeDisposable.clear();
+
+        if (position > lastMsgPos) {
+            lastMsgPos = position;
+            Animation animation = AnimationUtils.loadAnimation(
+                    conversationViewHolder.itemView.getContext(), R.anim.fade_in);
+            animation.setStartOffset(150);
+            conversationViewHolder.itemView.startAnimation(animation);
+        }
 
         if (interaction.getType() == (InteractionType.TEXT)) {
             configureForTextMessage(conversationViewHolder, interaction, position);
@@ -714,9 +725,36 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
         convViewHolder.mMsgTxt.setText(message);
 
+        boolean endOfSeq = msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE;
         if (textMessage.isIncoming()) {
-            convViewHolder.mAvatar.setImageBitmap(null);
-            convViewHolder.mAvatar.setVisibility(View.VISIBLE);
+            if (endOfSeq) {
+                convViewHolder.mAvatar.setImageDrawable(
+                        conversationFragment.getConversationAvatar(contact.getPrimaryNumber())
+                );
+                convViewHolder.mAvatar.setVisibility(View.VISIBLE);
+            } else {
+                if (position == lastMsgPos - 1 && convViewHolder.mAvatar != null) {
+                    Animation animation = AnimationUtils.loadAnimation(
+                            convViewHolder.mAvatar.getContext(), R.anim.fade_out);
+                    animation.setAnimationListener(new Animation.AnimationListener(){
+                        @Override
+                        public void onAnimationStart(Animation arg0) {
+                        }
+                        @Override
+                        public void onAnimationRepeat(Animation arg0) {
+                        }
+                        @Override
+                        public void onAnimationEnd(Animation arg0) {
+                            convViewHolder.mAvatar.setImageBitmap(null);
+                            convViewHolder.mAvatar.setVisibility(View.INVISIBLE);
+                        }
+                    });
+                    convViewHolder.mAvatar.startAnimation(animation);
+                } else {
+                    convViewHolder.mAvatar.setImageBitmap(null);
+                    convViewHolder.mAvatar.setVisibility(View.INVISIBLE);
+                }
+            }
         } else {
             switch (textMessage.getStatus()) {
                 case SENDING:
@@ -738,16 +776,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             }
         }
 
-        if (msgSequenceType == SequenceType.LAST || msgSequenceType == SequenceType.SINGLE) {
-            setBottomMargin(convViewHolder.mMsgTxt, 8);
-            if (textMessage.isIncoming()) {
-                convViewHolder.mAvatar.setImageDrawable(
-                        conversationFragment.getConversationAvatar(contact.getPrimaryNumber())
-                );
-            }
-        } else {
-            setBottomMargin(convViewHolder.mMsgTxt, 0);
-        }
+        setBottomMargin(convViewHolder.mMsgTxt, endOfSeq ? 8 : 0);
 
         if (isTimeShown) {
             convViewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe(t -> {
