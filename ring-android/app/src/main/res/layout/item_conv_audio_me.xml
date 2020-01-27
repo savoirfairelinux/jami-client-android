@@ -38,8 +38,7 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:textColor="@color/textColorSecondary"
-        android:textSize="14sp"
-        android:paddingTop="4dp"
+        android:textSize="@dimen/conversation_timestamp_textsize"
         android:paddingBottom="8dp"
         tools:text="@string/time_just_now" />
 
