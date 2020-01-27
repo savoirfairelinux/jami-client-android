@@ -31,8 +31,10 @@ import android.graphics.SurfaceTexture;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.text.SpannableString;
 import android.text.format.DateUtils;
 import android.text.format.Formatter;
+import android.text.style.URLSpan;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.ContextMenu;
@@ -45,6 +47,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -81,7 +84,6 @@ import cx.ring.model.TextMessage;
 import cx.ring.service.DRingService;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
-import cx.ring.utils.FileUtils;
 import cx.ring.utils.GlideApp;
 import cx.ring.utils.GlideOptions;
 import cx.ring.utils.ResourceMapper;
@@ -764,7 +766,23 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                 }));
             }
             setItemViewExpansionState(convViewHolder, isExpanded);
+            convViewHolder.mMsgTxt.setOnFocusChangeListener((v, hasFocus) -> {
+                if (hasFocus) {
+                    v.performClick();
+                }
+            });
             convViewHolder.mMsgTxt.setOnClickListener((View v) -> {
+                SpannableString current = (SpannableString) (((TextView) v).getText());
+                URLSpan[] spans = current.getSpans(0, current.length(), URLSpan.class);
+                for (URLSpan span : spans) {
+                    if (convViewHolder.mMsgTxt.getSelectionStart() >= current.getSpanStart(span) &&
+                            convViewHolder.mMsgTxt.getSelectionStart() <= current.getSpanEnd(span)) {
+                        v.clearFocus();
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(span.getURL()));
+                        context.startActivity(intent);
+                        return;
+                    }
+                }
                 if (convViewHolder.animator != null && convViewHolder.animator.isRunning()) {
                     return;
                 }
@@ -773,6 +791,9 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                     notifyItemChanged(prev);
                 }
                 expandedItemPosition = isExpanded ? -1 : position;
+                if (isExpanded) {
+                    v.clearFocus();
+                }
                 notifyItemChanged(expandedItemPosition);
             });
         }
