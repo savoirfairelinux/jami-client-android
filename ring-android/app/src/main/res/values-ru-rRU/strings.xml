@@ -5,7 +5,7 @@
   <string name="report">Отправьте нам email</string>
   <string name="section_license">Лицензия</string>
   <string name="sponsor_section">Jami это бесплатное программное обеспечение, разработанное и поддерживаемое </string>
-  <string name="copyright_section">Авторское право</string>
+  <string name="copyright_section">Авторские права</string>
   <string name="contribute_section">Помочь проекту</string>
   <string name="version_section">Версия</string>
   <string name="no_email_app_installed">Не найдено приложение электронной почты. Пожалуйста, установите его для отправки нам отчета.</string>
@@ -18,7 +18,7 @@
   <string name="call_service_description">Этот сервис необходима для того, чтобы ваши звонки продолжали работать поверх приложений. Это работает только во время звонков.</string>
   <string name="data_transfer_service_description">Этот сервис необходим для отображения уведомлений во время передачи файлов. Это работает только при передаче файлов. </string>
   <!--About dialog-->
-  <string name="developed_by">Разработано </string>
+  <string name="developed_by">Разработчики</string>
   <string name="designed_by">Дизайнер </string>
   <string name="ringtones_by">Рингтоны от </string>
   <!--RingActivity-->

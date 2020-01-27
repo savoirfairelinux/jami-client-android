@@ -74,11 +74,17 @@
   <string name="account_video_enable">启用视频</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">高级</string>
+  <string name="account_dht_public_in_calls_label">允许来自未加入通讯录的通话</string>
   <string name="account_registration_exp_label">注册过期</string>
   <string name="account_local_interface_label">本地接口</string>
   <string name="account_local_port_label">本地端口</string>
   <string name="account_stun_enable_label">使用STUN</string>
   <string name="account_stun_server_label">STUN服务器</string>
+  <string name="account_accept_files">自动接收传入的文件</string>
+  <string name="account_accept_files_max_size">允许自动接收文件的最大大小</string>
+  <string name="account_accept_files_never">从不自动接收</string>
+  <string name="account_accept_files_always">总是自动接收</string>
+  <string name="size_mb">%1$d 兆字节</string>
   <string name="account_turn_enable_label">使用TURN</string>
   <string name="account_turn_server_label">TURN服务器</string>
   <string name="account_turn_username_label">TURN用户名</string>
@@ -89,6 +95,9 @@
   <string name="account_proxy_label">DHT代理</string>
   <string name="account_proxy_enable_label">使用DHT代理</string>
   <string name="account_proxy_server_label">DHT代理地址</string>
+  <string name="account_peer_discovery_label">本地对等方发现</string>
+  <string name="account_peer_discovery_enable_label">启用本地对等方发现</string>
+  <string name="account_peer_discovery_enable_summary">连接至在本地网络宣告的DHT节点</string>
   <!--Security Details-->
   <string name="account_credentials_label">认证信息</string>
   <string name="account_credentials_edit">编辑认证信息</string>
