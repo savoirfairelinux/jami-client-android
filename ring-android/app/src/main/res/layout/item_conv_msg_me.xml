@@ -72,7 +72,7 @@ along with this program; if not, write to the Free Software
             android:autoLink="all"
             android:background="@drawable/textmsg_bg_out"
             android:ellipsize="marquee"
-            android:focusable="false"
+            android:focusable="true"
             android:marqueeRepeatLimit="marquee_forever"
             android:padding="@dimen/padding_medium"
             android:scrollHorizontally="true"
