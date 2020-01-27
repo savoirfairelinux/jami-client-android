@@ -37,8 +37,7 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:textColor="@color/textColorSecondary"
-        android:textSize="14sp"
-        android:paddingTop="4dp"
+        android:textSize="@dimen/conversation_timestamp_textsize"
         tools:text="@string/time_just_now" />
 
     <RelativeLayout
@@ -87,7 +86,7 @@
             android:layout_below="@id/video_frame"
             android:layout_marginStart="@dimen/conversation_message_radius"
             android:textColor="@color/textColorSecondary"
-            android:textSize="12sp"
+            android:textSize="@dimen/conversation_timestamp_textsize"
             android:singleLine="true"
             tools:text="@string/time_just_now" />
 
