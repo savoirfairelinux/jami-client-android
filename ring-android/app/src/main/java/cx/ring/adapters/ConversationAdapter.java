@@ -81,7 +81,6 @@ import cx.ring.model.TextMessage;
 import cx.ring.service.DRingService;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
-import cx.ring.utils.FileUtils;
 import cx.ring.utils.GlideApp;
 import cx.ring.utils.GlideOptions;
 import cx.ring.utils.ResourceMapper;
@@ -296,8 +295,10 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             holder.player = null;
         }
         if (holder.mMsgTxt != null) {
-            holder.mMsgTxt.setOnClickListener(null);
             holder.mMsgTxt.setOnLongClickListener(null);
+        }
+        if (holder.mItem != null) {
+            holder.mItem.setOnClickListener(null);
         }
         if (expandedItemPosition == holder.getLayoutPosition()) {
             holder.mMsgDetailTxt.setVisibility(View.GONE);
@@ -764,7 +765,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                 }));
             }
             setItemViewExpansionState(convViewHolder, isExpanded);
-            convViewHolder.mMsgTxt.setOnClickListener((View v) -> {
+            convViewHolder.mItem.setOnClickListener((View v) -> {
                 if (convViewHolder.animator != null && convViewHolder.animator.isRunning()) {
                     return;
                 }
