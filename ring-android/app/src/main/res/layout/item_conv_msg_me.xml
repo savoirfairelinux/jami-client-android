@@ -72,7 +72,7 @@ along with this program; if not, write to the Free Software
             android:autoLink="all"
             android:background="@drawable/textmsg_bg_out"
             android:ellipsize="marquee"
-            android:focusable="false"
+            android:focusable="true"
             android:marqueeRepeatLimit="marquee_forever"
             android:padding="@dimen/padding_medium"
             android:scrollHorizontally="true"
@@ -81,6 +81,7 @@ along with this program; if not, write to the Free Software
             android:textColorLink="@color/text_color_primary_dark"
             android:textIsSelectable="true"
             android:textSize="16sp"
+            android:textColorHighlight="@color/grey_700"
             tools:text="yo this is the test of a long long text can not be_found_message" />
 
         <ImageView
