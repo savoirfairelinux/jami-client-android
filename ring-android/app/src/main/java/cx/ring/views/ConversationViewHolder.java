@@ -40,6 +40,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 public class ConversationViewHolder extends RecyclerView.ViewHolder {
+    public View mItem;
     public TextView mMsgTxt;
     public TextView mMsgDetailTxt;
     public TextView mMsgDetailTxtPerm;
@@ -79,6 +80,7 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
                 // common layout elements
                 case INCOMING_TEXT_MESSAGE:
                 case OUTGOING_TEXT_MESSAGE:
+                    mItem = v.findViewById(R.id.txt_entry);
                     mMsgTxt = v.findViewById(R.id.msg_txt);
                     mMsgDetailTxt = v.findViewById(R.id.msg_details_txt);
                     mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm);

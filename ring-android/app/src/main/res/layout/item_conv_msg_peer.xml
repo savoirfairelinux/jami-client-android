@@ -55,7 +55,7 @@ along with this program; if not, write to the Free Software
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/padding_medium"
-        android:paddingEnd="@dimen/padding_large">
+        android:paddingEnd="36dp">
 
         <ImageView
             android:id="@+id/photo"
@@ -77,7 +77,7 @@ along with this program; if not, write to the Free Software
             android:autoLink="all"
             android:background="@drawable/textmsg_bg_in"
             android:ellipsize="marquee"
-            android:focusable="false"
+            android:focusable="true"
             android:marqueeRepeatLimit="marquee_forever"
             android:scrollHorizontally="true"
             android:singleLine="false"
