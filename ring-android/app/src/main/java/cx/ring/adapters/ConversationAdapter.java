@@ -31,8 +31,10 @@ import android.graphics.SurfaceTexture;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.text.SpannableString;
 import android.text.format.DateUtils;
 import android.text.format.Formatter;
+import android.text.style.URLSpan;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.ContextMenu;
@@ -45,6 +47,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -81,7 +84,6 @@ import cx.ring.model.TextMessage;
 import cx.ring.service.DRingService;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
-import cx.ring.utils.FileUtils;
 import cx.ring.utils.GlideApp;
 import cx.ring.utils.GlideOptions;
 import cx.ring.utils.ResourceMapper;
@@ -90,6 +92,21 @@ import cx.ring.views.ConversationViewHolder;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+
+class DefensiveURLSpan extends URLSpan {
+    private String mUrl;
+    private final static String TAG = ConversationAdapter.class.getSimpleName();
+
+    public DefensiveURLSpan(String url) {
+        super(url);
+        mUrl = url;
+    }
+
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+    }
+}
 
 public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHolder> {
     private final static String TAG = ConversationAdapter.class.getSimpleName();
@@ -138,6 +155,21 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .startWith(0L);
+    }
+
+    private void fixTextView(TextView tv) {
+        SpannableString current = (SpannableString) tv.getText();
+        URLSpan[] spans =
+                current.getSpans(0, current.length(), URLSpan.class);
+
+        for (URLSpan span : spans) {
+            int start = current.getSpanStart(span);
+            int end = current.getSpanEnd(span);
+
+            current.removeSpan(span);
+            current.setSpan(new DefensiveURLSpan(span.getURL()), start, end,
+                    0);
+        }
     }
 
     /**
@@ -764,7 +796,28 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                 }));
             }
             setItemViewExpansionState(convViewHolder, isExpanded);
+            convViewHolder.mMsgTxt.setOnFocusChangeListener((v, hasFocus) -> {
+                if (hasFocus) {
+                    v.performClick();
+                }
+            });
             convViewHolder.mMsgTxt.setOnClickListener((View v) -> {
+                SpannableString current = (SpannableString) (((TextView) v).getText());
+                URLSpan[] spans = current.getSpans(0, current.length(), URLSpan.class);
+                for (URLSpan span : spans) {
+                    int start = current.getSpanStart(span);
+                    int end = current.getSpanEnd(span);
+
+                    if (convViewHolder.mMsgTxt.getSelectionStart() >= start &&
+                            convViewHolder.mMsgTxt.getSelectionStart() <= end) {
+                        Log.d(TAG, "mMsgTxt URLCLICKED " + convViewHolder.mMsgTxt.getSelectionStart());
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(span.getURL()));
+                        context.startActivity(intent);
+                        return;
+                    }
+                }
+
+                Log.d(TAG, "mMsgTxt CLICKED " + convViewHolder.mMsgTxt.getSelectionStart());
                 if (convViewHolder.animator != null && convViewHolder.animator.isRunning()) {
                     return;
                 }
@@ -773,8 +826,12 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                     notifyItemChanged(prev);
                 }
                 expandedItemPosition = isExpanded ? -1 : position;
+                if (isExpanded) {
+                    v.clearFocus();
+                }
                 notifyItemChanged(expandedItemPosition);
             });
+            //fixTextView(convViewHolder.mMsgTxt);
         }
     }
 
