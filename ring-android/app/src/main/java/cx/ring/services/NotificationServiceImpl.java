@@ -490,7 +490,7 @@ public class NotificationServiceImpl implements NotificationService {
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setPriority(Notification.PRIORITY_HIGH)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
-                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
                 .setSmallIcon(R.drawable.ic_ring_logo_white)
                 .setContentTitle(contactName)
                 .setContentText(last.getBody())
@@ -564,6 +564,8 @@ public class NotificationServiceImpl implements NotificationService {
                 .addAction(new NotificationCompat.Action.Builder(R.drawable.baseline_reply_24, replyLabel, replyPendingIntent)
                         .setSemanticAction(NotificationCompat.Action.SEMANTIC_ACTION_REPLY)
                         .addRemoteInput(remoteInput)
+                        .extend(new NotificationCompat.Action.WearableExtender()
+                                .setHintDisplayActionInline(true))
                         .build())
                 .addAction(new NotificationCompat.Action.Builder(0,
                         mContext.getString(R.string.notif_mark_as_read),
