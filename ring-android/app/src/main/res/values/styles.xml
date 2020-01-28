@@ -274,4 +274,8 @@
 
     <style name="AppTheme.PopupOverlay" parent="AppTheme" />
 
+    <style name="OutgoingTextView">
+        <item name="colorControlActivated">@color/conversation_primary_selection_handles</item>
+    </style>
+
 </resources>
