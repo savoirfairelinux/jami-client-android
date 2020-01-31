@@ -24,6 +24,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NavigableMap;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -49,6 +50,7 @@ import cx.ring.services.PreferencesService;
 import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.FileUtils;
 import cx.ring.utils.Log;
+import cx.ring.utils.Tuple;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
@@ -126,6 +128,31 @@ public class ConversationFacade {
                         }))
                 .subscribe(this::parseNewMessage,
                         e -> Log.e(TAG, "Error adding text message", e)));
+
+        mDisposableBag.add(mAccountService.getLocationUpdates()
+                .concatMapSingle(location -> getAccountSubject(location.getAccount())
+                        .map(a -> {
+                            long expiration = a.onLocationUpdate(location);
+                            mDisposableBag.add(Completable.timer(expiration, TimeUnit.MILLISECONDS)
+                                    .subscribe(a::maintainLocation));
+                            return location;
+                        }))
+                .subscribe());
+
+        mDisposableBag.add(mAccountService.getObservableAccountList()
+                .switchMap(accounts -> {
+                    List<Observable<Tuple<Account, Account.ContactLocationEntry>>> r = new ArrayList<>(accounts.size());
+                    for (Account a : accounts)
+                        r.add(a.getLocationUpdates().map(s -> new Tuple<>(a, s)));
+                    return Observable.merge(r);
+                })
+                .distinctUntilChanged()
+                .subscribe(t -> {
+                    Log.e(TAG, "Location reception started for " + t.second.contact);
+                    mNotificationService.showLocationNotification(t.first, t.second.contact);
+                    mDisposableBag.add(t.second.location.doOnComplete(() ->
+                            mNotificationService.cancelLocationNotification(t.first, t.second.contact)).subscribe());
+                }));
 
         mDisposableBag.add(mAccountService
                 .getMessageStateChanges()

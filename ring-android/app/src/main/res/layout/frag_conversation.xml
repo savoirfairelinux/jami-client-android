@@ -62,6 +62,36 @@
 
             </LinearLayout>
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/mapCard"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_below="@id/trustRequestMessageLayout"
+                android:visibility="visible"
+                android:layout_margin="32dp"
+                app:cardCornerRadius="16dp"
+                android:animateLayoutChanges="true">
+
+                <FrameLayout
+                    android:id="@+id/mapLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="false"
+                    android:descendantFocusability="blocksDescendants"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:background="@drawable/loccationshare_bg_gradient" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Jean is sharing his position with you"
+                    android:layout_margin="@dimen/text_margin"/>
+
+            </androidx.cardview.widget.CardView>
+
             <ProgressBar
                 android:id="@+id/pb_loading"
                 android:layout_width="64dp"
@@ -187,7 +217,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:background="@drawable/msg_input_bg"
+                android:background="@drawable/textmsg_bg_input"
                 android:orientation="vertical"
                 android:visibility="visible"
                 tools:visibility="visible">

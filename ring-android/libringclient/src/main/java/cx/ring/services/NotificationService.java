@@ -69,4 +69,8 @@ public interface NotificationService {
     Object getDataTransferNotification(int notificationId);
 
     void onConnectionUpdate(Boolean b);
+
+    void showLocationNotification(Account first, CallContact contact);
+    void cancelLocationNotification(Account first, CallContact contact);
+
 }

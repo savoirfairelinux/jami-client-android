@@ -37,7 +37,7 @@ import io.reactivex.schedulers.Schedulers;
 public final class VCardUtils {
     public static final String TAG = VCardUtils.class.getSimpleName();
 
-    public static final String MIME_RING_PROFILE_VCARD = "x-ring/ring.profile.vcard";
+    public static final String MIME_PROFILE_VCARD = "x-ring/ring.profile.vcard";
     public static final String VCARD_KEY_MIME_TYPE = "mimeType";
     public static final String VCARD_KEY_PART = "part";
     public static final String VCARD_KEY_OF = "of";
