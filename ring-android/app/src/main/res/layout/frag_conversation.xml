@@ -62,6 +62,44 @@
 
             </LinearLayout>
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/mapCard"
+                android:layout_width="260dp"
+                android:layout_height="160dp"
+                android:layout_below="@id/trustRequestMessageLayout"
+                android:layout_margin="24dp"
+                android:layout_centerHorizontal="true"
+                android:animateLayoutChanges="true"
+                android:clickable="true"
+                android:descendantFocusability="blocksDescendants"
+                android:focusable="true"
+                android:visibility="visible"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
+
+                <FrameLayout
+                    android:id="@+id/mapLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="false" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:background="@drawable/loccationshare_bg_gradient"
+                    android:clickable="false"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/text_margin"
+                    android:layout_marginTop="8dp"
+                    android:text="Jean is sharing his location with you"
+                    android:textColor="@color/colorOnPrimary"
+                    android:textStyle="bold" />
+
+            </androidx.cardview.widget.CardView>
+
             <ProgressBar
                 android:id="@+id/pb_loading"
                 android:layout_width="64dp"
@@ -187,7 +225,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:background="@drawable/msg_input_bg"
+                android:background="@drawable/textmsg_bg_input"
                 android:orientation="vertical"
                 android:visibility="visible"
                 tools:visibility="visible">
@@ -196,10 +234,10 @@
                     android:id="@+id/cvMessageInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
                     android:layout_marginTop="2dp"
                     android:layout_marginRight="12dp"
                     android:layout_marginBottom="12dp"
-                    android:layout_marginLeft="12dp"
                     android:visibility="gone"
                     app:cardCornerRadius="@dimen/conversation_message_input_radius"
                     app:cardElevation="4dp"
@@ -221,7 +259,7 @@
                             android:onClick="@{v -> presenter.expandMenu(v)}"
                             android:padding="8dp"
                             android:tint="@android:color/darker_gray"
-                            app:srcCompat="@drawable/baseline_expand_less_24" />
+                            app:srcCompat="@drawable/baseline_more_vert_24" />
 
                         <ImageButton
                             android:id="@+id/btn_take_picture"
@@ -293,6 +331,7 @@
     </FrameLayout>
 
     <data>
+
         <variable
             name="presenter"
             type="cx.ring.fragments.ConversationFragment" />

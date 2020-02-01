@@ -212,6 +212,22 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         mConversationDisposable.add(c.getColor()
                 .observeOn(mUiScheduler)
                 .subscribe(view::setConversationColor, e -> Log.e(TAG, "Can't update conversation color", e)));
+
+        Log.e(TAG, "getLocationUpdates subscribe");
+        mConversationDisposable.add(account
+                .getLocationUpdates(c.getContact().getPrimaryUri())
+                .observeOn(mUiScheduler)
+                .subscribe(u -> {
+                    Log.e(TAG, "getLocationUpdates: update");
+                    getView().showMap(c.getAccountId(), c.getContact().getPrimaryUri().getUri());
+                    mConversationDisposable.add(u.doOnComplete(() -> {
+                        Log.e(TAG, "getLocationUpdates: onComplete");
+                        ConversationView v = getView();
+                        if (v != null) {
+                            getView().hideMap();
+                        }
+                    }).subscribe());
+                }));
     }
 
     public void openContact() {
@@ -377,4 +393,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         }
     }
 
+    public void shareLocation() {
+        getView().startShareLocation(mAccountId, mContactRingId.getRawUriString());
+    }
 }
