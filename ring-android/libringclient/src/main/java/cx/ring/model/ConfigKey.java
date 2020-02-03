@@ -100,6 +100,7 @@ public enum ConfigKey {
     DHT_PUBLIC_IN("DHT.PublicInCalls"),
     PROXY_ENABLED("Account.proxyEnabled"),
     PROXY_SERVER("Account.proxyServer"),
+    PROXY_SERVER_LIST("Account.dhtProxyListUrl"),
     PROXY_PUSH_TOKEN("Account.proxyPushToken"),
     MANAGER_URI("Account.managerUri"),
     MANAGER_USERNAME("Account.managerUsername");
