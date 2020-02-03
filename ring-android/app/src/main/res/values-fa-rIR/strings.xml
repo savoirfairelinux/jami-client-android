@@ -4,22 +4,22 @@
   <string name="feedback_section">بازخورد</string>
   <string name="report"><u>ایمیلی به ما بفرستید</u></string>
   <string name="section_license">مجوز</string>
-  <string name="sponsor_section">جمی نرم‌افزار آزادیست که به دست جامعه توسعه داده و پشتیبانی می‌شود</string>
+  <string name="sponsor_section">جمی نرم‌افزاری آزاد است که توسعه و پشتیبانی آن انجام شده است توسط</string>
   <string name="copyright_section">حق رونوشت</string>
   <string name="contribute_section">مشارکت</string>
-  <string name="version_section">نگارش</string>
-  <string name="no_email_app_installed">هیچ کارهٔ رایانامه‌ای پیدا نشد. برای فرستادن یک گزارش به ما، یکی نصب کنید</string>
-  <string name="no_browser_app_installed">هیچ کارهٔ مرورگری پیدا نشد، برای مشاهدهٔ این صفحه، یکی نصب کنبد</string>
-  <string name="email_chooser_title">فرستادن نامه با…</string>
-  <string name="website_chooser_title">دیدن پایگاه وب با…</string>
+  <string name="version_section">نسخه</string>
+  <string name="no_email_app_installed">هیچ برنامه‌ای برای پست الکترونیک پیدا نشد. برای فرستادن یک گزارش به ما، یکی را نصب کنید</string>
+  <string name="no_browser_app_installed">هیچ برنامه مرورگری پیدا نشد، برای مشاهده این صفحه، یکی را نصب کنید</string>
+  <string name="email_chooser_title">ارسال پست الکترونیک با…</string>
+  <string name="website_chooser_title">مشاهده وب‌سایت با…</string>
   <string name="license">این نرم‌افزار همان گونه که هست، بدون هیچ ضمانتی ارائه شده است. برای جزییات بیش‌تر، <u>نگارش ۳ یا جدیدتر پروانهٔ جامع همگانی گنو</u>را ببینید</string>
   <string name="description">جمی نرم‌افزار آزاد برای ارتباط جهانی است که به آزادی‌ها و محرمانگی کاربرانش احترام می‌گذارد.</string>
   <string name="credits">دست‌اندرکاران</string>
   <string name="call_service_description">این سرویس برای ادامه تماسهای شما در پیش‌زمینه ضروری است. فقط در طول تماس اجرا می‌شود.</string>
   <string name="data_transfer_service_description">این سرویس برای نمایش اعلان‌های مداوم در هنگام انتقال فایل ضروری است. فقط در زمان‌های انتقال فایل اجرا می‌شود.</string>
   <!--About dialog-->
-  <string name="developed_by">توسعه توسّط</string>
-  <string name="designed_by">طرّاحی توسّط</string>
+  <string name="developed_by">توسعه‌یافته توسط</string>
+  <string name="designed_by">طراحی‌شده توسط</string>
   <string name="ringtones_by">صدا‌های زنگ توسط</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">رینگ</string>

@@ -6,7 +6,20 @@
   <string name="pref_category_system">النظام</string>
   <string name="pref_category_privacy">الخصوصية</string>
   <string name="pref_mobileData_title">بيانات الهاتف</string>
+  <string name="pref_mobileData_summary">السماح لـ جامي باستخدام شبكات 3G/LTE بالإضافة لـ Wi-Fi</string>
+  <string name="pref_pushNotifications_title">الإشعارات المنبثقة</string>
+  <string name="pref_pushNotifications_summary">استخدام خدمات غوغل للسماح باستقبال المكالمات والرسائل في الخلفية</string>
+  <string name="pref_video_advanced_title">إعدادات الفيديو المتقدمة</string>
+  <string name="pref_video_advanced_summary">تغيير معدل البت والدقة للفيديو والوصول إلى الميزات التجريبية</string>
+  <string name="pref_hd_summary">تفعيل إرسال فيديو بدقة عالية HD</string>
+  <string name="pref_hwEncode_title">تفعيل الترميز المُسرَّع</string>
+  <string name="pref_hwEncode_summary">ميزة تجريبية</string>
   <string name="pref_systemContacts_title">استخدام جهات إتصال النظام</string>
   <string name="pref_systemContacts_summary">استخدام جهات إتصال النظام لإظهار تفاصيل المتصل</string>
+  <string name="pref_startOnBoot_title">شغل جامي عند بدء تشغيل الجهاز</string>
+  <string name="pref_startOnBoot_summary">تشغيل جامي في الخلفية عندما يبدأ النظام</string>
   <string name="pref_clearHistory_title">مسح السجل</string>
+  <string name="pref_clearHistory_summary">مسح كامل سجل المحادثات. لا يمكن التراجع عن هذا الخيار فيما بعد.</string>
+  <string name="pref_persistNotification_title">التشغيل في الخلفية</string>
+  <string name="pref_persistNotification_summary">السماح بالتشغيل في الخلفية لاستقبال المكالمات والرسائل.</string>
 </resources>

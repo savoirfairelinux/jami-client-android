@@ -3,25 +3,35 @@
   <!--Strings related to account edition screen-->
   <string name="ic_delete_menu">إحذف</string>
   <!--Strings related to account creation-->
+  <string name="add_sip_account_title">إضافة حساب SIP</string>
   <string name="prompt_alias">الاسم المستعار</string>
   <string name="prompt_hostname">اسم المضيف</string>
   <string name="prompt_username">اسم المستخدم</string>
   <string name="prompt_password">كلمة السر</string>
+  <string name="action_create">إنشاء حساب</string>
   <string name="action_create_short">أحدث</string>
   <string name="action_register">سجل</string>
   <string name="action_settings">إعدادات</string>
   <string name="error_field_required">هذا الحقل مطلوب</string>
   <string name="dialog_wait_create">في طور إضافة حساب</string>
   <string name="dialog_wait_create_details">الرجاء الإنتظار في حين نظيف حسابك</string>
+  <string name="dialog_wait_update">تحديث الحساب</string>
+  <string name="dialog_wait_update_details">يرجى الانتظار حتى يتم تحديث حسابك الجديد</string>
+  <string name="help_ring">يسمح لك حساب جامي بالتواصل مع الآخرين بأمان عبر طريقة P2P نظير إلى نظير من خلال شبكة موزعة بالكامل.</string>
+  <string name="help_sip_title">أضف حساب SIP الخاص بك</string>
   <string name="help_sip">ترتيب حساب SIP موجود</string>
+  <string name="create_sip_account">إضافة حساب SIP</string>
   <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_title">هل تريد حذف الحساب؟</string>
   <string name="account_delete_dialog_message">لا يمكن التراجع عن هذا الإجراء.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">لا حساب مسجل</string>
   <string name="normal_accounts_titles">حسابات</string>
+  <string name="normal_devices_titles">الأجهزة المعروفة المتصلة بحساب جامي هذا </string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">عام</string>
   <string name="account_basic_category">إعدادات أساسية</string>
+  <string name="account_alias_label">اسم الحساب</string>
   <string name="account_hostname_label">اسم المضيف</string>
   <string name="account_bootstrap_label">تشغيل ذاتي</string>
   <string name="account_username_label">اسم المستخدم</string>
@@ -29,6 +39,7 @@
   <string name="account_optionnal_category">إعدادات إختيارية</string>
   <string name="account_useragent_label">وكيل المستخدم</string>
   <string name="account_autoanswer_label">رد ألي</string>
+  <string name="account_upnp_label">تفعيل بروتوكول PUnP</string>
   <string name="account_proxy_field">الوكيل</string>
   <!--Audio Details-->
   <string name="account_audio_label">صوت</string>
@@ -47,11 +58,16 @@
   <string name="account_stun_enable_label">إستعمل STUN</string>
   <string name="account_stun_server_label">خادم STUN</string>
   <string name="account_turn_enable_label">إستعمل TURN</string>
+  <string name="account_turn_server_label">سيرفر بروتوكول TURN</string>
+  <string name="account_turn_username_label">اسم المستخدم لبروتوكول TURN</string>
+  <string name="account_turn_password_label">كلمة المرور لبروتوكول TURN</string>
   <string name="account_published_same_as_local_label">منشور مثل المحلي</string>
   <string name="account_published_port_label">نقطة العبور (port) المنشورة</string>
   <string name="account_published_address_label">العنوان المنشور</string>
   <!--Security Details-->
   <string name="account_credentials_label">الإعتمادات</string>
+  <string name="account_credentials_edit">تعديل بيانات الاعتماد</string>
+  <string name="account_credentials_add">إضافة بيانات الاعتماد</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">تأمين</string>
   <!--SIP-->
@@ -72,13 +88,24 @@
   <string name="account_rtp_min_port">الحد الأدنى</string>
   <string name="account_rtp_port_range">نطاق المنفذ RTP الصوتي</string>
   <!--restore/backup-->
+  <string name="account_new_device_password">أدخِل كلمة المرور الرئيسة لفتح الحساب</string>
+  <string name="error_password_char_count">6 محارف على الأقل</string>
+  <string name="error_passwords_not_equals">كلمة المرور غير متطابقة</string>
   <string name="account_export_end_error_title">خطأ</string>
+  <string name="account_enter_password">أدخِل كلمة المرور</string>
+  <string name="account_cannot_be_found_title">لم يعثر على الحساب</string>
+  <string name="account_no_network_title">لا يستطيع الاتصال بالشبكة</string>
+  <string name="account_link_prompt_pin">أدخِل رمز الأمان</string>
   <string name="account_new_button">كوّن حساب جامي</string>
+  <string name="account_link_export_button">اربط جهازاً آخر مع هذا الحساب</string>
   <string name="account_connect_prompt_username">اسم المستخدم</string>
   <!--Name registration-->
   <string name="account_status_connecting">يتم الإتصال</string>
   <string name="account_status_unknown">مجهول</string>
   <!--Create account-->
+  <string name="account_creation_home">مرحبا بك في جامي</string>
+  <string name="account_creation_profile">أنشئ ملفك الشخصي</string>
   <!--Edit profile-->
   <!--Devices-->
+  <string name="enter_password">أدخِل كلمة المرور</string>
 </resources>
