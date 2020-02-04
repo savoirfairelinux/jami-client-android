@@ -63,6 +63,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:persistent="false"
             android:summary=""
             android:title="@string/account_proxy_server_label" />
+
+        <EditTextPreference
+            android:defaultValue=""
+            android:dependency="Account.proxyEnabled"
+            android:key="Account.dhtProxyListUrl"
+            android:persistent="false"
+            android:summary=""
+            android:title="@string/account_proxy_server_list_label" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/account_peer_discovery_label">
