@@ -50,17 +50,24 @@ public class AvatarFactory {
         getGlideAvatar(view.getContext(), contact).into(view);
     }
 
-    public static Single<Drawable> getAvatar(Context context, CallContact contact) {
+    public static Single<Drawable> getAvatar(Context context, CallContact contact, boolean presence) {
         return Single.fromCallable(() ->
                 new AvatarDrawable.Builder()
                         .withContact(contact)
                         .withCircleCrop(true)
+                        .withPresence(presence)
                         .build(context));
     }
+    public static Single<Drawable> getAvatar(Context context, CallContact contact) {
+        return getAvatar(context, contact, true);
+    }
 
-    public static Single<Bitmap> getBitmapAvatar(Context context, CallContact contact, int size) {
-        return getAvatar(context, contact)
+    public static Single<Bitmap> getBitmapAvatar(Context context, CallContact contact, int size, boolean presence) {
+        return getAvatar(context, contact, presence)
                 .map(d -> drawableToBitmap(d, size));
+    }
+    public static Single<Bitmap> getBitmapAvatar(Context context, CallContact contact, int size) {
+        return getBitmapAvatar(context, contact, size, true);
     }
 
     public static Single<Bitmap> getBitmapAvatar(Context context, Account account, int size) {

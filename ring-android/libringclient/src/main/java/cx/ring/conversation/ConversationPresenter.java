@@ -45,6 +45,7 @@ import cx.ring.services.HardwareService;
 import cx.ring.services.VCardService;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
+import cx.ring.utils.Tuple;
 import cx.ring.utils.VCardUtils;
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
@@ -212,6 +213,15 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         mConversationDisposable.add(c.getColor()
                 .observeOn(mUiScheduler)
                 .subscribe(view::setConversationColor, e -> Log.e(TAG, "Can't update conversation color", e)));
+
+        Log.e(TAG, "getLocationUpdates subscribe");
+        mConversationDisposable.add(account
+                .getLocationUpdates(c.getContact().getPrimaryUri())
+                .observeOn(mUiScheduler)
+                .subscribe(u -> {
+                    Log.e(TAG, "getLocationUpdates: update");
+                    getView().showMap(c.getAccountId(), c.getContact().getPrimaryUri().getUri(), false);
+                }));
     }
 
     public void openContact() {
@@ -377,4 +387,11 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         }
     }
 
+    public void shareLocation() {
+        getView().startShareLocation(mAccountId, mContactRingId.getRawUriString());
+    }
+
+    public Tuple<String, String> getPath() {
+        return new Tuple<>(mAccountId, mContactRingId.getRawUriString());
+    }
 }
