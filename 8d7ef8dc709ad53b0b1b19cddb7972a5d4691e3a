@@ -1,0 +1,314 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58801f7b_f90f2221",
+        "filename": "ring-android/app/build.gradle",
+        "patchSetId": 14
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-02-05T22:26:13Z",
+      "side": 1,
+      "message": "Is this required?",
+      "range": {
+        "startLine": 92,
+        "startChar": 4,
+        "endLine": 92,
+        "endChar": 62
+      },
+      "revId": "8d7ef8dc709ad53b0b1b19cddb7972a5d4691e3a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb850c6f_af2cd751",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/AccountEditionFragment.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-02-05T22:26:13Z",
+      "side": 1,
+      "message": "Your name should be listed as an author wherever you make a significant contribution.",
+      "range": {
+        "startLine": 4,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 56
+      },
+      "revId": "8d7ef8dc709ad53b0b1b19cddb7972a5d4691e3a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94125e19_56ccec20",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/AccountEditionFragment.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-02-05T22:26:13Z",
+      "side": 1,
+      "message": "This can be removed from the AccountEditionView interface and AccountEditionPresenter.",
+      "range": {
+        "startLine": 266,
+        "startChar": 4,
+        "endLine": 269,
+        "endChar": 5
+      },
+      "revId": "8d7ef8dc709ad53b0b1b19cddb7972a5d4691e3a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00de1d6e_be8d2199",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/AccountEditionFragment.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-02-05T22:26:13Z",
+      "side": 1,
+      "message": "Optional, but I suggest either making the name of this function more precise as to its purpose like setBackListenerState(boolean enabled) or setBackListenerEnabled(boolean enabled)\nor removing it entirely.",
+      "range": {
+        "startLine": 281,
+        "startChar": 4,
+        "endLine": 287,
+        "endChar": 5
+      },
+      "revId": "8d7ef8dc709ad53b0b1b19cddb7972a5d4691e3a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "900d5790_fc1a4e19",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountSummaryFragment.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-02-05T22:26:13Z",
+      "side": 1,
+      "message": "spaces, indentation",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 233,
+        "endChar": 23
+      },
+      "revId": "8d7ef8dc709ad53b0b1b19cddb7972a5d4691e3a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6e7f3e9_b061707d",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountSummaryFragment.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-02-05T22:26:13Z",
+      "side": 1,
+      "message": "After allowing permissions when setting the avatar, nothing happens so needs a onRequestPermissionsResult override like:\n@Override\n    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {\n        switch (requestCode) {\n            case HomeActivity.REQUEST_PERMISSION_CAMERA:\n                if (grantResults.length \u003e 0 \u0026\u0026 grantResults[0] \u003d\u003d PackageManager.PERMISSION_GRANTED) {\n                    presenter.cameraClicked();\n                }\n                break;\n            case HomeActivity.REQUEST_PERMISSION_READ_STORAGE:\n                if (grantResults.length \u003e 0 \u0026\u0026 grantResults[0] \u003d\u003d PackageManager.PERMISSION_GRANTED) {\n                    presenter.galleryClicked();\n                }\n                break;\n        }\n    }",
+      "revId": "8d7ef8dc709ad53b0b1b19cddb7972a5d4691e3a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2abb0e92_a25c54a2",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-02-05T22:26:13Z",
+      "side": 1,
+      "message": "Would be great to have an enum for this.",
+      "range": {
+        "startLine": 163,
+        "startChar": 48,
+        "endLine": 163,
+        "endChar": 49
+      },
+      "revId": "8d7ef8dc709ad53b0b1b19cddb7972a5d4691e3a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97971d6d_d498ae53",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-02-05T22:26:13Z",
+      "side": 1,
+      "message": "Generally it would be a tad more clean to keep a member like this that returns observable on the previous line, as every other line in with the same indentation in this expression is an rx operator.",
+      "range": {
+        "startLine": 282,
+        "startChar": 17,
+        "endLine": 282,
+        "endChar": 41
+      },
+      "revId": "8d7ef8dc709ad53b0b1b19cddb7972a5d4691e3a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aefbcedb_d6b8c629",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/ToolbarSpinnerAdapter.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-02-05T22:26:13Z",
+      "side": 1,
+      "message": "Put a file header comment.",
+      "revId": "8d7ef8dc709ad53b0b1b19cddb7972a5d4691e3a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4477319_51855e9d",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/ToolbarSpinnerAdapter.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-02-05T22:26:13Z",
+      "side": 1,
+      "message": "These can be made private.",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "8d7ef8dc709ad53b0b1b19cddb7972a5d4691e3a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b683e8cc_3d260638",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/ToolbarSpinnerAdapter.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-02-05T22:26:13Z",
+      "side": 1,
+      "message": "a) Can be made static.\nb) Class names should use PascalCase.",
+      "range": {
+        "startLine": 166,
+        "startChar": 4,
+        "endLine": 166,
+        "endChar": 28
+      },
+      "revId": "8d7ef8dc709ad53b0b1b19cddb7972a5d4691e3a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2bc78db_f96b9d75",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/ToolbarSpinnerAdapter.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-02-05T22:26:13Z",
+      "side": 1,
+      "message": "These could be made private.",
+      "range": {
+        "startLine": 172,
+        "startChar": 4,
+        "endLine": 204,
+        "endChar": 5
+      },
+      "revId": "8d7ef8dc709ad53b0b1b19cddb7972a5d4691e3a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7535ab5e_ac553b91",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/account/RingAccountSummaryPresenter.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-02-05T22:26:13Z",
+      "side": 1,
+      "message": "same line",
+      "range": {
+        "startLine": 174,
+        "startChar": 33,
+        "endLine": 175,
+        "endChar": 62
+      },
+      "revId": "8d7ef8dc709ad53b0b1b19cddb7972a5d4691e3a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "006f859c_18925112",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/contactrequests/ContactRequestsPresenter.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-02-05T22:26:13Z",
+      "side": 1,
+      "message": "same line",
+      "range": {
+        "startLine": 60,
+        "startChar": 33,
+        "endLine": 61,
+        "endChar": 43
+      },
+      "revId": "8d7ef8dc709ad53b0b1b19cddb7972a5d4691e3a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
