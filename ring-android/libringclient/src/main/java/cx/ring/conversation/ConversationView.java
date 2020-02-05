@@ -79,4 +79,9 @@ public interface ConversationView extends BaseView {
     void setConversationColor(int integer);
 
     void startSaveFile(DataTransfer currentFile, String fileAbsolutePath);
+
+    void startShareLocation(String accountId, String contactId);
+
+    void showMap(String accountId, String contactId, boolean open);
+    void hideMap();
 }

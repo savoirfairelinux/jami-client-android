@@ -25,11 +25,21 @@ android {
             minifyEnabled true
             debuggable true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            packagingOptions{
+                doNotStrip '**/.*so'
+            }
         }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    packagingOptions{
+        doNotStrip "*/armeabi/*.so"
+        doNotStrip "*/armeabi-v7a/*.so"
+        doNotStrip "*/arm64-v8a/*.so"
+        doNotStrip "*/x86/*.so"
+        doNotStrip "*/x86_64/*.so"
     }
     flavorDimensions "push"
     productFlavors {
@@ -89,6 +99,7 @@ dependencies {
     implementation "androidx.media:media:$android_support_core_version"
     implementation "com.google.android.material:material:$material_version"
     implementation 'com.google.android:flexbox:1.1.1'
+    implementation 'org.osmdroid:osmdroid-android:6.1.5'
 
     // ORM
     implementation 'com.j256.ormlite:ormlite-android:5.1'
