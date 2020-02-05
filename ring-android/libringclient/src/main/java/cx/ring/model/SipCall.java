@@ -227,7 +227,7 @@ public class SipCall extends Interaction {
         for (Map.Entry<String, String> message : messages.entrySet()) {
             HashMap<String, String> messageKeyValue = VCardUtils.parseMimeAttributes(message.getKey());
             String mimeType = messageKeyValue.get(VCardUtils.VCARD_KEY_MIME_TYPE);
-            if (!VCardUtils.MIME_RING_PROFILE_VCARD.equals(mimeType)) {
+            if (!VCardUtils.MIME_PROFILE_VCARD.equals(mimeType)) {
                 continue;
             }
             int part = Integer.parseInt(messageKeyValue.get(VCardUtils.VCARD_KEY_PART));

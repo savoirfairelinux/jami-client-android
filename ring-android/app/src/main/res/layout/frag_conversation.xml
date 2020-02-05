@@ -14,7 +14,8 @@
             android:layout_height="match_parent"
             android:background="@color/background"
             android:clipToPadding="false"
-            android:paddingTop="?attr/actionBarSize">
+            android:paddingTop="?attr/actionBarSize"
+            android:animateLayoutChanges="true">
 
             <LinearLayout
                 android:id="@+id/ongoingcall_pane"
@@ -62,6 +63,32 @@
 
             </LinearLayout>
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/mapCard"
+                android:layout_width="@dimen/location_sharing_minmap_width"
+                android:layout_height="@dimen/location_sharing_minmap_height"
+                android:layout_below="@id/trustRequestMessageLayout"
+                android:layout_centerHorizontal="true"
+                android:layout_marginHorizontal="0dp"
+                android:layout_marginVertical="16dp"
+                android:animateLayoutChanges="true"
+                android:clickable="true"
+                android:descendantFocusability="blocksDescendants"
+                android:focusable="true"
+                android:visibility="gone"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                tools:visibility="visible">
+
+                <FrameLayout
+                    android:id="@+id/mapLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:background="@color/light_green_400"
+                    android:clickable="false" />
+
+            </androidx.cardview.widget.CardView>
+
             <ProgressBar
                 android:id="@+id/pb_loading"
                 android:layout_width="64dp"
@@ -83,6 +110,7 @@
                 android:paddingTop="8dp"
                 android:paddingBottom="60dp"
                 android:transcriptMode="normal"
+                android:animateLayoutChanges="false"
                 app:layoutManager="LinearLayoutManager"
                 app:stackFromEnd="true"
                 tools:listitem="@layout/item_conv_msg_peer" />
@@ -103,7 +131,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="8dp"
                 android:padding="0dp"
                 android:visibility="gone"
                 app:cardBackgroundColor="#4CAF50"
@@ -131,7 +159,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="8dp"
                 android:padding="0dp"
                 android:visibility="gone"
                 app:cardCornerRadius="@dimen/conversation_message_input_radius">
@@ -187,7 +215,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:background="@drawable/msg_input_bg"
                 android:orientation="vertical"
                 android:visibility="visible"
                 tools:visibility="visible">
@@ -196,10 +223,10 @@
                     android:id="@+id/cvMessageInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
                     android:layout_marginTop="2dp"
                     android:layout_marginRight="12dp"
-                    android:layout_marginBottom="12dp"
-                    android:layout_marginLeft="12dp"
+                    android:layout_marginBottom="8dp"
                     android:visibility="gone"
                     app:cardCornerRadius="@dimen/conversation_message_input_radius"
                     app:cardElevation="4dp"
@@ -220,20 +247,19 @@
                             android:contentDescription="@string/share_label"
                             android:onClick="@{v -> presenter.expandMenu(v)}"
                             android:padding="8dp"
-                            android:tint="@android:color/darker_gray"
-                            app:srcCompat="@drawable/baseline_expand_less_24" />
+                            android:tint="@color/colorPrimary"
+                            app:srcCompat="@drawable/baseline_more_vert_24" />
 
                         <ImageButton
                             android:id="@+id/btn_take_picture"
-                            android:layout_width="wrap_content"
+                            android:layout_width="34dp"
                             android:layout_height="match_parent"
-                            android:layout_marginEnd="5dp"
                             android:background="?selectableItemBackgroundBorderless"
                             android:contentDescription="@string/take_a_photo"
                             android:onClick="@{() -> presenter.takePicture()}"
                             android:padding="8dp"
-                            android:tint="@android:color/darker_gray"
-                            app:srcCompat="@drawable/baseline_photo_camera_24" />
+                            android:tint="@color/colorPrimary"
+                            app:srcCompat="@drawable/baseline_photo_camera_24"/>
 
                         <ProgressBar
                             android:id="@+id/pb_data_transfer"
@@ -293,6 +319,7 @@
     </FrameLayout>
 
     <data>
+
         <variable
             name="presenter"
             type="cx.ring.fragments.ConversationFragment" />
