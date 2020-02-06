@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    tools:context=".fragments.LocationSharingFragment">
+
+    <org.osmdroid.views.MapView
+        android:id="@+id/map"
+        tilesource="Mapnik"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        tools:background="@color/green_400"
+        android:animateLayoutChanges="false" />
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/locshare_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Location Sharing"
+        app:subtitle="Jean is sharing his location with you"
+        app:navigationIcon="@drawable/baseline_close_24"
+        style="@style/Widget.MaterialComponents.Toolbar.Surface"
+        android:elevation="4dp"/>
+
+    <!--
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/loccationshare_bg_gradient"
+        android:clickable="false"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:layout_centerVertical="true"
+            android:layout_alignBaseline="@id/close_btn"
+            android:text="Location sharing"
+            android:textColor="@color/colorOnPrimary"
+            style="@style/ToolbarTitle"/>
+
+        <ImageView
+            android:id="@+id/close_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="8dp"
+            android:contentDescription="@android:string/cancel"
+            android:padding="8dp"
+            android:tint="@color/colorOnPrimary"
+            app:srcCompat="@drawable/baseline_close_24" />
+
+    </RelativeLayout>
+    -->
+
+    <LinearLayout
+        android:id="@+id/shareControls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_center_position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="16dp"
+            android:src="@drawable/baseline_my_location_24"
+            app:backgroundTint="#C0FFFFFF"
+            app:rippleColor="@color/grey_400"
+            app:tint="@color/color_primary_dark"
+            app:elevation="2dp"
+            app:fabSize="mini" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/location_share_time_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            app:checkedChip="@id/location_share_time_1h"
+            app:singleLine="true"
+            app:singleSelection="true"
+            tools:visibility="gone">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/location_share_time_1h"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:checked="true"
+                android:text="1 hour" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/location_share_time_10m"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="10 minutes" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/location_share_time_remaining"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:checkable="false"
+            android:enabled="false"
+            android:focusable="false"
+            android:visibility="gone"
+            tools:text="43 minutes" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/btn_share_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/action_button_lpadding"
+            android:text="@string/location_share_action_start"
+            app:icon="@drawable/baseline_navigation_24"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/shareControlsMini"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="bottom" >
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/location_share_stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/location_share_action_stop"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            app:chipBackgroundColor="@color/design_default_color_error"
+            tools:visibility="visible"/>
+    </LinearLayout>
+</FrameLayout>

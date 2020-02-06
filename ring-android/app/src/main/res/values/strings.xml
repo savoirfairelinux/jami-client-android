@@ -132,6 +132,13 @@ along with this program; if not, write to the Free Software
     <string name="notif_incoming_picture">Picture from %1$s</string>
     <string name="action_open">Open</string>
     <string name="notif_sync_title">Syncing data…</string>
+    <string name="notif_location_title">Sharing location with %1$s</string>
+    <string name="location_share_contact">%1$s is sharing location with you</string>
+    <string name="notif_location_multi_title">Sharing location with %1$d contacts</string>
+    <string name="notif_location_remaining">%1$d minutes remaining</string>
+    <string name="notif_location_action_stop">"Stop sharing location"</string>
+    <string name="location_share_action_start">"Start sharing"</string>
+    <string name="location_share_action_stop">"Stop sharing"</string>
 
     <!-- Call Fragment -->
     <string name="you_txt_prefix">You:</string>
@@ -167,6 +174,7 @@ along with this program; if not, write to the Free Software
     <string name="hist_file_received">File received</string>
     <string name="conversation_send_audio">Record audio clip</string>
     <string name="conversation_send_video">Record video clip</string>
+    <string name="conversation_share_location">Share location</string>
 
     <!-- MediaPreferenceFragment -->
     <string name="permission_dialog_camera_title">Camera permission</string>
