@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "95693e3b_c8e19a31",
+        "filename": "ring-android/app/build.gradle",
+        "patchSetId": 14
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2020-02-06T22:18:37Z",
+      "side": 1,
+      "message": "It was a solution for a bug but I cannot remember what was the bug exactly. \nFor now I removed it till finding the bug again.",
+      "parentUuid": "58801f7b_f90f2221",
+      "range": {
+        "startLine": 92,
+        "startChar": 4,
+        "endLine": 92,
+        "endChar": 62
+      },
+      "revId": "8d7ef8dc709ad53b0b1b19cddb7972a5d4691e3a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb850c6f_af2cd751",
         "filename": "ring-android/app/src/main/java/cx/ring/account/AccountEditionFragment.java",
         "patchSetId": 14
