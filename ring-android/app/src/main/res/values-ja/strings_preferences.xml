@@ -6,7 +6,19 @@
   <string name="pref_category_system">システム</string>
   <string name="pref_category_privacy">プライバシー</string>
   <string name="pref_mobileData_title">モバイル通信</string>
+  <string name="pref_mobileData_summary">Wi-Fiに加えて3G / LTEでの使用をJamiに許可する</string>
+  <string name="pref_pushNotifications_title">プッシュ通知</string>
+  <string name="pref_hd_summary">HDビデオの送信を有効にする</string>
+  <string name="pref_hwEncode_title">高速エンコードを有効にする</string>
+  <string name="pref_hwEncode_summary">実験的機能</string>
   <string name="pref_systemContacts_title">システムの連絡先を使用する</string>
   <string name="pref_systemContacts_summary">システムの連絡先を使用して通話先の詳細を表示します。</string>
+  <string name="pref_systemDialer_title">Jamiを使用して発信する</string>
+  <string name="pref_systemDialer_summary">可能な場合、Jamiを使用して発信する</string>
+  <string name="pref_startOnBoot_title">起動時にJamiを開始する</string>
+  <string name="pref_startOnBoot_summary">起動時にバックグラウンドでJamiを実行する</string>
   <string name="pref_clearHistory_title">履歴をクリア</string>
+  <string name="pref_clearHistory_summary">全ての会話履歴を削除する。これは取り消しできません。</string>
+  <string name="pref_persistNotification_title">バックグラウンドで実行</string>
+  <string name="pref_persistNotification_summary">通話とメッセージの受信をバックグラウンドでも許可する</string>
 </resources>

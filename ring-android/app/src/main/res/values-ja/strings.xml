@@ -62,7 +62,19 @@
   <string name="notif_current_call">通話中</string>
   <string name="notif_channel_call_in_progress">発信中</string>
   <string name="notif_channel_calls">発信</string>
+  <string name="notif_channel_incoming_calls">着信</string>
+  <string name="notif_channel_messages">メッセージ</string>
+  <string name="notif_channel_requests">リクエスト</string>
+  <string name="notif_channel_file_transfer">ファイル転送</string>
+  <string name="notif_channel_sync">データ同期</string>
+  <string name="notif_channel_background_service">バックグラウンドサービス</string>
+  <string name="notif_channel_background_service_descr">着信とメッセージの受信を許可する</string>
   <string name="notif_group_calls">発信</string>
+  <string name="notif_background_service">Jimiはバックグラウンドで実行中</string>
+  <string name="notif_mark_as_read">既読</string>
+  <string name="notif_dismiss">退出</string>
+  <string name="notif_reply">返事</string>
+  <string name="notif_incoming_file_transfer_title">%1$sからのファイル受信</string>
   <string name="action_open">開く</string>
   <string name="notif_sync_title">データの同期中</string>
   <!--Call Fragment-->
