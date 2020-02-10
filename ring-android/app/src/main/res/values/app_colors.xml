@@ -2,4 +2,7 @@
 <resources>
     <color name="color_primary_light">#28B1ED</color>
     <color name="color_primary_dark">#000747</color>
+
+    <color name="color_primary_light_translucent">#B028B1ED</color>
+    <color name="color_primary_dark_translucent">#B0000747</color>
 </resources>

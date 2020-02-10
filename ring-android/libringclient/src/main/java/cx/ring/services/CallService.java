@@ -56,6 +56,7 @@ public class CallService {
 
     private final static String TAG = CallService.class.getSimpleName();
     public final static String MIME_TEXT_PLAIN = "text/plain";
+    public static final String MIME_GEOLOCATION = "application/geo";
 
     @Inject
     @Named("DaemonExecutor")
