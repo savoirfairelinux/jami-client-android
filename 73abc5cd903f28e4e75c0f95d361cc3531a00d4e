@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73e866bb_edf9ea56",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-02-11T21:25:35Z",
+      "side": 1,
+      "message": "is this needed?",
+      "range": {
+        "startLine": 846,
+        "startChar": 8,
+        "endLine": 846,
+        "endChar": 39
+      },
+      "revId": "73abc5cd903f28e4e75c0f95d361cc3531a00d4e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc1ea18c_51786908",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-02-11T21:25:35Z",
+      "side": 1,
+      "message": "this string is not gender neutral",
+      "range": {
+        "startLine": 345,
+        "startChar": 59,
+        "endLine": 345,
+        "endChar": 94
+      },
+      "revId": "73abc5cd903f28e4e75c0f95d361cc3531a00d4e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b360b83_d650a99a",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-02-11T21:25:35Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 347,
+        "startChar": 16,
+        "endLine": 347,
+        "endChar": 105
+      },
+      "revId": "73abc5cd903f28e4e75c0f95d361cc3531a00d4e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "294473e5_8cac52c8",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/ConversationPath.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-02-11T21:25:35Z",
+      "side": 1,
+      "message": "was this for debug? the contract seems implicit in the function body",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 29
+      },
+      "revId": "73abc5cd903f28e4e75c0f95d361cc3531a00d4e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a8ff453_d4b8bf77",
+        "filename": "ring-android/app/src/main/res/layout/frag_conversation.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-02-11T21:25:35Z",
+      "side": 1,
+      "message": "The bg layout file was renamed to textmsg_bg_input but is no longer used here?",
+      "range": {
+        "startLine": 214,
+        "startChar": 12,
+        "endLine": 220,
+        "endChar": 43
+      },
+      "revId": "73abc5cd903f28e4e75c0f95d361cc3531a00d4e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c44debe5_bcb87e28",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/AccountService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-02-11T21:25:35Z",
+      "side": 1,
+      "message": "not used",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 35
+      },
+      "revId": "73abc5cd903f28e4e75c0f95d361cc3531a00d4e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4588a8a_3a8d17e5",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/AccountService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-02-11T21:25:35Z",
+      "side": 1,
+      "message": "not used",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 22
+      },
+      "revId": "73abc5cd903f28e4e75c0f95d361cc3531a00d4e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
