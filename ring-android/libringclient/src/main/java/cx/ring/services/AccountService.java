@@ -20,6 +20,9 @@
  */
 package cx.ring.services;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import java.io.File;
 import java.net.SocketException;
 import java.util.ArrayList;
@@ -30,14 +33,12 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import cx.ring.daemon.Blob;
 import cx.ring.daemon.DataTransferInfo;
-import cx.ring.daemon.Message;
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.StringVect;
@@ -63,6 +64,7 @@ import cx.ring.utils.SwigNativeConverter;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import io.reactivex.Completable;
+import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
@@ -104,7 +106,6 @@ public class AccountService {
     private List<Account> mAccountList = new ArrayList<>();
     private boolean mHasSipAccount;
     private boolean mHasRingAccount;
-    private AtomicBoolean mAccountsLoaded = new AtomicBoolean(false);
 
     private final HashMap<Long, DataTransfer> mDataTransfers = new HashMap<>();
     private DataTransfer mStartingTransfer = null;
@@ -117,9 +118,81 @@ public class AccountService {
             .map(l -> l.get(0))
             .distinctUntilChanged();
 
-    private final Subject<TextMessage> incomingMessageSubject = PublishSubject.create();
-    private final Subject<TextMessage> messageSubject = PublishSubject.create();
+    public static class Message {
+        String accountId;
+        String callId;
+        String author;
+        Map<String, String> messages;
+    }
+    public static class Location {
+        String accountId;
+        String callId;
+        Uri peer;
+        long time;
+        double latitude;
+        double longitude;
 
+        public String getAccount() {
+            return accountId;
+        }
+
+        public Uri getPeer() {
+            return peer;
+        }
+
+        public long getDate() {
+            return time;
+        }
+
+        public double getLatitude() {
+            return latitude;
+        }
+
+        public double getLongitude() {
+            return longitude;
+        }
+    }
+
+    private final Subject<Message> incomingMessageSubject = PublishSubject.create();
+
+    private final Observable<TextMessage> incomingTextMessageSubject = incomingMessageSubject
+            .flatMapMaybe(msg -> {
+                String message = msg.messages.get(CallService.MIME_TEXT_PLAIN);
+                if (message != null) {
+                    return mHistoryService
+                            .incomingMessage(msg.accountId, msg.callId, msg.author, message)
+                            .toMaybe();
+                }
+                return Maybe.empty();
+            })
+            .share();
+
+    private final Observable<Location> incomingLocationSubject = incomingMessageSubject
+            .flatMapMaybe(msg -> {
+                try {
+                    String loc = msg.messages.get(CallService.MIME_GEOLOCATION);
+                    if (loc == null)
+                        return Maybe.empty();
+
+                    JsonObject obj = JsonParser.parseString(loc).getAsJsonObject();
+                    if (obj.size() < 2)
+                        return Maybe.empty();
+                    Location l = new Location();
+                    l.latitude = obj.get("lat").getAsDouble();
+                    l.longitude = obj.get("long").getAsDouble();
+                    l.time = obj.get("time").getAsLong();
+                    l.accountId = msg.accountId;
+                    l.callId = msg.callId;
+                    l.peer = new Uri(msg.author);
+                    return Maybe.just(l);
+                } catch (Exception e) {
+                    Log.w(TAG, "Failed to receive geolocation", e);
+                    return Maybe.empty();
+                }
+            })
+            .share();
+
+    private final Subject<TextMessage> textMessageSubject = PublishSubject.create();
     private final Subject<DataTransfer> dataTransferSubject = PublishSubject.create();
     private final Subject<TrustRequest> incomingRequestsSubject = PublishSubject.create();
 
@@ -127,7 +200,7 @@ public class AccountService {
         accountsSubject.onNext(mAccountList);
     }
 
-    public class RegisteredName {
+    public static class RegisteredName {
         public String accountId;
         public String name;
         public String address;
@@ -136,19 +209,19 @@ public class AccountService {
 
     private final Subject<RegisteredName> registeredNameSubject = PublishSubject.create();
 
-    private class ExportOnRingResult {
+    private static class ExportOnRingResult {
         String accountId;
         int code;
         String pin;
     }
 
-    private class DeviceRevocationResult {
+    private static class DeviceRevocationResult {
         String accountId;
         String deviceId;
         int code;
     }
 
-    private class MigrationResult {
+    private static class MigrationResult {
         String accountId;
         String state;
     }
@@ -162,11 +235,15 @@ public class AccountService {
     }
 
     public Observable<TextMessage> getIncomingMessages() {
-        return incomingMessageSubject;
+        return incomingTextMessageSubject;
+    }
+
+    public Observable<Location> getLocationUpdates() {
+        return incomingLocationSubject;
     }
 
     public Observable<TextMessage> getMessageStateChanges() {
-        return messageSubject;
+        return textMessageSubject;
     }
 
     public Observable<TrustRequest> getIncomingRequests() {
@@ -187,10 +264,6 @@ public class AccountService {
         return mHasRingAccount;
     }
 
-    public boolean isLoaded() {
-        return mAccountsLoaded.get();
-    }
-
     /**
      * Loads the accounts from the daemon and then builds the local cache (also sends ACCOUNTS_CHANGED event)
      *
@@ -205,7 +278,6 @@ public class AccountService {
 
     private void refreshAccountsCacheFromDaemon() {
         Log.w(TAG, "refreshAccountsCacheFromDaemon");
-        mAccountsLoaded.set(false);
         boolean hasSip = false, hasJami = false;
         List<Account> curList = mAccountList;
         List<String> accountIds = new ArrayList<>(Ringservice.getAccountList());
@@ -300,7 +372,6 @@ public class AccountService {
         }, e -> Log.e(TAG, "Error completing profile migration", e));
 
         accountsSubject.onNext(newAccounts);
-        mAccountsLoaded.set(true);
     }
 
     private Account getAccountByName(final String name) {
@@ -499,7 +570,7 @@ public class AccountService {
                     while (i <= nbTotal) {
                         HashMap<String, String> chunk = new HashMap<>();
                         Log.d(TAG, "length vcard " + stringVCard.length() + " id " + key + " part " + i + " nbTotal " + nbTotal);
-                        String keyHashMap = VCardUtils.MIME_RING_PROFILE_VCARD + "; id=" + key + ",part=" + i + ",of=" + nbTotal;
+                        String keyHashMap = VCardUtils.MIME_PROFILE_VCARD + "; id=" + key + ",part=" + i + ",of=" + nbTotal;
                         String message = stringVCard.substring(0, Math.min(VCARD_CHUNK_SIZE, stringVCard.length()));
                         chunk.put(keyHashMap, message);
                         Ringservice.sendTextMessage(callId, StringMap.toSwig(chunk), "Me", false);
@@ -738,9 +809,7 @@ public class AccountService {
         mExecutor.execute(() -> {
             UintVect list = new UintVect();
             list.reserve(codecs.size());
-            for (Long codec : codecs) {
-                list.add(codec);
-            }
+            list.addAll(codecs);
             Ringservice.setActiveCodecList(accountId, list);
             accountSubject.onNext(getAccount(accountId));
         });
@@ -1167,19 +1236,19 @@ public class AccountService {
 
     void incomingAccountMessage(String accountId, String callId, String from, Map<String, String> messages) {
         Log.d(TAG, "incomingAccountMessage: " + accountId + " " + messages.size());
-        String message = messages.get(CallService.MIME_TEXT_PLAIN);
-        if (message != null) {
-            mHistoryService
-                    .incomingMessage(accountId, callId, from, message)
-                    .subscribe(incomingMessageSubject::onNext);
-        }
+        Message message = new Message();
+        message.accountId = accountId;
+        message.callId = callId;
+        message.author = from;
+        message.messages = messages;
+        incomingMessageSubject.onNext(message);
     }
 
     void accountMessageStatusChanged(String accountId, long messageId, String to, int status) {
         Log.d(TAG, "accountMessageStatusChanged: " + accountId + ", " + messageId + ", " + to + ", " + status);
         mHistoryService
                 .accountMessageStatusChanged(accountId, messageId, to, status)
-                .subscribe(messageSubject::onNext, e -> Log.e(TAG, "Error updating message", e));
+                .subscribe(textMessageSubject::onNext, e -> Log.e(TAG, "Error updating message: " + e.getLocalizedMessage()));
     }
 
     void errorAlert(int alert) {
@@ -1322,7 +1391,7 @@ public class AccountService {
         return DataTransferError.UNKNOWN;
     }
 
-    public List<Message> getLastMessages(String accountId, long baseTime) {
+    public List<cx.ring.daemon.Message> getLastMessages(String accountId, long baseTime) {
         try {
             return mExecutor.submit(() -> SwigNativeConverter.toJava(Ringservice.getLastMessages(accountId, baseTime))).get();
         } catch (Exception e) {
