@@ -4,7 +4,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import org.jetbrains.annotations.Contract;
+
 import java.util.List;
+import java.util.Objects;
 
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.Interaction;
@@ -16,6 +22,12 @@ public class ConversationPath {
         accountId = account;
         contactId = contact;
     }
+
+    public ConversationPath(@NonNull Tuple<String, String> path) {
+        accountId = path.first;
+        contactId = path.second;
+    }
+
     public String getAccountId() {
         return accountId;
     }
@@ -31,13 +43,13 @@ public class ConversationPath {
         builder = builder.appendEncodedPath(contactId);
         return builder.build();
     }
-    public static Uri toUri(String accountId, cx.ring.model.Uri contactUri) {
+    public static Uri toUri(String accountId, @NonNull cx.ring.model.Uri contactUri) {
         Uri.Builder builder = ContentUriHandler.CONVERSATION_CONTENT_URI.buildUpon();
         builder = builder.appendEncodedPath(accountId);
         builder = builder.appendEncodedPath(contactUri.getUri());
         return builder.build();
     }
-    public static Uri toUri(Interaction interaction) {
+    public static Uri toUri(@NonNull Interaction interaction) {
         return toUri(interaction.getAccount(), new cx.ring.model.Uri(interaction.getConversation().getParticipant()));
     }
 
@@ -64,7 +76,9 @@ public class ConversationPath {
         }
         return null;
     }
-    public static ConversationPath fromBundle(Bundle bundle) {
+
+    @Contract("null -> null")
+    public static ConversationPath fromBundle(@Nullable Bundle bundle) {
         if (bundle != null) {
             String accountId = bundle.getString(ConversationFragment.KEY_ACCOUNT_ID);
             String contactId = bundle.getString(ConversationFragment.KEY_CONTACT_RING_ID);
@@ -75,7 +89,8 @@ public class ConversationPath {
         return null;
     }
 
-    public static ConversationPath fromIntent(Intent intent) {
+    @Contract("null -> null")
+    public static ConversationPath fromIntent(@Nullable Intent intent) {
         if (intent != null) {
             Uri uri = intent.getData();
             ConversationPath conversationPath = fromUri(uri);
@@ -84,5 +99,21 @@ public class ConversationPath {
             return fromBundle(intent.getExtras());
         }
         return null;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj == this)
+            return true;
+        if (obj == null || obj.getClass() != getClass())
+            return false;
+        ConversationPath o = (ConversationPath) obj;
+        return Objects.equals(o.accountId, accountId)
+                && Objects.equals(o.contactId, contactId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(accountId, contactId);
     }
 }
