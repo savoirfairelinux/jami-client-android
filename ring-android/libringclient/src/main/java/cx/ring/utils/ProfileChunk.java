@@ -39,7 +39,10 @@ public class ProfileChunk {
         this.mInsertedParts = 0;
         this.mNumberOfParts = numberOfParts;
         this.mParts = new StringVect();
-        this.mParts.reserve(mNumberOfParts + 1);
+        this.mParts.reserve(mNumberOfParts);
+        for (int i = 0; i < mNumberOfParts; i++) {
+            this.mParts.add("");
+        }
     }
 
     /**
@@ -49,7 +52,7 @@ public class ProfileChunk {
      * @param index the given position to insert the part
      */
     public void addPartAtIndex(String part, int index) {
-        mParts.set(index, part);
+        mParts.set(index - 1, part);
         mInsertedParts++;
         Log.d(TAG, "Inserting part " + part + " at index " + index);
     }
