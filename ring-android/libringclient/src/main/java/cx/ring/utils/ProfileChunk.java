@@ -49,7 +49,7 @@ public class ProfileChunk {
      * @param index the given position to insert the part
      */
     public void addPartAtIndex(String part, int index) {
-        mParts.set(index, part);
+        mParts.add(part);
         mInsertedParts++;
         Log.d(TAG, "Inserting part " + part + " at index " + index);
     }
