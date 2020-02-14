@@ -22,6 +22,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     package="cx.ring"
     android:installLocation="auto">
 
+    <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
+
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
@@ -46,7 +48,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
-    <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <uses-feature
         android:name="android.hardware.wifi"
@@ -71,6 +73,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:required="false" />
     <uses-feature
         android:name="android.hardware.usb.host"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.location.gps"
         android:required="false" />
 
     <application
@@ -187,7 +192,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:name=".services.SyncService"
             android:description="@string/data_transfer_service_description"
             android:exported="false"
-            android:foregroundServiceType="dataSync"/>
+            android:foregroundServiceType="dataSync" />
+        <service
+            android:name=".services.LocationSharingService"
+            android:foregroundServiceType="location"
+            android:exported="false" />
 
         <activity
             android:name=".client.CallActivity"

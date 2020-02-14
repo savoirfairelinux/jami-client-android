@@ -2,6 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+        android:id="@+id/conv_share_location"
+        android:icon="@drawable/baseline_navigation_24"
+        android:title="@string/conversation_share_location"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+
     <item
         android:id="@+id/conv_send_audio"
         android:icon="@drawable/baseline_mic_24"
