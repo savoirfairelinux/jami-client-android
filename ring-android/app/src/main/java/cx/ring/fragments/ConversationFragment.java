@@ -20,15 +20,20 @@
 package cx.ring.fragments;
 
 import android.Manifest;
+import android.animation.LayoutTransition;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.BitmapDrawable;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -41,6 +46,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -54,6 +60,8 @@ import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.core.view.ViewCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 
 import java.io.File;
@@ -86,10 +94,12 @@ import cx.ring.model.Phone;
 import cx.ring.model.Error;
 import cx.ring.model.Uri;
 import cx.ring.mvp.BaseSupportFragment;
+import cx.ring.services.LocationSharingService;
 import cx.ring.services.NotificationService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
+import cx.ring.utils.ConversationPath;
 import cx.ring.utils.MediaButtonsHelper;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.Completable;
@@ -102,7 +112,7 @@ import static android.app.Activity.RESULT_OK;
 public class ConversationFragment extends BaseSupportFragment<ConversationPresenter> implements
         MediaButtonsHelper.MediaButtonsHelperCallback,
         ConversationView, SharedPreferences.OnSharedPreferenceChangeListener {
-    protected static final String TAG = ConversationFragment.class.getSimpleName();
+    private static final String TAG = ConversationFragment.class.getSimpleName();
 
     public static final int REQ_ADD_CONTACT = 42;
 
@@ -110,6 +120,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     public static final String KEY_ACCOUNT_ID = BuildConfig.APPLICATION_ID + ".ACCOUNT_ID";
     public static final String KEY_PREFERENCE_PENDING_MESSAGE = "pendingMessage";
     public static final String KEY_PREFERENCE_CONVERSATION_COLOR = "color";
+    public static final String EXTRA_SHOW_MAP = "showMap";
 
     private static final int REQUEST_CODE_FILE_PICKER = 1000;
     private static final int REQUEST_PERMISSION_CAMERA = 1001;
@@ -118,13 +129,14 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     private static final int REQUEST_CODE_CAPTURE_AUDIO = 1004;
     private static final int REQUEST_CODE_CAPTURE_VIDEO = 1005;
 
+    private ServiceConnection locationServiceConnection = null;
+
     private FragConversationBinding binding;
     private MenuItem mAudioCallBtn = null;
     private MenuItem mVideoCallBtn = null;
 
     private View currentBottomView = null;
     private ConversationAdapter mAdapter = null;
-    private NumberAdapter mNumberAdapter = null;
     private int marginPx;
     private int marginPxTotal;
     private final ValueAnimator animation = new ValueAnimator();
@@ -137,7 +149,8 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     private int mSelectedPosition;
 
     private AvatarDrawable mConversationAvatar;
-    private Map<String, AvatarDrawable> mParticipantAvatars = new HashMap();
+    private Map<String, AvatarDrawable> mParticipantAvatars = new HashMap<>();
+    private int mapWidth, mapHeight;
 
     public AvatarDrawable getConversationAvatar(String uri) {
         return mParticipantAvatars.get(uri);
@@ -190,15 +203,22 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     private void updateListPadding() {
-        if (currentBottomView != null && currentBottomView.getHeight() != 0)
+        if (currentBottomView != null && currentBottomView.getHeight() != 0) {
             setBottomPadding(binding.histList, currentBottomView.getHeight() + marginPxTotal);
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.mapCard.getLayoutParams();
+            params.bottomMargin = currentBottomView.getHeight() + marginPxTotal;
+            binding.mapCard.setLayoutParams(params);
+        }
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         injectFragment(((JamiApplication) getActivity().getApplication()).getRingInjectionComponent());
-        marginPx = getResources().getDimensionPixelSize(R.dimen.conversation_message_input_margin);
+        Resources res = getResources();
+        marginPx = res.getDimensionPixelSize(R.dimen.conversation_message_input_margin);
+        mapWidth = res.getDimensionPixelSize(R.dimen.location_sharing_minmap_width);
+        mapHeight = res.getDimensionPixelSize(R.dimen.location_sharing_minmap_height);
         marginPxTotal = marginPx;
 
         binding = FragConversationBinding.inflate(inflater, container, false);
@@ -230,6 +250,14 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
                 .flatMapCompletable(this::sendFile)
                 .doFinally(contentInfo::releasePermission)));
         binding.msgInputTxt.setOnEditorActionListener((v, actionId, event) -> actionSendMsgText(actionId));
+        binding.msgInputTxt.setOnFocusChangeListener((view, hasFocus) -> {
+            if (hasFocus)  {
+                Fragment fragment = getChildFragmentManager().findFragmentById(R.id.mapLayout);
+                if (fragment != null) {
+                    ((LocationSharingFragment) fragment).hideControls();
+                }
+            }
+        });
         binding.msgInputTxt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -308,6 +336,13 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         animation.removeAllUpdateListeners();
         binding.histList.setAdapter(null);
         mCompositeDisposable.clear();
+        if (locationServiceConnection != null) {
+            try {
+                requireContext().unbindService(locationServiceConnection);
+            } catch (Exception e) {
+                Log.w(TAG, "Error unbinding service: " + e.getMessage());
+            }
+        }
         super.onDestroyView();
     }
 
@@ -339,6 +374,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         presenter.selectFile();
     }
 
+    @SuppressLint("RestrictedApi")
     public void expandMenu(View v) {
         Context context = requireContext();
         PopupMenu popup = new PopupMenu(context, v);
@@ -382,6 +418,9 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
                 case R.id.conv_send_file:
                     selectFile();
                     break;
+                case R.id.conv_share_location:
+                    shareLocation();
+                    break;
             }
             return false;
         });
@@ -390,12 +429,78 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         menuHelper.show();
     }
 
+    public void shareLocation() {
+        presenter.shareLocation();
+    }
+
+    public void closeLocationSharing(boolean isSharing) {
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.mapCard.getLayoutParams();
+        if (params.width != mapWidth) {
+            params.width = mapWidth;
+            params.height = mapHeight;
+            binding.mapCard.setLayoutParams(params);
+        }
+        if (!isSharing)
+            hideMap();
+    }
+
+    public void openLocationSharing() {
+        binding.conversationLayout.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.mapCard.getLayoutParams();
+        if (params.width != ViewGroup.LayoutParams.MATCH_PARENT) {
+            params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+            params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+            binding.mapCard.setLayoutParams(params);
+        }
+    }
+
+    @Override
+    public void startShareLocation(String accountId, String conversationId) {
+        showMap(accountId, conversationId, true);
+    }
+
     /**
      * Used to update with the past adapter position when a long click was registered
      * @param position
      */
     public void updatePosition(int position) {
         mSelectedPosition = position;
+    }
+
+    @Override
+    public void showMap(String accountId, String contactId, boolean open)  {
+        if (binding.mapCard.getVisibility() == View.GONE) {
+            Log.w(TAG, "showMap " + accountId + " " + contactId);
+
+            FragmentManager fragmentManager = getChildFragmentManager();
+            LocationSharingFragment fragment = LocationSharingFragment.newInstance(accountId, contactId, open);
+            fragmentManager.beginTransaction()
+                    .add(R.id.mapLayout, fragment, "map")
+                    .commit();
+            binding.mapCard.setVisibility(View.VISIBLE);
+        }
+        if (open) {
+            Fragment fragment = getChildFragmentManager().findFragmentById(R.id.mapLayout);
+            if (fragment != null) {
+                ((LocationSharingFragment) fragment).showControls();
+            }
+        }
+    }
+
+    @Override
+    public void hideMap() {
+        if (binding.mapCard.getVisibility() != View.GONE) {
+            binding.mapCard.setVisibility(View.GONE);
+
+            FragmentManager fragmentManager = getChildFragmentManager();
+            Fragment fragment = fragmentManager.findFragmentById(R.id.mapLayout);
+
+            if (fragment != null) {
+                fragmentManager.beginTransaction()
+                        .remove(fragment)
+                        .commit();
+            }
+        }
     }
 
     public void takePicture() {
@@ -677,6 +782,35 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         } catch (Exception e) {
             Log.e(TAG, "Can't load conversation preferences");
         }
+
+        if (locationServiceConnection == null) {
+            locationServiceConnection = new ServiceConnection() {
+                @Override
+                public void onServiceConnected(ComponentName name, IBinder service) {
+                    Log.w(TAG, "onServiceConnected");
+                    LocationSharingService.LocalBinder binder = (LocationSharingService.LocalBinder) service;
+                    LocationSharingService locationService = binder.getService();
+                    ConversationPath path = new ConversationPath(presenter.getPath());
+                    if (locationService.isSharing(path)) {
+                        showMap(accountId, contactUri.getUri(), false);
+                    }
+                    try {
+                        requireContext().unbindService(locationServiceConnection);
+                    } catch (Exception e) {
+                        Log.w(TAG, "Error unbinding service", e);
+                    }
+                }
+
+                @Override
+                public void onServiceDisconnected(ComponentName name) {
+                    Log.w(TAG, "onServiceDisconnected");
+                    locationServiceConnection = null;
+                }
+            };
+
+            Log.w(TAG, "bindService");
+            requireContext().bindService(new Intent(requireContext(), LocationSharingService.class), locationServiceConnection, 0);
+        }
     }
 
     @Override
@@ -718,10 +852,8 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     @Override
     public void displayNumberSpinner(final Conversation conversation, final Uri number) {
         binding.numberSelector.setVisibility(View.VISIBLE);
-        mNumberAdapter = new NumberAdapter(getActivity(),
-                conversation.getContact(),
-                false);
-        binding.numberSelector.setAdapter(mNumberAdapter);
+        binding.numberSelector.setAdapter(new NumberAdapter(getActivity(),
+                conversation.getContact(), false));
         binding.numberSelector.setSelection(getIndex(binding.numberSelector, number));
     }
 
@@ -805,7 +937,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     @Override
-    public void onPrepareOptionsMenu(Menu menu) {
+    public void onPrepareOptionsMenu(@NonNull Menu menu) {
         super.onPrepareOptionsMenu(menu);
         boolean visible = binding.cvMessageInput.getVisibility() == View.VISIBLE;
         if (mAudioCallBtn != null)
@@ -877,21 +1009,31 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     public void handleShareIntent(Intent intent) {
-        String type = intent.getType();
-        if (type == null) {
-            Log.w(TAG, "Can't share with no type");
-            return;
-        }
-        if (type.startsWith("text/plain")) {
-            binding.msgInputTxt.setText(intent.getStringExtra(Intent.EXTRA_TEXT));
-        } else {
-            android.net.Uri uri = intent.getData();
-            ClipData clip = intent.getClipData();
-            if (uri == null && clip != null && clip.getItemCount() > 0)
-                uri = clip.getItemAt(0).getUri();
-            if (uri == null)
+        Log.w(TAG, "handleShareIntent " + intent);
+
+        String action = intent.getAction();
+        if (Intent.ACTION_SEND.equals(action) || Intent.ACTION_SEND_MULTIPLE.equals(action)) {
+            String type = intent.getType();
+            if (type == null) {
+                Log.w(TAG, "Can't share with no type");
                 return;
-            startFileSend(AndroidFileUtils.getCacheFile(requireContext(), uri).flatMapCompletable(this::sendFile));
+            }
+            if (type.startsWith("text/plain")) {
+                binding.msgInputTxt.setText(intent.getStringExtra(Intent.EXTRA_TEXT));
+            } else {
+                android.net.Uri uri = intent.getData();
+                ClipData clip = intent.getClipData();
+                if (uri == null && clip != null && clip.getItemCount() > 0)
+                    uri = clip.getItemAt(0).getUri();
+                if (uri == null)
+                    return;
+                startFileSend(AndroidFileUtils.getCacheFile(requireContext(), uri).flatMapCompletable(this::sendFile));
+            }
+        } else if (Intent.ACTION_VIEW.equals(action)) {
+            ConversationPath path = ConversationPath.fromIntent(intent);
+            if (path != null && intent.getBooleanExtra(EXTRA_SHOW_MAP, false)) {
+                shareLocation();
+            }
         }
     }
 
@@ -909,7 +1051,6 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         //Use Android Storage File Access to download the file
         Intent downloadFileIntent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
         downloadFileIntent.setType(AndroidFileUtils.getMimeTypeFromExtension(file.getExtension()));
-
         downloadFileIntent.addCategory(Intent.CATEGORY_OPENABLE);
         downloadFileIntent.putExtra(Intent.EXTRA_TITLE,file.getDisplayName());
 
