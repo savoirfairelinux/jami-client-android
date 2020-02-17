@@ -21,9 +21,12 @@ package cx.ring.tv.search;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.leanback.app.SearchSupportFragment;
 import androidx.leanback.widget.ArrayObjectAdapter;
 import androidx.leanback.widget.HeaderItem;
+import androidx.leanback.widget.ImageCardView;
 import androidx.leanback.widget.ListRow;
 import androidx.leanback.widget.ListRowPresenter;
 import androidx.leanback.widget.ObjectAdapter;
@@ -44,6 +47,9 @@ import cx.ring.tv.call.TVCallActivity;
 import cx.ring.tv.cards.Card;
 import cx.ring.tv.cards.CardPresenterSelector;
 import cx.ring.tv.cards.contacts.ContactCard;
+import cx.ring.tv.contact.TVContactActivity;
+import cx.ring.tv.contactrequest.TVContactRequestActivity;
+import cx.ring.tv.model.TVListViewModel;
 import cx.ring.utils.ConversationPath;
 
 public class ContactSearchFragment extends BaseSearchFragment<ContactSearchPresenter>
@@ -148,5 +154,11 @@ public class ContactSearchFragment extends BaseSearchFragment<ContactSearchPrese
         intent.putExtra(ConversationFragment.KEY_CONTACT_RING_ID, number);
         getActivity().startActivity(intent, null);
         getActivity().finish();
+    }
+
+    @Override
+    public void displayContactDetails(TVListViewModel model) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(model.getAccountId(), model.getContact().getPrimaryUri()), getActivity(), TVContactActivity.class);
+        getActivity().startActivity(intent);
     }
 }

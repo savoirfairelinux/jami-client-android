@@ -41,7 +41,6 @@ import cx.ring.fragments.AccountMigrationFragment;
 import cx.ring.fragments.AccountsManagementFragment;
 import cx.ring.fragments.AdvancedAccountFragment;
 import cx.ring.fragments.CallFragment;
-import cx.ring.fragments.ConversationFragment;
 import cx.ring.client.ConversationSelectionActivity;
 import cx.ring.fragments.GeneralAccountFragment;
 import cx.ring.fragments.MediaPreferenceFragment;
@@ -82,6 +81,7 @@ import cx.ring.tv.account.TVShareFragment;
 import cx.ring.tv.call.TVCallActivity;
 import cx.ring.tv.call.TVCallFragment;
 import cx.ring.tv.cards.iconcards.IconCardPresenter;
+import cx.ring.tv.conversation.TvTvConversationFragment;
 import cx.ring.tv.contact.TVContactFragment;
 import cx.ring.tv.contactrequest.TVContactRequestFragment;
 import cx.ring.tv.main.MainFragment;
@@ -133,7 +133,7 @@ public interface JamiInjectionComponent {
 
     void inject(RegisterNameDialog dialog);
 
-    void inject(ConversationFragment fragment);
+    void inject(cx.ring.fragments.ConversationFragment fragment);
 
     void inject(ContactRequestsFragment fragment);
 
@@ -211,6 +211,8 @@ public interface JamiInjectionComponent {
     void inject(TVContactRequestFragment fragment);
 
     void inject(TVContactFragment fragment);
+
+    void inject(TvTvConversationFragment fragment);
 
     void inject(TVSettingsFragment tvSettingsFragment);
 
