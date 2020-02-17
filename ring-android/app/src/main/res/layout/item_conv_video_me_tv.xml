@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (C) 2004-2019 Savoir-faire Linux Inc.
+  ~
+  ~ Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+  ~
+  ~ This program is free software; you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation; either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program; if not, write to the Free Software
+  ~  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+  -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="8dp"
+    android:background="@android:color/transparent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <TextView
+        android:id="@+id/msg_details_txt_perm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:textColor="@color/conversation_secondary_background"
+        android:textSize="14sp"
+        android:paddingTop="4dp"
+        tools:text="@string/time_just_now" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingEnd="2dp"
+        android:paddingStart="72dp"
+        android:clipChildren="false"
+        android:clipToPadding="false">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/video_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="24dp"
+            android:foreground="@drawable/baseline_play_arrow_24"
+            android:foregroundGravity="center"
+            app:cardCornerRadius="16dp">
+
+            <TextureView
+                android:id="@+id/video"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:adjustViewBounds="true"
+                android:maxHeight="200dp"
+                android:transitionName="picture" />
+
+        </androidx.cardview.widget.CardView>
+
+        <ImageView
+            android:id="@+id/status_icon"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_alignBottom="@id/video_frame"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="5dp"
+            android:tint="@color/grey_500"
+            android:src="@drawable/round_check_circle_24" />
+
+        <TextView
+            android:id="@+id/msg_details_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@id/video_frame"
+            android:layout_below="@id/video_frame"
+            android:layout_marginEnd="@dimen/conversation_message_radius"
+            android:textColor="@color/conversation_secondary_background"
+            android:textSize="12sp"
+            android:singleLine="true"
+            tools:text="@string/time_just_now" />
+
+    </RelativeLayout>
+
+</LinearLayout>

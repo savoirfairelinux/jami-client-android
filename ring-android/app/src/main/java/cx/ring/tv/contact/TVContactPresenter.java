@@ -82,4 +82,8 @@ public class TVContactPresenter extends RootPresenter<TVContactView> {
         }
     }
 
+    public void clearHistory() {
+        mConversationService.clearHistory(mAccountId, mUri).subscribe();
+    }
+
 }

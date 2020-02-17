@@ -39,6 +39,7 @@ import cx.ring.R;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.services.VCardServiceImpl;
+import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.HashUtils;
 import io.reactivex.Single;
 
@@ -208,7 +209,12 @@ public class AvatarDrawable extends Drawable {
         presenceFillPaint.setStyle(Paint.Style.FILL);
         presenceFillPaint.setAntiAlias(true);
 
-        int backgroundColor = ContextCompat.getColor(context, R.color.background);
+        int backgroundColor;
+        if (DeviceUtils.isTv(context)) {
+            backgroundColor = ContextCompat.getColor(context, R.color.grey_900);
+        } else {
+            backgroundColor = ContextCompat.getColor(context, R.color.background);
+        }
         presenceStrokePaint.setColor(backgroundColor);
         presenceStrokePaint.setStyle(Paint.Style.STROKE);
         presenceStrokePaint.setAntiAlias(true);

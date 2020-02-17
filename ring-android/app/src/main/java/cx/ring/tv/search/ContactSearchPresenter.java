@@ -34,6 +34,7 @@ import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.VCardService;
+import cx.ring.tv.model.TVListViewModel;
 import cx.ring.utils.VCardUtils;
 import io.reactivex.Scheduler;
 import io.reactivex.subjects.PublishSubject;
@@ -133,17 +134,8 @@ public class ContactSearchPresenter extends RootPresenter<ContactSearchView> {
         }
 
         String accountId = mAccountService.getCurrentAccount().getAccountID();
+        TVListViewModel model = new TVListViewModel(accountId, contact);
 
-        if (contact.getStatus() == CallContact.Status.NO_REQUEST) {
-            mVCardService.loadSmallVCard(accountId, VCardService.MAX_SIZE_REQUEST)
-                    .subscribe(vCard -> {
-                        mAccountService.sendTrustRequest(accountId,
-                                contact.getPrimaryUri().getRawRingId(),
-                                Blob.fromString(VCardUtils.vcardToString(vCard)));
-
-                    });
-        }
-
-        getView().startCall(accountId, contact.getPrimaryNumber());
+        getView().displayContactDetails(model);
     }
 }
