@@ -24,6 +24,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -71,8 +72,8 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
 
         // Override down navigation as we do not use it in this screen
         // Only the detailPresenter will be displayed
-        BrowseFrameLayout layout = (BrowseFrameLayout) view;
-        layout.setOnDispatchKeyListener((v, keyCode, event) -> event.getKeyCode() == KeyEvent.KEYCODE_DPAD_DOWN);
+//        BrowseFrameLayout layout = (BrowseFrameLayout) view;
+//        layout.setOnDispatchKeyListener((v, keyCode, event) -> event.getKeyCode() == KeyEvent.KEYCODE_DPAD_DOWN);
 
         prepareBackgroundManager();
         setupAdapter();
@@ -94,7 +95,7 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
                         new TVContactDetailPresenter(),
                         new DetailsOverviewLogoPresenter());
 
-        detailsPresenter.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.color_primary_dark));
+        detailsPresenter.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.grey_900));
         detailsPresenter.setInitialState(FullWidthDetailsOverviewRowPresenter.STATE_HALF);
 
         // Hook up transition element.

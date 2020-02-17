@@ -1,7 +1,7 @@
 /*
- *  Copyright (C) 2004-2019 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2020 Savoir-faire Linux Inc.
  *
- *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ *  Authors:    AmirHossein Naghshzan <amirhossein.naghshzan@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,21 +17,34 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.tv.search;
+package cx.ring.tv.conversation;
+
+import java.util.List;
 
 import cx.ring.model.CallContact;
 import cx.ring.model.Error;
-import cx.ring.tv.model.TVListViewModel;
+import cx.ring.model.Interaction;
+import cx.ring.mvp.BaseView;
 
-public interface ContactSearchView {
+public interface ConversationView extends BaseView {
 
-    void displayContact(String accountId, CallContact contact);
+    void refreshView(List<Interaction> conversation);
 
-    void clearSearch();
+    void scrollToTop();
+
+    void displayContact(CallContact contact);
 
     void displayErrorToast(Error error);
 
-    void startCall(String accountID, String number);
+    void switchToUnknownView(String name);
 
-    void displayContactDetails(TVListViewModel model);
+    void switchToIncomingTrustRequestView(String message);
+
+    void switchToConversationView();
+
+    void addElement(Interaction e);
+
+    void updateElement(Interaction e);
+
+    void removeElement(Interaction e);
 }
