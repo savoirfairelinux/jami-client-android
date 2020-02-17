@@ -120,6 +120,7 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="error_password_char_count">Mažiausiai 6 simboliai</string>
   <string name="error_passwords_not_equals">Slaptažodžiai nesutampa</string>
   <string name="export_account_wait_title">Prašome palaukti...</string>
+  <string name="export_account_wait_message">Eksportuojama paskyros informacija</string>
   <string name="account_export_file">Padaryti paskyros atsarginę kopiją</string>
   <string name="account_export_end_decryption_message">Naudojant pateiktą slaptažodį, nepavyko atrakinti jūsų paskyros.</string>
   <string name="account_export_end_network_title">Tinklo klaida</string>

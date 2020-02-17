@@ -11,6 +11,7 @@
   <string name="no_browser_app_installed">NIje pronađen nijedan web preglednik, instalirajte jadan da biste visjeli stranicu</string>
   <string name="email_chooser_title">Pošalji mail koristeći...</string>
   <string name="website_chooser_title">Pogledaj web stranicu koristeći...</string>
+  <string name="description">Jami je slobodni software za univerzalnu komunikaciju koji poštuje slobode i privatnost svojih korisnika.</string>
   <string name="credits">Zasluge</string>
   <!--About dialog-->
   <!--RingActivity-->
@@ -24,8 +25,10 @@
   <!--Sections-->
   <string name="menu_item_home">Glavni meni</string>
   <string name="menu_item_accounts">Upravljaj računima</string>
+  <string name="menu_item_account">Upravljanje računom</string>
   <string name="menu_item_settings">Postavke</string>
   <string name="menu_item_share">Dijeli moj kontakt</string>
+  <string name="menu_item_about">O Jami-u</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Pozovi broj</string>
   <!--History Fragment-->
@@ -37,6 +40,7 @@
     <item quantity="other">%d razgovora</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Traži ime ili telefonski broj...</string>
   <string name="choose_number">Izaberite broj</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -47,12 +51,18 @@
   <string name="notif_incoming_call">Dolazni poziv</string>
   <string name="notif_outgoing_call_title">Odlazni poziv za %1$s</string>
   <string name="notif_outgoing_call">Odlazni poziv</string>
+  <string name="notif_current_call_title">Odlazni poziv sa %1$s</string>
   <string name="notif_current_call">Poziv koji je u tijeku</string>
+  <string name="notif_channel_call_in_progress">Poziv u tijeku</string>
   <string name="notif_channel_calls">Pozivi</string>
   <string name="notif_channel_missed_calls">Propušteni pozivi</string>
+  <string name="notif_channel_incoming_calls">Dolazni pozivi</string>
   <string name="notif_channel_messages">Poruke</string>
   <string name="notif_channel_requests">Zahtjevi</string>
   <string name="notif_channel_file_transfer">Prijenos datoteka </string>
+  <string name="notif_channel_sync">Sinkroniziranje podataka</string>
+  <string name="notif_channel_background_service">Pozadinska usluga</string>
+  <string name="notif_channel_background_service_descr">Dopušta primanje poziva i poruka bilo kada.</string>
   <string name="notif_group_calls">Pozivi</string>
   <string name="notif_mark_as_read">Označi kao pročitano</string>
   <string name="notif_reply">Odgovori</string>
@@ -61,6 +71,7 @@
   <string name="notif_outgoing_file_transfer_title">Slanje datoteke za %1$s</string>
   <string name="notif_outgoing_file_transfer">Netko vam želi poslati datoteku</string>
   <string name="action_open">Otvori</string>
+  <string name="notif_sync_title">Sinkroniziram podatke...</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ti:</string>
   <string name="action_call_hangup">Poklopi</string>
@@ -98,11 +109,13 @@
   <string name="ringtone_error_title">Greška</string>
   <string name="ringtone_error_format_not_supported">Ovaj format nije podržan.</string>
   <string name="ringtone_error_size_too_big">Datoteka je prevelika. Maksimalna veličina je %1$dkB.</string>
+  <string name="ringtone_custom_prompt">Postavi prilagođeni zvuk zvona</string>
   <string name="ringtone_custom_label">Prilagođeno</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Skenirajte QR kod korisnika kojeg želite dodati.</string>
+  <string name="title_activity_qrcode">Dijeli moj račun</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Obrisati povijest?</string>
   <string name="clear_history_completed">Povijest je očišćena.</string>
@@ -142,11 +155,15 @@
   <string name="share_message_no_account">Molim odaberite račun za djeljenje</string>
   <string name="share_label">Podijeli</string>
   <string name="generic_error_migration">Greška</string>
+  <string name="title_share_with">Dijeli sa...</string>
   <!--Pending contact requests-->
   <string name="accept">Prihvati</string>
   <string name="refuse">Odbij</string>
   <string name="block">Blokiraj</string>
+  <string name="contact_request_title">Zahtjev za novi kontakt</string>
+  <string name="contact_request_msg">Imate %1$s zahtjeva za kontakt</string>
   <string name="contact_request_account">Za %1$s</string>
+  <string name="message_contact_not_trusted_yet">%s još nije u vašim kontaktima.\Prihvaćate li ili odbijate zahtjev ovog kontakta?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Pošalji</string>
   <!--Blacklist-->

@@ -95,6 +95,7 @@
   <string name="account_proxy_label">DHT 代理伺服器</string>
   <string name="account_proxy_enable_label">使用 DHT 代理伺服器</string>
   <string name="account_proxy_server_label">DHT 代理伺服器位置</string>
+  <string name="account_proxy_server_list_label">DHT 代理伺服器清單 URL</string>
   <string name="account_peer_discovery_label">區域夥伴探索</string>
   <string name="account_peer_discovery_enable_label">啟用區域夥伴探索</string>
   <string name="account_peer_discovery_enable_summary">連線到我們的區域網路上發佈的其他 DHT 節點</string>

@@ -21,20 +21,20 @@ along with this program; if not, write to the Free Software
 -->
 <resources>
     <!-- Call error -->
-    <string name="call_error_no_microphone">تماس لغو شد. هیچ میکروفون شناسایی نشده است.</string>
-    <string name="call_error_no_camera_no_microphone">تماس لغو شد. هیچ دوربین یا میکروفن شناسایی نشده است.</string>
+    <string name="call_error_no_microphone">تماس لغو شد. هیچ میکروفونی شناسایی نشد.</string>
+    <string name="call_error_no_camera_no_microphone">تماس لغو شد. هیچ دوربین یا میکروفونی شناسایی نشد.</string>
 
     <!-- SipCalls -->
-    <string name="call_human_state_searching">در حال  جستجو</string>
-    <string name="call_human_state_incoming">تماس ورودی</string>
-    <string name="call_human_state_connecting">در حال برقراری ارتباط</string>
-    <string name="call_human_state_ringing">در حال زنگ خوردن</string>
+    <string name="call_human_state_searching">در حال جستجو</string>
+    <string name="call_human_state_incoming">ورودی</string>
+    <string name="call_human_state_connecting">در حال اتصال</string>
+    <string name="call_human_state_ringing">در حال زنگ</string>
     <string name="call_human_state_current">در حال صحبت</string>
-    <string name="call_human_state_hungup">تمام شد</string>
+    <string name="call_human_state_hungup">پایان</string>
     <string name="call_human_state_busy">مشغول</string>
     <string name="call_human_state_failure">ناموفق</string>
-    <string name="call_human_state_hold">صبر کنید لطفا</string>
-    <string name="call_human_state_unhold">لطفا رها کنید</string>
-    <string name="call_human_state_over">تمام شد</string>
+    <string name="call_human_state_hold">نگه‌داشتن</string>
+    <string name="call_human_state_unhold">رها کردن</string>
+    <string name="call_human_state_over">پایان</string>
     <!-- Conferences -->
 </resources>

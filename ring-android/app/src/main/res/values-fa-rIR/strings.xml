@@ -11,11 +11,11 @@
   <string name="no_email_app_installed">هیچ برنامه‌ای برای پست الکترونیک پیدا نشد. برای فرستادن یک گزارش به ما، یکی را نصب کنید</string>
   <string name="no_browser_app_installed">هیچ برنامه مرورگری پیدا نشد، برای مشاهده این صفحه، یکی را نصب کنید</string>
   <string name="email_chooser_title">ارسال پست الکترونیک با…</string>
-  <string name="website_chooser_title">مشاهده وب‌سایت با…</string>
+  <string name="website_chooser_title">مشاهده سایت اینترنتی از طریق…</string>
   <string name="license">این نرم‌افزار همان گونه که هست، بدون هیچ ضمانتی ارائه شده است. برای جزییات بیش‌تر، <u>نگارش ۳ یا جدیدتر پروانهٔ جامع همگانی گنو</u>را ببینید</string>
   <string name="description">جمی نرم‌افزار آزاد برای ارتباط جهانی است که به آزادی‌ها و محرمانگی کاربرانش احترام می‌گذارد.</string>
   <string name="credits">دست‌اندرکاران</string>
-  <string name="call_service_description">این سرویس برای ادامه تماسهای شما در پیش‌زمینه ضروری است. فقط در طول تماس اجرا می‌شود.</string>
+  <string name="call_service_description">این سرویس برای ادامه تماس‌های شما در پیش‌زمینه ضروری است. فقط در طول تماس اجرا می‌شود.</string>
   <string name="data_transfer_service_description">این سرویس برای نمایش اعلان‌های مداوم در هنگام انتقال فایل ضروری است. فقط در زمان‌های انتقال فایل اجرا می‌شود.</string>
   <!--About dialog-->
   <string name="developed_by">توسعه‌یافته توسط</string>
@@ -24,7 +24,7 @@
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">رینگ</string>
   <string name="error_no_network">بدون اتصال شبکه</string>
-  <string name="error_mobile_network_available_but_disabled">لطفاً در صفحهٔ تنظمیات به شبکهٔ سلولی دسترسی دهید.</string>
+  <string name="error_mobile_network_available_but_disabled">لطفا در صفحه تنظیمات به شبکه سلولی دسترسی دهید.</string>
   <!--AB menus-->
   <string name="ab_action_chat">پیام متنی</string>
   <!--Left Drawer-->
@@ -33,106 +33,106 @@
   <string name="drawer_close">بستن کشوی ناوبری</string>
   <!--Sections-->
   <string name="menu_item_home">خانه</string>
-  <string name="menu_item_contact_request">درخواست‌های تماس</string>
+  <string name="menu_item_contact_request">درخواست‌های ارتباط</string>
   <string name="menu_item_accounts">مدیریت حساب‌ها</string>
   <string name="menu_item_account">مدیریت حساب</string>
   <string name="menu_item_settings">تنظیمات</string>
-  <string name="menu_item_share">هم‌رسانی اطّلاعات تماس</string>
-  <string name="menu_item_about">دربارهٔ جمی</string>
+  <string name="menu_item_share">هم‌رسانی اطلاعات تماس من</string>
+  <string name="menu_item_about">درباره جمی</string>
   <!--Dialing Fragment-->
-  <string name="dial_number">تماس با یک شماره</string>
+  <string name="dial_number">شماره‌گیری کن</string>
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d گفتگو</item>
-    <item quantity="other">%d گفتگو</item>
+    <item quantity="other">%d گفتگوها</item>
   </plurals>
   <!--ContactList Fragment-->
   <string name="searchbar_hint">جستجوی نام یا شماره تلفن…</string>
-  <string name="choose_number">شماره‌ای را برگزینید</string>
+  <string name="choose_number">یک شماره‌ انتخاب کنید</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">تماس ورودی از دست رفته</string>
-  <string name="notif_missed_outgoing_call">تماس خروجی از دست رفته</string>
+  <string name="notif_missed_incoming_call">تماس ورودی از‌دست‌رفته</string>
+  <string name="notif_missed_outgoing_call">تماس خروجی از‌دست‌رفته</string>
   <string name="notif_incoming_call_title">تماس دریافتی از %1$s</string>
   <string name="notif_incoming_call">تماس دریافتی</string>
   <string name="notif_outgoing_call_title">تماس خروجی با %1$s</string>
   <string name="notif_outgoing_call">تماس خروجی</string>
   <string name="notif_current_call_title">تماس جاری با %1$s</string>
-  <string name="notif_current_call">تماس خروجی</string>
+  <string name="notif_current_call">تماس جاری</string>
   <string name="notif_channel_call_in_progress">تماس در جریان</string>
   <string name="notif_channel_calls">تماس‌ها</string>
-  <string name="notif_channel_missed_calls">تماس از دست رفته</string>
+  <string name="notif_channel_missed_calls">تماس‌های از‌دست‌رفته</string>
   <string name="notif_channel_incoming_calls">تماس‌های ورودی</string>
-  <string name="notif_channel_messages">پیام ها</string>
-  <string name="notif_channel_requests">درخواست ها</string>
+  <string name="notif_channel_messages">پیام‌ها</string>
+  <string name="notif_channel_requests">درخواست‌ها</string>
   <string name="notif_channel_file_transfer">انتقال فایل</string>
   <string name="notif_channel_sync">همگام‌سازی داده</string>
-  <string name="notif_channel_background_service">خدمت پس‌زمینه</string>
-  <string name="notif_channel_background_service_descr">اجازهٔ گرفتن تماس‌ها و پیام‌ها در هر زمان.</string>
+  <string name="notif_channel_background_service">سرویس پس‌زمینه</string>
+  <string name="notif_channel_background_service_descr">اجازه دریافت تماس‌ها و پیام‌ها در هر زمان.</string>
   <string name="notif_group_calls">تماس‌ها</string>
-  <string name="notif_background_service">جمی در پس‌زمینه در حال اجراست.</string>
-  <string name="notif_mark_as_read">به عنوان خوانده شده علامت بزن</string>
-  <string name="notif_dismiss"> رد کنید</string>
-  <string name="notif_reply">لطفا پاسخ دهید</string>
+  <string name="notif_background_service">جمی هم ‌اکنون در پس‌زمینه در حال اجراست.</string>
+  <string name="notif_mark_as_read">علامت‌گذاری به عنوان خوانده‌شده</string>
+  <string name="notif_dismiss"> رد‌کردن</string>
+  <string name="notif_reply">پاسخ</string>
   <string name="notif_incoming_file_transfer_title">فایل ورودی از%1$s</string>
-  <string name="notif_incoming_file_transfer">شخصی می خواهد به شما یک فایل ارسال کند</string>
+  <string name="notif_incoming_file_transfer">شخصی می‌خواهد یک فایل برای شما ارسال کند</string>
   <string name="notif_outgoing_file_transfer_title">ارسال فایل به %1$s</string>
-  <string name="notif_outgoing_file_transfer">شخصی می خواهد به شما یک فایل ارسال کند</string>
+  <string name="notif_outgoing_file_transfer">شخصی می‌خواهد یک فایل برای شما ارسال کند</string>
   <string name="notif_incoming_picture">تصویر از%1$s</string>
-  <string name="action_open">باز کردن</string>
+  <string name="action_open">باز‌کردن</string>
   <string name="notif_sync_title">در حال همگام‌سازی داده...</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">شما:</string>
-  <string name="action_call_hangup">قطع کردن</string>
-  <string name="ongoing_call">تماس خروجی</string>
-  <string name="hist_in_call">تماس دریافتی به مدّت  %1$s</string>
-  <string name="hist_out_call">تماس خروجی به مدّت %1$s</string>
-  <string name="start_error_title">نمی‌توان جمی را شروع کرد!</string>
-  <string name="start_error_mic_required">جمی برای کار به دسترسی میکروفون نیاز دارد.</string>
-  <string name="action_call_accept">برداشتن تماس</string>
-  <string name="action_call_decline">رد کردن</string>
-  <string name="action_call_mic_mute">صامت کردن میکروفون</string>
-  <string name="ab_action_speakerphone">فعال کردن بلندگو</string>
+  <string name="action_call_hangup">قطع‌کردن</string>
+  <string name="ongoing_call">تماس جاری</string>
+  <string name="hist_in_call">تماس ورودی به مدت  %1$s</string>
+  <string name="hist_out_call">تماس خروجی به مدت %1$s</string>
+  <string name="start_error_title">نمی‌توان جمی را راه‌اندازی کرد!</string>
+  <string name="start_error_mic_required">جمی برای کار به مجوز میکروفون نیاز دارد.</string>
+  <string name="action_call_accept">پذیرش تماس</string>
+  <string name="action_call_decline">ردکردن</string>
+  <string name="action_call_mic_mute">قطع میکروفون</string>
+  <string name="ab_action_speakerphone">فعال‌سازی بلندگو</string>
   <string name="ab_action_contact_add">افزودن به مخاطبان</string>
   <string name="ab_action_contact_add_question">افزودن به مخاطبان؟</string>
   <string name="hist_contact_added">مخاطب افزوده شد</string>
-  <string name="hist_invitation_received">دعوت نامه دریافت شد</string>
+  <string name="hist_invitation_received">دعوت‌نامه دریافت شد</string>
   <string name="ab_action_audio_call">تماس صوتی</string>
-  <string name="ab_action_video_call">تماس ویدیویی</string>
+  <string name="ab_action_video_call">تماس تصویری</string>
   <string name="ab_action_change_screen_orientation">تغییر جهت صفحه</string>
-  <string name="share_via">هم‌رسانی با</string>
+  <string name="share_via">هم‌رسانی از طریق</string>
   <string name="write_a_message">پیامی بنویسید</string>
-  <string name="scan_qr">پویش رمز QR</string>
+  <string name="scan_qr">اسکن کد QR</string>
   <string name="ab_action_flipcamera">چرخاندن دوربین</string>
   <!--Text messages-->
   <string name="send_message">ارسال پیام</string>
   <string name="message_sending">در حال ارسال پیام…</string>
   <string name="message_failed">شکست خورد</string>
-  <string name="time_just_now">هم‌اکنون</string>
+  <string name="time_just_now">همین الان</string>
   <string name="send_file">ارسال فایل</string>
   <string name="hist_file_sent">فایل ارسال شد</string>
   <string name="hist_file_received">فایل دریافت شد</string>
-  <string name="conversation_send_audio">ضبط برش (کلیپ) صوتی</string>
-  <string name="conversation_send_video">ضبط برش (کلیپ) ویدیویی</string>
+  <string name="conversation_send_audio">ضبط بُریده صوتی</string>
+  <string name="conversation_send_video">ضبط بُریده ویدیویی</string>
   <!--MediaPreferenceFragment-->
-  <string name="permission_dialog_camera_title">دسترسی دوربین</string>
-  <string name="permission_dialog_camera_message">گفت‌وگوی ویدیویی برای کار کردن نیاز به دسترسی دوربین دارد. لطفاً آن را فعّال کنید.</string>
+  <string name="permission_dialog_camera_title">مجوز دوربین</string>
+  <string name="permission_dialog_camera_message">گفتگوی ویدیویی برای کار نیاز به مجوز دوربین دارد. لطفا آن را فعال کنید.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">خطا</string>
   <string name="ringtone_error_format_not_supported">این قالب پشتیبانی نمی‌شود.</string>
-  <string name="ringtone_error_size_too_big">این فایل خیلی بزرگ است.حداکثر اندازه %1$d ک‌.ب. است.</string>
+  <string name="ringtone_error_size_too_big">این فایل خیلی بزرگ است. حداکثر اندازه %1$d کیلو‌بایت است.</string>
   <string name="ringtone_custom_prompt">تعیین صدای زنگ سفارشی</string>
   <string name="ringtone_custom_label">سفارشی</string>
-  <string name="ringtone_jami_tones">آهنگ‌های جمی</string>
+  <string name="ringtone_jami_tones">زنگ‌های جمی</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">جمی برای فعّال کردن این ویژگی به دسترسی «خواندن مخاطبان» نیاز دارد. لطفاً اعطایش کنید.</string>
+  <string name="permission_dialog_read_contacts_message">جمی برای فعال‌سازی این ویژگی به مجوز \"خواندن مخاطبان\" نیاز دارد. لطفا آن را اعطا کنید.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">جمی برای فعّال کردن این ویژگی به دسترسی «نوشتن گزارش تماس» نیاز دارد. لطفاً اعطایش کنید.</string>
+  <string name="permission_dialog_write_call_log_message">جمی برای فعال‌سازی این ویژگی به مجوز \"نوشتن گزارش تماس\" نیاز دارد. لطفا آن را اعطا کنید.</string>
   <!--QRCode Scan-->
-  <string name="scan_qr_account_message">رمز QR حسابی که می‌خواهید بیفزایید را بپویید.</string>
+  <string name="scan_qr_account_message">کد QR حسابی را که می‌خواهید بیفزایید، اسکن کنید.</string>
   <string name="title_activity_qrcode">هم‌رسانی حساب من</string>
   <string name="error_scan_no_camera_permissions">اسکنر QR برای کار به مجوزهای دوربین نیاز دارد</string>
   <string name="tab_code">کد من</string>
@@ -142,26 +142,26 @@
   <string name="clear_history_dialog_message">این کار قابل بازگشت نیست.</string>
   <string name="clear_history_completed">تاریخچه پاک‌سازی شد.</string>
   <!--Conversation-->
-  <string name="conversation_details">جزییات مخاطب</string>
-  <string name="conversation_action_delete_this">حذف این گفت‌وگو</string>
-  <string name="conversation_action_delete_this_title">حذف این گفت‌وگو؟</string>
+  <string name="conversation_details">جزئیات مخاطب</string>
+  <string name="conversation_action_delete_this">حذف این گفتگو</string>
+  <string name="conversation_action_delete_this_title">حذف این گفتگو؟</string>
   <string name="conversation_action_delete_this_message">این کار قابل بازگشت نیست.</string>
-  <string name="conversation_action_history_clear">پاکسازی تاریخچه</string>
-  <string name="conversation_action_history_clear_title">پاکسازی تاریخچه مکالمه؟</string>
-  <string name="conversation_action_history_clear_message">این باعث پاک شدن تاریخچه مکالمه خواهد شد.</string>
+  <string name="conversation_action_history_clear">پاک‌سازی تاریخچه</string>
+  <string name="conversation_action_history_clear_title">پاک‌سازی تاریخچه گفتگو؟</string>
+  <string name="conversation_action_history_clear_message">این کار قطعا باعث پاک شدن تاریخچه گفتگو خواهد شد.</string>
   <string name="conversation_action_remove_this">مخاطب را حذف کنید</string>
   <string name="conversation_action_remove_this_title">حذف این مخاطب؟</string>
-  <string name="conversation_action_remove_this_message">این باعث حذف این مخاطب میشود و تاریخچه مکالمه را پاک خواهد کرد.</string>
+  <string name="conversation_action_remove_this_message">این باعث حذف مخاطب شده و قطعا تاریخچه گفتگو را پاک خواهد کرد.</string>
   <string name="conversation_action_copy_peer_number">رونوشت از شماره</string>
   <string name="conversation_action_copied_peer_number_clipboard">‫%1$s در حافظه رونویسی شد</string>
   <string name="conversation_action_select_peer_number">گزینش یک شماره</string>
   <string name="conversation_action_block_this">مسدودسازی مخاطب</string>
-  <string name="conversation_action_go_to_call">بازگشت به تماس در حال جريان</string>
+  <string name="conversation_action_go_to_call">بازگشت به تماس جاری</string>
   <string name="conversation_open_file_error">هیچ برنامه‌ نصب‌شده‌ای قادر به باز کردن این نوع فایل نیست.</string>
   <string name="clip_contact_uri">نشانی مخاطب</string>
   <string name="block_contact_dialog_title">انسداد %1$s؟</string>
   <string name="block_contact_dialog_message">تا وقتی %1$s از انسداد خارج نشود، نمی‌تواند با شما ارتباط برقرار کند.</string>
-  <string name="block_contact_completed">%1$s مسدود شد.</string>
+  <string name="block_contact_completed">%1$s مسدود شده است.</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">افزودن %1$s؟</string>
   <string name="prompt_new_password">گذرواژه جدید</string>
@@ -169,8 +169,8 @@
   <string name="prompt_new_password_repeat">گذرواژه جدید را تکرار کنید</string>
   <string name="account_create_title">ایجاد یک حساب جمی</string>
   <string name="prompt_new_username">نام کاربری جدید را وارد کنید</string>
-  <string name="help_password_choose">برای حفاظت از حساب جمیتان، گذرواژه‌ای قوی که به خاطر خواهید سپرد را برگزینید.</string>
-  <string name="help_password_enter">گذرواژهٔ حساب جمیتان را وارد کنید</string>
+  <string name="help_password_choose">برای حفاظت از حساب جمی خود، گذرواژه‌ای قوی را که به خاطر خواهید سپرد، برگزینید.</string>
+  <string name="help_password_enter">گذرواژه حساب جمی خود را وارد کنید</string>
   <string name="help_server_enter">آدرس URL سرور مدیریت را وارد کن</string>
   <string name="help_pin_enter">پین را از دیگر حساب پیکربندی‌شدهٔ جمی وارد کنید. برای به دست آوردن یک پین، از ویژگی «صدور حساب جمی» استفاده کنید.</string>
   <string name="wizard_next">بعدی</string>

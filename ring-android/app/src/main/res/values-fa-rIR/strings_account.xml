@@ -95,6 +95,7 @@
   <string name="account_proxy_label">پروکسی DHT</string>
   <string name="account_proxy_enable_label"> استفاده از پروکسی DHT</string>
   <string name="account_proxy_server_label">آدرس پروکسی DHT</string>
+  <string name="account_proxy_server_list_label">آدرس اینترنتی لیست پروکسی DHT</string>
   <string name="account_peer_discovery_label">کاوش همتای محلی</string>
   <string name="account_peer_discovery_enable_label">فعال‌سازی کاوش همتای محلی</string>
   <string name="account_peer_discovery_enable_summary">اتصال به دیگر گره‌های DHT که در شبکه محلی ما تبلیغ می‌کنند</string>

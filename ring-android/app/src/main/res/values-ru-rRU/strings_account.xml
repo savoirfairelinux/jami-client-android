@@ -125,8 +125,8 @@
   <string name="account_export_end_error_title">Ошибка</string>
   <string name="account_export_end_error_message">Не удалось экспортировать аккаунт. Произошла неизвестная ошибка.</string>
   <string name="account_enter_password">Введите пароль</string>
-  <string name="account_share_body">Свяжитесь со мной, \'%1$s\' через распределенная коммуникационная платформа Jami: %2$s</string>
-  <string name="account_share_body_with_username">Свяжитесь со мной, \'%1$s\' или по общедоступному имени пользователя \'%2$s\' через распределенная коммуникационная платформа Jami: %3$s</string>
+  <string name="account_share_body">Свяжитесь со мной, используя имя пользователя \'%1$s\' через распределенную коммуникационную платформу Jami: %2$s</string>
+  <string name="account_share_body_with_username">Свяжитесь со мной, \'%1$s\' или по общедоступному имени пользователя \'%2$s\' через распределенную коммуникационную платформу Jami: %3$s</string>
   <string name="account_contact_me">Свяжитесь со мной через Jami !</string>
   <string name="update_account">Обновление аккаунта</string>
   <string name="account_migration">Ваш аккаунт Jami может быть обновлен.\nПожалуйста, введите свой пароль</string>

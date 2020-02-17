@@ -95,6 +95,7 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_proxy_label">DHT proxy</string>
   <string name="account_proxy_enable_label">Usa il proxy DHT</string>
   <string name="account_proxy_server_label">Indirizzo proxy DHT</string>
+  <string name="account_proxy_server_list_label">DHT proxy list URL</string>
   <string name="account_peer_discovery_label">Rilevamento peer locali</string>
   <string name="account_peer_discovery_enable_label">Abilita rilevamento peer locale</string>
   <string name="account_peer_discovery_enable_summary">Connettiti ad altri nodi DHT pubblicizzati sulla nostra rete locale</string>

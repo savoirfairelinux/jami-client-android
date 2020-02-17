@@ -95,6 +95,7 @@
   <string name="account_proxy_label">DHT-meghatalmazott</string>
   <string name="account_proxy_enable_label">DHT-meghatalmazott használata</string>
   <string name="account_proxy_server_label">DHT-meghatalmazott címe</string>
+  <string name="account_proxy_server_list_label">DHT-meghatalmazott lista URL-je</string>
   <string name="account_peer_discovery_label">Helyi egyenrangú felfedezés</string>
   <string name="account_peer_discovery_enable_label">Helyi egyenrangú felfedezés engedélyezése</string>
   <string name="account_peer_discovery_enable_summary">Csatlakozzon más DHT-csomópontokhoz, amelyek a helyi hálózaton hirdetik</string>
