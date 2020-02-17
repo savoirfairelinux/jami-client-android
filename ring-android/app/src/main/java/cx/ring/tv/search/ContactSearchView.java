@@ -21,6 +21,7 @@ package cx.ring.tv.search;
 
 import cx.ring.model.CallContact;
 import cx.ring.model.Error;
+import cx.ring.tv.model.TVListViewModel;
 
 public interface ContactSearchView {
 
@@ -31,4 +32,6 @@ public interface ContactSearchView {
     void displayErrorToast(Error error);
 
     void startCall(String accountID, String number);
+
+    void displayContactDetails(TVListViewModel model);
 }
