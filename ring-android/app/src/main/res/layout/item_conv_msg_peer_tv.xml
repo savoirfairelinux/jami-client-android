@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+
+Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+-->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/txt_entry"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="2dp"
+    android:background="@android:color/transparent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="5dp"
+    android:focusable="true"
+    android:clipToPadding="false"
+    android:clipChildren="false">
+
+    <TextView
+        android:id="@+id/msg_details_txt_perm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:textColor="@color/conversation_secondary_background"
+        android:textSize="14sp"
+        android:paddingTop="4dp"
+        android:paddingBottom="8dp"
+        tools:text="@string/time_just_now" />
+
+    <TextView
+        android:id="@+id/msg_details_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:textColor="@color/conversation_secondary_background"
+        android:textSize="14sp"
+        android:paddingTop="4dp"
+        android:paddingBottom="2dp"
+        tools:text="@string/time_just_now" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/padding_medium"
+        android:paddingEnd="36dp"
+        android:clipToPadding="false"
+        android:clipChildren="false">
+
+        <ImageView
+            android:id="@+id/photo"
+            android:layout_width="@dimen/conversation_avatar_size"
+            android:layout_height="@dimen/conversation_avatar_size"
+            android:background="@null"
+            android:layout_alignBottom="@id/msg_txt"
+            android:scaleType="centerCrop"
+            />
+
+        <TextView
+            android:id="@+id/msg_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/photo"
+            android:layout_marginStart="@dimen/padding_medium"
+            android:layout_marginEnd="20dp"
+            android:minWidth="@dimen/conversation_avatar_size"
+            android:minHeight="@dimen/conversation_avatar_size"
+            android:autoLink="all"
+            android:background="@drawable/textmsg_bg_in"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="false"
+            android:textColor="@color/textColorPrimary"
+            android:textIsSelectable="true"
+            android:textSize="16sp"
+            tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod" />
+
+    </RelativeLayout>
+
+</LinearLayout>

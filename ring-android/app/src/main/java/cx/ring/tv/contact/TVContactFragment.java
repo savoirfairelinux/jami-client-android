@@ -25,14 +25,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 
 import androidx.core.content.ContextCompat;
 import androidx.leanback.app.BackgroundManager;
 import androidx.leanback.widget.Action;
 import androidx.leanback.widget.ArrayObjectAdapter;
-import androidx.leanback.widget.BrowseFrameLayout;
 import androidx.leanback.widget.ClassPresenterSelector;
 import androidx.leanback.widget.DetailsOverviewLogoPresenter;
 import androidx.leanback.widget.DetailsOverviewRow;
@@ -55,6 +53,7 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
 
     private static final int ACTION_CALL = 0;
     private static final int ACTION_DELETE = 1;
+    private static final int ACTION_CLEAR_HISTORY = 2;
 
     private ArrayObjectAdapter mAdapter;
     private int iconSize = -1;
@@ -71,8 +70,8 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
 
         // Override down navigation as we do not use it in this screen
         // Only the detailPresenter will be displayed
-        BrowseFrameLayout layout = (BrowseFrameLayout) view;
-        layout.setOnDispatchKeyListener((v, keyCode, event) -> event.getKeyCode() == KeyEvent.KEYCODE_DPAD_DOWN);
+//        BrowseFrameLayout layout = (BrowseFrameLayout) view;
+//        layout.setOnDispatchKeyListener((v, keyCode, event) -> event.getKeyCode() == KeyEvent.KEYCODE_DPAD_DOWN);
 
         prepareBackgroundManager();
         setupAdapter();
@@ -94,7 +93,7 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
                         new TVContactDetailPresenter(),
                         new DetailsOverviewLogoPresenter());
 
-        detailsPresenter.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.color_primary_dark));
+        detailsPresenter.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.grey_900));
         detailsPresenter.setInitialState(FullWidthDetailsOverviewRowPresenter.STATE_HALF);
 
         // Hook up transition element.
@@ -112,6 +111,8 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
                 presenter.contactClicked();
             } else if (action.getId() == ACTION_DELETE) {
                 presenter.removeContact();
+            } else if (action.getId() == ACTION_CLEAR_HISTORY) {
+                presenter.clearHistory();
             }
         });
 
@@ -136,6 +137,7 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
         ArrayObjectAdapter adapter = new ArrayObjectAdapter();
         adapter.add(ACTION_CALL, new Action(ACTION_CALL, getResources().getString(R.string.ab_action_video_call)));
         adapter.add(ACTION_DELETE, new Action(ACTION_DELETE, getResources().getString(R.string.conversation_action_remove_this)));
+        adapter.add(ACTION_CLEAR_HISTORY, new Action(ACTION_CLEAR_HISTORY, getResources().getString(R.string.tv_clear_history)));
         row.setActionsAdapter(adapter);
 
         mAdapter.add(row);

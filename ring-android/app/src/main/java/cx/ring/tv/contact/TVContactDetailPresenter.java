@@ -19,20 +19,52 @@
  */
 package cx.ring.tv.contact;
 
-import androidx.leanback.widget.AbstractDetailsDescriptionPresenter;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.leanback.widget.Presenter;
+
+import cx.ring.R;
+import cx.ring.tv.conversation.TvConversationFragment;
 import cx.ring.tv.model.TVListViewModel;
 
-public class TVContactDetailPresenter extends AbstractDetailsDescriptionPresenter {
+public class TVContactDetailPresenter extends Presenter {
+
+    public static final String FRAGMENT_TAG = "conversation";
 
     @Override
-    protected void onBindDescription(ViewHolder viewHolder, Object item) {
-        TVListViewModel viewModel = (TVListViewModel) item;
-        if (viewModel != null) {
-            String id = viewModel.getContact().getRingUsername();
-            String displayName = viewModel.getContact().getDisplayName();
-            viewHolder.getTitle().setText(displayName);
-            if (!displayName.equals(id))
-                viewHolder.getSubtitle().setText(id);
+    public ViewHolder onCreateViewHolder(ViewGroup viewGroup) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.tv, viewGroup, false);
+        return new CustomViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder viewHolder, Object object) {
+        ((CustomViewHolder) viewHolder).bind((TVListViewModel) object);
+    }
+
+    @Override
+    public void onUnbindViewHolder(ViewHolder viewHolder) {
+
+    }
+
+    public class CustomViewHolder extends Presenter.ViewHolder {
+
+        public CustomViewHolder(View view) {
+            super(view);
+        }
+
+        public void bind(TVListViewModel object) {
+            Fragment fragment = TvConversationFragment.newInstance(object);
+            FragmentManager fragmentManager = ((TVContactActivity) view.getContext()).getSupportFragmentManager();
+
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content, fragment, FRAGMENT_TAG)
+                    .commit();
         }
     }
+
 }

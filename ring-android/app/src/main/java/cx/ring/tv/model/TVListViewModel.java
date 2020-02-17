@@ -19,9 +19,12 @@
  */
 package cx.ring.tv.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import cx.ring.model.CallContact;
 
-public class TVListViewModel {
+public class TVListViewModel implements Parcelable {
     private String mAccountId;
     private CallContact mCallContact;
     private boolean isOnline;
@@ -31,6 +34,23 @@ public class TVListViewModel {
         mCallContact = callContact;
         isOnline = callContact.isOnline();
     }
+
+    protected TVListViewModel(Parcel in) {
+        mAccountId = in.readString();
+        isOnline = in.readByte() != 0;
+    }
+
+    public static final Creator<TVListViewModel> CREATOR = new Creator<TVListViewModel>() {
+        @Override
+        public TVListViewModel createFromParcel(Parcel in) {
+            return new TVListViewModel(in);
+        }
+
+        @Override
+        public TVListViewModel[] newArray(int size) {
+            return new TVListViewModel[size];
+        }
+    };
 
     public CallContact getContact() {
         return mCallContact;
@@ -52,4 +72,16 @@ public class TVListViewModel {
     public String getAccountId() {
         return mAccountId;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mAccountId);
+        dest.writeByte((byte) (isOnline ? 1 : 0));
+    }
+
 }
