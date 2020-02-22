@@ -83,7 +83,6 @@ import cx.ring.service.DRingService;
 import cx.ring.tv.call.TVCallActivity;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
-import cx.ring.utils.FileUtils;
 import cx.ring.utils.ResourceMapper;
 import cx.ring.utils.Tuple;
 
@@ -113,7 +112,6 @@ public class NotificationServiceImpl implements NotificationService {
     private static final String NOTIF_CALL_GROUP = "calls";
 
     private static final int NOTIF_CALL_ID = 1001;
-
 
     private final SparseArray<NotificationCompat.Builder> mNotificationBuilders = new SparseArray<>();
     @Inject
@@ -151,12 +149,10 @@ public class NotificationServiceImpl implements NotificationService {
         if (notificationManager == null)
             return;
 
-
         notificationManager.deleteNotificationChannel(NOTIF_CHANNEL_MISSED_CALL_LEGACY);
         notificationManager.deleteNotificationChannel(NOTIF_CHANNEL_CALL_LEGACY);
 
         // Setting up groups
-
         notificationManager.createNotificationChannelGroup(new NotificationChannelGroup(NOTIF_CALL_GROUP, mContext.getString(R.string.notif_group_calls)));
 
         // Missed calls channel
