@@ -24,6 +24,6 @@ AR="${CROSS_COMPILE}ar" \
 AS="${CROSS_COMPILE}as" \
 PKG_CONFIG_LIBDIR=$DAEMON_DIR/contrib/$TARGET_TUPLE/lib/pkgconfig \
 $DAEMON_DIR/configure --host=$TARGET_TUPLE $EXTRA_PARAMS \
-                   --disable-shared --with-opensl --without-dbus --without-alsa --without-pulse --without-speexdsp --enable-accel\
+                   --disable-shared --with-opensl --without-dbus --without-alsa --without-pulse --enable-accel\
                    --prefix=$DAEMON_DIR/install-android-$TARGET_TUPLE \
                    $*

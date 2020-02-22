@@ -155,7 +155,7 @@ mkdir -p ${CONTRIB_DIR}
 mkdir -p ${CONTRIB_SYSROOT}/lib/pkgconfig
 
 cd ${CONTRIB_DIR}
-../bootstrap --host=${TARGET_TUPLE} --enable-ffmpeg --disable-speexdsp
+../bootstrap --host=${TARGET_TUPLE} --enable-ffmpeg
 
 make list
 make fetch
@@ -209,7 +209,7 @@ STATIC_LIBS_ALL="-llog -lOpenSLES -landroid \
                 -lavformat -lavdevice -lavfilter -lavcodec -lswresample -lswscale -lavutil \
                 -lyaml-cpp -ljsoncpp -lhttp_parser -lfmt\
                 -luuid -lz \
-                -lvpx -lopus -lspeex -lx264 \
+                -lvpx -lopus -lspeex -lspeexdsp -lx264 \
                 -largon2 \
                 -liconv"
 
