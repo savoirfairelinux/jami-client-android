@@ -30,7 +30,7 @@ public class DeviceUtils {
 
     private static final String TAG = DeviceUtils.class.getSimpleName();
 
-    private static final int MIN_SIZE_TABLET = 960;
+    private static final int MIN_SIZE_TABLET = 720;
 
     private DeviceUtils() {
     }
