@@ -109,7 +109,7 @@ public class ConversationActivity extends AppCompatActivity implements Colorable
                     .replace(R.id.main_frame, mConversationFragment, null)
                     .commit();
         }
-        if (Intent.ACTION_SEND.equals(action) || Intent.ACTION_SEND_MULTIPLE.equals(action)) {
+        if (Intent.ACTION_SEND.equals(action) || Intent.ACTION_SEND_MULTIPLE.equals(action) || Intent.ACTION_VIEW.equals(action)) {
             mPendingIntent = intent;
         }
     }
