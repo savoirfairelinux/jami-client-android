@@ -22,6 +22,7 @@ package cx.ring.dependencyinjection;
 import javax.inject.Singleton;
 
 import cx.ring.account.AccountEditionFragment;
+import cx.ring.fragments.LocationSharingFragment;
 import cx.ring.account.AccountWizardActivity;
 import cx.ring.account.HomeAccountCreationFragment;
 import cx.ring.account.JamiAccountConnectFragment;
@@ -63,6 +64,7 @@ import cx.ring.services.DataTransferService;
 import cx.ring.services.DeviceRuntimeServiceImpl;
 import cx.ring.services.HardwareService;
 import cx.ring.services.HistoryServiceImpl;
+import cx.ring.services.LocationSharingService;
 import cx.ring.services.NotificationServiceImpl;
 import cx.ring.services.JamiChooserTargetService;
 import cx.ring.services.SharedPreferencesServiceImpl;
@@ -212,11 +214,15 @@ public interface JamiInjectionComponent {
 
     void inject(JamiChooserTargetService service);
 
-    void inject(ShareWithFragment fragment);
+    void inject(LocationSharingFragment service);
 
-    void inject(JamiJobService fragment);
+    void inject(JamiJobService service);
+
+    void inject(ShareWithFragment fragment);
 
     void inject(ContactDetailsActivity fragment);
 
     void inject(IconCardPresenter presenter);
+
+    void inject(LocationSharingService service);
 }

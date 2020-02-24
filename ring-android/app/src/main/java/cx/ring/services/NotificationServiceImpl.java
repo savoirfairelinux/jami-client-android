@@ -54,6 +54,7 @@ import java.io.File;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
@@ -325,6 +326,32 @@ public class NotificationServiceImpl implements NotificationService {
         setContactPicture(contact, messageNotificationBuilder);
 
         return messageNotificationBuilder.build();
+    }
+
+    @Override
+    public void showLocationNotification(Account first, CallContact contact) {
+        android.net.Uri path = ConversationPath.toUri(first.getAccountID(), contact.getPrimaryUri());
+
+        Intent intentConversation = new Intent(Intent.ACTION_VIEW, path, mContext, ConversationActivity.class)
+                .putExtra(ConversationFragment.EXTRA_SHOW_MAP, true);
+
+        NotificationCompat.Builder messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_MESSAGE)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setSmallIcon(R.drawable.ic_ring_logo_white)
+                .setLargeIcon(getContactPicture(contact))
+                .setContentText(mContext.getString(R.string.location_share_contact, contact.getDisplayName()))
+                .setContentIntent(PendingIntent.getActivity(mContext, random.nextInt(), intentConversation, 0))
+                .setAutoCancel(false)
+                .setColor(ResourcesCompat.getColor(mContext.getResources(), R.color.color_primary_dark, null));
+        notificationManager.notify(Objects.hash( "Location", path), messageNotificationBuilder.build());
+    }
+
+    @Override
+    public void cancelLocationNotification(Account first, CallContact contact) {
+        notificationManager.cancel(Objects.hash( "Location", ConversationPath.toUri(first.getAccountID(), contact.getPrimaryUri())));
     }
 
     /**
