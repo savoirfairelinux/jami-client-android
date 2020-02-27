@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1b0083d_d866f8b3",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/contact/TVContactFragment.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-02-27T21:25:31Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 115
+      },
+      "revId": "4894be5aedc5bfa61c624259790351b38f3a5358",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19244692_f6998d47",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/conversation/TvConversationViewHolder.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-02-27T21:25:31Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 106,
+        "startChar": 1,
+        "endLine": 106,
+        "endChar": 62
+      },
+      "revId": "4894be5aedc5bfa61c624259790351b38f3a5358",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0689654b_f9426a34",
+        "filename": "ring-android/app/src/main/res/layout/item_conv_audio_me_tv.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-02-27T21:25:31Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 99,
+        "startChar": 16,
+        "endLine": 109,
+        "endChar": 68
+      },
+      "revId": "4894be5aedc5bfa61c624259790351b38f3a5358",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e4e08d2_c510cf02",
+        "filename": "ring-android/app/src/main/res/layout/item_conv_audio_peer_tv.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-02-27T21:25:31Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 95,
+        "startChar": 16,
+        "endLine": 105,
+        "endChar": 68
+      },
+      "revId": "4894be5aedc5bfa61c624259790351b38f3a5358",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17a85fb1_15dd10a8",
+        "filename": "ring-android/app/src/main/res/menu/conversation_item_actions_file_tv.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-02-27T21:25:31Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 10,
+        "startChar": 7,
+        "endLine": 14,
+        "endChar": 57
+      },
+      "revId": "4894be5aedc5bfa61c624259790351b38f3a5358",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5618234d_57a0a28d",
+        "filename": "ring-android/app/src/main/res/menu/conversation_item_actions_messages_tv.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2020-02-27T21:25:31Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 4,
+        "startChar": 8,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "4894be5aedc5bfa61c624259790351b38f3a5358",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
