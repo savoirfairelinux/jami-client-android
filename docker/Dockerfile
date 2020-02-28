@@ -39,7 +39,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	&& locale-gen $LANG $LC_ALL && update-locale $LANG $LC_ALL
 
 # Android SDK tools
-RUN wget -O /tmp/android-tools.zip https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip && \
+RUN wget -O /tmp/android-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-6200805_latest.zip && \
 	mkdir -p /opt/android-sdk && \
 	unzip -q -d /opt/android-sdk /tmp/android-tools.zip && \
 	rm -f /tmp/android-tools.zip && \
@@ -52,16 +52,15 @@ RUN cd /opt/swig-rel-4.0.1/ && ./autogen.sh && ./configure && make && make insta
 
 ENV ANDROID_HOME=/opt/android-sdk
 ENV PATH=${PATH}:${ANDROID_HOME}/tools/bin
-RUN (while sleep 1; do echo "y"; done) | sdkmanager --update
 
 # Android SDK libraries, NDK
-ENV ANDROID_DEPS=\
-'build-tools;29.0.2 \
+RUN sdkmanager --sdk_root=${ANDROID_HOME} --list
+RUN sdkmanager --sdk_root=${ANDROID_HOME} '\
+ build-tools;29.0.3 \
  platforms;android-29 \
  extras;android;m2repository \
  extras;google;m2repository \
  ndk;21.0.6113669'
-RUN (while sleep 1; do echo "y"; done) | sdkmanager $ANDROID_DEPS
 ENV ANDROID_SDK=/opt/android-sdk
 ENV ANDROID_NDK=/opt/android-sdk/ndk/21.0.6113669
 
