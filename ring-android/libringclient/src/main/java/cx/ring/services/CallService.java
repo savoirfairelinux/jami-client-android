@@ -118,6 +118,10 @@ public class CallService {
         connectionSubject.onNext(currentConnections.size() - 2*currentCalls.size());
     }
 
+    public void setIsComposing(String accountId, String uri, boolean isComposing) {
+        mExecutor.execute(() -> Ringservice.setIsComposing(accountId, uri, isComposing));
+    }
+
     private static class ConferenceEntity {
         Conference conference;
         ConferenceEntity(Conference conf) {

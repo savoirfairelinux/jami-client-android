@@ -64,7 +64,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     private final DeviceRuntimeService mDeviceRuntimeService;
 
     private Conversation mConversation;
-    private Uri mContactRingId;
+    private Uri mContactUri;
     private String mAccountId;
 
     private CompositeDisposable mConversationDisposable;
@@ -101,7 +101,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
 
     public void init(Uri contactRingId, String accountId) {
         Log.w(TAG, "init " + contactRingId + " " + accountId);
-        mContactRingId = contactRingId;
+        mContactUri = contactRingId;
         mAccountId = accountId;
         Account account = mAccountService.getAccount(accountId);
         if (account != null) {
@@ -132,7 +132,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     }
 
     public void resume() {
-        Log.w(TAG, "resume " + mConversation + " " + mAccountId + " " + mContactRingId);
+        Log.w(TAG, "resume " + mConversation + " " + mAccountId + " " + mContactUri);
         mVisibilityDisposable.clear();
         mVisibilityDisposable.add(mConversationSubject
                 .firstOrError()
@@ -191,7 +191,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                 .subscribe(view::refreshView, e -> Log.e(TAG, "Can't update elements", e)));
         mConversationDisposable.add(mContactService.getLoadedContact(c.getAccountId(), c.getContact())
                 .observeOn(mUiScheduler)
-                .subscribe(contact -> initContact(account, mContactRingId, view), e -> Log.e(TAG, "Can't get contact", e)));
+                .subscribe(contact -> initContact(account, mContactUri, view), e -> Log.e(TAG, "Can't get contact", e)));
         mConversationDisposable.add(c.getUpdatedElements()
                 .observeOn(mUiScheduler)
                 .subscribe(elementTuple -> {
@@ -207,6 +207,9 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                             break;
                     }
                 }, e -> Log.e(TAG, "Can't update element", e)));
+        mConversationDisposable.add(c.getComposingStatus()
+                .observeOn(mUiScheduler)
+                .subscribe(view::setComposingStatus));
         mConversationDisposable.add(c.getCalls()
                 .observeOn(mUiScheduler)
                 .subscribe(calls -> updateOngoingCallView(mConversation), e -> Log.e(TAG, "Can't update call view", e)));
@@ -235,7 +238,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         }
         Conference conference = mConversation.getCurrentCall();
         if (conference == null || !conference.isOnGoing()) {
-            mConversationFacade.sendTextMessage(mAccountId, mConversation, mContactRingId, message).subscribe();
+            mConversationFacade.sendTextMessage(mAccountId, mConversation, mContactUri, message).subscribe();
         } else {
             mConversationFacade.sendTextMessage(mConversation, conference, message);
         }
@@ -246,7 +249,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     }
 
     public void sendFile(File file) {
-        mConversationFacade.sendFile(mAccountId, mContactRingId, file).subscribe();
+        mConversationFacade.sendFile(mAccountId, mContactUri, file).subscribe();
     }
 
     /**
@@ -285,7 +288,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
 
     private void sendTrustRequest() {
         final String accountId = mAccountId;
-        final Uri contactId = mContactRingId;
+        final Uri contactId = mContactUri;
         mVCardService.loadSmallVCard(accountId, VCardService.MAX_SIZE_REQUEST)
                 .subscribeOn(Schedulers.computation())
                 .subscribe(vCard -> {
@@ -326,7 +329,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                                 && conf.getParticipants().get(0).getCallStatus() != SipCall.CallStatus.FAILURE) {
                             view.goToCallActivity(conf.getId());
                         } else {
-                            view.goToCallActivityWithResult(mAccountId, mContactRingId.getRawUriString(), audioOnly);
+                            view.goToCallActivityWithResult(mAccountId, mContactUri.getRawUriString(), audioOnly);
                         }
                     }
                 }));
@@ -343,8 +346,8 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
 
     public void onBlockIncomingContactRequest() {
         String accountId = mAccountId == null ? mAccountService.getCurrentAccount().getAccountID() : mAccountId;
-        mConversationFacade.discardRequest(accountId, mContactRingId);
-        mAccountService.removeContact(accountId, mContactRingId.getHost(), true);
+        mConversationFacade.discardRequest(accountId, mContactUri);
+        mAccountService.removeContact(accountId, mContactUri.getHost(), true);
 
         getView().goToHome();
     }
@@ -352,12 +355,12 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     public void onRefuseIncomingContactRequest() {
         String accountId = mAccountId == null ? mAccountService.getCurrentAccount().getAccountID() : mAccountId;
 
-        mConversationFacade.discardRequest(accountId, mContactRingId);
+        mConversationFacade.discardRequest(accountId, mContactUri);
         getView().goToHome();
     }
 
     public void onAcceptIncomingContactRequest() {
-        mConversationFacade.acceptRequest(mAccountId, mContactRingId);
+        mConversationFacade.acceptRequest(mAccountId, mContactUri);
         getView().switchToConversationView();
     }
 
@@ -388,10 +391,17 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     }
 
     public void shareLocation() {
-        getView().startShareLocation(mAccountId, mContactRingId.getUri());
+        getView().startShareLocation(mAccountId, mContactUri.getUri());
     }
 
     public Tuple<String, String> getPath() {
-        return new Tuple<>(mAccountId, mContactRingId.getUri());
+        return new Tuple<>(mAccountId, mContactUri.getUri());
+    }
+
+    public void onComposingChanged(boolean hasMessage) {
+        if (mConversation == null) {
+            return;
+        }
+        mConversationFacade.setIsComposing(mAccountId, mContactUri, hasMessage);
     }
 }

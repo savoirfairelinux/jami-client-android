@@ -158,6 +158,11 @@ public class DaemonService {
         }
 
         @Override
+        public void composingStatusChanged(String accountId, String contactUri, int status) {
+            mExecutor.submit(() -> mAccountService.composingStatusChanged(accountId, contactUri, status));
+        }
+
+        @Override
         public void errorAlert(int alert) {
             mExecutor.submit(() -> mAccountService.errorAlert(alert));
         }

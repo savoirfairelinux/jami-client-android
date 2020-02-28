@@ -90,6 +90,7 @@ import cx.ring.conversation.ConversationView;
 import cx.ring.databinding.FragConversationBinding;
 import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.interfaces.Colorable;
+import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.model.Interaction;
@@ -283,6 +284,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             public void afterTextChanged(Editable s) {
                 String message = s.toString();
                 boolean hasMessage = !TextUtils.isEmpty(message);
+                presenter.onComposingChanged(hasMessage);
                 if (hasMessage) {
                     binding.msgSend.setVisibility(View.VISIBLE);
                     binding.emojiSend.setVisibility(View.GONE);
@@ -355,6 +357,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
                 Log.w(TAG, "Error unbinding service: " + e.getMessage());
             }
         }
+        mAdapter = null;
         super.onDestroyView();
     }
 
@@ -667,6 +670,13 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     @Override
     public void removeElement(Interaction element) {
         mAdapter.remove(element);
+    }
+
+    @Override
+    public void setComposingStatus(Account.ComposingStatus composingStatus) {
+        mAdapter.setComposingStatus(composingStatus);
+        if (composingStatus == Account.ComposingStatus.Active)
+            scrollToEnd();
     }
 
     @Override

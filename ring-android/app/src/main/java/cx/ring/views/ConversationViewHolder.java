@@ -122,6 +122,8 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
                     mMsgDetailTxt = v.findViewById(R.id.msg_details_txt);
                     mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm);
                     break;
+                case COMPOSING_INDICATION:
+                    mStatusIcon = v.findViewById(R.id.status_icon);
             }
             // msg-direction-specific layout elements
             switch (type) {

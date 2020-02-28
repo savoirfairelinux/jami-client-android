@@ -22,6 +22,7 @@ package cx.ring.conversation;
 import java.io.File;
 import java.util.List;
 
+import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.model.Error;
@@ -75,6 +76,7 @@ public interface ConversationView extends BaseView {
     void addElement(Interaction e);
     void updateElement(Interaction e);
     void removeElement(Interaction e);
+    void setComposingStatus(Account.ComposingStatus composingStatus);
 
     void setConversationColor(int integer);
 
