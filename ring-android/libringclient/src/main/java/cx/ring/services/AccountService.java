@@ -1251,6 +1251,12 @@ public class AccountService {
                 .subscribe(textMessageSubject::onNext, e -> Log.e(TAG, "Error updating message: " + e.getLocalizedMessage()));
     }
 
+    public void composingStatusChanged(String accountId, String contactUri, int status) {
+        Log.d(TAG, "composingStatusChanged: " + accountId + ", " + contactUri + " " + status);
+        getAccountSingle(accountId)
+                .subscribe(account -> account.composingStatusChanged(new Uri(contactUri), Account.ComposingStatus.fromInt(status)));
+    }
+
     void errorAlert(int alert) {
         Log.d(TAG, "errorAlert : " + alert);
     }

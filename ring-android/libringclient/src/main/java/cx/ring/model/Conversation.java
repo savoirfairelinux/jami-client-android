@@ -53,6 +53,7 @@ public class Conversation extends ConversationHistory {
     private final Subject<Tuple<Interaction, ElementStatus>> updatedElementSubject = PublishSubject.create();
     private final Subject<List<Interaction>> clearedSubject = PublishSubject.create();
     private final Subject<List<Conference>> callsSubject = BehaviorSubject.create();
+    private final Subject<Account.ComposingStatus> composingStatusSubject = BehaviorSubject.createDefault(Account.ComposingStatus.Idle);
     private Subject<Integer> color = BehaviorSubject.create();
 
     private Single<Conversation> isLoaded = null;
@@ -77,6 +78,10 @@ public class Conversation extends ConversationHistory {
         return null;
     }
 
+    public void composingStatusChanged(CallContact contact, Account.ComposingStatus composing) {
+        composingStatusSubject.onNext(composing);
+    }
+
     public enum ElementStatus {
         UPDATE, REMOVE, ADD
     }
@@ -91,6 +96,10 @@ public class Conversation extends ConversationHistory {
 
     public Observable<List<Conference>> getCalls() {
         return callsSubject;
+    }
+
+    public Observable<Account.ComposingStatus> getComposingStatus() {
+        return composingStatusSubject;
     }
 
     public void addConference(final Conference conference) {

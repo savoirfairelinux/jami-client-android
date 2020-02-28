@@ -55,6 +55,8 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.vectordrawable.graphics.drawable.Animatable2Compat;
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import com.bumptech.glide.load.resource.bitmap.CenterInside;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
@@ -72,6 +74,7 @@ import cx.ring.R;
 import cx.ring.client.MediaViewerActivity;
 import cx.ring.conversation.ConversationPresenter;
 import cx.ring.fragments.ConversationFragment;
+import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.ContactEvent;
 import cx.ring.model.DataTransfer;
@@ -110,6 +113,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     private int lastDeliveredPosition = -1;
     private Observable<Long> timestampUpdateTimer;
     private int lastMsgPos = -1;
+
+    private boolean isComposing = false;
 
     private static int[] msgBGLayouts = new int[] {
             R.drawable.textmsg_bg_out_first,
@@ -207,16 +212,21 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
     @Override
     public int getItemCount() {
-        return mInteractions.size();
+        return mInteractions.size() + (isComposing ? 1 : 0);
     }
 
     @Override
     public long getItemId(int position) {
+        if (isComposing && position == mInteractions.size())
+            return Long.MAX_VALUE;
         return mInteractions.get(position).getId();
     }
 
     @Override
     public int getItemViewType(int position) {
+        if (isComposing && position == mInteractions.size())
+            return MessageType.COMPOSING_INDICATION.ordinal();
+
         Interaction interaction = mInteractions.get(position);
 
         if (interaction != null) {
@@ -259,6 +269,11 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ConversationViewHolder conversationViewHolder, int position) {
+        if (isComposing && position == mInteractions.size()) {
+            configureForTypingIndicator(conversationViewHolder);
+            return;
+        }
+
         Interaction interaction = mInteractions.get(position);
         if (interaction == null)
             return;
@@ -322,6 +337,17 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     public void setPrimaryColor(int color) {
         convColor = color;
         notifyDataSetChanged();
+    }
+
+    public void setComposingStatus(Account.ComposingStatus composingStatus) {
+        boolean composing = composingStatus == Account.ComposingStatus.Active;
+        if (isComposing != composing) {
+            isComposing = composing;
+            if (composing)
+                notifyItemInserted(mInteractions.size());
+            else
+                notifyItemRemoved(mInteractions.size());
+        }
     }
 
     private static class RecyclerViewContextMenuInfo implements ContextMenu.ContextMenuInfo {
@@ -649,6 +675,20 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             });
         } else {
             viewHolder.mAnswerLayout.setVisibility(View.GONE);
+        }
+    }
+
+    private void configureForTypingIndicator(@NonNull final ConversationViewHolder viewHolder) {
+        AnimatedVectorDrawableCompat anim = AnimatedVectorDrawableCompat.create(viewHolder.itemView.getContext(), R.drawable.typing_indicator_animation);
+        if (anim != null) {
+            viewHolder.mStatusIcon.setImageDrawable(anim);
+            anim.registerAnimationCallback(new Animatable2Compat.AnimationCallback() {
+                @Override
+                public void onAnimationEnd(Drawable drawable) {
+                    anim.start();
+                }
+            });
+            anim.start();
         }
     }
 
@@ -1083,7 +1123,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         CONTACT_EVENT(R.layout.item_conv_contact),
         CALL_INFORMATION(R.layout.item_conv_call),
         INCOMING_TEXT_MESSAGE(R.layout.item_conv_msg_peer),
-        OUTGOING_TEXT_MESSAGE(R.layout.item_conv_msg_me);
+        OUTGOING_TEXT_MESSAGE(R.layout.item_conv_msg_me),
+        COMPOSING_INDICATION(R.layout.item_conv_composing);
 
         private final int layout;
 

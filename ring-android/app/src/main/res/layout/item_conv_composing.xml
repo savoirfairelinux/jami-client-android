@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="60dp"
+    android:background="@drawable/textmsg_bg_in">
+
+    <ImageView
+        android:id="@+id/status_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="4dp"
+        app:srcCompat="@drawable/typing_indicator_animation"
+        android:contentDescription="@string/conversation_contact_is_typing"/>
+</FrameLayout>

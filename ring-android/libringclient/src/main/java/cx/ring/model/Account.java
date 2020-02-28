@@ -96,6 +96,15 @@ public class Account {
         public CallContact contact;
         public Observable<ContactLocation> location;
     }
+    public enum ComposingStatus {
+        Idle,
+        Active;
+
+        public static ComposingStatus fromInt(int status) {
+            return status == 1 ? Active : Idle;
+        }
+    }
+
     private final Map<CallContact, Observable<ContactLocation>> contactLocations = new HashMap<>();
     private final Subject<Map<CallContact, Observable<ContactLocation>>> mLocationSubject = BehaviorSubject.createDefault(contactLocations);
     private final Subject<ContactLocationEntry> mLocationStartedSubject = PublishSubject.create();
@@ -753,7 +762,7 @@ public class Account {
     }
 
     public Conversation getByUri(String uri) {
-        return getByKey(uri);
+        return getByUri(new Uri(uri));
     }
 
     private Conversation getByKey(String key) {
@@ -871,6 +880,12 @@ public class Account {
             if (pending.containsKey(contactUri))
                 pendingRefreshed();
         }
+    }
+
+    public void composingStatusChanged(Uri contactUri, ComposingStatus status) {
+        Conversation conversation = getByUri(contactUri);
+        if (conversation != null)
+            conversation.composingStatusChanged(getContactFromCache(contactUri), status);
     }
 
     synchronized public long onLocationUpdate(AccountService.Location location) {

@@ -244,6 +244,10 @@ public class ConversationFacade {
         c.addTextMessage(message);
     }
 
+    public void setIsComposing(String accountId, Uri contactUri, boolean isComposing) {
+        mCallService.setIsComposing(accountId, contactUri.getRawUriString(), isComposing);
+    }
+
     public Completable sendFile(String account, Uri to, File file) {
         return Completable.fromAction(() -> {
             if (file == null) {
