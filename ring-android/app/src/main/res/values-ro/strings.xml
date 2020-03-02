@@ -103,7 +103,6 @@
   <string name="wizard_back">Înapoi</string>
   <string name="wizard_skip">Omite</string>
   <!--MenuHeaderView-->
-  <string name="profile">Profilul meu</string>
   <string name="open_the_gallery">Deschide galeria</string>
   <string name="take_a_photo">Faceți o poză</string>
   <!--Share fragment-->
@@ -132,4 +131,6 @@
   <string name="menu_message_cancel">Anulează mesajul</string>
   <string name="menu_delete">Șterge</string>
   <string name="pref_darkTheme_title">Temă întunecată</string>
+  <!--Bottom Navigation-->
+  <!--TV-->
 </resources>

@@ -174,7 +174,6 @@
   <string name="wizard_back">Indietro</string>
   <string name="wizard_skip">Salta</string>
   <!--MenuHeaderView-->
-  <string name="profile">Il mio profilo</string>
   <string name="profile_message_warning">Il tuo profilo è condiviso solo con i tuoi contatti</string>
   <string name="open_the_gallery">Apri la galleria</string>
   <string name="take_a_photo">Scatta una foto</string>
@@ -242,4 +241,6 @@
   <string name="menu_delete">Elimina</string>
   <string name="pref_darkTheme_title">Tema scuro</string>
   <string name="pref_darkTheme_summary">Abilita sempre il tema scuro al posto di quello di sistema</string>
+  <!--Bottom Navigation-->
+  <!--TV-->
 </resources>

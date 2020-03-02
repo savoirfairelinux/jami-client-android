@@ -89,6 +89,9 @@
   <string name="export_account_wait_title">Bonvole atendu…</string>
   <string name="account_export_end_network_title">Reta eraro</string>
   <string name="account_export_end_error_title">Eraro</string>
+  <string name="account_cannot_be_found_title">Ne trovantas konton</string>
+  <string name="account_no_network_title">Ne povas konekti al la reto</string>
+  <string name="account_link_prompt_pin">Entajpu PIN</string>
   <string name="account_connect_prompt_username">Uzantnomo</string>
   <!--Name registration-->
   <string name="username_already_taken">Uzantnomo jam prenita</string>

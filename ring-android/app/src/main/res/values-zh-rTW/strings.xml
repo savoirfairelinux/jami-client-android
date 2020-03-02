@@ -176,7 +176,6 @@
   <string name="wizard_back">前一個</string>
   <string name="wizard_skip">略過</string>
   <!--MenuHeaderView-->
-  <string name="profile">我的介紹</string>
   <string name="profile_message_warning">您的介紹僅與您的聯絡人分享</string>
   <string name="open_the_gallery">開啟相簿</string>
   <string name="take_a_photo">照相</string>
@@ -245,4 +244,6 @@
   <string name="menu_delete">刪除</string>
   <string name="pref_darkTheme_title">深色主題</string>
   <string name="pref_darkTheme_summary">總是啟用深色主題而非系統行為</string>
+  <!--Bottom Navigation-->
+  <!--TV-->
 </resources>

@@ -174,4 +174,6 @@
   <string name="menu_file_share">Jaa tiedosto</string>
   <string name="menu_message_copy">Kopioi</string>
   <string name="menu_delete">Poista</string>
+  <!--Bottom Navigation-->
+  <!--TV-->
 </resources>

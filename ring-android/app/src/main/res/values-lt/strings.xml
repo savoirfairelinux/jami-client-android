@@ -154,7 +154,6 @@
   <string name="wizard_back">Atgal</string>
   <string name="wizard_skip">Praleisti</string>
   <!--MenuHeaderView-->
-  <string name="profile">Mano profilis</string>
   <string name="profile_message_warning">Jūsų profilis yra bendrinamas tik su jūsų adresatais</string>
   <string name="open_the_gallery">Atverti galeriją</string>
   <string name="take_a_photo">Padaryti nuotrauką</string>
@@ -214,4 +213,6 @@
   <string name="menu_delete">Ištrinti</string>
   <string name="pref_darkTheme_title">Tamsus apipavidalinimas</string>
   <string name="pref_darkTheme_summary">Vietoj sistemos elgsenos, visada naudoti tamsų apipavidalinimą</string>
+  <!--Bottom Navigation-->
+  <!--TV-->
 </resources>

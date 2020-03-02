@@ -16,6 +16,7 @@
   <!--Sections-->
   <string name="menu_item_home">Hejmo</string>
   <string name="menu_item_accounts">Administri kontojn</string>
+  <string name="menu_item_account">Administri Konton</string>
   <string name="menu_item_settings">Agordoj</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Diski numeron</string>
@@ -38,6 +39,7 @@
   <string name="notif_current_call">Aktiva voko</string>
   <string name="notif_channel_calls">Vokoj</string>
   <string name="notif_group_calls">Vokoj</string>
+  <string name="notif_reply">Respondo</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Vi:</string>
   <string name="action_call_hangup">Fini vokon</string>
@@ -99,4 +101,6 @@
   <string name="menu_file_share">Kunhavigi dosieron</string>
   <string name="menu_message_copy">Kopii</string>
   <string name="menu_delete">Forigi</string>
+  <!--Bottom Navigation-->
+  <!--TV-->
 </resources>

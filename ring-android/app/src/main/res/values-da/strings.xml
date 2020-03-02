@@ -136,7 +136,6 @@
   <string name="wizard_back">Tilbage</string>
   <string name="wizard_skip">Spring over</string>
   <!--MenuHeaderView-->
-  <string name="profile">Min profil</string>
   <string name="profile_message_warning">Din profil vil kun blive delt med dine kontakter</string>
   <string name="open_the_gallery">Åbn galleriet</string>
   <string name="take_a_photo">Tag et billede</string>
@@ -192,4 +191,6 @@
   <string name="menu_file_share">Del fil</string>
   <string name="menu_message_copy">Kopiér</string>
   <string name="menu_delete">Slet</string>
+  <!--Bottom Navigation-->
+  <!--TV-->
 </resources>

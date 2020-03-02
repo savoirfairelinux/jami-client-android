@@ -160,7 +160,6 @@
   <string name="wizard_back">Zpět</string>
   <string name="wizard_skip">Přeskočit</string>
   <!--MenuHeaderView-->
-  <string name="profile">Můj profil</string>
   <string name="profile_message_warning">Váš profil je sdílen jen s vašimi kontakty</string>
   <string name="open_the_gallery">Otevřít galerii</string>
   <string name="take_a_photo">Pořídit fotku</string>
@@ -217,4 +216,6 @@
   <string name="menu_file_share">Sdílet soubor</string>
   <string name="menu_message_copy">Zkopírovat</string>
   <string name="menu_delete">Odstranit</string>
+  <!--Bottom Navigation-->
+  <!--TV-->
 </resources>

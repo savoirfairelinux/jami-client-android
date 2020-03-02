@@ -165,7 +165,6 @@
   <string name="wizard_back">Späť</string>
   <string name="wizard_skip">Preskočiť</string>
   <!--MenuHeaderView-->
-  <string name="profile">Môj profil</string>
   <string name="profile_message_warning">Váš profil je zdieľaný iba s vašimi kontaktmi</string>
   <string name="open_the_gallery">Otvoriť galériu</string>
   <string name="take_a_photo">Urobiť fotografiu</string>
@@ -225,4 +224,6 @@
   <string name="menu_message_delete">Zmazať správu</string>
   <string name="menu_message_cancel">Zrušiť správu</string>
   <string name="menu_delete">Zmazať</string>
+  <!--Bottom Navigation-->
+  <!--TV-->
 </resources>

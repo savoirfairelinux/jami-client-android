@@ -174,7 +174,6 @@
   <string name="wizard_back">Terug</string>
   <string name="wizard_skip">Overslaan</string>
   <!--MenuHeaderView-->
-  <string name="profile">Mijn profiel</string>
   <string name="profile_message_warning">Uw profiel wordt enkel gedeeld met uw contacten</string>
   <string name="open_the_gallery">Galerij openen</string>
   <string name="take_a_photo">Foto nemen</string>
@@ -240,4 +239,6 @@
   <string name="menu_delete">Verwijderen</string>
   <string name="pref_darkTheme_title">Donker thema</string>
   <string name="pref_darkTheme_summary">Donker thema altijd gebruiken in plaats van systeemgedrag volgen</string>
+  <!--Bottom Navigation-->
+  <!--TV-->
 </resources>

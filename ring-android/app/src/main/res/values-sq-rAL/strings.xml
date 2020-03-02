@@ -177,7 +177,6 @@
   <string name="wizard_back">Mbrapsht</string>
   <string name="wizard_skip">Anashkaloje</string>
   <!--MenuHeaderView-->
-  <string name="profile">Profili im</string>
   <string name="profile_message_warning">Profili juaj ndahet vetëm me kontaktet tuaja</string>
   <string name="open_the_gallery">Hape galerinë</string>
   <string name="take_a_photo">Bëni një foto</string>
@@ -246,4 +245,6 @@
   <string name="menu_delete">Fshije</string>
   <string name="pref_darkTheme_title">Temë e errët</string>
   <string name="pref_darkTheme_summary">Aktivizo përherë temën e errët, në vend të përdorimit të sjelljes së sistemit</string>
+  <!--Bottom Navigation-->
+  <!--TV-->
 </resources>

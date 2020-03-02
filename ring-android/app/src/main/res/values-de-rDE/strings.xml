@@ -157,7 +157,6 @@
   <string name="wizard_back">Zurück</string>
   <string name="wizard_skip">Überspringen</string>
   <!--MenuHeaderView-->
-  <string name="profile">Mein Profil</string>
   <string name="profile_message_warning">Ihr Profil wird nur mit Ihren Kontakten geteilt</string>
   <string name="open_the_gallery">Galerie öffnen</string>
   <string name="take_a_photo">Mache ein Foto</string>
@@ -215,4 +214,6 @@
   <string name="menu_file_share">Datei teilen</string>
   <string name="menu_message_copy">Kopieren</string>
   <string name="menu_delete">Löschen</string>
+  <!--Bottom Navigation-->
+  <!--TV-->
 </resources>

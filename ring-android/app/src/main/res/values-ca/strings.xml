@@ -129,7 +129,6 @@
   <string name="wizard_next">Endavant</string>
   <string name="wizard_back">Enrere</string>
   <!--MenuHeaderView-->
-  <string name="profile">El meu perfil</string>
   <string name="profile_message_warning">El vostre perfil només es comparteix amb els vostres contactes</string>
   <string name="open_the_gallery">Obre la galeria</string>
   <string name="take_a_photo">Fes una foto</string>
@@ -160,4 +159,6 @@
   <!--File Transfer-->
   <string name="menu_file_share">Compartir arxiu</string>
   <string name="menu_delete">Suprimeix</string>
+  <!--Bottom Navigation-->
+  <!--TV-->
 </resources>

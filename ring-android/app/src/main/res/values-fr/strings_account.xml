@@ -97,6 +97,7 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="account_proxy_label">DHT mandataire</string>
   <string name="account_proxy_enable_label"> Utiliser un serveur délégataire </string>
   <string name="account_proxy_server_label">Adresse du DHT mandataire</string>
+  <string name="account_proxy_server_list_label">URL de la liste des DHT proxy</string>
   <string name="account_peer_discovery_label">Découverte des utilisateurs locaux</string>
   <string name="account_peer_discovery_enable_label">Activer la découverte des utilisateurs locaux</string>
   <string name="account_peer_discovery_enable_summary">Se connecter à d\'autres nœuds DHT affichés sur notre réseau local</string>

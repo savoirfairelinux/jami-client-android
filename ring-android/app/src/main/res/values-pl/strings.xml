@@ -168,7 +168,6 @@
   <string name="wizard_back">Wstecz</string>
   <string name="wizard_skip">Pomiń</string>
   <!--MenuHeaderView-->
-  <string name="profile">Mój profil</string>
   <string name="profile_message_warning">Twój profil jest udostępniany tylko twoim kontaktom</string>
   <string name="open_the_gallery">Otwórz galerię</string>
   <string name="take_a_photo">Zrób zdjęcie</string>
@@ -233,4 +232,6 @@
   <string name="menu_delete">Usuń</string>
   <string name="pref_darkTheme_title">Ciemny motyw</string>
   <string name="pref_darkTheme_summary">Zawsze używaj ciemnego motywu bez względu na ustawienia systemu</string>
+  <!--Bottom Navigation-->
+  <!--TV-->
 </resources>

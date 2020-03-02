@@ -164,7 +164,6 @@
   <string name="wizard_back">Назад</string>
   <string name="wizard_skip">Пропустити</string>
   <!--MenuHeaderView-->
-  <string name="profile">Мій профіль</string>
   <string name="profile_message_warning">Ваш профіль бачитимуть лише ваші контакти</string>
   <string name="open_the_gallery">Відкрити галерею</string>
   <string name="take_a_photo">Зробити фото</string>
@@ -203,4 +202,6 @@
   <string name="menu_file_share">Відправити файл</string>
   <string name="menu_message_copy">Копіювати</string>
   <string name="menu_delete">Видалити</string>
+  <!--Bottom Navigation-->
+  <!--TV-->
 </resources>

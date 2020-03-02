@@ -177,7 +177,6 @@
   <string name="wizard_back">Vissza</string>
   <string name="wizard_skip">Átugrani</string>
   <!--MenuHeaderView-->
-  <string name="profile">Profil</string>
   <string name="profile_message_warning">A profilja csak a kapcsolataival kerül megosztásra</string>
   <string name="open_the_gallery">Galéria megnyitása</string>
   <string name="take_a_photo">Fotó készítése</string>
@@ -246,4 +245,6 @@
   <string name="menu_delete">Törlés</string>
   <string name="pref_darkTheme_title">Sötét téma</string>
   <string name="pref_darkTheme_summary">A rendszer viselkedése helyett mindig engedélyezze a sötét témát</string>
+  <!--Bottom Navigation-->
+  <!--TV-->
 </resources>

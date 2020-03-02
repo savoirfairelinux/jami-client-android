@@ -45,4 +45,6 @@
   <string name="menu_file_share">分享檔案</string>
   <string name="menu_message_copy">複製</string>
   <string name="menu_delete">刪除</string>
+  <!--Bottom Navigation-->
+  <!--TV-->
 </resources>

@@ -181,7 +181,6 @@
   <string name="wizard_back">السابق</string>
   <string name="wizard_skip">تخطي</string>
   <!--MenuHeaderView-->
-  <string name="profile">حسابي</string>
   <string name="profile_message_warning">حسابك مشارك فقط مع جهات إتصالك</string>
   <string name="open_the_gallery">إفتح المعرض</string>
   <string name="take_a_photo">إلتقط صورة</string>
@@ -250,4 +249,6 @@
   <string name="menu_delete">إحذف</string>
   <string name="pref_darkTheme_title">الموضوع الداكن</string>
   <string name="pref_darkTheme_summary">دائما قم بتشغيل الموضوع الداكن عوضا عن إستعمال سلوك النظام</string>
+  <!--Bottom Navigation-->
+  <!--TV-->
 </resources>

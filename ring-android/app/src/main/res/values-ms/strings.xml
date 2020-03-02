@@ -91,7 +91,6 @@
   <string name="prompt_new_password_repeat">Ulang kata laluan baharu</string>
   <string name="prompt_new_username">Masukkan nama pengguna baharu</string>
   <!--MenuHeaderView-->
-  <string name="profile">Profil saya</string>
   <string name="open_the_gallery">Buka galeri</string>
   <string name="take_a_photo">Ambil gambar</string>
   <!--Share fragment-->
@@ -105,4 +104,6 @@
   <string name="tv_contact_row_header">Kenalan</string>
   <!--File Transfer-->
   <string name="menu_delete">Hapus</string>
+  <!--Bottom Navigation-->
+  <!--TV-->
 </resources>

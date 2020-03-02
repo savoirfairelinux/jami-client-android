@@ -147,7 +147,6 @@
   <string name="wizard_back">Natrag</string>
   <string name="wizard_skip">Preskoči</string>
   <!--MenuHeaderView-->
-  <string name="profile">Moj profil</string>
   <string name="profile_message_warning">Vaš profil je podjeljen samo sa vašim kontaktima</string>
   <string name="open_the_gallery">Otvorite galeriju</string>
   <string name="take_a_photo">Fotografiraj</string>
@@ -182,4 +181,6 @@
   <string name="menu_file_share">Dijeli datoteku</string>
   <string name="menu_message_copy">Kopiraj</string>
   <string name="menu_delete">Izbriši</string>
+  <!--Bottom Navigation-->
+  <!--TV-->
 </resources>

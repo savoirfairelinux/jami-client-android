@@ -155,7 +155,6 @@
   <string name="wizard_back">Atzera</string>
   <string name="wizard_skip">Jauzi</string>
   <!--MenuHeaderView-->
-  <string name="profile">Nire profila</string>
   <string name="open_the_gallery">Ireki galeria</string>
   <string name="take_a_photo">Atera argazkia</string>
   <string name="profile_name_hint">Sartu zure izena (aukerazkoa)</string>
@@ -199,4 +198,6 @@
   <string name="menu_message_cancel">Ezeztatu mezua</string>
   <string name="menu_delete">Ezabatu</string>
   <string name="pref_darkTheme_title">Gai iluna</string>
+  <!--Bottom Navigation-->
+  <!--TV-->
 </resources>

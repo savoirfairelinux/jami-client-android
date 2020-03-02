@@ -38,4 +38,6 @@
   <!--File Transfer-->
   <string name="menu_file_share">파일 공유하기</string>
   <string name="menu_message_copy">복사하기</string>
+  <!--Bottom Navigation-->
+  <!--TV-->
 </resources>

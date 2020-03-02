@@ -158,7 +158,6 @@
   <string name="wizard_back">Назад</string>
   <string name="wizard_skip">Пропускане</string>
   <!--MenuHeaderView-->
-  <string name="profile">Моят профил</string>
   <string name="profile_message_warning">Профилът Ви се споделя само с контактите Ви</string>
   <string name="open_the_gallery">Отваряне на галерията</string>
   <string name="take_a_photo">Снимане</string>
@@ -212,4 +211,6 @@
   <string name="menu_file_share">Споделяне на файл</string>
   <string name="menu_message_copy">Копиране</string>
   <string name="menu_delete">Изтриване</string>
+  <!--Bottom Navigation-->
+  <!--TV-->
 </resources>

@@ -58,4 +58,6 @@
   <string name="menu_file_share">שתף קובץ</string>
   <string name="menu_message_copy">העתק</string>
   <string name="menu_delete">מחק</string>
+  <!--Bottom Navigation-->
+  <!--TV-->
 </resources>

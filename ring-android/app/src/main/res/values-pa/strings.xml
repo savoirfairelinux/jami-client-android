@@ -162,7 +162,6 @@
   <string name="wizard_back">ਪਿੱਛੇ</string>
   <string name="wizard_skip">ਲੰਘਾਓ</string>
   <!--MenuHeaderView-->
-  <string name="profile">ਮੇਰਾ ਪ੍ਰੋਫਾਈਲ</string>
   <string name="profile_message_warning">ਤੁਹਾਡਾ ਪ੍ਰੋਫਾਈਲ ਸਿਰਫ਼ ਤੁਹਾਡੇ ਸੰਪਰਕਾਂ ਨਾਲ ਸਾਂਝਾ ਕੀਤਾ ਜਾਂਦਾ ਹੈ</string>
   <string name="open_the_gallery">ਗੈਲਰੀ ਖੋਲ੍ਹੋ</string>
   <string name="take_a_photo">ਫ਼ੋਟੋ ਖਿੱਚੋ</string>
@@ -222,4 +221,6 @@
   <string name="menu_message_delete">ਸੁਨੇਹਾ ਮਿਟਾਓ</string>
   <string name="menu_message_cancel">ਸੁਨੇਹਾ ਰੱਦ ਕਰੋ</string>
   <string name="menu_delete">ਮਿਟਾਓ</string>
+  <!--Bottom Navigation-->
+  <!--TV-->
 </resources>
