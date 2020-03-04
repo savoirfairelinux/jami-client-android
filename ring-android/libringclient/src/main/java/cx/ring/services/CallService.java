@@ -504,7 +504,7 @@ public class CallService {
             mContactService.saveVCardContactData(sipCall.getContact(), sipCall.getAccount(), vcard);
         }
         if (messages.containsKey(MIME_TEXT_PLAIN)) {
-            mAccountService.incomingAccountMessage(sipCall.getAccount(), callId, from, messages);
+            mAccountService.incomingAccountMessage(sipCall.getAccount(), null, callId, from, messages);
         }
     }
 

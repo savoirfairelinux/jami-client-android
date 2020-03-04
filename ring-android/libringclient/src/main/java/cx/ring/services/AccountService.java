@@ -120,6 +120,7 @@ public class AccountService {
 
     public static class Message {
         String accountId;
+        String messageId;
         String callId;
         String author;
         Map<String, String> messages;
@@ -1234,10 +1235,11 @@ public class AccountService {
         accountSubject.onNext(account);
     }
 
-    void incomingAccountMessage(String accountId, String callId, String from, Map<String, String> messages) {
+    void incomingAccountMessage(String accountId, String messageId, String callId, String from, Map<String, String> messages) {
         Log.d(TAG, "incomingAccountMessage: " + accountId + " " + messages.size());
         Message message = new Message();
         message.accountId = accountId;
+        message.messageId = messageId;
         message.callId = callId;
         message.author = from;
         message.messages = messages;

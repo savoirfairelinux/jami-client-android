@@ -145,11 +145,11 @@ public class DaemonService {
         }
 
         @Override
-        public void incomingAccountMessage(String accountId, String from, StringMap messages) {
+        public void incomingAccountMessage(String accountId, String messageId, String from, StringMap messages) {
             if (messages == null || messages.isEmpty())
                 return;
             Map<String, String> jmessages = messages.toNativeFromUtf8();
-            mExecutor.submit(() -> mAccountService.incomingAccountMessage(accountId, null, from, jmessages));
+            mExecutor.submit(() -> mAccountService.incomingAccountMessage(accountId, messageId, null, from, jmessages));
         }
 
         @Override
