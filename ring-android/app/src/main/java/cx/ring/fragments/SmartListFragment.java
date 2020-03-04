@@ -219,8 +219,10 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
             case R.id.menu_contact_dial:
                 if (mSearchView.getInputType() == EditorInfo.TYPE_CLASS_PHONE) {
                     mSearchView.setInputType(EditorInfo.TYPE_CLASS_TEXT);
+                    mDialpadMenuItem.setIcon(R.drawable.baseline_dialpad_24);
                 } else {
                     mSearchView.setInputType(EditorInfo.TYPE_CLASS_PHONE);
+                    mDialpadMenuItem.setIcon(R.drawable.baseline_keyboard_24);
                 }
                 return true;
             case R.id.menu_scan_qr:
@@ -334,12 +336,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
      */
     private void setOverflowMenuVisible(final Menu menu, boolean visible) {
         if (null != menu) {
-            MenuItem scanQrMenuItem = menu.findItem(R.id.menu_scan_qr);
             MenuItem overflowMenuItem = menu.findItem(R.id.menu_overflow);
-
-            if (null != scanQrMenuItem) {
-                scanQrMenuItem.setVisible(visible);
-            }
             if (null != overflowMenuItem) {
                 overflowMenuItem.setVisible(visible);
             }
