@@ -287,15 +287,19 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 boolean canScrollUp = recyclerView.canScrollVertically(SCROLL_DIRECTION_UP);
-                boolean isExtended = mFloatingActionButton.isExtended();
-
-                if (dy > 0 && isExtended) {
-                    mFloatingActionButton.shrink();
-                } else if ((dy < 0 || !canScrollUp) && !isExtended) {
-                    mFloatingActionButton.extend();
+                ExtendedFloatingActionButton btn = mFloatingActionButton;
+                if (btn != null) {
+                    boolean isExtended = btn.isExtended();
+                    if (dy > 0 && isExtended) {
+                        btn.shrink();
+                    } else if ((dy < 0 || !canScrollUp) && !isExtended) {
+                        btn.extend();
+                    }
                 }
 
-                ((HomeActivity) getActivity()).setToolbarElevation(mRecyclerView.canScrollVertically(SCROLL_DIRECTION_UP));
+                HomeActivity activity = (HomeActivity) getActivity();
+                if (activity != null)
+                    activity.setToolbarElevation(canScrollUp);
             }
         });
 
