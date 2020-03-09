@@ -158,6 +158,7 @@
   <string name="help_password_enter">Syötä pääasiallisen Jami-tilisi salasana</string>
   <string name="wizard_next">Seuraava</string>
   <!--MenuHeaderView-->
+  <string name="profile">Profiili</string>
   <!--Share fragment-->
   <string name="share_label">Jako</string>
   <string name="generic_error_migration">Virhe</string>
@@ -175,5 +176,11 @@
   <string name="menu_message_copy">Kopioi</string>
   <string name="menu_delete">Poista</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">Keskustelu</string>
+  <string name="navigation_item_contact_request">Yhteyspyynnöt</string>
+  <string name="navigation_item_account">Tunnus</string>
   <!--TV-->
+  <string name="tv_audio_play">Toista</string>
+  <string name="tv_audio_pause">Tauota</string>
+  <string name="tv_dialog_send">Lähetä</string>
 </resources>

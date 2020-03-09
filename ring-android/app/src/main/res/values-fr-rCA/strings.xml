@@ -111,6 +111,7 @@
   <string name="wizard_next">Suivant</string>
   <string name="wizard_back">Précédent</string>
   <!--MenuHeaderView-->
+  <string name="profile">Profil</string>
   <string name="profile_message_warning">Votre profil est partagé avec vos contacts uniquement</string>
   <string name="open_the_gallery">Ouvrir la galerie</string>
   <string name="take_a_photo">Prendre un photo.</string>
@@ -147,5 +148,11 @@
   <string name="menu_message_copy">Copier</string>
   <string name="menu_delete">Supprimer</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">Conversations</string>
+  <string name="navigation_item_contact_request">Demandes de contact</string>
+  <string name="navigation_item_account">Compte</string>
   <!--TV-->
+  <string name="tv_audio_play">Jouer</string>
+  <string name="tv_audio_pause">Pause</string>
+  <string name="tv_dialog_send">Envoyer</string>
 </resources>

@@ -158,6 +158,7 @@
   <string name="wizard_back">Назад</string>
   <string name="wizard_skip">Пропускане</string>
   <!--MenuHeaderView-->
+  <string name="profile">Профил</string>
   <string name="profile_message_warning">Профилът Ви се споделя само с контактите Ви</string>
   <string name="open_the_gallery">Отваряне на галерията</string>
   <string name="take_a_photo">Снимане</string>
@@ -212,5 +213,11 @@
   <string name="menu_message_copy">Копиране</string>
   <string name="menu_delete">Изтриване</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">Разговори</string>
+  <string name="navigation_item_contact_request">Заявки за нови контакти</string>
+  <string name="navigation_item_account">Профил</string>
   <!--TV-->
+  <string name="tv_audio_play">Пускане</string>
+  <string name="tv_audio_pause">Пауза</string>
+  <string name="tv_dialog_send">Изпращане</string>
 </resources>

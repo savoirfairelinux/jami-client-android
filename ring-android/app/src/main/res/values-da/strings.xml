@@ -136,6 +136,7 @@
   <string name="wizard_back">Tilbage</string>
   <string name="wizard_skip">Spring over</string>
   <!--MenuHeaderView-->
+  <string name="profile">Profil</string>
   <string name="profile_message_warning">Din profil vil kun blive delt med dine kontakter</string>
   <string name="open_the_gallery">Åbn galleriet</string>
   <string name="take_a_photo">Tag et billede</string>
@@ -192,5 +193,11 @@
   <string name="menu_message_copy">Kopiér</string>
   <string name="menu_delete">Slet</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">Samtaler</string>
+  <string name="navigation_item_contact_request">Kontaktforespørgsler</string>
+  <string name="navigation_item_account">Konto</string>
   <!--TV-->
+  <string name="tv_audio_play">Afspil</string>
+  <string name="tv_audio_pause">Pause</string>
+  <string name="tv_dialog_send">Send</string>
 </resources>

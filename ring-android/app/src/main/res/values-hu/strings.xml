@@ -84,6 +84,13 @@
   <string name="notif_incoming_picture">%1$sképe</string>
   <string name="action_open">Megnyitás</string>
   <string name="notif_sync_title">Adatok összehangolása…</string>
+  <string name="notif_location_title">Helymeghatározási információk osztás a következővel: %1$s</string>
+  <string name="location_share_contact">%1$s a helymeghatározási információk megosztástja Önnel</string>
+  <string name="notif_location_multi_title">Helymeghatározási információk osztása %1$d kapcsolattal</string>
+  <string name="notif_location_remaining">%1$d perc van hátra</string>
+  <string name="notif_location_action_stop">Helymeghatározási információk osztás leállítása</string>
+  <string name="location_share_action_start">Megosztás indítása</string>
+  <string name="location_share_action_stop">Megosztás leállítása</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ön:</string>
   <string name="action_call_hangup">Hívás befejezése</string>
@@ -117,6 +124,7 @@
   <string name="hist_file_received">Fájl érkezett</string>
   <string name="conversation_send_audio">Hangüzenet felvétele</string>
   <string name="conversation_send_video">Videóüzenet felvétele</string>
+  <string name="conversation_share_location">Helymeghatározási információk megosztása</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kameraengedély</string>
   <string name="permission_dialog_camera_message">A videótársalgások működéséhez szükséges a kamera engedély. Fontolja meg az engedélyezését!</string>
@@ -162,6 +170,7 @@
   <string name="block_contact_dialog_title">%1$sletiltása?</string>
   <string name="block_contact_dialog_message">%1$s nem lesz képes felvenni veled a kapcsolatot, amíg nincsen feloldva a tiltásod.</string>
   <string name="block_contact_completed">%1$s tiltva lett.</string>
+  <string name="conversation_contact_is_typing">Kapcsolat gépel…</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Hozzáadja %1$s?</string>
   <string name="prompt_new_password">Új jelszó</string>
@@ -177,6 +186,7 @@
   <string name="wizard_back">Vissza</string>
   <string name="wizard_skip">Átugrani</string>
   <!--MenuHeaderView-->
+  <string name="profile">Profil</string>
   <string name="profile_message_warning">A profilja csak a kapcsolataival kerül megosztásra</string>
   <string name="open_the_gallery">Galéria megnyitása</string>
   <string name="take_a_photo">Fotó készítése</string>
@@ -246,5 +256,17 @@
   <string name="pref_darkTheme_title">Sötét téma</string>
   <string name="pref_darkTheme_summary">A rendszer viselkedése helyett mindig engedélyezze a sötét témát</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">Társalgások</string>
+  <string name="navigation_item_contact_request">Kapcsolat kérelmek</string>
+  <string name="navigation_item_account">Fiók</string>
   <!--TV-->
+  <string name="tv_send_audio_dialog_message">Hangüzenet küldése?</string>
+  <string name="tv_audio_play">Lejátszás</string>
+  <string name="tv_audio_pause">Megállítás</string>
+  <string name="tv_dialog_send">Elküld</string>
+  <string name="tv_audio_recording">Felvétel…</string>
+  <string name="tv_send_text">Szöveg küldése</string>
+  <string name="tv_send_audio">Hang küldése</string>
+  <string name="tv_send_video">Videó küldése</string>
+  <string name="tv_clear_history">Előzmények törlése</string>
 </resources>

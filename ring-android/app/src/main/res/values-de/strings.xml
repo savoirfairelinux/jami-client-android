@@ -177,6 +177,7 @@
   <string name="wizard_back">Zurück</string>
   <string name="wizard_skip">Überspringen</string>
   <!--MenuHeaderView-->
+  <string name="profile">Profil</string>
   <string name="profile_message_warning">Ihr Profil wird nur mit Ihren Kontakten geteilt</string>
   <string name="open_the_gallery">Galerie öffnen</string>
   <string name="take_a_photo">Foto machen</string>
@@ -246,5 +247,11 @@
   <string name="pref_darkTheme_title">Dunkles Design</string>
   <string name="pref_darkTheme_summary">Aktivieren Sie immer das dunkle Design, anstatt das Systemverhalten zu verwenden</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">Unterhaltungen</string>
+  <string name="navigation_item_contact_request">Kontaktanfragen</string>
+  <string name="navigation_item_account">Konto</string>
   <!--TV-->
+  <string name="tv_audio_play">Abspielen</string>
+  <string name="tv_audio_pause">Pause</string>
+  <string name="tv_dialog_send">Senden</string>
 </resources>

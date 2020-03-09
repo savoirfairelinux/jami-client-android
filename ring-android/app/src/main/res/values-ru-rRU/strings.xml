@@ -179,6 +179,7 @@
   <string name="wizard_back">Назад</string>
   <string name="wizard_skip">Пропустить</string>
   <!--MenuHeaderView-->
+  <string name="profile">Профиль</string>
   <string name="profile_message_warning">Ваш профиль доступен только для ваших контактов</string>
   <string name="open_the_gallery">Открыть галерею</string>
   <string name="take_a_photo">Сфотографировать</string>
@@ -248,5 +249,11 @@
   <string name="pref_darkTheme_title">Тёмная тема</string>
   <string name="pref_darkTheme_summary">Всегда включать темную тему вместо использования системных параметров.</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">Разговоры</string>
+  <string name="navigation_item_contact_request">Запросы в контакты</string>
+  <string name="navigation_item_account">Учётная запись</string>
   <!--TV-->
+  <string name="tv_audio_play">Воспроизвести</string>
+  <string name="tv_audio_pause">Пауза</string>
+  <string name="tv_dialog_send">Отправть</string>
 </resources>

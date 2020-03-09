@@ -45,6 +45,7 @@
   <!--Contacts-->
   <string name="wizard_next">קדימה</string>
   <!--MenuHeaderView-->
+  <string name="profile">פרופיל</string>
   <!--Share fragment-->
   <string name="generic_error_migration">שגיאה</string>
   <!--Pending contact requests-->
@@ -59,5 +60,8 @@
   <string name="menu_message_copy">העתק</string>
   <string name="menu_delete">מחק</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">דיונים</string>
+  <string name="navigation_item_account">חשבון</string>
   <!--TV-->
+  <string name="tv_dialog_send">שלח</string>
 </resources>

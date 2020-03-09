@@ -162,6 +162,7 @@
   <string name="wizard_back">戻る</string>
   <string name="wizard_skip">スキップ</string>
   <!--MenuHeaderView-->
+  <string name="profile">プロフィール</string>
   <string name="profile_message_warning">あなたのプロフィールは連絡先とのみ共有されます</string>
   <string name="open_the_gallery">ギャラリーを開く</string>
   <string name="take_a_photo">写真を撮る</string>
@@ -208,5 +209,10 @@
   <string name="menu_message_cancel">メッセージをキャンセル</string>
   <string name="menu_delete">削除</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">会話</string>
+  <string name="navigation_item_contact_request">連絡先のリクエスト</string>
+  <string name="navigation_item_account">アカウント</string>
   <!--TV-->
+  <string name="tv_audio_play">再生</string>
+  <string name="tv_dialog_send">送信</string>
 </resources>

@@ -84,6 +84,13 @@
   <string name="notif_incoming_picture">Foto nga %1$s</string>
   <string name="action_open">Hape</string>
   <string name="notif_sync_title">Po njëkohësohen të dhëna…</string>
+  <string name="notif_location_title">Ndarje vendndodhjeje me %1$s</string>
+  <string name="location_share_contact">%1$s po ju tregon vendndodhjen</string>
+  <string name="notif_location_multi_title">Ndarje vendndodhjeje me %1$d kontakte</string>
+  <string name="notif_location_remaining">Edhe %1$d minuta</string>
+  <string name="notif_location_action_stop">Ndale dhënien e vendndodhjes</string>
+  <string name="location_share_action_start">Fillo ta japësh</string>
+  <string name="location_share_action_stop">Resht së dhëni</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ju:</string>
   <string name="action_call_hangup">Mbylle thirrjen</string>
@@ -117,6 +124,7 @@
   <string name="hist_file_received">Kartela u mor</string>
   <string name="conversation_send_audio">Incizoni copëz zanore</string>
   <string name="conversation_send_video">Regjistroni copës video</string>
+  <string name="conversation_share_location">Ndani vendndodhje</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Leje për kamerën</string>
   <string name="permission_dialog_camera_message">Që të funksionojnë, bisedat me video lypin doemos leje për kamerën. Ju lutemi, shihni mundësinë e akordimit të saj.</string>
@@ -162,6 +170,7 @@
   <string name="block_contact_dialog_title">Të bllokohet %1$s?</string>
   <string name="block_contact_dialog_message">%1$s s’do të jetë në gjendje të lidhet me ju, deri sa ta zhbllokoni.</string>
   <string name="block_contact_completed">%1$s u bllokua.</string>
+  <string name="conversation_contact_is_typing">Kontakti po shtyp…</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Të shtohet %1$s?</string>
   <string name="prompt_new_password">Fjalëkalim i ri</string>
@@ -177,6 +186,7 @@
   <string name="wizard_back">Mbrapsht</string>
   <string name="wizard_skip">Anashkaloje</string>
   <!--MenuHeaderView-->
+  <string name="profile">Profil</string>
   <string name="profile_message_warning">Profili juaj ndahet vetëm me kontaktet tuaja</string>
   <string name="open_the_gallery">Hape galerinë</string>
   <string name="take_a_photo">Bëni një foto</string>
@@ -246,5 +256,17 @@
   <string name="pref_darkTheme_title">Temë e errët</string>
   <string name="pref_darkTheme_summary">Aktivizo përherë temën e errët, në vend të përdorimit të sjelljes së sistemit</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">Biseda</string>
+  <string name="navigation_item_contact_request">Kërkesa kontakti</string>
+  <string name="navigation_item_account">Llogari</string>
   <!--TV-->
+  <string name="tv_send_audio_dialog_message">Të dërgohet mesazh audio?</string>
+  <string name="tv_audio_play">Luaje</string>
+  <string name="tv_audio_pause">Pushim</string>
+  <string name="tv_dialog_send">Dërgoje</string>
+  <string name="tv_audio_recording">Po incizohet…</string>
+  <string name="tv_send_text">Dërgoni Tekst</string>
+  <string name="tv_send_audio">Dërgoni Audio</string>
+  <string name="tv_send_video">Dërgoni Video</string>
+  <string name="tv_clear_history">spastro historikun</string>
 </resources>

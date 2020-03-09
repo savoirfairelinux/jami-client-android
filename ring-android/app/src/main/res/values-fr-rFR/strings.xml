@@ -91,6 +91,7 @@
   <string name="wizard_next">Suivant</string>
   <string name="wizard_back">Retour</string>
   <!--MenuHeaderView-->
+  <string name="profile">Profil</string>
   <string name="open_the_gallery">Ouvrir la galerie</string>
   <string name="take_a_photo">Prendre une photo</string>
   <!--Share fragment-->
@@ -109,5 +110,9 @@
   <string name="menu_message_copy">Copier</string>
   <string name="menu_delete">Supprimer</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">Conversation</string>
+  <string name="navigation_item_account">compte</string>
   <!--TV-->
+  <string name="tv_audio_play">jouer</string>
+  <string name="tv_audio_pause">Pause</string>
 </resources>

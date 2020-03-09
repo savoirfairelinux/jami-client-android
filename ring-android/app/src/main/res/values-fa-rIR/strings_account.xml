@@ -2,11 +2,11 @@
 <resources>
   <!--Strings related to account edition screen-->
   <string name="ic_delete_menu">حذف</string>
-  <string name="ic_advanced_menu">تنظیمات پیش‌رفته</string>
-  <string name="ic_blacklist_menu">مخاطبین مسدود شده</string>
+  <string name="ic_advanced_menu">تنظیمات پیشرفته</string>
+  <string name="ic_blacklist_menu">مخاطبین مسدود‌شده</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">افزدن حساب جمی</string>
-  <string name="add_sip_account_title">افزودن حساب کاربری سیپ</string>
+  <string name="add_ring_account_title">افزودن حساب جمی</string>
+  <string name="add_sip_account_title">افزودن حساب SIP</string>
   <string name="ring_account_default_name">حساب جمی %1$s</string>
   <string name="prompt_alias">نام مستعار</string>
   <string name="prompt_hostname">نام میزبان</string>
@@ -16,82 +16,82 @@
   <string name="action_create_short">ایجاد</string>
   <string name="action_register">ثبت‌نام</string>
   <string name="action_settings">تنظیمات</string>
-  <string name="error_field_required">این بخش مورد نیاز است</string>
+  <string name="error_field_required">این بخش موردنیاز است</string>
   <string name="dialog_wait_create">در حال افزودن حساب</string>
-  <string name="dialog_wait_create_details">لطفاً صبر کنید تا حساب جدیدتان افزوده شود…</string>
-  <string name="dialog_wait_update">در حال به‌روز رسانی حساب</string>
-  <string name="dialog_wait_update_details">لطفاً صبر کنید تا حساب جدیدتان به‌روز شود…</string>
-  <string name="dialog_warn_ip2ip_account_title">ایجاد حساب سیپ خالی؟</string>
-  <string name="dialog_warn_ip2ip_account_message">در حال ایجاد یک حساب سیپ بدون هیچ نام میزبان معتبرهستید.
-تنها قادر به ساخت و دریافت تماس های ip مستقیم هستید.
-می‌توانید در آینده حسابتان را ویرایش کنید</string>
-  <string name="account_type_ip2ip">حساب آی‌پی</string>
-  <string name="help_ring">حساب جمی به شما اجازه می‌دهد از درون یک شبکه کاملاً توزیع‌شده، به صورت امن با افراد در تماس باشید.</string>
-  <string name="help_sip_title">افزودن حساب سیپ</string>
-  <string name="help_sip">پیکربندی یک حساب سیپ موجود.</string>
-  <string name="create_sip_account">افزودن حساب کاربری سیپ</string>
+  <string name="dialog_wait_create_details">لطفا صبر کنید تا حساب جدیدتان افزوده شود…</string>
+  <string name="dialog_wait_update">در حال به‌روزرسانی حساب</string>
+  <string name="dialog_wait_update_details">لطفا صبر کنید تا حساب جدیدتان به‌روز شود…</string>
+  <string name="dialog_warn_ip2ip_account_title">ایجاد حساب SIP خالی؟</string>
+  <string name="dialog_warn_ip2ip_account_message">در حال ایجاد یک حساب SIP بدون هیچ نام میزبان معتبر هستید.
+     تنها قادر به برقراری و دریافت تماس‌های مستقیم مبتنی بر IP هستید.
+     می‌توانید در آینده حسابتان را ویرایش کنید</string>
+  <string name="account_type_ip2ip">حساب IP</string>
+  <string name="help_ring">حساب جمی به شما اجازه می‌دهد از درون یک شبکه کاملا توزیع‌شده، به صورت امن با افراد در تماس باشید.</string>
+  <string name="help_sip_title">افزودن حساب SIP خود</string>
+  <string name="help_sip">پیکربندی یک حساب SIP موجود.</string>
+  <string name="create_sip_account">افزودن حساب SIP</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">حذف حساب؟</string>
   <string name="account_delete_dialog_message">این کار قابل بازگشت نیست.</string>
   <!--AccountManagementFragment-->
-  <string name="empty_account_list">هیچ حسابی ثبت نشده</string>
+  <string name="empty_account_list">هیچ حسابی ثبت نشده است</string>
   <string name="normal_accounts_titles">حساب‌ها</string>
-  <string name="normal_devices_titles">افزاره‌های شناخته شدهٔ پیوسته به این حساب جمی</string>
+  <string name="normal_devices_titles">دستگاه‌های شناخته‌شده پیوندی به این حساب جمی</string>
   <string name="account_device_revoke">باطل کردن دستگاه</string>
-  <string name="account_device_revocation_success_title">با موفقیت انجام شد</string>
-  <string name="account_device_revocation_success">دستگاه لغو شد!</string>
-  <string name="account_device_revocation_error_title">نمی توان دستگاه را باطل کرد!</string>
-  <string name="account_device_revocation_wrong_password">کلمه عبور اشتباه است.</string>
+  <string name="account_device_revocation_success_title">موفق</string>
+  <string name="account_device_revocation_success">دستگاه باطل شد!</string>
+  <string name="account_device_revocation_error_title">نمی‌توان دستگاه را باطل کرد!</string>
+  <string name="account_device_revocation_wrong_password">گذر‌واژه نادرست.</string>
   <string name="account_device_revocation_unknown_device">دستگاه ناشناس.</string>
   <string name="account_device_revocation_error_unknown">خطای ناشناخته.</string>
-  <string name="account_password_change">تغییر رمز عبور</string>
+  <string name="account_password_change">تغییر گذرواژه</string>
   <string name="account_password_set">تعیین گذرواژه</string>
   <string name="account_password_change_wait_message">تغییر گذرواژه حساب</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">عمومی</string>
   <string name="account_basic_category">تنظیمات پایه</string>
-  <string name="account_alias_label">نام کاربری</string>
+  <string name="account_alias_label">نام حساب</string>
   <string name="account_hostname_label">نام میزبان</string>
-  <string name="account_bootstrap_label">خود راه اندازی</string>
+  <string name="account_bootstrap_label">خود‌راه‌انداز(Bootstrap)</string>
   <string name="account_username_label">نام کاربری</string>
   <string name="account_password_label">گذرواژه</string>
   <string name="account_optionnal_category">تنظیمات انتخابی</string>
   <string name="account_useragent_label">عامل کاربر</string>
   <string name="account_autoanswer_label">پاسخ خودکار</string>
-  <string name="account_upnp_label">فعّال‌کردن UPnP</string>
-  <string name="account_proxy_field">پیشکار یا پروکسی</string>
+  <string name="account_upnp_label">فعال‌کردن UPnP</string>
+  <string name="account_proxy_field">پراکسی</string>
   <!--Audio Details-->
   <string name="account_audio_label">صدا</string>
   <string name="account_preferences_media_tab">رسانه</string>
   <string name="account_ringtone_label">صداهای زنگ</string>
-  <string name="account_ringtone_enabled_label">فعّال کردن صداهای زنگ</string>
+  <string name="account_ringtone_enabled_label">فعال‌سازی صداهای زنگ</string>
   <string name="account_ringtone_path_label">مسیر صدای زنگ</string>
   <string name="account_ringtone_custom_label">استفاده از صدای زنگ سفارشی</string>
   <string name="account_ringtone_title">انتخاب یک صدای زنگ</string>
-  <string name="account_ringtone_summary">یک صدای زنگ انتخاب کرده یا صدای زنگ خود را برگزینید</string>
+  <string name="account_ringtone_summary">یک صدای زنگ انتخاب کرده یا صدای زنگ خودتان را استفاده کنید</string>
   <!--Video Details-->
   <string name="account_video_label">ویدیو</string>
-  <string name="account_video_enable">فعّال کردن ویدیو</string>
+  <string name="account_video_enable">فعال کردن ویدیو</string>
   <!--Advanced Details-->
-  <string name="account_preferences_advanced_tab">پیش‌رفته</string>
-  <string name="account_dht_public_in_calls_label">اجازه تماس ورودی به مخاطبین ناشناخته</string>
+  <string name="account_preferences_advanced_tab">پیشرفته</string>
+  <string name="account_dht_public_in_calls_label">اجازه تماس ورودی به مخاطبان ناشناخته</string>
   <string name="account_registration_exp_label">ثبت‌نام منقضی شد</string>
-  <string name="account_local_interface_label">اینترفیس محلی</string>
-  <string name="account_local_port_label">پرت محلی</string>
+  <string name="account_local_interface_label">رابط محلی</string>
+  <string name="account_local_port_label">درگاه محلی</string>
   <string name="account_stun_enable_label">استفاده از Stun</string>
   <string name="account_stun_server_label">سرور Stun</string>
-  <string name="account_accept_files">پذیرش خودکار فایل‌های دریافتی</string>
+  <string name="account_accept_files">پذیرش خودکار فایل‌های ورودی</string>
   <string name="account_accept_files_max_size">بیشینه اندازه فایل برای پذیرش خودکار</string>
   <string name="account_accept_files_never">هرگز به صورت خودکار قبول نکن</string>
-  <string name="account_accept_files_always">همواره پذیرش خودکار</string>
+  <string name="account_accept_files_always">همواره به صورت خودکار پذیرش کن</string>
   <string name="size_mb">%1$d مگابایت</string>
   <string name="account_turn_enable_label">استفاده از TURN</string>
   <string name="account_turn_server_label">سرور TURN</string>
   <string name="account_turn_username_label">نام کاربری TURN</string>
   <string name="account_turn_password_label">گذرواژه TURN</string>
-  <string name="account_published_same_as_local_label">انتشار همانند محلی</string>
-  <string name="account_published_port_label">پرت منتشر شده</string>
-  <string name="account_published_address_label">نشانی منتشر شده</string>
+  <string name="account_published_same_as_local_label">منتشر‌شده همانند محلی</string>
+  <string name="account_published_port_label">درگاه منتشر‌شده</string>
+  <string name="account_published_address_label">نشانی منتشر‌شده</string>
   <string name="account_proxy_label">پروکسی DHT</string>
   <string name="account_proxy_enable_label"> استفاده از پروکسی DHT</string>
   <string name="account_proxy_server_label">آدرس پروکسی DHT</string>
@@ -100,30 +100,30 @@
   <string name="account_peer_discovery_enable_label">فعال‌سازی کاوش همتای محلی</string>
   <string name="account_peer_discovery_enable_summary">اتصال به دیگر گره‌های DHT که در شبکه محلی ما تبلیغ می‌کنند</string>
   <!--Security Details-->
-  <string name="account_credentials_label">دسترسی ها</string>
-  <string name="account_credentials_edit">ویرایش دسترسی ها</string>
-  <string name="account_credentials_add">افزودن دسترسی ها</string>
+  <string name="account_credentials_label">اعتبار‌نامه‌ها</string>
+  <string name="account_credentials_edit">ویرایش اعتبار‌نامه‌ها</string>
+  <string name="account_credentials_add">افزودن اعتبار‌نامه‌ها</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">امنیت</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">استفاده از جابه‌جایی TLS</string>
-  <string name="account_tls_port_label">پرت شنودِ TLS</string>
-  <string name="account_tls_certificate_list_label">مرجع صدور</string>
-  <string name="account_tls_certificate_file_label">فایل مرجع</string>
+  <string name="account_tls_port_label">درگاه شنود TLS</string>
+  <string name="account_tls_certificate_list_label">مراجع صدور گواهینامه</string>
+  <string name="account_tls_certificate_file_label">فایل گواهینامه</string>
   <string name="account_tls_private_key_file_label">فایل کلید خصوصی</string>
   <string name="account_tls_password_label">گذرواژه  کلید خصوصی</string>
   <string name="account_tls_method_label">روش TLS</string>
   <string name="account_tls_ciphers_label">رمزهای TLS</string>
   <string name="account_tls_server_name_label">نام سرور</string>
   <string name="account_tls_verify_server_label">تأیید سرور</string>
-  <string name="account_tls_verify_client_label">تأیید اعتبارمشتری</string>
+  <string name="account_tls_verify_client_label">تأیید مشتری</string>
   <string name="account_tls_negotiation_timeout_sec">مهلت مذاکره (ثانیه)</string>
   <string name="account_rtp_max_port">بیشینه</string>
   <string name="account_rtp_min_port">کمینه</string>
-  <string name="account_rtp_port_range">دامنه پرت  صدا RTP</string>
+  <string name="account_rtp_port_range">دامنه درگاه RTP صدا</string>
   <!--restore/backup-->
-  <string name="account_new_device_password">برای قفل‌گشایی حساب کاربری، گذرواژه اصلی را وارد کنید</string>
+  <string name="account_new_device_password">برای قفل‌گشایی حساب، گذرواژه اصلی را وارد کنید</string>
   <string name="error_password_char_count">حداقل ۶ کاراکتر</string>
   <string name="error_passwords_not_equals">گذرواژه‌ها یکسان نیستند</string>
   <string name="export_account_wait_title">لطفاً صبر کنید…</string>

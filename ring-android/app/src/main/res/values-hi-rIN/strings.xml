@@ -44,5 +44,7 @@
   <!--Smartlist-->
   <!--File Transfer-->
   <!--Bottom Navigation-->
+  <string name="navigation_item_account">खाता</string>
   <!--TV-->
+  <string name="tv_audio_play">शुरू करें</string>
 </resources>

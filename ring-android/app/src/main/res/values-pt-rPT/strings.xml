@@ -166,6 +166,7 @@
   <string name="wizard_back">Voltar</string>
   <string name="wizard_skip">Ignorar</string>
   <!--MenuHeaderView-->
+  <string name="profile">Perfil</string>
   <string name="profile_message_warning">O seu perfil é partilhado apenas com seus contactos</string>
   <string name="open_the_gallery">Abrir a galeria</string>
   <string name="take_a_photo">Tirar uma foto</string>
@@ -228,5 +229,11 @@
   <string name="menu_message_cancel">Cancelar mensagem</string>
   <string name="menu_delete">Eliminar</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">Conversas</string>
+  <string name="navigation_item_contact_request">Solicitações de contactos</string>
+  <string name="navigation_item_account">Conta</string>
   <!--TV-->
+  <string name="tv_audio_play">Reproduzir</string>
+  <string name="tv_audio_pause">Pausa</string>
+  <string name="tv_dialog_send">Enviar</string>
 </resources>

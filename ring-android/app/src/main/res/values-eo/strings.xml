@@ -86,6 +86,7 @@
   <string name="prompt_new_password">Nova pasvorto</string>
   <string name="wizard_next">Sekva</string>
   <!--MenuHeaderView-->
+  <string name="profile">Profilo</string>
   <!--Share fragment-->
   <string name="share_label">Kunhavi</string>
   <string name="generic_error_migration">Eraro</string>
@@ -102,5 +103,10 @@
   <string name="menu_message_copy">Kopii</string>
   <string name="menu_delete">Forigi</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">Konversacioj</string>
+  <string name="navigation_item_account">Konto</string>
   <!--TV-->
+  <string name="tv_audio_play">Ludi</string>
+  <string name="tv_audio_pause">Paŭzi</string>
+  <string name="tv_dialog_send">Sendi</string>
 </resources>

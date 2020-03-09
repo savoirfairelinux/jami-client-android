@@ -97,6 +97,7 @@
   <string name="wizard_next">Επόμενο</string>
   <string name="wizard_back">Πίσω</string>
   <!--MenuHeaderView-->
+  <string name="profile">Προφίλ</string>
   <string name="profile_message_warning">Το προφίλ σας διαμοιράζεται μόνο με τις επαφές σας</string>
   <string name="open_the_gallery">Άνοιγμα έκθεσης</string>
   <string name="take_a_photo">Λήψη φωτογραφίας</string>
@@ -129,5 +130,10 @@
   <string name="menu_message_copy">Αντιγραφή</string>
   <string name="menu_delete">Διαγραφή</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">Συνομιλίες</string>
+  <string name="navigation_item_contact_request">Αιτήματα επαφών</string>
+  <string name="navigation_item_account">Λογαριασμός</string>
   <!--TV-->
+  <string name="tv_audio_play">Αναπαραγωγή</string>
+  <string name="tv_dialog_send">Αποστολή</string>
 </resources>

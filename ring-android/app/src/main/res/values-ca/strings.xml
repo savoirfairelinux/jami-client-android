@@ -129,6 +129,7 @@
   <string name="wizard_next">Endavant</string>
   <string name="wizard_back">Enrere</string>
   <!--MenuHeaderView-->
+  <string name="profile">Perfil</string>
   <string name="profile_message_warning">El vostre perfil només es comparteix amb els vostres contactes</string>
   <string name="open_the_gallery">Obre la galeria</string>
   <string name="take_a_photo">Fes una foto</string>
@@ -160,5 +161,10 @@
   <string name="menu_file_share">Compartir arxiu</string>
   <string name="menu_delete">Suprimeix</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">Converses</string>
+  <string name="navigation_item_contact_request">Peticions de contacte</string>
+  <string name="navigation_item_account">Compte</string>
   <!--TV-->
+  <string name="tv_audio_play">Reproduir</string>
+  <string name="tv_dialog_send">Envia</string>
 </resources>

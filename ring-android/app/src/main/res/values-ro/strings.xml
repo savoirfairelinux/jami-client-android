@@ -132,5 +132,8 @@
   <string name="menu_delete">Șterge</string>
   <string name="pref_darkTheme_title">Temă întunecată</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_contact_request">Solicitări de contact</string>
   <!--TV-->
+  <string name="tv_audio_play">Redare</string>
+  <string name="tv_dialog_send">Trimite</string>
 </resources>

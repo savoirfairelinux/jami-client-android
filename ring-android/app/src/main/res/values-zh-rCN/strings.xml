@@ -176,6 +176,7 @@
   <string name="wizard_back">上一步</string>
   <string name="wizard_skip">跳过</string>
   <!--MenuHeaderView-->
+  <string name="profile">帐户资料</string>
   <string name="profile_message_warning">您的帐户资料仅与您的通讯录共享</string>
   <string name="open_the_gallery">打开照片库</string>
   <string name="take_a_photo">拍照</string>
@@ -245,5 +246,11 @@
   <string name="pref_darkTheme_title">黑色主题</string>
   <string name="pref_darkTheme_summary">永远启用黑色主题而不跟随系统</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">会话</string>
+  <string name="navigation_item_contact_request">联系人请求</string>
+  <string name="navigation_item_account">帐户</string>
   <!--TV-->
+  <string name="tv_audio_play">播放</string>
+  <string name="tv_audio_pause">暂停</string>
+  <string name="tv_dialog_send">发送</string>
 </resources>

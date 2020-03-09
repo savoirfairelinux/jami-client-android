@@ -29,6 +29,7 @@
   <!--Contacts-->
   <string name="wizard_next">다음</string>
   <!--MenuHeaderView-->
+  <string name="profile">프로필</string>
   <!--Share fragment-->
   <!--Pending contact requests-->
   <string name="accept">수락</string>
@@ -39,5 +40,9 @@
   <string name="menu_file_share">파일 공유하기</string>
   <string name="menu_message_copy">복사하기</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">대화</string>
+  <string name="navigation_item_account">계정</string>
   <!--TV-->
+  <string name="tv_audio_play">재생</string>
+  <string name="tv_audio_pause">멈춤</string>
 </resources>

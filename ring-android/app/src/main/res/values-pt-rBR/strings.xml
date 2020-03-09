@@ -159,6 +159,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="wizard_back">Voltar</string>
   <string name="wizard_skip">Pular</string>
   <!--MenuHeaderView-->
+  <string name="profile">Perfil</string>
   <string name="profile_message_warning">Seu perfil é compartilhado apenas com seus contatos</string>
   <string name="open_the_gallery">Abrir a galeria</string>
   <string name="take_a_photo">Tirar uma foto</string>
@@ -217,5 +218,11 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="menu_message_copy">Copiar</string>
   <string name="menu_delete">Deletar</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">Conversas</string>
+  <string name="navigation_item_contact_request">Solicitações de contatos</string>
+  <string name="navigation_item_account">Conta</string>
   <!--TV-->
+  <string name="tv_audio_play">Reproduzir</string>
+  <string name="tv_audio_pause">Pausar</string>
+  <string name="tv_dialog_send">Enviar</string>
 </resources>

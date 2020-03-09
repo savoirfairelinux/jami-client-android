@@ -105,5 +105,7 @@
   <!--File Transfer-->
   <string name="menu_delete">Hapus</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_account">Akaun</string>
   <!--TV-->
+  <string name="tv_audio_play">Main</string>
 </resources>

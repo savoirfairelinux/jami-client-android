@@ -140,6 +140,7 @@
   <string name="block_contact_dialog_title">Blokuoti %1$s?</string>
   <string name="block_contact_dialog_message">%1$s negalės su jumis susisiekti tol, kol neatblokuosite.</string>
   <string name="block_contact_completed">Adresatas %1$s buvo užblokuotas.</string>
+  <string name="conversation_contact_is_typing">Adresatas rašo…</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Pridėti %1$s?</string>
   <string name="prompt_new_password">Naujas slaptažodis</string>
@@ -154,6 +155,7 @@
   <string name="wizard_back">Atgal</string>
   <string name="wizard_skip">Praleisti</string>
   <!--MenuHeaderView-->
+  <string name="profile">Profilis</string>
   <string name="profile_message_warning">Jūsų profilis yra bendrinamas tik su jūsų adresatais</string>
   <string name="open_the_gallery">Atverti galeriją</string>
   <string name="take_a_photo">Padaryti nuotrauką</string>
@@ -214,5 +216,16 @@
   <string name="pref_darkTheme_title">Tamsus apipavidalinimas</string>
   <string name="pref_darkTheme_summary">Vietoj sistemos elgsenos, visada naudoti tamsų apipavidalinimą</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">Pokalbiai</string>
+  <string name="navigation_item_contact_request">Adresato užklausos</string>
+  <string name="navigation_item_account">Paskyra</string>
   <!--TV-->
+  <string name="tv_send_audio_dialog_message">Siųsti garso žinutę?</string>
+  <string name="tv_audio_play">Groti</string>
+  <string name="tv_audio_pause">Pristabdyti</string>
+  <string name="tv_dialog_send">Siųsti</string>
+  <string name="tv_send_text">Siųsti tekstą</string>
+  <string name="tv_send_audio">Siųsti garsą</string>
+  <string name="tv_send_video">Siųsti vaizdo įrašą</string>
+  <string name="tv_clear_history">išvalyti istoriją</string>
 </resources>

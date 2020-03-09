@@ -222,5 +222,10 @@
   <string name="menu_message_cancel">ਸੁਨੇਹਾ ਰੱਦ ਕਰੋ</string>
   <string name="menu_delete">ਮਿਟਾਓ</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">ਗੱਲਾਂਬਾਤਾਂ</string>
+  <string name="navigation_item_contact_request">ਸੰਪਰਕ ਬੇਨਤੀਆਂ</string>
+  <string name="navigation_item_account">ਖਾਤਾ</string>
   <!--TV-->
+  <string name="tv_audio_play">ਚਲਾਓ</string>
+  <string name="tv_dialog_send">ਭੇਜੋ</string>
 </resources>

@@ -181,6 +181,7 @@
   <string name="wizard_back">السابق</string>
   <string name="wizard_skip">تخطي</string>
   <!--MenuHeaderView-->
+  <string name="profile">خذ لمحة</string>
   <string name="profile_message_warning">حسابك مشارك فقط مع جهات إتصالك</string>
   <string name="open_the_gallery">إفتح المعرض</string>
   <string name="take_a_photo">إلتقط صورة</string>
@@ -250,5 +251,11 @@
   <string name="pref_darkTheme_title">الموضوع الداكن</string>
   <string name="pref_darkTheme_summary">دائما قم بتشغيل الموضوع الداكن عوضا عن إستعمال سلوك النظام</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">محادثات</string>
+  <string name="navigation_item_contact_request">طلبات الإتصال</string>
+  <string name="navigation_item_account">حساب</string>
   <!--TV-->
+  <string name="tv_audio_play">تشغيل</string>
+  <string name="tv_audio_pause">إيقاف مؤقت</string>
+  <string name="tv_dialog_send">أرسل</string>
 </resources>

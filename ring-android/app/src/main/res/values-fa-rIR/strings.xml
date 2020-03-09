@@ -84,6 +84,13 @@
   <string name="notif_incoming_picture">تصویر از%1$s</string>
   <string name="action_open">باز کردن</string>
   <string name="notif_sync_title">در حال همگام‌سازی داده...</string>
+  <string name="notif_location_title">اشتراک مکان با %1$s</string>
+  <string name="location_share_contact">%1$s مکان را با شما به اشتراک می‌گذارد</string>
+  <string name="notif_location_multi_title">اشتراک مکان با %1$d مخاطب</string>
+  <string name="notif_location_remaining">%1$d دقیقه باقی مانده است</string>
+  <string name="notif_location_action_stop">اشتراک مکان را متوقف کنید</string>
+  <string name="location_share_action_start">شروع اشتراک‌گذاری</string>
+  <string name="location_share_action_stop">توقف اشتراک‌گذاری</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">شما:</string>
   <string name="action_call_hangup">قطع‌کردن</string>
@@ -103,7 +110,7 @@
   <string name="ab_action_audio_call">تماس صوتی</string>
   <string name="ab_action_video_call">تماس تصویری</string>
   <string name="ab_action_change_screen_orientation">تغییر جهت صفحه</string>
-  <string name="share_via">هم‌رسانی از طریق</string>
+  <string name="share_via">اشتراک از طریق</string>
   <string name="write_a_message">پیامی بنویسید</string>
   <string name="scan_qr">اسکن کد QR</string>
   <string name="ab_action_flipcamera">چرخاندن دوربین</string>
@@ -117,6 +124,7 @@
   <string name="hist_file_received">فایل دریافت شد</string>
   <string name="conversation_send_audio">ضبط بُریده صوتی</string>
   <string name="conversation_send_video">ضبط بُریده ویدیویی</string>
+  <string name="conversation_share_location">اشتراک مکان</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">مجوز دوربین</string>
   <string name="permission_dialog_camera_message">گفتگوی ویدیویی برای کار نیاز به مجوز دوربین دارد. لطفا آن را فعال کنید.</string>
@@ -162,6 +170,7 @@
   <string name="block_contact_dialog_title">انسداد %1$s؟</string>
   <string name="block_contact_dialog_message">تا وقتی %1$s از انسداد خارج نشود، نمی‌تواند با شما ارتباط برقرار کند.</string>
   <string name="block_contact_completed">%1$s مسدود شده است.</string>
+  <string name="conversation_contact_is_typing">مخاطب در حال نوشتن است...</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">افزودن %1$s؟</string>
   <string name="prompt_new_password">گذرواژه جدید</string>
@@ -177,6 +186,7 @@
   <string name="wizard_back">بازگشت</string>
   <string name="wizard_skip">پرش</string>
   <!--MenuHeaderView-->
+  <string name="profile">نمایه</string>
   <string name="profile_message_warning">نمایه شما تنها با مخاطبانتان هم‌رسانی می‌شود</string>
   <string name="open_the_gallery">گالری را باز کنید</string>
   <string name="take_a_photo">عکسی بگیرید</string>
@@ -246,5 +256,17 @@
   <string name="pref_darkTheme_title">زمینه تاریک</string>
   <string name="pref_darkTheme_summary">همیشه زمینه تاریک را به جای استفاده از حالت سیستم فعال کن</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">گفتگو‌ها</string>
+  <string name="navigation_item_contact_request">درخواست‌های ارتباط</string>
+  <string name="navigation_item_account">حساب</string>
   <!--TV-->
+  <string name="tv_send_audio_dialog_message">ارسال پیام صوتی؟</string>
+  <string name="tv_audio_play">پخش</string>
+  <string name="tv_audio_pause">مکث</string>
+  <string name="tv_dialog_send">ارسال</string>
+  <string name="tv_audio_recording">در حال ضبط...</string>
+  <string name="tv_send_text">ارسال متن</string>
+  <string name="tv_send_audio">ارسال صدا</string>
+  <string name="tv_send_video">ارسال ویدیو</string>
+  <string name="tv_clear_history">پاک‌سازی تاریخچه</string>
 </resources>
