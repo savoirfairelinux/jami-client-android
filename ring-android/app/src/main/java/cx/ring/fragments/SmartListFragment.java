@@ -24,6 +24,7 @@ import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -74,6 +75,7 @@ import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.mvp.BaseSupportFragment;
+import cx.ring.service.ConnectivityReceiver;
 import cx.ring.services.AccountService;
 import cx.ring.smartlist.SmartListPresenter;
 import cx.ring.smartlist.SmartListView;
@@ -132,10 +134,34 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     private MenuItem mSearchMenuItem = null;
     private MenuItem mDialpadMenuItem = null;
 
+    private ConnectivityReceiver mConnectivityReceiver;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mConnectivityReceiver = new ConnectivityReceiver(new ConnectivityReceiver.ConnectivityReceiverListener() {
+            @Override
+            public void onNetworkConnectionChanged(boolean isConnected) {
+                if (isConnected) {
+                    hideErrorPanel();
+                } else {
+                    showErrorPanel(R.string.error_no_network, false, null);
+                }
+            }
+        });
+    }
+
     @Override
     public void onResume() {
         super.onResume();
         presenter.refresh();
+        getActivity().registerReceiver(mConnectivityReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        getActivity().unregisterReceiver(mConnectivityReceiver);
     }
 
     @Override
@@ -378,10 +404,11 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     private void showErrorPanel(final int textResId,
                                 final boolean showImage,
                                 @Nullable View.OnClickListener clickListener) {
-        if (mErrorMessagePane != null) {
-            mErrorMessagePane.setVisibility(View.VISIBLE);
-            mErrorMessagePane.setOnClickListener(clickListener);
+        if (mErrorMessagePane == null || mErrorMessagePane.getVisibility() == View.VISIBLE) {
+            return;
         }
+        mErrorMessagePane.setVisibility(View.VISIBLE);
+        mErrorMessagePane.setOnClickListener(clickListener);
         if (mErrorMessageTextView != null) {
             mErrorMessageTextView.setText(textResId);
         }
@@ -499,7 +526,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
 
     @Override
     public void hideErrorPanel() {
-        if (mErrorMessagePane == null) {
+        if (mErrorMessagePane == null || mErrorMessagePane.getVisibility() == View.GONE) {
             return;
         }
         mErrorMessagePane.setVisibility(View.GONE);

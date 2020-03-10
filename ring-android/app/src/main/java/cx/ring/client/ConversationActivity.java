@@ -21,6 +21,7 @@
 package cx.ring.client;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
@@ -28,10 +29,14 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.ActionMenuItemView;
@@ -48,6 +53,7 @@ import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.interfaces.Colorable;
+import cx.ring.service.ConnectivityReceiver;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.MediaButtonsHelper;
 
@@ -58,12 +64,23 @@ public class ConversationActivity extends AppCompatActivity implements Colorable
     @BindView(R.id.main_toolbar)
     Toolbar mToolbar;
 
+    @BindView(R.id.error_msg_pane)
+    protected ViewGroup mErrorMessagePane;
+
+    @BindView(R.id.error_msg_txt)
+    protected TextView mErrorMessageTextView;
+
+    @BindView(R.id.error_image_view)
+    protected ImageView mErrorImageView;
+
     private ConversationFragment mConversationFragment;
     /*private String contactUri = null;
     private String accountId = null;*/
     private ConversationPath conversationPath = null;
 
     private Intent mPendingIntent = null;
+
+    private ConnectivityReceiver mConnectivityReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +129,17 @@ public class ConversationActivity extends AppCompatActivity implements Colorable
         if (Intent.ACTION_SEND.equals(action) || Intent.ACTION_SEND_MULTIPLE.equals(action) || Intent.ACTION_VIEW.equals(action)) {
             mPendingIntent = intent;
         }
+
+        mConnectivityReceiver = new ConnectivityReceiver(new ConnectivityReceiver.ConnectivityReceiverListener() {
+            @Override
+            public void onNetworkConnectionChanged(boolean isConnected) {
+                if (isConnected) {
+                    hideErrorPanel();
+                } else {
+                    showErrorPanel(R.string.error_no_network, false, null);
+                }
+            }
+        });
     }
 
     @Override
@@ -127,6 +155,18 @@ public class ConversationActivity extends AppCompatActivity implements Colorable
             handleShareIntent(mPendingIntent);
             mPendingIntent = null;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(mConnectivityReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(mConnectivityReceiver);
     }
 
     @Override
@@ -189,6 +229,29 @@ public class ConversationActivity extends AppCompatActivity implements Colorable
         if (overflowIcon != null) {
             overflowIcon.setColorFilter(colorFilter);
             toolbar.setOverflowIcon(overflowIcon);
+        }
+    }
+
+    private void hideErrorPanel() {
+        if (mErrorMessagePane == null || mErrorMessagePane.getVisibility() == View.GONE) {
+            return;
+        }
+        mErrorMessagePane.setVisibility(View.GONE);
+    }
+
+    private void showErrorPanel(final int textResId,
+                                final boolean showImage,
+                                @Nullable View.OnClickListener clickListener) {
+        if (mErrorMessagePane == null || mErrorMessagePane.getVisibility() == View.VISIBLE) {
+            return;
+        }
+        mErrorMessagePane.setVisibility(View.VISIBLE);
+        mErrorMessagePane.setOnClickListener(clickListener);
+        if (mErrorMessageTextView != null) {
+            mErrorMessageTextView.setText(textResId);
+        }
+        if (mErrorImageView != null) {
+            mErrorImageView.setVisibility(showImage ? View.VISIBLE : View.GONE);
         }
     }
 

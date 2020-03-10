@@ -16,6 +16,8 @@
         android:background="@color/error_pane"
         android:padding="16dp"
         android:visibility="gone"
+        android:layout_marginTop="?actionBarSize"
+        android:layout_marginStart="320dp"
         tools:visibility="visible">
 
         <ImageView
@@ -46,7 +48,6 @@
         android:id="@+id/list_coordinator"
         android:layout_width="320dp"
         android:layout_height="match_parent"
-        android:layout_below="@id/error_msg_pane"
         android:layout_marginTop="?actionBarSize">
 
         <LinearLayout
@@ -137,6 +138,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_toEndOf="@+id/separator"
-        android:layout_marginTop="?actionBarSize"/>
+        android:layout_marginTop="?actionBarSize"
+        android:layout_below="@id/error_msg_pane"/>
 
 </RelativeLayout>
