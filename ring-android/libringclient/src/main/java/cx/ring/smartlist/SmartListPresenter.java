@@ -98,11 +98,18 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
     }
 
     public void refresh() {
-        refreshConnectivity();
         getView().hideSearchRow();
+        Account currentAccount = mAccountService.getCurrentAccount();
+        if (currentAccount != null) {
+            mConversationDisposable.add(mAccountService.getObservableAccount(currentAccount.getAccountID())
+                    .observeOn(mUiScheduler)
+                    .subscribe(account -> {
+                        refreshConnectivity();
+                    }));
+        }
     }
 
-    private void refreshConnectivity() {
+    public void refreshConnectivity() {
         boolean isConnected = mPreferencesService.hasNetworkConnected();
         if (isConnected) {
             getView().hideErrorPanel();

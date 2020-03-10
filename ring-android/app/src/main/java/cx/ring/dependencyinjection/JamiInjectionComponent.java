@@ -22,6 +22,7 @@ package cx.ring.dependencyinjection;
 import javax.inject.Singleton;
 
 import cx.ring.account.AccountEditionFragment;
+import cx.ring.client.ConversationActivity;
 import cx.ring.fragments.LocationSharingFragment;
 import cx.ring.account.AccountWizardActivity;
 import cx.ring.account.HomeAccountCreationFragment;
@@ -95,6 +96,8 @@ public interface JamiInjectionComponent {
     void inject(JamiApplication app);
 
     void inject(HomeActivity activity);
+
+    void inject(ConversationActivity activity);
 
     void inject(DatabaseHelper helper);
 

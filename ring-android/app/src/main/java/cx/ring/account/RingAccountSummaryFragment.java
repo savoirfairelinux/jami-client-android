@@ -83,6 +83,7 @@ import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.model.Account;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.services.AccountService;
+import cx.ring.services.PreferencesService;
 import cx.ring.services.VCardServiceImpl;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.BitmapUtils;
@@ -209,6 +210,8 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
 
     @Inject
     AccountService mAccountService;
+    @Inject
+    PreferencesService mPreferencesService;
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -356,7 +359,10 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
         String status;
 
         if (account.isEnabled()) {
-            if (account.isTrying()) {
+            if (!mPreferencesService.hasNetworkConnected()) {
+                color = R.color.grey_400;
+                status = getString(R.string.account_status_offline);
+            } else if (account.isTrying()) {
                 color = R.color.orange_400;
                 status = getString(R.string.account_status_connecting);
             } else if (account.needsMigration()) {

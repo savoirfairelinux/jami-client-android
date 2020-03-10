@@ -378,10 +378,11 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     private void showErrorPanel(final int textResId,
                                 final boolean showImage,
                                 @Nullable View.OnClickListener clickListener) {
-        if (mErrorMessagePane != null) {
-            mErrorMessagePane.setVisibility(View.VISIBLE);
-            mErrorMessagePane.setOnClickListener(clickListener);
+        if (mErrorMessagePane == null || mErrorMessagePane.getVisibility() == View.VISIBLE) {
+            return;
         }
+        mErrorMessagePane.setVisibility(View.VISIBLE);
+        mErrorMessagePane.setOnClickListener(clickListener);
         if (mErrorMessageTextView != null) {
             mErrorMessageTextView.setText(textResId);
         }
@@ -499,7 +500,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
 
     @Override
     public void hideErrorPanel() {
-        if (mErrorMessagePane == null) {
+        if (mErrorMessagePane == null || mErrorMessagePane.getVisibility() == View.GONE) {
             return;
         }
         mErrorMessagePane.setVisibility(View.GONE);
