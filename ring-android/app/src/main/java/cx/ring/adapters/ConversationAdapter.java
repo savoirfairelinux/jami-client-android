@@ -454,14 +454,12 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             viewHolder.mMsgDetailTxtPerm.setVisibility(View.GONE);
         }
 
+        CallContact contact = interaction.getContact();
         if (interaction.isIncoming()) {
             viewHolder.mAvatar.setImageBitmap(null);
             viewHolder.mAvatar.setVisibility(View.VISIBLE);
-            CallContact contact = interaction.getContact();
             if (contact != null) {
-                viewHolder.mAvatar.setImageDrawable(
-                        conversationFragment.getConversationAvatar(contact.getPrimaryNumber())
-                );
+                viewHolder.mAvatar.setImageDrawable(conversationFragment.getConversationAvatar(contact.getPrimaryNumber()));
             }
         } else {
             switch (interaction.getStatus()) {
@@ -472,6 +470,10 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                 case FAILURE:
                     viewHolder.mStatusIcon.setVisibility(View.VISIBLE);
                     viewHolder.mStatusIcon.setImageResource(R.drawable.round_highlight_off_24);
+                    break;
+                case DISPLAYED:
+                    viewHolder.mStatusIcon.setVisibility(View.VISIBLE);
+                    viewHolder.mStatusIcon.setImageDrawable(conversationFragment.getConversationAvatar(contact.getPrimaryNumber()));
                     break;
                 default:
                     viewHolder.mStatusIcon.setVisibility(View.VISIBLE);

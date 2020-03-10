@@ -4,11 +4,20 @@ public class TextMessage extends Interaction {
 
     private boolean mNotified;
 
-
     public TextMessage(String author, String account, String daemonId, ConversationHistory conversation, String message) {
         mAuthor = author;
         mAccount = account;
-        mDaemonId = daemonId == null ? null : Long.parseLong(daemonId);
+        if (daemonId != null) {
+            try {
+                mDaemonId = Long.parseLong(daemonId);
+            } catch (NumberFormatException e) {
+                try {
+                    mDaemonId = Long.parseLong(daemonId, 16);
+                } catch (NumberFormatException e2) {
+                     mDaemonId = 0L;
+                }
+            }
+        }
         mTimestamp = System.currentTimeMillis();
         mType = InteractionType.TEXT.toString();
         mConversation = conversation;
