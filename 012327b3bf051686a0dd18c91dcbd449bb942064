@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f20484d_a143d916",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/SmartListFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-03-10T19:17:17Z",
+      "side": 1,
+      "message": "Already registered in DRingService (see updateConnectivityState()). Use an RX flow and connect to it.",
+      "range": {
+        "startLine": 158,
+        "startChar": 8,
+        "endLine": 158,
+        "endChar": 133
+      },
+      "revId": "012327b3bf051686a0dd18c91dcbd449bb942064",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4e9223b_82846b33",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/ConnectivityReceiver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-03-10T19:17:17Z",
+      "side": 1,
+      "message": "All of the file is boilerplate code except this \u003d\u003e use the current Receiver in DRingService and make an RX subject (in AccountService ?) to dispatch to various components.",
+      "range": {
+        "startLine": 28,
+        "startChar": 15,
+        "endLine": 28,
+        "endChar": 79
+      },
+      "revId": "012327b3bf051686a0dd18c91dcbd449bb942064",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
