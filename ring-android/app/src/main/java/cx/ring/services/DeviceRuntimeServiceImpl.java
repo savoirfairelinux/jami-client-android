@@ -65,7 +65,7 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
                 System.loadLibrary("ring");
                 return true;
             } catch (Exception e) {
-                Log.e(TAG, "Could not load Ring library", e);
+                Log.e(TAG, "Could not load Jami library", e);
                 return false;
             }
         });
