@@ -13,18 +13,49 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/main_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:elevation="4dp"
-        android:height="?attr/actionBarSize"
-        style="@style/Widget.MaterialComponents.Toolbar.Surface"
-        app:contentInsetStart="72dp"
-        app:elevation="4dp"
-        app:titleMarginStart="24dp"/>
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/main_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:elevation="4dp"
+            android:height="?attr/actionBarSize"
+            style="@style/Widget.MaterialComponents.Toolbar.Surface"
+            app:contentInsetStart="72dp"
+            app:elevation="4dp"
+            app:titleMarginStart="24dp"/>
+
+        <RelativeLayout
+            android:id="@+id/error_msg_pane"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar_layout"
+            android:background="@color/error_pane"
+            android:padding="16dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/error_image_view"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="end"
+                android:scaleType="fitCenter"
+                android:tint="@color/white"
+                app:srcCompat="@drawable/baseline_settings_24" />
+
+            <TextView
+                android:id="@+id/error_msg_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@id/error_image_view"
+                android:gravity="center_vertical|center_horizontal"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </RelativeLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -32,6 +63,6 @@
         android:id="@+id/main_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/main_toolbar"
-        android:layout_alignParentStart="true"/>
+        android:layout_below="@id/toolbar_layout"
+        />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

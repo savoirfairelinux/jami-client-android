@@ -32,7 +32,8 @@ along with this program; if not, write to the Free Software
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:background="@color/error_pane"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/error_image_view"

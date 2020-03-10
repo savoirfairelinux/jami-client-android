@@ -21,6 +21,7 @@
 package cx.ring.client;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
@@ -28,10 +29,14 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.ActionMenuItemView;
@@ -42,14 +47,23 @@ import androidx.core.view.ViewCompat;
 
 import com.google.android.material.appbar.AppBarLayout;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.interfaces.Colorable;
+import cx.ring.model.Account;
+import cx.ring.service.ConnectivityReceiver;
+import cx.ring.services.AccountService;
+import cx.ring.services.PreferencesService;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.MediaButtonsHelper;
+import io.reactivex.Scheduler;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class ConversationActivity extends AppCompatActivity implements Colorable {
     @BindView(R.id.toolbar_layout)
@@ -58,12 +72,31 @@ public class ConversationActivity extends AppCompatActivity implements Colorable
     @BindView(R.id.main_toolbar)
     Toolbar mToolbar;
 
+    @BindView(R.id.error_msg_pane)
+    protected ViewGroup mErrorMessagePane;
+
+    @BindView(R.id.error_msg_txt)
+    protected TextView mErrorMessageTextView;
+
+    @BindView(R.id.error_image_view)
+    protected ImageView mErrorImageView;
+
     private ConversationFragment mConversationFragment;
     /*private String contactUri = null;
     private String accountId = null;*/
     private ConversationPath conversationPath = null;
 
     private Intent mPendingIntent = null;
+
+    private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
+
+    @Inject
+    AccountService mAccountService;
+    @Inject
+    PreferencesService mPreferencesService;
+    @Inject
+    @Named("UiScheduler")
+    protected Scheduler mUiScheduler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +163,26 @@ public class ConversationActivity extends AppCompatActivity implements Colorable
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+//        registerReceiver(mConnectivityReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
+        Account currentAccount = mAccountService.getCurrentAccount();
+        if (currentAccount != null) {
+            mCompositeDisposable.add(mAccountService.getObservableAccount(currentAccount.getAccountID())
+                    .observeOn(mUiScheduler)
+                    .subscribe(account -> {
+                        showErrorPanel();
+                    }));
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mCompositeDisposable.clear();
+    }
+
+    @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         handleShareIntent(intent);
@@ -189,6 +242,28 @@ public class ConversationActivity extends AppCompatActivity implements Colorable
         if (overflowIcon != null) {
             overflowIcon.setColorFilter(colorFilter);
             toolbar.setOverflowIcon(overflowIcon);
+        }
+    }
+
+    private void hideErrorPanel() {
+        if (mErrorMessagePane == null || mErrorMessagePane.getVisibility() == View.GONE) {
+            return;
+        }
+        mErrorMessagePane.setVisibility(View.GONE);
+    }
+
+    private void showErrorPanel() {
+        boolean isConnected = mPreferencesService.hasNetworkConnected();
+        if (mErrorMessagePane == null || mErrorMessagePane.getVisibility() == View.VISIBLE) {
+            return;
+        }
+        mErrorMessagePane.setVisibility(View.VISIBLE);
+        mErrorMessagePane.setOnClickListener(null);
+        if (mErrorMessageTextView != null) {
+            mErrorMessageTextView.setText(R.string.error_no_network);
+        }
+        if (mErrorImageView != null) {
+            mErrorImageView.setVisibility(isConnected ? View.VISIBLE : View.GONE);
         }
     }
 
