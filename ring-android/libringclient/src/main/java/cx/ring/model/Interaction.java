@@ -198,7 +198,7 @@ public class Interaction {
     }
 
     public enum InteractionStatus {
-        UNKNOWN, SENDING, SUCCESS, INVALID, FAILURE,
+        UNKNOWN, SENDING, SUCCESS, DISPLAYED, INVALID, FAILURE,
 
         TRANSFER_CREATED,
         TRANSFER_ACCEPTED,
@@ -222,10 +222,7 @@ public class Interaction {
 
         static InteractionStatus fromIntTextMessage(int n) {
             try {
-                if (n == 3) {
-                    return SUCCESS;
-                } else
-                    return values()[n];
+                return values()[n];
             } catch (ArrayIndexOutOfBoundsException e) {
                 return INVALID;
             }
@@ -257,8 +254,9 @@ public class Interaction {
                     return TRANSFER_UNJOINABLE_PEER;
                 case 11:
                     return TRANSFER_TIMEOUT_EXPIRED;
+                default:
+                    return UNKNOWN;
             }
-            return UNKNOWN;
         }
 
         public boolean isError() {

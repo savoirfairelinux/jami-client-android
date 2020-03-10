@@ -161,7 +161,7 @@ public class AccountService {
                 String message = msg.messages.get(CallService.MIME_TEXT_PLAIN);
                 if (message != null) {
                     return mHistoryService
-                            .incomingMessage(msg.accountId, msg.callId, msg.author, message)
+                            .incomingMessage(msg.accountId, msg.messageId, msg.author, message)
                             .toMaybe();
                 }
                 return Maybe.empty();
@@ -581,6 +581,10 @@ public class AccountService {
                         i++;
                     }
                 });
+    }
+
+    public void setMessageDisplayed(String accountId, String contactId, String messageId) {
+        mExecutor.execute(() -> Ringservice.setMessageDisplayed(accountId, contactId, messageId, 4));
     }
 
     /**
