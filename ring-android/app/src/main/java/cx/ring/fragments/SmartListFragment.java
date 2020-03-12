@@ -114,15 +114,6 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     @BindView(R.id.newcontact_element)
     protected ViewGroup mNewContact;
 
-    @BindView(R.id.error_msg_pane)
-    protected ViewGroup mErrorMessagePane;
-
-    @BindView(R.id.error_msg_txt)
-    protected TextView mErrorMessageTextView;
-
-    @BindView(R.id.error_image_view)
-    protected ImageView mErrorImageView;
-
     @Inject
     AccountService mAccountService;
 
@@ -375,39 +366,6 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
         presenter.fabButtonClicked();
     }
 
-    private void showErrorPanel(final int textResId,
-                                final boolean showImage,
-                                @Nullable View.OnClickListener clickListener) {
-        if (mErrorMessagePane != null) {
-            mErrorMessagePane.setVisibility(View.VISIBLE);
-            mErrorMessagePane.setOnClickListener(clickListener);
-        }
-        if (mErrorMessageTextView != null) {
-            mErrorMessageTextView.setText(textResId);
-        }
-        if (mErrorImageView != null) {
-            mErrorImageView.setVisibility(showImage ? View.VISIBLE : View.GONE);
-        }
-    }
-
-    @Override
-    public void displayNetworkErrorPanel() {
-        showErrorPanel(R.string.error_no_network, false, null);
-    }
-
-    @Override
-    public void displayMobileDataPanel() {
-        showErrorPanel(R.string.error_mobile_network_available_but_disabled,
-                true,
-                v -> {
-                    Activity activity = getActivity();
-                    if (activity instanceof HomeActivity) {
-                        HomeActivity homeActivity = (HomeActivity) activity;
-                        homeActivity.goToSettings();
-                    }
-                });
-    }
-
     @Override
     public void displayContact(final CallContact contact) {
         if (mNewContact == null) {
@@ -497,13 +455,6 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
         mNewContact.setVisibility(View.GONE);
     }
 
-    @Override
-    public void hideErrorPanel() {
-        if (mErrorMessagePane == null) {
-            return;
-        }
-        mErrorMessagePane.setVisibility(View.GONE);
-    }
 
     @Override
     public void hideList() {

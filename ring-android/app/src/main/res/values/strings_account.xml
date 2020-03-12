@@ -237,6 +237,7 @@ along with this program; if not, write to the Free Software
     <string name="account_status_online">Online</string>
     <string name="account_status_unknown">Unknown</string>
     <string name="account_status_offline">Offline</string>
+    <string name="account_status_error">Error</string>
 
     <!-- Create account -->
     <string name="account_creation_home">Welcome to Jami</string>
