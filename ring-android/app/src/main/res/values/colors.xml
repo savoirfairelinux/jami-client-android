@@ -32,6 +32,7 @@
     <color name="white">#FFF</color>
     <color name="black">#000000</color>
     <color name="error_red">#f44336</color>
+    <color name="on_error">#ffffff</color>
 
     <color name="error_pane">#e57373</color>
 

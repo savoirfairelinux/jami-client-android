@@ -502,7 +502,7 @@ public class DRingService extends Service {
 
         @Override
         public void connectivityChanged() {
-            mHardwareService.connectivityChanged();
+            mHardwareService.connectivityChanged(mPreferencesService.hasNetworkConnected());
         }
 
         @Override
@@ -623,10 +623,11 @@ public class DRingService extends Service {
 
     private void updateConnectivityState() {
         if (mDaemonService.isStarted()) {
-            mAccountService.setAccountsActive(mPreferencesService.hasNetworkConnected());
+            boolean isConnected = mPreferencesService.hasNetworkConnected();
+            mAccountService.setAccountsActive(isConnected);
             // Execute connectivityChanged to reload UPnP
             // and reconnect active accounts if necessary.
-            mHardwareService.connectivityChanged();
+            mHardwareService.connectivityChanged(isConnected);
         }
     }
 

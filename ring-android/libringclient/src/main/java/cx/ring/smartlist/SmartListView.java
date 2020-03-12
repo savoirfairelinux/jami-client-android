@@ -27,10 +27,6 @@ import cx.ring.mvp.BaseView;
 
 public interface SmartListView extends BaseView {
 
-    void displayNetworkErrorPanel();
-
-    void displayMobileDataPanel();
-
     void displayContact(CallContact contact);
 
     void displayChooseNumberDialog(CharSequence numbers[]);
@@ -50,8 +46,6 @@ public interface SmartListView extends BaseView {
     void displayMenuItem();
 
     void hideSearchRow();
-
-    void hideErrorPanel();
 
     void hideList();
 
