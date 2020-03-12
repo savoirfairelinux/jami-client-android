@@ -141,6 +141,17 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                     updateOngoingCallView(conversation);
                     mConversationFacade.readMessages(mAccountService.getAccount(mAccountId), conversation);
                 }, e -> Log.e(TAG, "Error loading conversation", e)));
+
+        mCompositeDisposable.add(mHardwareService.getConnectivityState()
+                .subscribe(this::refreshConnectivity));
+    }
+
+    private void refreshConnectivity(boolean connected) {
+        if (connected) {
+            getView().hideErrorPanel();
+        } else {
+            getView().displayNetworkErrorPanel();
+        }
     }
 
     private CallContact initContact(final Account account, final Uri uri,

@@ -98,17 +98,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
     }
 
     public void refresh() {
-        refreshConnectivity();
         getView().hideSearchRow();
-    }
-
-    private void refreshConnectivity() {
-        boolean isConnected = mPreferencesService.hasNetworkConnected();
-        if (isConnected) {
-            getView().hideErrorPanel();
-        } else {
-            getView().displayNetworkErrorPanel();
-        }
     }
 
     public void queryTextChanged(String query) {

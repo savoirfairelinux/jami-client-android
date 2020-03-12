@@ -7,46 +7,10 @@
     android:animateLayoutChanges="true"
     tools:context=".client.HomeActivity">
 
-    <RelativeLayout
-        android:id="@+id/error_msg_pane"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="@color/error_pane"
-        android:padding="16dp"
-        android:visibility="gone"
-        tools:visibility="visible">
-
-        <ImageView
-            android:id="@+id/error_image_view"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_alignParentEnd="true"
-            android:layout_gravity="end"
-            android:scaleType="fitCenter"
-            android:tint="@color/colorOnPrimary"
-            app:srcCompat="@drawable/baseline_settings_24" />
-
-        <TextView
-            android:id="@+id/error_msg_txt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="26dp"
-            android:layout_marginRight="26dp"
-            android:gravity="center_vertical|center_horizontal"
-            android:textColor="@color/colorOnPrimary"
-            android:textSize="14sp"
-            tools:text="No connectivity"/>
-    </RelativeLayout>
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/list_coordinator"
         android:layout_width="320dp"
         android:layout_height="match_parent"
-        android:layout_below="@id/error_msg_pane"
         android:layout_marginTop="?actionBarSize">
 
         <LinearLayout
