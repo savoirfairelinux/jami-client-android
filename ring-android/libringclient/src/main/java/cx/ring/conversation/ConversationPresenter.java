@@ -210,6 +210,9 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         mConversationDisposable.add(c.getComposingStatus()
                 .observeOn(mUiScheduler)
                 .subscribe(view::setComposingStatus));
+        mConversationDisposable.add(c.getLastDisplayed()
+                .observeOn(mUiScheduler)
+                .subscribe(view::setLastDisplayed));
         mConversationDisposable.add(c.getCalls()
                 .observeOn(mUiScheduler)
                 .subscribe(calls -> updateOngoingCallView(mConversation), e -> Log.e(TAG, "Can't update call view", e)));

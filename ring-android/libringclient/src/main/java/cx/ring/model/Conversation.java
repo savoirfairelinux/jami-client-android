@@ -49,12 +49,14 @@ public class Conversation extends ConversationHistory {
     private final NavigableMap<Long, Interaction> mHistory = new TreeMap<>();
     private final ArrayList<Conference> mCurrentCalls = new ArrayList<>();
     private final ArrayList<Interaction> mAggregateHistory = new ArrayList<>(32);
+    private Interaction lastDisplayed = null;
 
     private final Subject<Tuple<Interaction, ElementStatus>> updatedElementSubject = PublishSubject.create();
+    private final Subject<Interaction> lastDisplayedSubject = BehaviorSubject.create();
     private final Subject<List<Interaction>> clearedSubject = PublishSubject.create();
     private final Subject<List<Conference>> callsSubject = BehaviorSubject.create();
     private final Subject<Account.ComposingStatus> composingStatusSubject = BehaviorSubject.createDefault(Account.ComposingStatus.Idle);
-    private Subject<Integer> color = BehaviorSubject.create();
+    private final Subject<Integer> color = BehaviorSubject.create();
 
     private Single<Conversation> isLoaded = null;
 
@@ -88,6 +90,10 @@ public class Conversation extends ConversationHistory {
 
     public Observable<Tuple<Interaction, ElementStatus>> getUpdatedElements() {
         return updatedElementSubject;
+    }
+
+    public Observable<Interaction> getLastDisplayed() {
+        return lastDisplayedSubject;
     }
 
     public Observable<List<Interaction>> getCleared() {
@@ -137,8 +143,8 @@ public class Conversation extends ConversationHistory {
         return isLoaded;
     }
 
-    public void setVisible(boolean mVisible) {
-        this.mVisible = mVisible;
+    public void setVisible(boolean visible) {
+        mVisible = visible;
     }
 
     public CallContact getContact() {
@@ -204,9 +210,15 @@ public class Conversation extends ConversationHistory {
         long time = text.getTimestamp();
         NavigableMap<Long, Interaction> msgs = mHistory.subMap(time, true, time, true);
         for (Interaction txt : msgs.values()) {
-            if (txt.getId().equals(text.getId())) {
+            if (txt.getId() == text.getId()) {
                 txt.setStatus(text.getStatus());
                 updatedElementSubject.onNext(new Tuple<>(txt, ElementStatus.UPDATE));
+                if (text.getStatus() == Interaction.InteractionStatus.DISPLAYED) {
+                    if (lastDisplayed == null || lastDisplayed.getTimestamp() < text.getTimestamp()) {
+                        lastDisplayed = text;
+                        lastDisplayedSubject.onNext(text);
+                    }
+                }
                 return;
             }
         }
@@ -336,12 +348,19 @@ public class Conversation extends ConversationHistory {
 
     public void setHistory(List<Interaction> loadedConversation) {
         mAggregateHistory.ensureCapacity(loadedConversation.size());
+        Interaction last = null;
         for (Interaction i : loadedConversation) {
             Interaction interaction = getTypedInteraction(i);
             interaction.setAccount(mAccountId);
             interaction.setContact(mContact);
             mAggregateHistory.add(interaction);
             mHistory.put(interaction.getTimestamp(), interaction);
+            if (!i.isIncoming() && i.getStatus() == Interaction.InteractionStatus.DISPLAYED)
+                last = i;
+        }
+        if (last != null) {
+            lastDisplayed = last;
+            lastDisplayedSubject.onNext(last);
         }
         mDirty = false;
     }

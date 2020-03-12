@@ -177,7 +177,7 @@ public class TvConversationAdapter extends RecyclerView.Adapter<TvConversationVi
     public void remove(Interaction e) {
         for (int i = mInteractions.size() - 1; i >= 0; i--) {
             Interaction element = mInteractions.get(i);
-            if (e.getId().equals(element.getId())) {
+            if (e.getId() == element.getId()) {
                 mInteractions.remove(i);
                 notifyItemRemoved(i);
                 if (i > 0) {
