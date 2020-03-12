@@ -1125,4 +1125,28 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         startActivityForResult(downloadFileIntent, ConversationFragment.REQUEST_CODE_SAVE_FILE);
     }
 
+    @Override
+    public void displayNetworkErrorPanel() {
+        showErrorPanel(R.string.error_no_network, null);
+    }
+
+    public void showErrorPanel(final int textResId, @Nullable View.OnClickListener clickListener) {
+        if (binding.errorMsgPane == null || binding.errorMsgPane.getVisibility() == View.VISIBLE) {
+            return;
+        }
+        binding.errorMsgPane.setVisibility(View.VISIBLE);
+        binding.errorMsgPane.setOnClickListener(clickListener);
+        if (binding.errorMsgTxt != null) {
+            binding.errorMsgTxt.setText(textResId);
+        }
+    }
+
+    @Override
+    public void hideErrorPanel() {
+        if (binding.errorMsgPane == null || binding.errorMsgPane.getVisibility() == View.GONE) {
+            return;
+        }
+        binding.errorMsgPane.setVisibility(View.GONE);
+    }
+
 }

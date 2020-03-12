@@ -22,6 +22,8 @@ package cx.ring.conversation;
 import java.io.File;
 import java.util.List;
 
+import javax.swing.text.View;
+
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
@@ -86,4 +88,8 @@ public interface ConversationView extends BaseView {
 
     void showMap(String accountId, String contactId, boolean open);
     void hideMap();
+
+    void hideErrorPanel();
+
+    void displayNetworkErrorPanel();
 }

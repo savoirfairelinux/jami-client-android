@@ -81,6 +81,7 @@ import cx.ring.client.HomeActivity;
 import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.model.Account;
+import cx.ring.model.AccountConfig;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.services.AccountService;
 import cx.ring.services.VCardServiceImpl;
@@ -366,8 +367,11 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
             } else if (account.isRegistered()) {
                 status = getString(R.string.account_status_online);
                 color = R.color.green_400;
+            } else if (account.getRegistrationState().equals(AccountConfig.STATE_UNREGISTERED)){
+                color = R.color.grey_400;
+                status = getString(R.string.account_status_offline);
             } else {
-                status = getString(R.string.account_status_unknown);
+                status = getString(R.string.account_status_error);
             }
         } else {
             color = R.color.grey_400;
