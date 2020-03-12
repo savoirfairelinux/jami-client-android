@@ -86,4 +86,8 @@ public interface ConversationView extends BaseView {
 
     void showMap(String accountId, String contactId, boolean open);
     void hideMap();
+
+    void hideErrorPanel();
+
+    void displayNetworkErrorPanel();
 }
