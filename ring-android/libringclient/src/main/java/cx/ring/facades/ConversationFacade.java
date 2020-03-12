@@ -200,15 +200,17 @@ public class ConversationFacade {
 
     public void readMessages(Account account, Conversation conversation) {
         if (conversation != null) {
-            if (readMessages(conversation)) {
+            String lastMessage = readMessages(conversation);
+            if (lastMessage != null) {
                 account.refreshed(conversation);
                 mNotificationService.cancelTextNotification(conversation.getContact().getPrimaryUri());
+                mAccountService.setMessageDisplayed(account.getAccountID(), conversation.getContact().getPrimaryNumber(), lastMessage);
             }
         }
     }
 
-    private boolean readMessages(Conversation conversation) {
-        boolean updated = false;
+    private String readMessages(Conversation conversation) {
+        String lastRead = null;
         NavigableMap<Long, Interaction> messages = conversation.getRawHistory();
         for (Interaction e : messages.descendingMap().values()) {
             if (!(e.getType().equals(InteractionType.TEXT)))
@@ -217,16 +219,18 @@ public class ConversationFacade {
                 break;
             }
             e.read();
+            if (lastRead == null)
+                lastRead = Long.toString(e.getDaemonId(), 16);
             mHistoryService.updateInteraction(e, conversation.getAccountId()).subscribe();
-            updated = true;
+            //updated = true;
         }
-        return updated;
+        return lastRead;
     }
 
     public Single<TextMessage> sendTextMessage(String account, Conversation c, Uri to, String txt) {
         return mCallService.sendAccountTextMessage(account, to.getRawUriString(), txt)
                 .map(id -> {
-                    TextMessage message = new TextMessage(null, account, Long.toString(id), c, txt);
+                    TextMessage message = new TextMessage(null, account, Long.toHexString(id), c, txt);
                     if (c.isVisible())
                         message.read();
                     mHistoryService.insertInteraction(account, c, message).subscribe();
@@ -441,6 +445,7 @@ public class ConversationFacade {
     private void parseNewMessage(final TextMessage txt) {
         if (txt.isRead()) {
             mHistoryService.updateInteraction(txt, txt.getAccount()).subscribe();
+            mAccountService.setMessageDisplayed(txt.getAccount(), txt.getAccount(), Long.toString(txt.getDaemonId(), 16));
         }
         getAccountSubject(txt.getAccount())
                 .flatMapObservable(Account::getConversationsSubject)

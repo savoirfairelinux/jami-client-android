@@ -43,13 +43,13 @@ public class Interaction {
     CallContact mContact = null;
 
     @DatabaseField(generatedId = true, columnName = COLUMN_ID, index = true)
-    Integer mId;
+    int mId;
     @DatabaseField(columnName = COLUMN_AUTHOR, index = true)
     String mAuthor;
     @DatabaseField(columnName = COLUMN_CONVERSATION, foreignColumnName = ConversationHistory.COLUMN_CONVERSATION_ID, foreign = true)
     ConversationHistory mConversation;
     @DatabaseField(columnName = COLUMN_TIMESTAMP, index = true)
-    Long mTimestamp;
+    long mTimestamp;
     @DatabaseField(columnName = COLUMN_BODY)
     String mBody;
     @DatabaseField(columnName = COLUMN_TYPE)
@@ -100,12 +100,8 @@ public class Interaction {
         mAccount = account;
     }
 
-    public Integer getId() {
+    public int getId() {
         return mId;
-    }
-
-    public void setId(Integer id) {
-        mId = id;
     }
 
     public void read() {
@@ -150,7 +146,6 @@ public class Interaction {
 
     public void setStatus(InteractionStatus status) {
         mStatus = status.toString();
-
     }
 
     JsonObject getExtraFlag() {
@@ -173,14 +168,6 @@ public class Interaction {
         return mDaemonId == null ? null : Long.toString(mDaemonId);
     }
 
-    public void setDaemonId(Long daemonId) {
-        mDaemonId = daemonId;
-    }
-
-    public void setDaemonId(String daemonId) {
-        mDaemonId = daemonId == null ? null : Long.parseLong(daemonId);
-    }
-
     public boolean isIncoming() {
         return mIsIncoming;
     }
@@ -198,7 +185,7 @@ public class Interaction {
     }
 
     public enum InteractionStatus {
-        UNKNOWN, SENDING, SUCCESS, INVALID, FAILURE,
+        UNKNOWN, SENDING, SUCCESS, DISPLAYED, INVALID, FAILURE,
 
         TRANSFER_CREATED,
         TRANSFER_ACCEPTED,
@@ -222,10 +209,7 @@ public class Interaction {
 
         static InteractionStatus fromIntTextMessage(int n) {
             try {
-                if (n == 3) {
-                    return SUCCESS;
-                } else
-                    return values()[n];
+                return values()[n];
             } catch (ArrayIndexOutOfBoundsException e) {
                 return INVALID;
             }
@@ -257,8 +241,9 @@ public class Interaction {
                     return TRANSFER_UNJOINABLE_PEER;
                 case 11:
                     return TRANSFER_TIMEOUT_EXPIRED;
+                default:
+                    return UNKNOWN;
             }
-            return UNKNOWN;
         }
 
         public boolean isError() {
