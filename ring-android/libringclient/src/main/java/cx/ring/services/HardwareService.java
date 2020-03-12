@@ -91,6 +91,7 @@ public abstract class HardwareService {
     protected final Subject<VideoEvent> videoEvents = PublishSubject.create();
     protected final Subject<BluetoothEvent> bluetoothEvents = PublishSubject.create();
     protected final Subject<AudioState> audioStateSubject = BehaviorSubject.createDefault(new AudioState());
+    protected final Subject<Boolean> connectivityEvents = BehaviorSubject.create();
 
     public Observable<VideoEvent> getVideoEvents() {
         return videoEvents;
@@ -100,6 +101,9 @@ public abstract class HardwareService {
     }
     public Observable<AudioState> getAudioState() {
         return audioStateSubject;
+    }
+    public Observable<Boolean> getConnectivityState() {
+        return connectivityEvents;
     }
 
     public abstract Completable initVideo();
@@ -159,8 +163,9 @@ public abstract class HardwareService {
 
     public abstract boolean shouldPlaySpeaker();
 
-    public void connectivityChanged() {
+    public void connectivityChanged(boolean isConnected) {
         Log.i(TAG, "connectivityChange()");
+        connectivityEvents.onNext(isConnected);
         mExecutor.execute(Ringservice::connectivityChanged);
     }
 

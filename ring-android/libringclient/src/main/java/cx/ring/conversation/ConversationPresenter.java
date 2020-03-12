@@ -42,6 +42,7 @@ import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
+import cx.ring.services.PreferencesService;
 import cx.ring.services.VCardService;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
@@ -73,6 +74,8 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     @Inject
     @Named("UiScheduler")
     protected Scheduler mUiScheduler;
+    @Inject
+    PreferencesService mPreferencesService;
 
     private final Subject<Conversation> mConversationSubject = BehaviorSubject.create();
 
@@ -141,6 +144,17 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                     updateOngoingCallView(conversation);
                     mConversationFacade.readMessages(mAccountService.getAccount(mAccountId), conversation);
                 }, e -> Log.e(TAG, "Error loading conversation", e)));
+
+        mCompositeDisposable.add(mHardwareService.getConnectivityState()
+                .subscribe(this::refreshConnectivity));
+    }
+
+    private void refreshConnectivity(boolean connected) {
+        if (connected) {
+            getView().hideErrorPanel();
+        } else {
+            getView().displayNetworkErrorPanel();
+        }
     }
 
     private CallContact initContact(final Account account, final Uri uri,
