@@ -111,6 +111,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
     private int expandedItemPosition = -1;
     private int lastDeliveredPosition = -1;
+    private int lastDisplayedPosition = -1;
     private Observable<Long> timestampUpdateTimer;
     private int lastMsgPos = -1;
 
@@ -189,7 +190,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     public void remove(Interaction e) {
         for (int i = mInteractions.size() - 1; i >= 0; i--) {
             Interaction element = mInteractions.get(i);
-            if (e.getId().equals(element.getId())) {
+            if (e.getId() == element.getId()) {
                 mInteractions.remove(i);
                 notifyItemRemoved(i);
                 if (i > 0) {
@@ -350,6 +351,21 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         }
     }
 
+    public void setLastDisplayed(Interaction interaction) {
+        Log.w(TAG, "setLastDisplayed " + interaction.getDaemonId());
+        for (int i = mInteractions.size() - 1; i >= 0; i--) {
+            Interaction element = mInteractions.get(i);
+            if (interaction.getId() == element.getId()) {
+                if (lastDisplayedPosition != -1)
+                    notifyItemChanged(lastDisplayedPosition);
+                lastDisplayedPosition = i;
+                notifyItemChanged(i);
+                Log.w(TAG, "new displayed item " + i);
+                break;
+            }
+        }
+    }
+
     private static class RecyclerViewContextMenuInfo implements ContextMenu.ContextMenuInfo {
         RecyclerViewContextMenuInfo(int position, long id) {
             this.position = position;
@@ -454,14 +470,12 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             viewHolder.mMsgDetailTxtPerm.setVisibility(View.GONE);
         }
 
+        CallContact contact = interaction.getContact();
         if (interaction.isIncoming()) {
             viewHolder.mAvatar.setImageBitmap(null);
             viewHolder.mAvatar.setVisibility(View.VISIBLE);
-            CallContact contact = interaction.getContact();
             if (contact != null) {
-                viewHolder.mAvatar.setImageDrawable(
-                        conversationFragment.getConversationAvatar(contact.getPrimaryNumber())
-                );
+                viewHolder.mAvatar.setImageDrawable(conversationFragment.getConversationAvatar(contact.getPrimaryNumber()));
             }
         } else {
             switch (interaction.getStatus()) {
@@ -472,6 +486,10 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                 case FAILURE:
                     viewHolder.mStatusIcon.setVisibility(View.VISIBLE);
                     viewHolder.mStatusIcon.setImageResource(R.drawable.round_highlight_off_24);
+                    break;
+                case DISPLAYED:
+                    viewHolder.mStatusIcon.setVisibility(View.VISIBLE);
+                    viewHolder.mStatusIcon.setImageDrawable(conversationFragment.getSmallConversationAvatar(contact.getPrimaryNumber()));
                     break;
                 default:
                     viewHolder.mStatusIcon.setVisibility(View.VISIBLE);
@@ -709,6 +727,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             Log.e(TAG, "Invalid contact, not able to display message correctly");
             return;
         }
+        Log.w(TAG, "configureForTextMessage " + position + " " + interaction.getDaemonId() + " " + interaction.getStatus());
 
         convViewHolder.mCid = textMessage.getConversation().getParticipant();
         String message = textMessage.getBody().trim();
@@ -805,6 +824,15 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                     convViewHolder.mStatusIcon.setVisibility(View.VISIBLE);
                     convViewHolder.mStatusIcon.setImageResource(R.drawable.round_highlight_off_24);
                     break;
+                case DISPLAYED:
+                    if (lastDisplayedPosition == position) {
+                        convViewHolder.mStatusIcon.setVisibility(View.VISIBLE);
+                        convViewHolder.mStatusIcon.setImageDrawable(conversationFragment.getSmallConversationAvatar(contact.getPrimaryNumber()));
+                    } else {
+                        convViewHolder.mStatusIcon.setVisibility(View.GONE);
+                        convViewHolder.mStatusIcon.setImageDrawable(null);
+                    }
+                    break;
                 default:
                     if (position == lastOutgoingIndex()) {
                         convViewHolder.mStatusIcon.setVisibility(View.VISIBLE);
@@ -812,6 +840,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                         lastDeliveredPosition = position;
                     } else {
                         convViewHolder.mStatusIcon.setVisibility(View.GONE);
+                        convViewHolder.mStatusIcon.setImageDrawable(null);
                     }
             }
         }

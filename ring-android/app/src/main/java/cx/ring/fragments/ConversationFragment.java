@@ -155,11 +155,17 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     private int mSelectedPosition;
 
     private AvatarDrawable mConversationAvatar;
-    private Map<String, AvatarDrawable> mParticipantAvatars = new HashMap<>();
+    private final Map<String, AvatarDrawable> mParticipantAvatars = new HashMap<>();
+    private final Map<String, AvatarDrawable> mSmallParticipantAvatars = new HashMap<>();
     private int mapWidth, mapHeight;
 
     public AvatarDrawable getConversationAvatar(String uri) {
         return mParticipantAvatars.get(uri);
+    }
+    public AvatarDrawable getSmallConversationAvatar(String uri) {
+        synchronized (mSmallParticipantAvatars) {
+            return mSmallParticipantAvatars.get(uri);
+        }
     }
 
     private static int getIndex(Spinner spinner, Uri myString) {
@@ -680,6 +686,11 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     @Override
+    public void setLastDisplayed(Interaction interaction) {
+        mAdapter.setLastDisplayed(interaction);
+    }
+
+    @Override
     public void shareFile(File path) {
         Context c = getContext();
         if (c == null)
@@ -762,8 +773,8 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        if (!this.isVisible()) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        if (!isVisible()) {
             return;
         }
         inflater.inflate(R.menu.conversation_actions, menu);
@@ -861,11 +872,22 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
                 .subscribe(c -> {
                     mConversationAvatar.update(c);
                     String uri = contact.getPrimaryNumber();
-                    if (mParticipantAvatars.containsKey(uri)) {
-                        mParticipantAvatars.get(uri).update(c);
-                    }
+                    AvatarDrawable ad = mParticipantAvatars.get(uri);
+                    if (ad != null)
+                        ad.update(c);
                     setupActionbar(contact);
                     mAdapter.setPhoto();
+                }));
+        mCompositeDisposable.add(AvatarFactory.getAvatar(requireContext(), contact, false)
+                .doOnSuccess(d -> mSmallParticipantAvatars.put(contact.getPrimaryNumber(), new AvatarDrawable((AvatarDrawable) d)))
+                .flatMapObservable(d -> contact.getUpdatesSubject())
+                .subscribe(c -> {
+                    synchronized (mSmallParticipantAvatars) {
+                        String uri = contact.getPrimaryNumber();
+                        AvatarDrawable ad = mSmallParticipantAvatars.get(uri);
+                        if (ad != null)
+                            ad.update(c);
+                    }
                 }));
     }
 

@@ -77,6 +77,7 @@ public interface ConversationView extends BaseView {
     void updateElement(Interaction e);
     void removeElement(Interaction e);
     void setComposingStatus(Account.ComposingStatus composingStatus);
+    void setLastDisplayed(Interaction interaction);
 
     void setConversationColor(int integer);
 
