@@ -219,10 +219,10 @@ public class ConversationFacade {
                 break;
             }
             e.read();
-            if (lastRead == null)
-                lastRead = Long.toString(e.getDaemonId(), 16);
+            Long did = e.getDaemonId();
+            if (lastRead == null && did != null && did != 0L)
+                lastRead = Long.toString(did, 16);
             mHistoryService.updateInteraction(e, conversation.getAccountId()).subscribe();
-            //updated = true;
         }
         return lastRead;
     }
