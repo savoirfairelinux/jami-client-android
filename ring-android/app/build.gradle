@@ -9,8 +9,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 224
-        versionName "20200313-01"
+        versionCode 225
+        versionName "20200315-01"
     }
     sourceSets {
         main {
@@ -120,7 +120,7 @@ dependencies {
 
     implementation 'com.jsibbold:zoomage:1.2.0'
 
-    withFirebaseImplementation('com.google.firebase:firebase-messaging:20.1.0') {
+    withFirebaseImplementation('com.google.firebase:firebase-messaging:20.1.2') {
         exclude group: 'com.google.firebase', module: 'firebase-core'
         exclude group: 'com.google.firebase', module: 'firebase-analytics'
         exclude group: 'com.google.firebase', module: 'firebase-measurement-connector'
