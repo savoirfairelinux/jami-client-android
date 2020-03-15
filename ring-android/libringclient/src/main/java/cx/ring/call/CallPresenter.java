@@ -638,8 +638,8 @@ public class CallPresenter extends RootPresenter<CallView> {
         mHardwareService.stopCapture();
     }
 
-    public void startScreenShare(Object mediaProjection) {
-        mHardwareService.startScreenShare(mediaProjection);
+    public boolean startScreenShare(Object mediaProjection) {
+        return mHardwareService.startScreenShare(mediaProjection);
     }
 
     public void stopScreenShare() {

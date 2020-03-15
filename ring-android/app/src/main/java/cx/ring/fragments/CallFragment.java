@@ -57,6 +57,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -900,8 +901,11 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     private void startScreenShare(MediaProjection mediaProjection) {
-        presenter.startScreenShare(mediaProjection);
-        binding.previewSurface.setVisibility(View.GONE);
+        if (presenter.startScreenShare(mediaProjection)) {
+            binding.previewSurface.setVisibility(View.GONE);
+        } else {
+            Toast.makeText(requireContext(), "Can't start screen sharing", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void stopShareScreen() {

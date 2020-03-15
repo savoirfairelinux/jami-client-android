@@ -441,12 +441,12 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         cameraService.setParameters(camId, format, width, height, rate, windowManager.getDefaultDisplay().getRotation());
     }
 
-    public void startScreenShare(Object projection) {
+    public boolean startScreenShare(Object projection) {
         MediaProjection mediaProjection = (MediaProjection) projection;
         if (mIsCapturing) {
             endCapture();
         }
-        if (!mIsScreenSharing) {
+        if (!mIsScreenSharing && mediaProjection != null) {
             mIsScreenSharing = true;
             mediaProjection.registerCallback(new MediaProjection.Callback(){
                 @Override
@@ -454,7 +454,14 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                     stopScreenShare();
                 }
             }, cameraService.getVideoHandler());
-            cameraService.startScreenSharing(mediaProjection, mContext.getResources().getDisplayMetrics());
+            if (!cameraService.startScreenSharing(mediaProjection, mContext.getResources().getDisplayMetrics())) {
+                mIsScreenSharing = false;
+                mediaProjection.stop();
+                return false;
+            }
+            return true;
+        } else {
+            return false;
         }
     }
 

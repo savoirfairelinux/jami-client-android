@@ -133,7 +133,7 @@ public abstract class HardwareService {
     public abstract void setParameters(String camId, int format, int width, int height, int rate);
 
     public abstract void startCapture(String camId);
-    public abstract void startScreenShare(Object mediaProjection);
+    public abstract boolean startScreenShare(Object mediaProjection);
 
     public abstract boolean hasMicrophone();
 
