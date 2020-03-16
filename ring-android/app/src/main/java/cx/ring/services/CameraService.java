@@ -634,39 +634,54 @@ public class CameraService {
         final MediaCodec codec = r.first;
         if (codec != null)
             codec.start();
-        return Pair.create(codec, projection.createVirtualDisplay("ScreenSharingDemo",
-                screenWidth, screenHeight, screenDensity,
-                DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR, surface
-                , new VirtualDisplay.Callback() {
-                    @Override
-                    public void onPaused() {
-                        Log.w(TAG, "VirtualDisplay.onPaused");
-                    }
-
-                    @Override
-                    public void onResumed() {
-                        Log.w(TAG, "VirtualDisplay.onResumed");
-                    }
-
-                    @Override
-                    public void onStopped() {
-                        Log.w(TAG, "VirtualDisplay.onStopped");
-                        if (surface != null) {
-                            surface.release();
-                            if (codec != null)
-                                codec.release();
-                            if (currentCodec == codec)
-                                currentCodec = null;
+        try {
+            return Pair.create(codec, projection.createVirtualDisplay("ScreenSharingDemo",
+                    screenWidth, screenHeight, screenDensity,
+                    DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR, surface
+                    , new VirtualDisplay.Callback() {
+                        @Override
+                        public void onPaused() {
+                            Log.w(TAG, "VirtualDisplay.onPaused");
                         }
-                    }
-                }, handler));
+
+                        @Override
+                        public void onResumed() {
+                            Log.w(TAG, "VirtualDisplay.onResumed");
+                        }
+
+                        @Override
+                        public void onStopped() {
+                            Log.w(TAG, "VirtualDisplay.onStopped");
+                            if (surface != null) {
+                                surface.release();
+                                if (codec != null)
+                                    codec.release();
+                                if (currentCodec == codec)
+                                    currentCodec = null;
+                            }
+                        }
+                    }, handler));
+        } catch (Exception e) {
+            if (codec != null) {
+                codec.stop();
+                codec.release();
+            }
+            if (surface != null) {
+                surface.release();
+            }
+            return null;
+        }
     }
 
-    void startScreenSharing(MediaProjection mediaProjection, DisplayMetrics metrics) {
-        currentMediaProjection = mediaProjection;
+    boolean startScreenSharing(MediaProjection mediaProjection, DisplayMetrics metrics) {
         Pair<MediaCodec, VirtualDisplay> r = createVirtualDisplay(mediaProjection, metrics);
-        currentCodec = r.first;
-        virtualDisplay = r.second;
+        if (r != null)  {
+            currentMediaProjection = mediaProjection;
+            currentCodec = r.first;
+            virtualDisplay = r.second;
+            return true;
+        }
+        return false;
     }
 
     void stopScreenSharing() {
