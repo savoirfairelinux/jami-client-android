@@ -150,6 +150,7 @@ Du kan rette din konto senere</string>
   <string name="account_status_online">Forbundet</string>
   <string name="account_status_unknown">Ukendt</string>
   <string name="account_status_offline">Ingen forbindelse</string>
+  <string name="account_status_error">Fejl</string>
   <!--Create account-->
   <string name="account_creation_profile">Opret din profil</string>
   <string name="account_link_title">Tilknyt denne enhed</string>

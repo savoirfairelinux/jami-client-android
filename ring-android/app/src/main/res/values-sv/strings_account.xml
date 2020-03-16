@@ -175,6 +175,7 @@ Du kan ändra kontot senare.</string>
   <string name="account_status_online">Uppkopplad</string>
   <string name="account_status_unknown">Okänd</string>
   <string name="account_status_offline">Nerkopplad</string>
+  <string name="account_status_error">Fel</string>
   <!--Create account-->
   <string name="account_creation_home">Välkommen till Jami!</string>
   <string name="account_creation_profile">Skapa din profil</string>

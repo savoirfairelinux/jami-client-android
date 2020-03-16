@@ -84,6 +84,13 @@
   <string name="notif_incoming_picture">Immagine da %1$s</string>
   <string name="action_open">Apri</string>
   <string name="notif_sync_title">Sincronizzazione dei dati ...</string>
+  <string name="notif_location_title">Condivisione della posizione con %1$s</string>
+  <string name="location_share_contact">%1$s sta condividendo la posizione con te</string>
+  <string name="notif_location_multi_title">Condivisione della posizione con i%1$d contatti</string>
+  <string name="notif_location_remaining">%1$d minuti rimanenti</string>
+  <string name="notif_location_action_stop">Interrompere condivisione della posizione</string>
+  <string name="location_share_action_start">Inizia a condividere</string>
+  <string name="location_share_action_stop">Ferma condivisione</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Tu:</string>
   <string name="action_call_hangup">Chiudi</string>
@@ -117,6 +124,7 @@
   <string name="hist_file_received">File recevuto</string>
   <string name="conversation_send_audio">Registra clip audio</string>
   <string name="conversation_send_video">Registra video</string>
+  <string name="conversation_share_location">Condividi posizione</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permesso videocamera</string>
   <string name="permission_dialog_camera_message">Le videochiamate hanno bisogna del permesso per accedere alla videocamera. Se lo desideri, attivalo.</string>
@@ -162,6 +170,7 @@
   <string name="block_contact_dialog_title">Blocca %1$s?</string>
   <string name="block_contact_dialog_message">%1$s non sara\' in grado di contattare l\'utente fino a sbloccarlo.</string>
   <string name="block_contact_completed">%1$sè bloccato.</string>
+  <string name="conversation_contact_is_typing">Il contatto sta scrivendo...</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Aggiungi %1$s?</string>
   <string name="prompt_new_password">Nuova password</string>
@@ -251,7 +260,13 @@
   <string name="navigation_item_contact_request">Richiesta di contatto</string>
   <string name="navigation_item_account">Account</string>
   <!--TV-->
+  <string name="tv_send_audio_dialog_message">Invia un messaggio audio?</string>
   <string name="tv_audio_play">Avvia</string>
   <string name="tv_audio_pause">Pausa</string>
   <string name="tv_dialog_send">Invia</string>
+  <string name="tv_audio_recording">Registrazione...</string>
+  <string name="tv_send_text">Invia testo</string>
+  <string name="tv_send_audio">Invia audio</string>
+  <string name="tv_send_video">Invia video</string>
+  <string name="tv_clear_history">cancella cronologia</string>
 </resources>

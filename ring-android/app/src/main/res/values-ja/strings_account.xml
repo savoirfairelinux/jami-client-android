@@ -144,6 +144,7 @@
   <string name="account_status_online">オンライン</string>
   <string name="account_status_unknown">不明</string>
   <string name="account_status_offline">オフライン</string>
+  <string name="account_status_error">エラー</string>
   <!--Create account-->
   <string name="account_creation_profile">プロフィールを作成</string>
   <string name="account_link_title">このデバイスをリンク</string>

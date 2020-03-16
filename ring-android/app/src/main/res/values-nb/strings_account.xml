@@ -153,6 +153,7 @@ Du kan endre kontoen din senere</string>
   <string name="account_status_online">Tilkoblet</string>
   <string name="account_status_unknown">Ukjent</string>
   <string name="account_status_offline">Frakoblet</string>
+  <string name="account_status_error">Feil</string>
   <!--Create account-->
   <string name="account_creation_home">Velkommen til Jami</string>
   <string name="account_creation_profile">Opprett din profil</string>

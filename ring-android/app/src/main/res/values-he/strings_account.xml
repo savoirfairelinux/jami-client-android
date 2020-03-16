@@ -67,6 +67,7 @@
   <!--Name registration-->
   <string name="account_status_connecting">מתחבר</string>
   <string name="account_status_unknown">לא מוכר</string>
+  <string name="account_status_error">שגיאה</string>
   <!--Create account-->
   <!--Edit profile-->
   <!--Devices-->

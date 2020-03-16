@@ -133,6 +133,7 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="account_status_connecting">Connectant</string>
   <string name="account_status_connection_error">Error de xarxa</string>
   <string name="account_status_unknown">Desconegut</string>
+  <string name="account_status_error">Error</string>
   <!--Create account-->
   <string name="account_creation_profile">Crei el seu perfil</string>
   <!--Edit profile-->

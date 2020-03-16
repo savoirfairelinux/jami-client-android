@@ -167,6 +167,7 @@
   <string name="account_status_online">Online</string>
   <string name="account_status_unknown">Desconhecido</string>
   <string name="account_status_offline">Offline</string>
+  <string name="account_status_error">Erro</string>
   <!--Create account-->
   <string name="account_creation_home">Bem-vindo ao Jami</string>
   <string name="account_creation_profile">Criar um Perfil</string>
