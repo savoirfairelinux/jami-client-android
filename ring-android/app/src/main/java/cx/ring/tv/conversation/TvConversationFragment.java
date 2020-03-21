@@ -44,6 +44,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -66,8 +68,8 @@ import cx.ring.model.CallContact;
 import cx.ring.model.DataTransfer;
 import cx.ring.model.Error;
 import cx.ring.model.Interaction;
-import cx.ring.model.Uri;
 import cx.ring.mvp.BaseSupportFragment;
+import cx.ring.tv.camera.CustomCameraActivity;
 import cx.ring.tv.model.TVListViewModel;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
@@ -82,19 +84,19 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
 
     private static final String ARG_MODEL = "model";
 
-    private static final int SPEECH_REQUEST_CODE = 43600;
-    private static final int REQUEST_CODE_SAVE_FILE = 1003;
+    private static final int REQUEST_CODE_PHOTO = 101;
+    private static final int REQUEST_SPEECH_CODE = 102;
+    private static final int REQUEST_CODE_SAVE_FILE = 103;
 
     private TVListViewModel mTvListViewModel;
 
     private TextView mTitle;
     private TextView mSubTitle;
     private TextView mTextAudio;
+    private TextView mTextVideo;
     private TextView mTextMessage;
     private RecyclerView mRecyclerView;
     private ImageButton mAudioButton;
-
-    private String mCurrentFileAbsolutePath = null;
 
     private int mSelectedPosition;
 
@@ -105,9 +107,8 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
     private MediaRecorder recorder = null;
     private MediaPlayer player = null;
 
-    // Requesting permission to RECORD_AUDIO
     private boolean permissionToRecordAccepted = false;
-    private String [] permissions = {Manifest.permission.RECORD_AUDIO};
+    private String[] permissions = {Manifest.permission.RECORD_AUDIO};
 
     boolean mStartRecording = true;
     boolean mStartPlaying = true;
@@ -141,8 +142,8 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
     private void displaySpeechRecognizer() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Say something...");
-        startActivityForResult(intent, SPEECH_REQUEST_CODE);
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Say something...");
+        startActivityForResult(intent, REQUEST_SPEECH_CODE);
     }
 
 
@@ -168,14 +169,26 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
 
         ViewGroup textContainer = view.findViewById(R.id.text_container);
         ViewGroup audioContainer = view.findViewById(R.id.audio_container);
+        ViewGroup videoContainer = view.findViewById(R.id.video_container);
         mTextAudio = view.findViewById(R.id.text_audio);
         mTextMessage = view.findViewById(R.id.text_text);
+        mTextVideo = view.findViewById(R.id.text_video);
 
         ImageButton text = view.findViewById(R.id.button_text);
         text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 displaySpeechRecognizer();
+            }
+        });
+
+        ImageButton video = view.findViewById(R.id.button_video);
+        video.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CustomCameraActivity.class);
+                intent.putExtra(CustomCameraActivity.EXTRA_VIDEO, true);
+                startActivityForResult(intent, REQUEST_CODE_PHOTO);
             }
         });
 
@@ -188,19 +201,27 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
             }
         });
 
-        mAudioButton.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        text.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 TransitionManager.beginDelayedTransition(textContainer);
+                mTextMessage.setVisibility(hasFocus ? View.VISIBLE : View.GONE);
+            }
+        });
+
+        mAudioButton.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                TransitionManager.beginDelayedTransition(audioContainer);
                 mTextAudio.setVisibility(hasFocus ? View.VISIBLE : View.GONE);
             }
         });
 
-        text.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        video.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                TransitionManager.beginDelayedTransition(audioContainer);
-                mTextMessage.setVisibility(hasFocus ? View.VISIBLE : View.GONE);
+                TransitionManager.beginDelayedTransition(videoContainer);
+                mTextVideo.setVisibility(hasFocus ? View.VISIBLE : View.GONE);
             }
         });
 
@@ -233,10 +254,23 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == SPEECH_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            List<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-            String spokenText = results.get(0);
-            createTextDialog(spokenText);
+        switch (requestCode) {
+            case REQUEST_CODE_PHOTO:
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    android.net.Uri image = (android.net.Uri) data.getExtras().get(CustomCameraActivity.EXTRA_DATA);
+                    Single<File> file = AndroidFileUtils.getCacheFile(requireContext(), image);
+                    createMediaDialog(file);
+                }
+                break;
+            case REQUEST_SPEECH_CODE:
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    List<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    String spokenText = results.get(0);
+                    createTextDialog(spokenText);
+                }
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+                break;
         }
     }
 
@@ -252,7 +286,30 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
         alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialog) {
-                Button positive= alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                Button positive = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                positive.setFocusable(true);
+                positive.setFocusableInTouchMode(true);
+                positive.requestFocus();
+            }
+        });
+
+        alertDialog.show();
+    }
+
+    private void createMediaDialog(Single<File> file) {
+        AlertDialog alertDialog = new MaterialAlertDialogBuilder(getContext(), R.style.Theme_MaterialComponents_Dialog)
+                .setTitle(R.string.tv_send_media_dialog_message)
+                .setMessage("")
+                .setPositiveButton(R.string.tv_dialog_send, (dialog, whichButton) ->
+                        startFileSend(file.flatMapCompletable(TvConversationFragment.this::sendFile)))
+                .setNegativeButton(android.R.string.cancel, null)
+                .create();
+        alertDialog.getWindow().setLayout(900, 400);
+        alertDialog.setOwnerActivity(getActivity());
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                Button positive = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
                 positive.setFocusable(true);
                 positive.setFocusableInTouchMode(true);
                 positive.requestFocus();
@@ -275,7 +332,7 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
         alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialog) {
-                Button positive= alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                Button positive = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
                 positive.setFocusable(true);
                 positive.setFocusableInTouchMode(true);
                 positive.requestFocus();
@@ -381,16 +438,13 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
      * @param file DataTransfer of the file that is going to be stored
      * @param currentFileAbsolutePath absolute path of the file we want to save
      */
-    public void startSaveFile(DataTransfer file, String currentFileAbsolutePath){
-        //Get the current file absolute path and store it
-        mCurrentFileAbsolutePath = currentFileAbsolutePath;
-
+    public void startSaveFile(DataTransfer file, String currentFileAbsolutePath) {
         //Use Android Storage File Access to download the file
         Intent downloadFileIntent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
         downloadFileIntent.setType(AndroidFileUtils.getMimeTypeFromExtension(file.getExtension()));
 
         downloadFileIntent.addCategory(Intent.CATEGORY_OPENABLE);
-        downloadFileIntent.putExtra(Intent.EXTRA_TITLE,file.getDisplayName());
+        downloadFileIntent.putExtra(Intent.EXTRA_TITLE, file.getDisplayName());
 
         startActivityForResult(downloadFileIntent, REQUEST_CODE_SAVE_FILE);
     }
@@ -409,12 +463,12 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode){
+        switch (requestCode) {
             case REQUEST_RECORD_AUDIO_PERMISSION:
-                permissionToRecordAccepted  = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                permissionToRecordAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                 break;
         }
-        if (!permissionToRecordAccepted ) getActivity().finish();
+        if (!permissionToRecordAccepted) getActivity().finish();
 
     }
 
@@ -477,6 +531,12 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
 
         mAudioButton.setImageResource(R.drawable.lb_ic_stop);
         mTextAudio.setText(R.string.tv_audio_recording);
+        Animation anim = new AlphaAnimation(0.0f, 1.0f);
+        anim.setDuration(500);
+        anim.setStartOffset(100);
+        anim.setRepeatMode(Animation.REVERSE);
+        anim.setRepeatCount(Animation.INFINITE);
+        mTextAudio.startAnimation(anim);
     }
 
     private void stopRecording() {
@@ -489,6 +549,7 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
 
         mAudioButton.setImageResource(R.drawable.baseline_mic_24);
         mTextAudio.setText(R.string.tv_send_audio);
+        mTextAudio.clearAnimation();
 
         createAudioDialog();
     }
@@ -506,7 +567,8 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
 
     private void startFileSend(Completable op) {
         op.observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> {}, e -> {
+                .subscribe(() -> {
+                }, e -> {
                     Log.e(TAG, "startFileSend: not able to create cache file", e);
                     displayErrorToast(Error.INVALID_FILE);
                 });
