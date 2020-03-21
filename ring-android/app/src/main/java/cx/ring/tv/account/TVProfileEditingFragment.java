@@ -21,10 +21,13 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import androidx.annotation.NonNull;
@@ -34,6 +37,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.List;
 
 import cx.ring.R;
@@ -71,8 +76,16 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<HomeNavigat
                         Log.e(TAG, "onActivityResult: Not able to get picture from extra");
                         return;
                     }
-                    presenter.saveVCardPhoto(Single.just((Bitmap) extras.get("data"))
-                            .map(BitmapUtils::bitmapToPhoto));
+                    Uri uri = (Uri) extras.get((MediaStore.EXTRA_OUTPUT));
+                    ContentResolver cr = getActivity().getContentResolver();
+                    try {
+                        InputStream is = cr.openInputStream(uri);
+                        Bitmap image = BitmapFactory.decodeStream(is);
+                        presenter.saveVCardPhoto(Single.just(image)
+                                .map(BitmapUtils::bitmapToPhoto));
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
                 }
                 break;
             case ProfileCreationFragment.REQUEST_CODE_GALLERY:
