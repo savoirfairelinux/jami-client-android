@@ -22,8 +22,12 @@ package cx.ring.tv.account;
 import android.Manifest;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import androidx.annotation.NonNull;
@@ -34,6 +38,8 @@ import androidx.appcompat.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.List;
 
 import cx.ring.R;
@@ -70,8 +76,17 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         switch (requestCode) {
             case ProfileCreationFragment.REQUEST_CODE_PHOTO:
-                if (resultCode == Activity.RESULT_OK && intent != null) {
-                    presenter.photoUpdated(Single.just(intent).map(i -> i.getExtras().get("data")));
+                if (resultCode == Activity.RESULT_OK && intent != null && intent.getExtras() != null) {
+                    Uri uri = (Uri) intent.getExtras().get((MediaStore.EXTRA_OUTPUT));
+                    ContentResolver cr = getActivity().getContentResolver();
+                    try {
+                        InputStream is = cr.openInputStream(uri);
+                        Bitmap image = BitmapFactory.decodeStream(is);
+                        presenter.photoUpdated(Single.just(intent)
+                                .map(i -> image));
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
                 }
                 break;
             case ProfileCreationFragment.REQUEST_CODE_GALLERY:

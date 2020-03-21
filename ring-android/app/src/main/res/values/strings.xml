@@ -323,13 +323,16 @@ along with this program; if not, write to the Free Software
 
     <!-- TV -->
     <string name="tv_send_audio_dialog_message">Send audio message?</string>
+    <string name="tv_send_image_dialog_message">Send the image?</string>
+    <string name="tv_send_video_dialog_message">Send the video?</string>
+    <string name="tv_media_preview">Preview</string>
     <string name="tv_audio_play">Play</string>
     <string name="tv_audio_pause">Pause</string>
     <string name="tv_dialog_send">Send</string>
     <string name="tv_audio_recording">Recording...</string>
     <string name="tv_send_text">Send Text</string>
     <string name="tv_send_audio">Send Audio</string>
-    <string name="tv_send_video">Send Video</string>
+    <string name="tv_send_video">Send Media</string>
     <string name="tv_clear_history">clear history</string>
 
 </resources>

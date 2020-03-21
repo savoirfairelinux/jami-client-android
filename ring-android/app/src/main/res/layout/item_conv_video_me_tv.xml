@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="24dp"
+            android:layout_marginEnd="44dp"
             android:foreground="@drawable/baseline_play_arrow_24"
             android:foregroundGravity="center"
             app:cardCornerRadius="16dp">
@@ -88,6 +88,7 @@
             android:layout_marginEnd="@dimen/conversation_message_radius"
             android:textColor="@color/conversation_secondary_background"
             android:textSize="12sp"
+            android:layout_marginTop="10dp"
             android:singleLine="true"
             tools:text="@string/time_just_now" />
 
