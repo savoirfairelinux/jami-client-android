@@ -57,7 +57,7 @@
                 android:clipChildren="false">
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="250dp"
+                    android:layout_width="300dp"
                     android:layout_height="65dp"
                     app:cardCornerRadius="35dp"
                     app:cardElevation="4dp"
@@ -122,6 +122,36 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/tv_send_audio"
+                                android:layout_marginStart="5dp"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                android:visibility="gone"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/video_container"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:layout_weight="1">
+
+                            <ImageButton
+                                android:id="@+id/button_video"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/baseline_photo_camera_24"
+                                android:background="@drawable/tv_button_shape"
+                                android:alpha="0.85"
+                                android:tint="@color/white"
+                                />
+
+                            <TextView
+                                android:id="@+id/text_video"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tv_send_video"
                                 android:layout_marginStart="5dp"
                                 android:textColor="@color/white"
                                 android:textSize="12sp"
