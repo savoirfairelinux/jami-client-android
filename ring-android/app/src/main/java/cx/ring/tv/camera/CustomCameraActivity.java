@@ -22,30 +22,71 @@
 package cx.ring.tv.camera;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraManager;
+import android.media.CamcorderProfile;
+import android.media.MediaRecorder;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.io.File;
+import java.io.IOException;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cx.ring.R;
+import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.BitmapUtils;
 
 public class CustomCameraActivity extends Activity {
+
+    public static final int TYPE_IMAGE = 1;
+    public static final int TYPE_VIDEO = 2;
+
+    public static final String EXTRA_DATA = "data";
+    public static final String EXTRA_TYPE = "type";
+    public static final String EXTRA_VIDEO = "withVideo";
+
     int cameraFront = -1;
     int cameraBack = -1;
     int currentCamera = 0;
+
+    private MediaRecorder recorder;
+    private boolean mRecording = false;
+    private boolean mWithVideo = false;
+
+    private File mVideoFile;
+
+    @BindView(R.id.button_video)
+    FloatingActionButton mButtonVideo;
+
     private Camera mCamera;
     private CameraPreview mCameraPreview;
     private final Camera.PictureCallback mPicture = (input, camera) -> {
-        Bitmap photo = BitmapFactory.decodeByteArray(input, 0, input.length);
-        Bitmap scaled = BitmapUtils.createScaledBitmap(photo, 256);
         Intent intent = new Intent();
-        intent.putExtra("data", scaled);
+        Bitmap photo = BitmapFactory.decodeByteArray(input, 0, input.length);
+        if (mWithVideo) {
+            String path = MediaStore.Images.Media.insertImage(getContentResolver(), photo, "Title", null);
+            Uri image = Uri.parse(path);
+            intent.putExtra(EXTRA_DATA, image);
+            intent.putExtra(EXTRA_TYPE, TYPE_IMAGE);
+        } else {
+            Bitmap scaled = BitmapUtils.createScaledBitmap(photo, 256);
+            intent.putExtra(EXTRA_DATA, scaled);
+        }
         if (getParent() == null) {
             setResult(RESULT_OK, intent);
         } else {
@@ -54,11 +95,34 @@ public class CustomCameraActivity extends Activity {
         finish();
     };
 
-    @OnClick(R.id.button_capture)
+    @OnClick(R.id.button_picture)
     public void takePicture() {
         if (mCamera != null) {
             mCamera.takePicture(null, null, mPicture);
         }
+    }
+
+    @OnClick(R.id.button_video)
+    public void takeVideo() {
+        if (mRecording){
+            releaseMediaRecorder();
+            Intent intent = new Intent();
+            intent.putExtra(EXTRA_DATA, Uri.fromFile(mVideoFile));
+            intent.putExtra(EXTRA_TYPE, TYPE_VIDEO);
+            if (getParent() == null) {
+                setResult(RESULT_OK, intent);
+            } else {
+                getParent().setResult(RESULT_OK, intent);
+            }
+            finish();
+            mButtonVideo.setImageResource(R.drawable.baseline_videocam_24);
+            return;
+        }
+        if (mCamera != null) {
+            initRecorder();
+            mButtonVideo.setImageResource(R.drawable.lb_ic_stop);
+        }
+        mRecording = !mRecording;
     }
 
     /**
@@ -69,6 +133,9 @@ public class CustomCameraActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.camerapicker);
         ButterKnife.bind(this);
+
+        mWithVideo = getIntent().getBooleanExtra(EXTRA_VIDEO, false);
+
         mCamera = getCameraInstance();
         if (mCamera == null) {
             Toast.makeText(this, "Can't open camera", Toast.LENGTH_LONG).show();
@@ -78,6 +145,10 @@ public class CustomCameraActivity extends Activity {
         mCameraPreview = new CameraPreview(this, mCamera);
         FrameLayout preview = findViewById(R.id.camera_preview);
         preview.addView(mCameraPreview);
+
+        if (mWithVideo) {
+            mButtonVideo.setVisibility(View.VISIBLE);
+        }
     }
 
     public void initVideo() {
@@ -109,5 +180,60 @@ public class CustomCameraActivity extends Activity {
             // cannot get camera or does not exist
         }
         return camera;
+    }
+
+    private void initRecorder() {
+        int videoWidth = mCamera.getParameters().getPreviewSize().width;
+        int videoHeight = mCamera.getParameters().getPreviewSize().height;
+        mCamera.unlock();
+        recorder = new MediaRecorder();
+        recorder.setCamera(mCamera);
+        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        recorder.setVideoSource(MediaRecorder.VideoSource.DEFAULT);
+
+        try {
+            mVideoFile = AndroidFileUtils.createVideoFile(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        CameraManager manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+        CamcorderProfile cpHigh = CamcorderProfile.get(Integer.valueOf(getFrontFacingCameraId(manager)), CamcorderProfile.QUALITY_HIGH);
+        recorder.setProfile(cpHigh);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            recorder.setOutputFile(mVideoFile);
+        }
+        recorder.setVideoSize(videoWidth, videoHeight);
+
+        prepareRecorder();
+    }
+
+    private void prepareRecorder() {
+        recorder.setPreviewDisplay(mCameraPreview.getHolder().getSurface());
+
+        try {
+            recorder.prepare();
+            recorder.start();
+        } catch (IllegalStateException | IOException e) {
+            e.printStackTrace();
+            finish();
+        }
+    }
+
+    private String getFrontFacingCameraId(CameraManager cManager){
+        try {
+            return cManager.getCameraIdList()[0];
+        } catch (CameraAccessException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    private void releaseMediaRecorder() {
+        if (recorder != null) {
+            recorder.reset();
+            recorder.release();
+            recorder = null;
+        }
     }
 }
