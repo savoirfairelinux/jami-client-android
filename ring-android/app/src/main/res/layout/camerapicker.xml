@@ -9,16 +9,36 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/button_capture"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:contentDescription="@string/action_call_decline"
-        android:padding="16dp"
-        app:backgroundTint="@color/green_500"
-        app:rippleColor="@android:color/white"
-        app:srcCompat="@drawable/baseline_photo_camera_24"
-        app:useCompatPadding="true" />
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/action_call_decline"
+            android:padding="16dp"
+            app:backgroundTint="@color/green_500"
+            app:rippleColor="@android:color/white"
+            app:srcCompat="@drawable/baseline_photo_camera_24"
+            app:useCompatPadding="true" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/action_call_decline"
+            android:padding="16dp"
+            app:backgroundTint="@color/green_500"
+            app:rippleColor="@android:color/white"
+            app:srcCompat="@drawable/baseline_videocam_24"
+            app:useCompatPadding="true"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
 </RelativeLayout>
