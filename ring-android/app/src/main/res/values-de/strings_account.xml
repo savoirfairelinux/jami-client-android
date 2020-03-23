@@ -193,6 +193,7 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_status_online">Online</string>
   <string name="account_status_unknown">Unbekannt</string>
   <string name="account_status_offline">Offline</string>
+  <string name="account_status_error">Fehler</string>
   <!--Create account-->
   <string name="account_creation_home">Willkommen bei Jami</string>
   <string name="account_creation_profile">Erstellen Sie Ihr Profil</string>

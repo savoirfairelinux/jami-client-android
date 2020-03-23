@@ -192,6 +192,7 @@
   <string name="account_status_online">В сети</string>
   <string name="account_status_unknown">Неизвестно</string>
   <string name="account_status_offline">Не в сети</string>
+  <string name="account_status_error">Ошибка</string>
   <!--Create account-->
   <string name="account_creation_home">Добро пожаловать в Jami</string>
   <string name="account_creation_profile">Создайте свой профиль</string>

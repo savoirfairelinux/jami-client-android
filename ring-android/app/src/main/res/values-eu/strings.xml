@@ -2,7 +2,7 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Iruzkinak</string>
-  <string name="report"><u>Bidali gaitzazu e-mail bat</u></string>
+  <string name="report"><u>Bidal iezaguzu posta elektroniko bat</u></string>
   <string name="section_license">Lizentzia</string>
   <string name="sponsor_section">Jami Software librea da, garatzaile eta babesleak: </string>
   <string name="copyright_section">Copyright</string>
@@ -18,6 +18,7 @@
   <!--About dialog-->
   <string name="developed_by">Garatzaileak:</string>
   <string name="designed_by">Diseinatzaileak:</string>
+  <string name="ringtones_by">noren partez txirrinak : </string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Ez dago sare-konexiorik</string>
@@ -45,6 +46,7 @@
     <item quantity="other">%d elkarrizketa</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Bilatze-barreko alhoku</string>
   <string name="choose_number">Hautatu zenbaki bat</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -181,14 +183,25 @@
   <string name="search_results">Bilaketaren emaitzak</string>
   <string name="tv_contact_row_header">Kontaktuak</string>
   <string name="gallery_error_title">Ez da galeria aplikaziorik aurkitu</string>
+  <string name="gallery_error_message">Galeri-errorearen mezua</string>
+  <string name="generic_error">Errore generikoa</string>
   <!--File Transfer-->
   <string name="invalid_file">Fitxategi baliogabea</string>
   <string name="not_able_to_write_file">Ezin izan da fitxategia idatzi</string>
   <string name="file_transfer_status_unsupported">onartu gabea</string>
   <string name="file_transfer_status_ongoing">abioan</string>
   <string name="file_transfer_status_finished">amaituta</string>
+  <string name="file_transfer_status_closed_by_host">Ostalariak moztutakoa</string>
+  <string name="file_transfer_status_closed_by_peer">Pareak itxitakoa</string>
   <string name="file_transfer_status_invalid_pathname">bide-izen baliogabea</string>
+  <string name="file_transfer_status_unjoinable_peer">pareareakin harremanetan hastea ez da posible </string>
+  <string name="file_transfer_status_cancelled">baztertuta</string>
+  <string name="file_transfer_status_error">errorea</string>
+  <string name="file_transfer_status_timed_out">denbora-muga gaindituta</string>
+  <string name="file_saved_in">Fitxategi gordetuta</string>
   <string name="file_saved_successfully">Fitxategia ongi gorde da</string>
+  <string name="no_space_left_on_device">Ez dago espazio nahikorik gailuan</string>
+  <string name="title_media_viewer">Titulu-euskarriko ikusle</string>
   <string name="menu_file_open">Ireki fitxategia</string>
   <string name="menu_file_download">Deskargatu fitxategia</string>
   <string name="menu_file_save">Gorde fitxategia</string>

@@ -42,6 +42,7 @@
   <string name="account_connect_prompt_username">nom d\'utilisateur</string>
   <!--Name registration-->
   <string name="account_status_unknown">Inconnu</string>
+  <string name="account_status_error">Erreur</string>
   <!--Create account-->
   <string name="account_creation_home">Bienvenu sur Jami</string>
   <string name="account_creation_profile">Créez votre profil</string>

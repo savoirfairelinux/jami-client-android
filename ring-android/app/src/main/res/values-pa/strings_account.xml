@@ -173,6 +173,7 @@
   <string name="account_status_online">ਆਨਲਾਈਨ</string>
   <string name="account_status_unknown">ਅਣਪਛਾਤਾ</string>
   <string name="account_status_offline">ਆਫ਼ਲਾਈਨ</string>
+  <string name="account_status_error">ਗੜਬੜ</string>
   <!--Create account-->
   <string name="account_creation_home">Jami ਵਿੱਚ ਜੀ ਆਇਆਂ ਨੂੰ</string>
   <string name="account_creation_profile">ਆਪਣਾ ਪ੍ਰੋਫਾਈਲ ਬਣਾਓ</string>

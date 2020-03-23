@@ -119,6 +119,7 @@ Anda masih akan dapat mengubah maklumat akaun anda pada masa hadapan</string>
   <string name="invalid_username">Nama pengguna tidak sah</string>
   <string name="account_status_connecting">Menyambung</string>
   <string name="account_status_unknown">Tidak diketahui</string>
+  <string name="account_status_error">Gagal</string>
   <!--Create account-->
   <!--Edit profile-->
   <!--Devices-->

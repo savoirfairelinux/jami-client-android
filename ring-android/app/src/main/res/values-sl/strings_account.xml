@@ -127,6 +127,7 @@
   <string name="account_status_online">Povezan</string>
   <string name="account_status_unknown">Neznano</string>
   <string name="account_status_offline">Odjavljen</string>
+  <string name="account_status_error">Napaka</string>
   <!--Create account-->
   <string name="account_creation_profile">Ustvari svoj profil</string>
   <string name="account_link_title">Poveži to naoravo</string>

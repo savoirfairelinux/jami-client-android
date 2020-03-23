@@ -193,6 +193,7 @@
   <string name="account_status_online">線上</string>
   <string name="account_status_unknown">未知</string>
   <string name="account_status_offline">離線</string>
+  <string name="account_status_error">錯誤</string>
   <!--Create account-->
   <string name="account_creation_home">歡迎來到 Jami</string>
   <string name="account_creation_profile">建立您的檔案</string>

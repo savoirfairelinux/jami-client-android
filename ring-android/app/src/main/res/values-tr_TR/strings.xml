@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <string name="feedback_section">Geribildirim</string>
+  <string name="section_license">Lisans</string>
+  <string name="copyright_section">İçerik Mülkiyeti</string>
+  <string name="version_section">Versiyon</string>
+  <string name="credits">Emek verenler</string>
+  <!--About dialog-->
+  <string name="developed_by">Geliştiren</string>
+  <string name="designed_by">Tasarlayan</string>
+  <!--RingActivity-->
+  <!--AB menus-->
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <!--Sections-->
+  <string name="menu_item_home">Başlangıç</string>
+  <string name="menu_item_accounts">Hesapları Yönet</string>
+  <string name="menu_item_settings">Ayarlar</string>
+  <string name="menu_item_share">Kontaklarımı paylaş</string>
+  <string name="menu_item_about">Jami Hakkında</string>
+  <!--Dialing Fragment-->
+  <string name="dial_number">Bir numarayı ara</string>
+  <!--History Fragment-->
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <!--ContactList Fragment-->
+  <string name="choose_number">Bir numara seç</string>
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <string name="notif_incoming_call">Gelen arama</string>
+  <string name="notif_outgoing_call">Giden arama</string>
+  <string name="notif_channel_call_in_progress">Arama devam ediyor</string>
+  <string name="notif_channel_calls">Aramalar</string>
+  <string name="notif_channel_missed_calls">Başarısız Aramalar</string>
+  <string name="notif_group_calls">Aramalar</string>
+  <!--Call Fragment-->
+  <!--Text messages-->
+  <!--MediaPreferenceFragment-->
+  <!--Ringtone activity-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
+  <!--Conversation-->
+  <!--Contacts-->
+  <!--MenuHeaderView-->
+  <!--Share fragment-->
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
+  <!--Blacklist-->
+  <!--Smartlist-->
+  <!--File Transfer-->
+  <!--Bottom Navigation-->
+  <!--TV-->
+</resources>
