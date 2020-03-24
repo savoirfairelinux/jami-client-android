@@ -69,4 +69,8 @@ along with this program; if not, write to the Free Software
 
     <dimen name="navigation_bottom_height">60dp</dimen>
 
+    <dimen name="call_preview_elevation">8dp</dimen>
+    <dimen name="call_preview_elevation_dragged">16dp</dimen>
+    <dimen name="call_preview_margin">12dp</dimen>
+
 </resources>

@@ -21,6 +21,7 @@
 package cx.ring.fragments;
 
 import android.Manifest;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.PendingIntent;
@@ -32,6 +33,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Matrix;
 import android.graphics.PixelFormat;
+import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.SurfaceTexture;
@@ -48,6 +50,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.OrientationEventListener;
 import android.view.Surface;
 import android.view.SurfaceHolder;
@@ -55,6 +58,7 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.DecelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -144,6 +148,10 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     private ConfParticipantAdapter confAdapter = null;
     private boolean mConferenceMode = false;
+
+    private PointF previewDrag = null;
+    private final ValueAnimator previewSnapAnimation = new ValueAnimator();
+    private final int[] previewMargins = new int[4];
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
@@ -322,6 +330,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         }
     };
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
@@ -399,6 +408,89 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         binding.previewSurface.setSurfaceTextureListener(listener);
         binding.previewSurface.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) ->
                 configureTransform(mPreviewSurfaceWidth, mPreviewSurfaceHeight));
+
+        float margin = getResources().getDimension(R.dimen.call_preview_margin);
+        previewSnapAnimation.setDuration(250);
+        previewSnapAnimation.setFloatValues(0.f, 1.f);
+        previewSnapAnimation.setInterpolator(new DecelerateInterpolator());
+        previewSnapAnimation.addUpdateListener(animation -> {
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.previewContainer.getLayoutParams();
+            float f = margin * animation.getAnimatedFraction();
+            float r = 1.f - animation.getAnimatedFraction();
+            params.setMargins(
+                    (int)(previewMargins[0] * r + f),
+                    (int)(previewMargins[1] * r + f),
+                    (int)(previewMargins[2] * r + f),
+                    (int)(previewMargins[3] * r + f));
+            binding.previewContainer.setLayoutParams(params);
+        });
+
+        binding.previewContainer.setOnTouchListener((v, event) -> {
+            int action = event.getActionMasked();
+            if (action == MotionEvent.ACTION_DOWN) {
+                previewSnapAnimation.cancel();
+                previewDrag = new PointF(event.getX(), event.getY());
+                v.setElevation(v.getContext().getResources().getDimension(R.dimen.call_preview_elevation_dragged));
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) v.getLayoutParams();
+                params.removeRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                params.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+                params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                params.setMargins((int)v.getX(), (int)v.getY(), 0, 0);
+                v.setLayoutParams(params);
+                return true;
+            } else if (action == MotionEvent.ACTION_MOVE) {
+                if (previewDrag != null) {
+                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) v.getLayoutParams();
+                    RelativeLayout parent = (RelativeLayout) v.getParent();
+                    params.setMargins(
+                            Math.min(params.leftMargin + (int) (event.getX() - previewDrag.x), parent.getWidth() - v.getWidth() - (int)margin),
+                            Math.min(params.topMargin + (int) (event.getY() - previewDrag.y), parent.getHeight() - v.getHeight() - (int)margin),
+                            0, 0);
+                    v.setLayoutParams(params);
+                    return true;
+                }
+                return false;
+            } else if (action == MotionEvent.ACTION_UP) {
+                if (previewDrag != null) {
+                    previewSnapAnimation.cancel();
+                    previewDrag = null;
+                    v.setElevation(v.getContext().getResources().getDimension(R.dimen.call_preview_elevation));
+                    RelativeLayout parent = (RelativeLayout) v.getParent();
+                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) v.getLayoutParams();
+                    int ml = 0, mr = 0, mt = 0, mb = 0;
+                    if (params.leftMargin + (v.getWidth() / 2) > parent.getWidth() / 2) {
+                        params.removeRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                        params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                        mr = (int) (parent.getWidth() - v.getWidth() - v.getX());
+                    } else {
+                        params.removeRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                        params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                        ml = (int) v.getX();
+                    }
+                    if (params.topMargin + (v.getHeight() / 2) > parent.getHeight() / 2) {
+                        params.removeRule(RelativeLayout.ALIGN_PARENT_TOP);
+                        params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                        mb = (int) (parent.getHeight() - v.getHeight() - v.getY());
+                    } else {
+                        params.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                        params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+                        mt = (int) v.getY();
+                    }
+                    previewMargins[0] = ml;
+                    previewMargins[1] = mt;
+                    previewMargins[2] = mr;
+                    previewMargins[3] = mb;
+                    params.setMargins(ml, mt, mr, mb);
+                    v.setLayoutParams(params);
+                    previewSnapAnimation.start();
+                    return true;
+                }
+                return false;
+            } else {
+                return false;
+            }
+        });
 
         binding.dialpadEditText.addTextChangedListener(new TextWatcher() {
             @Override
