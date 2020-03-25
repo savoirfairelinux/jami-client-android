@@ -72,11 +72,8 @@
   <string name="notif_dismiss">Odmietnuť</string>
   <string name="notif_reply">Odpovedať</string>
   <string name="notif_incoming_file_transfer_title">Prichádzajúci súbor od %1$s</string>
-  <string name="notif_incoming_file_transfer">Niekto sa vám snaží poslať súbor</string>
   <string name="notif_outgoing_file_transfer_title">Posielanie súboru na %1$s</string>
-  <string name="notif_outgoing_file_transfer">Niekto sa vám snaží poslať súbor</string>
   <string name="notif_incoming_picture">Obrázok od %1$s</string>
-  <string name="action_open">Otvoriť</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Vy:</string>
   <string name="action_call_hangup">Zložiť</string>

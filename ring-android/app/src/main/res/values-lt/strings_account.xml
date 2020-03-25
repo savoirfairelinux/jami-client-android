@@ -175,6 +175,7 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_status_online">Prisijungęs</string>
   <string name="account_status_unknown">Nežinomas</string>
   <string name="account_status_offline">Atsijungęs</string>
+  <string name="account_status_error">Klaida</string>
   <!--Create account-->
   <string name="account_creation_home">Sveiki atvykę į Jami</string>
   <string name="account_creation_profile">Susikurkite savo profilį</string>

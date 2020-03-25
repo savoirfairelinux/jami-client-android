@@ -169,6 +169,7 @@ Prověřte, prosím, své heslo.</string>
   <string name="account_status_online">Připojen</string>
   <string name="account_status_unknown">Neznámé</string>
   <string name="account_status_offline">Nepřipojen</string>
+  <string name="account_status_error">Chyba</string>
   <!--Create account-->
   <string name="account_creation_home">Vítejte v Jami</string>
   <string name="account_creation_profile">Vytvořit vlastní profil</string>

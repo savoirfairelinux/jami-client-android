@@ -95,6 +95,7 @@
   <string name="account_proxy_label">DHT代理</string>
   <string name="account_proxy_enable_label">使用DHT代理</string>
   <string name="account_proxy_server_label">DHT代理地址</string>
+  <string name="account_proxy_server_list_label">DHT代理列表URL </string>
   <string name="account_peer_discovery_label">本地对等方发现</string>
   <string name="account_peer_discovery_enable_label">启用本地对等方发现</string>
   <string name="account_peer_discovery_enable_summary">连接至在本地网络宣告的DHT节点</string>
@@ -192,6 +193,7 @@
   <string name="account_status_online">在线</string>
   <string name="account_status_unknown">未知</string>
   <string name="account_status_offline">离线</string>
+  <string name="account_status_error">错误</string>
   <!--Create account-->
   <string name="account_creation_home">欢迎来到Jami</string>
   <string name="account_creation_profile">创建您的帐户资料</string>

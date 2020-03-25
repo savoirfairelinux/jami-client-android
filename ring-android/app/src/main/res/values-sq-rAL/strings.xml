@@ -78,11 +78,8 @@
   <string name="notif_dismiss">Hidhe Tej</string>
   <string name="notif_reply">Përgjigjuni</string>
   <string name="notif_incoming_file_transfer_title">Kartelë ardhëse nga %1$s</string>
-  <string name="notif_incoming_file_transfer">Dikush dëshiron t\’ju dërgojë një kartelë</string>
   <string name="notif_outgoing_file_transfer_title">Po dërgohet kartelë te %1$s</string>
-  <string name="notif_outgoing_file_transfer">Dikush dëshiron t\’ju dërgojë një kartelë</string>
   <string name="notif_incoming_picture">Foto nga %1$s</string>
-  <string name="action_open">Hape</string>
   <string name="notif_sync_title">Po njëkohësohen të dhëna…</string>
   <string name="notif_location_title">Ndarje vendndodhjeje me %1$s</string>
   <string name="location_share_contact">%1$s po ju tregon vendndodhjen</string>

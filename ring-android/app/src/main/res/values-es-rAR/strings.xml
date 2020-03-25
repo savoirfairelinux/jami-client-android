@@ -78,12 +78,16 @@
   <string name="notif_dismiss">Rechazar</string>
   <string name="notif_reply">Responder</string>
   <string name="notif_incoming_file_transfer_title">Archivo entrante de %1$s</string>
-  <string name="notif_incoming_file_transfer">Alguien quiere enviarte un archivo</string>
   <string name="notif_outgoing_file_transfer_title">Enviando archivo a %1$s</string>
-  <string name="notif_outgoing_file_transfer">Alguien quiere enviarte un archivo</string>
   <string name="notif_incoming_picture">Imagen de %1$s</string>
-  <string name="action_open">Abrir</string>
   <string name="notif_sync_title">Sincronizando datos...</string>
+  <string name="notif_location_title">Compartir ubicación con %1$s</string>
+  <string name="location_share_contact">%1$s está compartiendo su ubicación con vos</string>
+  <string name="notif_location_multi_title">Compartiendo ubicación con %1$d contactos</string>
+  <string name="notif_location_remaining">%1$d minutos restantes</string>
+  <string name="notif_location_action_stop">Dejar de compartir ubicación</string>
+  <string name="location_share_action_start">Comenzar a compartir</string>
+  <string name="location_share_action_stop">Dejar de compartir</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Vos:</string>
   <string name="action_call_hangup">Colgar</string>
@@ -117,6 +121,7 @@
   <string name="hist_file_received">Archivo recibido</string>
   <string name="conversation_send_audio">Grabar clip de audio</string>
   <string name="conversation_send_video">Grabar clip de video</string>
+  <string name="conversation_share_location">Compartir ubicación</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permiso de cámara</string>
   <string name="permission_dialog_camera_message">Las videollamadas requieren el permiso de cámara para funcionar. Considerá activarlo.</string>
@@ -162,6 +167,7 @@
   <string name="block_contact_dialog_title">¿Bloquear a %1$s?</string>
   <string name="block_contact_dialog_message">%1$s no podrá contactarte a menos que lo desbloquees.</string>
   <string name="block_contact_completed">%1$s ha sido bloqueado.</string>
+  <string name="conversation_contact_is_typing">Escribiendo...</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">¿Añadir a %1$s?</string>
   <string name="prompt_new_password">Nueva contraseña</string>
@@ -251,6 +257,13 @@
   <string name="navigation_item_contact_request">Solicitudes de contacto</string>
   <string name="navigation_item_account">Cuenta</string>
   <!--TV-->
+  <string name="tv_send_audio_dialog_message">¿Enviar mensaje de audio?</string>
   <string name="tv_audio_play">Reproducir</string>
+  <string name="tv_audio_pause">Pausar</string>
   <string name="tv_dialog_send">Enviar</string>
+  <string name="tv_audio_recording">Grabando...</string>
+  <string name="tv_send_text">Enviar texto</string>
+  <string name="tv_send_audio">Enviar audio</string>
+  <string name="tv_send_video">Enviar video</string>
+  <string name="tv_clear_history">Borrar historial</string>
 </resources>

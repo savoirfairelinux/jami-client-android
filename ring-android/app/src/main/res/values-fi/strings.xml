@@ -69,11 +69,8 @@
   <string name="notif_mark_as_read">Merkitse luetuksi</string>
   <string name="notif_reply">Vastaa</string>
   <string name="notif_incoming_file_transfer_title">Tuleva tiedosto käyttäjältä %1$s</string>
-  <string name="notif_incoming_file_transfer">Joku haluaa lähettää sinulle tiedoston</string>
   <string name="notif_outgoing_file_transfer_title">Lähetetään tiedosto käyttäjälle %1$s</string>
-  <string name="notif_outgoing_file_transfer">Joku haluaa lähettää sinulle tiedoston</string>
   <string name="notif_incoming_picture">Kuva käyttäjältä %1$s</string>
-  <string name="action_open">Avaa</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Sinä:</string>
   <string name="action_call_hangup">Katkaise puhelu</string>

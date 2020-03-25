@@ -75,11 +75,8 @@
   <string name="notif_dismiss">Odrzuć</string>
   <string name="notif_reply">Odpowiedz</string>
   <string name="notif_incoming_file_transfer_title">Przychodzący plik od %1$s</string>
-  <string name="notif_incoming_file_transfer">Ktoś chce wysłać Ci plik</string>
   <string name="notif_outgoing_file_transfer_title">Wysyłanie pliku do %1$s</string>
-  <string name="notif_outgoing_file_transfer">Ktoś chce wysłać Ci plik</string>
   <string name="notif_incoming_picture">Obrazek od %1$s</string>
-  <string name="action_open">Otwórz</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ty:</string>
   <string name="action_call_hangup">Rozłącz się</string>

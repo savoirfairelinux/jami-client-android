@@ -78,11 +78,8 @@
   <string name="notif_dismiss"> رد‌کردن</string>
   <string name="notif_reply">پاسخ</string>
   <string name="notif_incoming_file_transfer_title">فایل ورودی از%1$s</string>
-  <string name="notif_incoming_file_transfer">شخصی می‌خواهد یک فایل برای شما ارسال کند</string>
   <string name="notif_outgoing_file_transfer_title">ارسال فایل به %1$s</string>
-  <string name="notif_outgoing_file_transfer">شخصی می‌خواهد یک فایل برای شما ارسال کند</string>
   <string name="notif_incoming_picture">تصویر از%1$s</string>
-  <string name="action_open">باز کردن</string>
   <string name="notif_sync_title">در حال همگام‌سازی داده...</string>
   <string name="notif_location_title">اشتراک مکان با %1$s</string>
   <string name="location_share_contact">%1$s مکان را با شما به اشتراک می‌گذارد</string>

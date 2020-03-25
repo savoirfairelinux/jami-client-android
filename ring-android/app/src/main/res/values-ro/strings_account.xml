@@ -57,6 +57,7 @@
   <!--Name registration-->
   <string name="account_status_connecting">Se conectează</string>
   <string name="account_status_unknown">Necunoscut</string>
+  <string name="account_status_error">Eroare</string>
   <!--Create account-->
   <!--Edit profile-->
   <!--Devices-->

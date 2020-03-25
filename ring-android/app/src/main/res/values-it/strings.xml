@@ -49,6 +49,7 @@
     <item quantity="other">%d Conversazioni</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Cerca un nome o un numero di telefono...</string>
   <string name="choose_number">Scegli un numero</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -68,6 +69,7 @@
   <string name="notif_channel_messages">Messaggi</string>
   <string name="notif_channel_requests">Richieste</string>
   <string name="notif_channel_file_transfer">Trasferimento file</string>
+  <string name="notif_channel_sync">Sincronizzazione dati</string>
   <string name="notif_channel_background_service">Servizio in background</string>
   <string name="notif_channel_background_service_descr">Consente di ricevere chiamate e messaggi in qualsiasi momento.</string>
   <string name="notif_group_calls">Chiamate</string>
@@ -76,11 +78,13 @@
   <string name="notif_dismiss">Ignora</string>
   <string name="notif_reply">Rispondi</string>
   <string name="notif_incoming_file_transfer_title">File in arrivo da %1$s</string>
-  <string name="notif_incoming_file_transfer">Qualcuno vuole inviarti un file</string>
   <string name="notif_outgoing_file_transfer_title">Invio file a %1$s</string>
-  <string name="notif_outgoing_file_transfer">Qualcuno vuole inviarti un file</string>
   <string name="notif_incoming_picture">Foto da %1$s</string>
-  <string name="action_open">Apri</string>
+  <string name="notif_sync_title">Sincronizzazione dati in corso...</string>
+  <string name="notif_location_title">Condividi la posizione con %1$s</string>
+  <string name="location_share_contact">%1$s sta condividendo la posizione con te. </string>
+  <string name="notif_location_multi_title">Condivisione posizione con %1$d contatti</string>
+  <string name="notif_location_remaining">%1$d minuti rimanenti</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Tu:</string>
   <string name="action_call_hangup">Riattacca</string>

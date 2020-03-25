@@ -69,11 +69,8 @@
   <string name="notif_mark_as_read">Žymėti kaip skaitytą</string>
   <string name="notif_reply">Atsakyti</string>
   <string name="notif_incoming_file_transfer_title">Gaunamas failas nuo %1$s</string>
-  <string name="notif_incoming_file_transfer">Kažkas nori išsiųsti jums failą</string>
   <string name="notif_outgoing_file_transfer_title">Siunčiamas failas naudotojui %1$s</string>
-  <string name="notif_outgoing_file_transfer">Kažkas nori išsiųsti jums failą</string>
   <string name="notif_incoming_picture">Paveikslas nuo %1$s</string>
-  <string name="action_open">Atverti</string>
   <string name="notif_sync_title">Sinchronizuojami duomenys…</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Jūs:</string>

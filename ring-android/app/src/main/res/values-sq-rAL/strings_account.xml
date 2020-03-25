@@ -192,6 +192,7 @@
   <string name="account_status_online">Në linjë</string>
   <string name="account_status_unknown">E panjohur</string>
   <string name="account_status_offline">Jo në linjë</string>
+  <string name="account_status_error">Gabim</string>
   <!--Create account-->
   <string name="account_creation_home">Mirë se vini te Jami</string>
   <string name="account_creation_profile">Krijoni profilin tuaj</string>

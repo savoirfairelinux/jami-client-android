@@ -82,11 +82,8 @@
   <string name="notif_dismiss">رفض</string>
   <string name="notif_reply">الرد</string>
   <string name="notif_incoming_file_transfer_title">مكالمة واردة من %1$s</string>
-  <string name="notif_incoming_file_transfer">أحدهم يريد أن يرسل إليك ملف</string>
   <string name="notif_outgoing_file_transfer_title">إرسال ملف الى %1$s</string>
-  <string name="notif_outgoing_file_transfer">أحدهم يريد أن يرسل إليك ملف</string>
   <string name="notif_incoming_picture">صورة من %1$s</string>
-  <string name="action_open">إفتح</string>
   <string name="notif_sync_title">مزامنة البيانات...</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">أنت:</string>

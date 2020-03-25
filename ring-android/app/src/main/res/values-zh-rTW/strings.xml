@@ -77,11 +77,8 @@
   <string name="notif_dismiss">忽略</string>
   <string name="notif_reply">回覆</string>
   <string name="notif_incoming_file_transfer_title">從 %1$s 而來的檔案</string>
-  <string name="notif_incoming_file_transfer">有人想要傳送檔案給您</string>
   <string name="notif_outgoing_file_transfer_title">傳送檔案給 %1$s</string>
-  <string name="notif_outgoing_file_transfer">有人想要傳送檔案給您</string>
   <string name="notif_incoming_picture">圖片從 %1$s</string>
-  <string name="action_open">開啟</string>
   <string name="notif_sync_title">正在同步資料……</string>
   <string name="notif_location_title">正在與 %1$s 分享位置</string>
   <string name="location_share_contact">%1$s 正在與您分享位置</string>

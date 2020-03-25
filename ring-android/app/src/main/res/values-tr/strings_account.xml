@@ -167,6 +167,7 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="account_status_online">Çevrimiçi</string>
   <string name="account_status_unknown">Bilinmeyen</string>
   <string name="account_status_offline">Çevrimdışı</string>
+  <string name="account_status_error">Hata</string>
   <!--Create account-->
   <string name="account_creation_home">Jami\'ye Hoşgeldiniz</string>
   <string name="account_creation_profile">Profilinizi oluşturun</string>

@@ -102,6 +102,7 @@
   <!--Name registration-->
   <string name="account_status_connecting">يتم الإتصال</string>
   <string name="account_status_unknown">مجهول</string>
+  <string name="account_status_error">خطأ</string>
   <!--Create account-->
   <string name="account_creation_home">مرحبا بك في جامي</string>
   <string name="account_creation_profile">أنشئ ملفك الشخصي</string>

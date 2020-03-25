@@ -76,11 +76,8 @@
   <string name="notif_dismiss">Negeren</string>
   <string name="notif_reply">Beantwoorden</string>
   <string name="notif_incoming_file_transfer_title">Inkomend bestand van %1$s</string>
-  <string name="notif_incoming_file_transfer">Iemand wilt u een bestand sturen</string>
   <string name="notif_outgoing_file_transfer_title">Bestand wordt verstuurd naar %1$s</string>
-  <string name="notif_outgoing_file_transfer">Iemand wilt u een bestand sturen</string>
   <string name="notif_incoming_picture">Afbeelding van %1$s</string>
-  <string name="action_open">Openen</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">U:</string>
   <string name="action_call_hangup">Ophangen</string>

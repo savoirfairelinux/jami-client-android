@@ -66,9 +66,6 @@
   <string name="notif_group_calls">Trucades</string>
   <string name="notif_background_service">Jami s\'està executant en segon pla</string>
   <string name="notif_mark_as_read">Marca com a llegit</string>
-  <string name="notif_incoming_file_transfer">Alguna persona us està enviant un fitxer</string>
-  <string name="notif_outgoing_file_transfer">Algú prova d\'enviar-te un fitxer</string>
-  <string name="action_open">Obre</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Usuari:</string>
   <string name="action_call_hangup">Penja</string>

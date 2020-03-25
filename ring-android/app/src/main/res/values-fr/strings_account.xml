@@ -195,6 +195,7 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="account_status_online">En ligne</string>
   <string name="account_status_unknown">Inconnu</string>
   <string name="account_status_offline">Déconnecté</string>
+  <string name="account_status_error">Erreur</string>
   <!--Create account-->
   <string name="account_creation_home">Bienvenu sur Jami</string>
   <string name="account_creation_profile">Créer votre profil</string>

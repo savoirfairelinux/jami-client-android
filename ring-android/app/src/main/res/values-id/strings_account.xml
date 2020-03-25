@@ -17,6 +17,7 @@
   <string name="account_export_end_error_title">Eror</string>
   <!--Name registration-->
   <string name="account_status_unknown">Tidak diketahui</string>
+  <string name="account_status_error">Galat</string>
   <!--Create account-->
   <!--Edit profile-->
   <!--Devices-->

@@ -57,7 +57,6 @@
   <string name="notif_channel_messages">Mesaje</string>
   <string name="notif_channel_requests">Cereri</string>
   <string name="notif_group_calls">Apeluri</string>
-  <string name="action_open">Deschide</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Tu:</string>
   <string name="action_call_hangup">Închide</string>

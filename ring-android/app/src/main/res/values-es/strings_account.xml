@@ -95,6 +95,7 @@ Puedes editar tu cuenta luego</string>
   <string name="account_proxy_label">Proxy DHT</string>
   <string name="account_proxy_enable_label">Usar proxy DHT</string>
   <string name="account_proxy_server_label">Dirección proxy DHT</string>
+  <string name="account_proxy_server_list_label">URL del listado de proxy DHT</string>
   <string name="account_peer_discovery_label">Descubrimiento local de pares</string>
   <string name="account_peer_discovery_enable_label">Habilitar descubrimiento local de pares</string>
   <string name="account_peer_discovery_enable_summary">Conectarse a otros nodos DHT que se anuncian en nuestra red local</string>
@@ -192,6 +193,7 @@ Puedes editar tu cuenta luego</string>
   <string name="account_status_online">En línea</string>
   <string name="account_status_unknown">Desconocido</string>
   <string name="account_status_offline">Desconectado</string>
+  <string name="account_status_error">Error</string>
   <!--Create account-->
   <string name="account_creation_home">Bienvenido a Jami</string>
   <string name="account_creation_profile">Crea tu perfil</string>

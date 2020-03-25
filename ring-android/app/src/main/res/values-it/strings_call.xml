@@ -25,7 +25,7 @@ along with this program; if not, write to the Free Software
     <string name="call_error_no_camera_no_microphone">Chiamata cancellata. Nessuna camera o microfono rilevato.</string>
 
     <!-- SipCalls -->
-    <string name="call_human_state_searching">In ricerca</string>
+    <string name="call_human_state_searching">Ricerca in corso...</string>
     <string name="call_human_state_incoming">In arrivo</string>
     <string name="call_human_state_connecting">Connessione in corso </string>
     <string name="call_human_state_ringing">Suonando</string>

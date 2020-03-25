@@ -173,6 +173,7 @@
   <string name="account_status_online">Online</string>
   <string name="account_status_unknown">Neznámy</string>
   <string name="account_status_offline">Offline</string>
+  <string name="account_status_error">Chyba</string>
   <!--Create account-->
   <string name="account_creation_home">Vitajte v Jami</string>
   <string name="account_creation_profile">Vytvorte si váš profil</string>

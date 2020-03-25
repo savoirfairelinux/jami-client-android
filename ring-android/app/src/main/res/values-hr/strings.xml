@@ -67,10 +67,7 @@
   <string name="notif_mark_as_read">Označi kao pročitano</string>
   <string name="notif_reply">Odgovori</string>
   <string name="notif_incoming_file_transfer_title">Dolazna datoteka od %1$s</string>
-  <string name="notif_incoming_file_transfer">Netko vam želi poslati datoteku</string>
   <string name="notif_outgoing_file_transfer_title">Slanje datoteke za %1$s</string>
-  <string name="notif_outgoing_file_transfer">Netko vam želi poslati datoteku</string>
-  <string name="action_open">Otvori</string>
   <string name="notif_sync_title">Sinkroniziram podatke...</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ti:</string>

@@ -70,11 +70,8 @@
   <string name="notif_dismiss">Abweisen</string>
   <string name="notif_reply">Antworten</string>
   <string name="notif_incoming_file_transfer_title">Einkommende Datei von %1$s</string>
-  <string name="notif_incoming_file_transfer">Jemand möchte dir eine Datei senden</string>
   <string name="notif_outgoing_file_transfer_title">Sende Datei an %1$s</string>
-  <string name="notif_outgoing_file_transfer">Jemand möchte dir eine Datei senden</string>
   <string name="notif_incoming_picture">Bild von %1$s</string>
-  <string name="action_open">Öffnen</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Sie:</string>
   <string name="action_call_hangup">Auflegen</string>

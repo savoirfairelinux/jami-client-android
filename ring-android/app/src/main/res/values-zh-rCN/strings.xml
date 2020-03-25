@@ -77,12 +77,16 @@
   <string name="notif_dismiss">解散</string>
   <string name="notif_reply">回复</string>
   <string name="notif_incoming_file_transfer_title">从%1$s收到的文件</string>
-  <string name="notif_incoming_file_transfer">有人想给你发送一个文件</string>
   <string name="notif_outgoing_file_transfer_title">发送文件到%1$s</string>
-  <string name="notif_outgoing_file_transfer">有人想给你发送一个文件</string>
   <string name="notif_incoming_picture">来自%1$s的图片</string>
-  <string name="action_open">打开</string>
   <string name="notif_sync_title">正在同步数据...</string>
+  <string name="notif_location_title">正与%1$s分享位置</string>
+  <string name="location_share_contact">%1$s正与你分享位置</string>
+  <string name="notif_location_multi_title">正与%1$d联系人分享位置</string>
+  <string name="notif_location_remaining">剩余%1$d分钟</string>
+  <string name="notif_location_action_stop">停止分享位置</string>
+  <string name="location_share_action_start">开始分享</string>
+  <string name="location_share_action_stop">停止分享</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">你：</string>
   <string name="action_call_hangup">挂断</string>
@@ -116,6 +120,7 @@
   <string name="hist_file_received">文件已接收</string>
   <string name="conversation_send_audio">录制音频片段</string>
   <string name="conversation_send_video">录制视频片段</string>
+  <string name="conversation_share_location">分享位置</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">摄像头使用权限</string>
   <string name="permission_dialog_camera_message">视频会话需要使用摄像头，请设置相应权限。</string>
@@ -161,6 +166,7 @@
   <string name="block_contact_dialog_title">屏蔽%1$s？</string>
   <string name="block_contact_dialog_message">你将不能联系%1$s直到你解除屏蔽。</string>
   <string name="block_contact_completed">%1$s已被屏蔽。</string>
+  <string name="conversation_contact_is_typing">联系人正在输入...</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">添加%1$s？</string>
   <string name="prompt_new_password">新密码</string>
@@ -250,7 +256,13 @@
   <string name="navigation_item_contact_request">联系人请求</string>
   <string name="navigation_item_account">帐户</string>
   <!--TV-->
+  <string name="tv_send_audio_dialog_message">发送音频消息？</string>
   <string name="tv_audio_play">播放</string>
   <string name="tv_audio_pause">暂停</string>
   <string name="tv_dialog_send">发送</string>
+  <string name="tv_audio_recording">正在录音...</string>
+  <string name="tv_send_text">发送文本</string>
+  <string name="tv_send_audio">发送音频</string>
+  <string name="tv_send_video">发送视频</string>
+  <string name="tv_clear_history">清除历史</string>
 </resources>

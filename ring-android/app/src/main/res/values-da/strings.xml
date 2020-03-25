@@ -62,11 +62,8 @@
   <string name="notif_dismiss">Afvis</string>
   <string name="notif_reply">Svar</string>
   <string name="notif_incoming_file_transfer_title">Indgående fil fra %1$s</string>
-  <string name="notif_incoming_file_transfer">Nogen vil sende dig en fil</string>
   <string name="notif_outgoing_file_transfer_title">Sender fil til %1$s</string>
-  <string name="notif_outgoing_file_transfer">Nogen vil sende dig en fil</string>
   <string name="notif_incoming_picture">Billede fra %1$s</string>
-  <string name="action_open">Åbn</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Dig:</string>
   <string name="action_call_hangup">Læg på</string>

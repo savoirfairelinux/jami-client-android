@@ -71,11 +71,8 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="notif_dismiss">Dispensar</string>
   <string name="notif_reply">Responder</string>
   <string name="notif_incoming_file_transfer_title">Recebendo arquivo de %1$s</string>
-  <string name="notif_incoming_file_transfer">Alguém quer enviar um arquivo</string>
   <string name="notif_outgoing_file_transfer_title">Enviando arquivo para %1$s</string>
-  <string name="notif_outgoing_file_transfer">Alguém quer enviar um arquivo</string>
   <string name="notif_incoming_picture">Foto de %1$s</string>
-  <string name="action_open">Abrir</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Você:</string>
   <string name="action_call_hangup">Desligar</string>

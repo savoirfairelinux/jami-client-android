@@ -70,11 +70,8 @@
   <string name="notif_dismiss">ਖਾਰਜ ਕਰੋ</string>
   <string name="notif_reply">ਜਵਾਬ ਦਿਓ</string>
   <string name="notif_incoming_file_transfer_title">%1$s ਤੋਂ ਆਉਂਦੀ ਫ਼ਾਈਲ</string>
-  <string name="notif_incoming_file_transfer">ਕੋਈ ਤੁਹਾਨੂੰ ਫ਼ਾਈਲ ਭੇਜਣੀ ਚਾਹੁੰਦਾ ਹੈ</string>
   <string name="notif_outgoing_file_transfer_title">%1$s ਨੂੰ ਫ਼ਾਈਲ ਭੇਜੀ ਜਾ ਰਹੀ ਹੈ</string>
-  <string name="notif_outgoing_file_transfer">ਕੋਈ ਤੁਹਾਨੂੰ ਫ਼ਾਈਲ ਭੇਜਣੀ ਚਾਹੁੰਦਾ ਹੈ</string>
   <string name="notif_incoming_picture">%1$s ਵੱਲੋਂ ਤਸਵੀਰ</string>
-  <string name="action_open">ਖੋਲ੍ਹੋ</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">ਤੁਸੀਂ:</string>
   <string name="action_call_hangup">ਕਾਲ ਕੱਟੋ</string>

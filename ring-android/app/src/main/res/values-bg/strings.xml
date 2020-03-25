@@ -70,11 +70,8 @@
   <string name="notif_dismiss">Отказ</string>
   <string name="notif_reply">Отговор</string>
   <string name="notif_incoming_file_transfer_title">Входящ файл от %1$s</string>
-  <string name="notif_incoming_file_transfer">Някой иска да ви изпрати файл.</string>
   <string name="notif_outgoing_file_transfer_title">Изпращане на файл до %1$s</string>
-  <string name="notif_outgoing_file_transfer">Някой иска да ви изпрати файл.</string>
   <string name="notif_incoming_picture">Снимка от %1$s</string>
-  <string name="action_open">Отваряне</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Вие:</string>
   <string name="action_call_hangup">Затваряне</string>

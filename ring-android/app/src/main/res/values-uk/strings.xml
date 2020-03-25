@@ -72,11 +72,8 @@
   <string name="notif_dismiss">Відхилити</string>
   <string name="notif_reply">Відповісти</string>
   <string name="notif_incoming_file_transfer_title">Вхідний файл від %1$s</string>
-  <string name="notif_incoming_file_transfer">Хтось хоче вислати вам файл</string>
   <string name="notif_outgoing_file_transfer_title">Надсилаємо файл до %1$s </string>
-  <string name="notif_outgoing_file_transfer">Хтось хоче вислати вам файл</string>
   <string name="notif_incoming_picture">Картинка від %1$s</string>
-  <string name="action_open">Відкрити</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ви:</string>
   <string name="action_call_hangup">Зупинити</string>

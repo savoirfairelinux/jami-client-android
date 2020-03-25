@@ -58,6 +58,7 @@
   <string name="invalid_username">Μη έγκυρο όνομα χρήστη</string>
   <string name="account_status_connecting">Συνδέεται</string>
   <string name="account_status_unknown">Άγνωστοι</string>
+  <string name="account_status_error">Σφάλμα</string>
   <!--Create account-->
   <!--Edit profile-->
   <!--Devices-->

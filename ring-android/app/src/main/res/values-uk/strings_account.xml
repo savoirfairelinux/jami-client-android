@@ -163,6 +163,7 @@
   <string name="account_status_online">У мережі</string>
   <string name="account_status_unknown">Невідомий</string>
   <string name="account_status_offline">Поза мережею</string>
+  <string name="account_status_error">Помилка</string>
   <!--Create account-->
   <string name="account_creation_home">Вітаємо в Джамі</string>
   <string name="account_creation_profile">Створіть ваш профіль</string>
