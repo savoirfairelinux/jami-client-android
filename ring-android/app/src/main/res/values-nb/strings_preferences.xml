@@ -9,6 +9,8 @@
   <string name="pref_mobileData_summary">Tillat Jami på 3G/LTE-nettverk i tillegg til Wi-Fi</string>
   <string name="pref_pushNotifications_title">Push-merknader</string>
   <string name="pref_pushNotifications_summary">Bruk Google-tjenere til å tillate mottak av samtaler/meldinger i bakgrunnen</string>
+  <string name="pref_video_advanced_title">Avanserte innstillinger for video</string>
+  <string name="pref_video_advanced_summary">Endre videobitrate og oppløsning, samt få tilgang til eksperimentelle funksjoner</string>
   <string name="pref_hd_summary">Aktiver sending av HD-video</string>
   <string name="pref_hwEncode_title">Aktiver aksellerert koding</string>
   <string name="pref_hwEncode_summary">Eksperimentelt valg</string>
@@ -19,6 +21,7 @@
   <string name="pref_startOnBoot_title">Start Jami ved oppstart</string>
   <string name="pref_startOnBoot_summary">Kjør Jami i bakgrunnen når systemet starter.</string>
   <string name="pref_clearHistory_title">Slett historikk</string>
+  <string name="pref_clearHistory_summary">Tøm samtalehistorikken. Denne handlingen kan ikke angres.</string>
   <string name="pref_persistNotification_title">Kjør i bakgrunnen</string>
   <string name="pref_persistNotification_summary">Tillater kjøring i bakgrunnen for å motta samtaler og meldinger.</string>
 </resources>

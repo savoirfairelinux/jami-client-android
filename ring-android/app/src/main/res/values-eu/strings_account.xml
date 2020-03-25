@@ -125,6 +125,7 @@
   <string name="account_status_online">Konektatuta</string>
   <string name="account_status_unknown">Ezezaguna</string>
   <string name="account_status_offline">Deskonektatuta</string>
+  <string name="account_status_error">Errorea</string>
   <!--Create account-->
   <string name="account_creation_home">Ongi etorri Jamira</string>
   <string name="account_creation_profile">Sortu zure profila</string>

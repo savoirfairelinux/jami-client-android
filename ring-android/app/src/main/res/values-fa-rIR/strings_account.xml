@@ -193,6 +193,7 @@
   <string name="account_status_online">آنلاین</string>
   <string name="account_status_unknown">ناشناخته</string>
   <string name="account_status_offline">آفلاین</string>
+  <string name="account_status_error">خطا</string>
   <!--Create account-->
   <string name="account_creation_home">به جمی خوش آمدید</string>
   <string name="account_creation_profile">پروفایل خود را بسازید</string>

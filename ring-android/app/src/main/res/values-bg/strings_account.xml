@@ -146,6 +146,7 @@
   <string name="account_status_online">На линия</string>
   <string name="account_status_unknown">Неизвестно</string>
   <string name="account_status_offline">Извън линия</string>
+  <string name="account_status_error">Грешка</string>
   <!--Create account-->
   <string name="account_creation_home">Добре дошли в Jami</string>
   <string name="account_creation_profile">Създаване на профил</string>

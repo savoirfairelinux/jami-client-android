@@ -183,6 +183,7 @@ U kunt uw account later bewerken</string>
   <string name="account_status_online">Online</string>
   <string name="account_status_unknown">Onbekend</string>
   <string name="account_status_offline">Offline</string>
+  <string name="account_status_error">Fout</string>
   <!--Create account-->
   <string name="account_creation_home">Welkom bij Jami</string>
   <string name="account_creation_profile">Maak uw profiel aan</string>

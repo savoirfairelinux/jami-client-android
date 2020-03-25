@@ -152,6 +152,7 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_status_online">Online</string>
   <string name="account_status_unknown">Sconosciuto</string>
   <string name="account_status_offline">Offline</string>
+  <string name="account_status_error">Errore</string>
   <!--Create account-->
   <string name="account_creation_home">Benvenuto in Jami</string>
   <string name="account_creation_profile">Crea il tuo profilo</string>

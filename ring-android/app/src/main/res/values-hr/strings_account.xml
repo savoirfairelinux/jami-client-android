@@ -94,6 +94,7 @@ Moćete urediti vaš račun kasnije</string>
   <!--Name registration-->
   <string name="account_status_connecting">Spajanje</string>
   <string name="account_status_unknown">Nepoznato</string>
+  <string name="account_status_error">Greška</string>
   <!--Create account-->
   <string name="account_creation_home">Dobrodošli u Jami</string>
   <string name="account_creation_profile">Napravite vaš profil</string>

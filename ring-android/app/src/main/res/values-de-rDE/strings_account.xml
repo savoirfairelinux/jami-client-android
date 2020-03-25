@@ -130,6 +130,7 @@ Sie können Ihr Konto später ändern.</string>
   <string name="account_status_online">Online</string>
   <string name="account_status_unknown">Unbekannt</string>
   <string name="account_status_offline">Offline</string>
+  <string name="account_status_error">Fehler</string>
   <!--Create account-->
   <string name="account_creation_home">Willkommen bei Jami</string>
   <!--Edit profile-->

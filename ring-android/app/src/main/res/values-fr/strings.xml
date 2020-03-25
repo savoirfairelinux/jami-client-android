@@ -84,6 +84,13 @@
   <string name="notif_incoming_picture">Image de %1$s</string>
   <string name="action_open">Ouvrir</string>
   <string name="notif_sync_title">Synchronisation des données...</string>
+  <string name="notif_location_title">Partage de la position avec %1$s</string>
+  <string name="location_share_contact">%1$s partage sa position avec vous</string>
+  <string name="notif_location_multi_title">Partage de la position avec %1$d contacts</string>
+  <string name="notif_location_remaining">%1$d minutes restantes</string>
+  <string name="notif_location_action_stop">Arrêter le partage de position</string>
+  <string name="location_share_action_start">Démarrer le partage</string>
+  <string name="location_share_action_stop">Arrêter le partage</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Vous :</string>
   <string name="action_call_hangup">Raccrochez</string>
@@ -117,6 +124,7 @@
   <string name="hist_file_received">Fichier reçu</string>
   <string name="conversation_send_audio">Envoyer un message vocal</string>
   <string name="conversation_send_video">Envoyer un message vidéo</string>
+  <string name="conversation_share_location">Partager votre position</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permission d\'accès à la caméra</string>
   <string name="permission_dialog_camera_message">Les conversation vidéo nécessitent la permission d\'utiliser l\'objectif. Merci de l\'autoriser.</string>
@@ -162,6 +170,7 @@
   <string name="block_contact_dialog_title">Bloquer %1$s ?</string>
   <string name="block_contact_dialog_message">%1$s ne pourra pas vous contacter tant que vous ne l\'aurez pas débloqué.</string>
   <string name="block_contact_completed">%1$s a été bloqué.</string>
+  <string name="conversation_contact_is_typing">Votre interlocuteur est en train d\'écrire...</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Ajouter %1$s ?</string>
   <string name="prompt_new_password">Nouveau mot de passe</string>
@@ -251,7 +260,13 @@
   <string name="navigation_item_contact_request">Invitations</string>
   <string name="navigation_item_account">Compte</string>
   <!--TV-->
+  <string name="tv_send_audio_dialog_message">Envoyer le message audio ?</string>
   <string name="tv_audio_play">Lire</string>
   <string name="tv_audio_pause">Pause</string>
   <string name="tv_dialog_send">Envoyer</string>
+  <string name="tv_audio_recording">Enregistrement...</string>
+  <string name="tv_send_text">Envoyer un texte</string>
+  <string name="tv_send_audio">Envoyer le message audio </string>
+  <string name="tv_send_video">Envoyer la vidéo</string>
+  <string name="tv_clear_history">Effacer l\'historique</string>
 </resources>

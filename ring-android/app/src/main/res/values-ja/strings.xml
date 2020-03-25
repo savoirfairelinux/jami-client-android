@@ -45,7 +45,7 @@
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
-    <item quantity="other">%d 会話</item>
+    <item quantity="other">%d 件の会話</item>
   </plurals>
   <!--ContactList Fragment-->
   <string name="searchbar_hint">名前または電話番号で検索</string>
@@ -83,6 +83,12 @@
   <string name="notif_incoming_picture">%1$sからの画像</string>
   <string name="action_open">開く</string>
   <string name="notif_sync_title">データの同期中</string>
+  <string name="notif_location_title">現在地を次の連絡先に共有中: %1$s</string>
+  <string name="location_share_contact">%1$s があなたに現在地を共有中です</string>
+  <string name="notif_location_remaining">残り %1$d 分</string>
+  <string name="notif_location_action_stop">現在地の共有を停止</string>
+  <string name="location_share_action_start">共有を開始</string>
+  <string name="location_share_action_stop">共有を停止</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">あなた:</string>
   <string name="action_call_hangup">通話終了</string>
@@ -103,7 +109,7 @@
   <string name="ab_action_video_call">ビデオ通話</string>
   <string name="ab_action_change_screen_orientation">画面の向きを変更</string>
   <string name="share_via">共有...</string>
-  <string name="write_a_message">メッセージを書く</string>
+  <string name="write_a_message">メッセージを入力</string>
   <string name="scan_qr">QR コードをスキャン</string>
   <string name="ab_action_flipcamera">カメラを押す</string>
   <!--Text messages-->
@@ -116,6 +122,7 @@
   <string name="hist_file_received">ファイルを受信しました</string>
   <string name="conversation_send_audio">音声の録音</string>
   <string name="conversation_send_video">ビデオの録画</string>
+  <string name="conversation_share_location">現在地の共有</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">カメラのアクセス許可</string>
   <string name="permission_dialog_camera_message">ビデオ会話ではカメラが動作するためにアクセス許可が必要です。 有効にすることを検討してください。</string>
@@ -131,6 +138,9 @@
   <string name="permission_dialog_write_call_log_message">Jamiは着信履歴へのアクセスが必要です。権限を許可してください。</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">追加したいアカウントの QR コートをスキャンしてください。</string>
+  <string name="title_activity_qrcode">アカウントの共有</string>
+  <string name="tab_code">自分のコード</string>
+  <string name="tab_scan">スキャン</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">履歴を削除しますか？</string>
   <string name="clear_history_dialog_message">この操作は取り消しできません</string>
@@ -147,17 +157,21 @@
   <string name="conversation_action_copy_peer_number">番号をコピー</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s をクリップボードにコピーしました</string>
   <string name="conversation_action_select_peer_number">番号を選択</string>
+  <string name="conversation_action_block_this">ブロックした連絡先</string>
   <string name="clip_contact_uri">連絡先</string>
   <string name="block_contact_dialog_title">%1$sをブロックしますか？</string>
   <string name="block_contact_dialog_message">%1$sはあなたがブロックを解除するまで連絡できません。</string>
   <string name="block_contact_completed">%1$sをブロックしました。</string>
+  <string name="conversation_contact_is_typing">相手が入力中…</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$sを追加しますか？</string>
   <string name="prompt_new_password">新しいパスワード</string>
   <string name="prompt_new_password_optional">新しいパスワード（オプション）</string>
-  <string name="prompt_new_password_repeat">新しいパスワードの繰り返し</string>
+  <string name="prompt_new_password_repeat">新しいパスワードの確認</string>
   <string name="account_create_title">Jamiアカウントを作成</string>
   <string name="prompt_new_username">新しいユーザー名を入力してください</string>
+  <string name="help_password_choose">あなたのJamiアカウントを守るために強固なパスワードを設定してください。また、このパスワードを忘れないでください。</string>
+  <string name="help_password_enter">現在のJamiアカウントのパスワード</string>
   <string name="wizard_next">次へ</string>
   <string name="wizard_back">戻る</string>
   <string name="wizard_skip">スキップ</string>
@@ -166,8 +180,9 @@
   <string name="profile_message_warning">あなたのプロフィールは連絡先とのみ共有されます</string>
   <string name="open_the_gallery">ギャラリーを開く</string>
   <string name="take_a_photo">写真を撮る</string>
-  <string name="profile_name_hint">名前を入力してください (オプション)</string>
+  <string name="profile_name_hint">名前を入力... (任意)</string>
   <!--Share fragment-->
+  <string name="share_message">このコードをJamiでスキャンしてください</string>
   <string name="share_message_no_account">共有するアカウントを選択してください。</string>
   <string name="share_your_account_information">連絡先情報を共有</string>
   <string name="share_label">共有</string>
@@ -180,12 +195,12 @@
   <string name="contact_request_title">新しい連絡先リクエスト</string>
   <string name="contact_request_msg">%1$s の連絡先リクエストがあります</string>
   <string name="contact_request_account">%1$s に</string>
-  <string name="no_requests">0 の連絡先リクエスト</string>
+  <string name="no_requests">0 件の連絡先リクエスト</string>
   <!--Send contact requests-->
   <string name="send_request_button">送信</string>
   <string name="send_request_title">連絡先リクエストを送信</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">0 のブロックした連絡先</string>
+  <string name="no_blocked_contact">0 件のブロックした連絡先</string>
   <!--Smartlist-->
   <string name="no_contact_request">連絡先のリクエストは送信していません</string>
   <string name="contact_request_sent">連絡先のリクエストを送信しました</string>
@@ -208,11 +223,19 @@
   <string name="menu_message_delete">メッセージを削除</string>
   <string name="menu_message_cancel">メッセージをキャンセル</string>
   <string name="menu_delete">削除</string>
+  <string name="pref_darkTheme_title">ダークテーマ</string>
+  <string name="pref_darkTheme_summary">システムの設定を使用するのではなく、常にダークテーマを有効にします</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">会話</string>
   <string name="navigation_item_contact_request">連絡先のリクエスト</string>
   <string name="navigation_item_account">アカウント</string>
   <!--TV-->
   <string name="tv_audio_play">再生</string>
+  <string name="tv_audio_pause">一時停止</string>
   <string name="tv_dialog_send">送信</string>
+  <string name="tv_audio_recording">録音中...</string>
+  <string name="tv_send_text">テキストの送信</string>
+  <string name="tv_send_audio">音声の送信</string>
+  <string name="tv_send_video">ビデオを送信</string>
+  <string name="tv_clear_history">履歴を削除</string>
 </resources>
