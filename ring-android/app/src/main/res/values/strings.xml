@@ -59,19 +59,13 @@ along with this program; if not, write to the Free Software
     <string name="credits_ringtones" translatable="false">Loïc Bogino</string>
 
     <!-- RingActivity -->
-    <string name="title_activity_sflphone_home">Ring</string>
     <string name="error_no_network">No network connectivity</string>
     <string name="error_mobile_network_available_but_disabled">Please grant access to cellular network in the settings screen.</string>
 
     <!-- AB menus -->
     <string name="ab_action_chat">Text messaging</string>
 
-    <!-- Left Drawer -->
-    <!-- Accessibility -->
-    <string name="drawer_open">Open navigation drawer</string>
-    <string name="drawer_close">Close navigation drawer</string>
     <!-- Sections -->
-    <string name="menu_item_home">Home</string>
     <string name="menu_item_contact_request">Contact requests</string>
     <string name="menu_item_accounts">Manage accounts</string>
     <string name="menu_item_account">Manage account</string>
