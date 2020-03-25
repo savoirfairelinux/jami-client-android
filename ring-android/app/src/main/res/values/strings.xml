@@ -126,9 +126,7 @@ along with this program; if not, write to the Free Software
     <string name="notif_dismiss">Dismiss</string>
     <string name="notif_reply">Reply</string>
     <string name="notif_incoming_file_transfer_title">Incoming file from %1$s</string>
-    <string name="notif_incoming_file_transfer">Someone wants to send you a file</string>
     <string name="notif_outgoing_file_transfer_title">Sending file to %1$s</string>
-    <string name="notif_outgoing_file_transfer">Someone wants to send you a file</string>
     <string name="notif_incoming_picture">Picture from %1$s</string>
     <string name="action_open">Open</string>
     <string name="notif_sync_title">Syncing data…</string>
