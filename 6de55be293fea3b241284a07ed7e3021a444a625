@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d17c747_d4814dd1",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/camera/CustomCameraActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-03-26T04:22:21Z",
+      "side": 1,
+      "message": "use MediaStore.EXTRA_OUTPUT",
+      "range": {
+        "startLine": 59,
+        "startChar": 31,
+        "endLine": 59,
+        "endChar": 41
+      },
+      "revId": "6de55be293fea3b241284a07ed7e3021a444a625",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93fe5a0c_4a70c7c6",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/camera/CustomCameraActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-03-26T04:22:21Z",
+      "side": 1,
+      "message": "use Intent action and type",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 57
+      },
+      "revId": "6de55be293fea3b241284a07ed7e3021a444a625",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b0baafc_4fe65f72",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/camera/CustomCameraActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-03-26T04:22:21Z",
+      "side": 1,
+      "message": "We dont want to share the media with other apps or the system unless explicitly requested by the user (through \u0027share\u0027,\u0027open\u0027 and \u0027download\u0027 actions).",
+      "range": {
+        "startLine": 82,
+        "startChar": 26,
+        "endLine": 82,
+        "endChar": 61
+      },
+      "revId": "6de55be293fea3b241284a07ed7e3021a444a625",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e70ab16f_78af5bc5",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/camera/CustomCameraActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-03-26T04:22:21Z",
+      "side": 1,
+      "message": "* create temp file using AndroidFileUtils.createImageFile\n* return uri to mFile with something like:\n    intent.putExtra(MediaStore.EXTRA_OUTPUT, ContentUriHandler.getUriForFile(...))",
+      "revId": "6de55be293fea3b241284a07ed7e3021a444a625",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eb4bb73_8eaf9caf",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/camera/CustomCameraActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-03-26T04:22:21Z",
+      "side": 1,
+      "message": "Use the same way to return audio and video, allowing to capture HD pictures",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 48
+      },
+      "revId": "6de55be293fea3b241284a07ed7e3021a444a625",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "907d0235_6cfcec8c",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/camera/CustomCameraActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-03-26T04:22:21Z",
+      "side": 1,
+      "message": "use intent.setType",
+      "range": {
+        "startLine": 111,
+        "startChar": 12,
+        "endLine": 111,
+        "endChar": 52
+      },
+      "revId": "6de55be293fea3b241284a07ed7e3021a444a625",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43294e3e_b255758d",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/camera/CustomCameraActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-03-26T04:22:21Z",
+      "side": 1,
+      "message": "use the Intent action (MediaStore.ACTION_VIDEO_CAPTURE or MediaStore.ACTION_IMAGE_CAPTURE)",
+      "range": {
+        "startLine": 137,
+        "startChar": 8,
+        "endLine": 137,
+        "endChar": 69
+      },
+      "revId": "6de55be293fea3b241284a07ed7e3021a444a625",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
