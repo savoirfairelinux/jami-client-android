@@ -72,7 +72,7 @@ public class ContactSearchFragment extends BaseSearchFragment<ContactSearchPrese
 
         // dependency injection
         ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
-        setOnItemViewClickedListener((itemViewHolder, item, rowViewHolder, row) -> presenter.contactClicked(((ContactCard) item).getModel().getContact()));
+        setOnItemViewClickedListener((itemViewHolder, item, rowViewHolder, row) -> presenter.contactClicked(((ContactCard) item).getModel()));
         setBadgeDrawable(ContextCompat.getDrawable(getActivity(), R.mipmap.ic_launcher));
         setSearchQuery("", false);
     }
@@ -158,7 +158,10 @@ public class ContactSearchFragment extends BaseSearchFragment<ContactSearchPrese
 
     @Override
     public void displayContactDetails(TVListViewModel model) {
-        Intent intent = new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(model.getAccountId(), model.getContact().getPrimaryUri()), getActivity(), TVContactActivity.class);
+        Intent intent = new Intent(getActivity(), TVContactActivity.class);
+        intent.putExtra(TVContactActivity.CONTACT_REQUEST, model.getContact().getPrimaryUri());
+        intent.setDataAndType(ConversationPath.toUri(model.getAccountId(), model.getContact().getPrimaryUri()), TVContactActivity.TYPE_TRUST_REQUEST);
         getActivity().startActivity(intent);
+        getActivity().finish();
     }
 }
