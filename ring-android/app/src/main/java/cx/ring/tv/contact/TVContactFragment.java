@@ -134,7 +134,7 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
 
         ArrayObjectAdapter adapter = new ArrayObjectAdapter();
         adapter.add(ACTION_CALL, new Action(ACTION_CALL, getResources().getString(R.string.ab_action_video_call),
-                null, getResources().getDrawable(R.drawable.baseline_videocam_24)));
+                null, requireContext().getDrawable(R.drawable.baseline_videocam_24)));
         adapter.add(ACTION_DELETE, new Action(ACTION_DELETE, getResources().getString(R.string.conversation_action_remove_this)));
         adapter.add(ACTION_CLEAR_HISTORY, new Action(ACTION_CLEAR_HISTORY, getResources().getString(R.string.tv_clear_history)));
         row.setActionsAdapter(adapter);
