@@ -84,7 +84,6 @@ import cx.ring.tv.call.TVCallFragment;
 import cx.ring.tv.cards.iconcards.IconCardPresenter;
 import cx.ring.tv.conversation.TvConversationFragment;
 import cx.ring.tv.contact.TVContactFragment;
-import cx.ring.tv.contactrequest.TVContactRequestFragment;
 import cx.ring.tv.main.MainFragment;
 import cx.ring.tv.search.ContactSearchFragment;
 import dagger.Component;
@@ -204,8 +203,6 @@ public interface JamiInjectionComponent {
     void inject(TVProfileEditingFragment activity);
 
     void inject(TVShareFragment activity);
-
-    void inject(TVContactRequestFragment fragment);
 
     void inject(TVContactFragment fragment);
 

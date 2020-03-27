@@ -322,9 +322,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </intent-filter>
         </activity>
         <activity
-            android:name=".tv.contactrequest.TVContactRequestActivity"
-            android:theme="@style/Theme.Leanback.Details" />
-        <activity
             android:name=".tv.contact.TVContactActivity"
             android:theme="@style/Theme.Leanback.Details" />
         <activity
