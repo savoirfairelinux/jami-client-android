@@ -27,6 +27,7 @@ import cx.ring.R;
 public class TVContactActivity extends FragmentActivity {
     public static final String SHARED_ELEMENT_NAME = "photo";
     public static final String CONTACT_REQUEST = "ContactRequest";
+    public static final String TYPE_TRUST_REQUEST = "TrustRequest";
 
     /**
      * Called when the activity is first created.
