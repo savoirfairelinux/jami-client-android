@@ -68,7 +68,6 @@ import cx.ring.tv.cards.contacts.ContactCard;
 import cx.ring.tv.cards.iconcards.IconCard;
 import cx.ring.tv.cards.iconcards.IconCardHelper;
 import cx.ring.tv.contact.TVContactActivity;
-import cx.ring.tv.contactrequest.TVContactRequestActivity;
 import cx.ring.tv.model.TVListViewModel;
 import cx.ring.tv.search.SearchActivity;
 import cx.ring.tv.views.CustomTitleView;
@@ -340,20 +339,21 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
             if (item instanceof ContactCard) {
                 TVListViewModel model = ((ContactCard) item).getModel();
                 if (row == requestsRow) {
-                    Intent intent = new Intent(getActivity(), TVContactRequestActivity.class);
-                    intent.putExtra(TVContactRequestActivity.CONTACT_REQUEST, model.getContact().getPrimaryUri());
+                    Intent intent = new Intent(getActivity(), TVContactActivity.class);
+                    intent.putExtra(TVContactActivity.CONTACT_REQUEST_URI, model.getContact().getPrimaryUri());
+                    intent.setDataAndType(ConversationPath.toUri(model.getAccountId(), model.getContact().getPrimaryUri()), TVContactActivity.TYPE_CONTACT_REQUEST_INCOMING);
 
                     Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
                             getActivity(),
                             ((ImageCardView) itemViewHolder.view).getMainImageView(),
-                            TVContactRequestActivity.SHARED_ELEMENT_NAME).toBundle();
+                            TVContactActivity.SHARED_ELEMENT_NAME).toBundle();
                     getActivity().startActivity(intent, bundle);
                 } else {
                     Intent intent = new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(model.getAccountId(), model.getContact().getPrimaryUri()), getActivity(), TVContactActivity.class);
 
                     Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
                             ((ImageCardView) itemViewHolder.view).getMainImageView(),
-                            TVContactRequestActivity.SHARED_ELEMENT_NAME).toBundle();
+                            TVContactActivity.SHARED_ELEMENT_NAME).toBundle();
                     getActivity().startActivity(intent, bundle);
                 }
             } else if (item instanceof IconCard) {
