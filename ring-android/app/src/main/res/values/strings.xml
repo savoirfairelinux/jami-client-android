@@ -333,6 +333,5 @@ along with this program; if not, write to the Free Software
     <string name="tv_send_text">Send Text</string>
     <string name="tv_send_audio">Send Audio</string>
     <string name="tv_send_video">Send Media</string>
-    <string name="tv_clear_history">clear history</string>
 
 </resources>
