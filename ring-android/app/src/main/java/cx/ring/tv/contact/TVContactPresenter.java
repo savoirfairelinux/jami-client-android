@@ -22,6 +22,7 @@ package cx.ring.tv.contact;
 
 import javax.inject.Inject;
 
+import cx.ring.daemon.Blob;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Account;
 import cx.ring.model.Conference;
@@ -29,8 +30,10 @@ import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
+import cx.ring.services.VCardService;
 import cx.ring.tv.model.TVListViewModel;
 import cx.ring.utils.ConversationPath;
+import cx.ring.utils.VCardUtils;
 import io.reactivex.Scheduler;
 
 public class TVContactPresenter extends RootPresenter<TVContactView> {
@@ -38,6 +41,7 @@ public class TVContactPresenter extends RootPresenter<TVContactView> {
     private final AccountService mAccountService;
     private final ConversationFacade mConversationService;
     private final Scheduler mUiScheduler;
+    private final VCardService mVCardService;
 
     private String mAccountId;
     private Uri mUri;
@@ -45,10 +49,12 @@ public class TVContactPresenter extends RootPresenter<TVContactView> {
     @Inject
     public TVContactPresenter(AccountService accountService,
                               ConversationFacade conversationService,
-                              Scheduler uiScheduler) {
+                              Scheduler uiScheduler,
+                              VCardService vCardService) {
         mAccountService = accountService;
         mConversationService = conversationService;
         mUiScheduler = uiScheduler;
+        mVCardService = vCardService;
     }
 
     public void setContact(ConversationPath path) {
@@ -85,5 +91,22 @@ public class TVContactPresenter extends RootPresenter<TVContactView> {
     public void clearHistory() {
         mConversationService.clearHistory(mAccountId, mUri).subscribe();
     }
+
+    public void onAddContact(Uri viewModel) {
+        String accountId = mAccountService.getCurrentAccount().getAccountID();
+        sendTrustRequest(accountId, viewModel.getRawRingId());
+        getView().switchToConversationView(accountId);
+    }
+
+    private void sendTrustRequest(String accountId, String ringId) {
+        mVCardService.loadSmallVCard(accountId, VCardService.MAX_SIZE_REQUEST)
+                .subscribe(vCard -> {
+                    mAccountService.sendTrustRequest(accountId,
+                            ringId,
+                            Blob.fromString(VCardUtils.vcardToString(vCard)));
+
+                });
+    }
+
 
 }
