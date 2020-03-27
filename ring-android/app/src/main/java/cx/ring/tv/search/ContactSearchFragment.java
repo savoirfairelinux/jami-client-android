@@ -22,11 +22,9 @@ package cx.ring.tv.search;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.core.app.ActivityOptionsCompat;
 import androidx.leanback.app.SearchSupportFragment;
 import androidx.leanback.widget.ArrayObjectAdapter;
 import androidx.leanback.widget.HeaderItem;
-import androidx.leanback.widget.ImageCardView;
 import androidx.leanback.widget.ListRow;
 import androidx.leanback.widget.ListRowPresenter;
 import androidx.leanback.widget.ObjectAdapter;
@@ -48,7 +46,6 @@ import cx.ring.tv.cards.Card;
 import cx.ring.tv.cards.CardPresenterSelector;
 import cx.ring.tv.cards.contacts.ContactCard;
 import cx.ring.tv.contact.TVContactActivity;
-import cx.ring.tv.contactrequest.TVContactRequestActivity;
 import cx.ring.tv.model.TVListViewModel;
 import cx.ring.utils.ConversationPath;
 
@@ -72,7 +69,7 @@ public class ContactSearchFragment extends BaseSearchFragment<ContactSearchPrese
 
         // dependency injection
         ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
-        setOnItemViewClickedListener((itemViewHolder, item, rowViewHolder, row) -> presenter.contactClicked(((ContactCard) item).getModel().getContact()));
+        setOnItemViewClickedListener((itemViewHolder, item, rowViewHolder, row) -> presenter.contactClicked(((ContactCard) item).getModel()));
         setBadgeDrawable(ContextCompat.getDrawable(getActivity(), R.mipmap.ic_launcher));
         setSearchQuery("", false);
     }
@@ -158,7 +155,10 @@ public class ContactSearchFragment extends BaseSearchFragment<ContactSearchPrese
 
     @Override
     public void displayContactDetails(TVListViewModel model) {
-        Intent intent = new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(model.getAccountId(), model.getContact().getPrimaryUri()), getActivity(), TVContactActivity.class);
+        Intent intent = new Intent(getActivity(), TVContactActivity.class);
+        intent.putExtra(TVContactActivity.CONTACT_REQUEST_URI, model.getContact().getPrimaryUri());
+        intent.setDataAndType(ConversationPath.toUri(model.getAccountId(), model.getContact().getPrimaryUri()), TVContactActivity.TYPE_CONTACT_REQUEST_OUTGOING);
         getActivity().startActivity(intent);
+        getActivity().finish();
     }
 }
