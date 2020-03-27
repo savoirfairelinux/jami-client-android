@@ -31,5 +31,7 @@ public interface TVContactView extends BaseView {
 
     void goToCallActivity(String id);
 
+    void switchToConversationView();
+
     void finishView();
 }
