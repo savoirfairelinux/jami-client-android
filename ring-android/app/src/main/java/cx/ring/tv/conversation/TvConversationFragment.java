@@ -40,6 +40,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.transition.TransitionManager;
 
 import android.speech.RecognizerIntent;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -66,7 +67,6 @@ import cx.ring.model.CallContact;
 import cx.ring.model.DataTransfer;
 import cx.ring.model.Error;
 import cx.ring.model.Interaction;
-import cx.ring.model.Uri;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.tv.model.TVListViewModel;
 import cx.ring.utils.AndroidFileUtils;
@@ -114,7 +114,7 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
 
     private TvConversationAdapter mAdapter = null;
     private AvatarDrawable mConversationAvatar;
-    private Map<String, AvatarDrawable> mParticipantAvatars = new HashMap();
+    private Map<String, AvatarDrawable> mParticipantAvatars = new HashMap<>();
 
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
@@ -172,36 +172,22 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
         mTextMessage = view.findViewById(R.id.text_text);
 
         ImageButton text = view.findViewById(R.id.button_text);
-        text.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displaySpeechRecognizer();
-            }
-        });
+        text.setOnClickListener(v -> displaySpeechRecognizer());
 
         mAudioButton = view.findViewById(R.id.button_audio);
-        mAudioButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onRecord(mStartRecording);
-                mStartRecording = !mStartRecording;
-            }
+        mAudioButton.setOnClickListener(v -> {
+            onRecord(mStartRecording);
+            mStartRecording = !mStartRecording;
         });
 
-        mAudioButton.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                TransitionManager.beginDelayedTransition(textContainer);
-                mTextAudio.setVisibility(hasFocus ? View.VISIBLE : View.GONE);
-            }
+        mAudioButton.setOnFocusChangeListener((v, hasFocus) -> {
+            TransitionManager.beginDelayedTransition(textContainer);
+            mTextAudio.setVisibility(hasFocus ? View.VISIBLE : View.GONE);
         });
 
-        text.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                TransitionManager.beginDelayedTransition(audioContainer);
-                mTextMessage.setVisibility(hasFocus ? View.VISIBLE : View.GONE);
-            }
+        text.setOnFocusChangeListener((v, hasFocus) -> {
+            TransitionManager.beginDelayedTransition(audioContainer);
+            mTextMessage.setVisibility(hasFocus ? View.VISIBLE : View.GONE);
         });
 
         mTitle = view.findViewById(R.id.title);
@@ -211,7 +197,7 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
         String id = mTvListViewModel.getContact().getRingUsername();
         String displayName = mTvListViewModel.getContact().getDisplayName();
         mTitle.setText(displayName);
-        if (!displayName.equals(id))
+        if (TextUtils.isEmpty(displayName) || !displayName.equals(id))
             mSubTitle.setText(id);
         else
             mSubTitle.setVisibility(View.GONE);

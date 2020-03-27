@@ -80,12 +80,12 @@ public class TvConversationPresenter extends RootPresenter<TvConversationView> {
         mContactId = new Uri(path.getContactId());
         mContactRingId = new Uri(path.getContactId());
 
-        mCompositeDisposable.add(mConversationFacade.loadConversationHistory(mAccountService.getCurrentAccount(), new Uri(mContactId.getRawUriString()))
+        mCompositeDisposable.add(mAccountService.getCurrentAccountSubject()
+                .switchMapSingle(account -> mConversationFacade.loadConversationHistory(account, new Uri(mContactId.getRawUriString())))
                 .observeOn(mUiScheduler)
                 .subscribe(this::setConversation));
 
         initContact(mAccountService.getCurrentAccount(), new Uri(mContactId.getRawUriString()), getView());
-
     }
 
     public void sendText(String message){
