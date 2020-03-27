@@ -37,7 +37,6 @@ import cx.ring.R;
 import cx.ring.adapters.ConversationAdapter;
 import cx.ring.utils.UiUpdater;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 
 public class ConversationViewHolder extends RecyclerView.ViewHolder {
     public View mItem;
@@ -63,7 +62,7 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
     public LinearLayout mCallInfoLayout, mFileInfoLayout, mAudioInfoLayout;
     public ValueAnimator animator;
 
-    public CompositeDisposable compositeDisposable = new CompositeDisposable();
+    public final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     public ConversationViewHolder(ViewGroup v, ConversationAdapter.MessageType type) {
         super(v);
