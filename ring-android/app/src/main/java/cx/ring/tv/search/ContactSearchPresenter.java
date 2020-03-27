@@ -127,15 +127,11 @@ public class ContactSearchPresenter extends RootPresenter<ContactSearchView> {
         }
     }
 
-    public void contactClicked(CallContact contact) {
+    public void contactClicked(TVListViewModel model) {
         if (!mHardwareService.isVideoAvailable() && !mHardwareService.hasMicrophone()) {
             getView().displayErrorToast(Error.NO_INPUT);
             return;
         }
-
-        String accountId = mAccountService.getCurrentAccount().getAccountID();
-        TVListViewModel model = new TVListViewModel(accountId, contact);
-
         getView().displayContactDetails(model);
     }
 }

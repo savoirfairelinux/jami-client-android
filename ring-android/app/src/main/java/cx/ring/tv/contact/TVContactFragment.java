@@ -38,12 +38,15 @@ import androidx.leanback.widget.FullWidthDetailsOverviewRowPresenter;
 import androidx.leanback.widget.FullWidthDetailsOverviewSharedElementHelper;
 import androidx.leanback.widget.ListRow;
 import androidx.leanback.widget.ListRowPresenter;
+import androidx.leanback.widget.SparseArrayObjectAdapter;
+
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.Uri;
 import cx.ring.services.NotificationService;
 import cx.ring.tv.call.TVCallActivity;
+import cx.ring.tv.contactrequest.TVContactRequestDetailPresenter;
 import cx.ring.tv.main.BaseDetailFragment;
 import cx.ring.tv.model.TVListViewModel;
 import cx.ring.utils.ConversationPath;
@@ -54,9 +57,14 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
     private static final int ACTION_CALL = 0;
     private static final int ACTION_DELETE = 1;
     private static final int ACTION_CLEAR_HISTORY = 2;
+    private static final int ACTION_ADD_CONTACT = 3;
 
     private ArrayObjectAdapter mAdapter;
     private int iconSize = -1;
+
+    private boolean isTrustRequest = false;
+
+    private Uri mSelectedContactRequest;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,6 +75,13 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mSelectedContactRequest = (Uri) getActivity().getIntent()
+                .getSerializableExtra(TVContactActivity.CONTACT_REQUEST);
+        String type = getActivity().getIntent().getType();
+        if (type != null) {
+            isTrustRequest = type.equals(TVContactActivity.TYPE_TRUST_REQUEST);
+        }
 
         // Override down navigation as we do not use it in this screen
         // Only the detailPresenter will be displayed
@@ -86,10 +101,16 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
 
     private void setupAdapter() {
         // Set detail background and style.
-        FullWidthDetailsOverviewRowPresenter detailsPresenter =
-                new FullWidthDetailsOverviewRowPresenter(
-                        new TVContactDetailPresenter(),
-                        new DetailsOverviewLogoPresenter());
+        FullWidthDetailsOverviewRowPresenter detailsPresenter;
+        if (isTrustRequest) {
+            detailsPresenter = new FullWidthDetailsOverviewRowPresenter(
+                    new TVContactRequestDetailPresenter(),
+                    new DetailsOverviewLogoPresenter());
+        } else {
+            detailsPresenter = new FullWidthDetailsOverviewRowPresenter(
+                    new TVContactDetailPresenter(),
+                    new DetailsOverviewLogoPresenter());
+        }
 
         detailsPresenter.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.grey_900));
         detailsPresenter.setInitialState(FullWidthDetailsOverviewRowPresenter.STATE_HALF);
@@ -111,6 +132,8 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
                 presenter.removeContact();
             } else if (action.getId() == ACTION_CLEAR_HISTORY) {
                 presenter.clearHistory();
+            } else if (action.getId() == ACTION_ADD_CONTACT) {
+            presenter.onAddContact(mSelectedContactRequest);
             }
         });
 
@@ -132,11 +155,15 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
         avatar.setInSize(iconSize);
         row.setImageDrawable(avatar);
 
-        ArrayObjectAdapter adapter = new ArrayObjectAdapter();
-        adapter.add(ACTION_CALL, new Action(ACTION_CALL, getResources().getString(R.string.ab_action_video_call),
-                null, requireContext().getDrawable(R.drawable.baseline_videocam_24)));
-        adapter.add(ACTION_DELETE, new Action(ACTION_DELETE, getResources().getString(R.string.conversation_action_remove_this)));
-        adapter.add(ACTION_CLEAR_HISTORY, new Action(ACTION_CLEAR_HISTORY, getResources().getString(R.string.tv_clear_history)));
+        SparseArrayObjectAdapter adapter = new SparseArrayObjectAdapter();
+        if (isTrustRequest) {
+            adapter.set(ACTION_ADD_CONTACT, new Action(ACTION_ADD_CONTACT, getResources().getString(R.string.ab_action_contact_add)));
+        } else {
+            adapter.set(ACTION_CALL, new Action(ACTION_CALL, getResources().getString(R.string.ab_action_video_call),
+                    null, requireContext().getDrawable(R.drawable.baseline_videocam_24)));
+            adapter.set(ACTION_DELETE, new Action(ACTION_DELETE, getResources().getString(R.string.conversation_action_remove_this)));
+            adapter.set(ACTION_CLEAR_HISTORY, new Action(ACTION_CLEAR_HISTORY, getResources().getString(R.string.conversation_action_history_clear)));
+        }
         row.setActionsAdapter(adapter);
 
         mAdapter.add(row);
@@ -157,6 +184,13 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
         Intent intent = new Intent(context, TVCallActivity.class);
         intent.putExtra(NotificationService.KEY_CALL_ID, id);
         context.startActivity(intent, null);
+    }
+
+    @Override
+    public void switchToConversationView() {
+        isTrustRequest = false;
+        setupAdapter();
+        presenter.setContact(ConversationPath.fromIntent(getActivity().getIntent()));
     }
 
     @Override
