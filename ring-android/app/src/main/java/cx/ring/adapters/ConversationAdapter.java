@@ -328,11 +328,11 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             holder.mItem.setOnClickListener(null);
         }
         if (expandedItemPosition == holder.getLayoutPosition()) {
-            holder.mMsgDetailTxt.setVisibility(View.GONE);
+            if (holder.mMsgDetailTxt != null)
+                holder.mMsgDetailTxt.setVisibility(View.GONE);
             expandedItemPosition = -1;
         }
         holder.compositeDisposable.clear();
-        super.onViewRecycled(holder);
     }
 
     public void setPrimaryColor(int color) {
