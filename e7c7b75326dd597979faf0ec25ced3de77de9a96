@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16bfcd3f_c2cb5659",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/contact/TVContactActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-03-28T01:20:19Z",
+      "side": 1,
+      "message": "trust request is the same as contact request (already defined above)",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 67
+      },
+      "revId": "e7c7b75326dd597979faf0ec25ced3de77de9a96",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
