@@ -19,17 +19,11 @@
   <string name="developed_by">Desenvolvido por</string>
   <string name="designed_by">Projetado por</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Sem conectividade à rede</string>
   <string name="error_mobile_network_available_but_disabled">Por favor, conceda acesso à rede móvel no ecrã de configurações.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Mensagens de texto</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
-  <string name="drawer_open">Abrir gaveta de navegação</string>
-  <string name="drawer_close">Fechar gaveta de navegação</string>
   <!--Sections-->
-  <string name="menu_item_home">Início</string>
   <string name="menu_item_contact_request">Solicitações de contactos</string>
   <string name="menu_item_accounts">Gerir contas</string>
   <string name="menu_item_account">Gerir conta</string>

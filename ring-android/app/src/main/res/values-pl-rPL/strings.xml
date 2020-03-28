@@ -19,17 +19,11 @@
   <string name="developed_by">Rozwijany przez</string>
   <string name="designed_by">Zaprojektowany przez</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Brak połączenia z siecią</string>
   <string name="error_mobile_network_available_but_disabled">Proszę w ustawieniach udzielić dostępu do sieci komórkowej.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Wiadomości tekstowe</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
-  <string name="drawer_open">Otwórz boczną szufladę</string>
-  <string name="drawer_close">Zamknij boczną szufladę</string>
   <!--Sections-->
-  <string name="menu_item_home">Ekran główny</string>
   <string name="menu_item_contact_request">Zaproszenia</string>
   <string name="menu_item_accounts">Ustawienia kont</string>
   <string name="menu_item_account">Zarządzaj kontem</string>

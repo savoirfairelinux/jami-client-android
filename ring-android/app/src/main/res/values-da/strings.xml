@@ -15,17 +15,11 @@
   <string name="developed_by">Udviklet af</string>
   <string name="designed_by">Designet af</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Ingen netværksforbindelse</string>
   <string name="error_mobile_network_available_but_disabled">Venligst tillad adgang til telefon netværk under Indstillinger.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Text-besked</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
-  <string name="drawer_open">Åbn navigationsskuffen</string>
-  <string name="drawer_close">Luk navigationsskuffen</string>
   <!--Sections-->
-  <string name="menu_item_home">Hjem</string>
   <string name="menu_item_contact_request">Kontaktforespørgsler</string>
   <string name="menu_item_accounts">Håndtér konti</string>
   <string name="menu_item_account">Håndter konto</string>

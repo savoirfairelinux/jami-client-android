@@ -19,17 +19,11 @@
   <string name="developed_by">Utviklet av</string>
   <string name="designed_by">Designet av</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Mangler nettverksforbindelse</string>
   <string name="error_mobile_network_available_but_disabled">Tildel tilgang til mobilnettverk på innstillingsskjermen.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Tekstmelding</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
-  <string name="drawer_open">Åpne navigasjonsskuff</string>
-  <string name="drawer_close">Lukk navigasjonsskuff</string>
   <!--Sections-->
-  <string name="menu_item_home">Hjem</string>
   <string name="menu_item_contact_request">Kontaktforespørsler</string>
   <string name="menu_item_accounts">Styr kontoer</string>
   <string name="menu_item_account">Behandle konto</string>

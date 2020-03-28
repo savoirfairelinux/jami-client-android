@@ -23,17 +23,11 @@
   <string name="designed_by">Diseñado por</string>
   <string name="ringtones_by">Tonos de llamada</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Sin conexión a la red</string>
   <string name="error_mobile_network_available_but_disabled">Permite el acceso a la red móvil en el menú de configuración.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Mensaje de texto</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
-  <string name="drawer_open">Abrir menú lateral</string>
-  <string name="drawer_close">Cerrar menú lateral</string>
   <!--Sections-->
-  <string name="menu_item_home">Inicio</string>
   <string name="menu_item_contact_request">Solicitudes de contacto</string>
   <string name="menu_item_accounts">Administrar cuentas</string>
   <string name="menu_item_account">Administrar cuenta</string>

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="feedback_section">ملاحظات</string>
+  <string name="feedback_section">انطباعات</string>
   <string name="report"><u>راسلنا بالبريد الإلكتروني</u></string>
   <string name="section_license">الرخصة</string>
   <string name="sponsor_section">جامي هو برنامج حر طور و دعم من قبل</string>
@@ -22,17 +22,11 @@
   <string name="designed_by">التصميم بواسطة</string>
   <string name="ringtones_by">النغمات بواسطة</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">الاتصال بالشبكة غير متوفر</string>
   <string name="error_mobile_network_available_but_disabled">الرجاء إعطاء صلاحيات الوصول إلى الشبكة الخلوية في شاشة الإعدادات.</string>
   <!--AB menus-->
   <string name="ab_action_chat">رسائل نصية</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
-  <string name="drawer_open">إفتح درج الإبحار</string>
-  <string name="drawer_close">أغلق درج الإبحار</string>
   <!--Sections-->
-  <string name="menu_item_home">الصفحة الرئيسية</string>
   <string name="menu_item_contact_request">طلبات الإتصال</string>
   <string name="menu_item_accounts">إدارة الحسابات</string>
   <string name="menu_item_account">إدارة الحسابات</string>
@@ -85,6 +79,13 @@
   <string name="notif_outgoing_file_transfer_title">إرسال ملف الى %1$s</string>
   <string name="notif_incoming_picture">صورة من %1$s</string>
   <string name="notif_sync_title">مزامنة البيانات...</string>
+  <string name="notif_location_title">مشاركة الموقع مع %1$s</string>
+  <string name="location_share_contact">%1$s يشارك الموقع معك</string>
+  <string name="notif_location_multi_title">مشاركة الموقع مع %1$d مراسل</string>
+  <string name="notif_location_remaining">%1$d دقائق متبقية</string>
+  <string name="notif_location_action_stop">أوقف مشاركة الموقع</string>
+  <string name="location_share_action_start">ابدأ المشاركة</string>
+  <string name="location_share_action_stop">أوقف المشاركة</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">أنت:</string>
   <string name="action_call_hangup">أنهي المكالمة</string>
@@ -118,6 +119,7 @@
   <string name="hist_file_received">تم تلقي ملف</string>
   <string name="conversation_send_audio">سجل مقطع صوتي</string>
   <string name="conversation_send_video">سجل مقطع فيديو</string>
+  <string name="conversation_share_location">مشاركة الموقع</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">صلاحيات الكاميرا</string>
   <string name="permission_dialog_camera_message">محادثات الفيديو تستوجب صلاحيات الكاميرا للعمل. الرجاء النظر في تفعيلها.</string>
@@ -163,6 +165,7 @@
   <string name="block_contact_dialog_title">حظر %1$s؟</string>
   <string name="block_contact_dialog_message">%1$s لن يستطيع التواصل معك حتى تقوم بفك الحظر عليه.</string>
   <string name="block_contact_completed">تم حظر %1$s.</string>
+  <string name="conversation_contact_is_typing">المراسل يكتب…</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">إضافة %1$s؟</string>
   <string name="prompt_new_password">كلمة سر جديدة</string>
@@ -252,7 +255,13 @@
   <string name="navigation_item_contact_request">طلبات الإتصال</string>
   <string name="navigation_item_account">حساب</string>
   <!--TV-->
+  <string name="tv_send_audio_dialog_message">أرسل رسالة صوتية؟</string>
   <string name="tv_audio_play">تشغيل</string>
   <string name="tv_audio_pause">إيقاف مؤقت</string>
   <string name="tv_dialog_send">أرسل</string>
+  <string name="tv_audio_recording">تسجيل...</string>
+  <string name="tv_send_text">أرسل نص</string>
+  <string name="tv_send_audio">أرسل صوت</string>
+  <string name="tv_send_video">أرسل فيديو</string>
+  <string name="tv_clear_history">محو السجل</string>
 </resources>

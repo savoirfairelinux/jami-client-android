@@ -20,17 +20,11 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="developed_by">Desenvolvido por</string>
   <string name="designed_by">Desenhado por</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Sem conectividade</string>
   <string name="error_mobile_network_available_but_disabled">Por favor, conceda acesso a rede do celular na tela de configurações.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Mensagens de texto</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
-  <string name="drawer_open">Abrir navegação</string>
-  <string name="drawer_close">Fechar navegação</string>
   <!--Sections-->
-  <string name="menu_item_home">Início</string>
   <string name="menu_item_contact_request">Solicitações de contatos</string>
   <string name="menu_item_accounts">Gerenciar contas</string>
   <string name="menu_item_account">Administrar conta</string>

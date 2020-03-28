@@ -16,6 +16,8 @@
   <string name="pref_hwEncode_summary">ميزة تجريبية</string>
   <string name="pref_systemContacts_title">استخدام جهات إتصال النظام</string>
   <string name="pref_systemContacts_summary">استخدام جهات إتصال النظام لإظهار تفاصيل المتصل</string>
+  <string name="pref_systemDialer_title">إجراء مكالمات النظام باستخدام جامي</string>
+  <string name="pref_systemDialer_summary">استخدم جامي لإجراء مكالمات النظام عند الإمكان.</string>
   <string name="pref_startOnBoot_title">شغل جامي عند بدء تشغيل الجهاز</string>
   <string name="pref_startOnBoot_summary">تشغيل جامي في الخلفية عندما يبدأ النظام</string>
   <string name="pref_clearHistory_title">مسح السجل</string>

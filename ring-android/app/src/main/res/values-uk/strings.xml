@@ -19,17 +19,11 @@
   <string name="developed_by">Розроблено</string>
   <string name="designed_by">Спроектовано</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Відсутнє з’єднання з мережею</string>
   <string name="error_mobile_network_available_but_disabled">Будь ласка, надайте права доступу для стільникової мережі у меню налаштувань.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Текстова переписка</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
-  <string name="drawer_open">Відкрити панель навігації</string>
-  <string name="drawer_close">Закрити панель навігації</string>
   <!--Sections-->
-  <string name="menu_item_home">Домівка</string>
   <string name="menu_item_contact_request">Запити контактів</string>
   <string name="menu_item_accounts">Керувати аккаунтами</string>
   <string name="menu_item_account">Керувати акаунтом</string>

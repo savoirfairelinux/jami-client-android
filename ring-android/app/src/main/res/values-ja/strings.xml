@@ -22,17 +22,11 @@
   <string name="designed_by">デザイン</string>
   <string name="ringtones_by">着信音</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">ネットワーク接続がありません</string>
   <string name="error_mobile_network_available_but_disabled">設定画面で携帯ネットワークへのアクセスを許可してください。</string>
   <!--AB menus-->
   <string name="ab_action_chat">テキストメッセージ</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
-  <string name="drawer_open">ナビゲーションドロワーを開く</string>
-  <string name="drawer_close">ナビゲーションドロワーを閉じる</string>
   <!--Sections-->
-  <string name="menu_item_home">ホーム</string>
   <string name="menu_item_contact_request">連絡先のリクエスト</string>
   <string name="menu_item_accounts">アカウント管理</string>
   <string name="menu_item_account">アカウントの管理</string>

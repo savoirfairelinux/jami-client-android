@@ -9,17 +9,11 @@
   <string name="credits">Kredit</string>
   <!--About dialog-->
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Tiada sambungan rangkaian</string>
   <string name="error_mobile_network_available_but_disabled">Sila berikan akses kepada rangkaian selular didalam skrin tetapan.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Pesanan teks</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
-  <string name="drawer_open">Buka laci navigasi</string>
-  <string name="drawer_close">Tutup laci navigasi</string>
   <!--Sections-->
-  <string name="menu_item_home">Utama</string>
   <string name="menu_item_accounts">Urus akaun</string>
   <string name="menu_item_settings">Tetapan</string>
   <string name="menu_item_share">Kongsikan profil saya</string>

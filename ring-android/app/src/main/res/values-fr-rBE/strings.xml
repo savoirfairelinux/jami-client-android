@@ -5,10 +5,7 @@
   <!--About dialog-->
   <!--RingActivity-->
   <!--AB menus-->
-  <!--Left Drawer-->
-  <!--Accessibility-->
   <!--Sections-->
-  <string name="menu_item_home">Accueil</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
@@ -28,7 +25,9 @@
   <!--Conversation-->
   <!--Contacts-->
   <string name="account_create_title">Créer un compte Jami</string>
+  <string name="wizard_skip">Passer</string>
   <!--MenuHeaderView-->
+  <string name="profile">Profil</string>
   <!--Share fragment-->
   <!--Pending contact requests-->
   <!--Send contact requests-->
@@ -37,5 +36,6 @@
   <string name="tv_contact_row_header">Contacts</string>
   <!--File Transfer-->
   <!--Bottom Navigation-->
+  <string name="navigation_item_account">Compte</string>
   <!--TV-->
 </resources>

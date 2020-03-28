@@ -22,17 +22,11 @@
   <string name="designed_by">Conçu par</string>
   <string name="ringtones_by">Sonneries d\'appels réalisées par </string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Jami</string>
   <string name="error_no_network">Pas d\'accès au réseau</string>
   <string name="error_mobile_network_available_but_disabled">Autorisez l\'accès au réseau cellulaire dans les options de configuration s\'il vous plaît</string>
   <!--AB menus-->
   <string name="ab_action_chat">Messagerie texte</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
-  <string name="drawer_open">Ouvrir le tiroir de navigation</string>
-  <string name="drawer_close">Fermer le tiroir de navigation</string>
   <!--Sections-->
-  <string name="menu_item_home">Accueil</string>
   <string name="menu_item_contact_request">Invitations</string>
   <string name="menu_item_accounts">Gérer les comptes</string>
   <string name="menu_item_account">Gestion du compte</string>

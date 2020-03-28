@@ -19,17 +19,11 @@
   <string name="developed_by">Vyvíjeno</string>
   <string name="designed_by">Navrženo</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Chybí připojení</string>
   <string name="error_mobile_network_available_but_disabled">Povolte prosím v nastavení přístup k mobilním datům</string>
   <!--AB menus-->
   <string name="ab_action_chat">Textové zprávy</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
-  <string name="drawer_open">Otevřít navigační šuplík</string>
-  <string name="drawer_close">Zavřít navigační šuplík</string>
   <!--Sections-->
-  <string name="menu_item_home">Domov</string>
   <string name="menu_item_contact_request">Žádosti o kontakt</string>
   <string name="menu_item_accounts">Spravovat účty</string>
   <string name="menu_item_account">Spravovat účet</string>

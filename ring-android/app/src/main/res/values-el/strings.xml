@@ -15,17 +15,11 @@
   <string name="developed_by">Ανάπτυξη</string>
   <string name="designed_by">Σχεδιασμός</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Καμία σύνδεση στο δίκτυο</string>
   <string name="error_mobile_network_available_but_disabled">Παρακαλώ δώστε πρόσβαση στο δίκτυο κινητής τηλεφωνίας από τις  ρυθμίσεις του κινητού.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Μήνυμα κειμένου</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
-  <string name="drawer_open">Άνοιγμα \"συρταριού\" πλοήγησης</string>
-  <string name="drawer_close">Κλείσιμο \"συρταριού\" πλοήγησης</string>
   <!--Sections-->
-  <string name="menu_item_home">Αρχική</string>
   <string name="menu_item_contact_request">Αιτήματα επαφών</string>
   <string name="menu_item_accounts">Διαχείριση Λογαριασμών</string>
   <string name="menu_item_settings">Ρυθμίσεις</string>

@@ -22,17 +22,11 @@
   <string name="designed_by">设计者</string>
   <string name="ringtones_by">铃声来自</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">无网络连接</string>
   <string name="error_mobile_network_available_but_disabled">请前往“设置”界面开启移动数据使用权限。</string>
   <!--AB menus-->
   <string name="ab_action_chat">文字消息</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
-  <string name="drawer_open">打开导航</string>
-  <string name="drawer_close">收起导航</string>
   <!--Sections-->
-  <string name="menu_item_home">主页</string>
   <string name="menu_item_contact_request">联系人请求</string>
   <string name="menu_item_accounts">管理帐户</string>
   <string name="menu_item_account">管理账户</string>

@@ -15,15 +15,11 @@
   <string name="credits">Zasluge</string>
   <!--About dialog-->
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Veza nedostupna</string>
   <string name="error_mobile_network_available_but_disabled">Molimo, dozvolite aplikaciji pristup mobilnim podacima u postavkama.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Dopisivanje</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
   <!--Sections-->
-  <string name="menu_item_home">Glavni meni</string>
   <string name="menu_item_accounts">Upravljaj računima</string>
   <string name="menu_item_account">Upravljanje računom</string>
   <string name="menu_item_settings">Postavke</string>

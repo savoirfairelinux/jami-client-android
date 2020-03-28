@@ -20,17 +20,11 @@
   <string name="designed_by">Designad av</string>
   <string name="ringtones_by">Ringsignaler av</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Ingen nätverksanslutning</string>
   <string name="error_mobile_network_available_but_disabled">Bevilja tillgång till mobilnätet på inställningssidan.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Textmeddelande</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
-  <string name="drawer_open">Öppna navigeringspanelen</string>
-  <string name="drawer_close">Stäng navigeringspanelen</string>
   <!--Sections-->
-  <string name="menu_item_home">Hem</string>
   <string name="menu_item_contact_request">Kontaktförfrågningar</string>
   <string name="menu_item_accounts">Hantera konton</string>
   <string name="menu_item_account">Hantera konto</string>

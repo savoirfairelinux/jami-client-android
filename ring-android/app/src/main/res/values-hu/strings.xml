@@ -22,17 +22,11 @@
   <string name="designed_by">Tervezők</string>
   <string name="ringtones_by">Csengőhangok:</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Jami</string>
   <string name="error_no_network">Nincs hálózati csatlakozás</string>
   <string name="error_mobile_network_available_but_disabled">Engedélyezze a mobilhálózat-elérést a beállítások képernyőn.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Szöveges üzenetek</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
-  <string name="drawer_open">Navigációs fiók kinyitása</string>
-  <string name="drawer_close">Navigációs fiók bezárása</string>
   <!--Sections-->
-  <string name="menu_item_home">Főoldal</string>
   <string name="menu_item_contact_request">Kapcsolatkérelmek</string>
   <string name="menu_item_accounts">Fiókok kezelése</string>
   <string name="menu_item_account">Fiók kezelése</string>

@@ -22,17 +22,11 @@
   <string name="designed_by">Conçu par</string>
   <string name="ringtones_by">Sonneries par</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Aucune connexion au réseau n\'est possible</string>
   <string name="error_mobile_network_available_but_disabled">Merci d\'accéder au réseau mobile dans les paramètres de l\'écran</string>
   <!--AB menus-->
   <string name="ab_action_chat">Messages textes</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
-  <string name="drawer_open">Ouvrir le panneau de navigation Android</string>
-  <string name="drawer_close">Fermer le panneau de navigation Android</string>
   <!--Sections-->
-  <string name="menu_item_home">Accueil</string>
   <string name="menu_item_contact_request">Demandes de contact</string>
   <string name="menu_item_accounts">Gérer des comptes</string>
   <string name="menu_item_account">Gérer le compte</string>

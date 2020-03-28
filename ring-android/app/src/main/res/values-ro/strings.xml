@@ -16,17 +16,11 @@
   <string name="designed_by">Design executat de</string>
   <string name="ringtones_by">Tonuri de apel realizate de</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Sună</string>
   <string name="error_no_network">Nu există conectivitate la rețea</string>
   <string name="error_mobile_network_available_but_disabled">Te rugăm să acorzi accesul la utilizarea rețelei de telefonie în ecranul de setări. </string>
   <!--AB menus-->
   <string name="ab_action_chat">Mesaje text</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
-  <string name="drawer_open">Deschide sertarul de navigare</string>
-  <string name="drawer_close">Închide sertarul de navigare</string>
   <!--Sections-->
-  <string name="menu_item_home">Acasă</string>
   <string name="menu_item_contact_request">Solicitări de contact</string>
   <string name="menu_item_accounts">Gestionează conturile</string>
   <string name="menu_item_account">Gestionează contul</string>

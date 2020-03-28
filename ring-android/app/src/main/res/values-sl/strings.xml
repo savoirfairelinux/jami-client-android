@@ -15,14 +15,10 @@
   <string name="developed_by">Razvoj</string>
   <string name="designed_by">Oblikovanje</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Ni mrežne povezave</string>
   <!--AB menus-->
   <string name="ab_action_chat">Besedilna sporočila</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
   <!--Sections-->
-  <string name="menu_item_home">Domov</string>
   <string name="menu_item_contact_request">Zahteve za povezavo</string>
   <string name="menu_item_accounts">Urejanje stikov</string>
   <string name="menu_item_settings">Nastavitve</string>

@@ -22,17 +22,11 @@
   <string name="designed_by">Оформлено</string>
   <string name="ringtones_by">Мелодии звонка</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Звонить</string>
   <string name="error_no_network">Нет подключения к сети</string>
   <string name="error_mobile_network_available_but_disabled">Пожалуйста, предоставьте доступ к сотовой сети в настройках.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Сообщения</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
-  <string name="drawer_open">Открыть панель навигации</string>
-  <string name="drawer_close">Закрыть панель навигации</string>
   <!--Sections-->
-  <string name="menu_item_home">Домой</string>
   <string name="menu_item_contact_request">Запросы на добавление в контакты</string>
   <string name="menu_item_accounts">Управление аккаунтами</string>
   <string name="menu_item_account">Управление аккаунтом</string>
@@ -253,4 +247,5 @@
   <string name="tv_audio_play">Проиграть</string>
   <string name="tv_audio_pause">Пауза</string>
   <string name="tv_dialog_send">Отправить</string>
+  <string name="tv_send_text">Отправить текст</string>
 </resources>

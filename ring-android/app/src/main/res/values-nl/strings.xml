@@ -22,17 +22,11 @@
   <string name="designed_by">Ontworpen door</string>
   <string name="ringtones_by">Beltonen door</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Geen netwerkverbinding</string>
   <string name="error_mobile_network_available_but_disabled">Geef toegang tot mobiel netwerk in de instellingen.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Tekstberichten</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
-  <string name="drawer_open">Navigatielade openen</string>
-  <string name="drawer_close">Navigatielade sluiten</string>
   <!--Sections-->
-  <string name="menu_item_home">Thuis</string>
   <string name="menu_item_contact_request">Contactverzoeken</string>
   <string name="menu_item_accounts">Accounts beheren</string>
   <string name="menu_item_account">Account beheren</string>

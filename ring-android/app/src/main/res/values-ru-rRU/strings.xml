@@ -22,17 +22,11 @@
   <string name="designed_by">Дизайнер </string>
   <string name="ringtones_by">Рингтоны от </string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Звонок</string>
   <string name="error_no_network">Отсутствует сетевое подключение</string>
   <string name="error_mobile_network_available_but_disabled">Пожалуйста, разрешите доступ к мобильной сети в настройках</string>
   <!--AB menus-->
   <string name="ab_action_chat">Тестовое сообщение</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
-  <string name="drawer_open">Открыть навигацию</string>
-  <string name="drawer_close">Закрыть навигацию</string>
   <!--Sections-->
-  <string name="menu_item_home">Домой</string>
   <string name="menu_item_contact_request">Запросы в контакты</string>
   <string name="menu_item_accounts">Учетные записи</string>
   <string name="menu_item_account">Учетные записи</string>

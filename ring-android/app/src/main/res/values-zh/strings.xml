@@ -3,10 +3,7 @@
   <!--About-->
   <!--About dialog-->
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Ring</string>
   <!--AB menus-->
-  <!--Left Drawer-->
-  <!--Accessibility-->
   <!--Sections-->
   <string name="menu_item_settings">設定</string>
   <!--Dialing Fragment-->

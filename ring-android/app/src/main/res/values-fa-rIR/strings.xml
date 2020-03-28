@@ -22,17 +22,11 @@
   <string name="designed_by">طراحی‌شده توسط</string>
   <string name="ringtones_by">صدا‌های زنگ توسط</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">رینگ</string>
   <string name="error_no_network">بدون اتصال شبکه</string>
   <string name="error_mobile_network_available_but_disabled">لطفا در صفحه تنظیمات به شبکه سلولی دسترسی دهید.</string>
   <!--AB menus-->
   <string name="ab_action_chat">پیام متنی</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
-  <string name="drawer_open">باز کردن کشوی ناوبری</string>
-  <string name="drawer_close">بستن کشوی ناوبری</string>
   <!--Sections-->
-  <string name="menu_item_home">خانه</string>
   <string name="menu_item_contact_request">درخواست‌های ارتباط</string>
   <string name="menu_item_accounts">مدیریت حساب‌ها</string>
   <string name="menu_item_account">مدیریت حساب</string>

@@ -19,17 +19,11 @@
   <string name="developed_by">Kehittänyt</string>
   <string name="designed_by">Suunnitellut</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Ei verkkoyhteyttä</string>
   <string name="error_mobile_network_available_but_disabled">Anna lupa muuttaa verkkoasetuksia asetusruudussa</string>
   <!--AB menus-->
   <string name="ab_action_chat">Tekstiviestittely</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
-  <string name="drawer_open">Avaa sivuvalikko</string>
-  <string name="drawer_close">Sulje sivuvalikko</string>
   <!--Sections-->
-  <string name="menu_item_home">Koti</string>
   <string name="menu_item_contact_request">Yhteyspyynnöt</string>
   <string name="menu_item_accounts">Hallitse tunnuksia</string>
   <string name="menu_item_account">Hallitse tiliä</string>

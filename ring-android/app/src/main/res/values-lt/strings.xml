@@ -19,17 +19,11 @@
   <string name="developed_by">Sukūrė</string>
   <string name="designed_by">Apipavidalino</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Nėra tinklo ryšio</string>
   <string name="error_mobile_network_available_but_disabled">Prašome nustatymų ekrane suteikti prieigą prie korinio tinklo.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Tekstinis susirašinėjimas</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
-  <string name="drawer_open">Atidaryti naršymo stalčių</string>
-  <string name="drawer_close">Uždaryti naršymo stalčių</string>
   <!--Sections-->
-  <string name="menu_item_home">Pradžia</string>
   <string name="menu_item_contact_request">Adresatų užklausos</string>
   <string name="menu_item_accounts">Tvarkyti paskyras</string>
   <string name="menu_item_account">Tvarkyti paskyrą</string>

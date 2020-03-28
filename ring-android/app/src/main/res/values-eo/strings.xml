@@ -5,16 +5,10 @@
   <string name="credits">Kredito</string>
   <!--About dialog-->
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Sen reta konekto</string>
   <!--AB menus-->
   <string name="ab_action_chat">Text messaging</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
-  <string name="drawer_open">Malfermu navigan tirkeston</string>
-  <string name="drawer_close">Fermu navigan tirkeston</string>
   <!--Sections-->
-  <string name="menu_item_home">Hejmo</string>
   <string name="menu_item_accounts">Administri kontojn</string>
   <string name="menu_item_account">Administri Konton</string>
   <string name="menu_item_settings">Agordoj</string>

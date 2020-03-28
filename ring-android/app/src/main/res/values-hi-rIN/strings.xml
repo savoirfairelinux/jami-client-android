@@ -12,11 +12,8 @@
   <string name="website_chooser_title">इस पृष्ठ को निम्नलिखित में से एक के द्वारा देखें</string>
   <!--About dialog-->
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">रिंग</string>
   <string name="error_no_network">नेटवर्क संपर्क नही है</string>
   <!--AB menus-->
-  <!--Left Drawer-->
-  <!--Accessibility-->
   <!--Sections-->
   <!--Dialing Fragment-->
   <!--History Fragment-->

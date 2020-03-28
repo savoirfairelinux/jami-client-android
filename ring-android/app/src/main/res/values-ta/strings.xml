@@ -1,7 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="contribute_section">Nye aka</string>
+  <string name="feedback_section">பின்னூட்டம்</string>
+  <string name="section_license">உரிமம்</string>
+  <string name="copyright_section">பதிப்புரிமை</string>
+  <string name="contribute_section">பங்களிப்பு</string>
+  <string name="version_section">பதிப்பு</string>
   <!--About dialog-->
   <!--RingActivity-->
   <!--AB menus-->
@@ -16,7 +20,6 @@
   <!--Notifications-->
   <!--Call Fragment-->
   <!--Text messages-->
-  <string name="send_message">Zie ozi</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
   <!--Read contacts permission-->
@@ -25,16 +28,13 @@
   <!--Settings-->
   <!--Conversation-->
   <!--Contacts-->
-  <string name="wizard_next">Nke na-abịa</string>
   <!--MenuHeaderView-->
   <!--Share fragment-->
   <!--Pending contact requests-->
   <!--Send contact requests-->
-  <string name="send_request_button">Zie</string>
   <!--Blacklist-->
   <!--Smartlist-->
   <!--File Transfer-->
   <!--Bottom Navigation-->
   <!--TV-->
-  <string name="tv_dialog_send">Zie</string>
 </resources>

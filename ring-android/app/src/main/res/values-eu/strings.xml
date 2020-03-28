@@ -15,21 +15,18 @@
   <string name="license">Software hau \"den moduan\" eskaintzen da, inolako bermeik gabe. Xehetasunetarako ikusi <u>General Public License lizentzia, 3. bertsioa edo berriagoa</u></string>
   <string name="description">Jami komunikazio unibertsalerako software librea da, erabiltzaileek askatasunak eta pribatutasuna aintzat hartzen dituena</string>
   <string name="credits">Kredituak</string>
+  <string name="call_service_description">Zerbitzu hau ezinbestekoa da zure deiak lehen planoan abian mantentzeko. Deietan zehar ari da soilik.</string>
+  <string name="data_transfer_service_description">Zerbitzu hau ezinbestekoa da fitxategi transferentzien zehar jakinarazpen iraunkorrak bistaratzeko. Fitxategi transferentzietan zehar ari da soilik.</string>
   <!--About dialog-->
   <string name="developed_by">Garatzaileak:</string>
   <string name="designed_by">Diseinatzaileak:</string>
   <string name="ringtones_by">noren partez txirrinak : </string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Ez dago sare-konexiorik</string>
+  <string name="error_mobile_network_available_but_disabled">Eman sare mugikorra atzitzeko baimena ezarpenen pantailan.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Testu-mezularitza</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
-  <string name="drawer_open">Ireki nabigazio-tiradera</string>
-  <string name="drawer_close">Itxi nabigazio-tiradera</string>
   <!--Sections-->
-  <string name="menu_item_home">Hasiera</string>
   <string name="menu_item_contact_request">Kontaktu eskariak</string>
   <string name="menu_item_accounts">Kudeatu kontuak</string>
   <string name="menu_item_account">Kudeatu kontua</string>
@@ -66,6 +63,7 @@
   <string name="notif_channel_messages">Mezuak</string>
   <string name="notif_channel_requests">Eskaerak</string>
   <string name="notif_channel_file_transfer">Fitxategi-transferentzia</string>
+  <string name="notif_channel_sync">Datuen sinkronizazioa</string>
   <string name="notif_channel_background_service">Bigarren planoko zerbitzua</string>
   <string name="notif_channel_background_service_descr">Deiak eta mezuak edonoiz jasotzea ahalbidetzen du.</string>
   <string name="notif_group_calls">Deiak</string>
@@ -77,6 +75,13 @@
   <string name="notif_outgoing_file_transfer_title">%1$s erabiltzaileari fitxategia bidaltzen</string>
   <string name="notif_incoming_picture">%1$s erabiltzaileak bidalitako irudia</string>
   <string name="notif_sync_title">Datuak sinkronizatzen...</string>
+  <string name="notif_location_title">%1$s erabiltzailearekin kokalekua partekatzen</string>
+  <string name="location_share_contact">%1$s kokalekua zurekin partekatzen ari da</string>
+  <string name="notif_location_multi_title">Kokalekua %1$d kontaktuekin partekatzen</string>
+  <string name="notif_location_remaining">%1$d minutu geratzen dira</string>
+  <string name="notif_location_action_stop">Utzi kokalekua partekatzeari</string>
+  <string name="location_share_action_start">Hasi partekatzen</string>
+  <string name="location_share_action_stop">Utzi partekatzeari</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Zuk:</string>
   <string name="action_call_hangup">Eseki</string>
@@ -108,16 +113,27 @@
   <string name="send_file">Bidali fitxategia</string>
   <string name="hist_file_sent">Fitxategia bidalita</string>
   <string name="hist_file_received">Fitxategia jasota</string>
+  <string name="conversation_send_audio">Grabatu audioa</string>
+  <string name="conversation_send_video">Grabatu bideoa</string>
+  <string name="conversation_share_location">Partekatu kokalekua</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera-baimena</string>
+  <string name="permission_dialog_camera_message">Bideo elkarrizketek kamera baimena behar dute. Gaitzea komeni da.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Errorea</string>
   <string name="ringtone_error_format_not_supported">Formatu hau ez da onartzen.</string>
+  <string name="ringtone_error_size_too_big">Fitxategia handiegia da. Gehieneko tamaina %1$d KB da.</string>
   <string name="ringtone_custom_prompt">Ezarri dei-doinu pertsonalizatua</string>
+  <string name="ringtone_custom_label">Pertsonala</string>
+  <string name="ringtone_jami_tones">Jami doinuak</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Jami \"Kontaktuak irakurri\" baimena behar du ezaugarri hau gaitzeko. Mesedez eman.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Jami \"Dei egunkaria idatzi\" baimena behar du ezaugarri hau gaitzeko. Mesedez eman.</string>
   <!--QRCode Scan-->
+  <string name="scan_qr_account_message">Eskaneatu gehitu nahi duzun kontuaren QR kodea.</string>
   <string name="title_activity_qrcode">partekatu nire kontua</string>
+  <string name="error_scan_no_camera_permissions">QR eskanerrak kamera baimena behar du guntzionatzeko</string>
   <string name="tab_code">Nire kodea</string>
   <string name="tab_scan">Eskaneatu kodea</string>
   <!--Settings-->
@@ -140,9 +156,12 @@
   <string name="conversation_action_select_peer_number">Hautatu zenbaki bat</string>
   <string name="conversation_action_block_this">Blokeatu kontaktua</string>
   <string name="conversation_action_go_to_call">Itzuli abioan den deira</string>
+  <string name="conversation_open_file_error">Ez dago fitxategi hau ireki dezakeen aplikaziorik instalatuta</string>
   <string name="clip_contact_uri">Kontaktuaren helbidea</string>
   <string name="block_contact_dialog_title">Blokeatu %1$s?</string>
+  <string name="block_contact_dialog_message">%1$s erabiltzailea ezin izango da zurekin harremanetan jarri desblokeatzen ez baduzu.</string>
   <string name="block_contact_completed">%1$s blokeatu da.</string>
+  <string name="conversation_contact_is_typing">Kontaktua idazten ari da…</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Gehitu %1$s?</string>
   <string name="prompt_new_password">Pasahitz berria</string>
@@ -150,33 +169,47 @@
   <string name="prompt_new_password_repeat">Errepikatu pasahitz berria</string>
   <string name="account_create_title">Sortu Jami kontua</string>
   <string name="prompt_new_username">Sartu erabiltzaile-izen berria</string>
-  <string name="wizard_next">Hurengoa</string>
+  <string name="help_password_choose">Hautatu gogoratuko duzun pasahitz sendo bat zure Jami kontua babesteko.</string>
+  <string name="help_password_enter">Sortu zure Jami kontuaren pasahitza</string>
+  <string name="help_server_enter">Sartu kudeaketa zerbitzariaren URLa</string>
+  <string name="help_pin_enter">Sartu konfiguratutako beste kontu baten PIN kodea. Erabili \"esportatu Jami kontua\" ezaugarria PINa eskuratzeko.</string>
+  <string name="wizard_next">Hurrengoa</string>
   <string name="wizard_back">Atzera</string>
   <string name="wizard_skip">Jauzi</string>
   <!--MenuHeaderView-->
   <string name="profile">Profila</string>
+  <string name="profile_message_warning">Zure profila zure kontaktuekin partekatzen da soilik</string>
   <string name="open_the_gallery">Ireki galeria</string>
   <string name="take_a_photo">Atera argazkia</string>
   <string name="profile_name_hint">Sartu zure izena (aukerazkoa)</string>
   <!--Share fragment-->
+  <string name="share_message">Eskaneatu kode hau Jami erabiliz</string>
+  <string name="share_message_no_account">Hautatu kontu bat partekatzeko.</string>
   <string name="share_your_account_information">Partekatu nire kontaktu-informazioa</string>
   <string name="share_label">Partekatu</string>
   <string name="generic_error_migration">Errorea</string>
+  <string name="generic_error_migration_message">Errore bat gertatu da migrazioan</string>
+  <string name="title_share_with">Partekatu honekin…</string>
   <!--Pending contact requests-->
   <string name="accept">Onartu</string>
   <string name="refuse">Ukatu</string>
   <string name="block">Bloketu</string>
   <string name="contact_request_title">Kontaktu-eskaera berria</string>
   <string name="contact_request_msg"> %1$s kontaktu eskaera dituzu</string>
+  <string name="contact_request_account">%1$s(r)entzat</string>
   <string name="no_requests">0 kontaktu-eskaera</string>
+  <string name="message_contact_not_trusted_yet">%s ez dago zure kontaktuen artean oraindik.\nKontaktu eskaera hau onartu ala ukatzen duzu?</string>
+  <string name="message_contact_not_trusted">%s ez dago zure kontaktuen artean oraindik.\nGehitu kontaktua?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Bidali</string>
   <string name="send_request_title">Bidali kontaktu-eskaera</string>
+  <string name="send_request_msg">Kontaktu eskaera bat bidali behar duzu erabiltzaile honekin komunikatzeko. Zure kontaktuak eskaera onartu bitartean, mezuak bidali ahal dizkiozu, baina ezin izango dizu erantzun.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 kontaktu blokeatuta</string>
   <!--Smartlist-->
   <string name="no_contact_request">Ez da kontaktu eskaerarik bidali</string>
   <string name="contact_request_sent">Kontaktu eskaera bidali da</string>
+  <string name="start_conversation">Hasi elkarrizketa</string>
   <string name="search_results">Bilaketaren emaitzak</string>
   <string name="tv_contact_row_header">Kontaktuak</string>
   <string name="gallery_error_title">Ez da galeria aplikaziorik aurkitu</string>
@@ -185,7 +218,10 @@
   <!--File Transfer-->
   <string name="invalid_file">Fitxategi baliogabea</string>
   <string name="not_able_to_write_file">Ezin izan da fitxategia idatzi</string>
+  <string name="file_transfer_status_created">transferentzia hasieratzen</string>
   <string name="file_transfer_status_unsupported">onartu gabea</string>
+  <string name="file_transfer_status_wait_peer_acceptance">besteak onartu bitartean zain</string>
+  <string name="file_transfer_status_wait_host_acceptance">ostalariak onartu bitartean zain</string>
   <string name="file_transfer_status_ongoing">abioan</string>
   <string name="file_transfer_status_finished">amaituta</string>
   <string name="file_transfer_status_closed_by_host">Ostalariak moztutakoa</string>
@@ -209,11 +245,19 @@
   <string name="menu_message_cancel">Ezeztatu mezua</string>
   <string name="menu_delete">Ezabatu</string>
   <string name="pref_darkTheme_title">Gai iluna</string>
+  <string name="pref_darkTheme_summary">Gaitu beti gai iluna sistemaren portaerari jarraitu ordez</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Elkarrizketak</string>
   <string name="navigation_item_contact_request">Kontaktu eskariak</string>
   <string name="navigation_item_account">Kontua</string>
   <!--TV-->
+  <string name="tv_send_audio_dialog_message">Bidali audio mezua?</string>
   <string name="tv_audio_play">Jo</string>
+  <string name="tv_audio_pause">Pausatu</string>
   <string name="tv_dialog_send">Bidali</string>
+  <string name="tv_audio_recording">Grabatzen…</string>
+  <string name="tv_send_text">Bidali testua</string>
+  <string name="tv_send_audio">Bidali audioa</string>
+  <string name="tv_send_video">Bidali bideoa</string>
+  <string name="tv_clear_history">garbitu historiala</string>
 </resources>

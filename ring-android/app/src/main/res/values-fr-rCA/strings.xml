@@ -16,17 +16,11 @@
   <string name="developed_by">Développé par</string>
   <string name="designed_by">Conçu par</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Aucune connectivité réseau</string>
   <string name="error_mobile_network_available_but_disabled">Veuillez permettre l\'accès au réseau cellulaire dans l\'écran des réglages.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Messagerie texte</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
-  <string name="drawer_open">Ouvrir le NavigationDrawer</string>
-  <string name="drawer_close">Fermer le NavigationDrawer</string>
   <!--Sections-->
-  <string name="menu_item_home">Accueil</string>
   <string name="menu_item_contact_request">Demandes de contact</string>
   <string name="menu_item_accounts">Gérer les comptes</string>
   <string name="menu_item_account">Gérer le compte</string>
@@ -110,6 +104,7 @@
   <string name="prompt_new_username">Entrer un nouveau nom d\'utilisateur</string>
   <string name="wizard_next">Suivant</string>
   <string name="wizard_back">Précédent</string>
+  <string name="wizard_skip">Passer</string>
   <!--MenuHeaderView-->
   <string name="profile">Profil</string>
   <string name="profile_message_warning">Votre profil est partagé avec vos contacts uniquement</string>

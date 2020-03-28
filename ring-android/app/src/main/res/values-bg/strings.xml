@@ -19,17 +19,11 @@
   <string name="developed_by">Разработен от</string>
   <string name="designed_by">Проектиран от</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Няма връзка с мрежата</string>
   <string name="error_mobile_network_available_but_disabled">Моля, разрешете достъпа до мобилната мрежа от настройките.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Текстово съобщение</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
-  <string name="drawer_open">Отваряне на менюто</string>
-  <string name="drawer_close">Затваряне на менюто</string>
   <!--Sections-->
-  <string name="menu_item_home">Начало</string>
   <string name="menu_item_contact_request">Заявки за нови контакти</string>
   <string name="menu_item_accounts">Управление на профилите</string>
   <string name="menu_item_account">Управление на профила</string>

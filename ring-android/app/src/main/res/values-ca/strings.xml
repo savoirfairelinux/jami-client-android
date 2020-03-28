@@ -17,17 +17,11 @@
   <string name="developed_by">Desenvolupat per</string>
   <string name="designed_by">Dissenyat per</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">No hi ha connexió a la xarxa</string>
   <string name="error_mobile_network_available_but_disabled">Per favor doneu accés a la xarxa mòbil en la pantalla d\'ajustaments.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Missatge de text</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
-  <string name="drawer_open">Obrir el calaix de navegació</string>
-  <string name="drawer_close">Tancar el calaix de navegació</string>
   <!--Sections-->
-  <string name="menu_item_home">Inici</string>
   <string name="menu_item_contact_request">Peticions de contacte</string>
   <string name="menu_item_accounts">Gestionar els comptes</string>
   <string name="menu_item_account">Administració del compte</string>

@@ -19,17 +19,11 @@
   <string name="developed_by">ਵਿਕਾਸਕਾਰ</string>
   <string name="designed_by">ਡਿਜ਼ਾਈਨਰ</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">ਰਿੰਗ</string>
   <string name="error_no_network">ਕੋਈ ਨੈੱਟਵਰਕ ਕਨੈਕਸ਼ਨ ਨਹੀਂ ਹੈ</string>
   <string name="error_mobile_network_available_but_disabled">ਕਿਰਪਾ ਕਰਕੇ ਸੈਟਿੰਗਾਂ ਸਕ੍ਰੀਨ ਵਿੱਚ ਸੈਲਿਊਲਰ ਨੈੱਟਵਰਕ ਤੱਕ ਪਹੁੰਚ ਦਿਓ।</string>
   <!--AB menus-->
   <string name="ab_action_chat">ਲਿਖਤ ਸੁਨੇਹੇ</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
-  <string name="drawer_open">ਆਵਾਗੌਣ ਦਰਾਜ਼ ਖੋਲ੍ਹੋ</string>
-  <string name="drawer_close">ਆਵਾਗੌਣ ਦਰਾਜ਼ ਬੰਦ ਕਰੋ</string>
   <!--Sections-->
-  <string name="menu_item_home">ਮੁੱਖ ਪੰਨਾ</string>
   <string name="menu_item_contact_request">ਸੰਪਰਕ ਬੇਨਤੀਆਂ</string>
   <string name="menu_item_accounts">ਖਾਤਿਆਂ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰੋ</string>
   <string name="menu_item_account">ਖਾਤੇ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰੋ</string>

@@ -19,17 +19,11 @@
   <string name="developed_by">Geliştiren</string>
   <string name="designed_by">Tasarlayan</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Ağ bağlantısı yok</string>
   <string name="error_mobile_network_available_but_disabled">Lütfen ayarlar ekranında hücre ağına erişim verin.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Metin ileti</string>
-  <!--Left Drawer-->
-  <!--Accessibility-->
-  <string name="drawer_open">Gezinti çekmecesini aç</string>
-  <string name="drawer_close">Gezinti çekmecesini kapat</string>
   <!--Sections-->
-  <string name="menu_item_home">Ev</string>
   <string name="menu_item_contact_request">İletişim istekleri</string>
   <string name="menu_item_accounts">Hesapları yönet</string>
   <string name="menu_item_account">Hesabı yönet</string>
