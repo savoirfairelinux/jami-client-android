@@ -463,6 +463,12 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
     }
 
     @Override
+    public void onStop() {
+        releaseRecorder();
+        super.onStop();
+    }
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
@@ -507,29 +513,32 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
     }
 
     private void startRecording() {
-        try {
-            fileName = AndroidFileUtils.createAudioFile(getContext());
-        } catch (IOException e) {
+        if (recorder != null) {
             return;
         }
-        recorder = new MediaRecorder();
-        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        recorder.setOutputFile(fileName.getAbsolutePath());
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            recorder.setOutputFormat(MediaRecorder.OutputFormat.OGG);
-            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.OPUS);
-        } else {
-            recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-        }
-
         try {
-            recorder.prepare();
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "prepare() failed");
-        }
+            fileName = AndroidFileUtils.createAudioFile(requireContext());
+            recorder = new MediaRecorder();
+            recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            recorder.setOutputFile(fileName.getAbsolutePath());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                recorder.setOutputFormat(MediaRecorder.OutputFormat.OGG);
+                recorder.setAudioEncoder(MediaRecorder.AudioEncoder.OPUS);
+            } else {
+                recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+                recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+            }
 
-        recorder.start();
+            recorder.prepare();
+            recorder.start();
+        } catch (Exception e) {
+            Toast.makeText(requireContext(), "Error starting recording: " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            if (recorder != null) {
+                recorder.release();
+                recorder = null;
+            }
+            return;
+        }
 
         mAudioButton.setImageResource(R.drawable.lb_ic_stop);
         mTextAudio.setText(R.string.tv_audio_recording);
@@ -541,18 +550,23 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
         mTextAudio.startAnimation(anim);
     }
 
-    private void stopRecording() {
-        if (recorder == null) {
-            return;
+    private void releaseRecorder() {
+        if (recorder != null) {
+            try {
+                recorder.stop();
+            } catch (Exception e) {
+                Log.w(TAG, "Exception stopping recorder");
+            }
+            recorder.release();
+            recorder = null;
         }
-        recorder.stop();
-        recorder.release();
-        recorder = null;
+    }
 
+    private void stopRecording() {
+        releaseRecorder();
         mAudioButton.setImageResource(R.drawable.baseline_mic_24);
         mTextAudio.setText(R.string.tv_send_audio);
         mTextAudio.clearAnimation();
-
         createAudioDialog();
     }
 
