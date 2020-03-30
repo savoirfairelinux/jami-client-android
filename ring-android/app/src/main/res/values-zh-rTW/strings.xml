@@ -257,6 +257,5 @@
   <string name="tv_audio_recording">正在錄製……</string>
   <string name="tv_send_text">傳送文字</string>
   <string name="tv_send_audio">傳送音訊</string>
-  <string name="tv_send_video">傳送視訊</string>
   <string name="tv_clear_history">清除歷史紀錄</string>
 </resources>

@@ -257,6 +257,5 @@
   <string name="tv_audio_recording">正在录音...</string>
   <string name="tv_send_text">发送文本</string>
   <string name="tv_send_audio">发送音频</string>
-  <string name="tv_send_video">发送视频</string>
   <string name="tv_clear_history">清除历史</string>
 </resources>

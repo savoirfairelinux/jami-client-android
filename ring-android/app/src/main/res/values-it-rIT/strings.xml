@@ -258,6 +258,5 @@
   <string name="tv_audio_recording">Registrazione...</string>
   <string name="tv_send_text">Invia testo</string>
   <string name="tv_send_audio">Invia audio</string>
-  <string name="tv_send_video">Invia video</string>
   <string name="tv_clear_history">cancella cronologia</string>
 </resources>

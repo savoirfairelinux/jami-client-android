@@ -258,6 +258,5 @@
   <string name="tv_audio_recording">Enregistrement en cours...</string>
   <string name="tv_send_text">Envoyer du texte</string>
   <string name="tv_send_audio">Envoyer de l\'audio</string>
-  <string name="tv_send_video">Envoyer de la vidéo</string>
   <string name="tv_clear_history">effacer l\'historique</string>
 </resources>

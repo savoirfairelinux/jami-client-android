@@ -227,6 +227,5 @@
   <string name="tv_audio_recording">録音中...</string>
   <string name="tv_send_text">テキストの送信</string>
   <string name="tv_send_audio">音声の送信</string>
-  <string name="tv_send_video">ビデオを送信</string>
   <string name="tv_clear_history">履歴を削除</string>
 </resources>

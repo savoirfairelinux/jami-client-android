@@ -258,6 +258,5 @@
   <string name="tv_audio_recording">Po incizohet…</string>
   <string name="tv_send_text">Dërgoni Tekst</string>
   <string name="tv_send_audio">Dërgoni Audio</string>
-  <string name="tv_send_video">Dërgoni Video</string>
   <string name="tv_clear_history">spastro historikun</string>
 </resources>

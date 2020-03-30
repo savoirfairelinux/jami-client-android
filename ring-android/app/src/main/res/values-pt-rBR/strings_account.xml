@@ -7,6 +7,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Adicionar conta do Jami</string>
   <string name="add_sip_account_title">Adicionar conta SIP</string>
+  <string name="ring_account_default_name">Conta Jami %1$s</string>
   <string name="prompt_alias">Apelido</string>
   <string name="prompt_hostname">Servidor</string>
   <string name="prompt_username">Nome de usuário</string>
@@ -44,6 +45,8 @@
   <string name="account_device_revocation_unknown_device">Dispositivo desconhecido.</string>
   <string name="account_device_revocation_error_unknown">Erro desconhecido.</string>
   <string name="account_password_change">Mudar senha</string>
+  <string name="account_password_set">Definir senha</string>
+  <string name="account_password_change_wait_message">Alterando senha da conta</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Geral</string>
   <string name="account_basic_category">Configurações básicas</string>
@@ -64,16 +67,24 @@
   <string name="account_ringtone_enabled_label">Ativar toques de chamada</string>
   <string name="account_ringtone_path_label">Caminho do toque de chamada</string>
   <string name="account_ringtone_custom_label">Usar toque personalizado</string>
+  <string name="account_ringtone_title">Escolha um toque</string>
+  <string name="account_ringtone_summary">Selecione um toque ou escolha seu próprio</string>
   <!--Video Details-->
   <string name="account_video_label">Vídeo</string>
   <string name="account_video_enable">Habilitar Vídeo</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avançado</string>
+  <string name="account_dht_public_in_calls_label">Permitir chamadas recebidas de contatos desconhecidos</string>
   <string name="account_registration_exp_label">Registro expirou</string>
   <string name="account_local_interface_label">Interface local</string>
   <string name="account_local_port_label">Porta Local</string>
   <string name="account_stun_enable_label">Usar Stun</string>
   <string name="account_stun_server_label">Servidor Stun</string>
+  <string name="account_accept_files">Aceitar arquivos recebidos automaticamente</string>
+  <string name="account_accept_files_max_size">Tamanho máximo de arquivo para aceitar automaticamente</string>
+  <string name="account_accept_files_never">Nunca aceite automaticamente</string>
+  <string name="account_accept_files_always">Sempre aceite automaticamente</string>
+  <string name="size_mb">%1$d MB</string>
   <string name="account_turn_enable_label">Usar TURN</string>
   <string name="account_turn_server_label">Servidor TURN</string>
   <string name="account_turn_username_label">Nome de usuário TURN</string>
@@ -84,6 +95,10 @@
   <string name="account_proxy_label">Proxy DHT</string>
   <string name="account_proxy_enable_label">Usar proxy DHT</string>
   <string name="account_proxy_server_label">Endereço do proxy DHT</string>
+  <string name="account_proxy_server_list_label">URL da lista de proxy DHT</string>
+  <string name="account_peer_discovery_label">Descoberta local de pares</string>
+  <string name="account_peer_discovery_enable_label">Ativar descoberta local de pares</string>
+  <string name="account_peer_discovery_enable_summary">Conecte-se a outros nós DHT que anunciam em nossa rede local</string>
   <!--Security Details-->
   <string name="account_credentials_label">Credenciais</string>
   <string name="account_credentials_edit">Editar credenciais</string>
@@ -112,6 +127,7 @@
   <string name="error_password_char_count">Pelo menos 6 caracteres</string>
   <string name="error_passwords_not_equals">Senhas não correspondem</string>
   <string name="export_account_wait_title">Por favor, aguarde...</string>
+  <string name="export_account_wait_message">Exportando informações da conta</string>
   <string name="account_export_file">Cópia de segurança da conta</string>
   <string name="account_export_end_decryption_message">Não foi possível desbloquear sua conta utilizando a senha fornecida.</string>
   <string name="account_export_end_network_title">Erro de rede</string>
@@ -142,6 +158,9 @@
   <string name="account_sip_success_title">Conta SIP registrada</string>
   <string name="account_sip_success_message">Você registrou sua conta SIP com sucesso.</string>
   <string name="account_sip_register_anyway">Registrar mesmo assim</string>
+  <string name="account_link_device">Conecte-se de outro dispositivo</string>
+  <string name="account_link_button">Conecte-se de outra rede</string>
+  <string name="account_link_archive_button">Conectar-se a partir do backup</string>
   <string name="account_link_prompt_pin">Entre o PIN</string>
   <string name="account_new_button">Criar uma conta no Jami</string>
   <string name="account_link_export_button">Associar outro dispositivo à esta conta</string>
@@ -151,16 +170,23 @@
   <string name="account_end_export_infos">Seu PIN é:\n\n%%\n\nPara completar o processo, você deve abrir o Jami no novo dispositivo. Crie uma nova conta com \"Associar este dispositivo à uma conta\". Seu PIN é válido por 10 minutos.</string>
   <string name="account_link_export_info_light">Para usar esta conta em outros dispositivos, você deve antes expô-la no Jami. Isso gerará um código PIN que você deverá entrar no novo dispositivo para configurar a conta. Este PIN é válido por 10 minutos.</string>
   <string name="account_export_title">Adicionar dispositivos</string>
+  <string name="account_connect_server_button">Conectar ao servidor de gerenciamento</string>
+  <string name="account_connect_button">Conectar</string>
+  <string name="prompt_server">URL do servidor de gerenciamento Jami</string>
+  <string name="help_credentials_enter">Insira as credenciais da sua organização</string>
+  <string name="help_connect_password_enter">Digite a senha da sua organização</string>
   <string name="account_connect_prompt_username">Nome de usuário</string>
   <!--Name registration-->
   <string name="error_username_empty">Entre um nome de usuário</string>
   <string name="no_registered_name_for_account">Nenhum nome registrado encontrado para esta conta</string>
+  <string name="username_available">Nome de usuário disponível !</string>
   <string name="register_name">Registrar nome</string>
   <string name="trying_to_register_name">Tentando registrar nome</string>
   <string name="registered_username">Nome de usuário registrado</string>
   <string name="register_username">Registrar nome de usuário público (recomendado)</string>
   <string name="username_already_taken">Nome de usuário já em uso</string>
   <string name="invalid_username">Nome de usuário inválido</string>
+  <string name="unknown_error">Erro desconhecido. Por favor, verifique sua conexão de rede!</string>
   <string name="looking_for_username_availability">Buscando disponibilidade de usuário...</string>
   <string name="account_status_connecting">Conectando</string>
   <string name="account_status_connection_error">Erro de conexão</string>

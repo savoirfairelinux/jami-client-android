@@ -258,6 +258,5 @@
   <string name="tv_audio_recording">در حال ضبط...</string>
   <string name="tv_send_text">ارسال متن</string>
   <string name="tv_send_audio">ارسال صدا</string>
-  <string name="tv_send_video">ارسال ویدیو</string>
   <string name="tv_clear_history">پاک‌سازی تاریخچه</string>
 </resources>
