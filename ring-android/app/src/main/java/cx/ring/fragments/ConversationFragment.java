@@ -23,6 +23,7 @@ import android.Manifest;
 import android.animation.LayoutTransition;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ComponentName;
@@ -950,7 +951,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     private void setupActionbar(CallContact contact) {
-        if (!this.isVisible()) {
+        if (!isVisible()) {
             return;
         }
 
@@ -963,17 +964,17 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         String displayName = contact.getDisplayName();
         String identity = contact.getRingUsername();
 
-        if (DeviceUtils.isTablet(getContext())) {
+        Activity activity = getActivity();
+        if (activity instanceof HomeActivity) {
             Toolbar toolbar = getActivity().findViewById(R.id.main_toolbar);
             TextView title = toolbar.findViewById(R.id.contact_title);
             TextView subtitle = toolbar.findViewById(R.id.contact_subtitle);
             ImageView logo = toolbar.findViewById(R.id.contact_image);
 
-            if (!((HomeActivity) getActivity()).isConversationSelected()) {
+            if (!((HomeActivity) activity).isConversationSelected()) {
                 title.setText("");
                 subtitle.setText("");
                 logo.setImageDrawable(null);
-
                 return;
             }
 
