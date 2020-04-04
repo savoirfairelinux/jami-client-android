@@ -67,6 +67,9 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     private Uri mContactUri;
     private String mAccountId;
 
+    private boolean isConnected;
+    private boolean isRegistered;
+
     private CompositeDisposable mConversationDisposable;
     private final CompositeDisposable mVisibilityDisposable = new CompositeDisposable();
 
@@ -112,6 +115,12 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         } else {
             getView().goToHome();
         }
+
+        mCompositeDisposable.add(mAccountService.getObservableAccountUpdates(mAccountId)
+                .subscribe(currentAccount -> {
+                    isRegistered = currentAccount.isRegistered();
+                    refreshConnectivity();
+                }));
     }
 
     private void setConversation(final Conversation conversation) {
@@ -143,14 +152,25 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                 }, e -> Log.e(TAG, "Error loading conversation", e)));
 
         mCompositeDisposable.add(mHardwareService.getConnectivityState()
-                .subscribe(this::refreshConnectivity));
+                .subscribe(connected -> {
+                    isConnected = connected;
+                    refreshConnectivity();
+                }));
+
+        mCompositeDisposable.add(mAccountService.getObservableAccountUpdates(mAccountId)
+                .subscribe(account -> {
+                    isRegistered = account.isRegistered();
+                    refreshConnectivity();
+                }));
     }
 
-    private void refreshConnectivity(boolean connected) {
-        if (connected) {
+    private void refreshConnectivity() {
+        if (isConnected) {
             getView().hideErrorPanel();
-        } else {
+        } else if (!isRegistered){
             getView().displayNetworkErrorPanel();
+        } else {
+            getView().hideErrorPanel();
         }
     }
 
