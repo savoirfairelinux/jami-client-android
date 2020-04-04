@@ -161,7 +161,7 @@ public abstract class HardwareService {
     public abstract boolean shouldPlaySpeaker();
 
     public void connectivityChanged(boolean isConnected) {
-        Log.i(TAG, "connectivityChange()");
+        Log.i(TAG, "connectivityChange() " + isConnected);
         connectivityEvents.onNext(isConnected);
         mExecutor.execute(Ringservice::connectivityChanged);
     }

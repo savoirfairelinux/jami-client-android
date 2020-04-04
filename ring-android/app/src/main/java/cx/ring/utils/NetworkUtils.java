@@ -22,6 +22,7 @@ package cx.ring.utils;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 
 public final class NetworkUtils {
@@ -34,17 +35,15 @@ public final class NetworkUtils {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (cm == null)
             return null;
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        if (activeNetwork != null && activeNetwork.isConnected())
-            return activeNetwork;
-        else {
-            for (Network n: cm.getAllNetworks()) {
-                NetworkInfo nInfo = cm.getNetworkInfo(n);
-                if(nInfo != null && nInfo.isConnected())
-                    return nInfo;
-            }
+        for (Network n: cm.getAllNetworks()) {
+            NetworkCapabilities caps = cm.getNetworkCapabilities(n);
+            if (caps != null && !caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET))
+                continue;
+            NetworkInfo nInfo = cm.getNetworkInfo(n);
+            if(nInfo != null && nInfo.isConnected())
+                return nInfo;
         }
-        return activeNetwork;
+        return null;
     }
 
     public static boolean isConnectivityAllowed(Context context) {
