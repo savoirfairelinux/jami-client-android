@@ -47,6 +47,7 @@ import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
 import cx.ring.utils.Tuple;
 import cx.ring.utils.VCardUtils;
+import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -112,6 +113,18 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         } else {
             getView().goToHome();
         }
+
+        Observable.combineLatest(
+                mHardwareService.getConnectivityState(),
+                mAccountService.getObservableAccount(mAccountId),
+                (isConnected, a) -> isConnected || a.isRegistered())
+                .observeOn(mUiScheduler)
+                .subscribe(isOk -> {
+                    if (isOk)
+                        getView().hideErrorPanel();
+                    else
+                        getView().displayNetworkErrorPanel();
+                });
     }
 
     private void setConversation(final Conversation conversation) {
@@ -141,17 +154,6 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                     updateOngoingCallView(conversation);
                     mConversationFacade.readMessages(mAccountService.getAccount(mAccountId), conversation);
                 }, e -> Log.e(TAG, "Error loading conversation", e)));
-
-        mCompositeDisposable.add(mHardwareService.getConnectivityState()
-                .subscribe(this::refreshConnectivity));
-    }
-
-    private void refreshConnectivity(boolean connected) {
-        if (connected) {
-            getView().hideErrorPanel();
-        } else {
-            getView().displayNetworkErrorPanel();
-        }
     }
 
     private CallContact initContact(final Account account, final Uri uri,
