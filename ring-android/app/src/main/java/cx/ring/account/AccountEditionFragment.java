@@ -22,12 +22,12 @@
  */
 package cx.ring.account;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -42,7 +42,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AlertDialog;
 
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -107,7 +106,7 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
         presenter.init(mAccountId);
         presenter.onAccountChanged();
 
-        if (DeviceUtils.isTablet(requireContext())) {
+        if (DeviceUtils.isTablet(getContext()) && getActivity() != null) {
             Toolbar toolbar = getActivity().findViewById(R.id.main_toolbar);
             TextView title = toolbar.findViewById(R.id.contact_title);
             ImageView logo = toolbar.findViewById(R.id.contact_image);
@@ -129,19 +128,20 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
     @Override
     public void displaySummary(String accountId) {
         toggleView(accountId);
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        Fragment existingFragment = fragmentManager.findFragmentByTag(RingAccountSummaryFragment.TAG);
+        FragmentManager fragmentManager = requireFragmentManager();
+        Fragment existingFragment = fragmentManager.findFragmentByTag(JamiAccountSummaryFragment.TAG);
         if (existingFragment == null) {
-            RingAccountSummaryFragment ringAccountSummaryFragment = new RingAccountSummaryFragment();
+            JamiAccountSummaryFragment fragment = new JamiAccountSummaryFragment();
             Bundle args = new Bundle();
             args.putString(ACCOUNT_ID_KEY, accountId);
-            ringAccountSummaryFragment.setArguments(args);
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, ringAccountSummaryFragment, RingAccountSummaryFragment.TAG)
-                    .addToBackStack(RingAccountSummaryFragment.TAG)
+            fragment.setArguments(args);
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, fragment, JamiAccountSummaryFragment.TAG)
+                    .addToBackStack(JamiAccountSummaryFragment.TAG)
                     .commit();
         } else {
-            ((HomeActivity) getActivity()).selectNavigationItem(R.id.navigation_settings);
+            if (getActivity() instanceof HomeActivity)
+                ((HomeActivity) getActivity()).selectNavigationItem(R.id.navigation_settings);
         }
     }
 
@@ -151,10 +151,10 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
     }
 
     @Override
-    public void initViewPager(String accountId, boolean isRing) {
+    public void initViewPager(String accountId, boolean isJami) {
         mViewPager.setOffscreenPageLimit(4);
         mSlidingTabLayout.setupWithViewPager(mViewPager);
-        mViewPager.setAdapter(new PreferencesPagerAdapter(getActivity().getSupportFragmentManager(), getActivity(), accountId, isRing));
+        mViewPager.setAdapter(new PreferencesPagerAdapter(getFragmentManager(), getActivity(), accountId, isJami));
     }
 
     @Override
@@ -177,7 +177,7 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
         Bundle args = new Bundle();
         args.putString(ACCOUNT_ID_KEY, accountId);
         blackListFragment.setArguments(args);
-        getActivity().getSupportFragmentManager().beginTransaction()
+        requireFragmentManager().beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .addToBackStack(BlackListFragment.TAG)
                 .replace(R.id.fragment_container, blackListFragment, BlackListFragment.TAG)
@@ -185,7 +185,6 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
         mSlidingTabLayout.setVisibility(View.GONE);
         mViewPager.setVisibility(View.GONE);
         frameLayout.setVisibility(View.VISIBLE);
-
     }
 
     @Override
@@ -197,7 +196,7 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
     }
 
     @Override
-    public void onPrepareOptionsMenu(Menu menu) {
+    public void onPrepareOptionsMenu(@NonNull Menu menu) {
         super.onPrepareOptionsMenu(menu);
         presenter.prepareOptionsMenu();
     }
@@ -218,20 +217,21 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
 
     public boolean onBackPressed() {
         mIsVisible = false;
-        ((HomeActivity) getActivity()).setToolbarOutlineState(true);
+        if (getActivity() instanceof HomeActivity)
+            ((HomeActivity) getActivity()).setToolbarOutlineState(true);
         if (frameLayout.getVisibility() != View.VISIBLE) {
             toggleView(mAccountId);
             return  true;
         }
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        RingAccountSummaryFragment summaryFragment = (RingAccountSummaryFragment) fragmentManager.findFragmentByTag(RingAccountSummaryFragment.TAG);
-        if (summaryFragment.onBackPressed()){
+        FragmentManager fragmentManager = requireFragmentManager();
+        JamiAccountSummaryFragment summaryFragment = (JamiAccountSummaryFragment) fragmentManager.findFragmentByTag(JamiAccountSummaryFragment.TAG);
+        if (summaryFragment != null && summaryFragment.onBackPressed()){
             return true;
         }
         fragmentManager.popBackStackImmediate();
         List<Fragment> fragments = fragmentManager.getFragments();
         Fragment fragment = fragments.get(fragments.size() - 1);
-        return fragment instanceof RingAccountSummaryFragment;
+        return fragment instanceof JamiAccountSummaryFragment;
     }
 
     private void toggleView(String accountId) {
@@ -244,8 +244,8 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
         presenter.prepareOptionsMenu();
         setBackListenerEnabled(isRing);
 
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        RingAccountSummaryFragment fragment = (RingAccountSummaryFragment) fragmentManager.findFragmentByTag(RingAccountSummaryFragment.TAG);
+        FragmentManager fragmentManager = requireFragmentManager();
+        JamiAccountSummaryFragment fragment = (JamiAccountSummaryFragment) fragmentManager.findFragmentByTag(JamiAccountSummaryFragment.TAG);
         if (fragment != null) {
             fragment.setFragmentVisibility(isRing);
             fragment.onScrollChanged();
@@ -256,7 +256,8 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                getActivity().onBackPressed();
+                if (getActivity() != null)
+                    getActivity().onBackPressed();
                 return true;
             case R.id.menuitem_delete:
                 AlertDialog deleteDialog = createDeleteDialog();
@@ -266,15 +267,16 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
                 mSlidingTabLayout.setVisibility(View.VISIBLE);
                 mViewPager.setVisibility(View.VISIBLE);
                 frameLayout.setVisibility(View.GONE);
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                RingAccountSummaryFragment fragment = (RingAccountSummaryFragment) fragmentManager.findFragmentByTag(RingAccountSummaryFragment.TAG);
-                fragment.setFragmentVisibility(false);
+                JamiAccountSummaryFragment fragment = (JamiAccountSummaryFragment) requireFragmentManager().findFragmentByTag(JamiAccountSummaryFragment.TAG);
+                if (fragment != null)
+                    fragment.setFragmentVisibility(false);
                 mIsVisible = true;
                 setupElevation();
                 break;
             case R.id.menuitem_blacklist:
                 presenter.goToBlackList();
-                ((HomeActivity) getActivity()).setToolbarElevation(false);
+                if (getActivity() instanceof HomeActivity)
+                    ((HomeActivity) getActivity()).setToolbarElevation(false);
             default:
                 break;
         }
@@ -283,13 +285,15 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
 
     @NonNull
     private AlertDialog createDeleteDialog() {
-        AlertDialog alertDialog = new MaterialAlertDialogBuilder(getActivity())
+        AlertDialog alertDialog = new MaterialAlertDialogBuilder(requireContext())
                 .setMessage(R.string.account_delete_dialog_message)
                 .setTitle(R.string.account_delete_dialog_title)
                 .setPositiveButton(android.R.string.ok, (dialog, whichButton) -> presenter.removeAccount())
                 .setNegativeButton(android.R.string.cancel, null)
                 .create();
-        alertDialog.setOwnerActivity(getActivity());
+        Activity activity = getActivity();
+        if (activity != null)
+            alertDialog.setOwnerActivity(getActivity());
         return alertDialog;
     }
 
@@ -303,7 +307,9 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
 
     @Override
     public void exit() {
-        getActivity().onBackPressed();
+        Activity activity = getActivity();
+        if (activity != null)
+            activity.onBackPressed();
     }
 
     @Override
@@ -317,23 +323,21 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
     }
 
     private void setBackListenerEnabled(boolean enable) {
-        if (enable) {
-            ((HomeActivity) getActivity()).setAccountFragmentOnBackPressedListener(this);
-        } else {
-            ((HomeActivity) getActivity()).setAccountFragmentOnBackPressedListener(null);
-        }
+        if (!(getActivity() instanceof HomeActivity))
+            return;
+        ((HomeActivity) getActivity()).setAccountFragmentOnBackPressedListener(enable ? this : null);
     }
 
     private static class PreferencesPagerAdapter extends FragmentStatePagerAdapter {
         private Context mContext;
         private String accountId;
-        private boolean isRing;
+        private boolean isJamiAccount;
 
-        PreferencesPagerAdapter(FragmentManager fm, Context mContext, String accountId, boolean isRing) {
+        PreferencesPagerAdapter(FragmentManager fm, Context mContext, String accountId, boolean isJamiAccount) {
             super(fm);
             this.mContext = mContext;
             this.accountId = accountId;
-            this.isRing = isRing;
+            this.isJamiAccount = isJamiAccount;
         }
 
         @StringRes
@@ -368,23 +372,23 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
 
         @Override
         public int getCount() {
-            return isRing ? 3 : 4;
+            return isJamiAccount ? 3 : 4;
         }
 
         @NonNull
         @Override
         public Fragment getItem(int position) {
-            return isRing ? getRingPanel(position) : getSIPPanel(position);
+            return isJamiAccount ? getJamiPanel(position) : getSIPPanel(position);
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            int resId = isRing ? getRingPanelTitle(position) : getSIPPanelTitle(position);
+            int resId = isJamiAccount ? getRingPanelTitle(position) : getSIPPanelTitle(position);
             return mContext.getString(resId);
         }
 
-        @Nullable
-        private Fragment getRingPanel(int position) {
+        @NonNull
+        private Fragment getJamiPanel(int position) {
             switch (position) {
                 case 0:
                     return fragmentWithBundle(new GeneralAccountFragment());
@@ -393,11 +397,11 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
                 case 2:
                     return fragmentWithBundle(new AdvancedAccountFragment());
                 default:
-                    return null;
+                    throw new IllegalArgumentException();
             }
         }
 
-        @Nullable
+        @NonNull
         private Fragment getSIPPanel(int position) {
             switch (position) {
                 case 0:
@@ -409,7 +413,7 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
                 case 3:
                     return fragmentWithBundle(new SecurityAccountFragment());
                 default:
-                    return null;
+                    throw new IllegalArgumentException();
             }
         }
 
@@ -430,21 +434,22 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
         if (mViewPager == null || !mIsVisible) {
             return;
         }
+        Activity activity = getActivity();
+        if (!(activity instanceof HomeActivity))
+            return;
         LinearLayout ll = (LinearLayout) mViewPager.getChildAt(mViewPager.getCurrentItem());
-        if (ll == null) { return; }
+        if (ll == null) return;
         RecyclerView rv = (RecyclerView)((FrameLayout) ll.getChildAt(0)).getChildAt(0);
-        if (rv == null) { return; }
+        if (rv == null) return;
+        HomeActivity homeActivity = (HomeActivity) activity;
         if (rv.canScrollVertically(SCROLL_DIRECTION_UP)) {
-            float elevation = TypedValue.applyDimension(
-                    TypedValue.COMPLEX_UNIT_DIP, 4, getContext().getResources().getDisplayMetrics());
-            mSlidingTabLayout.setElevation(elevation);
-            ((HomeActivity) getActivity()).setToolbarElevation(true);
-            ((HomeActivity) getActivity()).setToolbarOutlineState(false);
+            mSlidingTabLayout.setElevation(mSlidingTabLayout.getResources().getDimension(R.dimen.toolbar_elevation));
+            homeActivity.setToolbarElevation(true);
+            homeActivity.setToolbarOutlineState(false);
         } else {
             mSlidingTabLayout.setElevation(0);
-            ((HomeActivity) getActivity()).setToolbarElevation(false);
-            ((HomeActivity) getActivity()).setToolbarOutlineState(true);
+            homeActivity.setToolbarElevation(false);
+            homeActivity.setToolbarOutlineState(true);
         }
     }
-
 }

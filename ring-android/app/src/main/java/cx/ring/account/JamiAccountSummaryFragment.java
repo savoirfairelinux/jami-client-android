@@ -79,7 +79,6 @@ import butterknife.OnEditorAction;
 import cx.ring.R;
 import cx.ring.client.HomeActivity;
 import cx.ring.dependencyinjection.JamiInjectionComponent;
-import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.model.Account;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.services.AccountService;
@@ -96,7 +95,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountSummaryPresenter> implements
+public class JamiAccountSummaryFragment extends BaseSupportFragment<RingAccountSummaryPresenter> implements
         RegisterNameDialog.RegisterNameDialogListener,
         RenameDeviceDialog.RenameDeviceListener,
         DeviceAdapter.DeviceRevocationListener,
@@ -105,7 +104,7 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
         BackupAccountDialog.UnlockAccountListener,
         ViewTreeObserver.OnScrollChangedListener {
 
-    public static final String TAG = RingAccountSummaryFragment.class.getSimpleName();
+    public static final String TAG = JamiAccountSummaryFragment.class.getSimpleName();
     private static final String FRAGMENT_DIALOG_REVOCATION = TAG + ".dialog.deviceRevocation";
     private static final String FRAGMENT_DIALOG_RENAME = TAG + ".dialog.deviceRename";
     private static final String FRAGMENT_DIALOG_PASSWORD = TAG + ".dialog.changePassword";
@@ -308,7 +307,7 @@ public class RingAccountSummaryFragment extends BaseSupportFragment<RingAccountS
     public void accountChanged(@NonNull final Account account) {
         if (mDeviceAdapter == null) {
             mDeviceAdapter = new DeviceAdapter(requireContext(), account.getDevices(), account.getDeviceId(),
-                    RingAccountSummaryFragment.this);
+                    JamiAccountSummaryFragment.this);
             mDeviceList.setAdapter(mDeviceAdapter);
         } else {
             mDeviceAdapter.setData(account.getDevices(), account.getDeviceId());

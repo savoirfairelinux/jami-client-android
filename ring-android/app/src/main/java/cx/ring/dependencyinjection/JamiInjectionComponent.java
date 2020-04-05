@@ -29,7 +29,7 @@ import cx.ring.account.JamiAccountConnectFragment;
 import cx.ring.account.ProfileCreationFragment;
 import cx.ring.account.RegisterNameDialog;
 import cx.ring.account.JamiAccountCreationFragment;
-import cx.ring.account.RingAccountSummaryFragment;
+import cx.ring.account.JamiAccountSummaryFragment;
 import cx.ring.account.RingLinkAccountFragment;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.ContactDetailsActivity;
@@ -108,7 +108,7 @@ public interface JamiInjectionComponent {
 
     void inject(SIPAccountCreationFragment fragment);
 
-    void inject(RingAccountSummaryFragment fragment);
+    void inject(JamiAccountSummaryFragment fragment);
 
     void inject(CallFragment fragment);
 
