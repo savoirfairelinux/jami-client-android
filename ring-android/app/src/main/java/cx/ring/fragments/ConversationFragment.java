@@ -1170,5 +1170,4 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         }
         binding.errorMsgPane.setVisibility(View.GONE);
     }
-
 }
