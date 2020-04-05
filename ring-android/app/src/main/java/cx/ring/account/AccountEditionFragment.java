@@ -22,6 +22,7 @@
  */
 package cx.ring.account;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -42,7 +43,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AlertDialog;
 
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -430,20 +430,22 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
         if (mViewPager == null || !mIsVisible) {
             return;
         }
+        Activity activity = getActivity();
+        if (!(activity instanceof HomeActivity))
+            return;
         LinearLayout ll = (LinearLayout) mViewPager.getChildAt(mViewPager.getCurrentItem());
-        if (ll == null) { return; }
+        if (ll == null) return;
         RecyclerView rv = (RecyclerView)((FrameLayout) ll.getChildAt(0)).getChildAt(0);
-        if (rv == null) { return; }
+        if (rv == null) return;
+        HomeActivity homeActivity = (HomeActivity) activity;
         if (rv.canScrollVertically(SCROLL_DIRECTION_UP)) {
-            float elevation = TypedValue.applyDimension(
-                    TypedValue.COMPLEX_UNIT_DIP, 4, getContext().getResources().getDisplayMetrics());
-            mSlidingTabLayout.setElevation(elevation);
-            ((HomeActivity) getActivity()).setToolbarElevation(true);
-            ((HomeActivity) getActivity()).setToolbarOutlineState(false);
+            mSlidingTabLayout.setElevation(rv.getContext().getResources().getDimension(R.dimen.toolbar_elevation));
+            homeActivity.setToolbarElevation(true);
+            homeActivity.setToolbarOutlineState(false);
         } else {
             mSlidingTabLayout.setElevation(0);
-            ((HomeActivity) getActivity()).setToolbarElevation(false);
-            ((HomeActivity) getActivity()).setToolbarOutlineState(true);
+            homeActivity.setToolbarElevation(false);
+            homeActivity.setToolbarOutlineState(true);
         }
     }
 

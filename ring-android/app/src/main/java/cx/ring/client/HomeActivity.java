@@ -37,7 +37,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewOutlineProvider;
@@ -304,7 +303,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         mToolbar.setSubtitle(null);
 
         int targetSize = (int) (AvatarFactory.SIZE_AB * getResources().getDisplayMetrics().density);
-
         mDisposable.add(mAccountService.getCurrentAccountSubject()
                 .switchMapSingle(account -> AvatarFactory.getBitmapAvatar(HomeActivity.this, account, targetSize)
                         .map(avatar -> new Pair<>(account, avatar)))
@@ -419,11 +417,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         int fCount = fragmentManager.getBackStackEntryCount();
         if (fCount > 1) {
             fContent = fragmentManager.findFragmentById(R.id.main_frame);
-            if (fContent instanceof ContactRequestsFragment) {
-                conversationSelected = false;
-            } else {
-                conversationSelected = true;
-            }
+            conversationSelected = !(fContent instanceof ContactRequestsFragment);
             FragmentManager.BackStackEntry entry = fragmentManager.getBackStackEntryAt(fCount - 2);
             fContent = fragmentManager.findFragmentById(entry.getId());
             fragmentManager.popBackStack();
@@ -662,10 +656,8 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     public void setToolbarElevation(boolean enable) {
-        int dp = enable? 4 : 0;
-        float pixels = TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
-        mAppBarLayout.setElevation(pixels);
+        if (mAppBarLayout != null)
+            mAppBarLayout.setElevation(enable ? getResources().getDimension(R.dimen.toolbar_elevation) : 0);
     }
 
     public void setToolbarOutlineState(boolean enabled) {
