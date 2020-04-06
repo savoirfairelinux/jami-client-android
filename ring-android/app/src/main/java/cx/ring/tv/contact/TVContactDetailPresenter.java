@@ -51,7 +51,7 @@ public class TVContactDetailPresenter extends Presenter {
 
     }
 
-    public class CustomViewHolder extends Presenter.ViewHolder {
+    public static class CustomViewHolder extends Presenter.ViewHolder {
 
         public CustomViewHolder(View view) {
             super(view);

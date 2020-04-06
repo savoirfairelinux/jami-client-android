@@ -21,7 +21,7 @@ package cx.ring.account;
 
 import cx.ring.mvp.AccountCreationModel;
 
-public interface RingLinkAccountView {
+public interface JamiLinkAccountView {
 
     void enableLinkButton(boolean enable);
 

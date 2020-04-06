@@ -95,12 +95,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class JamiAccountSummaryFragment extends BaseSupportFragment<RingAccountSummaryPresenter> implements
+public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountSummaryPresenter> implements
         RegisterNameDialog.RegisterNameDialogListener,
         RenameDeviceDialog.RenameDeviceListener,
         DeviceAdapter.DeviceRevocationListener,
         ConfirmRevocationDialog.ConfirmRevocationListener,
-        RingAccountSummaryView, ChangePasswordDialog.PasswordChangedListener,
+        JamiAccountSummaryView, ChangePasswordDialog.PasswordChangedListener,
         BackupAccountDialog.UnlockAccountListener,
         ViewTreeObserver.OnScrollChangedListener {
 

@@ -34,7 +34,7 @@ import cx.ring.account.HomeAccountCreationView;
 import cx.ring.application.JamiApplication;
 
 public class TVHomeAccountCreationFragment
-        extends RingGuidedStepFragment<HomeAccountCreationPresenter>
+        extends JamiGuidedStepFragment<HomeAccountCreationPresenter>
         implements HomeAccountCreationView {
 
     private static final int LINK_ACCOUNT = 0;
@@ -58,7 +58,7 @@ public class TVHomeAccountCreationFragment
     public void goToAccountLink() {
         AccountCreationModelImpl ringAccountViewModel = new AccountCreationModelImpl();
         ringAccountViewModel.setLink(true);
-        GuidedStepSupportFragment.add(getFragmentManager(), TVRingLinkAccountFragment.newInstance(ringAccountViewModel));
+        GuidedStepSupportFragment.add(getFragmentManager(), TVJamiLinkAccountFragment.newInstance(ringAccountViewModel));
     }
 
     @Override

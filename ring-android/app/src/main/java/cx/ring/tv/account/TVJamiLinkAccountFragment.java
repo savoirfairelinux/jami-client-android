@@ -29,24 +29,24 @@ import java.util.List;
 
 import cx.ring.R;
 import cx.ring.account.AccountCreationModelImpl;
-import cx.ring.account.RingLinkAccountPresenter;
-import cx.ring.account.RingLinkAccountView;
+import cx.ring.account.JamiLinkAccountPresenter;
+import cx.ring.account.JamiLinkAccountView;
 import cx.ring.application.JamiApplication;
 import cx.ring.mvp.AccountCreationModel;
 import cx.ring.utils.StringUtils;
 
-public class TVRingLinkAccountFragment extends RingGuidedStepFragment<RingLinkAccountPresenter>
-        implements RingLinkAccountView {
+public class TVJamiLinkAccountFragment extends JamiGuidedStepFragment<JamiLinkAccountPresenter>
+        implements JamiLinkAccountView {
     private static final long PASSWORD = 1L;
     private static final long PIN = 2L;
     private static final long LINK = 3L;
     private AccountCreationModelImpl model;
 
-    public TVRingLinkAccountFragment() {
+    public TVJamiLinkAccountFragment() {
     }
 
-    public static TVRingLinkAccountFragment newInstance(AccountCreationModelImpl ringAccountViewModel) {
-        TVRingLinkAccountFragment fragment = new TVRingLinkAccountFragment();
+    public static TVJamiLinkAccountFragment newInstance(AccountCreationModelImpl ringAccountViewModel) {
+        TVJamiLinkAccountFragment fragment = new TVJamiLinkAccountFragment();
         fragment.model = ringAccountViewModel;
         return fragment;
     }

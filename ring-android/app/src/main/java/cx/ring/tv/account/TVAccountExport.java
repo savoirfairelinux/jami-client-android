@@ -43,15 +43,15 @@ import java.util.List;
 import java.util.Map;
 
 import cx.ring.R;
-import cx.ring.account.RingAccountSummaryPresenter;
-import cx.ring.account.RingAccountSummaryView;
+import cx.ring.account.JamiAccountSummaryPresenter;
+import cx.ring.account.JamiAccountSummaryView;
 import cx.ring.application.JamiApplication;
 import cx.ring.model.Account;
 import cx.ring.utils.AndroidFileUtils;
 
 public class TVAccountExport
-        extends RingGuidedStepFragment<RingAccountSummaryPresenter>
-        implements RingAccountSummaryView {
+        extends JamiGuidedStepFragment<JamiAccountSummaryPresenter>
+        implements JamiAccountSummaryView {
 
     private static final long PASSWORD = 1L;
     private ProgressDialog mWaitDialog;
