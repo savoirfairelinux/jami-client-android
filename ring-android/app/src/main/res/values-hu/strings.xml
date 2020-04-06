@@ -252,11 +252,15 @@
   <string name="navigation_item_account">Fiók</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">Hangüzenet küldése?</string>
+  <string name="tv_send_image_dialog_message">Küldd el a képet?</string>
+  <string name="tv_send_video_dialog_message">Küldd el a videót?</string>
+  <string name="tv_media_preview">Előnézet</string>
   <string name="tv_audio_play">Lejátszás</string>
   <string name="tv_audio_pause">Megállítás</string>
   <string name="tv_dialog_send">Elküld</string>
   <string name="tv_audio_recording">Felvétel…</string>
   <string name="tv_send_text">Szöveg küldése</string>
   <string name="tv_send_audio">Hang küldése</string>
+  <string name="tv_send_video">Média küldése</string>
   <string name="tv_clear_history">Előzmények törlése</string>
 </resources>

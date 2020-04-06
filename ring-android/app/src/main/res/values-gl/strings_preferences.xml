@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="pref_category_network">Rede</string>
+  <string name="pref_category_contacts">Contactos</string>
+  <string name="pref_category_video">Vídeo</string>
+  <string name="pref_category_system">Sistema</string>
+  <string name="pref_category_privacy">Privacidade</string>
+  <string name="pref_mobileData_title">Datos móbiles</string>
+  <string name="pref_mobileData_summary">Permitir que Jami acceda a redes 3G/LTE ademáis de a Wi-Fi.</string>
+  <string name="pref_pushNotifications_title">Notificacións Push</string>
+  <string name="pref_pushNotifications_summary">Usar servidores Google para permitir recibir chamadas e mensaxes en segundo plano</string>
+  <string name="pref_video_advanced_title">Axustes avanzados de video</string>
+  <string name="pref_video_advanced_summary">Cambiar a taxa de bits, resolución e acceso a características experimentais</string>
+  <string name="pref_hd_summary">Activar vídeo HD</string>
+  <string name="pref_hwEncode_title">Activar codificación acelerada</string>
+  <string name="pref_hwEncode_summary">Característica experimental</string>
+  <string name="pref_systemContacts_title">Usar contactos do sistema</string>
+  <string name="pref_systemContacts_summary">Usar contactos do sistema para mostrar detalles do contacto.</string>
+  <string name="pref_systemDialer_title">Facer as chamadas dos sistema usando Jami</string>
+  <string name="pref_systemDialer_summary">Usar Jami cando sexa posible para facer chamadas.</string>
+  <string name="pref_startOnBoot_title">Inciar Jami ao inicio do sistema</string>
+  <string name="pref_startOnBoot_summary">Executar Jami en segundo plano cando se inicia o sistema.</string>
+  <string name="pref_clearHistory_title">Eliminar historial</string>
+  <string name="pref_clearHistory_summary">Eliminar todo o historial de conversas. Esto non ten volta atrás.</string>
+  <string name="pref_persistNotification_title">Executar en segundo plano</string>
+  <string name="pref_persistNotification_summary">Permitir a execución en segundo plano para recibir mensaxe e chamadas.</string>
+</resources>

@@ -10,6 +10,7 @@
   <string name="no_browser_app_installed">Ingen webbrowser applikation fundet, installér en for at se denne side</string>
   <string name="email_chooser_title">Send mail ved brug af...</string>
   <string name="website_chooser_title">Vis websted med...</string>
+  <string name="description">Jami is free software for universal communication which respects the freedoms and privacy of its users. (Näcken)</string>
   <string name="credits">Krediteringer</string>
   <!--About dialog-->
   <string name="developed_by">Udviklet af</string>
@@ -117,6 +118,7 @@
   <string name="conversation_action_select_peer_number">Vælg et nummer</string>
   <string name="conversation_action_block_this">Bloker kontakt</string>
   <string name="conversation_action_go_to_call">Tilbage til igangeværende opkald</string>
+  <string name="conversation_contact_is_typing">Modparten skriver ........</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Tilføj %1$s?</string>
   <string name="prompt_new_password">Ny adgangskode</string>
@@ -137,7 +139,7 @@
   <string name="share_your_account_information">Del min kontaktinformation</string>
   <string name="share_label">Del</string>
   <string name="generic_error_migration">Fejl</string>
-  <string name="generic_error_migration_message">Der opstod en fejl under migrering</string>
+  <string name="generic_error_migration_message">Der opstod en fejl under overførsel</string>
   <!--Pending contact requests-->
   <string name="accept">Accepter</string>
   <string name="refuse">Afvis</string>
@@ -147,11 +149,11 @@
   <string name="contact_request_account">For %1$s</string>
   <string name="no_requests">0 kontaktforespørgsler</string>
   <string name="message_contact_not_trusted_yet">%s er ikke blandt dine kontakter endnu.\nVil du acceptere eller afvise denne kontaktforespørgsel?</string>
-  <string name="message_contact_not_trusted">%s er ikke i dine kontakter.\nTilføj en ny kontakt?</string>
+  <string name="message_contact_not_trusted">%s er ikke i dine \"kontakter\".\nTilføj en ny kontakt?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Send</string>
   <string name="send_request_title">Send en kontaktforespørgsel</string>
-  <string name="send_request_msg">Du skal sende en kontaktforespørgsel for at kommunikere med denne bruger. Så længe kontakten ikke har accepteret forespørgslen, kan du afsende beskeder men kontakten vil ikke være i stand til at besvare dem. </string>
+  <string name="send_request_msg">Du skal sende en kontaktforespørgsel for at kunne skrive sammen  med denne bruger. Så længe personen ikke har godkendt forespørgslen, kan du afsende beskeder men personen vil ikke være i stand til at besvare dem. </string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 blokerede kontakter</string>
   <!--Smartlist-->
@@ -165,10 +167,10 @@
   <!--File Transfer-->
   <string name="invalid_file">Ugyldig fil</string>
   <string name="not_able_to_write_file">Kan ikke skrive fil</string>
-  <string name="file_transfer_status_created">Initialiserer overførsel</string>
+  <string name="file_transfer_status_created">Start overførsel</string>
   <string name="file_transfer_status_unsupported">ikke understøttet</string>
-  <string name="file_transfer_status_wait_peer_acceptance">afventer modpartens accept</string>
-  <string name="file_transfer_status_wait_host_acceptance">afventer værtens accept</string>
+  <string name="file_transfer_status_wait_peer_acceptance">afventer modpartens godkendelse.</string>
+  <string name="file_transfer_status_wait_host_acceptance">afventer værtens godkendelse.</string>
   <string name="file_transfer_status_ongoing">igangværende</string>
   <string name="file_transfer_status_finished">afsluttet</string>
   <string name="file_transfer_status_closed_by_host">lukket af vært</string>

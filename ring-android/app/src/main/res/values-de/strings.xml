@@ -252,11 +252,15 @@
   <string name="navigation_item_account">Konto</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">Audionachricht senden?</string>
+  <string name="tv_send_image_dialog_message">Bild senden?</string>
+  <string name="tv_send_video_dialog_message">Video senden?</string>
+  <string name="tv_media_preview">Vorschau</string>
   <string name="tv_audio_play">Abspielen</string>
   <string name="tv_audio_pause">Pause</string>
   <string name="tv_dialog_send">Senden</string>
   <string name="tv_audio_recording">Aufnahme...</string>
   <string name="tv_send_text">Text senden</string>
   <string name="tv_send_audio">Audio senden</string>
+  <string name="tv_send_video">Medien senden</string>
   <string name="tv_clear_history">Verlauf leeren</string>
 </resources>

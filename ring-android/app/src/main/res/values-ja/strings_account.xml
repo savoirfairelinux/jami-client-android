@@ -7,6 +7,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Jamiアカウントを追加</string>
   <string name="add_sip_account_title">SIPアカウントを追加</string>
+  <string name="ring_account_default_name">Jamiアカウント %1$s</string>
   <string name="prompt_alias">別名</string>
   <string name="prompt_hostname">ホスト名</string>
   <string name="prompt_username">ユーザー名</string>
@@ -44,6 +45,8 @@
   <string name="account_device_revocation_unknown_device">不明なデバイス。</string>
   <string name="account_device_revocation_error_unknown">不明なエラー。</string>
   <string name="account_password_change">パスワードを変更</string>
+  <string name="account_password_set">パスワードを設定</string>
+  <string name="account_password_change_wait_message">アカウントのパスワードを変更中</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">全般</string>
   <string name="account_basic_category">基本設定</string>
@@ -64,6 +67,7 @@
   <string name="account_ringtone_enabled_label">着信音を使用</string>
   <string name="account_ringtone_path_label">着信音のパス</string>
   <string name="account_ringtone_custom_label">カスタム着信音を使用</string>
+  <string name="account_ringtone_title">着信音を選択</string>
   <!--Video Details-->
   <string name="account_video_label">動画</string>
   <string name="account_video_enable">動画を有効化</string>

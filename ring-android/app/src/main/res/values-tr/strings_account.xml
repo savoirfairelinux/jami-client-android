@@ -7,6 +7,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Jami hesabı ekle</string>
   <string name="add_sip_account_title">SIP hesabı ekle</string>
+  <string name="ring_account_default_name">Jami hesabı %1$s</string>
   <string name="prompt_alias">Takma ad</string>
   <string name="prompt_hostname">Sunucu adı</string>
   <string name="prompt_username">Kullanıcı adı</string>
@@ -44,6 +45,8 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="account_device_revocation_unknown_device">Bilinmeyen aygıt.</string>
   <string name="account_device_revocation_error_unknown">Bilinmeyen hata.</string>
   <string name="account_password_change">Parolayı değiştir</string>
+  <string name="account_password_set">Parola ayarla</string>
+  <string name="account_password_change_wait_message">Hesap parolasını değiştir </string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Genel</string>
   <string name="account_basic_category">Temel Ayarlar</string>
@@ -64,16 +67,24 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="account_ringtone_enabled_label">Zil seslerini etkinleştir</string>
   <string name="account_ringtone_path_label">Zil sesi yolu</string>
   <string name="account_ringtone_custom_label">Özel zil sesi kullan</string>
+  <string name="account_ringtone_title">Zil sesi seç</string>
+  <string name="account_ringtone_summary">Zil sesi terchi et veya kendininkini seç</string>
   <!--Video Details-->
   <string name="account_video_label">Görüntü</string>
   <string name="account_video_enable">Görüntüyü Etkinleştir</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Gelişmiş</string>
+  <string name="account_dht_public_in_calls_label">Bilinmeyen kişilerden gelen çağrılara izin ver</string>
   <string name="account_registration_exp_label">Kaydolma Bitimi</string>
   <string name="account_local_interface_label">Yerel Arayüz</string>
   <string name="account_local_port_label">Yerel Delik</string>
   <string name="account_stun_enable_label">Stun Kullan</string>
   <string name="account_stun_server_label">Stun Sunucusu</string>
+  <string name="account_accept_files">Gelen dosyaları otomatik olarak kabul et</string>
+  <string name="account_accept_files_max_size">Otomatik kabul edilebilir maksimum dosya boyutu </string>
+  <string name="account_accept_files_never">Asla otomatik olarak kabul etme</string>
+  <string name="account_accept_files_always">Her zaman otomatik kabul et</string>
+  <string name="size_mb">%1$dMB</string>
   <string name="account_turn_enable_label">TURN kullan</string>
   <string name="account_turn_server_label">TURN sunucusu</string>
   <string name="account_turn_username_label">TURN kullanıcı adı</string>
@@ -84,6 +95,7 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="account_proxy_label">DHT vekil</string>
   <string name="account_proxy_enable_label">DHT vekil sunucu kullan</string>
   <string name="account_proxy_server_label">DHT vekil adresi</string>
+  <string name="account_proxy_server_list_label">DHT proxy listesi URL</string>
   <!--Security Details-->
   <string name="account_credentials_label">Kimlik Bilgileri</string>
   <string name="account_credentials_edit">Kimlik bilgilerini düzenle</string>
@@ -112,6 +124,7 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="error_password_char_count">En az 6 karakter</string>
   <string name="error_passwords_not_equals">Parolalar eşleşmedi</string>
   <string name="export_account_wait_title">Lütfen bekleyin...</string>
+  <string name="export_account_wait_message">Hesap bilgilerini dışa aktar</string>
   <string name="account_export_file">Hesabı yedekle</string>
   <string name="account_export_end_decryption_message">Sağlanan parola kullanılarak hesabınızın kilidi açılamıyor.</string>
   <string name="account_export_end_network_title">Ağ hatası</string>
@@ -151,16 +164,19 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="account_end_export_infos">Pin\'iniz:\n\n%%\n\nSüreci tamamlamak için yeni aygıtta Ring\'i açmanız gerekiyor. \"Bu aygıtı bir hesaba bağla\" ile yeni hesap oluşturun. Pin\'iniz 10 dakikalığına geçerlidir.</string>
   <string name="account_link_export_info_light">Bu hesabı başka aygıtlarda kullanmak için önce Jami\'de açmalısınız. Bu, hesabı kurmak için yeni aygıtta girmeniz gereken bir PIN kodu oluşturacak. PIN 10 dakikalığına geçerlidir.</string>
   <string name="account_export_title">Aygıtlar ekle</string>
+  <string name="account_connect_button">Bağlan</string>
   <string name="account_connect_prompt_username">Kullanıcı adı</string>
   <!--Name registration-->
   <string name="error_username_empty">Bir kullanıcı adı gir</string>
   <string name="no_registered_name_for_account">Bu hesap için kaydedilmiş ad bulunamadı</string>
+  <string name="username_available">Kullanıcı adı geçerli !</string>
   <string name="register_name">Adı kaydet</string>
   <string name="trying_to_register_name">Ad kaydedilmeye çalışılıyor</string>
   <string name="registered_username">Kaydedilen kullanıcı adı</string>
   <string name="register_username">Halka açık kullanıcı adı kaydet (önerilir)</string>
   <string name="username_already_taken">Kullanıcı adı önceden alınmış</string>
   <string name="invalid_username">Geçersiz kullanıcı adı</string>
+  <string name="unknown_error">Bilinmeyen hata. Lütfen ağ bağlantınızı kontrol edin!</string>
   <string name="looking_for_username_availability">Kullanıcı adının uygunluğuna bakılıyor...</string>
   <string name="account_status_connecting">Bağlanılıyor</string>
   <string name="account_status_connection_error">Bağlantı hatası</string>

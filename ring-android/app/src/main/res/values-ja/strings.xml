@@ -76,6 +76,7 @@
   <string name="notif_sync_title">データの同期中</string>
   <string name="notif_location_title">現在地を次の連絡先に共有中: %1$s</string>
   <string name="location_share_contact">%1$s があなたに現在地を共有中です</string>
+  <string name="notif_location_multi_title">%1$d 人と現在位置を共有中</string>
   <string name="notif_location_remaining">残り %1$d 分</string>
   <string name="notif_location_action_stop">現在地の共有を停止</string>
   <string name="location_share_action_start">共有を開始</string>
@@ -123,13 +124,15 @@
   <string name="ringtone_error_size_too_big">ファイルのサイズが大きすぎます。最大サイズは%1$dkBです。</string>
   <string name="ringtone_custom_prompt">カスタム着信音を設定する</string>
   <string name="ringtone_custom_label">カスタム</string>
+  <string name="ringtone_jami_tones">Jamiの発信音</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Jamiは連絡先へのアクセスが必要です。権限を許可してください。</string>
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jamiは着信履歴へのアクセスが必要です。権限を許可してください。</string>
   <!--QRCode Scan-->
-  <string name="scan_qr_account_message">追加したいアカウントの QR コートをスキャンしてください。</string>
+  <string name="scan_qr_account_message">追加したいアカウントの QR コードをスキャンしてください。</string>
   <string name="title_activity_qrcode">アカウントの共有</string>
+  <string name="error_scan_no_camera_permissions">QRコードスキャナーはカメラの権限を必要とします</string>
   <string name="tab_code">自分のコード</string>
   <string name="tab_scan">スキャン</string>
   <!--Settings-->
@@ -143,12 +146,16 @@
   <string name="conversation_action_delete_this_message">この操作は元に戻せません。</string>
   <string name="conversation_action_history_clear">履歴をクリア</string>
   <string name="conversation_action_history_clear_title">会話の履歴を削除しますか？</string>
+  <string name="conversation_action_history_clear_message">この操作は会話の履歴を完全に削除します。</string>
   <string name="conversation_action_remove_this">連絡先を削除</string>
   <string name="conversation_action_remove_this_title">この連絡先を削除しますか？</string>
+  <string name="conversation_action_remove_this_message">この操作は連絡先を削除し、会話の履歴を完全に削除します。</string>
   <string name="conversation_action_copy_peer_number">番号をコピー</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s をクリップボードにコピーしました</string>
   <string name="conversation_action_select_peer_number">番号を選択</string>
   <string name="conversation_action_block_this">ブロックした連絡先</string>
+  <string name="conversation_action_go_to_call">通話に戻る</string>
+  <string name="conversation_open_file_error">この種類のファイルを開けるアプリがインストールされていません。</string>
   <string name="clip_contact_uri">連絡先</string>
   <string name="block_contact_dialog_title">%1$sをブロックしますか？</string>
   <string name="block_contact_dialog_message">%1$sはあなたがブロックを解除するまで連絡できません。</string>
@@ -163,6 +170,8 @@
   <string name="prompt_new_username">新しいユーザー名を入力してください</string>
   <string name="help_password_choose">あなたのJamiアカウントを守るために強固なパスワードを設定してください。また、このパスワードを忘れないでください。</string>
   <string name="help_password_enter">現在のJamiアカウントのパスワード</string>
+  <string name="help_server_enter">管理サーバーの URL を入力してください</string>
+  <string name="help_pin_enter">設定済みの別のJamiアカウントからPINを入力してください。 PINを取得するには、\"Jamiのアカウントをエクスポート\" 機能を使用します。</string>
   <string name="wizard_next">次へ</string>
   <string name="wizard_back">戻る</string>
   <string name="wizard_skip">スキップ</string>
@@ -179,6 +188,7 @@
   <string name="share_label">共有</string>
   <string name="generic_error_migration">エラー</string>
   <string name="generic_error_migration_message">移行中にエラーが発生しました。</string>
+  <string name="title_share_with">共有</string>
   <!--Pending contact requests-->
   <string name="accept">受け入れ</string>
   <string name="refuse">拒否</string>
@@ -187,9 +197,14 @@
   <string name="contact_request_msg">%1$s の連絡先リクエストがあります</string>
   <string name="contact_request_account">%1$s に</string>
   <string name="no_requests">0 件の連絡先リクエスト</string>
+  <string name="message_contact_not_trusted_yet">%s さんはあなたの連絡先に追加されていません。
+この連絡先のリクエストを許可しますか？</string>
+  <string name="message_contact_not_trusted">%s さんはあなたの連絡先に追加されていません。
+新しい連絡先に追加しますか？</string>
   <!--Send contact requests-->
   <string name="send_request_button">送信</string>
   <string name="send_request_title">連絡先リクエストを送信</string>
+  <string name="send_request_msg">このユーザーと会話するには、コンタクトリクエストを送信しなければなりません。連絡先のリクエストを許可するまでは、あなたはメッセージを送れますが、相手は返事を送れません。</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 件のブロックした連絡先</string>
   <!--Smartlist-->
@@ -198,13 +213,29 @@
   <string name="start_conversation">会話を開始</string>
   <string name="search_results">検索結果</string>
   <string name="tv_contact_row_header">連絡先</string>
+  <string name="gallery_error_title">ギャラリーアプリがありません</string>
+  <string name="gallery_error_message">デバイス上にギャラリーを開くアプリがありません</string>
+  <string name="generic_error">不明なエラーが起こりました</string>
   <!--File Transfer-->
+  <string name="invalid_file">無効なファイル</string>
+  <string name="not_able_to_write_file">ファイルを書き込めません</string>
+  <string name="file_transfer_status_created">転送の初期化中</string>
+  <string name="file_transfer_status_unsupported">未対応</string>
+  <string name="file_transfer_status_wait_peer_acceptance">相手の許可を待っています</string>
+  <string name="file_transfer_status_wait_host_acceptance">ホストの許可を待っています</string>
+  <string name="file_transfer_status_ongoing">通話中</string>
+  <string name="file_transfer_status_finished">終了</string>
+  <string name="file_transfer_status_closed_by_host">ホストが終了しました</string>
+  <string name="file_transfer_status_closed_by_peer">相手が終了しました</string>
+  <string name="file_transfer_status_invalid_pathname">不正なパス名</string>
+  <string name="file_transfer_status_unjoinable_peer">参加できない相手</string>
   <string name="file_transfer_status_cancelled">キャンセルしました</string>
   <string name="file_transfer_status_error">エラーで失敗しました</string>
   <string name="file_transfer_status_timed_out">タイムアウトしました</string>
   <string name="file_saved_in">%sに保存しました</string>
   <string name="file_saved_successfully">ファイルが保存されました</string>
   <string name="no_space_left_on_device">空き容量がありません</string>
+  <string name="title_media_viewer">メディアビューア</string>
   <string name="menu_file_open">ファイルを開く</string>
   <string name="menu_file_download">ファイルをダウンロード</string>
   <string name="menu_file_save">ファイルを保存</string>
@@ -221,11 +252,16 @@
   <string name="navigation_item_contact_request">連絡先のリクエスト</string>
   <string name="navigation_item_account">アカウント</string>
   <!--TV-->
+  <string name="tv_send_audio_dialog_message">音声を送信しますか？</string>
+  <string name="tv_send_image_dialog_message">画像を送信しますか？</string>
+  <string name="tv_send_video_dialog_message">ビデオを送信しますか？</string>
+  <string name="tv_media_preview">プレビュー</string>
   <string name="tv_audio_play">再生</string>
   <string name="tv_audio_pause">一時停止</string>
   <string name="tv_dialog_send">送信</string>
   <string name="tv_audio_recording">録音中...</string>
   <string name="tv_send_text">テキストの送信</string>
   <string name="tv_send_audio">音声の送信</string>
+  <string name="tv_send_video">メディアを送信</string>
   <string name="tv_clear_history">履歴を削除</string>
 </resources>

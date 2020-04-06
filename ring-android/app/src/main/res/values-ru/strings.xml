@@ -77,6 +77,13 @@
   <string name="notif_outgoing_file_transfer_title">Отправка файла %1$s</string>
   <string name="notif_incoming_picture">Изображение от %1$s</string>
   <string name="notif_sync_title">Синхронизация данных...</string>
+  <string name="notif_location_title">Трансляция геопозиции для %1$s</string>
+  <string name="location_share_contact">%1$s транслирует Вам геопозицию</string>
+  <string name="notif_location_multi_title">Трансляция геопозиции для %1$d контактов</string>
+  <string name="notif_location_remaining">%1$d минут осталось</string>
+  <string name="notif_location_action_stop">Остановить трансляцию геопозиции</string>
+  <string name="location_share_action_start">Начать трансляцию</string>
+  <string name="location_share_action_stop">Остановить трансляцию</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Вы:</string>
   <string name="action_call_hangup">Повесить трубку</string>
@@ -110,6 +117,7 @@
   <string name="hist_file_received">Файл получен</string>
   <string name="conversation_send_audio">Запись аудиоклипа</string>
   <string name="conversation_send_video">Запись видиоклипа</string>
+  <string name="conversation_share_location">Транслировать геопозицию</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Разрешение на доступ к камере</string>
   <string name="permission_dialog_camera_message">Видеосвязь требует для работы разрешения на доступ к камере. Пожалуйста, предоставьте его.</string>
@@ -155,6 +163,7 @@
   <string name="block_contact_dialog_title">Заблокировать %1$s?</string>
   <string name="block_contact_dialog_message">%1$s не сможет связаться с вами, пока вы не разблокируете его.</string>
   <string name="block_contact_completed">%1$s заблокирован.</string>
+  <string name="conversation_contact_is_typing">Контакт печатает...</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Добавить %1$s?</string>
   <string name="prompt_new_password">Новый пароль</string>
@@ -244,8 +253,16 @@
   <string name="navigation_item_contact_request">Запросы на добавление в контакты</string>
   <string name="navigation_item_account">Аккаунт</string>
   <!--TV-->
+  <string name="tv_send_audio_dialog_message">Отправить аудио-сообщение?</string>
+  <string name="tv_send_image_dialog_message">Отправить изображение?</string>
+  <string name="tv_send_video_dialog_message">Отправить видео?</string>
+  <string name="tv_media_preview">Предпросмотр</string>
   <string name="tv_audio_play">Проиграть</string>
   <string name="tv_audio_pause">Пауза</string>
   <string name="tv_dialog_send">Отправить</string>
+  <string name="tv_audio_recording">Запись...</string>
   <string name="tv_send_text">Отправить текст</string>
+  <string name="tv_send_audio">Отправить аудио</string>
+  <string name="tv_send_video">Отправить медиа</string>
+  <string name="tv_clear_history">очистить историю</string>
 </resources>
