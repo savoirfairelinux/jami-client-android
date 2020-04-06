@@ -41,7 +41,7 @@ import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
 
 public class TVJamiAccountCreationFragment
-        extends RingGuidedStepFragment<JamiAccountCreationPresenter>
+        extends JamiGuidedStepFragment<JamiAccountCreationPresenter>
         implements JamiAccountCreationView {
 
     private static final String TAG = TVJamiAccountCreationFragment.class.getSimpleName();

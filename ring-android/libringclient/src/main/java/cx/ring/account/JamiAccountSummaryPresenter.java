@@ -45,9 +45,9 @@ import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
-public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummaryView> {
+public class JamiAccountSummaryPresenter extends RootPresenter<JamiAccountSummaryView> {
 
-    private static final String TAG = RingAccountSummaryPresenter.class.getSimpleName();
+    private static final String TAG = JamiAccountSummaryPresenter.class.getSimpleName();
 
     private final DeviceRuntimeService mDeviceRuntimeService;
     private final HardwareService mHardwareService;
@@ -59,9 +59,9 @@ public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummar
     protected Scheduler mUiScheduler;
 
     @Inject
-    public RingAccountSummaryPresenter(AccountService accountService,
-                                        HardwareService hardwareService,
-                                        DeviceRuntimeService deviceRuntimeService) {
+    public JamiAccountSummaryPresenter(AccountService accountService,
+                                       HardwareService hardwareService,
+                                       DeviceRuntimeService deviceRuntimeService) {
         mAccountService = accountService;
         mHardwareService = hardwareService;
         mDeviceRuntimeService = deviceRuntimeService;
@@ -99,13 +99,13 @@ public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummar
     public void setAccountId(String accountID) {
         mCompositeDisposable.clear();
         mAccountID = accountID;
-        RingAccountSummaryView v = getView();
+        JamiAccountSummaryView v = getView();
         if (v != null)
             v.accountChanged(mAccountService.getAccount(mAccountID));
         mCompositeDisposable.add(mAccountService.getObservableAccountUpdates(mAccountID)
                 .observeOn(mUiScheduler)
                 .subscribe(account -> {
-                    RingAccountSummaryView view = getView();
+                    JamiAccountSummaryView view = getView();
                     if (view != null) {
                         view.accountChanged(account);
                     }
@@ -138,7 +138,7 @@ public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummar
     }
 
     public void changePassword(String oldPassword, String newPassword) {
-        RingAccountSummaryView view = getView();
+        JamiAccountSummaryView view = getView();
         if (view != null)
             view.showPasswordProgressDialog();
         mCompositeDisposable.add(mAccountService.setAccountPassword(mAccountID, oldPassword, newPassword)

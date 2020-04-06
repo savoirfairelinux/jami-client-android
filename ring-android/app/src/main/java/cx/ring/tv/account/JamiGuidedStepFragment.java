@@ -31,13 +31,19 @@ import javax.inject.Inject;
 
 import cx.ring.mvp.RootPresenter;
 
-public abstract class RingGuidedStepFragment<T extends RootPresenter> extends GuidedStepSupportFragment {
+public abstract class JamiGuidedStepFragment<T extends RootPresenter> extends GuidedStepSupportFragment {
 
-    protected static final String TAG = RingGuidedStepFragment.class.getSimpleName();
+    protected static final String TAG = JamiGuidedStepFragment.class.getSimpleName();
 
     @Inject
     protected T presenter;
 
+    protected static void addAction(Context context, List<GuidedAction> actions, long id, int title) {
+        actions.add(new GuidedAction.Builder(context)
+                .id(id)
+                .title(title)
+                .build());
+    }
     protected static void addAction(Context context, List<GuidedAction> actions, long id, String title, String desc) {
         actions.add(new GuidedAction.Builder(context)
                 .id(id)

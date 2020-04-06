@@ -24,7 +24,7 @@ import java.util.Map;
 
 import cx.ring.model.Account;
 
-public interface RingAccountSummaryView {
+public interface JamiAccountSummaryView {
 
     void showExportingProgressDialog();
 

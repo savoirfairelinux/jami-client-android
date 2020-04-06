@@ -55,7 +55,7 @@ import cx.ring.utils.AndroidFileUtils;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.Single;
 
-public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCreationPresenter>
+public class TVProfileCreationFragment extends JamiGuidedStepFragment<ProfileCreationPresenter>
         implements ProfileCreationView {
 
     private static final int USER_NAME = 1;

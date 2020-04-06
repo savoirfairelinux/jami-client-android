@@ -92,7 +92,7 @@ public class HomeAccountCreationFragment extends BaseSupportFragment<HomeAccount
     public void goToAccountLink() {
         AccountCreationModelImpl ringAccountViewModel = new AccountCreationModelImpl();
         ringAccountViewModel.setLink(true);
-        Fragment fragment = RingLinkAccountFragment.newInstance(ringAccountViewModel);
+        Fragment fragment = JamiLinkAccountFragment.newInstance(ringAccountViewModel);
         replaceFragmentWithSlide(fragment, R.id.wizard_container);
     }
 
@@ -124,7 +124,7 @@ public class HomeAccountCreationFragment extends BaseSupportFragment<HomeAccount
                                 AccountCreationModelImpl ringAccountViewModel = new AccountCreationModelImpl();
                                 ringAccountViewModel.setLink(true);
                                 ringAccountViewModel.setArchive(file);
-                                Fragment fragment = RingLinkAccountFragment.newInstance(ringAccountViewModel);
+                                Fragment fragment = JamiLinkAccountFragment.newInstance(ringAccountViewModel);
                                 replaceFragmentWithSlide(fragment, R.id.wizard_container);
                             }, e-> {
                                 View v = getView();

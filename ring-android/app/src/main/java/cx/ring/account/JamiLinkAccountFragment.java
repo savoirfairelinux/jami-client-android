@@ -36,9 +36,9 @@ import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.mvp.AccountCreationModel;
 
-public class RingLinkAccountFragment extends BaseSupportFragment<RingLinkAccountPresenter> implements RingLinkAccountView {
+public class JamiLinkAccountFragment extends BaseSupportFragment<JamiLinkAccountPresenter> implements JamiLinkAccountView {
 
-    public static final String TAG = RingLinkAccountFragment.class.getSimpleName();
+    public static final String TAG = JamiLinkAccountFragment.class.getSimpleName();
 
     @BindView(R.id.pin_box)
     protected ViewGroup mPinBox;
@@ -57,8 +57,8 @@ public class RingLinkAccountFragment extends BaseSupportFragment<RingLinkAccount
 
     private AccountCreationModel model;
 
-    public static RingLinkAccountFragment newInstance(AccountCreationModelImpl ringAccountViewModel) {
-        RingLinkAccountFragment fragment = new RingLinkAccountFragment();
+    public static JamiLinkAccountFragment newInstance(AccountCreationModelImpl ringAccountViewModel) {
+        JamiLinkAccountFragment fragment = new JamiLinkAccountFragment();
         fragment.model = ringAccountViewModel;
         return fragment;
     }
@@ -74,7 +74,7 @@ public class RingLinkAccountFragment extends BaseSupportFragment<RingLinkAccount
     }
 
     @Override
-    protected void initPresenter(RingLinkAccountPresenter presenter) {
+    protected void initPresenter(JamiLinkAccountPresenter presenter) {
         presenter.init(model);
     }
 

@@ -56,7 +56,7 @@ import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class TVProfileEditingFragment extends RingGuidedStepFragment<HomeNavigationPresenter>
+public class TVProfileEditingFragment extends JamiGuidedStepFragment<HomeNavigationPresenter>
         implements HomeNavigationView {
 
     private static final int USER_NAME = 1;
