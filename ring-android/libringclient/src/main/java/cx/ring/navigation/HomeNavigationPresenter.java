@@ -94,8 +94,11 @@ public class HomeNavigationPresenter extends RootPresenter<HomeNavigationView> {
         File filesDir = mDeviceRuntimeService.provideFilesDir();
 
         mCompositeDisposable.add(Single.zip(
-                VCardUtils.loadLocalProfileFromDisk(filesDir, accountId).subscribeOn(Schedulers.io()),
-                photo, (vcard, pic) -> {
+                VCardUtils.loadLocalProfileFromDisk(filesDir, accountId)
+                        .subscribeOn(Schedulers.io()),
+                photo
+                        .subscribeOn(Schedulers.io()),
+                (vcard, pic) -> {
                     vcard.setUid(new Uid(ringId));
                     vcard.removeProperties(Photo.class);
                     vcard.addPhoto(pic);

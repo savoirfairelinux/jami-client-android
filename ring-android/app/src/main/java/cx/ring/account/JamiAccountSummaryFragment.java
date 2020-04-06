@@ -489,7 +489,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
                 .setNegativeButton(android.R.string.cancel, (dialog, which) -> dialog.cancel())
                 .setPositiveButton(android.R.string.ok, (dialog, which) -> {
                     if (mSourcePhoto != null) {
-                        presenter.saveVCard(mAccountService.getCurrentAccount(), editText.getText().toString().trim(), Single.just(mSourcePhoto).map(BitmapUtils::bitmapToPhoto));
+                        presenter.saveVCard(editText.getText().toString().trim(), Single.just(mSourcePhoto).map(BitmapUtils::bitmapToPhoto));
                         mSourcePhoto = null;
                     } else {
                         presenter.saveVCardFormattedName(editText.getText().toString().trim());

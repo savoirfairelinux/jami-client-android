@@ -21,7 +21,6 @@
 package cx.ring.account;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.SocketException;
 
 import javax.inject.Inject;
@@ -32,7 +31,6 @@ import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
-import cx.ring.utils.FileUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
 import cx.ring.utils.VCardUtils;
@@ -167,16 +165,15 @@ public class JamiAccountSummaryPresenter extends RootPresenter<JamiAccountSummar
     }
 
     public void saveVCardFormattedName(String username) {
-        Account account = mAccountService.getCurrentAccount();
-        String accountId = account.getAccountID();
+        Account account = mAccountService.getAccount(mAccountID);
         File filesDir = mDeviceRuntimeService.provideFilesDir();
 
-        mCompositeDisposable.add(VCardUtils.loadLocalProfileFromDisk(filesDir, accountId)
+        mCompositeDisposable.add(VCardUtils.loadLocalProfileFromDisk(filesDir, mAccountID)
                 .doOnSuccess(vcard -> {
                     vcard.setFormattedName(username);
                     vcard.removeProperties(RawProperty.class);
                 })
-                .flatMap(vcard -> VCardUtils.saveLocalProfileToDisk(vcard, accountId, filesDir))
+                .flatMap(vcard -> VCardUtils.saveLocalProfileToDisk(vcard, mAccountID, filesDir))
                 .subscribeOn(Schedulers.io())
                 .subscribe(vcard -> {
                     account.setProfile(vcard);
@@ -185,25 +182,23 @@ public class JamiAccountSummaryPresenter extends RootPresenter<JamiAccountSummar
                 }, e -> Log.e(TAG, "Error saving vCard !", e)));
     }
 
-    public void saveVCard(Account account, String username, Single<Photo> photo) {
-        String accountId = account.getAccountID();
+    public void saveVCard(String username, Single<Photo> photo) {
+        Account account = mAccountService.getAccount(mAccountID);
         String ringId = account.getUsername();
         File filesDir = mDeviceRuntimeService.provideFilesDir();
         mCompositeDisposable.add(Single.zip(
-                VCardUtils.loadLocalProfileFromDisk(filesDir, accountId).subscribeOn(Schedulers.io()),
+                VCardUtils.loadLocalProfileFromDisk(filesDir, mAccountID).subscribeOn(Schedulers.io()),
                 photo, (vcard, pic) -> {
                     vcard.setUid(new Uid(ringId));
                     if (!StringUtils.isEmpty(username)) {
                         vcard.setFormattedName(username);
                     }
-                    if (photo != null) {
-                        vcard.removeProperties(Photo.class);
-                        vcard.addPhoto(pic);
-                    }
+                    vcard.removeProperties(Photo.class);
+                    vcard.addPhoto(pic);
                     vcard.removeProperties(RawProperty.class);
                     return vcard;
                 })
-                .flatMap(vcard -> VCardUtils.saveLocalProfileToDisk(vcard, accountId, filesDir))
+                .flatMap(vcard -> VCardUtils.saveLocalProfileToDisk(vcard, mAccountID, filesDir))
                 .subscribeOn(Schedulers.io())
                 .subscribe(vcard -> {
                     account.setProfile(vcard);

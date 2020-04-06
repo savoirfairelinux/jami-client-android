@@ -170,7 +170,6 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
         super.onViewCreated(view, savedInstanceState);
 
         ConversationPath path = ConversationPath.fromIntent(getActivity().getIntent());
-
         presenter.init(path);
 
         mAdapter = new TvConversationAdapter(this, presenter);
@@ -217,13 +216,16 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
         mSubTitle = view.findViewById(R.id.subtitle);
         mRecyclerView = view.findViewById(R.id.recycler_view);
 
-        String id = mTvListViewModel.getContact().getRingUsername();
-        String displayName = mTvListViewModel.getContact().getDisplayName();
-        mTitle.setText(displayName);
-        if (TextUtils.isEmpty(displayName) || !displayName.equals(id))
-            mSubTitle.setText(id);
-        else
-            mSubTitle.setVisibility(View.GONE);
+        CallContact contact = mTvListViewModel.getContact();
+        if (contact != null) {
+            String id = contact.getRingUsername();
+            String displayName = contact.getDisplayName();
+            mTitle.setText(displayName);
+            if (TextUtils.isEmpty(displayName) || !displayName.equals(id))
+                mSubTitle.setText(id);
+            else
+                mSubTitle.setVisibility(View.GONE);
+        }
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setReverseLayout(true);
