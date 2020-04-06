@@ -24,7 +24,6 @@ import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -37,8 +36,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.List;
 
 import cx.ring.R;
@@ -77,14 +74,10 @@ public class TVProfileEditingFragment extends JamiGuidedStepFragment<HomeNavigat
                         return;
                     }
                     Uri uri = (Uri) extras.get((MediaStore.EXTRA_OUTPUT));
-                    ContentResolver cr = getActivity().getContentResolver();
-                    try {
-                        InputStream is = cr.openInputStream(uri);
-                        Bitmap image = BitmapFactory.decodeStream(is);
-                        presenter.saveVCardPhoto(Single.just(image)
+                    if (uri != null) {
+                        ContentResolver cr = requireContext().getContentResolver();
+                        presenter.saveVCardPhoto(Single.fromCallable(() -> BitmapFactory.decodeStream(cr.openInputStream(uri)))
                                 .map(BitmapUtils::bitmapToPhoto));
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
                     }
                 }
                 break;
@@ -130,7 +123,7 @@ public class TVProfileEditingFragment extends JamiGuidedStepFragment<HomeNavigat
         String title = getString(R.string.profile);
         String breadcrumb = "";
         String description = getString(R.string.profile_message_warning);
-        Drawable icon = getActivity().getResources().getDrawable(R.drawable.ic_contact_picture_fallback);
+        Drawable icon = getResources().getDrawable(R.drawable.ic_contact_picture_fallback);
         return new GuidanceStylist.Guidance(title, description, breadcrumb, icon);
     }
 
@@ -142,8 +135,8 @@ public class TVProfileEditingFragment extends JamiGuidedStepFragment<HomeNavigat
     @Override
     public void onCreateActions(@NonNull List<GuidedAction> actions, Bundle savedInstanceState) {
         addEditTextAction(getActivity(), actions, USER_NAME, R.string.account_edit_profile, R.string.profile_name_hint);
-        addAction(getActivity(), actions, CAMERA, getActivity().getResources().getString(R.string.take_a_photo), "");
-        addAction(getActivity(), actions, GALLERY, getActivity().getResources().getString(R.string.open_the_gallery), "");
+        addAction(getActivity(), actions, CAMERA, R.string.take_a_photo);
+        addAction(getActivity(), actions, GALLERY, R.string.open_the_gallery);
         this.actions = actions;
     }
 

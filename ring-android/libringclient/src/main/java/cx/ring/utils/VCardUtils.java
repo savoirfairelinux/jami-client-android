@@ -121,11 +121,9 @@ public final class VCardUtils {
         }
 
         File file = new File(path + File.separator + filename);
-        try {
-            VCardWriter writer = new VCardWriter(file, VCardVersion.V2_1);
+        try (VCardWriter writer = new VCardWriter(file, VCardVersion.V2_1)) {
             writer.getVObjectWriter().getFoldedLineWriter().setLineLength(null);
             writer.write(vcard);
-            writer.close();
         } catch (Exception e) {
             Log.e(TAG, "Error while saving VCard to disk", e);
         }
