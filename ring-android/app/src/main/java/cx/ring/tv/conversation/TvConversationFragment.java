@@ -187,8 +187,8 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
 
         ImageButton video = view.findViewById(R.id.button_video);
         video.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), CustomCameraActivity.class);
-            intent.setAction(MediaStore.ACTION_VIDEO_CAPTURE);
+            Intent intent = new Intent(getActivity(), CustomCameraActivity.class)
+                    .setAction(MediaStore.ACTION_VIDEO_CAPTURE);
             startActivityForResult(intent, REQUEST_CODE_PHOTO);
         });
 

@@ -25,17 +25,15 @@ package cx.ring.tv.camera;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -53,14 +51,18 @@ import butterknife.OnClick;
 import cx.ring.R;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class CustomCameraActivity extends Activity {
-    public static final String TYPE_IMAGE = "image/png";
+    private static final String TAG = "CustomCameraActivity";
+    public static final String TYPE_IMAGE = "image/jpeg";
     public static final String TYPE_VIDEO = "video";
 
-    int cameraFront = -1;
-    int cameraBack = -1;
-    int currentCamera = 0;
+    private int cameraFront = -1;
+    private int cameraBack = -1;
+    private int currentCamera = 0;
 
     private MediaRecorder recorder;
     private boolean mRecording = false;
@@ -75,53 +77,52 @@ public class CustomCameraActivity extends Activity {
 
     private Camera mCamera;
     private CameraPreview mCameraPreview;
-    private final Camera.PictureCallback mPicture = (input, camera) -> {
-        if (mRecording) {
-            releaseMediaRecorder();
-        }
-        Intent intent = new Intent();
-        int result = RESULT_OK;
-        Bitmap photo = BitmapFactory.decodeByteArray(input, 0, input.length);
-        try {
-            File tempFile = AndroidFileUtils.createImageFile(this);
-            try (OutputStream outStream = new FileOutputStream(tempFile)) {
-                photo.compress(Bitmap.CompressFormat.PNG, 100, outStream);
-                outStream.flush();
+    private final Camera.PictureCallback mPicture = (input, camera) -> Single.fromCallable(() ->  {
+            mCameraPreview.stop();
+            File file = AndroidFileUtils.createImageFile(this);
+            try (OutputStream out = new FileOutputStream(file)) {
+                out.write(input);
+                out.flush();
             }
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, ContentUriHandler.getUriForFile(this, ContentUriHandler.AUTHORITY_FILES, tempFile));
-            intent.setType(TYPE_IMAGE);
-        } catch (IOException e) {
-            e.printStackTrace();
-            result = RESULT_CANCELED;
-        }
-        if (getParent() == null) {
-            setResult(result, intent);
-        } else {
-            getParent().setResult(result, intent);
-        }
-        finish();
-    };
+            return ContentUriHandler.getUriForFile(this, ContentUriHandler.AUTHORITY_FILES, file);
+        })
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(uri -> {
+                setResult(RESULT_OK, new Intent()
+                        .putExtra(MediaStore.EXTRA_OUTPUT, uri)
+                        .setType(TYPE_IMAGE));
+                finish();
+            }, e -> {
+                Log.e(TAG, "Error saving picture", e);
+                setResult(RESULT_CANCELED);
+                finish();
+            });
 
     @OnClick(R.id.button_picture)
     public void takePicture() {
+        if (mRecording)
+            releaseMediaRecorder();
         if (mCamera != null) {
-            mCamera.takePicture(null, null, mPicture);
+            mButtonPicture.setEnabled(false);
+            mButtonVideo.setVisibility(View.GONE);
+            try {
+                mCamera.takePicture(null, null, mPicture);
+            } catch (Exception e) {
+                Log.w(TAG, "Error taking picture", e);
+            }
         }
     }
 
     @OnClick(R.id.button_video)
     public void takeVideo() {
-        if (mRecording){
+        if (mRecording) {
             releaseMediaRecorder();
-            Intent intent = new Intent();
-            Uri uri = ContentUriHandler.getUriForFile(this, ContentUriHandler.AUTHORITY_FILES, mVideoFile);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-            intent.setType(TYPE_VIDEO);
-            if (getParent() == null) {
-                setResult(RESULT_OK, intent);
-            } else {
-                getParent().setResult(RESULT_OK, intent);
-            }
+            mCameraPreview.stop();
+            Intent intent = new Intent()
+                    .putExtra(MediaStore.EXTRA_OUTPUT, ContentUriHandler.getUriForFile(this, ContentUriHandler.AUTHORITY_FILES, mVideoFile))
+                    .setType(TYPE_VIDEO);
+            setResult(RESULT_OK, intent);
             finish();
             mButtonVideo.setImageResource(R.drawable.baseline_videocam_24);
             return;
@@ -155,7 +156,7 @@ public class CustomCameraActivity extends Activity {
         }
         mCameraPreview = new CameraPreview(this, mCamera);
         FrameLayout preview = findViewById(R.id.camera_preview);
-        preview.addView(mCameraPreview);
+        preview.addView(mCameraPreview, 0);
 
         if (mActionVideo) {
             mButtonVideo.setVisibility(View.VISIBLE);

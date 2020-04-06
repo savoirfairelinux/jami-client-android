@@ -24,21 +24,31 @@ import android.hardware.Camera;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import androidx.annotation.NonNull;
+
 import java.io.IOException;
 
-public class CameraPreview extends SurfaceView implements
-        SurfaceHolder.Callback {
-    private SurfaceHolder mSurfaceHolder;
+public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
     private Camera mCamera;
 
     // Constructor that obtains context and camera
     @SuppressWarnings("deprecation")
-    public CameraPreview(Context context, Camera camera) {
+    public CameraPreview(Context context, @NonNull Camera camera) {
         super(context);
-        this.mCamera = camera;
-        this.mSurfaceHolder = this.getHolder();
-        this.mSurfaceHolder.addCallback(this);
-        this.mSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+        mCamera = camera;
+        getHolder().addCallback(this);
+    }
+
+    public void stop()  {
+        if (mCamera == null)
+            return;
+        try {
+            mCamera.stopPreview();
+        }  catch (Exception e) {
+            // intentionally left blank
+        }
+        mCamera.release();
+        mCamera = null;
     }
 
     @Override
@@ -48,22 +58,18 @@ public class CameraPreview extends SurfaceView implements
         try {
             mCamera.setPreviewDisplay(surfaceHolder);
             mCamera.startPreview();
-        } catch (IOException e) {
+        } catch (Exception e) {
             // left blank for now
         }
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-        if (mCamera == null)
-            return;
-        mCamera.stopPreview();
-        mCamera.release();
+        stop();
     }
 
     @Override
-    public void surfaceChanged(SurfaceHolder surfaceHolder, int format,
-            int width, int height) {
+    public void surfaceChanged(SurfaceHolder surfaceHolder, int format, int width, int height) {
         if (mCamera == null)
             return;
         try {

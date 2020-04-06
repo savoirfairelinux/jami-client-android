@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/camera_preview"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/camera_preview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
+        android:layout_gravity="bottom|center_horizontal"
         android:orientation="horizontal">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -33,12 +28,12 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/action_call_decline"
             android:padding="16dp"
+            android:visibility="gone"
             app:backgroundTint="@color/green_500"
             app:rippleColor="@android:color/white"
             app:srcCompat="@drawable/baseline_videocam_24"
-            app:useCompatPadding="true"
-            android:visibility="gone" />
+            app:useCompatPadding="true" />
 
     </LinearLayout>
 
-</RelativeLayout>
+</FrameLayout>
