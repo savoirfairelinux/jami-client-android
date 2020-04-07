@@ -17,14 +17,9 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.tv.model;
+package cx.ring.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import cx.ring.model.CallContact;
-
-public class TVListViewModel implements Parcelable {
+public class TVListViewModel {
     private String mAccountId;
     private CallContact mCallContact;
     private boolean isOnline;
@@ -34,23 +29,6 @@ public class TVListViewModel implements Parcelable {
         mCallContact = callContact;
         isOnline = callContact.isOnline();
     }
-
-    protected TVListViewModel(Parcel in) {
-        mAccountId = in.readString();
-        isOnline = in.readByte() != 0;
-    }
-
-    public static final Creator<TVListViewModel> CREATOR = new Creator<TVListViewModel>() {
-        @Override
-        public TVListViewModel createFromParcel(Parcel in) {
-            return new TVListViewModel(in);
-        }
-
-        @Override
-        public TVListViewModel[] newArray(int size) {
-            return new TVListViewModel[size];
-        }
-    };
 
     public CallContact getContact() {
         return mCallContact;
@@ -72,16 +50,4 @@ public class TVListViewModel implements Parcelable {
     public String getAccountId() {
         return mAccountId;
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(mAccountId);
-        dest.writeByte((byte) (isOnline ? 1 : 0));
-    }
-
 }
