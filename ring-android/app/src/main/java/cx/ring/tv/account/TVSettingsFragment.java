@@ -30,7 +30,7 @@ import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceScreen;
-import android.util.Log;
+
 import android.view.View;
 
 import cx.ring.R;
@@ -62,7 +62,7 @@ public class TVSettingsFragment extends LeanbackSettingsFragmentCompat {
         return true;
     }
 
-    public static class PrefsFragment extends RingPreferenceFragment<GeneralAccountPresenter> implements GeneralAccountView {
+    public static class PrefsFragment extends JamiPreferenceFragment<GeneralAccountPresenter> implements GeneralAccountView {
         private boolean autoAnswer;
 
         public static PrefsFragment newInstance() {
@@ -70,7 +70,7 @@ public class TVSettingsFragment extends LeanbackSettingsFragmentCompat {
         }
 
         @Override
-        public void onViewCreated(View view, Bundle savedInstanceState) {
+        public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
             ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
             super.onViewCreated(view, savedInstanceState);
             presenter.init();

@@ -20,22 +20,25 @@
 package cx.ring.tv.account;
 
 import android.os.Bundle;
-import androidx.leanback.preference.LeanbackSettingsFragment;
+
+import androidx.annotation.NonNull;
+import androidx.leanback.preference.LeanbackPreferenceFragmentCompat;
+
 import android.view.View;
 
 import javax.inject.Inject;
 
 import cx.ring.mvp.RootPresenter;
 
-public abstract class RingSettingsFragment<T extends RootPresenter> extends LeanbackSettingsFragment {
+public abstract class JamiPreferenceFragment<T extends RootPresenter> extends LeanbackPreferenceFragmentCompat {
 
-    protected static final String TAG = RingSettingsFragment.class.getSimpleName();
+    protected static final String TAG = JamiPreferenceFragment.class.getSimpleName();
 
     @Inject
     protected T presenter;
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         //Be sure to do the injection in onCreateView method
