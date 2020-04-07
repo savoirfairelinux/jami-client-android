@@ -68,7 +68,7 @@ import cx.ring.tv.cards.contacts.ContactCard;
 import cx.ring.tv.cards.iconcards.IconCard;
 import cx.ring.tv.cards.iconcards.IconCardHelper;
 import cx.ring.tv.contact.TVContactActivity;
-import cx.ring.tv.model.TVListViewModel;
+import cx.ring.model.TVListViewModel;
 import cx.ring.tv.search.SearchActivity;
 import cx.ring.tv.views.CustomTitleView;
 import cx.ring.utils.ConversationPath;
@@ -339,8 +339,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
             if (item instanceof ContactCard) {
                 TVListViewModel model = ((ContactCard) item).getModel();
                 if (row == requestsRow) {
-                    Intent intent = new Intent(getActivity(), TVContactActivity.class);
-                    intent.putExtra(TVContactActivity.CONTACT_REQUEST_URI, model.getContact().getPrimaryUri());
+                    Intent intent = new Intent(requireContext(), TVContactActivity.class);
                     intent.setDataAndType(ConversationPath.toUri(model.getAccountId(), model.getContact().getPrimaryUri()), TVContactActivity.TYPE_CONTACT_REQUEST_INCOMING);
 
                     Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(

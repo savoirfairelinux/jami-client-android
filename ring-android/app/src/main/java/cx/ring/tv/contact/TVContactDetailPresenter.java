@@ -29,7 +29,7 @@ import androidx.leanback.widget.Presenter;
 
 import cx.ring.R;
 import cx.ring.tv.conversation.TvConversationFragment;
-import cx.ring.tv.model.TVListViewModel;
+import cx.ring.model.TVListViewModel;
 
 public class TVContactDetailPresenter extends Presenter {
 
@@ -58,7 +58,9 @@ public class TVContactDetailPresenter extends Presenter {
         }
 
         public void bind(TVListViewModel object) {
-            Fragment fragment = TvConversationFragment.newInstance(object);
+            String id = object.getContact().getRingUsername();
+            String displayName = object.getContact().getDisplayName();
+            Fragment fragment = TvConversationFragment.newInstance(id, displayName);
             FragmentManager fragmentManager = ((TVContactActivity) view.getContext()).getSupportFragmentManager();
 
             fragmentManager.beginTransaction()

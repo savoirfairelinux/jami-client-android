@@ -35,6 +35,7 @@ import cx.ring.model.DataTransfer;
 import cx.ring.model.Interaction;
 import cx.ring.model.Error;
 import cx.ring.model.SipCall;
+import cx.ring.model.TVListViewModel;
 import cx.ring.model.TrustRequest;
 import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
@@ -105,7 +106,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         mAccountId = accountId;
         Account account = mAccountService.getAccount(accountId);
         if (account != null) {
-            initContact(account, contactRingId, getView());
+            initContact();
             mCompositeDisposable.add(mConversationFacade.loadConversationHistory(account, contactRingId)
                     .observeOn(mUiScheduler)
                     .subscribe(this::setConversation, e -> getView().goToHome()));
@@ -154,15 +155,17 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         }
     }
 
-    private CallContact initContact(final Account account, final Uri uri,
-                                    final ConversationView view) {
+    public CallContact initContact() {
         CallContact contact;
+        Account account = mAccountService.getAccount(mAccountId);
+        ConversationView view = getView();
+
         if (account.isRing()) {
-            String rawId = uri.getRawRingId();
+            String rawId = mContactUri.getRawRingId();
             contact = account.getContact(rawId);
             if (contact == null) {
-                contact = account.getContactFromCache(uri);
-                TrustRequest req = account.getRequest(uri);
+                contact = account.getContactFromCache(mContactUri);
+                TrustRequest req = account.getRequest(mContactUri);
                 if (req == null) {
                     view.switchToUnknownView(contact.getRingUsername());
                 } else {
@@ -176,7 +179,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                 mAccountService.lookupAddress(mAccountId, "", rawId);
             }
         } else {
-            contact = mContactService.findContact(account, uri);
+            contact = mContactService.findContact(account, mContactUri);
             view.switchToConversationView();
         }
         view.displayContact(contact);
@@ -202,7 +205,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                 .subscribe(view::refreshView, e -> Log.e(TAG, "Can't update elements", e)));
         mConversationDisposable.add(mContactService.getLoadedContact(c.getAccountId(), c.getContact())
                 .observeOn(mUiScheduler)
-                .subscribe(contact -> initContact(account, mContactUri, view), e -> Log.e(TAG, "Can't get contact", e)));
+                .subscribe(contact -> initContact(), e -> Log.e(TAG, "Can't get contact", e)));
         mConversationDisposable.add(c.getUpdatedElements()
                 .observeOn(mUiScheduler)
                 .subscribe(elementTuple -> {
@@ -326,6 +329,20 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     }
 
     public void goToCall(boolean audioOnly) {
+//        Account account = mAccountService.getAccount(mAccountId);
+//        if (account != null) {
+//            Conference conf = account.getByUri(mContactUri).getCurrentCall();
+//            if (conf != null
+//                    && !conf.getParticipants().isEmpty()
+//                    && conf.getParticipants().get(0).getCallStatus() != SipCall.CallStatus.INACTIVE
+//                    && conf.getParticipants().get(0).getCallStatus() != SipCall.CallStatus.FAILURE) {
+//                getView().goToCallActivity(conf.getId());
+//            } else {
+//                getView().goToCallActivityWithResult(mAccountId, mContactUri.getRawUriString(), false);
+//            }
+//        }
+
+
         if (audioOnly && !mHardwareService.hasMicrophone()) {
             getView().displayErrorToast(Error.NO_MICROPHONE);
             return;
@@ -417,5 +434,14 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
             return;
         }
         mConversationFacade.setIsComposing(mAccountId, mContactUri, hasMessage);
+    }
+
+    public void removeContact() {
+        mConversationFacade.removeConversation(mAccountId, mContactUri).subscribe();
+        getView().goToHome();
+    }
+
+    public void clearHistory() {
+        mConversationFacade.clearHistory(mAccountId, mContactUri).subscribe();
     }
 }
