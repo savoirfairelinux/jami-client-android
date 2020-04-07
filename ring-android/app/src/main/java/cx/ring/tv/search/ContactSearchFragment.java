@@ -46,7 +46,7 @@ import cx.ring.tv.cards.Card;
 import cx.ring.tv.cards.CardPresenterSelector;
 import cx.ring.tv.cards.contacts.ContactCard;
 import cx.ring.tv.contact.TVContactActivity;
-import cx.ring.tv.model.TVListViewModel;
+import cx.ring.model.TVListViewModel;
 import cx.ring.utils.ConversationPath;
 
 public class ContactSearchFragment extends BaseSearchFragment<ContactSearchPresenter>
@@ -155,8 +155,7 @@ public class ContactSearchFragment extends BaseSearchFragment<ContactSearchPrese
 
     @Override
     public void displayContactDetails(TVListViewModel model) {
-        Intent intent = new Intent(getActivity(), TVContactActivity.class);
-        intent.putExtra(TVContactActivity.CONTACT_REQUEST_URI, model.getContact().getPrimaryUri());
+        Intent intent = new Intent(requireContext(), TVContactActivity.class);
         intent.setDataAndType(ConversationPath.toUri(model.getAccountId(), model.getContact().getPrimaryUri()), TVContactActivity.TYPE_CONTACT_REQUEST_OUTGOING);
         getActivity().startActivity(intent);
         getActivity().finish();

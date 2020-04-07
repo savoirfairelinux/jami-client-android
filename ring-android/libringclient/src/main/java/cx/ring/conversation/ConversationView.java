@@ -28,6 +28,7 @@ import cx.ring.model.Conversation;
 import cx.ring.model.Error;
 import cx.ring.model.Interaction;
 import cx.ring.model.DataTransfer;
+import cx.ring.model.TVListViewModel;
 import cx.ring.model.Uri;
 import cx.ring.mvp.BaseView;
 

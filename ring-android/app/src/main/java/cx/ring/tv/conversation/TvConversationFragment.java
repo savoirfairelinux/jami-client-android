@@ -74,7 +74,6 @@ import cx.ring.model.Error;
 import cx.ring.model.Interaction;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.tv.camera.CustomCameraActivity;
-import cx.ring.tv.model.TVListViewModel;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.ConversationPath;
@@ -87,7 +86,8 @@ import io.reactivex.disposables.CompositeDisposable;
 
 public class TvConversationFragment extends BaseSupportFragment<TvConversationPresenter> implements TvConversationView {
 
-    private static final String ARG_MODEL = "model";
+    private static final String ARG_ID = "id";
+    private static final String ARG_DISPLAY_NAME = "displayName";
 
     private static final int REQUEST_CODE_PHOTO = 101;
     private static final int REQUEST_SPEECH_CODE = 102;
@@ -95,8 +95,6 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
 
     private static final int DIALOG_WIDTH = 900;
     private static final int DIALOG_HEIGHT = 400;
-
-    private TVListViewModel mTvListViewModel;
 
     private TextView mTitle;
     private TextView mSubTitle;
@@ -121,16 +119,20 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
     boolean mStartRecording = true;
     boolean mStartPlaying = true;
 
+    private String mId;
+    private String mDisplayName;
+
     private TvConversationAdapter mAdapter = null;
     private AvatarDrawable mConversationAvatar;
     private Map<String, AvatarDrawable> mParticipantAvatars = new HashMap<>();
 
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
-    public static TvConversationFragment newInstance(TVListViewModel param) {
+    public static TvConversationFragment newInstance(String id, String displayName) {
         TvConversationFragment fragment = new TvConversationFragment();
         Bundle args = new Bundle();
-        args.putParcelable(ARG_MODEL, param);
+        args.putString(ARG_ID, id);
+        args.putString(ARG_DISPLAY_NAME, displayName);
         fragment.setArguments(args);
         return fragment;
     }
@@ -140,7 +142,8 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
         ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mTvListViewModel = getArguments().getParcelable(ARG_MODEL);
+            mId = getArguments().getString(ARG_ID);
+            mDisplayName = getArguments().getString(ARG_DISPLAY_NAME);
         }
 
         ActivityCompat.requestPermissions(getActivity(), permissions, REQUEST_RECORD_AUDIO_PERMISSION);
@@ -216,16 +219,13 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
         mSubTitle = view.findViewById(R.id.subtitle);
         mRecyclerView = view.findViewById(R.id.recycler_view);
 
-        CallContact contact = mTvListViewModel.getContact();
-        if (contact != null) {
-            String id = contact.getRingUsername();
-            String displayName = contact.getDisplayName();
-            mTitle.setText(displayName);
-            if (TextUtils.isEmpty(displayName) || !displayName.equals(id))
-                mSubTitle.setText(id);
-            else
-                mSubTitle.setVisibility(View.GONE);
+        if (!TextUtils.isEmpty(mDisplayName)) {
+            mTitle.setText(mDisplayName);
         }
+        if (TextUtils.isEmpty(mDisplayName) || (!TextUtils.isEmpty(mId) && !mDisplayName.equals(mId)))
+            mSubTitle.setText(mId);
+        else
+            mSubTitle.setVisibility(View.GONE);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setReverseLayout(true);
