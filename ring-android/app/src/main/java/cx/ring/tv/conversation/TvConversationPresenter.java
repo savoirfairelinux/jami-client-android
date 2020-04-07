@@ -89,23 +89,19 @@ public class TvConversationPresenter extends RootPresenter<TvConversationView> {
     }
 
     public void sendText(String message){
-
         mMessage = message;
-
         Account account = mAccountService.getAccount(mAccountId);
-
         mCompositeDisposable.add(mConversationFacade.loadConversationHistory(account, new Uri(mContactId.getRawUriString()))
                 .observeOn(mUiScheduler)
-                .subscribe(this::test));
+                .subscribe(this::sendTextMessage));
     }
 
-    private void test(Conversation conversation) {
+    private void sendTextMessage(Conversation conversation) {
         if (StringUtils.isEmpty(mMessage) || conversation == null) {
             return;
         }
 
         Account account = mAccountService.getAccount(mAccountId);
-
         if (account != null) {
             Conference conference = account.getByUri(mContactId).getCurrentCall();
             if (conference == null || !conference.isOnGoing()) {

@@ -40,19 +40,28 @@ import androidx.leanback.widget.ListRow;
 import androidx.leanback.widget.ListRowPresenter;
 import androidx.leanback.widget.SparseArrayObjectAdapter;
 
+import java.io.File;
+import java.util.List;
+
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
+import cx.ring.conversation.ConversationPresenter;
+import cx.ring.conversation.ConversationView;
 import cx.ring.fragments.ConversationFragment;
+import cx.ring.model.Account;
+import cx.ring.model.CallContact;
+import cx.ring.model.Conversation;
+import cx.ring.model.DataTransfer;
+import cx.ring.model.Interaction;
 import cx.ring.model.Uri;
 import cx.ring.services.NotificationService;
 import cx.ring.tv.call.TVCallActivity;
 import cx.ring.tv.contactrequest.TVContactRequestDetailPresenter;
 import cx.ring.tv.main.BaseDetailFragment;
-import cx.ring.tv.model.TVListViewModel;
-import cx.ring.utils.ConversationPath;
+import cx.ring.model.TVListViewModel;
 import cx.ring.views.AvatarDrawable;
 
-public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> implements TVContactView {
+public class TVContactFragment extends BaseDetailFragment<ConversationPresenter> implements ConversationView {
 
     private static final int ACTION_CALL = 0;
     private static final int ACTION_DELETE = 1;
@@ -68,7 +77,8 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
     private boolean isIncomingRequest = false;
     private boolean isOutgoingRequest = false;
 
-    private Uri mSelectedContactRequest;
+    private Uri mContactUri;
+    private String mAccountId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -90,9 +100,11 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
                     isOutgoingRequest = true;
                     break;
             }
-            mSelectedContactRequest = (Uri) getActivity().getIntent()
-                    .getSerializableExtra(TVContactActivity.CONTACT_REQUEST_URI);
         }
+
+        mAccountId = getActivity().getIntent().getStringExtra(ConversationFragment.KEY_ACCOUNT_ID);
+        mContactUri = (Uri) getActivity().getIntent().getSerializableExtra(ConversationFragment.KEY_CONTACT_RING_ID);
+        presenter.init(mContactUri, mAccountId);
 
         // Override down navigation as we do not use it in this screen
         // Only the detailPresenter will be displayed
@@ -101,7 +113,7 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
         setupAdapter();
         Resources res = getResources();
         iconSize = res.getDimensionPixelSize(R.dimen.tv_avatar_size);
-        presenter.setContact(ConversationPath.fromIntent(getActivity().getIntent()));
+        presenter.setContact();
     }
 
     private void prepareBackgroundManager() {
@@ -144,13 +156,13 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
             } else if (action.getId() == ACTION_CLEAR_HISTORY) {
                 presenter.clearHistory();
             } else if (action.getId() == ACTION_ADD_CONTACT) {
-                presenter.onAddContact(mSelectedContactRequest);
+                presenter.onAddContact();
             } else if (action.getId() == ACTION_ACCEPT) {
-                presenter.acceptTrustRequest(mSelectedContactRequest);
+                presenter.onAcceptIncomingContactRequest();
             } else if (action.getId() == ACTION_REFUSE) {
-                presenter.refuseTrustRequest(mSelectedContactRequest);
+                presenter.onRefuseIncomingContactRequest();
             } else if (action.getId() == ACTION_BLOCK) {
-                presenter.blockTrustRequest(mSelectedContactRequest);
+                presenter.onBlockIncomingContactRequest();
             }
         });
 
@@ -192,15 +204,6 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
     }
 
     @Override
-    public void callContact(String accountID, Uri uri) {
-        Context context = requireContext();
-        Intent intent = new Intent(context, TVCallActivity.class);
-        intent.putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountID);
-        intent.putExtra(ConversationFragment.KEY_CONTACT_RING_ID, uri.getRawUriString());
-        context.startActivity(intent, null);
-    }
-
-    @Override
     public void goToCallActivity(String id) {
         Context context = requireContext();
         Intent intent = new Intent(context, TVCallActivity.class);
@@ -209,11 +212,20 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
     }
 
     @Override
+    public void goToCallActivityWithResult(String accountId, String contactRingId, boolean audioOnly) {
+        Context context = requireContext();
+        Intent intent = new Intent(context, TVCallActivity.class);
+        intent.putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId);
+        intent.putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactRingId);
+        context.startActivity(intent, null);
+    }
+
+    @Override
     public void switchToConversationView() {
         isIncomingRequest = false;
         isOutgoingRequest = false;
         setupAdapter();
-        presenter.setContact(ConversationPath.fromIntent(getActivity().getIntent()));
+        presenter.setContact();
     }
 
     @Override
@@ -222,5 +234,145 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
         if (activity != null) {
             activity.finish();
         }
+    }
+
+    @Override
+    public void refreshView(List<Interaction> conversation) {
+
+    }
+
+    @Override
+    public void scrollToEnd() {
+
+    }
+
+    @Override
+    public void displayContact(CallContact contact) {
+
+    }
+
+    @Override
+    public void displayOnGoingCallPane(boolean display) {
+
+    }
+
+    @Override
+    public void displayNumberSpinner(Conversation conversation, Uri number) {
+
+    }
+
+    @Override
+    public void hideNumberSpinner() {
+
+    }
+
+    @Override
+    public void clearMsgEdit() {
+
+    }
+
+    @Override
+    public void goToHome() {
+
+    }
+
+    @Override
+    public void goToAddContact(CallContact callContact) {
+
+    }
+
+    @Override
+    public void goToContactActivity(String accountId, String contactRingId) {
+
+    }
+
+    @Override
+    public void switchToUnknownView(String name) {
+
+    }
+
+    @Override
+    public void switchToIncomingTrustRequestView(String message) {
+
+    }
+
+    @Override
+    public void askWriteExternalStoragePermission() {
+
+    }
+
+    @Override
+    public void openFilePicker() {
+
+    }
+
+    @Override
+    public void shareFile(File path) {
+
+    }
+
+    @Override
+    public void openFile(File path) {
+
+    }
+
+    @Override
+    public void addElement(Interaction e) {
+
+    }
+
+    @Override
+    public void updateElement(Interaction e) {
+
+    }
+
+    @Override
+    public void removeElement(Interaction e) {
+
+    }
+
+    @Override
+    public void setComposingStatus(Account.ComposingStatus composingStatus) {
+
+    }
+
+    @Override
+    public void setLastDisplayed(Interaction interaction) {
+
+    }
+
+    @Override
+    public void setConversationColor(int integer) {
+
+    }
+
+    @Override
+    public void startSaveFile(DataTransfer currentFile, String fileAbsolutePath) {
+
+    }
+
+    @Override
+    public void startShareLocation(String accountId, String contactId) {
+
+    }
+
+    @Override
+    public void showMap(String accountId, String contactId, boolean open) {
+
+    }
+
+    @Override
+    public void hideMap() {
+
+    }
+
+    @Override
+    public void hideErrorPanel() {
+
+    }
+
+    @Override
+    public void displayNetworkErrorPanel() {
+
     }
 }

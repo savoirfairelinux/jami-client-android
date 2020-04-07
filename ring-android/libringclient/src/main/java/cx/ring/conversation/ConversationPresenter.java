@@ -35,6 +35,7 @@ import cx.ring.model.DataTransfer;
 import cx.ring.model.Interaction;
 import cx.ring.model.Error;
 import cx.ring.model.SipCall;
+import cx.ring.model.TVListViewModel;
 import cx.ring.model.TrustRequest;
 import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
@@ -417,5 +418,38 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
             return;
         }
         mConversationFacade.setIsComposing(mAccountId, mContactUri, hasMessage);
+    }
+
+    public void removeContact() {
+        mConversationFacade.removeConversation(mAccountId, mContactUri).subscribe();
+        getView().finishView();
+    }
+
+    public void contactClicked() {
+        Account account = mAccountService.getAccount(mAccountId);
+        if (account != null) {
+            Conference conf = account.getByUri(mContactUri).getCurrentCall();
+            if (conf != null
+                    && !conf.getParticipants().isEmpty()
+                    && conf.getParticipants().get(0).getCallStatus() != SipCall.CallStatus.INACTIVE
+                    && conf.getParticipants().get(0).getCallStatus() != SipCall.CallStatus.FAILURE) {
+                getView().goToCallActivity(conf.getId());
+            } else {
+                getView().goToCallActivityWithResult(mAccountId, mContactUri.getRawUriString(), false);
+            }
+        }
+    }
+
+    public void setContact() {
+        mCompositeDisposable.clear();
+        mCompositeDisposable.add(mConversationFacade
+                .getAccountSubject(mAccountId)
+                .map(a -> new TVListViewModel(a.getAccountID(), a.getByUri(mContactUri).getContact()))
+                .observeOn(mUiScheduler)
+                .subscribe(c -> getView().showContact(c)));
+    }
+
+    public void clearHistory() {
+        mConversationFacade.clearHistory(mAccountId, mContactUri).subscribe();
     }
 }

@@ -21,7 +21,7 @@ package cx.ring.tv.contactrequest;
 
 import androidx.leanback.widget.AbstractDetailsDescriptionPresenter;
 
-import cx.ring.tv.model.TVListViewModel;
+import cx.ring.model.TVListViewModel;
 
 public class TVContactRequestDetailPresenter extends AbstractDetailsDescriptionPresenter {
 

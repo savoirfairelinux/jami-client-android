@@ -21,7 +21,7 @@ package cx.ring.tv.search;
 
 import cx.ring.model.CallContact;
 import cx.ring.model.Error;
-import cx.ring.tv.model.TVListViewModel;
+import cx.ring.model.TVListViewModel;
 
 public interface ContactSearchView {
 

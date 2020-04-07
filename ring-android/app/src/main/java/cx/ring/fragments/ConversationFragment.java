@@ -98,6 +98,7 @@ import cx.ring.model.Interaction;
 import cx.ring.model.DataTransfer;
 import cx.ring.model.Phone;
 import cx.ring.model.Error;
+import cx.ring.model.TVListViewModel;
 import cx.ring.model.Uri;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.services.LocationSharingService;
@@ -1151,6 +1152,16 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     @Override
     public void displayNetworkErrorPanel() {
         showErrorPanel(R.string.error_no_network, null);
+    }
+
+    @Override
+    public void finishView() {
+
+    }
+
+    @Override
+    public void showContact(TVListViewModel model) {
+
     }
 
     public void showErrorPanel(final int textResId, @Nullable View.OnClickListener clickListener) {
