@@ -38,7 +38,7 @@ import cx.ring.navigation.HomeNavigationViewModel;
 import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.services.HardwareService;
-import cx.ring.tv.model.TVListViewModel;
+import cx.ring.model.TVListViewModel;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;

@@ -21,11 +21,9 @@ package cx.ring.tv.cards.contacts;
 
 import android.graphics.Bitmap;
 
-import java.util.Arrays;
-
 import cx.ring.model.CallContact;
 import cx.ring.tv.cards.Card;
-import cx.ring.tv.model.TVListViewModel;
+import cx.ring.model.TVListViewModel;
 
 public class ContactCard extends Card {
     private TVListViewModel mModel;

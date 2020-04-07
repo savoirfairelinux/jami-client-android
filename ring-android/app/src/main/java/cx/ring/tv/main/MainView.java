@@ -23,7 +23,7 @@ import java.util.List;
 
 import cx.ring.model.Account;
 import cx.ring.navigation.HomeNavigationViewModel;
-import cx.ring.tv.model.TVListViewModel;
+import cx.ring.model.TVListViewModel;
 import cx.ring.model.Error;
 
 public interface MainView {
