@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <string name="feedback_section">Vaš komentar</string>
+  <string name="report">Pošaljite nam e-mail</string>
+  <string name="section_license">Licenca</string>
+  <string name="sponsor_section">Jami je besplatni softver razvijen i podržavan od strane</string>
+  <string name="copyright_section">Autorsko pravo</string>
+  <string name="contribute_section">Doprinesite</string>
+  <string name="version_section">Verzija</string>
+  <string name="no_email_app_installed">E-mail aplikacija nije nađena, instalirajte je i pošaljite nam izveštaj</string>
+  <string name="no_browser_app_installed">Veb pretraživač nije nađen, instalirajte ga da bi videli ovu stranu</string>
+  <string name="email_chooser_title">Pošaljite e-mail koristeći...</string>
+  <string name="website_chooser_title">Pogledajte veb-sajt koristeći...</string>
+  <string name="license">Ovaj softver is dostupan \"kakav jeste\", bez bilo kakvih garancija. Više detalja možete naći u GNU Opštoj Javnoj Licenci verzija 3 ili u kasnijoj verziji</string>
+  <string name="description">Jami je besplatan i slobodan softver za univerzalnu komunikaciju, koji poštuje slobode i privatnost svojih korisnika</string>
+  <string name="credits">Zasluge</string>
+  <!--About dialog-->
+  <!--RingActivity-->
+  <!--AB menus-->
+  <!--Sections-->
+  <!--Dialing Fragment-->
+  <!--History Fragment-->
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <!--ContactList Fragment-->
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <!--Call Fragment-->
+  <!--Text messages-->
+  <!--MediaPreferenceFragment-->
+  <!--Ringtone activity-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
+  <!--Conversation-->
+  <!--Contacts-->
+  <string name="account_create_title">Napravi Jami profil</string>
+  <string name="wizard_back">Nazad</string>
+  <!--MenuHeaderView-->
+  <!--Share fragment-->
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
+  <!--Blacklist-->
+  <!--Smartlist-->
+  <!--File Transfer-->
+  <!--Bottom Navigation-->
+  <!--TV-->
+</resources>

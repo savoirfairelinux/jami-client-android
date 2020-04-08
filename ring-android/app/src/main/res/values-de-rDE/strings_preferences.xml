@@ -9,6 +9,8 @@
   <string name="pref_mobileData_summary">Jami die Nutzung von 3G/LTE zusätzlich zu WLAN erlauben</string>
   <string name="pref_pushNotifications_title">Push-Benachrichtigungen</string>
   <string name="pref_pushNotifications_summary">Google-Server verwenden, um den Empfang von Anrufen/Nachrichten im Hintergrund zu ermöglichen</string>
+  <string name="pref_video_advanced_title">Erweiterte Videoeinstellungen</string>
+  <string name="pref_video_advanced_summary">Ändern Sie die Videobitrate, die Auflösung und greifen Sie auf experimentelle Funktionen zu</string>
   <string name="pref_hd_summary">HD-Videoübertragung aktivieren</string>
   <string name="pref_hwEncode_title">Hardware-Beschleunigung für den Encoder verwenden</string>
   <string name="pref_hwEncode_summary">Experimentelle Funktion</string>
@@ -19,6 +21,7 @@
   <string name="pref_startOnBoot_title">Jami beim Hochfahren starten</string>
   <string name="pref_startOnBoot_summary">Jami im Hintergrund ausführen während das System startet.</string>
   <string name="pref_clearHistory_title">Verlauf löschen</string>
+  <string name="pref_clearHistory_summary">Löschen Sie den gesamten Konversationsverlauf. Diese Aktion kann nicht rückgängig gemacht werden.</string>
   <string name="pref_persistNotification_title">Im Hintergrund ausführen</string>
   <string name="pref_persistNotification_summary">Ausführung im Hintergrund zulassen, um Anrufe und Nachrichten zu empfangen.</string>
 </resources>

@@ -67,16 +67,24 @@
   <string name="account_ringtone_enabled_label">Ativar toques de chamada</string>
   <string name="account_ringtone_path_label">Caminho do toque de chamada</string>
   <string name="account_ringtone_custom_label">Usar toque personalizado</string>
+  <string name="account_ringtone_title">Escolher toque de chamada</string>
+  <string name="account_ringtone_summary">Selecionar toque de chamada ou escolher o seu próprio</string>
   <!--Video Details-->
   <string name="account_video_label">Vídeo</string>
   <string name="account_video_enable">Ativar Vídeo</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avançado</string>
+  <string name="account_dht_public_in_calls_label">Permitir receber chamadas de contactos desconhecidos</string>
   <string name="account_registration_exp_label">O Registo Expirou</string>
   <string name="account_local_interface_label">Interface Local</string>
   <string name="account_local_port_label">Porta Local</string>
   <string name="account_stun_enable_label">Usar Stun</string>
   <string name="account_stun_server_label">Servidor Stun</string>
+  <string name="account_accept_files">Permitir receber ficheiros automáticamente</string>
+  <string name="account_accept_files_max_size">Tamanho máximo de ficheiro a aceitar automáticamente</string>
+  <string name="account_accept_files_never">Nunca aceitar automáticamente</string>
+  <string name="account_accept_files_always">Aceitar sempre automáticamente</string>
+  <string name="size_mb">%1$d MB</string>
   <string name="account_turn_enable_label">Usar TURN</string>
   <string name="account_turn_server_label">Servidor TURN</string>
   <string name="account_turn_username_label">Nome de utilizador TURN</string>
@@ -87,6 +95,10 @@
   <string name="account_proxy_label">Proxy DHT</string>
   <string name="account_proxy_enable_label">Usar proxy DHT</string>
   <string name="account_proxy_server_label">Endereço do proxy DHT</string>
+  <string name="account_proxy_server_list_label">URL de lista de proxy DHT</string>
+  <string name="account_peer_discovery_label">Descoberta de membros locais</string>
+  <string name="account_peer_discovery_enable_label">Ativar a descoberta de membros locais</string>
+  <string name="account_peer_discovery_enable_summary">Ligar a outros nós de DHT a anunciar na rede local</string>
   <!--Security Details-->
   <string name="account_credentials_label">Credenciais</string>
   <string name="account_credentials_edit">Editar credenciais</string>
@@ -146,6 +158,7 @@
   <string name="account_sip_success_title">Conta SIP registada</string>
   <string name="account_sip_success_message">Registou a sua conta SIP com sucesso.</string>
   <string name="account_sip_register_anyway">Registar mesmo assim</string>
+  <string name="account_link_device">Ligar através de outro dispositivo</string>
   <string name="account_link_button">Conectar da rede</string>
   <string name="account_link_archive_button">Conectar da cópia de segurança</string>
   <string name="account_link_prompt_pin">Introduza o PIN</string>
@@ -157,6 +170,11 @@
   <string name="account_end_export_infos">O seu código PIN é:\n\n%%\n\nPara completar o processo, tem de abrir o Jami no novo dispositivo. Crie uma nova conta com \"Associar este dispositivo a uma conta\". O seu código PIN é válido por 10 minutos.</string>
   <string name="account_link_export_info_light">Para usar esta conta noutros dispositivos, necessita primeiro de expo-lo ao Jami. Isto irá gerar um código PIN que necessita de introduzir no novo dispositivo para configurar a sua conta. O PIN é válido por apenas 10 minutos.</string>
   <string name="account_export_title">Adicionar dispositivos</string>
+  <string name="account_connect_server_button">Ligar ao servidor de gestão</string>
+  <string name="account_connect_button">Ligar</string>
+  <string name="prompt_server">URL do servidor de gestão do Jami</string>
+  <string name="help_credentials_enter">Introduza as credenciais da sua organização</string>
+  <string name="help_connect_password_enter">Introduza a palavra-chave da sua organização</string>
   <string name="account_connect_prompt_username">Nome de utilizador</string>
   <!--Name registration-->
   <string name="error_username_empty">Introduza um nome de utilizador</string>

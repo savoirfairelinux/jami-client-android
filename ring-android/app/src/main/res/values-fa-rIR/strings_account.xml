@@ -124,9 +124,9 @@
   <string name="account_rtp_port_range">دامنه درگاه RTP صدا</string>
   <!--restore/backup-->
   <string name="account_new_device_password">برای قفل‌گشایی حساب، گذرواژه اصلی را وارد کنید</string>
-  <string name="error_password_char_count">حداقل ۶ کاراکتر</string>
+  <string name="error_password_char_count">حداقل ۶ نویسه</string>
   <string name="error_passwords_not_equals">گذرواژه‌ها یکسان نیستند</string>
-  <string name="export_account_wait_title">لطفاً صبر کنید…</string>
+  <string name="export_account_wait_title">لطفا صبر کنید…</string>
   <string name="export_account_wait_message">برون‌برد (ذخیره) اطلاعات حساب</string>
   <string name="account_export_file">حساب کاربری پشتیبان</string>
   <string name="account_export_end_decryption_message">نمی‌توان قفل حسابتان را با گذرواژه  فراهم شده گشود.</string>

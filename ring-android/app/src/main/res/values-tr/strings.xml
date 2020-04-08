@@ -40,6 +40,7 @@
     <item quantity="other">%d Konuşma</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">İsim veya telefon numarası arayın...</string>
   <string name="choose_number">Numara seçin</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -59,6 +60,7 @@
   <string name="notif_channel_messages">İletiler</string>
   <string name="notif_channel_requests">İstekler</string>
   <string name="notif_channel_file_transfer">Dosya aktarımı</string>
+  <string name="notif_channel_sync">Veri senkronizasyonu</string>
   <string name="notif_channel_background_service">Artalan hizmeti</string>
   <string name="notif_channel_background_service_descr">Herzaman çağrı ve ileti almaya izin verir</string>
   <string name="notif_group_calls">Aramalar</string>
@@ -69,6 +71,13 @@
   <string name="notif_incoming_file_transfer_title">%1$s\'dan gelen dosya</string>
   <string name="notif_outgoing_file_transfer_title">%1$s\'e dosya gönderme</string>
   <string name="notif_incoming_picture">%1$s\'dan resim</string>
+  <string name="notif_sync_title">Senkronize ediliyor</string>
+  <string name="notif_location_title">Konumunuz %1$s ile paylaşılıyor </string>
+  <string name="location_share_contact">%1$s sizinle konumunu paylaşıyor</string>
+  <string name="notif_location_remaining">%1$ddakika kaldı</string>
+  <string name="notif_location_action_stop">Konum paylaşmayı durdur</string>
+  <string name="location_share_action_start">Paylaşmayı başlat</string>
+  <string name="location_share_action_stop">Paylaşmayı durdur</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Sen:</string>
   <string name="action_call_hangup">Kapat</string>
@@ -100,6 +109,9 @@
   <string name="send_file">Dosya gönder</string>
   <string name="hist_file_sent">Dosya gönderildi</string>
   <string name="hist_file_received">Dosya alındı</string>
+  <string name="conversation_send_audio">Ses klibi kaydet </string>
+  <string name="conversation_send_video">Video klibi kaydet</string>
+  <string name="conversation_share_location">Konum paylaş</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera izni</string>
   <string name="permission_dialog_camera_message">Görüntülü görüşmelerin çalışması için kamera izni gerekir. Lütfen etkinleştirmeyi göz ardı etmeyin.</string>
@@ -107,6 +119,7 @@
   <string name="ringtone_error_title">Hata</string>
   <string name="ringtone_error_format_not_supported">Bu biçim desteklenmiyor.</string>
   <string name="ringtone_error_size_too_big">Bu dosya çok büyük. En büyük boyut %1$dkB.</string>
+  <string name="ringtone_custom_prompt">Özel zil sesi ayarla </string>
   <string name="ringtone_custom_label">Özel</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Jami\'nin bu özelliğini etkinleştirmek için \"Rehberi oku\" izni gerekli. Lütfen izin verin.</string>
@@ -143,6 +156,7 @@
   <string name="block_contact_dialog_title">%1$s Engellensin mi?</string>
   <string name="block_contact_dialog_message">Sen engelini kaldırana dek %1$s sana ulaşamaz.</string>
   <string name="block_contact_completed">%1$s engellendi.</string>
+  <string name="conversation_contact_is_typing">Kişi yazıyor... </string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s eklensin mi?</string>
   <string name="prompt_new_password">Yeni parola</string>
@@ -187,6 +201,7 @@
   <!--Smartlist-->
   <string name="no_contact_request">Gönderilmiş bir iletişim isteği yok</string>
   <string name="contact_request_sent">İletişim isteği gönderildi</string>
+  <string name="start_conversation">Konuşma başlat </string>
   <string name="search_results">Arama Sonuçları</string>
   <string name="tv_contact_row_header">Kişiler</string>
   <string name="gallery_error_title">Galeri uygulaması bulunamadı</string>
@@ -198,9 +213,13 @@
   <string name="file_transfer_status_unsupported">desteklenmeyen</string>
   <string name="file_transfer_status_finished">Bitti</string>
   <string name="file_transfer_status_invalid_pathname">geçersiz yol adı</string>
+  <string name="file_transfer_status_cancelled">iptal edildi</string>
+  <string name="file_transfer_status_error">hata nedeniyle başarısız </string>
+  <string name="file_transfer_status_timed_out">zaman aşımı</string>
   <string name="file_saved_in">Dosya %s içine kaydedildi</string>
   <string name="file_saved_successfully">Dosya başarıyla kaydedildi</string>
   <string name="no_space_left_on_device">Aygıtda boş alan kalmadı</string>
+  <string name="title_media_viewer">medya görüntüleyici</string>
   <string name="menu_file_open">Dosyayı Aç</string>
   <string name="menu_file_download">Dosyayı indir</string>
   <string name="menu_file_save">Dosyayı Kaydet</string>
@@ -210,12 +229,18 @@
   <string name="menu_message_delete">İletiyi sil</string>
   <string name="menu_message_cancel">İletiyi iptal et</string>
   <string name="menu_delete">Sil</string>
+  <string name="pref_darkTheme_title">Karanlık tema</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Konuşmalar</string>
   <string name="navigation_item_contact_request">İletişim istekleri</string>
   <string name="navigation_item_account">Hesap</string>
   <!--TV-->
+  <string name="tv_media_preview">Önizle</string>
   <string name="tv_audio_play">Oynat</string>
   <string name="tv_audio_pause">Duraklat</string>
   <string name="tv_dialog_send">Gönder</string>
+  <string name="tv_audio_recording">Kaydediliyor...</string>
+  <string name="tv_send_text">Mesaj gönder</string>
+  <string name="tv_send_audio">Ses gönder</string>
+  <string name="tv_send_video">Medya gönder</string>
 </resources>

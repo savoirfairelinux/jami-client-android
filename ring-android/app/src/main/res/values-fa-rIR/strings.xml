@@ -252,11 +252,14 @@
   <string name="navigation_item_account">حساب</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">ارسال پیام صوتی؟</string>
+  <string name="tv_send_image_dialog_message">ارسال تصویر؟</string>
+  <string name="tv_send_video_dialog_message">ارسال ویدیو؟</string>
+  <string name="tv_media_preview">پیش‌نمایش</string>
   <string name="tv_audio_play">پخش</string>
   <string name="tv_audio_pause">مکث</string>
   <string name="tv_dialog_send">ارسال</string>
   <string name="tv_audio_recording">در حال ضبط...</string>
   <string name="tv_send_text">ارسال متن</string>
   <string name="tv_send_audio">ارسال صدا</string>
-  <string name="tv_clear_history">پاک‌سازی تاریخچه</string>
+  <string name="tv_send_video">ارسال محتوای رسانه‌ای</string>
 </resources>
