@@ -10,7 +10,7 @@ import com.bumptech.glide.module.AppGlideModule;
 import com.bumptech.glide.request.RequestOptions;
 
 @GlideModule
-public final class RingGlideModule extends AppGlideModule {
+public final class JamiGlideModule extends AppGlideModule {
 
     @Override
     public void applyOptions(@NonNull Context context, GlideBuilder builder) {
