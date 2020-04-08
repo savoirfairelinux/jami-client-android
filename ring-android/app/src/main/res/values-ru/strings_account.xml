@@ -95,6 +95,7 @@
   <string name="account_proxy_label">DHT прокси</string>
   <string name="account_proxy_enable_label">Использовать DHT прокси</string>
   <string name="account_proxy_server_label">Адрес DHT прокси</string>
+  <string name="account_proxy_server_list_label">DHT прокси список URL</string>
   <string name="account_peer_discovery_label">Обнаружение локальных пиров</string>
   <string name="account_peer_discovery_enable_label">Включить обнаружение локальных пиров</string>
   <string name="account_peer_discovery_enable_summary">Подключаться к другим DHT узлам в локальной сети</string>

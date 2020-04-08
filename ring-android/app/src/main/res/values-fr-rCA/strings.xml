@@ -96,6 +96,7 @@
   <string name="conversation_action_copy_peer_number">Copier le numéro</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s copié dans le presse papiers</string>
   <string name="conversation_action_select_peer_number">Sélectionner un numéro de téléphone</string>
+  <string name="conversation_action_block_this">Bloquer le contact</string>
   <!--Contacts-->
   <string name="prompt_new_password">Nouveau mot de passe</string>
   <string name="prompt_new_password_optional">Nouveau mot de passe (optionnel)</string>

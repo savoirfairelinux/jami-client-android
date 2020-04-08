@@ -251,11 +251,14 @@
   <string name="navigation_item_account">帳號</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">傳送音訊訊息？</string>
+  <string name="tv_send_image_dialog_message">傳送圖片？</string>
+  <string name="tv_send_video_dialog_message">傳送影片？</string>
+  <string name="tv_media_preview">預覽</string>
   <string name="tv_audio_play">播放</string>
   <string name="tv_audio_pause">暫停</string>
   <string name="tv_dialog_send">傳送</string>
   <string name="tv_audio_recording">正在錄製……</string>
   <string name="tv_send_text">傳送文字</string>
   <string name="tv_send_audio">傳送音訊</string>
-  <string name="tv_clear_history">清除歷史紀錄</string>
+  <string name="tv_send_video">傳送媒體</string>
 </resources>

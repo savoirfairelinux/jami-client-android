@@ -252,11 +252,14 @@
   <string name="navigation_item_account">Llogari</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">Të dërgohet mesazh audio?</string>
+  <string name="tv_send_image_dialog_message">Të dërgohet figura?</string>
+  <string name="tv_send_video_dialog_message">Të dërgohet videoja?</string>
+  <string name="tv_media_preview">Paraparje</string>
   <string name="tv_audio_play">Luaje</string>
   <string name="tv_audio_pause">Pushim</string>
   <string name="tv_dialog_send">Dërgoje</string>
   <string name="tv_audio_recording">Po incizohet…</string>
   <string name="tv_send_text">Dërgoni Tekst</string>
   <string name="tv_send_audio">Dërgoni Audio</string>
-  <string name="tv_clear_history">spastro historikun</string>
+  <string name="tv_send_video">Dërgoni Media</string>
 </resources>

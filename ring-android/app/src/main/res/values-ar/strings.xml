@@ -262,5 +262,4 @@
   <string name="tv_audio_recording">تسجيل...</string>
   <string name="tv_send_text">أرسل نص</string>
   <string name="tv_send_audio">أرسل صوت</string>
-  <string name="tv_clear_history">محو السجل</string>
 </resources>
