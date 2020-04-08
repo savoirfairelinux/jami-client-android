@@ -145,7 +145,7 @@
         <item name="searchOrbViewStyle">@style/CustomSearchOrbView</item>
     </style>
 
-    <style name="Theme.Ring.Leanback.CustomTitle" parent="Theme.Ring.LeanbackBrowse">
+    <style name="Theme.Jami.Leanback.Main" parent="Theme.Ring.LeanbackBrowse">
         <item name="browseTitleViewLayout">@layout/titleview</item>
     </style>
 
