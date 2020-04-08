@@ -82,6 +82,12 @@ public class ContactRequestsPresenter extends RootPresenter<ContactRequestsView>
                 }, e -> Log.d(TAG, "updateList subscribe onError", e)));
     }
 
+    @Override
+    public void unbindView() {
+        super.unbindView();
+        mContactDisposable.dispose();
+    }
+
     public void updateAccount(String accountId) {
         mAccount.onNext(accountId);
     }
