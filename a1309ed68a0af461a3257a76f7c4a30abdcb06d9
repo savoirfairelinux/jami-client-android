@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "687b8887_2051f96a",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/contact/TVContactFragment.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-04-10T17:11:51Z",
+      "side": 1,
+      "message": "if this is not implemented how are the messages updated ?",
+      "range": {
+        "startLine": 336,
+        "startChar": 0,
+        "endLine": 350,
+        "endChar": 0
+      },
+      "revId": "a1309ed68a0af461a3257a76f7c4a30abdcb06d9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
