@@ -21,18 +21,18 @@ package cx.ring.tv.account;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
-import butterknife.BindString;
-import butterknife.BindView;
 import cx.ring.R;
-import cx.ring.dependencyinjection.JamiInjectionComponent;
+import cx.ring.application.JamiApplication;
+import cx.ring.databinding.TvFragShareBinding;
 import cx.ring.model.Account;
-import cx.ring.mvp.BaseFragment;
+import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.mvp.GenericView;
 import cx.ring.services.VCardServiceImpl;
 import cx.ring.share.SharePresenter;
@@ -40,38 +40,32 @@ import cx.ring.share.ShareViewModel;
 import cx.ring.utils.Log;
 import cx.ring.utils.QRCodeUtils;
 import cx.ring.views.AvatarDrawable;
+import io.reactivex.disposables.CompositeDisposable;
 
-public class TVShareFragment extends BaseFragment<SharePresenter> implements GenericView<ShareViewModel> {
+public class TVShareFragment extends BaseSupportFragment<SharePresenter> implements GenericView<ShareViewModel> {
 
+    private TvFragShareBinding binding;
+    private final CompositeDisposable disposable = new CompositeDisposable();
 
-    @BindView(R.id.share_qr_instruction)
-    protected TextView mShareInstruction;
-
-    @BindView(R.id.qr_image)
-    protected ImageView mQrImage;
-
-    @BindString(R.string.share_message)
-    protected String mShareMessage;
-
-    @BindView(R.id.share_uri)
-    protected TextView mShareUri;
-
-    @BindView(R.id.qr_user_photo)
-    protected ImageView mUserPhoto;
-
+    @Nullable
     @Override
-    public int getLayout() {
-        return R.layout.tv_frag_share;
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = TvFragShareBinding.inflate(inflater, container, false);
+        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
+        return binding.getRoot();
     }
 
     @Override
-    public void injectFragment(JamiInjectionComponent component) {
-        component.inject(this);
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+        disposable.clear();
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onDestroy() {
+        super.onDestroy();
+        disposable.dispose();
     }
 
     @Override
@@ -79,37 +73,37 @@ public class TVShareFragment extends BaseFragment<SharePresenter> implements Gen
         final QRCodeUtils.QRCodeData qrCodeData = viewModel.getAccountQRCodeData(0x00000000, 0xFFFFFFFF);
         getUserAvatar(viewModel.getAccount());
 
-        if (mQrImage == null || mShareInstruction == null || mShareUri == null) {
+        if (binding == null) {
             return;
         }
 
         if (qrCodeData == null) {
-            mQrImage.setVisibility(View.INVISIBLE);
+            binding.qrImage.setVisibility(View.INVISIBLE);
 
         } else {
             Bitmap bitmap = Bitmap.createBitmap(qrCodeData.getWidth(), qrCodeData.getHeight(), Bitmap.Config.ARGB_8888);
             bitmap.setPixels(qrCodeData.getData(), 0, qrCodeData.getWidth(), 0, 0, qrCodeData.getWidth(), qrCodeData.getHeight());
-            mQrImage.setImageBitmap(bitmap);
-            mShareInstruction.setText(mShareMessage);
-            mQrImage.setVisibility(View.VISIBLE);
+            binding.qrImage.setImageBitmap(bitmap);
+            binding.shareQrInstruction.setText(R.string.share_message);
+            binding.qrImage.setVisibility(View.VISIBLE);
         }
     }
 
     private void getUserAvatar(Account account) {
-        VCardServiceImpl
+        disposable.add(VCardServiceImpl
                 .loadProfile(account)
                 .doOnSuccess(profile -> {
-                    mShareUri.setVisibility(View.VISIBLE);
+                    binding.shareUri.setVisibility(View.VISIBLE);
                     if (profile.first != null && !profile.first.isEmpty()) {
-                        mShareUri.setText(profile.first);
+                        binding.shareUri.setText(profile.first);
                     } else {
-                        mShareUri.setText(account.getDisplayUri());
+                        binding.shareUri.setText(account.getDisplayUri());
                     }
                 })
                 .flatMap(p -> AvatarDrawable.load(getActivity(), account))
                 .subscribe(a -> {
-                    mUserPhoto.setVisibility(View.VISIBLE);
-                    mUserPhoto.setImageDrawable(a);
-                }, e-> Log.e(TAG, e.getMessage()));
+                    binding.qrUserPhoto.setVisibility(View.VISIBLE);
+                    binding.qrUserPhoto.setImageDrawable(a);
+                }, e-> Log.e(TAG, e.getMessage())));
     }
 }

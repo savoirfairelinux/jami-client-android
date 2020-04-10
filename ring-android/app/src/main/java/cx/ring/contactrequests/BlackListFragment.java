@@ -23,20 +23,17 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.util.Collection;
 
-import butterknife.BindView;
-import cx.ring.R;
 import cx.ring.account.AccountEditionFragment;
-import cx.ring.dependencyinjection.JamiInjectionComponent;
+import cx.ring.application.JamiApplication;
+import cx.ring.databinding.FragBlacklistBinding;
 import cx.ring.model.CallContact;
 import cx.ring.mvp.BaseSupportFragment;
 
@@ -45,35 +42,27 @@ public class BlackListFragment extends BaseSupportFragment<BlackListPresenter> i
 
     public static final String TAG = BlackListFragment.class.getSimpleName();
 
-    @BindView(R.id.blacklist)
-    protected RecyclerView mBlacklist;
-
-    @BindView(R.id.emptyTextView)
-    protected TextView mEmptyTextView;
-
     private BlackListAdapter mAdapter;
-
-    @Override
-    public int getLayout() {
-        return R.layout.frag_blacklist;
-    }
-
-    @Override
-    public void injectFragment(JamiInjectionComponent component) {
-        component.inject(this);
-    }
+    private FragBlacklistBinding binding;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragBlacklistBinding.inflate(inflater, container, false);
+        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         setHasOptionsMenu(true);
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
         if (getArguments() == null || getArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY) == null) {
             return;
         }
@@ -81,7 +70,7 @@ public class BlackListFragment extends BaseSupportFragment<BlackListPresenter> i
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(Menu menu, @NonNull MenuInflater inflater) {
         menu.clear();
     }
 
@@ -97,26 +86,24 @@ public class BlackListFragment extends BaseSupportFragment<BlackListPresenter> i
 
     @Override
     public void updateView(final Collection<CallContact> list) {
-        getActivity().runOnUiThread(() -> {
-            mBlacklist.setVisibility(View.VISIBLE);
-            if (mBlacklist.getAdapter() != null) {
-                mAdapter.replaceAll(list);
-            } else {
-                mAdapter = new BlackListAdapter(list, BlackListFragment.this);
-                LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-                mBlacklist.setLayoutManager(layoutManager);
-                mBlacklist.setAdapter(mAdapter);
-            }
-        });
+        binding.blacklist.setVisibility(View.VISIBLE);
+        if (binding.blacklist.getAdapter() != null) {
+            mAdapter.replaceAll(list);
+        } else {
+            mAdapter = new BlackListAdapter(list, BlackListFragment.this);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+            binding.blacklist.setLayoutManager(layoutManager);
+            binding.blacklist.setAdapter(mAdapter);
+        }
     }
 
     @Override
     public void hideListView() {
-        getActivity().runOnUiThread(() -> mBlacklist.setVisibility(View.GONE));
+        binding.blacklist.setVisibility(View.GONE);
     }
 
     @Override
     public void displayEmptyListMessage(final boolean display) {
-        getActivity().runOnUiThread(() -> mEmptyTextView.setVisibility(display ? View.VISIBLE : View.GONE));
+        binding.emptyTextView.setVisibility(display ? View.VISIBLE : View.GONE);
     }
 }

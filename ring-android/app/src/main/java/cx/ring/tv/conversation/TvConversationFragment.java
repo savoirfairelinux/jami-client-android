@@ -44,6 +44,7 @@ import android.provider.MediaStore;
 import android.speech.RecognizerIntent;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,7 +68,7 @@ import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.MediaViewerActivity;
 import cx.ring.contacts.AvatarFactory;
-import cx.ring.dependencyinjection.JamiInjectionComponent;
+import cx.ring.databinding.FragConversationTvBinding;
 import cx.ring.model.CallContact;
 import cx.ring.model.DataTransfer;
 import cx.ring.model.Error;
@@ -126,6 +127,7 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
     private Map<String, AvatarDrawable> mParticipantAvatars = new HashMap<>();
 
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
+    private FragConversationTvBinding binding;
 
     public static TvConversationFragment newInstance(TVListViewModel param) {
         TvConversationFragment fragment = new TvConversationFragment();
@@ -137,13 +139,25 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mTvListViewModel = getArguments().getParcelable(ARG_MODEL);
         }
+        requestPermissions(permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+    }
 
-        ActivityCompat.requestPermissions(getActivity(), permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragConversationTvBinding.inflate(inflater, container, false);
+        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     // Create an intent that can start the Speech Recognizer activity
@@ -152,17 +166,6 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Say something...");
         startActivityForResult(intent, REQUEST_SPEECH_CODE);
-    }
-
-
-    @Override
-    public int getLayout() {
-        return R.layout.frag_conversation_tv;
-    }
-
-    @Override
-    public void injectFragment(JamiInjectionComponent component) {
-        component.inject(this);
     }
 
     @Override

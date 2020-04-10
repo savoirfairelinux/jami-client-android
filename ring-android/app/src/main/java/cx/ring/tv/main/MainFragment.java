@@ -98,7 +98,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 

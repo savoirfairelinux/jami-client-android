@@ -38,17 +38,13 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cx.ring.R;
+import cx.ring.databinding.CamerapickerBinding;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
 import io.reactivex.Single;
@@ -64,16 +60,13 @@ public class CustomCameraActivity extends Activity {
     private int cameraBack = -1;
     private int currentCamera = 0;
 
+    private CamerapickerBinding binding;
+
     private MediaRecorder recorder;
     private boolean mRecording = false;
     private boolean mActionVideo = false;
 
     private File mVideoFile;
-
-    @BindView(R.id.button_video)
-    FloatingActionButton mButtonVideo;
-    @BindView(R.id.button_picture)
-    FloatingActionButton mButtonPicture;
 
     private Camera mCamera;
     private CameraPreview mCameraPreview;
@@ -99,13 +92,12 @@ public class CustomCameraActivity extends Activity {
                 finish();
             });
 
-    @OnClick(R.id.button_picture)
     public void takePicture() {
         if (mRecording)
             releaseMediaRecorder();
         if (mCamera != null) {
-            mButtonPicture.setEnabled(false);
-            mButtonVideo.setVisibility(View.GONE);
+            binding.buttonPicture.setEnabled(false);
+            binding.buttonVideo.setVisibility(View.GONE);
             try {
                 mCamera.takePicture(null, null, mPicture);
             } catch (Exception e) {
@@ -114,7 +106,6 @@ public class CustomCameraActivity extends Activity {
         }
     }
 
-    @OnClick(R.id.button_video)
     public void takeVideo() {
         if (mRecording) {
             releaseMediaRecorder();
@@ -124,13 +115,13 @@ public class CustomCameraActivity extends Activity {
                     .setType(TYPE_VIDEO);
             setResult(RESULT_OK, intent);
             finish();
-            mButtonVideo.setImageResource(R.drawable.baseline_videocam_24);
+            binding.buttonVideo.setImageResource(R.drawable.baseline_videocam_24);
             return;
         }
         if (mCamera != null) {
             initRecorder();
-            mButtonVideo.setImageResource(R.drawable.lb_ic_stop);
-            mButtonPicture.setVisibility(View.GONE);
+            binding.buttonVideo.setImageResource(R.drawable.lb_ic_stop);
+            binding.buttonPicture.setVisibility(View.GONE);
         }
         mRecording = !mRecording;
     }
@@ -141,8 +132,9 @@ public class CustomCameraActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.camerapicker);
-        ButterKnife.bind(this);
+        binding = CamerapickerBinding.inflate(getLayoutInflater());
+        binding.buttonPicture.setOnClickListener(v -> takePicture());
+        binding.buttonVideo.setOnClickListener(v -> takeVideo());
 
         if (getIntent().getAction() != null) {
             mActionVideo = getIntent().getAction().equals(MediaStore.ACTION_VIDEO_CAPTURE);
@@ -159,7 +151,7 @@ public class CustomCameraActivity extends Activity {
         preview.addView(mCameraPreview, 0);
 
         if (mActionVideo) {
-            mButtonVideo.setVisibility(View.VISIBLE);
+            binding.buttonVideo.setVisibility(View.VISIBLE);
         }
     }
 

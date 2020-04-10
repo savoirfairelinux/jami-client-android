@@ -36,43 +36,46 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.client.HomeActivity;
-import cx.ring.dependencyinjection.JamiInjectionComponent;
+import cx.ring.databinding.FragAboutBinding;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.utils.DeviceUtils;
 
 public class AboutFragment extends BaseSupportFragment<RootPresenter> {
 
-    @BindView(R.id.release)
-    TextView mTextViewRelease;
+    private FragAboutBinding binding;
 
+    @Nullable
     @Override
-    public int getLayout() {
-        return R.layout.frag_about;
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragAboutBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
-    public void injectFragment(JamiInjectionComponent component) {
-    }
-
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, parent, savedInstanceState);
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        mTextViewRelease.setText(getString(R.string.app_release, BuildConfig.VERSION_NAME));
+        binding.release.setText(getString(R.string.app_release, BuildConfig.VERSION_NAME));
+        binding.logo.setOnClickListener(v ->  startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.app_website)))));
+        binding.sflLogo.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.savoirfairelinux_website)))));
+        binding.contributeContainer.setOnClickListener(this::webSiteToView);
+        binding.licenseContainer.setOnClickListener(this::webSiteToView);
+        binding.emailReportContainer.setOnClickListener(v -> sendFeedbackEmail());
+        binding.credits.setOnClickListener(v -> creditsClicked());
     }
 
     @Override
@@ -104,7 +107,7 @@ public class AboutFragment extends BaseSupportFragment<RootPresenter> {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(Menu menu, @NonNull MenuInflater inflater) {
         menu.clear();
     }
 
@@ -113,21 +116,8 @@ public class AboutFragment extends BaseSupportFragment<RootPresenter> {
         menu.clear();
     }
 
-    @OnClick({R.id.logo})
-    public void onLogoClicked() {
-        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.app_website))));
-    }
-
-    @OnClick({R.id.sfl_logo})
-    public void onSflClicked() {
-        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.savoirfairelinux_website))));
-    }
-
-    @OnClick({R.id.contribute_container, R.id.license_container})
-    public void webSiteToView(View view) {
-
-        Uri uriToView = null;
-
+    private void webSiteToView(View view) {
+        Uri uriToView;
         switch (view.getId()) {
             case R.id.contribute_container:
                 uriToView = Uri.parse(getString(R.string.ring_contribute_website));
@@ -135,10 +125,8 @@ public class AboutFragment extends BaseSupportFragment<RootPresenter> {
             case R.id.license_container:
                 uriToView = Uri.parse(getString(R.string.gnu_license_website));
                 break;
-        }
-
-        if (uriToView == null) {
-            return;
+            default:
+                return;
         }
 
         Intent webIntent = new Intent(Intent.ACTION_VIEW);
@@ -146,15 +134,13 @@ public class AboutFragment extends BaseSupportFragment<RootPresenter> {
         launchSystemIntent(webIntent, getString(R.string.website_chooser_title), getString(R.string.no_browser_app_installed));
     }
 
-    @OnClick(R.id.email_report_container)
-    public void sendFeedbackEmail() {
+    private void sendFeedbackEmail() {
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + "ring@gnu.org"));
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "[" + getText(R.string.app_name) + " Android - " + BuildConfig.VERSION_NAME + "]");
         launchSystemIntent(emailIntent, getString(R.string.email_chooser_title), getString(R.string.no_email_app_installed));
     }
 
-    @OnClick(R.id.credits)
-    public void creditsClicked() {
+    private void creditsClicked() {
         BottomSheetDialogFragment dialog = new AboutBottomSheetDialogFragment();
         dialog.show(getActivity().getSupportFragmentManager(), dialog.getTag());
     }

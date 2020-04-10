@@ -112,7 +112,7 @@ public class TVProfileEditingFragment extends JamiGuidedStepFragment<HomeNavigat
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         super.onViewCreated(view, savedInstanceState);
         iconSize = (int) getResources().getDimension(R.dimen.tv_avatar_size);
     }

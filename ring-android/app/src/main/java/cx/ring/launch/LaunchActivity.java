@@ -40,7 +40,7 @@ public class LaunchActivity extends BaseActivity<LaunchPresenter> implements Lau
     @Override
     public void onCreate(Bundle savedInstanceState) {
         // dependency injection
-        JamiApplication.getInstance().getRingInjectionComponent().inject(this);
+        JamiApplication.getInstance().getInjectionComponent().inject(this);
         super.onCreate(savedInstanceState);
         JamiApplication.getInstance().startDaemon();
 

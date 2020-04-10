@@ -24,7 +24,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
-import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -34,7 +33,6 @@ import androidx.core.content.ContextCompat;
 import androidx.core.util.Pair;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
 import android.view.MenuItem;
@@ -52,8 +50,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.about.AboutFragment;
@@ -62,6 +58,7 @@ import cx.ring.account.AccountWizardActivity;
 import cx.ring.application.JamiApplication;
 import cx.ring.contactrequests.ContactRequestsFragment;
 import cx.ring.contacts.AvatarFactory;
+import cx.ring.databinding.ActivityHomeBinding;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.fragments.SmartListFragment;
 import cx.ring.interfaces.BackHandlerInterface;
@@ -119,21 +116,11 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     @Inject
     NotificationService mNotificationService;
 
-    @BindView(R.id.main_toolbar)
-    Toolbar mToolbar;
-
-    @BindView(R.id.spinner_toolbar)
-    Spinner mToolbarSpinner;
-
-    @BindView(R.id.navigation_view)
-    BottomNavigationView mBottomNavigationView;
-
-    @BindView(R.id.app_bar)
-    AppBarLayout mAppBarLayout;
-
     @Inject
     @Named("UiScheduler")
     protected Scheduler mUiScheduler;
+
+    private ActivityHomeBinding binding;
 
     private boolean mIsMigrationDialogAlreadyShowed;
     private String mAccountWithPendingrequests = null;
@@ -162,34 +149,32 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         mDisposable.add(mAccountCheckDisposable);
 
         JamiApplication.getInstance().startDaemon();
-        FragmentManager fragmentManager = getSupportFragmentManager();
 
-        setContentView(R.layout.activity_home);
-
-        ButterKnife.bind(this);
+        binding = ActivityHomeBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         // dependency injection
-        JamiApplication.getInstance().getRingInjectionComponent().inject(this);
+        JamiApplication.getInstance().getInjectionComponent().inject(this);
 
         mOrientation = getResources().getConfiguration().orientation;
 
-        setSupportActionBar(mToolbar);
+        setSupportActionBar(binding.mainToolbar);
 
         ActionBar ab = getSupportActionBar();
         if (ab != null) {
             ab.setTitle("");
         }
 
-        mBottomNavigationView.setOnNavigationItemSelectedListener(this);
-        mBottomNavigationView.getMenu().getItem(NAVIGATION_CONVERSATIONS).setChecked(true);
+        binding.navigationView.setOnNavigationItemSelectedListener(this);
+        binding.navigationView.getMenu().getItem(NAVIGATION_CONVERSATIONS).setChecked(true);
 
-        mOutlineProvider = mAppBarLayout.getOutlineProvider();
+        mOutlineProvider = binding.appBar.getOutlineProvider();
 
         if (!DeviceUtils.isTablet(this)) {
             getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.bottom_navigation));
         }
 
-        mToolbarSpinner.setOnItemSelectedListener(this);
+        binding.spinnerToolbar.setOnItemSelectedListener(this);
 
         // if app opened from notification display trust request fragment when mService will connected
         Intent intent = getIntent();
@@ -203,6 +188,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         } else if (Intent.ACTION_SEND.equals(action) || Intent.ACTION_SEND_MULTIPLE.equals(action)) {
             handleShareIntent(intent);
         }
+        FragmentManager fragmentManager = getSupportFragmentManager();
         fContent = fragmentManager.findFragmentById(R.id.main_frame);
         if (fContent == null || Intent.ACTION_SEARCH.equals(action)) {
             fContent = new SmartListFragment();
@@ -221,6 +207,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     protected void onDestroy() {
         super.onDestroy();
         fContent = null;
+        mDisposable.dispose();
     }
 
     private void handleShareIntent(Intent intent) {
@@ -287,20 +274,20 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     public void setToolbarState(String title, String subtitle) {
-        mToolbar.setLogo(null);
-        mToolbar.setTitle(title);
+        binding.mainToolbar.setLogo(null);
+        binding.mainToolbar.setTitle(title);
 
         if (subtitle != null) {
-            mToolbar.setSubtitle(subtitle);
+            binding.mainToolbar.setSubtitle(subtitle);
         } else {
-            mToolbar.setSubtitle(null);
+            binding.mainToolbar.setSubtitle(null);
         }
     }
 
     private void showProfileInfo() {
-        mToolbarSpinner.setVisibility(View.VISIBLE);
-        mToolbar.setTitle(null);
-        mToolbar.setSubtitle(null);
+        binding.spinnerToolbar.setVisibility(View.VISIBLE);
+        binding.mainToolbar.setTitle(null);
+        binding.mainToolbar.setSubtitle(null);
 
         int targetSize = (int) (AvatarFactory.SIZE_AB * getResources().getDisplayMetrics().density);
         mDisposable.add(mAccountService.getCurrentAccountSubject()
@@ -308,7 +295,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                         .map(avatar -> new Pair<>(account, avatar)))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(d -> {
-                    mToolbar.setLogo(new BitmapDrawable(getResources(), d.second));
+                    binding.mainToolbar.setLogo(new BitmapDrawable(getResources(), d.second));
                 }, e -> Log.e(TAG, "Error loading avatar", e)));
     }
 
@@ -336,7 +323,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 .observeOn(mUiScheduler)
                 .subscribe(accounts -> {
                     mAccountAdapter = new ToolbarSpinnerAdapter(HomeActivity.this, R.layout.item_toolbar_spinner, accounts);
-                    mToolbarSpinner.setAdapter(mAccountAdapter);
+                    binding.spinnerToolbar.setAdapter(mAccountAdapter);
                     showProfileInfo();
                 }, e ->  cx.ring.utils.Log.e(TAG, "Error loading account list !", e)));
 
@@ -389,7 +376,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         }
         fContent = new ContactRequestsFragment();
         fContent.setArguments(bundle);
-        mBottomNavigationView.getMenu().getItem(NAVIGATION_CONTACT_REQUESTS).setChecked(true);
+        binding.navigationView.getMenu().getItem(NAVIGATION_CONTACT_REQUESTS).setChecked(true);
         getSupportFragmentManager().beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(R.id.main_frame, fContent, CONTACT_REQUESTS_TAG)
@@ -422,8 +409,8 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
             fContent = fragmentManager.findFragmentById(entry.getId());
             fragmentManager.popBackStack();
             if (fCount == 2) {
-                mBottomNavigationView.getMenu().getItem(NAVIGATION_CONVERSATIONS).setChecked(true);
-                mBottomNavigationView.setVisibility(View.VISIBLE);
+                binding.navigationView.getMenu().getItem(NAVIGATION_CONVERSATIONS).setChecked(true);
+                binding.navigationView.setVisibility(View.VISIBLE);
                 showProfileInfo();
                 showToolbarSpinner();
                 if (!conversationSelected) {
@@ -583,7 +570,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
             Account account = mAccountService.getCurrentAccount();
             if (account != null) {
-                mToolbarSpinner.setSelection(mAccountService.getAccountList().indexOf(account.getAccountID()));
+                binding.spinnerToolbar.setSelection(mAccountService.getAccountList().indexOf(account.getAccountID()));
             }
         }
     }
@@ -599,21 +586,21 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
     public void setBadge(int menuId, int number) {
         if (number == 0) {
-            mBottomNavigationView.removeBadge(menuId);
+            binding.navigationView.removeBadge(menuId);
             return;
         }
 
-        mBottomNavigationView.getOrCreateBadge(menuId);
-        BadgeDrawable badgeDrawable = mBottomNavigationView.getBadge(menuId);
+        binding.navigationView.getOrCreateBadge(menuId);
+        BadgeDrawable badgeDrawable = binding.navigationView.getBadge(menuId);
         if (badgeDrawable != null) {
             badgeDrawable.setNumber(number);
         }
     }
 
     private void hideTabletToolbar() {
-        TextView title = mToolbar.findViewById(R.id.contact_title);
-        TextView subtitle = mToolbar.findViewById(R.id.contact_subtitle);
-        ImageView logo = mToolbar.findViewById(R.id.contact_image);
+        TextView title = binding.mainToolbar.findViewById(R.id.contact_title);
+        TextView subtitle = binding.mainToolbar.findViewById(R.id.contact_subtitle);
+        ImageView logo = binding.mainToolbar.findViewById(R.id.contact_image);
 
         if (title != null)
             title.setText(null);
@@ -625,17 +612,17 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
     private void showTabletToolbar() {
         if (DeviceUtils.isTablet(this)) {
-            mToolbar.findViewById(R.id.tablet_toolbar).setVisibility(View.VISIBLE);
+            binding.mainToolbar.findViewById(R.id.tablet_toolbar).setVisibility(View.VISIBLE);
         }
     }
 
     private void showToolbarSpinner() {
-        mToolbarSpinner.setVisibility(View.VISIBLE);
+        binding.spinnerToolbar.setVisibility(View.VISIBLE);
     }
 
     private void hideToolbarSpinner() {
         if (!DeviceUtils.isTablet(HomeActivity.this)) {
-            mToolbarSpinner.setVisibility(View.GONE);
+            binding.spinnerToolbar.setVisibility(View.GONE);
         }
     }
 
@@ -656,20 +643,19 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     public void setToolbarElevation(boolean enable) {
-        if (mAppBarLayout != null)
-            mAppBarLayout.setElevation(enable ? getResources().getDimension(R.dimen.toolbar_elevation) : 0);
+        binding.appBar.setElevation(enable ? getResources().getDimension(R.dimen.toolbar_elevation) : 0);
     }
 
     public void setToolbarOutlineState(boolean enabled) {
         if (!enabled) {
-            mAppBarLayout.setOutlineProvider(null);
+            binding.appBar.setOutlineProvider(null);
         } else {
-            mAppBarLayout.setOutlineProvider(mOutlineProvider);
+            binding.appBar.setOutlineProvider(mOutlineProvider);
         }
     }
 
     public void selectNavigationItem(int id) {
-        mBottomNavigationView.setSelectedItemId(id);
+        binding.navigationView.setSelectedItemId(id);
     }
 
 }

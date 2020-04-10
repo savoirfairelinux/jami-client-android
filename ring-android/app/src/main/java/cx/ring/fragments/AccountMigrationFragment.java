@@ -25,15 +25,13 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -44,13 +42,9 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.OnEditorAction;
-import butterknife.OnFocusChange;
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
+import cx.ring.databinding.FragAccountMigrationBinding;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.ConfigKey;
@@ -63,9 +57,9 @@ public class AccountMigrationFragment extends Fragment {
     static final String TAG = AccountMigrationFragment.class.getSimpleName();
     @Inject
     AccountService mAccountService;
-    // UI references.
-    @BindView(R.id.ring_password)
-    EditText mRingPassword;
+
+    private FragAccountMigrationBinding binding;
+
     private String mAccountId;
     private ProgressDialog mProgress = null;
 
@@ -80,33 +74,22 @@ public class AccountMigrationFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        final View inflatedView = inflater.inflate(R.layout.frag_account_migration, parent, false);
-        ButterKnife.bind(this, inflatedView);
-
-        // dependency injection
-        ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
-
-        return inflatedView;
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+        binding = FragAccountMigrationBinding.inflate(inflater, parent, false);
+        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
+        return binding.getRoot();
     }
 
-    @OnEditorAction(R.id.ring_password)
-    public boolean onPasswordEditorAction(TextView v, int actionId, KeyEvent event) {
-        Log.d(TAG, "onPasswordEditorAction: " + actionId + " " + (event == null ? null : event.toString()));
-        return actionId == EditorInfo.IME_ACTION_NEXT && checkPassword(v, null);
-    }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        binding.ringPassword.setOnEditorActionListener((v, actionId, event) -> actionId == EditorInfo.IME_ACTION_NEXT && checkPassword(v, null));
+        binding.ringPassword.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                checkPassword((TextView) v, null);
+            }
+        });
 
-    @OnFocusChange(R.id.ring_password)
-    public void onPasswordFocusChange(View v, boolean hasFocus) {
-        if (!hasFocus) {
-            checkPassword((TextView) v, null);
-        }
-    }
-
-    @OnClick(R.id.ring_migrate_btn)
-    @SuppressWarnings("unused")
-    void onMigrateButtonClick(View view) {
-        initAccountMigration(mRingPassword.getText().toString());
+        binding.ringMigrateBtn.setOnClickListener(v -> initAccountMigration(binding.ringPassword.getText().toString()));
     }
 
     @Override
@@ -117,12 +100,6 @@ public class AccountMigrationFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @SuppressWarnings("unchecked")
     private void initAccountMigration(String password) {
         if (migratingAccount) {
             return;
@@ -131,7 +108,9 @@ public class AccountMigrationFragment extends Fragment {
         migratingAccount = true;
 
         //orientation is locked during the migration of account to avoid the destruction of the thread
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
+        Activity activity = getActivity();
+        if (activity != null)
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
         mProgress = new ProgressDialog(getActivity());
         mProgress.setTitle(R.string.dialog_wait_update);
@@ -196,24 +175,24 @@ public class AccountMigrationFragment extends Fragment {
             //do things
         });
         boolean success = false;
-        switch (newState) {
-            case AccountConfig.STATE_INVALID:
-                dialogBuilder.setTitle(R.string.account_cannot_be_found_title)
-                        .setMessage(R.string.account_cannot_be_updated_message);
-                break;
-            default:
-                dialogBuilder.setTitle(R.string.account_device_updated_title)
-                        .setMessage(R.string.account_device_updated_message);
-                success = true;
-                break;
+        if (AccountConfig.STATE_INVALID.equals(newState)) {
+            dialogBuilder.setTitle(R.string.account_cannot_be_found_title)
+                    .setMessage(R.string.account_cannot_be_updated_message);
+        } else {
+            dialogBuilder.setTitle(R.string.account_device_updated_title)
+                    .setMessage(R.string.account_device_updated_message);
+            success = true;
         }
         AlertDialog dialogSuccess = dialogBuilder.show();
         if (success) {
             dialogSuccess.setOnDismissListener(dialogInterface -> {
-                getActivity().setResult(Activity.RESULT_OK, new Intent());
-                //unlock the screen orientation
-                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-                getActivity().finish();
+                Activity activity = getActivity();
+                if (activity != null) {
+                    activity.setResult(Activity.RESULT_OK, new Intent());
+                    //unlock the screen orientation
+                    activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+                    activity.finish();
+                }
             });
         }
     }

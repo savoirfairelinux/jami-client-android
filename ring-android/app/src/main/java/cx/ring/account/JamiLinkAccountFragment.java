@@ -20,42 +20,28 @@
 package cx.ring.account;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
-import android.widget.EditText;
 
-import butterknife.BindView;
-import butterknife.OnClick;
-import butterknife.OnEditorAction;
-import butterknife.OnTextChanged;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import cx.ring.R;
-import cx.ring.dependencyinjection.JamiInjectionComponent;
+import cx.ring.application.JamiApplication;
+import cx.ring.databinding.FragAccRingLinkBinding;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.mvp.AccountCreationModel;
 
 public class JamiLinkAccountFragment extends BaseSupportFragment<JamiLinkAccountPresenter> implements JamiLinkAccountView {
 
     public static final String TAG = JamiLinkAccountFragment.class.getSimpleName();
-
-    @BindView(R.id.pin_box)
-    protected ViewGroup mPinBox;
-
-    @BindView(R.id.pin_help_message)
-    protected View mPinMessage;
-
-    @BindView(R.id.ring_add_pin)
-    protected EditText mPinTxt;
-
-    @BindView(R.id.ring_existing_password)
-    protected EditText mPasswordTxt;
-
-    @BindView(R.id.link_button)
-    protected Button mLinkAccountBtn;
-
     private AccountCreationModel model;
+    private FragAccRingLinkBinding binding;
 
     public static JamiLinkAccountFragment newInstance(AccountCreationModelImpl ringAccountViewModel) {
         JamiLinkAccountFragment fragment = new JamiLinkAccountFragment();
@@ -63,14 +49,53 @@ public class JamiLinkAccountFragment extends BaseSupportFragment<JamiLinkAccount
         return fragment;
     }
 
+    @Nullable
     @Override
-    public int getLayout() {
-        return R.layout.frag_acc_ring_link;
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragAccRingLinkBinding.inflate(inflater, container, false);
+        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
+        return binding.getRoot();
     }
 
     @Override
-    public void injectFragment(JamiInjectionComponent component) {
-        component.inject(this);
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        binding.linkButton.setOnClickListener(v -> presenter.linkClicked());
+        binding.ringAddPin.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                presenter.linkClicked();
+            }
+            return false;
+        });
+        binding.ringAddPin.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                presenter.pinChanged(s.toString());
+            }
+        });
+        binding.ringExistingPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                presenter.passwordChanged(s.toString());
+            }
+        });
     }
 
     @Override
@@ -78,39 +103,16 @@ public class JamiLinkAccountFragment extends BaseSupportFragment<JamiLinkAccount
         presenter.init(model);
     }
 
-    @OnClick(R.id.link_button)
-    public void onLinkClick() {
-        presenter.linkClicked();
-    }
-
-    @OnTextChanged(value = R.id.ring_existing_password, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterPasswordChanged(Editable txt) {
-        presenter.passwordChanged(txt.toString());
-    }
-
-    @OnTextChanged(value = R.id.ring_add_pin, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterPinChanged(Editable txt) {
-        presenter.pinChanged(txt.toString());
-    }
-
-    @OnEditorAction(value = R.id.ring_add_pin)
-    public boolean onPasswordConfirmDone(int keyCode) {
-        if (keyCode == EditorInfo.IME_ACTION_DONE) {
-            presenter.linkClicked();
-        }
-        return false;
-    }
-
     @Override
     public void enableLinkButton(boolean enable) {
-        mLinkAccountBtn.setEnabled(enable);
+        binding.linkButton.setEnabled(enable);
     }
 
     @Override
     public void showPin(boolean show) {
-        mPinBox.setVisibility(show ? View.VISIBLE : View.GONE);
-        mPinMessage.setVisibility(show ? View.VISIBLE : View.GONE);
-        mLinkAccountBtn.setText(show ? R.string.account_link_device : R.string.account_link_archive_button);
+        binding.pinBox.setVisibility(show ? View.VISIBLE : View.GONE);
+        binding.pinHelpMessage.setVisibility(show ? View.VISIBLE : View.GONE);
+        binding.linkButton.setText(show ? R.string.account_link_device : R.string.account_link_archive_button);
     }
 
     @Override

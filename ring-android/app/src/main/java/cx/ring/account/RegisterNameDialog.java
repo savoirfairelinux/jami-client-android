@@ -27,23 +27,18 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.textfield.TextInputLayout;
 
 import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
-import butterknife.BindString;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnEditorAction;
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
+import cx.ring.databinding.FragRegisterNameBinding;
 import cx.ring.services.AccountService;
 import cx.ring.utils.RegisteredNameFilter;
 import cx.ring.utils.RegisteredNameTextWatcher;
@@ -52,28 +47,8 @@ import io.reactivex.disposables.Disposable;
 
 public class RegisterNameDialog extends DialogFragment {
     static final String TAG = RegisterNameDialog.class.getSimpleName();
-    @BindView(R.id.ring_username_txt_box)
-    public TextInputLayout mUsernameTxtBox;
-    @BindView(R.id.ring_username)
-    public EditText mUsernameTxt;
-    @BindView(R.id.password_txt_box)
-    public TextInputLayout mPasswordTxtBox;
-    @BindView(R.id.password_txt)
-    public EditText mPasswordTxt;
-    @BindString(R.string.register_name)
-    public String mRegisterTitle;
-    @BindString(R.string.register_username)
-    public String mRegisterMessage;
-    @BindString(R.string.prompt_new_username)
-    public String mPromptUsername;
-    @BindString(R.string.prompt_password)
-    public String mPromptPassword;
     @Inject
     AccountService mAccountService;
-    @BindString(R.string.username_already_taken)
-    String mUserNameAlreadyTaken;
-    @BindString(R.string.invalid_username)
-    String mInvalidUsername;
     @Inject
     Scheduler mUiScheduler;
 
@@ -81,16 +56,17 @@ public class RegisterNameDialog extends DialogFragment {
     private RegisterNameDialogListener mListener = null;
 
     private Disposable mDisposableListener;
+    private FragRegisterNameBinding binding;
 
     public void setListener(RegisterNameDialogListener l) {
         mListener = l;
     }
 
     private void handleBlockchainResult(final int state, final String name) {
-        String actualName = mUsernameTxt.getText().toString();
-        if (actualName.isEmpty()) {
-            mUsernameTxtBox.setErrorEnabled(false);
-            mUsernameTxtBox.setError(null);
+        CharSequence actualName = binding.ringUsername.getText();
+        if (actualName == null || actualName.length() == 0) {
+            binding.ringUsernameTxtBox.setErrorEnabled(false);
+            binding.ringUsernameTxtBox.setError(null);
             return;
         }
 
@@ -98,18 +74,18 @@ public class RegisterNameDialog extends DialogFragment {
             switch (state) {
                 case 0:
                     // on found
-                    mUsernameTxtBox.setErrorEnabled(true);
-                    mUsernameTxtBox.setError(mUserNameAlreadyTaken);
+                    binding.ringUsernameTxtBox.setErrorEnabled(true);
+                    binding.ringUsernameTxtBox.setError(getText(R.string.username_already_taken));
                     break;
                 case 1:
                     // invalid name
-                    mUsernameTxtBox.setErrorEnabled(true);
-                    mUsernameTxtBox.setError(mInvalidUsername);
+                    binding.ringUsernameTxtBox.setErrorEnabled(true);
+                    binding.ringUsernameTxtBox.setError(getText(R.string.invalid_username));
                     break;
                 default:
                     // on error
-                    mUsernameTxtBox.setErrorEnabled(false);
-                    mUsernameTxtBox.setError(null);
+                    binding.ringUsernameTxtBox.setErrorEnabled(false);
+                    binding.ringUsernameTxtBox.setError(null);
                     break;
             }
         }
@@ -118,11 +94,11 @@ public class RegisterNameDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        View view = getActivity().getLayoutInflater().inflate(R.layout.frag_register_name, null);
-        ButterKnife.bind(this, view);
+        binding = FragRegisterNameBinding.inflate(getActivity().getLayoutInflater());
+        View view = binding.getRoot();
 
         // dependency injection
-        ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
 
         String accountId = "";
         boolean hasPassword = true;
@@ -132,10 +108,13 @@ public class RegisterNameDialog extends DialogFragment {
             hasPassword = args.getBoolean(AccountEditionFragment.ACCOUNT_HAS_PASSWORD_KEY, true);
         }
 
-        mUsernameTxt.setFilters(new InputFilter[]{new RegisteredNameFilter()});
-        mUsernameTextWatcher = new RegisteredNameTextWatcher(getActivity(), mAccountService, accountId, mUsernameTxtBox, mUsernameTxt);
-        mUsernameTxt.addTextChangedListener(mUsernameTextWatcher);
-        mPasswordTxtBox.setVisibility(hasPassword ? View.VISIBLE : View.GONE);
+        mUsernameTextWatcher = new RegisteredNameTextWatcher(getActivity(), mAccountService, accountId, binding.ringUsernameTxtBox, binding.ringUsername);
+        binding.ringUsername.setFilters(new InputFilter[]{new RegisteredNameFilter()});
+        binding.ringUsername.addTextChangedListener(mUsernameTextWatcher);
+        // binding.ringUsername.setOnEditorActionListener((v, actionId, event) -> RegisterNameDialog.this.onEditorAction(v, actionId));
+
+        binding.passwordTxtBox.setVisibility(hasPassword ? View.VISIBLE : View.GONE);
+        binding.passwordTxt.setOnEditorActionListener((v, actionId, event) -> RegisterNameDialog.this.onEditorAction(v, actionId));
 
         AlertDialog dialog = (AlertDialog) getDialog();
         if (dialog != null) {
@@ -145,8 +124,8 @@ public class RegisterNameDialog extends DialogFragment {
 
         AlertDialog result = new MaterialAlertDialogBuilder(requireContext())
                 .setView(view)
-                .setMessage(mRegisterMessage)
-                .setTitle(mRegisterTitle)
+                .setMessage(R.string.register_username)
+                .setTitle(R.string.register_name)
                 .setPositiveButton(android.R.string.ok, null) //Set to null. We override the onclick
                 .setNegativeButton(android.R.string.cancel, (d, b) -> dismiss())
                 .create();
@@ -164,10 +143,10 @@ public class RegisterNameDialog extends DialogFragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        if (mUsernameTxt != null) {
-            mUsernameTxt.addTextChangedListener(mUsernameTextWatcher);
+        if (binding != null) {
+            binding.ringUsername.addTextChangedListener(mUsernameTextWatcher);
         }
     }
 
@@ -188,61 +167,62 @@ public class RegisterNameDialog extends DialogFragment {
 
     @Override
     public void onDetach() {
-        if (mUsernameTxt != null) {
-            mUsernameTxt.removeTextChangedListener(mUsernameTextWatcher);
+        if (binding != null) {
+            binding.ringUsername.removeTextChangedListener(mUsernameTextWatcher);
         }
         super.onDetach();
     }
 
     private boolean isValidUsername() {
-        return mUsernameTxtBox.getError() == null;
+        return binding.ringUsernameTxtBox.getError() == null;
     }
 
-    public boolean checkInput() {
-        if (mUsernameTxt.getText().toString().isEmpty()) {
-            mUsernameTxtBox.setErrorEnabled(true);
-            mUsernameTxtBox.setError(mPromptUsername);
+    private boolean checkInput() {
+        if (binding.ringUsername.getText() == null || binding.ringUsername.getText().length() == 0) {
+            binding.ringUsernameTxtBox.setErrorEnabled(true);
+            binding.ringUsernameTxtBox.setError(getText(R.string.prompt_new_username));
             return false;
         }
 
         if (!isValidUsername()) {
-            mUsernameTxt.requestFocus();
+            binding.ringUsername.requestFocus();
             return false;
         }
 
-        mUsernameTxtBox.setErrorEnabled(false);
-        mUsernameTxtBox.setError(null);
+        binding.ringUsernameTxtBox.setErrorEnabled(false);
+        binding.ringUsernameTxtBox.setError(null);
 
-        if (mPasswordTxtBox.getVisibility() == View.VISIBLE) {
-            if (mPasswordTxt.getText().toString().isEmpty()) {
-                mPasswordTxtBox.setErrorEnabled(true);
-                mPasswordTxtBox.setError(mPromptPassword);
+        if (binding.passwordTxtBox.getVisibility() == View.VISIBLE) {
+            if (binding.passwordTxt.getText() == null || binding.passwordTxt.getText().length() == 0) {
+                binding.passwordTxtBox.setErrorEnabled(true);
+                binding.passwordTxtBox.setError(getString(R.string.prompt_password));
                 return false;
             } else {
-                mPasswordTxtBox.setErrorEnabled(false);
-                mPasswordTxtBox.setError(null);
+                binding.passwordTxtBox.setErrorEnabled(false);
+                binding.passwordTxtBox.setError(null);
             }
         }
         return true;
     }
 
-    boolean validate() {
+    private boolean validate() {
         if (checkInput() && mListener != null) {
-            final String username = mUsernameTxt.getText().toString();
-            final String password = mPasswordTxt.getText().toString();
+            final String username = binding.ringUsername.getText().toString();
+            final String password = binding.passwordTxt.getText().toString();
             mListener.onRegisterName(username, password);
             return true;
         }
         return false;
     }
 
-    @OnEditorAction({R.id.ring_username, R.id.password_txt})
-    public boolean onEditorAction(TextView v, int actionId) {
-        if (v == mPasswordTxt) {
+    private boolean onEditorAction(TextView v, int actionId) {
+        if (v == binding.passwordTxt) {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 boolean validationResult = validate();
                 if (validationResult) {
-                    getDialog().dismiss();
+                    Dialog dialog = getDialog();
+                    if (dialog != null)
+                        dialog.dismiss();
                 }
 
                 return validationResult;

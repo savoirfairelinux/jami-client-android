@@ -25,68 +25,54 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 
-import android.view.KeyEvent;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import butterknife.BindView;
-import butterknife.OnClick;
-import butterknife.OnEditorAction;
 import cx.ring.R;
-import cx.ring.dependencyinjection.JamiInjectionComponent;
+import cx.ring.application.JamiApplication;
+import cx.ring.databinding.FragAccSipCreateBinding;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.mvp.SIPCreationView;
 import cx.ring.wizard.SIPCreationPresenter;
 
 public class SIPAccountCreationFragment extends BaseSupportFragment<SIPCreationPresenter> implements SIPCreationView {
-
     public static final String TAG = SIPAccountCreationFragment.class.getSimpleName();
 
-    @BindView(R.id.alias)
-    protected EditText mAliasView;
-
-    @BindView(R.id.hostname)
-    protected EditText mHostnameView;
-
-    @BindView(R.id.username)
-    protected EditText mUsernameView;
-
-    @BindView(R.id.password)
-    protected EditText mPasswordView;
-
-    @BindView(R.id.create_sip_button)
-    protected Button mCreateSIPAccountButton;
-
     private ProgressDialog mProgress = null;
+    private FragAccSipCreateBinding binding = null;
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragAccSipCreateBinding.inflate(inflater, container, false);
+        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
+        return binding.getRoot();
+    }
 
     @Override
-    public int getLayout() {
-        return R.layout.frag_acc_sip_create;
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     @Override
-    public void injectFragment(JamiInjectionComponent component) {
-        component.inject(this);
-    }
-
-    @OnEditorAction(R.id.password)
-    public boolean keyPressedOnPasswordField(TextView v, int actionId, KeyEvent event) {
-        if (actionId == EditorInfo.IME_ACTION_DONE) {
-            mCreateSIPAccountButton.callOnClick();
-        }
-        return false;
-    }
-
-    /************************
-     * SIP Account ADD
-     ***********************/
-    @OnClick(R.id.create_sip_button)
-    public void createSIPAccount() {
-        createSIPAccount(false);
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        binding.password.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                binding.createSipButton.callOnClick();
+            }
+            return false;
+        });
+        binding.createSipButton.setOnClickListener(v -> createSIPAccount(false));
     }
 
     /**
@@ -98,17 +84,17 @@ public class SIPAccountCreationFragment extends BaseSupportFragment<SIPCreationP
         //orientation is locked during the create of account to avoid the destruction of the thread
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
-        String alias = mAliasView.getText().toString();
-        String hostname = mHostnameView.getText().toString();
-        String username = mUsernameView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        String alias = binding.alias.getText().toString();
+        String hostname = binding.hostname.getText().toString();
+        String username = binding.username.getText().toString();
+        String password = binding.password.getText().toString();
         presenter.startCreation(alias, hostname, username, password, bypassWarnings);
     }
 
     @Override
     public void showUsernameError() {
-        mUsernameView.setError(getString(R.string.error_field_required));
-        mUsernameView.requestFocus();
+        binding.username.setError(getString(R.string.error_field_required));
+        binding.username.requestFocus();
     }
 
     @Override
@@ -123,20 +109,20 @@ public class SIPAccountCreationFragment extends BaseSupportFragment<SIPCreationP
 
     @Override
     public void resetErrors() {
-        mAliasView.setError(null);
-        mPasswordView.setError(null);
+        binding.alias.setError(null);
+        binding.password.setError(null);
     }
 
     @Override
     public void showAliasError() {
-        mAliasView.setError(getString(R.string.error_field_required));
-        mAliasView.requestFocus();
+        binding.alias.setError(getString(R.string.error_field_required));
+        binding.alias.requestFocus();
     }
 
     @Override
     public void showPasswordError() {
-        mPasswordView.setError(getString(R.string.error_field_required));
-        mPasswordView.requestFocus();
+        binding.password.setError(getString(R.string.error_field_required));
+        binding.password.requestFocus();
     }
 
     @Override

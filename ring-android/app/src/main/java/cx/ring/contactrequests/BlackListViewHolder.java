@@ -21,36 +21,22 @@ package cx.ring.contactrequests;
 
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import cx.ring.R;
 import cx.ring.contacts.AvatarFactory;
+import cx.ring.databinding.ItemContactBlacklistBinding;
 import cx.ring.model.CallContact;
 
 public class BlackListViewHolder extends RecyclerView.ViewHolder {
-    @BindView(R.id.unblock)
-    protected ImageButton mButtonUnblock;
+    private final ItemContactBlacklistBinding binding;
 
-    @BindView(R.id.photo)
-    protected ImageView mPhoto;
-
-    @BindView(R.id.display_name)
-    protected TextView mDisplayname;
-
-
-    public BlackListViewHolder(View view) {
+    BlackListViewHolder(View view) {
         super(view);
-        ButterKnife.bind(this, view);
+        binding = ItemContactBlacklistBinding.bind(view);
     }
 
-    public void bind(final BlackListListeners clickListener, final CallContact contact) {
-        AvatarFactory.loadGlideAvatar(mPhoto, contact);
-        mDisplayname.setText(contact.getRingUsername());
-        mButtonUnblock.setOnClickListener(view -> clickListener.onUnblockClicked(contact));
+    void bind(final BlackListListeners clickListener, final CallContact contact) {
+        AvatarFactory.loadGlideAvatar(binding.photo, contact);
+        binding.displayName.setText(contact.getRingUsername());
+        binding.unblock.setOnClickListener(view -> clickListener.onUnblockClicked(contact));
     }
 
     public interface BlackListListeners {
