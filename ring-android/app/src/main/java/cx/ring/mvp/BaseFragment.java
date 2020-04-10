@@ -22,20 +22,12 @@ package cx.ring.mvp;
 import android.app.Fragment;
 import android.os.Bundle;
 
-import androidx.annotation.LayoutRes;
-import androidx.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import javax.inject.Inject;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import cx.ring.R;
-import cx.ring.application.JamiApplication;
-import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.model.Error;
 
 public abstract class BaseFragment<T extends RootPresenter> extends Fragment implements BaseView {
@@ -44,24 +36,6 @@ public abstract class BaseFragment<T extends RootPresenter> extends Fragment imp
 
     @Inject
     protected T presenter;
-
-    private Unbinder mUnbinder;
-
-    @LayoutRes
-    public abstract int getLayout();
-
-    public abstract void injectFragment(JamiInjectionComponent component);
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        final View inflatedView = inflater.inflate(getLayout(), container, false);
-        // dependency injection
-        injectFragment(((JamiApplication) getActivity().getApplication()).getRingInjectionComponent());
-        //Butterknife
-        mUnbinder = ButterKnife.bind(this, inflatedView);
-        return inflatedView;
-    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -76,11 +50,6 @@ public abstract class BaseFragment<T extends RootPresenter> extends Fragment imp
     public void onDestroyView() {
         super.onDestroyView();
         presenter.unbindView();
-        // Butterknife unbinding
-        if (mUnbinder != null) {
-            mUnbinder.unbind();
-            mUnbinder = null;
-        }
     }
 
     public void displayErrorToast(Error error) {

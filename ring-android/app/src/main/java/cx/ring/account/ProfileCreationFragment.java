@@ -31,22 +31,20 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
+import android.view.ViewGroup;
 
 import java.io.File;
 import java.io.IOException;
 
-import butterknife.BindView;
-import butterknife.OnClick;
-import butterknife.OnTextChanged;
-import cx.ring.R;
-import cx.ring.dependencyinjection.JamiInjectionComponent;
+import cx.ring.application.JamiApplication;
+import cx.ring.databinding.FragAccProfileCreateBinding;
 import cx.ring.model.Account;
 import cx.ring.mvp.AccountCreationModel;
 import cx.ring.mvp.BaseSupportFragment;
@@ -63,23 +61,9 @@ public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreation
     public static final int REQUEST_PERMISSION_CAMERA = 3;
     public static final int REQUEST_PERMISSION_READ_STORAGE = 4;
 
-    @BindView(R.id.profile_photo)
-    protected ImageView mPhotoView;
-
-    @BindView(R.id.user_name)
-    protected EditText mFullnameView;
-
-    @BindView(R.id.gallery)
-    protected ImageButton mGalleryButton;
-
-    @BindView(R.id.camera)
-    protected ImageButton mCameraButton;
-
-    @BindView(R.id.next_create_account)
-    protected Button mNextButton;
-
     private AccountCreationModel model;
     private Uri tmpProfilePhotoUri;
+    private FragAccProfileCreateBinding binding;
 
     public static ProfileCreationFragment newInstance(AccountCreationModelImpl model) {
         ProfileCreationFragment fragment = new ProfileCreationFragment();
@@ -87,14 +71,18 @@ public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreation
         return fragment;
     }
 
+    @Nullable
     @Override
-    public int getLayout() {
-        return R.layout.frag_acc_profile_create;
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragAccProfileCreateBinding.inflate(inflater, container, false);
+        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
+        return binding.getRoot();
     }
 
     @Override
-    public void injectFragment(JamiInjectionComponent component) {
-        component.inject(this);
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     @Override
@@ -106,8 +94,8 @@ public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreation
             getActivity().finish();
             return;
         }
-        if (mPhotoView.getDrawable() == null) {
-            mPhotoView.setImageDrawable(
+        if (binding.profilePhoto.getDrawable() == null) {
+            binding.profilePhoto.setImageDrawable(
                     new AvatarDrawable.Builder()
                             .withNameData(model.getFullName(), model.getUsername())
                             .withCircleCrop(true)
@@ -115,6 +103,23 @@ public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreation
             );
         }
         presenter.initPresenter(model);
+
+        binding.gallery.setOnClickListener(v -> presenter.galleryClick());
+        binding.camera.setOnClickListener(v -> presenter.cameraClick());
+        binding.nextCreateAccount.setOnClickListener(v -> presenter.nextClick());
+        binding.skipCreateAccount.setOnClickListener(v -> presenter.skipClick());
+        binding.userName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                presenter.fullNameUpdated(s.toString());
+            }
+        });
     }
 
     @Override
@@ -163,29 +168,9 @@ public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreation
         }
     }
 
-    @OnClick(R.id.gallery)
-    void galleryClicked() {
-        presenter.galleryClick();
-    }
-
-    @OnClick(R.id.camera)
-    void cameraClicked() {
-        presenter.cameraClick();
-    }
-
-    @OnClick(R.id.next_create_account)
-    void nextClicked() {
-        presenter.nextClick();
-    }
-
-    @OnClick(R.id.skip_create_account)
-    void skipClicked() {
-        presenter.skipClick();
-    }
-
     @Override
     public void displayProfileName(String profileName) {
-        mFullnameView.setText(profileName);
+        binding.userName.setText(profileName);
     }
 
     @Override
@@ -235,7 +220,7 @@ public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreation
     public void setProfile(AccountCreationModel accountCreationModel) {
         AccountCreationModelImpl model = ((AccountCreationModelImpl) accountCreationModel);
         Account newAccount = model.getNewAccount();
-        mPhotoView.setImageDrawable(
+        binding.profilePhoto.setImageDrawable(
                 new AvatarDrawable.Builder()
                         .withPhoto(model.getPhoto())
                         .withNameData(accountCreationModel.getFullName(), accountCreationModel.getUsername())
@@ -245,8 +230,4 @@ public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreation
         );
     }
 
-    @OnTextChanged(value = R.id.user_name, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterTextChanged(Editable txt) {
-        presenter.fullNameUpdated(txt.toString());
-    }
 }

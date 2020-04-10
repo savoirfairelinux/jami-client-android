@@ -20,50 +20,25 @@ package cx.ring.account;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.textfield.TextInputLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
-import butterknife.BindString;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnEditorAction;
 import cx.ring.R;
+import cx.ring.databinding.DialogSetPasswordBinding;
 
 public class ChangePasswordDialog extends DialogFragment {
     static final String TAG = ChangePasswordDialog.class.getSimpleName();
 
-    @BindView(R.id.old_password_txt_box)
-    protected TextInputLayout mPasswordTxtBox;
-
-    @BindView(R.id.old_password_txt)
-    protected EditText mPasswordTxt;
-
-    @BindView(R.id.new_password_txt_box)
-    protected TextInputLayout mNewPasswordTxtBox;
-
-    @BindView(R.id.new_password_txt)
-    protected EditText mNewPasswordTxt;
-
-    @BindView(R.id.new_password_repeat_txt_box)
-    protected TextInputLayout mNewPasswordRepeatsTxtBox;
-
-    @BindView(R.id.new_password_repeat_txt)
-    protected EditText mNewPasswordRepeatsTxt;
-
-    @BindString(R.string.enter_password)
-    protected String mPromptPassword;
-
     private PasswordChangedListener mListener = null;
+    private DialogSetPasswordBinding binding;
 
     public void setListener(PasswordChangedListener listener) {
         mListener = listener;
@@ -72,8 +47,7 @@ public class ChangePasswordDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        View view = requireActivity().getLayoutInflater().inflate(R.layout.dialog_set_password, null);
-        ButterKnife.bind(this, view);
+        binding = DialogSetPasswordBinding.inflate(getActivity().getLayoutInflater());
 
         String accountId = "";
         boolean hasPassword = true;
@@ -83,10 +57,19 @@ public class ChangePasswordDialog extends DialogFragment {
             hasPassword = args.getBoolean(AccountEditionFragment.ACCOUNT_HAS_PASSWORD_KEY, true);
         }
         int passwordMessage = hasPassword ? R.string.account_password_change : R.string.account_password_set;
-        mPasswordTxtBox.setVisibility(hasPassword ? View.VISIBLE : View.GONE);
+        binding.oldPasswordTxtBox.setVisibility(hasPassword ? View.VISIBLE : View.GONE);
+        binding.newPasswordRepeatTxt.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                if (validate()) {
+                    getDialog().dismiss();
+                    return true;
+                }
+            }
+            return false;
+        });
 
         final AlertDialog result = new MaterialAlertDialogBuilder(requireContext())
-                .setView(view)
+                .setView(binding.getRoot())
                 .setMessage(R.string.help_password_choose)
                 .setTitle(passwordMessage)
                 .setPositiveButton(passwordMessage, null) //Set to null. We override the onclick
@@ -104,39 +87,28 @@ public class ChangePasswordDialog extends DialogFragment {
         return result;
     }
 
-    public boolean checkInput() {
-        if (!mNewPasswordTxt.getText().toString().contentEquals(mNewPasswordRepeatsTxt.getText())) {
-            mNewPasswordTxtBox.setErrorEnabled(true);
-            mNewPasswordTxtBox.setError(getText(R.string.error_passwords_not_equals));
-            mNewPasswordRepeatsTxtBox.setErrorEnabled(true);
-            mNewPasswordRepeatsTxtBox.setError(getText(R.string.error_passwords_not_equals));
+    private boolean checkInput() {
+        if (!binding.newPasswordTxt.getText().toString().contentEquals(binding.newPasswordRepeatTxt.getText())) {
+            binding.newPasswordTxtBox.setErrorEnabled(true);
+            binding.newPasswordTxtBox.setError(getText(R.string.error_passwords_not_equals));
+            binding.newPasswordRepeatTxtBox.setErrorEnabled(true);
+            binding.newPasswordRepeatTxtBox.setError(getText(R.string.error_passwords_not_equals));
             return false;
         } else {
-            mNewPasswordTxtBox.setErrorEnabled(false);
-            mNewPasswordTxtBox.setError(null);
-            mNewPasswordRepeatsTxtBox.setErrorEnabled(false);
-            mNewPasswordRepeatsTxtBox.setError(null);
+            binding.newPasswordTxtBox.setErrorEnabled(false);
+            binding.newPasswordTxtBox.setError(null);
+            binding.newPasswordRepeatTxtBox.setErrorEnabled(false);
+            binding.newPasswordRepeatTxtBox.setError(null);
         }
         return true;
     }
 
     private boolean validate() {
         if (checkInput() && mListener != null) {
-            final String oldPassword = mPasswordTxt.getText().toString();
-            final String newPassword = mNewPasswordTxt.getText().toString();
+            final String oldPassword = binding.oldPasswordTxt.getText().toString();
+            final String newPassword = binding.newPasswordTxt.getText().toString();
             mListener.onPasswordChanged(oldPassword, newPassword);
             return true;
-        }
-        return false;
-    }
-
-    @OnEditorAction({R.id.new_password_repeat_txt})
-    public boolean onEditorAction(TextView v, int actionId) {
-        if (actionId == EditorInfo.IME_ACTION_DONE) {
-            if (validate()) {
-                getDialog().dismiss();
-                return true;
-            }
         }
         return false;
     }

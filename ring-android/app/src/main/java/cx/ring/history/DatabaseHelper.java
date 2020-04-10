@@ -65,7 +65,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public DatabaseHelper(Context context, String dbDirectory) {
         super(context, dbDirectory, null, DATABASE_VERSION);
         Log.d(TAG, "Helper initialized for " + dbDirectory);
-        ((JamiApplication) context.getApplicationContext()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) context.getApplicationContext()).getInjectionComponent().inject(this);
     }
 
     /**

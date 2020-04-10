@@ -23,18 +23,19 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.snackbar.Snackbar;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import cx.ring.R;
-import cx.ring.dependencyinjection.JamiInjectionComponent;
+import cx.ring.application.JamiApplication;
+import cx.ring.databinding.FragAccHomeCreateBinding;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.utils.AndroidFileUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -44,41 +45,30 @@ public class HomeAccountCreationFragment extends BaseSupportFragment<HomeAccount
 
     public static final String TAG = HomeAccountCreationFragment.class.getSimpleName();
 
-    @BindView(R.id.ring_add_account)
-    protected Button mLinkButton;
+    private FragAccHomeCreateBinding binding;
 
-    @BindView(R.id.ring_create_btn)
-    protected Button mCreateButton;
-
+    @Nullable
     @Override
-    public int getLayout() {
-        return R.layout.frag_acc_home_create;
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragAccHomeCreateBinding.inflate(inflater, container, false);
+        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
+        return binding.getRoot();
     }
 
     @Override
-    public void injectFragment(JamiInjectionComponent component) {
-        component.inject(this);
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setRetainInstance(true);
-    }
-
-    @OnClick(R.id.ring_add_account)
-    public void linkAccountClicked() {
-        presenter.clickOnLinkAccount();
-    }
-
-    @OnClick(R.id.ring_create_btn)
-    public void createAccountClicked() {
-        presenter.clickOnCreateAccount();
-    }
-
-    @OnClick(R.id.account_connect_server)
-    public void connectAccountClicked() {
-        presenter.clickOnConnectAccount();
+        binding.ringAddAccount.setOnClickListener(v -> presenter.clickOnLinkAccount());
+        binding.ringCreateBtn.setOnClickListener(v -> presenter.clickOnCreateAccount());
+        binding.accountConnectServer.setOnClickListener(v -> presenter.clickOnConnectAccount());
+        binding.ringImportAccount.setOnClickListener(v -> performFileSearch());
     }
 
     @Override
@@ -104,8 +94,7 @@ public class HomeAccountCreationFragment extends BaseSupportFragment<HomeAccount
         replaceFragmentWithSlide(fragment, R.id.wizard_container);
     }
 
-    @OnClick(R.id.ring_import_account)
-    public void performFileSearch() {
+    private void performFileSearch() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("*/*");

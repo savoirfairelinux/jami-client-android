@@ -32,14 +32,11 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.chip.Chip;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputLayout;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.SwitchCompat;
+import androidx.annotation.Nullable;
 
 import android.provider.MediaStore;
 import android.text.Layout;
@@ -55,14 +52,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.io.File;
@@ -73,12 +66,10 @@ import javax.inject.Inject;
 import androidx.core.content.FileProvider;
 import androidx.core.util.Pair;
 
-import butterknife.BindView;
-import butterknife.OnClick;
-import butterknife.OnEditorAction;
 import cx.ring.R;
+import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
-import cx.ring.dependencyinjection.JamiInjectionComponent;
+import cx.ring.databinding.FragAccSummaryBinding;
 import cx.ring.model.Account;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.services.AccountService;
@@ -116,79 +107,6 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
     private boolean mIsVisible = true;
 
     /*
-    UI Bindings
-     */
-
-    @BindView(R.id.ring_password)
-    EditText mRingPassword;
-
-    @BindView(R.id.btn_end_export)
-    Button mEndBtn;
-
-    @BindView(R.id.user_photo)
-    ImageView mUserImage;
-
-    @BindView(R.id.username)
-    TextView mUsername;
-
-    @BindView(R.id.subtitle)
-    TextView mSubtitle;
-
-    @BindView(R.id.btn_start_export)
-    Button mStartBtn;
-
-    @BindView(R.id.account_link_info)
-    TextView mExportInfos;
-
-    @BindView(R.id.account_alias_txt)
-    TextView mAccountNameTxt;
-
-    @BindView(R.id.account_id_txt)
-    TextView mAccountIdTxt;
-
-    @BindView(R.id.layout_account_options)
-    LinearLayout mAccountOptionsLayout;
-
-    @BindView(R.id.change_password_btn)
-    Button mChangePasswordBtn;
-
-    @BindView(R.id.layout_add_device)
-    MaterialCardView mAddAccountLayout;
-
-    @BindView(R.id.export_account_btn)
-    Button mExportButton;
-
-    @BindView(R.id.registered_name_txt)
-    TextView mAccountUsernameTxt;
-
-    @BindView(R.id.register_name_btn)
-    Button mRegisterNameBtn;
-
-    @BindView(R.id.group_registering_name)
-    ViewGroup registeringNameGroup;
-
-    @BindView(R.id.group_register_name)
-    ViewGroup mRegisterNameGroup;
-
-    @BindView(R.id.group_registered_name)
-    ViewGroup mRegisteredNameGroup;
-
-    @BindView(R.id.device_list)
-    ListView mDeviceList;
-
-    @BindView(R.id.password_layout)
-    TextInputLayout mPasswordLayout;
-
-    @BindView(R.id.account_switch)
-    SwitchCompat mAccountSwitch;
-
-    @BindView(R.id.account_status)
-    Chip mAccountStatus;
-
-    @BindView(R.id.scrollview)
-    ScrollView mScrollView;
-
-    /*
     Declarations
     */
     private DeviceAdapter mDeviceAdapter;
@@ -209,10 +127,33 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
     @Inject
     AccountService mAccountService;
 
+    private FragAccSummaryBinding binding;
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragAccSummaryBinding.inflate(inflater, container, false);
+        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mDisposableBag.clear();
+        binding = null;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mDisposableBag.dispose();
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mSheetBehavior = BottomSheetBehavior.from(mAddAccountLayout);
+        mSheetBehavior = BottomSheetBehavior.from(binding.layoutAddDevice);
 
         hidePopWizard();
         if (getArguments() != null) {
@@ -226,10 +167,10 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
             @Override
             public void onStateChanged(@NonNull View view, int i) {
                 if (mSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED){
-                    mPasswordLayout.setVisibility(mAccountHasPassword ? View.VISIBLE : View.GONE);
-                    mEndBtn.setVisibility(View.GONE);
-                    mStartBtn.setVisibility(View.VISIBLE);
-                    mExportInfos.setText(R.string.account_link_export_info);
+                    binding.passwordLayout.setVisibility(mAccountHasPassword ? View.VISIBLE : View.GONE);
+                    binding.btnEndExport.setVisibility(View.GONE);
+                    binding.btnStartExport.setVisibility(View.VISIBLE);
+                    binding.accountLinkInfo.setText(R.string.account_link_export_info);
                 }
             }
 
@@ -240,25 +181,36 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         });
 
         updateUserView();
-        mScrollView.getViewTreeObserver().addOnScrollChangedListener(this);
+        binding.scrollview.getViewTreeObserver().addOnScrollChangedListener(this);
+        binding.btnAddDevice.setOnClickListener(v -> flipForm());
+        binding.btnStartExport.setOnClickListener(v -> onClickStart());
+        binding.btnEndExport.setOnClickListener(v -> hidePopWizard());
+        binding.exportAccountBtn.setOnClickListener(v -> onClickExport());
+        binding.profileContainer.setOnClickListener(v -> profileContainerClicked());
+        binding.userProfileEdit.setOnClickListener(v -> profileContainerClicked());
+        binding.accountSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> presenter.enableAccount(isChecked));
+        binding.changePasswordBtn.setOnClickListener(v -> onPasswordChangeAsked());
+        binding.registerNameBtn.setOnClickListener(v -> showUsernameRegistrationPopup());
+        binding.ringPassword.setOnEditorActionListener(this::onPasswordEditorAction);
     }
 
     @Override
     public void updateUserView() {
-        if (getActivity() == null || mAccountService.getCurrentAccount() == null) {
+        Context context = getContext();
+        if (context == null || mAccountService.getCurrentAccount() == null) {
             Log.e(TAG, "Not able to update navigation view");
             return;
         }
 
         mDisposableBag.add(mAccountService
                 .getCurrentAccountSubject()
-                .switchMapSingle(account -> AvatarDrawable.load(getActivity(), account)
+                .switchMapSingle(account -> AvatarDrawable.load(context, account)
                         .map(avatar -> new Pair<>(account, avatar)))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(d -> {
-                    mUsername.setText(getAccountAlias(d.first));
-                    mSubtitle.setText(getUri(d.first,  getActivity().getString(R.string.account_type_ip2ip)));
-                    mUserImage.setImageDrawable(d.second);
+                    binding.username.setText(getAccountAlias(d.first));
+                    binding.subtitle.setText(getUri(d.first,  getActivity().getString(R.string.account_type_ip2ip)));
+                    binding.userPhoto.setImageDrawable(d.second);
                     accountChanged(d.first);
                 }, e -> Log.e(TAG, "Error loading avatar", e)));
     }
@@ -308,30 +260,30 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         if (mDeviceAdapter == null) {
             mDeviceAdapter = new DeviceAdapter(requireContext(), account.getDevices(), account.getDeviceId(),
                     JamiAccountSummaryFragment.this);
-            mDeviceList.setAdapter(mDeviceAdapter);
+            binding.deviceList.setAdapter(mDeviceAdapter);
         } else {
             mDeviceAdapter.setData(account.getDevices(), account.getDeviceId());
         }
 
         int totalHeight = 0;
         for (int i = 0; i < mDeviceAdapter.getCount(); i++) {
-            View listItem = mDeviceAdapter.getView(i, null, mDeviceList);
+            View listItem = mDeviceAdapter.getView(i, null, binding.deviceList);
             listItem.measure(0, 0);
             totalHeight += listItem.getMeasuredHeight();
         }
 
-        ViewGroup.LayoutParams par = mDeviceList.getLayoutParams();
-        par.height = totalHeight + (mDeviceList.getDividerHeight() * (mDeviceAdapter.getCount() - 1));
-        mDeviceList.setLayoutParams(par);
-        mDeviceList.requestLayout();
+        ViewGroup.LayoutParams par = binding.deviceList.getLayoutParams();
+        par.height = totalHeight + (binding.deviceList.getDividerHeight() * (mDeviceAdapter.getCount() - 1));
+        binding.deviceList.setLayoutParams(par);
+        binding.deviceList.requestLayout();
         mAccountHasPassword = account.hasPassword();
         mAccountHasManager = account.hasManager();
 
-        mChangePasswordBtn.setText(mAccountHasPassword ? R.string.account_password_change : R.string.account_password_set);
+        binding.changePasswordBtn.setText(mAccountHasPassword ? R.string.account_password_change : R.string.account_password_set);
 
-        mAccountSwitch.setChecked(account.isEnabled());
-        mAccountNameTxt.setText(getString(R.string.profile));
-        mAccountIdTxt.setText(account.getUsername());
+        binding.accountSwitch.setChecked(account.isEnabled());
+        binding.accountAliasTxt.setText(getString(R.string.profile));
+        binding.accountIdTxt.setText(account.getUsername());
         mAccountId = account.getAccountID();
         mBestName = account.getRegisteredName();
         if (mBestName.isEmpty()) {
@@ -344,11 +296,11 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         String username = account.getRegisteredName();
         boolean currentRegisteredName = account.registeringUsername;
         boolean hasRegisteredName = !currentRegisteredName && username != null && !username.isEmpty();
-        registeringNameGroup.setVisibility(currentRegisteredName ? View.VISIBLE : View.GONE);
-        mRegisterNameGroup.setVisibility((!hasRegisteredName && !currentRegisteredName) ? View.VISIBLE : View.GONE);
-        mRegisteredNameGroup.setVisibility(hasRegisteredName ? View.VISIBLE : View.GONE);
+        binding.groupRegisteringName.setVisibility(currentRegisteredName ? View.VISIBLE : View.GONE);
+        binding.groupRegisterName.setVisibility((!hasRegisteredName && !currentRegisteredName) ? View.VISIBLE : View.GONE);
+        binding.groupRegisteredName.setVisibility(hasRegisteredName ? View.VISIBLE : View.GONE);
         if (hasRegisteredName) {
-            mAccountUsernameTxt.setText(username);
+            binding.username.setText(username);
         }
 
         int color = R.color.red_400;
@@ -376,12 +328,13 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
             status = getString(R.string.account_status_offline);
         }
 
-        mAccountStatus.setText(status);
-        mAccountStatus.setChipBackgroundColorResource(color);
+        binding.accountStatus.setText(status);
+        binding.accountStatus.setChipBackgroundColorResource(color);
 
-        mPasswordLayout.setVisibility(mAccountHasPassword ? View.VISIBLE : View.GONE);
-        mAddAccountLayout.setVisibility(mAccountHasManager ? View.GONE : View.VISIBLE);
-        mAccountOptionsLayout.setVisibility(mAccountHasManager ? View.GONE : View.VISIBLE);
+        binding.passwordLayout.setVisibility(mAccountHasPassword ? View.VISIBLE : View.GONE);
+        binding.layoutAddDevice.setVisibility(mAccountHasManager ? View.GONE : View.VISIBLE);
+        binding.layoutAccountOptions.setVisibility(mAccountHasManager ? View.GONE : View.VISIBLE);
+
     }
 
     public boolean onBackPressed() {
@@ -396,9 +349,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
     /*
     Add a new device UI management
      */
-    @OnClick({R.id.btn_add_device})
-    @SuppressWarnings("unused")
-    void flipForm() {
+    private void flipForm() {
         if (!isDisplayingWizard()) {
             showWizard();
         } else {
@@ -410,13 +361,11 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         mSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
-    @OnClick(R.id.btn_end_export)
-    @SuppressWarnings("unused")
-    public void hidePopWizard() {
+    private void hidePopWizard() {
         mSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
-    public void hideWizard() {
+    private void hideWizard() {
         mSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         KeyboardVisibilityManager.hideKeyboard(getActivity(), 0);
     }
@@ -434,8 +383,8 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
     @Override
     public void showPasswordError() {
         dismissWaitDialog();
-        mPasswordLayout.setError(getString(R.string.account_export_end_decryption_message));
-        mRingPassword.setText("");
+        binding.passwordLayout.setError(getString(R.string.account_export_end_decryption_message));
+        binding.ringPassword.setText("");
     }
 
     @Override
@@ -452,7 +401,6 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         return mSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED;
     }
 
-    @OnEditorAction(R.id.ring_password)
     boolean onPasswordEditorAction(TextView pwd, int actionId, KeyEvent event) {
         Log.i(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
         if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -466,8 +414,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         return false;
     }
 
-    @OnClick({R.id.profile_container, R.id.user_profile_edit})
-    public void profileContainerClicked() {
+    private void profileContainerClicked() {
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         ViewGroup view = (ViewGroup) inflater.inflate(R.layout.dialog_profile, null);
 
@@ -498,15 +445,13 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
                 .show();
     }
 
-    @OnClick(R.id.btn_start_export)
-    void onClickStart() {
-        mPasswordLayout.setError(null);
-        String password = mRingPassword.getText().toString();
+    private void onClickStart() {
+        binding.passwordLayout.setError(null);
+        String password = binding.ringPassword.getText().toString();
         presenter.startAccountExport(password);
     }
 
-    @OnClick(R.id.export_account_btn)
-    void onClickExport() {
+    private void onClickExport() {
         if (mAccountHasPassword) {
             onBackupAccount();
         } else {
@@ -514,12 +459,6 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         }
     }
 
-    @OnClick(R.id.account_switch)
-    void onToggleAccount() {
-        presenter.enableAccount(mAccountSwitch.isChecked());
-    }
-
-    @OnClick(R.id.register_name_btn)
     void showUsernameRegistrationPopup() {
         Bundle args = new Bundle();
         args.putString(AccountEditionFragment.ACCOUNT_ID_KEY, getArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY));
@@ -556,16 +495,6 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
                 getString(R.string.account_password_change_wait_message));
     }
 
-    @Override
-    public int getLayout() {
-        return R.layout.frag_acc_summary;
-    }
-
-    @Override
-    public void injectFragment(JamiInjectionComponent component) {
-        component.inject(this);
-    }
-
     private void dismissWaitDialog() {
         if (mWaitDialog != null) {
             mWaitDialog.dismiss();
@@ -576,11 +505,11 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
 
     @Override
     public void showPIN(final String pin) {
-        mRingPassword.setText("");
+        binding.ringPassword.setText("");
         mSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-        mPasswordLayout.setVisibility(View.GONE);
-        mEndBtn.setVisibility(View.VISIBLE);
-        mStartBtn.setVisibility(View.GONE);
+        binding.passwordLayout.setVisibility(View.GONE);
+        binding.btnEndExport.setVisibility(View.VISIBLE);
+        binding.btnStartExport.setVisibility(View.GONE);
         dismissWaitDialog();
         String pined = getString(R.string.account_end_export_infos).replace("%%", pin);
         final SpannableString styledResultText = new SpannableString(pined);
@@ -588,8 +517,8 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         styledResultText.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), pos, (pos + pin.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         styledResultText.setSpan(new StyleSpan(Typeface.BOLD), pos, (pos + pin.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         styledResultText.setSpan(new RelativeSizeSpan(2.8f), pos, (pos + pin.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        mExportInfos.setText(styledResultText);
-        mExportInfos.requestFocus();
+        binding.accountLinkInfo.setText(styledResultText);
+        binding.accountLinkInfo.requestFocus();
 
         KeyboardVisibilityManager.hideKeyboard(getActivity(), 0);
     }
@@ -696,8 +625,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         dialog.show(requireFragmentManager(), FRAGMENT_DIALOG_RENAME);
     }
 
-    @OnClick(R.id.change_password_btn)
-    public void onPasswordChangeAsked() {
+    private void onPasswordChangeAsked() {
         ChangePasswordDialog dialog = new ChangePasswordDialog();
         Bundle args = new Bundle();
         args.putString(AccountEditionFragment.ACCOUNT_ID_KEY, getArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY));
@@ -845,8 +773,8 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
 
     @Override
     public void onScrollChanged() {
-        if (mIsVisible && mScrollView != null) {
-            ((HomeActivity) getActivity()).setToolbarElevation(mScrollView.canScrollVertically(SCROLL_DIRECTION_UP));
+        if (mIsVisible && binding != null) {
+            ((HomeActivity) getActivity()).setToolbarElevation(binding.scrollview.canScrollVertically(SCROLL_DIRECTION_UP));
         }
     }
 

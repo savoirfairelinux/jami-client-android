@@ -40,7 +40,6 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
@@ -66,13 +65,11 @@ public class AccountWizardActivity extends BaseActivity<AccountWizardPresenter> 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         // dependency injection
-        JamiApplication.getInstance().getRingInjectionComponent().inject(this);
+        JamiApplication.getInstance().getInjectionComponent().inject(this);
         super.onCreate(savedInstanceState);
 
         JamiApplication.getInstance().startDaemon();
-
         setContentView(R.layout.activity_wizard);
-        ButterKnife.bind(this);
 
         String accountToMigrate = null;
         Intent intent = getIntent();

@@ -58,7 +58,7 @@ public class JamiChooserTargetService extends ChooserTargetService {
     public void onCreate() {
         super.onCreate();
         JamiApplication.getInstance().startDaemon();
-        JamiApplication.getInstance().getRingInjectionComponent().inject(this);
+        JamiApplication.getInstance().getInjectionComponent().inject(this);
         targetSize = (int) (AvatarFactory.SIZE_NOTIF * getResources().getDisplayMetrics().density);
     }
 

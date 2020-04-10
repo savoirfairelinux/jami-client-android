@@ -52,7 +52,6 @@ import java.util.List;
 
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
-import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.mvp.BaseSupportFragment;
 
@@ -63,21 +62,12 @@ public class ScanFragment extends BaseSupportFragment {
     private DecoratedBarcodeView barcodeView;
     private TextView mErrorMessageTextView;
 
-    @Override
-    public int getLayout() {
-        return R.layout.frag_scan;
-    }
-
-    @Override
-    public void injectFragment(JamiInjectionComponent component) {
-    }
-
     private boolean hasCameraPermission() {
         return ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.frag_scan, container, false);
 
         barcodeView = rootView.findViewById(R.id.barcode_scanner);
@@ -153,7 +143,7 @@ public class ScanFragment extends BaseSupportFragment {
         }
     }
 
-    public void displayNoPermissionsError() {
+    private void displayNoPermissionsError() {
         showErrorPanel(R.string.error_scan_no_camera_permissions);
     }
 
@@ -202,7 +192,7 @@ public class ScanFragment extends BaseSupportFragment {
         }
     };
 
-    public void goToConversation(String contactId) {
+    private void goToConversation(String contactId) {
         Intent intent = new Intent().
                 putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
         getActivity().setResult(Activity.RESULT_OK, intent);

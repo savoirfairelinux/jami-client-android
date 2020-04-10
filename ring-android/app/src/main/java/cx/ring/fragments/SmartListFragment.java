@@ -35,7 +35,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,6 +44,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.os.Handler;
 import android.text.InputType;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -53,7 +53,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -61,16 +60,15 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import cx.ring.R;
 import cx.ring.adapters.SmartListAdapter;
+import cx.ring.application.JamiApplication;
 import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.client.QRCodeActivity;
 import cx.ring.contacts.AvatarFactory;
-import cx.ring.dependencyinjection.JamiInjectionComponent;
+import cx.ring.databinding.FragSmartlistBinding;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.mvp.BaseSupportFragment;
@@ -96,24 +94,6 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
 
     private static final int SCROLL_DIRECTION_UP = -1;
 
-    @BindView(R.id.list_coordinator)
-    protected CoordinatorLayout mCoordinator;
-
-    @BindView(R.id.newconv_fab)
-    protected ExtendedFloatingActionButton mFloatingActionButton;
-
-    @BindView(R.id.confs_list)
-    protected RecyclerView mRecyclerView;
-
-    @BindView(R.id.loading_indicator)
-    protected ProgressBar mLoader;
-
-    @BindView(R.id.empty_text_view)
-    protected TextView mEmptyTextView;
-
-    @BindView(R.id.newcontact_element)
-    protected ViewGroup mNewContact;
-
     @Inject
     AccountService mAccountService;
 
@@ -122,6 +102,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     private SearchView mSearchView = null;
     private MenuItem mSearchMenuItem = null;
     private MenuItem mDialpadMenuItem = null;
+    private FragSmartlistBinding binding;
 
     @Override
     public void onResume() {
@@ -140,7 +121,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
                 mDialpadMenuItem.setVisible(false);
-                mFloatingActionButton.show();
+                binding.newconvFab.show();
                 setOverflowMenuVisible(menu, true);
                 changeSeparatorHeight(false);
                 return true;
@@ -149,7 +130,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
                 mDialpadMenuItem.setVisible(true);
-                mFloatingActionButton.hide();
+                binding.newconvFab.hide();
                 setOverflowMenuVisible(menu, false);
                 changeSeparatorHeight(true);
                 return true;
@@ -238,11 +219,10 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        if (null != mLoader) {
-            // if there's another fragment on top of this one, when a rotation is done, this fragment is destroyed and
-            // in the process of recreating it, as it is not shown on the top of the screen, the "onCreateView" method is never called, so the mLoader is null
-            outState.putBoolean(STATE_LOADING, mLoader.isShown());
-        }
+        // if there's another fragment on top of this one, when a rotation is done, this fragment is destroyed and
+        // in the process of recreating it, as it is not shown on the top of the screen, the "onCreateView" method is never called, so the mLoader is null
+        if (binding != null)
+            outState.putBoolean(STATE_LOADING, binding.loadingIndicator.isShown());
         super.onSaveInstanceState(outState);
     }
 
@@ -252,14 +232,18 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
         return true;
     }
 
+    @Nullable
     @Override
-    public int getLayout() {
-        return R.layout.frag_smartlist;
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragSmartlistBinding.inflate(inflater, container, false);
+        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
+        return binding.getRoot();
     }
 
     @Override
-    public void injectFragment(JamiInjectionComponent component) {
-        component.inject(this);
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     @Override
@@ -267,9 +251,9 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
         setHasOptionsMenu(true);
         super.onViewCreated(view, savedInstanceState);
 
-        mNewContact.setVisibility(View.GONE);
+        binding.newcontactElement.setVisibility(View.GONE);
 
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        binding.confsList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -278,14 +262,12 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 boolean canScrollUp = recyclerView.canScrollVertically(SCROLL_DIRECTION_UP);
-                ExtendedFloatingActionButton btn = mFloatingActionButton;
-                if (btn != null) {
-                    boolean isExtended = btn.isExtended();
-                    if (dy > 0 && isExtended) {
-                        btn.shrink();
-                    } else if ((dy < 0 || !canScrollUp) && !isExtended) {
-                        btn.extend();
-                    }
+                ExtendedFloatingActionButton btn = binding.newconvFab;
+                boolean isExtended = btn.isExtended();
+                if (dy > 0 && isExtended) {
+                    btn.shrink();
+                } else if ((dy < 0 || !canScrollUp) && !isExtended) {
+                    btn.extend();
                 }
 
                 HomeActivity activity = (HomeActivity) getActivity();
@@ -294,33 +276,19 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
             }
         });
 
-        DefaultItemAnimator animator = (DefaultItemAnimator) mRecyclerView.getItemAnimator();
+        DefaultItemAnimator animator = (DefaultItemAnimator) binding.confsList.getItemAnimator();
         if (animator != null) {
             animator.setSupportsChangeAnimations(false);
         }
-    }
 
-    @OnClick(R.id.newcontact_element)
-    void newContactClicked() {
-        presenter.newContactClicked();
-    }
-
-    @OnClick(R.id.quick_call)
-    void quickCallClicked() {
-        presenter.quickCallClicked();
-    }
-
-    @OnClick(R.id.newconv_fab)
-    void fabButtonClicked() {
-        presenter.fabButtonClicked();
+        binding.newcontactElement.setOnClickListener(v -> presenter.newContactClicked());
+        //binding.quickCall.setOnClickListener(v -> presenter.quickCallClicked());
+        binding.newconvFab.setOnClickListener(v -> presenter.fabButtonClicked());
     }
 
     @Override
     public void setLoading(final boolean loading) {
-        if (mLoader == null) {
-            return;
-        }
-        mLoader.setVisibility(loading ? View.VISIBLE : View.GONE);
+        binding.loadingIndicator.setVisibility(loading ? View.VISIBLE : View.GONE);
     }
 
     /**
@@ -355,11 +323,9 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
 
     @Override
     public void clipBoardDidCopyNumber(String copiedNumber) {
-        if (mCoordinator != null) {
-            String snackbarText = getString(R.string.conversation_action_copied_peer_number_clipboard,
-                    ActionHelper.getShortenedNumber(copiedNumber));
-            Snackbar.make(mCoordinator, snackbarText, Snackbar.LENGTH_LONG).show();
-        }
+        String snackbarText = getString(R.string.conversation_action_copied_peer_number_clipboard,
+                ActionHelper.getShortenedNumber(copiedNumber));
+        Snackbar.make(binding.listCoordinator, snackbarText, Snackbar.LENGTH_LONG).show();
     }
 
     public void onFabButtonClicked() {
@@ -368,17 +334,13 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
 
     @Override
     public void displayContact(final CallContact contact) {
-        if (mNewContact == null) {
-            return;
-        }
-
-        TextView display_name = mNewContact.findViewById(R.id.display_name);
+        TextView display_name = binding.newcontactElement.findViewById(R.id.display_name);
         display_name.setText(contact.getRingUsername());
 
-        ImageView photo = mNewContact.findViewById(R.id.photo);
+        ImageView photo = binding.newcontactElement.findViewById(R.id.photo);
 
         AvatarFactory.loadGlideAvatar(photo, contact);
-        mNewContact.setVisibility(View.VISIBLE);
+        binding.newcontactElement.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -399,8 +361,8 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     @Override
     public void displayNoConversationMessage() {
         String emptyText = getResources().getQuantityString(R.plurals.home_conferences_title, 0, 0);
-        mEmptyTextView.setText(emptyText);
-        mEmptyTextView.setVisibility(View.VISIBLE);
+        binding.emptyTextView.setText(emptyText);
+        binding.emptyTextView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -449,38 +411,35 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
 
     @Override
     public void hideSearchRow() {
-        if (mNewContact == null) {
-            return;
-        }
-        mNewContact.setVisibility(View.GONE);
+        binding.newcontactElement.setVisibility(View.GONE);
     }
 
 
     @Override
     public void hideList() {
-        mRecyclerView.setVisibility(View.GONE);
+        binding.confsList.setVisibility(View.GONE);
     }
 
     @Override
     public void hideNoConversationMessage() {
-        mEmptyTextView.setVisibility(View.GONE);
+        binding.emptyTextView.setVisibility(View.GONE);
     }
 
     @Override
     public void updateList(@Nullable final List<SmartListViewModel> smartListViewModels) {
-        if (mRecyclerView == null)
+        if (binding == null)
             return;
-        if (mRecyclerView.getAdapter() == null) {
+        if (binding.confsList.getAdapter() == null) {
             mSmartListAdapter = new SmartListAdapter(smartListViewModels, SmartListFragment.this);
-            mRecyclerView.setAdapter(mSmartListAdapter);
-            mRecyclerView.setHasFixedSize(true);
+            binding.confsList.setAdapter(mSmartListAdapter);
+            binding.confsList.setHasFixedSize(true);
             LinearLayoutManager llm = new LinearLayoutManager(getActivity());
             llm.setOrientation(RecyclerView.VERTICAL);
-            mRecyclerView.setLayoutManager(llm);
+            binding.confsList.setLayoutManager(llm);
         } else {
             mSmartListAdapter.update(smartListViewModels);
         }
-        mRecyclerView.setVisibility(View.VISIBLE);
+        binding.confsList.setVisibility(View.VISIBLE);
 
         View view = getView();
         if (view != null) {
@@ -553,8 +512,8 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
 
     @Override
     public void scrollToTop() {
-        if (mRecyclerView != null)
-            mRecyclerView.scrollToPosition(0);
+        if (binding != null)
+            binding.confsList.scrollToPosition(0);
     }
 
     @Override
@@ -569,27 +528,25 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
 
     private void changeSeparatorHeight(boolean open) {
         if (DeviceUtils.isTablet(getActivity())) {
-            int margin;
+            int margin = 0;
 
-            View separator = getView().findViewById(R.id.separator);
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) separator.getLayoutParams();
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.separator.getLayoutParams();
             if (open) {
                 Toolbar toolbar = getActivity().findViewById(R.id.main_toolbar);
-                margin = toolbar.getHeight();
-            } else {
-                margin = 0;
+                if (toolbar != null)
+                    margin = toolbar.getHeight();
             }
 
             params.topMargin = margin;
-            separator.setLayoutParams(params);
+            binding.separator.setLayoutParams(params);
         }
     }
 
     private void selectFirstItem() {
         if (mSmartListAdapter != null && mSmartListAdapter.getItemCount() > 0) {
             new Handler().postDelayed(() -> {
-                if (mRecyclerView != null) {
-                    RecyclerView.ViewHolder holder = mRecyclerView.findViewHolderForAdapterPosition(0);
+                if (binding != null) {
+                    RecyclerView.ViewHolder holder = binding.confsList.findViewHolderForAdapterPosition(0);
                     if (holder != null)
                         holder.itemView.performClick();
                 }

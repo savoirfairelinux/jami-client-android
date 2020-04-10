@@ -23,68 +23,54 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import butterknife.BindString;
-import butterknife.BindView;
-import butterknife.OnClick;
+import androidx.annotation.Nullable;
+
 import cx.ring.R;
-import cx.ring.dependencyinjection.JamiInjectionComponent;
+import cx.ring.application.JamiApplication;
+import cx.ring.databinding.FragShareBinding;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.mvp.GenericView;
 import cx.ring.utils.QRCodeUtils;
 
 public class ShareFragment extends BaseSupportFragment<SharePresenter> implements GenericView<ShareViewModel> {
 
-    @BindView(R.id.share_instruction)
-    protected TextView mShareInstruction;
-
-    @BindView(R.id.qr_image)
-    protected ImageView mQrImage;
-
-    @BindString(R.string.share_message)
-    protected String mShareMessage;
-
-    @BindView(R.id.share_button)
-    protected Button mShareButton;
-
-    @BindString(R.string.share_message_no_account)
-    protected String mShareMessageNoAccount;
-
-    @BindString(R.string.account_contact_me)
-    protected String mAccountCountactMe;
-
-    @BindString(R.string.share_via)
-    protected String mShareVia;
-
     private String mUriToShow;
     private boolean isShareLocked = false;
+    private FragShareBinding binding;
 
+    @Nullable
     @Override
-    public int getLayout() {
-        return R.layout.frag_share;
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragShareBinding.inflate(inflater, container, false);
+        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
+        return binding.getRoot();
     }
 
     @Override
-    public void injectFragment(JamiInjectionComponent component) {
-        component.inject(this);
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
+        binding.shareButton.setOnClickListener(v -> {
+            if (!isShareLocked) shareAccount();
+        });
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.qr_menu, menu);
     }
 
@@ -104,40 +90,31 @@ public class ShareFragment extends BaseSupportFragment<SharePresenter> implement
         }
     }
 
-    @OnClick(R.id.share_button)
-    void shareClicked(View view) {
-        if(!isShareLocked) {
-            shareAccount();
-        }
-    }
-
     private void shareAccount() {
         if (!TextUtils.isEmpty(mUriToShow)) {
             Intent sharingIntent = new Intent(Intent.ACTION_SEND);
             sharingIntent.setType("text/plain");
-            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mAccountCountactMe);
+            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, getText(R.string.account_contact_me));
             sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.account_share_body, mUriToShow, getText(R.string.app_website)));
-            startActivity(Intent.createChooser(sharingIntent, mShareVia));
+            startActivity(Intent.createChooser(sharingIntent, getText(R.string.share_via)));
         }
     }
 
     @Override
     public void showViewModel(final ShareViewModel viewModel) {
-        final QRCodeUtils.QRCodeData qrCodeData = viewModel.getAccountQRCodeData(0xFF000000, 0xFFFFFFFF);
-
-        if (mQrImage == null || mShareInstruction == null) {
+        if (binding == null)
             return;
-        }
 
+        final QRCodeUtils.QRCodeData qrCodeData = viewModel.getAccountQRCodeData(0xFF000000, 0xFFFFFFFF);
         if (qrCodeData == null) {
-            mQrImage.setVisibility(View.INVISIBLE);
-            mShareInstruction.setText(mShareMessageNoAccount);
+            binding.qrImage.setVisibility(View.INVISIBLE);
+            binding.shareInstruction.setText(R.string.share_message_no_account);
         } else {
             Bitmap bitmap = Bitmap.createBitmap(qrCodeData.getWidth(), qrCodeData.getHeight(), Bitmap.Config.ARGB_8888);
             bitmap.setPixels(qrCodeData.getData(), 0, qrCodeData.getWidth(), 0, 0, qrCodeData.getWidth(), qrCodeData.getHeight());
-            mQrImage.setImageBitmap(bitmap);
-            mShareInstruction.setText(mShareMessage);
-            mQrImage.setVisibility(View.VISIBLE);
+            binding.qrImage.setImageBitmap(bitmap);
+            binding.shareInstruction.setText(R.string.share_message);
+            binding.qrImage.setVisibility(View.VISIBLE);
         }
 
         mUriToShow = viewModel.getAccountDisplayUri();

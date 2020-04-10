@@ -300,7 +300,7 @@ public abstract class JamiApplication extends Application {
         sInstance = null;
     }
 
-    public JamiInjectionComponent getRingInjectionComponent() {
+    public JamiInjectionComponent getInjectionComponent() {
         return mJamiInjectionComponent;
     }
 

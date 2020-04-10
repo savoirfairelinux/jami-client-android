@@ -43,7 +43,7 @@ public class IconCardPresenter extends AbstractCardPresenter<ImageCardView> {
 
     @Override
     protected ImageCardView onCreateView() {
-        JamiApplication.getInstance().getRingInjectionComponent().inject(this);
+        JamiApplication.getInstance().getInjectionComponent().inject(this);
         ImageCardView imageCardView = new ImageCardView(getContext());
         final ImageView image = imageCardView.getMainImageView();
         image.setBackgroundResource(R.drawable.icon_focused);
