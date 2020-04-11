@@ -67,8 +67,12 @@ import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.MediaViewerActivity;
 import cx.ring.contacts.AvatarFactory;
+import cx.ring.conversation.ConversationPresenter;
+import cx.ring.conversation.ConversationView;
 import cx.ring.dependencyinjection.JamiInjectionComponent;
+import cx.ring.model.Account;
 import cx.ring.model.CallContact;
+import cx.ring.model.Conversation;
 import cx.ring.model.DataTransfer;
 import cx.ring.model.Error;
 import cx.ring.model.Interaction;
@@ -85,7 +89,7 @@ import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class TvConversationFragment extends BaseSupportFragment<TvConversationPresenter> implements TvConversationView {
+public class TvConversationFragment extends BaseSupportFragment<ConversationPresenter> implements ConversationView {
 
     private static final String ARG_MODEL = "model";
 
@@ -170,7 +174,7 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
         super.onViewCreated(view, savedInstanceState);
 
         ConversationPath path = ConversationPath.fromIntent(getActivity().getIntent());
-        presenter.init(path);
+        presenter.init(new cx.ring.model.Uri(path.getContactId()), path.getAccountId());
 
         mAdapter = new TvConversationAdapter(this, presenter);
 
@@ -272,7 +276,7 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
         AlertDialog alertDialog = new MaterialAlertDialogBuilder(getContext(), R.style.Theme_MaterialComponents_Dialog)
                 .setTitle(spokenText)
                 .setMessage("")
-                .setPositiveButton(R.string.tv_dialog_send, (dialog, whichButton) -> presenter.sendText(spokenText))
+                .setPositiveButton(R.string.tv_dialog_send, (dialog, whichButton) -> presenter.sendTextMessage(spokenText))
                 .setNegativeButton(android.R.string.cancel, null)
                 .create();
         alertDialog.getWindow().setLayout(DIALOG_WIDTH, DIALOG_HEIGHT);
@@ -373,16 +377,6 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
     public void addElement(Interaction element) {
         mAdapter.add(element);
         scrollToTop();
-    }
-
-    @Override
-    public void updateElement(Interaction element) {
-        mAdapter.update(element);
-    }
-
-    @Override
-    public void removeElement(Interaction element) {
-        mAdapter.remove(element);
     }
 
     @Override
@@ -607,8 +601,7 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
         }
     }
 
-    @Override
-    public void scrollToTop() {
+    private void scrollToTop() {
         if (mAdapter.getItemCount() > 0) {
             mRecyclerView.scrollToPosition(mAdapter.getItemCount() - 1);
         }
@@ -636,6 +629,114 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
     }
 
     @Override
+    public void updateElement(Interaction element) {
+        mAdapter.update(element);
+    }
+
+    @Override
+    public void removeElement(Interaction element) {
+        mAdapter.remove(element);
+    }
+
+    public AvatarDrawable getConversationAvatar(String uri) {
+        return mParticipantAvatars.get(uri);
+    }
+
+    public void askWriteExternalStoragePermission() {
+        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, JamiApplication.PERMISSIONS_REQUEST);
+    }
+
+    @Override
+    public void scrollToEnd() {
+
+    }
+
+    @Override
+    public void setComposingStatus(Account.ComposingStatus composingStatus) {
+
+    }
+
+    @Override
+    public void setLastDisplayed(Interaction interaction) {
+
+    }
+
+    @Override
+    public void setConversationColor(int integer) {
+
+    }
+
+    @Override
+    public void startShareLocation(String accountId, String contactId) {
+
+    }
+
+    @Override
+    public void showMap(String accountId, String contactId, boolean open) {
+
+    }
+
+    @Override
+    public void hideMap() {
+
+    }
+
+    @Override
+    public void hideErrorPanel() {
+
+    }
+
+    @Override
+    public void displayNetworkErrorPanel() {
+
+    }
+
+    @Override
+    public void displayOnGoingCallPane(boolean display) {
+
+    }
+
+    @Override
+    public void displayNumberSpinner(Conversation conversation, cx.ring.model.Uri number) {
+
+    }
+
+    @Override
+    public void hideNumberSpinner() {
+
+    }
+
+    @Override
+    public void clearMsgEdit() {
+
+    }
+
+    @Override
+    public void goToHome() {
+
+    }
+
+    @Override
+    public void goToAddContact(CallContact callContact) {
+
+    }
+
+    @Override
+    public void goToCallActivity(String conferenceId) {
+
+    }
+
+    @Override
+    public void goToCallActivityWithResult(String accountId, String contactRingId, boolean audioOnly) {
+
+    }
+
+    @Override
+    public void goToContactActivity(String accountId, String contactRingId) {
+
+    }
+
+    @Override
     public void switchToUnknownView(String name) {
         // todo
     }
@@ -650,12 +751,9 @@ public class TvConversationFragment extends BaseSupportFragment<TvConversationPr
         // todo
     }
 
-    public AvatarDrawable getConversationAvatar(String uri) {
-        return mParticipantAvatars.get(uri);
-    }
+    @Override
+    public void openFilePicker() {
 
-    public void askWriteExternalStoragePermission() {
-        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, JamiApplication.PERMISSIONS_REQUEST);
     }
 
 }

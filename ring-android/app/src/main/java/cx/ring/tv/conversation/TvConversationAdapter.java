@@ -67,6 +67,7 @@ import java.util.concurrent.TimeUnit;
 
 import cx.ring.R;
 import cx.ring.client.MediaViewerActivity;
+import cx.ring.conversation.ConversationPresenter;
 import cx.ring.model.CallContact;
 import cx.ring.model.ContactEvent;
 import cx.ring.model.DataTransfer;
@@ -91,7 +92,7 @@ public class TvConversationAdapter extends RecyclerView.Adapter<TvConversationVi
 
     private final ArrayList<Interaction> mInteractions = new ArrayList<>();
 
-    private final TvConversationPresenter presenter;
+    private final ConversationPresenter presenter;
     private final TvConversationFragment mTvConversationFragment;
     private final int hPadding;
     private final int vPadding;
@@ -115,7 +116,7 @@ public class TvConversationAdapter extends RecyclerView.Adapter<TvConversationVi
             R.drawable.textmsg_bg_in
     };
 
-    public TvConversationAdapter(TvConversationFragment tvConversationFragment, TvConversationPresenter presenter) {
+    public TvConversationAdapter(TvConversationFragment tvConversationFragment, ConversationPresenter presenter) {
         mTvConversationFragment = tvConversationFragment;
         this.presenter = presenter;
         Context context = tvConversationFragment.getActivity();
