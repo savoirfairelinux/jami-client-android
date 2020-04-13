@@ -22,6 +22,7 @@
 
 package cx.ring.tv.camera;
 
+import android.animation.Animator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -35,7 +36,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.view.ViewAnimationUtils;
 import android.widget.Toast;
 
 import java.io.File;
@@ -49,6 +50,7 @@ import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class CustomCameraActivity extends Activity {
@@ -56,11 +58,12 @@ public class CustomCameraActivity extends Activity {
     public static final String TYPE_IMAGE = "image/jpeg";
     public static final String TYPE_VIDEO = "video";
 
+    private CamerapickerBinding binding;
+    private final CompositeDisposable mDisposableBag = new CompositeDisposable();
+
     private int cameraFront = -1;
     private int cameraBack = -1;
     private int currentCamera = 0;
-
-    private CamerapickerBinding binding;
 
     private MediaRecorder recorder;
     private boolean mRecording = false;
@@ -70,8 +73,9 @@ public class CustomCameraActivity extends Activity {
 
     private Camera mCamera;
     private CameraPreview mCameraPreview;
-    private final Camera.PictureCallback mPicture = (input, camera) -> Single.fromCallable(() ->  {
-            mCameraPreview.stop();
+    private final Camera.PictureCallback mPicture = (input, camera) -> mDisposableBag.add(Single.fromCallable(() ->  {
+            if (mCameraPreview != null)
+                mCameraPreview.stop();
             File file = AndroidFileUtils.createImageFile(this);
             try (OutputStream out = new FileOutputStream(file)) {
                 out.write(input);
@@ -90,7 +94,7 @@ public class CustomCameraActivity extends Activity {
                 Log.e(TAG, "Error saving picture", e);
                 setResult(RESULT_CANCELED);
                 finish();
-            });
+            }));
 
     public void takePicture() {
         if (mRecording)
@@ -101,7 +105,8 @@ public class CustomCameraActivity extends Activity {
             try {
                 mCamera.takePicture(null, null, mPicture);
             } catch (Exception e) {
-                Log.w(TAG, "Error taking picture", e);
+                Toast.makeText(this, "Error taking picture", Toast.LENGTH_LONG).show();
+                finish();
             }
         }
     }
@@ -133,25 +138,89 @@ public class CustomCameraActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = CamerapickerBinding.inflate(getLayoutInflater());
-        binding.buttonPicture.setOnClickListener(v -> takePicture());
-        binding.buttonVideo.setOnClickListener(v -> takeVideo());
 
         if (getIntent().getAction() != null) {
             mActionVideo = getIntent().getAction().equals(MediaStore.ACTION_VIDEO_CAPTURE);
         }
 
-        mCamera = getCameraInstance();
-        if (mCamera == null) {
-            Toast.makeText(this, "Can't open camera", Toast.LENGTH_LONG).show();
-            finish();
-            return;
-        }
-        mCameraPreview = new CameraPreview(this, mCamera);
-        FrameLayout preview = findViewById(R.id.camera_preview);
-        preview.addView(mCameraPreview, 0);
-
+        binding.buttonVideo.setEnabled(false);
+        binding.buttonPicture.setEnabled(false);
         if (mActionVideo) {
             binding.buttonVideo.setVisibility(View.VISIBLE);
+        }
+        setContentView(binding.getRoot());
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mDisposableBag.add(Single.fromCallable(this::getCameraInstance)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(camera -> {
+                    if (binding == null) {
+                        camera.release();
+                    } else {
+                        mCamera = camera;
+                        mCameraPreview = new CameraPreview(this, mCamera);
+                        binding.cameraPreview.addView(mCameraPreview, 0);
+                        binding.buttonVideo.setEnabled(true);
+                        binding.buttonPicture.setEnabled(true);
+                        binding.buttonPicture.setOnClickListener(v -> takePicture());
+                        binding.buttonVideo.setOnClickListener(v -> takeVideo());
+
+                        int endRadius = Math.max(binding.getRoot().getWidth(), binding.getRoot().getHeight());
+                        int x = binding.getRoot().getWidth()/2;
+                        int y = binding.getRoot().getHeight()/2;
+
+                        if (binding.loadClip.getVisibility() == View.VISIBLE) {
+                            Animator anim = ViewAnimationUtils.createCircularReveal(binding.loadClip, x, y, endRadius, 0);
+                            anim.addListener(new Animator.AnimatorListener() {
+                                @Override
+                                public void onAnimationStart(Animator animator) {
+                                }
+
+                                @Override
+                                public void onAnimationEnd(Animator animator) {
+                                    binding.loadClip.setVisibility(View.GONE);
+                                }
+
+                                @Override
+                                public void onAnimationCancel(Animator animator) {
+                                }
+
+                                @Override
+                                public void onAnimationRepeat(Animator animator) {
+                                }
+                            });
+                            anim.setDuration(600);
+                            anim.setStartDelay(50);
+                            anim.start();
+                        }
+                    }
+                }, e -> {
+                    Toast.makeText(this, "Can't open camera", Toast.LENGTH_LONG).show();
+                    finish();
+                }));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mCameraPreview != null) {
+            mCameraPreview.stop();
+            mCameraPreview = null;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mDisposableBag.dispose();
+        binding = null;
+        if (mCamera != null) {
+            mCamera.release();
+            mCamera = null;
         }
     }
 
@@ -177,13 +246,7 @@ public class CustomCameraActivity extends Activity {
      */
     private Camera getCameraInstance() {
         initVideo();
-        Camera camera = null;
-        try {
-            camera = Camera.open(currentCamera);
-        } catch (Exception e) {
-            // cannot get camera or does not exist
-        }
-        return camera;
+        return Camera.open(currentCamera);
     }
 
     private void initRecorder() {
