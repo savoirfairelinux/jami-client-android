@@ -84,7 +84,7 @@ public class TVJamiAccountCreationFragment
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
 
         // Bind the presenter to the view
         super.onViewCreated(view, savedInstanceState);

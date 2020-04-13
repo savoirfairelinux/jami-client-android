@@ -47,7 +47,7 @@ public class AdvancedAccountFragment extends BasePreferenceFragment<AdvancedAcco
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
-        ((JamiApplication) requireActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) requireActivity().getApplication()).getInjectionComponent().inject(this);
         super.onCreatePreferences(bundle, s);
 
         // Load the preferences from an XML resource

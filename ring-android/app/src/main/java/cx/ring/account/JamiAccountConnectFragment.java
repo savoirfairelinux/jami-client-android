@@ -20,37 +20,27 @@
 package cx.ring.account;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
-import android.widget.EditText;
 
-import butterknife.BindView;
-import butterknife.OnClick;
-import butterknife.OnEditorAction;
-import butterknife.OnTextChanged;
-import cx.ring.R;
-import cx.ring.dependencyinjection.JamiInjectionComponent;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import cx.ring.application.JamiApplication;
+import cx.ring.databinding.FragAccJamiConnectBinding;
 import cx.ring.mvp.AccountCreationModel;
 import cx.ring.mvp.BaseSupportFragment;
 
 public class JamiAccountConnectFragment extends BaseSupportFragment<JamiAccountConnectPresenter> implements JamiConnectAccountView {
-
     public static final String TAG = JamiAccountConnectFragment.class.getSimpleName();
 
-    @BindView(R.id.prompt_server)
-    protected EditText mServerTxt;
-
-    @BindView(R.id.username_txt)
-    protected EditText mUsernameTxt;
-
-    @BindView(R.id.password_txt)
-    protected EditText mPasswordTxt;
-
-    @BindView(R.id.connect_button)
-    protected Button mConnectAccountBtn;
-
     private AccountCreationModel model;
+    private FragAccJamiConnectBinding binding;
 
     public static JamiAccountConnectFragment newInstance(AccountCreationModelImpl ringAccountViewModel) {
         JamiAccountConnectFragment fragment = new JamiAccountConnectFragment();
@@ -58,14 +48,18 @@ public class JamiAccountConnectFragment extends BaseSupportFragment<JamiAccountC
         return fragment;
     }
 
+    @Nullable
     @Override
-    public int getLayout() {
-        return R.layout.frag_acc_jami_connect;
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragAccJamiConnectBinding.inflate(inflater, container, false);
+        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
+        return binding.getRoot();
     }
 
     @Override
-    public void injectFragment(JamiInjectionComponent component) {
-        component.inject(this);
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     @Override
@@ -73,37 +67,58 @@ public class JamiAccountConnectFragment extends BaseSupportFragment<JamiAccountC
         presenter.init(model);
     }
 
-    @OnClick(R.id.connect_button)
-    public void onConnectClick() {
-        presenter.connectClicked();
-    }
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        binding.connectButton.setOnClickListener(v -> presenter.connectClicked());
+        binding.usernameTxt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
-    @OnTextChanged(value = R.id.username_txt, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    void afterUsernameChanged(Editable txt) {
-        presenter.usernameChanged(txt.toString());
-    }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
-    @OnTextChanged(value = R.id.password_txt, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    void afterPasswordChanged(Editable txt) {
-        presenter.passwordChanged(txt.toString());
-    }
+            @Override
+            public void afterTextChanged(Editable s) {
+                presenter.usernameChanged(s.toString());
+            }
+        });
+        binding.passwordTxt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
-    @OnTextChanged(value = R.id.prompt_server, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    void afterServerChanged(Editable txt) {
-        presenter.serverChanged(txt.toString());
-    }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
-    @OnEditorAction(value = R.id.password_txt)
-    public boolean onPasswordConfirmDone(int keyCode) {
-        if (keyCode == EditorInfo.IME_ACTION_DONE) {
-            presenter.connectClicked();
-        }
-        return false;
+            @Override
+            public void afterTextChanged(Editable s) {
+                presenter.passwordChanged(s.toString());
+            }
+        });
+        binding.promptServer.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                presenter.serverChanged(s.toString());
+            }
+        });
+
+        binding.passwordTxt.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                presenter.connectClicked();
+            }
+            return false;
+        });
     }
 
     @Override
     public void enableConnectButton(boolean enable) {
-        mConnectAccountBtn.setEnabled(enable);
+        binding.connectButton.setEnabled(enable);
     }
 
     @Override

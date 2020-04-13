@@ -65,7 +65,7 @@ public class CallNotificationService extends Service {
 
     @Override
     public void onCreate() {
-        ((JamiApplication) getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) getApplication()).getInjectionComponent().inject(this);
         notificationManager = NotificationManagerCompat.from(this);
         super.onCreate();
     }

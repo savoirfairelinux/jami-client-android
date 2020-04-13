@@ -23,6 +23,7 @@ import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -31,6 +32,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -39,22 +41,17 @@ import android.view.ViewTreeObserver;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import butterknife.BindView;
-import butterknife.OnCheckedChanged;
-import butterknife.OnClick;
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
-import cx.ring.dependencyinjection.JamiInjectionComponent;
+import cx.ring.databinding.FragSettingsBinding;
 import cx.ring.model.Settings;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.mvp.GenericView;
 import cx.ring.utils.DeviceUtils;
-import cx.ring.views.BoundedScrollView;
 
 /**
  * TODO: improvements : handle multiples permissions for feature.
@@ -63,40 +60,31 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
 
     private static final int SCROLL_DIRECTION_UP = -1;
 
-    @BindView(R.id.settings_push_notifications_layout)
-    ViewGroup mGroupPushNotifications;
-    @BindView(R.id.settings_push_notifications)
-    Switch mViewPushNotifications;
-    @BindView(R.id.settings_startup)
-    Switch mViewStartup;
-    @BindView(R.id.settings_persistNotification)
-    Switch mViewPersistNotif;
-    @BindView(R.id.settings_video_layout)
-    View settings_video_layout;
-    @BindView(R.id.settings_dark_theme)
-    Switch mDarkTheme;
-    @BindView(R.id.scrollview)
-    BoundedScrollView mScrollView;
+    private FragSettingsBinding binding;
 
     private boolean mIsRefreshingViewFromPresenter;
 
+    @Nullable
     @Override
-    public int getLayout() {
-        return R.layout.frag_settings;
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragSettingsBinding.inflate(inflater, container, false);
+        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
+        return binding.getRoot();
     }
 
     @Override
-    public void injectFragment(JamiInjectionComponent component) {
-        component.inject(this);
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onViewCreated(view, savedInstanceState);
-        mDarkTheme.setChecked(presenter.getDarkMode());
+        binding.settingsDarkTheme.setChecked(presenter.getDarkMode());
         if (TextUtils.isEmpty(JamiApplication.getInstance().getPushToken())) {
-            mGroupPushNotifications.setVisibility(View.GONE);
+            binding.settingsPushNotificationsLayout.setVisibility(View.GONE);
         }
         // loading preferences
         presenter.loadSettings();
@@ -118,13 +106,43 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
             ((HomeActivity) getActivity()).setToolbarState(R.string.menu_item_settings);
         }
 
-        mScrollView.getViewTreeObserver().addOnScrollChangedListener(this);
+        binding.scrollview.getViewTreeObserver().addOnScrollChangedListener(this);
+        binding.settingsDarkTheme.setOnCheckedChangeListener((buttonView, isChecked) -> presenter.setDarkMode(isChecked));
+
+        CompoundButton.OnCheckedChangeListener save = (buttonView, isChecked) -> {
+            if (!mIsRefreshingViewFromPresenter)
+                saveSettings();
+        };
+        binding.settingsPushNotifications.setOnCheckedChangeListener(save);
+        binding.settingsStartup.setOnCheckedChangeListener(save);
+        binding.settingsPersistNotification.setOnCheckedChangeListener(save);
+
+        binding.settingsVideoLayout.setOnClickListener(v -> {
+            HomeActivity activity = (HomeActivity) getActivity();
+            if (activity != null)
+                activity.goToVideoSettings();
+        });
+
+        binding.settingsClearHistory.setOnClickListener(v -> new MaterialAlertDialogBuilder(view.getContext())
+                .setTitle(getString(R.string.clear_history_dialog_title))
+                .setMessage(getString(R.string.clear_history_dialog_message))
+                .setPositiveButton(android.R.string.ok, (dialog, id) -> {
+                    // ask the presenter to clear history
+                    presenter.clearHistory();
+                    Snackbar.make(view,
+                            getString(R.string.clear_history_completed),
+                            Snackbar.LENGTH_SHORT).show();
+                })
+                .setNegativeButton(android.R.string.cancel, (dialog, id) -> {
+                    //~ Empty
+                })
+                .show());
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentManager fragmentManager = requireFragmentManager();
         Fragment existingFragment = fragmentManager.findFragmentByTag(SettingsFragment.TAG);
         if (existingFragment == null) {
             ((HomeActivity) getActivity()).goToSettings();
@@ -132,7 +150,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(Menu menu, @NonNull MenuInflater inflater) {
         menu.clear();
     }
 
@@ -141,56 +159,14 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         menu.clear();
     }
 
-    @OnCheckedChanged(R.id.settings_dark_theme)
-    public void onDarkThemeChanged(CompoundButton button, boolean isChecked) {
-        presenter.setDarkMode(isChecked);
-    }
-
-    @OnCheckedChanged({
-        R.id.settings_push_notifications,
-        R.id.settings_startup,
-        R.id.settings_persistNotification
-    })
-    public void onSettingsCheckedChanged(CompoundButton button, boolean isChecked) {
-        if (!mIsRefreshingViewFromPresenter)
-            saveSettings();
-    }
-
     private void saveSettings() {
         Settings newSettings = new Settings();
-
-        newSettings.setAllowRingOnStartup(mViewStartup.isChecked());
-        newSettings.setAllowPushNotifications(mViewPushNotifications.isChecked());
-        newSettings.setAllowPersistentNotification(mViewPersistNotif.isChecked());
+        newSettings.setAllowRingOnStartup(binding.settingsStartup.isChecked());
+        newSettings.setAllowPushNotifications(binding.settingsPushNotifications.isChecked());
+        newSettings.setAllowPersistentNotification(binding.settingsPersistNotification.isChecked());
 
         // save settings according to UI inputs
         presenter.saveSettings(newSettings);
-    }
-
-    @OnClick(R.id.settings_video_layout)
-    void onVideoClick() {
-        HomeActivity activity = (HomeActivity) getActivity();
-        if (activity != null) {
-            activity.goToVideoSettings();
-        }
-    }
-
-    @OnClick(R.id.settings_clear_history)
-    public void onClearHistoryClick() {
-        new MaterialAlertDialogBuilder(getActivity())
-                .setTitle(getString(R.string.clear_history_dialog_title))
-                .setMessage(getString(R.string.clear_history_dialog_message))
-                .setPositiveButton(android.R.string.ok, (dialog, id) -> {
-                    // ask the presenter to clear history
-                    presenter.clearHistory();
-                    Snackbar.make(getView(),
-                            getString(R.string.clear_history_completed),
-                            Snackbar.LENGTH_SHORT).show();
-                })
-                .setNegativeButton(android.R.string.cancel, (dialog, id) -> {
-                    //~ Empty
-                })
-                .show();
     }
 
     /**
@@ -220,16 +196,18 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
     @Override
     public void showViewModel(Settings viewModel) {
         mIsRefreshingViewFromPresenter = true;
-        mViewPushNotifications.setChecked(viewModel.isAllowPushNotifications());
-        mViewPersistNotif.setChecked(viewModel.isAllowPersistentNotification());
-        mViewStartup.setChecked(viewModel.isAllowRingOnStartup());
+        binding.settingsPushNotifications.setChecked(viewModel.isAllowPushNotifications());
+        binding.settingsPersistNotification.setChecked(viewModel.isAllowPersistentNotification());
+        binding.settingsStartup.setChecked(viewModel.isAllowRingOnStartup());
         mIsRefreshingViewFromPresenter = false;
     }
 
     @Override
     public void onScrollChanged() {
-        if (mScrollView != null) {
-            ((HomeActivity) getActivity()).setToolbarElevation(mScrollView.canScrollVertically(SCROLL_DIRECTION_UP));
+        if (binding != null) {
+            Activity activity = getActivity();
+            if (activity instanceof HomeActivity)
+                ((HomeActivity) activity).setToolbarElevation(binding.scrollview.canScrollVertically(SCROLL_DIRECTION_UP));
         }
     }
 

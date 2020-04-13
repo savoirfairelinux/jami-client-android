@@ -84,7 +84,7 @@ public class DataTransferService extends Service {
     @Override
     public void onCreate() {
         Log.d(TAG, "OnCreate(), Service has been initialized");
-        ((JamiApplication) getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) getApplication()).getInjectionComponent().inject(this);
         notificationManager = NotificationManagerCompat.from(this);
         super.onCreate();
     }

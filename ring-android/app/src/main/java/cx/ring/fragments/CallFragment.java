@@ -263,16 +263,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     @Override
-    public int getLayout() {
-        return R.layout.frag_call;
-    }
-
-    @Override
-    public void injectFragment(JamiInjectionComponent component) {
-        component.inject(this);
-    }
-
-    @Override
     public void onStart() {
         super.onStart();
         if (restartVideo && restartPreview) {
@@ -299,7 +289,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        injectFragment(((JamiApplication) requireActivity().getApplication()).getRingInjectionComponent());
+        ((JamiApplication) requireActivity().getApplication()).getInjectionComponent().inject(this);
         binding = DataBindingUtil.inflate(inflater, R.layout.frag_call, container, false);
         binding.setPresenter(this);
         return binding.getRoot();
@@ -541,8 +531,14 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         if (mScreenWakeLock != null && mScreenWakeLock.isHeld()) {
             mScreenWakeLock.release();
         }
+        binding = null;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mCompositeDisposable.dispose();
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

@@ -24,28 +24,19 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.Switch;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
-import com.google.android.material.textfield.TextInputLayout;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnCheckedChanged;
-import butterknife.OnClick;
-import butterknife.OnEditorAction;
-import butterknife.OnTextChanged;
 import cx.ring.R;
-import cx.ring.dependencyinjection.JamiInjectionComponent;
+import cx.ring.application.JamiApplication;
+import cx.ring.databinding.FragAccRingCreateBinding;
 import cx.ring.mvp.AccountCreationModel;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.utils.RegisteredNameFilter;
@@ -53,43 +44,8 @@ import cx.ring.utils.RegisteredNameFilter;
 public class JamiAccountCreationFragment extends BaseSupportFragment<JamiAccountCreationPresenter>
         implements JamiAccountCreationView {
 
-    @BindView(R.id.switch_ring_username)
-    protected Switch mUsernameSwitch;
-
-    @BindView(R.id.ring_username_txt_box)
-    protected TextInputLayout mUsernameTxtBox;
-
-    @BindView(R.id.ring_username)
-    protected EditText mUsernameTxt;
-
-    @BindView(R.id.ring_password_switch)
-    protected Switch mPasswordSwitch;
-
-    @BindView(R.id.ring_password_box)
-    protected ViewGroup mPasswordBox;
-
-    @BindView(R.id.password_txt_box)
-    protected TextInputLayout mPasswordTxtBox;
-
-    @BindView(R.id.ring_password_repeat_txt_box)
-    protected TextInputLayout mPasswordRepeatTxtBox;
-
-    @BindView(R.id.ring_username_box)
-    protected ViewGroup mUsernameBox;
-
-    @BindView(R.id.switch_ring_push)
-    protected Switch mPushSwitch;
-
-    @BindView(R.id.create_account)
-    protected Button mCreateAccountButton;
-
-    @BindView(R.id.ring_username_availability_image_view)
-    protected ImageView mUsernameAvailabilityImageView;
-
-    @BindView(R.id.ring_username_availability_spinner)
-    protected ProgressBar mUsernameAvailabilitySpinner;
-
     private AccountCreationModel model;
+    private FragAccRingCreateBinding binding;
 
     public static JamiAccountCreationFragment newInstance(AccountCreationModelImpl ringAccountViewModel) {
         JamiAccountCreationFragment fragment = new JamiAccountCreationFragment();
@@ -97,119 +53,126 @@ public class JamiAccountCreationFragment extends BaseSupportFragment<JamiAccount
         return fragment;
     }
 
+    @Nullable
     @Override
-    public int getLayout() {
-        return R.layout.frag_acc_ring_create;
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragAccRingCreateBinding.inflate(inflater, container, false);
+        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
+        return binding.getRoot();
     }
 
     @Override
-    public void injectFragment(JamiInjectionComponent component) {
-        component.inject(this);
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setRetainInstance(true);
-        ButterKnife.bind(this, view);
-        mUsernameTxt.setFilters(new InputFilter[]{new RegisteredNameFilter()});
+        binding.ringUsername.setFilters(new InputFilter[]{new RegisteredNameFilter()});
+        binding.ringPasswordSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> binding.ringPasswordBox.setVisibility(isChecked ? View.VISIBLE : View.GONE));
+        binding.switchRingPush.setOnCheckedChangeListener((buttonView, isChecked) -> presenter.setPush(isChecked));
+        binding.switchRingUsername.setOnCheckedChangeListener((buttonView, isChecked) -> presenter.registerUsernameChanged(isChecked));
+        binding.createAccount.setOnClickListener(v -> presenter.createAccount());
+        binding.ringPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                presenter.passwordChanged(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+        binding.ringPasswordRepeat.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                presenter.passwordConfirmChanged(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+        binding.ringPasswordRepeat.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                presenter.createAccount();
+            }
+            return false;
+        });
+        binding.ringUsername.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                presenter.userNameChanged(s.toString());
+            }
+        });
+
         presenter.init(model);
-        presenter.setPush(mPushSwitch.isChecked());
+        presenter.setPush(binding.switchRingPush.isChecked());
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (mUsernameBox.getVisibility() == View.VISIBLE) {
-            mUsernameTxt.requestFocus();
+        if (binding.ringUsernameBox.getVisibility() == View.VISIBLE) {
+            binding.ringUsername.requestFocus();
             InputMethodManager imm = (InputMethodManager) requireActivity().
                     getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(mUsernameTxt, InputMethodManager.SHOW_IMPLICIT);
+            imm.showSoftInput(binding.ringUsername, InputMethodManager.SHOW_IMPLICIT);
         }
-    }
-
-    @OnCheckedChanged(R.id.ring_password_switch)
-    public void onPasswordCheckedChanged(boolean isChecked) {
-        mPasswordBox.setVisibility(isChecked ? View.VISIBLE : View.GONE);
-    }
-
-    @OnCheckedChanged(R.id.switch_ring_push)
-    public void onPushCheckedChanged(boolean isChecked) {
-        presenter.setPush(isChecked);
-    }
-
-    @OnCheckedChanged(R.id.switch_ring_username)
-    public void onCheckedChanged(boolean isChecked) {
-        presenter.registerUsernameChanged(isChecked);
-    }
-
-    @OnClick(R.id.create_account)
-    public void onCreateAccountButtonClick() {
-        presenter.createAccount();
-    }
-
-    @OnTextChanged(value = R.id.ring_password, callback = OnTextChanged.Callback.TEXT_CHANGED)
-    public void afterPasswordChanged(Editable txt) {
-        presenter.passwordChanged(txt.toString());
-    }
-
-    @OnTextChanged(value = R.id.ring_password_repeat, callback = OnTextChanged.Callback.TEXT_CHANGED)
-    public void afterPasswordConfirmChanged(Editable txt) {
-        presenter.passwordConfirmChanged(txt.toString());
-    }
-
-    @OnEditorAction(value = R.id.ring_password_repeat)
-    public boolean onPasswordConfirmDone(int keyCode) {
-        if (keyCode == EditorInfo.IME_ACTION_DONE) {
-            presenter.createAccount();
-        }
-        return false;
-    }
-
-    @OnTextChanged(value = R.id.ring_username, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    public void afterUsernameChanged(Editable txt) {
-        presenter.userNameChanged(txt.toString());
     }
 
     @Override
     public void updateUsernameAvailability(UsernameAvailabilityStatus status) {
-        mUsernameAvailabilitySpinner.setVisibility(View.GONE);
+        binding.ringUsernameAvailabilitySpinner.setVisibility(View.GONE);
         //mUsernameAvailabilityImageView.setVisibility(View.VISIBLE);
         switch (status){
             case ERROR:
-                mUsernameTxtBox.setErrorEnabled(true);
-                mUsernameTxtBox.setError(getString(R.string.unknown_error));
+                binding.ringUsernameTxtBox.setErrorEnabled(true);
+                binding.ringUsernameTxtBox.setError(getString(R.string.unknown_error));
                 //mUsernameAvailabilityImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_error_red));
-                mUsernameAvailabilityImageView.setVisibility(View.INVISIBLE);
+                binding.ringUsernameAvailabilityImageView.setVisibility(View.INVISIBLE);
                 break;
             case ERROR_USERNAME_INVALID:
-                mUsernameTxtBox.setErrorEnabled(true);
-                mUsernameTxtBox.setError(getString(R.string.invalid_username));
+                binding.ringUsernameTxtBox.setErrorEnabled(true);
+                binding.ringUsernameTxtBox.setError(getString(R.string.invalid_username));
                 //mUsernameAvailabilityImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_error_red));
-                mUsernameAvailabilityImageView.setVisibility(View.INVISIBLE);
+                binding.ringUsernameAvailabilityImageView.setVisibility(View.INVISIBLE);
                 break;
             case ERROR_USERNAME_TAKEN:
-                mUsernameTxtBox.setErrorEnabled(true);
-                mUsernameTxtBox.setError(getString(R.string.username_already_taken));
+                binding.ringUsernameTxtBox.setErrorEnabled(true);
+                binding.ringUsernameTxtBox.setError(getString(R.string.username_already_taken));
                 //mUsernameAvailabilityImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_error_red));
-                mUsernameAvailabilityImageView.setVisibility(View.INVISIBLE);
+                binding.ringUsernameAvailabilityImageView.setVisibility(View.INVISIBLE);
                 break;
             case LOADING:
-                mUsernameTxtBox.setErrorEnabled(false);
-                mUsernameAvailabilityImageView.setVisibility(View.INVISIBLE);
-                mUsernameAvailabilitySpinner.setVisibility(View.VISIBLE);
+                binding.ringUsernameTxtBox.setErrorEnabled(false);
+                binding.ringUsernameAvailabilityImageView.setVisibility(View.INVISIBLE);
+                binding.ringUsernameAvailabilitySpinner.setVisibility(View.VISIBLE);
                 break;
             case AVAILABLE:
-                mUsernameTxtBox.setErrorEnabled(false);
-                mUsernameAvailabilityImageView.setVisibility(View.VISIBLE);
-                mUsernameAvailabilityImageView.setImageDrawable(requireContext().getDrawable(R.drawable.ic_good_green));
+                binding.ringUsernameTxtBox.setErrorEnabled(false);
+                binding.ringUsernameAvailabilityImageView.setVisibility(View.VISIBLE);
+                binding.ringUsernameAvailabilityImageView.setImageDrawable(requireContext().getDrawable(R.drawable.ic_good_green));
                 break;
             case RESET:
-                mUsernameTxtBox.setErrorEnabled(false);
-                mUsernameAvailabilityImageView.setVisibility(View.INVISIBLE);
+                binding.ringUsernameTxtBox.setErrorEnabled(false);
+                binding.ringUsernameAvailabilityImageView.setVisibility(View.INVISIBLE);
                 enableNextButton(false);
             default:
-                mUsernameAvailabilityImageView.setVisibility(View.INVISIBLE);
+                binding.ringUsernameAvailabilitySpinner.setVisibility(View.INVISIBLE);
                 break;
         }
     }
@@ -217,29 +180,29 @@ public class JamiAccountCreationFragment extends BaseSupportFragment<JamiAccount
     @Override
     public void showInvalidPasswordError(final boolean display) {
         if (display) {
-            mPasswordTxtBox.setError(getString(R.string.error_password_char_count));
+            binding.passwordTxtBox.setError(getString(R.string.error_password_char_count));
         } else {
-            mPasswordTxtBox.setError(null);
+            binding.passwordTxtBox.setError(null);
         }
     }
 
     @Override
     public void showNonMatchingPasswordError(final boolean display) {
         if (display) {
-            mPasswordRepeatTxtBox.setError(getString(R.string.error_passwords_not_equals));
+            binding.ringPasswordRepeatTxtBox.setError(getString(R.string.error_passwords_not_equals));
         } else {
-            mPasswordRepeatTxtBox.setError(null);
+            binding.ringPasswordRepeatTxtBox.setError(null);
         }
     }
 
     @Override
     public void displayUsernameBox(final boolean display) {
-        mUsernameBox.setVisibility(display ? View.VISIBLE : View.GONE);
+        binding.ringUsernameBox.setVisibility(display ? View.VISIBLE : View.GONE);
     }
 
     @Override
     public void enableNextButton(final boolean enabled) {
-        mCreateAccountButton.setEnabled(enabled);
+        binding.createAccount.setEnabled(enabled);
     }
 
     @Override

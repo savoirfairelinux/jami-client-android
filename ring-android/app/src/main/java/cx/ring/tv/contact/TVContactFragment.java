@@ -72,7 +72,7 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         super.onCreate(savedInstanceState);
     }
 
