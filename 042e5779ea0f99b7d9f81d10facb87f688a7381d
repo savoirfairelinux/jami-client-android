@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cc09dcd_2d5c6004",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/conversation/ConversationPresenter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-04-13T19:14:45Z",
+      "side": 1,
+      "message": "unecessary (see bellow)",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 33
+      },
+      "revId": "042e5779ea0f99b7d9f81d10facb87f688a7381d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d6e80ef_da18640a",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/conversation/ConversationPresenter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-04-13T19:14:45Z",
+      "side": 1,
+      "message": "* move to init (also avoids duplicated subscriptions)\n* use Observable.combineLatest:\n\n\nObservable.combineLatest(\n    mHardwareService.getConnectivityState(), \n    mAccountService.getObservableAccountUpdates(mAccountId),\n    (isConnected, isRegistered) -\u003e isConnected or isRegistered\n)\n.observeOn(mUiScheduler)\n.subscribe(isOk -\u003e {\n    if (isOk)\n        getView().hideErrorPanel();\n    else\n        getView().displayNetworkErrorPanel();\n}",
+      "range": {
+        "startLine": 154,
+        "startChar": 8,
+        "endLine": 164,
+        "endChar": 20
+      },
+      "revId": "042e5779ea0f99b7d9f81d10facb87f688a7381d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
