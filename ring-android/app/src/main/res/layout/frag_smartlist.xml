@@ -88,6 +88,7 @@ along with this program; if not, write to the Free Software
             tools:listitem="@layout/item_smartlist"/>
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            style="@style/Widget.AppTheme.MainActionButton"
             android:id="@+id/newconv_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
