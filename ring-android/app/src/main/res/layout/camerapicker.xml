@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/camera_preview"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/black"
+    android:id="@+id/camera_preview">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:animateLayoutChanges="true">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/button_picture"
@@ -17,6 +20,7 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/action_call_decline"
             android:padding="16dp"
+            android:layout_margin="16dp"
             app:backgroundTint="@color/green_500"
             app:rippleColor="@android:color/white"
             app:srcCompat="@drawable/baseline_photo_camera_24"
@@ -28,12 +32,27 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/action_call_decline"
             android:padding="16dp"
+            android:layout_margin="16dp"
             android:visibility="gone"
+            tools:visibility="visible"
             app:backgroundTint="@color/green_500"
             app:rippleColor="@android:color/white"
             app:srcCompat="@drawable/baseline_videocam_24"
             app:useCompatPadding="true" />
-
     </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grey_800"
+        android:id="@+id/load_clip">
+        <ImageView
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/baseline_photo_camera_24"
+            android:tint="@color/grey_100"
+            android:layout_margin="16dp"
+            android:layout_gravity="center" />
+    </FrameLayout>
 
 </FrameLayout>
