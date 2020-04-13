@@ -15,9 +15,12 @@
   <string name="license">Denne programvaren tilbys «som den er», uten garantier av noe slag.  For detaljer, se <u>GNU General Public License versjon 3 eller senere</u></string>
   <string name="description">Jami er fri programvare for allsidig kommunikasjon som respekterer brukernes frihet og retten til privatliv.</string>
   <string name="credits">Bidragsytere</string>
+  <string name="call_service_description">Denne tjenesten er nødvendig for å holde samtalene dine i forgrunnen. Tjenesten kjører bare under samtaler.</string>
+  <string name="data_transfer_service_description">Denne tjenesten er nødvendig for å vise vedvarende varsler under filoverføring. Tjenesten kjøres bare under filoverføring.</string>
   <!--About dialog-->
   <string name="developed_by">Utviklet av</string>
   <string name="designed_by">Designet av</string>
+  <string name="ringtones_by">Ringetoner av</string>
   <!--RingActivity-->
   <string name="error_no_network">Mangler nettverksforbindelse</string>
   <string name="error_mobile_network_available_but_disabled">Tildel tilgang til mobilnettverk på innstillingsskjermen.</string>
@@ -40,6 +43,7 @@
     <item quantity="other">%d samtaler</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Søk etter navn eller telefonnummer...</string>
   <string name="choose_number">Velg et nummer</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -50,12 +54,16 @@
   <string name="notif_incoming_call">Innkommende samtale</string>
   <string name="notif_outgoing_call_title">Utgående samtale til %1$s</string>
   <string name="notif_outgoing_call">Utgående samtale</string>
+  <string name="notif_current_call_title">Pågående samtale med %1$s</string>
   <string name="notif_current_call">Pågående samtale</string>
+  <string name="notif_channel_call_in_progress">Samtale pågår</string>
   <string name="notif_channel_calls">Samtaler</string>
   <string name="notif_channel_missed_calls">Tapte anrop</string>
+  <string name="notif_channel_incoming_calls">Innkommende anrop</string>
   <string name="notif_channel_messages">Meldinger</string>
   <string name="notif_channel_requests">Forespørsler</string>
   <string name="notif_channel_file_transfer">Filoverføring</string>
+  <string name="notif_channel_sync">Datasynkronisering</string>
   <string name="notif_channel_background_service">Bakgrunnstjeneste</string>
   <string name="notif_channel_background_service_descr">Tillater anropsmottak og meldinger når som helst.</string>
   <string name="notif_group_calls">Samtaler</string>
@@ -66,6 +74,14 @@
   <string name="notif_incoming_file_transfer_title">Innkommende fil fra %1$s</string>
   <string name="notif_outgoing_file_transfer_title">Sender fil til %1$s</string>
   <string name="notif_incoming_picture">Bilde fra %1$s</string>
+  <string name="notif_sync_title">Synkroniserer data...</string>
+  <string name="notif_location_title">Deling av lokasjon med %1$s</string>
+  <string name="location_share_contact">%1$s deler lokasjon med deg</string>
+  <string name="notif_location_multi_title">Deling av lokasjon med %1$d kontakter</string>
+  <string name="notif_location_remaining">%1$d minutter igjen</string>
+  <string name="notif_location_action_stop">Slutt å dele lokasjon</string>
+  <string name="location_share_action_start">Begynn å dele</string>
+  <string name="location_share_action_stop">Stopp delingen</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Deg:</string>
   <string name="action_call_hangup">Legg på</string>
@@ -97,6 +113,9 @@
   <string name="send_file">Send fil</string>
   <string name="hist_file_sent">Sent fil</string>
   <string name="hist_file_received">Mottatt fil</string>
+  <string name="conversation_send_audio">Spill inn lydklipp</string>
+  <string name="conversation_send_video">Spill inn videoklipp</string>
+  <string name="conversation_share_location">Del lokasjon</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamerarettigheter</string>
   <string name="permission_dialog_camera_message">Videosamtaler krever tilgang til kameraet for å virke.  Vurder å aktivere det.</string>
@@ -104,7 +123,9 @@
   <string name="ringtone_error_title">Feil</string>
   <string name="ringtone_error_format_not_supported">Dette formatet støttes ikke</string>
   <string name="ringtone_error_size_too_big">Filen er for stor.  Maksimal størrelse er %1$d kB.</string>
+  <string name="ringtone_custom_prompt">Angi en tilpasset ringetone</string>
   <string name="ringtone_custom_label">Tilpasset</string>
+  <string name="ringtone_jami_tones">Jami-ringetoner</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Jami trenger tilgang til å «Lese kontakter» for å aktivere denne egenskapen.  Vær så snill å gi tilgang.</string>
   <!--Write call log permission-->
@@ -140,6 +161,7 @@
   <string name="block_contact_dialog_title">Blokker %1$s?</string>
   <string name="block_contact_dialog_message">%1$s vil ikke være i stand til å kontakte deg inntil du fjerner blokkeringen.</string>
   <string name="block_contact_completed">%1$s ble blokkert.</string>
+  <string name="conversation_contact_is_typing">Kontakten skriver...</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Legg til %1$s?</string>
   <string name="prompt_new_password">Nytt passord</string>
@@ -149,6 +171,7 @@
   <string name="prompt_new_username">Skriv inn nytt brukernavn</string>
   <string name="help_password_choose">Velg et sterkt passord som du husker, for å beskytte Jami-kontoen din.</string>
   <string name="help_password_enter">Skriv inn hovedpassord for Jami-kontoen din</string>
+  <string name="help_server_enter">Angi URL til administrasjonsserveren</string>
   <string name="help_pin_enter">Skriv inn PIN fra en annen ferdig oppsatt Jami-konto.  Bruk «Eksporter Jami-konto»-valget for å få tak i en PIN.</string>
   <string name="wizard_next">Neste</string>
   <string name="wizard_back">Tilbake</string>
@@ -166,6 +189,7 @@
   <string name="share_label">Del</string>
   <string name="generic_error_migration">Feil</string>
   <string name="generic_error_migration_message">En feil inntraff under flytting</string>
+  <string name="title_share_with">Del med...</string>
   <!--Pending contact requests-->
   <string name="accept">Aksepter</string>
   <string name="refuse">Avslå</string>
@@ -185,6 +209,7 @@
   <!--Smartlist-->
   <string name="no_contact_request">Ingen kontaktforespørsel sendt</string>
   <string name="contact_request_sent">Kontaktforespørsel sendt</string>
+  <string name="start_conversation">Start samtalen</string>
   <string name="search_results">Søkeresultater</string>
   <string name="tv_contact_row_header">Kontakter</string>
   <string name="gallery_error_title">Fant ingen galleriprogrammer</string>
@@ -203,23 +228,38 @@
   <string name="file_transfer_status_closed_by_peer">lukket av likemann</string>
   <string name="file_transfer_status_invalid_pathname">ugyldig stinavn</string>
   <string name="file_transfer_status_unjoinable_peer">likemann det ikke går an å koble til</string>
+  <string name="file_transfer_status_cancelled">avbrutt</string>
+  <string name="file_transfer_status_error">mislyktes på grunn av feil</string>
+  <string name="file_transfer_status_timed_out">tidsavbrudd</string>
   <string name="file_saved_in">Fil lagret i %s</string>
+  <string name="file_saved_successfully">Filen er lagret</string>
   <string name="no_space_left_on_device">Ingen plass igjen på enheten</string>
   <string name="title_media_viewer">Mediaviser</string>
   <string name="menu_file_open">Åpne fil</string>
   <string name="menu_file_download">Last ned fil</string>
+  <string name="menu_file_save">Lagre fil</string>
   <string name="menu_file_delete">Slett fil</string>
   <string name="menu_file_share">Del fil</string>
   <string name="menu_message_copy">Kopier</string>
   <string name="menu_message_delete">Slett melding</string>
   <string name="menu_message_cancel">Avbryt melding</string>
   <string name="menu_delete">Slett</string>
+  <string name="pref_darkTheme_title">Mørkt tema</string>
+  <string name="pref_darkTheme_summary">Aktiver alltid mørkt tema i stedet for å bruke systematferd</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Samtaler</string>
   <string name="navigation_item_contact_request">Kontaktforespørsler</string>
   <string name="navigation_item_account">Konto</string>
   <!--TV-->
+  <string name="tv_send_audio_dialog_message">Vil du sende lydmelding?</string>
+  <string name="tv_send_image_dialog_message">Vil du sende bildet?</string>
+  <string name="tv_send_video_dialog_message">Vil du sende videoen?</string>
+  <string name="tv_media_preview">Forhåndsvisning</string>
   <string name="tv_audio_play">Spill av</string>
   <string name="tv_audio_pause">Pause</string>
   <string name="tv_dialog_send">Send</string>
+  <string name="tv_audio_recording">Innspilling...</string>
+  <string name="tv_send_text">Send tekst</string>
+  <string name="tv_send_audio">Send lyd</string>
+  <string name="tv_send_video">Send media</string>
 </resources>

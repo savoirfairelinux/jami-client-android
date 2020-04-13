@@ -96,6 +96,9 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="account_proxy_enable_label">DHT vekil sunucu kullan</string>
   <string name="account_proxy_server_label">DHT vekil adresi</string>
   <string name="account_proxy_server_list_label">DHT proxy listesi URL</string>
+  <string name="account_peer_discovery_label">Yerel bağlantı bulma</string>
+  <string name="account_peer_discovery_enable_label">Yerel bağlantı bulmayı etkinleştir</string>
+  <string name="account_peer_discovery_enable_summary">Yerel ağımızdaki diğer DHT reklamlarına bağlanın</string>
   <!--Security Details-->
   <string name="account_credentials_label">Kimlik Bilgileri</string>
   <string name="account_credentials_edit">Kimlik bilgilerini düzenle</string>
@@ -155,6 +158,9 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="account_sip_success_title">Sip hesabı kayıtlı</string>
   <string name="account_sip_success_message">Sip hesabınızı başarıyla kaydettiniz.</string>
   <string name="account_sip_register_anyway">Her koşulda kaydol</string>
+  <string name="account_link_device">Başka bir cihazdan bağlanın</string>
+  <string name="account_link_button">Ağdan bağlanın</string>
+  <string name="account_link_archive_button">Yedeklemeden bağlan</string>
   <string name="account_link_prompt_pin">PIN\'i gir</string>
   <string name="account_new_button">Bir Jami hesabı oluştur</string>
   <string name="account_link_export_button">Başka aygıtı bu hesaba bağla</string>
@@ -164,7 +170,11 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="account_end_export_infos">Pin\'iniz:\n\n%%\n\nSüreci tamamlamak için yeni aygıtta Ring\'i açmanız gerekiyor. \"Bu aygıtı bir hesaba bağla\" ile yeni hesap oluşturun. Pin\'iniz 10 dakikalığına geçerlidir.</string>
   <string name="account_link_export_info_light">Bu hesabı başka aygıtlarda kullanmak için önce Jami\'de açmalısınız. Bu, hesabı kurmak için yeni aygıtta girmeniz gereken bir PIN kodu oluşturacak. PIN 10 dakikalığına geçerlidir.</string>
   <string name="account_export_title">Aygıtlar ekle</string>
+  <string name="account_connect_server_button">Yönetim sunucusuna bağlan</string>
   <string name="account_connect_button">Bağlan</string>
+  <string name="prompt_server">Jami Yönetim Sunucusu URL\'si</string>
+  <string name="help_credentials_enter">Kuruluş kimlik bilgilerinizi girin</string>
+  <string name="help_connect_password_enter">Kuruluş şifrenizi girin</string>
   <string name="account_connect_prompt_username">Kullanıcı adı</string>
   <!--Name registration-->
   <string name="error_username_empty">Bir kullanıcı adı gir</string>

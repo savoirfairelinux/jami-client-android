@@ -26,6 +26,7 @@
   <string name="menu_item_account">Håndter konto</string>
   <string name="menu_item_settings">Indstillinger</string>
   <string name="menu_item_share">Del min kontakt</string>
+  <string name="menu_item_about">Om Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Indtast et nummer</string>
   <!--History Fragment-->

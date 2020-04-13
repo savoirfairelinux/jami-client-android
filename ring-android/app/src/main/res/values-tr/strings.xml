@@ -15,9 +15,12 @@
   <string name="license">Bu yazılım, hiçbir garanti olmadan \"olduğu gibi\" sağlanmıştır. Ayrıntılar için bakınız <u>GNU Genel Kamu Lisansı 3.sürüm ve sonrası</u></string>
   <string name="description">Jami, kullanıcılarının özgürlüklerine ve gizliliğine önem veren, evrensel iletişim için özgür yazılımdır.</string>
   <string name="credits">Emeği geçenler</string>
+  <string name="call_service_description">Bu hizmet, aramalarınızı ön planda tutmak için gereklidir. Yalnızca aramalar sırasında çalışır.</string>
+  <string name="data_transfer_service_description">Bu hizmet, dosya aktarımları sırasında kalıcı bildirimleri görüntülemek için gereklidir. Yalnızca dosya aktarımları sırasında çalışır.</string>
   <!--About dialog-->
   <string name="developed_by">Geliştiren</string>
   <string name="designed_by">Tasarlayan</string>
+  <string name="ringtones_by">Zil seslerini hazırlayan</string>
   <!--RingActivity-->
   <string name="error_no_network">Ağ bağlantısı yok</string>
   <string name="error_mobile_network_available_but_disabled">Lütfen ayarlar ekranında hücre ağına erişim verin.</string>
@@ -74,6 +77,7 @@
   <string name="notif_sync_title">Senkronize ediliyor</string>
   <string name="notif_location_title">Konumunuz %1$s ile paylaşılıyor </string>
   <string name="location_share_contact">%1$s sizinle konumunu paylaşıyor</string>
+  <string name="notif_location_multi_title">Konumunuz %1$d bağlantılarınız ile paylaşılıyor</string>
   <string name="notif_location_remaining">%1$ddakika kaldı</string>
   <string name="notif_location_action_stop">Konum paylaşmayı durdur</string>
   <string name="location_share_action_start">Paylaşmayı başlat</string>
@@ -121,6 +125,7 @@
   <string name="ringtone_error_size_too_big">Bu dosya çok büyük. En büyük boyut %1$dkB.</string>
   <string name="ringtone_custom_prompt">Özel zil sesi ayarla </string>
   <string name="ringtone_custom_label">Özel</string>
+  <string name="ringtone_jami_tones">Jami Tonları</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Jami\'nin bu özelliğini etkinleştirmek için \"Rehberi oku\" izni gerekli. Lütfen izin verin.</string>
   <!--Write call log permission-->
@@ -166,6 +171,7 @@
   <string name="prompt_new_username">Yeni kullanıcı adı gir</string>
   <string name="help_password_choose">Jami hesabınızı korumak için anımsayacağınız güçlü bir şifre seçin.</string>
   <string name="help_password_enter">Jami ana hesap parolanızı girin</string>
+  <string name="help_server_enter">Yönetim sunucusunun URL adresini gir</string>
   <string name="help_pin_enter">Başka yapılandırılmış Jami hesabından PIN\'i girin. PIN edinmek için \"Jami\'de hesabı dışa aktarma\" özelliğini kullanın.</string>
   <string name="wizard_next">İleri</string>
   <string name="wizard_back">Geri</string>
@@ -183,6 +189,7 @@
   <string name="share_label">Paylaş</string>
   <string name="generic_error_migration">Hata</string>
   <string name="generic_error_migration_message">Göç sırasında bir hata oluştu</string>
+  <string name="title_share_with">Paylaş</string>
   <!--Pending contact requests-->
   <string name="accept">Kabul et</string>
   <string name="refuse">Geri Çevir</string>
@@ -191,6 +198,7 @@
   <string name="contact_request_msg">%1$s iletişim isteğiniz var</string>
   <string name="contact_request_account">%1$s için</string>
   <string name="no_requests">0 iletişim isteği</string>
+  <string name="message_contact_not_trusted_yet">%s henüz bağlantınız değil.\nBu bağlantı isteğini kabul etmek ister misiniz? </string>
   <string name="message_contact_not_trusted">%s kişilerinizde yok.\n yeni bir kişi eklensin mi?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Gönder</string>
@@ -209,17 +217,24 @@
   <string name="generic_error">Bilinmeyen bir hata oluştu</string>
   <!--File Transfer-->
   <string name="invalid_file">Geçersiz dosya</string>
+  <string name="not_able_to_write_file">Dosya yazılamıyor</string>
   <string name="file_transfer_status_created">Aktarım başlatılıyor</string>
   <string name="file_transfer_status_unsupported">desteklenmeyen</string>
+  <string name="file_transfer_status_wait_peer_acceptance">bekleyen bağlantı kabulü</string>
+  <string name="file_transfer_status_wait_host_acceptance">bekleyen hizmet sunucu kabulü</string>
+  <string name="file_transfer_status_ongoing">devam eden</string>
   <string name="file_transfer_status_finished">Bitti</string>
+  <string name="file_transfer_status_closed_by_host">sunucu tarafından kapatıldı</string>
+  <string name="file_transfer_status_closed_by_peer">bağlantı tarafından kapat</string>
   <string name="file_transfer_status_invalid_pathname">geçersiz yol adı</string>
+  <string name="file_transfer_status_unjoinable_peer">birleştirilemez bağlantı</string>
   <string name="file_transfer_status_cancelled">iptal edildi</string>
   <string name="file_transfer_status_error">hata nedeniyle başarısız </string>
   <string name="file_transfer_status_timed_out">zaman aşımı</string>
   <string name="file_saved_in">Dosya %s içine kaydedildi</string>
   <string name="file_saved_successfully">Dosya başarıyla kaydedildi</string>
   <string name="no_space_left_on_device">Aygıtda boş alan kalmadı</string>
-  <string name="title_media_viewer">medya görüntüleyici</string>
+  <string name="title_media_viewer">Medya görüntüleyici</string>
   <string name="menu_file_open">Dosyayı Aç</string>
   <string name="menu_file_download">Dosyayı indir</string>
   <string name="menu_file_save">Dosyayı Kaydet</string>
@@ -230,11 +245,15 @@
   <string name="menu_message_cancel">İletiyi iptal et</string>
   <string name="menu_delete">Sil</string>
   <string name="pref_darkTheme_title">Karanlık tema</string>
+  <string name="pref_darkTheme_summary">Sistem davranışını kullanmak yerine her zaman koyu temayı etkinleştir</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Konuşmalar</string>
   <string name="navigation_item_contact_request">İletişim istekleri</string>
   <string name="navigation_item_account">Hesap</string>
   <!--TV-->
+  <string name="tv_send_audio_dialog_message">Sesli mesaj gönderilsin mi?</string>
+  <string name="tv_send_image_dialog_message">Görüntü gönderilsin mi?</string>
+  <string name="tv_send_video_dialog_message">Video gönderilsin mi?</string>
   <string name="tv_media_preview">Önizle</string>
   <string name="tv_audio_play">Oynat</string>
   <string name="tv_audio_pause">Duraklat</string>
