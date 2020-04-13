@@ -22,6 +22,30 @@
       "revId": "d7da21f6c4812d8c814e951757f46cda8f9dc52f",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "037d70f9_34148ca9",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/conversation/ConversationPresenter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2020-04-13T16:35:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5035ced8_03225c2b",
+      "range": {
+        "startLine": 160,
+        "startChar": 33,
+        "endLine": 160,
+        "endChar": 75
+      },
+      "revId": "d7da21f6c4812d8c814e951757f46cda8f9dc52f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
