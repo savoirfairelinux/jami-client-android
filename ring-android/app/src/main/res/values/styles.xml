@@ -84,6 +84,20 @@
 
     <style name="AppTheme.Fullscreen" parent="AppThemeBase.Fullscreen" />
 
+    <!-- Main action button -->
+    <style name="Widget.AppTheme.MainActionButton" parent="@style/Widget.MaterialComponents.ExtendedFloatingActionButton.Icon">
+        <item name="android:textAppearance">@style/TextAppearance.AppTheme.MainActionButton</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+        <item name="iconPadding">8dp</item>
+    </style>
+
+    <style name="TextAppearance.AppTheme.MainActionButton" parent="@style/TextAppearance.MaterialComponents.Button">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <!-- Transparent toolbar theme -->
     <style name="ActionBar.Transparent" parent="@android:style/Widget.DeviceDefault.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@color/transparent_dark_grey</item>

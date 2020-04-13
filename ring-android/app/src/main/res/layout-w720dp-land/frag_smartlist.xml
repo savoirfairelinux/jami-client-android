@@ -71,15 +71,16 @@
             android:layout_marginBottom="@dimen/navigation_bottom_height" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            style="@style/Widget.AppTheme.MainActionButton"
             android:id="@+id/newconv_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignWithParentIfMissing="false"
             android:layout_gravity="bottom|end"
-            android:layout_marginStart="@dimen/fab_margin"
-            android:layout_marginEnd="@dimen/fab_margin"
-            android:layout_marginTop="@dimen/fab_margin"
-            android:layout_marginBottom="92dp"
+            android:layout_marginStart="@dimen/fab_margin_mini"
+            android:layout_marginEnd="@dimen/fab_margin_mini"
+            android:layout_marginTop="@dimen/fab_margin_mini"
+            android:layout_marginBottom="72dp"
             android:elevation="6dp"
             android:text="@string/start_conversation"
             app:elevation="6dp"
