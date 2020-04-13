@@ -20,21 +20,14 @@ package cx.ring.tv.about;
 import android.content.Context;
 import androidx.leanback.widget.Presenter;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import cx.ring.R;
+import cx.ring.databinding.DetailViewContentBinding;
 import cx.ring.tv.cards.iconcards.IconCard;
 
 public class AboutDetailsPresenter extends Presenter {
-    @BindView(R.id.primary_text)
-    TextView mPrimaryText;
-    @BindView(R.id.extra_text)
-    TextView mExtraText;
     private Context mContext;
+    private DetailViewContentBinding binding;
 
     public AboutDetailsPresenter(Context context) {
         mContext = context;
@@ -42,17 +35,15 @@ public class AboutDetailsPresenter extends Presenter {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.detail_view_content, null);
-        ButterKnife.bind(this, view);
-        return new ViewHolder(view);
+        binding = DetailViewContentBinding.inflate(LayoutInflater.from(mContext));
+        return new ViewHolder(binding.getRoot());
     }
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, Object itemData) {
         IconCard card = (IconCard) itemData;
-
-        mPrimaryText.setText(card.getTitle());
-        mExtraText.setText(card.getDescription());
+        binding.primaryText.setText(card.getTitle());
+        binding.extraText.setText(card.getDescription());
     }
 
     @Override

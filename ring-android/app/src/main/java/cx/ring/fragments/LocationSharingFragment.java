@@ -157,7 +157,7 @@ public class LocationSharingFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((JamiApplication) requireActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) requireActivity().getApplication()).getInjectionComponent().inject(this);
         setRetainInstance(true);
 
         Bundle args = getArguments();

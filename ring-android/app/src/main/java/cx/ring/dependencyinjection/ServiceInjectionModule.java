@@ -67,7 +67,7 @@ public class ServiceInjectionModule {
     @Singleton
     PreferencesService provideSettingsService() {
         SharedPreferencesServiceImpl settingsService = new SharedPreferencesServiceImpl();
-        mJamiApplication.getRingInjectionComponent().inject(settingsService);
+        mJamiApplication.getInjectionComponent().inject(settingsService);
         return settingsService;
     }
 
@@ -75,7 +75,7 @@ public class ServiceInjectionModule {
     @Singleton
     HistoryService provideHistoryService() {
         HistoryServiceImpl historyService = new HistoryServiceImpl();
-        mJamiApplication.getRingInjectionComponent().inject(historyService);
+        mJamiApplication.getInjectionComponent().inject(historyService);
         return historyService;
     }
 
@@ -91,7 +91,7 @@ public class ServiceInjectionModule {
     @Singleton
     NotificationService provideNotificationService() {
         NotificationServiceImpl service = new NotificationServiceImpl();
-        mJamiApplication.getRingInjectionComponent().inject(service);
+        mJamiApplication.getInjectionComponent().inject(service);
         service.initHelper();
         return service;
     }
@@ -100,7 +100,7 @@ public class ServiceInjectionModule {
     @Singleton
     DeviceRuntimeService provideDeviceRuntimeService(LogService logService) {
         DeviceRuntimeServiceImpl runtimeService = new DeviceRuntimeServiceImpl();
-        mJamiApplication.getRingInjectionComponent().inject(runtimeService);
+        mJamiApplication.getInjectionComponent().inject(runtimeService);
         runtimeService.loadNativeLibrary();
         return runtimeService;
     }
@@ -109,7 +109,7 @@ public class ServiceInjectionModule {
     @Singleton
     DaemonService provideDaemonService(DeviceRuntimeService deviceRuntimeService) {
         DaemonService daemonService = new DaemonService(deviceRuntimeService);
-        mJamiApplication.getRingInjectionComponent().inject(daemonService);
+        mJamiApplication.getInjectionComponent().inject(daemonService);
         return daemonService;
     }
 
@@ -117,7 +117,7 @@ public class ServiceInjectionModule {
     @Singleton
     CallService provideCallService() {
         CallService callService = new CallService();
-        mJamiApplication.getRingInjectionComponent().inject(callService);
+        mJamiApplication.getInjectionComponent().inject(callService);
         return callService;
     }
 
@@ -125,7 +125,7 @@ public class ServiceInjectionModule {
     @Singleton
     AccountService provideAccountService() {
         AccountService accountService = new AccountService();
-        mJamiApplication.getRingInjectionComponent().inject(accountService);
+        mJamiApplication.getInjectionComponent().inject(accountService);
         return accountService;
     }
 
@@ -133,7 +133,7 @@ public class ServiceInjectionModule {
     @Singleton
     HardwareService provideHardwareService(Context context) {
         HardwareServiceImpl hardwareService = new HardwareServiceImpl(context);
-        mJamiApplication.getRingInjectionComponent().inject(hardwareService);
+        mJamiApplication.getInjectionComponent().inject(hardwareService);
         return hardwareService;
     }
 
@@ -141,7 +141,7 @@ public class ServiceInjectionModule {
     @Singleton
     ContactService provideContactService(PreferencesService sharedPreferencesService) {
         ContactServiceImpl contactService = new ContactServiceImpl();
-        mJamiApplication.getRingInjectionComponent().inject(contactService);
+        mJamiApplication.getInjectionComponent().inject(contactService);
         return contactService;
     }
 
@@ -154,7 +154,7 @@ public class ServiceInjectionModule {
             AccountService accountService,
             NotificationService notificationService) {
         ConversationFacade conversationFacade = new ConversationFacade(historyService, callService, accountService, contactService, notificationService);
-        mJamiApplication.getRingInjectionComponent().inject(conversationFacade);
+        mJamiApplication.getInjectionComponent().inject(conversationFacade);
         return conversationFacade;
     }
 

@@ -49,13 +49,10 @@ import androidx.legacy.content.WakefulBroadcastReceiver;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ScheduledExecutorService;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.inject.Singleton;
 
 import cx.ring.BuildConfig;
@@ -63,7 +60,6 @@ import cx.ring.application.JamiApplication;
 import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.facades.ConversationFacade;
-import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.Codec;
 import cx.ring.model.Settings;
 import cx.ring.model.Uri;
@@ -554,7 +550,7 @@ public class DRingService extends Service {
         super.onCreate();
 
         // dependency injection
-        JamiApplication.getInstance().getRingInjectionComponent().inject(this);
+        JamiApplication.getInstance().getInjectionComponent().inject(this);
         isRunning = true;
 
         if (mDeviceRuntimeService.hasContactPermission()) {

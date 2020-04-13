@@ -40,30 +40,21 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.ViewCompat;
 
-import com.google.android.material.appbar.AppBarLayout;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
+import cx.ring.databinding.ActivityConversationBinding;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.interfaces.Colorable;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.MediaButtonsHelper;
 
 public class ConversationActivity extends AppCompatActivity implements Colorable {
-    @BindView(R.id.toolbar_layout)
-    AppBarLayout mToolbarLayout;
-
-    @BindView(R.id.main_toolbar)
-    Toolbar mToolbar;
 
     private ConversationFragment mConversationFragment;
-    /*private String contactUri = null;
-    private String accountId = null;*/
     private ConversationPath conversationPath = null;
 
     private Intent mPendingIntent = null;
+    private ActivityConversationBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +62,10 @@ public class ConversationActivity extends AppCompatActivity implements Colorable
 
         JamiApplication.getInstance().startDaemon();
 
-        setContentView(R.layout.activity_conversation);
-        ButterKnife.bind(this);
-        setSupportActionBar(mToolbar);
+        binding = ActivityConversationBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        setSupportActionBar(binding.mainToolbar);
         ActionBar ab = getSupportActionBar();
         if (ab != null)
             ab.setDisplayHomeAsUpEnabled(true);
@@ -86,10 +78,10 @@ public class ConversationActivity extends AppCompatActivity implements Colorable
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
 
-        ViewCompat.setOnApplyWindowInsetsListener(mToolbarLayout, (v, insets) -> {
-            CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) mToolbarLayout.getLayoutParams();
+        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbarLayout, (v, insets) -> {
+            CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) binding.toolbarLayout.getLayoutParams();
             params.topMargin = insets.getSystemWindowInsetTop();
-            mToolbarLayout.setLayoutParams(params);
+            binding.toolbarLayout.setLayoutParams(params);
             insets.consumeSystemWindowInsets();
             return insets;
         });
@@ -153,7 +145,7 @@ public class ConversationActivity extends AppCompatActivity implements Colorable
     }
 
     public void setColor(@ColorInt int color) {
-        colouriseToolbar(mToolbar, color);
+        colouriseToolbar(binding.mainToolbar, color);
         //mToolbar.setBackground(new ColorDrawable(color));
         //getWindow().setStatusBarColor(color);
     }

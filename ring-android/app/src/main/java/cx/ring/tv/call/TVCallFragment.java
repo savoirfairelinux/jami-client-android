@@ -166,22 +166,12 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
     }
 
     @Override
-    public int getLayout() {
-        return R.layout.tv_frag_call;
-    }
-
-    @Override
     public void handleCallWakelock(boolean isAudioOnly) { }
-
-    @Override
-    public void injectFragment(JamiInjectionComponent component) {
-        component.inject(this);
-    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        injectFragment(((JamiApplication) getActivity().getApplication()).getRingInjectionComponent());
+        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         binding = TvFragCallBinding.inflate(inflater, container, false);
         binding.setPresenter(this);
         return binding.getRoot();

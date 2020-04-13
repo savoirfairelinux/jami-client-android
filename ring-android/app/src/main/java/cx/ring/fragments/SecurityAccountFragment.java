@@ -100,7 +100,7 @@ public class SecurityAccountFragment extends BasePreferenceFragment<SecurityAcco
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
         // dependency injection
-        ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         super.onCreatePreferences(bundle, s);
 
         addPreferencesFromResource(R.xml.account_security_prefs);

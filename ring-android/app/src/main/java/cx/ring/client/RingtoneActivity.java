@@ -83,7 +83,7 @@ public class RingtoneActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        JamiApplication.getInstance().getRingInjectionComponent().inject(this);
+        JamiApplication.getInstance().getInjectionComponent().inject(this);
         setContentView(R.layout.activity_ringtone);
         super.onCreate(savedInstanceState);
         mAccount = mAccountService.getAccount(getIntent().getExtras().getString(AccountEditionFragment.ACCOUNT_ID_KEY));

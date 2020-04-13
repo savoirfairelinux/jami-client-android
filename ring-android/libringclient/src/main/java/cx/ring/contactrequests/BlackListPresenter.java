@@ -58,7 +58,7 @@ public class BlackListPresenter extends RootPresenter<BlackListView> {
         super.unbindView();
     }
 
-    public void updateList(Collection<CallContact> list) {
+    private void updateList(Collection<CallContact> list) {
         if (getView() == null) {
             return;
         }

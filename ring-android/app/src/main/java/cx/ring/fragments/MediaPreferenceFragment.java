@@ -74,7 +74,7 @@ public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPrefere
 
     @Override
     public void onCreatePreferences(Bundle bundle, String rootKey) {
-        ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         super.onCreatePreferences(bundle, rootKey);
 
         String accountId = getArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY);
