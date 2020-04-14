@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dc0610d7_3b5e0109",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/conversation/ConversationPresenter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2020-04-14T15:23:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cc09dcd_2d5c6004",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 33
+      },
+      "revId": "042e5779ea0f99b7d9f81d10facb87f688a7381d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d6e80ef_da18640a",
         "filename": "ring-android/libringclient/src/main/java/cx/ring/conversation/ConversationPresenter.java",
         "patchSetId": 5
@@ -93,6 +117,30 @@
       "revId": "042e5779ea0f99b7d9f81d10facb87f688a7381d",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "512c9199_3e4b9d0c",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/conversation/ConversationPresenter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2020-04-14T15:23:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7af7f4b4_e0e400a4",
+      "range": {
+        "startLine": 154,
+        "startChar": 8,
+        "endLine": 164,
+        "endChar": 20
+      },
+      "revId": "042e5779ea0f99b7d9f81d10facb87f688a7381d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
