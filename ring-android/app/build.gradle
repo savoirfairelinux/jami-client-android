@@ -58,6 +58,9 @@ android {
             universalApk true
         }
     }
+    viewBinding {
+        enabled true
+    }
     dataBinding {
         enabled true
     }
@@ -71,7 +74,6 @@ dependencies {
     def android_support_core_version = '1.1.0'
     def android_support_version = '1.0.0'
     def material_version = '1.1.0'
-    def butterknife_version = '10.2.1'
     def dagger_version = '2.27'
 
     implementation fileTree(include: '*.jar', dir: 'libs')
@@ -97,10 +99,6 @@ dependencies {
     // Barcode scanning
     implementation('com.journeyapps:zxing-android-embedded:4.0.2@aar') { transitive = false }
     implementation 'com.google.zxing:core:3.3.3'
-
-    // Butterknife
-    implementation "com.jakewharton:butterknife:$butterknife_version"
-    annotationProcessor "com.jakewharton:butterknife-compiler:${butterknife_version}"
 
     // RxBindings
     implementation 'com.jakewharton.rxbinding3:rxbinding:3.1.0'

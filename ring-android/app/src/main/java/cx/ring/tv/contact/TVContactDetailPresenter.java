@@ -37,8 +37,7 @@ public class TVContactDetailPresenter extends Presenter {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.tv, viewGroup, false);
-        return new CustomViewHolder(view);
+        return new CustomViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.tv, viewGroup, false));
     }
 
     @Override
@@ -51,13 +50,13 @@ public class TVContactDetailPresenter extends Presenter {
 
     }
 
-    public static class CustomViewHolder extends Presenter.ViewHolder {
+    private static class CustomViewHolder extends Presenter.ViewHolder {
 
-        public CustomViewHolder(View view) {
+        CustomViewHolder(View view) {
             super(view);
         }
 
-        public void bind(TVListViewModel object) {
+        void bind(TVListViewModel object) {
             Fragment fragment = TvConversationFragment.newInstance(object);
             FragmentManager fragmentManager = ((TVContactActivity) view.getContext()).getSupportFragmentManager();
 

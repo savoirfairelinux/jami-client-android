@@ -21,40 +21,25 @@ package cx.ring.account;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.textfield.TextInputLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
-import butterknife.BindString;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnEditorAction;
 import cx.ring.R;
+import cx.ring.databinding.DialogConfirmRevocationBinding;
 
 public class BackupAccountDialog extends DialogFragment {
     static final String TAG = BackupAccountDialog.class.getSimpleName();
 
-    @BindView(R.id.password_txt_box)
-    protected TextInputLayout mPasswordTxtBox;
-
-    @BindView(R.id.password_txt)
-    protected EditText mPasswordTxt;
-
-    @BindString(R.string.enter_password)
-    protected String mPromptPassword;
-
     private String mAccountId;
 
     private UnlockAccountListener mListener = null;
+    private DialogConfirmRevocationBinding binding;
 
     public void setListener(UnlockAccountListener listener) {
         mListener = listener;
@@ -63,18 +48,28 @@ public class BackupAccountDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        View view = requireActivity().getLayoutInflater().inflate(R.layout.dialog_confirm_revocation, null);
-        ButterKnife.bind(this, view);
+        binding = DialogConfirmRevocationBinding.inflate(getActivity().getLayoutInflater());
 
         Bundle args = getArguments();
         if (args != null) {
             mAccountId = args.getString(AccountEditionFragment.ACCOUNT_ID_KEY);
         }
 
+        binding.passwordTxt.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                boolean validationResult = validate();
+                if (validationResult) {
+                    getDialog().dismiss();
+                }
+                return validationResult;
+            }
+            return false;
+        });
+
         final AlertDialog result = new MaterialAlertDialogBuilder(requireContext())
                 .setTitle(R.string.account_enter_password)
                 .setMessage(R.string.account_new_device_password)
-                .setView(view)
+                .setView(binding.getRoot())
                 .setPositiveButton(android.R.string.ok, null) //Set to null. We override the onclick
                 .setNegativeButton(android.R.string.cancel,
                         (dialog, whichButton) -> dismiss()
@@ -94,23 +89,8 @@ public class BackupAccountDialog extends DialogFragment {
 
     private boolean validate() {
         if (mListener != null) {
-            mListener.onUnlockAccount(mAccountId, mPasswordTxt.getText().toString());
+            mListener.onUnlockAccount(mAccountId, binding.passwordTxt.getText().toString());
             return true;
-        }
-        return false;
-    }
-
-    @OnEditorAction({R.id.password_txt})
-    public boolean onEditorAction(TextView v, int actionId) {
-        if (v == mPasswordTxt) {
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                boolean validationResult = validate();
-                if (validationResult) {
-                    getDialog().dismiss();
-                }
-
-                return validationResult;
-            }
         }
         return false;
     }

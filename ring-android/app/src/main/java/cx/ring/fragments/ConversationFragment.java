@@ -75,7 +75,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.OnEditorAction;
 import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.adapters.ConversationAdapter;
@@ -89,7 +88,6 @@ import cx.ring.contacts.AvatarFactory;
 import cx.ring.conversation.ConversationPresenter;
 import cx.ring.conversation.ConversationView;
 import cx.ring.databinding.FragConversationBinding;
-import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.interfaces.Colorable;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
@@ -197,16 +195,6 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         }
     }
 
-    @Override
-    public int getLayout() {
-        return R.layout.frag_conversation;
-    }
-
-    @Override
-    public void injectFragment(JamiInjectionComponent component) {
-        component.inject(this);
-    }
-
     private static void setBottomPadding(@NonNull View view, int padding) {
         view.setPadding(
                 view.getPaddingLeft(),
@@ -227,7 +215,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        injectFragment(((JamiApplication) getActivity().getApplication()).getRingInjectionComponent());
+        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         Resources res = getResources();
         marginPx = res.getDimensionPixelSize(R.dimen.conversation_message_input_margin);
         mapWidth = res.getDimensionPixelSize(R.dimen.location_sharing_minmap_width);
@@ -340,6 +328,8 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         if (animator != null)
             animator.setSupportsChangeAnimations(false);
         binding.histList.setAdapter(mAdapter);
+
+
     }
 
     @Override
@@ -741,7 +731,6 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         }
     }
 
-    @OnEditorAction(R.id.msg_input_txt)
     boolean actionSendMsgText(int actionId) {
         switch (actionId) {
             case EditorInfo.IME_ACTION_SEND:

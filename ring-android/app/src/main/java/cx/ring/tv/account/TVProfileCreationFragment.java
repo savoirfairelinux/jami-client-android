@@ -119,7 +119,7 @@ public class TVProfileCreationFragment extends JamiGuidedStepFragment<ProfileCre
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         super.onViewCreated(view, savedInstanceState);
 
         if (mModel == null) {

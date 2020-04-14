@@ -28,10 +28,10 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.tabs.TabLayout;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -39,13 +39,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AlertDialog;
 
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -55,10 +56,11 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import butterknife.BindView;
 import cx.ring.R;
+import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.contactrequests.BlackListFragment;
+import cx.ring.databinding.FragAccountSettingsBinding;
 import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.fragments.AdvancedAccountFragment;
 import cx.ring.fragments.GeneralAccountFragment;
@@ -80,21 +82,29 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
 
     private static final int SCROLL_DIRECTION_UP = -1;
 
+    private FragAccountSettingsBinding binding;
+
     private boolean mIsVisible;
-
-    @BindView(R.id.pager)
-    protected ViewPager mViewPager;
-
-    @BindView(R.id.sliding_tabs)
-    protected TabLayout mSlidingTabLayout;
-
-    @BindView(R.id.fragment_container)
-    protected FrameLayout frameLayout;
 
     private MenuItem mItemAdvanced;
     private MenuItem mItemBlacklist;
 
     private String mAccountId;
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragAccountSettingsBinding.inflate(inflater, container, false);
+        // dependency injection
+        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -122,7 +132,7 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
             title.setLayoutParams(params);
         }
 
-        frameLayout.getViewTreeObserver().addOnScrollChangedListener(this);
+        binding.fragmentContainer.getViewTreeObserver().addOnScrollChangedListener(this);
     }
 
     @Override
@@ -152,9 +162,9 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
 
     @Override
     public void initViewPager(String accountId, boolean isJami) {
-        mViewPager.setOffscreenPageLimit(4);
-        mSlidingTabLayout.setupWithViewPager(mViewPager);
-        mViewPager.setAdapter(new PreferencesPagerAdapter(getFragmentManager(), getActivity(), accountId, isJami));
+        binding.pager.setOffscreenPageLimit(4);
+        binding.slidingTabs.setupWithViewPager(binding.pager);
+        binding.pager.setAdapter(new PreferencesPagerAdapter(getFragmentManager(), getActivity(), accountId, isJami));
     }
 
     @Override
@@ -182,9 +192,9 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
                 .addToBackStack(BlackListFragment.TAG)
                 .replace(R.id.fragment_container, blackListFragment, BlackListFragment.TAG)
                 .commit();
-        mSlidingTabLayout.setVisibility(View.GONE);
-        mViewPager.setVisibility(View.GONE);
-        frameLayout.setVisibility(View.VISIBLE);
+        binding.slidingTabs.setVisibility(View.GONE);
+        binding.pager.setVisibility(View.GONE);
+        binding.fragmentContainer.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -219,7 +229,7 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
         mIsVisible = false;
         if (getActivity() instanceof HomeActivity)
             ((HomeActivity) getActivity()).setToolbarOutlineState(true);
-        if (frameLayout.getVisibility() != View.VISIBLE) {
+        if (binding.fragmentContainer.getVisibility() != View.VISIBLE) {
             toggleView(mAccountId);
             return  true;
         }
@@ -238,9 +248,9 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
         mAccountId = accountId;
         boolean isRing = presenter.getAccount(mAccountId).isRing();
 
-        mSlidingTabLayout.setVisibility(isRing? View.GONE : View.VISIBLE);
-        mViewPager.setVisibility(isRing? View.GONE : View.VISIBLE);
-        frameLayout.setVisibility(isRing? View.VISIBLE : View.GONE);
+        binding.slidingTabs.setVisibility(isRing? View.GONE : View.VISIBLE);
+        binding.pager.setVisibility(isRing? View.GONE : View.VISIBLE);
+        binding.fragmentContainer.setVisibility(isRing? View.VISIBLE : View.GONE);
         presenter.prepareOptionsMenu();
         setBackListenerEnabled(isRing);
 
@@ -248,7 +258,7 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
         JamiAccountSummaryFragment fragment = (JamiAccountSummaryFragment) fragmentManager.findFragmentByTag(JamiAccountSummaryFragment.TAG);
         if (fragment != null) {
             fragment.setFragmentVisibility(isRing);
-            fragment.onScrollChanged();
+            fragment.setAccount(accountId);
         }
     }
 
@@ -264,9 +274,9 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
                 deleteDialog.show();
                 break;
             case R.id.menuitem_advanced:
-                mSlidingTabLayout.setVisibility(View.VISIBLE);
-                mViewPager.setVisibility(View.VISIBLE);
-                frameLayout.setVisibility(View.GONE);
+                binding.slidingTabs.setVisibility(View.VISIBLE);
+                binding.pager.setVisibility(View.VISIBLE);
+                binding.fragmentContainer.setVisibility(View.GONE);
                 JamiAccountSummaryFragment fragment = (JamiAccountSummaryFragment) requireFragmentManager().findFragmentByTag(JamiAccountSummaryFragment.TAG);
                 if (fragment != null)
                     fragment.setFragmentVisibility(false);
@@ -310,16 +320,6 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
         Activity activity = getActivity();
         if (activity != null)
             activity.onBackPressed();
-    }
-
-    @Override
-    public int getLayout() {
-        return R.layout.frag_account_settings;
-    }
-
-    @Override
-    public void injectFragment(JamiInjectionComponent component) {
-        component.inject(this);
     }
 
     private void setBackListenerEnabled(boolean enable) {
@@ -431,23 +431,23 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
     }
 
     private void setupElevation() {
-        if (mViewPager == null || !mIsVisible) {
+        if (binding == null || !mIsVisible) {
             return;
         }
         Activity activity = getActivity();
         if (!(activity instanceof HomeActivity))
             return;
-        LinearLayout ll = (LinearLayout) mViewPager.getChildAt(mViewPager.getCurrentItem());
+        LinearLayout ll = (LinearLayout) binding.pager.getChildAt(binding.pager.getCurrentItem());
         if (ll == null) return;
         RecyclerView rv = (RecyclerView)((FrameLayout) ll.getChildAt(0)).getChildAt(0);
         if (rv == null) return;
         HomeActivity homeActivity = (HomeActivity) activity;
         if (rv.canScrollVertically(SCROLL_DIRECTION_UP)) {
-            mSlidingTabLayout.setElevation(mSlidingTabLayout.getResources().getDimension(R.dimen.toolbar_elevation));
+            binding.slidingTabs.setElevation(binding.slidingTabs.getResources().getDimension(R.dimen.toolbar_elevation));
             homeActivity.setToolbarElevation(true);
             homeActivity.setToolbarOutlineState(false);
         } else {
-            mSlidingTabLayout.setElevation(0);
+            binding.slidingTabs.setElevation(0);
             homeActivity.setToolbarElevation(false);
             homeActivity.setToolbarOutlineState(true);
         }

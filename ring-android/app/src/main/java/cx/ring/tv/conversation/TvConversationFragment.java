@@ -23,7 +23,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
@@ -35,7 +34,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.transition.TransitionManager;
@@ -44,6 +42,7 @@ import android.provider.MediaStore;
 import android.speech.RecognizerIntent;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,8 +68,8 @@ import cx.ring.client.MediaViewerActivity;
 import cx.ring.contacts.AvatarFactory;
 import cx.ring.conversation.ConversationPresenter;
 import cx.ring.conversation.ConversationView;
-import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.model.Account;
+import cx.ring.databinding.FragConversationTvBinding;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.model.DataTransfer;
@@ -130,6 +129,7 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     private Map<String, AvatarDrawable> mParticipantAvatars = new HashMap<>();
 
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
+    private FragConversationTvBinding binding;
 
     public static TvConversationFragment newInstance(TVListViewModel param) {
         TvConversationFragment fragment = new TvConversationFragment();
@@ -141,13 +141,25 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mTvListViewModel = getArguments().getParcelable(ARG_MODEL);
         }
+        requestPermissions(permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+    }
 
-        ActivityCompat.requestPermissions(getActivity(), permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragConversationTvBinding.inflate(inflater, container, false);
+        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     // Create an intent that can start the Speech Recognizer activity
@@ -156,17 +168,6 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Say something...");
         startActivityForResult(intent, REQUEST_SPEECH_CODE);
-    }
-
-
-    @Override
-    public int getLayout() {
-        return R.layout.frag_conversation_tv;
-    }
-
-    @Override
-    public void injectFragment(JamiInjectionComponent component) {
-        component.inject(this);
     }
 
     @Override
@@ -281,14 +282,11 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
                 .create();
         alertDialog.getWindow().setLayout(DIALOG_WIDTH, DIALOG_HEIGHT);
         alertDialog.setOwnerActivity(getActivity());
-        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialog) {
-                Button positive = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                positive.setFocusable(true);
-                positive.setFocusableInTouchMode(true);
-                positive.requestFocus();
-            }
+        alertDialog.setOnShowListener(dialog -> {
+            Button positive = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            positive.setFocusable(true);
+            positive.setFocusableInTouchMode(true);
+            positive.requestFocus();
         });
 
         alertDialog.show();

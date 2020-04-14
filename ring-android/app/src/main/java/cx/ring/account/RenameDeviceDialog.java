@@ -22,34 +22,23 @@ import android.app.Dialog;
 import android.os.Bundle;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.textfield.TextInputLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import android.view.View;
+
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.fragment.app.DialogFragment;
-import butterknife.BindString;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnEditorAction;
 import cx.ring.R;
+import cx.ring.databinding.DialogDeviceRenameBinding;
 
 public class RenameDeviceDialog extends DialogFragment {
     public static final String DEVICENAME_KEY = "devicename_key";
     static final String TAG = RenameDeviceDialog.class.getSimpleName();
-    @BindView(R.id.ring_device_name_txt_box)
-    public TextInputLayout mDeviceNameTxtBox;
-    @BindView(R.id.ring_device_name_txt)
-    public EditText mDeviceNameTxt;
-    @BindString(R.string.account_device_name_empty)
-    protected String mPromptDeviceName;
     private RenameDeviceListener mListener = null;
+    private DialogDeviceRenameBinding binding;
 
     public void setListener(RenameDeviceListener listener) {
         mListener = listener;
@@ -58,13 +47,22 @@ public class RenameDeviceDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        View view = requireActivity().getLayoutInflater().inflate(R.layout.dialog_device_rename, null);
-        ButterKnife.bind(this, view);
+        binding = DialogDeviceRenameBinding.inflate(getActivity().getLayoutInflater());
 
-        mDeviceNameTxt.setText(getArguments().getString(DEVICENAME_KEY));
+        binding.ringDeviceNameTxt.setText(getArguments().getString(DEVICENAME_KEY));
+        binding.ringDeviceNameTxt.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                boolean validationResult = validate();
+                if (validationResult) {
+                    getDialog().dismiss();
+                }
+                return validationResult;
+            }
+            return false;
+        });
 
         final AlertDialog dialog = new MaterialAlertDialogBuilder(requireContext())
-                .setView(view)
+                .setView(binding.getRoot())
                 .setTitle(R.string.rename_device_title)
                 .setMessage(R.string.rename_device_message)
                 .setPositiveButton(R.string.rename_device_button, null)
@@ -90,35 +88,21 @@ public class RenameDeviceDialog extends DialogFragment {
 
     private boolean checkInput(String input) {
         if (input.isEmpty()) {
-            mDeviceNameTxtBox.setErrorEnabled(true);
-            mDeviceNameTxtBox.setError(mPromptDeviceName);
+            binding.ringDeviceNameTxtBox.setErrorEnabled(true);
+            binding.ringDeviceNameTxtBox.setError(getText(R.string.account_device_name_empty));
             return false;
         } else {
-            mDeviceNameTxtBox.setErrorEnabled(false);
-            mDeviceNameTxtBox.setError(null);
+            binding.ringDeviceNameTxtBox.setErrorEnabled(false);
+            binding.ringDeviceNameTxtBox.setError(null);
         }
         return true;
     }
 
     private boolean validate() {
-        String input = mDeviceNameTxt.getText().toString().trim();
+        String input = binding.ringDeviceNameTxt.getText().toString().trim();
         if (checkInput(input) && mListener != null) {
             mListener.onDeviceRename(input);
             return true;
-        }
-        return false;
-    }
-
-    @OnEditorAction({R.id.ring_device_name_txt})
-    public boolean onEditorAction(TextView v, int actionId) {
-        if (v == mDeviceNameTxt) {
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                boolean validationResult = validate();
-                if (validationResult) {
-                    getDialog().dismiss();
-                }
-                return validationResult;
-            }
         }
         return false;
     }

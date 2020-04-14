@@ -32,7 +32,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
@@ -83,7 +82,7 @@ public class ShareWithFragment extends Fragment {
      * fragment (e.g. upon screen orientation changes).
      */
     public ShareWithFragment() {
-        JamiApplication.getInstance().getRingInjectionComponent().inject(this);
+        JamiApplication.getInstance().getInjectionComponent().inject(this);
     }
 
     public static ShareWithFragment newInstance() {

@@ -33,9 +33,6 @@ import androidx.leanback.widget.SearchEditText;
 import androidx.core.content.ContextCompat;
 import android.view.View;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.CallActivity;
@@ -51,16 +48,10 @@ import cx.ring.utils.ConversationPath;
 
 public class ContactSearchFragment extends BaseSearchFragment<ContactSearchPresenter>
         implements SearchSupportFragment.SearchResultProvider, ContactSearchView {
-
-    private static final String TAG = ContactSearchFragment.class.getSimpleName();
-    @BindView(R.id.lb_search_text_editor)
-    SearchEditText mTextEditor;
-
-    @BindView(R.id.lb_search_bar)
-    SearchBar mSearchBar;
+    private SearchEditText mTextEditor;
+    private SearchBar mSearchBar;
 
     private final ArrayObjectAdapter mRowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
-    private Unbinder mUnbinder;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,7 +59,7 @@ public class ContactSearchFragment extends BaseSearchFragment<ContactSearchPrese
         setSearchResultProvider(this);
 
         // dependency injection
-        ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         setOnItemViewClickedListener((itemViewHolder, item, rowViewHolder, row) -> presenter.contactClicked(((ContactCard) item).getModel()));
         setBadgeDrawable(ContextCompat.getDrawable(getActivity(), R.mipmap.ic_launcher));
         setSearchQuery("", false);
@@ -77,8 +68,9 @@ public class ContactSearchFragment extends BaseSearchFragment<ContactSearchPrese
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mTextEditor = view.findViewById(R.id.lb_search_text_editor);
+        mSearchBar = view.findViewById(R.id.lb_search_bar);
         // view injection
-        mUnbinder = ButterKnife.bind(this, view);
         mSearchBar.setSearchBarListener(new SearchBar.SearchBarListener() {
             @Override
             public void onSearchQueryChange(String query) {
@@ -109,7 +101,6 @@ public class ContactSearchFragment extends BaseSearchFragment<ContactSearchPrese
 
     @Override
     public void onDestroyView() {
-        mUnbinder.unbind();
         super.onDestroyView();
     }
 

@@ -143,7 +143,7 @@ public class GeneralAccountFragment extends BasePreferenceFragment<GeneralAccoun
 
     @Override
     public void onCreatePreferences(Bundle bundle, String rootKey) {
-        ((JamiApplication) requireActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) requireActivity().getApplication()).getInjectionComponent().inject(this);
         super.onCreatePreferences(bundle, rootKey);
 
         Bundle args = getArguments();

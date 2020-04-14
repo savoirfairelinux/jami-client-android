@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -31,17 +32,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.util.List;
 import java.util.Objects;
 
-import butterknife.BindView;
 import cx.ring.R;
 import cx.ring.adapters.SmartListAdapter;
+import cx.ring.application.JamiApplication;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
-import cx.ring.dependencyinjection.JamiInjectionComponent;
+import cx.ring.databinding.FragPendingContactRequestsBinding;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.ConversationPath;
@@ -56,31 +56,23 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
 
     private static final int SCROLL_DIRECTION_UP = -1;
 
-    @BindView(R.id.requests_list)
-    protected RecyclerView mRequestsList;
+    private SmartListAdapter mAdapter;
+    private FragPendingContactRequestsBinding binding;
 
-    @BindView(R.id.pane_ringID)
-    protected TextView mPaneTextView;
-
-    @BindView(R.id.emptyTextView)
-    protected TextView mEmptyTextView;
-
-    public SmartListAdapter mAdapter;
-
+    @Nullable
     @Override
-    public int getLayout() {
-        return R.layout.frag_pending_contact_requests;
-    }
-
-    @Override
-    public void injectFragment(JamiInjectionComponent component) {
-        component.inject(this);
-    }
-
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragPendingContactRequestsBinding.inflate(inflater, container, false);
+        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         setHasOptionsMenu(true);
-        return super.onCreateView(inflater, parent, savedInstanceState);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mAdapter = null;
+        binding = null;
     }
 
     public void presentForAccount(Bundle bundle) {
@@ -103,7 +95,7 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(Menu menu, @NonNull MenuInflater inflater) {
         menu.clear();
     }
 
@@ -114,26 +106,26 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
 
     @Override
     public void updateView(final List<SmartListViewModel> list) {
-        if (mPaneTextView == null || mEmptyTextView == null) {
+        if (binding == null) {
             return;
         }
 
         if (!list.isEmpty()) {
-            mPaneTextView.setVisibility(/*viewModel.hasPane() ? View.VISIBLE :*/ View.GONE);
+            binding.paneRingID.setVisibility(/*viewModel.hasPane() ? View.VISIBLE :*/ View.GONE);
         }
 
-        mEmptyTextView.setVisibility(list.isEmpty() ? View.VISIBLE : View.GONE);
+        binding.emptyTextView.setVisibility(list.isEmpty() ? View.VISIBLE : View.GONE);
 
-        if (mRequestsList.getAdapter() != null) {
+        if (binding.requestsList.getAdapter() != null) {
             mAdapter.update(list);
         } else {
             mAdapter = new SmartListAdapter(list, ContactRequestsFragment.this);
-            mRequestsList.setAdapter(mAdapter);
+            binding.requestsList.setAdapter(mAdapter);
             LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-            mRequestsList.setLayoutManager(mLayoutManager);
+            binding.requestsList.setLayoutManager(mLayoutManager);
         }
 
-        mRequestsList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        binding.requestsList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -141,7 +133,7 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
 
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                ((HomeActivity) getActivity()).setToolbarElevation(mRequestsList.canScrollVertically(SCROLL_DIRECTION_UP));
+                ((HomeActivity) getActivity()).setToolbarElevation(recyclerView.canScrollVertically(SCROLL_DIRECTION_UP));
             }
         });
 

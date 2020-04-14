@@ -65,7 +65,6 @@ import cx.ring.model.Conversation;
 import cx.ring.model.SipCall;
 import cx.ring.services.AccountService;
 import cx.ring.services.NotificationService;
-import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.ConversationPath;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -172,7 +171,7 @@ public class ContactDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_contact_details);
-        JamiApplication.getInstance().getRingInjectionComponent().inject(this);
+        JamiApplication.getInstance().getInjectionComponent().inject(this);
 
         CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.toolbar_layout);
         collapsingToolbarLayout.setTitle("");
@@ -275,7 +274,7 @@ public class ContactDetailsActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         adapter.actions.clear();
-        mDisposableBag.clear();
+        mDisposableBag.dispose();
         super.onDestroy();
         contactAction = null;
         colorAction = null;

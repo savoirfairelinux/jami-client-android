@@ -57,6 +57,6 @@ public interface JamiAccountSummaryView {
 
     void askGalleryPermission();
 
-    void updateUserView();
+    void updateUserView(Account account);
 
 }

@@ -22,7 +22,6 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 import androidx.leanback.app.GuidedStepSupportFragment;
@@ -32,7 +31,6 @@ import android.widget.Toast;
 
 import java.io.File;
 
-import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.account.AccountCreationModelImpl;
 import cx.ring.account.AccountWizardPresenter;
@@ -42,7 +40,6 @@ import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.mvp.AccountCreationModel;
 import cx.ring.mvp.BaseActivity;
-import cx.ring.tv.main.HomeActivity;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import io.reactivex.Single;
@@ -61,9 +58,8 @@ public class TVAccountWizard
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        JamiApplication.getInstance().getRingInjectionComponent().inject(this);
+        JamiApplication.getInstance().getInjectionComponent().inject(this);
         super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
         JamiApplication.getInstance().startDaemon();
 
         Intent intent = getIntent();

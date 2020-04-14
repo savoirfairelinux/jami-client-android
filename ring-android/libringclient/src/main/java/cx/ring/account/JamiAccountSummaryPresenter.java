@@ -178,7 +178,7 @@ public class JamiAccountSummaryPresenter extends RootPresenter<JamiAccountSummar
                 .subscribe(vcard -> {
                     account.setProfile(vcard);
                     mAccountService.refreshAccounts();
-                    getView().updateUserView();
+                    getView().updateUserView(account);
                 }, e -> Log.e(TAG, "Error saving vCard !", e)));
     }
 
@@ -203,7 +203,7 @@ public class JamiAccountSummaryPresenter extends RootPresenter<JamiAccountSummar
                 .subscribe(vcard -> {
                     account.setProfile(vcard);
                     mAccountService.refreshAccounts();
-                    getView().updateUserView();
+                    getView().updateUserView(account);
                 }, e -> Log.e(TAG, "Error saving vCard !", e)));
     }
 

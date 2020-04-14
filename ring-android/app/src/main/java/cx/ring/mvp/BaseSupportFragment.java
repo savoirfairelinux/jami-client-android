@@ -20,24 +20,16 @@
 package cx.ring.mvp;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import javax.inject.Inject;
 
 import androidx.annotation.IdRes;
-import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import cx.ring.R;
 import cx.ring.account.JamiAccountCreationFragment;
-import cx.ring.application.JamiApplication;
-import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.model.Error;
 
 public abstract class BaseSupportFragment<T extends RootPresenter> extends Fragment implements BaseView {
@@ -47,28 +39,8 @@ public abstract class BaseSupportFragment<T extends RootPresenter> extends Fragm
     @Inject
     protected T presenter;
 
-    private Unbinder mUnbinder;
-
-    @LayoutRes
-    public abstract int getLayout();
-
-    public abstract void injectFragment(JamiInjectionComponent component);
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View inflatedView = inflater.inflate(getLayout(), container, false);
-        // dependency injection
-        injectFragment(((JamiApplication) getActivity().getApplication()).getRingInjectionComponent());
-        //Butterknife
-        mUnbinder = ButterKnife.bind(this, inflatedView);
-        return inflatedView;
-    }
-
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
         //Be sure to do the injection in onCreateView method
         if (presenter != null) {
             presenter.bindView(this);
@@ -81,10 +53,6 @@ public abstract class BaseSupportFragment<T extends RootPresenter> extends Fragm
         super.onDestroyView();
         if (presenter != null)
             presenter.unbindView();
-        // Butterknife unbinding
-        if (mUnbinder != null) {
-            mUnbinder.unbind();
-        }
     }
 
     public void displayErrorToast(Error error) {

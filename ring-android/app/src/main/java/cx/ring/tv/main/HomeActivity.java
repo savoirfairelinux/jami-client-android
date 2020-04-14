@@ -46,7 +46,7 @@ public class HomeActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         JamiApplication.getInstance().startDaemon();
-        JamiApplication.getInstance().getRingInjectionComponent().inject(this);
+        JamiApplication.getInstance().getInjectionComponent().inject(this);
         setContentView(R.layout.tv_activity_home);
         mBackgroundManager = BackgroundManager.getInstance(this);
         mBackgroundManager.attach(getWindow());

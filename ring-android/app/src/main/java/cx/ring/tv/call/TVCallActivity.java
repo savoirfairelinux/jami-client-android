@@ -66,7 +66,7 @@ public class TVCallActivity extends FragmentActivity {
         setVolumeControlStream(AudioManager.STREAM_VOICE_CALL);
 
         // dependency injection
-        JamiApplication.getInstance().getRingInjectionComponent().inject(this);
+        JamiApplication.getInstance().getInjectionComponent().inject(this);
         JamiApplication.getInstance().startDaemon();
 
         boolean audioOnly = false;

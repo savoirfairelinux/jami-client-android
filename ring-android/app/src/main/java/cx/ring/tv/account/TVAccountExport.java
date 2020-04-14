@@ -65,7 +65,7 @@ public class TVAccountExport
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        ((JamiApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
 
         super.onViewCreated(view, savedInstanceState);
         presenter.setAccountId(mIdAccount);
@@ -77,7 +77,7 @@ public class TVAccountExport
         String title = getString(R.string.account_export_title);
         String breadcrumb = "";
         String description = getString(R.string.account_link_export_info_light);
-        Drawable icon = getActivity().getResources().getDrawable(R.drawable.baseline_devices_24);
+        Drawable icon = getContext().getDrawable(R.drawable.baseline_devices_24);
         return new GuidanceStylist.Guidance(title, description, breadcrumb, icon);
     }
 
@@ -214,7 +214,7 @@ public class TVAccountExport
     }
 
     @Override
-    public void updateUserView() {
+    public void updateUserView(Account account) {
 
     }
 

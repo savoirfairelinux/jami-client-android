@@ -129,7 +129,7 @@ public class LocationSharingService extends Service implements LocationListener 
 
     @Override
     public void onCreate() {
-        ((JamiApplication) getApplication()).getRingInjectionComponent().inject(this);
+        ((JamiApplication) getApplication()).getInjectionComponent().inject(this);
 
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         mNoticationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
