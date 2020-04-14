@@ -72,7 +72,14 @@ public class JamiAccountCreationFragment extends BaseSupportFragment<JamiAccount
         super.onViewCreated(view, savedInstanceState);
         setRetainInstance(true);
         binding.ringUsername.setFilters(new InputFilter[]{new RegisteredNameFilter()});
-        binding.ringPasswordSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> binding.ringPasswordBox.setVisibility(isChecked ? View.VISIBLE : View.GONE));
+        binding.ringPasswordSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            binding.ringPasswordBox.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+            if (isChecked) {
+                presenter.passwordChanged(binding.ringPassword.getText().toString(), binding.ringPasswordRepeat.getText().toString());
+            } else {
+                presenter.passwordUnset();
+            }
+        });
         binding.switchRingPush.setOnCheckedChangeListener((buttonView, isChecked) -> presenter.setPush(isChecked));
         binding.switchRingUsername.setOnCheckedChangeListener((buttonView, isChecked) -> presenter.registerUsernameChanged(isChecked));
         binding.createAccount.setOnClickListener(v -> presenter.createAccount());
