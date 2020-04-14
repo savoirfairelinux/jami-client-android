@@ -661,8 +661,11 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
             Context context = requireContext();
             File file = AndroidFileUtils.createImageFile(context);
             Uri uri = FileProvider.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, file);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
+                    .addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+                    .putExtra("android.intent.extras.CAMERA_FACING", 1)
+                    .putExtra("android.intent.extras.LENS_FACING_FRONT", 1)
+                    .putExtra("android.intent.extra.USE_FRONT_CAMERA", true);
             tmpProfilePhotoUri = uri;
         } catch (Exception e) {
             Log.e(TAG, "Can't create temp file", e);

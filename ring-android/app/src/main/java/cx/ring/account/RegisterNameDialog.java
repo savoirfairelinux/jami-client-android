@@ -62,7 +62,7 @@ public class RegisterNameDialog extends DialogFragment {
         mListener = l;
     }
 
-    private void handleBlockchainResult(final int state, final String name) {
+    private void onLookupResult(final int state, final String name) {
         CharSequence actualName = binding.ringUsername.getText();
         if (actualName == null || actualName.length() == 0) {
             binding.ringUsernameTxtBox.setErrorEnabled(false);
@@ -70,7 +70,7 @@ public class RegisterNameDialog extends DialogFragment {
             return;
         }
 
-        if (actualName.equals(name)) {
+        if (name.contentEquals(actualName)) {
             switch (state) {
                 case 0:
                     // on found
@@ -156,7 +156,7 @@ public class RegisterNameDialog extends DialogFragment {
         mDisposableListener = mAccountService
                 .getRegisteredNames()
                 .observeOn(mUiScheduler)
-                .subscribe(r -> handleBlockchainResult(r.state, r.name));
+                .subscribe(r -> onLookupResult(r.state, r.name));
     }
 
     @Override
