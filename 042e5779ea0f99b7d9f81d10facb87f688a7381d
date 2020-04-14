@@ -69,6 +69,30 @@
       "revId": "042e5779ea0f99b7d9f81d10facb87f688a7381d",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7af7f4b4_e0e400a4",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/conversation/ConversationPresenter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-04-14T14:24:22Z",
+      "side": 1,
+      "message": "* use getObservableAccount instead of getObservableAccountUpdates to have a first account item emitted on subscription\n* getConnectivityState is a behaviorSubject so it will emit the last item on subscription\n\nThis should solve the issue",
+      "parentUuid": "dcd8b74a_2bb99061",
+      "range": {
+        "startLine": 154,
+        "startChar": 8,
+        "endLine": 164,
+        "endChar": 20
+      },
+      "revId": "042e5779ea0f99b7d9f81d10facb87f688a7381d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
     }
   ]
 }
