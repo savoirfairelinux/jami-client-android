@@ -22,7 +22,6 @@ package cx.ring.services;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
 import javax.inject.Inject;
@@ -50,8 +49,6 @@ public abstract class HardwareService {
     @Inject
     @Named("DaemonExecutor")
     ScheduledExecutorService mExecutor;
-
-    protected final ScheduledExecutorService mVideoExecutor = Executors.newSingleThreadScheduledExecutor(r -> new Thread(r, "VideoThread"));
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
