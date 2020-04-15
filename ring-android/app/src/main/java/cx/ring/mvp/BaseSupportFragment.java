@@ -75,7 +75,7 @@ public abstract class BaseSupportFragment<T extends RootPresenter> extends Fragm
                 break;
         }
 
-        Toast.makeText(getActivity(), errorString, Toast.LENGTH_LONG).show();
+        Toast.makeText(requireContext(), errorString, Toast.LENGTH_LONG).show();
     }
 
     protected void initPresenter(T presenter) {

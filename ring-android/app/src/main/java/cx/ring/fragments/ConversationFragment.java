@@ -328,8 +328,6 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         if (animator != null)
             animator.setSupportsChangeAnimations(false);
         binding.histList.setAdapter(mAdapter);
-
-
     }
 
     @Override
@@ -356,6 +354,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         }
         mAdapter = null;
         super.onDestroyView();
+        binding = null;
     }
 
     @Override
@@ -380,10 +379,6 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
 
     public void sendEmoji() {
         presenter.sendTextMessage(binding.emojiSend.getText().toString());
-    }
-
-    public void selectFile() {
-        presenter.selectFile();
     }
 
     @SuppressLint("RestrictedApi")
@@ -428,7 +423,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
                     break;
                 }
                 case R.id.conv_send_file:
-                    selectFile();
+                    presenter.selectFile();
                     break;
                 case R.id.conv_share_location:
                     shareLocation();
@@ -473,7 +468,6 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
 
     /**
      * Used to update with the past adapter position when a long click was registered
-     * @param position
      */
     public void updatePosition(int position) {
         mSelectedPosition = position;
@@ -1142,23 +1136,19 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         showErrorPanel(R.string.error_no_network, null);
     }
 
-    public void showErrorPanel(final int textResId, @Nullable View.OnClickListener clickListener) {
-        if (binding.errorMsgPane == null || binding.errorMsgPane.getVisibility() == View.VISIBLE) {
-            return;
-        }
-        binding.errorMsgPane.setVisibility(View.VISIBLE);
-        binding.errorMsgPane.setOnClickListener(clickListener);
-        if (binding.errorMsgTxt != null) {
+    private void showErrorPanel(final int textResId, @Nullable View.OnClickListener clickListener) {
+        if (binding != null) {
+            binding.errorMsgPane.setVisibility(View.VISIBLE);
+            binding.errorMsgPane.setOnClickListener(clickListener);
             binding.errorMsgTxt.setText(textResId);
         }
     }
 
     @Override
     public void hideErrorPanel() {
-        if (binding.errorMsgPane == null || binding.errorMsgPane.getVisibility() == View.GONE) {
-            return;
+        if (binding != null) {
+            binding.errorMsgPane.setVisibility(View.GONE);
         }
-        binding.errorMsgPane.setVisibility(View.GONE);
     }
 
 }

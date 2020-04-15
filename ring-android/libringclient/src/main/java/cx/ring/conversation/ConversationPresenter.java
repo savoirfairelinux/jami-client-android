@@ -84,12 +84,12 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                                  ConversationFacade conversationFacade,
                                  VCardService vCardService,
                                  DeviceRuntimeService deviceRuntimeService) {
-        this.mContactService = contactService;
-        this.mAccountService = accountService;
-        this.mHardwareService = hardwareService;
-        this.mConversationFacade = conversationFacade;
-        this.mVCardService = vCardService;
-        this.mDeviceRuntimeService = deviceRuntimeService;
+        mContactService = contactService;
+        mAccountService = accountService;
+        mHardwareService = hardwareService;
+        mConversationFacade = conversationFacade;
+        mVCardService = vCardService;
+        mDeviceRuntimeService = deviceRuntimeService;
     }
 
     @Override
