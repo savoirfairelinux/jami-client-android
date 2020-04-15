@@ -65,6 +65,7 @@ public class JamiLinkAccountFragment extends BaseSupportFragment<JamiLinkAccount
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         binding.linkButton.setOnClickListener(v -> presenter.linkClicked());
         binding.ringAddPin.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
