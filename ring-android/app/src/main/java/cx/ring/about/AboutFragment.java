@@ -135,7 +135,7 @@ public class AboutFragment extends BaseSupportFragment<RootPresenter> {
     }
 
     private void sendFeedbackEmail() {
-        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + "ring@gnu.org"));
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + "jami@gnu.org"));
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "[" + getText(R.string.app_name) + " Android - " + BuildConfig.VERSION_NAME + "]");
         launchSystemIntent(emailIntent, getString(R.string.email_chooser_title), getString(R.string.no_email_app_installed));
     }
