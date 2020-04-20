@@ -16,7 +16,7 @@
   <string name="action_create_short">作成</string>
   <string name="action_register">登録</string>
   <string name="action_settings">設定</string>
-  <string name="error_field_required">このフィールドは入力必須です</string>
+  <string name="error_field_required">このフィールドは必須です</string>
   <string name="dialog_wait_create">アカウントを追加</string>
   <string name="dialog_wait_create_details">新しいアカウントを追加しています。しばらくお待ちください...</string>
   <string name="dialog_wait_update">アカウントの更新</string>
@@ -26,7 +26,7 @@
 これは、直接のIP呼び出しによる発着信しかできません。
 アカウントを後で編集してください。</string>
   <string name="account_type_ip2ip">IPアカウント</string>
-  <string name="help_ring">Jamiアカウントを使用すると、完全に分散したネットワークを介してピアツーピアで安全に人々と連絡を取ることが出来ます。</string>
+  <string name="help_ring">Jamiアカウントを使って、完全に分散したネットワークを通じ、ピアツーピアで安全に連絡を取ることができます。</string>
   <string name="help_sip_title">SIPアカウントを追加</string>
   <string name="help_sip">既存のSIPアカウントを設定</string>
   <string name="create_sip_account">SIPアカウントを追加</string>
@@ -39,9 +39,9 @@
   <string name="normal_devices_titles">このJamiアカウントにリンクされている既知のデバイス</string>
   <string name="account_device_revoke">デバイスを取り消し</string>
   <string name="account_device_revocation_success_title">成功</string>
-  <string name="account_device_revocation_success">デバイスを取り消しました!</string>
+  <string name="account_device_revocation_success">デバイスを取り消しました</string>
   <string name="account_device_revocation_error_title">デバイスを取り消しできません</string>
-  <string name="account_device_revocation_wrong_password">パスワードが間違っています。</string>
+  <string name="account_device_revocation_wrong_password">パスワードが正しくありません</string>
   <string name="account_device_revocation_unknown_device">不明なデバイス。</string>
   <string name="account_device_revocation_error_unknown">不明なエラー。</string>
   <string name="account_password_change">パスワードを変更</string>
@@ -67,7 +67,8 @@
   <string name="account_ringtone_enabled_label">着信音を使用</string>
   <string name="account_ringtone_path_label">着信音のパス</string>
   <string name="account_ringtone_custom_label">カスタム着信音を使用</string>
-  <string name="account_ringtone_title">着信音を選択</string>
+  <string name="account_ringtone_title">着信音を設定</string>
+  <string name="account_ringtone_summary">着信音から選択するか、カスタムで設定します</string>
   <!--Video Details-->
   <string name="account_video_label">動画</string>
   <string name="account_video_enable">動画を有効化</string>
@@ -93,6 +94,7 @@
   <string name="account_proxy_label">DHTプロキシ</string>
   <string name="account_proxy_enable_label">DHTプロキシを使う</string>
   <string name="account_proxy_server_label">DHTプロキシアドレス</string>
+  <string name="account_proxy_server_list_label">DHTプロキシリストURL</string>
   <string name="account_peer_discovery_label">ローカルピアの発見</string>
   <string name="account_peer_discovery_enable_label">ローカルピアの発見を有効化</string>
   <string name="account_peer_discovery_enable_summary">ローカルネットワーク上の他のDHTノードに接続します</string>
@@ -124,6 +126,7 @@
   <string name="error_password_char_count">6文字以上</string>
   <string name="error_passwords_not_equals">パスワードが一致しません</string>
   <string name="export_account_wait_title">しばらくお待ちください…</string>
+  <string name="export_account_wait_message">アカウント情報をエクスポートしています</string>
   <string name="account_export_file">アカウントをバックアップ</string>
   <string name="account_export_end_decryption_message">提供されたパスワードを使用してアカウントをロック解除できませんでした。</string>
   <string name="account_export_end_network_title">ネットワークエラー</string>
@@ -156,17 +159,21 @@
   <string name="account_start_export_button">PINを生成</string>
   <string name="account_end_export_button">閉じる</string>
   <string name="account_link_export_info_light">別のデバイスでこのアカウントを使用するには、最初にJamiでそれを公開する必要があります。これにより、アカウントを設定するために新しいデバイスに入力するためのPINコードが生成されます。PINコードの有効期限は10分間です。</string>
+  <string name="account_export_title">デバイスの追加</string>
+  <string name="account_connect_server_button">管理サーバーに接続</string>
   <string name="account_connect_button">接続</string>
   <string name="account_connect_prompt_username">ユーザー名</string>
   <!--Name registration-->
   <string name="error_username_empty">ユーザー名を入力してください</string>
   <string name="no_registered_name_for_account">このアカウントの登録名が見つかりません</string>
+  <string name="username_available">使用できます</string>
   <string name="register_name">登録名</string>
   <string name="trying_to_register_name">名前を登録しようとしています</string>
   <string name="registered_username">登録名</string>
   <string name="register_username">公開ユーザー名を登録 (推奨)</string>
   <string name="username_already_taken">名前はすでに取得されています</string>
   <string name="invalid_username">無効なユーザー名</string>
+  <string name="unknown_error">不明なエラー。ネットワークの接続を確認してください。</string>
   <string name="looking_for_username_availability">利用可能なユーザー名を検索中…</string>
   <string name="account_status_connecting">接続中</string>
   <string name="account_status_connection_error">接続エラー</string>
@@ -190,8 +197,9 @@
   <string name="revoke_device_wait_title">しばらくお待ちください…</string>
   <string name="revoke_device_wait_message">デバイスを取り消し中</string>
   <string name="rename_device_title">このデバイスの名前を変更</string>
+  <string name="rename_device_message">Jami アカウントでこのデバイスだとわかる名前を設定しましょう</string>
   <string name="rename_device_button">デバイスの名前を変更</string>
-  <string name="account_rename_device_hint">新しいデバイス名を選択</string>
+  <string name="account_rename_device_hint">新しいデバイス名</string>
   <string name="account_device_name_empty">デバイス名は空にできません</string>
   <string name="account_device_this_indicator">このデバイス</string>
   <string name="account_disabled_indicator">無効</string>

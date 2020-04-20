@@ -127,9 +127,9 @@
   <string name="ringtone_custom_label">Benutzerdefiniert</string>
   <string name="ringtone_jami_tones">Jami Töne</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Ring benötigt die Berechtigung \"Kontaktdaten lesen\" für diese Funktion. Bitte erteilen Sie diese.</string>
+  <string name="permission_dialog_read_contacts_message">Jami benötigt die Berechtigung \"Kontaktdaten lesen\" für diese Funktion. Bitte erteilen Sie diese.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Ring benötigt die Berechtigung \"Anruflisten schreiben\" für diese Funktion. Bitte erteilen Sie diese.</string>
+  <string name="permission_dialog_write_call_log_message">Jami benötigt die Berechtigung \"Anruflisten schreiben\" für diese Funktion. Bitte erteilen Sie diese.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Scannen Sie den QR-Code des Kontos, das Sie hinzufügen möchten.</string>
   <string name="title_activity_qrcode">Mein Konto teilen</string>

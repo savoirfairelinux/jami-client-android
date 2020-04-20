@@ -15,9 +15,12 @@
   <string name="license">Tämä ohjelmisto on jaettu sellaisenaan, ilman minkäänlaista takuuta. Saadaksesi lisätietoja, katso <u>GNU General Public License versio 3 tai myöhempi</u></string>
   <string name="description">Jami on vapaa ja universaali viestintäalusta, joka kunnioittaa käyttäjiensä vapauksia ja yksityisyyttä.</string>
   <string name="credits">Tekijät</string>
+  <string name="call_service_description">Tämä palvelu on välttämätön puhelusi pitämiseksi etualalla. Se toimii vain puheluiden aikana.</string>
+  <string name="data_transfer_service_description">Tämä palvelu on välttämätön pysyvien ilmoitusten näyttämiseksi tiedostojen siirron aikana. Se toimii vain tiedostojen siirron aikana.</string>
   <!--About dialog-->
   <string name="developed_by">Kehittänyt</string>
   <string name="designed_by">Suunnitellut</string>
+  <string name="ringtones_by">Soittoääniä</string>
   <!--RingActivity-->
   <string name="error_no_network">Ei verkkoyhteyttä</string>
   <string name="error_mobile_network_available_but_disabled">Anna lupa muuttaa verkkoasetuksia asetusruudussa</string>
@@ -40,6 +43,7 @@
     <item quantity="other">%d Keskustelut</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Etsi nimi tai puhelinnumero…</string>
   <string name="choose_number">Valitse numero</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -50,21 +54,34 @@
   <string name="notif_incoming_call">Saapuva puhelu</string>
   <string name="notif_outgoing_call_title">Lähtevä puhelu %1$s</string>
   <string name="notif_outgoing_call">Lähtevä puhelu</string>
+  <string name="notif_current_call_title">Jatkuva puhelu... %1$s</string>
   <string name="notif_current_call">Tämänhetkinen puhelu</string>
+  <string name="notif_channel_call_in_progress">Puhelu käynnissä</string>
   <string name="notif_channel_calls">Puhelut</string>
   <string name="notif_channel_missed_calls">Vastaamattomat puhelut</string>
+  <string name="notif_channel_incoming_calls">Saapuvat puhelut</string>
   <string name="notif_channel_messages">Viestit</string>
   <string name="notif_channel_requests">Pyynnöt</string>
   <string name="notif_channel_file_transfer">Tiedostonsiirto</string>
+  <string name="notif_channel_sync">Tietojen synkronointi</string>
   <string name="notif_channel_background_service">Taustapalvelu</string>
   <string name="notif_channel_background_service_descr">Sallii puheluiden ja viestien saamisen milloin vain.</string>
   <string name="notif_group_calls">Puhelut</string>
   <string name="notif_background_service">Jami toimii taustalla</string>
   <string name="notif_mark_as_read">Merkitse luetuksi</string>
+  <string name="notif_dismiss">Hylkää</string>
   <string name="notif_reply">Vastaa</string>
   <string name="notif_incoming_file_transfer_title">Tuleva tiedosto käyttäjältä %1$s</string>
   <string name="notif_outgoing_file_transfer_title">Lähetetään tiedosto käyttäjälle %1$s</string>
   <string name="notif_incoming_picture">Kuva käyttäjältä %1$s</string>
+  <string name="notif_sync_title">Synkronoidaan tietoja...</string>
+  <string name="notif_location_title">Sijainnin jakaminen %1$s</string>
+  <string name="location_share_contact">%1$s jakaa sijainnin kanssasi</string>
+  <string name="notif_location_multi_title">Sijainnin %1$d jakaminen yhteystiedoillesi</string>
+  <string name="notif_location_remaining">%1$d minuuttia jäljellä</string>
+  <string name="notif_location_action_stop">Lopeta sijainnin jakaminen</string>
+  <string name="location_share_action_start">Aloita jakaminen</string>
+  <string name="location_share_action_stop">Lopeta jakaminen</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Sinä:</string>
   <string name="action_call_hangup">Katkaise puhelu</string>
@@ -96,6 +113,9 @@
   <string name="send_file">Lähetä tiedosto</string>
   <string name="hist_file_sent">Tiedosto lähetetty</string>
   <string name="hist_file_received">Tiedosto vastaanotettu</string>
+  <string name="conversation_send_audio">Tallenna ääniviesti</string>
+  <string name="conversation_send_video">Tallenna videoviesti</string>
+  <string name="conversation_share_location">Jaa sijainti</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera oikeudet</string>
   <string name="permission_dialog_camera_message">Videopuhelut vaativat toimiakseen kameran käyttöoikeudet.</string>
@@ -103,6 +123,9 @@
   <string name="ringtone_error_title">Virhe</string>
   <string name="ringtone_error_format_not_supported">Tätä tiedostomuotoa ei tueta.</string>
   <string name="ringtone_error_size_too_big">Tämä tiedosto on liian suuri. Maksimikoko on %1$dkt.</string>
+  <string name="ringtone_custom_prompt">Aseta oma soittoääni</string>
+  <string name="ringtone_custom_label">Oma</string>
+  <string name="ringtone_jami_tones">Jami äänet</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Jami tarvitsee yhteystietojen lukuoikeudet tätä toimintoa varten.</string>
   <!--Write call log permission-->
@@ -138,6 +161,7 @@
   <string name="block_contact_dialog_title">Estä %1$s?</string>
   <string name="block_contact_dialog_message">%1$sei voi ottaa sinuun yhteyttä kunnes poistat hänen estonsa.</string>
   <string name="block_contact_completed">%1$s estettiin.</string>
+  <string name="conversation_contact_is_typing">Hän kirjoittaa...</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Lisää %1$s?</string>
   <string name="prompt_new_password">Uusi salasana</string>
@@ -147,19 +171,41 @@
   <string name="prompt_new_username">Syötä uusi käyttäjänimi</string>
   <string name="help_password_choose">Valitse muistettava, vahva salasana jota käytät Jami-tilisi suojaamiseen.</string>
   <string name="help_password_enter">Syötä pääasiallisen Jami-tilisi salasana</string>
+  <string name="help_server_enter">Kirjoita hallintapalvelimen verkko-osoite</string>
+  <string name="help_pin_enter">Anna PIN-koodi toiselta määritetyltä Jami-tililtä. Käytä \"vie Jami-tili\" -ominaisuutta saadaksesi PIN-koodi.</string>
   <string name="wizard_next">Seuraava</string>
+  <string name="wizard_back">Takaisin</string>
+  <string name="wizard_skip">Ohita</string>
   <!--MenuHeaderView-->
   <string name="profile">Profiili</string>
+  <string name="profile_message_warning">Profiilisi jaetaan vain yhteystietojesi kanssa</string>
+  <string name="open_the_gallery">Avaa valokuvat</string>
+  <string name="take_a_photo">Ota valokuva</string>
+  <string name="profile_name_hint">Anna nimesi (valinnainen)</string>
   <!--Share fragment-->
+  <string name="share_message">Skannaa tämä koodi Jamilla</string>
+  <string name="share_message_no_account">Valitse jaettava tili.</string>
+  <string name="share_your_account_information">Jaa yhteystietoni</string>
   <string name="share_label">Jako</string>
   <string name="generic_error_migration">Virhe</string>
+  <string name="generic_error_migration_message">Siirron aikana tapahtui virhe</string>
+  <string name="title_share_with">Jaa...</string>
   <!--Pending contact requests-->
   <string name="accept">Hyväksy</string>
   <string name="refuse">Kieltäydy</string>
   <string name="block">Estä</string>
+  <string name="contact_request_title">Uusi yhteyspyyntö</string>
+  <string name="contact_request_msg">Sinulla on %1$s yhteyspyyntöjä</string>
+  <string name="contact_request_account">%1$s:tä</string>
+  <string name="no_requests">0 yhteyspyyntöä</string>
+  <string name="message_contact_not_trusted_yet">%s ei ole vielä yhteystiedoissasi.\nHaluatko hyväksyä tai hylätä tämän yhteyspyynnön?</string>
+  <string name="message_contact_not_trusted">%s ei ole yhteystiedoissasi.\nLisää uusi yhteyshenkilö?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Lähetä</string>
+  <string name="send_request_title">Lähetä yhteyspyyntö</string>
+  <string name="send_request_msg">Sinun on lähetettävä yhteyspyyntö, jotta voit olla yhteydessä tähän käyttäjään. Niin kauan kuin yhteystietosi ei ole käsitellyt pyyntöä, voit lähettää viestejä, mutta hän ei voi vastata sinulle.</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">0 estettyä yhteystietoa</string>
   <!--Smartlist-->
   <string name="tv_contact_row_header">Yhteystiedot</string>
   <!--File Transfer-->

@@ -24,12 +24,15 @@
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Ei rekistöröityjä tunnuksia</string>
   <string name="normal_accounts_titles">Tunnukset</string>
+  <string name="normal_devices_titles">Tähän Jami-tiliin linkitetyt laitteet</string>
+  <string name="account_device_revoke">Peruuta laite</string>
   <string name="account_password_change">Vaihda salasana</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Yleiset</string>
   <string name="account_basic_category">Yleiset asetukset</string>
   <string name="account_alias_label">Tunnuksen nimi</string>
   <string name="account_hostname_label">Yhteysosoite</string>
+  <string name="account_bootstrap_label">Bootstrap</string>
   <string name="account_username_label">Käyttäjänimi</string>
   <string name="account_password_label">Salasana</string>
   <string name="account_optionnal_category">Valinnaiset asetukset</string>
@@ -50,7 +53,9 @@
   <string name="account_registration_exp_label">Rekistöröinti vanhentuu</string>
   <string name="account_local_interface_label">Paikallinen liitäntä</string>
   <string name="account_local_port_label">Paikallinen portti</string>
+  <string name="account_turn_enable_label">Käytä TURNia</string>
   <string name="account_turn_password_label">TURN salasana</string>
+  <string name="account_published_address_label">Julkinen osoite</string>
   <!--Security Details-->
   <string name="account_credentials_label">Käyttöoikeudet</string>
   <string name="account_credentials_edit">Muokkaa käyttöoikeuksia</string>
@@ -77,16 +82,22 @@
   <string name="error_passwords_not_equals">Salasanat eivät täsmää</string>
   <string name="export_account_wait_title">Odota hetki...</string>
   <string name="account_export_file">Varakäyttäjätunnus</string>
+  <string name="account_export_end_network_title">Verkkovirhe</string>
   <string name="account_export_end_error_title">Virhe</string>
   <string name="account_enter_password">Syötä salasana</string>
+  <string name="ring_account_identity">Tunnistetiedot</string>
   <string name="account_no_network_title">Verkkoon ei saada yhteyttä</string>
   <string name="account_link_prompt_pin">Syötä PIN-koodi</string>
   <string name="account_new_button">Tee Jami-tili</string>
   <string name="account_connect_prompt_username">Käyttäjänimi</string>
   <!--Name registration-->
+  <string name="register_name">Rekisteröi nimi</string>
+  <string name="username_already_taken">käyttäjätunnus on varattu</string>
   <string name="invalid_username">Käyttäjätunnus ei kelpaa</string>
   <string name="account_status_connecting">Yhdistää</string>
+  <string name="account_status_online">Verkossa</string>
   <string name="account_status_unknown">Tuntematon</string>
+  <string name="account_status_offline">Poissa</string>
   <string name="account_status_error">Virhe</string>
   <!--Create account-->
   <string name="account_creation_home">Tervetuloa Jamiin</string>
@@ -94,5 +105,7 @@
   <!--Edit profile-->
   <!--Devices-->
   <string name="enter_password">Syötä salasana</string>
+  <string name="revoke_device_title">Peruuta laite</string>
   <string name="revoke_device_wait_title">Odota hetki...</string>
+  <string name="account_device_this_indicator">tämä laite</string>
 </resources>

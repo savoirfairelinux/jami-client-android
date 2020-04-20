@@ -4,4 +4,5 @@
   <string name="contact_quick_call_description">Pikapuhelu</string>
   <string name="contact_picture_description">Yhteystiedon kuva</string>
   <string name="dial_numeric_pad">Numeeriset valintanäppäimet</string>
+  <string name="contact_unblock">Poista esto</string>
 </resources>

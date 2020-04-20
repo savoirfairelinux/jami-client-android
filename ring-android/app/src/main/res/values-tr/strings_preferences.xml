@@ -9,6 +9,8 @@
   <string name="pref_mobileData_summary">Wi-Fi\'ye ek olarak 3G/LTE ağlarında Jami\'ye izin ver</string>
   <string name="pref_pushNotifications_title">Bildirim gönder</string>
   <string name="pref_pushNotifications_summary">Arka planda arama / ileti almaya izin vermek için Google sunucularını kullanın.</string>
+  <string name="pref_video_advanced_title">Gelişmiş görüntü ayarları</string>
+  <string name="pref_video_advanced_summary">Video bit hızını ve çözünürlüğü değiştirin, hem de deneysel özelliklere erişin</string>
   <string name="pref_hd_summary">Yüksek çözünürlüklü görüntü göndermeyi etkinleştir</string>
   <string name="pref_hwEncode_title">Hızlandırılmış kodlamayı etkinleştir</string>
   <string name="pref_hwEncode_summary">Deneysel özellik</string>
@@ -19,6 +21,7 @@
   <string name="pref_startOnBoot_title">Jami\'yi başlangıçta başlat</string>
   <string name="pref_startOnBoot_summary">Sistem başladığında Jami\'yi arkaplanda çalıştır.</string>
   <string name="pref_clearHistory_title">Geçmişi temizle</string>
+  <string name="pref_clearHistory_summary">Tüm konuşma geçmişini temizle. Bu işlem geri alınamaz.</string>
   <string name="pref_persistNotification_title">Arkaplanda çalıştır</string>
   <string name="pref_persistNotification_summary">Arka planda çalışan çağrı  ve iletileri almak için izin ver</string>
 </resources>

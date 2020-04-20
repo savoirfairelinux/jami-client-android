@@ -20,11 +20,15 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
+    <!-- Call error -->
+    <string name="call_error_no_microphone">通話が取り消されました。マイクが見つかりません。</string>
+    <string name="call_error_no_camera_no_microphone">通話が取り消されました。カメラかマイクが見つかりません。</string>
+
     <!-- SipCalls -->
     <string name="call_human_state_searching">検索中</string>
     <string name="call_human_state_incoming">着信</string>
     <string name="call_human_state_connecting">接続中</string>
-    <string name="call_human_state_ringing">着信中</string>
+    <string name="call_human_state_ringing">呼び出し中</string>
     <string name="call_human_state_current">通話中</string>
     <string name="call_human_state_hungup">通話終了</string>
     <string name="call_human_state_busy">話中</string>

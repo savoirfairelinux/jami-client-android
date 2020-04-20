@@ -6,14 +6,14 @@
   <string name="section_license">ライセンス</string>
   <string name="sponsor_section">Jamiは以下によって開発、サポートされているフリーソフトウェアです</string>
   <string name="copyright_section">著作権表示</string>
-  <string name="contribute_section">貢献</string>
+  <string name="contribute_section">開発に協力</string>
   <string name="version_section">バージョン</string>
   <string name="no_email_app_installed">メールアプリが見つかりませんでした。報告するにはメールアプリをインストールしてください</string>
   <string name="no_browser_app_installed">Webブラウザーアプリが見つかりませんでした。このページを表示するためにインストールしてください</string>
   <string name="email_chooser_title">メール送信に使用するアプリ...</string>
   <string name="website_chooser_title">Webサイトを表示…</string>
   <string name="license">このソフトウェアは、いかなる保証もなしに現状のまま提供されます。詳細については、<u>GNU General Public Licenseのversion 3以降</u>を参照してください。</string>
-  <string name="description">Jamiは、世界中のユーザーと繋がることができるユーザーの自由とプライバシーを尊重したフリーソフトウェアです。</string>
+  <string name="description">Jamiは、世界中のユーザーと繋がることができる、ユーザーの自由とプライバシーを尊重したフリーソフトウェアです。</string>
   <string name="credits">クレジット</string>
   <string name="call_service_description">このサービスは、呼び出しのコールをフォアグラウンドで実行し続けるために必要です。通話中にのみ実行されます。</string>
   <string name="data_transfer_service_description">このサービスは、ファイル転送中に持続的な通知を表示するために必要です。ファイル転送中にのみ実行されます。</string>
@@ -48,7 +48,7 @@
   <!--TransferDFragment-->
   <!--Notifications-->
   <string name="notif_missed_incoming_call">不在着信</string>
-  <string name="notif_missed_outgoing_call">不在発信</string>
+  <string name="notif_missed_outgoing_call">応答なし</string>
   <string name="notif_incoming_call_title">%1$s から着信</string>
   <string name="notif_incoming_call">着信</string>
   <string name="notif_outgoing_call_title">%1$s への発信</string>
@@ -66,17 +66,17 @@
   <string name="notif_channel_background_service">バックグラウンドサービス</string>
   <string name="notif_channel_background_service_descr">着信とメッセージの受信を許可する</string>
   <string name="notif_group_calls">発信</string>
-  <string name="notif_background_service">Jimiはバックグラウンドで実行中</string>
+  <string name="notif_background_service">Jamiはバックグラウンドで実行中</string>
   <string name="notif_mark_as_read">既読</string>
   <string name="notif_dismiss">退出</string>
-  <string name="notif_reply">返事</string>
+  <string name="notif_reply">返信</string>
   <string name="notif_incoming_file_transfer_title">%1$sからのファイル受信</string>
   <string name="notif_outgoing_file_transfer_title">%1$sへのファイル送信</string>
   <string name="notif_incoming_picture">%1$sからの画像</string>
   <string name="notif_sync_title">データの同期中</string>
-  <string name="notif_location_title">現在地を次の連絡先に共有中: %1$s</string>
+  <string name="notif_location_title">現在地を%1$sと共有中</string>
   <string name="location_share_contact">%1$s があなたに現在地を共有中です</string>
-  <string name="notif_location_multi_title">%1$d 人と現在位置を共有中</string>
+  <string name="notif_location_multi_title">%1$d 人と現在地を共有中</string>
   <string name="notif_location_remaining">残り %1$d 分</string>
   <string name="notif_location_action_stop">現在地の共有を停止</string>
   <string name="location_share_action_start">共有を開始</string>
@@ -108,7 +108,7 @@
   <string name="send_message">メッセージを送信</string>
   <string name="message_sending">メッセージを送信中…</string>
   <string name="message_failed">失敗しました</string>
-  <string name="time_just_now">ちょうど今</string>
+  <string name="time_just_now">たった今</string>
   <string name="send_file">ファイルの送信</string>
   <string name="hist_file_sent">ファイルを送信しました</string>
   <string name="hist_file_received">ファイルを受信しました</string>
@@ -136,9 +136,9 @@
   <string name="tab_code">自分のコード</string>
   <string name="tab_scan">スキャン</string>
   <!--Settings-->
-  <string name="clear_history_dialog_title">履歴を削除しますか？</string>
-  <string name="clear_history_dialog_message">この操作は取り消しできません</string>
-  <string name="clear_history_completed">履歴をクリアしました。</string>
+  <string name="clear_history_dialog_title">履歴を消去しますか？</string>
+  <string name="clear_history_dialog_message">この操作は元に戻せません。</string>
+  <string name="clear_history_completed">履歴を消去しました。</string>
   <!--Conversation-->
   <string name="conversation_details">連絡先の詳細</string>
   <string name="conversation_action_delete_this">この会話を削除</string>
@@ -153,7 +153,7 @@
   <string name="conversation_action_copy_peer_number">番号をコピー</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s をクリップボードにコピーしました</string>
   <string name="conversation_action_select_peer_number">番号を選択</string>
-  <string name="conversation_action_block_this">ブロックした連絡先</string>
+  <string name="conversation_action_block_this">この連絡先をブロック</string>
   <string name="conversation_action_go_to_call">通話に戻る</string>
   <string name="conversation_open_file_error">この種類のファイルを開けるアプリがインストールされていません。</string>
   <string name="clip_contact_uri">連絡先</string>
@@ -177,7 +177,7 @@
   <string name="wizard_skip">スキップ</string>
   <!--MenuHeaderView-->
   <string name="profile">プロフィール</string>
-  <string name="profile_message_warning">あなたのプロフィールは連絡先とのみ共有されます</string>
+  <string name="profile_message_warning">プロフィールは連絡先以外に共有されません</string>
   <string name="open_the_gallery">ギャラリーを開く</string>
   <string name="take_a_photo">写真を撮る</string>
   <string name="profile_name_hint">名前を入力... (任意)</string>
