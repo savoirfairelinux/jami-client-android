@@ -21,7 +21,6 @@ package cx.ring.fragments;
 
 import android.util.Log;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
@@ -75,9 +74,9 @@ public class MediaPreferencePresenter extends RootPresenter<MediaPreferenceView>
                             final ArrayList<Codec> audioCodec = new ArrayList<>();
                             final ArrayList<Codec> videoCodec = new ArrayList<>();
                             for (Codec codec : codecList) {
-                                if (codec.getType() == Codec.Type.AUDIO) {
+                                if (codec.getType() == Codec.Type.AUDIO && !audioCodec.contains(codec)) {
                                     audioCodec.add(codec);
-                                } else if (codec.getType() == Codec.Type.VIDEO) {
+                                } else if (codec.getType() == Codec.Type.VIDEO && !videoCodec.contains(codec)) {
                                     videoCodec.add(codec);
                                 }
                             }
