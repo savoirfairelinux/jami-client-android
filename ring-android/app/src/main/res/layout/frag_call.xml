@@ -47,6 +47,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:visibility="gone"
                 tools:visibility="visible" />
 
+            <ImageView
+                android:id="@+id/show_preview"
+                android:layout_width="60dp"
+                android:layout_height="190dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:elevation="21dp"
+                android:layout_marginLeft="@dimen/call_preview_margin"
+                android:layout_marginRight="-65dp"
+                android:layout_marginTop="@dimen/call_preview_margin"
+                android:layout_marginBottom="@dimen/call_preview_margin"
+                android:background="@drawable/show_preview" />
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/preview_container"
                 android:layout_width="wrap_content"
@@ -62,12 +75,53 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 app:cardPreventCornerOverlap="false"
                 tools:visibility="visible">
 
-                <cx.ring.views.AutoFitTextureView
-                    android:id="@+id/preview_surface"
+                <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    tools:visibility="visible" />
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/call_preview_handle_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/call_preview_margin_handle"
+                        android:layout_alignLeft="@+id/preview_surface"
+                        android:elevation="21dp"
+                        app:srcCompat="@drawable/ic_preview_handle" />
+
+                    <ImageView
+                        android:id="@+id/call_preview_handle_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="invisible"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/call_preview_margin_handle"
+                        android:layout_alignRight="@+id/preview_surface"
+                        android:elevation="21dp"
+                        app:srcCompat="@drawable/ic_preview_handle" />
+
+                    <ImageView
+                        android:id="@+id/call_preview_overlay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="invisible"
+                        android:elevation="20dp"
+                        android:layout_alignTop="@+id/preview_surface"
+                        android:layout_alignBottom="@+id/preview_surface"
+                        android:layout_alignStart="@+id/preview_surface"
+                        android:layout_alignEnd="@+id/preview_surface"
+                        android:background="@drawable/transparent_round_grey"/>
+
+                    <cx.ring.views.AutoFitTextureView
+                        android:id="@+id/preview_surface"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible"
+                        tools:visibility="visible" />
+
+                </RelativeLayout>
+
             </androidx.cardview.widget.CardView>
 
         </RelativeLayout>
