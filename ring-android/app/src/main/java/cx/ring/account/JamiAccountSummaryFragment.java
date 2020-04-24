@@ -163,7 +163,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         mSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View view, int i) {
-                if (mSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED){
+                if (binding != null && mSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
                     binding.passwordLayout.setVisibility(mAccountHasPassword ? View.VISIBLE : View.GONE);
                     binding.btnEndExport.setVisibility(View.GONE);
                     binding.btnStartExport.setVisibility(View.VISIBLE);
@@ -190,7 +190,8 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
     }
 
     public void setAccount(String accountId) {
-        presenter.setAccountId(accountId);
+        if (presenter != null)
+            presenter.setAccountId(accountId);
     }
 
     @Override

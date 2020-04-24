@@ -258,7 +258,8 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
         JamiAccountSummaryFragment fragment = (JamiAccountSummaryFragment) fragmentManager.findFragmentByTag(JamiAccountSummaryFragment.TAG);
         if (fragment != null) {
             fragment.setFragmentVisibility(isRing);
-            fragment.setAccount(accountId);
+            if (isRing)
+                fragment.setAccount(accountId);
         }
     }
 
