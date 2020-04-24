@@ -72,6 +72,8 @@ along with this program; if not, write to the Free Software
     <dimen name="call_preview_elevation">8dp</dimen>
     <dimen name="call_preview_elevation_dragged">16dp</dimen>
     <dimen name="call_preview_margin">12dp</dimen>
+    <dimen name="call_preview_margin_big">65dp</dimen>
+    <dimen name="call_preview_margin_handle">15dp</dimen>
 
     <dimen name="wizard_button_width">340dp</dimen>
     <dimen name="wizard_button_height">60dp</dimen>

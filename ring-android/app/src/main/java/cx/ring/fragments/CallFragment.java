@@ -21,6 +21,8 @@
 package cx.ring.fragments;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -93,7 +95,6 @@ import cx.ring.client.ConversationActivity;
 import cx.ring.client.ConversationSelectionActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.databinding.FragCallBinding;
-import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
 import cx.ring.mvp.BaseSupportFragment;
@@ -152,6 +153,27 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     private PointF previewDrag = null;
     private final ValueAnimator previewSnapAnimation = new ValueAnimator();
     private final int[] previewMargins = new int[4];
+    private int currentTranslationPreview = 0;
+    private boolean willMoveIn = false;
+    private boolean willMoveOut = false;
+
+    private enum PreviewPosition {
+        TOP_LEFT,
+        TOP_RIGHT,
+        BOTTOM_LEFT,
+        BOTTOM_RIGHT;
+
+        public static boolean isRight(PreviewPosition p) {
+            return p == PreviewPosition.BOTTOM_RIGHT || p == PreviewPosition.TOP_RIGHT;
+        }
+
+        public static boolean isTop(PreviewPosition p) {
+            return p == PreviewPosition.TOP_RIGHT || p == PreviewPosition.TOP_LEFT;
+        }
+    }
+
+    private PreviewPosition lastKnownPreviewPositionUp = PreviewPosition.BOTTOM_RIGHT;
+    private PreviewPosition lastKnownPreviewPositionDown = PreviewPosition.BOTTOM_RIGHT;
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
@@ -215,8 +237,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             if (action != null) {
                 if (action.equals(ACTION_PLACE_CALL)) {
                     prepareCall(false);
-                }
-                else if (action.equals(ACTION_GET_CALL) || action.equals(CallActivity.ACTION_CALL_ACCEPT)) {
+                } else if (action.equals(ACTION_GET_CALL) || action.equals(CallActivity.ACTION_CALL_ACCEPT)) {
                     presenter.initIncomingCall(getArguments().getString(KEY_CONF_ID), action.equals(ACTION_GET_CALL));
                 }
             }
@@ -414,10 +435,35 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                     (int)(previewMargins[3] * r + f));
             binding.previewContainer.setLayoutParams(params);
         });
+        previewSnapAnimation.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+
+                // Showing the preview again
+                if (currentTranslationPreview != 0 && willMoveIn) {
+                    moveIn();
+                }
+                // The preview is partially out of screen
+                if (currentTranslationPreview == 0 && willMoveOut) {
+                    moveOut();
+                }
+                willMoveOut = false;
+                willMoveIn = false;
+
+                if (PreviewPosition.isRight(lastKnownPreviewPositionUp)) {
+                    binding.callPreviewHandleRight.setVisibility(View.INVISIBLE);
+                    binding.callPreviewHandleLeft.setVisibility(View.VISIBLE);
+                } else {
+                    binding.callPreviewHandleLeft.setVisibility(View.INVISIBLE);
+                    binding.callPreviewHandleRight.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
         binding.previewContainer.setOnTouchListener((v, event) -> {
             int action = event.getActionMasked();
             if (action == MotionEvent.ACTION_DOWN) {
+                RelativeLayout parent = (RelativeLayout) v.getParent();
                 previewSnapAnimation.cancel();
                 previewDrag = new PointF(event.getX(), event.getY());
                 v.setElevation(v.getContext().getResources().getDimension(R.dimen.call_preview_elevation_dragged));
@@ -426,37 +472,48 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                 params.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                 params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
                 params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-                params.setMargins((int)v.getX(), (int)v.getY(), 0, 0);
+
+                lastKnownPreviewPositionDown = lastKnownPreviewPositionUp;
+
+                params.setMargins((int) v.getX(), (int) v.getY(), parent.getWidth() - ((int) v.getX() + v.getWidth()), parent.getHeight() - ((int) v.getY() + v.getHeight()));
                 v.setLayoutParams(params);
                 return true;
             } else if (action == MotionEvent.ACTION_MOVE) {
                 if (previewDrag != null) {
                     RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) v.getLayoutParams();
-                    RelativeLayout parent = (RelativeLayout) v.getParent();
+                    int currentXPosition = params.leftMargin + (int) (event.getX() - previewDrag.x);
+                    int currentYPosition = params.topMargin + (int) (event.getY() - previewDrag.y);
                     params.setMargins(
-                            Math.min(params.leftMargin + (int) (event.getX() - previewDrag.x), parent.getWidth() - v.getWidth() - (int)margin),
-                            Math.min(params.topMargin + (int) (event.getY() - previewDrag.y), parent.getHeight() - v.getHeight() - (int)margin),
-                            0, 0);
+                            currentXPosition,
+                            currentYPosition,
+                            -((currentXPosition + v.getWidth()) - (int) event.getX()),
+                            -((currentYPosition + v.getHeight()) - (int) event.getY()));
                     v.setLayoutParams(params);
                     return true;
                 }
                 return false;
             } else if (action == MotionEvent.ACTION_UP) {
+                RelativeLayout parent = (RelativeLayout) v.getParent();
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) v.getLayoutParams();
+
                 if (previewDrag != null) {
+                    int currentXPosition = params.leftMargin + (int) (event.getX() - previewDrag.x);
+                    int currentYPosition = params.topMargin + (int) (event.getY() - previewDrag.y);
+
                     previewSnapAnimation.cancel();
                     previewDrag = null;
                     v.setElevation(v.getContext().getResources().getDimension(R.dimen.call_preview_elevation));
-                    RelativeLayout parent = (RelativeLayout) v.getParent();
-                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) v.getLayoutParams();
                     int ml = 0, mr = 0, mt = 0, mb = 0;
-                    if (params.leftMargin + (v.getWidth() / 2) > parent.getWidth() / 2) {
+                    if (params.leftMargin + (v.getWidth() / 2) + currentTranslationPreview > parent.getWidth() / 2) {
                         params.removeRule(RelativeLayout.ALIGN_PARENT_LEFT);
                         params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                         mr = (int) (parent.getWidth() - v.getWidth() - v.getX());
+                        lastKnownPreviewPositionUp = PreviewPosition.BOTTOM_RIGHT;
                     } else {
                         params.removeRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                         params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
                         ml = (int) v.getX();
+                        lastKnownPreviewPositionUp = PreviewPosition.BOTTOM_LEFT;
                     }
                     if (params.topMargin + (v.getHeight() / 2) > parent.getHeight() / 2) {
                         params.removeRule(RelativeLayout.ALIGN_PARENT_TOP);
@@ -466,6 +523,11 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                         params.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                         params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
                         mt = (int) v.getY();
+
+                        if (lastKnownPreviewPositionUp == PreviewPosition.BOTTOM_LEFT)
+                            lastKnownPreviewPositionUp = PreviewPosition.TOP_LEFT;
+                        else
+                            lastKnownPreviewPositionUp = PreviewPosition.TOP_RIGHT;
                     }
                     previewMargins[0] = ml;
                     previewMargins[1] = mt;
@@ -474,6 +536,17 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                     params.setMargins(ml, mt, mr, mb);
                     v.setLayoutParams(params);
                     previewSnapAnimation.start();
+
+                    if (currentTranslationPreview != 0 && (currentXPosition > 0 ||
+                            currentXPosition + v.getWidth() < parent.getWidth())) {
+                        willMoveIn = true;
+                    } else if (currentXPosition < 0 ||
+                            currentYPosition < 0 ||
+                            currentXPosition + v.getWidth() > parent.getWidth() ||
+                            currentYPosition + v.getHeight() > parent.getHeight()) {
+                        // The preview is partially out of screen
+                        willMoveOut = true;
+                    }
                     return true;
                 }
                 return false;
@@ -496,6 +569,38 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             public void afterTextChanged(Editable s) {
             }
         });
+    }
+
+    private void moveIn() {
+        boolean isRight = PreviewPosition.isRight(lastKnownPreviewPositionDown);
+        int v = (int) (binding.previewContainer.getWidth() * 0.85);
+        int translationPreview = isRight ? -v : v;
+        binding.previewContainer.animate()
+                .setDuration(300)
+                .translationXBy(translationPreview);
+        currentTranslationPreview = 0;
+
+        binding.callPreviewOverlay.animate()
+                .setDuration(300)
+                .alpha(0)
+                .withEndAction(() -> {
+                    binding.callPreviewOverlay.setVisibility(View.INVISIBLE);
+                });
+    }
+
+    public void moveOut() {
+        boolean isRight = PreviewPosition.isRight(lastKnownPreviewPositionUp);
+        int v = (int) (binding.previewContainer.getWidth() * 0.85);
+        int translationPreview = isRight ? v : -v;
+        binding.previewContainer.animate()
+                .setDuration(300)
+                .translationXBy(translationPreview);
+        currentTranslationPreview = translationPreview;
+
+        binding.callPreviewOverlay.setVisibility(View.VISIBLE);
+        binding.callPreviewOverlay.animate()
+                .setDuration(300)
+                .alpha(1);
     }
 
     /**
