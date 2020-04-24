@@ -70,6 +70,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     tools:visibility="visible" />
             </androidx.cardview.widget.CardView>
 
+            <ImageView
+                android:id="@+id/show_preview"
+                android:layout_width="50dp"
+                android:layout_height="180dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="@dimen/call_preview_margin"
+                android:layout_marginRight="-60dp"
+                android:layout_marginTop="@dimen/call_preview_margin"
+                android:layout_marginBottom="@dimen/call_preview_margin"
+                android:background="@drawable/show_preview" />
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -272,6 +284,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:padding="16dp"
                     android:tint="@color/white"
                     app:srcCompat="@drawable/baseline_mobile_screen_share_24" />
+
+                <cx.ring.views.CheckableImageButton
+                    android:id="@+id/call_hide_preview_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:background="@drawable/call_button_background"
+                    android:contentDescription="@string/ab_action_hidepreview"
+                    android:onClick="@{(v) -> presenter.hidePreview(((android.widget.Checkable)v).isChecked())}"
+                    android:padding="16dp"
+                    android:tint="@color/white"
+                    app:srcCompat="@drawable/square_off" />
 
             </com.google.android.flexbox.FlexboxLayout>
 
