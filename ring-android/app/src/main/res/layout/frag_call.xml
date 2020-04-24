@@ -70,6 +70,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     tools:visibility="visible" />
             </androidx.cardview.widget.CardView>
 
+            <ImageView
+                android:id="@+id/show_preview"
+                android:layout_width="50dp"
+                android:layout_height="180dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="@dimen/call_preview_margin"
+                android:layout_marginRight="-60dp"
+                android:layout_marginTop="@dimen/call_preview_margin"
+                android:layout_marginBottom="@dimen/call_preview_margin"
+                android:background="@drawable/show_preview" />
+
         </RelativeLayout>
 
         <RelativeLayout

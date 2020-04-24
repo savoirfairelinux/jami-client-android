@@ -93,7 +93,6 @@ import cx.ring.client.ConversationActivity;
 import cx.ring.client.ConversationSelectionActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.databinding.FragCallBinding;
-import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
 import cx.ring.mvp.BaseSupportFragment;
@@ -152,6 +151,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     private PointF previewDrag = null;
     private final ValueAnimator previewSnapAnimation = new ValueAnimator();
     private final int[] previewMargins = new int[4];
+    private boolean isMoving = false;
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
@@ -418,6 +418,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         binding.previewContainer.setOnTouchListener((v, event) -> {
             int action = event.getActionMasked();
             if (action == MotionEvent.ACTION_DOWN) {
+                isMoving = false;
                 previewSnapAnimation.cancel();
                 previewDrag = new PointF(event.getX(), event.getY());
                 v.setElevation(v.getContext().getResources().getDimension(R.dimen.call_preview_elevation_dragged));
@@ -431,6 +432,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                 return true;
             } else if (action == MotionEvent.ACTION_MOVE) {
                 if (previewDrag != null) {
+                    isMoving = true;
                     RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) v.getLayoutParams();
                     RelativeLayout parent = (RelativeLayout) v.getParent();
                     params.setMargins(
@@ -442,7 +444,10 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                 }
                 return false;
             } else if (action == MotionEvent.ACTION_UP) {
+                if (!isMoving)
+                    fadeOut();
                 if (previewDrag != null) {
+                    isMoving = false;
                     previewSnapAnimation.cancel();
                     previewDrag = null;
                     v.setElevation(v.getContext().getResources().getDimension(R.dimen.call_preview_elevation));
@@ -496,6 +501,30 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             public void afterTextChanged(Editable s) {
             }
         });
+
+        binding.showPreview.setOnClickListener(v -> fadeIn());
+    }
+
+    private void fadeIn() {
+        binding.previewContainer.animate()
+                .setDuration(300)
+                .alpha(1)
+                .withEndAction(() -> binding.previewSurface.setVisibility(View.VISIBLE));
+
+        binding.showPreview.animate()
+                .setDuration(300)
+                .translationX(60);
+    }
+
+    private void fadeOut() {
+        binding.previewContainer.animate()
+                .setDuration(300)
+                .alpha(0)
+                .withEndAction(() -> binding.previewSurface.setVisibility(View.GONE));
+
+        binding.showPreview.animate()
+                .setDuration(300)
+                .translationX(-60);
     }
 
     /**
