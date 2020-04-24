@@ -47,6 +47,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:visibility="gone"
                 tools:visibility="visible" />
 
+            <ImageView
+                android:id="@+id/show_preview"
+                android:layout_width="60dp"
+                android:layout_height="190dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:elevation="21dp"
+                android:layout_marginLeft="@dimen/call_preview_margin"
+                android:layout_marginRight="-65dp"
+                android:layout_marginTop="@dimen/call_preview_margin"
+                android:layout_marginBottom="@dimen/call_preview_margin"
+                android:background="@drawable/show_preview" />
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/preview_container"
                 android:layout_width="wrap_content"
@@ -61,6 +74,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 app:cardCornerRadius="16dp"
                 app:cardPreventCornerOverlap="false"
                 tools:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/call_hide_preview_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|right"
+                    android:padding="5dp"
+                    android:background="@drawable/transparent_round_grey"
+                    android:elevation="20dp"
+                    android:onClick="@{() -> presenter.moveOut()}"
+                    app:srcCompat="@drawable/ic_chevron_right_24px" />
 
                 <cx.ring.views.AutoFitTextureView
                     android:id="@+id/preview_surface"
