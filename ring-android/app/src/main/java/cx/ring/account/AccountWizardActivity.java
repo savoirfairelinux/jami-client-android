@@ -24,7 +24,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -49,7 +48,6 @@ import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.mvp.BaseActivity;
 import cx.ring.mvp.AccountCreationModel;
-import cx.ring.utils.Log;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import io.reactivex.Single;
@@ -108,16 +106,11 @@ public class AccountWizardActivity extends BaseActivity<AccountWizardPresenter> 
             mProgress = null;
         }
         if (mAlertDialog != null) {
+            mAlertDialog.setOnDismissListener(null);
             mAlertDialog.dismiss();
             mAlertDialog = null;
         }
         super.onDestroy();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        Log.i(TAG, "onConfigurationChanged " + newConfig);
-        super.onConfigurationChanged(newConfig);
     }
 
     @Override
@@ -253,9 +246,7 @@ public class AccountWizardActivity extends BaseActivity<AccountWizardPresenter> 
                 .setPositiveButton(android.R.string.ok, null)
                 .setTitle(R.string.account_cannot_be_found_title)
                 .setMessage(R.string.account_cannot_be_found_message)
-                .setOnDismissListener(dialogInterface -> {
-                    getSupportFragmentManager().popBackStack();
-                })
+                .setOnDismissListener(dialogInterface -> getSupportFragmentManager().popBackStack())
                 .show();
     }
 
