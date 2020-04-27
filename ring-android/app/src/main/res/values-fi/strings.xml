@@ -207,17 +207,59 @@
   <!--Blacklist-->
   <string name="no_blocked_contact">0 estettyä yhteystietoa</string>
   <!--Smartlist-->
+  <string name="no_contact_request">Yhteydenottopyyntöä ei lähetetty</string>
+  <string name="contact_request_sent">Yhteydenottopyyntö lähetetty</string>
+  <string name="start_conversation">Aloita keskustelu</string>
+  <string name="search_results">Hakutulokset</string>
   <string name="tv_contact_row_header">Yhteystiedot</string>
+  <string name="gallery_error_title">Valokuvat sovellusta ei löytynyt</string>
+  <string name="gallery_error_message">Laitteesta ei löydy sovellusta valokuvien avaamiseen</string>
+  <string name="generic_error">Tuntematon virhe tapahtui</string>
   <!--File Transfer-->
+  <string name="invalid_file">Virheellinen tiedosto</string>
+  <string name="not_able_to_write_file">Tiedostoa ei voi kirjoittaa</string>
+  <string name="file_transfer_status_created">siirron valmistelu</string>
+  <string name="file_transfer_status_unsupported">ei tueta</string>
+  <string name="file_transfer_status_wait_peer_acceptance">odottaa hyväksymistä</string>
+  <string name="file_transfer_status_wait_host_acceptance">odotetaan isännän hyväksyntää</string>
+  <string name="file_transfer_status_ongoing">meneillään oleva</string>
+  <string name="file_transfer_status_finished">valmis</string>
+  <string name="file_transfer_status_closed_by_host">suljettu laitteelta</string>
+  <string name="file_transfer_status_closed_by_peer">suljettu verkosta</string>
+  <string name="file_transfer_status_invalid_pathname">virheellinen polku</string>
+  <string name="file_transfer_status_unjoinable_peer">liittymätön vertaiskone</string>
+  <string name="file_transfer_status_cancelled">peruttu</string>
+  <string name="file_transfer_status_error">epäonnistui virheen takia</string>
+  <string name="file_transfer_status_timed_out">aika loppui</string>
+  <string name="file_saved_in">Tiedosto tallennettu %s</string>
+  <string name="file_saved_successfully">Tiedosto tallennettu onnistuneesti</string>
+  <string name="no_space_left_on_device">laitteessa ei ole tilaa jäljellä</string>
+  <string name="title_media_viewer">Median katseluohjelma</string>
+  <string name="menu_file_open">Avaa tiedosto</string>
+  <string name="menu_file_download">Lataa tiedosto</string>
+  <string name="menu_file_save">Tallenna tiedosto</string>
+  <string name="menu_file_delete">Poista tiedosto</string>
   <string name="menu_file_share">Jaa tiedosto</string>
   <string name="menu_message_copy">Kopioi</string>
+  <string name="menu_message_delete">Poista viesti</string>
+  <string name="menu_message_cancel">Peruuta viesti</string>
   <string name="menu_delete">Poista</string>
+  <string name="pref_darkTheme_title">Tumma teema</string>
+  <string name="pref_darkTheme_summary">Ota aina käyttöön tumma teema järjestelmän toiminnan sijasta</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Keskustelu</string>
   <string name="navigation_item_contact_request">Yhteyspyynnöt</string>
   <string name="navigation_item_account">Tunnus</string>
   <!--TV-->
+  <string name="tv_send_audio_dialog_message">Lähetätkö ääniviestin?</string>
+  <string name="tv_send_image_dialog_message">Lähetätkö kuvan?</string>
+  <string name="tv_send_video_dialog_message">Lähetätkö videon?</string>
+  <string name="tv_media_preview">Esikatselu</string>
   <string name="tv_audio_play">Toista</string>
   <string name="tv_audio_pause">Tauota</string>
   <string name="tv_dialog_send">Lähetä</string>
+  <string name="tv_audio_recording">Tallentaa...</string>
+  <string name="tv_send_text">Lähetä teksti</string>
+  <string name="tv_send_audio">Lähetä ääni</string>
+  <string name="tv_send_video">Lähetä media</string>
 </resources>
