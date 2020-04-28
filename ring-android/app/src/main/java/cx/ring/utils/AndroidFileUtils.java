@@ -201,13 +201,19 @@ public class AndroidFileUtils {
         return "application/octet-stream";
     }
 
+    public static File getTempShareDir(@NonNull Context context) {
+        File tmp = new File(context.getCacheDir(), "tmp");
+        tmp.mkdir();
+        return tmp;
+    }
+
     public static File createImageFile(@NonNull Context context) throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
         String imageFileName = "img_" + timeStamp + "_";
 
         // Save a file: path for use with ACTION_VIEW intents
-        return File.createTempFile(imageFileName, ".jpg", context.getExternalCacheDir());
+        return File.createTempFile(imageFileName, ".jpg", getTempShareDir(context));
     }
 
     public static File createAudioFile(@NonNull Context context) throws IOException {
@@ -216,7 +222,7 @@ public class AndroidFileUtils {
         String imageFileName = "audio_" + timeStamp + "_";
 
         // Save a file: path for use with ACTION_VIEW intents
-        return File.createTempFile(imageFileName, ".mp3", context.getExternalCacheDir());
+        return File.createTempFile(imageFileName, ".mp3", getTempShareDir(context));
     }
     public static File createVideoFile(@NonNull Context context) throws IOException {
         // Create an image file name
@@ -224,7 +230,7 @@ public class AndroidFileUtils {
         String imageFileName = "video_" + timeStamp + "_";
 
         // Save a file: path for use with ACTION_VIEW intents
-        return File.createTempFile(imageFileName, ".webm", context.getExternalCacheDir());
+        return File.createTempFile(imageFileName, ".webm", getTempShareDir(context));
     }
 
     public static @NonNull Single<File> getCacheFile(@NonNull Context context, @NonNull Uri uri) {
