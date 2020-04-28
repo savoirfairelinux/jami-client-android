@@ -20,7 +20,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="72dp"
-    android:padding="16dp">
+    android:paddingHorizontal="8dp"
+    android:paddingVertical="16dp">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -47,12 +48,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         android:id="@+id/txt_device_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/txt_device_label"
         android:layout_below="@id/txt_device_label"
+        android:layout_alignStart="@+id/txt_device_label"
         android:layout_toStartOf="@+id/rename_button"
         android:ellipsize="middle"
         android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
         tools:text="b982672502b9f1236a68353d74734cb82f9d1fab" />
 
     <TextView

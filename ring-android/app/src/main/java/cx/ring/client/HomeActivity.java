@@ -621,7 +621,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     private void hideToolbarSpinner() {
-        if (!DeviceUtils.isTablet(HomeActivity.this)) {
+        if (!DeviceUtils.isTablet(this)) {
             binding.spinnerToolbar.setVisibility(View.GONE);
         }
     }

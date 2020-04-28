@@ -1133,14 +1133,10 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
 
     @Override
     public void displayNetworkErrorPanel() {
-        showErrorPanel(R.string.error_no_network, null);
-    }
-
-    private void showErrorPanel(final int textResId, @Nullable View.OnClickListener clickListener) {
         if (binding != null) {
             binding.errorMsgPane.setVisibility(View.VISIBLE);
-            binding.errorMsgPane.setOnClickListener(clickListener);
-            binding.errorMsgTxt.setText(textResId);
+            binding.errorMsgPane.setOnClickListener(null);
+            binding.errorMsgPane.setText(R.string.error_no_network);
         }
     }
 

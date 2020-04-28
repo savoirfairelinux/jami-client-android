@@ -154,7 +154,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:onClick="@{() -> presenter.refuseClicked()}"
                         android:tint="@color/white"
                         android:visibility="gone"
-                        app:backgroundTint="@color/error_red"
+                        app:backgroundTint="@color/colorError"
                         app:elevation="6dp"
                         app:pressedTranslationZ="12dp"
                         app:rippleColor="@android:color/white"
@@ -191,7 +191,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:onClick="@{() -> presenter.hangUpClicked()}"
             android:tint="@color/white"
             android:visibility="gone"
-            app:backgroundTint="@color/error_red"
+            app:backgroundTint="@color/colorError"
             app:rippleColor="@android:color/white"
             app:srcCompat="@drawable/baseline_call_end_24"
             app:useCompatPadding="true" />

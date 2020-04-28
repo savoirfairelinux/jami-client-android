@@ -218,7 +218,7 @@ public class SecurityAccountFragment extends BasePreferenceFragment<SecurityAcco
         Context c = current.getContext();
         if (!checkCertificate()) {
             Drawable icon = c.getDrawable(R.drawable.baseline_error_24);
-            icon.setTint(c.getResources().getColor(R.color.error_red));
+            icon.setTint(c.getResources().getColor(R.color.colorError));
             current.setIcon(icon);
         } else {
             Drawable icon = c.getDrawable(R.drawable.baseline_check_circle_24);

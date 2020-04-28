@@ -320,6 +320,7 @@ along with this program; if not, write to the Free Software
     <string name="navigation_item_conversation">Conversations</string>
     <string name="navigation_item_contact_request">Contact requests</string>
     <string name="navigation_item_account">Account</string>
+    <string name="search_results_public_directory">Public directory</string>
 
     <!-- TV -->
     <string name="tv_send_audio_dialog_message">Send audio message?</string>

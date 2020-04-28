@@ -17,8 +17,8 @@
 
         <item name="android:textColorSecondary">@color/colorPrimary</item>
 
-        <item name="colorError">@color/error_red</item>
-        <item name="colorOnError">@color/white</item>
+        <item name="colorError">@color/colorError</item>
+        <item name="colorOnError">@color/colorOnError</item>
 
         <item name="colorPrimaryDark">@color/background</item>
         <!--<item name="android:windowContentTransitions">true</item>-->
@@ -28,7 +28,7 @@
     <style name="AppThemeBase.Dark" parent="@style/Theme.MaterialComponents.NoActionBar">
         <item name="colorPrimary">@color/color_primary_dark</item>
         <item name="colorSecondary">@color/color_primary_light</item>
-        <item name="colorError">@color/error_red</item>
+        <item name="colorError">@color/colorError</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorOnSecondary">@color/color_primary_dark</item>
         <item name="android:windowContentTransitions">true</item>
@@ -38,7 +38,7 @@
     <style name="AppThemeBase.Light" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/color_primary_dark</item>
         <item name="colorSecondary">@color/color_primary_light</item>
-        <item name="colorError">@color/error_red</item>
+        <item name="colorError">@color/colorError</item>
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
         <item name="android:textColor">@color/abc_primary_text_material_light</item>
     </style>

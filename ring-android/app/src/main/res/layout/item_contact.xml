@@ -59,7 +59,7 @@ along with this program; if not, write to the Free Software
         android:textColor="@color/textColorPrimary"
         android:textIsSelectable="false"
         android:textSize="16sp"
-        tools:text="display name" />
+        tools:text="contact_name" />
 
     <ImageButton
         android:id="@+id/quick_call"

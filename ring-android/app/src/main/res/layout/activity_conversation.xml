@@ -22,9 +22,14 @@
         android:elevation="4dp"
         android:height="?attr/actionBarSize"
         style="@style/Widget.MaterialComponents.Toolbar.Surface"
+        app:titleTextAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        app:subtitleTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
         app:contentInsetStart="72dp"
         app:elevation="4dp"
-        app:titleMarginStart="24dp"/>
+        app:titleMarginStart="24dp"
+        tools:title="Adrien"
+        tools:subtitle="adrienberaud"
+        tools:navigationIcon="@drawable/baseline_person_24" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
