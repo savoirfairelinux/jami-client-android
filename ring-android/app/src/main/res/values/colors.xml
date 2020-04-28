@@ -10,7 +10,10 @@
     <color name="colorOnPrimary">@color/white</color>
 
     <color name="colorSecondary">@color/color_primary_light</color>
-    <color name="colorOnSecondary">@color/white</color>s
+    <color name="colorOnSecondary">@color/white</color>
+
+    <color name="colorError">#f44336</color>
+    <color name="colorOnError">#ffffff</color>
 
     <color name="textColorPrimary">@color/abc_primary_text_material_light</color>
     <color name="textColorSecondary">@color/abc_secondary_text_material_light</color>
@@ -31,10 +34,6 @@
 
     <color name="white">#FFF</color>
     <color name="black">#000000</color>
-    <color name="error_red">#f44336</color>
-    <color name="on_error">#ffffff</color>
-
-    <color name="error_pane">#e57373</color>
 
     <color name="transparent_light">#AAFFFFFF</color>
 

@@ -12,39 +12,47 @@
             android:id="@+id/conversationLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
             android:background="@color/background"
             android:clipToPadding="false"
-            android:paddingTop="?attr/actionBarSize"
-            android:animateLayoutChanges="true">
+            android:paddingTop="?attr/actionBarSize">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/error_msg_pane"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="?attr/colorError"
+                android:gravity="center_vertical|center_horizontal"
+                android:padding="8dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="?attr/colorOnError"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:text="No connectivity"
+                tools:visibility="visible" />
+
+            <TextView
                 android:id="@+id/ongoingcall_pane"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:background="@color/red_300"
+                android:layout_below="@id/error_msg_pane"
+                android:background="?attr/colorSecondary"
                 android:gravity="center"
                 android:onClick="@{() -> presenter.onClick()}"
+                android:padding="8dp"
+                android:text="@string/conversation_action_go_to_call"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="?attr/colorOnPrimary"
+                android:textStyle="bold"
                 android:visibility="gone"
-                tools:visibility="visible">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="@string/conversation_action_go_to_call"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/textColorPrimary" />
-            </LinearLayout>
+                tools:visibility="visible" />
 
             <LinearLayout
                 android:id="@+id/trustRequestMessageLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ongoingcall_pane"
-                android:layout_alignParentTop="false"
-                android:orientation="vertical"
-                android:visibility="visible"
-                tools:visibility="visible">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tvTrustRequestMessage"
@@ -63,33 +71,37 @@
 
             </LinearLayout>
 
-            <FrameLayout
-                android:id="@+id/error_msg_pane"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/error_pane"
-                android:layout_below="@+id/trustRequestMessageLayout"
-                android:padding="16dp"
-                android:visibility="gone"
-                tools:visibility="visible">
+            <ProgressBar
+                android:id="@+id/pb_loading"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_centerInParent="true"
+                android:indeterminate="true" />
 
-                <TextView
-                    android:id="@+id/error_msg_txt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="26dp"
-                    android:layout_marginRight="26dp"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:textColor="@color/on_error"
-                    android:textSize="14sp"
-                    tools:text="No connectivity"/>
-            </FrameLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/hist_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/trustRequestMessageLayout"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:animateLayoutChanges="false"
+                android:clipToPadding="false"
+                android:divider="@null"
+                android:listSelector="@color/transparent"
+                android:paddingTop="8dp"
+                android:paddingBottom="60dp"
+                android:transcriptMode="normal"
+                app:layoutManager="LinearLayoutManager"
+                app:stackFromEnd="true"
+                tools:listitem="@layout/item_conv_msg_peer" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/mapCard"
                 android:layout_width="@dimen/location_sharing_minmap_width"
                 android:layout_height="@dimen/location_sharing_minmap_height"
-                android:layout_below="@id/error_msg_pane"
+                android:layout_below="@id/trustRequestMessageLayout"
                 android:layout_centerHorizontal="true"
                 android:layout_marginHorizontal="0dp"
                 android:layout_marginVertical="16dp"
@@ -106,36 +118,10 @@
                     android:id="@+id/mapLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    tools:background="@color/light_green_400"
-                    android:clickable="false" />
+                    android:clickable="false"
+                    tools:background="@color/light_green_400" />
 
             </androidx.cardview.widget.CardView>
-
-            <ProgressBar
-                android:id="@+id/pb_loading"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_centerInParent="true"
-                android:indeterminate="true" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/hist_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/error_msg_pane"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:clipToPadding="false"
-                android:divider="@null"
-                android:listSelector="@color/transparent"
-                android:paddingTop="8dp"
-                android:paddingBottom="60dp"
-                android:transcriptMode="normal"
-                android:animateLayoutChanges="false"
-                app:layoutManager="LinearLayoutManager"
-                app:stackFromEnd="true"
-                tools:listitem="@layout/item_conv_msg_peer" />
 
         </RelativeLayout>
 
@@ -282,7 +268,7 @@
                             android:onClick="@{() -> presenter.takePicture()}"
                             android:padding="8dp"
                             android:tint="@color/colorPrimary"
-                            app:srcCompat="@drawable/baseline_photo_camera_24"/>
+                            app:srcCompat="@drawable/baseline_photo_camera_24" />
 
                         <ProgressBar
                             android:id="@+id/pb_data_transfer"

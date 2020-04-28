@@ -60,7 +60,7 @@ along with this program; if not, write to the Free Software
                 android:textAlignment="viewStart"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="16sp"
-                tools:text="Test test" />
+                tools:text="Person Name" />
 
             <TextView
                 android:id="@+id/conv_last_item"

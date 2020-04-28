@@ -39,7 +39,7 @@ along with this program; if not, write to the Free Software
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:contentInsetStart="16dp"
-            android:layout_alignParentTop="true" >
+            android:layout_alignParentTop="true">
 
             <Spinner
                 android:id="@+id/spinner_toolbar"
@@ -61,7 +61,8 @@ along with this program; if not, write to the Free Software
                     android:layout_width="36dp"
                     android:layout_height="36dp"
                     android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true" />
+                    android:layout_centerVertical="true"
+                    tools:src="@drawable/ic_contact_picture_fallback" />
 
                 <TextView
                     android:id="@+id/contact_title"
@@ -71,7 +72,8 @@ along with this program; if not, write to the Free Software
                     android:layout_toEndOf="@+id/contact_image"
                     android:layout_marginStart="16dp"
                     android:textSize="16sp"
-                    android:textColor="@color/textColorPrimary"/>
+                    android:textColor="@color/textColorPrimary"
+                    tools:text="Thomas"/>
 
                 <TextView
                     android:id="@+id/contact_subtitle"
@@ -80,7 +82,8 @@ along with this program; if not, write to the Free Software
                     android:layout_alignStart="@id/contact_title"
                     android:layout_below="@+id/contact_title"
                     android:textSize="14sp"
-                    android:layout_toEndOf="@+id/contact_image"/>
+                    android:layout_toEndOf="@+id/contact_image"
+                    tools:text="tom"/>
 
             </RelativeLayout>
 

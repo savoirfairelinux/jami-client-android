@@ -91,7 +91,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:clickable="false"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:tint="@color/error_red"
+        android:tint="@color/colorError"
         android:visibility="gone"
         app:srcCompat="@drawable/baseline_error_24" />
 

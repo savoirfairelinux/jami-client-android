@@ -23,6 +23,8 @@ package cx.ring.account;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -187,6 +189,21 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         binding.changePasswordBtn.setOnClickListener(v -> onPasswordChangeAsked());
         binding.registerNameBtn.setOnClickListener(v -> showUsernameRegistrationPopup());
         binding.ringPassword.setOnEditorActionListener(this::onPasswordEditorAction);
+        binding.registeredNameCopy.setOnClickListener(v -> {
+            ClipboardManager clipboard = (ClipboardManager) v.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+            if (clipboard != null) {
+                clipboard.setPrimaryClip(ClipData.newPlainText("Jami username", binding.registeredNameTxt.getText()));
+                Snackbar.make(binding.getRoot(), getString(R.string.conversation_action_copied_peer_number_clipboard, binding.registeredNameTxt.getText()), Snackbar.LENGTH_SHORT)
+                        .setAnchorView(binding.layoutAddDevice)
+                        .show();
+            }
+        });
+        binding.registeredNameShare.setOnClickListener(v ->  {
+            Intent sendIntent = new Intent(Intent.ACTION_SEND)
+                    .putExtra(Intent.EXTRA_TEXT, binding.registeredNameTxt.getText())
+                    .setType("text/plain");
+            startActivity(Intent.createChooser(sendIntent, null));
+        });
     }
 
     public void setAccount(String accountId) {
