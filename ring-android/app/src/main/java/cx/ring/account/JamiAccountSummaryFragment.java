@@ -645,7 +645,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
     @Override
     public void onUnlockAccount(String accountId, String password) {
         Context context = requireContext();
-        File cacheDir = new File(context.getExternalCacheDir(), "archives");
+        File cacheDir = new File(AndroidFileUtils.getTempShareDir(context), "archives");
         cacheDir.mkdirs();
         if (!cacheDir.canWrite())
             Log.w(TAG, "Can't write to: " + cacheDir);
