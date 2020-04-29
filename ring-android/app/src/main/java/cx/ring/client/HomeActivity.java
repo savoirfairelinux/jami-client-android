@@ -208,6 +208,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         super.onDestroy();
         fContent = null;
         mDisposable.dispose();
+        binding = null;
     }
 
     private void handleShareIntent(Intent intent) {
@@ -294,9 +295,8 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 .switchMapSingle(account -> AvatarFactory.getBitmapAvatar(HomeActivity.this, account, targetSize)
                         .map(avatar -> new Pair<>(account, avatar)))
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(d -> {
-                    binding.mainToolbar.setLogo(new BitmapDrawable(getResources(), d.second));
-                }, e -> Log.e(TAG, "Error loading avatar", e)));
+                .subscribe(d -> binding.mainToolbar.setLogo(new BitmapDrawable(getResources(), d.second)),
+                        e -> Log.e(TAG, "Error loading avatar", e)));
     }
 
     /* activity gets back to the foreground and user input */
@@ -394,6 +394,8 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         if (mAccountFragmentBackHandlerInterface != null && mAccountFragmentBackHandlerInterface.onBackPressed()) {
             return;
         }
+        if (binding == null)
+            return;
         setToolbarElevation(false);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fContent = fragmentManager.findFragmentById(R.id.conversation_container);
@@ -643,19 +645,23 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     public void setToolbarElevation(boolean enable) {
-        binding.appBar.setElevation(enable ? getResources().getDimension(R.dimen.toolbar_elevation) : 0);
+        if (binding != null)
+            binding.appBar.setElevation(enable ? getResources().getDimension(R.dimen.toolbar_elevation) : 0);
     }
 
     public void setToolbarOutlineState(boolean enabled) {
-        if (!enabled) {
-            binding.appBar.setOutlineProvider(null);
-        } else {
-            binding.appBar.setOutlineProvider(mOutlineProvider);
+        if (binding != null) {
+            if (!enabled) {
+                binding.appBar.setOutlineProvider(null);
+            } else {
+                binding.appBar.setOutlineProvider(mOutlineProvider);
+            }
         }
     }
 
     public void selectNavigationItem(int id) {
-        binding.navigationView.setSelectedItemId(id);
+        if (binding != null)
+            binding.navigationView.setSelectedItemId(id);
     }
 
 }
