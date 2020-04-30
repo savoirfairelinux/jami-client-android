@@ -22,7 +22,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
                 android:contentDescription="@string/app_name"
                 app:srcCompat="@drawable/ic_jami_full_logo" />
 
@@ -30,45 +31,61 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingLeft="16dp"
-                android:paddingTop="24dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="24dp"
+                android:padding="30dp"
+                android:layout_marginBottom="18dp"
+                android:layout_marginTop="18dp"
                 android:text="@string/help_ring"
-                android:textSize="14sp" />
+                android:textSize="18sp"
+                android:textStyle="bold"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/ring_create_btn"
-                style="@style/Widget.MaterialComponents.Button"
-                android:layout_width="260dp"
-                android:layout_height="wrap_content"
+                style="@style/WizardButton"
+                android:layout_width="@dimen/wizard_button_width"
+                android:layout_height="@dimen/wizard_button_height"
                 android:layout_gravity="center"
-                android:layout_marginBottom="16dp"
-                android:text="@string/account_new_button" />
+                android:text="@string/account_new_button"
+                android:textSize="@dimen/wizard_button_text_size"
+                android:drawableLeft="@drawable/baseline_account_circle_white_36"
+                android:drawableRight="@drawable/baseline_arrow_forward_white_18"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/ring_add_account"
-                style="@style/Widget.MaterialComponents.Button"
-                android:layout_width="260dp"
-                android:layout_height="wrap_content"
+                style="@style/WizardButton"
+                android:layout_width="@dimen/wizard_button_width"
+                android:layout_height="@dimen/wizard_button_height"
                 android:layout_gravity="center"
-                android:text="@string/account_link_device" />
+                android:layout_marginBottom="12dp"
+                android:textSize="@dimen/wizard_button_text_size"
+                android:text="@string/account_link_device"
+                android:drawableLeft="@drawable/baseline_devices_white_36"
+                android:drawableRight="@drawable/baseline_arrow_forward_white_18"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/ring_import_account"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="260dp"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/wizard_button_width"
+                android:layout_height="@dimen/wizard_button_height"
                 android:layout_gravity="center"
-                android:text="@string/account_link_archive_button" />
+                app:cornerRadius="@dimen/wizard_button_corner_radius"
+                android:text="@string/account_link_archive_button"
+                android:textSize="@dimen/wizard_button_text_size"
+                android:padding="@dimen/wizard_button_padding"
+                android:drawableLeft="@drawable/baseline_backup_black_36"
+                android:drawableRight="@drawable/baseline_arrow_forward_black_18"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/account_connect_server"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="260dp"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/wizard_button_width"
+                android:layout_height="@dimen/wizard_button_height"
                 android:layout_gravity="center"
-                android:text="@string/account_connect_server_button" />
+                app:cornerRadius="@dimen/wizard_button_corner_radius"
+                android:textSize="@dimen/wizard_button_text_size"
+                android:padding="@dimen/wizard_button_padding"
+                android:text="@string/account_connect_server_button"
+                android:drawableLeft="@drawable/baseline_router_black_36"
+                android:drawableRight="@drawable/baseline_arrow_forward_black_18"/>
 
         </LinearLayout>
 

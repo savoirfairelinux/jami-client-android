@@ -50,7 +50,7 @@ import android.util.TypedValue;
 public class AvatarDrawable extends Drawable {
     private static final int SIZE_AB = 36;
     private static final float DEFAULT_TEXT_SIZE_PERCENTAGE = 0.5f;
-    private static final int PLACEHOLDER_ICON = R.drawable.baseline_account_circle_24;
+    private static final int PLACEHOLDER_ICON = R.drawable.baseline_account_crop_24;
     private static final int PRESENCE_COLOR = R.color.green_A700;
 
     private static final int[] contactColors = {
