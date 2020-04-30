@@ -292,4 +292,10 @@
         <item name="colorControlActivated">@color/conversation_primary_selection_handles</item>
     </style>
 
+    <style name="WizardButton" parent="Widget.MaterialComponents.Button">
+        <item name="cornerRadius">@dimen/wizard_button_corner_radius</item>
+        <item name="android:padding">@dimen/wizard_button_padding</item>
+        <item name="android:backgroundTint">@drawable/wizard_button_background_selector</item>
+    </style>
+
 </resources>
