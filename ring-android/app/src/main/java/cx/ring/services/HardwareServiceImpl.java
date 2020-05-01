@@ -56,7 +56,6 @@ import cx.ring.utils.Log;
 import cx.ring.utils.Ringer;
 import io.reactivex.Completable;
 
-
 public class HardwareServiceImpl extends HardwareService implements AudioManager.OnAudioFocusChangeListener, BluetoothWrapper.BluetoothChangeListener {
 
     private static final Point VIDEO_SIZE_LOW = new Point(320, 240);
@@ -171,36 +170,39 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     synchronized public void updateAudioState(final SipCall.CallStatus state, final boolean incomingCall, final boolean isOngoingVideo) {
         Log.d(TAG, "updateAudioState: Call state updated to " + state + " Call is incoming: " + incomingCall + " Call is video: " + isOngoingVideo);
         boolean callEnded = state.equals(CallStatus.HUNGUP) || state.equals(CallStatus.FAILURE) || state.equals(CallStatus.OVER);
-        if (mBluetoothWrapper == null && !callEnded) {
-            mBluetoothWrapper = new BluetoothWrapper(mContext, this);
-        }
-        switch (state) {
-            case RINGING:
-                if (incomingCall)
-                    startRinging();
-                getFocus(RINGTONE_REQUEST);
-                if (incomingCall) {
-                    // ringtone for incoming calls
-                    mAudioManager.setMode(AudioManager.MODE_RINGTONE);
-                    setAudioRouting(true);
-                    mShouldSpeakerphone = isOngoingVideo;
-                }
-                else
+        try {
+            if (mBluetoothWrapper == null && !callEnded) {
+                mBluetoothWrapper = new BluetoothWrapper(mContext, this);
+            }
+            switch (state) {
+                case RINGING:
+                    if (incomingCall)
+                        startRinging();
+                    getFocus(RINGTONE_REQUEST);
+                    if (incomingCall) {
+                        // ringtone for incoming calls
+                        mAudioManager.setMode(AudioManager.MODE_RINGTONE);
+                        setAudioRouting(true);
+                        mShouldSpeakerphone = isOngoingVideo;
+                    } else
+                        setAudioRouting(isOngoingVideo);
+                    break;
+                case CURRENT:
+                    stopRinging();
+                    getFocus(CALL_REQUEST);
+                    mAudioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
                     setAudioRouting(isOngoingVideo);
-                break;
-            case CURRENT:
-                stopRinging();
-                getFocus(CALL_REQUEST);
-                mAudioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
-                setAudioRouting(isOngoingVideo);
-                break;
-            case HOLD:
-            case UNHOLD:
-            case INACTIVE:
-                break;
-            default:
-                closeAudioState();
-                break;
+                    break;
+                case HOLD:
+                case UNHOLD:
+                case INACTIVE:
+                    break;
+                default:
+                    closeAudioState();
+                    break;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error updating audio state", e);
         }
     }
 
