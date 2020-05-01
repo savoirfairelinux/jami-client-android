@@ -170,11 +170,15 @@ public class BluetoothWrapper {
         /*Log.d(TAG, "setBluetoothOn: " + on);
         Log.i(TAG, "mAudioManager.isBluetoothA2dpOn():" + audioManager.isBluetoothA2dpOn());
         Log.i(TAG, "mAudioManager.isBluetoothscoOn():" + audioManager.isBluetoothScoOn());*/
-        if (on) {
-            isBluetoothConnecting = true;
-            audioManager.startBluetoothSco();
-        } else {
-            audioManager.stopBluetoothSco();
+        try {
+            if (on) {
+                isBluetoothConnecting = true;
+                audioManager.startBluetoothSco();
+            } else {
+                audioManager.stopBluetoothSco();
+            }
+        } catch (Exception e)  {
+            Log.d(TAG, "Error switching bluetooth", e);
         }
     }
 
