@@ -20,9 +20,8 @@
 package cx.ring.mvp;
 
 import android.os.Bundle;
-import androidx.preference.PreferenceFragmentCompat;
 
-import android.view.View;
+import androidx.preference.PreferenceFragmentCompat;
 
 import javax.inject.Inject;
 
@@ -34,24 +33,12 @@ public abstract class BasePreferenceFragment<T extends RootPresenter> extends Pr
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         //Be sure to do the injection in onCreateView method
         presenter.bindView(this);
-        initPresenter(presenter);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         presenter.unbindView();
-    }
-
-    protected void initPresenter(T presenter) {
-
     }
 
 }
