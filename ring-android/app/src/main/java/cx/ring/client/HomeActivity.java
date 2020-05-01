@@ -371,7 +371,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         bundle.putString(ContactRequestsFragment.ACCOUNT_ID, accountID);
         mNotificationService.cancelTrustRequestNotification(accountID);
         if (fContent instanceof ContactRequestsFragment) {
-            ((ContactRequestsFragment) fContent).presentForAccount(bundle);
+            ((ContactRequestsFragment) fContent).presentForAccount(accountID);
             return;
         }
         fContent = new ContactRequestsFragment();
@@ -486,17 +486,20 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Bundle bundle = new Bundle();
+        Account account = mAccountService.getCurrentAccount();
+        if (account == null)
+            return false;
 
+        Bundle bundle = new Bundle();
         switch (item.getItemId()) {
             case R.id.navigation_requests:
-                bundle.putString(ContactRequestsFragment.ACCOUNT_ID, mAccountService.getCurrentAccount().getAccountID());
                 if (fContent instanceof ContactRequestsFragment) {
-                    ((ContactRequestsFragment) fContent).presentForAccount(bundle);
+                    ((ContactRequestsFragment) fContent).presentForAccount(account.getAccountID());
                     break;
                 }
                 popCustomBackStack();
                 fContent = new ContactRequestsFragment();
+                bundle.putString(ContactRequestsFragment.ACCOUNT_ID, account.getAccountID());
                 fContent.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction()
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -521,7 +524,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 showToolbarSpinner();
                 break;
             case R.id.navigation_settings:
-                Account account = mAccountService.getCurrentAccount();
 
                 if (account.needsMigration()) {
                     Log.d(TAG, "launchAccountMigrationActivity: Launch account migration activity");

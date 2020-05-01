@@ -34,6 +34,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.transition.TransitionManager;
@@ -89,6 +90,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
 public class TvConversationFragment extends BaseSupportFragment<ConversationPresenter> implements ConversationView {
+    private static final String TAG = TvConversationFragment.class.getSimpleName();
 
     private static final String ARG_MODEL = "model";
 
@@ -111,15 +113,13 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
 
     private int mSelectedPosition;
 
-    private static final String LOG_TAG = "AudioRecordTest";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private static File fileName = null;
 
     private MediaRecorder recorder = null;
     private MediaPlayer player = null;
 
-    private boolean permissionToRecordAccepted = false;
-    private String[] permissions = {Manifest.permission.RECORD_AUDIO};
+    private String[] permissions = { Manifest.permission.RECORD_AUDIO };
 
     boolean mStartRecording = true;
     boolean mStartPlaying = true;
@@ -145,7 +145,6 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
         if (getArguments() != null) {
             mTvListViewModel = getArguments().getParcelable(ARG_MODEL);
         }
-        requestPermissions(permissions, REQUEST_RECORD_AUDIO_PERMISSION);
     }
 
     @Nullable
@@ -164,9 +163,11 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
 
     // Create an intent that can start the Speech Recognizer activity
     private void displaySpeechRecognizer() {
-        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Say something...");
+        if (!checkAudioPermission())
+            return;
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+                .putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+                .putExtra(RecognizerIntent.EXTRA_PROMPT, getText(R.string.conversation_input_speech_hint));
         startActivityForResult(intent, REQUEST_SPEECH_CODE);
     }
 
@@ -239,6 +240,14 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
         mRecyclerView.setAdapter(mAdapter);
     }
 
+    private boolean checkAudioPermission() {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+            return false;
+        }
+        return true;
+    }
+
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         if (mAdapter.onContextItemSelected(item))
@@ -248,7 +257,6 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case REQUEST_CODE_PHOTO:
                 if (resultCode == Activity.RESULT_OK && data != null) {
@@ -465,13 +473,9 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case REQUEST_RECORD_AUDIO_PERMISSION:
-                permissionToRecordAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                break;
+        if (requestCode == REQUEST_RECORD_AUDIO_PERMISSION) {
+            // NOOP
         }
-        if (!permissionToRecordAccepted) getActivity().finish();
-
     }
 
     private void onRecord(boolean start) {
@@ -497,7 +501,7 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
             player.prepare();
             player.start();
         } catch (IOException e) {
-            Log.e(LOG_TAG, "prepare() failed");
+            Log.e(TAG, "prepare() failed");
         }
     }
 
@@ -507,6 +511,8 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     }
 
     private void startRecording() {
+        if (!checkAudioPermission())
+            return;
         if (recorder != null) {
             return;
         }

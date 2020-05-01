@@ -519,21 +519,19 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             if (takePictureIntent.resolveActivity(c.getPackageManager()) != null) {
                 // Create the File where the photo should go
-                File photoFile;
                 try {
-                    photoFile = AndroidFileUtils.createImageFile(c);
-                } catch (IOException ex) {
-                    Log.e(TAG, "takePicture: error creating temporary file", ex);
-                    return;
+                    File photoFile = AndroidFileUtils.createImageFile(c);
+                    Log.i(TAG, "takePicture: trying to save to " + photoFile);
+                    android.net.Uri photoURI = ContentUriHandler.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, photoFile);
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                            .putExtra("android.intent.extras.CAMERA_FACING", 1)
+                            .putExtra("android.intent.extras.LENS_FACING_FRONT", 1)
+                            .putExtra("android.intent.extra.USE_FRONT_CAMERA", true);
+                    mCurrentPhoto = photoFile;
+                    startActivityForResult(takePictureIntent, REQUEST_CODE_TAKE_PICTURE);
+                } catch (Exception e) {
+                    Toast.makeText(c, "Error taking picture: " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 }
-                Log.i(TAG, "takePicture: trying to save to " + photoFile);
-                mCurrentPhoto = photoFile;
-                android.net.Uri photoURI = ContentUriHandler.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                takePictureIntent.putExtra("android.intent.extras.CAMERA_FACING", 1);
-                takePictureIntent.putExtra("android.intent.extras.LENS_FACING_FRONT", 1);
-                takePictureIntent.putExtra("android.intent.extra.USE_FRONT_CAMERA", true);
-                startActivityForResult(takePictureIntent, REQUEST_CODE_TAKE_PICTURE);
             }
         }
     }

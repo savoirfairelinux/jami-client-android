@@ -100,7 +100,7 @@ public class AboutFragment extends BaseSupportFragment<RootPresenter> {
         }
 
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        Fragment existingFragment = fragmentManager.findFragmentByTag(AboutFragment.TAG);
+        Fragment existingFragment = fragmentManager.findFragmentByTag(TAG);
         if (existingFragment == null) {
             ((HomeActivity) getActivity()).goToAbout();
         }

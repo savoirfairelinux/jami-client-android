@@ -263,8 +263,13 @@ public class LocationSharingFragment extends Fragment {
     public void onResume() {
         super.onResume();
         mMap.onResume();
-        if (overlay != null)
-            overlay.enableMyLocation();
+        if (overlay != null) {
+            try {
+                overlay.enableMyLocation();
+            } catch (Exception e) {
+                Log.w(TAG, e);
+            }
+        }
     }
 
     public void onPause(){

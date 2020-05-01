@@ -137,7 +137,7 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
 
     @Override
     public void displaySummary(String accountId) {
-        toggleView(accountId);
+        toggleView(accountId, true);
         FragmentManager fragmentManager = requireFragmentManager();
         Fragment existingFragment = fragmentManager.findFragmentByTag(JamiAccountSummaryFragment.TAG);
         if (existingFragment == null) {
@@ -157,7 +157,7 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
 
     @Override
     public void displaySIPView(String accountId) {
-        toggleView(accountId);
+        toggleView(accountId, false);
     }
 
     @Override
@@ -230,8 +230,8 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
         if (getActivity() instanceof HomeActivity)
             ((HomeActivity) getActivity()).setToolbarOutlineState(true);
         if (binding.fragmentContainer.getVisibility() != View.VISIBLE) {
-            toggleView(mAccountId);
-            return  true;
+            // toggleView(mAccountId);
+            return true;
         }
         FragmentManager fragmentManager = requireFragmentManager();
         JamiAccountSummaryFragment summaryFragment = (JamiAccountSummaryFragment) fragmentManager.findFragmentByTag(JamiAccountSummaryFragment.TAG);
@@ -244,22 +244,21 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
         return fragment instanceof JamiAccountSummaryFragment;
     }
 
-    private void toggleView(String accountId) {
+    private void toggleView(String accountId, boolean isJami) {
         mAccountId = accountId;
-        boolean isRing = presenter.getAccount(mAccountId).isRing();
-
-        binding.slidingTabs.setVisibility(isRing? View.GONE : View.VISIBLE);
-        binding.pager.setVisibility(isRing? View.GONE : View.VISIBLE);
-        binding.fragmentContainer.setVisibility(isRing? View.VISIBLE : View.GONE);
+        binding.slidingTabs.setVisibility(isJami? View.GONE : View.VISIBLE);
+        binding.pager.setVisibility(isJami? View.GONE : View.VISIBLE);
+        binding.fragmentContainer.setVisibility(isJami? View.VISIBLE : View.GONE);
         presenter.prepareOptionsMenu();
-        setBackListenerEnabled(isRing);
+        setBackListenerEnabled(isJami);
 
         FragmentManager fragmentManager = requireFragmentManager();
-        JamiAccountSummaryFragment fragment = (JamiAccountSummaryFragment) fragmentManager.findFragmentByTag(JamiAccountSummaryFragment.TAG);
-        if (fragment != null) {
-            fragment.setFragmentVisibility(isRing);
-            if (isRing)
-                fragment.setAccount(accountId);
+        Fragment fragment = fragmentManager.findFragmentByTag(JamiAccountSummaryFragment.TAG);
+        if (fragment instanceof JamiAccountSummaryFragment) {
+            JamiAccountSummaryFragment f = (JamiAccountSummaryFragment) fragment;
+            f.setFragmentVisibility(isJami);
+            if (isJami)
+                f.setAccount(accountId);
         }
     }
 

@@ -75,14 +75,11 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
         binding = null;
     }
 
-    public void presentForAccount(Bundle bundle) {
-        if (bundle != null && bundle.containsKey(ACCOUNT_ID)) {
-            String accountId = bundle.getString(ACCOUNT_ID);
-            presenter.updateAccount(accountId);
-            Bundle arguments = getArguments();
-            if (arguments != null)
-                arguments.putString(ACCOUNT_ID, accountId);
-        }
+    public void presentForAccount(@NonNull String accountId) {
+        presenter.updateAccount(accountId);
+        Bundle arguments = getArguments();
+        if (arguments != null)
+            arguments.putString(ACCOUNT_ID, accountId);
     }
 
     @Override

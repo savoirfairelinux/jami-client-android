@@ -104,6 +104,6 @@ public class TVShareFragment extends BaseSupportFragment<SharePresenter> impleme
                 .subscribe(a -> {
                     binding.qrUserPhoto.setVisibility(View.VISIBLE);
                     binding.qrUserPhoto.setImageDrawable(a);
-                }, e-> Log.e(TAG, e.getMessage())));
+                }, e-> Log.e(TVShareFragment.class.getSimpleName(), e.getMessage())));
     }
 }

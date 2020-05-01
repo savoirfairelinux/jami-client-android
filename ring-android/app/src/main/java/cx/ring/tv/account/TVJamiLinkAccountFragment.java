@@ -45,7 +45,7 @@ public class TVJamiLinkAccountFragment extends JamiGuidedStepFragment<JamiLinkAc
     public TVJamiLinkAccountFragment() {
     }
 
-    public static TVJamiLinkAccountFragment newInstance(AccountCreationModelImpl ringAccountViewModel) {
+    public static TVJamiLinkAccountFragment newInstance(@NonNull AccountCreationModelImpl ringAccountViewModel) {
         TVJamiLinkAccountFragment fragment = new TVJamiLinkAccountFragment();
         fragment.model = ringAccountViewModel;
         return fragment;
@@ -57,7 +57,7 @@ public class TVJamiLinkAccountFragment extends JamiGuidedStepFragment<JamiLinkAc
         super.onViewCreated(view, savedInstanceState);
 
         presenter.init(model);
-        if (model.getPhoto() != null) {
+        if (model != null && model.getPhoto() != null) {
             getGuidanceStylist().getIconView().setImageBitmap(model.getPhoto());
         }
     }

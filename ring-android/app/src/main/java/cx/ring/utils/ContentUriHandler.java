@@ -58,7 +58,6 @@ public class ContentUriHandler {
 
     public static Uri getUriForFile(@NonNull Context context, @NonNull String authority, @NonNull File file) {
         if (HUAWEI_MANUFACTURER.equalsIgnoreCase(Build.MANUFACTURER)) {
-            Log.w(TAG, "Using a Huawei device Increased likelihood of failure...");
             try {
                 return FileProvider.getUriForFile(context, authority, file);
             } catch (IllegalArgumentException e) {

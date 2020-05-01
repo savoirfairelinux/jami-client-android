@@ -29,7 +29,6 @@ import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import cx.ring.R;
-import cx.ring.account.JamiAccountCreationFragment;
 import cx.ring.model.Error;
 
 public abstract class BaseSupportFragment<T extends RootPresenter> extends Fragment implements BaseView {
@@ -86,16 +85,16 @@ public abstract class BaseSupportFragment<T extends RootPresenter> extends Fragm
                 .beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_right,
                         R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
-                .replace(content, fragment, JamiAccountCreationFragment.TAG)
-                .addToBackStack(JamiAccountCreationFragment.TAG)
+                .replace(content, fragment, TAG)
+                .addToBackStack(TAG)
                 .commit();
     }
 
     protected void replaceFragment(Fragment fragment, @IdRes int content) {
         getFragmentManager()
                 .beginTransaction()
-                .replace(content, fragment, JamiAccountCreationFragment.TAG)
-                .addToBackStack(JamiAccountCreationFragment.TAG)
+                .replace(content, fragment, TAG)
+                .addToBackStack(TAG)
                 .commit();
     }
 }
