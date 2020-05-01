@@ -46,6 +46,30 @@
       "revId": "f13c195178cffa18c326d313818166f1f7320551",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a5de65b_18ad457b",
+        "filename": "ring-android/app/src/main/res/layout/frag_acc_home_create.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-05-01T19:03:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c0fb7af_c657f2bc",
+      "range": {
+        "startLine": 50,
+        "startChar": 49,
+        "endLine": 50,
+        "endChar": 52
+      },
+      "revId": "f13c195178cffa18c326d313818166f1f7320551",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
