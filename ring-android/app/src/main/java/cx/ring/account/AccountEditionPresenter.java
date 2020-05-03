@@ -40,13 +40,17 @@ public class AccountEditionPresenter extends RootPresenter<AccountEditionView> {
     }
 
     public void init(String accountId) {
+        init(mAccountService.getAccount(accountId));
+    }
+
+    public void init(Account account) {
         final AccountEditionView view = getView();
-        mAccount = getAccount(accountId);
-        if (mAccount == null) {
+        if (account == null) {
             if (view != null)
                 view.exit();
             return;
         }
+        mAccount = account;
         if (mAccount.isRing()) {
             view.displaySummary(mAccount.getAccountID());
         } else {
@@ -59,8 +63,8 @@ public class AccountEditionPresenter extends RootPresenter<AccountEditionView> {
         mCompositeDisposable.add(mAccountService.getCurrentAccountSubject()
                 .observeOn(mUiScheduler)
                 .subscribe(account -> {
-                    if (mAccount.getAccountID() != account.getAccountID()) {
-                        init(account.getAccountID());
+                    if (mAccount != account) {
+                        init(account);
                     }
                 }));
     }
@@ -71,7 +75,6 @@ public class AccountEditionPresenter extends RootPresenter<AccountEditionView> {
 
     public void removeAccount() {
         mAccountService.removeAccount(mAccount.getAccountID());
-
         if (mAccountService.getAccountList().size() == 0) {
             getView().goToWizardActivity();
         } else {
@@ -80,14 +83,10 @@ public class AccountEditionPresenter extends RootPresenter<AccountEditionView> {
     }
 
     public void prepareOptionsMenu() {
-        if (getView() != null) {
-            getView().showAdvancedOption(mAccount.isRing());
-            getView().showBlacklistOption(mAccount.isRing());
+        AccountEditionView view = getView();
+        if (view != null && mAccount != null) {
+            view.showAdvancedOption(mAccount.isRing());
+            view.showBlacklistOption(mAccount.isRing());
         }
     }
-
-    public Account getAccount(String accountId) {
-        return accountId == null ? null : mAccountService.getAccount(accountId);
-    }
-
 }
