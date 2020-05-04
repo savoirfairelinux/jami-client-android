@@ -51,12 +51,12 @@ public class AccountEditionPresenter extends RootPresenter<AccountEditionView> {
             return;
         }
         mAccount = account;
-        if (mAccount.isRing()) {
+        if (mAccount.isJami()) {
             view.displaySummary(mAccount.getAccountID());
         } else {
             view.displaySIPView(mAccount.getAccountID());
         }
-        view.initViewPager(mAccount.getAccountID(), mAccount.isRing());
+        view.initViewPager(mAccount.getAccountID(), mAccount.isJami());
     }
 
     public void onAccountChanged() {
@@ -83,10 +83,15 @@ public class AccountEditionPresenter extends RootPresenter<AccountEditionView> {
     }
 
     public void prepareOptionsMenu() {
+        if (mAccount != null)
+            prepareOptionsMenu(mAccount.isJami());
+    }
+
+    public void prepareOptionsMenu(boolean isJami) {
         AccountEditionView view = getView();
-        if (view != null && mAccount != null) {
-            view.showAdvancedOption(mAccount.isRing());
-            view.showBlacklistOption(mAccount.isRing());
+        if (view != null) {
+            view.showAdvancedOption(isJami);
+            view.showBlacklistOption(isJami);
         }
     }
 }

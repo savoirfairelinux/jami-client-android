@@ -49,41 +49,40 @@ public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> {
 
     // Init with current account
     public void init() {
-        Account currentAccount = mAccountService.getCurrentAccount();
-        if (currentAccount == null) {
-            Log.e(TAG, "init: No currentAccount available");
-            return;
-        }
-        init(currentAccount.getAccountID());
+        init(mAccountService.getCurrentAccount());
     }
 
-    void init(String accountId) {
-        mAccount = mAccountService.getAccount(accountId);
-        if (mAccount != null) {
-            if (mAccount.isRing()) {
-                getView().addJamiPreferences(mAccount.getAccountID());
+    public void init(String accountId) {
+        init(mAccountService.getAccount(accountId));
+    }
+
+    private void init(Account account) {
+        mAccount = account;
+        if (account != null) {
+            if (account.isJami()) {
+                getView().addJamiPreferences(account.getAccountID());
             } else {
                 getView().addSipPreferences();
             }
-            getView().accountChanged(mAccount);
+            getView().accountChanged(account);
             mCompositeDisposable.clear();
-            mCompositeDisposable.add(mAccountService.getObservableAccount(accountId)
+            mCompositeDisposable.add(mAccountService.getObservableAccount(account.getAccountID())
                     .observeOn(mUiScheduler)
-                    .subscribe(account -> getView().accountChanged(account)));
+                    .subscribe(acc -> getView().accountChanged(acc)));
         } else {
+            Log.e(TAG, "init: No currentAccount available");
             getView().finish();
         }
     }
 
-    void setEnabled(Object newValue) {
-        boolean enabled = (Boolean) newValue;
+    void setEnabled(boolean enabled) {
         mAccount.setEnabled(enabled);
         mAccountService.setAccountEnabled(mAccount.getAccountID(), enabled);
     }
 
     public void twoStatePreferenceChanged(ConfigKey configKey, Object newValue) {
         if (configKey == ConfigKey.ACCOUNT_ENABLE) {
-            setEnabled(newValue);
+            setEnabled((Boolean) newValue);
         } else {
             mAccount.setDetail(configKey, newValue.toString());
             updateAccount();

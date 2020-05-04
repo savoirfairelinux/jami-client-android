@@ -221,7 +221,6 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
     public void onPause() {
         super.onPause();
         presenter.unbindView();
-
         setBackListenerEnabled(false);
     }
 
@@ -249,7 +248,7 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
         binding.slidingTabs.setVisibility(isJami? View.GONE : View.VISIBLE);
         binding.pager.setVisibility(isJami? View.GONE : View.VISIBLE);
         binding.fragmentContainer.setVisibility(isJami? View.VISIBLE : View.GONE);
-        presenter.prepareOptionsMenu();
+        presenter.prepareOptionsMenu(isJami);
         setBackListenerEnabled(isJami);
 
         FragmentManager fragmentManager = requireFragmentManager();

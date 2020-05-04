@@ -281,7 +281,7 @@ public class Account {
         else if (conversation == pending.get(key))
             pendingUpdated(conversation);
         else if (conversation == cache.get(key)) {
-            if (mContacts.containsKey(key) || !isRing()) {
+            if (mContacts.containsKey(key) || !isJami()) {
                 conversations.put(key, conversation);
                 conversationChanged();
             } else {
@@ -394,7 +394,7 @@ public class Account {
     }
 
     public String getDisplayUsername() {
-        if (isRing()) {
+        if (isJami()) {
             String registeredName = getRegisteredName();
             if (registeredName != null && !registeredName.isEmpty()) {
                 return registeredName;
@@ -452,7 +452,7 @@ public class Account {
         return mDetails.get(ConfigKey.ACCOUNT_TYPE).equals(AccountConfig.ACCOUNT_TYPE_SIP);
     }
 
-    public Boolean isRing() {
+    public Boolean isJami() {
         return mDetails.get(ConfigKey.ACCOUNT_TYPE).equals(AccountConfig.ACCOUNT_TYPE_RING);
     }
 
@@ -545,7 +545,7 @@ public class Account {
 
     private String getUri(boolean display) {
         String username = display ? getDisplayUsername() : getUsername();
-        if (isRing()) {
+        if (isJami()) {
             return username;
         } else {
             return username + "@" + getHost();

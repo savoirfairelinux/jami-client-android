@@ -315,7 +315,7 @@ public class AccountService {
 
             if (account.isSip()) {
                 hasSip = true;
-            } else if (account.isRing()) {
+            } else if (account.isJami()) {
                 hasJami = true;
                 boolean enabled = account.isEnabled();
 
@@ -363,7 +363,7 @@ public class AccountService {
                 mVCardService.migrateProfiles(accountIds);
                 for (String accountId : accountIds) {
                     Account account = getAccount(accountId);
-                    if (account.isRing()) {
+                    if (account.isJami()) {
                         mVCardService.migrateContact(account.getContacts(), accountId);
                         migrateContactEvents(account, account.getContacts(), account.getRequestsMigration());
                     }
@@ -1551,7 +1551,7 @@ public class AccountService {
     public void setProxyEnabled(boolean enabled) {
         mExecutor.execute(() -> {
             for (Account acc : mAccountList) {
-                if (acc.isRing() && (acc.isDhtProxyEnabled() != enabled)) {
+                if (acc.isJami() && (acc.isDhtProxyEnabled() != enabled)) {
                     Log.d(TAG, (enabled ? "Enabling" : "Disabling") + " proxy for account " + acc.getAccountID());
                     acc.setDhtProxyEnabled(enabled);
                     StringMap details = Ringservice.getAccountDetails(acc.getAccountID());
