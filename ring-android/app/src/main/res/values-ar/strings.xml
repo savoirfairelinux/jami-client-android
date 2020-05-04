@@ -259,7 +259,6 @@
   <string name="tv_audio_play">تشغيل</string>
   <string name="tv_audio_pause">إيقاف مؤقت</string>
   <string name="tv_dialog_send">أرسل</string>
-  <string name="tv_audio_recording">تسجيل...</string>
   <string name="tv_send_text">أرسل نص</string>
   <string name="tv_send_audio">أرسل صوت</string>
 </resources>

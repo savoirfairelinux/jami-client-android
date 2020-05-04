@@ -258,7 +258,6 @@
   <string name="tv_audio_play">Lejátszás</string>
   <string name="tv_audio_pause">Megállítás</string>
   <string name="tv_dialog_send">Elküld</string>
-  <string name="tv_audio_recording">Felvétel…</string>
   <string name="tv_send_text">Szöveg küldése</string>
   <string name="tv_send_audio">Hang küldése</string>
   <string name="tv_send_video">Média küldése</string>

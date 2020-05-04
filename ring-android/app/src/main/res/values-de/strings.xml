@@ -258,7 +258,6 @@
   <string name="tv_audio_play">Abspielen</string>
   <string name="tv_audio_pause">Pause</string>
   <string name="tv_dialog_send">Senden</string>
-  <string name="tv_audio_recording">Aufnahme...</string>
   <string name="tv_send_text">Text senden</string>
   <string name="tv_send_audio">Audio senden</string>
   <string name="tv_send_video">Medien senden</string>

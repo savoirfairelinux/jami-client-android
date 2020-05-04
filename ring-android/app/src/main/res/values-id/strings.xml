@@ -2,7 +2,9 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Umpan balik</string>
+  <string name="report">Kirimkan kami email</string>
   <string name="section_license">Lisensi</string>
+  <string name="sponsor_section">Jami adalah perangkat lunak gratis dan didukung oleh</string>
   <string name="copyright_section">Hak cipta</string>
   <string name="contribute_section">Berkontribusi</string>
   <string name="version_section">Versi</string>
@@ -10,6 +12,10 @@
   <string name="no_browser_app_installed">Aplikasi peramban tidak ditemukan, silakan pasang salah satu untuk melihat halaman ini</string>
   <string name="email_chooser_title">Kirim email menggunakan...</string>
   <string name="website_chooser_title">Lihat halaman menggunakan...</string>
+  <string name="license">Perangkat lunak ini disediakan \"apa adanya\", tanpa jaminan apapun. Untuk detalinya, <u>GNU General Public License versi 3 atau yang lebih baru</u></string>
+  <string name="description">Jami adalah perangkat lunak gratis untuk komunikasi universal yang menghormati kebebasan dan privasi penggunanya</string>
+  <string name="credits">Partisipan</string>
+  <string name="call_service_description">Layanan ini diperlukan untuk membuat panggilan anda tetap berjalan di latar depan. Ini hanya berjalan selama panggilan</string>
   <!--About dialog-->
   <!--RingActivity-->
   <!--AB menus-->
@@ -93,5 +99,6 @@
   <!--Bottom Navigation-->
   <string name="navigation_item_account">Akun</string>
   <!--TV-->
+  <string name="tv_audio_play">Mainkan</string>
   <string name="tv_dialog_send">Kirim</string>
 </resources>

@@ -258,7 +258,6 @@
   <string name="tv_audio_play">Toista</string>
   <string name="tv_audio_pause">Tauota</string>
   <string name="tv_dialog_send">Lähetä</string>
-  <string name="tv_audio_recording">Tallentaa...</string>
   <string name="tv_send_text">Lähetä teksti</string>
   <string name="tv_send_audio">Lähetä ääni</string>
   <string name="tv_send_video">Lähetä media</string>

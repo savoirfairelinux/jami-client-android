@@ -255,7 +255,6 @@
   <string name="tv_audio_play">Jouer</string>
   <string name="tv_audio_pause">Pause</string>
   <string name="tv_dialog_send">Envoyer</string>
-  <string name="tv_audio_recording">Enregistrement en cours...</string>
   <string name="tv_send_text">Envoyer du texte</string>
   <string name="tv_send_audio">Envoyer de l\'audio</string>
 </resources>

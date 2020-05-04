@@ -8,8 +8,8 @@
   <string name="copyright_section">Autorių teisės</string>
   <string name="contribute_section">Talkinti</string>
   <string name="version_section">Versija</string>
-  <string name="no_email_app_installed">Nerasta jokios el. pašto programėlės, įdiekite kurią nors, kad išsiųstumėte mums pranešimą</string>
-  <string name="no_browser_app_installed">Nerasta jokios saityno naršyklės programėlės, įdiekite kurią nors, kad peržiūrėtumėte šį puslapį</string>
+  <string name="no_email_app_installed">Nerasta jokios el. pašto programėlės, įdiekite el. pašto programą, kad išsiųsti mums pranešimą</string>
+  <string name="no_browser_app_installed">Nerasta jokios interneto naršyklės programėlės, įdiekite interneto naršyklę, kad peržiūrėti šį puslapį</string>
   <string name="email_chooser_title">Siųsti paštą, naudojant...</string>
   <string name="website_chooser_title">Rodyti svetainę, naudojant...</string>
   <string name="license">Ši programinė įranga yra pateikiama \"tokia, kokia yra\", be jokios garantijos. Išsamesnei informacijai, žiūrėkite <u>GNU Bendrąją Viešąją Licenciją, versiją 3 arba vėlesnę</u></string>
@@ -53,9 +53,11 @@
   <string name="notif_current_call">Esamas skambutis</string>
   <string name="notif_channel_calls">Skambučiai</string>
   <string name="notif_channel_missed_calls">Praleisti skambučiai</string>
+  <string name="notif_channel_incoming_calls">Gauti skambučiai</string>
   <string name="notif_channel_messages">Žinutės</string>
   <string name="notif_channel_requests">Užklausos</string>
   <string name="notif_channel_file_transfer">Failų persiuntimas</string>
+  <string name="notif_channel_sync">Duomenų sinchronizavimas</string>
   <string name="notif_channel_background_service">Foninė tarnyba</string>
   <string name="notif_channel_background_service_descr">Leidžia bet kuriuo metu priimti skambučius ir gauti žinutes.</string>
   <string name="notif_group_calls">Skambučiai</string>
@@ -125,6 +127,7 @@
   <string name="conversation_action_remove_this_message">Tai ištrins adresatą ir išvalys pokalbio istoriją.</string>
   <string name="conversation_action_copy_peer_number">Kopijuoti numerį</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s nukopijuota į iškarpinę</string>
+  <string name="conversation_action_select_peer_number">Pasirinkite numerį</string>
   <string name="conversation_action_block_this">Užblokuoti adresatą</string>
   <string name="conversation_open_file_error">Nėra įdiegtos programos, kuri galėtų atverti šį failo tipą.</string>
   <string name="clip_contact_uri">Adresato adresas</string>
@@ -158,6 +161,7 @@
   <string name="share_label">Bendrinti</string>
   <string name="generic_error_migration">Klaida</string>
   <string name="generic_error_migration_message">Perkėlimo metu įvyko klaida</string>
+  <string name="title_share_with">Dalytis su…</string>
   <!--Pending contact requests-->
   <string name="accept">Priimti</string>
   <string name="refuse">Atmesti</string>
@@ -188,6 +192,7 @@
   <string name="not_able_to_write_file">Nepavyko rašyti failo</string>
   <string name="file_transfer_status_created">inicijuojamas persiuntimas</string>
   <string name="file_transfer_status_unsupported">nepalaikoma</string>
+  <string name="file_transfer_status_finished">baigta</string>
   <string name="file_transfer_status_invalid_pathname">neteisingas kelio pavadinimas</string>
   <string name="file_transfer_status_cancelled">atsisakyta</string>
   <string name="file_transfer_status_error">nepavyko dėl klaidos</string>
@@ -212,6 +217,8 @@
   <string name="navigation_item_account">Paskyra</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">Siųsti garso žinutę?</string>
+  <string name="tv_send_image_dialog_message">Siųsti paveikslėlį?</string>
+  <string name="tv_media_preview">Peržiūra</string>
   <string name="tv_audio_play">Groti</string>
   <string name="tv_audio_pause">Pristabdyti</string>
   <string name="tv_dialog_send">Siųsti</string>

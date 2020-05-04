@@ -170,7 +170,7 @@
   <string name="prompt_new_password_repeat">Repite la nueva contraseña</string>
   <string name="account_create_title">Crear una cuenta en Jami</string>
   <string name="prompt_new_username">Ingresa un nuevo nombre de usuario</string>
-  <string name="help_password_choose">Elige una contraseña robusta que podrás recordar para proteger tu cuenta de Jami.</string>
+  <string name="help_password_choose">Elige una contraseña robusta que recuerdes para proteger tu cuenta de Jami.</string>
   <string name="help_password_enter">Ingresa la contraseña de tu cuenta principal de Jami</string>
   <string name="help_server_enter">Introduzca la URL del servidor de gestión</string>
   <string name="help_pin_enter">Ingresa el PIN de otra cuenta de Jami configurada. Utiliza la opción \"Exportar cuenta en Jami\" para obtener un PIN.</string>
@@ -259,7 +259,6 @@
   <string name="tv_audio_play">Reproducir</string>
   <string name="tv_audio_pause">Pausar</string>
   <string name="tv_dialog_send">Enviar</string>
-  <string name="tv_audio_recording">Grabando...</string>
   <string name="tv_send_text">Enviar texto</string>
   <string name="tv_send_audio">Enviar audio</string>
   <string name="tv_send_video">Enviar contenido</string>

@@ -258,7 +258,6 @@
   <string name="tv_audio_play">Reproduzir</string>
   <string name="tv_audio_pause">Pausa</string>
   <string name="tv_dialog_send">Enviar</string>
-  <string name="tv_audio_recording">A gravar...</string>
   <string name="tv_send_text">Enviar Texto</string>
   <string name="tv_send_audio">Enviar Áudio</string>
   <string name="tv_send_video">Enviar media</string>

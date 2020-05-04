@@ -258,7 +258,6 @@
   <string name="tv_audio_play">Oynat</string>
   <string name="tv_audio_pause">Duraklat</string>
   <string name="tv_dialog_send">Gönder</string>
-  <string name="tv_audio_recording">Kaydediliyor...</string>
   <string name="tv_send_text">Mesaj gönder</string>
   <string name="tv_send_audio">Ses gönder</string>
   <string name="tv_send_video">Medya gönder</string>

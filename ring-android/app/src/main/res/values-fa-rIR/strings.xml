@@ -258,7 +258,6 @@
   <string name="tv_audio_play">پخش</string>
   <string name="tv_audio_pause">مکث</string>
   <string name="tv_dialog_send">ارسال</string>
-  <string name="tv_audio_recording">در حال ضبط...</string>
   <string name="tv_send_text">ارسال متن</string>
   <string name="tv_send_audio">ارسال صدا</string>
   <string name="tv_send_video">ارسال محتوای رسانه‌ای</string>

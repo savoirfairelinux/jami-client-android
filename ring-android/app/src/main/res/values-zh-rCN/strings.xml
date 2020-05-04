@@ -257,7 +257,6 @@
   <string name="tv_audio_play">播放</string>
   <string name="tv_audio_pause">暂停</string>
   <string name="tv_dialog_send">发送</string>
-  <string name="tv_audio_recording">正在录音...</string>
   <string name="tv_send_text">发送文本</string>
   <string name="tv_send_audio">发送音频</string>
   <string name="tv_send_video">发送媒体文件</string>

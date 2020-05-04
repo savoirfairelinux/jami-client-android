@@ -255,7 +255,6 @@
   <string name="tv_audio_play">Jo</string>
   <string name="tv_audio_pause">Pausatu</string>
   <string name="tv_dialog_send">Bidali</string>
-  <string name="tv_audio_recording">Grabatzen…</string>
   <string name="tv_send_text">Bidali testua</string>
   <string name="tv_send_audio">Bidali audioa</string>
 </resources>

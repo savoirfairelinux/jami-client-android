@@ -43,6 +43,7 @@
     <item quantity="other">%d gesprekken</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Zoek op naam of telefoonnummer...</string>
   <string name="choose_number">Kies een nummer</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -62,6 +63,7 @@
   <string name="notif_channel_messages">Berichten</string>
   <string name="notif_channel_requests">Verzoeken</string>
   <string name="notif_channel_file_transfer">Bestandsoverdracht</string>
+  <string name="notif_channel_sync">Data synchronisatie</string>
   <string name="notif_channel_background_service">Achtergronddienst</string>
   <string name="notif_channel_background_service_descr">Maakt het mogelijk om op elk moment oproepen en berichten te ontvangen.</string>
   <string name="notif_group_calls">Oproepen</string>
@@ -72,6 +74,14 @@
   <string name="notif_incoming_file_transfer_title">Inkomend bestand van %1$s</string>
   <string name="notif_outgoing_file_transfer_title">Bestand wordt verstuurd naar %1$s</string>
   <string name="notif_incoming_picture">Afbeelding van %1$s</string>
+  <string name="notif_sync_title">Aan het synchroniseren...</string>
+  <string name="notif_location_title">Uw locatie aan het delen met %1$s</string>
+  <string name="location_share_contact">%1$s is een locatie aan het delen met u</string>
+  <string name="notif_location_multi_title">Uw locatie aan het delen met %1$dcontacten</string>
+  <string name="notif_location_remaining">Nog %1$d minuten resterend</string>
+  <string name="notif_location_action_stop">Stop met het delen van uw locatie</string>
+  <string name="location_share_action_start">Begin met delen</string>
+  <string name="location_share_action_stop">Stop met delen</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">U:</string>
   <string name="action_call_hangup">Ophangen</string>
@@ -105,6 +115,7 @@
   <string name="hist_file_received">Bestand ontvangen</string>
   <string name="conversation_send_audio">Geluidsbericht opnemen</string>
   <string name="conversation_send_video">Videobericht opnemen</string>
+  <string name="conversation_share_location">Uw locatie delen</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Cameramachtiging</string>
   <string name="permission_dialog_camera_message">Videogesprekken vereisen machtiging voor gebruik van de camera. Gelieve te overwegen deze machtiging alsnog toe te kennen.</string>
@@ -150,6 +161,7 @@
   <string name="block_contact_dialog_title">%1$s blokkeren?</string>
   <string name="block_contact_dialog_message">%1$s zal u niet meer kunnen contacteren totdat u hem/haar deblokkeert.</string>
   <string name="block_contact_completed">%1$s is geblokkeerd.</string>
+  <string name="conversation_contact_is_typing">Contact is aan het typen...</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s toevoegen?</string>
   <string name="prompt_new_password">Nieuw wachtwoord</string>
@@ -216,6 +228,8 @@
   <string name="file_transfer_status_closed_by_peer">gesloten door peer</string>
   <string name="file_transfer_status_invalid_pathname">ongeldige padnaam</string>
   <string name="file_transfer_status_unjoinable_peer">peer kan niet deelnemen</string>
+  <string name="file_transfer_status_cancelled">Geannuleerd</string>
+  <string name="file_transfer_status_error">Mislukt door een error</string>
   <string name="file_saved_in">Bestand opgeslagen in %s</string>
   <string name="file_saved_successfully">Bestand opgeslagen</string>
   <string name="no_space_left_on_device">Geen vrije ruimte resterend op apparaat</string>
@@ -236,7 +250,14 @@
   <string name="navigation_item_contact_request">Contactverzoeken</string>
   <string name="navigation_item_account">Account</string>
   <!--TV-->
+  <string name="tv_send_audio_dialog_message">Een audio opname versturen?</string>
+  <string name="tv_send_image_dialog_message">Deze afbeelding verzenden?</string>
+  <string name="tv_send_video_dialog_message">Deze video versturen?</string>
+  <string name="tv_media_preview">Voorbeeld</string>
   <string name="tv_audio_play">Afspelen</string>
   <string name="tv_audio_pause">Pauze</string>
   <string name="tv_dialog_send">Versturen</string>
+  <string name="tv_send_text">Verstuur Tekst</string>
+  <string name="tv_send_audio">Verstuur Audio</string>
+  <string name="tv_send_video">Verstuur Media</string>
 </resources>
