@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36f97f08_c69b7c70",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-05-05T16:48:03Z",
+      "side": 1,
+      "message": "hardcoded size (should work with preview of any size)",
+      "range": {
+        "startLine": 555,
+        "startChar": 43,
+        "endLine": 555,
+        "endChar": 54
+      },
+      "revId": "58fa5e8bf6908a393ae054a8a3ab9e8dc0fcfdad",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d909dc02_a68d4293",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-05-05T16:48:03Z",
+      "side": 1,
+      "message": "hardcoded size (should work with preview of any size)",
+      "range": {
+        "startLine": 561,
+        "startChar": 0,
+        "endLine": 561,
+        "endChar": 98
+      },
+      "revId": "58fa5e8bf6908a393ae054a8a3ab9e8dc0fcfdad",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bf21a9c_21648bbd",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-05-05T16:48:03Z",
+      "side": 1,
+      "message": "hardcoded size (should work with preview of any size)",
+      "range": {
+        "startLine": 569,
+        "startChar": 0,
+        "endLine": 569,
+        "endChar": 54
+      },
+      "revId": "58fa5e8bf6908a393ae054a8a3ab9e8dc0fcfdad",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c738d62_98cb88c7",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-05-05T16:48:03Z",
+      "side": 1,
+      "message": "hardcoded size (should work with preview of any size)",
+      "range": {
+        "startLine": 580,
+        "startChar": 0,
+        "endLine": 580,
+        "endChar": 110
+      },
+      "revId": "58fa5e8bf6908a393ae054a8a3ab9e8dc0fcfdad",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cf0f2ca_acefaa15",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-05-05T16:48:03Z",
+      "side": 1,
+      "message": "hardcoded size (should work with preview of any size)",
+      "range": {
+        "startLine": 584,
+        "startChar": 0,
+        "endLine": 584,
+        "endChar": 110
+      },
+      "revId": "58fa5e8bf6908a393ae054a8a3ab9e8dc0fcfdad",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da0221f2_b2e2778a",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/UIUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-05-05T16:48:03Z",
+      "side": 1,
+      "message": "* Resources.getSystem() can\u0027t be used for dimensions:\n\nhttps://developer.android.com/reference/android/content/res/Resources.html#getSystem%28%29\n\"Return a global shared Resources object that provides access to only system resources (no application resources), is not configured for the current screen (can not use dimension units, does not change based on orientation, etc)\"\n\n* Not needed anyway, just use:\n\n TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, getResources().getDisplayMetrics());\n\nor ideally use direct pixel size from the preview or proper dimensions in resource files.\n\n* Additional util file not needed (clean system API already exists for this, new file adds more lines than it removes).",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 0
+      },
+      "revId": "58fa5e8bf6908a393ae054a8a3ab9e8dc0fcfdad",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4997f04a_9fd41e8c",
+        "filename": "ring-android/app/src/main/res/drawable/transparent_round_grey.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-05-05T16:48:03Z",
+      "side": 1,
+      "message": "use same radius as the card ?",
+      "range": {
+        "startLine": 7,
+        "startChar": 34,
+        "endLine": 7,
+        "endChar": 35
+      },
+      "revId": "58fa5e8bf6908a393ae054a8a3ab9e8dc0fcfdad",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
