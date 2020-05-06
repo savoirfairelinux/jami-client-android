@@ -504,7 +504,9 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 getSupportFragmentManager().beginTransaction()
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         .replace(R.id.main_frame, fContent, CONTACT_REQUESTS_TAG)
-                        .addToBackStack(CONTACT_REQUESTS_TAG).commit();
+                        .setReorderingAllowed(true)
+                        .addToBackStack(CONTACT_REQUESTS_TAG)
+                        .commit();
                 conversationSelected = false;
                 showProfileInfo();
                 showToolbarSpinner();
@@ -518,7 +520,9 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 getSupportFragmentManager().beginTransaction()
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         .replace(R.id.main_frame, fContent, HOME_TAG)
-                        .addToBackStack(HOME_TAG).commit();
+                        .setReorderingAllowed(true)
+                        .addToBackStack(HOME_TAG)
+                        .commit();
                 conversationSelected = false;
                 showProfileInfo();
                 showToolbarSpinner();
@@ -545,7 +549,9 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                     getSupportFragmentManager().beginTransaction()
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                             .replace(getFragmentContainerId(), fContent, ACCOUNTS_TAG)
-                            .addToBackStack(ACCOUNTS_TAG).commit();
+                            .setReorderingAllowed(true)
+                            .addToBackStack(ACCOUNTS_TAG)
+                            .commit();
                     conversationSelected = false;
                     showProfileInfo();
                     showToolbarSpinner();

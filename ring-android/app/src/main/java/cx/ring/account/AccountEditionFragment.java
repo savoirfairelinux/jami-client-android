@@ -74,10 +74,10 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
         BackHandlerInterface,
         AccountEditionView,
         ViewTreeObserver.OnScrollChangedListener  {
+    private static final String TAG = AccountEditionFragment.class.getSimpleName();
 
     public static final String ACCOUNT_ID_KEY = AccountEditionFragment.class.getCanonicalName() + "accountid";
     static final String ACCOUNT_HAS_PASSWORD_KEY = AccountEditionFragment.class.getCanonicalName() + "hasPassword";
-    private static final String TAG = AccountEditionFragment.class.getSimpleName();
     public static final String ACCOUNT_ID = TAG + "accountID";
 
     private static final int SCROLL_DIRECTION_UP = -1;
@@ -90,6 +90,7 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
     private MenuItem mItemBlacklist;
 
     private String mAccountId;
+    private boolean mAccountIsJami;
 
     @Nullable
     @Override
@@ -229,7 +230,7 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
         if (getActivity() instanceof HomeActivity)
             ((HomeActivity) getActivity()).setToolbarOutlineState(true);
         if (binding.fragmentContainer.getVisibility() != View.VISIBLE) {
-            // toggleView(mAccountId);
+            toggleView(mAccountId, mAccountIsJami);
             return true;
         }
         FragmentManager fragmentManager = requireFragmentManager();
@@ -245,6 +246,7 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
 
     private void toggleView(String accountId, boolean isJami) {
         mAccountId = accountId;
+        mAccountIsJami = isJami;
         binding.slidingTabs.setVisibility(isJami? View.GONE : View.VISIBLE);
         binding.pager.setVisibility(isJami? View.GONE : View.VISIBLE);
         binding.fragmentContainer.setVisibility(isJami? View.VISIBLE : View.GONE);

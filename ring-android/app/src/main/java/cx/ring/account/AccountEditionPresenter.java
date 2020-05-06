@@ -41,6 +41,14 @@ public class AccountEditionPresenter extends RootPresenter<AccountEditionView> {
 
     public void init(String accountId) {
         init(mAccountService.getAccount(accountId));
+        mCompositeDisposable.add(mAccountService
+                .getCurrentAccountSubject()
+                .observeOn(mUiScheduler)
+                .subscribe(a -> {
+                    if (mAccount != a) {
+                        init(a);
+                    }
+                }));
     }
 
     public void init(Account account) {
@@ -51,22 +59,15 @@ public class AccountEditionPresenter extends RootPresenter<AccountEditionView> {
             return;
         }
         mAccount = account;
-        if (mAccount.isJami()) {
-            view.displaySummary(mAccount.getAccountID());
+        if (account.isJami()) {
+            view.displaySummary(account.getAccountID());
         } else {
-            view.displaySIPView(mAccount.getAccountID());
+            view.displaySIPView(account.getAccountID());
         }
-        view.initViewPager(mAccount.getAccountID(), mAccount.isJami());
+        view.initViewPager(account.getAccountID(), account.isJami());
     }
 
     public void onAccountChanged() {
-        mCompositeDisposable.add(mAccountService.getCurrentAccountSubject()
-                .observeOn(mUiScheduler)
-                .subscribe(account -> {
-                    if (mAccount != account) {
-                        init(account);
-                    }
-                }));
     }
 
     public void goToBlackList() {
@@ -75,11 +76,6 @@ public class AccountEditionPresenter extends RootPresenter<AccountEditionView> {
 
     public void removeAccount() {
         mAccountService.removeAccount(mAccount.getAccountID());
-        if (mAccountService.getAccountList().size() == 0) {
-            getView().goToWizardActivity();
-        } else {
-            getView().exit();
-        }
     }
 
     public void prepareOptionsMenu() {

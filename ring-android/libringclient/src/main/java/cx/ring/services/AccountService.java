@@ -406,17 +406,15 @@ public class AccountService {
     public Observable<Account> addAccount(final Map<String, String> map) {
         return Observable.fromCallable(() -> {
             String accountId = Ringservice.addAccount(StringMap.toSwig(map));
-            if (accountId == null) {
+            if (StringUtils.isEmpty(accountId)) {
                 throw new RuntimeException("Can't create account.");
             }
-
-            Map<String, String> accountDetails = Ringservice.getAccountDetails(accountId).toNative();
-            List<Map<String, String>> accountCredentials = Ringservice.getCredentials(accountId).toNative();
-            Map<String, String> accountVolatileDetails = Ringservice.getVolatileAccountDetails(accountId).toNative();
-            Map<String, String> accountDevices = Ringservice.getKnownRingDevices(accountId).toNative();
-
             Account account = getAccount(accountId);
             if (account == null) {
+                Map<String, String> accountDetails = Ringservice.getAccountDetails(accountId).toNative();
+                List<Map<String, String>> accountCredentials = Ringservice.getCredentials(accountId).toNative();
+                Map<String, String> accountVolatileDetails = Ringservice.getVolatileAccountDetails(accountId).toNative();
+                Map<String, String> accountDevices = Ringservice.getKnownRingDevices(accountId).toNative();
                 account = new Account(accountId, accountDetails, accountCredentials, accountVolatileDetails);
                 account.setDevices(accountDevices);
                 if (account.isSip()) {
@@ -717,7 +715,7 @@ public class AccountService {
     public void removeAccount(final String accountId) {
         Log.i(TAG, "removeAccount() " + accountId);
         mExecutor.execute(() -> Ringservice.removeAccount(accountId));
-        mHistoryService.deleteAccountHistory(accountId);
+        mHistoryService.clearHistory(accountId).subscribe();
     }
 
     /**
