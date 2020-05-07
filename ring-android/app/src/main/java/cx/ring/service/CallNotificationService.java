@@ -48,6 +48,7 @@ public class CallNotificationService extends Service {
         super.onStartCommand(intent, flags, startId);
         Notification notification = (Notification) mNotificationService.showCallNotification(intent.getIntExtra(NotificationService.KEY_NOTIFICATION_ID, -1));
         if (notification == null) {
+            stopSelf();
             return START_NOT_STICKY;
         }
 
@@ -57,9 +58,9 @@ public class CallNotificationService extends Service {
                 startForeground(NOTIF_CALL_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL | ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION);
             else
                 startForeground(NOTIF_CALL_ID, notification);
+        } else {
+            notificationManager.notify(NOTIF_CALL_ID, notification);
         }
-
-        notificationManager.notify(NOTIF_CALL_ID, notification);
         return START_NOT_STICKY;
     }
 

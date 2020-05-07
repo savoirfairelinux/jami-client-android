@@ -162,7 +162,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     private CallContact initContact(final Account account, final Uri uri,
                                     final ConversationView view) {
         CallContact contact;
-        if (account.isRing()) {
+        if (account.isJami()) {
             String rawId = uri.getRawRingId();
             contact = account.getContact(rawId);
             if (contact == null) {

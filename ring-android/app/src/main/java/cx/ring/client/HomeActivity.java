@@ -325,16 +325,18 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                     mAccountAdapter = new ToolbarSpinnerAdapter(HomeActivity.this, R.layout.item_toolbar_spinner, accounts);
                     binding.spinnerToolbar.setAdapter(mAccountAdapter);
                     showProfileInfo();
-                }, e ->  cx.ring.utils.Log.e(TAG, "Error loading account list !", e)));
+                }, e ->  Log.e(TAG, "Error loading account list !", e)));
 
         mDisposable.add((mAccountService
                 .getCurrentAccountSubject()
                 .switchMap(Account::getUnreadPending)
+                .observeOn(mUiScheduler)
                 .subscribe(count -> setBadge(R.id.navigation_requests, count))));
 
         mDisposable.add((mAccountService
                 .getCurrentAccountSubject()
                 .switchMap(Account::getUnreadConversations)
+                .observeOn(mUiScheduler)
                 .subscribe(count -> setBadge(R.id.navigation_home, count))));
 
         int newOrientation = getResources().getConfiguration().orientation;
@@ -504,7 +506,9 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 getSupportFragmentManager().beginTransaction()
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         .replace(R.id.main_frame, fContent, CONTACT_REQUESTS_TAG)
-                        .addToBackStack(CONTACT_REQUESTS_TAG).commit();
+                        .setReorderingAllowed(true)
+                        .addToBackStack(CONTACT_REQUESTS_TAG)
+                        .commit();
                 conversationSelected = false;
                 showProfileInfo();
                 showToolbarSpinner();
@@ -518,7 +522,9 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 getSupportFragmentManager().beginTransaction()
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         .replace(R.id.main_frame, fContent, HOME_TAG)
-                        .addToBackStack(HOME_TAG).commit();
+                        .setReorderingAllowed(true)
+                        .addToBackStack(HOME_TAG)
+                        .commit();
                 conversationSelected = false;
                 showProfileInfo();
                 showToolbarSpinner();
@@ -545,7 +551,9 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                     getSupportFragmentManager().beginTransaction()
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                             .replace(getFragmentContainerId(), fContent, ACCOUNTS_TAG)
-                            .addToBackStack(ACCOUNTS_TAG).commit();
+                            .setReorderingAllowed(true)
+                            .addToBackStack(ACCOUNTS_TAG)
+                            .commit();
                     conversationSelected = false;
                     showProfileInfo();
                     showToolbarSpinner();
@@ -589,16 +597,10 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     public void setBadge(int menuId, int number) {
-        if (number == 0) {
+        if (number == 0)
             binding.navigationView.removeBadge(menuId);
-            return;
-        }
-
-        binding.navigationView.getOrCreateBadge(menuId);
-        BadgeDrawable badgeDrawable = binding.navigationView.getBadge(menuId);
-        if (badgeDrawable != null) {
-            badgeDrawable.setNumber(number);
-        }
+        else
+            binding.navigationView.getOrCreateBadge(menuId).setNumber(number);
     }
 
     private void hideTabletToolbar() {

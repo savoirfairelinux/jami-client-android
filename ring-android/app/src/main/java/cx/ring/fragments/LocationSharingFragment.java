@@ -597,13 +597,9 @@ public class LocationSharingFragment extends Fragment {
                 mStartSharingPending = durationSec;
                 requestPermissions(new String[]{ Manifest.permission.ACCESS_FINE_LOCATION }, REQUEST_CODE_LOCATION);
             } else {
-                Intent intent = new Intent(LocationSharingService.ACTION_START, mPath.toUri(), ctx, LocationSharingService.class);
-                intent.putExtra(LocationSharingService.EXTRA_SHARING_DURATION, durationSec);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    ctx.startForegroundService(intent);
-                } else {
-                    ctx.startService(intent);
-                }
+                Intent intent = new Intent(LocationSharingService.ACTION_START, mPath.toUri(), ctx, LocationSharingService.class)
+                        .putExtra(LocationSharingService.EXTRA_SHARING_DURATION, durationSec);
+                ContextCompat.startForegroundService(ctx, intent);
             }
         } catch (Exception e) {
             Toast.makeText(ctx, "Error starting location sharing: " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();

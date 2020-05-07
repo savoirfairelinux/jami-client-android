@@ -45,6 +45,7 @@ import androidx.core.app.NotificationCompat.CarExtender.UnreadConversation;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.app.Person;
 import androidx.core.app.RemoteInput;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.drawable.IconCompat;
 
@@ -368,12 +369,8 @@ public class NotificationServiceImpl implements NotificationService {
      * @param id            the notification id
      */
     private void startForegroundService(int id, Class serviceClass) {
-        Intent serviceIntent = new Intent(mContext, serviceClass);
-        serviceIntent.putExtra(KEY_NOTIFICATION_ID, id);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            mContext.startForegroundService(serviceIntent);
-        else
-            mContext.startService(serviceIntent);
+        ContextCompat.startForegroundService(mContext, new Intent(mContext, serviceClass)
+                .putExtra(KEY_NOTIFICATION_ID, id));
     }
 
     /**
@@ -395,19 +392,16 @@ public class NotificationServiceImpl implements NotificationService {
         if (!remove) {
             currentCalls.put(id, conference);
             startForegroundService(id, CallNotificationService.class);
-        } else if (currentCalls.isEmpty())
+        } else if (currentCalls.isEmpty()) {
             mContext.stopService(new Intent(mContext, CallNotificationService.class));
+        } else {
             // this is a temporary solution until we have direct support for concurrent calls and the call state will exclusively update notifications
-        else {
             int key = -1;
-            Iterator<Integer> iterator = (currentCalls.keySet().iterator());
-            while (iterator.hasNext()) {
-                key = iterator.next();
-            }
+            for (Integer integer : currentCalls.keySet())
+                key = integer;
             updateNotification(showCallNotification(key), NOTIF_CALL_ID);
         }
     }
-
 
     @Override
     public void onConnectionUpdate(Boolean b) {
@@ -415,10 +409,7 @@ public class NotificationServiceImpl implements NotificationService {
         if (b) {
             Intent serviceIntent = new Intent(SyncService.ACTION_START).setClass(mContext, SyncService.class);
             try {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                mContext.startForegroundService(serviceIntent);
-            else
-                mContext.startService(serviceIntent);
+                ContextCompat.startForegroundService(mContext, serviceIntent);
             } catch (IllegalStateException e) {
                 Log.e(TAG, "Error starting service", e);
             }

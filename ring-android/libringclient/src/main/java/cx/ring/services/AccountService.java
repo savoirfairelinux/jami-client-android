@@ -315,7 +315,7 @@ public class AccountService {
 
             if (account.isSip()) {
                 hasSip = true;
-            } else if (account.isRing()) {
+            } else if (account.isJami()) {
                 hasJami = true;
                 boolean enabled = account.isEnabled();
 
@@ -363,7 +363,7 @@ public class AccountService {
                 mVCardService.migrateProfiles(accountIds);
                 for (String accountId : accountIds) {
                     Account account = getAccount(accountId);
-                    if (account.isRing()) {
+                    if (account.isJami()) {
                         mVCardService.migrateContact(account.getContacts(), accountId);
                         migrateContactEvents(account, account.getContacts(), account.getRequestsMigration());
                     }
@@ -406,17 +406,15 @@ public class AccountService {
     public Observable<Account> addAccount(final Map<String, String> map) {
         return Observable.fromCallable(() -> {
             String accountId = Ringservice.addAccount(StringMap.toSwig(map));
-            if (accountId == null) {
+            if (StringUtils.isEmpty(accountId)) {
                 throw new RuntimeException("Can't create account.");
             }
-
-            Map<String, String> accountDetails = Ringservice.getAccountDetails(accountId).toNative();
-            List<Map<String, String>> accountCredentials = Ringservice.getCredentials(accountId).toNative();
-            Map<String, String> accountVolatileDetails = Ringservice.getVolatileAccountDetails(accountId).toNative();
-            Map<String, String> accountDevices = Ringservice.getKnownRingDevices(accountId).toNative();
-
             Account account = getAccount(accountId);
             if (account == null) {
+                Map<String, String> accountDetails = Ringservice.getAccountDetails(accountId).toNative();
+                List<Map<String, String>> accountCredentials = Ringservice.getCredentials(accountId).toNative();
+                Map<String, String> accountVolatileDetails = Ringservice.getVolatileAccountDetails(accountId).toNative();
+                Map<String, String> accountDevices = Ringservice.getKnownRingDevices(accountId).toNative();
                 account = new Account(accountId, accountDetails, accountCredentials, accountVolatileDetails);
                 account.setDevices(accountDevices);
                 if (account.isSip()) {
@@ -717,7 +715,7 @@ public class AccountService {
     public void removeAccount(final String accountId) {
         Log.i(TAG, "removeAccount() " + accountId);
         mExecutor.execute(() -> Ringservice.removeAccount(accountId));
-        mHistoryService.deleteAccountHistory(accountId);
+        mHistoryService.clearHistory(accountId).subscribe();
     }
 
     /**
@@ -1551,7 +1549,7 @@ public class AccountService {
     public void setProxyEnabled(boolean enabled) {
         mExecutor.execute(() -> {
             for (Account acc : mAccountList) {
-                if (acc.isRing() && (acc.isDhtProxyEnabled() != enabled)) {
+                if (acc.isJami() && (acc.isDhtProxyEnabled() != enabled)) {
                     Log.d(TAG, (enabled ? "Enabling" : "Disabling") + " proxy for account " + acc.getAccountID());
                     acc.setDhtProxyEnabled(enabled);
                     StringMap details = Ringservice.getAccountDetails(acc.getAccountID());

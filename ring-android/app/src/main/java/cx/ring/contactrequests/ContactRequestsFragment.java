@@ -168,6 +168,6 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
     }
 
     private void updateBadge() {
-        ((HomeActivity) Objects.requireNonNull(getActivity())).setBadge(R.id.navigation_requests, mAdapter.getItemCount());
+        ((HomeActivity) requireActivity()).setBadge(R.id.navigation_requests, mAdapter.getItemCount());
     }
 }

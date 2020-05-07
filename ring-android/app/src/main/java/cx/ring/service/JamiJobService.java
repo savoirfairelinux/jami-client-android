@@ -25,6 +25,8 @@ import android.os.Build;
 import android.os.Handler;
 
 import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
+
 import cx.ring.application.JamiApplication;
 import cx.ring.services.SyncService;
 import cx.ring.utils.Log;
@@ -51,10 +53,7 @@ public class JamiJobService extends JobService
             JamiApplication.getInstance().startDaemon();
             Intent serviceIntent = new Intent(SyncService.ACTION_START).setClass(this, SyncService.class);
             try {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                    startForegroundService(serviceIntent);
-                else
-                    startService(serviceIntent);
+                ContextCompat.startForegroundService(this, serviceIntent);
             } catch (IllegalStateException e) {
                 android.util.Log.e(TAG, "Error starting service", e);
             }

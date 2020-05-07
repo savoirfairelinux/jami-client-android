@@ -40,29 +40,34 @@ public class AccountEditionPresenter extends RootPresenter<AccountEditionView> {
     }
 
     public void init(String accountId) {
+        init(mAccountService.getAccount(accountId));
+        mCompositeDisposable.add(mAccountService
+                .getCurrentAccountSubject()
+                .observeOn(mUiScheduler)
+                .subscribe(a -> {
+                    if (mAccount != a) {
+                        init(a);
+                    }
+                }));
+    }
+
+    public void init(Account account) {
         final AccountEditionView view = getView();
-        mAccount = getAccount(accountId);
-        if (mAccount == null) {
+        if (account == null) {
             if (view != null)
                 view.exit();
             return;
         }
-        if (mAccount.isRing()) {
-            view.displaySummary(mAccount.getAccountID());
+        mAccount = account;
+        if (account.isJami()) {
+            view.displaySummary(account.getAccountID());
         } else {
-            view.displaySIPView(mAccount.getAccountID());
+            view.displaySIPView(account.getAccountID());
         }
-        view.initViewPager(mAccount.getAccountID(), mAccount.isRing());
+        view.initViewPager(account.getAccountID(), account.isJami());
     }
 
     public void onAccountChanged() {
-        mCompositeDisposable.add(mAccountService.getCurrentAccountSubject()
-                .observeOn(mUiScheduler)
-                .subscribe(account -> {
-                    if (mAccount.getAccountID() != account.getAccountID()) {
-                        init(account.getAccountID());
-                    }
-                }));
     }
 
     public void goToBlackList() {
@@ -71,23 +76,18 @@ public class AccountEditionPresenter extends RootPresenter<AccountEditionView> {
 
     public void removeAccount() {
         mAccountService.removeAccount(mAccount.getAccountID());
-
-        if (mAccountService.getAccountList().size() == 0) {
-            getView().goToWizardActivity();
-        } else {
-            getView().exit();
-        }
     }
 
     public void prepareOptionsMenu() {
-        if (getView() != null) {
-            getView().showAdvancedOption(mAccount.isRing());
-            getView().showBlacklistOption(mAccount.isRing());
+        if (mAccount != null)
+            prepareOptionsMenu(mAccount.isJami());
+    }
+
+    public void prepareOptionsMenu(boolean isJami) {
+        AccountEditionView view = getView();
+        if (view != null) {
+            view.showAdvancedOption(isJami);
+            view.showBlacklistOption(isJami);
         }
     }
-
-    public Account getAccount(String accountId) {
-        return accountId == null ? null : mAccountService.getAccount(accountId);
-    }
-
 }

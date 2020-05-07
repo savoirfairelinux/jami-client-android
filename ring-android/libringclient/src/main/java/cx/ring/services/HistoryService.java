@@ -68,6 +68,11 @@ public abstract class HistoryService {
         return scheduler;
     }
 
+    public Completable clearHistory(final String accountId) {
+        return Completable.fromAction(() -> deleteAccountHistory(accountId))
+                .subscribeOn(scheduler);
+    }
+
     /**
      * Clears a conversation's history
      *
