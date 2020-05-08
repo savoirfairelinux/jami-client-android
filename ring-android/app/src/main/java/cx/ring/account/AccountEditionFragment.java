@@ -54,14 +54,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.List;
-
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.contactrequests.BlackListFragment;
 import cx.ring.databinding.FragAccountSettingsBinding;
-import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.fragments.AdvancedAccountFragment;
 import cx.ring.fragments.GeneralAccountFragment;
 import cx.ring.fragments.MediaPreferenceFragment;
@@ -114,9 +111,6 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
 
         mAccountId = getArguments().getString(ACCOUNT_ID);
 
-        presenter.init(mAccountId);
-        presenter.onAccountChanged();
-
         if (DeviceUtils.isTablet(getContext()) && getActivity() != null) {
             Toolbar toolbar = getActivity().findViewById(R.id.main_toolbar);
             TextView title = toolbar.findViewById(R.id.contact_title);
@@ -134,12 +128,14 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
         }
 
         binding.fragmentContainer.getViewTreeObserver().addOnScrollChangedListener(this);
+
+        presenter.init(mAccountId);
     }
 
     @Override
     public void displaySummary(String accountId) {
         toggleView(accountId, true);
-        FragmentManager fragmentManager = requireFragmentManager();
+        FragmentManager fragmentManager = getChildFragmentManager();
         Fragment existingFragment = fragmentManager.findFragmentByTag(JamiAccountSummaryFragment.TAG);
         if (existingFragment == null) {
             JamiAccountSummaryFragment fragment = new JamiAccountSummaryFragment();
@@ -147,12 +143,10 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
             args.putString(ACCOUNT_ID_KEY, accountId);
             fragment.setArguments(args);
             fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, fragment, JamiAccountSummaryFragment.TAG)
-                    .addToBackStack(JamiAccountSummaryFragment.TAG)
+                    .add(R.id.fragment_container, fragment, JamiAccountSummaryFragment.TAG)
                     .commit();
         } else {
-            if (getActivity() instanceof HomeActivity)
-                ((HomeActivity) getActivity()).selectNavigationItem(R.id.navigation_settings);
+            ((JamiAccountSummaryFragment) existingFragment).setAccount(accountId);
         }
     }
 
@@ -165,7 +159,7 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
     public void initViewPager(String accountId, boolean isJami) {
         binding.pager.setOffscreenPageLimit(4);
         binding.slidingTabs.setupWithViewPager(binding.pager);
-        binding.pager.setAdapter(new PreferencesPagerAdapter(getFragmentManager(), getActivity(), accountId, isJami));
+        binding.pager.setAdapter(new PreferencesPagerAdapter(getChildFragmentManager(), getActivity(), accountId, isJami));
     }
 
     @Override
@@ -188,7 +182,7 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
         Bundle args = new Bundle();
         args.putString(ACCOUNT_ID_KEY, accountId);
         blackListFragment.setArguments(args);
-        requireFragmentManager().beginTransaction()
+        getParentFragmentManager().beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .addToBackStack(BlackListFragment.TAG)
                 .replace(R.id.fragment_container, blackListFragment, BlackListFragment.TAG)
@@ -221,7 +215,6 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
     @Override
     public void onPause() {
         super.onPause();
-        presenter.unbindView();
         setBackListenerEnabled(false);
     }
 
@@ -233,15 +226,11 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
             toggleView(mAccountId, mAccountIsJami);
             return true;
         }
-        FragmentManager fragmentManager = requireFragmentManager();
-        JamiAccountSummaryFragment summaryFragment = (JamiAccountSummaryFragment) fragmentManager.findFragmentByTag(JamiAccountSummaryFragment.TAG);
-        if (summaryFragment != null && summaryFragment.onBackPressed()){
+        JamiAccountSummaryFragment summaryFragment = (JamiAccountSummaryFragment) getChildFragmentManager().findFragmentByTag(JamiAccountSummaryFragment.TAG);
+        if (summaryFragment != null && summaryFragment.onBackPressed()) {
             return true;
         }
-        fragmentManager.popBackStackImmediate();
-        List<Fragment> fragments = fragmentManager.getFragments();
-        Fragment fragment = fragments.get(fragments.size() - 1);
-        return fragment instanceof JamiAccountSummaryFragment;
+        return getChildFragmentManager().popBackStackImmediate();
     }
 
     private void toggleView(String accountId, boolean isJami) {
@@ -252,15 +241,6 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
         binding.fragmentContainer.setVisibility(isJami? View.VISIBLE : View.GONE);
         presenter.prepareOptionsMenu(isJami);
         setBackListenerEnabled(isJami);
-
-        FragmentManager fragmentManager = requireFragmentManager();
-        Fragment fragment = fragmentManager.findFragmentByTag(JamiAccountSummaryFragment.TAG);
-        if (fragment instanceof JamiAccountSummaryFragment) {
-            JamiAccountSummaryFragment f = (JamiAccountSummaryFragment) fragment;
-            f.setFragmentVisibility(isJami);
-            if (isJami)
-                f.setAccount(accountId);
-        }
     }
 
     @Override
@@ -278,7 +258,7 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
                 binding.slidingTabs.setVisibility(View.VISIBLE);
                 binding.pager.setVisibility(View.VISIBLE);
                 binding.fragmentContainer.setVisibility(View.GONE);
-                JamiAccountSummaryFragment fragment = (JamiAccountSummaryFragment) requireFragmentManager().findFragmentByTag(JamiAccountSummaryFragment.TAG);
+                JamiAccountSummaryFragment fragment = (JamiAccountSummaryFragment) getChildFragmentManager().findFragmentByTag(JamiAccountSummaryFragment.TAG);
                 if (fragment != null)
                     fragment.setFragmentVisibility(false);
                 mIsVisible = true;
@@ -324,9 +304,8 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
     }
 
     private void setBackListenerEnabled(boolean enable) {
-        if (!(getActivity() instanceof HomeActivity))
-            return;
-        ((HomeActivity) getActivity()).setAccountFragmentOnBackPressedListener(enable ? this : null);
+        if (getActivity() instanceof HomeActivity)
+            ((HomeActivity) getActivity()).setAccountFragmentOnBackPressedListener(enable ? this : null);
     }
 
     private static class PreferencesPagerAdapter extends FragmentStatePagerAdapter {
