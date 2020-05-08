@@ -108,6 +108,15 @@ public class PluginUtils {
         return Ringservice.listLoadedPlugins();
     }
 
+    //  /**
+    //  * Lists the root paths of the loaded plugins dependents libs
+    //  * @return list of path
+    //  */
+    // public static List<String> listLoadedLibs() {
+    //     return Ringservice.listLoadedLibs();
+    // }
+
+
     /**
      * Displays the content of any directory
      * @param dirPath directory to display

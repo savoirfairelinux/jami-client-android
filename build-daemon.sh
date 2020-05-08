@@ -155,7 +155,7 @@ mkdir -p ${CONTRIB_DIR}
 mkdir -p ${CONTRIB_SYSROOT}/lib/pkgconfig
 
 cd ${CONTRIB_DIR}
-../bootstrap --host=${TARGET_TUPLE} --enable-ffmpeg
+../bootstrap --host=${TARGET_TUPLE} --enable-ffmpeg --disable-opencv --disable-opencv_contrib
 
 make list
 make fetch

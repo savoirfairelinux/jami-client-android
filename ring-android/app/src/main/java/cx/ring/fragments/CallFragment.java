@@ -1238,9 +1238,4 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             toggleCallMediaHandler(callMediaId, true);
         }
     }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
 }

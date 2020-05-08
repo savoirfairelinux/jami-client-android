@@ -90,7 +90,7 @@ public class PluginsListSettingsFragment extends Fragment implements PluginsList
     @Override
     public void onResume() {
         ((HomeActivity) requireActivity()).
-                setToolbarState(false, R.string.menu_item_settings);
+                setToolbarState(R.string.menu_item_settings);
         super.onResume();
     }
 
