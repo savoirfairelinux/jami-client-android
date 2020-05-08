@@ -70,8 +70,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.about.AboutFragment;
@@ -87,7 +85,6 @@ import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.interfaces.Colorable;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
-import cx.ring.navigation.HomeNavigationFragment;
 import cx.ring.plugins.PluginUtils;
 import cx.ring.service.DRingService;
 import cx.ring.services.AccountService;
@@ -492,11 +489,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     @Override
-    public void setColor(int color) {
-//        mToolbar.setBackground(new ColorDrawable(color));
-    }
-
-    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Account account = mAccountService.getCurrentAccount();
         if (account == null)
@@ -677,9 +669,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
      * Changes the current main fragment to a plugins list settings fragment
      */
     public void goToPluginsListSettings() {
-        if (mNavigationDrawer != null && !isDrawerLocked) {
-            mNavigationDrawer.closeDrawers();
-        }
         if (fContent instanceof PluginsListSettingsFragment) {
             return;
         }
@@ -696,9 +685,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
      * @param pluginDetails
      */
     public void gotToPluginSettings(PluginDetails pluginDetails){
-        if (mNavigationDrawer != null && !isDrawerLocked) {
-            mNavigationDrawer.closeDrawers();
-        }
         if (fContent instanceof PluginSettingsFragment) {
             return;
         }
@@ -735,10 +721,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         fm.popBackStackImmediate();
         FragmentManager.BackStackEntry entry = fm.getBackStackEntryAt(fm.getBackStackEntryCount()-1);
         fContent = fm.findFragmentById(entry.getId());
-    }
-
-    public interface Refreshable {
-        void refresh();
     }
 
     public void selectNavigationItem(int id) {
