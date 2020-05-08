@@ -440,14 +440,6 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
             mSmartListAdapter.update(smartListViewModels);
         }
         binding.confsList.setVisibility(View.VISIBLE);
-
-        View view = getView();
-        if (view != null) {
-            ViewGroup container = view.findViewById(R.id.conversation_container);
-            if (container != null && container.getChildCount() == 0) {
-                selectFirstItem();
-            }
-        }
     }
 
     @Override

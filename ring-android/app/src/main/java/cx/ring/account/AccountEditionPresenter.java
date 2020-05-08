@@ -67,9 +67,6 @@ public class AccountEditionPresenter extends RootPresenter<AccountEditionView> {
         view.initViewPager(account.getAccountID(), account.isJami());
     }
 
-    public void onAccountChanged() {
-    }
-
     public void goToBlackList() {
         getView().goToBlackList(mAccount.getAccountID());
     }

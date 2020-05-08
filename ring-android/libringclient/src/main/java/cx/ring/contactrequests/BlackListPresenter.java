@@ -25,9 +25,11 @@ import java.util.Collection;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
+import cx.ring.utils.Log;
 import io.reactivex.Scheduler;
 
 public class BlackListPresenter extends RootPresenter<BlackListView> {
@@ -76,9 +78,11 @@ public class BlackListPresenter extends RootPresenter<BlackListView> {
             return;
         }
         mCompositeDisposable.clear();
-        mCompositeDisposable.add(mAccountService.getAccount(accountID).getBannedContactsUpdates()
+        mCompositeDisposable.add(mAccountService
+                .getAccountSingle(accountID)
+                .flatMapObservable(Account::getBannedContactsUpdates)
                 .subscribeOn(mUiScheduler)
-                .subscribe(this::updateList));
+                .subscribe(this::updateList, e -> Log.e(TAG, "Error showing blacklist", e)));
         mAccountID = accountID;
     }
 

@@ -192,9 +192,10 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         fContent = fragmentManager.findFragmentById(R.id.main_frame);
         if (fContent == null || Intent.ACTION_SEARCH.equals(action)) {
             fContent = new SmartListFragment();
-            fragmentManager.beginTransaction().replace(R.id.main_frame, fContent, HOME_TAG).addToBackStack(HOME_TAG).commitAllowingStateLoss();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.main_frame, fContent, HOME_TAG)
+                    .commitNow();
         } else if (fContent instanceof Refreshable) {
-            fragmentManager.beginTransaction().replace(R.id.main_frame, fContent).addToBackStack(HOME_TAG).commitAllowingStateLoss();
             ((Refreshable) fContent).refresh();
         }
         if (mAccountWithPendingrequests != null) {
@@ -363,7 +364,8 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
         conversationSelected = true;
 
-        getSupportFragmentManager().beginTransaction()
+        getSupportFragmentManager()
+                .beginTransaction()
                 .replace(R.id.conversation_container, fConversation, ConversationFragment.class.getName())
                 .commit();
     }
@@ -396,47 +398,22 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         if (mAccountFragmentBackHandlerInterface != null && mAccountFragmentBackHandlerInterface.onBackPressed()) {
             return;
         }
-        if (binding == null)
-            return;
-        setToolbarElevation(false);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fContent = fragmentManager.findFragmentById(R.id.conversation_container);
-        if (DeviceUtils.isTablet(this) && fContent instanceof ConversationFragment && fContent.isVisible()) {
-            finish();
-            return;
+        super.onBackPressed();
+        fContent = getSupportFragmentManager().findFragmentById(R.id.main_frame);
+        if (fContent instanceof SmartListFragment) {
+            binding.navigationView.getMenu().getItem(NAVIGATION_CONVERSATIONS).setChecked(true);
+            showProfileInfo();
+            showToolbarSpinner();
         }
-        int fCount = fragmentManager.getBackStackEntryCount();
-        if (fCount > 1) {
-            fContent = fragmentManager.findFragmentById(R.id.main_frame);
-            conversationSelected = !(fContent instanceof ContactRequestsFragment);
-            FragmentManager.BackStackEntry entry = fragmentManager.getBackStackEntryAt(fCount - 2);
-            fContent = fragmentManager.findFragmentById(entry.getId());
-            fragmentManager.popBackStack();
-            if (fCount == 2) {
-                binding.navigationView.getMenu().getItem(NAVIGATION_CONVERSATIONS).setChecked(true);
-                binding.navigationView.setVisibility(View.VISIBLE);
-                showProfileInfo();
-                showToolbarSpinner();
-                if (!conversationSelected) {
-                    hideTabletToolbar();
-                }
-            } else {
-                conversationSelected = false;
-                hideTabletToolbar();
-            }
-            return;
-        }
-        finish();
     }
 
     private void popCustomBackStack() {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentManager.BackStackEntry entry = fragmentManager.getBackStackEntryAt(0);
-        fContent = fragmentManager.findFragmentById(entry.getId());
-        int entryCount = fragmentManager.getBackStackEntryCount() - 1;
+        int entryCount = fragmentManager.getBackStackEntryCount();
         for (int i = 0; i < entryCount; ++i) {
             fragmentManager.popBackStack();
         }
+        fContent = fragmentManager.findFragmentById(R.id.main_frame);
         hideTabletToolbar();
         setToolbarElevation(false);
     }
@@ -551,7 +528,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                     getSupportFragmentManager().beginTransaction()
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                             .replace(getFragmentContainerId(), fContent, ACCOUNTS_TAG)
-                            .setReorderingAllowed(true)
                             .addToBackStack(ACCOUNTS_TAG)
                             .commit();
                     conversationSelected = false;
