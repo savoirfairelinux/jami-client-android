@@ -68,6 +68,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="16dp"
+            android:baselineAligned="false"
             android:orientation="horizontal"
             android:weightSum="100">
 
@@ -200,7 +201,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:id="@+id/call_add_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/call_hangup_btn"
             android:layout_toEndOf="@+id/call_hangup_btn"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="16dp"
