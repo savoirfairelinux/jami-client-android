@@ -24,17 +24,19 @@ public class Settings {
     private boolean mAllowPersistentNotification;
     private boolean mAllowSystemContacts;
     private boolean mAllowPlaceSystemCalls;
-    private boolean mAllowRingOnStartup;
+    private boolean mAllowOnStartup;
     private boolean mHwEncoding;
 
     public Settings() {
     }
+
     public Settings(Settings s) {
         mAllowPushNotifications = s.mAllowPushNotifications;
         mAllowPersistentNotification = s.mAllowPersistentNotification;
         mAllowSystemContacts = s.mAllowSystemContacts;
         mAllowPlaceSystemCalls = s.mAllowPlaceSystemCalls;
-        mAllowRingOnStartup = s.mAllowRingOnStartup;
+        mAllowOnStartup = s.mAllowOnStartup;
+        mHwEncoding = s.mHwEncoding;
     }
 
     public boolean isAllowPushNotifications() {
@@ -61,12 +63,12 @@ public class Settings {
         this.mAllowPlaceSystemCalls = allowPlaceSystemCalls;
     }
 
-    public boolean isAllowRingOnStartup() {
-        return mAllowRingOnStartup;
+    public boolean isAllowOnStartup() {
+        return mAllowOnStartup;
     }
 
     public void setAllowRingOnStartup(boolean allowRingOnStartup) {
-        this.mAllowRingOnStartup = allowRingOnStartup;
+        this.mAllowOnStartup = allowRingOnStartup;
     }
 
     public void setAllowPersistentNotification(boolean checked) {

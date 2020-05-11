@@ -23,25 +23,23 @@ import android.app.job.JobService;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
+import android.text.format.DateUtils;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 
 import cx.ring.application.JamiApplication;
 import cx.ring.services.SyncService;
-import cx.ring.utils.Log;
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class JamiJobService extends JobService
 {
     private static final String TAG = JamiJobService.class.getName();
 
-    private static final int SECOND = 1000;
-    private static final int MINUTE = SECOND * 60;
-
-    public static final int JOB_INTERVAL = 120 * MINUTE;
-    public static final int JOB_FLEX = 20 * MINUTE;
-    public static final int JOB_DURATION = 15 * SECOND;
+    public static final long JOB_INTERVAL = 120 * DateUtils.MINUTE_IN_MILLIS;
+    public static final long JOB_FLEX = 20 * DateUtils.MINUTE_IN_MILLIS;
+    public static final long JOB_DURATION = 15 * DateUtils.SECOND_IN_MILLIS;
     public static final int JOB_ID = 3905;
 
     @Override
@@ -57,7 +55,7 @@ public class JamiJobService extends JobService
             } catch (IllegalStateException e) {
                 android.util.Log.e(TAG, "Error starting service", e);
             }
-            new Handler(getMainLooper()).postDelayed(() -> {
+            new Handler().postDelayed(() -> {
                 Log.w(TAG, "jobFinished() " + params);
                 try {
                     startService(new Intent(SyncService.ACTION_STOP).setClass(this, SyncService.class));

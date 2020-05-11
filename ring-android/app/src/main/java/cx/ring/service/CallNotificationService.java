@@ -48,7 +48,8 @@ public class CallNotificationService extends Service {
         super.onStartCommand(intent, flags, startId);
         Notification notification = (Notification) mNotificationService.showCallNotification(intent.getIntExtra(NotificationService.KEY_NOTIFICATION_ID, -1));
         if (notification == null) {
-            stopSelf();
+            if (isFirst)
+                stopSelf();
             return START_NOT_STICKY;
         }
 

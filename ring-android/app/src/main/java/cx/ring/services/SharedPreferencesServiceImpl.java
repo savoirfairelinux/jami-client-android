@@ -73,7 +73,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         edit.clear();
         edit.putBoolean(PREF_SYSTEM_CONTACTS, settings.isAllowSystemContacts());
         edit.putBoolean(PREF_PLACE_CALLS, settings.isAllowPlaceSystemCalls());
-        edit.putBoolean(PREF_ON_STARTUP, settings.isAllowRingOnStartup());
+        edit.putBoolean(PREF_ON_STARTUP, settings.isAllowOnStartup());
         edit.putBoolean(PREF_PUSH_NOTIFICATIONS, settings.isAllowPushNotifications());
         edit.putBoolean(PREF_PERSISTENT_NOTIFICATION, settings.isAllowPersistentNotification());
         edit.apply();

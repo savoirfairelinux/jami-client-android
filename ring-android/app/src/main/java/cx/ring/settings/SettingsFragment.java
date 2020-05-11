@@ -198,7 +198,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         mIsRefreshingViewFromPresenter = true;
         binding.settingsPushNotifications.setChecked(viewModel.isAllowPushNotifications());
         binding.settingsPersistNotification.setChecked(viewModel.isAllowPersistentNotification());
-        binding.settingsStartup.setChecked(viewModel.isAllowRingOnStartup());
+        binding.settingsStartup.setChecked(viewModel.isAllowOnStartup());
         mIsRefreshingViewFromPresenter = false;
     }
 
