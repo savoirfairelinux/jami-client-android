@@ -9,14 +9,19 @@
   <string name="normal_accounts_titles">Comptes</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Général</string>
+  <string name="account_bootstrap_label">Amorcer</string>
   <!--Audio Details-->
   <string name="account_audio_label">Audio</string>
   <!--Video Details-->
   <string name="account_video_label">Vidéo</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Options avancées</string>
+  <string name="account_turn_enable_label">Utiliser le TURN</string>
+  <string name="account_turn_username_label">Nom d\'utilisateur TURN</string>
+  <string name="account_turn_password_label">Mot de passe TURN</string>
   <!--Security Details-->
   <!--SRTP Details-->
+  <string name="account_preferences_security_tab">Sécurité</string>
   <!--SIP-->
   <!--TLS Details-->
   <!--restore/backup-->

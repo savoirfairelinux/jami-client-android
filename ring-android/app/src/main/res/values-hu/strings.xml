@@ -250,6 +250,7 @@
   <string name="navigation_item_conversation">Beszélgetések</string>
   <string name="navigation_item_contact_request">Kapcsolatkérelmek</string>
   <string name="navigation_item_account">Fiók</string>
+  <string name="search_results_public_directory">Nyilvános könyvtár</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">Hangüzenet küldése?</string>
   <string name="tv_send_image_dialog_message">Küldd el a képet?</string>
@@ -258,7 +259,9 @@
   <string name="tv_audio_play">Lejátszás</string>
   <string name="tv_audio_pause">Megállítás</string>
   <string name="tv_dialog_send">Elküld</string>
+  <string name="tv_audio_recording">Felvétel…</string>
   <string name="tv_send_text">Szöveg küldése</string>
   <string name="tv_send_audio">Hang küldése</string>
   <string name="tv_send_video">Média küldése</string>
+  <string name="conversation_input_speech_hint">Mondjon valamit…</string>
 </resources>
