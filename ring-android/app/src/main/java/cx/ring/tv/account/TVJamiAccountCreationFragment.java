@@ -258,11 +258,6 @@ public class TVJamiAccountCreationFragment
         notifyActionChanged(findActionPositionById(CONTINUE));
     }
 
-
-    @Override
-    public void displayUsernameBox(boolean display) {
-    }
-
     @Override
     public void enableNextButton(boolean enabled) {
         Log.d(TAG, "enableNextButton: " + enabled);
