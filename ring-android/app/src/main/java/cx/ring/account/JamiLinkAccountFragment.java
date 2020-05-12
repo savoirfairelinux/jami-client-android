@@ -37,7 +37,8 @@ import cx.ring.databinding.FragAccRingLinkBinding;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.mvp.AccountCreationModel;
 
-public class JamiLinkAccountFragment extends BaseSupportFragment<JamiLinkAccountPresenter> implements JamiLinkAccountView {
+public class JamiLinkAccountFragment extends BaseSupportFragment<JamiLinkAccountPresenter>
+        implements JamiLinkAccountView {
 
     public static final String TAG = JamiLinkAccountFragment.class.getSimpleName();
     private AccountCreationModel model;
