@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2aa95b6_0ba5115b",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/UIUtils.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-05-13T20:49:17Z",
+      "side": 1,
+      "message": "remove file",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 0
+      },
+      "revId": "fa9d124d87551e94c94acb6fd5d109a93b009984",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
