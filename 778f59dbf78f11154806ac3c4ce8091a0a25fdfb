@@ -1,0 +1,337 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "888d25ea_9ca30f53",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/JamiAccountUsernameFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-05-13T17:34:46Z",
+      "side": 1,
+      "message": "binding.ringUsernameTxtBox.setEndIconMode(TextInputLayout.END_ICON_NONE);",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 101
+      },
+      "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4088e1aa_f98ec5a4",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/JamiAccountUsernameFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-05-13T17:34:46Z",
+      "side": 1,
+      "message": "binding.ringUsernameTxtBox.setEndIconMode(TextInputLayout.END_ICON_NONE);",
+      "range": {
+        "startLine": 114,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 101
+      },
+      "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7c0a02b_4ae7bf1d",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/JamiAccountUsernameFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-05-13T17:34:46Z",
+      "side": 1,
+      "message": "binding.ringUsernameTxtBox.setEndIconMode(TextInputLayout.END_ICON_NONE);",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 101
+      },
+      "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56c0eede_715fb67d",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/JamiAccountUsernameFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-05-13T17:34:46Z",
+      "side": 1,
+      "message": "binding.ringUsernameTxtBox.setEndIconMode(TextInputLayout.END_ICON_NONE);",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 101
+      },
+      "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cb88c86_619ac25f",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/JamiAccountUsernameFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-05-13T17:34:46Z",
+      "side": 1,
+      "message": "binding.ringUsernameTxtBox.setEndIconMode(TextInputLayout.END_ICON_CUSTOM);\n                binding.ringUsernameTxtBox.setEndIconDrawable(R.drawable.ic_good_green);",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 84
+      },
+      "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66fe0662_e78a728f",
+        "filename": "ring-android/app/src/main/res/drawable/baseline_lock_18.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-05-13T17:34:46Z",
+      "side": 1,
+      "message": "* we don\u0027t have the copyright on this Artwork (it belongs to Google, with an open licence)\n* Remove this file completely\n* Add and use baseline_lock_24.xml from the Material Icons website *without modifications*.\n* sizing and coloring of icons should be handled by the app/library when possible",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 0
+      },
+      "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea664a7d_1d541c91",
+        "filename": "ring-android/app/src/main/res/drawable/ic_good_green.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-05-13T17:34:46Z",
+      "side": 1,
+      "message": "not needed if using proper APIs",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 24
+      },
+      "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5034794a_76ea11ed",
+        "filename": "ring-android/app/src/main/res/layout/frag_acc_ring_password.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-05-13T17:34:46Z",
+      "side": 1,
+      "message": "frag_acc_jami_password.xml",
+      "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed8e0d44_c7b81ec9",
+        "filename": "ring-android/app/src/main/res/layout/frag_acc_ring_password.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-05-13T17:34:46Z",
+      "side": 1,
+      "message": "add\napp:startIconDrawable\u003d\"@drawable/baseline_lock_24\"",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 48
+      },
+      "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cc78c8f_348ca6f9",
+        "filename": "ring-android/app/src/main/res/layout/frag_acc_ring_password.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-05-13T17:34:46Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 70
+      },
+      "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "480beccc_9fb1cef3",
+        "filename": "ring-android/app/src/main/res/layout/frag_acc_ring_password.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-05-13T17:34:46Z",
+      "side": 1,
+      "message": "add\napp:startIconDrawable\u003d\"@drawable/baseline_lock_24\"",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 48
+      },
+      "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17e934e8_60cf4bda",
+        "filename": "ring-android/app/src/main/res/layout/frag_acc_ring_password.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-05-13T17:34:46Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 70
+      },
+      "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14bb5150_99f86aa8",
+        "filename": "ring-android/app/src/main/res/layout/frag_acc_ring_password.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-05-13T17:34:46Z",
+      "side": 1,
+      "message": "button has shadow issue",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 18
+      },
+      "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a5b13d4_c513c9fb",
+        "filename": "ring-android/app/src/main/res/layout/frag_acc_ring_username.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-05-13T17:34:46Z",
+      "side": 1,
+      "message": "frag_acc_jami_username.xml",
+      "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30a5eb4a_53ba0d55",
+        "filename": "ring-android/app/src/main/res/layout/frag_acc_ring_username.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-05-13T17:34:46Z",
+      "side": 1,
+      "message": "* use proper MaterialButton with \"Text button\" style\nhttps://material.io/develop/android/components/buttons/#text-button\n\n* NEVER apply App\u0027 text style using string ressources tricks. MaterialButton will capitalize text automatically (otherwise, use Theme styling, or worst case xml TextView property to capitalize).",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 55
+      },
+      "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
