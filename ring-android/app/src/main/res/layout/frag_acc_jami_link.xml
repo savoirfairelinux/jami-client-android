@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.26" />
+        app:layout_constraintGuide_percent="0.31" />
 
     <ImageView
         android:id="@+id/background"
@@ -24,7 +24,7 @@
         android:layout_height="@dimen/wizard_image_background"
         android:tint="@color/white"
         android:alpha="0.1"
-        android:src="@drawable/baseline_dialer_sip_24"/>
+        android:src="@drawable/baseline_devices_24"/>
 
     <TextView
         android:id="@+id/title"
@@ -36,7 +36,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="22dp"
         android:textColor="@color/color_primary_light"
-        android:text="@string/help_sip_title"
+        android:text="@string/account_link_device"
         android:textStyle="bold"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
 
@@ -45,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.3" />
+        app:layout_constraintGuide_percent="0.4" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="@dimen/wizard_card_width"
@@ -78,7 +78,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="4dp"
                     android:textStyle="bold"
-                    android:text="@string/help_sip" />
+                    android:text="@string/help_password_enter" />
 
                 <TextView
                     android:id="@+id/status"
@@ -96,91 +96,63 @@
             </RelativeLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/alias"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:hint="@string/prompt_alias"
-                    android:drawableStart="@drawable/baseline_account_crop_24"
-                    android:drawablePadding="5dp"
-                    android:imeOptions="flagNoExtractUi"
-                    android:maxLines="1"
-                    android:singleLine="true" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/hostname"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:hint="@string/prompt_hostname"
-                    android:drawableStart="@drawable/baseline_language_18"
-                    android:imeOptions="flagNoExtractUi"
-                    android:drawablePadding="5dp"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:typeface="monospace" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/username"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:hint="@string/prompt_username"
-                    android:drawablePadding="5dp"
-                    android:imeOptions="flagNoExtractUi"
-                    android:maxLines="1"
-                    android:drawableStart="@drawable/baseline_account_crop_24"
-                    android:singleLine="true"
-                    android:typeface="monospace" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/password_txt_box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:passwordToggleEnabled="true"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/password"
+                    android:id="@+id/ring_existing_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
                     android:hint="@string/prompt_password"
-                    android:drawablePadding="5dp"
-                    android:imeActionLabel="@string/action_register"
-                    android:imeOptions="actionDone|flagNoExtractUi"
-                    android:inputType="textPassword"
                     android:drawableStart="@drawable/baseline_lock_24"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:typeface="monospace" />
+                    android:drawablePadding="5dp"
+                    android:imeOptions="actionNext"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <TextView
+                android:id="@+id/pin_help_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:paddingBottom="8dp"
+                android:text="@string/help_pin_enter" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/pin_box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:passwordToggleEnabled="true"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ring_add_pin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/account_link_prompt_pin"
+                    android:drawableStart="@drawable/baseline_lock_24"
+                    android:drawablePadding="5dp"
+                    android:imeOptions="actionDone"
+                    android:inputType="textNoSuggestions"
+                    android:singleLine="true" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/create_sip_button"
-                android:layout_width="@dimen/wizard_card_button_width"
+                android:id="@+id/link_button"
+                style="@style/WizardButton"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:enabled="false"
+                android:textSize="12sp"
                 android:layout_marginTop="18dp"
-                android:text="@string/create_sip_account"
-                style="@style/WizardButton" />
+                android:text="@string/account_link_button"
+                android:theme="@style/ButtonColoredInverse" />
 
         </LinearLayout>
 

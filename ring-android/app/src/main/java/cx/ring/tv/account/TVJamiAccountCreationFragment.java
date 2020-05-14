@@ -21,6 +21,7 @@ import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.leanback.widget.GuidanceStylist;
 import androidx.leanback.widget.GuidedAction;
 import android.text.Editable;
@@ -220,7 +221,7 @@ public class TVJamiAccountCreationFragment
                 break;
             case AVAILABLE:
                 actionCheck.setTitle(getString(R.string.username_available));
-                actionCheck.setIcon(getResources().getDrawable(R.drawable.ic_good_green));
+                actionCheck.setIcon(requireContext().getDrawable(R.drawable.ic_good_green));
                 break;
             case RESET:
                 actionCheck.setIcon(null);
@@ -256,11 +257,6 @@ public class TVJamiAccountCreationFragment
             action.setDescription("");
         }
         notifyActionChanged(findActionPositionById(CONTINUE));
-    }
-
-
-    @Override
-    public void displayUsernameBox(boolean display) {
     }
 
     @Override
