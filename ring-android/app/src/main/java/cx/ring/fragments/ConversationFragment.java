@@ -388,40 +388,12 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         popup.inflate(R.menu.conversation_share_actions);
         popup.setOnMenuItemClickListener(item -> {
             switch(item.getItemId()) {
-                case R.id.conv_send_audio: {
-                    Intent intent = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
-                    if (intent.resolveActivity(context.getPackageManager()) != null) {
-                        try {
-                            mCurrentPhoto = AndroidFileUtils.createAudioFile(context);
-                        } catch (IOException ex) {
-                            Log.e(TAG, "takePicture: error creating temporary file", ex);
-                            break;
-                        }
-                        startActivityForResult(intent, REQUEST_CODE_CAPTURE_AUDIO);
-                    } else {
-                        Toast.makeText(getActivity(), "Can't find audio recorder app", Toast.LENGTH_SHORT).show();
-                    }
+                case R.id.conv_send_audio:
+                    sendAudioMessage();
                     break;
-                }
-                case R.id.conv_send_video: {
-                    Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-                    intent.putExtra("android.intent.extras.CAMERA_FACING", android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT);
-                    intent.putExtra("android.intent.extras.LENS_FACING_FRONT", 1);
-                    intent.putExtra("android.intent.extra.USE_FRONT_CAMERA", true);
-                    if (intent.resolveActivity(context.getPackageManager()) != null) {
-                        try {
-                            mCurrentPhoto = AndroidFileUtils.createVideoFile(context);
-                        } catch (IOException ex) {
-                            Log.e(TAG, "takePicture: error creating temporary file", ex);
-                            break;
-                        }
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, ContentUriHandler.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, mCurrentPhoto));
-                        startActivityForResult(intent, REQUEST_CODE_CAPTURE_VIDEO);
-                    } else {
-                        Toast.makeText(getActivity(), "Can't find video recorder app", Toast.LENGTH_SHORT).show();
-                    }
+                case R.id.conv_send_video:
+                    sendVideoMessage();
                     break;
-                }
                 case R.id.conv_send_file:
                     presenter.selectFile();
                     break;
@@ -509,9 +481,54 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         }
     }
 
+    public void sendAudioMessage() {
+        if (!presenter.getDeviceRuntimeService().hasAudioPermission()) {
+            requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, REQUEST_CODE_CAPTURE_AUDIO);
+        } else {
+            Context ctx = requireContext();
+            Intent intent = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
+
+            if (intent.resolveActivity(ctx.getPackageManager()) != null) {
+                try {
+                    mCurrentPhoto = AndroidFileUtils.createAudioFile(ctx);
+                } catch (IOException ex) {
+                    Log.e(TAG, "takePicture: error creating temporary file", ex);
+                    return;
+                }
+                startActivityForResult(intent, REQUEST_CODE_CAPTURE_AUDIO);
+            } else {
+                Toast.makeText(getActivity(), "Can't find audio recorder app", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    public void sendVideoMessage() {
+        if (!presenter.getDeviceRuntimeService().hasVideoPermission()) {
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_CAPTURE_VIDEO);
+        } else {
+            Context context = requireContext();
+            Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+            intent.putExtra("android.intent.extras.CAMERA_FACING", android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT);
+            intent.putExtra("android.intent.extras.LENS_FACING_FRONT", 1);
+            intent.putExtra("android.intent.extra.USE_FRONT_CAMERA", true);
+            if (intent.resolveActivity(context.getPackageManager()) != null) {
+                try {
+                    mCurrentPhoto = AndroidFileUtils.createVideoFile(context);
+                } catch (IOException ex) {
+                    Log.e(TAG, "takePicture: error creating temporary file", ex);
+                    return;
+                }
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, ContentUriHandler.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, mCurrentPhoto));
+                startActivityForResult(intent, REQUEST_CODE_CAPTURE_VIDEO);
+            } else {
+                Toast.makeText(getActivity(), "Can't find video recorder app", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     public void takePicture() {
         if (!presenter.getDeviceRuntimeService().hasVideoPermission()) {
-            requestPermissions(new String[]{Manifest.permission.CAMERA}, JamiApplication.PERMISSIONS_REQUEST);
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_TAKE_PICTURE);
         } else {
             Context c = getContext();
             if (c == null)
@@ -614,13 +631,10 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
                 //Try to copy the data of the current file into the newly created one
                 File input = new File(mCurrentFileAbsolutePath);
                 if(requireContext().getContentResolver() != null)
-                    AndroidFileUtils.copyFileToUri(
-                            requireContext().getContentResolver(),input,createdUri).
+                    mCompositeDisposable.add(AndroidFileUtils.copyFileToUri(requireContext().getContentResolver(), input, createdUri).
                             observeOn(AndroidSchedulers.mainThread()).
-                            subscribe(()->Toast.makeText(getContext(), R.string.file_saved_successfully,
-                                    Toast.LENGTH_SHORT).show(),
-                                    error->Toast.makeText(getContext(), R.string.generic_error,
-                                            Toast.LENGTH_SHORT).show());
+                            subscribe(()-> Toast.makeText(getContext(), R.string.file_saved_successfully, Toast.LENGTH_SHORT).show(),
+                                    error-> Toast.makeText(getContext(), R.string.generic_error, Toast.LENGTH_SHORT).show()));
 
             }
         }
@@ -629,14 +643,24 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         for (int i = 0, n = permissions.length; i < n; i++) {
+            boolean granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
             switch (permissions[i]) {
                 case Manifest.permission.CAMERA:
-                    boolean granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
                     presenter.cameraPermissionChanged(granted);
                     if (granted) {
-                        takePicture();
+                        if (requestCode == REQUEST_CODE_CAPTURE_VIDEO) {
+                            sendVideoMessage();
+                        } else if (requestCode == REQUEST_CODE_TAKE_PICTURE) {
+                            takePicture();
+                        }
+                    }
+                    return;
+                case Manifest.permission.RECORD_AUDIO:
+                    if (granted) {
+                        if (requestCode == REQUEST_CODE_CAPTURE_AUDIO) {
+                            sendAudioMessage();
+                        }
                     }
                     return;
                 default:
