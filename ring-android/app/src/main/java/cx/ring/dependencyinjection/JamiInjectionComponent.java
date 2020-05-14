@@ -22,6 +22,8 @@ package cx.ring.dependencyinjection;
 import javax.inject.Singleton;
 
 import cx.ring.account.AccountEditionFragment;
+import cx.ring.account.JamiAccountPasswordFragment;
+import cx.ring.account.JamiAccountUsernameFragment;
 import cx.ring.fragments.LocationSharingFragment;
 import cx.ring.account.AccountWizardActivity;
 import cx.ring.account.HomeAccountCreationFragment;
@@ -115,7 +117,11 @@ public interface JamiInjectionComponent {
 
     void inject(ConversationSelectionActivity fragment);
 
-    void inject(JamiAccountCreationFragment fragment);
+//    void inject(JamiAccountCreationFragment fragment);
+
+    void inject(JamiAccountUsernameFragment fragment);
+
+    void inject(JamiAccountPasswordFragment fragment);
 
     void inject(MediaPreferenceFragment fragment);
 
