@@ -161,7 +161,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:name=".account.AccountWizardActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:theme="@style/AppThemeBase.Light"
-            android:icon="@mipmap/ic_launcher" />
+            android:icon="@mipmap/ic_launcher"
+            android:resizeableActivity="true"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".client.RingtoneActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
