@@ -1,10 +1,15 @@
 package cx.ring.views;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.TextureView;
+
+import androidx.core.view.ViewCompat;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * A {@link TextureView} that can be adjusted to a specified aspect ratio.
@@ -14,6 +19,7 @@ public class AutoFitTextureView extends TextureView {
     private int mRatioWidth = 720;
     private int mRatioHeight = 1280;
     private final int mSize;
+    private final List<Rect> mBounds = Collections.singletonList(new Rect());
 
     public AutoFitTextureView(Context context) {
         this(context, null);
@@ -26,6 +32,13 @@ public class AutoFitTextureView extends TextureView {
     public AutoFitTextureView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mSize = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 192, context.getResources().getDisplayMetrics()));
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+        mBounds.get(0).set(left, top, right, bottom);
+        ViewCompat.setSystemGestureExclusionRects(this, mBounds);
     }
 
     /**
