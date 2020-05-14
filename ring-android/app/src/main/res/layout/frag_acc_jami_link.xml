@@ -24,7 +24,7 @@
         android:layout_height="@dimen/wizard_image_background"
         android:tint="@color/white"
         android:alpha="0.1"
-        android:src="@drawable/baseline_router_black_36"/>
+        android:src="@drawable/baseline_devices_24"/>
 
     <TextView
         android:id="@+id/title"
@@ -36,7 +36,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="22dp"
         android:textColor="@color/color_primary_light"
-        android:text="@string/account_connect_server_button"
+        android:text="@string/account_link_device"
         android:textStyle="bold"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
 
@@ -78,7 +78,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="4dp"
                     android:textStyle="bold"
-                    android:text="@string/help_server_enter" />
+                    android:text="@string/help_password_enter" />
 
                 <TextView
                     android:id="@+id/status"
@@ -96,53 +96,6 @@
             </RelativeLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/prompt_server_box"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/prompt_server"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/baseline_language_18"
-                    android:drawablePadding="5dp"
-                    android:hint="@string/prompt_server"
-                    android:imeOptions="actionNext"
-                    android:inputType="textUri"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                android:id="@+id/pin_help_message"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="4dp"
-                android:paddingTop="16dp"
-                android:paddingEnd="16dp"
-                android:paddingBottom="8dp"
-                android:text="@string/help_credentials_enter"
-                android:textSize="14sp" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/username_txt_box"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/username_txt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/account_connect_prompt_username"
-                    android:imeOptions="actionNext"
-                    android:drawableStart="@drawable/baseline_account_crop_24"
-                    android:drawablePadding="5dp"
-                    android:inputType="textNoSuggestions"
-                    android:singleLine="true" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/password_txt_box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -150,27 +103,55 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/password_txt"
+                    android:id="@+id/ring_existing_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_password"
                     android:drawableStart="@drawable/baseline_lock_24"
                     android:drawablePadding="5dp"
-                    android:imeOptions="actionDone"
+                    android:imeOptions="actionNext"
                     android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <TextView
+                android:id="@+id/pin_help_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:paddingBottom="8dp"
+                android:text="@string/help_pin_enter" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/pin_box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:passwordToggleEnabled="true"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ring_add_pin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/account_link_prompt_pin"
+                    android:drawableStart="@drawable/baseline_lock_24"
+                    android:drawablePadding="5dp"
+                    android:imeOptions="actionDone"
+                    android:inputType="textNoSuggestions"
+                    android:singleLine="true" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/connect_button"
+                android:id="@+id/link_button"
                 style="@style/WizardButton"
-                android:layout_width="wrap_content"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:enabled="false"
                 android:textSize="12sp"
                 android:layout_marginTop="18dp"
-                android:text="@string/account_connect_button"
+                android:text="@string/account_link_button"
                 android:theme="@style/ButtonColoredInverse" />
 
         </LinearLayout>
@@ -178,4 +159,3 @@
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
