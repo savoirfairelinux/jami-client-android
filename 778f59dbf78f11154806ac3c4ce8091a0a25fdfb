@@ -601,6 +601,30 @@
     },
     {
       "key": {
+        "uuid": "8c6df415_30220c7d",
+        "filename": "ring-android/app/src/main/res/layout/frag_acc_ring_password.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2020-05-14T17:32:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a435bc66_d98440c7",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 18
+      },
+      "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a5b13d4_c513c9fb",
         "filename": "ring-android/app/src/main/res/layout/frag_acc_ring_username.xml",
         "patchSetId": 2
