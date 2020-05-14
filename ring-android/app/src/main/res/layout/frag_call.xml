@@ -60,14 +60,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:visibility="gone"
                 app:cardCornerRadius="16dp"
                 app:cardPreventCornerOverlap="false"
-                tools:visibility="visible">
+                tools:visibility="visible"
+                app:cardBackgroundColor="@color/black">
 
                 <cx.ring.views.AutoFitTextureView
                     android:id="@+id/preview_surface"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="visible"/>
+
+                <ImageView
+                    android:id="@+id/preview_handle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center_vertical"
+                    android:layout_marginHorizontal="@dimen/call_preview_margin_handle"
                     android:visibility="visible"
-                    tools:visibility="visible" />
+                    app:srcCompat="@drawable/ic_preview_handle" />
+
             </androidx.cardview.widget.CardView>
 
         </RelativeLayout>
@@ -85,7 +95,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:orientation="vertical"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:flexDirection="column"
                 app:flexWrap="wrap"
                 tools:visibility="visible">
@@ -158,8 +168,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        tools:visibility="visible">
+                        android:orientation="horizontal">
 
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
                             android:id="@+id/call_refuse_btn"
@@ -169,14 +178,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:contentDescription="@string/action_call_decline"
                             android:onClick="@{() -> presenter.refuseClicked()}"
                             android:tint="@color/white"
-                            tools:visibility="visible"
+                            android:visibility="gone"
                             app:backgroundTint="@color/colorError"
                             app:elevation="6dp"
                             app:fabSize="normal"
                             app:pressedTranslationZ="12dp"
                             app:rippleColor="@android:color/white"
                             app:srcCompat="@drawable/baseline_call_end_24"
-                            app:useCompatPadding="true" />
+                            app:useCompatPadding="true"
+                            tools:visibility="visible" />
 
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
                             android:id="@+id/call_accept_btn"
@@ -185,14 +195,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:layout_margin="16dp"
                             android:contentDescription="@string/action_call_accept"
                             android:onClick="@{() -> presenter.acceptClicked()}"
-                            android:visibility="visible"
+                            android:visibility="gone"
                             app:backgroundTint="@color/green_500"
                             app:elevation="6dp"
                             app:fabSize="normal"
                             app:pressedTranslationZ="12dp"
                             app:rippleColor="@android:color/white"
                             app:srcCompat="@drawable/baseline_call_24"
-                            app:useCompatPadding="true" />
+                            app:useCompatPadding="true"
+                            tools:visibility="visible" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -276,14 +287,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </com.google.android.flexbox.FlexboxLayout>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/conf_control_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/conf_control_group"
-                android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_conference_participant"
-                tools:itemCount="4" />
+                tools:itemCount="4"
+                tools:listitem="@layout/item_conference_participant" />
 
             <EditText
                 android:id="@+id/dialpad_edit_text"
@@ -313,5 +324,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 app:useCompatPadding="true" />
 
         </RelativeLayout>
+
     </FrameLayout>
 </layout>

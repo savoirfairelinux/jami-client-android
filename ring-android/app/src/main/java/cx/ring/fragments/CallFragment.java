@@ -46,6 +46,7 @@ import android.os.PowerManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Rational;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -60,6 +61,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.DecelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -93,7 +95,6 @@ import cx.ring.client.ConversationActivity;
 import cx.ring.client.ConversationSelectionActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.databinding.FragCallBinding;
-import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
 import cx.ring.mvp.BaseSupportFragment;
@@ -152,6 +153,9 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     private PointF previewDrag = null;
     private final ValueAnimator previewSnapAnimation = new ValueAnimator();
     private final int[] previewMargins = new int[4];
+    private float previewHiddenState = 0;
+    private enum PreviewPosition {LEFT, RIGHT}
+    private PreviewPosition previewPosition = PreviewPosition.RIGHT;
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
@@ -215,8 +219,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             if (action != null) {
                 if (action.equals(ACTION_PLACE_CALL)) {
                     prepareCall(false);
-                }
-                else if (action.equals(ACTION_GET_CALL) || action.equals(CallActivity.ACTION_CALL_ACCEPT)) {
+                } else if (action.equals(ACTION_GET_CALL) || action.equals(CallActivity.ACTION_CALL_ACCEPT)) {
                     presenter.initIncomingCall(getArguments().getString(KEY_CONF_ID), action.equals(ACTION_GET_CALL));
                 }
             }
@@ -320,6 +323,14 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         }
     };
 
+    /**
+     * @param hiddenState 0.f if fully shown, 1.f if fully hidden.
+     */
+    private void setPreviewDragHiddenState(float hiddenState) {
+        binding.previewSurface.setAlpha(1.f - (3 * hiddenState / 4));
+        binding.previewHandle.setAlpha(hiddenState);
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -405,59 +416,88 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         previewSnapAnimation.setInterpolator(new DecelerateInterpolator());
         previewSnapAnimation.addUpdateListener(animation -> {
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.previewContainer.getLayoutParams();
-            float f = margin * animation.getAnimatedFraction();
             float r = 1.f - animation.getAnimatedFraction();
+            float hideMargin = 0.f;
+            float targetHiddenState = 0.f;
+            if (previewHiddenState != 0.f) {
+                targetHiddenState = 1.f;
+                float v = binding.previewContainer.getWidth() * 0.85f * animation.getAnimatedFraction();
+                hideMargin = previewPosition == PreviewPosition.RIGHT ? v : -v;
+            }
+            setPreviewDragHiddenState(previewHiddenState * r  + targetHiddenState * animation.getAnimatedFraction());
+
+            float f = margin * animation.getAnimatedFraction();
             params.setMargins(
-                    (int)(previewMargins[0] * r + f),
+                    (int)(previewMargins[0] * r + f + hideMargin),
                     (int)(previewMargins[1] * r + f),
-                    (int)(previewMargins[2] * r + f),
+                    (int)(previewMargins[2] * r + f - hideMargin),
                     (int)(previewMargins[3] * r + f));
             binding.previewContainer.setLayoutParams(params);
         });
 
         binding.previewContainer.setOnTouchListener((v, event) -> {
             int action = event.getActionMasked();
+            RelativeLayout parent = (RelativeLayout) v.getParent();
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) v.getLayoutParams();
+
             if (action == MotionEvent.ACTION_DOWN) {
                 previewSnapAnimation.cancel();
                 previewDrag = new PointF(event.getX(), event.getY());
                 v.setElevation(v.getContext().getResources().getDimension(R.dimen.call_preview_elevation_dragged));
-                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) v.getLayoutParams();
                 params.removeRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                 params.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                 params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
                 params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-                params.setMargins((int)v.getX(), (int)v.getY(), 0, 0);
+                params.setMargins((int) v.getX(), (int) v.getY(), parent.getWidth() - ((int) v.getX() + v.getWidth()), parent.getHeight() - ((int) v.getY() + v.getHeight()));
                 v.setLayoutParams(params);
                 return true;
             } else if (action == MotionEvent.ACTION_MOVE) {
                 if (previewDrag != null) {
-                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) v.getLayoutParams();
-                    RelativeLayout parent = (RelativeLayout) v.getParent();
+                    int currentXPosition = params.leftMargin + (int) (event.getX() - previewDrag.x);
+                    int currentYPosition = params.topMargin + (int) (event.getY() - previewDrag.y);
                     params.setMargins(
-                            Math.min(params.leftMargin + (int) (event.getX() - previewDrag.x), parent.getWidth() - v.getWidth() - (int)margin),
-                            Math.min(params.topMargin + (int) (event.getY() - previewDrag.y), parent.getHeight() - v.getHeight() - (int)margin),
-                            0, 0);
+                            currentXPosition,
+                            currentYPosition,
+                            -((currentXPosition + v.getWidth()) - (int) event.getX()),
+                            -((currentYPosition + v.getHeight()) - (int) event.getY()));
                     v.setLayoutParams(params);
+
+                    float outPosition = binding.previewContainer.getWidth() * 0.85f;
+                    float drapOut = 0.f;
+                    if (currentXPosition < 0) {
+                        drapOut = Math.min(1.f, -currentXPosition / outPosition);
+                    } else if (currentXPosition + v.getWidth() > parent.getWidth()) {
+                        drapOut = Math.min(1.f, (currentXPosition + v.getWidth() - parent.getWidth()) / outPosition);
+                    }
+                    setPreviewDragHiddenState(drapOut);
                     return true;
                 }
                 return false;
             } else if (action == MotionEvent.ACTION_UP) {
                 if (previewDrag != null) {
+                    int currentXPosition = params.leftMargin + (int) (event.getX() - previewDrag.x);
+
                     previewSnapAnimation.cancel();
                     previewDrag = null;
                     v.setElevation(v.getContext().getResources().getDimension(R.dimen.call_preview_elevation));
-                    RelativeLayout parent = (RelativeLayout) v.getParent();
-                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) v.getLayoutParams();
                     int ml = 0, mr = 0, mt = 0, mb = 0;
+
+                    FrameLayout.LayoutParams hp = (FrameLayout.LayoutParams) binding.previewHandle.getLayoutParams();
                     if (params.leftMargin + (v.getWidth() / 2) > parent.getWidth() / 2) {
                         params.removeRule(RelativeLayout.ALIGN_PARENT_LEFT);
                         params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                         mr = (int) (parent.getWidth() - v.getWidth() - v.getX());
+                        previewPosition = PreviewPosition.RIGHT;
+                        hp.gravity = Gravity.CENTER_VERTICAL | Gravity.LEFT;
                     } else {
                         params.removeRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                         params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
                         ml = (int) v.getX();
+                        previewPosition = PreviewPosition.LEFT;
+                        hp.gravity = Gravity.CENTER_VERTICAL | Gravity.RIGHT;
                     }
+                    binding.previewHandle.setLayoutParams(hp);
+
                     if (params.topMargin + (v.getHeight() / 2) > parent.getHeight() / 2) {
                         params.removeRule(RelativeLayout.ALIGN_PARENT_TOP);
                         params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
@@ -473,6 +513,15 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                     previewMargins[3] = mb;
                     params.setMargins(ml, mt, mr, mb);
                     v.setLayoutParams(params);
+
+                    float outPosition = binding.previewContainer.getWidth() * 0.85f;
+                    previewHiddenState = currentXPosition < 0
+                            ? Math.min(1.f, -currentXPosition / outPosition)
+                            : ((currentXPosition + v.getWidth() > parent.getWidth())
+                                ? Math.min(1.f, (currentXPosition + v.getWidth() - parent.getWidth()) / outPosition)
+                                : 0.f);
+                    setPreviewDragHiddenState(previewHiddenState);
+
                     previewSnapAnimation.start();
                     return true;
                 }
@@ -676,7 +725,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     @Override
     public void updateTime(final long duration) {
-        if (binding.callStatusTxt != null) {
+        if (binding != null) {
             if (duration == 0)
                 binding.callStatusTxt.setText(null);
             else
@@ -767,7 +816,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     @Override
     public void initMenu(boolean isSpeakerOn, boolean displayFlip, boolean canDial, boolean onGoingCall) {
-        if (binding.callCameraFlipBtn != null) {
+        if (binding != null) {
             binding.callCameraFlipBtn.setVisibility(displayFlip ? View.VISIBLE : View.GONE);
         }
         if (dialPadBtn != null) {
