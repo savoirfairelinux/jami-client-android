@@ -45,7 +45,6 @@ public class JamiAccountCreationPresenter extends RootPresenter<JamiAccountCreat
     private boolean isRingUserNameCorrect = false;
     private boolean isPasswordCorrect = true;
     private boolean isConfirmCorrect = true;
-    private boolean isRegisterUsernameChecked = true;
     private boolean startUsernameAvailabitlityProgressBarAnimation = true;
     private String mPasswordConfirm = "";
 
@@ -93,8 +92,6 @@ public class JamiAccountCreationPresenter extends RootPresenter<JamiAccountCreat
     }
 
     public void registerUsernameChanged(boolean isChecked) {
-        getView().displayUsernameBox(isChecked);
-        isRegisterUsernameChecked = isChecked;
         if (mAccountCreationModel != null) {
             if (!isChecked) {
                 mAccountCreationModel.setUsername("");
@@ -123,9 +120,14 @@ public class JamiAccountCreationPresenter extends RootPresenter<JamiAccountCreat
             isPasswordCorrect = false;
         } else {
             getView().showInvalidPasswordError(false);
-            isPasswordCorrect = true;
+            if (password.isEmpty()) {
+                isPasswordCorrect = false;
+            } else {
+                isPasswordCorrect = true;
+            }
             if (!password.equals(mPasswordConfirm)) {
-                getView().showNonMatchingPasswordError(true);
+                if (!mPasswordConfirm.isEmpty())
+                    getView().showNonMatchingPasswordError(true);
                 isConfirmCorrect = false;
             } else {
                 getView().showNonMatchingPasswordError(false);
@@ -157,7 +159,7 @@ public class JamiAccountCreationPresenter extends RootPresenter<JamiAccountCreat
 
     private boolean isInputValid() {
         boolean passwordOk = isPasswordCorrect && isConfirmCorrect;
-        boolean usernameOk = !isRegisterUsernameChecked || isRingUserNameCorrect;
+        boolean usernameOk = mAccountCreationModel.getUsername() != null || isRingUserNameCorrect;
         return passwordOk && usernameOk;
     }
 
