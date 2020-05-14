@@ -201,7 +201,7 @@ along with this program; if not, write to the Free Software
     <string name="account_sip_success_message">You have successfully registered your Sip account.</string>
     <string name="account_sip_register_anyway">Register anyway</string>
 
-    <string name="account_link_device">Connect from other device</string>
+    <string name="account_link_device">Connect from another device</string>
     <string name="account_link_button">Connect from network</string>
     <string name="account_link_archive_button">Connect from backup</string>
     <string name="account_link_prompt_pin">Enter PIN</string>
@@ -227,7 +227,8 @@ along with this program; if not, write to the Free Software
     <string name="register_name">Register name</string>
     <string name="trying_to_register_name">Trying to register name</string>
     <string name="registered_username">Registered username</string>
-    <string name="register_username">Register public username (recommended)</string>
+    <string name="register_username">Register public username</string>
+    <string name="register_recommended">Recommended</string>
     <string name="username_already_taken">Username already taken</string>
     <string name="invalid_username">Invalid username</string>
     <string name="unknown_error">Unknown error. Please check your network connection!</string>
