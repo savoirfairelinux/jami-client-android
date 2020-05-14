@@ -108,7 +108,7 @@ public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreation
         binding.camera.setOnClickListener(v -> presenter.cameraClick());
         binding.nextCreateAccount.setOnClickListener(v -> presenter.nextClick());
         binding.skipCreateAccount.setOnClickListener(v -> presenter.skipClick());
-        binding.userName.addTextChangedListener(new TextWatcher() {
+        binding.username.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
@@ -170,7 +170,7 @@ public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreation
 
     @Override
     public void displayProfileName(String profileName) {
-        binding.userName.setText(profileName);
+        binding.username.setText(profileName);
     }
 
     @Override
@@ -233,4 +233,7 @@ public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreation
         );
     }
 
+    public AccountCreationModel getModel() {
+        return model;
+    }
 }

@@ -157,11 +157,6 @@ public class AccountWizardActivity extends BaseActivity<AccountWizardPresenter> 
 
     @Override
     public void goToProfileCreation(AccountCreationModel model) {
-        Fragment fragment = ProfileCreationFragment.newInstance((AccountCreationModelImpl) model);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.wizard_container, fragment, ProfileCreationFragment.TAG)
-                .commit();
     }
 
     @Override
