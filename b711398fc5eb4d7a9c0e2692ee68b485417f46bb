@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c44b3e21_2e3ba604",
+        "filename": "ring-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-05-14T21:03:22Z",
+      "side": 1,
+      "message": "Capitalize normally here",
+      "range": {
+        "startLine": 346,
+        "startChar": 40,
+        "endLine": 346,
+        "endChar": 62
+      },
+      "revId": "b711398fc5eb4d7a9c0e2692ee68b485417f46bb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17a6002d_22599691",
+        "filename": "ring-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-05-14T21:03:22Z",
+      "side": 1,
+      "message": "Capitalize normally here",
+      "range": {
+        "startLine": 348,
+        "startChar": 42,
+        "endLine": 348,
+        "endChar": 57
+      },
+      "revId": "b711398fc5eb4d7a9c0e2692ee68b485417f46bb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4df34720_76ec40e6",
+        "filename": "ring-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-05-14T21:03:22Z",
+      "side": 1,
+      "message": "Capitalize normally here",
+      "range": {
+        "startLine": 353,
+        "startChar": 41,
+        "endLine": 353,
+        "endChar": 53
+      },
+      "revId": "b711398fc5eb4d7a9c0e2692ee68b485417f46bb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a97614b_713e715d",
+        "filename": "ring-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-05-14T21:03:22Z",
+      "side": 1,
+      "message": "Capitalize normally here",
+      "range": {
+        "startLine": 354,
+        "startChar": 39,
+        "endLine": 354,
+        "endChar": 61
+      },
+      "revId": "b711398fc5eb4d7a9c0e2692ee68b485417f46bb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
