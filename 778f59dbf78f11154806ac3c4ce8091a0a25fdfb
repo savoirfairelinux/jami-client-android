@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e821daac_02643f35",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/JamiAccountUsernameFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2020-05-14T14:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "888d25ea_9ca30f53",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 101
+      },
+      "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4088e1aa_f98ec5a4",
         "filename": "ring-android/app/src/main/java/cx/ring/account/JamiAccountUsernameFragment.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1f59f1f_0cdfe095",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/JamiAccountUsernameFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2020-05-14T14:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4088e1aa_f98ec5a4",
+      "range": {
+        "startLine": 114,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 101
+      },
+      "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "57e0c772_74d82720",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/JamiAccountUsernameFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2020-05-14T14:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7c0a02b_4ae7bf1d",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 101
+      },
+      "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56c0eede_715fb67d",
         "filename": "ring-android/app/src/main/java/cx/ring/account/JamiAccountUsernameFragment.java",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd82fad7_544bd4b8",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/JamiAccountUsernameFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2020-05-14T14:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56c0eede_715fb67d",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 101
+      },
+      "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "9989e951_f87c6d47",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/JamiAccountUsernameFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2020-05-14T14:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cb88c86_619ac25f",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 84
+      },
+      "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66fe0662_e78a728f",
         "filename": "ring-android/app/src/main/res/drawable/baseline_lock_18.xml",
         "patchSetId": 2
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "c052da03_9d867405",
+        "filename": "ring-android/app/src/main/res/drawable/baseline_lock_18.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2020-05-14T14:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66fe0662_e78a728f",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 0
+      },
+      "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea664a7d_1d541c91",
         "filename": "ring-android/app/src/main/res/drawable/ic_good_green.xml",
         "patchSetId": 2
@@ -151,6 +295,30 @@
       "writtenOn": "2020-05-13T17:34:46Z",
       "side": 1,
       "message": "not needed if using proper APIs",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 24
+      },
+      "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab9a67b0_27709c75",
+        "filename": "ring-android/app/src/main/res/drawable/ic_good_green.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2020-05-14T14:54:38Z",
+      "side": 1,
+      "message": "What APIs? \nI am not sure how it is possible to change size of only EndDrawble",
+      "parentUuid": "ea664a7d_1d541c91",
       "range": {
         "startLine": 3,
         "startChar": 0,
@@ -180,6 +348,24 @@
     },
     {
       "key": {
+        "uuid": "d994d252_4509e624",
+        "filename": "ring-android/app/src/main/res/layout/frag_acc_ring_password.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2020-05-14T14:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5034794a_76ea11ed",
+      "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed8e0d44_c7b81ec9",
         "filename": "ring-android/app/src/main/res/layout/frag_acc_ring_password.xml",
         "patchSetId": 2
@@ -200,6 +386,30 @@
       "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "360d3cfa_33da6c1f",
+        "filename": "ring-android/app/src/main/res/layout/frag_acc_ring_password.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2020-05-14T14:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed8e0d44_c7b81ec9",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 48
+      },
+      "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "79224429_b96d2162",
+        "filename": "ring-android/app/src/main/res/layout/frag_acc_ring_password.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2020-05-14T14:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cc78c8f_348ca6f9",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 70
+      },
+      "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "480beccc_9fb1cef3",
         "filename": "ring-android/app/src/main/res/layout/frag_acc_ring_password.xml",
         "patchSetId": 2
@@ -246,6 +480,30 @@
       "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06bc9738_e6890142",
+        "filename": "ring-android/app/src/main/res/layout/frag_acc_ring_password.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2020-05-14T14:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "480beccc_9fb1cef3",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 48
+      },
+      "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     },
     {
       "key": {
@@ -272,6 +530,30 @@
     },
     {
       "key": {
+        "uuid": "ad70a2ff_5ecfa460",
+        "filename": "ring-android/app/src/main/res/layout/frag_acc_ring_password.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2020-05-14T14:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17e934e8_60cf4bda",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 70
+      },
+      "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14bb5150_99f86aa8",
         "filename": "ring-android/app/src/main/res/layout/frag_acc_ring_password.xml",
         "patchSetId": 2
@@ -283,6 +565,30 @@
       "writtenOn": "2020-05-13T17:34:46Z",
       "side": 1,
       "message": "button has shadow issue",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 18
+      },
+      "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a435bc66_d98440c7",
+        "filename": "ring-android/app/src/main/res/layout/frag_acc_ring_password.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2020-05-14T14:54:38Z",
+      "side": 1,
+      "message": "What issue? \nYou want the shodow to be removed?",
+      "parentUuid": "14bb5150_99f86aa8",
       "range": {
         "startLine": 116,
         "startChar": 0,
@@ -312,6 +618,24 @@
     },
     {
       "key": {
+        "uuid": "f0eef184_e2ba1fab",
+        "filename": "ring-android/app/src/main/res/layout/frag_acc_ring_username.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2020-05-14T14:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a5b13d4_c513c9fb",
+      "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30a5eb4a_53ba0d55",
         "filename": "ring-android/app/src/main/res/layout/frag_acc_ring_username.xml",
         "patchSetId": 2
@@ -332,6 +656,30 @@
       "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e95b437_cb84490f",
+        "filename": "ring-android/app/src/main/res/layout/frag_acc_ring_username.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2020-05-14T14:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30a5eb4a_53ba0d55",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 55
+      },
+      "revId": "778f59dbf78f11154806ac3c4ce8091a0a25fdfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
