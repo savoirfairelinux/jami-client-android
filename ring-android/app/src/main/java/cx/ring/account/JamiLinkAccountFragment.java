@@ -33,15 +33,16 @@ import androidx.annotation.Nullable;
 
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
-import cx.ring.databinding.FragAccRingLinkBinding;
+import cx.ring.databinding.FragAccJamiLinkBinding;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.mvp.AccountCreationModel;
 
-public class JamiLinkAccountFragment extends BaseSupportFragment<JamiLinkAccountPresenter> implements JamiLinkAccountView {
+public class JamiLinkAccountFragment extends BaseSupportFragment<JamiLinkAccountPresenter>
+        implements JamiLinkAccountView {
 
     public static final String TAG = JamiLinkAccountFragment.class.getSimpleName();
     private AccountCreationModel model;
-    private FragAccRingLinkBinding binding;
+    private FragAccJamiLinkBinding binding;
 
     public static JamiLinkAccountFragment newInstance(AccountCreationModelImpl ringAccountViewModel) {
         JamiLinkAccountFragment fragment = new JamiLinkAccountFragment();
@@ -52,7 +53,7 @@ public class JamiLinkAccountFragment extends BaseSupportFragment<JamiLinkAccount
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragAccRingLinkBinding.inflate(inflater, container, false);
+        binding = FragAccJamiLinkBinding.inflate(inflater, container, false);
         ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         return binding.getRoot();
     }

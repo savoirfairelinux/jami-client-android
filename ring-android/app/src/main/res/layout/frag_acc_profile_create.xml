@@ -3,58 +3,72 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="@dimen/wizard_card_height">
 
-    <cx.ring.views.BoundedScrollView
-        android:id="@+id/scrollview"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/next_create_account"
-        android:layout_centerHorizontal="true"
-        app:bounded_width="500dp">
+        android:background="@color/white"
+        app:cardCornerRadius="@dimen/wizard_card_radius">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin">
+            android:paddingTop="@dimen/wizard_card_padding"
+            android:paddingStart="@dimen/wizard_card_padding"
+            android:paddingEnd="@dimen/wizard_card_padding"
+            android:paddingBottom="10dp"
+            android:clipChildren="false"
+            android:clipToPadding="false">
 
-            <TextView
-                android:id="@+id/title"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:layout_marginTop="24dp"
-                android:gravity="center"
-                android:text="@string/account_creation_profile"
-                android:textSize="24sp" />
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:paddingBottom="8dp"
-                android:paddingEnd="16dp"
-                android:paddingStart="16dp"
-                android:paddingTop="16dp"
-                android:text="@string/profile_message_warning" />
+                <TextView
+                    android:id="@+id/info"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/status"
+                    app:layout_constraintBottom_toBottomOf="@id/status"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/status"
+                    android:textStyle="bold"
+                    android:layout_marginRight="4dp"
+                    android:text="@string/wizard_profile_info"
+                    />
+
+                <TextView
+                    android:id="@+id/status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:text="@string/wizard_status_optional"
+                    android:textSize="@dimen/wizard_text_size"
+                    android:textStyle="bold"
+                    android:textColor="#ff1f62"
+                    android:background="@drawable/background_status"
+                    android:padding="6dp"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <RelativeLayout
                 android:id="@+id/profile_container"
-                android:layout_width="150dp"
-                android:layout_height="180dp"
-                android:layout_gravity="center">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="center"
+                android:clipToPadding="false"
+                android:clipChildren="false">
 
                 <ImageView
                     android:id="@+id/profile_photo"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_margin="10dp"
                     android:scaleType="fitCenter"
                     tools:src="@drawable/ic_contact_picture_fallback" />
 
@@ -64,16 +78,15 @@
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/anchor"
                     android:layout_toEndOf="@+id/anchor"
-                    android:contentDescription="@string/take_a_photo"
-                    android:text="@string/take_a_photo"
                     app:backgroundTint="@color/light"
-                    app:rippleColor="@android:color/white"
-                    app:srcCompat="@drawable/baseline_photo_camera_24" />
+                    app:fabCustomSize="40dp"
+                    app:srcCompat="@drawable/baseline_photo_camera_24"
+                    app:rippleColor="@android:color/white" />
 
                 <Space
                     android:id="@+id/anchor"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="15dp"
+                    android:layout_height="25dp"
                     android:layout_alignBottom="@+id/profile_photo"
                     android:layout_centerHorizontal="true" />
 
@@ -86,53 +99,66 @@
                     android:contentDescription="@string/open_the_gallery"
                     android:text="@string/open_the_gallery"
                     app:backgroundTint="@color/light"
-                    app:rippleColor="@android:color/white"
-                    app:srcCompat="@drawable/baseline_insert_photo_24" />
+                    app:fabCustomSize="40dp"
+                    app:srcCompat="@drawable/baseline_insert_photo_24"
+                    app:rippleColor="@android:color/white" />
 
             </RelativeLayout>
 
-            <EditText
-                android:id="@+id/user_name"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/username_box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autofillHints="name"
-                android:hint="@string/profile_name_hint"
-                android:inputType="textCapWords"
-                android:maxLines="1"
-                android:paddingBottom="8dp"
-                android:paddingEnd="16dp"
-                android:paddingStart="16dp"
-                android:paddingTop="16dp"
-                android:textAlignment="center" />
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="name"
+                    android:hint="@string/profile_name_hint"
+                    android:inputType="textCapWords"
+                    android:drawablePadding="5dp"
+                    android:drawableStart="@drawable/baseline_account_crop_24"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_gravity="bottom"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/next_create_account"
+                    style="@style/WizardButton"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@+id/skip_create_account"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:text="@string/wizard_profile_button" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/skip_create_account"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/wizard_profile_skip"
+                    android:textColor="@color/grey_500"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 
-    </cx.ring.views.BoundedScrollView>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/next_create_account"
-        style="@style/WizardButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@id/scrollview"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginBottom="16dp"
-        android:text="@string/wizard_next" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/skip_create_account"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toStartOf="@id/next_create_account"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/wizard_skip" />
+    </androidx.cardview.widget.CardView>
 
 </RelativeLayout>

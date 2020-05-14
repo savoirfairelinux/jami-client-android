@@ -38,8 +38,6 @@ public interface JamiAccountCreationView {
 
     void showNonMatchingPasswordError(boolean display);
 
-    void displayUsernameBox(boolean display);
-
     void enableNextButton(boolean enabled);
 
     void goToAccountCreation(AccountCreationModel accountCreationModel);

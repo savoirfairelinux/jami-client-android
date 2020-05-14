@@ -45,7 +45,6 @@ public class JamiAccountCreationPresenter extends RootPresenter<JamiAccountCreat
     private boolean isRingUserNameCorrect = false;
     private boolean isPasswordCorrect = true;
     private boolean isConfirmCorrect = true;
-    private boolean isRegisterUsernameChecked = true;
     private boolean startUsernameAvailabitlityProgressBarAnimation = true;
     private String mPasswordConfirm = "";
 
@@ -93,8 +92,6 @@ public class JamiAccountCreationPresenter extends RootPresenter<JamiAccountCreat
     }
 
     public void registerUsernameChanged(boolean isChecked) {
-        getView().displayUsernameBox(isChecked);
-        isRegisterUsernameChecked = isChecked;
         if (mAccountCreationModel != null) {
             if (!isChecked) {
                 mAccountCreationModel.setUsername("");
@@ -108,7 +105,7 @@ public class JamiAccountCreationPresenter extends RootPresenter<JamiAccountCreat
         isPasswordCorrect = true;
         isConfirmCorrect = true;
         getView().showInvalidPasswordError(false);
-        checkForms();
+        getView().enableNextButton(true);
     }
 
     public void passwordChanged(String password, String repeat) {
@@ -123,16 +120,21 @@ public class JamiAccountCreationPresenter extends RootPresenter<JamiAccountCreat
             isPasswordCorrect = false;
         } else {
             getView().showInvalidPasswordError(false);
-            isPasswordCorrect = true;
+            if (password.isEmpty()) {
+                isPasswordCorrect = false;
+            } else {
+                isPasswordCorrect = true;
+            }
             if (!password.equals(mPasswordConfirm)) {
-                getView().showNonMatchingPasswordError(true);
+                if (!mPasswordConfirm.isEmpty())
+                    getView().showNonMatchingPasswordError(true);
                 isConfirmCorrect = false;
             } else {
                 getView().showNonMatchingPasswordError(false);
                 isConfirmCorrect = true;
             }
         }
-        checkForms();
+        getView().enableNextButton(isPasswordCorrect && isConfirmCorrect);
     }
 
     public void passwordConfirmChanged(String passwordConfirm) {
@@ -144,26 +146,24 @@ public class JamiAccountCreationPresenter extends RootPresenter<JamiAccountCreat
             isConfirmCorrect = true;
         }
         mPasswordConfirm = passwordConfirm;
-        checkForms();
+        getView().enableNextButton(isPasswordCorrect && isConfirmCorrect);
     }
 
     public void createAccount() {
         if (isInputValid()) {
             JamiAccountCreationView view = getView();
-            view.enableNextButton(false);
             view.goToAccountCreation(mAccountCreationModel);
         }
     }
 
     private boolean isInputValid() {
         boolean passwordOk = isPasswordCorrect && isConfirmCorrect;
-        boolean usernameOk = !isRegisterUsernameChecked || isRingUserNameCorrect;
+        boolean usernameOk = mAccountCreationModel.getUsername() != null || isRingUserNameCorrect;
         return passwordOk && usernameOk;
     }
 
     private void checkForms() {
         boolean valid = isInputValid();
-        getView().enableNextButton(valid);
         if(valid && isRingUserNameCorrect)
             getView().updateUsernameAvailability(JamiAccountCreationView.
                     UsernameAvailabilityStatus.AVAILABLE);
