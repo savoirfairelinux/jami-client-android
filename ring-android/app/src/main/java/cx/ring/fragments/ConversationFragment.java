@@ -810,15 +810,14 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
 
     @Override
     protected void initPresenter(ConversationPresenter presenter) {
-        Bundle args = getArguments();
-        if (args == null)
+        ConversationPath path = ConversationPath.fromBundle(getArguments());
+        if (path == null)
             return;
-        Uri contactUri = new Uri(args.getString(KEY_CONTACT_RING_ID));
-        String accountId = args.getString(KEY_ACCOUNT_ID);
+        Uri contactUri = new Uri(path.getContactId());
         mAdapter = new ConversationAdapter(this, presenter);
-        presenter.init(contactUri, accountId);
+        presenter.init(contactUri, path.getAccountId());
         try {
-            mPreferences = requireActivity().getSharedPreferences(accountId + "_" + contactUri.getRawRingId(), Context.MODE_PRIVATE);
+            mPreferences = requireActivity().getSharedPreferences(path.getAccountId() + "_" + contactUri.getRawRingId(), Context.MODE_PRIVATE);
             mPreferences.registerOnSharedPreferenceChangeListener(this);
             presenter.setConversationColor(mPreferences.getInt(KEY_PREFERENCE_CONVERSATION_COLOR, getResources().getColor(R.color.color_primary_light)));
         } catch (Exception e) {
@@ -834,7 +833,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
                     LocationSharingService locationService = binder.getService();
                     ConversationPath path = new ConversationPath(presenter.getPath());
                     if (locationService.isSharing(path)) {
-                        showMap(accountId, contactUri.getUri(), false);
+                        showMap(path.getAccountId(), contactUri.getUri(), false);
                     }
                     try {
                         requireContext().unbindService(locationServiceConnection);

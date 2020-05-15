@@ -236,10 +236,8 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 return;
             }
             presentTrustRequestFragment(extra.getString(ContactRequestsFragment.ACCOUNT_ID));
-            return;
         } else if (Intent.ACTION_SEND.equals(action) || Intent.ACTION_SEND_MULTIPLE.equals(action)) {
             handleShareIntent(intent);
-            return;
         } else if (Intent.ACTION_SEARCH.equals(action)) {
             if (fContent instanceof SmartListFragment) {
                 ((SmartListFragment)fContent).handleIntent(intent);
@@ -360,7 +358,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.conversation_container, fConversation, ConversationFragment.class.getName())
+                .replace(R.id.conversation_container, fConversation, ConversationFragment.class.getSimpleName())
                 .commit();
     }
 
