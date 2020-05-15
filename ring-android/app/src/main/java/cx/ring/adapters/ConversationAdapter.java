@@ -128,11 +128,10 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             R.drawable.textmsg_bg_in
     };
 
-    public ConversationAdapter(ConversationFragment conversationFragment, ConversationPresenter presenter) {
-        this.conversationFragment = conversationFragment;
-        this.presenter = presenter;
-        Context context = conversationFragment.getActivity();
-        Resources res = context.getResources();
+    public ConversationAdapter(ConversationFragment fragment, ConversationPresenter p) {
+        conversationFragment = fragment;
+        presenter = p;
+        Resources res = conversationFragment.getResources();
         hPadding = res.getDimensionPixelSize(R.dimen.padding_medium);
         vPadding = res.getDimensionPixelSize(R.dimen.padding_small);
         mPictureMaxSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200, res.getDisplayMetrics());
@@ -142,9 +141,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                 .fitCenter()
                 .override(mPictureMaxSize)
                 .transform(new RoundedCorners(corner));
-        timestampUpdateTimer = Observable.interval(10, TimeUnit.SECONDS)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        timestampUpdateTimer = Observable.interval(10, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
                 .startWith(0L);
     }
 
@@ -292,11 +289,11 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         if (interaction.getType() == (InteractionType.TEXT)) {
             configureForTextMessage(conversationViewHolder, interaction, position);
         } else if (interaction.getType() == (InteractionType.CALL)) {
-            configureForCallInfoTextMessage(conversationViewHolder, interaction);
+            configureForCallInfo(conversationViewHolder, interaction);
         } else if (interaction.getType() == (InteractionType.CONTACT)) {
             configureForContactEvent(conversationViewHolder, interaction);
         } else if (interaction.getType() == (InteractionType.DATA_TRANSFER)) {
-            configureForFileInfoTextMessage(conversationViewHolder, interaction, position);
+            configureForFileInfo(conversationViewHolder, interaction, position);
         }
     }
 
@@ -426,9 +423,145 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         clipboard.setPrimaryClip(clip);
     }
 
+    private void configureImage(@NonNull final ConversationViewHolder viewHolder, @NonNull File path) {
+        Context context = viewHolder.mImage.getContext();
 
-    private void configureForFileInfoTextMessage(@NonNull final ConversationViewHolder viewHolder,
-                                                 @NonNull final Interaction interaction, int position) {
+        GlideApp.with(context)
+                .load(path)
+                .apply(PICTURE_OPTIONS)
+                .into(new DrawableImageViewTarget(viewHolder.mImage).waitForLayout());
+
+        viewHolder.mImage.setOnClickListener(v -> {
+            Uri contentUri = ContentUriHandler.getUriForFile(v.getContext(), ContentUriHandler.AUTHORITY_FILES, path);
+            Intent i = new Intent(context, MediaViewerActivity.class);
+            i.setAction(Intent.ACTION_VIEW).setDataAndType(contentUri, "image/*").setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            ActivityOptionsCompat options = ActivityOptionsCompat.
+                    makeSceneTransitionAnimation(conversationFragment.getActivity(), viewHolder.mImage, "picture");
+            conversationFragment.startActivityForResult(i, 3006, options.toBundle());
+        });
+    }
+
+    private void configureAudio(@NonNull final ConversationViewHolder viewHolder, @NonNull File path) {
+        Context context = viewHolder.itemView.getContext();
+        try {
+            ((ImageView) viewHolder.btnAccept).setImageResource(R.drawable.baseline_play_arrow_24);
+            final MediaPlayer player = MediaPlayer.create(context,
+                    ContentUriHandler.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path));
+            viewHolder.player = player;
+            if (player != null) {
+                player.setOnCompletionListener(mp -> {
+                    player.seekTo(0);
+                    ((ImageView) viewHolder.btnAccept).setImageResource(R.drawable.baseline_play_arrow_24);
+                });
+                viewHolder.btnAccept.setOnClickListener((b) -> {
+                    if (player.isPlaying()) {
+                        player.pause();
+                        ((ImageView) viewHolder.btnAccept).setImageResource(R.drawable.baseline_play_arrow_24);
+                    } else {
+                        player.start();
+                        ((ImageView) viewHolder.btnAccept).setImageResource(R.drawable.baseline_pause_24);
+                    }
+                });
+                viewHolder.btnRefuse.setOnClickListener((b) -> {
+                    if (player.isPlaying())
+                        player.pause();
+                    player.seekTo(0);
+                    ((ImageView) viewHolder.btnAccept).setImageResource(R.drawable.baseline_play_arrow_24);
+                });
+                viewHolder.compositeDisposable.add(Observable.interval(1L, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
+                        .startWith(0L)
+                        .subscribe(t -> {
+                            int pS = player.getCurrentPosition() / 1000;
+                            int dS = player.getDuration() / 1000;
+                            viewHolder.mMsgTxt.setText(String.format(Locale.getDefault(),
+                                    "%02d:%02d / %02d:%02d", pS / 60, pS % 60, dS / 60, dS % 60));
+                        }));
+            } else {
+                viewHolder.btnAccept.setOnClickListener(null);
+                viewHolder.btnRefuse.setOnClickListener(null);
+                viewHolder.updater = null;
+            }
+        } catch (IllegalStateException | NullPointerException e) {
+            Log.e(TAG, "Error initializing player, it may have already been released: " + e.getMessage());
+        }
+    }
+
+    private void configureVideo(@NonNull final ConversationViewHolder viewHolder, @NonNull File path) {
+        Context context = viewHolder.itemView.getContext();
+        if (viewHolder.player != null) {
+            viewHolder.player.release();
+            viewHolder.player = null;
+        }
+        final MediaPlayer player = MediaPlayer.create(context,
+                ContentUriHandler.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path));
+        if (player == null)
+            return;
+        viewHolder.player = player;
+        final Drawable playBtn = ContextCompat.getDrawable(viewHolder.mLayout.getContext(), R.drawable.baseline_play_arrow_24).mutate();
+        DrawableCompat.setTint(playBtn, Color.WHITE);
+        ((CardView) viewHolder.mLayout).setForeground(playBtn);
+        player.setOnCompletionListener(mp -> {
+            if (player.isPlaying())
+                player.pause();
+            player.seekTo(1);
+            ((CardView) viewHolder.mLayout).setForeground(playBtn);
+        });
+        player.setOnVideoSizeChangedListener((mp, width, height) -> {
+            Log.w(TAG, "OnVideoSizeChanged " + width + "x" + height);
+            FrameLayout.LayoutParams p = (FrameLayout.LayoutParams) viewHolder.video.getLayoutParams();
+            int maxDim = Math.max(width, height);
+            p.width = width * mPictureMaxSize / maxDim;
+            p.height = height * mPictureMaxSize / maxDim;
+            viewHolder.video.setLayoutParams(p);
+        });
+        if (viewHolder.video.isAvailable()) {
+            if (viewHolder.surface == null) {
+                viewHolder.surface = new Surface(viewHolder.video.getSurfaceTexture());
+            }
+            player.setSurface(viewHolder.surface);
+        }
+        viewHolder.video.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
+            @Override
+            public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+                if (viewHolder.surface == null) {
+                    viewHolder.surface = new Surface(surface);
+                    player.setSurface(viewHolder.surface);
+                }
+            }
+
+            @Override
+            public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+            }
+
+            @Override
+            public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
+                player.setSurface(null);
+                player.release();
+                if (viewHolder.surface != null) {
+                    viewHolder.surface.release();
+                    viewHolder.surface = null;
+                }
+                return true;
+            }
+
+            @Override
+            public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+            }
+        });
+        viewHolder.video.setOnClickListener(v -> {
+            if (player.isPlaying()) {
+                player.pause();
+                ((CardView) viewHolder.mLayout).setForeground(playBtn);
+            } else {
+                player.start();
+                ((CardView) viewHolder.mLayout).setForeground(null);
+            }
+        });
+        player.seekTo(1);
+    }
+
+    private void configureForFileInfo(@NonNull final ConversationViewHolder viewHolder,
+                                      @NonNull final Interaction interaction, int position) {
         DataTransfer file = (DataTransfer) interaction;
         File path = presenter.getDeviceRuntimeService().getConversationPath(file.getPeerId(), file.getStoragePath());
         file.setSize(path.length());
@@ -523,176 +656,50 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             }
             mCurrentLongItem = new RecyclerViewContextMenuInfo(viewHolder.getAdapterPosition(), v.getId());
             return false;
-
         });
 
         if (type == TransferMsgType.IMAGE) {
-            Context context = viewHolder.mImage.getContext();
-
-            GlideApp.with(context)
-                    .load(path)
-                    .apply(PICTURE_OPTIONS)
-                    .into(new DrawableImageViewTarget(viewHolder.mImage).waitForLayout());
-
-            viewHolder.mImage.setOnClickListener(v -> {
-                Uri contentUri = ContentUriHandler.getUriForFile(v.getContext(), ContentUriHandler.AUTHORITY_FILES, path);
-                Intent i = new Intent(context, MediaViewerActivity.class);
-                i.setAction(Intent.ACTION_VIEW).setDataAndType(contentUri, "image/*").setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                ActivityOptionsCompat options = ActivityOptionsCompat.
-                        makeSceneTransitionAnimation(conversationFragment.getActivity(), viewHolder.mImage, "picture");
-                conversationFragment.startActivityForResult(i, 3006, options.toBundle());
-            });
-            return;
+            configureImage(viewHolder, path);
         } else if (type == TransferMsgType.VIDEO) {
-            Context context = viewHolder.itemView.getContext();
-            if (viewHolder.player != null) {
-                viewHolder.player.release();
-            }
-            final MediaPlayer player = MediaPlayer.create(context,
-                    ContentUriHandler.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path));
-            if (player == null)
-                return;
-            viewHolder.player = player;
-            final Drawable playBtn = ContextCompat.getDrawable(viewHolder.mLayout.getContext(), R.drawable.baseline_play_arrow_24).mutate();
-            DrawableCompat.setTint(playBtn, Color.WHITE);
-            ((CardView) viewHolder.mLayout).setForeground(playBtn);
-            player.setOnCompletionListener(mp -> {
-                if (player.isPlaying())
-                    player.pause();
-                player.seekTo(1);
-                ((CardView) viewHolder.mLayout).setForeground(playBtn);
-            });
-            player.setOnVideoSizeChangedListener((mp, width, height) -> {
-                Log.w(TAG, "OnVideoSizeChanged " + width + "x" + height);
-                FrameLayout.LayoutParams p = (FrameLayout.LayoutParams) viewHolder.video.getLayoutParams();
-                int maxDim = Math.max(width, height);
-                p.width = width * mPictureMaxSize / maxDim;
-                p.height = height * mPictureMaxSize / maxDim;
-                viewHolder.video.setLayoutParams(p);
-            });
-            if (viewHolder.video.isAvailable()) {
-                if (viewHolder.surface == null) {
-                    viewHolder.surface = new Surface(viewHolder.video.getSurfaceTexture());
-                }
-                player.setSurface(viewHolder.surface);
-            }
-            viewHolder.video.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
-                @Override
-                public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-                    if (viewHolder.surface == null) {
-                        viewHolder.surface = new Surface(surface);
-                        player.setSurface(viewHolder.surface);
-                    }
-                }
-
-                @Override
-                public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
-                }
-
-                @Override
-                public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
-                    player.setSurface(null);
-                    viewHolder.surface = null;
-                    return true;
-                }
-
-                @Override
-                public void onSurfaceTextureUpdated(SurfaceTexture surface) {
-                }
-            });
-            viewHolder.video.setOnClickListener(v -> {
-                if (player.isPlaying()) {
-                    player.pause();
-                    ((CardView) viewHolder.mLayout).setForeground(playBtn);
-                } else {
-                    player.start();
-                    ((CardView) viewHolder.mLayout).setForeground(null);
-                }
-            });
-            player.seekTo(1);
-            return;
+            configureVideo(viewHolder, path);
         } else if (type == TransferMsgType.AUDIO) {
-            Context context = viewHolder.itemView.getContext();
-            try {
-                ((ImageView) viewHolder.btnAccept).setImageResource(R.drawable.baseline_play_arrow_24);
-                final MediaPlayer player = MediaPlayer.create(context,
-                        ContentUriHandler.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, path));
-                viewHolder.player = player;
-                if (player != null) {
-                    player.setOnCompletionListener(mp -> {
-                        player.seekTo(0);
-                        ((ImageView) viewHolder.btnAccept).setImageResource(R.drawable.baseline_play_arrow_24);
-                    });
-                    viewHolder.btnAccept.setOnClickListener((b) -> {
-                        if (player.isPlaying()) {
-                            player.pause();
-                            ((ImageView) viewHolder.btnAccept).setImageResource(R.drawable.baseline_play_arrow_24);
-                        } else {
-                            player.start();
-                            ((ImageView) viewHolder.btnAccept).setImageResource(R.drawable.baseline_pause_24);
-                        }
-                    });
-                    viewHolder.btnRefuse.setOnClickListener((b) -> {
-                        if (player.isPlaying())
-                            player.pause();
-                        player.seekTo(0);
-                        ((ImageView) viewHolder.btnAccept).setImageResource(R.drawable.baseline_play_arrow_24);
-                    });
-                    viewHolder.compositeDisposable.add(Observable.interval(1L, TimeUnit.SECONDS)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .startWith(0L)
-                            .subscribe(t -> {
-                                int pS = player.getCurrentPosition() / 1000;
-                                int dS = player.getDuration() / 1000;
-                                viewHolder.mMsgTxt.setText(String.format(Locale.getDefault(),
-                                        "%02d:%02d / %02d:%02d", pS / 60, pS % 60, dS / 60, dS % 60));
-                            }));
-                } else {
-                    viewHolder.btnAccept.setOnClickListener(null);
-                    viewHolder.btnRefuse.setOnClickListener(null);
-                    viewHolder.updater = null;
-                }
-            } catch (IllegalStateException | NullPointerException e) {
-                Log.e(TAG, "Error initializing player, it may have already been released: " + e.getMessage());
+            configureAudio(viewHolder, path);
+        } else {
+            if (file.getStatus().isError()) {
+                viewHolder.mIcon.setImageResource(R.drawable.baseline_warning_24);
+            } else {
+                viewHolder.mIcon.setImageResource(R.drawable.baseline_attach_file_24);
             }
-            return;
-        }
 
-        if (file.getStatus().isError()) {
-            viewHolder.mIcon.setImageResource(R.drawable.baseline_warning_24);
-        } else {
-            viewHolder.mIcon.setImageResource(R.drawable.baseline_attach_file_24);
-        }
+            viewHolder.mMsgTxt.setText(file.getDisplayName());
 
-        viewHolder.mMsgTxt.setText(file.getDisplayName());
-
-        if (file.getStatus() == InteractionStatus.TRANSFER_AWAITING_HOST) {
-            viewHolder.mAnswerLayout.setVisibility(View.VISIBLE);
-            viewHolder.btnAccept.setOnClickListener(v -> {
-                if (!presenter.getDeviceRuntimeService().hasWriteExternalStoragePermission()) {
-                    conversationFragment.askWriteExternalStoragePermission();
-                    return;
-                }
-                Context context = v.getContext();
-                File cacheDir = context.getCacheDir();
-                long spaceLeft = AndroidFileUtils.getSpaceLeft(cacheDir.toString());
-                if (spaceLeft == -1L || file.getTotalSize() > spaceLeft) {
-                    presenter.noSpaceLeft();
-                    return;
-                }
-                context.startService(new Intent(DRingService.ACTION_FILE_ACCEPT)
-                        .setClass(context.getApplicationContext(), DRingService.class)
-                        .putExtra(DRingService.KEY_TRANSFER_ID, file.getDaemonId()));
-            });
-            viewHolder.btnRefuse.setOnClickListener(v -> {
-                Context context = v.getContext();
-                context.startService(new Intent(DRingService.ACTION_FILE_CANCEL)
-                        .setClass(context.getApplicationContext(), DRingService.class)
-                        .putExtra(DRingService.KEY_TRANSFER_ID, file.getDaemonId()));
-            });
-        } else {
-            viewHolder.mAnswerLayout.setVisibility(View.GONE);
+            if (file.getStatus() == InteractionStatus.TRANSFER_AWAITING_HOST) {
+                viewHolder.mAnswerLayout.setVisibility(View.VISIBLE);
+                viewHolder.btnAccept.setOnClickListener(v -> {
+                    if (!presenter.getDeviceRuntimeService().hasWriteExternalStoragePermission()) {
+                        conversationFragment.askWriteExternalStoragePermission();
+                        return;
+                    }
+                    Context context = v.getContext();
+                    File cacheDir = context.getCacheDir();
+                    long spaceLeft = AndroidFileUtils.getSpaceLeft(cacheDir.toString());
+                    if (spaceLeft == -1L || file.getTotalSize() > spaceLeft) {
+                        presenter.noSpaceLeft();
+                        return;
+                    }
+                    context.startService(new Intent(DRingService.ACTION_FILE_ACCEPT)
+                            .setClass(context.getApplicationContext(), DRingService.class)
+                            .putExtra(DRingService.KEY_TRANSFER_ID, file.getDaemonId()));
+                });
+                viewHolder.btnRefuse.setOnClickListener(v -> {
+                    Context context = v.getContext();
+                    context.startService(new Intent(DRingService.ACTION_FILE_CANCEL)
+                            .setClass(context.getApplicationContext(), DRingService.class)
+                            .putExtra(DRingService.KEY_TRANSFER_ID, file.getDaemonId()));
+                });
+            } else {
+                viewHolder.mAnswerLayout.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -896,8 +903,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
      * @param convViewHolder The conversation viewHolder
      * @param interaction    The conversation element to display
      */
-    private void configureForCallInfoTextMessage(@NonNull final ConversationViewHolder convViewHolder,
-                                                 @NonNull final Interaction interaction) {
+    private void configureForCallInfo(@NonNull final ConversationViewHolder convViewHolder,
+                                      @NonNull final Interaction interaction) {
         int pictureResID;
         String historyTxt;
         convViewHolder.mIcon.setScaleY(1);
