@@ -244,16 +244,10 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
             if (fContent instanceof SmartListFragment) {
                 ((SmartListFragment)fContent).handleIntent(intent);
             }
-        }
-
-        if (!DeviceUtils.isTablet(this) || !DRingService.ACTION_CONV_ACCEPT.equals(action)) {
-            return;
-        }
-
-        if (fContent instanceof SmartListFragment) {
-            Bundle bundle = new Bundle();
-            bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, intent.getStringExtra(ConversationFragment.KEY_CONTACT_RING_ID));
-            startConversationTablet(bundle);
+        } else if (DRingService.ACTION_CONV_ACCEPT.equals(action))  {
+            if (DeviceUtils.isTablet(this)) {
+                startConversationTablet(ConversationPath.fromIntent(intent).toBundle());
+            }
         }
     }
 
@@ -580,21 +574,17 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     private void hideTabletToolbar() {
-        TextView title = binding.mainToolbar.findViewById(R.id.contact_title);
-        TextView subtitle = binding.mainToolbar.findViewById(R.id.contact_subtitle);
-        ImageView logo = binding.mainToolbar.findViewById(R.id.contact_image);
-
-        if (title != null)
-            title.setText(null);
-        if (subtitle != null)
-            subtitle.setText(null);
-        if (logo != null)
-            logo.setImageDrawable(null);
+        if (binding != null) {
+            binding.contactTitle.setText(null);
+            binding.contactSubtitle.setText(null);
+            binding.contactImage.setImageDrawable(null);
+            binding.tabletToolbar.setVisibility(View.GONE);
+        }
     }
 
     private void showTabletToolbar() {
-        if (DeviceUtils.isTablet(this)) {
-            binding.mainToolbar.findViewById(R.id.tablet_toolbar).setVisibility(View.VISIBLE);
+        if (binding != null && DeviceUtils.isTablet(this)) {
+            binding.tabletToolbar.setVisibility(View.VISIBLE);
         }
     }
 
@@ -603,7 +593,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     private void hideToolbarSpinner() {
-        if (!DeviceUtils.isTablet(this)) {
+        if (binding != null && !DeviceUtils.isTablet(this)) {
             binding.spinnerToolbar.setVisibility(View.GONE);
         }
     }

@@ -932,9 +932,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     public void goToConversation(String accountId, String conversationId) {
         Context context = requireContext();
         if (DeviceUtils.isTablet(context)) {
-            startActivity(new Intent(context, HomeActivity.class)
-                    .setAction(DRingService.ACTION_CONV_ACCEPT)
-                    .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, conversationId));
+            startActivity(new Intent(DRingService.ACTION_CONV_ACCEPT, ConversationPath.toUri(accountId, conversationId), context, HomeActivity.class));
         } else {
             startActivityForResult(new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, conversationId), context, ConversationActivity.class)
                     .setFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT), HomeActivity.REQUEST_CODE_CONVERSATION);
