@@ -98,15 +98,15 @@ public class JamiAccountSummaryPresenter extends RootPresenter<JamiAccountSummar
         mCompositeDisposable.clear();
         mAccountID = accountID;
         JamiAccountSummaryView v = getView();
-        if (v != null)
-            v.accountChanged(mAccountService.getAccount(mAccountID));
+        Account account = mAccountService.getAccount(mAccountID);
+        if (v != null && account != null)
+            v.accountChanged(account);
         mCompositeDisposable.add(mAccountService.getObservableAccountUpdates(mAccountID)
                 .observeOn(mUiScheduler)
-                .subscribe(account -> {
+                .subscribe(a -> {
                     JamiAccountSummaryView view = getView();
-                    if (view != null) {
-                        view.accountChanged(account);
-                    }
+                    if (view != null)
+                        view.accountChanged(a);
                 }));
     }
 
