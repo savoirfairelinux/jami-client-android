@@ -512,7 +512,10 @@ public class CameraService {
                 }
             } catch (Exception e) {
                 Log.e(TAG, "Can't open codec", e);
-                codec = null;
+                if (codec != null) {
+                    codec.release();
+                    codec = null;
+                }
                 if (encoderInput != null) {
                     encoderInput.release();
                     encoderInput = null;
@@ -771,8 +774,12 @@ public class CameraService {
                                         @Override
                                         public void onCaptureStarted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, long timestamp, long frameNumber) {
                                             if (frameNumber == 1) {
-                                                codec.first.start();
-                                                codecStarted[0] = true;
+                                                try {
+                                                    codec.first.start();
+                                                    codecStarted[0] = true;
+                                                } catch (Exception e) {
+                                                    listener.onError();
+                                                }
                                             }
                                         }
                                     } : null, handler);
@@ -820,12 +827,19 @@ public class CameraService {
                     Log.w(TAG, "onClosed");
                     if (previewCamera == camera)
                         previewCamera = null;
-                    if (codec != null && codec.first != null) {
-                        if (codecStarted[0])
-                            codec.first.signalEndOfInputStream();
-                        codec.first.release();
-                        if (codec.first == currentCodec)
-                            currentCodec = null;
+                    if (codec != null) {
+                        if (codec.first != null) {
+                            if (codecStarted[0])
+                                codec.first.signalEndOfInputStream();
+                            codec.first.release();
+                            if (codec.first == currentCodec)
+                                currentCodec = null;
+                        }
+                        if (codec.second != null)
+                            codec.second.release();
+                    }
+                    if (reader != null) {
+                        reader.close();
                     }
                     s.release();
                 }

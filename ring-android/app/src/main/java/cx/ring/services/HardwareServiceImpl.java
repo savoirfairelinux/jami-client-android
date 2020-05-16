@@ -478,6 +478,10 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
 
     @Override
     public void startCapture(@Nullable String camId) {
+        if (mIsScreenSharing) {
+            cameraService.stopScreenSharing();
+            mIsScreenSharing = false;
+        }
         mShouldCapture = true;
         if (mIsCapturing && mCapturingId != null && mCapturingId.equals(camId)) {
             return;
@@ -544,6 +548,10 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         Log.d(TAG, "stopCapture: " + cameraService.isOpen());
         mShouldCapture = false;
         endCapture();
+        if (mIsScreenSharing) {
+            cameraService.stopScreenSharing();
+            mIsScreenSharing = false;
+        }
     }
 
     public void requestKeyFrame() {
