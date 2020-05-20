@@ -249,6 +249,7 @@
   <string name="navigation_item_conversation">会话</string>
   <string name="navigation_item_contact_request">联系人请求</string>
   <string name="navigation_item_account">帐户</string>
+  <string name="search_results_public_directory">公共目录</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">发送音频消息？</string>
   <string name="tv_send_image_dialog_message">发送该图片吗？</string>
@@ -257,7 +258,9 @@
   <string name="tv_audio_play">播放</string>
   <string name="tv_audio_pause">暂停</string>
   <string name="tv_dialog_send">发送</string>
+  <string name="tv_audio_recording">录制中…</string>
   <string name="tv_send_text">发送文本</string>
   <string name="tv_send_audio">发送音频</string>
   <string name="tv_send_video">发送媒体文件</string>
+  <string name="conversation_input_speech_hint">说点什么…</string>
 </resources>

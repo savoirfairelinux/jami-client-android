@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <!--About dialog-->
+  <!--RingActivity-->
+  <!--AB menus-->
+  <!--Sections-->
+  <string name="menu_item_contact_request">Demanda de contacte</string>
+  <string name="menu_item_settings">Paramètres</string>
+  <!--Dialing Fragment-->
+  <!--History Fragment-->
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <!--ContactList Fragment-->
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <!--Call Fragment-->
+  <!--Text messages-->
+  <!--MediaPreferenceFragment-->
+  <!--Ringtone activity-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
+  <!--Conversation-->
+  <string name="conversation_action_history_clear">Escafar l’istoric</string>
+  <string name="conversation_action_block_this">Blocar contacte</string>
+  <!--Contacts-->
+  <string name="wizard_next">Seguent</string>
+  <string name="wizard_skip">Saultar</string>
+  <!--MenuHeaderView-->
+  <string name="profile">Perfil</string>
+  <!--Share fragment-->
+  <!--Pending contact requests-->
+  <string name="accept">Acceptar</string>
+  <string name="refuse">Refusar</string>
+  <!--Send contact requests-->
+  <string name="send_request_button">Enviar</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
+  <!--File Transfer-->
+  <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">Discutidas</string>
+  <string name="navigation_item_contact_request">Demanda de contacte</string>
+  <string name="navigation_item_account">Compte</string>
+  <!--TV-->
+  <string name="tv_dialog_send">Enviar</string>
+</resources>

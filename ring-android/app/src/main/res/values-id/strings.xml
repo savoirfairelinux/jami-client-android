@@ -16,19 +16,56 @@
   <string name="description">Jami adalah perangkat lunak gratis untuk komunikasi universal yang menghormati kebebasan dan privasi penggunanya</string>
   <string name="credits">Partisipan</string>
   <string name="call_service_description">Layanan ini diperlukan untuk membuat panggilan anda tetap berjalan di latar depan. Ini hanya berjalan selama panggilan</string>
+  <string name="data_transfer_service_description">Layanan ini diperlukan untuk menampilkan pemberitahuan terus menerus selama mengirim file. Ini hanya berjalan ketika mengirim file</string>
   <!--About dialog-->
+  <string name="developed_by">Dikembangkan oleh</string>
+  <string name="designed_by">Didesain oleh</string>
+  <string name="ringtones_by">Nada dering oleh</string>
   <!--RingActivity-->
+  <string name="error_no_network">Tidak ada jaringan internet</string>
+  <string name="error_mobile_network_available_but_disabled">Tolong beri akses ke jaringan seluler di layar pengaturan</string>
   <!--AB menus-->
+  <string name="ab_action_chat">Pesan teks</string>
   <!--Sections-->
+  <string name="menu_item_contact_request">Contact requests</string>
+  <string name="menu_item_accounts">Mengelola akun</string>
+  <string name="menu_item_account">Mengelola akun</string>
+  <string name="menu_item_settings">Setelan</string>
+  <string name="menu_item_share">Bagikan kontak saya</string>
+  <string name="menu_item_about">Tentang Jami</string>
   <!--Dialing Fragment-->
+  <string name="dial_number">Tekan nomor</string>
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
+  <plurals name="home_conferences_title">
+    <item quantity="other">%dPerkapakan</item>
+  </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Cari nama atau nomor telepon...</string>
+  <string name="choose_number">Pilih nomor</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">Panggilan masuk tidak terjawab</string>
+  <string name="notif_missed_outgoing_call">Panggilan keluar tidak terjawab</string>
+  <string name="notif_incoming_call_title">Panggilan masuk dari %1$s</string>
+  <string name="notif_incoming_call">Panggilan masuk</string>
+  <string name="notif_outgoing_call_title">Panggilan keluar ke %1$s</string>
+  <string name="notif_outgoing_call">Panggilan keluar</string>
+  <string name="notif_current_call_title">Panggilan berlangsung dengan %1$s</string>
+  <string name="notif_current_call">Panggilan berlangsung</string>
+  <string name="notif_channel_call_in_progress">Panggilan sedang berlangsung</string>
+  <string name="notif_channel_calls">Panggilan</string>
+  <string name="notif_channel_missed_calls">Panggilan tak terjawab</string>
+  <string name="notif_channel_incoming_calls">Panggilan masuk</string>
+  <string name="notif_channel_messages">Pesan</string>
+  <string name="notif_channel_requests">Permintaan</string>
+  <string name="notif_channel_file_transfer">Mengirim berkas</string>
+  <string name="notif_channel_background_service">Layanan latar belakang</string>
+  <string name="notif_group_calls">Panggilan</string>
   <!--Call Fragment-->
+  <string name="ongoing_call">Panggilan berlangsung</string>
   <string name="action_call_accept">Terima panggilan</string>
   <string name="action_call_decline">Tolak</string>
   <string name="ab_action_speakerphone">Aktifkan pengeras suara</string>
@@ -97,6 +134,7 @@
   <string name="tv_contact_row_header">Kontak</string>
   <!--File Transfer-->
   <!--Bottom Navigation-->
+  <string name="navigation_item_contact_request">Contact requests</string>
   <string name="navigation_item_account">Akun</string>
   <!--TV-->
   <string name="tv_audio_play">Mainkan</string>

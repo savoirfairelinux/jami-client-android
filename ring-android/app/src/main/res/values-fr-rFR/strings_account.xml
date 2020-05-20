@@ -18,6 +18,7 @@
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Général</string>
   <string name="account_hostname_label">nom d\'hôte</string>
+  <string name="account_bootstrap_label">Amorcer</string>
   <string name="account_username_label">nom d\'utilisateur</string>
   <string name="account_password_label">mot de passe</string>
   <!--Audio Details-->
@@ -27,6 +28,9 @@
   <string name="account_video_label">Vidéo</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Options avancées</string>
+  <string name="account_turn_enable_label">Utiliser le TURN</string>
+  <string name="account_turn_username_label">Nom d\'utilisateur TURN</string>
+  <string name="account_turn_password_label">Mot de passe TURN</string>
   <!--Security Details-->
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">securité</string>
