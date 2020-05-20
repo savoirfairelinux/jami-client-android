@@ -2,13 +2,13 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Feedback</string>
-  <string name="report"><u>Nos mande um e-mail</u></string>
+  <string name="report"><u>Envie-nos um e-mail</u></string>
   <string name="section_license">Licença</string>
   <string name="sponsor_section">Jami é um software livre desenvolvido e mantido por</string>
-  <string name="copyright_section">Direitos de Autor</string>
+  <string name="copyright_section">Direitos autorais</string>
   <string name="contribute_section">Contribua</string>
   <string name="version_section">Versão</string>
-  <string name="no_email_app_installed">Aplicação de e-mail não encontrada. Instale uma para nos enviar um relatório de erros.</string>
+  <string name="no_email_app_installed">Aplicativo de e-mail não encontrado. Instale um para enviar-nos um relatório de erros</string>
   <string name="no_browser_app_installed">Nenhum navegador de internet foi encontrado, instale um para acessar esta página</string>
   <string name="email_chooser_title">Enviar e-mail usando...</string>
   <string name="website_chooser_title">Ver site utilizando...</string>
@@ -16,12 +16,15 @@
 Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u></string>
   <string name="description">Jami é um software livre para comunicação universal que respeita as liberdades e privacidade de seus usuários.</string>
   <string name="credits">Créditos</string>
+  <string name="call_service_description">Este serviço é necessário para manter suas chamadas no primeiro plano. Ele só executa durante chamadas.</string>
+  <string name="data_transfer_service_description">Este serviço é necessário para exibir notificações persistentes durante transferências de arquivos. Ele só executa durante transferência de arquivos.</string>
   <!--About dialog-->
   <string name="developed_by">Desenvolvido por</string>
-  <string name="designed_by">Desenhado por</string>
+  <string name="designed_by">Projetado por</string>
+  <string name="ringtones_by">Toques de chamada por</string>
   <!--RingActivity-->
   <string name="error_no_network">Sem conectividade</string>
-  <string name="error_mobile_network_available_but_disabled">Por favor, conceda acesso a rede do celular na tela de configurações.</string>
+  <string name="error_mobile_network_available_but_disabled">Por favor, conceda acesso a rede móvel na tela de configurações.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Mensagens de texto</string>
   <!--Sections-->
@@ -41,6 +44,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
     <item quantity="other">%d Conversas</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Buscar nome ou número de telefone</string>
   <string name="choose_number">Escolhe um número</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -51,12 +55,16 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="notif_incoming_call">Chamada recebida</string>
   <string name="notif_outgoing_call_title">Chamada efetuada para %1$s</string>
   <string name="notif_outgoing_call">Chamada efetuada</string>
+  <string name="notif_current_call_title">Chamada em andamento com%1$s</string>
   <string name="notif_current_call">Chamada em andamento</string>
+  <string name="notif_channel_call_in_progress">Chamada em Andamento</string>
   <string name="notif_channel_calls">Chamadas</string>
   <string name="notif_channel_missed_calls">Chamadas não atendidas</string>
+  <string name="notif_channel_incoming_calls">Chamadas recebidas</string>
   <string name="notif_channel_messages">Mensagens</string>
   <string name="notif_channel_requests">Solicitações</string>
   <string name="notif_channel_file_transfer">Transferência de arquivo</string>
+  <string name="notif_channel_sync">Sincronização de dados</string>
   <string name="notif_channel_background_service">Serviço de segundo-plano</string>
   <string name="notif_channel_background_service_descr">Permite receber chamadas e mensagens a qualquer hora.</string>
   <string name="notif_group_calls">Chamadas</string>
@@ -67,6 +75,14 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="notif_incoming_file_transfer_title">Recebendo arquivo de %1$s</string>
   <string name="notif_outgoing_file_transfer_title">Enviando arquivo para %1$s</string>
   <string name="notif_incoming_picture">Foto de %1$s</string>
+  <string name="notif_sync_title">Sincronizando dados...</string>
+  <string name="notif_location_title">Compartilhando localização com %1$s</string>
+  <string name="location_share_contact">%1$s está compartilhando a localização com você</string>
+  <string name="notif_location_multi_title">Compartilhando localização com %1$d contatos</string>
+  <string name="notif_location_remaining">%1$d minutos restantes</string>
+  <string name="notif_location_action_stop">Parar de compartilhar a localização</string>
+  <string name="location_share_action_start">Começar a compartilhar</string>
+  <string name="location_share_action_stop">Parar de compartilhar</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Você:</string>
   <string name="action_call_hangup">Desligar</string>
@@ -98,6 +114,9 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="send_file">Enviar arquivo</string>
   <string name="hist_file_sent">Arquivo enviado</string>
   <string name="hist_file_received">Arquivo recebido</string>
+  <string name="conversation_send_audio">Gravar áudio</string>
+  <string name="conversation_send_video">Gravar vídeo</string>
+  <string name="conversation_share_location">Compartilhar localização</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permissão de câmera</string>
   <string name="permission_dialog_camera_message">Conversas de vídeo requerem permissão para acesso à câmera. Considere habilitá-la.</string>
@@ -105,13 +124,19 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="ringtone_error_title">Erro</string>
   <string name="ringtone_error_format_not_supported">Este formato não é suportado.</string>
   <string name="ringtone_error_size_too_big">Este arquivo é grande demais. O tamanho máximo é %1$dkB.</string>
+  <string name="ringtone_custom_prompt">Definir um toque personalizado</string>
   <string name="ringtone_custom_label">Personalizado</string>
+  <string name="ringtone_jami_tones">Toques do Jami</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">O Jami precisa da permissão \"Acessar contatos\" para habilitar esta função. Permita, por favor.</string>
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">O Jami precisa da permissão \"Escrever registro de chamadas\" para ativar esse recurso. Permita, por favor.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Escanear o Código QR da conta que deseja adicionar.</string>
+  <string name="title_activity_qrcode">Compartilhar minha conta</string>
+  <string name="error_scan_no_camera_permissions">O scanner QR requer permissão para uso da câmera para funcionar</string>
+  <string name="tab_code">Meu código</string>
+  <string name="tab_scan">Escanear código</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Limpar histórico?</string>
   <string name="clear_history_dialog_message">Esta ação não pode ser desfeita.</string>
@@ -132,10 +157,12 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="conversation_action_select_peer_number">Selecione um número</string>
   <string name="conversation_action_block_this">Bloquear contato</string>
   <string name="conversation_action_go_to_call">Voltar à chamada em andamento</string>
+  <string name="conversation_open_file_error">Não há aplicativo instalado capaz de abrir este tipo de arquivo.</string>
   <string name="clip_contact_uri">Endereço do contato</string>
   <string name="block_contact_dialog_title">Bloquear %1$s?</string>
   <string name="block_contact_dialog_message">%1$snão conseguirá te contactar até que você o desbloqueie.</string>
   <string name="block_contact_completed">%1$s foi bloqueado.</string>
+  <string name="conversation_contact_is_typing">Contato está digitando...</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Adicionar %1$s?</string>
   <string name="prompt_new_password">Nova senha</string>
@@ -145,6 +172,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="prompt_new_username">Entre novo nome de usuário</string>
   <string name="help_password_choose">Escolha uma senha difícil que você poderá lembrar para proteger a sua conta Jami. </string>
   <string name="help_password_enter">Entre com a senha da sua conta Jami principal</string>
+  <string name="help_server_enter">Inserir URL do servidor de gerenciamento</string>
   <string name="help_pin_enter">Entre com o PIN de uma outra conta Jami já configurada. Utilize a opção \"exportar conta do Jami\" para obter um novo PIN.</string>
   <string name="wizard_next">Próximo</string>
   <string name="wizard_back">Voltar</string>
@@ -162,6 +190,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="share_label">Compartilhar</string>
   <string name="generic_error_migration">Erro</string>
   <string name="generic_error_migration_message">Um erro ocorreu durante a migração</string>
+  <string name="title_share_with">Compartilhar com...</string>
   <!--Pending contact requests-->
   <string name="accept">Aceitar</string>
   <string name="refuse">Recusar</string>
@@ -181,6 +210,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <!--Smartlist-->
   <string name="no_contact_request">Nenhuma solicitação de contato enviada</string>
   <string name="contact_request_sent">Solicitação de contato enviada</string>
+  <string name="start_conversation">Iniciar conversa</string>
   <string name="search_results">Resultados da Busca</string>
   <string name="tv_contact_row_header">Contatos</string>
   <string name="gallery_error_title">Galeria de aplicativos não encontrada</string>
@@ -199,21 +229,40 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="file_transfer_status_closed_by_peer">encerrada pelo destinatário</string>
   <string name="file_transfer_status_invalid_pathname">diretório inválido</string>
   <string name="file_transfer_status_unjoinable_peer">contato indisponível</string>
+  <string name="file_transfer_status_cancelled">Cancelada</string>
+  <string name="file_transfer_status_error">falha devido a um erro</string>
+  <string name="file_transfer_status_timed_out">tempo esgotado</string>
   <string name="file_saved_in">Arquivo salvo em %s</string>
+  <string name="file_saved_successfully">Arquivo salvo com sucesso</string>
   <string name="no_space_left_on_device">Sem espaço no dispositivo</string>
   <string name="title_media_viewer">Visualizador de mídia</string>
   <string name="menu_file_open">Abrir arquivo</string>
   <string name="menu_file_download">Baixar arquivo</string>
+  <string name="menu_file_save">Salvar arquivo</string>
   <string name="menu_file_delete">Excluir arquivo</string>
   <string name="menu_file_share">Compartilhar arquivo</string>
   <string name="menu_message_copy">Copiar</string>
+  <string name="menu_message_delete">Apagar mensagem</string>
+  <string name="menu_message_cancel">Cancelar mensagem</string>
   <string name="menu_delete">Deletar</string>
+  <string name="pref_darkTheme_title">Tema escuro</string>
+  <string name="pref_darkTheme_summary">Sempre habilitar tema escuro ao invés de usar o comportamento do sistema</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Conversas</string>
   <string name="navigation_item_contact_request">Solicitações de contatos</string>
   <string name="navigation_item_account">Conta</string>
+  <string name="search_results_public_directory">Diretório público</string>
   <!--TV-->
+  <string name="tv_send_audio_dialog_message">Enviar mensagem de áudio?</string>
+  <string name="tv_send_image_dialog_message">Enviar a imagem?</string>
+  <string name="tv_send_video_dialog_message">Enviar o vídeo?</string>
+  <string name="tv_media_preview">Pré-visualização</string>
   <string name="tv_audio_play">Reproduzir</string>
   <string name="tv_audio_pause">Pausar</string>
   <string name="tv_dialog_send">Enviar</string>
+  <string name="tv_audio_recording">Gravando...</string>
+  <string name="tv_send_text">Enviar Texto</string>
+  <string name="tv_send_audio">Enviar Áudio</string>
+  <string name="tv_send_video">Enviar Mídia</string>
+  <string name="conversation_input_speech_hint">Fale algo...</string>
 </resources>
