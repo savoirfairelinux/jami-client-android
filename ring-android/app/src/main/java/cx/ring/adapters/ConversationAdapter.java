@@ -312,9 +312,13 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             holder.surface = null;
         }
         if (holder.player != null) {
-            if (holder.player.isPlaying())
-                holder.player.stop();
-            holder.player.reset();
+            try {
+                if (holder.player.isPlaying())
+                    holder.player.stop();
+                holder.player.reset();
+            } catch (Exception e) {
+                // left blank intentionally
+            }
             holder.player.release();
             holder.player = null;
         }
