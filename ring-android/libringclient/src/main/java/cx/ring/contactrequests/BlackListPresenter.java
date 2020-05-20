@@ -81,7 +81,7 @@ public class BlackListPresenter extends RootPresenter<BlackListView> {
         mCompositeDisposable.add(mAccountService
                 .getAccountSingle(accountID)
                 .flatMapObservable(Account::getBannedContactsUpdates)
-                .subscribeOn(mUiScheduler)
+                .observeOn(mUiScheduler)
                 .subscribe(this::updateList, e -> Log.e(TAG, "Error showing blacklist", e)));
         mAccountID = accountID;
     }
@@ -89,6 +89,5 @@ public class BlackListPresenter extends RootPresenter<BlackListView> {
     public void unblockClicked(CallContact contact) {
         String contactId = contact.getPhones().get(0).getNumber().getRawRingId();
         mAccountService.addContact(mAccountID, contactId);
-        //updateList();
     }
 }

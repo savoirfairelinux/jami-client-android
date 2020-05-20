@@ -171,7 +171,7 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
         Bundle args = new Bundle();
         args.putString(ACCOUNT_ID_KEY, accountId);
         blackListFragment.setArguments(args);
-        requireFragmentManager().beginTransaction()
+        getChildFragmentManager().beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .addToBackStack(BlackListFragment.TAG)
                 .replace(R.id.fragment_container, blackListFragment, BlackListFragment.TAG)
