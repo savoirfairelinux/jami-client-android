@@ -111,20 +111,9 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
 
         mAccountId = getArguments().getString(ACCOUNT_ID);
 
-        if (DeviceUtils.isTablet(getContext()) && getActivity() != null) {
-            Toolbar toolbar = getActivity().findViewById(R.id.main_toolbar);
-            TextView title = toolbar.findViewById(R.id.contact_title);
-            ImageView logo = toolbar.findViewById(R.id.contact_image);
-
-            logo.setVisibility(View.GONE);
-            title.setText(R.string.navigation_item_account);
-            title.setTextSize(19);
-            title.setTypeface(null, Typeface.BOLD);
-
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) title.getLayoutParams();
-            params.removeRule(RelativeLayout.ALIGN_TOP);
-            params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-            title.setLayoutParams(params);
+        HomeActivity activity = (HomeActivity) getActivity();
+        if (activity != null && DeviceUtils.isTablet(activity)) {
+            activity.setTabletTitle(R.string.navigation_item_account);
         }
 
         binding.fragmentContainer.getViewTreeObserver().addOnScrollChangedListener(this);

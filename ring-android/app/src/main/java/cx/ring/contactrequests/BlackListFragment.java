@@ -31,8 +31,10 @@ import android.view.ViewGroup;
 
 import java.util.Collection;
 
+import cx.ring.R;
 import cx.ring.account.AccountEditionFragment;
 import cx.ring.application.JamiApplication;
+import cx.ring.client.HomeActivity;
 import cx.ring.databinding.FragBlacklistBinding;
 import cx.ring.model.CallContact;
 import cx.ring.mvp.BaseSupportFragment;
@@ -67,6 +69,7 @@ public class BlackListFragment extends BaseSupportFragment<BlackListPresenter> i
             return;
         }
         presenter.setAccountId(getArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY));
+        ((HomeActivity) getActivity()).setToolbarTitle(R.string.ic_blacklist_menu);
     }
 
     @Override

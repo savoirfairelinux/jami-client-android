@@ -20,6 +20,7 @@
 package cx.ring.client;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 import androidx.core.content.ContextCompat;
 import androidx.core.util.Pair;
 import androidx.appcompat.app.ActionBar;
@@ -263,7 +265,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 .show();
     }
 
-    public void setToolbarState(int titleRes) {
+    public void setToolbarState(@StringRes int titleRes) {
         setToolbarState(getString(titleRes) , null);
     }
 
@@ -583,6 +585,26 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     private void showTabletToolbar() {
         if (binding != null && DeviceUtils.isTablet(this)) {
             binding.tabletToolbar.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void setTabletTitle(@StringRes int titleRes) {
+        binding.tabletToolbar.setVisibility(View.VISIBLE);
+        binding.contactTitle.setText(titleRes);
+        binding.contactTitle.setTextSize(19);
+        binding.contactTitle.setTypeface(null, Typeface.BOLD);
+        binding.contactImage.setVisibility(View.GONE);
+        /*RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.contactTitle.getLayoutParams();
+        params.removeRule(RelativeLayout.ALIGN_TOP);
+        params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+        binding.contactTitle.setLayoutParams(params);*/
+    }
+
+    public void setToolbarTitle(@StringRes int titleRes) {
+        if (DeviceUtils.isTablet(this)) {
+            setTabletTitle(titleRes);
+        } else {
+            setToolbarState(titleRes);
         }
     }
 
