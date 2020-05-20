@@ -81,29 +81,12 @@ public class AboutFragment extends BaseSupportFragment<RootPresenter> {
     @Override
     public void onResume() {
         super.onResume();
-        if (DeviceUtils.isTablet(getContext())) {
-            Toolbar toolbar = getActivity().findViewById(R.id.main_toolbar);
-            TextView title = toolbar.findViewById(R.id.contact_title);
-            ImageView logo = toolbar.findViewById(R.id.contact_image);
-
-            logo.setVisibility(View.GONE);
-            title.setText(R.string.menu_item_about);
-            title.setTextSize(19);
-            title.setTypeface(null, Typeface.BOLD);
-
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) title.getLayoutParams();
-            params.removeRule(RelativeLayout.ALIGN_TOP);
-            params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-            title.setLayoutParams(params);
-        } else {
-            ((HomeActivity) getActivity()).setToolbarState(R.string.menu_item_about);
-        }
-
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        ((HomeActivity) getActivity()).setToolbarTitle(R.string.menu_item_about);
+        /*FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         Fragment existingFragment = fragmentManager.findFragmentByTag(TAG);
         if (existingFragment == null) {
             ((HomeActivity) getActivity()).goToAbout();
-        }
+        }*/
     }
 
     @Override
