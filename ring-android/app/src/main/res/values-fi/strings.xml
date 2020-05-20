@@ -105,6 +105,7 @@
   <string name="write_a_message">Kirjoita viesti</string>
   <string name="scan_qr">Skannaa QR-koodi</string>
   <string name="ab_action_flipcamera">Käännä kamera</string>
+  <string name="ab_action_hidepreview">Piilota esikatselu</string>
   <!--Text messages-->
   <string name="send_message">Lähetä viesti</string>
   <string name="message_sending">Viestiä lähetetään...</string>
@@ -250,6 +251,7 @@
   <string name="navigation_item_conversation">Keskustelu</string>
   <string name="navigation_item_contact_request">Yhteyspyynnöt</string>
   <string name="navigation_item_account">Tunnus</string>
+  <string name="search_results_public_directory">Julkinen kansio</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">Lähetätkö ääniviestin?</string>
   <string name="tv_send_image_dialog_message">Lähetätkö kuvan?</string>
@@ -258,7 +260,9 @@
   <string name="tv_audio_play">Toista</string>
   <string name="tv_audio_pause">Tauota</string>
   <string name="tv_dialog_send">Lähetä</string>
+  <string name="tv_audio_recording">Tallentaa...</string>
   <string name="tv_send_text">Lähetä teksti</string>
   <string name="tv_send_audio">Lähetä ääni</string>
   <string name="tv_send_video">Lähetä media</string>
+  <string name="conversation_input_speech_hint">Sano jotakin...</string>
 </resources>

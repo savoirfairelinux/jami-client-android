@@ -6,9 +6,22 @@
   <string name="pref_category_system">Sistema</string>
   <string name="pref_category_privacy">Privadesa</string>
   <string name="pref_mobileData_title">Dades mòbils</string>
+  <string name="pref_mobileData_summary">Permet Jami en xarxes 3G/LTE a més de Wi-Fi</string>
   <string name="pref_pushNotifications_title">Notificacions Push</string>
   <string name="pref_pushNotifications_summary">Utilitza els servidors de Google per permetre rebre trucades/missatges en rerefons.</string>
+  <string name="pref_video_advanced_title">Preferències de vídeo avançades</string>
+  <string name="pref_video_advanced_summary">Canvia el bitrate de vídeo, resolució així com l\'accés a característiques experimentals</string>
+  <string name="pref_hd_summary">Habilita vídeo en HD</string>
+  <string name="pref_hwEncode_title">Habilita l\'acceleració de codificació</string>
+  <string name="pref_hwEncode_summary">Característica experimental</string>
   <string name="pref_systemContacts_title">Usa contactes del sistema</string>
   <string name="pref_systemContacts_summary">Usa contactes del sistema per mostrar detalls del que truca</string>
+  <string name="pref_systemDialer_title">Fer trucades del sistema amb Jami</string>
+  <string name="pref_systemDialer_summary">Utilitza Jami per fer trucades del sistema quan sigui possible</string>
+  <string name="pref_startOnBoot_title">Arrenca Jami a l\'inici</string>
+  <string name="pref_startOnBoot_summary">Executa Jami en segon pla quan el sistema s\'inicia.</string>
   <string name="pref_clearHistory_title">Neteja historial</string>
+  <string name="pref_clearHistory_summary">Neteja totes les converses de l\'historial. Aquesta acció no pot es desfer.</string>
+  <string name="pref_persistNotification_title">Executa en segon pla</string>
+  <string name="pref_persistNotification_summary">Permet executar en segon pla per rebre trucades i missatges.</string>
 </resources>

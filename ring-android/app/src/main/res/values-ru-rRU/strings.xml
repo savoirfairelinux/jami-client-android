@@ -77,6 +77,13 @@
   <string name="notif_outgoing_file_transfer_title">Отправка файла %1$s</string>
   <string name="notif_incoming_picture">Изображение от %1$s</string>
   <string name="notif_sync_title">Синхронизация данных...</string>
+  <string name="notif_location_title">Вы делитесь местоположением с %1$s</string>
+  <string name="location_share_contact">%1$sделится с вами местоположением</string>
+  <string name="notif_location_multi_title">Начать делиться местоположением с %1$dконтактами</string>
+  <string name="notif_location_remaining">осталось %1$d минут(ы)</string>
+  <string name="notif_location_action_stop">Прекратить делиться местоположением</string>
+  <string name="location_share_action_start">Начать делиться</string>
+  <string name="location_share_action_stop">Прекратить делиться</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Вы</string>
   <string name="action_call_hangup">Завершить</string>
@@ -110,6 +117,7 @@
   <string name="hist_file_received">Файл получен</string>
   <string name="conversation_send_audio">Записать аудиоклип</string>
   <string name="conversation_send_video">Записать видеоклип </string>
+  <string name="conversation_share_location">Поделиться местоположением</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Разрешение на использование камеры</string>
   <string name="permission_dialog_camera_message">Необходимо доступ к камере для работы с видеозвонками. Пожалуйста, предоставьте их.</string>
@@ -155,6 +163,7 @@
   <string name="block_contact_dialog_title">Заблокировать %1$s?</string>
   <string name="block_contact_dialog_message">%1$sне сможет связаться с вами, пока вы его не разблокируете. </string>
   <string name="block_contact_completed">%1$sбыл заблокирован. </string>
+  <string name="conversation_contact_is_typing">Собеседник печатает...</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Добавить %1$s?</string>
   <string name="prompt_new_password">Новый пароль</string>
@@ -243,8 +252,18 @@
   <string name="navigation_item_conversation">Разговоры</string>
   <string name="navigation_item_contact_request">Запросы в контакты</string>
   <string name="navigation_item_account">Учётная запись</string>
+  <string name="search_results_public_directory">Публичный каталог</string>
   <!--TV-->
+  <string name="tv_send_audio_dialog_message">Отправить голосовое сообщение?</string>
+  <string name="tv_send_image_dialog_message">Отправить картинку?</string>
+  <string name="tv_send_video_dialog_message">Отправить видео?</string>
+  <string name="tv_media_preview">Предпросмотр</string>
   <string name="tv_audio_play">Воспроизвести</string>
   <string name="tv_audio_pause">Пауза</string>
   <string name="tv_dialog_send">Отправть</string>
+  <string name="tv_audio_recording">Запись...</string>
+  <string name="tv_send_text">Отправить Текст</string>
+  <string name="tv_send_audio">Отправить Запись</string>
+  <string name="tv_send_video">Отправить Медиа</string>
+  <string name="conversation_input_speech_hint">Скажите что-нибудь...</string>
 </resources>
