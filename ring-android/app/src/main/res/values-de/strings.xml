@@ -172,7 +172,7 @@
   <string name="help_password_choose">Wählen Sie ein sicheres Passwort, an das Sie sich erinnern können, um ihr Jami-Konto zu schützen.</string>
   <string name="help_password_enter">Geben Sie ihr Haupt-Jami-Kontopasswort ein</string>
   <string name="help_server_enter">URL des Management-Servers eingeben</string>
-  <string name="help_pin_enter">Geben Sie die PIN eines anderen konfigurierten Jami-Kontos ein. Benutzen Sie die Funktion \"Exportiere Konto\",bei Jami, um die PIN zu erhalten.</string>
+  <string name="help_pin_enter">Geben Sie die PIN eines anderen konfigurierten Jami-Kontos ein. Benutzen Sie die Funktion \"Exportiere Jami-Konto\", um eine PIN zu erhalten.</string>
   <string name="wizard_next">Weiter</string>
   <string name="wizard_back">Zurück</string>
   <string name="wizard_skip">Überspringen</string>
@@ -250,6 +250,7 @@
   <string name="navigation_item_conversation">Unterhaltungen</string>
   <string name="navigation_item_contact_request">Kontaktanfragen</string>
   <string name="navigation_item_account">Konto</string>
+  <string name="search_results_public_directory">Öffentliches Verzeichnis</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">Audionachricht senden?</string>
   <string name="tv_send_image_dialog_message">Bild senden?</string>
@@ -258,7 +259,9 @@
   <string name="tv_audio_play">Abspielen</string>
   <string name="tv_audio_pause">Pause</string>
   <string name="tv_dialog_send">Senden</string>
+  <string name="tv_audio_recording">Aufnahme…</string>
   <string name="tv_send_text">Text senden</string>
   <string name="tv_send_audio">Audio senden</string>
   <string name="tv_send_video">Medien senden</string>
+  <string name="conversation_input_speech_hint">Sag etwas...</string>
 </resources>

@@ -153,7 +153,7 @@
   <string name="conversation_action_copy_peer_number">番号をコピー</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s をクリップボードにコピーしました</string>
   <string name="conversation_action_select_peer_number">番号を選択</string>
-  <string name="conversation_action_block_this">この連絡先をブロック</string>
+  <string name="conversation_action_block_this">連絡先をブロック</string>
   <string name="conversation_action_go_to_call">通話に戻る</string>
   <string name="conversation_open_file_error">この種類のファイルを開けるアプリがインストールされていません。</string>
   <string name="clip_contact_uri">連絡先</string>

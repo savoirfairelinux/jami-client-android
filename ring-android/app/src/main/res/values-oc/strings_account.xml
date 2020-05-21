@@ -2,26 +2,26 @@
 <resources>
   <!--Strings related to account edition screen-->
   <!--Strings related to account creation-->
-  <string name="action_settings">Setelan</string>
+  <string name="prompt_password">Senha</string>
+  <string name="action_settings">Paramètres</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_message">Aksi ini tidak dapat dibatalkan.</string>
   <!--AccountManagementFragment-->
   <!--Basic Details-->
+  <string name="account_preferences_basic_tab">General</string>
+  <string name="account_password_label">Senha</string>
   <!--Audio Details-->
-  <string name="account_audio_label">Suara</string>
-  <string name="account_ringtone_label">Nada dering</string>
+  <string name="account_preferences_media_tab">Mèdia</string>
   <!--Video Details-->
-  <string name="account_video_label">Video</string>
   <!--Advanced Details-->
   <!--Security Details-->
   <!--SRTP Details-->
+  <string name="account_preferences_security_tab">Seguretat</string>
   <!--SIP-->
   <!--TLS Details-->
   <!--restore/backup-->
-  <string name="account_export_end_error_title">Eror</string>
   <!--Name registration-->
-  <string name="account_status_unknown">Tidak diketahui</string>
-  <string name="account_status_error">Galat</string>
+  <string name="account_status_online">En linha</string>
+  <string name="account_status_offline">Fòra linha</string>
   <!--Create account-->
   <!--Edit profile-->
   <!--Devices-->
