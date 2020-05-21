@@ -126,15 +126,17 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
         toggleView(accountId, true);
         FragmentManager fragmentManager = getChildFragmentManager();
         Fragment existingFragment = fragmentManager.findFragmentByTag(JamiAccountSummaryFragment.TAG);
+        Bundle args = new Bundle();
+        args.putString(ACCOUNT_ID_KEY, accountId);
         if (existingFragment == null) {
             JamiAccountSummaryFragment fragment = new JamiAccountSummaryFragment();
-            Bundle args = new Bundle();
-            args.putString(ACCOUNT_ID_KEY, accountId);
             fragment.setArguments(args);
             fragmentManager.beginTransaction()
                     .add(R.id.fragment_container, fragment, JamiAccountSummaryFragment.TAG)
                     .commit();
         } else {
+            if (!existingFragment.isStateSaved())
+                existingFragment.setArguments(args);
             ((JamiAccountSummaryFragment) existingFragment).setAccount(accountId);
         }
     }
@@ -149,6 +151,14 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
         binding.pager.setOffscreenPageLimit(4);
         binding.slidingTabs.setupWithViewPager(binding.pager);
         binding.pager.setAdapter(new PreferencesPagerAdapter(getChildFragmentManager(), getActivity(), accountId, isJami));
+        BlackListFragment existingFragment = (BlackListFragment) getChildFragmentManager().findFragmentByTag(BlackListFragment.TAG);
+        if (existingFragment != null) {
+            Bundle args = new Bundle();
+            args.putString(ACCOUNT_ID_KEY, accountId);
+            if (!existingFragment.isStateSaved())
+                existingFragment.setArguments(args);
+            existingFragment.setAccount(accountId);
+        }
     }
 
     @Override

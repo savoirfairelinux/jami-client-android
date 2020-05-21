@@ -153,7 +153,7 @@ public class Interaction {
     }
 
     JsonObject toJson(String value) {
-        return new JsonParser().parse(value).getAsJsonObject();
+        return JsonParser.parseString(value).getAsJsonObject();
     }
 
     String fromJson(JsonObject json) {

@@ -38,6 +38,7 @@ import cx.ring.client.HomeActivity;
 import cx.ring.databinding.FragBlacklistBinding;
 import cx.ring.model.CallContact;
 import cx.ring.mvp.BaseSupportFragment;
+import cx.ring.utils.DeviceUtils;
 
 public class BlackListFragment extends BaseSupportFragment<BlackListPresenter> implements BlackListView,
         BlackListViewHolder.BlackListListeners {
@@ -69,7 +70,10 @@ public class BlackListFragment extends BaseSupportFragment<BlackListPresenter> i
             return;
         }
         presenter.setAccountId(getArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY));
-        ((HomeActivity) getActivity()).setToolbarTitle(R.string.ic_blacklist_menu);
+        HomeActivity activity = (HomeActivity) getActivity();
+        if (activity != null && DeviceUtils.isTablet(activity)) {
+            activity.setTabletTitle(R.string.ic_blacklist_menu);
+        }
     }
 
     @Override
@@ -108,5 +112,9 @@ public class BlackListFragment extends BaseSupportFragment<BlackListPresenter> i
     @Override
     public void displayEmptyListMessage(final boolean display) {
         binding.emptyTextView.setVisibility(display ? View.VISIBLE : View.GONE);
+    }
+
+    public void setAccount(String accountId) {
+        presenter.setAccountId(accountId);
     }
 }
