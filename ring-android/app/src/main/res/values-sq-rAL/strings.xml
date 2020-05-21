@@ -105,6 +105,7 @@
   <string name="write_a_message">Shkruani një mesazh</string>
   <string name="scan_qr">Skanoni Kodin QR</string>
   <string name="ab_action_flipcamera">Rrotulloni kamerën</string>
+  <string name="ab_action_hidepreview">Fshihe paraparjen</string>
   <!--Text messages-->
   <string name="send_message">Dërgoje mesazhin</string>
   <string name="message_sending">Po dërgohet mesazhi…</string>
@@ -250,6 +251,7 @@
   <string name="navigation_item_conversation">Biseda</string>
   <string name="navigation_item_contact_request">Kërkesa kontakti</string>
   <string name="navigation_item_account">Llogari</string>
+  <string name="search_results_public_directory">Drejtori publike</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">Të dërgohet mesazh audio?</string>
   <string name="tv_send_image_dialog_message">Të dërgohet figura?</string>
@@ -258,7 +260,9 @@
   <string name="tv_audio_play">Luaje</string>
   <string name="tv_audio_pause">Pushim</string>
   <string name="tv_dialog_send">Dërgoje</string>
+  <string name="tv_audio_recording">Po regjistrohet…</string>
   <string name="tv_send_text">Dërgoni Tekst</string>
   <string name="tv_send_audio">Dërgoni Audio</string>
   <string name="tv_send_video">Dërgoni Media</string>
+  <string name="conversation_input_speech_hint">Thoni diçka…</string>
 </resources>

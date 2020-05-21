@@ -250,6 +250,7 @@
   <string name="navigation_item_conversation">Konuşmalar</string>
   <string name="navigation_item_contact_request">İletişim istekleri</string>
   <string name="navigation_item_account">Hesap</string>
+  <string name="search_results_public_directory">Aleni dizin</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">Sesli mesaj gönderilsin mi?</string>
   <string name="tv_send_image_dialog_message">Görüntü gönderilsin mi?</string>
@@ -258,7 +259,9 @@
   <string name="tv_audio_play">Oynat</string>
   <string name="tv_audio_pause">Duraklat</string>
   <string name="tv_dialog_send">Gönder</string>
+  <string name="tv_audio_recording">Kayda geçiliyor...</string>
   <string name="tv_send_text">Mesaj gönder</string>
   <string name="tv_send_audio">Ses gönder</string>
   <string name="tv_send_video">Medya gönder</string>
+  <string name="conversation_input_speech_hint">Bir şey söyle…</string>
 </resources>

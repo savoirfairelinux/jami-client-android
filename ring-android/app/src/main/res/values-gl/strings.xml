@@ -6,7 +6,7 @@
   <string name="section_license">Licenza</string>
   <string name="sponsor_section">Jami é software libre desenvolto e mantido por</string>
   <string name="copyright_section">Copyright</string>
-  <string name="contribute_section">Contribuír</string>
+  <string name="contribute_section">Colaborar</string>
   <string name="version_section">Versión</string>
   <string name="no_email_app_installed">Non se atopa unha app de correo, instala unha e envíanos un informe</string>
   <string name="no_browser_app_installed">Non se atopou unha app de navegador, instala unha para ver esta páxina</string>
@@ -250,6 +250,7 @@
   <string name="navigation_item_conversation">Conversas</string>
   <string name="navigation_item_contact_request">Solicitudes de contacto</string>
   <string name="navigation_item_account">Conta</string>
+  <string name="search_results_public_directory">Directorio público</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">Enviar mensaxe de audio?</string>
   <string name="tv_send_image_dialog_message">Enviar a imaxe?</string>
@@ -258,7 +259,9 @@
   <string name="tv_audio_play">Reproducir</string>
   <string name="tv_audio_pause">Deter</string>
   <string name="tv_dialog_send">Enviar</string>
+  <string name="tv_audio_recording">Gravando...</string>
   <string name="tv_send_text">Enviar texto</string>
   <string name="tv_send_audio">Enviar audio</string>
   <string name="tv_send_video">Enviar multimedia</string>
+  <string name="conversation_input_speech_hint">Dí algo...</string>
 </resources>
