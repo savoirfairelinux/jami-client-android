@@ -140,13 +140,13 @@ public class NotificationServiceImpl implements NotificationService {
         }
         avatarSize = (int) (mContext.getResources().getDisplayMetrics().density * AvatarFactory.SIZE_NOTIF);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            registerNotificationChannels();
+            registerNotificationChannels(mContext);
         }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void registerNotificationChannels() {
-        NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+    public static void registerNotificationChannels(Context context) {
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         if (notificationManager == null)
             return;
 
@@ -154,10 +154,10 @@ public class NotificationServiceImpl implements NotificationService {
         notificationManager.deleteNotificationChannel(NOTIF_CHANNEL_CALL_LEGACY);
 
         // Setting up groups
-        notificationManager.createNotificationChannelGroup(new NotificationChannelGroup(NOTIF_CALL_GROUP, mContext.getString(R.string.notif_group_calls)));
+        notificationManager.createNotificationChannelGroup(new NotificationChannelGroup(NOTIF_CALL_GROUP, context.getString(R.string.notif_group_calls)));
 
         // Missed calls channel
-        NotificationChannel missedCallsChannel = new NotificationChannel(NOTIF_CHANNEL_MISSED_CALL, mContext.getString(R.string.notif_channel_missed_calls), NotificationManager.IMPORTANCE_DEFAULT);
+        NotificationChannel missedCallsChannel = new NotificationChannel(NOTIF_CHANNEL_MISSED_CALL, context.getString(R.string.notif_channel_missed_calls), NotificationManager.IMPORTANCE_DEFAULT);
         missedCallsChannel.setLockscreenVisibility(Notification.VISIBILITY_SECRET);
         missedCallsChannel.setSound(null, null);
         missedCallsChannel.enableVibration(false);
@@ -165,7 +165,7 @@ public class NotificationServiceImpl implements NotificationService {
         notificationManager.createNotificationChannel(missedCallsChannel);
 
         // Incoming call channel
-        NotificationChannel incomingCallChannel = new NotificationChannel(NOTIF_CHANNEL_INCOMING_CALL, mContext.getString(R.string.notif_channel_incoming_calls), NotificationManager.IMPORTANCE_HIGH);
+        NotificationChannel incomingCallChannel = new NotificationChannel(NOTIF_CHANNEL_INCOMING_CALL, context.getString(R.string.notif_channel_incoming_calls), NotificationManager.IMPORTANCE_HIGH);
         incomingCallChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
         incomingCallChannel.setGroup(NOTIF_CALL_GROUP);
         incomingCallChannel.setSound(null, null);
@@ -173,7 +173,7 @@ public class NotificationServiceImpl implements NotificationService {
         notificationManager.createNotificationChannel(incomingCallChannel);
 
         // Call in progress channel
-        NotificationChannel callInProgressChannel = new NotificationChannel(NOTIF_CHANNEL_CALL_IN_PROGRESS, mContext.getString(R.string.notif_channel_call_in_progress), NotificationManager.IMPORTANCE_DEFAULT);
+        NotificationChannel callInProgressChannel = new NotificationChannel(NOTIF_CHANNEL_CALL_IN_PROGRESS, context.getString(R.string.notif_channel_call_in_progress), NotificationManager.IMPORTANCE_DEFAULT);
         callInProgressChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
         callInProgressChannel.setSound(null, null);
         callInProgressChannel.enableVibration(false);
@@ -186,28 +186,28 @@ public class NotificationServiceImpl implements NotificationService {
                 .setUsage(AudioAttributes.USAGE_NOTIFICATION_COMMUNICATION_INSTANT)
                 .build();
 
-        NotificationChannel messageChannel = new NotificationChannel(NOTIF_CHANNEL_MESSAGE, mContext.getString(R.string.notif_channel_messages), NotificationManager.IMPORTANCE_HIGH);
+        NotificationChannel messageChannel = new NotificationChannel(NOTIF_CHANNEL_MESSAGE, context.getString(R.string.notif_channel_messages), NotificationManager.IMPORTANCE_HIGH);
         messageChannel.enableVibration(true);
         messageChannel.setLockscreenVisibility(Notification.VISIBILITY_SECRET);
         messageChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), soundAttributes);
         notificationManager.createNotificationChannel(messageChannel);
 
         // Contact requests
-        NotificationChannel requestsChannel = new NotificationChannel(NOTIF_CHANNEL_REQUEST, mContext.getString(R.string.notif_channel_requests), NotificationManager.IMPORTANCE_DEFAULT);
+        NotificationChannel requestsChannel = new NotificationChannel(NOTIF_CHANNEL_REQUEST, context.getString(R.string.notif_channel_requests), NotificationManager.IMPORTANCE_DEFAULT);
         requestsChannel.enableVibration(true);
         requestsChannel.setLockscreenVisibility(Notification.VISIBILITY_SECRET);
         requestsChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), soundAttributes);
         notificationManager.createNotificationChannel(requestsChannel);
 
         // File transfer requests
-        NotificationChannel fileTransferChannel = new NotificationChannel(NOTIF_CHANNEL_FILE_TRANSFER, mContext.getString(R.string.notif_channel_file_transfer), NotificationManager.IMPORTANCE_DEFAULT);
+        NotificationChannel fileTransferChannel = new NotificationChannel(NOTIF_CHANNEL_FILE_TRANSFER, context.getString(R.string.notif_channel_file_transfer), NotificationManager.IMPORTANCE_DEFAULT);
         fileTransferChannel.enableVibration(true);
         fileTransferChannel.setLockscreenVisibility(Notification.VISIBILITY_SECRET);
         fileTransferChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), soundAttributes);
         notificationManager.createNotificationChannel(fileTransferChannel);
 
         // File transfer requests
-        NotificationChannel syncChannel = new NotificationChannel(NOTIF_CHANNEL_SYNC, mContext.getString(R.string.notif_channel_sync), NotificationManager.IMPORTANCE_DEFAULT);
+        NotificationChannel syncChannel = new NotificationChannel(NOTIF_CHANNEL_SYNC, context.getString(R.string.notif_channel_sync), NotificationManager.IMPORTANCE_DEFAULT);
         syncChannel.setLockscreenVisibility(Notification.VISIBILITY_SECRET);
         syncChannel.enableLights(false);
         syncChannel.enableVibration(false);
@@ -216,8 +216,8 @@ public class NotificationServiceImpl implements NotificationService {
         notificationManager.createNotificationChannel(syncChannel);
 
         // Background service channel
-        NotificationChannel backgroundChannel = new NotificationChannel(NOTIF_CHANNEL_SERVICE, mContext.getString(R.string.notif_channel_background_service), NotificationManager.IMPORTANCE_LOW);
-        backgroundChannel.setDescription(mContext.getString(R.string.notif_channel_background_service_descr));
+        NotificationChannel backgroundChannel = new NotificationChannel(NOTIF_CHANNEL_SERVICE, context.getString(R.string.notif_channel_background_service), NotificationManager.IMPORTANCE_LOW);
+        backgroundChannel.setDescription(context.getString(R.string.notif_channel_background_service_descr));
         backgroundChannel.setLockscreenVisibility(Notification.VISIBILITY_SECRET);
         backgroundChannel.enableLights(false);
         backgroundChannel.enableVibration(false);

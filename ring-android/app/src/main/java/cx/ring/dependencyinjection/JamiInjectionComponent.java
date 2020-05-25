@@ -68,6 +68,7 @@ import cx.ring.services.LocationSharingService;
 import cx.ring.services.NotificationServiceImpl;
 import cx.ring.services.JamiChooserTargetService;
 import cx.ring.services.SharedPreferencesServiceImpl;
+import cx.ring.services.SyncService;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.share.ShareFragment;
 import cx.ring.tv.account.TVAccountExport;
@@ -225,4 +226,6 @@ public interface JamiInjectionComponent {
     void inject(IconCardPresenter presenter);
 
     void inject(LocationSharingService service);
+
+    void inject(SyncService syncService);
 }

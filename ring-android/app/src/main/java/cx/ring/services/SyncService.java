@@ -32,6 +32,8 @@ import androidx.core.app.NotificationCompat;
 
 import java.util.Random;
 
+import javax.inject.Inject;
+
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
@@ -44,6 +46,15 @@ public class SyncService extends Service {
 
     private boolean isFirst = true;
     private final Random mRandom = new Random();
+
+    @Inject
+    NotificationService mNotificationService;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        ((JamiApplication) getApplication()).getInjectionComponent().inject(this);
+    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
