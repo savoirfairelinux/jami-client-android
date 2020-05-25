@@ -685,10 +685,11 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
                     .putExtra("android.intent.extras.LENS_FACING_FRONT", 1)
                     .putExtra("android.intent.extra.USE_FRONT_CAMERA", true);
             tmpProfilePhotoUri = uri;
+            startActivityForResult(intent, HomeActivity.REQUEST_CODE_PHOTO);
         } catch (Exception e) {
+            Toast.makeText(requireContext(), "Error starting camera: " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             Log.e(TAG, "Can't create temp file", e);
         }
-        startActivityForResult(intent, HomeActivity.REQUEST_CODE_PHOTO);
     }
 
     @Override

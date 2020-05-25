@@ -95,10 +95,16 @@ public class HomeAccountCreationFragment extends BaseSupportFragment<HomeAccount
     }
 
     private void performFileSearch() {
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("*/*");
-        startActivityForResult(intent, ARCHIVE_REQUEST_CODE);
+        try {
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT)
+                    .addCategory(Intent.CATEGORY_OPENABLE)
+                    .setType("*/*");
+            startActivityForResult(intent, ARCHIVE_REQUEST_CODE);
+        } catch (Exception e) {
+            View v = getView();
+            if (v != null)
+                Snackbar.make(v, "No file browser available on this device", Snackbar.LENGTH_SHORT).show();
+        }
     }
 
     @Override
