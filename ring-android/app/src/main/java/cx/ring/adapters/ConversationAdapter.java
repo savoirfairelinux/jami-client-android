@@ -529,7 +529,11 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
                 if (viewHolder.surface == null) {
                     viewHolder.surface = new Surface(surface);
-                    player.setSurface(viewHolder.surface);
+                    try {
+                        player.setSurface(viewHolder.surface);
+                    } catch (Exception e) {
+                        // Left blank
+                    }
                 }
             }
 
@@ -539,7 +543,11 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
             @Override
             public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
-                player.setSurface(null);
+                try {
+                    player.setSurface(null);
+                } catch (Exception e) {
+                    // Left blank
+                }
                 player.release();
                 if (viewHolder.surface != null) {
                     viewHolder.surface.release();
@@ -553,12 +561,16 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             }
         });
         viewHolder.video.setOnClickListener(v -> {
-            if (player.isPlaying()) {
-                player.pause();
-                ((CardView) viewHolder.mLayout).setForeground(playBtn);
-            } else {
-                player.start();
-                ((CardView) viewHolder.mLayout).setForeground(null);
+            try {
+                if (player.isPlaying()) {
+                    player.pause();
+                    ((CardView) viewHolder.mLayout).setForeground(playBtn);
+                } else {
+                    player.start();
+                    ((CardView) viewHolder.mLayout).setForeground(null);
+                }
+            } catch (Exception e) {
+                // Left blank
             }
         });
         player.seekTo(1);
