@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <string name="feedback_section">Părere</string>
+  <string name="report"><u>Trimite-ne un mesaj</u></string>
+  <string name="section_license">Licență</string>
+  <string name="sponsor_section">Jami este un program liber, creat și susținut de</string>
+  <string name="copyright_section">Drepturi de autor</string>
+  <string name="contribute_section">Contribuiți</string>
+  <string name="version_section">Versiune</string>
+  <string name="no_email_app_installed">Nu a fost găsită o aplicație de poștă electronică. Instalează una pentru a ne putea trimite un raport.</string>
+  <string name="no_browser_app_installed">Nu a fost găsită o aplicație browser web. Instalează una pentru a vedea această pagină.</string>
+  <string name="email_chooser_title">Trimite mesaj folosind...</string>
+  <string name="website_chooser_title">Vezi adresa de internet folosind...</string>
+  <string name="license">Acest program este furnizat \"așa cum este\", fără nicio garanție. Pentru detalii, vezi <u>GNU General Public License versiunea 3 sau următoarele</u></string>
+  <string name="description">Jami este un program liber pentru comunicații universale care respectă libertățile și intimitatea utilizatorilor săi.</string>
+  <string name="credits">Merite</string>
+  <string name="call_service_description">Acest serviciu este necesar pentru a vă menține apelurile în prim plan. Funcționează numai în timpul apelurilor.</string>
+  <string name="data_transfer_service_description">Acest serviciu este necesar pentru a afișa notificări persistente în timpul transferurilor de fișiere. Funcționează numai în timpul transferurilor de fișiere.</string>
+  <!--About dialog-->
+  <string name="developed_by">Creat de</string>
+  <string name="designed_by">Proiectat de</string>
+  <string name="ringtones_by">Sonerii de</string>
+  <!--RingActivity-->
+  <string name="error_no_network">Nicio legătură la rețea</string>
+  <string name="error_mobile_network_available_but_disabled">Te rugăm să permiți accesul la rețeaua de telefonie în Reglări.</string>
+  <!--AB menus-->
+  <string name="ab_action_chat">Mesaje text</string>
+  <!--Sections-->
+  <string name="menu_item_contact_request">Solicitări de contact</string>
+  <string name="menu_item_accounts">Gestionează conturile</string>
+  <string name="menu_item_account">Gestionează cont</string>
+  <string name="menu_item_settings">Reglări</string>
+  <string name="menu_item_share">Distribuie datele mele de contact</string>
+  <string name="menu_item_about">Despre Jami</string>
+  <!--Dialing Fragment-->
+  <string name="dial_number">Formează un număr</string>
+  <!--History Fragment-->
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <!--ContactList Fragment-->
+  <string name="searchbar_hint">Caută nume sau număr de telefon...</string>
+  <string name="choose_number">Alege un număr</string>
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <string name="notif_missed_incoming_call">Apelul primit a fost pierdut</string>
+  <string name="notif_missed_outgoing_call">Apelul efectuat a fost pierdut</string>
+  <string name="notif_incoming_call_title">Apel primit de la %1$s</string>
+  <string name="notif_incoming_call">Apel primit</string>
+  <string name="notif_outgoing_call_title">Apel efectuat către %1$s</string>
+  <string name="notif_outgoing_call">Apel efectuat</string>
+  <string name="notif_current_call_title">Apel în curs cu %1$s</string>
+  <string name="notif_current_call">Apel în curs</string>
+  <string name="notif_channel_call_in_progress">Apelare în curs</string>
+  <string name="notif_channel_calls">Apeluri</string>
+  <string name="notif_channel_missed_calls">Apeluri pierdute</string>
+  <string name="notif_channel_incoming_calls">Apeluri primite</string>
+  <string name="notif_channel_messages">Mesaje</string>
+  <string name="notif_channel_requests">Cereri</string>
+  <string name="notif_channel_file_transfer">Transfer de fișier</string>
+  <string name="notif_channel_sync">Sincronizarea datelor</string>
+  <string name="notif_channel_background_service">Serviciu în fundal</string>
+  <string name="notif_channel_background_service_descr">Permite primirea de apeluri și mesaje oricînd.</string>
+  <string name="notif_group_calls">Apeluri</string>
+  <string name="notif_background_service">Jami funcționează acum în fundal</string>
+  <string name="notif_mark_as_read">Bifează ca citit</string>
+  <string name="notif_dismiss">Ignoră</string>
+  <string name="notif_reply">Răspunde</string>
+  <string name="notif_incoming_file_transfer_title">Fișier primit de la %1$s</string>
+  <string name="notif_outgoing_file_transfer_title">Se trimite fișierul către %1$s</string>
+  <string name="notif_incoming_picture">Fotografie de la %1$s</string>
+  <string name="notif_sync_title">Sincronizarea datelor...</string>
+  <string name="notif_location_title">Distribuirea poziției către %1$s</string>
+  <string name="location_share_contact">%1$s împărtășește poziția cu tine</string>
+  <string name="notif_location_multi_title">Distribuirea poziției către %1$d contacte</string>
+  <string name="notif_location_remaining">%1$d minute rămase</string>
+  <string name="notif_location_action_stop">Întrerupe distribuirea poziției</string>
+  <string name="location_share_action_start">Pornește distribuirea</string>
+  <string name="location_share_action_stop">Oprește distribuirea</string>
+  <!--Call Fragment-->
+  <string name="you_txt_prefix">Tu:</string>
+  <string name="action_call_hangup">Închide</string>
+  <string name="ongoing_call">Apel în curs</string>
+  <string name="hist_in_call">Apel primit de la %1$s</string>
+  <string name="hist_out_call">Apel efectuat de %1$s</string>
+  <string name="start_error_title">Jami nu se deschide !</string>
+  <string name="start_error_mic_required">Jami trebuie să folosească microfonul ca să funcționeze.</string>
+  <string name="action_call_accept">Răspunde</string>
+  <string name="action_call_decline">Refuză</string>
+  <string name="action_call_mic_mute">Oprește microfonul</string>
+  <string name="ab_action_speakerphone">Pornește sonorul</string>
+  <string name="ab_action_contact_add">Adaugă la contacte</string>
+  <string name="ab_action_contact_add_question">Adaugi la contacte?</string>
+  <string name="hist_contact_added">Contact adăugat</string>
+  <string name="hist_invitation_received">Invitație primită</string>
+  <string name="ab_action_audio_call">Apel audio</string>
+  <string name="ab_action_video_call">Apel video</string>
+  <string name="ab_action_change_screen_orientation">Rotește ecranul</string>
+  <string name="share_via">Distribuie prin</string>
+  <string name="write_a_message">Scrie un mesaj</string>
+  <string name="scan_qr">Scanează Codul QR</string>
+  <string name="ab_action_flipcamera">Schimbă videocamera</string>
+  <string name="ab_action_hidepreview">Ascunde previzualizarea</string>
+  <!--Text messages-->
+  <string name="send_message">Trimite mesajul</string>
+  <string name="message_sending">Se trimite mesajul...</string>
+  <string name="message_failed">Eșec</string>
+  <string name="time_just_now">Chiar acum</string>
+  <string name="send_file">Trimite fișier</string>
+  <string name="hist_file_sent">Fișier trimis</string>
+  <string name="hist_file_received">Fișier primit</string>
+  <string name="conversation_send_audio">Înregistrează mesaj vocal</string>
+  <string name="conversation_send_video">Înregistrează mesaj video</string>
+  <string name="conversation_share_location">Distribuie poziția ta</string>
+  <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">Permisiune pentru videocameră</string>
+  <!--Ringtone activity-->
+  <string name="ringtone_error_title">Eroare</string>
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
+  <!--Conversation-->
+  <!--Contacts-->
+  <!--MenuHeaderView-->
+  <!--Share fragment-->
+  <string name="generic_error_migration">Eroare</string>
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
+  <!--Blacklist-->
+  <!--Smartlist-->
+  <!--File Transfer-->
+  <!--Bottom Navigation-->
+  <string name="navigation_item_contact_request">Solicitări de contact</string>
+  <!--TV-->
+  <string name="tv_audio_play">Start</string>
+</resources>

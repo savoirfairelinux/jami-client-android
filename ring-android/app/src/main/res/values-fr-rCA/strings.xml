@@ -62,6 +62,8 @@
   <string name="action_call_decline">Refuser</string>
   <string name="ab_action_speakerphone">Activer le haut-parleur</string>
   <string name="ab_action_contact_add">Ajouter aux contacts</string>
+  <string name="hist_contact_added">Contact ajouté</string>
+  <string name="hist_invitation_received">Invitation reçue</string>
   <string name="ab_action_audio_call">Appel audio</string>
   <string name="ab_action_video_call">Appel vidéo</string>
   <string name="ab_action_change_screen_orientation">Modifier l\'orientation de l\'écran</string>

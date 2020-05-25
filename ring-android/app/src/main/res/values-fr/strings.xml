@@ -8,12 +8,12 @@
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Contribuez</string>
   <string name="version_section">Version</string>
-  <string name="no_email_app_installed">Application d\'envoi de courriel non-trouvée, installez-en une pour envoyer votre rapport</string>
+  <string name="no_email_app_installed">Application d\'envoi de courriel non trouvée, installez-en une pour envoyer votre rapport</string>
   <string name="no_browser_app_installed">Aucun navigateur internet trouvé. Vous devez en installer un afin de voir cette page</string>
   <string name="email_chooser_title">Envoi du courriel en utilisant …</string>
   <string name="website_chooser_title">Voir le site web avec...</string>
   <string name="license">Ce logiciel est offert \"tel quel\", sans aucune garantie. Pour plus d\'informations,  voir <u>GNU General Public License version 3 or later</u></string>
-  <string name="description">Jami est un logiciel libre de communication universel qui respecte la vie privée et l\'intimité de ses utilisateurs.</string>
+  <string name="description">Jami est un logiciel libre de communication universel qui respecte les libertés et la vie privée de ses utilisateurs.</string>
   <string name="credits">Crédits</string>
   <string name="call_service_description">Ce service est nécessaire pour que vos appels continuent de fonctionner en arrière-plan. Il ne fonctionne que pendant les appels.</string>
   <string name="data_transfer_service_description">Ce service est nécessaire pour afficher les notifications persistantes pendant un transfert de fichier. Il ne fonctionne que pendant le transfert de fichiers.</string>
@@ -105,6 +105,7 @@
   <string name="write_a_message">Ecrire un message</string>
   <string name="scan_qr">Scanner un code QR</string>
   <string name="ab_action_flipcamera">Changer de caméra</string>
+  <string name="ab_action_hidepreview">Masquer l\'aperçu</string>
   <!--Text messages-->
   <string name="send_message">Envoyer le message</string>
   <string name="message_sending">Envoi du message</string>

@@ -16,6 +16,8 @@
   <!--Notifications-->
   <!--Call Fragment-->
   <string name="ab_action_contact_add">Ajouter aux contacts</string>
+  <string name="hist_contact_added">Contact ajouté</string>
+  <string name="hist_invitation_received">Invitation reçue</string>
   <!--Text messages-->
   <string name="message_failed">Échec</string>
   <!--MediaPreferenceFragment-->
@@ -28,6 +30,7 @@
   <string name="conversation_action_block_this">Bloquer le contact</string>
   <!--Contacts-->
   <string name="account_create_title">Créer un compte Jami</string>
+  <string name="wizard_next">Suivant</string>
   <string name="wizard_skip">Passer</string>
   <!--MenuHeaderView-->
   <string name="profile">Profil</string>
@@ -44,6 +47,7 @@
   <!--File Transfer-->
   <string name="menu_message_copy">Copier</string>
   <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">Conversations</string>
   <string name="navigation_item_account">Compte</string>
   <!--TV-->
   <string name="tv_dialog_send">Envoyer</string>

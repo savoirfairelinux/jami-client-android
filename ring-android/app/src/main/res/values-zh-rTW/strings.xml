@@ -104,6 +104,7 @@
   <string name="write_a_message">寫訊息</string>
   <string name="scan_qr">掃描 QR Code</string>
   <string name="ab_action_flipcamera">翻轉攝影機</string>
+  <string name="ab_action_hidepreview">隱藏預覽</string>
   <!--Text messages-->
   <string name="send_message">傳送訊息</string>
   <string name="message_sending">正在傳送訊息...</string>

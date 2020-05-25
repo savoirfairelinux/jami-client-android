@@ -106,6 +106,7 @@
   <string name="write_a_message">Escribir un mensaje</string>
   <string name="scan_qr">Escanear código QR</string>
   <string name="ab_action_flipcamera">Cambiar de cámara</string>
+  <string name="ab_action_hidepreview">Ocultar vista previa</string>
   <!--Text messages-->
   <string name="send_message">Enviar mensaje</string>
   <string name="message_sending">Enviando mensaje...</string>
@@ -251,6 +252,7 @@
   <string name="navigation_item_conversation">Conversaciones</string>
   <string name="navigation_item_contact_request">Solicitudes de contacto</string>
   <string name="navigation_item_account">Cuenta</string>
+  <string name="search_results_public_directory">Directorio público</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">¿Enviar mensaje de audio?</string>
   <string name="tv_send_image_dialog_message">¿Enviar la imagen?</string>
@@ -259,7 +261,9 @@
   <string name="tv_audio_play">Reproducir</string>
   <string name="tv_audio_pause">Pausar</string>
   <string name="tv_dialog_send">Enviar</string>
+  <string name="tv_audio_recording">Grabando...</string>
   <string name="tv_send_text">Enviar texto</string>
   <string name="tv_send_audio">Enviar audio</string>
   <string name="tv_send_video">Enviar contenido</string>
+  <string name="conversation_input_speech_hint">Di algo…</string>
 </resources>
