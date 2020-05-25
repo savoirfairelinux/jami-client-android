@@ -21,7 +21,6 @@ package cx.ring.tv.conversation;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -36,7 +35,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.transition.TransitionManager;
 
 import android.provider.MediaStore;
@@ -50,8 +48,6 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -103,14 +99,6 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
 
     private TVListViewModel mTvListViewModel;
 
-    private TextView mTitle;
-    private TextView mSubTitle;
-    private TextView mTextAudio;
-    private TextView mTextVideo;
-    private TextView mTextMessage;
-    private RecyclerView mRecyclerView;
-    private ImageButton mAudioButton;
-
     private int mSelectedPosition;
 
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
@@ -151,7 +139,7 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragConversationTvBinding.inflate(inflater, container, false);
-        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
+        ((JamiApplication) requireActivity().getApplication()).getInjectionComponent().inject(this);
         return binding.getRoot();
     }
 
@@ -165,79 +153,67 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     private void displaySpeechRecognizer() {
         if (!checkAudioPermission())
             return;
-        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-                .putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-                .putExtra(RecognizerIntent.EXTRA_PROMPT, getText(R.string.conversation_input_speech_hint));
-        startActivityForResult(intent, REQUEST_SPEECH_CODE);
+        try {
+            Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+                    .putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+                    .putExtra(RecognizerIntent.EXTRA_PROMPT, getText(R.string.conversation_input_speech_hint));
+            startActivityForResult(intent, REQUEST_SPEECH_CODE);
+        } catch (Exception e) {
+            Snackbar.make(requireView(), "Can't get voice input", Snackbar.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ConversationPath path = ConversationPath.fromIntent(getActivity().getIntent());
+        ConversationPath path = ConversationPath.fromIntent(requireActivity().getIntent());
         presenter.init(new cx.ring.model.Uri(path.getContactId()), path.getAccountId());
-
         mAdapter = new TvConversationAdapter(this, presenter);
 
-        ViewGroup textContainer = view.findViewById(R.id.text_container);
-        ViewGroup audioContainer = view.findViewById(R.id.audio_container);
-        ViewGroup videoContainer = view.findViewById(R.id.video_container);
-        mTextAudio = view.findViewById(R.id.text_audio);
-        mTextMessage = view.findViewById(R.id.text_text);
-        mTextVideo = view.findViewById(R.id.text_video);
-
-        ImageButton text = view.findViewById(R.id.button_text);
-        text.setOnClickListener(v -> displaySpeechRecognizer());
-
-        ImageButton video = view.findViewById(R.id.button_video);
-        video.setOnClickListener(v -> {
+        binding.buttonText.setOnClickListener(v -> displaySpeechRecognizer());
+        binding.buttonVideo.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), CustomCameraActivity.class)
                     .setAction(MediaStore.ACTION_VIDEO_CAPTURE);
             startActivityForResult(intent, REQUEST_CODE_PHOTO);
         });
 
-        mAudioButton = view.findViewById(R.id.button_audio);
-        mAudioButton.setOnClickListener(v -> {
+        binding.buttonAudio.setOnClickListener(v -> {
             onRecord(mStartRecording);
             mStartRecording = !mStartRecording;
         });
 
-        text.setOnFocusChangeListener((v, hasFocus) -> {
-            TransitionManager.beginDelayedTransition(textContainer);
-            mTextMessage.setVisibility(hasFocus ? View.VISIBLE : View.GONE);
+        binding.buttonText.setOnFocusChangeListener((v, hasFocus) -> {
+            TransitionManager.beginDelayedTransition(binding.textContainer);
+            binding.textText.setVisibility(hasFocus ? View.VISIBLE : View.GONE);
         });
 
-        mAudioButton.setOnFocusChangeListener((v, hasFocus) -> {
-            TransitionManager.beginDelayedTransition(audioContainer);
-            mTextAudio.setVisibility(hasFocus ? View.VISIBLE : View.GONE);
+        binding.buttonAudio.setOnFocusChangeListener((v, hasFocus) -> {
+            TransitionManager.beginDelayedTransition(binding.audioContainer);
+            binding.textAudio.setVisibility(hasFocus ? View.VISIBLE : View.GONE);
         });
 
-        video.setOnFocusChangeListener((v, hasFocus) -> {
-            TransitionManager.beginDelayedTransition(videoContainer);
-            mTextVideo.setVisibility(hasFocus ? View.VISIBLE : View.GONE);
+        binding.buttonVideo.setOnFocusChangeListener((v, hasFocus) -> {
+            TransitionManager.beginDelayedTransition(binding.videoContainer);
+            binding.textVideo.setVisibility(hasFocus ? View.VISIBLE : View.GONE);
         });
-
-        mTitle = view.findViewById(R.id.title);
-        mSubTitle = view.findViewById(R.id.subtitle);
-        mRecyclerView = view.findViewById(R.id.recycler_view);
 
         CallContact contact = mTvListViewModel.getContact();
         if (contact != null) {
             String id = contact.getRingUsername();
             String displayName = contact.getDisplayName();
-            mTitle.setText(displayName);
+            binding.title.setText(displayName);
             if (TextUtils.isEmpty(displayName) || !displayName.equals(id))
-                mSubTitle.setText(id);
+                binding.subtitle.setText(id);
             else
-                mSubTitle.setVisibility(View.GONE);
+                binding.subtitle.setVisibility(View.GONE);
         }
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
-        mRecyclerView.setLayoutManager(linearLayoutManager);
-        mRecyclerView.setAdapter(mAdapter);
+        binding.recyclerView.setLayoutManager(linearLayoutManager);
+        binding.recyclerView.setAdapter(mAdapter);
     }
 
     private boolean checkAudioPermission() {
@@ -282,14 +258,14 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
             return;
         }
 
-        AlertDialog alertDialog = new MaterialAlertDialogBuilder(getContext(), R.style.Theme_MaterialComponents_Dialog)
+        AlertDialog alertDialog = new MaterialAlertDialogBuilder(requireContext(), R.style.Theme_MaterialComponents_Dialog)
                 .setTitle(spokenText)
                 .setMessage("")
                 .setPositiveButton(R.string.tv_dialog_send, (dialog, whichButton) -> presenter.sendTextMessage(spokenText))
                 .setNegativeButton(android.R.string.cancel, null)
                 .create();
         alertDialog.getWindow().setLayout(DIALOG_WIDTH, DIALOG_HEIGHT);
-        alertDialog.setOwnerActivity(getActivity());
+        alertDialog.setOwnerActivity(requireActivity());
         alertDialog.setOnShowListener(dialog -> {
             Button positive = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
             positive.setFocusable(true);
@@ -343,7 +319,7 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     }
 
     private void createAudioDialog() {
-        AlertDialog alertDialog = new MaterialAlertDialogBuilder(getContext(), R.style.Theme_MaterialComponents_Dialog)
+        AlertDialog alertDialog = new MaterialAlertDialogBuilder(requireContext(), R.style.Theme_MaterialComponents_Dialog)
                 .setTitle(R.string.tv_send_audio_dialog_message)
                 .setMessage("")
                 .setPositiveButton(R.string.tv_dialog_send, (dialog, whichButton) -> sendAudio())
@@ -351,7 +327,7 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
                 .setNeutralButton(R.string.tv_audio_play, null)
                 .create();
         alertDialog.getWindow().setLayout(DIALOG_WIDTH, DIALOG_HEIGHT);
-        alertDialog.setOwnerActivity(getActivity());
+        alertDialog.setOwnerActivity(requireActivity());
         alertDialog.setOnShowListener(dialog -> {
             Button positive = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
             positive.setFocusable(true);
@@ -390,20 +366,19 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
         Context c = getContext();
         if (c == null)
             return;
-        android.net.Uri fileUri = null;
         try {
-            fileUri = ContentUriHandler.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path);
-        } catch (IllegalArgumentException e) {
-            Log.e("File Selector", "The selected file can't be shared: " + path.getName());
-        }
-        if (fileUri != null) {
-            Intent sendIntent = new Intent();
-            sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            String type = c.getContentResolver().getType(fileUri);
-            sendIntent.setDataAndType(fileUri, type);
-            sendIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
-            startActivity(Intent.createChooser(sendIntent, null));
+            android.net.Uri fileUri = ContentUriHandler.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path);
+            if (fileUri != null) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                String type = c.getContentResolver().getType(fileUri);
+                sendIntent.setDataAndType(fileUri, type);
+                sendIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
+                startActivity(Intent.createChooser(sendIntent, null));
+            }
+        } catch (Exception e) {
+            Snackbar.make(requireView(), "Error sharing file: " + e.getLocalizedMessage(), Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -412,26 +387,19 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
         Context c = getContext();
         if (c == null)
             return;
-        android.net.Uri fileUri = null;
         try {
-            fileUri = ContentUriHandler.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path);
-        } catch (IllegalArgumentException e) {
-            Log.e("File Selector", "The selected file can't be shared: " + path.getName());
-        }
-        if (fileUri != null) {
-            Intent sendIntent = new Intent();
-            sendIntent.setAction(Intent.ACTION_VIEW);
-            sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            String type = c.getContentResolver().getType(fileUri);
-            sendIntent.setDataAndType(fileUri, type);
-            sendIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
-            startActivity(Intent.createChooser(sendIntent, null));
-            try {
-                startActivity(sendIntent);
-            } catch (ActivityNotFoundException e) {
-                Snackbar.make(getView(), R.string.conversation_open_file_error, Snackbar.LENGTH_LONG).show();
-                Log.e("File Loader", "File of unknown type, could not open: " + path.getName());
+            android.net.Uri fileUri = ContentUriHandler.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path);
+            if (fileUri != null) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_VIEW);
+                sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                String type = c.getContentResolver().getType(fileUri);
+                sendIntent.setDataAndType(fileUri, type);
+                sendIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
+                startActivity(Intent.createChooser(sendIntent, null));
             }
+        } catch (IllegalArgumentException e) {
+            Snackbar.make(requireView(), "Error opening file: " + e.getLocalizedMessage(), Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -443,14 +411,18 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
      * @param currentFileAbsolutePath absolute path of the file we want to save
      */
     public void startSaveFile(DataTransfer file, String currentFileAbsolutePath) {
-        //Use Android Storage File Access to download the file
-        Intent downloadFileIntent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-        downloadFileIntent.setType(AndroidFileUtils.getMimeTypeFromExtension(file.getExtension()));
+        try {
+            // Use Android Storage File Access to download the file
+            Intent downloadFileIntent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+            downloadFileIntent.setType(AndroidFileUtils.getMimeTypeFromExtension(file.getExtension()));
 
-        downloadFileIntent.addCategory(Intent.CATEGORY_OPENABLE);
-        downloadFileIntent.putExtra(Intent.EXTRA_TITLE, file.getDisplayName());
+            downloadFileIntent.addCategory(Intent.CATEGORY_OPENABLE);
+            downloadFileIntent.putExtra(Intent.EXTRA_TITLE, file.getDisplayName());
 
-        startActivityForResult(downloadFileIntent, REQUEST_CODE_SAVE_FILE);
+            startActivityForResult(downloadFileIntent, REQUEST_CODE_SAVE_FILE);
+        } catch (Exception e) {
+            Snackbar.make(requireView(), "No file saving app available", Snackbar.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -540,14 +512,14 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
             return;
         }
 
-        mAudioButton.setImageResource(R.drawable.lb_ic_stop);
-        mTextAudio.setText(R.string.tv_audio_recording);
+        binding.buttonAudio.setImageResource(R.drawable.lb_ic_stop);
+        binding.textAudio.setText(R.string.tv_audio_recording);
         Animation anim = new AlphaAnimation(0.0f, 1.0f);
         anim.setDuration(500);
         anim.setStartOffset(100);
         anim.setRepeatMode(Animation.REVERSE);
         anim.setRepeatCount(Animation.INFINITE);
-        mTextAudio.startAnimation(anim);
+        binding.textAudio.startAnimation(anim);
     }
 
     private void releaseRecorder() {
@@ -564,9 +536,9 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
 
     private void stopRecording() {
         releaseRecorder();
-        mAudioButton.setImageResource(R.drawable.baseline_mic_24);
-        mTextAudio.setText(R.string.tv_send_audio);
-        mTextAudio.clearAnimation();
+        binding.buttonAudio.setImageResource(R.drawable.baseline_mic_24);
+        binding.textAudio.setText(R.string.tv_send_audio);
+        binding.textAudio.clearAnimation();
         createAudioDialog();
     }
 
@@ -607,7 +579,7 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
 
     private void scrollToTop() {
         if (mAdapter.getItemCount() > 0) {
-            mRecyclerView.scrollToPosition(mAdapter.getItemCount() - 1);
+            binding.recyclerView.scrollToPosition(mAdapter.getItemCount() - 1);
         }
     }
 
@@ -625,9 +597,9 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
                 .subscribe(c -> {
                     mConversationAvatar.update(c);
                     String uri = contact.getPrimaryNumber();
-                    if (mParticipantAvatars.containsKey(uri)) {
-                        mParticipantAvatars.get(uri).update(c);
-                    }
+                    AvatarDrawable a = mParticipantAvatars.get(uri);
+                    if (a != null)
+                        a.update(c);
                     mAdapter.setPhoto();
                 }));
     }
