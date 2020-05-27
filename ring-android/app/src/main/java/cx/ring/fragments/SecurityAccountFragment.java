@@ -88,6 +88,10 @@ public class SecurityAccountFragment extends BasePreferenceFragment<SecurityAcco
             }
         }
 
+        if (preference.getKey().contentEquals(ConfigKey.SRTP_KEY_EXCHANGE.key())) {
+            newValue = ((Boolean) newValue) ? "sdes" : "";
+        }
+
         if (!(preference instanceof TwoStatePreference)) {
             preference.setSummary((String) newValue);
         }
@@ -160,7 +164,11 @@ public class SecurityAccountFragment extends BasePreferenceFragment<SecurityAcco
             final ConfigKey key = ConfigKey.fromString(current.getKey());
 
             if (current instanceof TwoStatePreference) {
-                ((TwoStatePreference) current).setChecked(config.getBool(key));
+                if (key == ConfigKey.SRTP_KEY_EXCHANGE) {
+                    ((TwoStatePreference) current).setChecked(config.get(key).equals("sdes"));
+                } else {
+                    ((TwoStatePreference) current).setChecked(config.getBool(key));
+                }
             } else {
                 if (key == ConfigKey.TLS_CA_LIST_FILE) {
                     File crt = new File(config.get(ConfigKey.TLS_CA_LIST_FILE));
