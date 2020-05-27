@@ -111,6 +111,7 @@ public class BlackListFragment extends BaseSupportFragment<BlackListPresenter> i
 
     @Override
     public void displayEmptyListMessage(final boolean display) {
+        binding.placeholder.setVisibility(display ? View.VISIBLE : View.GONE);
         binding.emptyTextView.setVisibility(display ? View.VISIBLE : View.GONE);
     }
 

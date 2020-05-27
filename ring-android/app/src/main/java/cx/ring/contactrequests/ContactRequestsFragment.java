@@ -112,6 +112,7 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
         }
 
         binding.emptyTextView.setVisibility(list.isEmpty() ? View.VISIBLE : View.GONE);
+        binding.placeholder.setVisibility(list.isEmpty() ? View.VISIBLE : View.GONE);
 
         if (binding.requestsList.getAdapter() != null) {
             mAdapter.update(list);

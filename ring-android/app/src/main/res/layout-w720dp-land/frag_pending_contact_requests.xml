@@ -7,6 +7,34 @@
     android:orientation="vertical"
     tools:context=".client.HomeActivity">
 
+    <LinearLayout
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/placeholder"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:tint="@color/darker_gray"
+            android:src="@drawable/baseline_group_add_24"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/emptyTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/no_requests"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
+    </LinearLayout>
+
     <FrameLayout
         android:id="@+id/flPendingRequests"
         android:layout_width="320dp"
@@ -36,15 +64,6 @@
             android:elevation="2dp"
             android:paddingBottom="8dp"
             tools:listitem="@layout/item_contact"
-            android:layout_marginBottom="@dimen/navigation_bottom_height" />
-
-        <TextView
-            android:id="@+id/emptyTextView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/no_requests"
             android:layout_marginBottom="@dimen/navigation_bottom_height" />
 
     </FrameLayout>

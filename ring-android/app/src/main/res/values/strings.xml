@@ -262,7 +262,7 @@ along with this program; if not, write to the Free Software
     <string name="contact_request_title">New contact request</string>
     <string name="contact_request_msg">You have %1$s contact requests</string>
     <string name="contact_request_account">For %1$s</string>
-    <string name="no_requests">0 contact requests</string>
+    <string name="no_requests">You have no contact requests</string>
     <string name="message_contact_not_trusted_yet">%s is not in your contacts yet.\nDo you accept or refuse this contact request?</string>
     <string name="message_contact_not_trusted">%s is not in your contacts.\nAdd a new contact?</string>
 
@@ -272,10 +272,11 @@ along with this program; if not, write to the Free Software
     <string name="send_request_msg">You must send a contact request to communicate with this user. As long as your contact has not accepted the request, you can send messages but he won\'t be able to answer.</string>
 
     <!-- Blacklist -->
-    <string name="no_blocked_contact">0 blocked contacts</string>
+    <string name="no_blocked_contact">No blocked contacts</string>
 
     <!-- Smartlist -->
     <string name="no_contact_request">No contact request sent</string>
+    <string name="conversation_placeholder">You have no conversations yet</string>
     <string name="contact_request_sent">Contact request sent</string>
     <string name="start_conversation">Start conversation</string>
 

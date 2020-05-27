@@ -289,6 +289,8 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     @Override
     public void setLoading(final boolean loading) {
         binding.loadingIndicator.setVisibility(loading ? View.VISIBLE : View.GONE);
+        binding.placeholder.setVisibility(loading ? View.GONE : View.VISIBLE);
+        binding.emptyTextView.setVisibility(loading ? View.GONE : View.VISIBLE);
     }
 
     /**
@@ -360,9 +362,9 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
 
     @Override
     public void displayNoConversationMessage() {
-        String emptyText = getResources().getQuantityString(R.plurals.home_conferences_title, 0, 0);
-        binding.emptyTextView.setText(emptyText);
+        binding.emptyTextView.setText(R.string.conversation_placeholder);
         binding.emptyTextView.setVisibility(View.VISIBLE);
+        binding.placeholder.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -423,6 +425,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     @Override
     public void hideNoConversationMessage() {
         binding.emptyTextView.setVisibility(View.GONE);
+        binding.placeholder.setVisibility(View.GONE);
     }
 
     @Override
