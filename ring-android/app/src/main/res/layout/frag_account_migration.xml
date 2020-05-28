@@ -55,7 +55,7 @@ along with this program; if not, write to the Free Software
                     android:layout_alignParentEnd="true"
                     android:layout_margin="16dp"
                     android:contentDescription="@string/app_name"
-                    app:srcCompat="@drawable/ic_logo_48" />
+                    app:srcCompat="@drawable/ic_jami_48" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
