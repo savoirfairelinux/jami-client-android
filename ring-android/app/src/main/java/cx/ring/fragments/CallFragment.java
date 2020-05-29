@@ -310,6 +310,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
             mPreviewSurfaceWidth = width;
             mPreviewSurfaceHeight = height;
+            configurePreview(width, 1);
         }
 
         @Override
@@ -410,29 +411,12 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         binding.previewSurface.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) ->
                 configureTransform(mPreviewSurfaceWidth, mPreviewSurfaceHeight));
 
-        float margin = getResources().getDimension(R.dimen.call_preview_margin);
         previewSnapAnimation.setDuration(250);
         previewSnapAnimation.setFloatValues(0.f, 1.f);
         previewSnapAnimation.setInterpolator(new DecelerateInterpolator());
         previewSnapAnimation.addUpdateListener(animation -> {
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.previewContainer.getLayoutParams();
-            float r = 1.f - animation.getAnimatedFraction();
-            float hideMargin = 0.f;
-            float targetHiddenState = 0.f;
-            if (previewHiddenState != 0.f) {
-                targetHiddenState = 1.f;
-                float v = binding.previewContainer.getWidth() * 0.85f * animation.getAnimatedFraction();
-                hideMargin = previewPosition == PreviewPosition.RIGHT ? v : -v;
-            }
-            setPreviewDragHiddenState(previewHiddenState * r  + targetHiddenState * animation.getAnimatedFraction());
-
-            float f = margin * animation.getAnimatedFraction();
-            params.setMargins(
-                    (int)(previewMargins[0] * r + f + hideMargin),
-                    (int)(previewMargins[1] * r + f),
-                    (int)(previewMargins[2] * r + f - hideMargin),
-                    (int)(previewMargins[3] * r + f));
-            binding.previewContainer.setLayoutParams(params);
+            float animatedFraction = animation == null ? 1 : animation.getAnimatedFraction();
+            configurePreview(mPreviewSurfaceWidth, animatedFraction);
         });
 
         binding.previewContainer.setOnTouchListener((v, event) -> {
@@ -545,6 +529,28 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             public void afterTextChanged(Editable s) {
             }
         });
+    }
+
+    private void configurePreview(int width, float animatedFraction) {
+        float margin = getResources().getDimension(R.dimen.call_preview_margin);
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.previewContainer.getLayoutParams();
+        float r = 1.f - animatedFraction;
+        float hideMargin = 0.f;
+        float targetHiddenState = 0.f;
+        if (previewHiddenState > 0.f) {
+            targetHiddenState = 1.f;
+            float v = width * 0.85f * animatedFraction;
+            hideMargin = previewPosition == PreviewPosition.RIGHT ? v : -v;
+        }
+        setPreviewDragHiddenState(previewHiddenState * r + targetHiddenState * animatedFraction);
+
+        float f = margin * animatedFraction;
+        params.setMargins(
+                (int) (previewMargins[0] * r + f + hideMargin),
+                (int) (previewMargins[1] * r + f),
+                (int) (previewMargins[2] * r + f - hideMargin),
+                (int) (previewMargins[3] * r + f));
+        binding.previewContainer.setLayoutParams(params);
     }
 
     /**
