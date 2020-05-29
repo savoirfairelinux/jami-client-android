@@ -24,6 +24,7 @@ import javax.inject.Singleton;
 import cx.ring.account.AccountEditionFragment;
 import cx.ring.account.JamiAccountPasswordFragment;
 import cx.ring.account.JamiAccountUsernameFragment;
+import cx.ring.account.JamiLinkAccountPasswordFragment;
 import cx.ring.fragments.LocationSharingFragment;
 import cx.ring.account.AccountWizardActivity;
 import cx.ring.account.HomeAccountCreationFragment;
@@ -118,8 +119,6 @@ public interface JamiInjectionComponent {
 
     void inject(ConversationSelectionActivity fragment);
 
-//    void inject(JamiAccountCreationFragment fragment);
-
     void inject(JamiAccountUsernameFragment fragment);
 
     void inject(JamiAccountPasswordFragment fragment);
@@ -178,7 +177,7 @@ public interface JamiInjectionComponent {
 
     void inject(HomeAccountCreationFragment fragment);
 
-    void inject(JamiLinkAccountFragment fragment);
+    void inject(JamiLinkAccountPasswordFragment fragment);
 
     void inject(JamiAccountConnectFragment fragment);
 

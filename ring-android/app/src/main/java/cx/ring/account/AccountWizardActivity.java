@@ -33,6 +33,7 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import java.io.File;
+import java.util.List;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -157,6 +158,13 @@ public class AccountWizardActivity extends BaseActivity<AccountWizardPresenter> 
 
     @Override
     public void goToProfileCreation(AccountCreationModel model) {
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        if (fragments.size() > 0) {
+            Fragment fragment =fragments.get(0);
+            if (fragment instanceof JamiLinkAccountFragment) {
+                ((JamiLinkAccountFragment) fragment).scrollPagerFragment(model);
+            }
+        }
     }
 
     @Override

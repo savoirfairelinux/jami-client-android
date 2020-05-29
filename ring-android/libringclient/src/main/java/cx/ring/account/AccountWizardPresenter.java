@@ -96,10 +96,10 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
     public void initRingAccountCreation(AccountCreationModel accountCreationModel, String defaultAccountName) {
         Single<Map<String, String>> newAccount = initRingAccountDetails(defaultAccountName)
                 .map(accountDetails -> {
-                    if (!accountCreationModel.getUsername().isEmpty()) {
+                    if (!StringUtils.isEmpty(accountCreationModel.getUsername())) {
                         accountDetails.put(ConfigKey.ACCOUNT_REGISTERED_NAME.key(), accountCreationModel.getUsername());
                     }
-                    if (!accountCreationModel.getPassword().isEmpty()) {
+                    if (!StringUtils.isEmpty(accountCreationModel.getPassword())) {
                         accountDetails.put(ConfigKey.ARCHIVE_PASSWORD.key(), accountCreationModel.getPassword());
                     }
                     if (accountCreationModel.isPush()) {
@@ -168,8 +168,6 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
                         getView().displayProgress(false);
                         getView().displayCannotBeFoundError();
                     }));
-        } else {
-            getView().goToProfileCreation(accountCreationModel);
         }
     }
 

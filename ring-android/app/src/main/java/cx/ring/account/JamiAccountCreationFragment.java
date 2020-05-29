@@ -63,7 +63,6 @@ public class JamiAccountCreationFragment extends BaseSupportFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = FragAccJamiCreateBinding.inflate(inflater, container, false);
-        mBinding.pager.setOffscreenPageLimit(NUM_PAGES);
         return mBinding.getRoot();
     }
 
