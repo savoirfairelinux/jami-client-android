@@ -157,6 +157,8 @@ public class AccountWizardActivity extends BaseActivity<AccountWizardPresenter> 
 
     @Override
     public void goToProfileCreation(AccountCreationModel model) {
+        JamiLinkAccountFragment fragment = (JamiLinkAccountFragment) getSupportFragmentManager().getFragments().get(0);
+        fragment.scrollPagerFragment(model);
     }
 
     @Override
