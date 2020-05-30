@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--
+  ~ Copyright (C) 2004-2020 Savoir-faire Linux Inc.
+  ~
+  ~ Authors:    AmirHossein Naghshzan <amirhossein.naghshzan@savoirfairelinux.com>
+  ~
+  ~ This program is free software; you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation; either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program; if not, write to the Free Software
+  ~ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+  -->
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,64 +27,53 @@
     android:background="@color/color_primary_dark"
     tools:context="cx.ring.account.AccountWizardActivity">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/background_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.31" />
-
-    <ImageView
-        android:id="@+id/background"
-        app:layout_constraintBottom_toTopOf="@+id/background_guideline"
-        app:layout_constraintTop_toTopOf="@+id/background_guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="@dimen/wizard_image_background"
-        android:layout_height="@dimen/wizard_image_background"
-        android:alpha="0.1"
-        android:src="@drawable/baseline_account_circle_white_36"/>
-
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/background"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="22dp"
-        android:textColor="@color/color_primary_light"
-        android:text="@string/account_creation_ring"
-        android:textStyle="bold"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/pager_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.37" />
-
-    <cx.ring.views.WizardViewPager
-        android:id="@+id/pager"
-        android:layout_width="@dimen/wizard_card_width"
-        android:layout_height="@dimen/wizard_card_height"
-        app:layout_constraintTop_toBottomOf="@+id/pager_guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_gravity="center"
-        android:clipChildren="false"
-        android:clipToPadding="false" />
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/indicator"
+    <cx.ring.views.BoundedRelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        app:layout_constraintTop_toBottomOf="@id/pager"
-        app:tabBackground="@drawable/tab_selector"
-        android:background="@color/color_primary_dark"
-        app:tabGravity="center"
-        app:tabIndicatorHeight="0dp"/>
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        app:bounded_height="670dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/background"
+            android:layout_width="@dimen/wizard_image_background"
+            android:layout_height="@dimen/wizard_image_background"
+            android:layout_centerHorizontal="true"
+            android:layout_alignTop="@id/pager"
+            android:layout_marginTop="-200dp"
+            android:alpha="0.1"
+            android:src="@drawable/baseline_account_circle_white_36"/>
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="210dp"
+            android:layout_above="@+id/background"
+            android:textColor="@color/color_primary_light"
+            android:gravity="center"
+            android:text="@string/account_creation_ring"
+            android:textStyle="bold"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
+
+        <cx.ring.views.WizardViewPager
+            android:id="@+id/pager"
+            android:layout_width="@dimen/wizard_card_width"
+            android:layout_height="@dimen/wizard_card_height"
+            android:layout_above="@+id/indicator"
+            android:layout_centerHorizontal="true"
+            android:clipChildren="false"
+            android:clipToPadding="false" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/indicator"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            app:tabBackground="@drawable/tab_selector"
+            android:background="@color/color_primary_dark"
+            app:tabGravity="center"
+            app:tabIndicatorHeight="0dp"/>
+
+    </cx.ring.views.BoundedRelativeLayout>
+
+</FrameLayout>

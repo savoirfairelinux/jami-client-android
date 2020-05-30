@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,56 +7,45 @@
     android:background="@color/color_primary_dark"
     tools:context="cx.ring.account.AccountWizardActivity">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/background_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.31" />
-
-    <ImageView
-        android:id="@+id/background"
-        app:layout_constraintBottom_toTopOf="@+id/background_guideline"
-        app:layout_constraintTop_toTopOf="@+id/background_guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="@dimen/wizard_image_background"
-        android:layout_height="@dimen/wizard_image_background"
-        android:tint="@color/white"
-        android:alpha="0.1"
-        android:src="@drawable/baseline_devices_24"/>
-
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/background"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="22dp"
-        android:textColor="@color/color_primary_light"
-        android:text="@string/account_link_device"
-        android:textStyle="bold"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/pager_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.4" />
-
-    <cx.ring.views.WizardViewPager
-        android:id="@+id/pager"
-        android:layout_width="@dimen/wizard_card_width"
-        android:layout_height="@dimen/wizard_card_height"
-        app:layout_constraintTop_toBottomOf="@+id/pager_guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <cx.ring.views.BoundedRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:clipChildren="false"
-        android:clipToPadding="false" />
+        app:bounded_height="620dp">
 
+        <ImageView
+            android:id="@+id/background"
+            android:layout_width="@dimen/wizard_image_background"
+            android:layout_height="@dimen/wizard_image_background"
+            android:layout_centerHorizontal="true"
+            android:layout_alignTop="@id/pager"
+            android:layout_marginTop="-200dp"
+            android:alpha="0.1"
+            android:tint="@color/white"
+            android:src="@drawable/baseline_devices_24"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="210dp"
+            android:layout_above="@+id/background"
+            android:textColor="@color/color_primary_light"
+            android:gravity="center"
+            android:text="@string/account_link_device"
+            android:textStyle="bold"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
+
+        <cx.ring.views.WizardViewPager
+            android:id="@+id/pager"
+            android:layout_width="@dimen/wizard_card_width"
+            android:layout_height="@dimen/wizard_card_height"
+            android:layout_above="@+id/indicator"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:clipChildren="false"
+            android:clipToPadding="false" />
+
+    </cx.ring.views.BoundedRelativeLayout>
+
+</FrameLayout>

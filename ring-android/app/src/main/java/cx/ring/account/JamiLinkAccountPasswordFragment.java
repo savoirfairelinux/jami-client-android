@@ -20,6 +20,7 @@
 package cx.ring.account;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -28,6 +29,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -126,6 +128,9 @@ public class JamiLinkAccountPasswordFragment extends BaseSupportFragment<JamiLin
     @Override
     public void createAccount(AccountCreationModel accountCreationModel) {
         ((AccountWizardActivity) requireActivity()).createAccount(accountCreationModel);
+        InputMethodManager imm = (InputMethodManager) requireActivity().
+                getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(mBinding.ringExistingPassword.getWindowToken(), 0);
     }
 
     @Override
