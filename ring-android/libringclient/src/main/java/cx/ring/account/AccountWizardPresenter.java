@@ -93,7 +93,7 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
         createAccount(accountCreationModel, newAccount);
     }
 
-    public void initRingAccountCreation(AccountCreationModel accountCreationModel, String defaultAccountName) {
+    public void initJamiAccountCreation(AccountCreationModel accountCreationModel, String defaultAccountName) {
         Single<Map<String, String>> newAccount = initRingAccountDetails(defaultAccountName)
                 .map(accountDetails -> {
                     if (!StringUtils.isEmpty(accountCreationModel.getUsername())) {
@@ -110,7 +110,7 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
         createAccount(accountCreationModel, newAccount);
     }
 
-    public void initRingAccountLink(AccountCreationModel accountCreationModel, String defaultAccountName) {
+    public void initJamiAccountLink(AccountCreationModel accountCreationModel, String defaultAccountName) {
         Single<Map<String, String>> newAccount = initRingAccountDetails(defaultAccountName)
                 .map(accountDetails -> {
                     Settings settings = mPreferences.getSettings();
@@ -118,7 +118,7 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
                         accountCreationModel.setPush(true);
                         accountDetails.put(ConfigKey.PROXY_ENABLED.key(), AccountConfig.TRUE_STR);
                     }
-                    if (!accountCreationModel.getPassword().isEmpty()) {
+                    if (!StringUtils.isEmpty(accountCreationModel.getPassword())) {
                         accountDetails.put(ConfigKey.ARCHIVE_PASSWORD.key(), accountCreationModel.getPassword());
                     }
                     if (accountCreationModel.getArchive() != null) {
@@ -213,7 +213,7 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
                 .firstElement()
                 .subscribe(a -> {
                     if (!model.isLink() && a.isJami() && !StringUtils.isEmpty(model.getUsername()))
-                        mAccountService.registerName(a, model.getPassword(), model.getUsername());
+                        mAccountService.registerName(a, model.getPassword().toString(), model.getUsername());
                     mAccountService.setCurrentAccount(a);
                     if (model.isPush()) {
                         Settings settings = mPreferences.getSettings();

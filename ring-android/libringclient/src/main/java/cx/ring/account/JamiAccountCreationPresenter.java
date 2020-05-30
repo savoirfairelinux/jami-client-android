@@ -28,6 +28,7 @@ import javax.inject.Named;
 import cx.ring.mvp.AccountCreationModel;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
+import cx.ring.utils.StringUtils;
 import io.reactivex.Scheduler;
 import io.reactivex.subjects.PublishSubject;
 
@@ -42,11 +43,11 @@ public class JamiAccountCreationPresenter extends RootPresenter<JamiAccountCreat
     @Named("UiScheduler")
     protected Scheduler mUiScheduler;
     private AccountCreationModel mAccountCreationModel;
-    private boolean isRingUserNameCorrect = false;
+    private boolean isUsernameCorrect = false;
     private boolean isPasswordCorrect = true;
     private boolean isConfirmCorrect = true;
-    private boolean startUsernameAvailabitlityProgressBarAnimation = true;
-    private String mPasswordConfirm = "";
+    private boolean showLoadingAnimation = true;
+    private CharSequence mPasswordConfirm = "";
 
     @Inject
     public JamiAccountCreationPresenter(AccountService accountService) {
@@ -61,7 +62,7 @@ public class JamiAccountCreationPresenter extends RootPresenter<JamiAccountCreat
                 .switchMapSingle(q -> mAccountService.
                         findRegistrationByName("", "", q))
                 .observeOn(mUiScheduler)
-                .subscribe(q -> handleBlockchainResult(q.name, q.address, q.state)));
+                .subscribe(q -> onLookupResult(q.name, q.address, q.state)));
     }
 
     public void init(AccountCreationModel accountCreationModel) {
@@ -75,19 +76,18 @@ public class JamiAccountCreationPresenter extends RootPresenter<JamiAccountCreat
      * Called everytime the provided username for the new account changes
      * Sends the new value of the username to the ContactQuery subjet and shows the loading
      * animation if it has not been started before
-     * @param userName
      */
     public void userNameChanged(String userName) {
         if (mAccountCreationModel != null)
             mAccountCreationModel.setUsername(userName);
         contactQuery.onNext(userName);
-        isRingUserNameCorrect = false;
+        isUsernameCorrect = false;
 
-        if (startUsernameAvailabitlityProgressBarAnimation) {
+        if (showLoadingAnimation) {
             JamiAccountCreationView view = getView();
             if (view != null)
                 view.updateUsernameAvailability(JamiAccountCreationView.UsernameAvailabilityStatus.LOADING);
-            startUsernameAvailabitlityProgressBarAnimation = false;
+            showLoadingAnimation = false;
         }
     }
 
@@ -108,25 +108,21 @@ public class JamiAccountCreationPresenter extends RootPresenter<JamiAccountCreat
         getView().enableNextButton(true);
     }
 
-    public void passwordChanged(String password, String repeat) {
+    public void passwordChanged(String password, CharSequence repeat) {
         mPasswordConfirm = repeat;
         passwordChanged(password);
     }
 
     public void passwordChanged(String password) {
         mAccountCreationModel.setPassword(password);
-        if (!password.isEmpty() && password.length() < PASSWORD_MIN_LENGTH) {
+        if (!StringUtils.isEmpty(password) && password.length() < PASSWORD_MIN_LENGTH) {
             getView().showInvalidPasswordError(true);
             isPasswordCorrect = false;
         } else {
             getView().showInvalidPasswordError(false);
-            if (password.isEmpty()) {
-                isPasswordCorrect = false;
-            } else {
-                isPasswordCorrect = true;
-            }
-            if (!password.equals(mPasswordConfirm)) {
-                if (!mPasswordConfirm.isEmpty())
+            isPasswordCorrect = password.length() != 0;
+            if (!password.contentEquals(mPasswordConfirm)) {
+                if (mPasswordConfirm.length() > 0)
                     getView().showNonMatchingPasswordError(true);
                 isConfirmCorrect = false;
             } else {
@@ -158,21 +154,21 @@ public class JamiAccountCreationPresenter extends RootPresenter<JamiAccountCreat
 
     private boolean isInputValid() {
         boolean passwordOk = isPasswordCorrect && isConfirmCorrect;
-        boolean usernameOk = mAccountCreationModel.getUsername() != null || isRingUserNameCorrect;
+        boolean usernameOk = mAccountCreationModel.getUsername() != null || isUsernameCorrect;
         return passwordOk && usernameOk;
     }
 
     private void checkForms() {
         boolean valid = isInputValid();
-        if(valid && isRingUserNameCorrect)
+        if(valid && isUsernameCorrect)
             getView().updateUsernameAvailability(JamiAccountCreationView.
                     UsernameAvailabilityStatus.AVAILABLE);
     }
 
-    private void handleBlockchainResult(String name, String address, int state) {
+    private void onLookupResult(String name, String address, int state) {
         JamiAccountCreationView view = getView();
         //Once we get the result, we can show the loading animation again when the user types
-        startUsernameAvailabitlityProgressBarAnimation = true;
+        showLoadingAnimation = true;
         if (view == null) {
             return;
         }
@@ -180,33 +176,33 @@ public class JamiAccountCreationPresenter extends RootPresenter<JamiAccountCreat
 
             view.updateUsernameAvailability(JamiAccountCreationView.
                     UsernameAvailabilityStatus.RESET);
-            isRingUserNameCorrect = false;
+            isUsernameCorrect = false;
         } else {
             switch (state) {
                 case 0:
                     // on found
                     view.updateUsernameAvailability(JamiAccountCreationView.
                             UsernameAvailabilityStatus.ERROR_USERNAME_TAKEN);
-                    isRingUserNameCorrect = false;
+                    isUsernameCorrect = false;
                     break;
                 case 1:
                     // invalid name
                     view.updateUsernameAvailability(JamiAccountCreationView.
                             UsernameAvailabilityStatus.ERROR_USERNAME_INVALID);
-                    isRingUserNameCorrect = false;
+                    isUsernameCorrect = false;
                     break;
                 case 2:
                     // available
                     view.updateUsernameAvailability(JamiAccountCreationView.
                             UsernameAvailabilityStatus.AVAILABLE);
                     mAccountCreationModel.setUsername(name);
-                    isRingUserNameCorrect = true;
+                    isUsernameCorrect = true;
                     break;
                 default:
                     // on error
                     view.updateUsernameAvailability(JamiAccountCreationView.
                             UsernameAvailabilityStatus.ERROR);
-                    isRingUserNameCorrect = false;
+                    isUsernameCorrect = false;
                     break;
             }
         }

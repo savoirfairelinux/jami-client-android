@@ -98,8 +98,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:text="@string/wizard_username_button"
-            android:enabled="false"
-            android:theme="@style/ButtonColoredInverse" />
+            android:enabled="false" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/skip"

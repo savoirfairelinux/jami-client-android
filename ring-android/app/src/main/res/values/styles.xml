@@ -296,6 +296,7 @@
         <item name="cornerRadius">@dimen/wizard_button_corner_radius</item>
         <item name="android:padding">@dimen/wizard_button_padding</item>
         <item name="android:backgroundTint">@drawable/wizard_button_background_selector</item>
+        <item name="android:textSize">@dimen/wizard_text_size</item>
     </style>
 
 </resources>

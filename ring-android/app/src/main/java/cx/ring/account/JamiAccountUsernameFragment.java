@@ -178,6 +178,9 @@ public class JamiAccountUsernameFragment extends BaseSupportFragment<JamiAccount
         JamiAccountCreationFragment parent = (JamiAccountCreationFragment) getParentFragment();
         if (parent != null) {
             parent.scrollPagerFragment(accountCreationModel);
+            InputMethodManager imm = (InputMethodManager) requireActivity().
+                    getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(binding.ringUsername.getWindowToken(), 0);
         }
     }
 

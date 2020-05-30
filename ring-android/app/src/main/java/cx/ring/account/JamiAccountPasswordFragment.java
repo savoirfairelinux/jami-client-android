@@ -20,6 +20,7 @@
 package cx.ring.account;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -59,7 +60,7 @@ public class JamiAccountPasswordFragment extends BaseSupportFragment<JamiAccount
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragAccJamiPasswordBinding.inflate(inflater, container, false);
-        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
+        ((JamiApplication) requireActivity().getApplication()).getInjectionComponent().inject(this);
         return binding.getRoot();
     }
 
@@ -75,24 +76,21 @@ public class JamiAccountPasswordFragment extends BaseSupportFragment<JamiAccount
         setRetainInstance(true);
 
         binding.createAccount.setOnClickListener(v -> presenter.createAccount());
-        binding.createAccount.setStateListAnimator(null);
-        binding.ringPasswordSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mIsChecked = isChecked;
-                if (isChecked) {
-                    binding.passwordTxtBox.setVisibility(View.VISIBLE);
-                    binding.ringPasswordRepeatTxtBox.setVisibility(View.VISIBLE);
-                    binding.placeholder.setVisibility(View.GONE);
-                    binding.placeholder.setImageAlpha(60);
-                    presenter.passwordChanged(binding.ringPassword.getText().toString(), binding.ringPasswordRepeat.getText().toString());
-                } else {
-                    binding.passwordTxtBox.setVisibility(View.GONE);
-                    binding.ringPasswordRepeatTxtBox.setVisibility(View.GONE);
-                    binding.placeholder.setVisibility(View.VISIBLE);
-                    binding.placeholder.setImageAlpha(60);
-                    presenter.passwordUnset();
-                }
+        binding.ringPasswordSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            mIsChecked = isChecked;
+            if (isChecked) {
+                binding.passwordTxtBox.setVisibility(View.VISIBLE);
+                binding.ringPasswordRepeatTxtBox.setVisibility(View.VISIBLE);
+                binding.placeholder.setVisibility(View.GONE);
+                binding.placeholder.setImageAlpha(60);
+                CharSequence password = binding.ringPassword.getText();
+                presenter.passwordChanged(password == null ? null : password.toString(), binding.ringPasswordRepeat.getText());
+            } else {
+                binding.passwordTxtBox.setVisibility(View.GONE);
+                binding.ringPasswordRepeatTxtBox.setVisibility(View.GONE);
+                binding.placeholder.setVisibility(View.VISIBLE);
+                binding.placeholder.setImageAlpha(60);
+                presenter.passwordUnset();
             }
         });
         binding.ringPassword.addTextChangedListener(new TextWatcher() {
@@ -125,17 +123,15 @@ public class JamiAccountPasswordFragment extends BaseSupportFragment<JamiAccount
             }
             return false;
         });
-        binding.ringPasswordRepeat.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE && binding.createAccount.isEnabled()) {
-                    InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
-                    inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
-                    presenter.createAccount();
-                    return true;
-                }
-                return false;
+        binding.ringPasswordRepeat.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE && binding.createAccount.isEnabled()) {
+                InputMethodManager inputMethodManager = (InputMethodManager) v.getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                if (inputMethodManager != null)
+                    inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                presenter.createAccount();
+                return true;
             }
+            return false;
         });
 
         presenter.init(model);
@@ -182,6 +178,9 @@ public class JamiAccountPasswordFragment extends BaseSupportFragment<JamiAccount
             JamiAccountCreationFragment parent = (JamiAccountCreationFragment) getParentFragment();
             if (parent != null) {
                 parent.scrollPagerFragment(accountCreationModel);
+                InputMethodManager imm = (InputMethodManager) wizard.getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null)
+                    imm.hideSoftInputFromWindow(binding.ringPassword.getWindowToken(), 0);
             }
         }
     }

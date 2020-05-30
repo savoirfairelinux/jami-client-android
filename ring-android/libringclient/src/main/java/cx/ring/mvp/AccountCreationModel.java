@@ -79,7 +79,7 @@ public abstract class AccountCreationModel {
     }
 
     public void setPassword(String password) {
-        this.mPassword = password;
+        mPassword = password;
     }
 
     public String getPin() {
@@ -87,7 +87,7 @@ public abstract class AccountCreationModel {
     }
 
     public void setPin(String pin) {
-        this.mPin = pin.toUpperCase();
+        mPin = pin.toUpperCase();
     }
 
     public boolean isPush() {

@@ -43,6 +43,10 @@ public final class StringUtils {
         return s == null || s.isEmpty();
     }
 
+    public static boolean isEmpty(CharSequence s) {
+        return s == null || s.length() == 0;
+    }
+
     public static String capitalize(String s) {
         if (isEmpty(s)) {
             return "";

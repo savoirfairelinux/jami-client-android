@@ -343,16 +343,16 @@ along with this program; if not, write to the Free Software
     <string name="wizard_status_recommended">Recommended</string>
     <string name="wizard_status_optional">Optional</string>
     <string name="wizard_status_required">Required</string>
-    <string name="wizard_username_info">Choose a username for your account.</string>
+    <string name="wizard_username_info">Choose a username for your account</string>
     <string name="wizard_username_button">Choose Username</string>
-    <string name="wizard_username_skip">SKIP CHOOSING USERNAME</string>
+    <string name="wizard_username_skip">Skip choosing username</string>
     <string name="wizard_password_info">Account password</string>
-    <string name="wizard_password_placeholder">Choose a password to encrypt the account key on this device.</string>
+    <string name="wizard_password_placeholder">Choose a password to encrypt the account key on this device</string>
     <string name="wizard_password_button">Choose password</string>
-    <string name="wizard_password_skip">create account</string>
+    <string name="wizard_password_skip">Create account</string>
     <string name="wizard_password_switch">Encrypt account with password</string>
-    <string name="wizard_password_warning">Note that the password cannot be recovered.</string>
-    <string name="wizard_profile_info">Profile is only shared with contacts.</string>
+    <string name="wizard_password_warning">Note that the password cannot be recovered</string>
+    <string name="wizard_profile_info">Profile is only shared with contacts</string>
     <string name="wizard_profile_button">Save Profile</string>
     <string name="wizard_profile_skip">Skip and do this later</string>
 

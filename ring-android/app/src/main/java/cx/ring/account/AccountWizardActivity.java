@@ -130,10 +130,10 @@ public class AccountWizardActivity extends BaseActivity<AccountWizardPresenter> 
             presenter.initJamiAccountConnect(accountCreationModel,
                     getText(R.string.ring_account_default_name).toString());
         } else if (accountCreationModel.isLink()) {
-            presenter.initRingAccountLink(accountCreationModel,
+            presenter.initJamiAccountLink(accountCreationModel,
                     getText(R.string.ring_account_default_name).toString());
         } else {
-            presenter.initRingAccountCreation(accountCreationModel,
+            presenter.initJamiAccountCreation(accountCreationModel,
                     getText(R.string.ring_account_default_name).toString());
         }
     }
