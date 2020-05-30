@@ -27,11 +27,10 @@
     android:background="@color/color_primary_dark"
     tools:context="cx.ring.account.AccountWizardActivity">
 
-    <cx.ring.views.BoundedRelativeLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        app:bounded_height="670dp">
+        android:layout_gravity="center">
 
         <ImageView
             android:id="@+id/background"
@@ -58,7 +57,7 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card"
-            android:layout_width="@dimen/wizard_card_width"
+            android:layout_width="@dimen/wizard_card_width_land"
             android:layout_height="wrap_content"
             android:background="@color/white"
             app:cardCornerRadius="12dp"
@@ -196,6 +195,6 @@
             app:tabGravity="center"
             app:tabIndicatorHeight="0dp"/>
 
-    </cx.ring.views.BoundedRelativeLayout>
+    </RelativeLayout>
 
 </FrameLayout>

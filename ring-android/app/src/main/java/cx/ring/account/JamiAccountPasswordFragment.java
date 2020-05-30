@@ -20,6 +20,7 @@
 package cx.ring.account;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -182,6 +183,9 @@ public class JamiAccountPasswordFragment extends BaseSupportFragment<JamiAccount
             JamiAccountCreationFragment parent = (JamiAccountCreationFragment) getParentFragment();
             if (parent != null) {
                 parent.scrollPagerFragment(accountCreationModel);
+                InputMethodManager imm = (InputMethodManager) requireActivity().
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(binding.ringPassword.getWindowToken(), 0);
             }
         }
     }
