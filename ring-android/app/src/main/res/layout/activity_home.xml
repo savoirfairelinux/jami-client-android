@@ -22,7 +22,6 @@ along with this program; if not, write to the Free Software
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/relative_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".client.HomeActivity">
@@ -73,7 +72,8 @@ along with this program; if not, write to the Free Software
                     android:layout_marginStart="16dp"
                     android:textSize="16sp"
                     android:textColor="@color/textColorPrimary"
-                    tools:text="Thomas"/>
+                    tools:text="Thomas"
+                    android:singleLine="true"/>
 
                 <TextView
                     android:id="@+id/contact_subtitle"
@@ -83,6 +83,7 @@ along with this program; if not, write to the Free Software
                     android:layout_below="@+id/contact_title"
                     android:textSize="14sp"
                     android:layout_toEndOf="@+id/contact_image"
+                    android:textColor="@color/textColorPrimary"
                     tools:text="tom"/>
 
             </RelativeLayout>

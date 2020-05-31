@@ -27,17 +27,61 @@
                 android:visibility="gone"
                 tools:visibility="visible">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/search_results_public_directory"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline" />
+
                 <include
                     layout="@layout/item_contact"
                     android:layout_width="match_parent"
                     android:layout_height="72dp" />
 
-                <View
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="?android:attr/listDivider" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/navigation_item_conversation"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Overline" />
 
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/placeholder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:layout_width="128dp"
+                    android:layout_height="128dp"
+                    android:tint="@color/darker_gray"
+                    android:src="@drawable/baseline_forum_24" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/text_margin"
+                    android:text="@string/conversation_placeholder" />
+
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/loading_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/confs_list"
@@ -52,23 +96,6 @@
                 android:layout_marginBottom="@dimen/navigation_bottom_height"/>
 
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/empty_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:visibility="gone"
-            tools:text="0 conversations"
-            tools:visibility="visible" />
-
-        <ProgressBar
-            android:id="@+id/loading_indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/navigation_bottom_height" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             style="@style/Widget.AppTheme.MainActionButton"

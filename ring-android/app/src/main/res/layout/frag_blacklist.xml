@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:animateLayoutChanges="true"
     tools:context=".client.HomeActivity">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -17,12 +16,31 @@
         android:paddingBottom="8dp"
         tools:listitem="@layout/item_contact_blacklist" />
 
-    <TextView
-        android:id="@+id/emptyTextView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
+    <LinearLayout
+        android:id="@+id/placeholder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
         android:gravity="center"
-        android:text="@string/no_blocked_contact" />
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <ImageView
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:tint="@color/darker_gray"
+            android:src="@drawable/baseline_block_24"
+            android:contentDescription="@string/no_blocked_contact" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/no_blocked_contact"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

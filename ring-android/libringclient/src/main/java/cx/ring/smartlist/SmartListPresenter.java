@@ -263,8 +263,8 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
                         view.displayNoConversationMessage();
                         return;
                     }
-                    view.updateList(filter(viewModels, mCurrentQuery));
                     view.hideNoConversationMessage();
+                    view.updateList(filter(viewModels, mCurrentQuery));
                 }));
     }
 

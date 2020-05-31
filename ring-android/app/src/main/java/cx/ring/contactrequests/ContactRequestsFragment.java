@@ -34,7 +34,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
-import java.util.Objects;
 
 import cx.ring.R;
 import cx.ring.adapters.SmartListAdapter;
@@ -63,7 +62,7 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragPendingContactRequestsBinding.inflate(inflater, container, false);
-        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
+        ((JamiApplication) requireActivity().getApplication()).getInjectionComponent().inject(this);
         setHasOptionsMenu(true);
         return binding.getRoot();
     }
@@ -111,7 +110,7 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
             binding.paneRingID.setVisibility(/*viewModel.hasPane() ? View.VISIBLE :*/ View.GONE);
         }
 
-        binding.emptyTextView.setVisibility(list.isEmpty() ? View.VISIBLE : View.GONE);
+        binding.placeholder.setVisibility(list.isEmpty() ? View.VISIBLE : View.GONE);
 
         if (binding.requestsList.getAdapter() != null) {
             mAdapter.update(list);
@@ -130,7 +129,7 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
 
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                ((HomeActivity) getActivity()).setToolbarElevation(recyclerView.canScrollVertically(SCROLL_DIRECTION_UP));
+                ((HomeActivity) requireActivity()).setToolbarElevation(recyclerView.canScrollVertically(SCROLL_DIRECTION_UP));
             }
         });
 
