@@ -63,28 +63,37 @@ along with this program; if not, write to the Free Software
         android:layout_height="match_parent"
         android:layout_below="@id/newcontact_element">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/placeholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible"
+            tools:ignore="UseCompoundDrawables">
 
-            <ProgressBar
-                android:id="@+id/loading_indicator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/empty_text_view"
-                android:layout_centerInParent="true" />
+            <ImageView
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:tint="@color/darker_gray"
+                android:src="@drawable/baseline_forum_24" />
 
             <TextView
-                android:id="@+id/empty_text_view"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:visibility="gone"
-                tools:text="0 conversations"
-                tools:visibility="visible" />
+                android:layout_margin="@dimen/text_margin"
+                android:text="@string/conversation_placeholder" />
 
-        </RelativeLayout>
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/loading_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/confs_list"
@@ -96,7 +105,8 @@ along with this program; if not, write to the Free Software
             android:elevation="2dp"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
-            tools:listitem="@layout/item_smartlist"/>
+            tools:listitem="@layout/item_smartlist"
+            tools:visibility="gone"/>
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             style="@style/Widget.AppTheme.MainActionButton"
