@@ -169,9 +169,8 @@
   <string name="prompt_new_password_repeat">Herhaal nieuwe wachtwoord</string>
   <string name="account_create_title">Een Jami-account aanmaken</string>
   <string name="prompt_new_username">Voer nieuwe gebruikersnaam in</string>
+  <string name="prompt_hint_username">Gebruikersnaam</string>
   <string name="help_password_choose">Kies een sterk wachtwoord om uw Jami-account te beschermen.</string>
-  <string name="help_password_enter">Voer het hoofdwachtwoord van uw Jami-account in</string>
-  <string name="help_server_enter">Voer URL van beheerserver in</string>
   <string name="help_pin_enter">Voer de pincode in vanuit uw Jami-account dat al is geconfigureerd op een ander apparaat. Gebruik de functie ‘Jami-account exporteren’ om een pincode te verkrijgen.</string>
   <string name="wizard_next">Volgende</string>
   <string name="wizard_back">Terug</string>
@@ -181,7 +180,6 @@
   <string name="profile_message_warning">Uw profiel wordt enkel gedeeld met uw contacten</string>
   <string name="open_the_gallery">Galerij openen</string>
   <string name="take_a_photo">Foto nemen</string>
-  <string name="profile_name_hint">Voer uw naam in (optioneel)</string>
   <!--Share fragment-->
   <string name="share_message">Scan deze code met Jami</string>
   <string name="share_message_no_account">Selecteer een account om te delen.</string>
@@ -197,7 +195,6 @@
   <string name="contact_request_title">Nieuw contactverzoek</string>
   <string name="contact_request_msg">U heeft %1$s contactverzoeken</string>
   <string name="contact_request_account">Voor %1$s</string>
-  <string name="no_requests">0 contactverzoeken</string>
   <string name="message_contact_not_trusted_yet">%s staat nog niet in uw contacten.\nWilt u dit contactverzoek accepteren of weigeren?</string>
   <string name="message_contact_not_trusted">%s staat niet in uw contacten.\nNieuw contact toevoegen?</string>
   <!--Send contact requests-->
@@ -205,7 +202,7 @@
   <string name="send_request_title">Contactverzoek versturen</string>
   <string name="send_request_msg">U dient een contactverzoek te versturen om met deze gebruiker te communiceren. U kunt berichten versturen, maar zolang de ander het verzoek niet accepteert zal hij/zij deze niet kunnen beantwoorden.</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">0 geblokkeerde contacten</string>
+  <string name="no_blocked_contact">Geen geblokkeerde contacten</string>
   <!--Smartlist-->
   <string name="no_contact_request">Geen contactverzoek verstuurd</string>
   <string name="contact_request_sent">Contactverzoek verstuurd</string>
@@ -260,4 +257,6 @@
   <string name="tv_send_text">Verstuur Tekst</string>
   <string name="tv_send_audio">Verstuur Audio</string>
   <string name="tv_send_video">Verstuur Media</string>
+  <!--WIZARD-->
+  <string name="wizard_password_skip">Account aanmaken</string>
 </resources>

@@ -95,6 +95,7 @@
   <string name="prompt_new_password">Novo geslo</string>
   <string name="prompt_new_password_repeat">Ponovi novo geslo</string>
   <string name="prompt_new_username">Vpiši novo uporabniško ime</string>
+  <string name="prompt_hint_username">Uporabnik</string>
   <string name="wizard_next">Naprej</string>
   <string name="wizard_back">Nazaj</string>
   <!--MenuHeaderView-->
@@ -102,7 +103,6 @@
   <string name="profile_message_warning">Tvoj profil je deljen samo s tvojimi stiki</string>
   <string name="open_the_gallery">Odpri galerijo</string>
   <string name="take_a_photo">Slikaj</string>
-  <string name="profile_name_hint">Vpiši svoje ime (opcijsko)</string>
   <!--Share fragment-->
   <string name="share_message_no_account">Izberi račun, ki ga želiš deliti.</string>
   <string name="share_your_account_information">Deli informacije mojega stika</string>
@@ -116,12 +116,10 @@
   <string name="contact_request_title">Zahteva za nov stik</string>
   <string name="contact_request_msg">Imaš%1$s zahtev za stik</string>
   <string name="contact_request_account">Za %1$s</string>
-  <string name="no_requests">0 zahtek za stik</string>
   <!--Send contact requests-->
   <string name="send_request_button">Pošlji</string>
   <string name="send_request_title">Pošlji zahtevo za stik</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">0 blokiranih stikov</string>
   <!--Smartlist-->
   <string name="no_contact_request">Ni bilo poslanih zahtev za stik</string>
   <string name="contact_request_sent">Zahteva za stik poslana</string>
@@ -138,4 +136,6 @@
   <string name="tv_audio_play">Predvajaj</string>
   <string name="tv_audio_pause">Pavza</string>
   <string name="tv_dialog_send">Pošlji</string>
+  <!--WIZARD-->
+  <string name="wizard_password_skip">Ustvari račun</string>
 </resources>

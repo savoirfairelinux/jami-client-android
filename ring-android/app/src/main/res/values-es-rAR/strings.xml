@@ -169,9 +169,8 @@
   <string name="prompt_new_password_repeat">Repetir nueva contraseña</string>
   <string name="account_create_title">Crear una cuenta de Jami</string>
   <string name="prompt_new_username">Escribir nuevo usuario</string>
+  <string name="prompt_hint_username">Nombre de usuario</string>
   <string name="help_password_choose">Elegí una contraseña robusta que recuerdes para proteger tu cuenta de Jami.</string>
-  <string name="help_password_enter">Ingresá la contraseña de tu cuenta principal de Jami</string>
-  <string name="help_server_enter">Ingresá la URL del servidor de gestión</string>
   <string name="help_pin_enter">Ingresá el PIN de la cuenta de Jami configurada en el otro dispositivo. Para obtener el PIN seleccioná la opción \"Exportar cuenta de Jami\".</string>
   <string name="wizard_next">Siguiente</string>
   <string name="wizard_back">Atrás</string>
@@ -181,7 +180,6 @@
   <string name="profile_message_warning">Tu perfil sólo es compartido con tus contactos</string>
   <string name="open_the_gallery">Abrir galería</string>
   <string name="take_a_photo">Tomar foto</string>
-  <string name="profile_name_hint">Escribí tu nombre (opcional)</string>
   <!--Share fragment-->
   <string name="share_message">Escaneá este código con Jami</string>
   <string name="share_message_no_account">Selecciona una cuenta que quieras compartir.</string>
@@ -197,7 +195,6 @@
   <string name="contact_request_title">Nueva solicitud de contacto</string>
   <string name="contact_request_msg">Tenés %1$s solicitudes de contacto</string>
   <string name="contact_request_account">Para %1$s</string>
-  <string name="no_requests">0 solicitudes de contacto</string>
   <string name="message_contact_not_trusted_yet">%s no está en tus contactos. ¿Quieres aceptar o rechazar la solicitud de este contacto?</string>
   <string name="message_contact_not_trusted">%s no está entre tus contactos.\n¿Agregar nuevo contacto?</string>
   <!--Send contact requests-->
@@ -205,7 +202,6 @@
   <string name="send_request_title">Enviar solicitud de contacto</string>
   <string name="send_request_msg">Debes enviar una solicitud de contacto para comunicarte con este usuario. Si tu contacto no ha aceptado la solicitud, podrás enviar mensajes, pero él no podrá responder.</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">0 contactos bloqueados</string>
   <!--Smartlist-->
   <string name="no_contact_request">No se enviaron solicitudes de contacto</string>
   <string name="contact_request_sent">Solicitud de contacto enviada</string>
@@ -257,4 +253,6 @@
   <string name="tv_dialog_send">Enviar</string>
   <string name="tv_send_text">Enviar texto</string>
   <string name="tv_send_audio">Enviar audio</string>
+  <!--WIZARD-->
+  <string name="wizard_password_skip">Crear cuenta</string>
 </resources>

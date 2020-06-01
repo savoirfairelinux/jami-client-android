@@ -126,6 +126,7 @@
   <string name="prompt_new_password_optional">Ny adgangskode (valgfrit)</string>
   <string name="prompt_new_password_repeat">Gentag ny adgangskode</string>
   <string name="prompt_new_username">Indtast nyt brugernavn</string>
+  <string name="prompt_hint_username">Brugernavn</string>
   <string name="wizard_next">Næste</string>
   <string name="wizard_back">Tilbage</string>
   <string name="wizard_skip">Spring over</string>
@@ -134,7 +135,6 @@
   <string name="profile_message_warning">Din profil vil kun blive delt med dine kontakter</string>
   <string name="open_the_gallery">Åbn galleriet</string>
   <string name="take_a_photo">Tag et billede</string>
-  <string name="profile_name_hint">Indtast dit navn (valgfrit)</string>
   <!--Share fragment-->
   <string name="share_message_no_account">Vælg en konto at dele.</string>
   <string name="share_your_account_information">Del min kontaktinformation</string>
@@ -148,7 +148,6 @@
   <string name="contact_request_title">Ny kontakt-anmodning</string>
   <string name="contact_request_msg">Du har %1$s kontakt-anmodninger</string>
   <string name="contact_request_account">For %1$s</string>
-  <string name="no_requests">0 kontaktforespørgsler</string>
   <string name="message_contact_not_trusted_yet">%s er ikke blandt dine kontakter endnu.\nVil du acceptere eller afvise denne kontaktforespørgsel?</string>
   <string name="message_contact_not_trusted">%s er ikke i dine \"kontakter\".\nTilføj en ny kontakt?</string>
   <!--Send contact requests-->
@@ -156,7 +155,6 @@
   <string name="send_request_title">Send en kontaktforespørgsel</string>
   <string name="send_request_msg">Du skal sende en kontaktforespørgsel for at kunne skrive sammen  med denne bruger. Så længe personen ikke har godkendt forespørgslen, kan du afsende beskeder men personen vil ikke være i stand til at besvare dem. </string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">0 blokerede kontakter</string>
   <!--Smartlist-->
   <string name="no_contact_request">Ingen kontaktforespørgsler afsendt</string>
   <string name="contact_request_sent">Kontaktforespørgsel afsendt</string>
@@ -194,4 +192,6 @@
   <string name="tv_audio_play">Afspil</string>
   <string name="tv_audio_pause">Pause</string>
   <string name="tv_dialog_send">Send</string>
+  <!--WIZARD-->
+  <string name="wizard_password_skip">Opret konto</string>
 </resources>

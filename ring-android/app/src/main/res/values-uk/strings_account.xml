@@ -87,6 +87,7 @@
   <string name="account_credentials_add">Додати облікові дані</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Безпека</string>
+  <string name="account_srtp_switch_label">Кодування потоку (SRTP)</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Використовувати TLS</string>
@@ -154,7 +155,7 @@
   <string name="register_name">Зареєструвати ім\'я</string>
   <string name="trying_to_register_name">Спроба реєстрації імені</string>
   <string name="registered_username">Зареєстроване ім\'я користувача</string>
-  <string name="register_username">Зареєструвати публічне ім\'я користувача (рекомендовано)</string>
+  <string name="register_username">Зареєструвати публічне ум\'я користувача</string>
   <string name="username_already_taken">Ім\'я користувача вже зайнято</string>
   <string name="invalid_username">Недопустиме ім\'я користувача</string>
   <string name="looking_for_username_availability">Перевіряю доступність імені користувача…</string>

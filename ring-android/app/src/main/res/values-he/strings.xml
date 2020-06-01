@@ -39,6 +39,7 @@
   <!--Conversation-->
   <string name="conversation_action_copy_peer_number">העתק מספר</string>
   <!--Contacts-->
+  <string name="prompt_hint_username">שם משתמש</string>
   <string name="wizard_next">קדימה</string>
   <!--MenuHeaderView-->
   <string name="profile">פרופיל</string>
@@ -60,4 +61,5 @@
   <string name="navigation_item_account">חשבון</string>
   <!--TV-->
   <string name="tv_dialog_send">שלח</string>
+  <!--WIZARD-->
 </resources>

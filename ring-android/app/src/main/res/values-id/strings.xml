@@ -113,7 +113,6 @@
   <string name="profile_message_warning">Profil Anda hanya dibagikan kepada kontak Anda</string>
   <string name="open_the_gallery">Buka galeri</string>
   <string name="take_a_photo">Ambil foto</string>
-  <string name="profile_name_hint">Masukkan nama Anda (opsional)</string>
   <!--Share fragment-->
   <string name="share_message_no_account">Silakan pilih akun untuk dibagikan.</string>
   <string name="share_your_account_information">Bagikan informasi kontak saya</string>
@@ -124,12 +123,10 @@
   <string name="refuse">Tolak</string>
   <string name="block">Blokir</string>
   <string name="contact_request_account">Untuk %1$s</string>
-  <string name="no_requests">0 permintaan kontak</string>
   <!--Send contact requests-->
   <string name="send_request_button">Kirim</string>
   <string name="send_request_title">Kirim permintaan kontak</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">0 kontak diblokir</string>
   <!--Smartlist-->
   <string name="tv_contact_row_header">Kontak</string>
   <!--File Transfer-->
@@ -139,4 +136,5 @@
   <!--TV-->
   <string name="tv_audio_play">Mainkan</string>
   <string name="tv_dialog_send">Kirim</string>
+  <!--WIZARD-->
 </resources>

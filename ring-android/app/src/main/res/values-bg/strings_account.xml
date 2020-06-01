@@ -138,6 +138,7 @@
   <string name="register_name">Регистриране на име</string>
   <string name="trying_to_register_name">Протича опит за регистриране на името</string>
   <string name="registered_username">Регистрирано потребителско име</string>
+  <string name="register_username">Регистриране на публично потребителско име</string>
   <string name="username_already_taken">Потребителското име е вече заето</string>
   <string name="invalid_username">Грешно потребителско име</string>
   <string name="looking_for_username_availability">Проверяване дали потребителското име е свободно…</string>

@@ -105,6 +105,7 @@
   <string name="account_credentials_add">Hitelesítő adatok hozzáadása</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Biztonság</string>
+  <string name="account_srtp_switch_label">Média-adatfolyamok titkosítása (SRTP)</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS titkosítás használata</string>
@@ -158,7 +159,6 @@
   <string name="account_sip_success_title">SIP-fiók regisztrálva</string>
   <string name="account_sip_success_message">Sikeresen regisztrálta a SIP-fiókját.</string>
   <string name="account_sip_register_anyway">Regisztráció mindenképp</string>
-  <string name="account_link_device">Kapcsolódás más eszközről</string>
   <string name="account_link_button">Kapcsolódás a hálózatról</string>
   <string name="account_link_archive_button">Kapcsolódás biztonsági mentésből</string>
   <string name="account_link_prompt_pin">PIN-kód megadása</string>
@@ -183,7 +183,7 @@
   <string name="register_name">Név regisztrációja</string>
   <string name="trying_to_register_name">A név regisztrációjának megkísérlése</string>
   <string name="registered_username">Felhasználónév regisztrálva</string>
-  <string name="register_username">Nyilvános felhasználónév regisztrációja (ajánlott)</string>
+  <string name="register_username">Nyilvános felhasználónév bejegyeztetése</string>
   <string name="username_already_taken">A felhasználónév már foglalt</string>
   <string name="invalid_username">Érvénytelen felhasználónév</string>
   <string name="unknown_error">Ismeretlen hiba történt. Ellenőrizze a hálózati kapcsolatot.</string>

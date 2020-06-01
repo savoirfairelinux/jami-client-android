@@ -148,7 +148,6 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_sip_success_title">Cuenta SIP registrada</string>
   <string name="account_sip_success_message">Has registrado con éxito tu cuenta SIP.</string>
   <string name="account_sip_register_anyway">Registrarse de todas maneras</string>
-  <string name="account_link_device">Conectarse desde otro dispositivo</string>
   <string name="account_link_button">Conectarse desde la red</string>
   <string name="account_link_archive_button">Conectarse desde una copia de seguridad</string>
   <string name="account_link_prompt_pin">Introducir PIN</string>
@@ -173,7 +172,7 @@ Podrá editar su cuenta más tarde.</string>
   <string name="register_name">Registrar nombre</string>
   <string name="trying_to_register_name">Intentanto registrar nombre</string>
   <string name="registered_username">Nombre de usuario registrado</string>
-  <string name="register_username">Registrar nombre de usuario público (recomendado)</string>
+  <string name="register_username">Registrar nombre de usuario público</string>
   <string name="username_already_taken">Nombre de usuario ya en uso</string>
   <string name="invalid_username">Nombre de usuario inválido</string>
   <string name="unknown_error">Error desconocido. ¡Revisar la conexión a internet!</string>

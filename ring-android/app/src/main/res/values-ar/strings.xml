@@ -173,9 +173,8 @@
   <string name="prompt_new_password_repeat">كرر كلمة المرور الجديدة</string>
   <string name="account_create_title">كوّن حساب جامي</string>
   <string name="prompt_new_username">أدخل إسم مستخدم جديد</string>
+  <string name="prompt_hint_username">اسم المستخدم</string>
   <string name="help_password_choose">إختار كلمة مرور قوية يمكنك تذكرها لحماية حساب جامي الخاص بك.</string>
-  <string name="help_password_enter">أدخل كلمة مرور حساب جامي الرئيسي</string>
-  <string name="help_server_enter">أدخل رابط خادم الإدارة</string>
   <string name="help_pin_enter">أدخل الرقم السري من حساب جامي آخر مكوّن. إستعمل \"تصدير حساب جامي\" للحصول على رقم سري.</string>
   <string name="wizard_next">التالي</string>
   <string name="wizard_back">السابق</string>
@@ -185,7 +184,6 @@
   <string name="profile_message_warning">حسابك مشارك فقط مع جهات إتصالك</string>
   <string name="open_the_gallery">إفتح المعرض</string>
   <string name="take_a_photo">إلتقط صورة</string>
-  <string name="profile_name_hint">أدخل إسمك (إختياري)</string>
   <!--Share fragment-->
   <string name="share_message">إمسح هذا الكود بإستعمال جامي</string>
   <string name="share_message_no_account">الرجاء إختيار حساب للمشاركة.</string>
@@ -201,7 +199,6 @@
   <string name="contact_request_title">طلب تواصل جديد</string>
   <string name="contact_request_msg">لديك %1$s طلبات تواصل</string>
   <string name="contact_request_account">ل%1$s</string>
-  <string name="no_requests">0 طلبات تواصل</string>
   <string name="message_contact_not_trusted_yet">%s ليس في جهات إتصالك بعد.\nهل تقبل أم ترفض هذا الإتصال؟</string>
   <string name="message_contact_not_trusted">%s ليس في جهات إتصالك.\nإضافة جهة إتصال جديدة؟</string>
   <!--Send contact requests-->
@@ -209,7 +206,6 @@
   <string name="send_request_title">أرسل طلب إتصال</string>
   <string name="send_request_msg">يجب أن ترسل طلب تواصل لتتواصل مع هذا المستخدم. طالما لم يقبل المستخدم هذا الطلب, يمكنك إرسال رسائل و لكنه لن يستطيع الرد.</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">0 جهات إتصال محظورة</string>
   <!--Smartlist-->
   <string name="no_contact_request">لم يتم إرسال طلب تواصل</string>
   <string name="contact_request_sent">تم إرسال طلب تواصل</string>
@@ -261,4 +257,6 @@
   <string name="tv_dialog_send">أرسل</string>
   <string name="tv_send_text">أرسل نص</string>
   <string name="tv_send_audio">أرسل صوت</string>
+  <!--WIZARD-->
+  <string name="wizard_password_skip">إنشاء حساب</string>
 </resources>

@@ -143,8 +143,8 @@
   <string name="prompt_new_password_repeat">Neues Passwort wiederholen</string>
   <string name="account_create_title">Jami-Konto erstellen</string>
   <string name="prompt_new_username">Neuen Benutzername eingeben</string>
+  <string name="prompt_hint_username">Benutzername</string>
   <string name="help_password_choose">Wählen Sie ein sicheres Passwort und merken Sie es sich um Ihre Jami-Zugangsdaten zu schützen.</string>
-  <string name="help_password_enter">Geben Sie das Passwort für Ihre Jami-Konto ein.</string>
   <string name="help_pin_enter">Geben Sie die PIN eines anderen konfigurierten Jami-Kontos ein. Verwenden Sie die Funktion \"Jami-Konto exportieren\", um eine PIN zu erhalten.</string>
   <string name="wizard_next">Weiter</string>
   <string name="wizard_back">Zurück</string>
@@ -154,7 +154,6 @@
   <string name="profile_message_warning">Ihr Profil wird nur mit Ihren Kontakten geteilt</string>
   <string name="open_the_gallery">Galerie öffnen</string>
   <string name="take_a_photo">Mache ein Foto</string>
-  <string name="profile_name_hint">Name eingeben (optional)</string>
   <!--Share fragment-->
   <string name="share_message">Diesen Code mit Jami scannen</string>
   <string name="share_message_no_account">Bitte wählen Sie ein Konto, das Sie teilen wollen.</string>
@@ -169,7 +168,6 @@
   <string name="contact_request_title">Neue Kontaktanfrage</string>
   <string name="contact_request_msg">Du hast %1$s Kontaktanfragen</string>
   <string name="contact_request_account">Für %1$s</string>
-  <string name="no_requests">0 Kontaktanfragen</string>
   <string name="message_contact_not_trusted_yet">%s ist noch nicht in Ihrer Kontaktliste.\nWollen Sie diese Kontaktanfrage annehmen oder ablehnen?</string>
   <string name="message_contact_not_trusted">%s ist nicht in Ihrer Kontaktliste.\nEinen neuen Kontakt hinzufügen?</string>
   <!--Send contact requests-->
@@ -177,7 +175,6 @@
   <string name="send_request_title">Eine Kontaktanfrage verschicken</string>
   <string name="send_request_msg">Es ist eine Kontaktanfrage nötig, um mit dem Kontakt zu kommunizieren. So lange diese Anfrage vom Gegenüber nicht akzeptiert wurde, können weiterhin Nachrichten gesendet werden, aber dieser kann nicht antworten.</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">0 blockierte Kontakte</string>
   <!--Smartlist-->
   <string name="no_contact_request">Keine Kontaktanfrage verschickt</string>
   <string name="contact_request_sent">Kontaktanfrage verschickt</string>
@@ -215,4 +212,6 @@
   <!--TV-->
   <string name="tv_audio_play">Wiedergeben</string>
   <string name="tv_dialog_send">Senden</string>
+  <!--WIZARD-->
+  <string name="wizard_password_skip">Konto erstellen</string>
 </resources>

@@ -105,6 +105,7 @@
   <string name="account_credentials_add">Добавить идентификационные данные</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Безопасность</string>
+  <string name="account_srtp_switch_label">Шифровать медиа потоки (SRTP)</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Использовать TLS</string>
@@ -158,7 +159,6 @@
   <string name="account_sip_success_title">SIP-аккаунт зарегистрирован</string>
   <string name="account_sip_success_message">Вы успешно зарегистрировали свой SIP-аккаунт.</string>
   <string name="account_sip_register_anyway">Все равно зарегистрироваться</string>
-  <string name="account_link_device">Подключиться с другого устройства</string>
   <string name="account_link_button">Подключение из сети</string>
   <string name="account_link_archive_button">Подключиться из резервной копии</string>
   <string name="account_link_prompt_pin">Введите PIN</string>
@@ -183,7 +183,7 @@
   <string name="register_name">Зарегистрировать имя</string>
   <string name="trying_to_register_name">Попытка зарегистрировать имя</string>
   <string name="registered_username">Зарегистрированное имя пользователя</string>
-  <string name="register_username">Зарегистрировать публичное имя пользователя (рекомендуется)</string>
+  <string name="register_username">Зарегистрировать публичное имя</string>
   <string name="username_already_taken">Имя пользователя уже занято</string>
   <string name="invalid_username">Недопустимое имя пользователя</string>
   <string name="unknown_error">Неизвестная ошибка. Пожалуйста, проверьте сетевое соединение.</string>

@@ -5,8 +5,8 @@
   <string name="ic_advanced_menu">高级设置</string>
   <string name="ic_blacklist_menu">已屏蔽的联系人</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">添加Jami账户</string>
-  <string name="add_sip_account_title">添加SIP帐户</string>
+  <string name="add_ring_account_title">添加 Jami 账户</string>
+  <string name="add_sip_account_title">添加 SIP 帐户</string>
   <string name="ring_account_default_name">Jami 用户%1$s</string>
   <string name="prompt_alias">别名</string>
   <string name="prompt_hostname">主机名</string>
@@ -25,8 +25,8 @@
   <string name="dialog_warn_ip2ip_account_message">您正在创建一个主机名非法的SIP帐户。
 该帐户拨出或接听通话将只能直接通过IP地址。
 您可以稍后编辑该帐户。</string>
-  <string name="account_type_ip2ip">IP帐户</string>
-  <string name="help_ring">Jami帐户允许您通过完全的分布式网络以点对点的方式安全地与其他人员联系。</string>
+  <string name="account_type_ip2ip">IP 帐户</string>
+  <string name="help_ring">Jami 帐户允许您通过完全的分布式网络以点对点的方式安全地与其他人员联系。</string>
   <string name="help_sip_title">添加您的 SIP 帐户</string>
   <string name="help_sip">配置已有的 SIP 帐户。</string>
   <string name="create_sip_account">添加 SIP 帐户</string>
@@ -92,19 +92,20 @@
   <string name="account_published_same_as_local_label">公开参数与本地相同</string>
   <string name="account_published_port_label">公开端口</string>
   <string name="account_published_address_label">公开地址</string>
-  <string name="account_proxy_label">DHT代理</string>
+  <string name="account_proxy_label">DHT 代理</string>
   <string name="account_proxy_enable_label">使用DHT代理</string>
   <string name="account_proxy_server_label">DHT代理地址</string>
   <string name="account_proxy_server_list_label">DHT代理列表URL </string>
   <string name="account_peer_discovery_label">本地对等方发现</string>
   <string name="account_peer_discovery_enable_label">启用本地对等方发现</string>
-  <string name="account_peer_discovery_enable_summary">连接至在本地网络宣告的DHT节点</string>
+  <string name="account_peer_discovery_enable_summary">连接至在本地网络宣告的 DHT 节点</string>
   <!--Security Details-->
   <string name="account_credentials_label">认证信息</string>
   <string name="account_credentials_edit">编辑认证信息</string>
   <string name="account_credentials_add">添加认证信息</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">安全</string>
+  <string name="account_srtp_switch_label">加密流媒体 (SRTP)</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">使用 TLS 通讯</string>
@@ -158,7 +159,6 @@
   <string name="account_sip_success_title">SIP帐户已注册</string>
   <string name="account_sip_success_message">您已成功注册了您的SIP帐户。</string>
   <string name="account_sip_register_anyway">仍然注册</string>
-  <string name="account_link_device">从其他设备关联</string>
   <string name="account_link_button">从网络关联</string>
   <string name="account_link_archive_button">从备份文件关联</string>
   <string name="account_link_prompt_pin">输入 PIN 码</string>
@@ -183,7 +183,7 @@
   <string name="register_name">注册名称</string>
   <string name="trying_to_register_name">正在尝试注册用户名</string>
   <string name="registered_username">已注册的用户名</string>
-  <string name="register_username">注册公开用户名（推荐）</string>
+  <string name="register_username">注册公共用户名</string>
   <string name="username_already_taken">用户名已被占用</string>
   <string name="invalid_username">非法用户名</string>
   <string name="unknown_error">未知错误。请检查你的网络连接。</string>

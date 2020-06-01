@@ -95,6 +95,7 @@ U kunt uw account later bewerken</string>
   <string name="account_credentials_add">Legitimatie toevoegen</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Beveiliging</string>
+  <string name="account_srtp_switch_label">Mediastreams versleutelen (SRTP)</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS-transport gebruiken</string>
@@ -148,7 +149,6 @@ U kunt uw account later bewerken</string>
   <string name="account_sip_success_title">SIP-account geregistreerd</string>
   <string name="account_sip_success_message">Uw SIP-account is met succes geregistreerd.</string>
   <string name="account_sip_register_anyway">Toch registreren</string>
-  <string name="account_link_device">Verbinden vanaf ander apparaat</string>
   <string name="account_link_button">Verbinden uit netwerk</string>
   <string name="account_link_archive_button">Verbinden uit back-up</string>
   <string name="account_link_prompt_pin">Geef pincode in</string>
@@ -173,7 +173,7 @@ U kunt uw account later bewerken</string>
   <string name="register_name">Naam registreren</string>
   <string name="trying_to_register_name">Naam wordt geregistreerd</string>
   <string name="registered_username">Geregistreerde gebruikersnaam</string>
-  <string name="register_username">Registreer een openbare gebruikersnaam (aanbevolen)</string>
+  <string name="register_username">Registreer een openbare gebruikersnaam</string>
   <string name="username_already_taken">Gebruikersnaam reeds in gebruik</string>
   <string name="invalid_username">Ongeldige gebruikersnaam</string>
   <string name="unknown_error">Onbekende fout. Controleer uw netwerkverbinding!</string>
