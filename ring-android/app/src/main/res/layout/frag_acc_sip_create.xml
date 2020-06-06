@@ -101,7 +101,7 @@
                             android:textSize="12sp"
                             android:textStyle="bold"
                             android:textColor="#ff1f62"
-                            android:background="@drawable/background_status"
+                            android:background="@drawable/background_status_required"
                             android:padding="6dp"/>
 
                     </RelativeLayout>

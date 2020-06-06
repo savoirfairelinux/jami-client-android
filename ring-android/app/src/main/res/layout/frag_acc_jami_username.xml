@@ -1,102 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="250dp"
+    android:layout_height="wrap_content"
     tools:context="cx.ring.account.AccountWizardActivity"
     android:clipToPadding="false"
     android:clipChildren="false" >
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         app:cardCornerRadius="@dimen/wizard_card_radius">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:paddingTop="@dimen/wizard_card_padding"
         android:paddingStart="@dimen/wizard_card_padding"
         android:paddingEnd="@dimen/wizard_card_padding"
-        android:paddingBottom="10dp">
+        android:paddingBottom="10dp"
+        android:clipToPadding="false"
+        android:clipChildren="false">
 
-        <TextView
-            android:id="@+id/status"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:text="@string/wizard_status_recommended"
-            android:textSize="@dimen/wizard_text_size"
-            android:textStyle="bold"
-            android:textColor="#ff1f62"
-            android:background="@drawable/background_status"
-            android:padding="6dp"/>
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/info"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="@id/status"
-            app:layout_constraintBottom_toBottomOf="@id/status"
-            app:layout_constraintRight_toLeftOf="@id/status"
-            android:layout_marginRight="4dp"
-            android:textStyle="bold"
-            android:text="@string/wizard_username_info"/>
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.2" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/ring_username_txt_box"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/guideline"
-            app:startIconDrawable="@drawable/baseline_account_crop_24">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ring_username"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/info"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:autofillHints="username"
-                android:hint="@string/prompt_hint_username"
-                android:inputType="text"
-                android:lines="1"
-                android:maxLines="1"/>
+                android:layout_weight="1"
+                android:layout_marginRight="4dp"
+                android:textStyle="bold"
+                android:text="@string/wizard_username_info"/>
 
-        </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/wizard_status_recommended"
+                android:textSize="@dimen/wizard_text_size"
+                android:textStyle="bold"
+                android:textColor="#31ab94"
+                android:background="@drawable/background_status_recommended"
+                android:padding="6dp"/>
 
-        <ProgressBar
-            android:id="@+id/ring_username_availability_spinner"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:visibility="gone"
-            app:layout_constraintRight_toRightOf="@id/ring_username_txt_box"
-            app:layout_constraintTop_toTopOf="@id/ring_username_txt_box"
-            app:layout_constraintBottom_toBottomOf="@id/ring_username_txt_box"
-            android:layout_marginRight="12dp"/>
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ring_username_txt_box"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="18dp"
+                app:startIconDrawable="@drawable/baseline_account_crop_24">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ring_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="username"
+                    android:hint="@string/prompt_hint_username"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:maxLines="1"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ProgressBar
+                android:id="@+id/ring_username_availability_spinner"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:visibility="invisible"
+                app:layout_constraintRight_toRightOf="@id/ring_username_txt_box"
+                app:layout_constraintTop_toTopOf="@id/ring_username_txt_box"
+                app:layout_constraintBottom_toBottomOf="@id/ring_username_txt_box"
+                android:layout_marginRight="12dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/create_account"
             style="@style/WizardButton"
             android:layout_width="@dimen/wizard_card_button_width"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/skip"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="32dp"
+            android:layout_gravity="center_horizontal"
             android:text="@string/wizard_username_button"
             android:enabled="false" />
 
@@ -107,13 +110,11 @@
             android:layout_height="wrap_content"
             android:text="@string/wizard_username_skip"
             android:textColor="@color/grey_500"
-            android:textSize="@dimen/wizard_text_size"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            android:layout_gravity="center_horizontal"
+            android:textSize="@dimen/wizard_text_size" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
-</RelativeLayout>
+</FrameLayout>

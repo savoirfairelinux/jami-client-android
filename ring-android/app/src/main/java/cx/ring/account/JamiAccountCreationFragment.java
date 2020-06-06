@@ -39,6 +39,7 @@ import androidx.viewpager.widget.ViewPager;
 import cx.ring.databinding.FragAccJamiCreateBinding;
 import cx.ring.mvp.AccountCreationModel;
 import cx.ring.mvp.BaseSupportFragment;
+import cx.ring.views.WizardViewPager;
 
 public class JamiAccountCreationFragment extends BaseSupportFragment {
 
@@ -135,6 +136,7 @@ public class JamiAccountCreationFragment extends BaseSupportFragment {
     private static class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
 
         SparseArray<Fragment> mRegisteredFragments = new SparseArray<>();
+        private int mCurrentPosition = -1;
 
         public ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
@@ -157,6 +159,21 @@ public class JamiAccountCreationFragment extends BaseSupportFragment {
             }
 
             return fragment;
+        }
+
+        @Override
+        public void setPrimaryItem(ViewGroup container, int position, Object object) {
+            super.setPrimaryItem(container, position, object);
+
+            if (position != mCurrentPosition && container instanceof WizardViewPager) {
+                Fragment fragment = (Fragment) object;
+                WizardViewPager pager = (WizardViewPager) container;
+
+                if (fragment != null && fragment.getView() != null) {
+                    mCurrentPosition = position;
+                    pager.measureCurrentView(fragment.getView());
+                }
+            }
         }
 
         @NonNull

@@ -3,17 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/wizard_card_height">
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         app:cardCornerRadius="@dimen/wizard_card_radius">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="vertical"
             android:paddingTop="@dimen/wizard_card_padding"
@@ -49,8 +49,8 @@
                     android:text="@string/wizard_status_optional"
                     android:textSize="@dimen/wizard_text_size"
                     android:textStyle="bold"
-                    android:textColor="#ff1f62"
-                    android:background="@drawable/background_status"
+                    android:textColor="#3988b0"
+                    android:background="@drawable/background_status_optional"
                     android:padding="6dp"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -109,6 +109,7 @@
                 android:id="@+id/username_box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -123,14 +124,11 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Space
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_gravity="bottom"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_marginTop="12dp"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.button.MaterialButton
@@ -138,9 +136,6 @@
                     style="@style/WizardButton"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toTopOf="@+id/skip_create_account"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
                     android:text="@string/wizard_profile_button" />
 
                 <com.google.android.material.button.MaterialButton
@@ -150,12 +145,9 @@
                     android:layout_height="wrap_content"
                     android:text="@string/wizard_profile_skip"
                     android:textColor="@color/grey_500"
-                    android:textSize="12sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                    android:textSize="12sp"/>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
 
         </LinearLayout>
 
