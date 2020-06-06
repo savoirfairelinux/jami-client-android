@@ -241,7 +241,6 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
     private void loadConversations() {
         mConversationDisposable.clear();
         getView().setLoading(true);
-
         mConversationDisposable.add(mConversationFacade
                 .getSmartList(accountSubject)
                 .switchMap(viewModels -> viewModels.isEmpty()
@@ -261,6 +260,9 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
                     if (viewModels.isEmpty()) {
                         view.hideList();
                         view.displayNoConversationMessage();
+                        if (mSmartListViewModels != null){
+                            mSmartListViewModels.clear();
+                        }
                         return;
                     }
                     view.hideNoConversationMessage();

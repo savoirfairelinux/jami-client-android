@@ -36,8 +36,11 @@
     <color name="black">#000000</color>
 
     <color name="transparent_light">#AAFFFFFF</color>
-
     <color name="transparent_grey">#AACCCCCC</color>
     <color name="transparent_dark_grey">#88424242</color>
+
+    <color name="background_status_optional">#9fd0e8</color>
+    <color name="background_status_recommended">#8ee0d0</color>
+    <color name="background_status_required">#fee4e9</color>
 
 </resources>

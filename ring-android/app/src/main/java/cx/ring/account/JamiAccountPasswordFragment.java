@@ -19,6 +19,8 @@
  */
 package cx.ring.account;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -79,17 +81,69 @@ public class JamiAccountPasswordFragment extends BaseSupportFragment<JamiAccount
         binding.ringPasswordSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             mIsChecked = isChecked;
             if (isChecked) {
-                binding.passwordTxtBox.setVisibility(View.VISIBLE);
-                binding.ringPasswordRepeatTxtBox.setVisibility(View.VISIBLE);
-                binding.placeholder.setVisibility(View.GONE);
-                binding.placeholder.setImageAlpha(60);
+                binding.passwordTxtBox.animate()
+                        .alpha(1f)
+                        .setDuration(1000)
+                        .setListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationStart(Animator animation) {
+                                super.onAnimationStart(animation);
+                                binding.passwordTxtBox.setVisibility(View.VISIBLE);
+                            }
+                        });
+                binding.ringPasswordRepeatTxtBox.animate()
+                        .alpha(1f)
+                        .setDuration(1000)
+                        .setListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationStart(Animator animation) {
+                                super.onAnimationStart(animation);
+                                binding.ringPasswordRepeatTxtBox.setVisibility(View.VISIBLE);
+                            }
+                        });
+                binding.placeholder.animate()
+                        .alpha(0f)
+                        .setDuration(200)
+                        .setListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                binding.placeholder.setVisibility(View.INVISIBLE);
+                            }
+                        });
                 CharSequence password = binding.ringPassword.getText();
                 presenter.passwordChanged(password == null ? null : password.toString(), binding.ringPasswordRepeat.getText());
             } else {
-                binding.passwordTxtBox.setVisibility(View.GONE);
-                binding.ringPasswordRepeatTxtBox.setVisibility(View.GONE);
-                binding.placeholder.setVisibility(View.VISIBLE);
-                binding.placeholder.setImageAlpha(60);
+                binding.passwordTxtBox.animate()
+                        .alpha(0f)
+                        .setDuration(200)
+                        .setListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                binding.passwordTxtBox.setVisibility(View.INVISIBLE);
+                            }
+                        });
+                binding.ringPasswordRepeatTxtBox.animate()
+                        .alpha(0f)
+                        .setDuration(200)
+                        .setListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                binding.ringPasswordRepeatTxtBox.setVisibility(View.INVISIBLE);
+                            }
+                        });
+                binding.placeholder.animate()
+                        .alpha(0.6f)
+                        .setDuration(200)
+                        .setListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationStart(Animator animation) {
+                                super.onAnimationStart(animation);
+                                binding.placeholder.setVisibility(View.VISIBLE);
+                            }
+                        });
                 presenter.passwordUnset();
             }
         });
