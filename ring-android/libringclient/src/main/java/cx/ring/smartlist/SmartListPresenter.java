@@ -94,11 +94,11 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
         super.bindView(view);
         mCompositeDisposable.clear();
         mCompositeDisposable.add(mConversationDisposable);
-        loadConversations();
     }
 
     public void refresh() {
         getView().hideSearchRow();
+        loadConversations();
     }
 
     public void queryTextChanged(String query) {
@@ -241,6 +241,9 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
     private void loadConversations() {
         mConversationDisposable.clear();
         getView().setLoading(true);
+        if (mSmartListViewModels != null){
+            mSmartListViewModels.clear();
+        }
 
         mConversationDisposable.add(mConversationFacade
                 .getSmartList(accountSubject)

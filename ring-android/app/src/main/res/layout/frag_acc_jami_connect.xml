@@ -100,7 +100,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentTop="true"
                             android:layout_alignParentEnd="true"
-                            android:background="@drawable/background_status"
+                            android:background="@drawable/background_status_required"
                             android:padding="6dp"
                             android:text="@string/wizard_status_required"
                             android:textColor="#ff1f62"
