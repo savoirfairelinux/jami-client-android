@@ -61,6 +61,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
     private static final int SCROLL_DIRECTION_UP = -1;
 
     private FragSettingsBinding binding;
+    private Settings currentSettings = null;
 
     private boolean mIsRefreshingViewFromPresenter;
 
@@ -144,7 +145,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
     }
 
     private void saveSettings() {
-        Settings newSettings = new Settings();
+        Settings newSettings = new Settings(currentSettings);
         newSettings.setAllowRingOnStartup(binding.settingsStartup.isChecked());
         newSettings.setAllowPushNotifications(binding.settingsPushNotifications.isChecked());
         newSettings.setAllowPersistentNotification(binding.settingsPersistNotification.isChecked());
@@ -179,6 +180,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
 
     @Override
     public void showViewModel(Settings viewModel) {
+        currentSettings = viewModel;
         mIsRefreshingViewFromPresenter = true;
         binding.settingsPushNotifications.setChecked(viewModel.isAllowPushNotifications());
         binding.settingsPersistNotification.setChecked(viewModel.isAllowPersistentNotification());
