@@ -19,6 +19,8 @@
  */
 package cx.ring.account;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -82,14 +84,12 @@ public class JamiAccountPasswordFragment extends BaseSupportFragment<JamiAccount
                 binding.passwordTxtBox.setVisibility(View.VISIBLE);
                 binding.ringPasswordRepeatTxtBox.setVisibility(View.VISIBLE);
                 binding.placeholder.setVisibility(View.GONE);
-                binding.placeholder.setImageAlpha(60);
                 CharSequence password = binding.ringPassword.getText();
                 presenter.passwordChanged(password == null ? null : password.toString(), binding.ringPasswordRepeat.getText());
             } else {
                 binding.passwordTxtBox.setVisibility(View.GONE);
                 binding.ringPasswordRepeatTxtBox.setVisibility(View.GONE);
                 binding.placeholder.setVisibility(View.VISIBLE);
-                binding.placeholder.setImageAlpha(60);
                 presenter.passwordUnset();
             }
         });

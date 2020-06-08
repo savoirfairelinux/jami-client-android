@@ -261,6 +261,9 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
                     if (viewModels.isEmpty()) {
                         view.hideList();
                         view.displayNoConversationMessage();
+                        if (mSmartListViewModels != null){
+                            mSmartListViewModels.clear();
+                        }
                         return;
                     }
                     view.hideNoConversationMessage();
