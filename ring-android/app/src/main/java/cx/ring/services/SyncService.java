@@ -25,6 +25,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.content.pm.ServiceInfo;
 import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
 
 import androidx.annotation.Nullable;
@@ -39,12 +40,13 @@ import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
 
 public class SyncService extends Service {
-    private static final String TAG = SyncService.class.getSimpleName();
     public static final int NOTIF_SYNC_SERVICE_ID = 1004;
+
     public static final String ACTION_START = "startService";
     public static final String ACTION_STOP = "stopService";
+    public static final String EXTRA_TIMEOUT = "timeout";
 
-    private boolean isFirst = true;
+    private int serviceUsers = 0;
     private final Random mRandom = new Random();
 
     @Inject
@@ -60,8 +62,7 @@ public class SyncService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         String action = intent.getAction();
         if (ACTION_START.equals(action)) {
-            if (isFirst) {
-                isFirst = false;
+            if (serviceUsers == 0) {
                 final Intent deleteIntent = new Intent(ACTION_STOP)
                         .setClass(getApplicationContext(), SyncService.class);
                 final Intent contentIntent = new Intent(Intent.ACTION_VIEW)
@@ -73,7 +74,6 @@ public class SyncService extends Service {
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                         .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
                         .setAutoCancel(false)
-                        .setOngoing(false)
                         .setVibrate(null)
                         .setSmallIcon(R.drawable.ic_ring_logo_white)
                         .setCategory(NotificationCompat.CATEGORY_PROGRESS)
@@ -88,11 +88,24 @@ public class SyncService extends Service {
 
                 JamiApplication.getInstance().startDaemon();
             }
+            serviceUsers++;
+
+            long timeout = intent.getLongExtra(EXTRA_TIMEOUT, -1);
+            if (timeout > 0) {
+                new Handler().postDelayed(() -> {
+                    try {
+                        startService(new Intent(SyncService.ACTION_STOP).setClass(getApplicationContext(), SyncService.class));
+                    } catch (IllegalStateException ignored) {
+                    }
+                }, timeout);
+            }
         }
         else if (ACTION_STOP.equals(action)) {
-            stopForeground(true);
-            stopSelf();
-            isFirst = true;
+            serviceUsers--;
+            if (serviceUsers == 0) {
+                stopForeground(true);
+                stopSelf();
+            }
         }
         return START_NOT_STICKY;
     }

@@ -49,11 +49,11 @@ public class JamiJobService extends JobService
         Log.w(TAG, "onStartJob() " + params);
         try {
             JamiApplication.getInstance().startDaemon();
-            Intent serviceIntent = new Intent(SyncService.ACTION_START).setClass(this, SyncService.class);
             try {
-                ContextCompat.startForegroundService(this, serviceIntent);
+                ContextCompat.startForegroundService(this, new Intent(SyncService.ACTION_START)
+                        .setClass(this, SyncService.class));
             } catch (IllegalStateException e) {
-                android.util.Log.e(TAG, "Error starting service", e);
+                Log.e(TAG, "Error starting service", e);
             }
             new Handler().postDelayed(() -> {
                 Log.w(TAG, "jobFinished() " + params);
