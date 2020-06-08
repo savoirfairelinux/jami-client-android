@@ -788,23 +788,23 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             binding.confControlGroup.setVisibility(View.VISIBLE);
             if (confAdapter  == null) {
                 confAdapter = new ConfParticipantAdapter((view, call) -> {
-                    Context context = requireContext();
-                    PopupMenu popup = new PopupMenu(context, view);
+                    PopupMenu popup = new PopupMenu(view.getContext(), view);
                     popup.inflate(R.menu.conference_participant_actions);
                     popup.setOnMenuItemClickListener(item -> {
-                        switch (item.getItemId()) {
-                            case R.id.conv_contact_details:
-                                presenter.openParticipantContact(call);
-                                break;
-                            case R.id.conv_contact_hangup:
-                                presenter.hangupParticipant(call);
-                                break;
-                            default:
-                                return false;
-                        }
+                        if (presenter != null)
+                            switch (item.getItemId()) {
+                                case R.id.conv_contact_details:
+                                    presenter.openParticipantContact(call);
+                                    break;
+                                case R.id.conv_contact_hangup:
+                                    presenter.hangupParticipant(call);
+                                    break;
+                                default:
+                                    return false;
+                            }
                         return true;
                     });
-                    MenuPopupHelper menuHelper = new MenuPopupHelper(context, (MenuBuilder) popup.getMenu(), view);
+                    MenuPopupHelper menuHelper = new MenuPopupHelper(view.getContext(), (MenuBuilder) popup.getMenu(), view);
                     menuHelper.setForceShowIcon(true);
                     menuHelper.show();
                 });
