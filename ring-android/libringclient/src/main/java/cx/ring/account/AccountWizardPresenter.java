@@ -32,6 +32,7 @@ import cx.ring.model.Settings;
 import cx.ring.mvp.AccountCreationModel;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
+import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.PreferencesService;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
@@ -46,6 +47,7 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
 
     private final AccountService mAccountService;
     private final PreferencesService mPreferences;
+    private final DeviceRuntimeService mDeviceService;
     private final Scheduler mUiScheduler;
 
     //private boolean mCreationError = false;
@@ -56,9 +58,13 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
     private Observable<Account> newAccount;
 
     @Inject
-    public AccountWizardPresenter(AccountService accountService, PreferencesService preferences, @Named("UiScheduler") Scheduler uiScheduler) {
+    public AccountWizardPresenter(AccountService accountService,
+                                  PreferencesService preferences,
+                                  DeviceRuntimeService deviceService,
+                                  @Named("UiScheduler") Scheduler uiScheduler) {
         mAccountService = accountService;
         mPreferences = preferences;
+        mDeviceService = deviceService;
         mUiScheduler = uiScheduler;
     }
 
@@ -87,6 +93,7 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
                     }
                     if (accountCreationModel.isPush()) {
                         accountDetails.put(ConfigKey.PROXY_ENABLED.key(), AccountConfig.TRUE_STR);
+                        accountDetails.put(ConfigKey.PROXY_PUSH_TOKEN.key(), mDeviceService.getPushToken());
                     }
                     return accountDetails;
                 });
@@ -104,6 +111,7 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
                     }
                     if (accountCreationModel.isPush()) {
                         accountDetails.put(ConfigKey.PROXY_ENABLED.key(), AccountConfig.TRUE_STR);
+                        accountDetails.put(ConfigKey.PROXY_PUSH_TOKEN.key(), mDeviceService.getPushToken());
                     }
                     return accountDetails;
                 });
@@ -117,6 +125,7 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
                     if(settings != null && settings.isAllowPushNotifications()) {
                         accountCreationModel.setPush(true);
                         accountDetails.put(ConfigKey.PROXY_ENABLED.key(), AccountConfig.TRUE_STR);
+                        accountDetails.put(ConfigKey.PROXY_PUSH_TOKEN.key(), mDeviceService.getPushToken());
                     }
                     if (!StringUtils.isEmpty(accountCreationModel.getPassword())) {
                         accountDetails.put(ConfigKey.ARCHIVE_PASSWORD.key(), accountCreationModel.getPassword());
