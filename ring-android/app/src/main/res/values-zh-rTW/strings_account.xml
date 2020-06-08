@@ -105,6 +105,9 @@
   <string name="account_credentials_add">新增憑證</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">安全性</string>
+  <string name="account_srtp_switch_label">加密媒體串流 (SRTP)</string>
+  <string name="account_srtp_enable_sdes">啟用 SDES 作為金鑰交換協定</string>
+  <string name="account_srtp_rtp_fallback">如果 SRTP 失敗則汰退至 RTP</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">使用 TLS 傳輸</string>
@@ -183,7 +186,8 @@
   <string name="register_name">註冊名稱</string>
   <string name="trying_to_register_name">正在嘗試註冊名稱</string>
   <string name="registered_username">已註冊的使用者名稱</string>
-  <string name="register_username">註冊公開的使用者名稱（建議）</string>
+  <string name="register_username">註冊公開使用者名稱</string>
+  <string name="register_recommended">建議</string>
   <string name="username_already_taken">已取得的使用者名稱</string>
   <string name="invalid_username">無效的使用者名稱</string>
   <string name="unknown_error">未知的錯誤。請檢查您的網路連線！</string>

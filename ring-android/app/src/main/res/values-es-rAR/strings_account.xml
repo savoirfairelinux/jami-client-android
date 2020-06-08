@@ -74,11 +74,17 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_video_enable">Permitir video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avanzadas</string>
+  <string name="account_dht_public_in_calls_label">Permitir llamadas entrantes de contactos desconocidos</string>
   <string name="account_registration_exp_label">Caducidad del registro</string>
   <string name="account_local_interface_label">Interfaz Local</string>
   <string name="account_local_port_label">Puerto Local</string>
   <string name="account_stun_enable_label">Usar STUN</string>
   <string name="account_stun_server_label">Servidor STUN</string>
+  <string name="account_accept_files">Aceptar archivos entrantes automáticamente</string>
+  <string name="account_accept_files_max_size">Tamaño máximo de archivo para aceptación automática</string>
+  <string name="account_accept_files_never">Nunca aceptar automáticamente</string>
+  <string name="account_accept_files_always">Siempre aceptar automáticamente</string>
+  <string name="size_mb">%1$dMB</string>
   <string name="account_turn_enable_label">Usar TURN</string>
   <string name="account_turn_server_label">Servidor TURN</string>
   <string name="account_turn_username_label">Usuario TURN</string>
@@ -89,12 +95,19 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_proxy_label">Proxy DHT</string>
   <string name="account_proxy_enable_label">Usar proxy DHT</string>
   <string name="account_proxy_server_label">Dirección del proxy DHT</string>
+  <string name="account_proxy_server_list_label">Dirección URL del proxy DHT</string>
+  <string name="account_peer_discovery_label">Descubrimiento de pares locales</string>
+  <string name="account_peer_discovery_enable_label">Habilitar descubrimiento de pares locales</string>
+  <string name="account_peer_discovery_enable_summary">Conéctese a otros nodos DHT que se anuncian en nuestra red local</string>
   <!--Security Details-->
   <string name="account_credentials_label">Credenciales</string>
   <string name="account_credentials_edit">Editar credenciales</string>
   <string name="account_credentials_add">Añadir credenciales</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Seguridad</string>
+  <string name="account_srtp_switch_label">Cifrar los flujos de medios (SRTP)</string>
+  <string name="account_srtp_enable_sdes">Habilitar SDES para el protocolo intercambio de claves</string>
+  <string name="account_srtp_rtp_fallback">Replegar a RTP en caso de que falle SRTP</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Usar TLS</string>
@@ -111,7 +124,7 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_tls_negotiation_timeout_sec">Tiempo de espera de negociación (s)</string>
   <string name="account_rtp_max_port">Máximo</string>
   <string name="account_rtp_min_port">Mínimo</string>
-  <string name="account_rtp_port_range">Intervalo de puertos de audio RTP</string>
+  <string name="account_rtp_port_range">Intervalo para puertos de audio RTP</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Indroduzca la contraseña principal para desbloquear su cuenta</string>
   <string name="error_password_char_count">6 carateres mínimo</string>
@@ -173,7 +186,8 @@ Podrá editar su cuenta más tarde.</string>
   <string name="register_name">Registrar nombre</string>
   <string name="trying_to_register_name">Intentanto registrar nombre</string>
   <string name="registered_username">Nombre de usuario registrado</string>
-  <string name="register_username">Registrar nombre de usuario público (recomendado)</string>
+  <string name="register_username">Registrar nombre de usuario público</string>
+  <string name="register_recommended">Recomendado</string>
   <string name="username_already_taken">Nombre de usuario ya en uso</string>
   <string name="invalid_username">Nombre de usuario inválido</string>
   <string name="unknown_error">Error desconocido. ¡Revisar la conexión a internet!</string>

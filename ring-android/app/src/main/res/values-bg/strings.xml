@@ -142,8 +142,8 @@
   <string name="prompt_new_password_repeat">Повторете новата парола</string>
   <string name="account_create_title">Създаване на профил в Jami</string>
   <string name="prompt_new_username">Въведете ново потребителско име</string>
+  <string name="prompt_hint_username">Потребителско име</string>
   <string name="help_password_choose">Изберете сигурна парола, която ще запомните, за да е защитен профилът ви.</string>
-  <string name="help_password_enter">Въведете основната си парола за Jami</string>
   <string name="help_pin_enter">Въведете ПИН-кода на друг настроен профил за Jami. Използвайте функцията „Изнасяне на профила от Jami“, за да получите ПИН.</string>
   <string name="wizard_next">Напред</string>
   <string name="wizard_back">Назад</string>
@@ -153,7 +153,6 @@
   <string name="profile_message_warning">Профилът Ви се споделя само с контактите Ви</string>
   <string name="open_the_gallery">Отваряне на галерията</string>
   <string name="take_a_photo">Снимане</string>
-  <string name="profile_name_hint">Въведете името си (незадължително)</string>
   <!--Share fragment-->
   <string name="share_message">Сканирайте този код с Jami</string>
   <string name="share_message_no_account">Моля, изберете кой профил искате да споделите.</string>
@@ -168,7 +167,6 @@
   <string name="contact_request_title">Заявка за свързване с нов контакт</string>
   <string name="contact_request_msg">Имате %1$s заявки за свързване с нови контакти</string>
   <string name="contact_request_account">За %1$s</string>
-  <string name="no_requests">0 заявки за свързване с нови контакти</string>
   <string name="message_contact_not_trusted_yet">%sвсе още не е в контактите ви.\nПриемате ли или отказвате тази заявка за контакт? </string>
   <string name="message_contact_not_trusted">%s не е в контактите ви.\nДобавяне на контакт?</string>
   <!--Send contact requests-->
@@ -176,7 +174,6 @@
   <string name="send_request_title">Изпращане на заявка за свързване с нов контакт</string>
   <string name="send_request_msg">Трябва да изпратите заявка за контакт, за да комуникирате с този потребител. Докато вашият контакт не е приел заявката, можете да изпращате съобщения, но той няма да може да отговори.</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">0 блокирани контакти</string>
   <!--Smartlist-->
   <string name="no_contact_request">Няма изпратени заявки за свързване с нови контакти</string>
   <string name="contact_request_sent">Заявката за свързване с нов контакт е изпратена</string>
@@ -211,4 +208,6 @@
   <string name="tv_audio_play">Пускане</string>
   <string name="tv_audio_pause">Пауза</string>
   <string name="tv_dialog_send">Изпращане</string>
+  <!--WIZARD-->
+  <string name="wizard_password_skip">Създаване на профил</string>
 </resources>

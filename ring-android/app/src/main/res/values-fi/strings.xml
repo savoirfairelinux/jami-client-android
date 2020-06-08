@@ -170,9 +170,10 @@
   <string name="prompt_new_password_repeat">Toista uusi salasana</string>
   <string name="account_create_title">Tee Jami-tili</string>
   <string name="prompt_new_username">Syötä uusi käyttäjänimi</string>
+  <string name="prompt_hint_username">Käyttäjänimi</string>
   <string name="help_password_choose">Valitse muistettava, vahva salasana jota käytät Jami-tilisi suojaamiseen.</string>
-  <string name="help_password_enter">Syötä pääasiallisen Jami-tilisi salasana</string>
-  <string name="help_server_enter">Kirjoita hallintapalvelimen verkko-osoite</string>
+  <string name="help_password_enter">Syötä pääasiallisen Jami-tilisi salasana.</string>
+  <string name="help_server_enter">Kirjoita hallintapalvelimen verkko-osoite.</string>
   <string name="help_pin_enter">Anna PIN-koodi toiselta määritetyltä Jami-tililtä. Käytä \"vie Jami-tili\" -ominaisuutta saadaksesi PIN-koodi.</string>
   <string name="wizard_next">Seuraava</string>
   <string name="wizard_back">Takaisin</string>
@@ -182,7 +183,7 @@
   <string name="profile_message_warning">Profiilisi jaetaan vain yhteystietojesi kanssa</string>
   <string name="open_the_gallery">Avaa valokuvat</string>
   <string name="take_a_photo">Ota valokuva</string>
-  <string name="profile_name_hint">Anna nimesi (valinnainen)</string>
+  <string name="profile_name_hint">Kirjoita nimesi</string>
   <!--Share fragment-->
   <string name="share_message">Skannaa tämä koodi Jamilla</string>
   <string name="share_message_no_account">Valitse jaettava tili.</string>
@@ -198,7 +199,7 @@
   <string name="contact_request_title">Uusi yhteyspyyntö</string>
   <string name="contact_request_msg">Sinulla on %1$s yhteyspyyntöjä</string>
   <string name="contact_request_account">%1$s:tä</string>
-  <string name="no_requests">0 yhteyspyyntöä</string>
+  <string name="no_requests">Sinulla ei ole yhteyspyyntöjä</string>
   <string name="message_contact_not_trusted_yet">%s ei ole vielä yhteystiedoissasi.\nHaluatko hyväksyä tai hylätä tämän yhteyspyynnön?</string>
   <string name="message_contact_not_trusted">%s ei ole yhteystiedoissasi.\nLisää uusi yhteyshenkilö?</string>
   <!--Send contact requests-->
@@ -206,9 +207,10 @@
   <string name="send_request_title">Lähetä yhteyspyyntö</string>
   <string name="send_request_msg">Sinun on lähetettävä yhteyspyyntö, jotta voit olla yhteydessä tähän käyttäjään. Niin kauan kuin yhteystietosi ei ole käsitellyt pyyntöä, voit lähettää viestejä, mutta hän ei voi vastata sinulle.</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">0 estettyä yhteystietoa</string>
+  <string name="no_blocked_contact">EI estettyjä yhteystietoja</string>
   <!--Smartlist-->
   <string name="no_contact_request">Yhteydenottopyyntöä ei lähetetty</string>
+  <string name="conversation_placeholder">Sinulla ei ole vielä keskusteluja.</string>
   <string name="contact_request_sent">Yhteydenottopyyntö lähetetty</string>
   <string name="start_conversation">Aloita keskustelu</string>
   <string name="search_results">Hakutulokset</string>
@@ -265,4 +267,20 @@
   <string name="tv_send_audio">Lähetä ääni</string>
   <string name="tv_send_video">Lähetä media</string>
   <string name="conversation_input_speech_hint">Sano jotakin...</string>
+  <!--WIZARD-->
+  <string name="wizard_status_recommended">Suositus</string>
+  <string name="wizard_status_optional">Valinnainen</string>
+  <string name="wizard_status_required">Vaaditaan</string>
+  <string name="wizard_username_info">Valitse tilillesi käyttäjänimi</string>
+  <string name="wizard_username_button">Valitse käyttäjänimi</string>
+  <string name="wizard_username_skip">Ohita käyttäjänimen valitseminen</string>
+  <string name="wizard_password_info">Tilin salasana</string>
+  <string name="wizard_password_placeholder">Valitse salasana, jolla tiliavain salataan tässä laitteessa</string>
+  <string name="wizard_password_button">Valitse salasana</string>
+  <string name="wizard_password_skip">Luo tili</string>
+  <string name="wizard_password_switch">Salaa tili salasanalla</string>
+  <string name="wizard_password_warning">Huomaa, että salasanaa ei voi palauttaa</string>
+  <string name="wizard_profile_info">Profiili jaetaan vain yhteystietojen kanssa</string>
+  <string name="wizard_profile_button">Tallenna profiili</string>
+  <string name="wizard_profile_skip">Ohita ja tee tämä myöhemmin</string>
 </resources>

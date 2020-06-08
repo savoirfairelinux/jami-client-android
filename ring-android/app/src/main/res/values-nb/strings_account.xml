@@ -88,6 +88,7 @@ Du kan endre kontoen din senere</string>
   <string name="account_credentials_add">Legg til identitetsdetaljer</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Sikkerhet</string>
+  <string name="account_srtp_switch_label">Krypter mediastrømmer (SRTP)</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Bruk TLS-transport</string>
@@ -144,7 +145,7 @@ Du kan endre kontoen din senere</string>
   <string name="register_name">Registrer navn</string>
   <string name="trying_to_register_name">Prøver å registrere navn</string>
   <string name="registered_username">Registrert brukernavn</string>
-  <string name="register_username">Registrer offentlig brukernavn (anbefales)</string>
+  <string name="register_username">Registrer offentlig brukernavn</string>
   <string name="username_already_taken">Brukernavnet er allerede i bruk</string>
   <string name="invalid_username">Ugyldig brukernavn</string>
   <string name="looking_for_username_availability">Sjekker hvorvidt brukernavnet er tilgjengelig…</string>

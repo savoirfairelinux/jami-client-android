@@ -93,6 +93,7 @@ Du kan ändra kontot senare.</string>
   <string name="account_credentials_add">Lägg till inloggningsuppgifter</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Säkerhet</string>
+  <string name="account_srtp_switch_label">Kryptera mediaströmmar (SRTP)</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Använd TLS-transport</string>
@@ -165,7 +166,7 @@ Du kan ändra kontot senare.</string>
   <string name="register_name">Registrera namn</string>
   <string name="trying_to_register_name">Försöker registrera namnet</string>
   <string name="registered_username">Registrerat namn</string>
-  <string name="register_username">Registrera offentligt användarnamn (rekommenderas)</string>
+  <string name="register_username">Registrera offentligt användarnamn</string>
   <string name="username_already_taken">Användarnamnet finns redan</string>
   <string name="invalid_username">Ogiltigt användarnamn</string>
   <string name="unknown_error">Okänt fel! Kontrollera din nätverksanslutning.</string>

@@ -102,9 +102,10 @@
   <string name="ab_action_video_call">Videollamada</string>
   <string name="ab_action_change_screen_orientation">Cambiar orientación de pantalla</string>
   <string name="share_via">Compartir con</string>
-  <string name="write_a_message">Escribir un mensaje</string>
-  <string name="scan_qr">Escanear código QR</string>
+  <string name="write_a_message">Escribí un mensaje</string>
+  <string name="scan_qr">Leer código QR</string>
   <string name="ab_action_flipcamera">Girar cámara</string>
+  <string name="ab_action_hidepreview">Ocultar previsualización</string>
   <!--Text messages-->
   <string name="send_message">Enviar mensaje</string>
   <string name="message_sending">Enviando mensaje...</string>
@@ -169,9 +170,10 @@
   <string name="prompt_new_password_repeat">Repetir nueva contraseña</string>
   <string name="account_create_title">Crear una cuenta de Jami</string>
   <string name="prompt_new_username">Escribir nuevo usuario</string>
+  <string name="prompt_hint_username">Nombre de usuario</string>
   <string name="help_password_choose">Elegí una contraseña robusta que recuerdes para proteger tu cuenta de Jami.</string>
-  <string name="help_password_enter">Ingresá la contraseña de tu cuenta principal de Jami</string>
-  <string name="help_server_enter">Ingresá la URL del servidor de gestión</string>
+  <string name="help_password_enter">Ingrese la contraseña de su cuenta principal Jami.</string>
+  <string name="help_server_enter">Ingrese la URL del servidor de administración.</string>
   <string name="help_pin_enter">Ingresá el PIN de la cuenta de Jami configurada en el otro dispositivo. Para obtener el PIN seleccioná la opción \"Exportar cuenta de Jami\".</string>
   <string name="wizard_next">Siguiente</string>
   <string name="wizard_back">Atrás</string>
@@ -181,7 +183,7 @@
   <string name="profile_message_warning">Tu perfil sólo es compartido con tus contactos</string>
   <string name="open_the_gallery">Abrir galería</string>
   <string name="take_a_photo">Tomar foto</string>
-  <string name="profile_name_hint">Escribí tu nombre (opcional)</string>
+  <string name="profile_name_hint">Ingresá tu nombre</string>
   <!--Share fragment-->
   <string name="share_message">Escaneá este código con Jami</string>
   <string name="share_message_no_account">Selecciona una cuenta que quieras compartir.</string>
@@ -197,7 +199,7 @@
   <string name="contact_request_title">Nueva solicitud de contacto</string>
   <string name="contact_request_msg">Tenés %1$s solicitudes de contacto</string>
   <string name="contact_request_account">Para %1$s</string>
-  <string name="no_requests">0 solicitudes de contacto</string>
+  <string name="no_requests">No tenés solicitudes de contacto</string>
   <string name="message_contact_not_trusted_yet">%s no está en tus contactos. ¿Quieres aceptar o rechazar la solicitud de este contacto?</string>
   <string name="message_contact_not_trusted">%s no está entre tus contactos.\n¿Agregar nuevo contacto?</string>
   <!--Send contact requests-->
@@ -205,9 +207,10 @@
   <string name="send_request_title">Enviar solicitud de contacto</string>
   <string name="send_request_msg">Debes enviar una solicitud de contacto para comunicarte con este usuario. Si tu contacto no ha aceptado la solicitud, podrás enviar mensajes, pero él no podrá responder.</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">0 contactos bloqueados</string>
+  <string name="no_blocked_contact">No hay contactos bloqueados</string>
   <!--Smartlist-->
   <string name="no_contact_request">No se enviaron solicitudes de contacto</string>
+  <string name="conversation_placeholder">Todavía no tienes conversaciones</string>
   <string name="contact_request_sent">Solicitud de contacto enviada</string>
   <string name="start_conversation">Comenzar una conversación</string>
   <string name="search_results">Resultados de la búsqueda</string>
@@ -250,11 +253,34 @@
   <string name="navigation_item_conversation">Conversaciones</string>
   <string name="navigation_item_contact_request">Solicitudes de contacto</string>
   <string name="navigation_item_account">Cuenta</string>
+  <string name="search_results_public_directory">Directorio público</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">¿Enviar mensaje de audio?</string>
+  <string name="tv_send_image_dialog_message">¿Enviar la imagen?</string>
+  <string name="tv_send_video_dialog_message">¿Enviar el video?</string>
+  <string name="tv_media_preview">Previsualización</string>
   <string name="tv_audio_play">Reproducir</string>
   <string name="tv_audio_pause">Pausar</string>
   <string name="tv_dialog_send">Enviar</string>
+  <string name="tv_audio_recording">Grabando...</string>
   <string name="tv_send_text">Enviar texto</string>
   <string name="tv_send_audio">Enviar audio</string>
+  <string name="tv_send_video">Enviar medios</string>
+  <string name="conversation_input_speech_hint">Diga algo...</string>
+  <!--WIZARD-->
+  <string name="wizard_status_recommended">Recomendado</string>
+  <string name="wizard_status_optional">Opcional</string>
+  <string name="wizard_status_required">Requerido</string>
+  <string name="wizard_username_info">Elija un nombre de usuario para su cuenta</string>
+  <string name="wizard_username_button">Eligí tu nombre de usuario</string>
+  <string name="wizard_username_skip">Omitir elección de nombre de usuario</string>
+  <string name="wizard_password_info">Contraseña de cuenta</string>
+  <string name="wizard_password_placeholder">Eligí una contraseña para cifrar la clave de la cuenta en este dispositivo</string>
+  <string name="wizard_password_button">Elegí tu contraseña</string>
+  <string name="wizard_password_skip">Crear cuenta</string>
+  <string name="wizard_password_switch">Cifrar cuenta con contraseña</string>
+  <string name="wizard_password_warning">Tenga en cuenta que la contraseña no se puede recuperar</string>
+  <string name="wizard_profile_info">Tu perfil sólo es compartido con tus contactos</string>
+  <string name="wizard_profile_button">Guardar perfil</string>
+  <string name="wizard_profile_skip">Saltear y hacerlo más tarde</string>
 </resources>

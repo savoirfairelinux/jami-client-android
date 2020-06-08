@@ -93,6 +93,7 @@ Możesz edytować swoje konto później</string>
   <string name="account_credentials_add">Dodaj detale</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Zabezpieczenia</string>
+  <string name="account_srtp_switch_label">Szyfrowanie strumieni multimedialnych (SRTP)</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Korzystaj z transportu TLS</string>
@@ -165,7 +166,7 @@ Możesz edytować swoje konto później</string>
   <string name="register_name">Zarejestruj nazwę</string>
   <string name="trying_to_register_name">Trwa próba rejestracji nazwy</string>
   <string name="registered_username">Zarejestruj nazwę użytkownika</string>
-  <string name="register_username">Zarejestruj publiczny login (zalecane)</string>
+  <string name="register_username">Zarejestruj publiczną nazwę użytkownika</string>
   <string name="username_already_taken">Nazwa użytkownika zajęta</string>
   <string name="invalid_username">Nieprawidłowa nazwa użytkownika</string>
   <string name="unknown_error">Nieznany błąd. Proszę sprawdź swoje połączenie sieciowe!</string>
