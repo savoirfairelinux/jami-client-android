@@ -31,6 +31,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    buildFeatures {
+        viewBinding true
+        dataBinding true
+    }
     flavorDimensions "push"
     productFlavors {
         noPush {
@@ -57,12 +61,6 @@ android {
             include(sp)
             universalApk true
         }
-    }
-    viewBinding {
-        enabled true
-    }
-    dataBinding {
-        enabled true
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
