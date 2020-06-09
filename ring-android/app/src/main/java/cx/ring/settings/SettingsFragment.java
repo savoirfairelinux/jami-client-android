@@ -63,7 +63,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
     private FragSettingsBinding binding;
     private Settings currentSettings = null;
 
-    private boolean mIsRefreshingViewFromPresenter;
+    private boolean mIsRefreshingViewFromPresenter = true;
 
     @Nullable
     @Override

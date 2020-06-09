@@ -31,12 +31,14 @@ public class Settings {
     }
 
     public Settings(Settings s) {
-        mAllowPushNotifications = s.mAllowPushNotifications;
-        mAllowPersistentNotification = s.mAllowPersistentNotification;
-        mAllowSystemContacts = s.mAllowSystemContacts;
-        mAllowPlaceSystemCalls = s.mAllowPlaceSystemCalls;
-        mAllowOnStartup = s.mAllowOnStartup;
-        mHwEncoding = s.mHwEncoding;
+        if (s != null) {
+            mAllowPushNotifications = s.mAllowPushNotifications;
+            mAllowPersistentNotification = s.mAllowPersistentNotification;
+            mAllowSystemContacts = s.mAllowSystemContacts;
+            mAllowPlaceSystemCalls = s.mAllowPlaceSystemCalls;
+            mAllowOnStartup = s.mAllowOnStartup;
+            mHwEncoding = s.mHwEncoding;
+        }
     }
 
     public boolean isAllowPushNotifications() {
