@@ -77,6 +77,15 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
         }
     }
 
+    private void setProxyDetails(AccountCreationModel accountCreationModel, Map<String, String> details)  {
+        if (accountCreationModel.isPush()) {
+            details.put(ConfigKey.PROXY_ENABLED.key(), AccountConfig.TRUE_STR);
+            String pushToken = mDeviceService.getPushToken();
+            if (!StringUtils.isEmpty(pushToken))
+                details.put(ConfigKey.PROXY_PUSH_TOKEN.key(), pushToken);
+        }
+    }
+
     public void initJamiAccountConnect(AccountCreationModel accountCreationModel, String defaultAccountName) {
         Single<Map<String, String>> newAccount = initRingAccountDetails(defaultAccountName)
                 .map(accountDetails -> {
@@ -91,10 +100,7 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
                     if (!StringUtils.isEmpty(accountCreationModel.getPassword())) {
                         accountDetails.put(ConfigKey.ARCHIVE_PASSWORD.key(), accountCreationModel.getPassword());
                     }
-                    if (accountCreationModel.isPush()) {
-                        accountDetails.put(ConfigKey.PROXY_ENABLED.key(), AccountConfig.TRUE_STR);
-                        accountDetails.put(ConfigKey.PROXY_PUSH_TOKEN.key(), mDeviceService.getPushToken());
-                    }
+                    setProxyDetails(accountCreationModel, accountDetails);
                     return accountDetails;
                 });
         createAccount(accountCreationModel, newAccount);
@@ -109,10 +115,7 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
                     if (!StringUtils.isEmpty(accountCreationModel.getPassword())) {
                         accountDetails.put(ConfigKey.ARCHIVE_PASSWORD.key(), accountCreationModel.getPassword());
                     }
-                    if (accountCreationModel.isPush()) {
-                        accountDetails.put(ConfigKey.PROXY_ENABLED.key(), AccountConfig.TRUE_STR);
-                        accountDetails.put(ConfigKey.PROXY_PUSH_TOKEN.key(), mDeviceService.getPushToken());
-                    }
+                    setProxyDetails(accountCreationModel, accountDetails);
                     return accountDetails;
                 });
         createAccount(accountCreationModel, newAccount);
@@ -122,10 +125,9 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
         Single<Map<String, String>> newAccount = initRingAccountDetails(defaultAccountName)
                 .map(accountDetails -> {
                     Settings settings = mPreferences.getSettings();
-                    if(settings != null && settings.isAllowPushNotifications()) {
+                    if (settings != null && settings.isAllowPushNotifications()) {
                         accountCreationModel.setPush(true);
-                        accountDetails.put(ConfigKey.PROXY_ENABLED.key(), AccountConfig.TRUE_STR);
-                        accountDetails.put(ConfigKey.PROXY_PUSH_TOKEN.key(), mDeviceService.getPushToken());
+                        setProxyDetails(accountCreationModel, accountDetails);
                     }
                     if (!StringUtils.isEmpty(accountCreationModel.getPassword())) {
                         accountDetails.put(ConfigKey.ARCHIVE_PASSWORD.key(), accountCreationModel.getPassword());
