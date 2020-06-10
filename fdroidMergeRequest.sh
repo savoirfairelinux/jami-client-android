@@ -54,6 +54,9 @@ echo "  - versionName: ${versionName}
     timeout: 10800
     subdir: client-android/ring-android/app
     submodules: true
+    sudo:
+      - apt update || apt update
+      - apt install -y -t testing swig
     gradle:
       - noPush
     rm:
