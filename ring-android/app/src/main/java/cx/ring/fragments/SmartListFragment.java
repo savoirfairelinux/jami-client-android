@@ -200,6 +200,9 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
             case R.id.menu_scan_qr:
                 presenter.clickQRSearch();
                 return true;
+            case R.id.menu_new_group:
+                ((HomeActivity) getActivity()).goToOpenGroupBottomSheet();
+                return true;
             case R.id.menu_settings:
                 ((HomeActivity) getActivity()).goToSettings();
                 return true;

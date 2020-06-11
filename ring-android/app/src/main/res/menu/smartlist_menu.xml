@@ -42,6 +42,10 @@
 
         <menu>
 
+            <item android:id="@+id/menu_new_group"
+                app:showAsAction="ifRoom"
+                android:title="@string/menu_item_new_group" />
+
             <item android:id="@+id/menu_settings"
                 app:showAsAction="ifRoom"
                 android:title="@string/menu_item_settings" />
