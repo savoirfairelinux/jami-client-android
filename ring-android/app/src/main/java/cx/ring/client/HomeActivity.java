@@ -24,33 +24,28 @@ import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-
-import com.google.android.material.badge.BadgeDrawable;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
-import androidx.core.content.ContextCompat;
-import androidx.core.util.Pair;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.BuildConfig;
 import cx.ring.R;
@@ -63,6 +58,7 @@ import cx.ring.contacts.AvatarFactory;
 import cx.ring.databinding.ActivityHomeBinding;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.fragments.SmartListFragment;
+import cx.ring.groupchat.BottomSheetNewGroupFragment;
 import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.interfaces.Colorable;
 import cx.ring.model.Account;
@@ -410,6 +406,14 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         fContent = fragmentManager.findFragmentById(R.id.main_frame);
         hideTabletToolbar();
         setToolbarElevation(false);
+    }
+
+    public void goToOpenGroupBottomSheet() {
+        if (fContent instanceof SettingsFragment) {
+            return;
+        }
+        BottomSheetNewGroupFragment bottomSheetFragment = new BottomSheetNewGroupFragment();
+        bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
     }
 
     public void goToSettings() {
