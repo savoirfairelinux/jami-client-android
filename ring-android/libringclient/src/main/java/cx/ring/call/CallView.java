@@ -32,6 +32,7 @@ public interface CallView {
     void displayContactBubble(boolean display);
 
     void displayVideoSurface(boolean displayVideoSurface, boolean displayPreviewContainer);
+//    void displayPluginSurface();
 
     void displayPreviewSurface(boolean display);
 
@@ -59,6 +60,7 @@ public interface CallView {
     void initOutGoingCallDisplay();
 
     void resetPreviewVideoSize(int previewWidth, int previewHeight, int rot);
+    void resetPluginPreviewVideoSize(int previewWidth, int previewHeight, int rot);
     void resetVideoSize(int videoWidth, int videoHeight);
 
     void goToConversation(String accountId, String conversationId);

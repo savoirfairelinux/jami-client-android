@@ -185,10 +185,8 @@ public abstract class HardwareService {
         if (inputWindow == 0) {
             return inputWindow;
         }
-
         RingserviceJNI.setNativeWindowGeometry(inputWindow, width, height);
         RingserviceJNI.registerVideoCallback(inputId, inputWindow);
-
         return inputWindow;
     }
 

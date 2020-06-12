@@ -123,8 +123,6 @@ import cx.ring.utils.MediaButtonsHelper;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.disposables.CompositeDisposable;
 
-import static cx.ring.plugins.PluginUtils.loadPlugin;
-
 public class CallFragment extends BaseSupportFragment<CallPresenter> implements CallView, MediaButtonsHelper.MediaButtonsHelperCallback, RecyclerPickerLayoutManager.ItemSelectedListener {
 
     public static final String TAG = CallFragment.class.getSimpleName();
@@ -306,14 +304,21 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         if (binding.videoSurface.getVisibility() == View.VISIBLE) {
             restartVideo = true;
         }
-        if (binding.previewContainer.getVisibility() == View.VISIBLE) {
-            restartPreview = true;
+        if (!pluginsMode) {
+            if (binding.previewContainer.getVisibility() == View.VISIBLE) {
+                restartPreview = true;
+            }
+        }else {
+            if (binding.pluginPreviewContainer.getVisibility() == View.VISIBLE) {
+                restartPreview = true;
+            }
         }
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+
         ((JamiApplication) requireActivity().getApplication()).getInjectionComponent().inject(this);
         binding = DataBindingUtil.inflate(inflater, R.layout.frag_call, container, false);
         binding.setPresenter(this);
@@ -331,6 +336,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             mPreviewSurfaceWidth = width;
             mPreviewSurfaceHeight = height;
             presenter.previewVideoSurfaceCreated(binding.previewSurface);
+//            presenter.pluginSurfaceCreated(binding.pluginPreviewSurface);
         }
 
         @Override
@@ -343,6 +349,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         @Override
         public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
             presenter.previewVideoSurfaceDestroyed();
+//            presenter.pluginSurfaceDestroyed();
             return true;
         }
 
@@ -356,7 +363,9 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
      */
     private void setPreviewDragHiddenState(float hiddenState) {
         binding.previewSurface.setAlpha(1.f - (3 * hiddenState / 4));
+        binding.pluginPreviewSurface.setAlpha(1.f - (3 * hiddenState / 4));
         binding.previewHandle.setAlpha(hiddenState);
+        binding.pluginPreviewHandle.setAlpha(hiddenState);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -416,6 +425,25 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                 presenter.videoSurfaceDestroyed();
             }
         });
+
+        binding.pluginPreviewSurface.getHolder().setFormat(PixelFormat.RGBA_8888);
+        binding.pluginPreviewSurface.getHolder().addCallback(new SurfaceHolder.Callback() {
+            @Override
+            public void surfaceCreated(SurfaceHolder holder) {
+                presenter.pluginSurfaceCreated(holder);
+            }
+
+            @Override
+            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+
+            }
+
+            @Override
+            public void surfaceDestroyed(SurfaceHolder holder) {
+                presenter.pluginSurfaceDestroyed();
+            }
+        });
+
         view.setOnSystemUiVisibilityChangeListener(visibility -> {
             boolean ui = (visibility & (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN)) == 0;
             presenter.uiVisibilityChanged(ui);
@@ -443,6 +471,8 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         binding.shapeRipple.setRippleShape(new Circle());
         binding.callSpeakerBtn.setChecked(presenter.isSpeakerphoneOn());
         binding.callMicBtn.setChecked(presenter.isMicrophoneMuted());
+        binding.pluginPreviewSurface.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) ->
+                configureTransform(mPreviewSurfaceWidth, mPreviewSurfaceHeight));
         binding.previewSurface.setSurfaceTextureListener(listener);
         binding.previewSurface.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) ->
                 configureTransform(mPreviewSurfaceWidth, mPreviewSurfaceHeight));
@@ -551,6 +581,102 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             }
         });
 
+        binding.pluginPreviewContainer.setOnTouchListener((v, event) -> {
+            int action = event.getActionMasked();
+            RelativeLayout parent = (RelativeLayout) v.getParent();
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) v.getLayoutParams();
+
+            if (action == MotionEvent.ACTION_DOWN) {
+                previewSnapAnimation.cancel();
+                previewDrag = new PointF(event.getX(), event.getY());
+                v.setElevation(v.getContext().getResources().getDimension(R.dimen.call_preview_elevation_dragged));
+                params.removeRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                params.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+                params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                params.setMargins((int) v.getX(), (int) v.getY(), parent.getWidth() - ((int) v.getX() + v.getWidth()), parent.getHeight() - ((int) v.getY() + v.getHeight()));
+                v.setLayoutParams(params);
+                return true;
+            } else if (action == MotionEvent.ACTION_MOVE) {
+                if (previewDrag != null) {
+                    int currentXPosition = params.leftMargin + (int) (event.getX() - previewDrag.x);
+                    int currentYPosition = params.topMargin + (int) (event.getY() - previewDrag.y);
+                    params.setMargins(
+                            currentXPosition,
+                            currentYPosition,
+                            -((currentXPosition + v.getWidth()) - (int) event.getX()),
+                            -((currentYPosition + v.getHeight()) - (int) event.getY()));
+                    v.setLayoutParams(params);
+
+                    float outPosition = binding.pluginPreviewContainer.getWidth() * 0.85f;
+                    float drapOut = 0.f;
+                    if (currentXPosition < 0) {
+                        drapOut = Math.min(1.f, -currentXPosition / outPosition);
+                    } else if (currentXPosition + v.getWidth() > parent.getWidth()) {
+                        drapOut = Math.min(1.f, (currentXPosition + v.getWidth() - parent.getWidth()) / outPosition);
+                    }
+                    setPreviewDragHiddenState(drapOut);
+                    return true;
+                }
+                return false;
+            } else if (action == MotionEvent.ACTION_UP) {
+                if (previewDrag != null) {
+                    int currentXPosition = params.leftMargin + (int) (event.getX() - previewDrag.x);
+
+                    previewSnapAnimation.cancel();
+                    previewDrag = null;
+                    v.setElevation(v.getContext().getResources().getDimension(R.dimen.call_preview_elevation));
+                    int ml = 0, mr = 0, mt = 0, mb = 0;
+
+                    FrameLayout.LayoutParams hp = (FrameLayout.LayoutParams) binding.pluginPreviewHandle.getLayoutParams();
+                    if (params.leftMargin + (v.getWidth() / 2) > parent.getWidth() / 2) {
+                        params.removeRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                        params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                        mr = (int) (parent.getWidth() - v.getWidth() - v.getX());
+                        previewPosition = PreviewPosition.RIGHT;
+                        hp.gravity = Gravity.CENTER_VERTICAL | Gravity.LEFT;
+                    } else {
+                        params.removeRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                        params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                        ml = (int) v.getX();
+                        previewPosition = PreviewPosition.LEFT;
+                        hp.gravity = Gravity.CENTER_VERTICAL | Gravity.RIGHT;
+                    }
+                    binding.pluginPreviewHandle.setLayoutParams(hp);
+
+                    if (params.topMargin + (v.getHeight() / 2) > parent.getHeight() / 2) {
+                        params.removeRule(RelativeLayout.ALIGN_PARENT_TOP);
+                        params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                        mb = (int) (parent.getHeight() - v.getHeight() - v.getY());
+                    } else {
+                        params.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                        params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+                        mt = (int) v.getY();
+                    }
+                    previewMargins[0] = ml;
+                    previewMargins[1] = mt;
+                    previewMargins[2] = mr;
+                    previewMargins[3] = mb;
+                    params.setMargins(ml, mt, mr, mb);
+                    v.setLayoutParams(params);
+
+                    float outPosition = binding.pluginPreviewContainer.getWidth() * 0.85f;
+                    previewHiddenState = currentXPosition < 0
+                            ? Math.min(1.f, -currentXPosition / outPosition)
+                            : ((currentXPosition + v.getWidth() > parent.getWidth())
+                            ? Math.min(1.f, (currentXPosition + v.getWidth() - parent.getWidth()) / outPosition)
+                            : 0.f);
+                    setPreviewDragHiddenState(previewHiddenState);
+
+                    previewSnapAnimation.start();
+                    return true;
+                }
+                return false;
+            } else {
+                return false;
+            }
+        });
+
         binding.dialpadEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -587,6 +713,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                 (int) (previewMargins[2] * r + f - hideMargin),
                 (int) (previewMargins[3] * r + f));
         binding.previewContainer.setLayoutParams(params);
+        binding.pluginPreviewContainer.setLayoutParams(params);
     }
 
     /**
@@ -726,7 +853,15 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     @Override
     public void displayVideoSurface(final boolean displayVideoSurface, final boolean displayPreviewContainer) {
         binding.videoSurface.setVisibility(displayVideoSurface ? View.VISIBLE : View.GONE);
-        binding.previewContainer.setVisibility(displayPreviewContainer ? View.VISIBLE : View.GONE);
+        if (pluginsMode) {
+            binding.pluginPreviewSurface.setVisibility(displayPreviewContainer ? View.VISIBLE : View.GONE);
+            binding.pluginPreviewContainer.setVisibility(displayPreviewContainer ? View.VISIBLE : View.GONE);
+            binding.previewContainer.setVisibility(View.GONE);
+        } else {
+            binding.pluginPreviewSurface.setVisibility(View.GONE);
+            binding.pluginPreviewContainer.setVisibility(View.GONE);
+            binding.previewContainer.setVisibility(displayPreviewContainer ? View.VISIBLE : View.GONE);
+        }
         updateMenu();
     }
 
@@ -930,6 +1065,16 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     @Override
+    public void resetPluginPreviewVideoSize(int previewWidth, int previewHeight, int rot) {
+        if (previewWidth == -1 && previewHeight == -1)
+            return;
+        mPreviewWidth = previewWidth;
+        mPreviewHeight = previewHeight;
+        boolean flip = (rot % 180) != 0;
+        binding.pluginPreviewSurface.setAspectRatio(flip ? mPreviewHeight : mPreviewWidth, flip ? mPreviewWidth : mPreviewHeight);
+    }
+
+    @Override
     public void resetVideoSize(int videoWidth, int videoHeight) {
         ViewGroup rootView = (ViewGroup) getView();
         if (rootView == null)
@@ -978,7 +1123,12 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         } else if (Surface.ROTATION_180 == rotation) {
             matrix.postRotate(180, centerX, centerY);
         }
-        binding.previewSurface.setTransform(matrix);
+        if(!pluginsMode) {
+//            binding.pluginPreviewSurface.setTransform(matrix);
+//        }
+//        else {
+            binding.previewSurface.setTransform(matrix);
+        }
     }
 
     @Override
@@ -1090,14 +1240,24 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     private void startScreenShare(MediaProjection mediaProjection) {
         if (presenter.startScreenShare(mediaProjection)) {
-            binding.previewSurface.setVisibility(View.GONE);
+            if(pluginsMode) {
+                binding.pluginPreviewSurface.setVisibility(View.GONE);
+            } else {
+                binding.previewSurface.setVisibility(View.GONE);
+            }
         } else {
             Toast.makeText(requireContext(), "Can't start screen sharing", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void stopShareScreen() {
-        binding.previewSurface.setVisibility(View.VISIBLE);
+        if(pluginsMode)
+        {
+            binding.previewSurface.setVisibility(View.VISIBLE);
+        }
+        else {
+            binding.previewSurface.setVisibility(View.VISIBLE);
+        }
         presenter.stopScreenShare();
     }
 
@@ -1218,6 +1378,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
      */
     public void displayVideoPluginsCarousel() {
         pluginsMode = !pluginsMode;
+
         Context context = requireActivity();
 
         // Create callMediaHandlers and videoPluginsItems in a lazy manner
@@ -1246,6 +1407,8 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         }
 
         if (pluginsMode) {
+            //change preview image
+            displayVideoSurface(true,true);
             // hide hang up button and other call buttons
             displayHangupButton(false);
             // Display the plugins recyclerpicker
@@ -1262,6 +1425,8 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             }
 
         } else {
+            //change preview image
+            displayVideoSurface(true,true);
             if (previousPluginPosition != -1) {
                 String callMediaId = callMediaHandlers.
                         get(previousPluginPosition);

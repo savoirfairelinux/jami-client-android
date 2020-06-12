@@ -29,6 +29,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import cx.ring.daemon.Ringservice;
+import cx.ring.daemon.RingserviceJNI;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
@@ -49,6 +50,9 @@ import io.reactivex.Scheduler;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.Subject;
+
+import static cx.ring.daemon.Ringservice.listCallMediaHandlers;
+import static cx.ring.daemon.Ringservice.toggleCallMediaHandler;
 
 public class CallPresenter extends RootPresenter<CallView> {
 
@@ -77,6 +81,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     private int previewWidth = -1;
     private int previewHeight = -1;
     private String currentSurfaceId = null;
+    private String currentPluginSurfaceId = null;
 
     private Disposable timeUpdateTask = null;
 
@@ -277,6 +282,13 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void hangupCall() {
+        List<String> callMediaHandlers = listCallMediaHandlers();
+
+        for (String callMediaHandler : callMediaHandlers)
+        {
+            toggleCallMediaHandler(callMediaHandler, false);
+        }
+
         if (mConference != null) {
             if (mConference.isConference())
                 mCallService.hangUpConference(mConference.getId());
@@ -317,6 +329,26 @@ public class CallPresenter extends RootPresenter<CallView> {
         }
     }
 
+    public void pluginSurfaceCreated(Object holder) {
+        if (mConference == null) {
+            return;
+        }
+        String newId = mConference.getPluginId();
+        if (!newId.equals(currentPluginSurfaceId)) {
+            mHardwareService.removeVideoSurface(currentPluginSurfaceId);
+            currentPluginSurfaceId = newId;
+        }
+        mHardwareService.addVideoSurface(mConference.getPluginId(), holder);
+        getView().displayContactBubble(false);
+    }
+
+    public void pluginSurfaceUpdateId(String newId) {
+        if (!Objects.equals(newId, currentPluginSurfaceId)) {
+            mHardwareService.updateVideoSurfaceId(currentPluginSurfaceId, newId);
+            currentPluginSurfaceId = newId;
+        }
+    }
+
     public void previewVideoSurfaceCreated(Object holder) {
         mHardwareService.addPreviewVideoSurface(holder, mConference);
         //mHardwareService.startCapture(null);
@@ -328,7 +360,12 @@ public class CallPresenter extends RootPresenter<CallView> {
             currentSurfaceId = null;
         }
     }
-
+    public void pluginSurfaceDestroyed() {
+        if (currentPluginSurfaceId != null) {
+            mHardwareService.removeVideoSurface(currentPluginSurfaceId);
+            currentPluginSurfaceId = null;
+        }
+    }
     public void previewVideoSurfaceDestroyed() {
         mHardwareService.removePreviewVideoSurface();
         mHardwareService.endCapture();
@@ -428,6 +465,7 @@ public class CallPresenter extends RootPresenter<CallView> {
                 mHardwareService.setPreviewSettings();
                 mHardwareService.updatePreviewVideoSurface(mConference);
                 videoSurfaceUpdateId(call.getId());
+                pluginSurfaceUpdateId(call.getPluginId());
                 view.displayVideoSurface(true, mDeviceRuntimeService.hasVideoPermission());
                 if (permissionChanged) {
                     mHardwareService.switchInput(mConference.getId(), permissionChanged);
@@ -489,6 +527,13 @@ public class CallPresenter extends RootPresenter<CallView> {
                 previewWidth = event.w;
                 previewHeight = event.h;
                 getView().resetPreviewVideoSize(previewWidth, previewHeight, event.rot);
+            }
+        }
+        if (mConference != null && mConference.getPluginId().equals(event.callId)) {
+            if (event.started) {
+                previewWidth = event.w;
+                previewHeight = event.h;
+                getView().resetPluginPreviewVideoSize(previewWidth, previewHeight, event.rot);
             }
         }
         /*if (event.started || event.start) {
