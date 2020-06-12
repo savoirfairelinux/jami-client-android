@@ -503,6 +503,16 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
     }
 
     @Override
+    public void resetPluginPreviewVideoSize(int previewWidth, int previewHeight, int rot) {
+        if (previewWidth == -1 && previewHeight == -1)
+            return;
+        mPreviewWidth = previewWidth;
+        mPreviewHeight = previewHeight;
+        boolean flip = (rot % 180) != 0;
+        binding.pluginPreviewSurface.setAspectRatio(flip ? mPreviewHeight : mPreviewWidth, flip ? mPreviewWidth : mPreviewHeight);
+    }
+
+    @Override
     public void resetVideoSize(final int videoWidth, final int videoHeight) {
         ViewGroup rootView = (ViewGroup) getView();
         if (rootView == null)
