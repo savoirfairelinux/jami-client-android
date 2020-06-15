@@ -44,6 +44,7 @@
   <string name="conversation_action_copy_peer_number">Kopieër nummer</string>
   <string name="conversation_action_select_peer_number">Selecteer een nummer</string>
   <!--Contacts-->
+  <string name="prompt_hint_username">Gebruikersnaam</string>
   <!--MenuHeaderView-->
   <!--Share fragment-->
   <!--Pending contact requests-->
@@ -55,4 +56,5 @@
   <!--Bottom Navigation-->
   <!--TV-->
   <string name="tv_audio_play">Spelen</string>
+  <!--WIZARD-->
 </resources>

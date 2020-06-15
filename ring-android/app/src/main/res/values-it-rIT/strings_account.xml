@@ -105,6 +105,9 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_credentials_add">Aggiungi credenziali</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Sicurezza</string>
+  <string name="account_srtp_switch_label">Cripta i flussi (SRTP)</string>
+  <string name="account_srtp_enable_sdes">Abilita SDES come protocollo di scambio chiavi</string>
+  <string name="account_srtp_rtp_fallback">Fallback su RTP se SRTP fallisce</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Usa trasporto TLS</string>
@@ -158,7 +161,7 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_sip_success_title">Account Sip registrato</string>
   <string name="account_sip_success_message">Hai registrato il tuo account Sip con successo.</string>
   <string name="account_sip_register_anyway">Registrati lo stesso</string>
-  <string name="account_link_device">Connetti da un altro dispositivo</string>
+  <string name="account_link_device">Connettiti da un altro dispositivo</string>
   <string name="account_link_button">Connetti dalla rete</string>
   <string name="account_link_archive_button">Connetti dal backup</string>
   <string name="account_link_prompt_pin">Inserisci il PIN</string>
@@ -183,7 +186,8 @@ Potrai modificare il tuo account successivamente</string>
   <string name="register_name">Nome registrazione</string>
   <string name="trying_to_register_name">Tentativo di registrazione del nome</string>
   <string name="registered_username">Nome utente registrato</string>
-  <string name="register_username">Registra nome utente pubblico (consigliato)</string>
+  <string name="register_username">Registra nome utente pubblico</string>
+  <string name="register_recommended">Consigliato</string>
   <string name="username_already_taken">Il nome utente è già utilizzato</string>
   <string name="invalid_username">Nome utente non valido</string>
   <string name="unknown_error">Errore sconosciuto. Controlla la tua connessione di rete!</string>

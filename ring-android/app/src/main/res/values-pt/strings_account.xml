@@ -93,6 +93,7 @@
   <string name="account_credentials_add">Adicionar credenciais</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Segurança</string>
+  <string name="account_srtp_switch_label">Encriptar fluxo de média (SRTP)</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Usar Transporte TLS</string>
@@ -165,7 +166,7 @@
   <string name="register_name">Registar nome</string>
   <string name="trying_to_register_name">A tentar registar o nome</string>
   <string name="registered_username">Nome de utilizador registado</string>
-  <string name="register_username">Registar nome de utilizador público (recomendado)</string>
+  <string name="register_username">Registar nome de utilizador público</string>
   <string name="username_already_taken">O nome de utilizador já está registado</string>
   <string name="invalid_username">O nome de utilizador não é válido</string>
   <string name="unknown_error">Erro desconhecido. Por favor verifique a sua ligação à rede!</string>

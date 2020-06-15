@@ -103,6 +103,9 @@
   <string name="account_credentials_add">Lisää käyttöoikeudet</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Turvallisuus</string>
+  <string name="account_srtp_switch_label">Salattu mediavirta (SRTP)</string>
+  <string name="account_srtp_enable_sdes">Ota SDES käyttöön avaimien vaihdossa</string>
+  <string name="account_srtp_rtp_fallback">Varalla RTP jos SRTP epäonnistuu</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Käytä TLS:ää</string>
@@ -156,7 +159,7 @@
   <string name="account_sip_success_title">Sip-tili rekisteröity</string>
   <string name="account_sip_success_message">Olet rekisteröinyt Sip-tilisi onnistuneesti.</string>
   <string name="account_sip_register_anyway">Rekisteröidy kuitenkin</string>
-  <string name="account_link_device">Yhteyden muodostaminen toisesta laitteesta</string>
+  <string name="account_link_device">Yhdistä toisesta laitteesta</string>
   <string name="account_link_button">Yhteyden muodostaminen verkosta</string>
   <string name="account_link_archive_button">Yhteyden muodostaminen varmuuskopiosta</string>
   <string name="account_link_prompt_pin">Syötä PIN-koodi</string>
@@ -181,7 +184,8 @@
   <string name="register_name">Rekisteröi nimi</string>
   <string name="trying_to_register_name">Yritetään rekisteröidä nimeä</string>
   <string name="registered_username">Rekisteröity käyttäjänimi</string>
-  <string name="register_username">Rekisteröi julkinen käyttäjänimi (suositus)</string>
+  <string name="register_username">Rekisteröi julkinen käyttäjänimi</string>
+  <string name="register_recommended">Suositus</string>
   <string name="username_already_taken">käyttäjätunnus on varattu</string>
   <string name="invalid_username">Käyttäjätunnus ei kelpaa</string>
   <string name="unknown_error">Tuntematon virhe. Tarkista verkkoyhteytesi!</string>

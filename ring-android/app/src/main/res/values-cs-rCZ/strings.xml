@@ -144,8 +144,8 @@
   <string name="prompt_new_password_repeat">Zopakujte nové heslo</string>
   <string name="account_create_title">Vytvořit účet Jami</string>
   <string name="prompt_new_username">Zadejte nové uživatelské jméno</string>
+  <string name="prompt_hint_username">Uživatelské jméno</string>
   <string name="help_password_choose">K ochraně účtu Jami si zvolte silné heslo, které si dovedete zapamatovat.</string>
-  <string name="help_password_enter">Zadejte hlavní heslo ke svému účtu Jami</string>
   <string name="help_pin_enter">Zadejte PIN z jiného nastaveného účtu Jami. Abyste PIN získali, použijte volbu „vyvést účet u Jami“.</string>
   <string name="wizard_next">Další</string>
   <string name="wizard_back">Zpět</string>
@@ -155,7 +155,6 @@
   <string name="profile_message_warning">Váš profil je sdílen jen s vašimi kontakty</string>
   <string name="open_the_gallery">Otevřít galerii</string>
   <string name="take_a_photo">Pořídit fotku</string>
-  <string name="profile_name_hint">Zadejte své jméno (volitelné)</string>
   <!--Share fragment-->
   <string name="share_message">Skenovat tento kód s Jami</string>
   <string name="share_message_no_account">Vyberte, prosím, účet ke sdílení.</string>
@@ -170,14 +169,13 @@
   <string name="contact_request_title">Nová žádost o kontakt</string>
   <string name="contact_request_msg">Máte %1$s žádostí o kontakt</string>
   <string name="contact_request_account">Pro %1$s</string>
-  <string name="no_requests">0 žádostí o kontakt</string>
   <string name="message_contact_not_trusted_yet">%sještě není ve vašich kontaktech.\nPřijmete anebo odmítnete tuto žádost o kontakt?</string>
   <string name="message_contact_not_trusted">%snení ve vašich kontaktech.\nPřidat nové spojení?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Odeslat</string>
   <string name="send_request_title">Poslat žádost o kontakt</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">0 blokovaných kontaktů</string>
+  <string name="no_blocked_contact">Žádné blokované kontakty</string>
   <!--Smartlist-->
   <string name="no_contact_request">Neposlána žádná žádost o kontakt</string>
   <string name="contact_request_sent">Poslána žádost o kontakt</string>
@@ -216,4 +214,6 @@
   <string name="tv_audio_play">Přehrát</string>
   <string name="tv_audio_pause">Pozastavit</string>
   <string name="tv_dialog_send">Odeslat</string>
+  <!--WIZARD-->
+  <string name="wizard_password_skip">Vytvořit účet</string>
 </resources>

@@ -105,6 +105,9 @@ Puedes editar tu cuenta luego</string>
   <string name="account_credentials_add">Agregar credenciales</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Seguridad</string>
+  <string name="account_srtp_switch_label">Flujo de medio cifrado (SRTP)</string>
+  <string name="account_srtp_enable_sdes">Habilite SDES para el protocolo de intercambio de claves</string>
+  <string name="account_srtp_rtp_fallback">Retractarse a RTP si falla el cifrado</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Usar protocolo TLS</string>
@@ -183,7 +186,8 @@ Puedes editar tu cuenta luego</string>
   <string name="register_name">Registrar nombre</string>
   <string name="trying_to_register_name">Intentando registrar nombre</string>
   <string name="registered_username">Nombre de usuario registrado</string>
-  <string name="register_username">Registrar nombre de usuario publico (recomendado)</string>
+  <string name="register_username">Registrar nombre de usuario público</string>
+  <string name="register_recommended">Recomendado</string>
   <string name="username_already_taken">El nombre de usuario ya está en uso</string>
   <string name="invalid_username">Nombre de usuario no válido</string>
   <string name="unknown_error">Error desconocido. ¡Revisa tu conección a la red!</string>

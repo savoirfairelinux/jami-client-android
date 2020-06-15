@@ -105,6 +105,7 @@
   <string name="account_credentials_add">Adicionar credenciais</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Segurança</string>
+  <string name="account_srtp_switch_label">Encriptar fluxo de média (SRTP)</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Usar Transporte TLS</string>
@@ -158,7 +159,6 @@
   <string name="account_sip_success_title">Conta SIP registada</string>
   <string name="account_sip_success_message">Registou a sua conta SIP com sucesso.</string>
   <string name="account_sip_register_anyway">Registar mesmo assim</string>
-  <string name="account_link_device">Ligar através de outro dispositivo</string>
   <string name="account_link_button">Conectar da rede</string>
   <string name="account_link_archive_button">Conectar da cópia de segurança</string>
   <string name="account_link_prompt_pin">Introduza o PIN</string>
@@ -183,7 +183,7 @@
   <string name="register_name">Registar nome</string>
   <string name="trying_to_register_name">A tentar registar o nome</string>
   <string name="registered_username">Nome de utilizador registado</string>
-  <string name="register_username">Registar nome de utilizador público (recomendado)</string>
+  <string name="register_username">Registar nome de utilizador público</string>
   <string name="username_already_taken">O nome de utilizador já está registado</string>
   <string name="invalid_username">O nome de utilizador não é válido</string>
   <string name="unknown_error">Erro desconhecido. Por favor verifique a sua ligação à rede!</string>

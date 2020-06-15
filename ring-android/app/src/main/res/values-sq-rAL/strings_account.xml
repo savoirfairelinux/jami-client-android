@@ -95,6 +95,7 @@
   <string name="account_proxy_label">Ndërmjetës DHT</string>
   <string name="account_proxy_enable_label">Përdor ndërmjetës DHT</string>
   <string name="account_proxy_server_label">Adresë ndërmjetësi DHT</string>
+  <string name="account_proxy_server_list_label">URL liste ndërmjetësish DHT</string>
   <string name="account_peer_discovery_label">Pikasje ortakësh vendorë</string>
   <string name="account_peer_discovery_enable_label">Aktivizo pikasje ortakësh vendorë</string>
   <string name="account_peer_discovery_enable_summary">Lidhu me nyje të tjera DHT që reklamohen në rrjetin tonë vendor</string>
@@ -104,6 +105,9 @@
   <string name="account_credentials_add">Shtoni kredenciale</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Siguri</string>
+  <string name="account_srtp_switch_label">Fshehtëzo rrjedha media (SRTP)</string>
+  <string name="account_srtp_enable_sdes">Aktivizon SDES si protokoll shkëmbimi kyçesh</string>
+  <string name="account_srtp_rtp_fallback">Nëse SRTP dështon, përdor RTP</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Përdor Bartje TLS</string>
@@ -157,7 +161,7 @@
   <string name="account_sip_success_title">Llogaria SIP u regjistrua</string>
   <string name="account_sip_success_message">E regjistruat me sukses llogarinë tuaj SIP.</string>
   <string name="account_sip_register_anyway">Regjistroje sido qoftë</string>
-  <string name="account_link_device">Lidhuni prej pajisje tjetër</string>
+  <string name="account_link_device">Lidhuni prej një pajisje tjetër</string>
   <string name="account_link_button">Lidhu prej rrjeti</string>
   <string name="account_link_archive_button">Lidhje prej kopjeruajtjeje</string>
   <string name="account_link_prompt_pin">Jepni PIN-in</string>
@@ -182,7 +186,8 @@
   <string name="register_name">Regjistroni emër</string>
   <string name="trying_to_register_name">Po provohet të regjistrohet emri</string>
   <string name="registered_username">Emër përdoruesi i regjistruar</string>
-  <string name="register_username">Regjistroni emër publik përdoruesi (e këshilluar)</string>
+  <string name="register_username">Regjistroni emër publik përdoruesi</string>
+  <string name="register_recommended">E rekomanduar</string>
   <string name="username_already_taken">Emër përdoruesi tashmë i zënë</string>
   <string name="invalid_username">Emër përdoruesi i pavlefshëm</string>
   <string name="unknown_error">Gabim i panjohur. Ju lutemi, kontrolloni lidhjen në rrjet!</string>

@@ -105,6 +105,9 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_credentials_add">Anmeldedaten hinzufügen</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Sicherheit</string>
+  <string name="account_srtp_switch_label">Medienströme verschlüsseln (SRTP)</string>
+  <string name="account_srtp_enable_sdes">SDES als Schlüsselaustauschprotokoll verwenden</string>
+  <string name="account_srtp_rtp_fallback">Rückgriff auf RTP, wenn SRTP fehlschlägt</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS-Transportverschlüsselung benutzen</string>
@@ -158,7 +161,7 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_sip_success_title">SIP-Konto registriert</string>
   <string name="account_sip_success_message">Sie haben erfolgreich Ihr SIP-Konto registriert.</string>
   <string name="account_sip_register_anyway">Trotzdem registieren</string>
-  <string name="account_link_device">Verbindung von einem anderen Gerät</string>
+  <string name="account_link_device">Verbindung von einem anderen Gerät aus herstellen</string>
   <string name="account_link_button">Verbindung vom Netzwerk</string>
   <string name="account_link_archive_button">Verbindung vom Backup</string>
   <string name="account_link_prompt_pin">PIN eingeben</string>
@@ -183,7 +186,8 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="register_name">Name registrieren</string>
   <string name="trying_to_register_name">Name wird registriert</string>
   <string name="registered_username">Benutzername wurde registriert</string>
-  <string name="register_username">Öffentlichen Benutzernamen registrieren (empfohlen)</string>
+  <string name="register_username">Öffentlichen Benutzernamen registrieren</string>
+  <string name="register_recommended">Empfohlen</string>
   <string name="username_already_taken">Dieser Benutzername ist bereits vergeben</string>
   <string name="invalid_username">Ungültiger Benutzername</string>
   <string name="unknown_error">Unbekannter Fehler. Bitte überprüfen sie ihre Netzwerkverbindung!</string>

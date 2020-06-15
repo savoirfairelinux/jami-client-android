@@ -27,6 +27,7 @@
   <!--Conversation-->
   <string name="conversation_action_copy_peer_number">複製號碼</string>
   <!--Contacts-->
+  <string name="prompt_hint_username">使用者名</string>
   <string name="wizard_next">下一步</string>
   <!--MenuHeaderView-->
   <string name="profile">個人檔案</string>
@@ -50,4 +51,5 @@
   <string name="tv_audio_play">播放</string>
   <string name="tv_audio_pause">暫停</string>
   <string name="tv_dialog_send">發送</string>
+  <!--WIZARD-->
 </resources>

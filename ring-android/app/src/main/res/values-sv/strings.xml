@@ -151,8 +151,8 @@
   <string name="prompt_new_password_repeat">Upprepa nytt lösenord</string>
   <string name="account_create_title">Skapa ett Jami-konto</string>
   <string name="prompt_new_username">Ange nytt användarnamn</string>
+  <string name="prompt_hint_username">Användarnamn</string>
   <string name="help_password_choose">Välj ett starkt lösenord som du kommer ihåg, för att skydda ditt Jami-konto.</string>
-  <string name="help_password_enter">Ange lösenordet för ditt Jami-konto</string>
   <string name="help_pin_enter">Ange PIN-koden från ett annat konfigurerat Jami-konto. Använd \"Exportera Jami-konto\", för att få din PIN-kod.</string>
   <string name="wizard_next">Nästa</string>
   <string name="wizard_back">Tillbaka</string>
@@ -162,7 +162,6 @@
   <string name="profile_message_warning">Din profil delas endast med dina kontakter</string>
   <string name="open_the_gallery">Öppna galleriet</string>
   <string name="take_a_photo">Ta ett foto</string>
-  <string name="profile_name_hint">Ange ditt namn (frivilligt)</string>
   <!--Share fragment-->
   <string name="share_message">Skanna den här koden med Jami</string>
   <string name="share_message_no_account">Välj ett konto att dela.</string>
@@ -177,7 +176,6 @@
   <string name="contact_request_title">Ny kontaktförfrågan</string>
   <string name="contact_request_msg">Du har %1$s kontaktförfrågningar</string>
   <string name="contact_request_account">För %1$s</string>
-  <string name="no_requests">0 kontaktförfrågningar</string>
   <string name="message_contact_not_trusted_yet">%s finns ännu inte i din kontaktlista.\nAccepterar eller avslår du denna kontaktförfrågan?</string>
   <string name="message_contact_not_trusted">%s finns inte i dina kontakter.\nVill du lägga till ny kontakt?</string>
   <!--Send contact requests-->
@@ -185,7 +183,7 @@
   <string name="send_request_title">Skicka en kontaktförfrågan</string>
   <string name="send_request_msg">Du måste skicka en kontaktförfrågan för att kommunicera med den här användaren. Så länge som kontakten inte har accepterat din förfrågan, kan du skicka meddelanden men han/hon kan inte svara.</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">0 blockerade kontakter</string>
+  <string name="no_blocked_contact">Inga blockerade kontakter</string>
   <!--Smartlist-->
   <string name="no_contact_request">Ingen kontaktförfrågan skickad</string>
   <string name="contact_request_sent">Kontaktförfrågan skickad</string>
@@ -228,4 +226,6 @@
   <string name="tv_audio_play">Spela</string>
   <string name="tv_audio_pause">Paus</string>
   <string name="tv_dialog_send">Skicka</string>
+  <!--WIZARD-->
+  <string name="wizard_password_skip">Skapa konto</string>
 </resources>
