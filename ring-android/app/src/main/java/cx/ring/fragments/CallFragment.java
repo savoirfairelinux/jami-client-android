@@ -336,7 +336,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             mPreviewSurfaceWidth = width;
             mPreviewSurfaceHeight = height;
             presenter.previewVideoSurfaceCreated(binding.previewSurface);
-//            presenter.pluginSurfaceCreated(binding.pluginPreviewSurface);
         }
 
         @Override
@@ -349,7 +348,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         @Override
         public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
             presenter.previewVideoSurfaceDestroyed();
-//            presenter.pluginSurfaceDestroyed();
             return true;
         }
 
@@ -1445,6 +1443,29 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
      */
     @Override
     public void onItemSelected(int position) {
+        Log.i(TAG, "selected position: " + position);
+        if (previousPluginPosition != position) {
+            /** If there was a different plugin before, unload it
+             * If previousPluginPosition = -1, there was no plugin
+             */
+            if (previousPluginPosition != -1) {
+                String callMediaId = callMediaHandlers.get(previousPluginPosition);
+                toggleCallMediaHandler(callMediaId, false);
+            }
+
+            previousPluginPosition = position;
+            String callMediaId = callMediaHandlers.get(position);
+            toggleCallMediaHandler(callMediaId, true);
+        }
+    }
+
+
+    /**
+     * Called whenever a plugin drawable in the recycler picker is clicked
+     * @param position
+     */
+    @Override
+    public void onItemClicked(int position) {
         Log.i(TAG, "selected position: " + position);
         if (previousPluginPosition != position) {
             /** If there was a different plugin before, unload it

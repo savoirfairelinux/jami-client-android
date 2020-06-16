@@ -72,6 +72,11 @@ public class RecyclerPickerLayoutManager extends LinearLayoutManager {
         }
     }
 
+    private void OnClickListener()
+    {
+
+    }
+
     private int getRecyclerViewCenterX() {
         Log.i("ZZZ", "recyclerView width: " + recyclerView.getWidth() + " Right-Left: " + (recyclerView.getRight()-recyclerView.getLeft()));
         return (recyclerView.getWidth())/2 + recyclerView.getLeft();
@@ -99,5 +104,6 @@ public class RecyclerPickerLayoutManager extends LinearLayoutManager {
 
     public interface ItemSelectedListener {
         void onItemSelected(int position);
+        void onItemClicked(int position);
     }
 }

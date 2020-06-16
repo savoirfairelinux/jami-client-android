@@ -19,14 +19,15 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="76dp"
         android:layout_marginTop="16dp"
         android:ellipsize="marquee"
         android:fadingEdge="horizontal"
         android:singleLine="true"
         android:text="@string/video_plugins"
+        android:textSize="16sp"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        app:layout_constraintStart_toEndOf="@+id/icon"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -35,12 +36,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@android:id/title"
         android:layout_alignStart="@android:id/title"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="76dp"
         android:maxLines="4"
         android:text="@string/video_plugins"
+        android:textSize="14sp"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="?android:attr/textColorSecondary"
-        app:layout_constraintStart_toEndOf="@+id/icon"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title" />
 
     <Button
