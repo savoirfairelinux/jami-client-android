@@ -46,7 +46,8 @@ public class CallNotificationService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
-        Notification notification = (Notification) mNotificationService.showCallNotification(intent.getIntExtra(NotificationService.KEY_NOTIFICATION_ID, -1));
+        Notification notification = (Notification) mNotificationService.showCallNotification(intent.getIntExtra(NotificationService.KEY_NOTIFICATION_ID, -1),
+                intent.getBooleanExtra(NotificationService.KEY_AUTO_ANSWER, false));
         if (notification == null) {
             if (isFirst)
                 stopSelf();
