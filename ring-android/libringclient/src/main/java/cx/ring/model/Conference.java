@@ -73,7 +73,7 @@ public class Conference {
     }
 
     public String getPluginId() {
-        return mId + "_plugin";
+        return "local";
     }
 
     public String getConfId() {

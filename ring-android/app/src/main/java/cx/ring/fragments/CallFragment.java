@@ -169,6 +169,9 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     private boolean toggleVideoPluginsCarousel = true;
     private final ValueAnimator animation = new ValueAnimator();
 
+    public boolean isPluginsMode() {
+        return pluginsMode;
+    }
 
     private PointF previewDrag = null;
     private final ValueAnimator previewSnapAnimation = new ValueAnimator();
@@ -336,7 +339,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             mPreviewSurfaceWidth = width;
             mPreviewSurfaceHeight = height;
             presenter.previewVideoSurfaceCreated(binding.previewSurface);
-//            presenter.pluginSurfaceCreated(binding.pluginPreviewSurface);
         }
 
         @Override
@@ -349,7 +351,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         @Override
         public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
             presenter.previewVideoSurfaceDestroyed();
-//            presenter.pluginSurfaceDestroyed();
             return true;
         }
 
@@ -1387,11 +1388,14 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             callMediaHandlers = Ringservice.listCallMediaHandlers();
             List<Drawable> videoPluginsItems = new ArrayList<>();
 
+            Drawable d = context.getDrawable(R.drawable.round_cancel_24);
+
+            videoPluginsItems.add(d);
             // Search for plugin call media handlers icons
             // If a call media handler doesn't have an icon use a standard android icon
             for (String callMediaHandler : callMediaHandlers) {
                 Map<String, String> details = getCallMediaHandlerDetails(callMediaHandler);
-                Drawable d = context.getDrawable(R.drawable.ic_jami);
+                d = context.getDrawable(R.drawable.ic_jami);
                 if(details.containsKey("icoPath")){
                      Drawable cd = PluginUtils.getIcon(details.get("icoPath"));
                     if(cd != null) {
@@ -1418,20 +1422,29 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             // Start loading the first or previous plugin if one was active
             if(callMediaHandlers.size() > 0) {
                 // If no previous plugin was active, take the first, else previous
-                int position = (previousPluginPosition == -1)? 0 :previousPluginPosition;
-                String callMediaId = callMediaHandlers.get(position);
-                toggleCallMediaHandler(callMediaId, true);
-                previousPluginPosition = position;
+                int position;
+                if(previousPluginPosition < 1) {
+                    rp.scrollToPosition(1);
+                    position = 1;
+                    previousPluginPosition = 1;
+                } else {
+                    position = previousPluginPosition;
+                }
+                if (position > 0) {
+                    String callMediaId = callMediaHandlers.get(position-1);
+                    toggleCallMediaHandler(callMediaId, true);
+                }
             }
 
         } else {
             //change preview image
             displayVideoSurface(true,true);
-            if (previousPluginPosition != -1) {
+            if (previousPluginPosition > 0) {
                 String callMediaId = callMediaHandlers.
-                        get(previousPluginPosition);
+                        get(previousPluginPosition-1);
 
                 toggleCallMediaHandler(callMediaId, false);
+                rp.scrollToPosition(previousPluginPosition);
             }
             binding.recyclerPicker.setVisibility(View.GONE);
             movePreview(false);
@@ -1446,18 +1459,44 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     @Override
     public void onItemSelected(int position) {
         Log.i(TAG, "selected position: " + position);
-        if (previousPluginPosition != position) {
+        /** If there was a different plugin before, unload it
+         * If previousPluginPosition = -1 or 0, there was no plugin
+         */
+        if (previousPluginPosition > 0) {
+            String callMediaId = callMediaHandlers.get(previousPluginPosition-1);
+            toggleCallMediaHandler(callMediaId, false);
+        }
+
+        if (position > 0) {
+            previousPluginPosition = position;
+            String callMediaId = callMediaHandlers.get(position-1);
+            toggleCallMediaHandler(callMediaId, true);
+        }
+    }
+
+
+    /**
+     * Called whenever a plugin drawable in the recycler picker is clicked
+     * @param position
+     */
+    @Override
+    public void onItemClicked(int position) {
+        Log.i(TAG, "selected position: " + position);
+        if (position == 0) {
             /** If there was a different plugin before, unload it
-             * If previousPluginPosition = -1, there was no plugin
+             * If previousPluginPosition = -1 or 0, there was no plugin
              */
-            if (previousPluginPosition != -1) {
-                String callMediaId = callMediaHandlers.get(previousPluginPosition);
+            if (previousPluginPosition > 0) {
+                String callMediaId = callMediaHandlers.get(previousPluginPosition-1);
                 toggleCallMediaHandler(callMediaId, false);
+                rp.scrollToPosition(previousPluginPosition);
             }
 
-            previousPluginPosition = position;
-            String callMediaId = callMediaHandlers.get(position);
-            toggleCallMediaHandler(callMediaId, true);
+            CallActivity callActivity = (CallActivity) getActivity();
+            callActivity.showSystemUI();
+
+            toggleVideoPluginsCarousel(false);
+            displayVideoPluginsCarousel();
         }
     }
 }

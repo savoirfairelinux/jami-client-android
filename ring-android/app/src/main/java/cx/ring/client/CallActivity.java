@@ -157,13 +157,13 @@ public class CallActivity extends AppCompatActivity {
                             | View.SYSTEM_UI_FLAG_IMMERSIVE);
 
             CallFragment callFragment = getCallFragment();
-            if(callFragment != null) {
+            if(callFragment != null && !callFragment.isPluginsMode()) {
                 callFragment.toggleVideoPluginsCarousel(false);
             }
         }
     }
 
-    private void showSystemUI() {
+    public void showSystemUI() {
         if (mMainView != null) {
             mMainView.setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LOW_PROFILE
@@ -192,6 +192,8 @@ public class CallActivity extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         CallFragment callFragment = getCallFragment();
         if (callFragment != null) {
+            callFragment.toggleVideoPluginsCarousel(false);
+            callFragment.displayVideoPluginsCarousel();
             return MediaButtonsHelper.handleMediaKeyCode(keyCode, callFragment)
                     || super.onKeyDown(keyCode, event);
         }

@@ -41,7 +41,7 @@
     <string name="pref_persistNotification_summary">Allow running in background to receive calls and messages.</string>
 
     <!-- Plugin -->
-    <string name="pref_plugins_title">Plugins (experimental)</string>
+    <string name="pref_plugins_title">Plugins</string>
     <string name="pref_plugins_summary">Enable plugins and set their parameters</string>
     <string name="fab_plugins_add">Add a new plugin</string>
     <string name="plugin_uninstall_title">Uninstall Plugin ?</string>

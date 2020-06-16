@@ -672,6 +672,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         if (fContent instanceof PluginsListSettingsFragment) {
             return;
         }
+
         fContent = new PluginsListSettingsFragment();
         getSupportFragmentManager()
                 .beginTransaction()

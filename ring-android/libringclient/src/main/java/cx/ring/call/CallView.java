@@ -32,7 +32,6 @@ public interface CallView {
     void displayContactBubble(boolean display);
 
     void displayVideoSurface(boolean displayVideoSurface, boolean displayPreviewContainer);
-//    void displayPluginSurface();
 
     void displayPreviewSurface(boolean display);
 
