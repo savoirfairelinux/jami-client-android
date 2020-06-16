@@ -510,17 +510,17 @@ public class ConversationFacade {
         }
 
         if (incomingCall) {
-            mNotificationService.handleCallNotification(conference, false);
+            mNotificationService.handleCallNotification(conference, false, account.isAutoanswerEnabled());
             mHardwareService.setPreviewSettings();
         } else if ((newState == SipCall.CallStatus.CURRENT && call.isIncoming())
                 || newState == SipCall.CallStatus.RINGING && !call.isIncoming()) {
-            mNotificationService.handleCallNotification(conference, false);
+            mNotificationService.handleCallNotification(conference, false, false);
             mAccountService.sendProfile(call.getDaemonIdString(), call.getAccount());
         } else if (newState == SipCall.CallStatus.HUNGUP
                 || newState == SipCall.CallStatus.BUSY
                 || newState == SipCall.CallStatus.FAILURE
                 || newState == SipCall.CallStatus.OVER) {
-            mNotificationService.handleCallNotification(conference, true);
+            mNotificationService.handleCallNotification(conference, true, false);
             mHardwareService.closeAudioState();
             long now = System.currentTimeMillis();
             if (call.getTimestamp() == 0) {
