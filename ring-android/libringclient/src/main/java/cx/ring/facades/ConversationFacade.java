@@ -509,18 +509,23 @@ public class ConversationFacade {
             call.setTimestamp(System.currentTimeMillis());
         }
 
+        boolean autoAnswer = false;
+        if (account != null) {
+            autoAnswer = account.isAutoanswerEnabled();
+        }
+
         if (incomingCall) {
-            mNotificationService.handleCallNotification(conference, false);
+            mNotificationService.handleCallNotification(conference, false, autoAnswer);
             mHardwareService.setPreviewSettings();
         } else if ((newState == SipCall.CallStatus.CURRENT && call.isIncoming())
                 || newState == SipCall.CallStatus.RINGING && !call.isIncoming()) {
-            mNotificationService.handleCallNotification(conference, false);
+            mNotificationService.handleCallNotification(conference, false, autoAnswer);
             mAccountService.sendProfile(call.getDaemonIdString(), call.getAccount());
         } else if (newState == SipCall.CallStatus.HUNGUP
                 || newState == SipCall.CallStatus.BUSY
                 || newState == SipCall.CallStatus.FAILURE
                 || newState == SipCall.CallStatus.OVER) {
-            mNotificationService.handleCallNotification(conference, true);
+            mNotificationService.handleCallNotification(conference, true, autoAnswer);
             mHardwareService.closeAudioState();
             long now = System.currentTimeMillis();
             if (call.getTimestamp() == 0) {
