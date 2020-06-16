@@ -64,6 +64,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.inject.Inject;
 
 import cx.ring.R;
+import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.contactrequests.ContactRequestsFragment;
@@ -132,6 +133,7 @@ public class NotificationServiceImpl implements NotificationService {
     private int avatarSize;
     private LinkedHashMap<Integer, Conference> currentCalls = new LinkedHashMap<>();
     private ConcurrentHashMap<Integer, Notification> dataTransferNotifications = new ConcurrentHashMap<>();
+    private boolean mAutoAnswer = false;
 
     @SuppressLint("CheckResult")
     public void initHelper() {
@@ -294,6 +296,12 @@ public class NotificationServiceImpl implements NotificationService {
                                                 .setClass(mContext, DRingService.class)
                                                 .putExtra(KEY_CALL_ID, call.getDaemonIdString()),
                                         PendingIntent.FLAG_ONE_SHOT));
+                if (mAutoAnswer) {
+                    mContext.startActivity(new Intent(DRingService.ACTION_CALL_ACCEPT)
+                            .putExtra(KEY_CALL_ID, call.getDaemonIdString())
+                            .setClass(mContext, CallActivity.class)
+                            .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                }
             } else {
                 messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_CALL_IN_PROGRESS);
                 messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_outgoing_call_title, contact.getDisplayName()))
@@ -312,7 +320,7 @@ public class NotificationServiceImpl implements NotificationService {
                                         PendingIntent.FLAG_ONE_SHOT));
             }
         } else {
-            handleCallNotification(mConference, true);
+            handleCallNotification(mConference, true, false);
             return null;
         }
 
@@ -370,7 +378,7 @@ public class NotificationServiceImpl implements NotificationService {
      */
     private void startForegroundService(int id, Class serviceClass) {
         ContextCompat.startForegroundService(mContext, new Intent(mContext, serviceClass)
-                .putExtra(KEY_NOTIFICATION_ID, id));
+                .putExtra(KEY_NOTIFICATION_ID, id).putExtra(KEY_AUTO_ANSWER, mAutoAnswer));
     }
 
     /**
@@ -380,12 +388,14 @@ public class NotificationServiceImpl implements NotificationService {
      * @param remove     true if it should be removed from current calls
      */
     @Override
-    public void handleCallNotification(Conference conference, boolean remove) {
+    public void handleCallNotification(Conference conference, boolean remove, boolean autoAnswer) {
         if (DeviceUtils.isTv(mContext)) {
             if (!remove)
                 startCallActivity(conference.getId());
             return;
         }
+
+        mAutoAnswer = autoAnswer;
 
         int id = conference.getId().hashCode();
         currentCalls.remove(id);
