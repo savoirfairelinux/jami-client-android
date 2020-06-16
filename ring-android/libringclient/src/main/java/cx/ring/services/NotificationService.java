@@ -33,6 +33,7 @@ public interface NotificationService {
     String TRUST_REQUEST_NOTIFICATION_FROM = "trustRequestNotificationFrom";
     String KEY_CALL_ID = "callId";
     String KEY_NOTIFICATION_ID = "notificationId";
+    String KEY_AUTO_ANSWER = "autoAnswer";
 
     Object showCallNotification(int callId);
 
@@ -60,7 +61,7 @@ public interface NotificationService {
 
     Object getServiceNotification();
 
-    void handleCallNotification(Conference conference, boolean remove);
+    void handleCallNotification(Conference conference, boolean remove, boolean autoAnswer);
 
     void handleDataTransferNotification(DataTransfer transfer, CallContact contact, boolean remove);
 
