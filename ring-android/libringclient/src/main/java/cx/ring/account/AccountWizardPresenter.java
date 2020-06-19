@@ -179,6 +179,8 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> {
                         getView().displayProgress(false);
                         getView().displayCannotBeFoundError();
                     }));
+        } else {
+            getView().goToProfileCreation(accountCreationModel);
         }
     }
 
