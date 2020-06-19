@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e36c7fec_3a0efa96",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2020-06-19T16:38:01Z",
+      "side": 1,
+      "message": "setFullScreenIntent triggers when the phone is lock and the pending intent will run but when the device is awake it works as a simple notification without pending intent. In this case I need to handle it manually. I just wanted to have both logic at the same location.",
+      "parentUuid": "9a46027a_28e75393",
+      "range": {
+        "startLine": 299,
+        "startChar": 16,
+        "endLine": 304,
+        "endChar": 17
+      },
+      "revId": "be587a4c4c0f52c7dda3b3158407ea38da494732",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84084ee2_be5b968f",
         "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
         "patchSetId": 7
@@ -53,6 +77,30 @@
       "writtenOn": "2020-06-19T13:28:48Z",
       "side": 1,
       "message": "how is autoanswer relevant to show the notification of an ended call ?",
+      "range": {
+        "startLine": 526,
+        "startChar": 12,
+        "endLine": 526,
+        "endChar": 86
+      },
+      "revId": "be587a4c4c0f52c7dda3b3158407ea38da494732",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "767cd3ae_79bccf05",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/facades/ConversationFacade.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2020-06-19T16:38:01Z",
+      "side": 1,
+      "message": "It is not relevant but as the function needs the argument for incoming state, I passed it",
+      "parentUuid": "766aea94_2625521d",
       "range": {
         "startLine": 526,
         "startChar": 12,
