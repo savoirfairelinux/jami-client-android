@@ -39,6 +39,7 @@ import cx.ring.fragments.GeneralAccountPresenter;
 import cx.ring.fragments.GeneralAccountView;
 import cx.ring.model.Account;
 import cx.ring.model.ConfigKey;
+import cx.ring.services.SharedPreferencesServiceImpl;
 
 public class TVSettingsFragment extends LeanbackSettingsFragmentCompat {
 
@@ -104,6 +105,7 @@ public class TVSettingsFragment extends LeanbackSettingsFragmentCompat {
         public void onCreatePreferences(Bundle bundle, String rootKey) {
             PreferenceManager pm = getPreferenceManager();
             pm.setSharedPreferencesMode(Context.MODE_PRIVATE);
+            pm.setSharedPreferencesName(SharedPreferencesServiceImpl.PREFS_VIDEO);
             setPreferencesFromResource(R.xml.tv_account_general_pref, rootKey);
         }
 
