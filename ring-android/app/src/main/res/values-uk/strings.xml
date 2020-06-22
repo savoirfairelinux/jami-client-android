@@ -148,8 +148,8 @@
   <string name="prompt_new_password_repeat">Новий пароль ще раз</string>
   <string name="account_create_title">Створити обліковий запис Джамі</string>
   <string name="prompt_new_username">Вкажіть нове ім\'я користувача</string>
+  <string name="prompt_hint_username">Ім’я</string>
   <string name="help_password_choose">Оберіть сильний пароль, який ви запам\'ятаєте, щоб захистити ваш обліковий запис Джамі.</string>
-  <string name="help_password_enter">Введіть основний пароль від вашого облікового запису Джамі</string>
   <string name="help_pin_enter">Введіть PIN-код з іншого налаштованого облікового запису Джамі. Скористайтеся можливістю «Вивантажити обліковий запис Джамі», щоб отримати PIN-код.</string>
   <string name="wizard_next">Далі</string>
   <string name="wizard_back">Назад</string>
@@ -159,7 +159,6 @@
   <string name="profile_message_warning">Ваш профіль бачитимуть лише ваші контакти</string>
   <string name="open_the_gallery">Відкрити галерею</string>
   <string name="take_a_photo">Зробити фото</string>
-  <string name="profile_name_hint">Вкажіть ваше ім\'я (не обов\'язково)</string>
   <!--Share fragment-->
   <string name="share_message">Зіскануйте цей код у Джамі</string>
   <string name="share_message_no_account">Будь ласка, оберіть обліковий запис, щоб поділитися.</string>
@@ -174,7 +173,6 @@
   <string name="contact_request_title">Новий запит контакту</string>
   <string name="contact_request_msg">У вас є %1$s запитів контактів</string>
   <string name="contact_request_account">Для %1$s</string>
-  <string name="no_requests">0 запитів контактів</string>
   <string name="message_contact_not_trusted_yet">%s ще не серед ваших контактів.\nВи приймаєте чи відхиляєте цей запит контакту?</string>
   <string name="message_contact_not_trusted">%s немає серед ваших контактів.\nДодати новий контакт?</string>
   <!--Send contact requests-->
@@ -182,7 +180,6 @@
   <string name="send_request_title">Відправити запит контакту</string>
   <string name="send_request_msg">Ви повинні відправити запит контакту, щоб спілкуватися з іншим користувачем. Поки контакт не прийме запит, ви можете надсилати повідомлення, але він не зможе відповісти.</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">0 заблокованих контактів</string>
   <!--Smartlist-->
   <string name="no_contact_request">Не було відправлено жодних запитів контакту</string>
   <string name="contact_request_sent">Запит контакту надіслано</string>
@@ -202,4 +199,6 @@
   <string name="tv_audio_play">Програти</string>
   <string name="tv_audio_pause">Пауза</string>
   <string name="tv_dialog_send">Відправити</string>
+  <!--WIZARD-->
+  <string name="wizard_password_skip">Створити обліковий запис</string>
 </resources>

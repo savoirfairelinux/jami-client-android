@@ -169,9 +169,8 @@
   <string name="prompt_new_password_repeat">Saisir à nouveau le mot de passe</string>
   <string name="account_create_title">Créer un compte Jami</string>
   <string name="prompt_new_username">Saisir un nouveau nom d\'utilisateur</string>
+  <string name="prompt_hint_username">nom d\'utilisateur</string>
   <string name="help_password_choose">Choisir un mot de passe robuste dont vous vous rappellerez pour protéger votre compte Jami.</string>
-  <string name="help_password_enter">Entrez le mot de passe de votre compte Jami principal</string>
-  <string name="help_server_enter">Entrez l\'URL du serveur de gestion</string>
   <string name="help_pin_enter">Saisissez le code PIN d\'un autre compte Jami configuré. Utilisez la fonction \"exporter le compte Jami\" pour obtenir un code PIN.</string>
   <string name="wizard_next">Suivant</string>
   <string name="wizard_back">Retour</string>
@@ -181,7 +180,6 @@
   <string name="profile_message_warning">Votre profil n\'est partagé qu\'avec vos contacts</string>
   <string name="open_the_gallery">Ouvrir la galerie</string>
   <string name="take_a_photo">Prendre une photo</string>
-  <string name="profile_name_hint">Entrez votre nom (optionnel)</string>
   <!--Share fragment-->
   <string name="share_message">Numériser ce code avec Jami</string>
   <string name="share_message_no_account">Sélectionnez un compte à partager.</string>
@@ -197,7 +195,6 @@
   <string name="contact_request_title">Nouvelle demande de contact</string>
   <string name="contact_request_msg">Vous avez %1$s demandes de contact</string>
   <string name="contact_request_account">Pour %1$s</string>
-  <string name="no_requests">0 demande de contact</string>
   <string name="message_contact_not_trusted_yet">%s n\'est pas encore dans vos contacts.\nAcceptez-vous ou non cette demande de contact ?</string>
   <string name="message_contact_not_trusted">%s n\'est pas dans vos contacts.\nAjouter un nouveau contact ?</string>
   <!--Send contact requests-->
@@ -205,7 +202,7 @@
   <string name="send_request_title">Envoyer une demande de contact</string>
   <string name="send_request_msg">Vous devez envoyer une demande de contact pour communiquer avec cet utilisateur. Tant que votre contact n\'aura pas accepté la demande, vous pouvez lui envoyer des messages mais il ne pourra pas y répondre.</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">0 contact bloqué</string>
+  <string name="no_blocked_contact">Aucun contact bloqué</string>
   <!--Smartlist-->
   <string name="no_contact_request">Aucune demande de contact envoyée</string>
   <string name="contact_request_sent">Demande de contact envoyée</string>
@@ -257,4 +254,5 @@
   <string name="tv_dialog_send">Envoyer</string>
   <string name="tv_send_text">Envoyer du texte</string>
   <string name="tv_send_audio">Envoyer de l\'audio</string>
+  <!--WIZARD-->
 </resources>

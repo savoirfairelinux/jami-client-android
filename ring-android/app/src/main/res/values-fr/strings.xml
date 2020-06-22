@@ -8,12 +8,12 @@
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Contribuez</string>
   <string name="version_section">Version</string>
-  <string name="no_email_app_installed">Application d\'envoi de courriel non-trouvée, installez-en une pour envoyer votre rapport</string>
+  <string name="no_email_app_installed">Application d\'envoi de courriel non trouvée, installez-en une pour envoyer votre rapport</string>
   <string name="no_browser_app_installed">Aucun navigateur internet trouvé. Vous devez en installer un afin de voir cette page</string>
   <string name="email_chooser_title">Envoi du courriel en utilisant …</string>
   <string name="website_chooser_title">Voir le site web avec...</string>
   <string name="license">Ce logiciel est offert \"tel quel\", sans aucune garantie. Pour plus d\'informations,  voir <u>GNU General Public License version 3 or later</u></string>
-  <string name="description">Jami est un logiciel libre de communication universel qui respecte la vie privée et l\'intimité de ses utilisateurs.</string>
+  <string name="description">Jami est un logiciel libre de communication universel qui respecte les libertés et la vie privée de ses utilisateurs.</string>
   <string name="credits">Crédits</string>
   <string name="call_service_description">Ce service est nécessaire pour que vos appels continuent de fonctionner en arrière-plan. Il ne fonctionne que pendant les appels.</string>
   <string name="data_transfer_service_description">Ce service est nécessaire pour afficher les notifications persistantes pendant un transfert de fichier. Il ne fonctionne que pendant le transfert de fichiers.</string>
@@ -105,6 +105,7 @@
   <string name="write_a_message">Ecrire un message</string>
   <string name="scan_qr">Scanner un code QR</string>
   <string name="ab_action_flipcamera">Changer de caméra</string>
+  <string name="ab_action_hidepreview">Masquer l\'aperçu</string>
   <!--Text messages-->
   <string name="send_message">Envoyer le message</string>
   <string name="message_sending">Envoi du message</string>
@@ -169,9 +170,10 @@
   <string name="prompt_new_password_repeat">Confirmez le mot de passe</string>
   <string name="account_create_title">Créer un compte Jami</string>
   <string name="prompt_new_username">Entrez un nouveau nom d\'utilisateur</string>
+  <string name="prompt_hint_username">Nom d\'utilisateur</string>
   <string name="help_password_choose">Pour protéger votre compte Jami, choisissez un mot de passe fort dont vous vous souviendrez.</string>
   <string name="help_password_enter">Saisissez le mot de passe du compte Jami de référence </string>
-  <string name="help_server_enter">Entrer l\'URL du serveur d\'entreprise</string>
+  <string name="help_server_enter">Adresse du serveur de gestion Jami</string>
   <string name="help_pin_enter">Entrez le NIP obtenu en configurant un autre compte Jami . Utilisez la fonction \"exportez un compte sur Jami\" pour obtenir un NIP.</string>
   <string name="wizard_next">Suivant</string>
   <string name="wizard_back">Précédent</string>
@@ -181,7 +183,7 @@
   <string name="profile_message_warning">Votre profil n\'est partagé qu\'avec vos contacts</string>
   <string name="open_the_gallery">Ouvrir la galerie</string>
   <string name="take_a_photo">Prendre une photo</string>
-  <string name="profile_name_hint">Entrez votre nom (facultatif)</string>
+  <string name="profile_name_hint">Entrer votre nom</string>
   <!--Share fragment-->
   <string name="share_message">Numériser cet identifiant avec Jami</string>
   <string name="share_message_no_account">Svp, sélectionnez le compte à partager</string>
@@ -197,7 +199,7 @@
   <string name="contact_request_title">Nouvelle demande de contact  </string>
   <string name="contact_request_msg">Vous avez %1$s demande(s) d\'ajout</string>
   <string name="contact_request_account">Pour %1$s</string>
-  <string name="no_requests">Aucune demande de contact</string>
+  <string name="no_requests">Vous n\'avez pas de demande de contact</string>
   <string name="message_contact_not_trusted_yet">%sne fait pas partie actuellement de vos contacts.\n Acceptez-vous ou refusez-vous cette invitation ?</string>
   <string name="message_contact_not_trusted">%s n\'est pas l\'un de vos contacts.\n Souhaitez-vous le rajouter ?</string>
   <!--Send contact requests-->
@@ -208,6 +210,7 @@
   <string name="no_blocked_contact">Aucun contact bloqué</string>
   <!--Smartlist-->
   <string name="no_contact_request">Aucune invitation envoyée</string>
+  <string name="conversation_placeholder">Aucune conversation pour le moment</string>
   <string name="contact_request_sent">Invitation envoyée</string>
   <string name="start_conversation">Démarrer une conversation</string>
   <string name="search_results">Résultats de la recherche</string>
@@ -264,4 +267,20 @@
   <string name="tv_send_audio">Envoyer le message audio </string>
   <string name="tv_send_video">Envoyer le média</string>
   <string name="conversation_input_speech_hint">Dîtes quelque chose...</string>
+  <!--WIZARD-->
+  <string name="wizard_status_recommended">Recommandé</string>
+  <string name="wizard_status_optional">Optionnel</string>
+  <string name="wizard_status_required">Obligatoire</string>
+  <string name="wizard_username_info">Choisissez un nom d\'utilisateur pour votre compte</string>
+  <string name="wizard_username_button">Choisissez un nom d\'utilisateur</string>
+  <string name="wizard_username_skip">Passer cette étape</string>
+  <string name="wizard_password_info">Mot  de passe du compte</string>
+  <string name="wizard_password_placeholder">Choisissez un mot de passe pour encrypter la clé de votre compte sur cet appareil</string>
+  <string name="wizard_password_button">Choisir un mot de passe</string>
+  <string name="wizard_password_skip">Créer le compte</string>
+  <string name="wizard_password_switch">Encrypter mon compte avec un mot de passe</string>
+  <string name="wizard_password_warning">Notez que le mot de passe ne peut pas être récupéré</string>
+  <string name="wizard_profile_info">Votre profil n\'est partagé qu\'avec vos contacts</string>
+  <string name="wizard_profile_button">Sauvegardez votre profile</string>
+  <string name="wizard_profile_skip">Passez cette étape et faire cela ultérieurement</string>
 </resources>

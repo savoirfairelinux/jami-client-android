@@ -105,6 +105,7 @@
   <string name="account_credentials_add">ログイン情報を追加</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">セキュリティ</string>
+  <string name="account_srtp_switch_label">メディアストリームを暗号化 (SRTP)</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS Transportを使用</string>
@@ -158,7 +159,6 @@
   <string name="account_sip_success_title">SIPアカウントを登録しました</string>
   <string name="account_sip_success_message">SIPアカウントを正常に登録しました。</string>
   <string name="account_sip_register_anyway">とにかく登録する</string>
-  <string name="account_link_device">別のデバイスから接続</string>
   <string name="account_link_button">ネットワークから接続</string>
   <string name="account_link_archive_button">バックアップから接続</string>
   <string name="account_link_prompt_pin">PINを入力してください</string>
@@ -183,7 +183,8 @@
   <string name="register_name">登録名</string>
   <string name="trying_to_register_name">名前を登録しようとしています</string>
   <string name="registered_username">登録ユーザー名</string>
-  <string name="register_username">公開ユーザー名を登録 (推奨)</string>
+  <string name="register_username">公開ユーザー名を登録</string>
+  <string name="register_recommended">推奨</string>
   <string name="username_already_taken">すでに取得されているユーザー名です</string>
   <string name="invalid_username">無効なユーザー名</string>
   <string name="unknown_error">原因不明のエラーが発生しました。ネットワークの接続を確認してください。</string>

@@ -105,6 +105,7 @@
   <string name="account_credentials_add">افزودن اعتبار‌نامه‌ها</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">امنیت</string>
+  <string name="account_srtp_switch_label">رمزنگاری جریان های مدیا (SRTP)</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">استفاده از جابه‌جایی TLS</string>
@@ -158,7 +159,6 @@
   <string name="account_sip_success_title">حساب SIP ثبت شد</string>
   <string name="account_sip_success_message">شما حساب SIP خود را با موفقیت ثبت کردید.</string>
   <string name="account_sip_register_anyway">به هر حال ثبت کنید</string>
-  <string name="account_link_device">اتصال از دستگاه دیگر</string>
   <string name="account_link_button">اتصال از طریق شبکه</string>
   <string name="account_link_archive_button">اتصال از طریق پشتیبان</string>
   <string name="account_link_prompt_pin">پین را وارد کنید</string>
@@ -183,7 +183,7 @@
   <string name="register_name">ثبت نام</string>
   <string name="trying_to_register_name">در حال تلاش برای ثبت نام</string>
   <string name="registered_username">نام کاربری ثبت‌شده</string>
-  <string name="register_username">ثبت نام کاربری عمومی (توصیه‌شده)</string>
+  <string name="register_username">ثبت نام‌کاربری عمومی</string>
   <string name="username_already_taken">نام کاربری قبلا گرفته شده است</string>
   <string name="invalid_username">نام کاربری نامعتبر</string>
   <string name="unknown_error">خطای نامشخص. لطفا اتصال شبکه خود را بررسی کنید!</string>

@@ -88,6 +88,7 @@
   <string name="prompt_new_password">Νέο συνθηματικό</string>
   <string name="prompt_new_password_repeat">Επανάληψη νέου συνθηματικού</string>
   <string name="prompt_new_username">Εισάγετε νέο ψευδώνυμο</string>
+  <string name="prompt_hint_username">Όνομα χρήστη</string>
   <string name="wizard_next">Επόμενο</string>
   <string name="wizard_back">Πίσω</string>
   <!--MenuHeaderView-->
@@ -95,7 +96,6 @@
   <string name="profile_message_warning">Το προφίλ σας διαμοιράζεται μόνο με τις επαφές σας</string>
   <string name="open_the_gallery">Άνοιγμα έκθεσης</string>
   <string name="take_a_photo">Λήψη φωτογραφίας</string>
-  <string name="profile_name_hint">Εισάγετε το όνομα σας (προαιρετικό)</string>
   <!--Share fragment-->
   <string name="share_message_no_account">Επιλέξτε έναν λογαριασμό για διαμοιρασμό.</string>
   <string name="share_your_account_information">Μοίρασε τις πληροφορίες των επαφών μου</string>
@@ -109,12 +109,10 @@
   <string name="contact_request_title">Νέο αίτημα επαφής</string>
   <string name="contact_request_msg">Έχετε %1$sαίτημα(τα) επαφής</string>
   <string name="contact_request_account">Για %1$s</string>
-  <string name="no_requests">0 αιτήματα επαφής</string>
   <!--Send contact requests-->
   <string name="send_request_button">Αποστολή</string>
   <string name="send_request_title">Αποστολή αίτημα επαφής</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">0 Μπλοκαρισμένες επαφές</string>
   <!--Smartlist-->
   <string name="no_contact_request">Δεν έχουν αποσταλλέι αιτήματα επαφής</string>
   <string name="contact_request_sent">Αίτημα επαφής εστάλει</string>
@@ -131,4 +129,6 @@
   <!--TV-->
   <string name="tv_audio_play">Αναπαραγωγή</string>
   <string name="tv_dialog_send">Αποστολή</string>
+  <!--WIZARD-->
+  <string name="wizard_password_skip">Δημιουργία λογαριασμού</string>
 </resources>

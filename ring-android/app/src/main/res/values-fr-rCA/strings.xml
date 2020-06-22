@@ -62,6 +62,8 @@
   <string name="action_call_decline">Refuser</string>
   <string name="ab_action_speakerphone">Activer le haut-parleur</string>
   <string name="ab_action_contact_add">Ajouter aux contacts</string>
+  <string name="hist_contact_added">Contact ajouté</string>
+  <string name="hist_invitation_received">Invitation reçue</string>
   <string name="ab_action_audio_call">Appel audio</string>
   <string name="ab_action_video_call">Appel vidéo</string>
   <string name="ab_action_change_screen_orientation">Modifier l\'orientation de l\'écran</string>
@@ -103,6 +105,7 @@
   <string name="prompt_new_password_repeat">Répéter le nouveau mot de passe</string>
   <string name="account_create_title">Créer un compte Jami</string>
   <string name="prompt_new_username">Entrer un nouveau nom d\'utilisateur</string>
+  <string name="prompt_hint_username">Nom d\'utilisateur</string>
   <string name="wizard_next">Suivant</string>
   <string name="wizard_back">Précédent</string>
   <string name="wizard_skip">Passer</string>
@@ -111,7 +114,6 @@
   <string name="profile_message_warning">Votre profil est partagé avec vos contacts uniquement</string>
   <string name="open_the_gallery">Ouvrir la galerie</string>
   <string name="take_a_photo">Prendre un photo.</string>
-  <string name="profile_name_hint">Entrer votre nom (optionnel)</string>
   <!--Share fragment-->
   <string name="share_message_no_account">S\'il vous plaît, sélectionnez un compte à partager.</string>
   <string name="share_your_account_information">Partager mes informations de contact</string>
@@ -125,12 +127,11 @@
   <string name="contact_request_title">Nouvelle demande de contact</string>
   <string name="contact_request_msg">Vous avez %1$s demande de contacts</string>
   <string name="contact_request_account">Pour %1$s</string>
-  <string name="no_requests">0 demande de contact</string>
   <!--Send contact requests-->
   <string name="send_request_button">Envoyer</string>
   <string name="send_request_title">Envoyer une demande de contact</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">0 contact bloqué</string>
+  <string name="no_blocked_contact">Aucun contact bloqué</string>
   <!--Smartlist-->
   <string name="no_contact_request">Aucune demande de contact n\'a été envoyée</string>
   <string name="contact_request_sent">Demande de contact envoyée</string>
@@ -151,4 +152,6 @@
   <string name="tv_audio_play">Jouer</string>
   <string name="tv_audio_pause">Pause</string>
   <string name="tv_dialog_send">Envoyer</string>
+  <!--WIZARD-->
+  <string name="wizard_password_skip">Créer un compte</string>
 </resources>

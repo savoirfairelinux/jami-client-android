@@ -104,6 +104,7 @@
   <string name="write_a_message">寫訊息</string>
   <string name="scan_qr">掃描 QR Code</string>
   <string name="ab_action_flipcamera">翻轉攝影機</string>
+  <string name="ab_action_hidepreview">隱藏預覽</string>
   <!--Text messages-->
   <string name="send_message">傳送訊息</string>
   <string name="message_sending">正在傳送訊息...</string>
@@ -168,9 +169,10 @@
   <string name="prompt_new_password_repeat">重新輸入新密碼</string>
   <string name="account_create_title">建立 Jami 帳號</string>
   <string name="prompt_new_username">輸入新使用者名稱</string>
+  <string name="prompt_hint_username">使用者名稱</string>
   <string name="help_password_choose">選擇您可以記住用來保護您的 Jami 帳號的強式密碼。</string>
-  <string name="help_password_enter">輸入您的主要 Jami 帳號密碼</string>
-  <string name="help_server_enter">輸入管理伺服器的 URL</string>
+  <string name="help_password_enter">輸入您的主要 Jami 帳號密碼。</string>
+  <string name="help_server_enter">輸入管理伺服器的 URL。</string>
   <string name="help_pin_enter">輸入從其他已設定 Jami 帳號的 PIN 碼。使用「在 Jami 上匯出帳號」功能來取得 PIN 碼。</string>
   <string name="wizard_next">下一個</string>
   <string name="wizard_back">前一個</string>
@@ -180,7 +182,7 @@
   <string name="profile_message_warning">您的介紹僅與您的聯絡人分享</string>
   <string name="open_the_gallery">開啟相簿</string>
   <string name="take_a_photo">照相</string>
-  <string name="profile_name_hint">輸入您的名稱（選擇性）</string>
+  <string name="profile_name_hint">輸入您的名字</string>
   <!--Share fragment-->
   <string name="share_message">使用 Jami 掃描此條碼</string>
   <string name="share_message_no_account">請選取要分享的帳號。</string>
@@ -196,7 +198,7 @@
   <string name="contact_request_title">新聯絡人請求</string>
   <string name="contact_request_msg">您有 %1$s 個聯絡人請求</string>
   <string name="contact_request_account">給 %1$s</string>
-  <string name="no_requests">0 個聯絡人請求</string>
+  <string name="no_requests">您沒有聯絡人請求</string>
   <string name="message_contact_not_trusted_yet">%s 不在您的聯絡人清單裡。\n您要接受或是回絕此聯絡人請求？</string>
   <string name="message_contact_not_trusted">%s 不是您的聯絡人。\n新增新聯絡人嗎？</string>
   <!--Send contact requests-->
@@ -204,9 +206,10 @@
   <string name="send_request_title">傳送聯絡人請求</string>
   <string name="send_request_msg">您必須傳送聯絡人請求給您要通訊的使用者。只要您的聯絡人沒有接受此請求，您可以傳送訊息，但他無法回應。</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">0 個已阻擋的聯絡人</string>
+  <string name="no_blocked_contact">沒有已封鎖的聯絡人</string>
   <!--Smartlist-->
   <string name="no_contact_request">未有送出的聯絡人請求</string>
+  <string name="conversation_placeholder">您尚未有對話</string>
   <string name="contact_request_sent">聯絡人請求已傳送</string>
   <string name="start_conversation">開啟對話</string>
   <string name="search_results">搜尋結果</string>
@@ -263,4 +266,20 @@
   <string name="tv_send_audio">傳送音訊</string>
   <string name="tv_send_video">傳送媒體</string>
   <string name="conversation_input_speech_hint">說點東西……</string>
+  <!--WIZARD-->
+  <string name="wizard_status_recommended">建議</string>
+  <string name="wizard_status_optional">選擇性</string>
+  <string name="wizard_status_required">必填</string>
+  <string name="wizard_username_info">為您的帳號選擇一個使用者名稱</string>
+  <string name="wizard_username_button">選擇使用者名稱</string>
+  <string name="wizard_username_skip">略過選擇使用者名稱</string>
+  <string name="wizard_password_info">帳號密碼</string>
+  <string name="wizard_password_placeholder">選擇密碼以加密此裝置上的帳號金鑰</string>
+  <string name="wizard_password_button">選擇密碼</string>
+  <string name="wizard_password_skip">建立帳號</string>
+  <string name="wizard_password_switch">以密碼加密帳號</string>
+  <string name="wizard_password_warning">注意，這個密碼不能被復原</string>
+  <string name="wizard_profile_info">個人檔案僅與聯絡人分享</string>
+  <string name="wizard_profile_button">儲存個人檔案</string>
+  <string name="wizard_profile_skip">略過並在稍後執行此動作</string>
 </resources>

@@ -169,9 +169,8 @@
   <string name="prompt_new_password_repeat">Yeni parola tekrar</string>
   <string name="account_create_title">Bir Jami hesabı oluştur</string>
   <string name="prompt_new_username">Yeni kullanıcı adı gir</string>
+  <string name="prompt_hint_username">Kullanıcı adı</string>
   <string name="help_password_choose">Jami hesabınızı korumak için anımsayacağınız güçlü bir şifre seçin.</string>
-  <string name="help_password_enter">Jami ana hesap parolanızı girin</string>
-  <string name="help_server_enter">Yönetim sunucusunun URL adresini gir</string>
   <string name="help_pin_enter">Başka yapılandırılmış Jami hesabından PIN\'i girin. PIN edinmek için \"Jami\'de hesabı dışa aktarma\" özelliğini kullanın.</string>
   <string name="wizard_next">İleri</string>
   <string name="wizard_back">Geri</string>
@@ -181,7 +180,6 @@
   <string name="profile_message_warning">Profiliniz sadece kayıtlı kişilerinizle paylaşılıyor</string>
   <string name="open_the_gallery">Galeriyi aç</string>
   <string name="take_a_photo">Fotoğraf çek</string>
-  <string name="profile_name_hint">Adınızı girin (isteğe bağlı)</string>
   <!--Share fragment-->
   <string name="share_message">Bu kodu Jami ile tarayın</string>
   <string name="share_message_no_account">Lütfen paylaşmak için bir hesap seçin.</string>
@@ -197,7 +195,6 @@
   <string name="contact_request_title">Yeni letişim isteği</string>
   <string name="contact_request_msg">%1$s iletişim isteğiniz var</string>
   <string name="contact_request_account">%1$s için</string>
-  <string name="no_requests">0 iletişim isteği</string>
   <string name="message_contact_not_trusted_yet">%s henüz bağlantınız değil.\nBu bağlantı isteğini kabul etmek ister misiniz? </string>
   <string name="message_contact_not_trusted">%s kişilerinizde yok.\n yeni bir kişi eklensin mi?</string>
   <!--Send contact requests-->
@@ -205,7 +202,7 @@
   <string name="send_request_title">Bir ileteşem isteği gönder</string>
   <string name="send_request_msg">Bu kullanıcıyla iletişime geçmek için iletişim isteği göndermelisiniz. Kişiniz bu isteği kabul etmediği sürece, siz ona ileti gönderebilirsiniz fakat o bunları yanıtlayamaz.</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">0 engellenmiş kişi</string>
+  <string name="no_blocked_contact">Engellenmiş kişi yok</string>
   <!--Smartlist-->
   <string name="no_contact_request">Gönderilmiş bir iletişim isteği yok</string>
   <string name="contact_request_sent">İletişim isteği gönderildi</string>
@@ -264,4 +261,6 @@
   <string name="tv_send_audio">Ses gönder</string>
   <string name="tv_send_video">Medya gönder</string>
   <string name="conversation_input_speech_hint">Bir şey söyle…</string>
+  <!--WIZARD-->
+  <string name="wizard_password_skip">Hesap oluştur</string>
 </resources>
