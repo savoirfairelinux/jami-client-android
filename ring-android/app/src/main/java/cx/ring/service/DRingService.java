@@ -62,6 +62,7 @@ import cx.ring.client.ConversationActivity;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Codec;
 import cx.ring.model.Settings;
+import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
@@ -85,6 +86,8 @@ public class DRingService extends Service {
     public static final String ACTION_TRUST_REQUEST_BLOCK = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST_BLOCK";
 
     static public final String ACTION_CALL_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CALL_ACCEPT";
+    static public final String ACTION_CALL_HOLD_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CALL_HOLD_ACCEPT";
+    static public final String ACTION_CALL_END_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CALL_END_ACCEPT";
     static public final String ACTION_CALL_REFUSE = BuildConfig.APPLICATION_ID + ".action.CALL_REFUSE";
     static public final String ACTION_CALL_END = BuildConfig.APPLICATION_ID + ".action.CALL_END";
     static public final String ACTION_CALL_VIEW = BuildConfig.APPLICATION_ID + ".action.CALL_VIEW";
@@ -642,6 +645,8 @@ public class DRingService extends Service {
                 }
                 break;
             case ACTION_CALL_ACCEPT:
+            case ACTION_CALL_HOLD_ACCEPT:
+            case ACTION_CALL_END_ACCEPT:
             case ACTION_CALL_REFUSE:
             case ACTION_CALL_END:
             case ACTION_CALL_VIEW:
@@ -710,6 +715,24 @@ public class DRingService extends Service {
                         .setClass(getApplicationContext(), CallActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                 break;
+            case ACTION_CALL_HOLD_ACCEPT:
+                String holdId = extras.getString(NotificationService.KEY_HOLD_ID);
+                mNotificationService.cancelCallNotification();
+                mCallService.hold(holdId);
+                startActivity(new Intent(ACTION_CALL_ACCEPT)
+                        .putExtras(extras)
+                        .setClass(getApplicationContext(), CallActivity.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                break;
+            case ACTION_CALL_END_ACCEPT:
+                String endId = extras.getString(NotificationService.KEY_END_ID);
+                mNotificationService.cancelCallNotification();
+                mCallService.hangUp(endId);
+                startActivity(new Intent(ACTION_CALL_ACCEPT)
+                        .putExtras(extras)
+                        .setClass(getApplicationContext(), CallActivity.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                break;
             case ACTION_CALL_REFUSE:
                 mCallService.refuse(callId);
                 mHardwareService.closeAudioState();
@@ -719,6 +742,10 @@ public class DRingService extends Service {
                 mHardwareService.closeAudioState();
                 break;
             case ACTION_CALL_VIEW:
+                SipCall.CallStatus status = mCallService.getConference(callId).getState();
+                if (status == SipCall.CallStatus.HOLD) {
+                    mCallService.unhold(callId);
+                }
                 mNotificationService.cancelCallNotification();
                 if (DeviceUtils.isTv(this)) {
                     startActivity(new Intent(Intent.ACTION_VIEW)
