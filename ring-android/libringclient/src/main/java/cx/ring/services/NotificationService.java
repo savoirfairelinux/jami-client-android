@@ -32,6 +32,8 @@ public interface NotificationService {
     String TRUST_REQUEST_NOTIFICATION_ACCOUNT_ID = "trustRequestNotificationAccountId";
     String TRUST_REQUEST_NOTIFICATION_FROM = "trustRequestNotificationFrom";
     String KEY_CALL_ID = "callId";
+    String KEY_HOLD_ID = "holdId";
+    String KEY_END_ID = "endId";
     String KEY_NOTIFICATION_ID = "notificationId";
 
     Object showCallNotification(int callId);
