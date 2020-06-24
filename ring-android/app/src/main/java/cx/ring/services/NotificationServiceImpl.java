@@ -243,6 +243,11 @@ public class NotificationServiceImpl implements NotificationService {
         if (mConference == null || mConference.getParticipants().isEmpty()) {
             return null;
         }
+        String ongoingCallId = null;
+        for (Conference conference : currentCalls.values()) {
+            if (conference != mConference && conference.getState() == SipCall.CallStatus.CURRENT)
+                ongoingCallId = conference.getParticipants().get(0).getDaemonIdString();
+        }
 
         SipCall call = mConference.getParticipants().get(0);
 
@@ -288,12 +293,23 @@ public class NotificationServiceImpl implements NotificationService {
                                                 .setClass(mContext, DRingService.class)
                                                 .putExtra(KEY_CALL_ID, call.getDaemonIdString()),
                                         PendingIntent.FLAG_ONE_SHOT))
-                        .addAction(R.drawable.baseline_call_24, mContext.getText(R.string.action_call_accept),
+                        .addAction(R.drawable.baseline_call_24, ongoingCallId == null ?
+                                        mContext.getText(R.string.action_call_accept) : mContext.getText(R.string.action_call_end_accept),
                                 PendingIntent.getService(mContext, random.nextInt(),
-                                        new Intent(DRingService.ACTION_CALL_ACCEPT)
+                                        new Intent(ongoingCallId == null ? DRingService.ACTION_CALL_ACCEPT : DRingService.ACTION_CALL_END_ACCEPT)
                                                 .setClass(mContext, DRingService.class)
+                                                .putExtra(KEY_END_ID, ongoingCallId)
                                                 .putExtra(KEY_CALL_ID, call.getDaemonIdString()),
                                         PendingIntent.FLAG_ONE_SHOT));
+                if (ongoingCallId != null) {
+                    messageNotificationBuilder.addAction(R.drawable.baseline_call_24, mContext.getText(R.string.action_call_hold_accept),
+                            PendingIntent.getService(mContext, random.nextInt(),
+                                    new Intent(DRingService.ACTION_CALL_HOLD_ACCEPT)
+                                            .setClass(mContext, DRingService.class)
+                                            .putExtra(KEY_HOLD_ID, ongoingCallId)
+                                            .putExtra(KEY_CALL_ID, call.getDaemonIdString()),
+                                    PendingIntent.FLAG_ONE_SHOT));
+                }
             } else {
                 messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_CALL_IN_PROGRESS);
                 messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_outgoing_call_title, contact.getDisplayName()))
