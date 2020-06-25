@@ -64,4 +64,6 @@ public interface SmartListView extends BaseView {
     void goToContact(CallContact callContact);
 
     void scrollToTop();
+
+    void displaySearchResults(List<CallContact> results);
 }

@@ -136,14 +136,23 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
                     view.hideSearchRow();
                     view.setLoading(true);
 
-                    // Ring search
+                    // Jami search
                     if (mQueryDisposable == null || mQueryDisposable.isDisposed()) {
+                        boolean search = currentAccount.canSearch();
                         mQueryDisposable = contactQuery
                                 .debounce(350, TimeUnit.MILLISECONDS)
-                                .switchMapSingle(q -> mAccountService.findRegistrationByName(mAccount.getAccountID(), "", q))
+                                .switchMapSingle(q -> search ? mAccountService.searchUser(currentAccount.getAccountID(), q)
+                                        : mAccountService.findRegistrationByName(currentAccount.getAccountID(), "", q))
                                 .observeOn(mUiScheduler)
-                                .subscribe(q -> parseEventState(mAccountService.getAccount(q.accountId), q.name, q.address, q.state),
-                                        e -> Log.e(TAG, "Can't perform query"));
+                                .subscribe(q -> {
+                                    if (q instanceof AccountService.RegisteredName) {
+                                        AccountService.RegisteredName r = (AccountService.RegisteredName) q;
+                                        parseEventState(currentAccount, r.name, r.address, r.state);
+                                    } else if (q instanceof AccountService.UserSearchResult) {
+                                        parseSearchResult(currentAccount, (AccountService.UserSearchResult) q);
+                                    }
+                                    getView().setLoading(false);
+                                }, e -> Log.e(TAG, "Can't perform query"));
                         mCompositeDisposable.add(mQueryDisposable);
                     }
                     contactQuery.onNext(query);
@@ -172,7 +181,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
     public void quickCallClicked() {
         if (mCallContact != null) {
             if (mCallContact.getPhones().size() > 1) {
-                CharSequence numbers[] = new CharSequence[mCallContact.getPhones().size()];
+                CharSequence[] numbers = new CharSequence[mCallContact.getPhones().size()];
                 int i = 0;
                 for (Phone p : mCallContact.getPhones()) {
                     numbers[i++] = p.getNumber().getRawUriString();
@@ -317,7 +326,32 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
                 }
                 break;
         }
-        getView().setLoading(false);
+    }
+
+    private void parseSearchResult(Account account, AccountService.UserSearchResult q) {
+        Log.w(TAG, "parseSearchResult " + q.query + " " + q.results.size());
+        switch (q.state) {
+            case 0:
+                // on found
+                List<CallContact> results = new ArrayList<>(q.results.size());
+                for (AccountService.User user : q.results) {
+                    CallContact contact = account.getContactFromCache(user.address);
+                    contact.setUsername(user.name);
+                    results.add(contact);
+                }
+                getView().displaySearchResults(results);
+                break;
+            default:
+                // on error
+                Uri uriAddress = new Uri(q.query);
+                if (uriAddress.isRingId()) {
+                    mCallContact = account.getContactFromCache(uriAddress);
+                    getView().displayContact(mCallContact);
+                } else {
+                    getView().hideSearchRow();
+                }
+                break;
+        }
     }
 
     public void banContact(SmartListViewModel smartListViewModel) {
