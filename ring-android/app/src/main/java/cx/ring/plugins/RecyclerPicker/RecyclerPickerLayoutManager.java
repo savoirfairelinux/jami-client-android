@@ -99,5 +99,6 @@ public class RecyclerPickerLayoutManager extends LinearLayoutManager {
 
     public interface ItemSelectedListener {
         void onItemSelected(int position);
+        void onItemClicked(int position);
     }
 }

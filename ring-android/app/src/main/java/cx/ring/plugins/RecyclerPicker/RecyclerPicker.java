@@ -57,8 +57,9 @@ public class RecyclerPicker implements RecyclerPickerAdapter.ItemClickListener{
         int currentPos = mLayoutManager.findFirstVisibleItemPosition();
         if(position != currentPos) {
             mRecyclerView.smoothScrollToPosition(position);
-        } else {
             mItemSelectedListener.onItemSelected(position);
+        } else {
+            mItemSelectedListener.onItemClicked(position);
         }
 
     }

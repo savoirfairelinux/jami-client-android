@@ -24,6 +24,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import cx.ring.R;
 import cx.ring.client.HomeActivity;
@@ -85,13 +86,16 @@ public class PluginsListSettingsFragment extends Fragment implements PluginsList
             startActivityForResult(intent, ARCHIVE_REQUEST_CODE);
         });
 
+        ((HomeActivity) requireActivity()).
+                setToolbarState(R.string.menu_item_plugin_list);
+
         return pluginsSettingsList;
     }
 
     @Override
     public void onResume() {
         ((HomeActivity) requireActivity()).
-                setToolbarState(R.string.menu_item_settings);
+                setToolbarState(R.string.menu_item_plugin_list);
         super.onResume();
     }
 
@@ -146,6 +150,7 @@ public class PluginsListSettingsFragment extends Fragment implements PluginsList
 
     private String installPluginFile(File pluginFile, boolean force) throws IOException{
         int i = Ringservice.installPlugin(pluginFile.getAbsolutePath(), force);
+
         // Free the cache
         boolean cacheFileFreed = pluginFile.delete();
         if(!cacheFileFreed) {
@@ -181,6 +186,16 @@ public class PluginsListSettingsFragment extends Fragment implements PluginsList
 
                     @Override
                     public void onSuccess(String filename) {
+
+                        String[] plugin = filename.split(".jpl");
+                        List<PluginDetails> availablePlugins = listAvailablePlugins(mContext);
+                        for (PluginDetails availablePlugin : availablePlugins){
+                            if (availablePlugin.getName().equals(plugin[0]))
+                            {
+                                availablePlugin.setEnabled(true);
+                                onPluginEnabled(availablePlugin);
+                            }
+                        }
                         ((PluginsListAdapter) mAdapter)
                                 .updatePluginsList(listAvailablePlugins(mContext));
                         Toast.makeText(mContext, "Plugin: " + filename +
