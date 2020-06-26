@@ -53,7 +53,6 @@ import com.bumptech.glide.Glide;
 
 import java.io.File;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Objects;
 import java.util.Random;
@@ -73,9 +72,9 @@ import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
+import cx.ring.model.DataTransfer;
 import cx.ring.model.Interaction;
 import cx.ring.model.Interaction.InteractionStatus;
-import cx.ring.model.DataTransfer;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 import cx.ring.model.Uri;
@@ -321,6 +320,12 @@ public class NotificationServiceImpl implements NotificationService {
                 .setSmallIcon(R.drawable.ic_ring_logo_white);
 
         setContactPicture(contact, messageNotificationBuilder);
+
+        if (mAccountService.getAccount(call.getAccount()).isAutoanswerEnabled()) {
+            mContext.startService(new Intent(DRingService.ACTION_CALL_ACCEPT)
+                    .setClass(mContext, DRingService.class)
+                    .putExtra(KEY_CALL_ID, call.getDaemonIdString()));
+        }
 
         return messageNotificationBuilder.build();
     }
