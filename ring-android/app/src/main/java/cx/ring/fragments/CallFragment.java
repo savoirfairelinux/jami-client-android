@@ -80,6 +80,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
 import androidx.preference.PreferenceManager;
 
+import com.google.android.flexbox.FlexboxLayout;
 import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 
 import java.util.ArrayList;
@@ -847,7 +848,11 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     @Override
     public void displayContactBubble(final boolean display) {
-        binding.contactBubbleLayout.getHandler().post(() -> binding.contactBubbleLayout.setVisibility(display ? View.VISIBLE : View.GONE));
+        FlexboxLayout contactBubbleLayout = binding.contactBubbleLayout;
+        if (contactBubbleLayout == null) {
+            return;
+        }
+        contactBubbleLayout.getHandler().post(() -> contactBubbleLayout.setVisibility(display ? View.VISIBLE : View.GONE));
     }
 
     @Override
