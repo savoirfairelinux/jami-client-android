@@ -32,44 +32,23 @@ public class PluginUtils {
         tree(mContext.getFilesDir() + File.separator+ "plugins",0);
         tree(mContext.getCacheDir().getAbsolutePath(),0);
 
-        List<PluginDetails> pluginsList = new ArrayList<>();
-
         List<String> pluginsPaths = Ringservice.listAvailablePlugins();
 
-        for(String pluginPath : pluginsPaths) {
+        List<PluginDetails> pluginsList = new ArrayList<>(pluginsPaths.size());
+        for (String pluginPath : pluginsPaths) {
             File pluginFolder = new File(pluginPath);
-            if(pluginFolder.isDirectory()){
+            if(pluginFolder.isDirectory()) {
                 //We use the absolute path of a plugin as a preference name for uniqueness
-                SharedPreferences sp = mContext.getSharedPreferences(
-                        pluginFolder.getName(), MODE_PRIVATE);
-
+                //TODO remove and use enabled information from daemon
+                SharedPreferences sp = mContext.getSharedPreferences(pluginFolder.getName(), MODE_PRIVATE);
                 boolean enabled = sp.getBoolean(PLUGIN_ENABLED,false);
 
                 pluginsList.add(new PluginDetails(
                         pluginFolder.getName(),
-                        pluginFolder.getAbsolutePath(),enabled));
+                        pluginFolder.getAbsolutePath(), enabled));
             }
         }
         return pluginsList;
-    }
-
-    public static String getABI(){
-        return Build.SUPPORTED_ABIS[0];
-    }
-
-    /**
-     * Checks if there is a file at the indicated path and converts if to a drawable if possible
-     * @param iconPath String representing the absolute icon path
-     * @return Drawable of the icon
-     */
-    public static Drawable getIcon(String iconPath) {
-        Drawable icon = null;
-        File file = new File(iconPath);
-        Log.i(TAG, "Icon path: " + iconPath);
-        if(file.exists()) {
-            icon = Drawable.createFromPath(iconPath);
-        }
-        return icon;
     }
 
     /**

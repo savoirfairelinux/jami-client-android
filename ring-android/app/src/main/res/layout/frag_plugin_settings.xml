@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/plugin_setting_icon"
+        android:layout_marginTop="32dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/baseline_group_24" />
+
+    <TextView
+        android:id="@+id/plugin_setting_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/plugin_setting_icon"
+        android:singleLine="true"
+        android:text="@string/video_plugins"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <View
+        android:id="@+id/plugin_setting_divider"
+        android:layout_below="@+id/plugin_setting_title"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
+    <LinearLayout
+        android:id="@+id/plugin_setting_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@+id/plugin_setting_divider"
+        android:layout_marginTop="16dp"
+        android:weightSum="2">
+
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/plugin_setting_load"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:clickable="true">-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/plugin_setting_load_image"-->
+<!--                android:layout_width="32dp"-->
+<!--                android:layout_height="32dp"-->
+<!--                android:src="@drawable/baseline_delete_24"-->
+<!--                android:layout_centerHorizontal="true"/>-->
+
+<!--            <TextView-->
+<!--                android:layout_below="@+id/plugin_setting_load_image"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Activate"-->
+<!--                android:layout_centerHorizontal="true"/>-->
+
+<!--        </RelativeLayout>-->
+        <RelativeLayout
+            android:id="@+id/plugin_setting_reset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true">
+
+            <ImageView
+                android:id="@+id/plugin_setting_reset_image"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/round_settings_backup_restore_24"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:layout_below="@+id/plugin_setting_reset_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reset"
+                android:layout_centerHorizontal="true"/>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/plugin_setting_install"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:id="@+id/plugin_setting_install_image"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/baseline_delete_24"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:layout_below="@+id/plugin_setting_install_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Uninstall"
+                android:layout_centerHorizontal="true"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+    <View
+        android:layout_below="@+id/plugin_setting_buttons"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
+</android.widget.RelativeLayout>

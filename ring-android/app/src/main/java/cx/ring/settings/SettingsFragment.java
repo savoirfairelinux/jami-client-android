@@ -134,8 +134,9 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
                 .show());
         binding.settingsPluginsLayout.setOnClickListener(v -> {
             HomeActivity activity = (HomeActivity) getActivity();
-            if (activity != null && presenter.getPluginsEnabled())
+            if (activity != null && presenter.getPluginsEnabled()){
                 activity.goToPluginsListSettings();
+            }
         });
     }
 
