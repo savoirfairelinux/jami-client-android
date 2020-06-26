@@ -105,14 +105,12 @@ import cx.ring.databinding.FragCallBinding;
 import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
 import cx.ring.mvp.BaseSupportFragment;
-import cx.ring.plugins.PluginUtils;
 import cx.ring.plugins.RecyclerPicker.RecyclerPicker;
 import cx.ring.plugins.RecyclerPicker.RecyclerPickerLayoutManager;
 import cx.ring.service.DRingService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.NotificationService;
-import cx.ring.settings.pluginssettings.PluginDetails;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.ConversationPath;
@@ -847,7 +845,11 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     @Override
     public void displayContactBubble(final boolean display) {
-        binding.contactBubbleLayout.getHandler().post(() -> binding.contactBubbleLayout.setVisibility(display ? View.VISIBLE : View.GONE));
+        if (binding != null)
+            binding.contactBubbleLayout.getHandler().post(() -> {
+                if (binding != null)
+                    binding.contactBubbleLayout.setVisibility(display ? View.VISIBLE : View.GONE);
+            });
     }
 
     @Override
