@@ -72,5 +72,5 @@ public interface NotificationService {
 
     void showLocationNotification(Account first, CallContact contact);
     void cancelLocationNotification(Account first, CallContact contact);
-
+    void startCallService(String daemonIdString);
 }

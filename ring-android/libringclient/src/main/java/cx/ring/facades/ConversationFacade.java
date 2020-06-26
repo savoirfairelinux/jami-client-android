@@ -564,6 +564,9 @@ public class ConversationFacade {
         }
 
         if (incomingCall) {
+            if (account != null && conference != null && account.isAutoanswerEnabled()) {
+                mNotificationService.startCallService(conference.getCall().getDaemonIdString());
+            }
             mNotificationService.handleCallNotification(conference, false);
             mHardwareService.setPreviewSettings();
         } else if ((newState == SipCall.CallStatus.CURRENT && call.isIncoming())

@@ -53,7 +53,6 @@ import com.bumptech.glide.Glide;
 
 import java.io.File;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Objects;
 import java.util.Random;
@@ -73,9 +72,9 @@ import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
+import cx.ring.model.DataTransfer;
 import cx.ring.model.Interaction;
 import cx.ring.model.Interaction.InteractionStatus;
-import cx.ring.model.DataTransfer;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 import cx.ring.model.Uri;
@@ -275,25 +274,27 @@ public class NotificationServiceImpl implements NotificationService {
         } else if (mConference.isRinging()) {
             if (mConference.isIncoming()) {
                 messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_INCOMING_CALL);
-                messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_incoming_call_title, contact.getDisplayName()))
+                NotificationCompat.Builder builder = messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_incoming_call_title, contact.getDisplayName()))
                         .setPriority(NotificationCompat.PRIORITY_MAX)
                         .setContentText(mContext.getText(R.string.notif_incoming_call))
                         .setContentIntent(gotoIntent)
                         .setSound(null)
                         .setVibrate(null)
-                        .setFullScreenIntent(gotoIntent, true)
-                        .addAction(R.drawable.baseline_call_end_24, mContext.getText(R.string.action_call_decline),
-                                PendingIntent.getService(mContext, random.nextInt(),
-                                        new Intent(DRingService.ACTION_CALL_REFUSE)
-                                                .setClass(mContext, DRingService.class)
-                                                .putExtra(KEY_CALL_ID, call.getDaemonIdString()),
-                                        PendingIntent.FLAG_ONE_SHOT))
-                        .addAction(R.drawable.baseline_call_24, mContext.getText(R.string.action_call_accept),
-                                PendingIntent.getService(mContext, random.nextInt(),
-                                        new Intent(DRingService.ACTION_CALL_ACCEPT)
-                                                .setClass(mContext, DRingService.class)
-                                                .putExtra(KEY_CALL_ID, call.getDaemonIdString()),
-                                        PendingIntent.FLAG_ONE_SHOT));
+                        .setFullScreenIntent(gotoIntent, true);
+                if (!mAccountService.getAccount(call.getAccount()).isAutoanswerEnabled()) {
+                    builder.addAction(R.drawable.baseline_call_end_24, mContext.getText(R.string.action_call_decline),
+                                    PendingIntent.getService(mContext, random.nextInt(),
+                                            new Intent(DRingService.ACTION_CALL_REFUSE)
+                                                    .setClass(mContext, DRingService.class)
+                                                    .putExtra(KEY_CALL_ID, call.getDaemonIdString()),
+                                            PendingIntent.FLAG_ONE_SHOT))
+                            .addAction(R.drawable.baseline_call_24, mContext.getText(R.string.action_call_accept),
+                                    PendingIntent.getService(mContext, random.nextInt(),
+                                            new Intent(DRingService.ACTION_CALL_ACCEPT)
+                                                    .setClass(mContext, DRingService.class)
+                                                    .putExtra(KEY_CALL_ID, call.getDaemonIdString()),
+                                            PendingIntent.FLAG_ONE_SHOT));
+                }
             } else {
                 messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_CALL_IN_PROGRESS);
                 messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_outgoing_call_title, contact.getDisplayName()))
@@ -401,6 +402,13 @@ public class NotificationServiceImpl implements NotificationService {
                 key = integer;
             updateNotification(showCallNotification(key), NOTIF_CALL_ID);
         }
+    }
+
+    @Override
+    public void startCallService(String daemonIdString) {
+        mContext.startService(new Intent(DRingService.ACTION_CALL_ACCEPT)
+                .setClass(mContext, DRingService.class)
+                .putExtra(KEY_CALL_ID, daemonIdString));
     }
 
     @Override
