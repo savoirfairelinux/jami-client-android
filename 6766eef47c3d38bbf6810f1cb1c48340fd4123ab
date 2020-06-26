@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23a49215_200619c0",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-06-26T23:43:41Z",
+      "side": 1,
+      "message": "???",
+      "range": {
+        "startLine": 853,
+        "startChar": 0,
+        "endLine": 857,
+        "endChar": 123
+      },
+      "revId": "6766eef47c3d38bbf6810f1cb1c48340fd4123ab",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55d1868e_25108714",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-06-26T23:43:41Z",
+      "side": 1,
+      "message": "Already done elsewhere",
+      "range": {
+        "startLine": 324,
+        "startChar": 0,
+        "endLine": 328,
+        "endChar": 9
+      },
+      "revId": "6766eef47c3d38bbf6810f1cb1c48340fd4123ab",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
