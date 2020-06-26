@@ -564,7 +564,11 @@ public class ConversationFacade {
         }
 
         if (incomingCall) {
-            mNotificationService.handleCallNotification(conference, false);
+            if (account != null && conference != null && account.isAutoanswerEnabled()) {
+                mNotificationService.startCallService(conference.getCall().getDaemonIdString());
+            } else {
+                mNotificationService.handleCallNotification(conference, false);
+            }
             mHardwareService.setPreviewSettings();
         } else if ((newState == SipCall.CallStatus.CURRENT && call.isIncoming())
                 || newState == SipCall.CallStatus.RINGING && !call.isIncoming()) {
