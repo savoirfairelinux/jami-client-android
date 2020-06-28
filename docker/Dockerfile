@@ -60,9 +60,9 @@ RUN (while sleep 1; do echo "y"; done) | sdkmanager --sdk_root=${ANDROID_HOME} '
 	'platforms;android-29'\
 	'extras;android;m2repository'\
 	'extras;google;m2repository'\
-	'ndk;21.1.6352462'
+	'ndk;21.3.6528147'
 ENV ANDROID_SDK=${ANDROID_HOME}
-ENV ANDROID_NDK=${ANDROID_HOME}/ndk/21.1.6352462
+ENV ANDROID_NDK=${ANDROID_HOME}/ndk/21.3.6528147
 
 WORKDIR /home/builder/src
 VOLUME /home/builder/src
