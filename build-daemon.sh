@@ -203,6 +203,7 @@ STATIC_LIBS_ALL="-llog -lOpenSLES -landroid \
                 -lpjlib-util-${PJ_TARGET_TUPLE} \
                 -lpj-${PJ_TARGET_TUPLE} \
                 -lupnp -lixml \
+                -larchive \
                 -lsecp256k1 \
                 -lgnutls -lhogweed -lnettle -lgmp \
                 -lssl -lcrypto \
@@ -211,8 +212,7 @@ STATIC_LIBS_ALL="-llog -lOpenSLES -landroid \
                 -luuid -lz -ldl \
                 -lvpx -lopus -lspeex -lspeexdsp -lx264 \
                 -largon2 \
-                -liconv	\
-				-larchive"
+                -liconv"
 
 LIBRING_JNI_DIR=${ANDROID_APP_DIR}/app/src/main/libs/${ANDROID_ABI}
 
