@@ -24,4 +24,5 @@
   <string name="pref_clearHistory_summary">پاک‌سازی تمام سابقه گفت‌وگوها. این کار قابل بازگشت نیست.</string>
   <string name="pref_persistNotification_title">اجرا در پس‌زمینه</string>
   <string name="pref_persistNotification_summary">اجازه اجرا در پس‌زمینه برای دریافت تماس‌ها و پیام‌ها.</string>
+  <!--Plugin-->
 </resources>

@@ -70,6 +70,7 @@
   <string name="account_credentials_add">إضافة بيانات الاعتماد</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">تأمين</string>
+  <string name="account_srtp_switch_label">تشفير تيارات الميديا (SRTP)</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">إستعمل المواصلات TLS</string>
@@ -100,6 +101,7 @@
   <string name="account_link_export_button">اربط جهازاً آخر مع هذا الحساب</string>
   <string name="account_connect_prompt_username">اسم المستخدم</string>
   <!--Name registration-->
+  <string name="register_username">سجل اسم المستخدم العام</string>
   <string name="account_status_connecting">يتم الإتصال</string>
   <string name="account_status_unknown">مجهول</string>
   <string name="account_status_error">خطأ</string>

@@ -169,9 +169,8 @@
   <string name="prompt_new_password_repeat">Gjenta nytt passord</string>
   <string name="account_create_title">Opprett en Jami-konto</string>
   <string name="prompt_new_username">Skriv inn nytt brukernavn</string>
+  <string name="prompt_hint_username">Brukernavn</string>
   <string name="help_password_choose">Velg et sterkt passord som du husker, for å beskytte Jami-kontoen din.</string>
-  <string name="help_password_enter">Skriv inn hovedpassord for Jami-kontoen din</string>
-  <string name="help_server_enter">Angi URL til administrasjonsserveren</string>
   <string name="help_pin_enter">Skriv inn PIN fra en annen ferdig oppsatt Jami-konto.  Bruk «Eksporter Jami-konto»-valget for å få tak i en PIN.</string>
   <string name="wizard_next">Neste</string>
   <string name="wizard_back">Tilbake</string>
@@ -181,7 +180,6 @@
   <string name="profile_message_warning">Din profil deles bare med dine kontakter</string>
   <string name="open_the_gallery">Åpne galleriet</string>
   <string name="take_a_photo">Ta et bilde</string>
-  <string name="profile_name_hint">Skriv inn ditt navn (valgfritt)</string>
   <!--Share fragment-->
   <string name="share_message">Søk etter denne koden med Jami</string>
   <string name="share_message_no_account">Velg en konto å dele.</string>
@@ -197,7 +195,6 @@
   <string name="contact_request_title">Ny kontaktforespørsel</string>
   <string name="contact_request_msg">Du har %1$s kontaktforspørsler</string>
   <string name="contact_request_account">For %1$s</string>
-  <string name="no_requests">0 kontaktforespørsler</string>
   <string name="message_contact_not_trusted_yet">%s er ikke i din kontaktliste enda.\nØnsker du å godta eller avslå denne kontaktforespørselen?</string>
   <string name="message_contact_not_trusted">%s er ikke blant dine kontakter.\nLegg til ny kontakt?</string>
   <!--Send contact requests-->
@@ -205,7 +202,6 @@
   <string name="send_request_title">Send en kontaktforespørsel</string>
   <string name="send_request_msg">Du må sende en kontaktforespørsel for å kommunisere med denne brukeren. Så lenge din kontakt ikke har godtatt forespørselen, kan du sende meldinger som din kontakt ikke kan lese.</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">0 blokkerte kontakter</string>
   <!--Smartlist-->
   <string name="no_contact_request">Ingen kontaktforespørsel sendt</string>
   <string name="contact_request_sent">Kontaktforespørsel sendt</string>
@@ -261,4 +257,6 @@
   <string name="tv_send_text">Send tekst</string>
   <string name="tv_send_audio">Send lyd</string>
   <string name="tv_send_video">Send media</string>
+  <!--WIZARD-->
+  <string name="wizard_password_skip">Opprett kongo</string>
 </resources>

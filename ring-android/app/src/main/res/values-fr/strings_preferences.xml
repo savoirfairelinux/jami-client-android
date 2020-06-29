@@ -24,4 +24,5 @@
   <string name="pref_clearHistory_summary">Effacer tous les historiques de conversation. L\'action est irréversible.</string>
   <string name="pref_persistNotification_title">Fonctionne en arrière-plan</string>
   <string name="pref_persistNotification_summary">Permet de fonctionner en arrière-plan pour recevoir des appels ou des messages</string>
+  <!--Plugin-->
 </resources>

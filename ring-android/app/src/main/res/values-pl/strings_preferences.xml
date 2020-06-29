@@ -21,4 +21,5 @@
   <string name="pref_clearHistory_title">Wyczyść historię</string>
   <string name="pref_persistNotification_title">Zezwalaj na pracę w tle</string>
   <string name="pref_persistNotification_summary">Zezwalaj na pracę w tle, aby odbierać rozmowy i wiadomości</string>
+  <!--Plugin-->
 </resources>

@@ -171,9 +171,8 @@
   <string name="prompt_new_password_repeat">Повторите новый пароль</string>
   <string name="account_create_title">Создать учётную запись Jami</string>
   <string name="prompt_new_username">Введите новое имя пользователя</string>
+  <string name="prompt_hint_username">Имя пользователя</string>
   <string name="help_password_choose">Выберите надежный пароль, который вы запомните, чтобы защитить свою учетную запись Jami.</string>
-  <string name="help_password_enter">Введите ваш основной пароль учётной записи Jami </string>
-  <string name="help_server_enter">Введите URL-адрес управляющего сервера</string>
   <string name="help_pin_enter">Введите PIN-код из другой учетной записи Jami. Используйте функцию \"экспорт учетной записи Jami\" для получения PIN-кода.</string>
   <string name="wizard_next">Далее</string>
   <string name="wizard_back">Назад</string>
@@ -183,7 +182,6 @@
   <string name="profile_message_warning">Ваш профиль доступен только для ваших контактов</string>
   <string name="open_the_gallery">Открыть галерею</string>
   <string name="take_a_photo">Сфотографировать</string>
-  <string name="profile_name_hint">Введите ваше имя (необязательно) </string>
   <!--Share fragment-->
   <string name="share_message">Отсканируйте код с помощью Jami</string>
   <string name="share_message_no_account">Выберите контакт, чтобы поделиться</string>
@@ -199,7 +197,6 @@
   <string name="contact_request_title">Запрос на добавление в контакты</string>
   <string name="contact_request_msg">У вас %1$sзапросов на добавление в контакты</string>
   <string name="contact_request_account">Для %1$s</string>
-  <string name="no_requests">0 запросов на добавление в контакты</string>
   <string name="message_contact_not_trusted_yet">%sеще нет в ваших контактах.\nВы хотите принять или отклонить запрос?</string>
   <string name="message_contact_not_trusted">%sеще нет в ваших контактах.\nДобавить его в контакты?</string>
   <!--Send contact requests-->
@@ -207,7 +204,6 @@
   <string name="send_request_title">Отправить запрос на добавление в контакты</string>
   <string name="send_request_msg">Для связи с этим пользователем необходимо отправить запрос на добавление в контакты. Пока ваш контакт не принял запрос, вы можете отправлять сообщения, но он не может отвечать.</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">0 заблокированных контактов</string>
   <!--Smartlist-->
   <string name="no_contact_request">Нет запросов на добавление в контакты</string>
   <string name="contact_request_sent">Запрос на добавление в контакты отправлен</string>
@@ -266,4 +262,6 @@
   <string name="tv_send_audio">Отправить Запись</string>
   <string name="tv_send_video">Отправить Медиа</string>
   <string name="conversation_input_speech_hint">Скажите что-нибудь...</string>
+  <!--WIZARD-->
+  <string name="wizard_password_skip">Создать аккаунт</string>
 </resources>

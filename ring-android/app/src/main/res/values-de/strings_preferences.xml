@@ -24,4 +24,5 @@
   <string name="pref_clearHistory_summary">Kompletten Gesprächsverlauf löschen. Diese Aktion kann nicht rückgängig gemacht werden.</string>
   <string name="pref_persistNotification_title">Im Hintergrund laufen lassen</string>
   <string name="pref_persistNotification_summary">Jami erlauben im Hintergrund zu laufen, um Anrufe und Nachrichten zu empfangen.</string>
+  <!--Plugin-->
 </resources>

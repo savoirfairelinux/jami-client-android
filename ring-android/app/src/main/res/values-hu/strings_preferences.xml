@@ -24,4 +24,5 @@
   <string name="pref_clearHistory_summary">Minden beszélgetés előzmény törlése. Ez a művelet nem vonható vissza.</string>
   <string name="pref_persistNotification_title">Háttérfolyamat engedélyezése</string>
   <string name="pref_persistNotification_summary">Háttérfolyamat engedélyezése hívások és üzenetek fogadásához.</string>
+  <!--Plugin-->
 </resources>

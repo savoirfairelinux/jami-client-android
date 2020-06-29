@@ -24,4 +24,5 @@
   <string name="pref_clearHistory_summary">مسح كامل سجل المحادثات. لا يمكن التراجع عن هذا الخيار فيما بعد.</string>
   <string name="pref_persistNotification_title">التشغيل في الخلفية</string>
   <string name="pref_persistNotification_summary">السماح بالتشغيل في الخلفية لاستقبال المكالمات والرسائل.</string>
+  <!--Plugin-->
 </resources>

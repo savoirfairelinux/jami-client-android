@@ -20,4 +20,5 @@
   <string name="pref_clearHistory_title">Vymazat historii</string>
   <string name="pref_persistNotification_title">Běžet na pozadí</string>
   <string name="pref_persistNotification_summary">Umožnit běh na pozadí pro příjem hovorů a zpráv.</string>
+  <!--Plugin-->
 </resources>

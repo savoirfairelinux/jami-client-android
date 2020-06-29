@@ -105,6 +105,7 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="account_credentials_add">Afegeix les credencials</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Seguretat</string>
+  <string name="account_srtp_switch_label">Xifra el flux de mitjans (SRTP)</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Utilitza transport TLS</string>
@@ -158,7 +159,6 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="account_sip_success_title">Compte Sip registrat</string>
   <string name="account_sip_success_message">Ha registrat amb èxit el seu compte Sip.</string>
   <string name="account_sip_register_anyway">Registre de totes maneres</string>
-  <string name="account_link_device">Connecta des d\'un altre dispositiu</string>
   <string name="account_link_button">Connecta des de la xarxa</string>
   <string name="account_link_archive_button">Connecta des d\'una còpia de seguretat</string>
   <string name="account_link_prompt_pin">Introdueix PIN</string>
@@ -183,7 +183,7 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="register_name">Registrar nom</string>
   <string name="trying_to_register_name">Provant de registrar nom d\'usuari</string>
   <string name="registered_username">Nom d\'usuari registrat</string>
-  <string name="register_username">Registra nom d\'usuari públic (recomanat)</string>
+  <string name="register_username">Registra nom d\'usuari públic</string>
   <string name="username_already_taken">Nom d\'usuari ja registrat.</string>
   <string name="invalid_username">Nom d\'usuari invalid</string>
   <string name="unknown_error">Error desconegut. Si us plau, comprovi la seva connexió a la xarxa!</string>

@@ -170,9 +170,10 @@
   <string name="prompt_new_password_repeat">Përsëriteni fjalëkalimin e ri</string>
   <string name="account_create_title">Krijoni një llogari Jami</string>
   <string name="prompt_new_username">Jepni emër përdoruesi të ri</string>
+  <string name="prompt_hint_username">Emër përdoruesi</string>
   <string name="help_password_choose">Për të mbrojtur llogarinë tuaj Jami, zgjidhni fjalëkalim të fuqishëm që do ta mbani mend.</string>
-  <string name="help_password_enter">Jepni fjalëkalimin e llogarisë suaj kryesore Jami</string>
-  <string name="help_server_enter">Jepni URL-në e shërbyesit të administrimeve</string>
+  <string name="help_password_enter">Jepni fjalëkalimin e llogarisë tuaj kryesore Jami.</string>
+  <string name="help_server_enter">Jepni URL-në e shërbyesit të administrimeve.</string>
   <string name="help_pin_enter">Jepni PIN-in prej një llogarie tjetër Jami të formësuar. Përdorni veçorinë \"eksportoje llogarinë në Jami\" që të merrni një PIN.</string>
   <string name="wizard_next">Pasuesi</string>
   <string name="wizard_back">Mbrapsht</string>
@@ -182,7 +183,7 @@
   <string name="profile_message_warning">Profili juaj ndahet vetëm me kontaktet tuaja</string>
   <string name="open_the_gallery">Hape galerinë</string>
   <string name="take_a_photo">Bëni një foto</string>
-  <string name="profile_name_hint">Jepni emrin tuaj (opsionale)</string>
+  <string name="profile_name_hint">Jepni emrin tuaj</string>
   <!--Share fragment-->
   <string name="share_message">Skanojeni këtë kod me Jami-n</string>
   <string name="share_message_no_account">Ju lutemi, përzgjidhni një llogari për ndarje me të.</string>
@@ -198,7 +199,7 @@
   <string name="contact_request_title">Kërkesë kontakti të ri</string>
   <string name="contact_request_msg">Keni %1$s kërkesa kontakti</string>
   <string name="contact_request_account">Për %1$s</string>
-  <string name="no_requests">0 kërkesa kontakti</string>
+  <string name="no_requests">S’keni kërkesa për kontakt</string>
   <string name="message_contact_not_trusted_yet">%s s\’gjendet ende te kontaktet tuaj.\nE pranoni apo e hidhni tej këtë kërkesë kontakti?</string>
   <string name="message_contact_not_trusted">%s s\’gjendet në kontaktet tuaja.\nTë shtohet një kontakt i ri?</string>
   <!--Send contact requests-->
@@ -206,9 +207,10 @@
   <string name="send_request_title">Dërgoni një kërkesë kontakti</string>
   <string name="send_request_msg">Duhet të dërgoni një kërkesë kontakti që të komunikoni me këtë përdorues. Për sa kohë që kontakti juaj s\’e ka pranuar kërkesën, mund t\’i dërgoni mesazhe, por ai s\’do të jetë në gjendje t\’ju përgjigjet.</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">0 kontakte të bllokuar</string>
+  <string name="no_blocked_contact">S’ka kontakte të bllokuar</string>
   <!--Smartlist-->
   <string name="no_contact_request">S\’është dërguar ndonjë kërkesë kontakti</string>
+  <string name="conversation_placeholder">Ende s’keni biseda</string>
   <string name="contact_request_sent">Kërkesa e kontaktit u dërgua</string>
   <string name="start_conversation">Nisni bisedë</string>
   <string name="search_results">Përfundime Kërkimi</string>
@@ -265,4 +267,20 @@
   <string name="tv_send_audio">Dërgoni Audio</string>
   <string name="tv_send_video">Dërgoni Media</string>
   <string name="conversation_input_speech_hint">Thoni diçka…</string>
+  <!--WIZARD-->
+  <string name="wizard_status_recommended">E rekomanduar</string>
+  <string name="wizard_status_optional">Opsionale</string>
+  <string name="wizard_status_required">E domosdoshme</string>
+  <string name="wizard_username_info">Zgjidhni një emër përdoruesi për llogarinë tuaj</string>
+  <string name="wizard_username_button">Zgjidhni Emër Përdoruesi</string>
+  <string name="wizard_username_skip">Anashkaloje zgjedhjen e emrit të përdoruesit</string>
+  <string name="wizard_password_info">Fjalëkalim llogarie</string>
+  <string name="wizard_password_placeholder">Zgjidhni një fjalëkalim për fshehtëzimin e kyçit të llogarisë në këtë pajisje</string>
+  <string name="wizard_password_button">Zgjidhni fjalëkalim</string>
+  <string name="wizard_password_skip">Krijoni llogari</string>
+  <string name="wizard_password_switch">Fshehtëzoje llogarinë me fjalëkalim</string>
+  <string name="wizard_password_warning">Mbani parasysh se fjalëkalimi s’mund të rimerret</string>
+  <string name="wizard_profile_info">Profili ndahet vetëm me kontaktet</string>
+  <string name="wizard_profile_button">Ruaje Profilin</string>
+  <string name="wizard_profile_skip">Anashakalojeni dhe bëjeni këtë më vonë</string>
 </resources>

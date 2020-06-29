@@ -24,4 +24,5 @@
   <string name="pref_clearHistory_summary">Tøm samtalehistorikken. Denne handlingen kan ikke angres.</string>
   <string name="pref_persistNotification_title">Kjør i bakgrunnen</string>
   <string name="pref_persistNotification_summary">Tillater kjøring i bakgrunnen for å motta samtaler og meldinger.</string>
+  <!--Plugin-->
 </resources>

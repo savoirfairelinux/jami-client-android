@@ -98,6 +98,7 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_credentials_add">Pridėti prisijungimo duomenis</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Saugumas</string>
+  <string name="account_srtp_switch_label">Šifruoti medija srautus (SRTP)</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Naudoti TLS perdavimą</string>
@@ -165,7 +166,7 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="register_name">Registruoti vardą</string>
   <string name="trying_to_register_name">Bandoma užregistruoti vardą</string>
   <string name="registered_username">Registruotas naudotojo vardas</string>
-  <string name="register_username">Registruoti viešąjį naudotojo vardą (rekomenduojama)</string>
+  <string name="register_username">Registruoti viešąjį naudotojo vardą</string>
   <string name="username_already_taken">Naudotojo vardas jau užimtas</string>
   <string name="invalid_username">Neteisingas naudotojo vardas</string>
   <string name="unknown_error">Nežinoma klaida. Patikrinkite savo tinklo ryšį!</string>

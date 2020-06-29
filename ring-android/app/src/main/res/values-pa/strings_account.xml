@@ -164,7 +164,6 @@
   <string name="register_name">ਨਾਂ ਦਾ ਪੰਜੀਕਰਨ ਕਰੋ</string>
   <string name="trying_to_register_name">ਨਾਂ ਦੇ ਪੰਜੀਕਰਨ ਦੀ ਕੋਸ਼ਿਸ਼ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ</string>
   <string name="registered_username">ਪੰਜੀਕਿਰਤ ਵਰਤੋਂਕਾਰ ਨਾਂ</string>
-  <string name="register_username">ਜਨਤਕ ਵਰਤੋਂਕਾਰ ਨਾਂ ਦਾ ਪੰਜੀਕਰਨ ਕਰੋ (ਸਿਫ਼ਾਰਸ਼ੀ)</string>
   <string name="username_already_taken">ਵਰਤੋਂਕਾਰ ਨਾਂ ਪਹਿਲਾਂ ਹੀ ਲਿਆ ਗਿਆ</string>
   <string name="invalid_username">ਅਵੈਧ ਵਰਤੋਂਕਾਰ ਨਾਂ</string>
   <string name="looking_for_username_availability">ਵਰਤੋਂਕਾਰ ਨਾਂ ਦੀ ਉਪਲਬਧਤਾ ਲੱਭੀ ਜਾ ਰਹੀ ਹੈ…</string>

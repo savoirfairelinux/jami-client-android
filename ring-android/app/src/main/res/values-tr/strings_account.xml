@@ -105,6 +105,7 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="account_credentials_add">Kimlik bilgisi ekle</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Güvenlik</string>
+  <string name="account_srtp_switch_label">Ortam akışlarını şifrele (SRTP)</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS Taşıyıcı kullan</string>
@@ -158,7 +159,6 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="account_sip_success_title">Sip hesabı kayıtlı</string>
   <string name="account_sip_success_message">Sip hesabınızı başarıyla kaydettiniz.</string>
   <string name="account_sip_register_anyway">Her koşulda kaydol</string>
-  <string name="account_link_device">Başka bir cihazdan bağlanın</string>
   <string name="account_link_button">Ağdan bağlanın</string>
   <string name="account_link_archive_button">Yedeklemeden bağlan</string>
   <string name="account_link_prompt_pin">PIN\'i gir</string>
@@ -183,7 +183,7 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="register_name">Adı kaydet</string>
   <string name="trying_to_register_name">Ad kaydedilmeye çalışılıyor</string>
   <string name="registered_username">Kaydedilen kullanıcı adı</string>
-  <string name="register_username">Halka açık kullanıcı adı kaydet (önerilir)</string>
+  <string name="register_username">Halka açık kullanıcı adı kaydet</string>
   <string name="username_already_taken">Kullanıcı adı önceden alınmış</string>
   <string name="invalid_username">Geçersiz kullanıcı adı</string>
   <string name="unknown_error">Bilinmeyen hata. Lütfen ağ bağlantınızı kontrol edin!</string>

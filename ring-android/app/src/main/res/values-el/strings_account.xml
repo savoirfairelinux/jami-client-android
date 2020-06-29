@@ -45,6 +45,7 @@
   <!--Security Details-->
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Ασφάλεια</string>
+  <string name="account_srtp_switch_label">Κρυπτογράφηση ροών μέσων (SRTP)</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_rtp_port_range">Εύρος θυρών RTP ήχου</string>
@@ -56,6 +57,7 @@
   <string name="account_link_export_button">Σύνδεση μιας άλλης συσκευής σε αυτόν το λογαριασμό</string>
   <string name="account_connect_prompt_username">Όνομα χρήστη</string>
   <!--Name registration-->
+  <string name="register_username">Καταχώρηση δημόσιου ονόματος χρήστη</string>
   <string name="username_already_taken">Το όνομα χρήστη ήδη χρησιμοποιείται</string>
   <string name="invalid_username">Μη έγκυρο όνομα χρήστη</string>
   <string name="account_status_connecting">Συνδέεται</string>
