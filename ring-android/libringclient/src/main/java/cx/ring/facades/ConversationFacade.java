@@ -22,6 +22,7 @@ package cx.ring.facades;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.NavigableMap;
 import java.util.concurrent.TimeUnit;
@@ -366,6 +367,18 @@ public class ConversationFacade {
                         .switchMapSingle(conversations -> Observable.fromIterable(conversations)
                                 .map(conv -> observeConversation(account, conv))
                                 .toList()));
+    }
+    public Observable<List<Observable<SmartListViewModel>>> getSearchResults(Account account, Observable<String> query) {
+        if (account.canSearch()) {
+            return query
+                    .switchMapSingle(q -> mAccountService.searchUser(account.getAccountID(), q))
+                    .switchMapSingle(result -> Observable.fromIterable(result.results)
+                            .map(user -> observeConversation(account, account.getByUri(user.address)))
+                            .toList());
+        } else {
+            return query.switchMapSingle(q -> mAccountService.findRegistrationByName(account.getAccountID(), "", q))
+                    .map(result -> result.state == 0 ? Collections.singletonList(observeConversation(account, account.getByUri(result.address))) : Collections.emptyList());
+        }
     }
 
     /**

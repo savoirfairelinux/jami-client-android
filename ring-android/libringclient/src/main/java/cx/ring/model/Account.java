@@ -86,6 +86,10 @@ public class Account {
     private final BehaviorSubject<Collection<CallContact>> contactListSubject = BehaviorSubject.create();
     private final BehaviorSubject<Collection<TrustRequest>> trustRequestsSubject = BehaviorSubject.create();
 
+    public boolean canSearch() {
+        return !StringUtils.isEmpty(getDetail(ConfigKey.MANAGER_URI));
+    }
+
     public static class ContactLocation {
         public double latitude;
         public double longitude;
