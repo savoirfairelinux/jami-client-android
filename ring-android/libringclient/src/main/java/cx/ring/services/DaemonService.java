@@ -36,6 +36,7 @@ import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.StringVect;
 import cx.ring.daemon.UintVect;
+import cx.ring.daemon.VectMap;
 import cx.ring.daemon.VideoCallback;
 import cx.ring.utils.Log;
 
@@ -201,6 +202,11 @@ public class DaemonService {
         @Override
         public void registeredNameFound(String accountId, int state, String address, String name) {
             mAccountService.registeredNameFound(accountId, state, address, name);
+        }
+
+        @Override
+        public void userSearchEnded(String accountId, int state, String query, VectMap results) {
+            mAccountService.userSearchEnded(accountId, state, query, results.toNative());
         }
 
         @Override

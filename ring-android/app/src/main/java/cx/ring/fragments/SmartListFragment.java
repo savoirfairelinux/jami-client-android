@@ -344,6 +344,11 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     }
 
     @Override
+    public void displaySearchResults(List<CallContact> results) {
+        //mSmartListAdapter.update(results);
+    }
+
+    @Override
     public void displayChooseNumberDialog(final CharSequence[] numbers) {
         final Context context = requireContext();
         new MaterialAlertDialogBuilder(context)

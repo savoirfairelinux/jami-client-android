@@ -207,8 +207,30 @@ public class AccountService {
         public String address;
         public int state;
     }
+    public static class User {
+        public String name;
+        public String address;
+        public String profileName;
+
+        public User(Map<String, String> m) {
+            name = m.get("username");
+            address = m.get("address");
+        }
+    }
+    public static class UserSearchResult {
+        public String accountId;
+        public String query;
+        public int state;
+        public List<User> results;
+
+        public UserSearchResult(String account, String query) {
+            accountId = account;
+            this.query = query;
+        }
+    }
 
     private final Subject<RegisteredName> registeredNameSubject = PublishSubject.create();
+    private final Subject<UserSearchResult> searchResultSubject = PublishSubject.create();
 
     private static class ExportOnRingResult {
         String accountId;
@@ -233,6 +255,9 @@ public class AccountService {
 
     public Observable<RegisteredName> getRegisteredNames() {
         return registeredNameSubject;
+    }
+    public Observable<UserSearchResult> getSearchResults() {
+        return searchResultSubject;
     }
 
     public Observable<TextMessage> getIncomingMessages() {
@@ -1140,15 +1165,24 @@ public class AccountService {
     }
 
     public Single<RegisteredName> findRegistrationByName(final String account, final String nameserver, final String name) {
-        if (name == null || name.isEmpty()) {
+        if (StringUtils.isEmpty(name)) {
             return Single.just(new RegisteredName());
         }
         return getRegisteredNames()
                 .filter(r -> account.equals(r.accountId) && name.equals(r.name))
                 .firstOrError()
-                .doOnSubscribe(s -> {
-                    mExecutor.execute(() -> Ringservice.lookupName(account, nameserver, name));
-                })
+                .doOnSubscribe(s -> mExecutor.execute(() -> Ringservice.lookupName(account, nameserver, name)))
+                .subscribeOn(Schedulers.from(mExecutor));
+    }
+
+    public Single<UserSearchResult> searchUser(final String account, final String query) {
+        if (StringUtils.isEmpty(query)) {
+            return Single.just(new UserSearchResult(account, query));
+        }
+        return getSearchResults()
+                .filter(r -> account.equals(r.accountId) && query.equals(r.query))
+                .firstOrError()
+                .doOnSubscribe(s -> mExecutor.execute(() -> Ringservice.searchUser(account, query)))
                 .subscribeOn(Schedulers.from(mExecutor));
     }
 
@@ -1370,6 +1404,16 @@ public class AccountService {
         r.name = name;
         r.state = state;
         registeredNameSubject.onNext(r);
+    }
+
+    public void userSearchEnded(String accountId, int state, String query, ArrayList<Map<String, String>> results) {
+        UserSearchResult r = new UserSearchResult(accountId, query);
+        r.state = state;
+        r.results = new ArrayList(results.size());//results.stream().map(item -> new User(item)).collect(Collectors.toList());
+        for (Map<String, String> m : results) {
+            r.results.add(new User(m));
+        }
+        searchResultSubject.onNext(r);
     }
 
     public DataTransferError sendFile(final DataTransfer dataTransfer, File file) {
