@@ -49,6 +49,8 @@ public class SyncService extends Service {
     private int serviceUsers = 0;
     private final Random mRandom = new Random();
 
+    private Notification notification = null;
+
     @Inject
     NotificationService mNotificationService;
 
@@ -62,14 +64,13 @@ public class SyncService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         String action = intent.getAction();
         if (ACTION_START.equals(action)) {
-            if (serviceUsers == 0) {
+            if (notification == null) {
                 final Intent deleteIntent = new Intent(ACTION_STOP)
                         .setClass(getApplicationContext(), SyncService.class);
                 final Intent contentIntent = new Intent(Intent.ACTION_VIEW)
                         .setClass(getApplicationContext(), HomeActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                Notification notif = new NotificationCompat.Builder(this, NotificationServiceImpl.NOTIF_CHANNEL_SYNC)
+                notification = new NotificationCompat.Builder(this, NotificationServiceImpl.NOTIF_CHANNEL_SYNC)
                         .setContentTitle(getString(R.string.notif_sync_title))
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                         .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
@@ -81,11 +82,12 @@ public class SyncService extends Service {
                         .setDeleteIntent(PendingIntent.getService(getApplicationContext(), mRandom.nextInt(), deleteIntent, 0))
                         .setContentIntent(PendingIntent.getActivity(getApplicationContext(), mRandom.nextInt(), contentIntent, 0))
                         .build();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
-                    startForeground(NOTIF_SYNC_SERVICE_ID, notif, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
-                else
-                    startForeground(NOTIF_SYNC_SERVICE_ID, notif);
-
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+                startForeground(NOTIF_SYNC_SERVICE_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
+            else
+                startForeground(NOTIF_SYNC_SERVICE_ID, notification);
+            if (serviceUsers == 0) {
                 JamiApplication.getInstance().startDaemon();
             }
             serviceUsers++;
@@ -105,6 +107,7 @@ public class SyncService extends Service {
             if (serviceUsers == 0) {
                 stopForeground(true);
                 stopSelf();
+                notification = null;
             }
         }
         return START_NOT_STICKY;
