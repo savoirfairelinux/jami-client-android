@@ -22,18 +22,16 @@ package cx.ring.dependencyinjection;
 import javax.inject.Singleton;
 
 import cx.ring.account.AccountEditionFragment;
+import cx.ring.account.JamiAccountConnectPasswordFragment;
 import cx.ring.account.JamiAccountPasswordFragment;
 import cx.ring.account.JamiAccountUsernameFragment;
 import cx.ring.account.JamiLinkAccountPasswordFragment;
 import cx.ring.fragments.LocationSharingFragment;
 import cx.ring.account.AccountWizardActivity;
 import cx.ring.account.HomeAccountCreationFragment;
-import cx.ring.account.JamiAccountConnectFragment;
 import cx.ring.account.ProfileCreationFragment;
 import cx.ring.account.RegisterNameDialog;
-import cx.ring.account.JamiAccountCreationFragment;
 import cx.ring.account.JamiAccountSummaryFragment;
-import cx.ring.account.JamiLinkAccountFragment;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.ContactDetailsActivity;
 import cx.ring.client.HomeActivity;
@@ -179,7 +177,7 @@ public interface JamiInjectionComponent {
 
     void inject(JamiLinkAccountPasswordFragment fragment);
 
-    void inject(JamiAccountConnectFragment fragment);
+    void inject(JamiAccountConnectPasswordFragment fragment);
 
     void inject(LaunchActivity activity);
 
