@@ -37,7 +37,7 @@
             android:id="@+id/background"
             android:layout_width="@dimen/wizard_image_background"
             android:layout_height="@dimen/wizard_image_background"
-            android:layout_alignTop="@id/card"
+            android:layout_alignTop="@id/pager"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="-200dp"
             android:alpha="0.1"
@@ -51,145 +51,22 @@
             android:layout_alignParentTop="true"
             android:layout_margin="@dimen/text_margin"
             android:gravity="center"
+            android:layout_centerHorizontal="true"
             android:text="@string/account_connect_server_button"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
             android:textColor="@color/color_primary_light"
             android:textStyle="bold" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card"
+        <cx.ring.views.WizardViewPager
+            android:id="@+id/pager"
             android:layout_width="@dimen/wizard_card_width"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
+            android:layout_height="@dimen/wizard_card_height"
             android:layout_margin="16dp"
-            android:background="@color/white"
-            app:cardCornerRadius="12dp">
-
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="@dimen/wizard_card_padding"
-                    android:paddingTop="@dimen/wizard_card_padding"
-                    android:paddingBottom="0dp">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp">
-
-                        <TextView
-                            android:id="@+id/info"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginEnd="4dp"
-                            android:layout_toStartOf="@id/status"
-                            android:text="@string/help_server_enter"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/status"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true"
-                            android:layout_alignParentEnd="true"
-                            android:background="@drawable/background_status_required"
-                            android:padding="6dp"
-                            android:text="@string/wizard_status_required"
-                            android:textColor="#ff1f62"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-
-                    </RelativeLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/prompt_server_box"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/prompt_server"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/baseline_language_18"
-                            android:drawablePadding="5dp"
-                            android:hint="@string/prompt_server"
-                            android:imeOptions="actionNext"
-                            android:inputType="textUri" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <TextView
-                        android:id="@+id/pin_help_message"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingStart="4dp"
-                        android:paddingTop="16dp"
-                        android:paddingEnd="16dp"
-                        android:paddingBottom="8dp"
-                        android:text="@string/help_credentials_enter"
-                        android:textSize="14sp" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/username_txt_box"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/username_txt"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/baseline_account_crop_24"
-                            android:drawablePadding="5dp"
-                            android:hint="@string/account_connect_prompt_username"
-                            android:imeOptions="actionNext"
-                            android:inputType="textNoSuggestions"
-                            android:singleLine="true" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/password_txt_box"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:passwordToggleEnabled="true">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/password_txt"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/baseline_lock_24"
-                            android:drawablePadding="5dp"
-                            android:hint="@string/prompt_password"
-                            android:imeOptions="actionDone"
-                            android:inputType="textPassword" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/connect_button"
-                        style="@style/WizardButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="16dp"
-                        android:enabled="false"
-                        android:text="@string/account_connect_button"
-                        android:theme="@style/ButtonColoredInverse"
-                        android:layout_gravity="center_horizontal" />
-                </LinearLayout>
-
-            </ScrollView>
-
-        </androidx.cardview.widget.CardView>
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            tools:background="@color/grey_400"/>
 
     </cx.ring.views.BoundedRelativeLayout>
 
