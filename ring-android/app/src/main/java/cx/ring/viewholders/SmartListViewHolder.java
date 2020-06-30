@@ -26,12 +26,15 @@ import cx.ring.model.ContactEvent;
 import cx.ring.model.Interaction;
 import cx.ring.model.SipCall;
 import cx.ring.smartlist.SmartListViewModel;
+import cx.ring.utils.BitmapUtils;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.disposables.CompositeDisposable;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.text.format.DateUtils;
+import android.util.Base64;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -59,8 +62,6 @@ public class SmartListViewHolder extends RecyclerView.ViewHolder {
         compositeDisposable.add(RxView.longClicks(itemView)
                 .subscribe(u -> clickListener.onItemLongClick(smartListViewModel)));
 
-        CallContact contact = smartListViewModel.getContact();
-
         binding.convParticipant.setText(smartListViewModel.getContactName());
 
         long lastInteraction = smartListViewModel.getLastInteractionTime();
@@ -86,11 +87,21 @@ public class SmartListViewHolder extends RecyclerView.ViewHolder {
             binding.convLastItem.setTypeface(null, Typeface.NORMAL);
         }
 
-        binding.photo.setImageDrawable(
-                new AvatarDrawable.Builder()
-                        .withContact(contact)
-                        .withCircleCrop(true)
-                        .build(binding.photo.getContext()));
+        CallContact contact = smartListViewModel.getContact();
+        if (contact != null) {
+            binding.photo.setImageDrawable(
+                    new AvatarDrawable.Builder()
+                            .withContact(contact)
+                            .withCircleCrop(true)
+                            .build(binding.photo.getContext()));
+        } else {
+            binding.photo.setImageDrawable(
+                    new AvatarDrawable.Builder()
+                            .withPhoto(BitmapUtils.base64ToBitmap(smartListViewModel.picture_b64))
+                            .withNameData(smartListViewModel.getContactName(), smartListViewModel.getUuid())
+                            .withCircleCrop(true)
+                            .build(binding.photo.getContext()));
+        }
     }
 
     public void unbind() {

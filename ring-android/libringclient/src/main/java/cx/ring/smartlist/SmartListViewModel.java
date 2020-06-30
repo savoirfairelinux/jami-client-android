@@ -22,6 +22,7 @@ package cx.ring.smartlist;
 
 import cx.ring.model.CallContact;
 import cx.ring.model.Interaction;
+import cx.ring.services.AccountService;
 
 public class SmartListViewModel
 {
@@ -33,6 +34,8 @@ public class SmartListViewModel
     private boolean hasOngoingCall;
     private boolean isOnline = false;
     private final Interaction lastEvent;
+
+    public String picture_b64 = null;
 
     public SmartListViewModel(String accountId, CallContact contact, String id, Interaction lastEvent) {
         this.accountId = accountId;
@@ -53,6 +56,16 @@ public class SmartListViewModel
         this.hasOngoingCall = false;
         this.lastEvent = lastEvent;
         isOnline = contact.isOnline();
+    }
+
+    public SmartListViewModel(String accountId, AccountService.User user) {
+        contactName = user.firstName + " " + user.lastName;
+        this.accountId = accountId;
+        this.contact = null;
+        this.uuid = user.username;
+        hasUnreadTextMessage = false;
+        lastEvent = null;
+        picture_b64 = user.picture_b64;
     }
 
     public CallContact getContact() {

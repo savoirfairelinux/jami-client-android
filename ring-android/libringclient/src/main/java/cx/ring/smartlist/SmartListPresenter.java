@@ -72,7 +72,8 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
     private final CompositeDisposable mConversationDisposable = new CompositeDisposable();
 
     @Inject
-    public SmartListPresenter(AccountService accountService, ContactService contactService,
+    public SmartListPresenter(AccountService accountService,
+                              ContactService contactService,
                               ConversationFacade conversationFacade,
                               PreferencesService sharedPreferencesService,
                               HardwareService hardwareService,
@@ -110,6 +111,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
             if (mQueryDisposable != null) {
                 mQueryDisposable.dispose();
                 mQueryDisposable = null;
+                loadConversations();
             }
             view.hideSearchRow();
             view.setLoading(false);
@@ -134,24 +136,35 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
                             .subscribe(view::displayContact, e -> Log.e(TAG, "Can't load contact")));
                 } else {
                     view.hideSearchRow();
-                    view.setLoading(true);
+                    //view.setLoading(true);
 
-                    // Ring search
+                    // Jami search
                     if (mQueryDisposable == null || mQueryDisposable.isDisposed()) {
+                        /*boolean search = currentAccount.canSearch();
                         mQueryDisposable = contactQuery
                                 .debounce(350, TimeUnit.MILLISECONDS)
-                                .switchMapSingle(q -> mAccountService.findRegistrationByName(mAccount.getAccountID(), "", q))
+                                .switchMapSingle(q -> search ? mAccountService.searchUser(currentAccount.getAccountID(), q)
+                                        : mAccountService.findRegistrationByName(currentAccount.getAccountID(), "", q))
                                 .observeOn(mUiScheduler)
-                                .subscribe(q -> parseEventState(mAccountService.getAccount(q.accountId), q.name, q.address, q.state),
-                                        e -> Log.e(TAG, "Can't perform query"));
-                        mCompositeDisposable.add(mQueryDisposable);
+                                .subscribe(q -> {
+                                    if (q instanceof AccountService.RegisteredName) {
+                                        AccountService.RegisteredName r = (AccountService.RegisteredName) q;
+                                        parseEventState(currentAccount, r.name, r.address, r.state);
+                                    } else if (q instanceof AccountService.UserSearchResult) {
+                                        parseSearchResult(currentAccount, (AccountService.UserSearchResult) q);
+                                    }
+                                    getView().setLoading(false);
+                                }, e -> Log.e(TAG, "Can't perform query"));
+                        mCompositeDisposable.add(mQueryDisposable);*/
+                        showConversations(mConversationFacade.getSearchResults(currentAccount, contactQuery.debounce(350, TimeUnit.MILLISECONDS)));
+                        mQueryDisposable = new CompositeDisposable();
                     }
                     contactQuery.onNext(query);
                 }
             }
         }
 
-        view.updateList(filter(mSmartListViewModels, query));
+        //view.updateList(filter(mSmartListViewModels, query));
     }
 
     public void newContactClicked() {
@@ -161,8 +174,26 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
         startConversation(mAccount.getAccountID(), mCallContact);
     }
 
-    public void conversationClicked(SmartListViewModel smartListViewModel) {
-        startConversation(smartListViewModel.getAccountId(), smartListViewModel.getContact());
+    public void conversationClicked(SmartListViewModel viewModel) {
+        if (viewModel.getContact() != null)
+            startConversation(viewModel.getAccountId(), viewModel.getContact());
+        else if (viewModel.getUuid() != null) {
+            mCompositeDisposable.add(mAccountService
+                    .findRegistrationByName(viewModel.getAccountId(), "", viewModel.getUuid())
+                    .observeOn(Schedulers.io())
+                    .flatMap(r -> mConversationFacade.startConversation(viewModel.getAccountId(), new Uri(r.address)))
+                    .map(c -> {
+                        CallContact contact = c.getContact();
+                        contact.setUsername(viewModel.getUuid());
+                        contact.setProfile(viewModel.getContactName(), mContactService.base64ToBitmap(viewModel.picture_b64));
+                        mContactService.saveVCardContact(viewModel.getAccountId(), contact.getPrimaryNumber(), viewModel.getContactName(), viewModel.picture_b64)
+                                .subscribe();
+                        return contact;
+                    })
+                    .observeOn(mUiScheduler)
+                    .subscribe(contact -> startConversation(viewModel.getAccountId(), contact)
+                            , e -> Log.e(TAG, "Error opening conversation", e)));
+        }
     }
 
     public void conversationLongClicked(SmartListViewModel smartListViewModel) {
@@ -172,7 +203,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
     public void quickCallClicked() {
         if (mCallContact != null) {
             if (mCallContact.getPhones().size() > 1) {
-                CharSequence numbers[] = new CharSequence[mCallContact.getPhones().size()];
+                CharSequence[] numbers = new CharSequence[mCallContact.getPhones().size()];
                 int i = 0;
                 for (Phone p : mCallContact.getPhones()) {
                     numbers[i++] = p.getNumber().getRawUriString();
@@ -238,21 +269,19 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
         getView().goToQRActivity();
     }
 
-    private void loadConversations() {
+    void showConversations(Observable<List<Observable<SmartListViewModel>>> conversations) {
         mConversationDisposable.clear();
         getView().setLoading(true);
 
-        mConversationDisposable.add(mConversationFacade
-                .getSmartList(accountSubject)
-                .switchMap(viewModels -> viewModels.isEmpty()
-                        ? Observable.just(new ArrayList<SmartListViewModel>())
-                        : Observable.combineLatest(viewModels, obs -> {
-                            List<SmartListViewModel> vms = new ArrayList<>(obs.length);
-                            for (Object ob : obs)
-                                vms.add((SmartListViewModel) ob);
-                            mSmartListViewModels = vms;
-                            return vms;
-                        }))
+        mConversationDisposable.add(conversations.switchMap(viewModels -> viewModels.isEmpty()
+                ? Observable.just(new ArrayList<SmartListViewModel>())
+                : Observable.combineLatest(viewModels, obs -> {
+            List<SmartListViewModel> vms = new ArrayList<>(obs.length);
+            for (Object ob : obs)
+                vms.add((SmartListViewModel) ob);
+            mSmartListViewModels = vms;
+            return vms;
+        }))
                 .throttleLatest(150, TimeUnit.MILLISECONDS, mUiScheduler)
                 .observeOn(mUiScheduler)
                 .subscribe(viewModels -> {
@@ -267,8 +296,12 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
                         return;
                     }
                     view.hideNoConversationMessage();
-                    view.updateList(filter(viewModels, mCurrentQuery));
+                    view.updateList(/*filter(viewModels, mCurrentQuery)*/viewModels);
                 }));
+    }
+
+    private void loadConversations() {
+        showConversations(mConversationFacade.getSmartList(accountSubject));
     }
 
     private List<SmartListViewModel> filter(List<SmartListViewModel> list, String query) {
@@ -317,9 +350,34 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
                 }
                 break;
         }
-        getView().setLoading(false);
     }
 
+   /* private void parseSearchResult(Account account, AccountService.UserSearchResult q) {
+        Log.w(TAG, "parseSearchResult " + q.getQuery() + " " + q.results.size());
+        switch (q.state) {
+            case 0:
+                // on found
+                List<CallContact> results = new ArrayList<>(q.results.size());
+                for (AccountService.User user : q.results) {
+                    CallContact contact = account.getContactFromCache(user.address);
+                    contact.setUsername(user.name);
+                    results.add(contact);
+                }
+                getView().displaySearchResults(results);
+                break;
+            default:
+                // on error
+                Uri uriAddress = new Uri(q.getQuery());
+                if (uriAddress.isRingId()) {
+                    mCallContact = account.getContactFromCache(uriAddress);
+                    getView().displayContact(mCallContact);
+                } else {
+                    getView().hideSearchRow();
+                }
+                break;
+        }
+    }
+*/
     public void banContact(SmartListViewModel smartListViewModel) {
         CallContact contact = smartListViewModel.getContact();
         mAccountService.removeContact(mAccount.getAccountID(), contact.getPrimaryNumber(), true);
