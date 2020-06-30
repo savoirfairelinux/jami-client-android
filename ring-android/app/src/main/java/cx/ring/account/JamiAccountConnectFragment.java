@@ -20,27 +20,49 @@
 package cx.ring.account;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import cx.ring.application.JamiApplication;
 import cx.ring.databinding.FragAccJamiConnectBinding;
 import cx.ring.mvp.AccountCreationModel;
 import cx.ring.mvp.BaseSupportFragment;
 
-public class JamiAccountConnectFragment extends BaseSupportFragment<JamiAccountConnectPresenter> implements JamiConnectAccountView {
+public class JamiAccountConnectFragment extends BaseSupportFragment {
+
     public static final String TAG = JamiAccountConnectFragment.class.getSimpleName();
+    private static final int NUM_PAGES = 2;
 
     private AccountCreationModel model;
-    private FragAccJamiConnectBinding binding;
+    private FragAccJamiConnectBinding mBinding;
+    private Fragment mCurrentFragment;
+
+    private final OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(false) {
+        @Override
+        public void handleOnBackPressed() {
+            if (mCurrentFragment instanceof ProfileCreationFragment) {
+                ProfileCreationFragment fragment = (ProfileCreationFragment) mCurrentFragment;
+                ((AccountWizardActivity) getActivity()).profileCreated(fragment.getModel(), false);
+                return;
+            }
+            mBinding.pager.setCurrentItem(mBinding.pager.getCurrentItem() - 1);
+        }
+    };
 
     public static JamiAccountConnectFragment newInstance(AccountCreationModelImpl ringAccountViewModel) {
         JamiAccountConnectFragment fragment = new JamiAccountConnectFragment();
@@ -51,86 +73,108 @@ public class JamiAccountConnectFragment extends BaseSupportFragment<JamiAccountC
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragAccJamiConnectBinding.inflate(inflater, container, false);
-        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
-        return binding.getRoot();
+        mBinding = FragAccJamiConnectBinding.inflate(inflater, container, false);
+        return mBinding.getRoot();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
-    }
-
-    @Override
-    protected void initPresenter(JamiAccountConnectPresenter presenter) {
-        presenter.init(model);
+        mBinding = null;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.connectButton.setOnClickListener(v -> presenter.connectClicked());
-        binding.usernameTxt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        ScreenSlidePagerAdapter pagerAdapter = new ScreenSlidePagerAdapter(getChildFragmentManager(), model);
+        mBinding.pager.setAdapter(pagerAdapter);
+        mBinding.pager.disableScroll(true);
 
+        mBinding.pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void afterTextChanged(Editable s) {
-                presenter.usernameChanged(s.toString());
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
-        });
-        binding.passwordTxt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                presenter.passwordChanged(s.toString());
+            public void onPageSelected(int position) {
+                mCurrentFragment = pagerAdapter.getRegisteredFragment(position);
+                onBackPressedCallback.setEnabled(mCurrentFragment instanceof ProfileCreationFragment);
             }
-        });
-        binding.promptServer.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onPageScrollStateChanged(int state) {
 
-            @Override
-            public void afterTextChanged(Editable s) {
-                presenter.serverChanged(s.toString());
             }
-        });
-
-        binding.passwordTxt.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                presenter.connectClicked();
-            }
-            return false;
         });
     }
 
     @Override
-    public void enableConnectButton(boolean enable) {
-        binding.connectButton.setEnabled(enable);
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
     }
 
-    @Override
-    public void createAccount(AccountCreationModel accountCreationModel) {
-        ((AccountWizardActivity) requireActivity()).createAccount(accountCreationModel);
+    public void scrollPagerFragment(AccountCreationModel accountCreationModel) {
+        if (accountCreationModel == null) {
+            mBinding.pager.setCurrentItem(mBinding.pager.getCurrentItem() - 1);
+            return;
+        }
+        mBinding.pager.setCurrentItem(mBinding.pager.getCurrentItem() + 1);
+        for (Fragment fragment : getChildFragmentManager().getFragments()) {
+            if (fragment instanceof JamiAccountPasswordFragment) {
+                ((JamiAccountPasswordFragment) fragment).setUsername(accountCreationModel.getUsername());
+            }
+        }
     }
 
-    @Override
-    public void cancel() {
-        Activity wizardActivity = getActivity();
-        if (wizardActivity != null) {
-            wizardActivity.onBackPressed();
+    private static class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+
+        AccountCreationModelImpl ringAccountViewModel;
+        SparseArray<Fragment> mRegisteredFragments = new SparseArray<>();
+
+        public ScreenSlidePagerAdapter(FragmentManager fm, AccountCreationModel model) {
+            super(fm);
+            ringAccountViewModel = (AccountCreationModelImpl) model;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            Fragment fragment = null;
+
+            switch (position) {
+                case 0:
+                    fragment = JamiAccountConnectPasswordFragment.newInstance(ringAccountViewModel);
+                    break;
+                case 1:
+                    fragment = ProfileCreationFragment.newInstance(ringAccountViewModel);
+                    break;
+            }
+
+            return fragment;
+        }
+
+        @NonNull
+        @Override
+        public Object instantiateItem(@NonNull ViewGroup container, int position) {
+            Fragment fragment = (Fragment) super.instantiateItem(container, position);
+            mRegisteredFragments.put(position, fragment);
+            return super.instantiateItem(container, position);
+        }
+
+        @Override
+        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+            mRegisteredFragments.remove(position);
+            super.destroyItem(container, position, object);
+        }
+
+        @Override
+        public int getCount() {
+            return NUM_PAGES;
+        }
+
+        public Fragment getRegisteredFragment(int position) {
+            return mRegisteredFragments.get(position);
         }
     }
 }
