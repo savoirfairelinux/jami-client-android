@@ -824,24 +824,12 @@ public class AccountService {
     public Single<List<Codec>> getCodecList(final String accountId) {
         return Single.fromCallable(() -> {
             List<Codec> results = new ArrayList<>();
-
-            UintVect activePayloads = Ringservice.getActiveCodecList(accountId);
-            for (int i = 0; i < activePayloads.size(); ++i) {
-                StringMap codecsDetails = Ringservice.getCodecDetails(accountId, activePayloads.get(i));
-                results.add(new Codec(activePayloads.get(i), codecsDetails.toNative(), true));
-            }
-
             UintVect payloads = Ringservice.getCodecList();
-            cl:
+            UintVect activePayloads = Ringservice.getActiveCodecList(accountId);
             for (int i = 0; i < payloads.size(); ++i) {
-                for (Codec co : results) {
-                    if (co.getPayload() == payloads.get(i)) {
-                        continue cl;
-                    }
-                }
                 StringMap details = Ringservice.getCodecDetails(accountId, payloads.get(i));
                 if (details.size() > 1) {
-                    results.add(new Codec(payloads.get(i), details.toNative(), false));
+                    results.add(new Codec(payloads.get(i), details.toNative(), activePayloads.contains(payloads.get(i))));
                 } else {
                     Log.i(TAG, "Error loading codec " + i);
                 }
