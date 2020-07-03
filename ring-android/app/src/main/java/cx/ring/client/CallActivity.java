@@ -192,8 +192,8 @@ public class CallActivity extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         CallFragment callFragment = getCallFragment();
         if (callFragment != null) {
-            callFragment.toggleVideoPluginsCarousel(false);
-            callFragment.displayVideoPluginsCarousel();
+//            callFragment.toggleVideoPluginsCarousel(false);
+//            callFragment.displayVideoPluginsCarousel();
             return MediaButtonsHelper.handleMediaKeyCode(keyCode, callFragment)
                     || super.onKeyDown(keyCode, event);
         }
