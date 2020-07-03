@@ -115,7 +115,7 @@ public class CallService {
     }
 
     private void updateConnectionCount() {
-        connectionSubject.onNext(currentConnections.size() - 2*currentCalls.size());
+        //connectionSubject.onNext(currentConnections.size() - 2*currentCalls.size());
     }
 
     public void setIsComposing(String accountId, String uri, boolean isComposing) {

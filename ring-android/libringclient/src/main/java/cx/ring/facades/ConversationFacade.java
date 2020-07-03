@@ -102,8 +102,8 @@ public class ConversationFacade {
         mDisposableBag.add(mCallService.getCallsUpdates()
                 .subscribe(this::onCallStateChange));
 
-        mDisposableBag.add(mCallService.getConnectionUpdates()
-                .subscribe(mNotificationService::onConnectionUpdate));
+        /*mDisposableBag.add(mCallService.getConnectionUpdates()
+                    .subscribe(mNotificationService::onConnectionUpdate));*/
 
         mDisposableBag.add(mCallService.getConfsUpdates()
                 .observeOn(Schedulers.io())

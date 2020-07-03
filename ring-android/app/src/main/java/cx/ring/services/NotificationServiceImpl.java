@@ -405,7 +405,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public void onConnectionUpdate(Boolean b) {
-        Log.i(TAG, "onConnectionUpdate " + b);
+        /*Log.i(TAG, "onConnectionUpdate " + b);
         if (b) {
             Intent serviceIntent = new Intent(SyncService.ACTION_START).setClass(mContext, SyncService.class);
             try {
@@ -418,7 +418,7 @@ public class NotificationServiceImpl implements NotificationService {
                 mContext.startService(new Intent(SyncService.ACTION_STOP).setClass(mContext, SyncService.class));
             } catch (IllegalStateException ignored) {
             }
-        }
+        }*/
     }
 
     /**
