@@ -105,6 +105,7 @@
   <string name="write_a_message">پیامی بنویسید</string>
   <string name="scan_qr">اسکن کد QR</string>
   <string name="ab_action_flipcamera">چرخاندن دوربین</string>
+  <string name="ab_action_hidepreview">مخفی‌کردن پیش‌نمایش</string>
   <!--Text messages-->
   <string name="send_message">ارسال پیام</string>
   <string name="message_sending">در حال ارسال پیام…</string>
@@ -169,9 +170,8 @@
   <string name="prompt_new_password_repeat">گذرواژه جدید را تکرار کنید</string>
   <string name="account_create_title">ایجاد یک حساب جمی</string>
   <string name="prompt_new_username">نام کاربری جدید را وارد کنید</string>
+  <string name="prompt_hint_username">نام کاربری</string>
   <string name="help_password_choose">برای حفاظت از حساب جمی خود، گذرواژه‌ای قوی را که به خاطر خواهید سپرد، برگزینید.</string>
-  <string name="help_password_enter">گذرواژه حساب جمی خود را وارد کنید</string>
-  <string name="help_server_enter">آدرس URL سرور مدیریت را وارد کن</string>
   <string name="help_pin_enter">پین را از حساب پیکربندی‌شده جمی دیگر وارد کنید. برای به دست آوردن یک پین، از ویژگی «برون‌برد حساب جمی» استفاده کنید.</string>
   <string name="wizard_next">بعدی</string>
   <string name="wizard_back">بازگشت</string>
@@ -181,7 +181,7 @@
   <string name="profile_message_warning">نمایه شما تنها با مخاطبانتان هم‌رسانی می‌شود</string>
   <string name="open_the_gallery">گالری را باز کنید</string>
   <string name="take_a_photo">عکسی بگیرید</string>
-  <string name="profile_name_hint">نام خود را وارد کنید (اختیاری)</string>
+  <string name="profile_name_hint">نام‌تان را بگذارید</string>
   <!--Share fragment-->
   <string name="share_message">این رمز را با جمی اسکن کنید</string>
   <string name="share_message_no_account">لطفا برای هم‌رسانی، حسابی را انتخاب کنید.</string>
@@ -197,7 +197,6 @@
   <string name="contact_request_title"> درخواست مخاطب جدید</string>
   <string name="contact_request_msg">شما‫ %1$s درخواست ارتباط دارید</string>
   <string name="contact_request_account">برای %1$s</string>
-  <string name="no_requests">0 درخواست ارتباط</string>
   <string name="message_contact_not_trusted_yet">%s هنوز در مخاطبان شما نیست.\nآیا این درخواست ارتباط را قبول یا رد می‌کنید؟</string>
   <string name="message_contact_not_trusted">%s در مخاطبان شما نیست.\nمخاطب جدیدی اضافه می‌کنید؟</string>
   <!--Send contact requests-->
@@ -205,7 +204,7 @@
   <string name="send_request_title">ارسال یک درخواست ارتباط</string>
   <string name="send_request_msg">برای رابطه با این کاربر باید یک درخواست ارتباط ارسال کنید. مادامی که مخاطبتان درخواست را نپذیرفته، می‌توانید پیام بفرستید ولی او قادر به پاسخ‌دهی نخواهد بود.</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">0 مخاطب مسدود</string>
+  <string name="no_blocked_contact">مخاطب مسدودی وجود ندارد</string>
   <!--Smartlist-->
   <string name="no_contact_request">هیچ درخواست ارتباطی ارسال نشده</string>
   <string name="contact_request_sent">درخواست ارتباط ارسال شد</string>
@@ -250,6 +249,7 @@
   <string name="navigation_item_conversation">گفتگو‌ها</string>
   <string name="navigation_item_contact_request">درخواست‌های ارتباط</string>
   <string name="navigation_item_account">حساب</string>
+  <string name="search_results_public_directory">فهرست راهنمای عمومی</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">ارسال پیام صوتی؟</string>
   <string name="tv_send_image_dialog_message">ارسال تصویر؟</string>
@@ -258,7 +258,12 @@
   <string name="tv_audio_play">پخش</string>
   <string name="tv_audio_pause">مکث</string>
   <string name="tv_dialog_send">ارسال</string>
+  <string name="tv_audio_recording">در حال ضبط...</string>
   <string name="tv_send_text">ارسال متن</string>
   <string name="tv_send_audio">ارسال صدا</string>
   <string name="tv_send_video">ارسال محتوای رسانه‌ای</string>
+  <string name="conversation_input_speech_hint">چیزی بگویید...</string>
+  <!--WIZARD-->
+  <string name="wizard_password_info">گذرواژه کاربری</string>
+  <string name="wizard_password_skip">ساخت کاربری</string>
 </resources>

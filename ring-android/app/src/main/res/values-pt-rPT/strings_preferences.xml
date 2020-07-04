@@ -24,4 +24,5 @@
   <string name="pref_clearHistory_summary">Apagar o histórico de todas as conversas. Esta ação não pode ser revertida.</string>
   <string name="pref_persistNotification_title">Executar em segundo plano</string>
   <string name="pref_persistNotification_summary">Permite ser executado em segundo plano para receber chamadas e mensagens</string>
+  <!--Plugin-->
 </resources>

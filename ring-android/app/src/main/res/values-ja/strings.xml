@@ -104,6 +104,7 @@
   <string name="write_a_message">メッセージを入力</string>
   <string name="scan_qr">QR コードをスキャン</string>
   <string name="ab_action_flipcamera">カメラを押す</string>
+  <string name="ab_action_hidepreview">プレビューを隠す</string>
   <!--Text messages-->
   <string name="send_message">メッセージを送信</string>
   <string name="message_sending">メッセージを送信中…</string>
@@ -168,9 +169,8 @@
   <string name="prompt_new_password_repeat">新しいパスワードの確認</string>
   <string name="account_create_title">Jamiアカウントを作成</string>
   <string name="prompt_new_username">新しいユーザー名を入力してください</string>
+  <string name="prompt_hint_username">ユーザー名</string>
   <string name="help_password_choose">あなたのJamiアカウントを守るために強固なパスワードを設定してください。また、このパスワードを忘れないでください。</string>
-  <string name="help_password_enter">現在のJamiアカウントのパスワード</string>
-  <string name="help_server_enter">管理サーバーの URL を入力してください</string>
   <string name="help_pin_enter">設定済みの別のJamiアカウントからPINを入力してください。 PINを取得するには、\"Jamiのアカウントをエクスポート\" 機能を使用します。</string>
   <string name="wizard_next">次へ</string>
   <string name="wizard_back">戻る</string>
@@ -180,7 +180,7 @@
   <string name="profile_message_warning">プロフィールは連絡先以外に共有されません</string>
   <string name="open_the_gallery">ギャラリーを開く</string>
   <string name="take_a_photo">写真を撮る</string>
-  <string name="profile_name_hint">名前を入力... (任意)</string>
+  <string name="profile_name_hint">名前を入力</string>
   <!--Share fragment-->
   <string name="share_message">このコードをJamiでスキャンしてください</string>
   <string name="share_message_no_account">共有するアカウントを選択してください。</string>
@@ -196,7 +196,6 @@
   <string name="contact_request_title">新しい連絡先リクエスト</string>
   <string name="contact_request_msg">%1$s の連絡先リクエストがあります</string>
   <string name="contact_request_account">%1$s に</string>
-  <string name="no_requests">0 件の連絡先リクエスト</string>
   <string name="message_contact_not_trusted_yet">%s さんはあなたの連絡先に追加されていません。
 この連絡先のリクエストを許可しますか？</string>
   <string name="message_contact_not_trusted">%s さんはあなたの連絡先に追加されていません。
@@ -206,7 +205,7 @@
   <string name="send_request_title">連絡先リクエストを送信</string>
   <string name="send_request_msg">このユーザーと会話するには、コンタクトリクエストを送信しなければなりません。連絡先のリクエストを許可するまでは、あなたはメッセージを送れますが、相手は返事を送れません。</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">0 件のブロックした連絡先</string>
+  <string name="no_blocked_contact">ブロックした連絡先はありません</string>
   <!--Smartlist-->
   <string name="no_contact_request">連絡先のリクエストは送信していません</string>
   <string name="contact_request_sent">連絡先のリクエストを送信しました</string>
@@ -259,7 +258,13 @@
   <string name="tv_audio_play">再生</string>
   <string name="tv_audio_pause">一時停止</string>
   <string name="tv_dialog_send">送信</string>
+  <string name="tv_audio_recording">録音中…</string>
   <string name="tv_send_text">テキストの送信</string>
   <string name="tv_send_audio">音声の送信</string>
   <string name="tv_send_video">メディアを送信</string>
+  <!--WIZARD-->
+  <string name="wizard_status_recommended">推奨</string>
+  <string name="wizard_username_button">ユーザー名を選択</string>
+  <string name="wizard_password_info">アカウントのパスワード</string>
+  <string name="wizard_password_skip">アカウント作成</string>
 </resources>

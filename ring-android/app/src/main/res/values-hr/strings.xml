@@ -134,8 +134,8 @@
   <string name="prompt_new_password_repeat">Ponovite novu lozinku</string>
   <string name="account_create_title">Napravite Jami račun</string>
   <string name="prompt_new_username">Unesite novo korisničko ime</string>
+  <string name="prompt_hint_username">Korisničko ime</string>
   <string name="help_password_choose">Odaberite jaku lozinku koje ćete se sjećati da biste zaštitili vaš Jami račun.</string>
-  <string name="help_password_enter">Unesite lozinku za vaš glavni Jami račun</string>
   <string name="wizard_next">Slijedeće</string>
   <string name="wizard_back">Natrag</string>
   <string name="wizard_skip">Preskoči</string>
@@ -160,7 +160,6 @@
   <!--Send contact requests-->
   <string name="send_request_button">Pošalji</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">0 blokiranih kontakata</string>
   <!--Smartlist-->
   <string name="tv_contact_row_header">Kontakti</string>
   <string name="generic_error">Došlo je do nepoznate greške</string>
@@ -182,4 +181,6 @@
   <string name="tv_audio_play">izvodi</string>
   <string name="tv_audio_pause">Pauza</string>
   <string name="tv_dialog_send">Pošalji</string>
+  <!--WIZARD-->
+  <string name="wizard_password_skip">Napravi račun</string>
 </resources>

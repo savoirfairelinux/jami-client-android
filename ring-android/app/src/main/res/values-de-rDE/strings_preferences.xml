@@ -24,4 +24,5 @@
   <string name="pref_clearHistory_summary">Löschen Sie den gesamten Konversationsverlauf. Diese Aktion kann nicht rückgängig gemacht werden.</string>
   <string name="pref_persistNotification_title">Im Hintergrund ausführen</string>
   <string name="pref_persistNotification_summary">Ausführung im Hintergrund zulassen, um Anrufe und Nachrichten zu empfangen.</string>
+  <!--Plugin-->
 </resources>

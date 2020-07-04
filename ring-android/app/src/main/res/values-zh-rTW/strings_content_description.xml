@@ -5,4 +5,5 @@
   <string name="contact_picture_description">聯絡人的照片</string>
   <string name="dial_numeric_pad">電話按鍵鍵盤</string>
   <string name="contact_unblock">取消封鎖</string>
+  <string name="video_plugins">視訊外掛程式</string>
 </resources>

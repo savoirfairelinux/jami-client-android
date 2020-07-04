@@ -24,4 +24,5 @@
   <string name="pref_clearHistory_summary">Išvalyti visą pokalbių istoriją. Šio veiksmo negalima bus atšaukti.</string>
   <string name="pref_persistNotification_title">Paleisti fone</string>
   <string name="pref_persistNotification_summary">Leisti veikti fone, kad būtų priimami skambučiai ir žinutės.</string>
+  <!--Plugin-->
 </resources>

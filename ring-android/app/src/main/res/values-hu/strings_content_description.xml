@@ -5,4 +5,5 @@
   <string name="contact_picture_description">Kapcsolat fényképe</string>
   <string name="dial_numeric_pad">Tárcsázó</string>
   <string name="contact_unblock">Letiltás feloldása</string>
+  <string name="video_plugins">Videó beépülő modulok</string>
 </resources>

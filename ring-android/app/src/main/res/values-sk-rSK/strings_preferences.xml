@@ -9,6 +9,8 @@
   <string name="pref_mobileData_summary">Povoliť Jami používať okrem Wi-Fi aj 3G/LTE</string>
   <string name="pref_pushNotifications_title">Notifikácie</string>
   <string name="pref_pushNotifications_summary">Použiť servery Google na prijímanie hovorov/správ na pozadí</string>
+  <string name="pref_video_advanced_title">Pokročilé nastavenia videa</string>
+  <string name="pref_video_advanced_summary">Zmeniť dátový tok videa, rozlíšenie a prístup k experimentálnym funkciám</string>
   <string name="pref_hd_summary">Povoliť posielanie HD videa</string>
   <string name="pref_hwEncode_title">Povoliť akcelerované kódovanie</string>
   <string name="pref_hwEncode_summary">Experimentálna funkcia</string>
@@ -19,6 +21,8 @@
   <string name="pref_startOnBoot_title">Spustiť Jami pri zapnutí zariadenia</string>
   <string name="pref_startOnBoot_summary">Spustiť Jami na pozadí pri štarte systému.</string>
   <string name="pref_clearHistory_title">Vymazať históriu</string>
+  <string name="pref_clearHistory_summary">Vymazať históriu konverzácie. Táto operácia nemôže byť vrátená. </string>
   <string name="pref_persistNotification_title">Spustiť na pozadí</string>
   <string name="pref_persistNotification_summary">Povoliť spustenie na pozadí na prijímanie hovorov a spáv.</string>
+  <!--Plugin-->
 </resources>

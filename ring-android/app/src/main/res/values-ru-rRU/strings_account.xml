@@ -10,7 +10,7 @@
   <string name="ring_account_default_name">Jami аккаунт %1$s</string>
   <string name="prompt_alias">Псевдоним</string>
   <string name="prompt_hostname">Узел</string>
-  <string name="prompt_username">Пользователь</string>
+  <string name="prompt_username">Имя пользователя</string>
   <string name="prompt_password">Пароль</string>
   <string name="action_create">Создать аккаунт</string>
   <string name="action_create_short">Создать</string>
@@ -34,7 +34,7 @@
   <string name="account_delete_dialog_title">Удалить аккаунт?</string>
   <string name="account_delete_dialog_message">Это действие не может быть отменено</string>
   <!--AccountManagementFragment-->
-  <string name="empty_account_list">Аккаунт не зарегистрирован</string>
+  <string name="empty_account_list">Нет зарегистрированного аккаунта</string>
   <string name="normal_accounts_titles">Учетные записи</string>
   <string name="normal_devices_titles">Устройства, привязанные к этому аккаунту Jami</string>
   <string name="account_device_revoke">Отозвать устройство</string>
@@ -95,6 +95,7 @@
   <string name="account_credentials_add">Добавить учетные данные</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Безопасность</string>
+  <string name="account_srtp_switch_label">Шифровать медиа потоки (SRTP)</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Использовать TLS</string>
@@ -148,7 +149,6 @@
   <string name="account_sip_success_title">Sip аккаунт зарегистрирован</string>
   <string name="account_sip_success_message">Вы успешно зарегистрировали свой Sip аккаунт.</string>
   <string name="account_sip_register_anyway">Зарегистрироваться несмотря ни на что</string>
-  <string name="account_link_device">Подключиться через другое устройство</string>
   <string name="account_link_button">Подключиться из сети</string>
   <string name="account_link_archive_button">Подключиться через резервную копию</string>
   <string name="account_link_prompt_pin">Введите PIN</string>
@@ -173,7 +173,7 @@
   <string name="register_name">Зарегистрировать имя пользователя</string>
   <string name="trying_to_register_name">Попробовать зарегистрировать имя</string>
   <string name="registered_username">Зарегистрированное имя пользователя</string>
-  <string name="register_username">Зарегистрировать общедоступное имя (рекомендуется)</string>
+  <string name="register_username">Зарегистрировать общедоступное имя пользователя</string>
   <string name="username_already_taken">Имя пользователя уже занято</string>
   <string name="invalid_username">Недопустимое имя пользователя</string>
   <string name="unknown_error">Неизвестная ошибка. Пожалуйста, проверьте ваше интернет соединение</string>

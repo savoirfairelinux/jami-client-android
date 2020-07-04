@@ -31,6 +31,7 @@
   <string name="menu_item_accounts">Fiókok kezelése</string>
   <string name="menu_item_account">Fiók kezelése</string>
   <string name="menu_item_settings">Beállítások</string>
+  <string name="menu_item_plugin_list">Beépülő modulok beállításai</string>
   <string name="menu_item_share">Kapcsolati adatok megosztása</string>
   <string name="menu_item_about">A Jami névjegye</string>
   <!--Dialing Fragment-->
@@ -93,6 +94,7 @@
   <string name="action_call_accept">Hívás fogadása</string>
   <string name="action_call_decline">Elutasítás</string>
   <string name="action_call_mic_mute">Mikrofon elnémítása</string>
+  <string name="action_load_plugin">Beépülő modul betöltése</string>
   <string name="ab_action_speakerphone">Hangszóró engedélyezése</string>
   <string name="ab_action_contact_add">Hozzáadás a kapcsolatokhoz</string>
   <string name="ab_action_contact_add_question">Hozzáadja a kapcsolatokhoz?</string>
@@ -170,9 +172,10 @@
   <string name="prompt_new_password_repeat">Új jelszó még egyszer</string>
   <string name="account_create_title">Jami-fiók létrehozása</string>
   <string name="prompt_new_username">Új felhasználónév megadása</string>
+  <string name="prompt_hint_username">Felhasználónév</string>
   <string name="help_password_choose">Válasszon erős jelszót, amelyre emlékezni fog, hogy megvédje a Jami fiókját.</string>
-  <string name="help_password_enter">Adja meg a fő Jami fiókja jelszót</string>
-  <string name="help_server_enter">Adja meg a felügyeleti kiszolgáló URL-jét</string>
+  <string name="help_password_enter">Adja meg a fő Jami fiókja jelszót.</string>
+  <string name="help_server_enter">Adja meg a felügyeleti kiszolgáló URL-jét.</string>
   <string name="help_pin_enter">Adja meg egy másik beállított Jami fiók PIN-jét! Használja a „Fiók exportálása a Jami-n” működést a PIN eléréséhez!</string>
   <string name="wizard_next">Tovább</string>
   <string name="wizard_back">Vissza</string>
@@ -182,7 +185,7 @@
   <string name="profile_message_warning">A profilja csak a kapcsolataival kerül megosztásra</string>
   <string name="open_the_gallery">Galéria megnyitása</string>
   <string name="take_a_photo">Fotó készítése</string>
-  <string name="profile_name_hint">Adja meg a nevét (nem kötelező)</string>
+  <string name="profile_name_hint">Név megadása</string>
   <!--Share fragment-->
   <string name="share_message">Olvassa be a kódot a Jami programmal</string>
   <string name="share_message_no_account">Válassza ki a megosztandó fiókot.</string>
@@ -198,7 +201,7 @@
   <string name="contact_request_title">Új kapcsolatkérelem</string>
   <string name="contact_request_msg">%1$s kapcsolatkérelme van</string>
   <string name="contact_request_account">Ehhez: %1$s</string>
-  <string name="no_requests">Nincs kapcsolatkérelem</string>
+  <string name="no_requests">Nincs kapcsolatfelvételi kérés</string>
   <string name="message_contact_not_trusted_yet">%smég nincs a kapcsolatban Önnel.\nAkkor elfogadja vagy elutasítja ezt a felkérést?</string>
   <string name="message_contact_not_trusted">%snincs a kapcsolataiban.\nÚj kapcsolat hozzáadása?</string>
   <!--Send contact requests-->
@@ -206,9 +209,10 @@
   <string name="send_request_title">Kapcsolatkérelem küldése</string>
   <string name="send_request_msg">Küldenie kell egy felkérést, hogy közléshasson ezzel a felhasználóval. Mindaddig, amíg a leendő kapcsolat nem fogadta el a felkérést, üzeneteket küldhet Neki, de nem tud vissza válaszolni.</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">0 letiltott kapcsolat</string>
+  <string name="no_blocked_contact">Nincsenek letiltott kapcsolatok</string>
   <!--Smartlist-->
   <string name="no_contact_request">Nincs elküldött kapcsolatkérelem</string>
+  <string name="conversation_placeholder">Még nincs beszélgetése</string>
   <string name="contact_request_sent">Kapcsolatkérelem elküldve</string>
   <string name="start_conversation">Beszélgetés indítása</string>
   <string name="search_results">Keresési eredmények</string>
@@ -265,4 +269,20 @@
   <string name="tv_send_audio">Hang küldése</string>
   <string name="tv_send_video">Média küldése</string>
   <string name="conversation_input_speech_hint">Mondjon valamit…</string>
+  <!--WIZARD-->
+  <string name="wizard_status_recommended">Ajánlott</string>
+  <string name="wizard_status_optional">Választható</string>
+  <string name="wizard_status_required">Szükséges</string>
+  <string name="wizard_username_info">Válassz egy felhasználónevet fiókja</string>
+  <string name="wizard_username_button">Felhasználónév kiválasztása</string>
+  <string name="wizard_username_skip">Felhasználónév kihagyása</string>
+  <string name="wizard_password_info">Fiók jelszava</string>
+  <string name="wizard_password_placeholder">Válasszon egy jelszót az eszköz fiókkulcsának titkosításához</string>
+  <string name="wizard_password_button">Jelszó kiválasztása</string>
+  <string name="wizard_password_skip">Fiók létrehozása</string>
+  <string name="wizard_password_switch">Fiók titkosítása jelszóval</string>
+  <string name="wizard_password_warning">Vegye figyelembe, hogy a jelszó nem lehet helyreállított</string>
+  <string name="wizard_profile_info">Profil megosztva csak a névjegyekkel</string>
+  <string name="wizard_profile_button">Profil mentése</string>
+  <string name="wizard_profile_skip">Későbbre halasztás</string>
 </resources>

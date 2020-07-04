@@ -24,4 +24,5 @@
   <string name="pref_clearHistory_summary">Очистить всю историю переписки. Это действие нельзя будет отменить.</string>
   <string name="pref_persistNotification_title">Запустить в фоновом режиме</string>
   <string name="pref_persistNotification_summary">Разрешить работать в фоновом режиме для приема звонков и сообщений.</string>
+  <!--Plugin-->
 </resources>

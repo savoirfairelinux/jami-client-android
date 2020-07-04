@@ -87,6 +87,7 @@ Du kan rette din konto senere</string>
   <string name="account_credentials_add">Tilføj Legitimeringsoplysninger</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Sikkerhed</string>
+  <string name="account_srtp_switch_label">Krypter mediestrømme (SRTP)</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Brug TLS-transport</string>
@@ -141,7 +142,7 @@ Du kan rette din konto senere</string>
   <string name="register_name">Registrer navn</string>
   <string name="trying_to_register_name">Forsøger at registrere navn</string>
   <string name="registered_username">Registreret brugernavn</string>
-  <string name="register_username">Registrer offentligt brugernavn (anbefales)</string>
+  <string name="register_username">Registrer offentligt brugernavn</string>
   <string name="username_already_taken">Brugernavn er allerede taget</string>
   <string name="invalid_username">Ugyldigt brugernavn</string>
   <string name="looking_for_username_availability">Tjekker efter om brugernavnet er ledigt...</string>

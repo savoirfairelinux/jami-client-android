@@ -40,7 +40,7 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_device_revoke">Panaikinti įrenginį</string>
   <string name="account_device_revocation_success_title">Pavyko</string>
   <string name="account_device_revocation_success">Dabar įrenginys yra panaikintas!</string>
-  <string name="account_device_revocation_error_title">Nepavyksta panaikinti įrenginio</string>
+  <string name="account_device_revocation_error_title">Neįmanoma atšaukti įrenginio</string>
   <string name="account_device_revocation_wrong_password">Neteisingas slaptažodis.</string>
   <string name="account_device_revocation_unknown_device">Nežinomas įrenginys.</string>
   <string name="account_device_revocation_error_unknown">Nežinoma klaida.</string>
@@ -51,7 +51,7 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_preferences_basic_tab">Bendra</string>
   <string name="account_basic_category">Pagrindiniai nustatymai</string>
   <string name="account_alias_label">Paskyros pavadinimas</string>
-  <string name="account_hostname_label">Kompiuterio vardas</string>
+  <string name="account_hostname_label">Pagrindinio kompiuterio vardas</string>
   <string name="account_bootstrap_label">Pradinė įkeltis</string>
   <string name="account_username_label">Naudotojo vardas</string>
   <string name="account_password_label">Slaptažodis</string>
@@ -67,11 +67,14 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_ringtone_enabled_label">Aktyvuoti skambučių melodijas</string>
   <string name="account_ringtone_path_label">Skambučio melodijos kelias</string>
   <string name="account_ringtone_custom_label">Naudoti tinkintą skambučio melodiją</string>
+  <string name="account_ringtone_title">Pasirinkite skambėjimo toną</string>
+  <string name="account_ringtone_summary">Pasirinkite skambėjimo toną arba patys pasirinkite savo skambėjimo toną</string>
   <!--Video Details-->
   <string name="account_video_label">Vaizdas</string>
   <string name="account_video_enable">Įjungti vaizdą</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Išplėstiniai</string>
+  <string name="account_dht_public_in_calls_label">Leisti įeinančius skambučius iš nežinomų kontaktų</string>
   <string name="account_registration_exp_label">Registracijos galiojimo laikas</string>
   <string name="account_local_interface_label">Vietinė sąsaja</string>
   <string name="account_local_port_label">Vietinis prievadas</string>
@@ -92,12 +95,19 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_proxy_label">DHT įgaliotasis serveris</string>
   <string name="account_proxy_enable_label">Naudoti DHT įgaliotąjį serverį</string>
   <string name="account_proxy_server_label">DHT įgaliotojo serverio adresas</string>
+  <string name="account_proxy_server_list_label">DHT tarpinio serverio sąrašo URL</string>
+  <string name="account_peer_discovery_label">Vietinis kolegų atradimas</string>
+  <string name="account_peer_discovery_enable_label">Įgalinti vietinį peer atradimą</string>
+  <string name="account_peer_discovery_enable_summary">Prisijunkite prie kitų DHT mazgų, reklamuojančių mūsų vietiniame tinkle</string>
   <!--Security Details-->
   <string name="account_credentials_label">Prisijungimo duomenys</string>
   <string name="account_credentials_edit">Taisyti prisijungimo duomenis</string>
   <string name="account_credentials_add">Pridėti prisijungimo duomenis</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Saugumas</string>
+  <string name="account_srtp_switch_label">Šifruoti medija srautus (SRTP)</string>
+  <string name="account_srtp_enable_sdes">Įgalinti SDES kaip raktų mainų protokolą</string>
+  <string name="account_srtp_rtp_fallback">Grįžimas į RTP, jei SRTP nepavyksta naudoti</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Naudoti TLS perdavimą</string>
@@ -137,6 +147,7 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_migration_message_dialog">Jūsų paskyros turi būti atnaujintos. Ar norite pereiti į paskyros tvarkymo ekraną, kad atliktumėte šį veiksmą?</string>
   <string name="account_update_needed">Reikalingas atnaujinimas</string>
   <string name="account_cannot_be_found_title">Nepavyksta rasti paskyros</string>
+  <string name="account_cannot_be_found_message">Paskyros nepavyko rasti „Jami“ tinkle. Įsitikinkite, kad ji buvo eksportuota į „Jami“ iš esamo įrenginio ir ar pateikiami kredencialai yra teisingi.</string>
   <string name="account_sip_cannot_be_registered_message">Galite tęsti paskyros kūrimo procesą arba taisyti savo informaciją čia. Vėliau taisymas taip pat yra įmanomas paskyros nustatymuose.</string>
   <string name="account_no_network_title">Nepavyksta prisijungti prie tinklo</string>
   <string name="account_no_network_message">Nepavyko pridėti paskyros, nes Jami nepavyko prisijungti prie paskirstytojo tinklo. Patikrinkite savo įrenginio ryšį.</string>
@@ -144,19 +155,27 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_device_added_message">Jūs sėkmingai nusistatėte savo Jami paskyrą šiame įrenginyje.</string>
   <string name="account_device_updated_title">Paskyros įrenginys atnaujintas</string>
   <string name="account_device_updated_message">Jūs sėkmingai atnaujinote savo Jami paskyrą.</string>
+  <string name="account_cannot_be_updated_message">Paskyros įrenginio nepavyko atnaujinti. Patikrinkite savo slaptažodį.</string>
   <string name="account_sip_success_title">Sip paskyra užregistruota</string>
   <string name="account_sip_success_message">Jūs sėkmingai užregistravote savo Sip paskyrą.</string>
   <string name="account_sip_register_anyway">Vis tiek registruoti</string>
+  <string name="account_link_device">Prisijungta iš kito įrenginio</string>
   <string name="account_link_button">Prijungti iš tinklo</string>
   <string name="account_link_archive_button">Prijungti iš atsarginės kopijos</string>
   <string name="account_link_prompt_pin">Įveskite PIN</string>
   <string name="account_new_button">Susikurti Jami paskyrą</string>
   <string name="account_link_export_button">Susieti kitą įrenginį su šia paskyra</string>
+  <string name="account_link_export_info">Jei norite naudoti šią paskyrą kituose įrenginiuose, pirmiausia turite ją atskleisti „Jami“. Tai sugeneruos PIN kodą, kurį turite įvesti naujame įrenginyje, kad nustatytumėte paskyrą. PIN kodas galioja 10 minučių.</string>
   <string name="account_start_export_button">Generuoti PIN</string>
   <string name="account_end_export_button">užverti</string>
   <string name="account_end_export_infos">Jūsų PIN yra:\n\n%%\n\nNorėdami užbaigti procesą, turite atverti Jami naujame įrenginyje. Susikurkite paskyrą, naudodami \"Susieti šį įrenginį su paskyra\". Jūsų PIN galioja 10 minučių.</string>
+  <string name="account_link_export_info_light">Jei norite naudoti šią paskyrą kituose įrenginiuose, pirmiausia turite ją atskleisti „Jami“. Tai sugeneruos PIN kodą, kurį turite įvesti naujame įrenginyje, kad nustatytumėte paskyrą. PIN kodas galioja 10 minučių.</string>
   <string name="account_export_title">Pridėti įrenginius</string>
+  <string name="account_connect_server_button">Prisijunkite prie valdymo serverio</string>
   <string name="account_connect_button">Prisijungti</string>
+  <string name="prompt_server">„Jami“ valdymo serverio URL</string>
+  <string name="help_credentials_enter">Įveskite organizacijos kredencialus</string>
+  <string name="help_connect_password_enter">Įveskite organizacijos slaptažodį</string>
   <string name="account_connect_prompt_username">Naudotojo vardas</string>
   <!--Name registration-->
   <string name="error_username_empty">Įveskite naudotojo vardą</string>
@@ -165,7 +184,8 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="register_name">Registruoti vardą</string>
   <string name="trying_to_register_name">Bandoma užregistruoti vardą</string>
   <string name="registered_username">Registruotas naudotojo vardas</string>
-  <string name="register_username">Registruoti viešąjį naudotojo vardą (rekomenduojama)</string>
+  <string name="register_username">Registruoti viešąjį naudotojo vardą</string>
+  <string name="register_recommended">Rekomenduojamas</string>
   <string name="username_already_taken">Naudotojo vardas jau užimtas</string>
   <string name="invalid_username">Neteisingas naudotojo vardas</string>
   <string name="unknown_error">Nežinoma klaida. Patikrinkite savo tinklo ryšį!</string>
