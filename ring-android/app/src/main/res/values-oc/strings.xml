@@ -1,12 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="description">Jami es un logicial liure per comunicacions universalas que respèctan la libertat e la vida privada de sos utilizaires.</string>
+  <string name="credits">Crèdit</string>
   <!--About dialog-->
   <!--RingActivity-->
+  <string name="error_no_network">Cap de connectivitat ret</string>
   <!--AB menus-->
   <!--Sections-->
   <string name="menu_item_contact_request">Demanda de contacte</string>
   <string name="menu_item_settings">Paramètres</string>
+  <string name="menu_item_about">A prepaus de Jami</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
@@ -16,9 +20,13 @@
   <!--TransferDFragment-->
   <!--Notifications-->
   <!--Call Fragment-->
+  <string name="action_call_decline">Regetar</string>
+  <string name="hist_contact_added">Contacte ajustat</string>
+  <string name="hist_invitation_received">Invitacion recebuda</string>
   <!--Text messages-->
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
+  <string name="ringtone_error_title">Error</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->
@@ -27,23 +35,32 @@
   <string name="conversation_action_history_clear">Escafar l’istoric</string>
   <string name="conversation_action_block_this">Blocar contacte</string>
   <!--Contacts-->
+  <string name="prompt_new_password">Senhal novèl</string>
+  <string name="account_create_title">Crear un compte Jami</string>
+  <string name="prompt_hint_username">Nom d’utilizaire</string>
   <string name="wizard_next">Seguent</string>
+  <string name="wizard_back">Tornar</string>
   <string name="wizard_skip">Saultar</string>
   <!--MenuHeaderView-->
   <string name="profile">Perfil</string>
   <!--Share fragment-->
+  <string name="generic_error_migration">Error</string>
   <!--Pending contact requests-->
   <string name="accept">Acceptar</string>
   <string name="refuse">Refusar</string>
+  <string name="block">Blocar</string>
   <!--Send contact requests-->
   <string name="send_request_button">Enviar</string>
   <!--Blacklist-->
   <!--Smartlist-->
   <!--File Transfer-->
+  <string name="menu_message_copy">Copiar</string>
+  <string name="menu_delete">Suprimir</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Discutidas</string>
   <string name="navigation_item_contact_request">Demanda de contacte</string>
   <string name="navigation_item_account">Compte</string>
   <!--TV-->
   <string name="tv_dialog_send">Enviar</string>
+  <!--WIZARD-->
 </resources>

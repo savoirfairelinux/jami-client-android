@@ -28,7 +28,7 @@
   <string name="ab_action_chat">文字消息</string>
   <!--Sections-->
   <string name="menu_item_contact_request">联系人请求</string>
-  <string name="menu_item_accounts">管理帐户</string>
+  <string name="menu_item_accounts">管理账户</string>
   <string name="menu_item_account">管理账户</string>
   <string name="menu_item_settings">设置</string>
   <string name="menu_item_share">共享我的通讯录</string>
@@ -104,6 +104,7 @@
   <string name="write_a_message">写消息</string>
   <string name="scan_qr">扫描二维码</string>
   <string name="ab_action_flipcamera">翻转摄像头</string>
+  <string name="ab_action_hidepreview">隐藏预览</string>
   <!--Text messages-->
   <string name="send_message">发消息</string>
   <string name="message_sending">正在发送消息…</string>
@@ -130,10 +131,10 @@
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami需要“写入通话记录”权限才能启用此功能，请批准。</string>
   <!--QRCode Scan-->
-  <string name="scan_qr_account_message">扫描您想添加帐户的二维码。</string>
+  <string name="scan_qr_account_message">扫描您想添加账户的二维码。</string>
   <string name="title_activity_qrcode">分享我的账户</string>
   <string name="error_scan_no_camera_permissions">二维码扫描器需要摄像头使用权限来工作</string>
-  <string name="tab_code">我的代码</string>
+  <string name="tab_code">我的二维码</string>
   <string name="tab_scan">扫描二维码</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">清除历史记录？</string>
@@ -168,26 +169,27 @@
   <string name="prompt_new_password_repeat">确认新密码</string>
   <string name="account_create_title">创建一个 Jami 账户</string>
   <string name="prompt_new_username">输入新用户名</string>
-  <string name="help_password_choose">为了保护您的 Jami 帐户，请使用一个强密码并牢记。</string>
-  <string name="help_password_enter">输入您的 Jami 主帐户密码</string>
-  <string name="help_server_enter">输入管理服务器的URL</string>
-  <string name="help_pin_enter">从其他已配置的 Jami 帐户输入 PIN 码。使用“导出 Jami 帐户”功能获取 PIN 码。</string>
+  <string name="prompt_hint_username">用户名</string>
+  <string name="help_password_choose">为了保护您的 Jami 账户，请使用一个强密码并牢记。</string>
+  <string name="help_password_enter">输入您的 Jami 主账户密码。</string>
+  <string name="help_server_enter">输入管理服务器的 URL。</string>
+  <string name="help_pin_enter">从其他已配置的 Jami 账户输入 PIN 码。使用“导出 Jami 账户”功能获取 PIN 码。</string>
   <string name="wizard_next">下一步</string>
   <string name="wizard_back">上一步</string>
   <string name="wizard_skip">跳过</string>
   <!--MenuHeaderView-->
-  <string name="profile">帐户资料</string>
-  <string name="profile_message_warning">您的帐户资料仅与您的通讯录共享</string>
+  <string name="profile">账户资料</string>
+  <string name="profile_message_warning">您的账户资料仅与您的通讯录共享</string>
   <string name="open_the_gallery">打开照片库</string>
   <string name="take_a_photo">拍照</string>
-  <string name="profile_name_hint">输入您的名字（可选）</string>
+  <string name="profile_name_hint">输入您的名字</string>
   <!--Share fragment-->
   <string name="share_message">用 Jami 扫描此码</string>
-  <string name="share_message_no_account">请选择要共享的帐户。</string>
+  <string name="share_message_no_account">请选择要共享的账户。</string>
   <string name="share_your_account_information">共享我的通讯信息</string>
   <string name="share_label">共享</string>
   <string name="generic_error_migration">错误</string>
-  <string name="generic_error_migration_message">帐户迁移时发生错误</string>
+  <string name="generic_error_migration_message">账户迁移时发生错误</string>
   <string name="title_share_with">分享给...</string>
   <!--Pending contact requests-->
   <string name="accept">接听</string>
@@ -196,7 +198,7 @@
   <string name="contact_request_title">新联系人请求</string>
   <string name="contact_request_msg">您有%1$s个联系人请求</string>
   <string name="contact_request_account">为了 %1$s</string>
-  <string name="no_requests">0个联系人请求</string>
+  <string name="no_requests">您没有联系人请求</string>
   <string name="message_contact_not_trusted_yet">%s还不是你的联系人。\n你接受还是拒绝此联系人请求？</string>
   <string name="message_contact_not_trusted">%s不在您的联系人中。\n添加联系人？</string>
   <!--Send contact requests-->
@@ -204,9 +206,10 @@
   <string name="send_request_title">发送联系人请求</string>
   <string name="send_request_msg">您必须发送联系人请求才能与此用户通信。如果您的联系人未接受该请求，您依然可以发送消息，但他将无法回复。</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">0 个屏蔽的联系人</string>
+  <string name="no_blocked_contact">没有被屏蔽的联系人</string>
   <!--Smartlist-->
   <string name="no_contact_request">联系人请求未发送</string>
+  <string name="conversation_placeholder">您当前没有会话</string>
   <string name="contact_request_sent">联系人请求已发送</string>
   <string name="start_conversation">开始对话</string>
   <string name="search_results">搜索结果</string>
@@ -248,7 +251,7 @@
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">会话</string>
   <string name="navigation_item_contact_request">联系人请求</string>
-  <string name="navigation_item_account">帐户</string>
+  <string name="navigation_item_account">账户</string>
   <string name="search_results_public_directory">公共目录</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">发送音频消息？</string>
@@ -263,4 +266,20 @@
   <string name="tv_send_audio">发送音频</string>
   <string name="tv_send_video">发送媒体文件</string>
   <string name="conversation_input_speech_hint">说点什么…</string>
+  <!--WIZARD-->
+  <string name="wizard_status_recommended">推荐</string>
+  <string name="wizard_status_optional">选填</string>
+  <string name="wizard_status_required">必填</string>
+  <string name="wizard_username_info">为您的账户创建一个用户名</string>
+  <string name="wizard_username_button">设置用户名</string>
+  <string name="wizard_username_skip">跳过用户名设置</string>
+  <string name="wizard_password_info">账户密码</string>
+  <string name="wizard_password_placeholder">创建密码来加密此设备上的账户密钥</string>
+  <string name="wizard_password_button">输入密码</string>
+  <string name="wizard_password_skip">创建账户</string>
+  <string name="wizard_password_switch">用密码加密账户</string>
+  <string name="wizard_password_warning">注意密码不能恢复</string>
+  <string name="wizard_profile_info">资料仅会与联系人分享</string>
+  <string name="wizard_profile_button">保存资料</string>
+  <string name="wizard_profile_skip">跳过此步骤稍后进行</string>
 </resources>

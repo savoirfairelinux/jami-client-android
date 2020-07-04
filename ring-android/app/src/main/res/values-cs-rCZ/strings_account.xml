@@ -90,6 +90,7 @@ Svůj účet můžete upravit později</string>
   <string name="account_credentials_add">Přidat ověřovací údaje</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Zabezpečení</string>
+  <string name="account_srtp_switch_label">Šifrovat datový tok (SRTP)</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Použít Transport TLS</string>
@@ -160,7 +161,7 @@ Prověřte, prosím, své heslo.</string>
   <string name="register_name">Zaregistrovat jméno</string>
   <string name="trying_to_register_name">Pokus o registraci jména</string>
   <string name="registered_username">Registrované uživatelské jméno</string>
-  <string name="register_username">Zaregistrovat veřejné uživatelské jméno (pokusné)</string>
+  <string name="register_username">Zaregistrovat veřejné uživatelské jméno</string>
   <string name="username_already_taken">Uživatelské jméno je již obsazené</string>
   <string name="invalid_username">Neplatné uživatelské jméno</string>
   <string name="looking_for_username_availability">Zjišťuje se dostupnost uživatelského jména…</string>

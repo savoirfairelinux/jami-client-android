@@ -2,4 +2,5 @@
 <resources>
   <string name="pref_category_contacts">聯絡人</string>
   <string name="pref_category_video">影像</string>
+  <!--Plugin-->
 </resources>

@@ -170,9 +170,10 @@
   <string name="prompt_new_password_repeat">Ripeti nuova password</string>
   <string name="account_create_title">Crea un account Jami</string>
   <string name="prompt_new_username">Inserisci il nuovo nome utente</string>
+  <string name="prompt_hint_username">Utente</string>
   <string name="help_password_choose">Scegliere una password facile da ricordare per proteggere il tuo account Jami.</string>
-  <string name="help_password_enter">Inserire la password dell\'account principale Jami</string>
-  <string name="help_server_enter">Immettere l\'URL del server di gestione</string>
+  <string name="help_password_enter">Inserisci la password del tuo account Jami principale.</string>
+  <string name="help_server_enter">Immettere l\'URL del server di gestione.</string>
   <string name="help_pin_enter">Jami configurato per inserire il PIN da un altro account. Utilizzare la funzione di \"esporta account Jami\" per ottenere un PIN.</string>
   <string name="wizard_next">Prossimo</string>
   <string name="wizard_back">Indietro</string>
@@ -182,7 +183,7 @@
   <string name="profile_message_warning">Il tuo profilo è condiviso solo con i tuoi contatti</string>
   <string name="open_the_gallery">Apri la galleria immagini</string>
   <string name="take_a_photo">Scatta una foto</string>
-  <string name="profile_name_hint">Inserisci il tuo nome (facoltativo)</string>
+  <string name="profile_name_hint">Inserisci il tuo nome</string>
   <!--Share fragment-->
   <string name="share_message">Scansione questo codice con Jami</string>
   <string name="share_message_no_account">Seleziona un account per la condivisione.</string>
@@ -198,7 +199,7 @@
   <string name="contact_request_title">Nuova richiesta di contatto</string>
   <string name="contact_request_msg">Hai %1$s richieste di contatto</string>
   <string name="contact_request_account">Per %1$s</string>
-  <string name="no_requests">0 richieste di contatto</string>
+  <string name="no_requests">Non hai richieste di contatto</string>
   <string name="message_contact_not_trusted_yet">%s non è ancora nei tuoi contatti \n Accetti o rifiuti questo richiesta di contatto?</string>
   <string name="message_contact_not_trusted">%s non è nei tuoi contatti.\nAggiugere un nuovo contatto?</string>
   <!--Send contact requests-->
@@ -206,9 +207,10 @@
   <string name="send_request_title">Invia una richiesta di contatto</string>
   <string name="send_request_msg">È necessario inviare una richiesta di contatto per comunicare con questo utente. Fino a quando il vostro contatto non ha accettato la richiesta, è possibile inviare messaggi, ma non sarà in grado di rispondere.</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">0 contatti bloccati</string>
+  <string name="no_blocked_contact">Nessun contatto bloccato</string>
   <!--Smartlist-->
   <string name="no_contact_request">Nessuna richiesta di contatto inviata</string>
+  <string name="conversation_placeholder">Non hai ancora conversazioni</string>
   <string name="contact_request_sent">Richiesta di contatto inviata</string>
   <string name="start_conversation">Inizia la conversazione</string>
   <string name="search_results">Risultati della ricerca</string>
@@ -265,4 +267,20 @@
   <string name="tv_send_audio">Invia audio</string>
   <string name="tv_send_video">Inviare media</string>
   <string name="conversation_input_speech_hint">Di\' qualcosa…</string>
+  <!--WIZARD-->
+  <string name="wizard_status_recommended">Consigliato</string>
+  <string name="wizard_status_optional">Opzionale</string>
+  <string name="wizard_status_required">Necessario</string>
+  <string name="wizard_username_info">Scegli un nome utente per il tuo account</string>
+  <string name="wizard_username_button">Scegli un nome utente</string>
+  <string name="wizard_username_skip">Salta la scelta del nome utente</string>
+  <string name="wizard_password_info">Password dell\'account</string>
+  <string name="wizard_password_placeholder">Scegli una password per crittografare la chiave dell\'account su questo dispositivo</string>
+  <string name="wizard_password_button">Scegli password</string>
+  <string name="wizard_password_skip">Crea account</string>
+  <string name="wizard_password_switch">Crittografa account con password</string>
+  <string name="wizard_password_warning">Si noti che la password non può essere recuperata</string>
+  <string name="wizard_profile_info">Il profilo è condiviso solo con i contatti</string>
+  <string name="wizard_profile_button">Salva il profilo</string>
+  <string name="wizard_profile_skip">Salta e fallo più tardi</string>
 </resources>

@@ -38,4 +38,5 @@
   <string name="navigation_item_account">Cuenta</string>
   <!--TV-->
   <string name="tv_audio_play">Reproducir</string>
+  <!--WIZARD-->
 </resources>

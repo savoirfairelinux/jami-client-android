@@ -119,6 +119,7 @@
   <string name="register_name">Erregistratu izena</string>
   <string name="trying_to_register_name">Izena erregistratzen saiatzen</string>
   <string name="registered_username">Erregistratutako erabiltzaile-izena</string>
+  <string name="register_username">Erregistratu izen publikoa</string>
   <string name="invalid_username">Erabiltzaile-izen baliogabea</string>
   <string name="account_status_connecting">Konektatzen</string>
   <string name="account_status_connection_error">Konexio errorea</string>

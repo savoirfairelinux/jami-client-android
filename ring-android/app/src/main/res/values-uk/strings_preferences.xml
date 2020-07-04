@@ -14,4 +14,5 @@
   <string name="pref_startOnBoot_title">Запускати Джамі після включення пристрою</string>
   <string name="pref_startOnBoot_summary">Дозволити Джамі працювати на задньому плані, коли вмикається пристрій.</string>
   <string name="pref_clearHistory_title">Видалити історію</string>
+  <!--Plugin-->
 </resources>

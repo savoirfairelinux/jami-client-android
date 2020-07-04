@@ -39,6 +39,7 @@
   <!--Conversation-->
   <string name="conversation_action_copy_peer_number">העתק מספר</string>
   <!--Contacts-->
+  <string name="prompt_hint_username">שם משתמש</string>
   <string name="wizard_next">קדימה</string>
   <!--MenuHeaderView-->
   <string name="profile">פרופיל</string>
@@ -46,6 +47,8 @@
   <string name="generic_error_migration">שגיאה</string>
   <!--Pending contact requests-->
   <string name="accept">קבל</string>
+  <string name="refuse">סרב</string>
+  <string name="block">חסום</string>
   <!--Send contact requests-->
   <string name="send_request_button">שלח</string>
   <!--Blacklist-->
@@ -60,4 +63,5 @@
   <string name="navigation_item_account">חשבון</string>
   <!--TV-->
   <string name="tv_dialog_send">שלח</string>
+  <!--WIZARD-->
 </resources>

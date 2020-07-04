@@ -107,6 +107,9 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="account_credentials_add">Ajouter des identifiants</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Sécurité</string>
+  <string name="account_srtp_switch_label">Chiffrer les flux média (SRTP)</string>
+  <string name="account_srtp_enable_sdes">Activer SDES pour le protocole d\'échange de clé</string>
+  <string name="account_srtp_rtp_fallback">Se rabattre sur RTP si SRTP échoue</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Utiliser le transport TLS</string>
@@ -185,7 +188,8 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="register_name">Enregistrer un nom</string>
   <string name="trying_to_register_name">Enregistrement du nom en cours</string>
   <string name="registered_username">Nom d\'utilisateur enregistré</string>
-  <string name="register_username">Enregistrer un nom d\'usager public (recommandé)</string>
+  <string name="register_username">Enregistrer un nom d\'utilisateur public</string>
+  <string name="register_recommended">Recommandé</string>
   <string name="username_already_taken">Ce nom d\'utilisateur est déjà utilisé</string>
   <string name="invalid_username">Nom d\'utilisateur incorrect</string>
   <string name="unknown_error">Erreur inconnue. Veuillez vérifier votre connexion réseau !</string>

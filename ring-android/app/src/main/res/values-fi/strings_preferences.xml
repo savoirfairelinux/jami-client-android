@@ -24,4 +24,17 @@
   <string name="pref_clearHistory_summary">Tyhjennä koko keskusteluhistoria. Tätä toimintoa ei voi peruuttaa.</string>
   <string name="pref_persistNotification_title">Suorita taustalla</string>
   <string name="pref_persistNotification_summary">Salli tausta-ajo vastaanottamaan puheluita ja viestejä.</string>
+  <!--Plugin-->
+  <string name="pref_plugins_title">Lisäosat</string>
+  <string name="pref_plugins_summary">Salli lisäosat ja aseta niiden parametrit</string>
+  <string name="fab_plugins_add">Lisää uusi lisäosa</string>
+  <string name="plugin_uninstall_title">Poista lisäosa ?</string>
+  <string name="plugin_reset_preferences">Nollaa lisäosan asetukset</string>
+  <string name="plugin_reset_preferences_summary">Lisäosasi asetukset palautetaan oletukseksi</string>
+  <string name="plugin_reset_preferences_ask">Haluatko palauttaa lisäosan asetukset?</string>
+  <string name="plugin_successfully_installed">Lisäosa <b>%1$s</b> asennettu onnistuneesti</string>
+  <string name="plugin_install_failure">Lisäosan asennus epäonnistui: <b>%1$s</b></string>
+  <string name="plugin_recent_version_exception">Sinulla on uudempi versio: <b>%1$s</b></string>
+  <string name="plugin_same_version_exception">Sinulla on sama versio <b>%1$s</b> asennettuna</string>
+  <string name="plugin_force_install">pakota \n asennus</string>
 </resources>

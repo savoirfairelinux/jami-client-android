@@ -1,0 +1,223 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to account edition screen-->
+  <string name="ic_delete_menu">Șterge</string>
+  <string name="ic_advanced_menu">Reglări avansate</string>
+  <string name="ic_blacklist_menu">Contacte blocate</string>
+  <!--Strings related to account creation-->
+  <string name="add_ring_account_title">Adaugă cont Jami</string>
+  <string name="add_sip_account_title">Adaugă cont SIP</string>
+  <string name="ring_account_default_name">Cont Jami %1$s</string>
+  <string name="prompt_alias">Alias</string>
+  <string name="prompt_hostname">Nume de gazdă</string>
+  <string name="prompt_username">Nume de Utilizator</string>
+  <string name="prompt_password">Parolă</string>
+  <string name="action_create">Creează cont</string>
+  <string name="action_create_short">Creează</string>
+  <string name="action_register">Înscrie-te</string>
+  <string name="action_settings">Reglări</string>
+  <string name="error_field_required">Aceste date sînt obligatorii</string>
+  <string name="dialog_wait_create">Se adaugă contul</string>
+  <string name="dialog_wait_create_details">Așteaptă în timp ce noul tău cont este adăugat...</string>
+  <string name="dialog_wait_update">Se actualizează contul</string>
+  <string name="dialog_wait_update_details">Așteaptă în timp ce noul tău cont este actualizat...</string>
+  <string name="dialog_warn_ip2ip_account_title">Creezi un cont SIP gol ?</string>
+  <string name="dialog_warn_ip2ip_account_message">Ești pe cale să creezi un cont SIP fără nume de gazdă valabil.
+        Vei putea face și primi doar apeluri IP directe.
+        Îți vei putea modifica contul mai tîrziu</string>
+  <string name="account_type_ip2ip">Cont IP</string>
+  <string name="help_ring">Un cont Jami îți permite să comunici cu alții în siguranță, în peer to peer, printr-o rețea complet distribuită.</string>
+  <string name="help_sip_title">Adaugă contul tău SIP</string>
+  <string name="help_sip">Configurează un cont SIP existent.</string>
+  <string name="create_sip_account">Adaugă cont SIP</string>
+  <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_title">Ștergi contul ?</string>
+  <string name="account_delete_dialog_message">Această acțiune este ireversibilă.</string>
+  <!--AccountManagementFragment-->
+  <string name="empty_account_list">Nu este înregistrat niciun cont</string>
+  <string name="normal_accounts_titles">Conturi</string>
+  <string name="normal_devices_titles">Dispozitivele cunoscute asociate acestui cont Jami</string>
+  <string name="account_device_revoke">Deconectează dispozitivul</string>
+  <string name="account_device_revocation_success_title">Succes</string>
+  <string name="account_device_revocation_success">Dispozitivul este acum deconectat!</string>
+  <string name="account_device_revocation_error_title">Dispozitivul nu poate fi deconectat</string>
+  <string name="account_device_revocation_wrong_password">Parolă greșită.</string>
+  <string name="account_device_revocation_unknown_device">Dispozitiv necunoscut.</string>
+  <string name="account_device_revocation_error_unknown">Eroare necunoscută.</string>
+  <string name="account_password_change">Schimbă parola</string>
+  <string name="account_password_set">Alege parola</string>
+  <string name="account_password_change_wait_message">Se schimbă parola contului </string>
+  <!--Basic Details-->
+  <string name="account_preferences_basic_tab">Generale</string>
+  <string name="account_basic_category">Reglări simple</string>
+  <string name="account_alias_label">Numele contului</string>
+  <string name="account_hostname_label">Nume de gazdă</string>
+  <string name="account_bootstrap_label">Pornire</string>
+  <string name="account_username_label">Nume de Utilizator</string>
+  <string name="account_password_label">Parolă</string>
+  <string name="account_optionnal_category">Reglări Facultative</string>
+  <string name="account_useragent_label">User Agent</string>
+  <string name="account_autoanswer_label">Răspuns Automat</string>
+  <string name="account_upnp_label">Activează UPnP</string>
+  <string name="account_proxy_field">Proxy</string>
+  <!--Audio Details-->
+  <string name="account_audio_label">Audio</string>
+  <string name="account_preferences_media_tab">Media</string>
+  <string name="account_ringtone_label">Sonerii</string>
+  <string name="account_ringtone_enabled_label">Activează Sonerii</string>
+  <string name="account_ringtone_path_label">Parcursul soneriei</string>
+  <string name="account_ringtone_custom_label">Folosește sonerie personalizată</string>
+  <string name="account_ringtone_title">Alege o sonerie</string>
+  <string name="account_ringtone_summary">Selecționează o sonerie sau alege una personală</string>
+  <!--Video Details-->
+  <string name="account_video_label">Video</string>
+  <string name="account_video_enable">Activează Video</string>
+  <!--Advanced Details-->
+  <string name="account_preferences_advanced_tab">Avansate</string>
+  <string name="account_dht_public_in_calls_label">Permite apelurile primite de la contacte necunoscute</string>
+  <string name="account_registration_exp_label">Înregistrarea a expirat</string>
+  <string name="account_local_interface_label">Interfață locală</string>
+  <string name="account_local_port_label">Port local</string>
+  <string name="account_stun_enable_label">Folosește STUN</string>
+  <string name="account_stun_server_label">Server Stun</string>
+  <string name="account_accept_files">Acceptă automat fișierele primite</string>
+  <string name="account_accept_files_max_size">Dimensiunea maximă a fișierului acceptat automat</string>
+  <string name="account_accept_files_never">Nu accepta niciodată automat</string>
+  <string name="account_accept_files_always">Acceptă mereu automat</string>
+  <string name="size_mb">%1$d MB</string>
+  <string name="account_turn_enable_label">Folosește TURN</string>
+  <string name="account_turn_server_label">Server TURN</string>
+  <string name="account_turn_username_label">Nume de utilizator TURN</string>
+  <string name="account_turn_password_label">Parolă TURN</string>
+  <string name="account_published_same_as_local_label">Adresa publică la fel ca cea locală</string>
+  <string name="account_published_port_label">Port Public</string>
+  <string name="account_published_address_label">Adresa Publică</string>
+  <string name="account_proxy_label">DHT proxy</string>
+  <string name="account_proxy_enable_label">Folosește DHT proxy</string>
+  <string name="account_proxy_server_label">Adresa proxy DHT</string>
+  <string name="account_proxy_server_list_label">Adresa URL a listei de proxy DHT</string>
+  <string name="account_peer_discovery_label">Descoperă utilizatori locali</string>
+  <string name="account_peer_discovery_enable_label">Activează Descoperă utilizatori locali</string>
+  <string name="account_peer_discovery_enable_summary">Conectează-te la alte noduri DHT afișate în rețeaua noastră locală</string>
+  <!--Security Details-->
+  <string name="account_credentials_label">Date de autentificare</string>
+  <string name="account_credentials_edit">Modifică datele de autentificare</string>
+  <string name="account_credentials_add">Adaugă date de autentificare</string>
+  <!--SRTP Details-->
+  <string name="account_preferences_security_tab">Protecție</string>
+  <string name="account_srtp_switch_label">Cifrează fluxurile media (SRTP)</string>
+  <string name="account_srtp_enable_sdes">Activează SDES ca protocol pentru schimbul de chei</string>
+  <string name="account_srtp_rtp_fallback">Folosește RTP dacă SRTP eșuează</string>
+  <!--SIP-->
+  <!--TLS Details-->
+  <string name="account_tls_transport_switch_label">Folosește transportul TLS</string>
+  <string name="account_tls_port_label">Port de recepție TLS</string>
+  <string name="account_tls_certificate_list_label">Autoritate de certificare</string>
+  <string name="account_tls_certificate_file_label">Certificat</string>
+  <string name="account_tls_private_key_file_label">Cheie privată</string>
+  <string name="account_tls_password_label">Parola cheii private</string>
+  <string name="account_tls_method_label">Metoda TLS</string>
+  <string name="account_tls_ciphers_label">Cifrare TLS</string>
+  <string name="account_tls_server_name_label">Numele serverului</string>
+  <string name="account_tls_verify_server_label">Verifică Server</string>
+  <string name="account_tls_verify_client_label">Verifică Client</string>
+  <string name="account_tls_negotiation_timeout_sec">Timp de negociere (sec)</string>
+  <string name="account_rtp_max_port">Maxim</string>
+  <string name="account_rtp_min_port">Minim</string>
+  <string name="account_rtp_port_range">Interval Audio RTP Port</string>
+  <!--restore/backup-->
+  <string name="account_new_device_password">Introdu parola principală pentru a debloca contul</string>
+  <string name="error_password_char_count">6 caractere minim</string>
+  <string name="error_passwords_not_equals">Parolele nu se potrivesc</string>
+  <string name="export_account_wait_title">Te rog așteaptă...</string>
+  <string name="export_account_wait_message">Exportă contul Jami</string>
+  <string name="account_export_file">Copie de rezervă a contului</string>
+  <string name="account_export_end_decryption_message">Contul tău nu poate fi deblocat cu parola furnizată.</string>
+  <string name="account_export_end_network_title">Eroare de rețea</string>
+  <string name="account_export_end_network_message">Contul nu poate fi exportat în rețea. Verifică conectarea la rețea.</string>
+  <string name="account_export_end_error_title">Eroare</string>
+  <string name="account_export_end_error_message">Contul nu poate fi exportat. A apărut o eroare necunoscută.</string>
+  <string name="account_enter_password">Introdu parola</string>
+  <string name="account_share_body">Contactează-mă folosind \'%1$s\' pe platforma de comunicare distribuită Jami: %2$s</string>
+  <string name="account_share_body_with_username">Contactează-mă folosind \'%1$s\' sau numele meu public de utilizator  \'%2$s\' pe platforma de comunicare distribuită Jami: %3$s </string>
+  <string name="account_contact_me">Contactează-mă pe Jami !</string>
+  <string name="update_account">Actualizează contul</string>
+  <string name="account_migration">Contul tău Jami poate fi actualizat.\nIntrodu parola ta.</string>
+  <string name="ring_account">Cont Jami</string>
+  <string name="ring_account_identity">Identitate</string>
+  <string name="account_migration_title_dialog">Transferul contului</string>
+  <string name="account_migration_message_dialog">Conturile tale trebuie actualizate. Vrei să te duci la \"Gestionează cont\" pentru a face acest lucru ?</string>
+  <string name="account_update_needed">Actualizare necesară</string>
+  <string name="account_cannot_be_found_title">Nu pot găsi contul</string>
+  <string name="account_cannot_be_found_message">Contul nu poate fi găsit în rețeaua Jami.\nAsigură-te că a fost exportat pe Jami de pe un dispozitiv existent și datele de autentificare sînt corecte.</string>
+  <string name="account_sip_cannot_be_registered_message">Poți continua cu procesul de creare a contului sau poți modifica informațiile tale aici. Modificarea e posibilă ulterior în reglările contului.</string>
+  <string name="account_no_network_title">Nu mă pot conecta la rețea</string>
+  <string name="account_no_network_message">Contul nu poate fi adăugat deoarece Jami nu se poate conecta la rețea. Verifică conectarea la rețea.</string>
+  <string name="account_device_added_title">Dispozitiv adăugat</string>
+  <string name="account_device_added_message">Ai configurat cu succes contul Jami pe acest dispozitiv.</string>
+  <string name="account_device_updated_title">Dispozitiv actualizat</string>
+  <string name="account_device_updated_message">Ai actualizat cu succes contul tău Jami.</string>
+  <string name="account_cannot_be_updated_message">Dispozitivul conectat nu poate fi actualizat. Verifică parola.</string>
+  <string name="account_sip_success_title">Cont SIP înregistrat</string>
+  <string name="account_sip_success_message">Ai înregistrat cu succes contul tău SIP.</string>
+  <string name="account_sip_register_anyway">Înscrie-te oricum</string>
+  <string name="account_link_device">Conectează-te de la alt dispozitiv</string>
+  <string name="account_link_button">Conectează-te dintr-o rețea</string>
+  <string name="account_link_archive_button">Conectează-te de la o copie de rezervă</string>
+  <string name="account_link_prompt_pin">Introdu codul PIN</string>
+  <string name="account_new_button">Creează un cont Jami</string>
+  <string name="account_link_export_button">Asociază alt dispozitiv acestui cont</string>
+  <string name="account_link_export_info">Pentru a utiliza acest cont pe alte dispozitive, trebuie să îl expui mai întîi pe Jami. Asta va genera un cod PIN pe care trebuie să-l introduci pe noul dispozitiv pentru a configura contul. Acest PIN este valabil 10 minute.</string>
+  <string name="account_start_export_button">Generează PIN</string>
+  <string name="account_end_export_button">închide</string>
+  <string name="account_end_export_infos">PIN-ul tău este:\n\n%%\n\nPentru a completa procesul, trebuie să deschizi Jami pe noul dispozitiv. Creează un cont nou cu \"Asociază acest dispozitiv unui cont\". Codul tău PIN este valabil 10 minute.</string>
+  <string name="account_link_export_info_light">Pentru a utiliza acest cont pe alte dispozitive, trebuie să îl expui mai întîi pe Jami. Asta va genera un cod PIN pe care trebuie să-l introduci pe noul dispozitiv pentru a configura contul. Acest PIN este valabil 10 minute.</string>
+  <string name="account_export_title">Adaugă dispozitive</string>
+  <string name="account_connect_server_button">Conectează-te la serverul de administrare</string>
+  <string name="account_connect_button">Conectează</string>
+  <string name="prompt_server">URL-ul serverului de administrare Jami</string>
+  <string name="help_credentials_enter">Introdu datele de autentificare ale organizației tale</string>
+  <string name="help_connect_password_enter">Introdu parola organizației tale</string>
+  <string name="account_connect_prompt_username">Nume de Utilizator</string>
+  <!--Name registration-->
+  <string name="error_username_empty">Introdu un nume de utilizator</string>
+  <string name="no_registered_name_for_account">Nu a fost găsit niciun nume înregistrat pentru acest cont</string>
+  <string name="username_available">Nume de utilizator disponibil !</string>
+  <string name="register_name">Înregistrează numele</string>
+  <string name="trying_to_register_name">Se înregistrează numele</string>
+  <string name="registered_username">Nume de utilizator înregistrat</string>
+  <string name="register_username">Înregistrează numele de utilizator public</string>
+  <string name="register_recommended">Recomandat</string>
+  <string name="username_already_taken">Nume de utilizator deja ales</string>
+  <string name="invalid_username">Numele de utilizator este greșit</string>
+  <string name="unknown_error">Eroare necunoscută. Verifică conectarea la rețea!</string>
+  <string name="looking_for_username_availability">Caut disponibilitatea numelui de utilizator...</string>
+  <string name="account_status_connecting">Se conectează</string>
+  <string name="account_status_connection_error">Eroare de conectare</string>
+  <string name="account_status_online">Conectat</string>
+  <string name="account_status_unknown">Necunoscut</string>
+  <string name="account_status_offline">Deconectat</string>
+  <string name="account_status_error">Eroare</string>
+  <!--Create account-->
+  <string name="account_creation_home">Bine ai venit pe Jami</string>
+  <string name="account_creation_profile">Creează profilul tău</string>
+  <string name="account_creation_ring">Creează contul tău Jami</string>
+  <string name="account_link_title">Asociază acest dispozitiv</string>
+  <string name="account_sip_cannot_be_registered">Nu pot înregistra contul</string>
+  <!--Edit profile-->
+  <string name="account_edit_profile">Modifică profilul tău</string>
+  <!--Devices-->
+  <string name="account_revoke_device_hint">Introdu parola pentru confirmare</string>
+  <string name="enter_password">Introdu parola</string>
+  <string name="revoke_device_title">Deconectează dispozitivul</string>
+  <string name="revoke_device_message">Sigur vrei să deconectezi %1$s ?</string>
+  <string name="revoke_device_wait_title">Te rog așteaptă...</string>
+  <string name="revoke_device_wait_message">Se deconectează dispozitivul</string>
+  <string name="rename_device_title">Redenumește acest dispozitiv</string>
+  <string name="rename_device_message">Alege un nume nou pentru a identifica acest dispozitiv în contul tău Jami</string>
+  <string name="rename_device_button">Redenumește dispozitivul</string>
+  <string name="account_rename_device_hint">Alege un nume nou pentru dispozitiv</string>
+  <string name="account_device_name_empty">Numele dispozitivului nu poate fi gol</string>
+  <string name="account_device_this_indicator">acest dispozitiv</string>
+  <string name="account_disabled_indicator">dezactivat</string>
+</resources>

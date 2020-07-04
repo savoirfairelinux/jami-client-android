@@ -12,4 +12,5 @@
   <string name="pref_systemContacts_title">Użyj kontakty z systemu</string>
   <string name="pref_systemContacts_summary">Użyj kontakty z systemu aby pokazać detale tego który dzwoni</string>
   <string name="pref_clearHistory_title">Wyczyść historię</string>
+  <!--Plugin-->
 </resources>

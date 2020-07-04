@@ -142,8 +142,8 @@
   <string name="prompt_new_password_repeat">Pakartokite naują slaptažodį</string>
   <string name="account_create_title">Susikurti Jami paskyrą</string>
   <string name="prompt_new_username">Įveskite naują naudotojo vardą</string>
+  <string name="prompt_hint_username">Naudotojo vardas</string>
   <string name="help_password_choose">Pasirinkite stiprų slaptažodį, kurį prisiminsite, kad apsaugotumėte savo Jami paskyrą.</string>
-  <string name="help_password_enter">Įveskite savo pagrindinės Jami paskyros slaptažodį</string>
   <string name="help_pin_enter">Įveskite PIN iš kitos sukonfigūruotos Jami paskyros. Norėdami gauti PIN, naudokite ypatybę \"eksportuoti Jami paskyrą\".</string>
   <string name="wizard_next">Kitas</string>
   <string name="wizard_back">Atgal</string>
@@ -153,7 +153,6 @@
   <string name="profile_message_warning">Jūsų profilis yra bendrinamas tik su jūsų adresatais</string>
   <string name="open_the_gallery">Atverti galeriją</string>
   <string name="take_a_photo">Padaryti nuotrauką</string>
-  <string name="profile_name_hint">Įveskite savo vardą (nebūtina)</string>
   <!--Share fragment-->
   <string name="share_message">Nuskenuokite šį kodą, naudodami Jami</string>
   <string name="share_message_no_account">Pasirinkite norimą bendrinti paskyrą.</string>
@@ -169,7 +168,6 @@
   <string name="contact_request_title">Nauja adresato užklausa</string>
   <string name="contact_request_msg">Jūs turite %1$s adresatų užklausų</string>
   <string name="contact_request_account">Skirta %1$s</string>
-  <string name="no_requests">0 adresatų užklausų</string>
   <string name="message_contact_not_trusted_yet">%s kol kas nėra jūsų adresatų sąraše.\nJūs priimate ar atmetate šią adresato užklausą?</string>
   <string name="message_contact_not_trusted">%s nėra jūsų adresatų sąraše.\nPridėti naują adresatą?</string>
   <!--Send contact requests-->
@@ -177,7 +175,7 @@
   <string name="send_request_title">Siųsti adresato užklausą</string>
   <string name="send_request_msg">Norėdami bendrauti su šiuo naudotoju, privalote išsiųsti adresato užklausą. Kol adresatas nepriims užklausos, jūs galite siųsti žinutes, tačiau adresatas negalės atsakyti.</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">0 užblokuotų adresatų</string>
+  <string name="no_blocked_contact">Užblokuotų adresatų nėra</string>
   <!--Smartlist-->
   <string name="no_contact_request">Jokia adresato užklausa neišsiųsta</string>
   <string name="contact_request_sent">Adresato užklausa išsiųsta</string>
@@ -224,4 +222,7 @@
   <string name="tv_dialog_send">Siųsti</string>
   <string name="tv_send_text">Siųsti tekstą</string>
   <string name="tv_send_audio">Siųsti garsą</string>
+  <!--WIZARD-->
+  <string name="wizard_status_recommended">Rekomenduojamas</string>
+  <string name="wizard_password_skip">Sukurti paskyrą</string>
 </resources>
