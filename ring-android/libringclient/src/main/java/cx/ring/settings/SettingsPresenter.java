@@ -74,12 +74,4 @@ public class SettingsPresenter extends RootPresenter<GenericView<Settings>>  {
     public boolean getDarkMode() {
         return mPreferencesService.getDarkMode();
     }
-
-    public void togglePlugins(boolean isChecked) {
-        mPreferencesService.togglePlugins(isChecked);
-    }
-
-    public boolean getPluginsEnabled(){
-        return mPreferencesService.getPluginsEnabled();
-    }
 }

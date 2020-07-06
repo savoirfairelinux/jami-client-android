@@ -179,19 +179,6 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         return mContext.getSharedPreferences(PREFS_ACCOUNT+accountId, Context.MODE_PRIVATE)
                 .getInt(PREF_ACCEPT_IN_MAX_SIZE, 30) * 1024 * 1024;
 	}
-	
-    public void togglePlugins(boolean isChecked) {
-        SharedPreferences preferences = getThemePreferences();
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean(PREF_PLUGINS, isChecked);
-        editor.apply();
-    }
-
-    @Override
-    public boolean getPluginsEnabled() {
-        SharedPreferences preferences = getThemePreferences();
-        return preferences.getBoolean(PREF_PLUGINS, false);
-    }
 
     private void applyDarkMode(boolean enabled) {
         AppCompatDelegate.setDefaultNightMode(
@@ -212,5 +199,4 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
     private SharedPreferences getThemePreferences() {
         return PreferenceManager.getDefaultSharedPreferences(mContext);
     }
-
 }

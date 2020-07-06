@@ -94,8 +94,4 @@ public abstract class PreferencesService {
     public abstract void loadDarkMode();
 
     public abstract int getMaxFileAutoAccept(String accountId);
-
-    public abstract void togglePlugins(boolean isChecked);
-
-    public abstract boolean getPluginsEnabled();
 }

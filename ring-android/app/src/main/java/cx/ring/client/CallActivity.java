@@ -45,6 +45,8 @@ import cx.ring.services.NotificationService;
 import cx.ring.utils.KeyboardVisibilityManager;
 import cx.ring.utils.MediaButtonsHelper;
 
+import static cx.ring.daemon.Ringservice.getPluginsEnabled;
+
 public class CallActivity extends AppCompatActivity {
     public static final String ACTION_CALL = BuildConfig.APPLICATION_ID + ".action.call";
     public static final String ACTION_CALL_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CALL_ACCEPT";
@@ -157,7 +159,7 @@ public class CallActivity extends AppCompatActivity {
                             | View.SYSTEM_UI_FLAG_IMMERSIVE);
 
             CallFragment callFragment = getCallFragment();
-            if(callFragment != null && !callFragment.isPluginsMode()) {
+            if(callFragment != null && !getPluginsEnabled()) {
                 callFragment.toggleVideoPluginsCarousel(false);
             }
         }

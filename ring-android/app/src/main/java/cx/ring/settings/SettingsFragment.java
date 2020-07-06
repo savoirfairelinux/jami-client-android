@@ -31,7 +31,6 @@ import androidx.fragment.app.FragmentManager;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -60,6 +59,9 @@ import cx.ring.model.Settings;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.mvp.GenericView;
 import cx.ring.utils.DeviceUtils;
+
+import static cx.ring.daemon.Ringservice.getPluginsEnabled;
+import static cx.ring.daemon.Ringservice.setPluginsEnabled;
 
 /**
  * TODO: improvements : handle multiples permissions for feature.
@@ -92,7 +94,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         setHasOptionsMenu(true);
         super.onViewCreated(view, savedInstanceState);
         binding.settingsDarkTheme.setChecked(presenter.getDarkMode());
-        binding.settingsPluginsSwitch.setChecked(presenter.getPluginsEnabled());
+        binding.settingsPluginsSwitch.setChecked(getPluginsEnabled());
         if (TextUtils.isEmpty(JamiApplication.getInstance().getPushToken())) {
             binding.settingsPushNotificationsLayout.setVisibility(View.GONE);
         }
@@ -102,7 +104,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
 
         binding.scrollview.getViewTreeObserver().addOnScrollChangedListener(this);
         binding.settingsDarkTheme.setOnCheckedChangeListener((buttonView, isChecked) -> presenter.setDarkMode(isChecked));
-        binding.settingsPluginsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> presenter.togglePlugins(isChecked));
+        binding.settingsPluginsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> setPluginsEnabled(isChecked));
 
         CompoundButton.OnCheckedChangeListener save = (buttonView, isChecked) -> {
             if (!mIsRefreshingViewFromPresenter)
@@ -134,7 +136,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
                 .show());
         binding.settingsPluginsLayout.setOnClickListener(v -> {
             HomeActivity activity = (HomeActivity) getActivity();
-            if (activity != null && presenter.getPluginsEnabled()){
+            if (activity != null && getPluginsEnabled()){
                 activity.goToPluginsListSettings();
             }
         });
