@@ -36,8 +36,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
-import static android.content.Context.MODE_PRIVATE;
-import static cx.ring.plugins.PluginUtils.PLUGIN_ENABLED;
 import static cx.ring.plugins.PluginUtils.listAvailablePlugins;
 
 public class PluginsListSettingsFragment extends Fragment implements PluginsListAdapter.PluginListItemListener {
@@ -116,16 +114,10 @@ public class PluginsListSettingsFragment extends Fragment implements PluginsList
      */
     @Override
     public void onPluginEnabled(PluginDetails pluginDetails) {
-        SharedPreferences sp = mContext.getSharedPreferences(
-                pluginDetails.getName(), MODE_PRIVATE);
 
-        SharedPreferences.Editor preferencesEditor = sp.edit();
-        preferencesEditor.putBoolean(PLUGIN_ENABLED, pluginDetails.isEnabled());
         if(pluginDetails.isEnabled()) {
-            PluginUtils.loadPlugin(pluginDetails.getRootPath());
-            preferencesEditor.apply();
+            pluginDetails.setEnabled(PluginUtils.loadPlugin(pluginDetails.getRootPath()));
         } else {
-            preferencesEditor.apply();
             PluginUtils.unloadPlugin(pluginDetails.getRootPath());
         }
         String status = pluginDetails.isEnabled()?"ON":"OFF";

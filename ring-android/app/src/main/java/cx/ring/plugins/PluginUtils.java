@@ -1,7 +1,6 @@
 package cx.ring.plugins;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 
@@ -21,8 +20,6 @@ public class PluginUtils {
 
     public static final String TAG = PluginUtils.class.getSimpleName();
 
-    public static final String PLUGIN_ENABLED = "enabled";
-
     /**
      * Fetches the plugins folder in the internal storage for plugins subfolder
      * Gathers the details of each plugin in a PluginDetails instance
@@ -33,16 +30,18 @@ public class PluginUtils {
         tree(mContext.getCacheDir().getAbsolutePath(),0);
 
         List<String> pluginsPaths = Ringservice.listAvailablePlugins();
+        List<String> loadedPluginsPaths = Ringservice.listLoadedPlugins();
 
         List<PluginDetails> pluginsList = new ArrayList<>(pluginsPaths.size());
         for (String pluginPath : pluginsPaths) {
             File pluginFolder = new File(pluginPath);
             if(pluginFolder.isDirectory()) {
                 //We use the absolute path of a plugin as a preference name for uniqueness
-                //TODO remove and use enabled information from daemon
-                SharedPreferences sp = mContext.getSharedPreferences(pluginFolder.getName(), MODE_PRIVATE);
-                boolean enabled = sp.getBoolean(PLUGIN_ENABLED,false);
+                boolean enabled = false;
 
+                if (loadedPluginsPaths.contains(pluginPath)) {
+                    enabled = true;
+                }
                 pluginsList.add(new PluginDetails(
                         pluginFolder.getName(),
                         pluginFolder.getAbsolutePath(), enabled));

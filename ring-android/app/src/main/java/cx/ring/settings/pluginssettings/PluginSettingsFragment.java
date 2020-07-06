@@ -44,7 +44,6 @@ import cx.ring.plugins.ButtonPreference.ButtonPreference;
 import cx.ring.plugins.PluginPreferences;
 
 import static android.content.Context.MODE_PRIVATE;
-import static cx.ring.plugins.PluginUtils.PLUGIN_ENABLED;
 import static cx.ring.plugins.PluginUtils.getOrElse;
 import static cx.ring.plugins.PluginUtils.stringListToListString;
 
@@ -185,13 +184,7 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
                         .setMessage(R.string.account_delete_dialog_message)
                         .setTitle(R.string.plugin_uninstall_title)
                         .setPositiveButton(android.R.string.ok, (dialog, whichButton) -> {
-                            SharedPreferences sp = mContext.getSharedPreferences(
-                                    pluginDetails.getName(), MODE_PRIVATE);
-
-                            SharedPreferences.Editor preferencesEditor = sp.edit();
                             pluginDetails.setEnabled(false);
-                            preferencesEditor.putBoolean(PLUGIN_ENABLED, pluginDetails.isEnabled());
-                            preferencesEditor.apply();
                             Ringservice.uninstallPlugin(pluginDetails.getRootPath());
                             ((HomeActivity) requireActivity()).popFragmentImmediate();
                         })

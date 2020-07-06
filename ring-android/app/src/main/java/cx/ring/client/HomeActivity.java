@@ -232,14 +232,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
             presentTrustRequestFragment(mAccountWithPendingrequests);
             mAccountWithPendingrequests = null;
         }
-
-        List<PluginDetails> plugins = PluginUtils.listAvailablePlugins(this);
-
-        for(PluginDetails pluginDetails : plugins) {
-            if(pluginDetails.isEnabled()) {
-                PluginUtils.loadPlugin(pluginDetails.getRootPath());
-            }
-        }
     }
 
     @Override
