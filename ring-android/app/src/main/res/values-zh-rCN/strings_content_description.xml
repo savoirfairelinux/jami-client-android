@@ -5,4 +5,5 @@
   <string name="contact_picture_description">联系人头像</string>
   <string name="dial_numeric_pad">数字拨号盘</string>
   <string name="contact_unblock">取消屏蔽</string>
+  <string name="video_plugins">视频插件</string>
 </resources>

@@ -66,10 +66,10 @@
   <string name="notif_channel_requests">Cereri</string>
   <string name="notif_channel_file_transfer">Transfer de fișier</string>
   <string name="notif_channel_sync">Sincronizarea datelor</string>
-  <string name="notif_channel_background_service">Serviciu în fundal</string>
-  <string name="notif_channel_background_service_descr">Permite primirea de apeluri și mesaje oricând.</string>
+  <string name="notif_channel_background_service">Serviciu ascuns</string>
+  <string name="notif_channel_background_service_descr">Permite primirea de apeluri și mesaje oricînd.</string>
   <string name="notif_group_calls">Apeluri</string>
-  <string name="notif_background_service">Jami funcționează acum în fundal</string>
+  <string name="notif_background_service">Jami funcționează acum ascuns</string>
   <string name="notif_mark_as_read">Bifează ca citit</string>
   <string name="notif_dismiss">Ignoră</string>
   <string name="notif_reply">Răspunde</string>
@@ -250,8 +250,8 @@
   <string name="menu_message_delete">Șterge mesajul</string>
   <string name="menu_message_cancel">Anulează mesajul</string>
   <string name="menu_delete">Șterge</string>
-  <string name="pref_darkTheme_title">Temă neagră</string>
-  <string name="pref_darkTheme_summary">Activează mereu tema neagră în loc să folosești tema sistemului</string>
+  <string name="pref_darkTheme_title">Fond negru</string>
+  <string name="pref_darkTheme_summary">Activează mereu fondul negru în loc să folosești fondul sistemului</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Conversații</string>
   <string name="navigation_item_contact_request">Cereri de contact</string>
