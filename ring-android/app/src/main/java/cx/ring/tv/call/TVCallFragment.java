@@ -664,6 +664,11 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
     }
 
     @Override
+    public void toggleCallMediaHandler(String id, boolean toggle) {
+        cx.ring.daemon.RingserviceJNI.toggleCallMediaHandler(id, toggle);
+    }
+
+    @Override
     public void goToConversation(String accountId, String conversationId) {
 
     }

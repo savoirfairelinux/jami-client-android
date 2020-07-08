@@ -84,4 +84,6 @@ public interface CallView {
     boolean displayPluginsButton();
 
     void updateConfInfo(List<Conference.ParticipantInfo> info);
+
+    void toggleCallMediaHandler(String id, boolean toggle);
 }
