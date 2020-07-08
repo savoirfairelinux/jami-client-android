@@ -46,6 +46,30 @@
       "revId": "0abe8980c0fc6ecb169d465900b2df369accdc45",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c769ddf4_86a09c5b",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-07-08T15:39:16Z",
+      "side": 1,
+      "message": "This change would not fix this crash.\nIf the binding is not initialized, binding would be null so binding.contactBubbleLayout would cause crash.\n\nCheck if binding is null instead.",
+      "parentUuid": "56fc4abd_c558482b",
+      "range": {
+        "startLine": 851,
+        "startChar": 8,
+        "endLine": 855,
+        "endChar": 123
+      },
+      "revId": "0abe8980c0fc6ecb169d465900b2df369accdc45",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
     }
   ]
 }
