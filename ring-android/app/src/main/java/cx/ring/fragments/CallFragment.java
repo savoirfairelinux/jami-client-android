@@ -101,6 +101,7 @@ import cx.ring.client.ConversationActivity;
 import cx.ring.client.ConversationSelectionActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.daemon.Ringservice;
+import cx.ring.daemon.StringMap;
 import cx.ring.databinding.FragCallBinding;
 import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
@@ -309,7 +310,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         if (binding.videoSurface.getVisibility() == View.VISIBLE) {
             restartVideo = true;
         }
-        if (!choosePluginMode) {
+        if (!presenter.getCallMediaHandlerStatus()) {
             if (binding.previewContainer.getVisibility() == View.VISIBLE) {
                 restartPreview = true;
             }
@@ -856,7 +857,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     @Override
     public void displayVideoSurface(final boolean displayVideoSurface, final boolean displayPreviewContainer) {
         binding.videoSurface.setVisibility(displayVideoSurface ? View.VISIBLE : View.GONE);
-        if (choosePluginMode) {
+        if (presenter.getCallMediaHandlerStatus()) {
             binding.pluginPreviewSurface.setVisibility(displayPreviewContainer ? View.VISIBLE : View.GONE);
             binding.pluginPreviewContainer.setVisibility(displayPreviewContainer ? View.VISIBLE : View.GONE);
             binding.previewContainer.setVisibility(View.GONE);
@@ -1126,7 +1127,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         } else if (Surface.ROTATION_180 == rotation) {
             matrix.postRotate(180, centerX, centerY);
         }
-        if(!choosePluginMode) {
+        if(!presenter.getCallMediaHandlerStatus()) {
 //            binding.pluginPreviewSurface.setTransform(matrix);
 //        }
 //        else {
@@ -1243,7 +1244,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     private void startScreenShare(MediaProjection mediaProjection) {
         if (presenter.startScreenShare(mediaProjection)) {
-            if(choosePluginMode) {
+            if(presenter.getCallMediaHandlerStatus()) {
                 binding.pluginPreviewSurface.setVisibility(View.GONE);
             } else {
                 binding.previewSurface.setVisibility(View.GONE);
@@ -1254,12 +1255,12 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     private void stopShareScreen() {
-        if(choosePluginMode)
+        if(presenter.getCallMediaHandlerStatus())
         {
             binding.previewSurface.setVisibility(View.VISIBLE);
         }
         else {
-            binding.previewSurface.setVisibility(View.VISIBLE);
+            binding.pluginPreviewSurface.setVisibility(View.VISIBLE);
         }
         presenter.stopScreenShare();
     }
@@ -1304,8 +1305,16 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                         .putExtra(KEY_CONF_ID, conferenceId),
                 CallFragment.REQUEST_CODE_ADD_PARTICIPANT);
     }
-    public void toggleCallMediaHandler(String id, boolean toggle) {
-        Ringservice.toggleCallMediaHandler(id, toggle);
+
+    @Override
+    public void toggleCallMediaHandler(String callID, String id, boolean toggle) {
+        Ringservice.toggleCallMediaHandler(callID, id, toggle);
+    }
+
+    @Override
+    public StringMap getCallMediaHandlerStatus(String callID)
+    {
+        return Ringservice.getCallMediaHandlerStatus(callID);
     }
 
     public Map<String, String> getCallMediaHandlerDetails(String id) {
@@ -1394,8 +1403,8 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             // If a call media handler doesn't have an icon use a standard android icon
             for (String callMediaHandler : callMediaHandlers) {
                 Map<String, String> details = getCallMediaHandlerDetails(callMediaHandler);
-                String drawablePath = details.get("icoPath");
-                Drawable handlerIcon = StringUtils.isEmpty(drawablePath) ? null : Drawable.createFromPath(details.get("icoPath"));
+                String drawablePath = details.get("iconPath");
+                Drawable handlerIcon = StringUtils.isEmpty(drawablePath) ? null : Drawable.createFromPath(details.get("iconPath"));
                 if (handlerIcon == null) {
                     handlerIcon = context.getDrawable(R.drawable.ic_jami);
                 }
@@ -1408,8 +1417,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         }
 
         if (choosePluginMode) {
-            //change preview image
-            displayVideoSurface(true,true);
             // hide hang up button and other call buttons
             displayHangupButton(false);
             // Display the plugins recyclerpicker
@@ -1429,23 +1436,25 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                 }
                 if (position > 0) {
                     String callMediaId = callMediaHandlers.get(position-1);
-                    toggleCallMediaHandler(callMediaId, true);
+                    presenter.toggleCallMediaHandler(callMediaId, true);
                 }
             }
-
-        } else {
             //change preview image
             displayVideoSurface(true,true);
+
+        } else {
             if (previousPluginPosition > 0) {
                 String callMediaId = callMediaHandlers.
                         get(previousPluginPosition-1);
 
-                toggleCallMediaHandler(callMediaId, false);
+                presenter.toggleCallMediaHandler(callMediaId, false);
                 rp.scrollToPosition(previousPluginPosition);
             }
             binding.recyclerPicker.setVisibility(View.GONE);
             movePreview(false);
             displayHangupButton(true);
+            //change preview image
+            displayVideoSurface(true,true);
         }
     }
 
@@ -1461,13 +1470,13 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
          */
         if (previousPluginPosition > 0) {
             String callMediaId = callMediaHandlers.get(previousPluginPosition-1);
-            toggleCallMediaHandler(callMediaId, false);
+            presenter.toggleCallMediaHandler(callMediaId, false);
         }
 
         if (position > 0) {
             previousPluginPosition = position;
             String callMediaId = callMediaHandlers.get(position-1);
-            toggleCallMediaHandler(callMediaId, true);
+            presenter.toggleCallMediaHandler(callMediaId, true);
         }
     }
 
@@ -1485,7 +1494,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
              */
             if (previousPluginPosition > 0) {
                 String callMediaId = callMediaHandlers.get(previousPluginPosition-1);
-                toggleCallMediaHandler(callMediaId, false);
+                presenter.toggleCallMediaHandler(callMediaId, false);
                 rp.scrollToPosition(previousPluginPosition);
             }
 

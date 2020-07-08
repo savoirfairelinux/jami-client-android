@@ -21,6 +21,7 @@ package cx.ring.call;
 
 import java.util.List;
 
+import cx.ring.daemon.StringMap;
 import cx.ring.model.CallContact;
 import cx.ring.model.SipCall.CallStatus;
 import cx.ring.model.SipCall;
@@ -81,4 +82,8 @@ public interface CallView {
     void goToContact(String accountId, CallContact contact);
 
     boolean displayPluginsButton();
+
+    void toggleCallMediaHandler(String callID, String id, boolean toggle);
+
+    StringMap getCallMediaHandlerStatus(String callID);
 }

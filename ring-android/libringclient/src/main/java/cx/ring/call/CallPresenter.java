@@ -30,6 +30,7 @@ import javax.inject.Named;
 
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.RingserviceJNI;
+import cx.ring.daemon.StringMap;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
@@ -51,8 +52,8 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.Subject;
 
-import static cx.ring.daemon.Ringservice.listCallMediaHandlers;
-import static cx.ring.daemon.Ringservice.toggleCallMediaHandler;
+//import static cx.ring.daemon.Ringservice.listCallMediaHandlers;
+//import static cx.ring.daemon.Ringservice.toggleCallMediaHandler;
 
 public class CallPresenter extends RootPresenter<CallView> {
 
@@ -282,13 +283,6 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void hangupCall() {
-        List<String> callMediaHandlers = listCallMediaHandlers();
-
-        for (String callMediaHandler : callMediaHandlers)
-        {
-            toggleCallMediaHandler(callMediaHandler, false);
-        }
-
         if (mConference != null) {
             if (mConference.isConference())
                 mCallService.hangUpConference(mConference.getId());
@@ -587,6 +581,25 @@ public class CallPresenter extends RootPresenter<CallView> {
             getView().displayPreviewSurface(true);
             getView().displayVideoSurface(true, mDeviceRuntimeService.hasVideoPermission());
         }
+    }
+
+    public void toggleCallMediaHandler(String id, boolean toggle)
+    {
+        if (mConference != null && mConference.isOnGoing() && mConference.hasVideo()) {
+            getView().toggleCallMediaHandler(mConference.getId(), id, toggle);
+        }
+    }
+
+    public boolean getCallMediaHandlerStatus()
+    {
+        if (mConference != null && mConference.isOnGoing() && mConference.hasVideo()) {
+            StringMap mhs = getView().getCallMediaHandlerStatus(mConference.getId());
+            if (!mhs.get("name").equals(""))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean isSpeakerphoneOn() {
