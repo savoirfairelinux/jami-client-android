@@ -51,8 +51,8 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.Subject;
 
-import static cx.ring.daemon.Ringservice.listCallMediaHandlers;
-import static cx.ring.daemon.Ringservice.toggleCallMediaHandler;
+//import static cx.ring.daemon.Ringservice.listCallMediaHandlers;
+//import static cx.ring.daemon.Ringservice.toggleCallMediaHandler;
 
 public class CallPresenter extends RootPresenter<CallView> {
 
@@ -282,13 +282,6 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void hangupCall() {
-        List<String> callMediaHandlers = listCallMediaHandlers();
-
-        for (String callMediaHandler : callMediaHandlers)
-        {
-            toggleCallMediaHandler(callMediaHandler, false);
-        }
-
         if (mConference != null) {
             if (mConference.isConference())
                 mCallService.hangUpConference(mConference.getId());
@@ -586,6 +579,13 @@ public class CallPresenter extends RootPresenter<CallView> {
         } else {
             getView().displayPreviewSurface(true);
             getView().displayVideoSurface(true, mDeviceRuntimeService.hasVideoPermission());
+        }
+    }
+
+    public void toggleCallMediaHandler(String id, boolean toggle)
+    {
+        if (mConference != null && mConference.isOnGoing() && mConference.hasVideo()) {
+            getView().toggleCallMediaHandler(mConference.getId(), id, toggle);
         }
     }
 

@@ -81,4 +81,6 @@ public interface CallView {
     void goToContact(String accountId, CallContact contact);
 
     boolean displayPluginsButton();
+
+    void toggleCallMediaHandler(String callID, String id, boolean toggle);
 }

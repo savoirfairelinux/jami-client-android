@@ -69,6 +69,7 @@ import cx.ring.call.CallPresenter;
 import cx.ring.call.CallView;
 import cx.ring.client.ContactDetailsActivity;
 import cx.ring.client.ConversationSelectionActivity;
+import cx.ring.daemon.Ringservice;
 import cx.ring.databinding.TvFragCallBinding;
 import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.fragments.CallFragment;
@@ -636,6 +637,11 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
     @Override
     public boolean displayPluginsButton() {
         return false;
+    }
+
+    @Override
+    public void toggleCallMediaHandler(String callID, String id, boolean toggle) {
+        Ringservice.toggleCallMediaHandler(callID, id, toggle);
     }
 
     @Override
