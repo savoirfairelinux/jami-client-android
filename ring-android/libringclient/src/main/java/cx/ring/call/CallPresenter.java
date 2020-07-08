@@ -50,7 +50,6 @@ import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.Subject;
 
 import static cx.ring.daemon.Ringservice.listCallMediaHandlers;
-import static cx.ring.daemon.Ringservice.toggleCallMediaHandler;
 
 public class CallPresenter extends RootPresenter<CallView> {
 
@@ -604,6 +603,13 @@ public class CallPresenter extends RootPresenter<CallView> {
         } else {
             getView().displayPreviewSurface(true);
             getView().displayVideoSurface(true, mDeviceRuntimeService.hasVideoPermission());
+        }
+    }
+
+    public void toggleCallMediaHandler(String id, boolean toggle)
+    {
+        if (mConference != null && mConference.isOnGoing() && mConference.hasVideo()) {
+            getView().toggleCallMediaHandler(id, toggle);
         }
     }
 
