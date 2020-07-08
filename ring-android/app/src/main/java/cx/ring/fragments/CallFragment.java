@@ -316,6 +316,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         }else {
             if (binding.pluginPreviewContainer.getVisibility() == View.VISIBLE) {
                 restartPreview = true;
+                presenter.stopPlugin();
             }
         }
     }
@@ -1313,6 +1314,8 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                         .putExtra(KEY_CONF_ID, conferenceId),
                 CallFragment.REQUEST_CODE_ADD_PARTICIPANT);
     }
+
+    @Override
     public void toggleCallMediaHandler(String id, boolean toggle) {
         Ringservice.toggleCallMediaHandler(id, toggle);
     }
@@ -1436,7 +1439,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                 if (position > 0) {
                     String callMediaId = callMediaHandlers.get(position-1);
                     presenter.startPlugin(callMediaId);
-                    //toggleCallMediaHandler(callMediaId, true);
                 }
             }
 
@@ -1445,7 +1447,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                 String callMediaId = callMediaHandlers.
                         get(previousPluginPosition-1);
 
-                toggleCallMediaHandler(callMediaId, false);
+                presenter.toggleCallMediaHandler(callMediaId, false);
                 rp.scrollToPosition(previousPluginPosition);
             }
             presenter.stopPlugin();
@@ -1470,13 +1472,13 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
          */
         if (previousPluginPosition > 0) {
             String callMediaId = callMediaHandlers.get(previousPluginPosition-1);
-            toggleCallMediaHandler(callMediaId, false);
+            presenter.toggleCallMediaHandler(callMediaId, false);
         }
 
         if (position > 0) {
             previousPluginPosition = position;
             String callMediaId = callMediaHandlers.get(position-1);
-            toggleCallMediaHandler(callMediaId, true);
+            presenter.toggleCallMediaHandler(callMediaId, true);
         }
     }
 
@@ -1494,7 +1496,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
              */
             if (previousPluginPosition > 0) {
                 String callMediaId = callMediaHandlers.get(previousPluginPosition-1);
-                toggleCallMediaHandler(callMediaId, false);
+                presenter.toggleCallMediaHandler(callMediaId, false);
                 rp.scrollToPosition(previousPluginPosition);
             }
 
