@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44fa52d6_2a9f2738",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-07-08T19:55:20Z",
+      "side": 1,
+      "message": "not used",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 48
+      },
+      "revId": "12f3c12502df303342adf1b1adf79dfb9ac2e585",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b51713c_b9830434",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-07-08T19:55:20Z",
+      "side": 1,
+      "message": "or just:\n\n    if (binding !\u003d null) {\n        binding.contactBubbleLayout.getHandler().post(() -\u003e binding.contactBubbleLayout.setVisibility(display ? View.VISIBLE : View.GONE));\n    }\n\nlike updateTime() for instance.\n\nNull bindings might happen normally during destruction with no consequence since the Fragment is being destroyed (not displayed).\n\nDuring creation, it would/should not happen with current design, since all callbacks are registered in onViewCreated, which happens after the binding is created.",
+      "range": {
+        "startLine": 851,
+        "startChar": 0,
+        "endLine": 855,
+        "endChar": 139
+      },
+      "revId": "12f3c12502df303342adf1b1adf79dfb9ac2e585",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
