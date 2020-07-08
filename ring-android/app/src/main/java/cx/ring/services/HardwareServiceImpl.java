@@ -49,6 +49,7 @@ import java.util.Map;
 
 import cx.ring.daemon.IntVect;
 import cx.ring.daemon.Ringservice;
+import cx.ring.daemon.StringMap;
 import cx.ring.daemon.UintVect;
 import cx.ring.model.Conference;
 import cx.ring.model.SipCall;
@@ -58,6 +59,7 @@ import cx.ring.utils.Log;
 import cx.ring.utils.Ringer;
 import io.reactivex.Completable;
 
+import static cx.ring.daemon.Ringservice.getCallMediaHandlerStatus;
 import static cx.ring.daemon.RingserviceJNI.toggleCallMediaHandler;
 
 public class HardwareServiceImpl extends HardwareService implements AudioManager.OnAudioFocusChangeListener, BluetoothWrapper.BluetoothChangeListener {
@@ -89,7 +91,8 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     private boolean mShouldSpeakerphone = false;
     private final boolean mHasSpeakerPhone;
     private boolean mIsChoosePlugin = false;
-    private String mMediaHandlerId;
+    private String mMediaHandlerId = "";
+    private String mPluginCallId = "";
 
     public HardwareServiceImpl(Context context) {
         mContext = context;
@@ -544,7 +547,15 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                 new CameraService.CameraListener() {
                     @Override
                     public void onOpened() {
-                        if(mIsChoosePlugin && !mMediaHandlerId.isEmpty())
+                        String currentCall = conf.getConfId();
+                        if (!mPluginCallId.isEmpty() && !currentCall.equals(mPluginCallId)) {
+                            toggleCallMediaHandler("", false);
+                            mIsChoosePlugin = false;
+                            mMediaHandlerId = "";
+                            mPluginCallId = "";
+                        }
+                        else if(mIsChoosePlugin && !mMediaHandlerId.isEmpty())
+                            mPluginCallId = conf.getConfId();
                             toggleMediaHandler();
                     }
 
