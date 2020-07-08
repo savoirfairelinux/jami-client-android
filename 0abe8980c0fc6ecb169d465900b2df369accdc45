@@ -22,6 +22,30 @@
       "revId": "0abe8980c0fc6ecb169d465900b2df369accdc45",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56fc4abd_c558482b",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2020-07-08T15:22:25Z",
+      "side": 1,
+      "message": "without this check, the call can start before the binding is initialized causing:\n2020-07-08 10:00:16.081 9610-9610/cx.ring E/AndroidRuntime: FATAL EXCEPTION: main\n    Process: cx.ring, PID: 9610\n    java.lang.NullPointerException: Attempt to read from field \u0027com.google.android.flexbox.FlexboxLayout cx.ring.databinding.FragCallBinding.contactBubbleLayout\u0027 on a null object reference\n        at cx.ring.fragments.CallFragment.c(:852)\n        at cx.ring.fragments.h.run(Unknown Source:4)\n        at android.os.Handler.handleCallback(Handler.java:883)\n        at android.os.Handler.dispatchMessage(Handler.java:100)\n        at android.os.Looper.loop(Looper.java:214)\n        at android.app.ActivityThread.main(ActivityThread.java:7356)\n        at java.lang.reflect.Method.invoke(Native Method)\n        at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:491)\n        at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:930)",
+      "parentUuid": "3599fb65_26bafe3c",
+      "range": {
+        "startLine": 851,
+        "startChar": 8,
+        "endLine": 855,
+        "endChar": 123
+      },
+      "revId": "0abe8980c0fc6ecb169d465900b2df369accdc45",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
     }
   ]
 }
