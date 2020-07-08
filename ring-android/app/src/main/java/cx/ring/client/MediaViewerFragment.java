@@ -34,6 +34,8 @@ import android.widget.ImageView;
 import com.bumptech.glide.load.resource.bitmap.CenterInside;
 
 import cx.ring.R;
+import cx.ring.utils.GlideApp;
+import cx.ring.utils.GlideOptions;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -44,6 +46,8 @@ public class MediaViewerFragment extends Fragment {
     private Uri mUri = null;
 
     protected ImageView mImage;
+
+    private final GlideOptions PICTURE_OPTIONS = new GlideOptions().transform(new CenterInside());
 
     public MediaViewerFragment() {
     }
@@ -81,6 +85,10 @@ public class MediaViewerFragment extends Fragment {
             Log.w(TAG, "showImage(): null image view");
             return;
         }
+        GlideApp.with(a)
+                .load(mUri)
+                .apply(PICTURE_OPTIONS)
+                .into(mImage);
     }
 
     @Override
