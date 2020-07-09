@@ -31,6 +31,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.core.util.Pair;
 import androidx.appcompat.app.ActionBar;
@@ -152,7 +153,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
     private ActivityHomeBinding binding;
 
-    private boolean mIsMigrationDialogAlreadyShowed;
+    private AlertDialog mMigrationDialog;
     private String mAccountWithPendingrequests = null;
 
     private final CompositeDisposable mDisposable = new CompositeDisposable();
@@ -237,6 +238,11 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (mMigrationDialog != null) {
+            if (mMigrationDialog.isShowing())
+                mMigrationDialog.dismiss();
+            mMigrationDialog = null;
+        }
         fContent = null;
         mDisposable.dispose();
         binding = null;
@@ -280,11 +286,10 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     private void showMigrationDialog() {
-        if (mIsMigrationDialogAlreadyShowed) {
+        if (mMigrationDialog != null) {
             return;
         }
-        mIsMigrationDialogAlreadyShowed = true;
-        new MaterialAlertDialogBuilder(this)
+        mMigrationDialog = new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.account_migration_title_dialog)
                 .setMessage(R.string.account_migration_message_dialog)
                 .setIcon(R.drawable.baseline_warning_24)
