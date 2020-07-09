@@ -159,7 +159,7 @@ public class CallActivity extends AppCompatActivity {
                             | View.SYSTEM_UI_FLAG_IMMERSIVE);
 
             CallFragment callFragment = getCallFragment();
-            if(callFragment != null && !getPluginsEnabled()) {
+            if(callFragment != null && !callFragment.isChoosePluginMode()) {
                 callFragment.toggleVideoPluginsCarousel(false);
             }
         }
