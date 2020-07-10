@@ -70,6 +70,30 @@
       "revId": "0abe8980c0fc6ecb169d465900b2df369accdc45",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b383b9b_b3221f0e",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2020-07-10T19:03:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c769ddf4_86a09c5b",
+      "range": {
+        "startLine": 851,
+        "startChar": 8,
+        "endLine": 855,
+        "endChar": 123
+      },
+      "revId": "0abe8980c0fc6ecb169d465900b2df369accdc45",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }

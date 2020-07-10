@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4a73426b_0e2eca21",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2020-07-10T19:03:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44fa52d6_2a9f2738",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 48
+      },
+      "revId": "12f3c12502df303342adf1b1adf79dfb9ac2e585",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b51713c_b9830434",
         "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "12f3c12502df303342adf1b1adf79dfb9ac2e585",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18183ff5_d7a99571",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2020-07-10T19:03:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b51713c_b9830434",
+      "range": {
+        "startLine": 851,
+        "startChar": 0,
+        "endLine": 855,
+        "endChar": 139
+      },
+      "revId": "12f3c12502df303342adf1b1adf79dfb9ac2e585",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
