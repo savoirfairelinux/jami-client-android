@@ -23,12 +23,9 @@ package cx.ring.model;
 import java.util.ArrayList;
 import java.util.Date;
 
-import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
-import ezvcard.VCard;
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
-import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
 public class CallContact {
@@ -56,7 +53,6 @@ public class CallContact {
     public boolean detailsLoaded = false;
 
     // Profile
-    private VCard vcard = null;
     private String mDisplayName;
     private Object mContactPhoto = null;
 
@@ -323,13 +319,5 @@ public class CallContact {
         }
         detailsLoaded = true;
         mContactUpdates.onNext(this);
-    }
-
-    public void setVCard(VCard vcard) {
-        this.vcard = vcard;
-    }
-
-    public VCard getVCard() {
-        return vcard;
     }
 }

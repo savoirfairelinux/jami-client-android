@@ -21,11 +21,13 @@ package cx.ring.viewholders;
 
 import cx.ring.R;
 import cx.ring.databinding.ItemSmartlistBinding;
+import cx.ring.databinding.ItemSmartlistHeaderBinding;
 import cx.ring.model.CallContact;
 import cx.ring.model.ContactEvent;
 import cx.ring.model.Interaction;
 import cx.ring.model.SipCall;
 import cx.ring.smartlist.SmartListViewModel;
+import cx.ring.utils.BitmapUtils;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -43,6 +45,7 @@ import java.util.concurrent.TimeUnit;
 
 public class SmartListViewHolder extends RecyclerView.ViewHolder {
     public ItemSmartlistBinding binding;
+    public ItemSmartlistHeaderBinding headerBinding;
 
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -51,46 +54,65 @@ public class SmartListViewHolder extends RecyclerView.ViewHolder {
         binding = b;
     }
 
+    public SmartListViewHolder(@NonNull ItemSmartlistHeaderBinding b) {
+        super(b.getRoot());
+        headerBinding = b;
+    }
+
     public void bind(final SmartListListeners clickListener, final SmartListViewModel smartListViewModel) {
         compositeDisposable.clear();
-        compositeDisposable.add(RxView.clicks(itemView)
-                .throttleFirst(1000, TimeUnit.MILLISECONDS)
-                .subscribe(v -> clickListener.onItemClick(smartListViewModel)));
-        compositeDisposable.add(RxView.longClicks(itemView)
-                .subscribe(u -> clickListener.onItemLongClick(smartListViewModel)));
 
-        CallContact contact = smartListViewModel.getContact();
+        if (binding != null) {
+            compositeDisposable.add(RxView.clicks(itemView)
+                    .throttleFirst(1000, TimeUnit.MILLISECONDS)
+                    .subscribe(v -> clickListener.onItemClick(smartListViewModel)));
+            compositeDisposable.add(RxView.longClicks(itemView)
+                    .subscribe(u -> clickListener.onItemLongClick(smartListViewModel)));
 
-        binding.convParticipant.setText(smartListViewModel.getContactName());
+            binding.convParticipant.setText(smartListViewModel.getContactName());
 
-        long lastInteraction = smartListViewModel.getLastInteractionTime();
-        String lastInteractionStr = lastInteraction == 0 ?
-                "" : DateUtils.getRelativeTimeSpanString(lastInteraction, System.currentTimeMillis(), 0L, DateUtils.FORMAT_ABBREV_ALL).toString();
+            long lastInteraction = smartListViewModel.getLastInteractionTime();
+            String lastInteractionStr = lastInteraction == 0 ?
+                    "" : DateUtils.getRelativeTimeSpanString(lastInteraction, System.currentTimeMillis(), 0L, DateUtils.FORMAT_ABBREV_ALL).toString();
 
-        binding.convLastTime.setText(lastInteractionStr);
-        if (smartListViewModel.hasOngoingCall()) {
-            binding.convLastItem.setText(itemView.getContext().getString(R.string.ongoing_call));
-        } else if (smartListViewModel.getLastEvent() != null) {
-            binding.convLastItem.setText(getLastEventSummary(smartListViewModel.getLastEvent(), itemView.getContext()));
-        } else {
-            binding.convLastItem.setVisibility(View.GONE);
+            binding.convLastTime.setText(lastInteractionStr);
+            if (smartListViewModel.hasOngoingCall()) {
+                binding.convLastItem.setText(itemView.getContext().getString(R.string.ongoing_call));
+            } else if (smartListViewModel.getLastEvent() != null) {
+                binding.convLastItem.setText(getLastEventSummary(smartListViewModel.getLastEvent(), itemView.getContext()));
+            } else {
+                binding.convLastItem.setVisibility(View.GONE);
+            }
+
+            if (smartListViewModel.hasUnreadTextMessage()) {
+                binding.convParticipant.setTypeface(null, Typeface.BOLD);
+                binding.convLastTime.setTypeface(null, Typeface.BOLD);
+                binding.convLastItem.setTypeface(null, Typeface.BOLD);
+            } else {
+                binding.convParticipant.setTypeface(null, Typeface.NORMAL);
+                binding.convLastTime.setTypeface(null, Typeface.NORMAL);
+                binding.convLastItem.setTypeface(null, Typeface.NORMAL);
+            }
+
+            CallContact contact = smartListViewModel.getContact();
+            if (contact != null) {
+                binding.photo.setImageDrawable(
+                        new AvatarDrawable.Builder()
+                                .withContact(contact)
+                                .withCircleCrop(true)
+                                .build(binding.photo.getContext()));
+            } else {
+                binding.photo.setImageDrawable(
+                        new AvatarDrawable.Builder()
+                                .withPhoto(BitmapUtils.base64ToBitmap(smartListViewModel.picture_b64))
+                                .withNameData(smartListViewModel.getContactName(), smartListViewModel.getUuid())
+                                .withCircleCrop(true)
+                                .build(binding.photo.getContext()));
+            }
+        } else if (headerBinding != null) {
+            headerBinding.headerTitle.setText(smartListViewModel.getHeaderTitle() == SmartListViewModel.Title.Conversations
+                    ? R.string.navigation_item_conversation : R.string.search_results_public_directory);
         }
-
-        if (smartListViewModel.hasUnreadTextMessage()) {
-            binding.convParticipant.setTypeface(null, Typeface.BOLD);
-            binding.convLastTime.setTypeface(null, Typeface.BOLD);
-            binding.convLastItem.setTypeface(null, Typeface.BOLD);
-        } else {
-            binding.convParticipant.setTypeface(null, Typeface.NORMAL);
-            binding.convLastTime.setTypeface(null, Typeface.NORMAL);
-            binding.convLastItem.setTypeface(null, Typeface.NORMAL);
-        }
-
-        binding.photo.setImageDrawable(
-                new AvatarDrawable.Builder()
-                        .withContact(contact)
-                        .withCircleCrop(true)
-                        .build(binding.photo.getContext()));
     }
 
     public void unbind() {

@@ -27,8 +27,6 @@ import cx.ring.mvp.BaseView;
 
 public interface SmartListView extends BaseView {
 
-    void displayContact(CallContact contact);
-
     void displayChooseNumberDialog(CharSequence numbers[]);
 
     void displayNoConversationMessage();
@@ -45,8 +43,6 @@ public interface SmartListView extends BaseView {
 
     void displayMenuItem();
 
-    void hideSearchRow();
-
     void hideList();
 
     void hideNoConversationMessage();
@@ -60,8 +56,6 @@ public interface SmartListView extends BaseView {
     void goToCallActivity(String accountId, String contactId);
 
     void goToQRActivity();
-
-    void goToContact(CallContact callContact);
 
     void scrollToTop();
 }
