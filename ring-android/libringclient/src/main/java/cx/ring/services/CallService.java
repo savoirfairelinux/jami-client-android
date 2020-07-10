@@ -209,6 +209,11 @@ public class CallService {
 
     public void accept(final String callId) {
         mExecutor.execute(() -> {
+            SipCall sipCall = currentCalls.get(callId);
+            if (sipCall != null && sipCall.getCallStatus() == SipCall.CallStatus.CURRENT) {
+                Log.w(TAG, "Call " + callId + " already accepted");
+                return;
+            }
             Log.i(TAG, "accept() running... " + callId);
             Ringservice.muteCapture(false);
             Ringservice.accept(callId);
