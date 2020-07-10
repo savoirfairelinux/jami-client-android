@@ -1394,8 +1394,8 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             // If a call media handler doesn't have an icon use a standard android icon
             for (String callMediaHandler : callMediaHandlers) {
                 Map<String, String> details = getCallMediaHandlerDetails(callMediaHandler);
-                String drawablePath = details.get("icoPath");
-                Drawable handlerIcon = StringUtils.isEmpty(drawablePath) ? null : Drawable.createFromPath(details.get("icoPath"));
+                String drawablePath = details.get("iconPath");
+                Drawable handlerIcon = StringUtils.isEmpty(drawablePath) ? null : Drawable.createFromPath(details.get("iconPath"));
                 if (handlerIcon == null) {
                     handlerIcon = context.getDrawable(R.drawable.ic_jami);
                 }
@@ -1408,8 +1408,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         }
 
         if (choosePluginMode) {
-            //change preview image
-            displayVideoSurface(true,true);
             // hide hang up button and other call buttons
             displayHangupButton(false);
             // Display the plugins recyclerpicker
@@ -1429,13 +1427,12 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                 }
                 if (position > 0) {
                     String callMediaId = callMediaHandlers.get(position-1);
-                    toggleCallMediaHandler(callMediaId, true);
+                    presenter.startPlugin(callMediaId);
+                    //toggleCallMediaHandler(callMediaId, true);
                 }
             }
 
         } else {
-            //change preview image
-            displayVideoSurface(true,true);
             if (previousPluginPosition > 0) {
                 String callMediaId = callMediaHandlers.
                         get(previousPluginPosition-1);
@@ -1443,10 +1440,14 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                 toggleCallMediaHandler(callMediaId, false);
                 rp.scrollToPosition(previousPluginPosition);
             }
+            presenter.stopPlugin();
             binding.recyclerPicker.setVisibility(View.GONE);
             movePreview(false);
             displayHangupButton(true);
         }
+
+        //change preview image
+        displayVideoSurface(true,true);
     }
 
     /**
