@@ -29,7 +29,10 @@ import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import ezvcard.VCardVersion;
 import ezvcard.io.text.VCardWriter;
+import ezvcard.parameter.ImageType;
 import ezvcard.property.FormattedName;
+import ezvcard.property.Photo;
+import ezvcard.property.RawProperty;
 import ezvcard.property.Uid;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
@@ -68,6 +71,17 @@ public final class VCardUtils {
             }
         }
         return new Tuple<>(contactName, photo);
+    }
+
+    public static VCard writeData(String uri, String displayName, byte[] picture) {
+        VCard vcard = new VCard();
+        vcard.setFormattedName(new FormattedName(displayName));
+        vcard.setUid(new Uid(uri));
+        if (picture != null) {
+            vcard.addPhoto(new Photo(picture, ImageType.JPEG));
+        }
+        vcard.removeProperties(RawProperty.class);
+        return vcard;
     }
 
     /**

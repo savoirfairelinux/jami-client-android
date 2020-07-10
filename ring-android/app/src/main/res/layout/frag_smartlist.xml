@@ -25,43 +25,10 @@ along with this program; if not, write to the Free Software
     android:layout_height="match_parent"
     tools:context=".client.HomeActivity">
 
-    <LinearLayout
-        android:id="@+id/newcontact_element"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone"
-        tools:visibility="visible">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/search_results_public_directory"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Overline" />
-
-        <include
-            layout="@layout/item_contact"
-            android:layout_width="match_parent"
-            android:layout_height="72dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/navigation_item_conversation"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Overline" />
-
-    </LinearLayout>
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/list_coordinator"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/newcontact_element">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/placeholder"

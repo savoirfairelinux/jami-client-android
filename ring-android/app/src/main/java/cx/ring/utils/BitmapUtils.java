@@ -24,6 +24,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Base64;
 
 import androidx.annotation.NonNull;
 import ezvcard.parameter.ImageType;
@@ -55,6 +56,16 @@ public final class BitmapUtils
         ByteBuffer buffer = ByteBuffer.allocate(bytes); //Create a new buffer
         bmp.copyPixelsToBuffer(buffer); //Move the byte data to the buffer
         return buffer.array();
+    }
+
+    public static Bitmap base64ToBitmap(String base64) {
+        if (base64 == null)
+            return null;
+        try {
+            return bytesToBitmap(Base64.decode(base64, Base64.DEFAULT));
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
     }
 
     public static Bitmap bytesToBitmap(byte[] imageData) {
