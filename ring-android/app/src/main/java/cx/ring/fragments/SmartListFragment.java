@@ -52,9 +52,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -67,7 +65,6 @@ import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.client.QRCodeActivity;
-import cx.ring.contacts.AvatarFactory;
 import cx.ring.databinding.FragSmartlistBinding;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
@@ -103,12 +100,6 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     private MenuItem mSearchMenuItem = null;
     private MenuItem mDialpadMenuItem = null;
     private FragSmartlistBinding binding;
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        presenter.refresh();
-    }
 
     @Override
     public void onCreateOptionsMenu(final Menu menu, MenuInflater inflater) {
@@ -213,7 +204,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        presenter.newContactClicked();
+        // presenter.newContactClicked();
         return true;
     }
 
@@ -251,8 +242,6 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
         setHasOptionsMenu(true);
         super.onViewCreated(view, savedInstanceState);
 
-        binding.newcontactElement.setVisibility(View.GONE);
-
         binding.confsList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -281,8 +270,6 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
             animator.setSupportsChangeAnimations(false);
         }
 
-        binding.newcontactElement.setOnClickListener(v -> presenter.newContactClicked());
-        //binding.quickCall.setOnClickListener(v -> presenter.quickCallClicked());
         binding.newconvFab.setOnClickListener(v -> presenter.fabButtonClicked());
     }
 
@@ -330,17 +317,6 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
 
     public void onFabButtonClicked() {
         presenter.fabButtonClicked();
-    }
-
-    @Override
-    public void displayContact(final CallContact contact) {
-        TextView display_name = binding.newcontactElement.findViewById(R.id.display_name);
-        display_name.setText(contact.getRingUsername());
-
-        ImageView photo = binding.newcontactElement.findViewById(R.id.photo);
-
-        AvatarFactory.loadGlideAvatar(photo, contact);
-        binding.newcontactElement.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -411,12 +387,6 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
             mSearchMenuItem.expandActionView();
         }
     }
-
-    @Override
-    public void hideSearchRow() {
-        binding.newcontactElement.setVisibility(View.GONE);
-    }
-
 
     @Override
     public void hideList() {
@@ -493,11 +463,6 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
         Intent intent = new Intent(QRCodeActivity.ACTION_SCAN)
                 .setClass(requireActivity(), QRCodeActivity.class);
         startActivityForResult(intent, HomeActivity.REQUEST_CODE_QR_CONVERSATION);
-    }
-
-    @Override
-    public void goToContact(CallContact callContact) {
-        ActionHelper.displayContact(getActivity(), callContact);
     }
 
     @Override
