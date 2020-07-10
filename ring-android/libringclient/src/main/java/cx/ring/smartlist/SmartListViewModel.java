@@ -20,11 +20,22 @@
  */
 package cx.ring.smartlist;
 
+import java.util.Collections;
+import java.util.List;
+
 import cx.ring.model.CallContact;
 import cx.ring.model.Interaction;
+import cx.ring.services.AccountService;
+import io.reactivex.Observable;
+import io.reactivex.Single;
 
 public class SmartListViewModel
 {
+    public static final Observable<SmartListViewModel> TITLE_CONVERSATIONS = Observable.just(new SmartListViewModel(Title.Conversations));
+    public static final Observable<SmartListViewModel> TITLE_PUBLIC_DIR = Observable.just(new SmartListViewModel(Title.PublicDirectory));
+    public static final Single<List<Observable<SmartListViewModel>>> EMPTY_LIST = Single.just(Collections.emptyList());
+    public static final Observable<List<SmartListViewModel>> EMPTY_RESULTS = Observable.just(Collections.emptyList());
+
     private final String accountId;
     private final CallContact contact;
     private final String uuid;
@@ -33,6 +44,15 @@ public class SmartListViewModel
     private boolean hasOngoingCall;
     private boolean isOnline = false;
     private final Interaction lastEvent;
+
+    public enum Title {
+        None,
+        Conversations,
+        PublicDirectory
+    }
+    private final Title title;
+
+    public String picture_b64 = null;
 
     public SmartListViewModel(String accountId, CallContact contact, String id, Interaction lastEvent) {
         this.accountId = accountId;
@@ -43,6 +63,7 @@ public class SmartListViewModel
         this.hasOngoingCall = false;
         this.lastEvent = lastEvent;
         isOnline = contact.isOnline();
+        title = Title.None;
     }
     public SmartListViewModel(String accountId, CallContact contact, Interaction lastEvent) {
         this.accountId = accountId;
@@ -53,6 +74,29 @@ public class SmartListViewModel
         this.hasOngoingCall = false;
         this.lastEvent = lastEvent;
         isOnline = contact.isOnline();
+        title = Title.None;
+    }
+
+    public SmartListViewModel(String accountId, AccountService.User user) {
+        contactName = user.firstName + " " + user.lastName;
+        this.accountId = accountId;
+        this.contact = null;
+        this.uuid = user.username;
+        hasUnreadTextMessage = false;
+        lastEvent = null;
+        picture_b64 = user.picture_b64;
+        title = Title.None;
+    }
+
+    private SmartListViewModel(Title title) {
+        contactName = null;
+        this.accountId = null;
+        this.contact = null;
+        this.uuid = null;
+        hasUnreadTextMessage = false;
+        lastEvent = null;
+        picture_b64 = null;
+        this.title = title;
     }
 
     public CallContact getContact() {
@@ -100,15 +144,21 @@ public class SmartListViewModel
         if (!(o instanceof SmartListViewModel))
             return false;
         SmartListViewModel other = (SmartListViewModel) o;
-        return contact == other.contact
+        return other.getHeaderTitle() == getHeaderTitle()
+                && (getHeaderTitle() != Title.None
+                || (contact == other.contact
                 && contactName.equals(other.contactName)
                 && isOnline == other.isOnline
                 && lastEvent == other.lastEvent
                 && hasOngoingCall == other.hasOngoingCall
-                && hasUnreadTextMessage == other.hasUnreadTextMessage;
+                && hasUnreadTextMessage == other.hasUnreadTextMessage));
     }
 
     public String getAccountId() {
         return accountId;
+    }
+
+    public Title getHeaderTitle() {
+        return title;
     }
 }

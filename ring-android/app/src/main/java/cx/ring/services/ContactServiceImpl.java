@@ -24,6 +24,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.ContactsContract;
+import android.util.Base64;
 import android.util.Log;
 import android.util.LongSparseArray;
 
@@ -38,6 +39,7 @@ import cx.ring.contacts.AvatarFactory;
 import cx.ring.model.CallContact;
 import cx.ring.model.Uri;
 import cx.ring.utils.AndroidFileUtils;
+import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.Tuple;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
@@ -406,7 +408,6 @@ public class ContactServiceImpl extends ContactService {
     public void saveVCardContactData(CallContact contact, String accountId, VCard vcard) {
         if (vcard != null) {
             Tuple<String, Object> profileData = VCardServiceImpl.readData(vcard);
-            contact.setVCard(vcard);
             contact.setProfile(profileData.first, profileData.second);
             String filename = contact.getPrimaryNumber() + ".vcf";
             VCardUtils.savePeerProfileToDisk(vcard, accountId
@@ -415,14 +416,23 @@ public class ContactServiceImpl extends ContactService {
         }
     }
 
+    @Override
+    public Single<VCard> saveVCardContact(String accountId, String uri, String displayName, String picture)
+    {
+        return Single.fromCallable(() -> {
+            VCard vcard = VCardUtils.writeData(uri, displayName, Base64.decode(picture, Base64.DEFAULT));
+            String filename = uri + ".vcf";
+            VCardUtils.savePeerProfileToDisk(vcard, accountId, filename, mContext.getFilesDir());
+            return vcard;
+        });
+    }
+
     private Single<Tuple<String, Object>> loadVCardContactData(CallContact callContact, String accountId) {
         String id = callContact.getPrimaryNumber();
         if (id != null) {
             return Single.fromCallable(() -> VCardUtils.loadPeerProfileFromDisk(mContext.getFilesDir(), id + ".vcf", accountId))
-                    .map(vcard -> {
-                        callContact.setVCard(vcard);
-                        return VCardServiceImpl.readData(vcard);
-                    }).subscribeOn(Schedulers.computation());
+                    .map(VCardServiceImpl::readData)
+                    .subscribeOn(Schedulers.computation());
         }
         return Single.error(new IllegalArgumentException());
     }
@@ -436,4 +446,10 @@ public class ContactServiceImpl extends ContactService {
                 .onErrorReturn(e -> new Tuple<>(contactName, null))
                 .subscribeOn(Schedulers.io());
     }
+
+    @Override
+    public Object base64ToBitmap(String base64) {
+        return BitmapUtils.base64ToBitmap(base64);
+    }
+
 }
