@@ -1417,6 +1417,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         }
 
         if (choosePluginMode) {
+            presenter.startPlugin();
             // hide hang up button and other call buttons
             displayHangupButton(false);
             // Display the plugins recyclerpicker
@@ -1439,8 +1440,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                     presenter.toggleCallMediaHandler(callMediaId, true);
                 }
             }
-            //change preview image
-            displayVideoSurface(true,true);
 
         } else {
             if (previousPluginPosition > 0) {
@@ -1450,12 +1449,14 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                 presenter.toggleCallMediaHandler(callMediaId, false);
                 rp.scrollToPosition(previousPluginPosition);
             }
+            presenter.stopPlugin();
             binding.recyclerPicker.setVisibility(View.GONE);
             movePreview(false);
             displayHangupButton(true);
-            //change preview image
-            displayVideoSurface(true,true);
         }
+
+        //change preview image
+        displayVideoSurface(true,true);
     }
 
     /**

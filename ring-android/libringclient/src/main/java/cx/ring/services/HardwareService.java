@@ -163,6 +163,10 @@ public abstract class HardwareService {
 
     public abstract void unregisterCameraDetectionCallback();
 
+    public abstract void startPlugin(String callID);
+
+    public abstract void stopPlugin(String callID);
+
     public void connectivityChanged(boolean isConnected) {
         Log.i(TAG, "connectivityChange() " + isConnected);
         connectivityEvents.onNext(isConnected);

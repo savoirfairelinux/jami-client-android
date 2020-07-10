@@ -86,6 +86,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     private boolean mShouldCapture = false;
     private boolean mShouldSpeakerphone = false;
     private final boolean mHasSpeakerPhone;
+    private boolean mIsChoosePlugin = false;
 
     public HardwareServiceImpl(Context context) {
         mContext = context;
@@ -478,6 +479,24 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         }
     }
 
+    public void startPlugin() {
+        mIsChoosePlugin = true;
+        if (mIsCapturing) {
+            endCapture();
+        }
+        if (mShouldCapture)
+            startCapture(mCapturingId);
+    }
+
+    public void stopPlugin() {
+        mIsChoosePlugin = false;
+        if (mIsCapturing) {
+            endCapture();
+        }
+        if (mShouldCapture)
+            startCapture(mCapturingId);
+    }
+
     @Override
     public void startCapture(@Nullable String camId) {
         if (mIsScreenSharing) {
@@ -506,7 +525,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
             return;
         }
         final Conference conf = mCameraPreviewCall.get();
-        boolean useHardwareCodec = mPreferenceService.isHardwareAccelerationEnabled() && (conf == null || !conf.isConference());
+        boolean useHardwareCodec = mPreferenceService.isHardwareAccelerationEnabled() && (conf == null || !conf.isConference()) && !mIsChoosePlugin;
         if (conf != null && useHardwareCodec) {
             SipCall call = conf.getCall();
             if (call != null) {
