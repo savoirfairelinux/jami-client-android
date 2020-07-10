@@ -21,6 +21,7 @@
 package cx.ring.adapters;
 
 import cx.ring.databinding.ItemSmartlistBinding;
+import cx.ring.databinding.ItemSmartlistHeaderBinding;
 import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.viewholders.SmartListViewHolder;
 
@@ -53,8 +54,19 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
     @Override
     public SmartListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        ItemSmartlistBinding itemBinding = ItemSmartlistBinding.inflate(layoutInflater, parent, false);
-        return new SmartListViewHolder(itemBinding);
+        if (viewType == 0) {
+            ItemSmartlistBinding itemBinding = ItemSmartlistBinding.inflate(layoutInflater, parent, false);
+            return new SmartListViewHolder(itemBinding);
+        } else {
+            ItemSmartlistHeaderBinding itemBinding = ItemSmartlistHeaderBinding.inflate(layoutInflater, parent, false);
+            return new SmartListViewHolder(itemBinding);
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        final SmartListViewModel smartListViewModel = mSmartListViewModels.get(position);
+        return smartListViewModel.getHeaderTitle() == SmartListViewModel.Title.None ? 0 : 1;
     }
 
     @Override
@@ -65,8 +77,7 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull SmartListViewHolder holder, int position) {
-        final SmartListViewModel smartListViewModel = mSmartListViewModels.get(position);
-        holder.bind(listener, smartListViewModel);
+        holder.bind(listener, mSmartListViewModels.get(position));
     }
 
     @Override
@@ -75,7 +86,7 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
     }
 
     @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
         this.recyclerView = recyclerView;
     }

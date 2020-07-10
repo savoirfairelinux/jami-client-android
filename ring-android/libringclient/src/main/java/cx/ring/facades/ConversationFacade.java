@@ -22,6 +22,7 @@ package cx.ring.facades;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.NavigableMap;
 import java.util.concurrent.TimeUnit;
@@ -359,13 +360,56 @@ public class ConversationFacade {
                         .observeContact(conversation.getAccountId(), conversation.getContact())
                         .map(contact -> new SmartListViewModel(conversation.getAccountId(), contact, conversation.getLastEvent())));
     }
-
     public Observable<List<Observable<SmartListViewModel>>> getSmartList(Observable<Account> currentAccount) {
-        return currentAccount
-                .switchMap(account -> account.getConversationsSubject()
-                        .switchMapSingle(conversations -> Observable.fromIterable(conversations)
-                                .map(conv -> observeConversation(account, conv))
-                                .toList()));
+        return currentAccount.switchMap(account -> account.getConversationsSubject()
+                .switchMapSingle(conversations -> Observable.fromIterable(conversations)
+                        .map(conv -> observeConversation(account, conv))
+                        .toList()));
+    }
+    private Single<List<Observable<SmartListViewModel>>> getSearchResults(Account account, String query) {
+        if (account.canSearch()) {
+            return mAccountService.searchUser(account.getAccountID(), query)
+                    .map(AccountService.UserSearchResult::getResultsViewModels);
+        } else {
+            return mAccountService.findRegistrationByName(account.getAccountID(), "", query)
+                    .map(result -> result.state == 0 ? Collections.singletonList(observeConversation(account, account.getByUri(result.address))) : Collections.emptyList());
+        }
+    }
+    private Observable<List<Observable<SmartListViewModel>>> getSearchResults(Account account, Observable<String> query) {
+        return query.switchMapSingle(q -> q.isEmpty()
+                        ? SmartListViewModel.EMPTY_LIST
+                        : getSearchResults(account, q));
+    }
+    public Observable<List<Observable<SmartListViewModel>>> getFullList(Observable<Account> currentAccount, Observable<String> query) {
+        return currentAccount.switchMap(account -> Observable.combineLatest(
+                account.getConversationsSubject(),
+                getSearchResults(account, query),
+                query,
+                (conversations, searchResults, q) -> {
+                    List<Observable<SmartListViewModel>> newList = new ArrayList<>(conversations.size() + searchResults.size() + 2);
+                    if (!searchResults.isEmpty()) {
+                        newList.add(SmartListViewModel.TITLE_PUBLIC_DIR);
+                        newList.addAll(searchResults);
+                    }
+                    if (!conversations.isEmpty()) {
+                        if (q.isEmpty()) {
+                            for (Conversation conversation : conversations)
+                                newList.add(observeConversation(account, conversation));
+                        } else {
+                            newList.add(SmartListViewModel.TITLE_CONVERSATIONS);
+                            int nRes = 0;
+                            for (Conversation conversation : conversations) {
+                                if (conversation.getContact().matches(q)) {
+                                    newList.add(observeConversation(account, conversation));
+                                    nRes++;
+                                }
+                            }
+                            if (nRes == 0)
+                                newList.remove(newList.size() - 1);
+                        }
+                    }
+                    return newList;
+                }));
     }
 
     /**

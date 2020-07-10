@@ -62,8 +62,10 @@ public abstract class ContactService {
     protected abstract CallContact findContactByNumberFromSystem(String number);
 
     public abstract Completable loadContactData(CallContact callContact, String accountId);
+    public abstract Object base64ToBitmap(String base64);
 
     public abstract void saveVCardContactData(CallContact contact, String accountId, VCard vcard);
+    public abstract Single<VCard> saveVCardContact(String accountId, String uri, String displayName, String pictureB64);
 
     public ContactService() {}
 
