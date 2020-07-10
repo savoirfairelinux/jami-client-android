@@ -1429,7 +1429,8 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                 }
                 if (position > 0) {
                     String callMediaId = callMediaHandlers.get(position-1);
-                    toggleCallMediaHandler(callMediaId, true);
+                    presenter.startPlugin();
+                    presenter.toggleCallMediaHandler(true);
                 }
             }
 
@@ -1443,6 +1444,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                 toggleCallMediaHandler(callMediaId, false);
                 rp.scrollToPosition(previousPluginPosition);
             }
+            presenter.stopPlugin();
             binding.recyclerPicker.setVisibility(View.GONE);
             movePreview(false);
             displayHangupButton(true);
