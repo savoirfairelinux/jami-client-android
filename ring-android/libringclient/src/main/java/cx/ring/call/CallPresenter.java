@@ -689,4 +689,11 @@ public class CallPresenter extends RootPresenter<CallView> {
     public void stopScreenShare() {
         mHardwareService.stopScreenShare();
     }
+
+    public void startPlugin() {
+        mHardwareService.startPlugin();
+    }
+    public void stopPlugin() {
+        mHardwareService.stopPlugin();
+    }
 }
