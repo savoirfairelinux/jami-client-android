@@ -58,6 +58,8 @@ import cx.ring.utils.Log;
 import cx.ring.utils.Ringer;
 import io.reactivex.Completable;
 
+import static cx.ring.daemon.RingserviceJNI.toggleCallMediaHandler;
+
 public class HardwareServiceImpl extends HardwareService implements AudioManager.OnAudioFocusChangeListener, BluetoothWrapper.BluetoothChangeListener {
 
     private static final Point VIDEO_SIZE_LOW = new Point(320, 240);
@@ -86,6 +88,8 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     private boolean mShouldCapture = false;
     private boolean mShouldSpeakerphone = false;
     private final boolean mHasSpeakerPhone;
+    private boolean mIsChoosePlugin = false;
+    private String mMediaHandlerId;
 
     public HardwareServiceImpl(Context context) {
         mContext = context;
@@ -478,6 +482,20 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         }
     }
 
+    public void startMediaHandler(String mediaHandlerId) {
+        mIsChoosePlugin = true;
+        mMediaHandlerId = mediaHandlerId;
+    }
+
+    private void toggleMediaHandler() {
+        toggleCallMediaHandler(mMediaHandlerId, true);
+    }
+
+    public void stopMediaHandler() {
+        mIsChoosePlugin = false;
+        mMediaHandlerId = "";
+    }
+
     @Override
     public void startCapture(@Nullable String camId) {
         if (mIsScreenSharing) {
@@ -506,7 +524,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
             return;
         }
         final Conference conf = mCameraPreviewCall.get();
-        boolean useHardwareCodec = mPreferenceService.isHardwareAccelerationEnabled() && (conf == null || !conf.isConference());
+        boolean useHardwareCodec = mPreferenceService.isHardwareAccelerationEnabled() && (conf == null || !conf.isConference()) && !mIsChoosePlugin;
         if (conf != null && useHardwareCodec) {
             SipCall call = conf.getCall();
             if (call != null) {
@@ -526,6 +544,8 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                 new CameraService.CameraListener() {
                     @Override
                     public void onOpened() {
+                        if(mIsChoosePlugin && !mMediaHandlerId.isEmpty())
+                            toggleMediaHandler();
                     }
 
                     @Override

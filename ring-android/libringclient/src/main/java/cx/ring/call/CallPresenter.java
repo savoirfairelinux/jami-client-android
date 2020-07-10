@@ -705,4 +705,17 @@ public class CallPresenter extends RootPresenter<CallView> {
     public void stopScreenShare() {
         mHardwareService.stopScreenShare();
     }
+
+    public void startPlugin(String mediaHandlerId) {
+        mHardwareService.startMediaHandler(mediaHandlerId);
+        if(mConference == null)
+            return;
+        mHardwareService.switchInput(mConference.getId(), mHardwareService.isPreviewFromFrontCamera());
+    }
+    public void stopPlugin() {
+        mHardwareService.stopMediaHandler();
+        if(mConference == null)
+            return;
+        mHardwareService.switchInput(mConference.getId(), mHardwareService.isPreviewFromFrontCamera());
+    }
 }
