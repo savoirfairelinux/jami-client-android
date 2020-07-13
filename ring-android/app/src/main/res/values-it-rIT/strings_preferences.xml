@@ -25,4 +25,16 @@
   <string name="pref_persistNotification_title">Esegui in background</string>
   <string name="pref_persistNotification_summary">Consenti l\'esecuzione in background per ricevere chiamate e messaggi.</string>
   <!--Plugin-->
+  <string name="pref_plugins_title">Plugin</string>
+  <string name="pref_plugins_summary">Abilita i plugin e imposta i loro parametri</string>
+  <string name="fab_plugins_add">Aggiungi un nuovo plugin</string>
+  <string name="plugin_uninstall_title">Disinstallare Plugin?</string>
+  <string name="plugin_reset_preferences">Ripristina le preferenze del plugin</string>
+  <string name="plugin_reset_preferences_summary">Le impostazioni del tuo plugin saranno predefinite</string>
+  <string name="plugin_reset_preferences_ask">Vuoi ripristinare le impostazioni del plugin?</string>
+  <string name="plugin_successfully_installed">Plugin <b>%1$s</b> installato con successo</string>
+  <string name="plugin_install_failure">Impossibile installare il plugin: <b>%1$s</b></string>
+  <string name="plugin_recent_version_exception">Hai una versione più recente di: <b>%1$s</b></string>
+  <string name="plugin_same_version_exception">Hai la stessa versione di <b>%1$s</b> installata</string>
+  <string name="plugin_force_install">forza \n installazione</string>
 </resources>

@@ -31,6 +31,7 @@
   <string name="menu_item_accounts">مدیریت حساب‌ها</string>
   <string name="menu_item_account">مدیریت حساب</string>
   <string name="menu_item_settings">تنظیمات</string>
+  <string name="menu_item_plugin_list">تنظیمات افزونه</string>
   <string name="menu_item_share">هم‌رسانی اطلاعات تماس من</string>
   <string name="menu_item_about">درباره جمی</string>
   <!--Dialing Fragment-->
@@ -93,6 +94,7 @@
   <string name="action_call_accept">پذیرش تماس</string>
   <string name="action_call_decline">ردکردن</string>
   <string name="action_call_mic_mute">قطع میکروفون</string>
+  <string name="action_load_plugin">بارگذاری افزونه</string>
   <string name="ab_action_speakerphone">فعال‌سازی بلندگو</string>
   <string name="ab_action_contact_add">افزودن به مخاطبان</string>
   <string name="ab_action_contact_add_question">افزودن به مخاطبان؟</string>
@@ -172,6 +174,8 @@
   <string name="prompt_new_username">نام کاربری جدید را وارد کنید</string>
   <string name="prompt_hint_username">نام کاربری</string>
   <string name="help_password_choose">برای حفاظت از حساب جمی خود، گذرواژه‌ای قوی را که به خاطر خواهید سپرد، برگزینید.</string>
+  <string name="help_password_enter">گذرواژه حساب جمی خود را وارد کنید.</string>
+  <string name="help_server_enter">آدرس URL سرور مدیریت را وارد کن.</string>
   <string name="help_pin_enter">پین را از حساب پیکربندی‌شده جمی دیگر وارد کنید. برای به دست آوردن یک پین، از ویژگی «برون‌برد حساب جمی» استفاده کنید.</string>
   <string name="wizard_next">بعدی</string>
   <string name="wizard_back">بازگشت</string>
@@ -197,6 +201,7 @@
   <string name="contact_request_title"> درخواست مخاطب جدید</string>
   <string name="contact_request_msg">شما‫ %1$s درخواست ارتباط دارید</string>
   <string name="contact_request_account">برای %1$s</string>
+  <string name="no_requests">شما هیچ درخواست تماسی ندارید</string>
   <string name="message_contact_not_trusted_yet">%s هنوز در مخاطبان شما نیست.\nآیا این درخواست ارتباط را قبول یا رد می‌کنید؟</string>
   <string name="message_contact_not_trusted">%s در مخاطبان شما نیست.\nمخاطب جدیدی اضافه می‌کنید؟</string>
   <!--Send contact requests-->
@@ -207,6 +212,7 @@
   <string name="no_blocked_contact">مخاطب مسدودی وجود ندارد</string>
   <!--Smartlist-->
   <string name="no_contact_request">هیچ درخواست ارتباطی ارسال نشده</string>
+  <string name="conversation_placeholder">شما تاکنون مکالمه ای نداشتید</string>
   <string name="contact_request_sent">درخواست ارتباط ارسال شد</string>
   <string name="start_conversation">شروع گفتگو</string>
   <string name="search_results">نتایج جستجو</string>
@@ -264,6 +270,12 @@
   <string name="tv_send_video">ارسال محتوای رسانه‌ای</string>
   <string name="conversation_input_speech_hint">چیزی بگویید...</string>
   <!--WIZARD-->
+  <string name="wizard_status_recommended">توصیه شده</string>
+  <string name="wizard_status_optional">اختیاری</string>
+  <string name="wizard_status_required">ضروری</string>
   <string name="wizard_password_info">گذرواژه کاربری</string>
+  <string name="wizard_password_button">گذرواژه خود را انتخاب کنید</string>
   <string name="wizard_password_skip">ساخت کاربری</string>
+  <string name="wizard_profile_info">نمایه فقط با مخاطبین به اشتراک گذاشته می شود</string>
+  <string name="wizard_profile_button">ذخیره نمایه</string>
 </resources>

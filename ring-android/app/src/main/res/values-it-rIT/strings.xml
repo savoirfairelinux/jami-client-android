@@ -31,6 +31,7 @@
   <string name="menu_item_accounts">Gestisci accounts</string>
   <string name="menu_item_account">Gestisci account</string>
   <string name="menu_item_settings">Impostazioni</string>
+  <string name="menu_item_plugin_list">Impostazioni dei plugin</string>
   <string name="menu_item_share">Condividi il mio contatto</string>
   <string name="menu_item_about">Informazioni su Jami</string>
   <!--Dialing Fragment-->
@@ -93,6 +94,7 @@
   <string name="action_call_accept">Rispondi</string>
   <string name="action_call_decline">Rifiuta</string>
   <string name="action_call_mic_mute">Microfono muto</string>
+  <string name="action_load_plugin">Carica plugin</string>
   <string name="ab_action_speakerphone">Attiva l\'audio</string>
   <string name="ab_action_contact_add">Aggiungi alla rubrica</string>
   <string name="ab_action_contact_add_question">Aggiungere ai contatti?</string>

@@ -9,7 +9,7 @@
   <string name="add_sip_account_title">Adaugă cont SIP</string>
   <string name="ring_account_default_name">Cont Jami %1$s</string>
   <string name="prompt_alias">Alias</string>
-  <string name="prompt_hostname">Nume de gazdă</string>
+  <string name="prompt_hostname">Numele serverului</string>
   <string name="prompt_username">Nume de Utilizator</string>
   <string name="prompt_password">Parolă</string>
   <string name="action_create">Creează cont</string>
@@ -49,9 +49,9 @@
   <string name="account_password_change_wait_message">Se schimbă parola contului </string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Generale</string>
-  <string name="account_basic_category">Reglări simple</string>
+  <string name="account_basic_category">Reglări Simple</string>
   <string name="account_alias_label">Numele contului</string>
-  <string name="account_hostname_label">Nume de gazdă</string>
+  <string name="account_hostname_label">Numele serverului</string>
   <string name="account_bootstrap_label">Pornire</string>
   <string name="account_username_label">Nume de Utilizator</string>
   <string name="account_password_label">Parolă</string>
@@ -75,11 +75,11 @@
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avansate</string>
   <string name="account_dht_public_in_calls_label">Permite apelurile primite de la contacte necunoscute</string>
-  <string name="account_registration_exp_label">Înregistrarea a expirat</string>
+  <string name="account_registration_exp_label">Înregistrarea Expiră</string>
   <string name="account_local_interface_label">Interfață locală</string>
   <string name="account_local_port_label">Port local</string>
   <string name="account_stun_enable_label">Folosește STUN</string>
-  <string name="account_stun_server_label">Server Stun</string>
+  <string name="account_stun_server_label">Server STUN</string>
   <string name="account_accept_files">Acceptă automat fișierele primite</string>
   <string name="account_accept_files_max_size">Dimensiunea maximă a fișierului acceptat automat</string>
   <string name="account_accept_files_never">Nu accepta niciodată automat</string>
@@ -110,17 +110,17 @@
   <string name="account_srtp_rtp_fallback">Folosește RTP dacă SRTP eșuează</string>
   <!--SIP-->
   <!--TLS Details-->
-  <string name="account_tls_transport_switch_label">Folosește transportul TLS</string>
-  <string name="account_tls_port_label">Port de recepție TLS</string>
+  <string name="account_tls_transport_switch_label">Folosește Transportul TLS</string>
+  <string name="account_tls_port_label">Port de Recepție TLS</string>
   <string name="account_tls_certificate_list_label">Autoritate de certificare</string>
   <string name="account_tls_certificate_file_label">Certificat</string>
-  <string name="account_tls_private_key_file_label">Cheie privată</string>
-  <string name="account_tls_password_label">Parola cheii private</string>
+  <string name="account_tls_private_key_file_label">Cheie Privată</string>
+  <string name="account_tls_password_label">Parola Cheii Private</string>
   <string name="account_tls_method_label">Metoda TLS</string>
   <string name="account_tls_ciphers_label">Cifrare TLS</string>
-  <string name="account_tls_server_name_label">Numele serverului</string>
-  <string name="account_tls_verify_server_label">Verifică Server</string>
-  <string name="account_tls_verify_client_label">Verifică Client</string>
+  <string name="account_tls_server_name_label">Numele Serverului</string>
+  <string name="account_tls_verify_server_label">Verifică Serverul</string>
+  <string name="account_tls_verify_client_label">Verifică Clientul</string>
   <string name="account_tls_negotiation_timeout_sec">Timp de negociere (sec)</string>
   <string name="account_rtp_max_port">Maxim</string>
   <string name="account_rtp_min_port">Minim</string>
@@ -129,7 +129,7 @@
   <string name="account_new_device_password">Introdu parola principală pentru a debloca contul</string>
   <string name="error_password_char_count">6 caractere minim</string>
   <string name="error_passwords_not_equals">Parolele nu se potrivesc</string>
-  <string name="export_account_wait_title">Te rog așteaptă...</string>
+  <string name="export_account_wait_title">Așteaptă...</string>
   <string name="export_account_wait_message">Exportă contul Jami</string>
   <string name="account_export_file">Copie de rezervă a contului</string>
   <string name="account_export_end_decryption_message">Contul tău nu poate fi deblocat cu parola furnizată.</string>
