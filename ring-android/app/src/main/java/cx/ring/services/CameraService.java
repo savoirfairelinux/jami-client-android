@@ -94,6 +94,8 @@ public class CameraService {
     private MediaProjection currentMediaProjection;
     private VirtualDisplay virtualDisplay;
     private MediaCodec currentCodec;
+    // SPS and PPS NALs (Config frame).
+    private ByteBuffer mConfigData = null;
     private final CameraManager.AvailabilityCallback availabilityCallback = new CameraManager.AvailabilityCallback() {
         @Override
         public void onCameraAvailable(@NonNull String cameraId) {
@@ -497,17 +499,66 @@ public class CameraService {
                     @Override
                     public void onInputBufferAvailable(@NonNull MediaCodec codec, int index) {}
 
+                    // Save the config frame(SPS/PPS NALs) and append it to each keyframe.
+                    @SuppressWarnings("deprecation")
                     @Override
-                    public void onOutputBufferAvailable(@NonNull MediaCodec codec, int index, @NonNull MediaCodec.BufferInfo info) {
+                    protected int dequeueOutputBufferInternal(MediaCodec.BufferInfo info, long timeoutUs) {
+                        int indexOrStatus = -1;
                         try {
-                            if ((info.flags & MediaCodec.BUFFER_FLAG_END_OF_STREAM) == 0) {
-                                ByteBuffer buffer = codec.getOutputBuffer(index);
-                                RingserviceJNI.captureVideoPacket(buffer, info.size, info.offset, (info.flags & MediaCodec.BUFFER_FLAG_KEY_FRAME) != 0, info.presentationTimeUs, videoParams.rotation);
-                                codec.releaseOutputBuffer(index, false);
+                            indexOrStatus = mMediaCodec.dequeueOutputBuffer(info, timeoutUs);
+                            ByteBuffer codecOutputBuffer = null;
+                            if (indexOrStatus >= 0) {
+                                boolean isConfigFrame = (info.flags & MediaCodec.BUFFER_FLAG_CODEC_CONFIG) != 0;
+                                if (isConfigFrame) {
+                                    Log.d(TAG, "Config frame generated. Offset: %d, size: %d", info.offset,
+                                            info.size);
+                                    codecOutputBuffer = getMediaCodecOutputBuffer(indexOrStatus);
+                                    codecOutputBuffer.position(info.offset);
+                                    codecOutputBuffer.limit(info.offset + info.size);
+                                    mConfigData = ByteBuffer.allocateDirect(info.size);
+                                    mConfigData.put(codecOutputBuffer);
+                                    // Log few SPS header bytes to check profile and level.
+                                    StringBuilder spsData = new StringBuilder();
+                                    for (int i = 0; i < (info.size < 8 ? info.size : 8); i++) {
+                                        spsData.append(Integer.toHexString(mConfigData.get(i) & 0xff)).append(" ");
+                                    }
+                                    Log.i(TAG, "spsData: %s", spsData.toString());
+                                    mConfigData.rewind();
+                                    // Release buffer back.
+                                    mMediaCodec.releaseOutputBuffer(indexOrStatus, false);
+                                    // Query next output.
+                                    indexOrStatus = mMediaCodec.dequeueOutputBuffer(info, timeoutUs);
+                                }
+                            }
+                            if (indexOrStatus >= 0) {
+                                codecOutputBuffer = getMediaCodecOutputBuffer(indexOrStatus);
+                                codecOutputBuffer.position(info.offset);
+                                codecOutputBuffer.limit(info.offset + info.size);
+                                // Check key frame flag.
+                                boolean isKeyFrame = (info.flags & MediaCodec.BUFFER_FLAG_SYNC_FRAME) != 0;
+                                if (isKeyFrame) {
+                                    Log.d(TAG, "Key frame generated");
+                                }
+                                final ByteBuffer frameBuffer;
+                                if (isKeyFrame && mConfigData != null) {
+                                    Log.d(TAG, "Appending config frame of size %d to output buffer with size %d",
+                                            mConfigData.capacity(), info.size);
+                                    // For encoded key frame append SPS and PPS NALs at the start.
+                                    frameBuffer = ByteBuffer.allocateDirect(mConfigData.capacity() + info.size);
+                                    frameBuffer.put(mConfigData);
+                                    frameBuffer.put(codecOutputBuffer);
+                                    frameBuffer.rewind();
+                                    info.offset = 0;
+                                    info.size += mConfigData.capacity();
+                                    mOutputBuffers.put(indexOrStatus, frameBuffer);
+                                } else {
+                                    mOutputBuffers.put(indexOrStatus, codecOutputBuffer);
+                                }
                             }
                         } catch (IllegalStateException e) {
-                            Log.e(TAG, "MediaCodec can't process buffer", e);
+                            Log.e(TAG, "Failed to dequeue output buffer", e);
                         }
+                        return indexOrStatus;
                     }
 
                     @Override
