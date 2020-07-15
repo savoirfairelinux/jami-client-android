@@ -399,7 +399,9 @@ public class ContactServiceImpl extends ContactService {
             Single<Tuple<String, Object>> profile = callContact.isFromSystem() ? loadSystemContactData(callContact) : loadVCardContactData(callContact, accountId);
             return profile
                     .doOnSuccess(p -> callContact.setProfile(p.first, p.second))
-                    .doOnError(e -> callContact.setProfile(null, null)).ignoreElement();
+                    .doOnError(e -> callContact.setProfile(null, null))
+                    .ignoreElement()
+                    .onErrorComplete();
         }
         return Completable.complete();
     }

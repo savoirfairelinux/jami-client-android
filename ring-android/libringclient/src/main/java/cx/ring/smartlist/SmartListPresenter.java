@@ -200,7 +200,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
                     }
                     view.hideNoConversationMessage();
                     view.updateList(viewModels);
-                }));
+                }, e -> Log.w(TAG, "showConversations error ", e)));
     }
 
     private void loadConversations() {
