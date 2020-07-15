@@ -24,7 +24,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.net.SocketException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -1200,10 +1202,16 @@ public class AccountService {
         if (StringUtils.isEmpty(query)) {
             return Single.just(new UserSearchResult(account, query));
         }
+        String encodedUrl;
+        try {
+            encodedUrl = URLEncoder.encode(query, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            return Single.error(e);
+        }
         return getSearchResults()
                 .filter(r -> account.equals(r.accountId) && query.equals(r.query))
                 .firstOrError()
-                .doOnSubscribe(s -> mExecutor.execute(() -> Ringservice.searchUser(account, query)))
+                .doOnSubscribe(s -> mExecutor.execute(() -> Ringservice.searchUser(account, encodedUrl)))
                 .subscribeOn(Schedulers.from(mExecutor));
     }
 
