@@ -750,7 +750,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             Log.e(TAG, "Invalid contact, not able to display message correctly");
             return;
         }
-        Log.w(TAG, "configureForTextMessage " + position + " " + interaction.getDaemonId() + " " + interaction.getStatus());
+        // Log.w(TAG, "configureForTextMessage " + position + " " + interaction.getDaemonId() + " " + interaction.getStatus());
 
         convViewHolder.mCid = textMessage.getConversation().getParticipant();
         String message = textMessage.getBody().trim();

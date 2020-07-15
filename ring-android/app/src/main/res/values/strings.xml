@@ -128,9 +128,12 @@ along with this program; if not, write to the Free Software
     <string name="location_share_contact">%1$s is sharing location with you</string>
     <string name="notif_location_multi_title">Sharing location with %1$d contacts</string>
     <string name="notif_location_remaining">%1$d minutes remaining</string>
-    <string name="notif_location_action_stop">"Stop sharing location"</string>
-    <string name="location_share_action_start">"Start sharing"</string>
-    <string name="location_share_action_stop">"Stop sharing"</string>
+    <string name="notif_location_action_stop">Stop sharing location</string>
+    <string name="location_share_action_start">Start sharing</string>
+    <string name="location_share_action_stop">Stop sharing</string>
+    <string name="location_share_about_title">Map information</string>
+    <string name="location_share_about_message" translatable="false">Map data from OpenStreetMap.\n\n© OpenStreetMap contributors</string>
+    <string name="location_share_about_osm_copy_url" translatable="false">https://www.openstreetmap.org/copyright</string>
 
     <!-- Call Fragment -->
     <string name="you_txt_prefix">You:</string>
