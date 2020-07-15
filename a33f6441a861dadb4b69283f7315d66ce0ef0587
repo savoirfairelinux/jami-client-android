@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12f36f72_fbcbe970",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2020-07-15T18:20:35Z",
+      "side": 1,
+      "message": "Method invocation \u0027getParticipants\u0027 may produce \u0027NullPointerException\u0027.\n\nYou need to store the result of currentCalls.get(id) because there\u0027s no guarantee that this method will always return the same result. If this method evolve and become inconsistant, this would cause NullPointerException as a side effect.\n\n            Conference conference \u003d currentCalls.get(id);\n            if (conference !\u003d null \u0026\u0026 !conference.getParticipants().isEmpty() \u0026\u0026\n                    conference.getParticipants().get(0).getCallStatus() \u003d\u003d SipCall.CallStatus.CURRENT) {\n                ongoingCallId \u003d conference.getParticipants().get(0).getDaemonIdString();\n            }",
+      "revId": "a33f6441a861dadb4b69283f7315d66ce0ef0587",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
