@@ -37,7 +37,6 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -46,15 +45,13 @@ import androidx.preference.PreferenceManager;
 import android.os.IBinder;
 import android.text.format.DateUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipGroup;
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.osmdroid.config.Configuration;
 import org.osmdroid.config.IConfigurationProvider;
@@ -62,7 +59,6 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.BoundingBox;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.CustomZoomButtonsController;
-import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.mylocation.IMyLocationConsumer;
 import org.osmdroid.views.overlay.mylocation.IMyLocationProvider;
@@ -79,6 +75,7 @@ import javax.inject.Inject;
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.contacts.AvatarFactory;
+import cx.ring.databinding.FragLocationSharingBinding;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
@@ -122,28 +119,26 @@ public class LocationSharingFragment extends Fragment {
 
     private int bubbleSize;
 
-    private Toolbar mToolbar;
-    private ViewGroup mSnippetGroup;
-    private TextView mSnippet;
-    private ImageView mSnippetShadow;
-    private ViewGroup mShareControls;
-    private ViewGroup mShareControlsMini;
-    private ExtendedFloatingActionButton mShareButton;
-    private Chip mStopShareButton;
-    private ChipGroup mShareTimeGroup;
-    private Chip mTimeRemaining;
-    private MapView mMap = null;
     private MyLocationNewOverlay overlay;
     private Marker marker;
     private BoundingBox lastBoundingBox = null;
     private boolean trackAll = true;
     private Integer mStartSharingPending = null;
 
+    private FragLocationSharingBinding binding = null;
     private LocationSharingService mService = null;
     private boolean mBound = false;
 
-    public LocationSharingFragment() {
-        super(R.layout.frag_location_sharing);
+    @Nullable
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragLocationSharingBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
     public static LocationSharingFragment newInstance(String accountId, String conversationId, boolean showControls) {
@@ -192,50 +187,47 @@ public class LocationSharingFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        mToolbar = view.findViewById(R.id.locshare_toolbar);
-        mSnippetGroup = view.findViewById(R.id.locshare_snipet);
-        mSnippet = view.findViewById(R.id.locshare_snipet_txt);
-        mSnippetShadow = view.findViewById(R.id.locshare_snipet_txt_shadow);
-        mMap = view.findViewById(R.id.map);
-        mShareControls = view.findViewById(R.id.shareControls);
-        mShareControlsMini = view.findViewById(R.id.shareControlsMini);
-        mShareButton = view.findViewById(R.id.btn_share_location);
-        mStopShareButton = view.findViewById(R.id.location_share_stop);
-        mTimeRemaining = view.findViewById(R.id.location_share_time_remaining);
-        mShareTimeGroup = view.findViewById(R.id.location_share_time_group);
-        Chip chip_1h = view.findViewById(R.id.location_share_time_1h);
-        Chip chip_10m = view.findViewById(R.id.location_share_time_10m);
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            chip_1h.setText(formatDuration( DateUtils.HOUR_IN_MILLIS, MeasureFormat.FormatWidth.WIDE));
-            chip_10m.setText(formatDuration( 10 * DateUtils.MINUTE_IN_MILLIS, MeasureFormat.FormatWidth.WIDE));
+            binding.locationShareTime1h.setText(formatDuration( DateUtils.HOUR_IN_MILLIS, MeasureFormat.FormatWidth.WIDE));
+            binding.locationShareTime10m.setText(formatDuration( 10 * DateUtils.MINUTE_IN_MILLIS, MeasureFormat.FormatWidth.WIDE));
         }
+        binding.infoBtn.setOnClickListener(v -> {
+            int padding = v.getResources().getDimensionPixelSize(R.dimen.padding_large);
+            TextView textView = new TextView(v.getContext());
+            textView.setText(R.string.location_share_about_message);
+            textView.setOnClickListener(tv -> tv.getContext().startActivity(new Intent(Intent.ACTION_VIEW, android.net.Uri.parse(getString(R.string.location_share_about_osm_copy_url)))));
+            textView.setPadding(padding, padding, padding, padding);
+            new MaterialAlertDialogBuilder(view.getContext())
+                    .setTitle(R.string.location_share_about_title)
+                    .setView(textView)
+                    .create().show();
+        });
 
         View locateView = view.findViewById(R.id.btn_center_position);
         locateView.setOnClickListener(v -> {
             if (overlay != null) {
                 trackAll = true;
                 if (lastBoundingBox != null)
-                    mMap.zoomToBoundingBox(lastBoundingBox, true);
+                    binding.map.zoomToBoundingBox(lastBoundingBox, true);
                 else
                     overlay.enableFollowLocation();
             }
         });
-        mShareTimeGroup.setOnCheckedChangeListener((group, id) -> {
+        binding.locationShareTimeGroup.setOnCheckedChangeListener((group, id) -> {
             if (id == View.NO_ID)
                 group.check(R.id.location_share_time_1h);
         });
-        mToolbar.setNavigationOnClickListener(v -> mShowControlsSubject.onNext(false));
-        mStopShareButton.setOnClickListener(v -> stopSharing());
+        binding.locshareToolbar.setNavigationOnClickListener(v -> mShowControlsSubject.onNext(false));
+        binding.locationShareStop.setOnClickListener(v -> stopSharing());
 
-        mMap.setTileSource(TileSourceFactory.MAPNIK);
-        mMap.setHorizontalMapRepetitionEnabled(false);
-        mMap.setTilesScaledToDpi(true);
-        mMap.setMapOrientation(0, false);
-        mMap.setMinZoomLevel(1d);
-        mMap.setMaxZoomLevel(19.d);
-        mMap.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.NEVER);
-        mMap.getController().setZoom(14.0);
+        binding.map.setTileSource(TileSourceFactory.MAPNIK);
+        binding.map.setHorizontalMapRepetitionEnabled(false);
+        binding.map.setTilesScaledToDpi(true);
+        binding.map.setMapOrientation(0, false);
+        binding.map.setMinZoomLevel(1d);
+        binding.map.setMaxZoomLevel(19.d);
+        binding.map.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.NEVER);
+        binding.map.getController().setZoom(14.0);
         ((ViewGroup)view).getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
     }
 
@@ -262,7 +254,7 @@ public class LocationSharingFragment extends Fragment {
 
     public void onResume() {
         super.onResume();
-        mMap.onResume();
+        binding.map.onResume();
         if (overlay != null) {
             try {
                 overlay.enableMyLocation();
@@ -274,7 +266,7 @@ public class LocationSharingFragment extends Fragment {
 
     public void onPause(){
         super.onPause();
-        mMap.onPause();
+        binding.map.onPause();
         if (overlay != null)
             overlay.disableMyLocation();
     }
@@ -316,15 +308,15 @@ public class LocationSharingFragment extends Fragment {
                 .subscribe(sharing -> {
                     if (sharing) {
                         String sharingString = getString(R.string.location_share_contact, mContact.getDisplayName());
-                        mToolbar.setSubtitle(sharingString);
-                        mSnippet.setVisibility(View.VISIBLE);
-                        mSnippetShadow.setVisibility(View.VISIBLE);
-                        mSnippet.setText(sharingString);
+                        binding.locshareToolbar.setSubtitle(sharingString);
+                        binding.locshareSnipetTxt.setVisibility(View.VISIBLE);
+                        binding.locshareSnipetTxtShadow.setVisibility(View.VISIBLE);
+                        binding.locshareSnipetTxt.setText(sharingString);
                     } else {
-                        mToolbar.setSubtitle(null);
-                        mSnippet.setVisibility(View.GONE);
-                        mSnippetShadow.setVisibility(View.GONE);
-                        mSnippet.setText(null);
+                        binding.locshareToolbar.setSubtitle(null);
+                        binding.locshareSnipetTxt.setVisibility(View.GONE);
+                        binding.locshareSnipetTxtShadow.setVisibility(View.GONE);
+                        binding.locshareSnipetTxt.setText(null);
                     }
                 }));
 
@@ -356,20 +348,20 @@ public class LocationSharingFragment extends Fragment {
                 .subscribe(locations -> {
                     Context context = getContext();
                     if (context != null) {
-                        mMap.getOverlays().clear();
+                        binding.map.getOverlays().clear();
                         if (overlay != null)
-                            mMap.getOverlays().add(overlay);
+                            binding.map.getOverlays().add(overlay);
                         if (marker != null)
-                            mMap.getOverlays().add(marker);
+                            binding.map.getOverlays().add(marker);
 
-                        List<GeoPoint> geoLocations =new ArrayList<>(locations.size() + 1);
+                        List<GeoPoint> geoLocations = new ArrayList<>(locations.size() + 1);
                         GeoPoint myLoc = overlay == null ? null : overlay.getMyLocation();
                         if (myLoc != null) {
                             geoLocations.add(myLoc);
                         }
 
                         for (LocationViewModel vm : locations) {
-                            Marker m = new Marker(mMap);
+                            Marker m = new Marker(binding.map);
                             GeoPoint position = new GeoPoint(vm.location.latitude, vm.location.longitude);
                             m.setInfoWindow(null);
                             m.setPosition(position);
@@ -379,19 +371,19 @@ public class LocationSharingFragment extends Fragment {
                                 BitmapDrawable bd = new BitmapDrawable(context.getResources(), avatar);
                                 m.setIcon(bd);
                                 m.setInfoWindow(null);
-                                mMap.getOverlays().add(m);
+                                binding.map.getOverlays().add(m);
                             }));
                         }
 
                         if (trackAll) {
                             if (geoLocations.size() == 1) {
                                 lastBoundingBox = null;
-                                mMap.getController().animateTo(geoLocations.get(0));
+                                binding.map.getController().animateTo(geoLocations.get(0));
                             } else {
                                 BoundingBox bb = BoundingBox.fromGeoPointsSafe(geoLocations);
                                 bb = bb.increaseByScale(1.5f);
                                 lastBoundingBox = bb;
-                                mMap.zoomToBoundingBox(bb, true);
+                                binding.map.zoomToBoundingBox(bb, true);
                             }
                         }
                     }
@@ -442,26 +434,30 @@ public class LocationSharingFragment extends Fragment {
     private void setShowControls(boolean show) {
         if (show) {
             onBackPressedCallback.setEnabled(true);
-            mSnippetGroup.setVisibility(View.GONE);
-            mShareControlsMini.setVisibility(View.GONE);
-            mShareControlsMini.postDelayed(() -> {
-                mShareControlsMini.setVisibility(View.GONE);
-                mSnippetGroup.setVisibility(View.GONE);
+            binding.locshareSnipet.setVisibility(View.GONE);
+            binding.shareControlsMini.setVisibility(View.GONE);
+            binding.shareControlsMini.postDelayed(() -> {
+                if (binding != null) {
+                    binding.shareControlsMini.setVisibility(View.GONE);
+                    binding.locshareSnipet.setVisibility(View.GONE);
+                }
             }, 300);
-            mShareControls.setVisibility(View.VISIBLE);
-            mToolbar.setVisibility(View.VISIBLE);
-            mMap.setOnTouchListener(null);
-            mMap.setMultiTouchControls(true);
+            binding.shareControls.setVisibility(View.VISIBLE);
+            binding.locshareToolbar.setVisibility(View.VISIBLE);
+            binding.map.setOnTouchListener(null);
+            binding.map.setMultiTouchControls(true);
         } else {
             onBackPressedCallback.setEnabled(false);
-            mShareControls.setVisibility(View.GONE);
-            mShareControlsMini.postDelayed(() -> {
-                mShareControlsMini.setVisibility(View.VISIBLE);
-                mSnippetGroup.setVisibility(View.VISIBLE);
+            binding.shareControls.setVisibility(View.GONE);
+            binding.shareControlsMini.postDelayed(() -> {
+                if (binding != null) {
+                    binding.shareControlsMini.setVisibility(View.VISIBLE);
+                    binding.locshareSnipet.setVisibility(View.VISIBLE);
+                }
             }, 300);
-            mToolbar.setVisibility(View.GONE);
-            mMap.setMultiTouchControls(false);
-            mMap.setOnTouchListener(new TouchClickListener(mMap.getContext(), v -> mShowControlsSubject.onNext(true)));
+            binding.locshareToolbar.setVisibility(View.GONE);
+            binding.map.setMultiTouchControls(false);
+            binding.map.setOnTouchListener(new TouchClickListener(binding.map.getContext(), v -> mShowControlsSubject.onNext(true)));
         }
     }
 
@@ -514,7 +510,7 @@ public class LocationSharingFragment extends Fragment {
             mBound = true;
 
             if (marker == null) {
-                marker = new Marker(mMap);
+                marker = new Marker(binding.map);
                 marker.setInfoWindow(null);
                 marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
                 mServiceDisposableBag.add(mConversationFacade
@@ -522,7 +518,7 @@ public class LocationSharingFragment extends Fragment {
                         .flatMap(account -> AvatarFactory.getBitmapAvatar(requireContext(), account, bubbleSize))
                         .subscribe(avatar -> {
                             marker.setIcon(new BitmapDrawable(requireContext().getResources(), avatar));
-                            mMap.getOverlays().add(marker);
+                            binding.map.getOverlays().add(marker);
                         }));
             }
 
@@ -535,10 +531,10 @@ public class LocationSharingFragment extends Fragment {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(location  -> {
                         // start map on first location
-                        mMap.setExpectedCenter(new GeoPoint(location));
-                        overlay = new MyLocationNewOverlay(new RxLocationListener(mService.getMyLocation()), mMap);
+                        binding.map.setExpectedCenter(new GeoPoint(location));
+                        overlay = new MyLocationNewOverlay(new RxLocationListener(mService.getMyLocation()), binding.map);
                         overlay.enableMyLocation();
-                        mMap.getOverlays().add(overlay);
+                        binding.map.getOverlays().add(overlay);
                     }));
 
             if (mStartSharingPending != null) {
@@ -550,6 +546,7 @@ public class LocationSharingFragment extends Fragment {
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
+            Log.w(TAG, "onServiceDisconnected");
             mBound = false;
             mService = null;
             mServiceDisposableBag.clear();
@@ -557,7 +554,7 @@ public class LocationSharingFragment extends Fragment {
     };
 
     private int getSelectedDuration() {
-        switch (mShareTimeGroup.getCheckedChipId()) {
+        switch (binding.locationShareTimeGroup.getCheckedChipId()) {
             case R.id.location_share_time_10m:
                 return 10 * 60;
             case R.id.location_share_time_1h:
@@ -568,24 +565,24 @@ public class LocationSharingFragment extends Fragment {
 
     private void setIsSharing(boolean sharing) {
         if (sharing) {
-            mShareButton.setBackgroundColor(ContextCompat.getColor(mShareButton.getContext(), R.color.design_default_color_error));
-            mShareButton.setText(R.string.location_share_action_stop);
-            mShareButton.setOnClickListener(v -> stopSharing());
-            mShareTimeGroup.setVisibility(View.GONE);
+            binding.btnShareLocation.setBackgroundColor(ContextCompat.getColor(binding.btnShareLocation.getContext(), R.color.design_default_color_error));
+            binding.btnShareLocation.setText(R.string.location_share_action_stop);
+            binding.btnShareLocation.setOnClickListener(v -> stopSharing());
+            binding.locationShareTimeGroup.setVisibility(View.GONE);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                mTimeRemaining.setVisibility(View.VISIBLE);
+                binding.locationShareTimeRemaining.setVisibility(View.VISIBLE);
                 mDisposableBag.add(mService.getContactSharingExpiration(mPath)
-                        .subscribe(l -> mTimeRemaining.setText(formatDuration(l, MeasureFormat.FormatWidth.SHORT))));
+                        .subscribe(l -> binding.locationShareTimeRemaining.setText(formatDuration(l, MeasureFormat.FormatWidth.SHORT))));
             }
-            mStopShareButton.setVisibility(View.VISIBLE);
+            binding.locationShareStop.setVisibility(View.VISIBLE);
             requireView().post(this::hideControls);
         } else {
-            mShareButton.setBackgroundColor(ContextCompat.getColor(mShareButton.getContext(), R.color.colorSecondary));
-            mShareButton.setText(R.string.location_share_action_start);
-            mShareButton.setOnClickListener(v -> startSharing(getSelectedDuration()));
-            mTimeRemaining.setVisibility(View.GONE);
-            mShareTimeGroup.setVisibility(View.VISIBLE);
-            mStopShareButton.setVisibility(View.GONE);
+            binding.btnShareLocation.setBackgroundColor(ContextCompat.getColor(binding.btnShareLocation.getContext(), R.color.colorSecondary));
+            binding.btnShareLocation.setText(R.string.location_share_action_start);
+            binding.btnShareLocation.setOnClickListener(v -> startSharing(getSelectedDuration()));
+            binding.locationShareTimeRemaining.setVisibility(View.GONE);
+            binding.locationShareTimeGroup.setVisibility(View.VISIBLE);
+            binding.locationShareStop.setVisibility(View.GONE);
         }
     }
 
