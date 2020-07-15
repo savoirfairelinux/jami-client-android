@@ -22,6 +22,30 @@
       "revId": "320f7ae2513e6d02ffe66db421a49f91a879d3bf",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19c513cc_cadd1299",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/facades/ConversationFacade.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-07-15T20:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "119d33bd_11fc5737",
+      "range": {
+        "startLine": 372,
+        "startChar": 57,
+        "endLine": 374,
+        "endChar": 149
+      },
+      "revId": "320f7ae2513e6d02ffe66db421a49f91a879d3bf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
