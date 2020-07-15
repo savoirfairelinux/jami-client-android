@@ -109,6 +109,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:textColor="@color/colorPrimary"
             android:checkable="false"
             android:enabled="false"
             android:focusable="false"
@@ -145,4 +146,14 @@
             app:chipBackgroundColor="@color/design_default_color_error"
             tools:visibility="visible" />
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/infoBtn"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:padding="8dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="8dp"
+        android:src="@drawable/baseline_info_24"
+        android:tint="@color/surface" />
 </FrameLayout>
