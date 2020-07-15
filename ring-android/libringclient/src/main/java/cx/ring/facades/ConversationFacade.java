@@ -367,7 +367,16 @@ public class ConversationFacade {
                         .toList()));
     }
     private Single<List<Observable<SmartListViewModel>>> getSearchResults(Account account, String query) {
-        if (account.canSearch()) {
+        Uri uri = new Uri(query);
+        if (account.isSip()) {
+            CallContact contact = mContactService.findContact(account, uri);
+            return mContactService.loadContactData(contact, account.getAccountID())
+                    .andThen(Single.just(Collections.singletonList(Observable.just(new SmartListViewModel(account.getAccountID(), contact, null)))));
+        } else if (uri.isRingId()) {
+            CallContact contact = account.getContactFromCache(uri);
+            return mContactService.getLoadedContact(account.getAccountID(), contact)
+                    .map(c -> Collections.singletonList(Observable.just(new SmartListViewModel(account.getAccountID(), c, null))));
+        } else if (account.canSearch()) {
             return mAccountService.searchUser(account.getAccountID(), query)
                     .map(AccountService.UserSearchResult::getResultsViewModels);
         } else {
@@ -397,10 +406,11 @@ public class ConversationFacade {
                             for (Conversation conversation : conversations)
                                 newList.add(observeConversation(account, conversation));
                         } else {
+                            String lq = q.toLowerCase();
                             newList.add(SmartListViewModel.TITLE_CONVERSATIONS);
                             int nRes = 0;
                             for (Conversation conversation : conversations) {
-                                if (conversation.getContact().matches(q)) {
+                                if (conversation.getContact().matches(lq)) {
                                     newList.add(observeConversation(account, conversation));
                                     nRes++;
                                 }
