@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "119d33bd_11fc5737",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/facades/ConversationFacade.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2020-07-15T15:40:13Z",
+      "side": 1,
+      "message": "Sip research is still broken",
+      "range": {
+        "startLine": 372,
+        "startChar": 57,
+        "endLine": 374,
+        "endChar": 149
+      },
+      "revId": "320f7ae2513e6d02ffe66db421a49f91a879d3bf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
