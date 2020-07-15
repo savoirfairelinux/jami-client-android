@@ -31,6 +31,7 @@
   <string name="menu_item_accounts">Управление аккаунтами</string>
   <string name="menu_item_account">Управление аккаунтом</string>
   <string name="menu_item_settings">Настройки</string>
+  <string name="menu_item_plugin_list">Настройки дополнений</string>
   <string name="menu_item_share">Поделиться моим контактом</string>
   <string name="menu_item_about">О программе Jami</string>
   <!--Dialing Fragment-->
@@ -95,6 +96,7 @@
   <string name="action_call_accept">Принять</string>
   <string name="action_call_decline">Отклонить</string>
   <string name="action_call_mic_mute">Выключить микрофон</string>
+  <string name="action_load_plugin">Загрузить дополнение</string>
   <string name="ab_action_speakerphone">Включить динамик</string>
   <string name="ab_action_contact_add">Добавить в контакты</string>
   <string name="ab_action_contact_add_question">Добавить в контакты?</string>
@@ -174,6 +176,8 @@
   <string name="prompt_new_username">Введите новое имя пользователя</string>
   <string name="prompt_hint_username">Имя пользователя</string>
   <string name="help_password_choose">Выберите надёжный и запоминающийся пароль для защиты вашей учетной записи Jami.</string>
+  <string name="help_password_enter">Введите основной пароль учетной записи Jami.</string>
+  <string name="help_server_enter">Введите URL сервера управления.</string>
   <string name="help_pin_enter">Введите PIN другого аккаунта Jami. Используйте функцию «экспортировать аккаунт в Jami» для получения PIN.</string>
   <string name="wizard_next">Далее</string>
   <string name="wizard_back">Назад</string>
@@ -183,6 +187,7 @@
   <string name="profile_message_warning">Ваш профиль доступен только вашим контактам</string>
   <string name="open_the_gallery">Открыть галерею</string>
   <string name="take_a_photo">Сфотографировать</string>
+  <string name="profile_name_hint">Введите своё имя</string>
   <!--Share fragment-->
   <string name="share_message">Отсканируйте этот код Jami</string>
   <string name="share_message_no_account">Выберите аккаунт, которым хотите поделиться.</string>
@@ -208,6 +213,7 @@
   <string name="no_blocked_contact">Нет заблокированных контактов</string>
   <!--Smartlist-->
   <string name="no_contact_request">Нет отправленных запросов на добавление в контакты</string>
+  <string name="conversation_placeholder">У вас еще нет бесед</string>
   <string name="contact_request_sent">Запрос на добавление в контакты отправлен</string>
   <string name="start_conversation">Начать разговор</string>
   <string name="search_results">Результаты поиска</string>
@@ -265,5 +271,18 @@
   <string name="tv_send_video">Отправить медиа</string>
   <string name="conversation_input_speech_hint">Скажите что-нибудь...</string>
   <!--WIZARD-->
+  <string name="wizard_status_recommended">Рекомендуется</string>
+  <string name="wizard_status_optional">По желанию</string>
+  <string name="wizard_status_required">Требуется</string>
+  <string name="wizard_username_info">Выберите имя пользователя для вашей учётной записи</string>
+  <string name="wizard_username_button">Выберите имя пользователя</string>
+  <string name="wizard_username_skip">Пропустить выбор имени пользователя</string>
+  <string name="wizard_password_info">Пароль учётной записи</string>
+  <string name="wizard_password_placeholder">Придумайте пароль для шифрования учётной записи на этом устройстве</string>
+  <string name="wizard_password_button">Придумайте пароль</string>
   <string name="wizard_password_skip">Создать аккаунт</string>
+  <string name="wizard_password_switch">Зашифровать учётную запись паролем</string>
+  <string name="wizard_password_warning">Обратите внимание, что пароль не может быть восстановлен</string>
+  <string name="wizard_profile_button">Сохранить профиль</string>
+  <string name="wizard_profile_skip">Пропустить и сделать позже</string>
 </resources>

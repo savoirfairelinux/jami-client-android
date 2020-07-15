@@ -16,7 +16,7 @@
   <string name="description">Jami este un program liber pentru comunicare universală care respectă libertățile și intimitatea utilizatorilor săi.</string>
   <string name="credits">Merite</string>
   <string name="call_service_description">Acest serviciu este necesar pentru a vă menține apelurile în prim plan. Funcționează numai în timpul apelurilor.</string>
-  <string name="data_transfer_service_description">Acest serviciu este necesar pentru a afișa notificări persistente în timpul transferurilor de fișiere. Funcționează numai în timpul transferurilor de fișiere.</string>
+  <string name="data_transfer_service_description">Acest serviciu e necesar pentru a afișa notificări persistente în timpul transferurilor de fișiere. Funcționează numai în timpul transferurilor de fișiere.</string>
   <!--About dialog-->
   <string name="developed_by">Creat de</string>
   <string name="designed_by">Proiectat de</string>
@@ -32,7 +32,7 @@
   <string name="menu_item_account">Gestionează cont</string>
   <string name="menu_item_settings">Reglări</string>
   <string name="menu_item_plugin_list">Reglări Extensii</string>
-  <string name="menu_item_share">Distribuie datele mele de contact</string>
+  <string name="menu_item_share">Distribuie contactul meu</string>
   <string name="menu_item_about">Despre Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Formează un număr</string>
@@ -66,10 +66,10 @@
   <string name="notif_channel_requests">Cereri</string>
   <string name="notif_channel_file_transfer">Transfer de fișier</string>
   <string name="notif_channel_sync">Sincronizarea datelor</string>
-  <string name="notif_channel_background_service">Serviciu în fundal</string>
-  <string name="notif_channel_background_service_descr">Permite primirea de apeluri și mesaje oricând.</string>
+  <string name="notif_channel_background_service">Serviciu ascuns</string>
+  <string name="notif_channel_background_service_descr">Permite primirea de apeluri și mesaje oricînd.</string>
   <string name="notif_group_calls">Apeluri</string>
-  <string name="notif_background_service">Jami funcționează acum în fundal</string>
+  <string name="notif_background_service">Jami funcționează acum ascuns</string>
   <string name="notif_mark_as_read">Bifează ca citit</string>
   <string name="notif_dismiss">Ignoră</string>
   <string name="notif_reply">Răspunde</string>
@@ -81,7 +81,7 @@
   <string name="location_share_contact">%1$s împărtășește poziția cu tine</string>
   <string name="notif_location_multi_title">Distribuirea poziției către %1$d contacte</string>
   <string name="notif_location_remaining">%1$d minute rămase</string>
-  <string name="notif_location_action_stop">Întrerupe distribuirea poziției</string>
+  <string name="notif_location_action_stop">Oprește distribuirea poziției</string>
   <string name="location_share_action_start">Pornește distribuirea</string>
   <string name="location_share_action_stop">Oprește distribuirea</string>
   <!--Call Fragment-->
@@ -114,7 +114,7 @@
   <string name="message_sending">Se trimite mesajul...</string>
   <string name="message_failed">Eșec</string>
   <string name="time_just_now">Chiar acum</string>
-  <string name="send_file">Trimite fișier</string>
+  <string name="send_file">Trimite fișierul</string>
   <string name="hist_file_sent">Fișier trimis</string>
   <string name="hist_file_received">Fișier primit</string>
   <string name="conversation_send_audio">Înregistrează mesaj vocal</string>
@@ -139,7 +139,7 @@
   <string name="title_activity_qrcode">Distribuie contul meu</string>
   <string name="error_scan_no_camera_permissions">Scanerul QR are nevoie de acces la videocameră pentru a funcționa.</string>
   <string name="tab_code">Codul meu</string>
-  <string name="tab_scan">Scanează codul</string>
+  <string name="tab_scan">Scanează Codul</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Ștergi cronologia?</string>
   <string name="clear_history_dialog_message">Această acțiune este ireversibilă.</string>
@@ -215,7 +215,7 @@
   <string name="no_contact_request">Nicio cerere de contact nu a fost trimisă</string>
   <string name="conversation_placeholder">Încă nu ai conversații</string>
   <string name="contact_request_sent">Cererea de contact a fost trimisă</string>
-  <string name="start_conversation">Începe o conversație</string>
+  <string name="start_conversation">Începe conversația</string>
   <string name="search_results">Rezultatele căutării</string>
   <string name="tv_contact_row_header">Contacte</string>
   <string name="gallery_error_title">Aplicația Galerie nu a fost găsită</string>
@@ -250,8 +250,8 @@
   <string name="menu_message_delete">Șterge mesajul</string>
   <string name="menu_message_cancel">Anulează mesajul</string>
   <string name="menu_delete">Șterge</string>
-  <string name="pref_darkTheme_title">Temă neagră</string>
-  <string name="pref_darkTheme_summary">Activează mereu tema neagră în loc să folosești tema sistemului</string>
+  <string name="pref_darkTheme_title">Fond negru</string>
+  <string name="pref_darkTheme_summary">Activează mereu fondul negru în loc să folosești fondul sistemului</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Conversații</string>
   <string name="navigation_item_contact_request">Cereri de contact</string>
@@ -275,7 +275,7 @@
   <string name="wizard_status_optional">Facultativ</string>
   <string name="wizard_status_required">Obligatoriu</string>
   <string name="wizard_username_info">Alege un nume de utilizator pentru contul tău</string>
-  <string name="wizard_username_button">Alege Nume de Utilizator</string>
+  <string name="wizard_username_button">Alege Numele de Utilizator</string>
   <string name="wizard_username_skip">Saltă alegerea numelui de utilizator</string>
   <string name="wizard_password_info">Parola contului</string>
   <string name="wizard_password_placeholder">Alege o parolă pentru a cifra cheia contului pe acest dispozitiv</string>

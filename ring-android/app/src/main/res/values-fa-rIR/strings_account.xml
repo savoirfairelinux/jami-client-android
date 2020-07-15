@@ -184,6 +184,7 @@
   <string name="trying_to_register_name">در حال تلاش برای ثبت نام</string>
   <string name="registered_username">نام کاربری ثبت‌شده</string>
   <string name="register_username">ثبت نام‌کاربری عمومی</string>
+  <string name="register_recommended">توصیه شده</string>
   <string name="username_already_taken">نام کاربری قبلا گرفته شده است</string>
   <string name="invalid_username">نام کاربری نامعتبر</string>
   <string name="unknown_error">خطای نامشخص. لطفا اتصال شبکه خود را بررسی کنید!</string>

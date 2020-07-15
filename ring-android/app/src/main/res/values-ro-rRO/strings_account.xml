@@ -5,11 +5,11 @@
   <string name="ic_advanced_menu">Reglări avansate</string>
   <string name="ic_blacklist_menu">Contacte blocate</string>
   <!--Strings related to account creation-->
-  <string name="add_ring_account_title">Adaugă cont Jami</string>
-  <string name="add_sip_account_title">Adaugă cont SIP</string>
+  <string name="add_ring_account_title">Adaugă un cont Jami</string>
+  <string name="add_sip_account_title">Adaugă un cont SIP</string>
   <string name="ring_account_default_name">Cont Jami %1$s</string>
   <string name="prompt_alias">Alias</string>
-  <string name="prompt_hostname">Nume de gazdă</string>
+  <string name="prompt_hostname">Numele serverului</string>
   <string name="prompt_username">Nume de Utilizator</string>
   <string name="prompt_password">Parolă</string>
   <string name="action_create">Creează cont</string>
@@ -29,7 +29,7 @@
   <string name="help_ring">Un cont Jami îți permite să comunici cu alții în siguranță, în peer to peer, printr-o rețea complet distribuită.</string>
   <string name="help_sip_title">Adaugă contul tău SIP</string>
   <string name="help_sip">Configurează un cont SIP existent.</string>
-  <string name="create_sip_account">Adaugă cont SIP</string>
+  <string name="create_sip_account">Adaugă un cont SIP</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Ștergi contul ?</string>
   <string name="account_delete_dialog_message">Această acțiune este ireversibilă.</string>
@@ -37,10 +37,10 @@
   <string name="empty_account_list">Nu este înregistrat niciun cont</string>
   <string name="normal_accounts_titles">Conturi</string>
   <string name="normal_devices_titles">Dispozitivele cunoscute asociate acestui cont Jami</string>
-  <string name="account_device_revoke">Deconectează dispozitivul</string>
+  <string name="account_device_revoke">Elimină dispozitivul</string>
   <string name="account_device_revocation_success_title">Succes</string>
-  <string name="account_device_revocation_success">Dispozitivul este acum deconectat!</string>
-  <string name="account_device_revocation_error_title">Dispozitivul nu poate fi deconectat</string>
+  <string name="account_device_revocation_success">Dispozitivul este acum eliminat!</string>
+  <string name="account_device_revocation_error_title">Dispozitivul nu poate fi eliminat</string>
   <string name="account_device_revocation_wrong_password">Parolă greșită.</string>
   <string name="account_device_revocation_unknown_device">Dispozitiv necunoscut.</string>
   <string name="account_device_revocation_error_unknown">Eroare necunoscută.</string>
@@ -49,9 +49,9 @@
   <string name="account_password_change_wait_message">Se schimbă parola contului </string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Generale</string>
-  <string name="account_basic_category">Reglări simple</string>
+  <string name="account_basic_category">Reglări Simple</string>
   <string name="account_alias_label">Numele contului</string>
-  <string name="account_hostname_label">Nume de gazdă</string>
+  <string name="account_hostname_label">Numele serverului</string>
   <string name="account_bootstrap_label">Pornire</string>
   <string name="account_username_label">Nume de Utilizator</string>
   <string name="account_password_label">Parolă</string>
@@ -75,11 +75,11 @@
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avansate</string>
   <string name="account_dht_public_in_calls_label">Permite apelurile primite de la contacte necunoscute</string>
-  <string name="account_registration_exp_label">Înregistrarea a expirat</string>
+  <string name="account_registration_exp_label">Înregistrarea Expiră</string>
   <string name="account_local_interface_label">Interfață locală</string>
   <string name="account_local_port_label">Port local</string>
   <string name="account_stun_enable_label">Folosește STUN</string>
-  <string name="account_stun_server_label">Server Stun</string>
+  <string name="account_stun_server_label">Server STUN</string>
   <string name="account_accept_files">Acceptă automat fișierele primite</string>
   <string name="account_accept_files_max_size">Dimensiunea maximă a fișierului acceptat automat</string>
   <string name="account_accept_files_never">Nu accepta niciodată automat</string>
@@ -110,17 +110,17 @@
   <string name="account_srtp_rtp_fallback">Folosește RTP dacă SRTP eșuează</string>
   <!--SIP-->
   <!--TLS Details-->
-  <string name="account_tls_transport_switch_label">Folosește transportul TLS</string>
-  <string name="account_tls_port_label">Port de recepție TLS</string>
+  <string name="account_tls_transport_switch_label">Folosește Transportul TLS</string>
+  <string name="account_tls_port_label">Port de Recepție TLS</string>
   <string name="account_tls_certificate_list_label">Autoritate de certificare</string>
   <string name="account_tls_certificate_file_label">Certificat</string>
-  <string name="account_tls_private_key_file_label">Cheie privată</string>
-  <string name="account_tls_password_label">Parola cheii private</string>
+  <string name="account_tls_private_key_file_label">Cheie Privată</string>
+  <string name="account_tls_password_label">Parola Cheii Private</string>
   <string name="account_tls_method_label">Metoda TLS</string>
   <string name="account_tls_ciphers_label">Cifrare TLS</string>
-  <string name="account_tls_server_name_label">Numele serverului</string>
-  <string name="account_tls_verify_server_label">Verifică Server</string>
-  <string name="account_tls_verify_client_label">Verifică Client</string>
+  <string name="account_tls_server_name_label">Numele Serverului</string>
+  <string name="account_tls_verify_server_label">Verifică Serverul</string>
+  <string name="account_tls_verify_client_label">Verifică Clientul</string>
   <string name="account_tls_negotiation_timeout_sec">Timp de negociere (sec)</string>
   <string name="account_rtp_max_port">Maxim</string>
   <string name="account_rtp_min_port">Minim</string>
@@ -129,7 +129,7 @@
   <string name="account_new_device_password">Introdu parola principală pentru a debloca contul</string>
   <string name="error_password_char_count">6 caractere minim</string>
   <string name="error_passwords_not_equals">Parolele nu se potrivesc</string>
-  <string name="export_account_wait_title">Te rog așteaptă...</string>
+  <string name="export_account_wait_title">Așteaptă...</string>
   <string name="export_account_wait_message">Exportă contul Jami</string>
   <string name="account_export_file">Copie de rezervă a contului</string>
   <string name="account_export_end_decryption_message">Contul tău nu poate fi deblocat cu parola furnizată.</string>
@@ -153,7 +153,7 @@
   <string name="account_sip_cannot_be_registered_message">Poți continua cu procesul de creare a contului sau poți modifica informațiile tale aici. Modificarea e posibilă ulterior în reglările contului.</string>
   <string name="account_no_network_title">Nu mă pot conecta la rețea</string>
   <string name="account_no_network_message">Contul nu poate fi adăugat deoarece Jami nu se poate conecta la rețea. Verifică conectarea la rețea.</string>
-  <string name="account_device_added_title">Dispozitiv adăugat</string>
+  <string name="account_device_added_title">Cont adăugat</string>
   <string name="account_device_added_message">Ai configurat cu succes contul Jami pe acest dispozitiv.</string>
   <string name="account_device_updated_title">Dispozitiv actualizat</string>
   <string name="account_device_updated_message">Ai actualizat cu succes contul tău Jami.</string>
@@ -209,10 +209,10 @@
   <!--Devices-->
   <string name="account_revoke_device_hint">Introdu parola pentru confirmare</string>
   <string name="enter_password">Introdu parola</string>
-  <string name="revoke_device_title">Deconectează dispozitivul</string>
-  <string name="revoke_device_message">Sigur vrei să deconectezi %1$s ?</string>
+  <string name="revoke_device_title">Elimină dispozitivul</string>
+  <string name="revoke_device_message">Sigur vrei să elimini %1$s ?</string>
   <string name="revoke_device_wait_title">Te rog așteaptă...</string>
-  <string name="revoke_device_wait_message">Se deconectează dispozitivul</string>
+  <string name="revoke_device_wait_message">Se elimină dispozitivul</string>
   <string name="rename_device_title">Redenumește acest dispozitiv</string>
   <string name="rename_device_message">Alege un nume nou pentru a identifica acest dispozitiv în contul tău Jami</string>
   <string name="rename_device_button">Redenumește dispozitivul</string>
