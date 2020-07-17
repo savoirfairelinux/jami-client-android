@@ -22,6 +22,30 @@
       "revId": "0930061538fbed62913f54216aee73198ef33069",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30b2df07_3149eb11",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2020-07-17T19:57:49Z",
+      "side": 1,
+      "message": "Indeed, but CallPresenter.confUpdate() doesn\u0027t seems to be called in this use case. Could this be some dead code?",
+      "parentUuid": "43fec717_fb029c8d",
+      "range": {
+        "startLine": 323,
+        "startChar": 0,
+        "endLine": 328,
+        "endChar": 9
+      },
+      "revId": "0930061538fbed62913f54216aee73198ef33069",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
     }
   ]
 }
