@@ -88,4 +88,7 @@ along with this program; if not, write to the Free Software
     <dimen name="wizard_text_size">14sp</dimen>
     <dimen name="wizard_card_button_width">250dp</dimen>
 
+    <!--  Account Summary  -->
+    <dimen name="summary_scrollview_padding_bottom">45dp</dimen>
+
 </resources>
