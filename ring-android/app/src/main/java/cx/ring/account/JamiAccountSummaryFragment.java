@@ -348,6 +348,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         binding.passwordLayout.setVisibility(mAccountHasPassword ? View.VISIBLE : View.GONE);
         binding.layoutAddDevice.setVisibility(mAccountHasManager ? View.GONE : View.VISIBLE);
         binding.layoutAccountOptions.setVisibility(mAccountHasManager ? View.GONE : View.VISIBLE);
+        binding.scrollview.setPadding(0, 0, 0, mAccountHasManager? 0 : getResources().getDimensionPixelSize(R.dimen.summary_scrollview_padding_bottom));
     }
 
     public boolean onBackPressed() {
