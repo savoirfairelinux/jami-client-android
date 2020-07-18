@@ -352,7 +352,9 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 .subscribe(accounts -> {
                     mAccountAdapter = new ToolbarSpinnerAdapter(HomeActivity.this, R.layout.item_toolbar_spinner, accounts);
                     binding.spinnerToolbar.setAdapter(mAccountAdapter);
-                    showProfileInfo();
+                    if (fContent instanceof SmartListFragment) {
+                        showProfileInfo();
+                    }
                 }, e ->  Log.e(TAG, "Error loading account list !", e)));
 
         mDisposable.add((mAccountService
