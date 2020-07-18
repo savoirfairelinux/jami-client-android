@@ -37,6 +37,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.transition.TransitionManager;
 
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.speech.RecognizerIntent;
 import android.text.TextUtils;
@@ -118,6 +119,8 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
 
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     private FragConversationTvBinding binding;
+
+    private String mCurrentFileAbsolutePath = null;
 
     public static TvConversationFragment newInstance(TVListViewModel param) {
         TvConversationFragment fragment = new TvConversationFragment();
@@ -247,10 +250,26 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
                     String spokenText = results.get(0);
                     createTextDialog(spokenText);
                 }
+                break;
+            case REQUEST_CODE_SAVE_FILE:
+                if(resultCode == Activity.RESULT_OK) {
+                    if (data != null && data.getData() != null) {
+                        writeToFile(data.getData());
+                    }
+                }
             default:
                 super.onActivityResult(requestCode, resultCode, data);
                 break;
         }
+    }
+
+    private void writeToFile(Uri data) {
+        File input = new File(mCurrentFileAbsolutePath);
+        if (requireContext().getContentResolver() != null)
+            mCompositeDisposable.add(AndroidFileUtils.copyFileToUri(requireContext().getContentResolver(), input, data).
+                    observeOn(AndroidSchedulers.mainThread()).
+                    subscribe(() -> Toast.makeText(getContext(), R.string.file_saved_successfully, Toast.LENGTH_SHORT).show(),
+                            error -> Toast.makeText(getContext(), R.string.generic_error, Toast.LENGTH_SHORT).show()));
     }
 
     private void createTextDialog(String spokenText) {
@@ -411,6 +430,7 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
      * @param currentFileAbsolutePath absolute path of the file we want to save
      */
     public void startSaveFile(DataTransfer file, String currentFileAbsolutePath) {
+        mCurrentFileAbsolutePath = currentFileAbsolutePath;
         try {
             // Use Android Storage File Access to download the file
             Intent downloadFileIntent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
@@ -421,7 +441,12 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
 
             startActivityForResult(downloadFileIntent, REQUEST_CODE_SAVE_FILE);
         } catch (Exception e) {
-            Snackbar.make(requireView(), "No file saving app available", Snackbar.LENGTH_SHORT).show();
+            Log.i(TAG, "No app detected for saving files.");
+            File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+            writeToFile(Uri.fromFile(new File(directory, file.getDisplayName())));
         }
     }
 
