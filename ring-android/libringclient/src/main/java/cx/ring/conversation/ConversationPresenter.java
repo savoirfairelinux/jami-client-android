@@ -147,7 +147,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         }
     }
 
-    public void resume() {
+    public void resume(boolean isBubble) {
         Log.w(TAG, "resume " + mConversation + " " + mAccountId + " " + mContactUri);
         mVisibilityDisposable.clear();
         mVisibilityDisposable.add(mConversationSubject
@@ -155,7 +155,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                 .subscribe(conversation -> {
                     conversation.setVisible(true);
                     updateOngoingCallView(conversation);
-                    mConversationFacade.readMessages(mAccountService.getAccount(mAccountId), conversation);
+                    mConversationFacade.readMessages(mAccountService.getAccount(mAccountId), conversation, !isBubble);
                 }, e -> Log.e(TAG, "Error loading conversation", e)));
     }
 

@@ -196,16 +196,18 @@ public class ConversationFacade {
     public void readMessages(String accountId, Uri contact) {
         Account account = mAccountService.getAccount(accountId);
         if (account != null)
-            readMessages(account, account.getByUri(contact));
+            readMessages(account, account.getByUri(contact), true);
     }
 
-    public void readMessages(Account account, Conversation conversation) {
+    public void readMessages(Account account, Conversation conversation, boolean cancelNotification) {
         if (conversation != null) {
             String lastMessage = readMessages(conversation);
             if (lastMessage != null) {
                 account.refreshed(conversation);
-                mNotificationService.cancelTextNotification(conversation.getContact().getPrimaryUri());
                 mAccountService.setMessageDisplayed(account.getAccountID(), conversation.getContact().getPrimaryNumber(), lastMessage);
+                if (cancelNotification) {
+                    mNotificationService.cancelTextNotification(conversation.getContact().getPrimaryUri());
+                }
             }
         }
     }

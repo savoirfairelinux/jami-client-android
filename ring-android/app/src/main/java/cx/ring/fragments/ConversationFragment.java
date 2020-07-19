@@ -102,6 +102,7 @@ import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.services.LocationSharingService;
 import cx.ring.plugins.PluginUtils;
 import cx.ring.services.NotificationService;
+import cx.ring.services.NotificationServiceImpl;
 import cx.ring.settings.pluginssettings.PluginDetails;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.AndroidFileUtils;
@@ -155,6 +156,8 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     private String mCurrentFileAbsolutePath = null;
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     private int mSelectedPosition;
+
+    private boolean mIsBubble;
 
     private AvatarDrawable mConversationAvatar;
     private final Map<String, AvatarDrawable> mParticipantAvatars = new HashMap<>();
@@ -771,7 +774,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     @Override
     public void onResume() {
         super.onResume();
-        presenter.resume();
+        presenter.resume(mIsBubble);
     }
 
     @Override
@@ -813,6 +816,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     @Override
     protected void initPresenter(ConversationPresenter presenter) {
         ConversationPath path = ConversationPath.fromBundle(getArguments());
+        mIsBubble = getArguments().getBoolean(NotificationServiceImpl.EXTRA_BUBBLE);
         if (path == null)
             return;
         Uri contactUri = new Uri(path.getContactId());
