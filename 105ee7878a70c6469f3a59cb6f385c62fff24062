@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "e8becbd5_628ad718",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-07-19T20:16:26Z",
+      "side": 1,
+      "message": "caused NPE during test because mCallService.getConference(callId) was null",
+      "range": {
+        "startLine": 745,
+        "startChar": 44,
+        "endLine": 745,
+        "endChar": 90
+      },
+      "revId": "105ee7878a70c6469f3a59cb6f385c62fff24062",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae74c985_48e54a87",
         "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
         "patchSetId": 6
