@@ -1209,7 +1209,7 @@ public class AccountService {
             return Single.error(e);
         }
         return getSearchResults()
-                .filter(r -> account.equals(r.accountId) && query.equals(r.query))
+                .filter(r -> account.equals(r.accountId) && encodedUrl.equals(r.query))
                 .firstOrError()
                 .doOnSubscribe(s -> mExecutor.execute(() -> Ringservice.searchUser(account, encodedUrl)))
                 .subscribeOn(Schedulers.from(mExecutor));

@@ -375,7 +375,7 @@ public class ConversationFacade {
         } else if (uri.isRingId()) {
             return mContactService.getLoadedContact(account.getAccountID(), account.getContactFromCache(uri))
                     .map(contact -> Collections.singletonList(Observable.just(new SmartListViewModel(account.getAccountID(), contact, null))));
-        } else if (account.canSearch()) {
+        } else if (account.canSearch() && !query.contains("@")) {
             return mAccountService.searchUser(account.getAccountID(), query)
                     .map(AccountService.UserSearchResult::getResultsViewModels);
         } else {
