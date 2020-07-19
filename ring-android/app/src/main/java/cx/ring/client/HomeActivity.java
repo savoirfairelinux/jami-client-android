@@ -327,10 +327,9 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                         e -> Log.e(TAG, "Error loading avatar", e)));
     }
 
-    /* activity gets back to the foreground and user input */
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
         mAccountCheckDisposable.clear();
         mAccountCheckDisposable.add(mAccountService.getObservableAccountList()
                 .firstElement()
@@ -379,6 +378,12 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         }
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mDisposable.clear();
+    }
+
     public void startConversationTablet(Bundle bundle) {
         fConversation = new ConversationFragment();
         fConversation.setArguments(bundle);
@@ -412,12 +417,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(R.id.main_frame, fContent, CONTACT_REQUESTS_TAG)
                 .addToBackStack(CONTACT_REQUESTS_TAG).commit();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mDisposable.clear();
     }
 
     @Override
