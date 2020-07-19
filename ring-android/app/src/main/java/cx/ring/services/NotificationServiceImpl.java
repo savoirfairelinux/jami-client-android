@@ -89,6 +89,8 @@ import cx.ring.utils.Tuple;
 
 public class NotificationServiceImpl implements NotificationService {
 
+    public static final String EXTRA_BUBBLE = "bubble";
+
     private static final String TAG = NotificationServiceImpl.class.getSimpleName();
 
     private static final String NOTIF_MSG = "MESSAGE";
@@ -517,10 +519,12 @@ public class NotificationServiceImpl implements NotificationService {
         if (contactPicture != null) {
             messageNotificationBuilder.setLargeIcon(contactPicture);
             Intent intentBubble = new Intent(Intent.ACTION_VIEW, path, mContext, ConversationActivity.class);
+            intentBubble.putExtra(EXTRA_BUBBLE, true);
             messageNotificationBuilder.setBubbleMetadata(new NotificationCompat.BubbleMetadata.Builder()
                     .setDesiredHeight(600)
                     .setIcon(IconCompat.createWithAdaptiveBitmap(contactPicture))
-                    .setIntent(PendingIntent.getActivity(mContext, 0, intentBubble, 0))
+                    .setIntent(PendingIntent.getActivity(mContext, 0, intentBubble,
+                            PendingIntent.FLAG_UPDATE_CURRENT))
                     .build());
         }
 
