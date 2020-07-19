@@ -45,6 +45,7 @@ import cx.ring.application.JamiApplication;
 import cx.ring.databinding.ActivityConversationBinding;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.interfaces.Colorable;
+import cx.ring.services.NotificationServiceImpl;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.MediaButtonsHelper;
 
@@ -56,11 +57,15 @@ public class ConversationActivity extends AppCompatActivity implements Colorable
     private Intent mPendingIntent = null;
     private ActivityConversationBinding binding;
 
+    private boolean mIsBubble;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         JamiApplication.getInstance().startDaemon();
+
+        mIsBubble = getIntent().getBooleanExtra(NotificationServiceImpl.EXTRA_BUBBLE, false);
 
         binding = ActivityConversationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -95,8 +100,11 @@ public class ConversationActivity extends AppCompatActivity implements Colorable
             conversationPath = ConversationPath.fromBundle(savedInstanceState);
         }
         if (mConversationFragment == null) {
+            Bundle bundle = conversationPath.toBundle();
+            bundle.putBoolean(NotificationServiceImpl.EXTRA_BUBBLE, mIsBubble);
+
             mConversationFragment = new ConversationFragment();
-            mConversationFragment.setArguments(conversationPath.toBundle());
+            mConversationFragment.setArguments(bundle);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.main_frame, mConversationFragment, null)
                     .commit();
