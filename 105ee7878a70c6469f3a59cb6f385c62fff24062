@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae74c985_48e54a87",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-07-19T15:19:35Z",
+      "side": 1,
+      "message": "Maybe:\n        Conference mConference \u003d currentCalls.get(callId);\n        if (mConference \u003d\u003d null || mConference.getParticipants().isEmpty()) {\n            return null;\n        }\n        String ongoingCallId \u003d null;\n        for (Conference conference : currentCalls.values()) {\n            if (conference !\u003d mConference \u0026\u0026 conference.getState() \u003d\u003d SipCall.CallStatus.CURRENT)\n                ongoingCallId \u003d conference.getParticipants().get(0).getDaemonIdString();\n        }",
+      "range": {
+        "startLine": 242,
+        "startChar": 0,
+        "endLine": 255,
+        "endChar": 0
+      },
+      "revId": "105ee7878a70c6469f3a59cb6f385c62fff24062",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
