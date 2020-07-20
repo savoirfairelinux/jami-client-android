@@ -29,7 +29,7 @@
   <!--Sections-->
   <string name="menu_item_contact_request">Cereri de contact</string>
   <string name="menu_item_accounts">Gestionează conturile</string>
-  <string name="menu_item_account">Gestionează cont</string>
+  <string name="menu_item_account">Gestionează contul</string>
   <string name="menu_item_settings">Reglări</string>
   <string name="menu_item_plugin_list">Reglări Extensii</string>
   <string name="menu_item_share">Distribuie contactul meu</string>
@@ -95,7 +95,7 @@
   <string name="action_call_accept">Răspunde</string>
   <string name="action_call_decline">Refuză</string>
   <string name="action_call_mic_mute">Oprește microfonul</string>
-  <string name="action_load_plugin">Încarcă Extensia</string>
+  <string name="action_load_plugin">Pornește Extensia</string>
   <string name="ab_action_speakerphone">Activează sonorul</string>
   <string name="ab_action_contact_add">Adaugă la contacte</string>
   <string name="ab_action_contact_add_question">Adaugi la contacte?</string>
@@ -280,7 +280,7 @@
   <string name="wizard_password_info">Parola contului</string>
   <string name="wizard_password_placeholder">Alege o parolă pentru a cifra cheia contului pe acest dispozitiv</string>
   <string name="wizard_password_button">Alege parola</string>
-  <string name="wizard_password_skip">Creează cont</string>
+  <string name="wizard_password_skip">Creează contul</string>
   <string name="wizard_password_switch">Cifrează contul cu parolă</string>
   <string name="wizard_password_warning">Reține că parola nu poate fi recuperată</string>
   <string name="wizard_profile_info">Profilul este distribuit doar contactelor</string>

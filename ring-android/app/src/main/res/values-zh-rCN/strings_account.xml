@@ -78,8 +78,8 @@
   <string name="account_registration_exp_label">注册过期</string>
   <string name="account_local_interface_label">本地接口</string>
   <string name="account_local_port_label">本地端口</string>
-  <string name="account_stun_enable_label">使用STUN</string>
-  <string name="account_stun_server_label">STUN 服务器</string>
+  <string name="account_stun_enable_label">使用 Stun</string>
+  <string name="account_stun_server_label">Stun 服务器</string>
   <string name="account_accept_files">自动接收传入的文件</string>
   <string name="account_accept_files_max_size">允许自动接收文件的最大大小</string>
   <string name="account_accept_files_never">从不自动接收</string>
@@ -93,9 +93,9 @@
   <string name="account_published_port_label">公开端口</string>
   <string name="account_published_address_label">公开地址</string>
   <string name="account_proxy_label">DHT 代理</string>
-  <string name="account_proxy_enable_label">使用DHT代理</string>
-  <string name="account_proxy_server_label">DHT代理地址</string>
-  <string name="account_proxy_server_list_label">DHT代理列表URL </string>
+  <string name="account_proxy_enable_label">使用 DHT 代理</string>
+  <string name="account_proxy_server_label">DHT 代理地址</string>
+  <string name="account_proxy_server_list_label">DHT 代理列表 URL </string>
   <string name="account_peer_discovery_label">本地对等方发现</string>
   <string name="account_peer_discovery_enable_label">启用本地对等方发现</string>
   <string name="account_peer_discovery_enable_summary">连接至在本地网络宣告的 DHT 节点</string>
@@ -127,7 +127,7 @@
   <string name="account_rtp_port_range">音频 RTP 端口范围</string>
   <!--restore/backup-->
   <string name="account_new_device_password">输入主密码以解锁账户</string>
-  <string name="error_password_char_count">最少6字符</string>
+  <string name="error_password_char_count">最少 6 字符</string>
   <string name="error_passwords_not_equals">密码不匹配</string>
   <string name="export_account_wait_title">请稍等…</string>
   <string name="export_account_wait_message">导出用户信息</string>
@@ -138,8 +138,8 @@
   <string name="account_export_end_error_title">错误</string>
   <string name="account_export_end_error_message">无法导出账户，发生未知错误。</string>
   <string name="account_enter_password">输入密码</string>
-  <string name="account_share_body">用“%1$s”在Jami分布式通信平台上与我联系：%2$s</string>
-  <string name="account_share_body_with_username">使用“%1$s”或我的公共用户名“%2$s”在Ring分布式通讯平台上联系我：%3$s</string>
+  <string name="account_share_body">用 \"%1$s\" 在 Jami 分布式通信平台上与我联系：%2$s</string>
+  <string name="account_share_body_with_username">使用 \"%1$s\"或我的公共用户名 \"%2$s\" 在 Ring 分布式通讯平台上联系我：%3$s</string>
   <string name="account_contact_me">在 Jami 上联系我！</string>
   <string name="update_account">更新账户</string>
   <string name="account_migration">您的 Jami 账户可以被更新。\n请输入您的密码。</string>
@@ -156,10 +156,10 @@
   <string name="account_device_added_title">账户设备已添加</string>
   <string name="account_device_added_message">你已在此设备上成功设置了 Jami 账户。</string>
   <string name="account_device_updated_title">账户设备已更新</string>
-  <string name="account_device_updated_message">你的Jami账户已成功更新。</string>
+  <string name="account_device_updated_message">你的 Jami 账户已成功更新。</string>
   <string name="account_cannot_be_updated_message">无法更新账户设备。请检查您的密码。</string>
-  <string name="account_sip_success_title">SIP账户已注册</string>
-  <string name="account_sip_success_message">您已成功注册了您的SIP账户。</string>
+  <string name="account_sip_success_title">SIP 账户已注册</string>
+  <string name="account_sip_success_message">您已成功注册了您的 SIP 账户。</string>
   <string name="account_sip_register_anyway">仍然注册</string>
   <string name="account_link_device">从另一台设备连接</string>
   <string name="account_link_button">从网络关联</string>
@@ -175,7 +175,7 @@
   <string name="account_export_title">添加设备</string>
   <string name="account_connect_server_button">连接到管理服务器</string>
   <string name="account_connect_button">连接</string>
-  <string name="prompt_server">Jami管理服务器URL</string>
+  <string name="prompt_server">Jami 管理服务器 URL</string>
   <string name="help_credentials_enter">输入您的组织凭据</string>
   <string name="help_connect_password_enter">输入您的组织密码</string>
   <string name="account_connect_prompt_username">用户名</string>
@@ -199,9 +199,9 @@
   <string name="account_status_offline">离线</string>
   <string name="account_status_error">错误</string>
   <!--Create account-->
-  <string name="account_creation_home">欢迎来到Jami</string>
+  <string name="account_creation_home">欢迎来到 Jami</string>
   <string name="account_creation_profile">创建您的账户资料</string>
-  <string name="account_creation_ring">创建你的Jami帐号</string>
+  <string name="account_creation_ring">创建你的 Jami 帐号</string>
   <string name="account_link_title">连接此设备</string>
   <string name="account_sip_cannot_be_registered">无法注册账户</string>
   <!--Edit profile-->
@@ -214,7 +214,7 @@
   <string name="revoke_device_wait_title">请稍等…</string>
   <string name="revoke_device_wait_message">正在吊销设备</string>
   <string name="rename_device_title">重命名该设备</string>
-  <string name="rename_device_message">选择一个新名称以在您的Jami账户中标识此设备</string>
+  <string name="rename_device_message">选择一个新名称以在您的 Jami 账户中标识此设备</string>
   <string name="rename_device_button">重命名设备</string>
   <string name="account_rename_device_hint">输入新的设备名</string>
   <string name="account_device_name_empty">设备名不可为空</string>

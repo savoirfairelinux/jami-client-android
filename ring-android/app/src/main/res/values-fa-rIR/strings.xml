@@ -185,7 +185,7 @@
   <string name="profile_message_warning">نمایه شما تنها با مخاطبانتان هم‌رسانی می‌شود</string>
   <string name="open_the_gallery">گالری را باز کنید</string>
   <string name="take_a_photo">عکسی بگیرید</string>
-  <string name="profile_name_hint">نام‌تان را بگذارید</string>
+  <string name="profile_name_hint">نام خود را وارد کنید</string>
   <!--Share fragment-->
   <string name="share_message">این رمز را با جمی اسکن کنید</string>
   <string name="share_message_no_account">لطفا برای هم‌رسانی، حسابی را انتخاب کنید.</string>
@@ -212,7 +212,7 @@
   <string name="no_blocked_contact">مخاطب مسدودی وجود ندارد</string>
   <!--Smartlist-->
   <string name="no_contact_request">هیچ درخواست ارتباطی ارسال نشده</string>
-  <string name="conversation_placeholder">شما تاکنون مکالمه ای نداشتید</string>
+  <string name="conversation_placeholder">شما تاکنون مکالمه‌ای نداشتید</string>
   <string name="contact_request_sent">درخواست ارتباط ارسال شد</string>
   <string name="start_conversation">شروع گفتگو</string>
   <string name="search_results">نتایج جستجو</string>
@@ -270,12 +270,19 @@
   <string name="tv_send_video">ارسال محتوای رسانه‌ای</string>
   <string name="conversation_input_speech_hint">چیزی بگویید...</string>
   <!--WIZARD-->
-  <string name="wizard_status_recommended">توصیه شده</string>
+  <string name="wizard_status_recommended">توصیه‌شده</string>
   <string name="wizard_status_optional">اختیاری</string>
   <string name="wizard_status_required">ضروری</string>
-  <string name="wizard_password_info">گذرواژه کاربری</string>
+  <string name="wizard_username_info">یک نام کاربری برای حساب خود انتخاب کنید</string>
+  <string name="wizard_username_button">نام کاربری انتخاب کنید</string>
+  <string name="wizard_username_skip">رد شدن از انتخاب نام کاربری</string>
+  <string name="wizard_password_info">گذرواژه حساب</string>
+  <string name="wizard_password_placeholder">گذرواژه‌ای را برای رمزگذاری کلید حساب در این دستگاه انتخاب کنید</string>
   <string name="wizard_password_button">گذرواژه خود را انتخاب کنید</string>
-  <string name="wizard_password_skip">ساخت کاربری</string>
-  <string name="wizard_profile_info">نمایه فقط با مخاطبین به اشتراک گذاشته می شود</string>
+  <string name="wizard_password_skip">ایجاد حساب</string>
+  <string name="wizard_password_switch">رمزگذاری حساب با گذرواژه</string>
+  <string name="wizard_password_warning">توجه داشته باشید که گذرواژه قابل بازیابی نیست</string>
+  <string name="wizard_profile_info">نمایه فقط با مخاطبین به اشتراک گذاشته می‌شود</string>
   <string name="wizard_profile_button">ذخیره نمایه</string>
+  <string name="wizard_profile_skip">رد شوید و این کار را بعدا انجام دهید</string>
 </resources>

@@ -12,7 +12,7 @@
   <string name="prompt_hostname">Numele serverului</string>
   <string name="prompt_username">Nume de Utilizator</string>
   <string name="prompt_password">Parolă</string>
-  <string name="action_create">Creează cont</string>
+  <string name="action_create">Creează contul</string>
   <string name="action_create_short">Creează</string>
   <string name="action_register">Înscrie-te</string>
   <string name="action_settings">Reglări</string>
@@ -66,7 +66,7 @@
   <string name="account_ringtone_label">Sonerii</string>
   <string name="account_ringtone_enabled_label">Activează Sonerii</string>
   <string name="account_ringtone_path_label">Parcursul soneriei</string>
-  <string name="account_ringtone_custom_label">Folosește sonerie personalizată</string>
+  <string name="account_ringtone_custom_label">Folosește o sonerie personalizată</string>
   <string name="account_ringtone_title">Alege o sonerie</string>
   <string name="account_ringtone_summary">Selecționează o sonerie sau alege una personală</string>
   <!--Video Details-->
@@ -157,7 +157,7 @@
   <string name="account_device_added_message">Ai configurat cu succes contul Jami pe acest dispozitiv.</string>
   <string name="account_device_updated_title">Dispozitiv actualizat</string>
   <string name="account_device_updated_message">Ai actualizat cu succes contul tău Jami.</string>
-  <string name="account_cannot_be_updated_message">Dispozitivul conectat nu poate fi actualizat. Verifică parola.</string>
+  <string name="account_cannot_be_updated_message">Dispozitivul asociat nu poate fi actualizat. Verifică parola.</string>
   <string name="account_sip_success_title">Cont SIP înregistrat</string>
   <string name="account_sip_success_message">Ai înregistrat cu succes contul tău SIP.</string>
   <string name="account_sip_register_anyway">Înscrie-te oricum</string>
@@ -181,12 +181,12 @@
   <string name="account_connect_prompt_username">Nume de Utilizator</string>
   <!--Name registration-->
   <string name="error_username_empty">Introdu un nume de utilizator</string>
-  <string name="no_registered_name_for_account">Nu a fost găsit niciun nume înregistrat pentru acest cont</string>
+  <string name="no_registered_name_for_account">Nu a fost găsit niciun nume înscris pentru acest cont</string>
   <string name="username_available">Nume de utilizator disponibil !</string>
-  <string name="register_name">Înregistrează numele</string>
-  <string name="trying_to_register_name">Se înregistrează numele</string>
-  <string name="registered_username">Nume de utilizator înregistrat</string>
-  <string name="register_username">Înregistrează numele de utilizator public</string>
+  <string name="register_name">Înscrie numele</string>
+  <string name="trying_to_register_name">Se înscrie numele</string>
+  <string name="registered_username">Nume de utilizator înscris</string>
+  <string name="register_username">Înscrie numele de utilizator public</string>
   <string name="register_recommended">Recomandat</string>
   <string name="username_already_taken">Nume de utilizator deja ales</string>
   <string name="invalid_username">Numele de utilizator este greșit</string>

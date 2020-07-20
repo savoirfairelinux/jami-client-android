@@ -203,6 +203,7 @@
   <string name="contact_request_title">Новый запрос на добавление в контакты</string>
   <string name="contact_request_msg">%1$s запросов на добавление в контакты</string>
   <string name="contact_request_account">Для %1$s</string>
+  <string name="no_requests">Нет запросов на добавление в контакты</string>
   <string name="message_contact_not_trusted_yet">%s еще не в вашем списке контактов. Вы хотите принять или отклонить этот запрос?</string>
   <string name="message_contact_not_trusted">%s отсутствует в ваших контактах.\nДобавить новый контакт?</string>
   <!--Send contact requests-->
@@ -283,6 +284,7 @@
   <string name="wizard_password_skip">Создать аккаунт</string>
   <string name="wizard_password_switch">Зашифровать учётную запись паролем</string>
   <string name="wizard_password_warning">Обратите внимание, что пароль не может быть восстановлен</string>
+  <string name="wizard_profile_info">Ваш профиль доступен только вашим контактам</string>
   <string name="wizard_profile_button">Сохранить профиль</string>
   <string name="wizard_profile_skip">Пропустить и сделать позже</string>
 </resources>

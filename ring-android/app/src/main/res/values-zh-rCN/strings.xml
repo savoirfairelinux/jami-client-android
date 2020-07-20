@@ -4,16 +4,16 @@
   <string name="feedback_section">反馈</string>
   <string name="report"><u>给我们发送邮件</u></string>
   <string name="section_license">许可</string>
-  <string name="sponsor_section">Jami是一个自由软件，开发和支持者为：</string>
+  <string name="sponsor_section">Jami 是一个自由软件，开发和支持者为：</string>
   <string name="copyright_section">版权所有</string>
   <string name="contribute_section">贡献</string>
   <string name="version_section">版本</string>
   <string name="no_email_app_installed">未找到电子邮件客户端，请安装后再重试发送报告。</string>
   <string name="no_browser_app_installed">未找到浏览器，请安装后再重试浏览该网页。</string>
   <string name="email_chooser_title">使用…发送邮件</string>
-  <string name="website_chooser_title">用…浏览网站</string>
-  <string name="license">本软件由版权持有人及其他责任者“按原样”提供，不提供任何形式的担保。详细信息请参阅<u>GNU通用公共许可证版本3或更新</u></string>
-  <string name="description">Jami是一种自由通信软件，它尊重用户的自由和隐私。</string>
+  <string name="website_chooser_title">使用…浏览网站</string>
+  <string name="license">本软件由版权持有人及其他责任者“按原样”提供，不提供任何形式的担保。详细信息请参阅<u>GNU 通用公共许可证版本 3 或更新</u></string>
+  <string name="description">Jami 是一种自由通信软件，它尊重用户的自由和隐私。</string>
   <string name="credits">致谢</string>
   <string name="call_service_description">这项服务对于保持您的通话在前台运行是必要的。它仅在您通话时运行。</string>
   <string name="data_transfer_service_description">这项服务对于在文件传输过程中显示持久通知是必要的。它仅在传输文件时运行。</string>
@@ -33,7 +33,7 @@
   <string name="menu_item_settings">设置</string>
   <string name="menu_item_plugin_list">插件设置</string>
   <string name="menu_item_share">共享我的通讯录</string>
-  <string name="menu_item_about">关于Jami</string>
+  <string name="menu_item_about">关于 Jami</string>
   <!--Dialing Fragment-->
   <string name="dial_number">拨号</string>
   <!--History Fragment-->
@@ -67,7 +67,7 @@
   <string name="notif_channel_background_service">后台服务</string>
   <string name="notif_channel_background_service_descr">允许在任何时间接受电话和消息。</string>
   <string name="notif_group_calls">呼叫</string>
-  <string name="notif_background_service">Jami正在后台运行</string>
+  <string name="notif_background_service">Jami 正在后台运行</string>
   <string name="notif_mark_as_read">标为已读</string>
   <string name="notif_dismiss">解散</string>
   <string name="notif_reply">回复</string>
@@ -88,7 +88,7 @@
   <string name="ongoing_call">正在通话</string>
   <string name="hist_in_call">来电：%1$s</string>
   <string name="hist_out_call">去电：%1$s</string>
-  <string name="start_error_title">无法启动Jami！</string>
+  <string name="start_error_title">无法启动 Jami！</string>
   <string name="start_error_mic_required">Jami 需要麦克风权限以正常工作。</string>
   <string name="action_call_accept">接听</string>
   <string name="action_call_decline">拒接</string>
@@ -127,11 +127,11 @@
   <string name="ringtone_error_size_too_big">文件过大。最大支持%1$dKB。</string>
   <string name="ringtone_custom_prompt">设置一个自定义铃声</string>
   <string name="ringtone_custom_label">自定义</string>
-  <string name="ringtone_jami_tones">Jami铃声</string>
+  <string name="ringtone_jami_tones">Jami 铃声</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jami需要“读取通讯录”权限来启用此功能，请批准。</string>
+  <string name="permission_dialog_read_contacts_message">Jami 需要“读取通讯录”权限来启用此功能，请批准。</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami需要“写入通话记录”权限才能启用此功能，请批准。</string>
+  <string name="permission_dialog_write_call_log_message">Jami 需要“写入通话记录”权限才能启用此功能，请授予权限。</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">扫描您想添加账户的二维码。</string>
   <string name="title_activity_qrcode">分享我的账户</string>
