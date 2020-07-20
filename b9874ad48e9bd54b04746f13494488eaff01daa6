@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8afc2c8_5512dbe3",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-07-20T16:11:51Z",
+      "side": 1,
+      "message": "Not allowed (causing IllegalStateException) if app is in background.",
+      "range": {
+        "startLine": 409,
+        "startChar": 8,
+        "endLine": 411,
+        "endChar": 56
+      },
+      "revId": "b9874ad48e9bd54b04746f13494488eaff01daa6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
