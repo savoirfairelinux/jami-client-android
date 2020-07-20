@@ -81,12 +81,7 @@ public class AboutFragment extends BaseSupportFragment<RootPresenter> {
     @Override
     public void onResume() {
         super.onResume();
-        ((HomeActivity) getActivity()).setToolbarTitle(R.string.menu_item_about);
-        /*FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        Fragment existingFragment = fragmentManager.findFragmentByTag(TAG);
-        if (existingFragment == null) {
-            ((HomeActivity) getActivity()).goToAbout();
-        }*/
+        ((HomeActivity) requireActivity()).setToolbarTitle(R.string.menu_item_about);
     }
 
     @Override
