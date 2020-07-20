@@ -349,8 +349,18 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         mDisposable.add(mAccountService.getProfileAccountList()
                 .observeOn(mUiScheduler)
                 .subscribe(accounts -> {
-                    mAccountAdapter = new ToolbarSpinnerAdapter(HomeActivity.this, R.layout.item_toolbar_spinner, accounts);
-                    binding.spinnerToolbar.setAdapter(mAccountAdapter);
+                    if (mAccountAdapter == null) {
+                        mAccountAdapter = new ToolbarSpinnerAdapter(HomeActivity.this, accounts);
+                        mAccountAdapter.setNotifyOnChange(false);
+                        binding.spinnerToolbar.setAdapter(mAccountAdapter);
+                    } else {
+                        mAccountAdapter.clear();
+                        mAccountAdapter.addAll(accounts);
+                        mAccountAdapter.notifyDataSetChanged();
+                        if (accounts.size() > 0) {
+                            binding.spinnerToolbar.setSelection(0);
+                        }
+                    }
                     if (fContent instanceof SmartListFragment) {
                         showProfileInfo();
                     }
@@ -570,12 +580,12 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if (mAccountAdapter.getItemViewType(position) == ToolbarSpinnerAdapter.TYPE_ACCOUNT){
+        int type = mAccountAdapter.getItemViewType(position);
+        if (type == ToolbarSpinnerAdapter.TYPE_ACCOUNT) {
             mAccountService.setCurrentAccount(mAccountAdapter.getItem(position));
         } else {
             Intent intent = new Intent(HomeActivity.this, AccountWizardActivity.class);
-
-            if (mAccountAdapter.getItemViewType(position) == ToolbarSpinnerAdapter.TYPE_CREATE_SIP) {
+            if (type == ToolbarSpinnerAdapter.TYPE_CREATE_SIP) {
                 intent.setAction(AccountConfig.ACCOUNT_TYPE_SIP);
             }
             startActivity(intent);

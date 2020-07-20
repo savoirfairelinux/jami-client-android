@@ -24,172 +24,145 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import cx.ring.R;
+import cx.ring.databinding.ItemToolbarSpinnerBinding;
 import cx.ring.model.Account;
-import cx.ring.services.AccountService;
 import cx.ring.views.AvatarDrawable;
 import ezvcard.VCard;
 import ezvcard.property.FormattedName;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class ToolbarSpinnerAdapter extends ArrayAdapter<Account> {
-
+    private static final String TAG = ToolbarSpinnerAdapter.class.getSimpleName();
     public static final int TYPE_ACCOUNT = 0;
     public static final int TYPE_CREATE_JAMI = 1;
     public static final int TYPE_CREATE_SIP = 2;
+    private final LayoutInflater mInflater;
+    private final int logoSize;
 
-    private static final String TAG = ToolbarSpinnerAdapter.class.getSimpleName();
-
-    private final CompositeDisposable mDisposable = new CompositeDisposable();
-
-    @Inject
-    AccountService mAccountService;
-
-    private Context mContext;
-    private List<Account> mAccounts;
-
-    public ToolbarSpinnerAdapter(@NonNull Context context, int resource, List<Account> accounts){
-        super(context, resource, accounts);
-
-        mContext = context;
-        mAccounts = accounts;
+    public ToolbarSpinnerAdapter(@NonNull Context context, List<Account> accounts){
+        super(context, R.layout.item_toolbar_spinner, accounts);
+        mInflater = LayoutInflater.from(context);
+        logoSize = context.getResources().getDimensionPixelSize(R.dimen.list_medium_icon_size);
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        return selectedView(convertView, position);
+        int type = getItemViewType(position);
+
+        ViewHolder holder;
+        if (convertView == null) {
+            holder = new ViewHolder();
+            holder.binding = ItemToolbarSpinnerBinding.inflate(mInflater, parent, false);
+            convertView = holder.binding.getRoot();
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+            if (holder.loader != null)  {
+                holder.loader.dispose();
+            }
+        }
+
+        holder.binding.logo.setVisibility(View.GONE);
+        holder.binding.subtitle.setVisibility(View.GONE);
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) holder.binding.title.getLayoutParams();
+        params.leftMargin = 0;
+        holder.binding.title.setLayoutParams(params);
+        if (type == TYPE_ACCOUNT) {
+            Account account = getItem(position);
+            holder.binding.title.setText(getAccountAlias(account));
+        }
+
+        return convertView;
     }
 
     @Override
     public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        return dropDownView(convertView, position);
+        int type = getItemViewType(position);
+        ViewHolder holder;
+        View rowView = convertView;
+        if (rowView == null) {
+            holder = new ViewHolder();
+            holder.binding = ItemToolbarSpinnerBinding.inflate(mInflater, parent, false);
+            rowView = holder.binding.getRoot();
+            rowView.setTag(holder);
+        } else {
+            holder = (ViewHolder) rowView.getTag();
+            if (holder.loader != null)  {
+                holder.loader.dispose();
+            }
+        }
+
+        holder.binding.logo.setVisibility(View.VISIBLE);
+        ViewGroup.LayoutParams logoParam = holder.binding.logo.getLayoutParams();
+        if (type == TYPE_ACCOUNT) {
+            Account account = getItem(position);
+            holder.binding.subtitle.setVisibility(View.VISIBLE);
+            holder.binding.title.setText(getAccountAlias(account));
+            holder.binding.subtitle.setText(getUri(account, rowView.getContext().getString(R.string.account_type_ip2ip)));
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) holder.binding.title.getLayoutParams();
+            params.removeRule(RelativeLayout.CENTER_VERTICAL);
+            holder.binding.title.setLayoutParams(params);
+            logoParam.width = logoSize;
+            logoParam.height = logoSize;
+            holder.binding.logo.setLayoutParams(logoParam);
+            holder.loader = AvatarDrawable.load(getContext(), account)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(avatar -> holder.binding.logo.setImageDrawable(avatar), e -> Log.e(TAG, "Error loading avatar", e));
+        } else {
+            if (type == TYPE_CREATE_JAMI)
+                holder.binding.title.setText(R.string.add_ring_account_title);
+            else
+                holder.binding.title.setText(R.string.add_sip_account_title);
+            holder.binding.subtitle.setVisibility(View.GONE);
+            holder.binding.logo.setImageResource(R.drawable.baseline_add_24);
+            logoParam.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+            logoParam.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+            holder.binding.logo.setLayoutParams(logoParam);
+
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) holder.binding.title.getLayoutParams();
+            params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+            holder.binding.title.setLayoutParams(params);
+        }
+
+        return rowView;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (position == mAccounts.size()) {
+        if (position == super.getCount()) {
             return TYPE_CREATE_JAMI;
         }
-        if (position == mAccounts.size() + 1) {
+        if (position == super.getCount() + 1) {
             return TYPE_CREATE_SIP;
         }
-
         return TYPE_ACCOUNT;
     }
 
     @Override
     public int getCount() {
-        return mAccounts.size() + 2;
-    }
-
-    private View selectedView(View convertView , int position){
-
-        int type = getItemViewType(position);
-
-        ViewHolder holder ;
-        View rowView = convertView;
-        if (rowView == null) {
-
-            holder = new ViewHolder();
-            LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            rowView = inflater.inflate(R.layout.item_toolbar_spinner, null, false);
-
-            holder.title = rowView.findViewById(R.id.title);
-            holder.subTitle = rowView.findViewById(R.id.subtitle);
-            holder.logo = rowView.findViewById(R.id.logo);
-            holder.logo.setVisibility(View.GONE);
-            holder.subTitle.setVisibility(View.GONE);
-
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) holder.title.getLayoutParams();
-            params.leftMargin = 0;
-            holder.title.setLayoutParams(params);
-
-            rowView.setTag(holder);
-        } else {
-            holder = (ViewHolder) rowView.getTag();
-        }
-
-        if (type == TYPE_ACCOUNT) {
-            Account account = getItem(position);
-
-            holder.title.setText(getAccountAlias(account));
-        }
-
-        return rowView;
-    }
-
-    private View dropDownView(View convertView , int position){
-
-        int type = getItemViewType(position);
-
-        ViewHolder holder ;
-        View rowView = convertView;
-        if (rowView == null) {
-
-            holder = new ViewHolder();
-            LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            rowView = inflater.inflate(R.layout.item_toolbar_spinner, null, false);
-
-            holder.title = rowView.findViewById(R.id.title);
-            holder.subTitle = rowView.findViewById(R.id.subtitle);
-            holder.logo = rowView.findViewById(R.id.logo);
-            rowView.setTag(holder);
-        } else {
-            holder = (ViewHolder) rowView.getTag();
-        }
-
-        if (type == TYPE_ACCOUNT) {
-            Account account = getItem(position);
-
-            holder.title.setText(getAccountAlias(account));
-            holder.subTitle.setText(getUri(account, mContext.getString(R.string.account_type_ip2ip)));
-
-            mDisposable.add(AvatarDrawable.load(mContext, account)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(avatar -> holder.logo.setImageDrawable(avatar), e -> Log.e(TAG, "Error loading avatar", e)));
-        } else {
-            if (type == TYPE_CREATE_JAMI)
-                holder.title.setText(R.string.add_ring_account_title);
-            else
-                holder.title.setText(R.string.add_sip_account_title);
-            holder.subTitle.setVisibility(View.GONE);
-            holder.logo.setImageResource(R.drawable.baseline_add_24);
-
-            ViewGroup.LayoutParams logoParam = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            holder.logo.setLayoutParams(logoParam);
-
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) holder.title.getLayoutParams();
-            params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-            holder.title.setLayoutParams(params);
-        }
-
-        return rowView;
+        return super.getCount() + 2;
     }
 
     private static class ViewHolder {
-        TextView title;
-        TextView subTitle;
-        ImageView logo;
+        ItemToolbarSpinnerBinding binding;
+        Disposable loader;
     }
 
     private String getAccountAlias(Account account) {
         if (account == null) {
-            cx.ring.utils.Log.e(TAG, "Not able to get account alias");
+            Log.e(TAG, "Not able to get account alias");
             return null;
         }
         String alias = getAlias(account);
@@ -198,7 +171,7 @@ public class ToolbarSpinnerAdapter extends ArrayAdapter<Account> {
 
     private String getAlias(Account account) {
         if (account == null) {
-            cx.ring.utils.Log.e(TAG, "Not able to get alias");
+            Log.e(TAG, "Not able to get alias");
             return null;
         }
         VCard vcard = account.getProfile();

@@ -145,12 +145,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
     @Override
     public void onResume() {
         super.onResume();
-        FragmentManager fragmentManager = requireFragmentManager();
-        Fragment existingFragment = fragmentManager.findFragmentByTag(SettingsFragment.TAG);
-        if (existingFragment == null) {
-            ((HomeActivity) getActivity()).goToSettings();
-        }
-        ((HomeActivity) getActivity()).setToolbarState(R.string.menu_item_settings);
+        ((HomeActivity) getActivity()).setToolbarTitle(R.string.menu_item_settings);
     }
 
     @Override
