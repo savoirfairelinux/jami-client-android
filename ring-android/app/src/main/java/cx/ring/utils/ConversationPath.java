@@ -38,16 +38,16 @@ public class ConversationPath {
         return toUri(accountId, contactId);
     }
     public static Uri toUri(String accountId, String contactId) {
-        Uri.Builder builder = ContentUriHandler.CONVERSATION_CONTENT_URI.buildUpon();
-        builder = builder.appendEncodedPath(accountId);
-        builder = builder.appendEncodedPath(contactId);
-        return builder.build();
+        return ContentUriHandler.CONVERSATION_CONTENT_URI.buildUpon()
+                .appendEncodedPath(accountId)
+                .appendEncodedPath(contactId)
+                .build();
     }
     public static Uri toUri(String accountId, @NonNull cx.ring.model.Uri contactUri) {
-        Uri.Builder builder = ContentUriHandler.CONVERSATION_CONTENT_URI.buildUpon();
-        builder = builder.appendEncodedPath(accountId);
-        builder = builder.appendEncodedPath(contactUri.getUri());
-        return builder.build();
+        return ContentUriHandler.CONVERSATION_CONTENT_URI.buildUpon()
+                .appendEncodedPath(accountId)
+                .appendEncodedPath(contactUri.getUri())
+                .build();
     }
     public static Uri toUri(@NonNull Interaction interaction) {
         return toUri(interaction.getAccount(), new cx.ring.model.Uri(interaction.getConversation().getParticipant()));
