@@ -190,7 +190,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:name=".service.CallNotificationService"
             android:description="@string/call_service_description"
             android:exported="false"
-            android:foregroundServiceType="phoneCall|mediaProjection" />
+            android:foregroundServiceType="phoneCall|mediaProjection|camera|microphone" />
         <service
             android:name=".services.DataTransferService"
             android:description="@string/data_transfer_service_description"
