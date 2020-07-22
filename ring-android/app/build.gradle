@@ -9,8 +9,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 252
-        versionName "20200715-01"
+        versionCode 253
+        versionName "20200722-01"
     }
     sourceSets {
         main {
@@ -80,7 +80,7 @@ dependencies {
     def android_support_core_version = '1.1.0'
     def android_support_version = '1.0.0'
     def material_version = '1.2.0-alpha05'
-    def dagger_version = '2.27'
+    def dagger_version = '2.28.1'
 
     implementation fileTree(include: '*.jar', dir: 'libs')
     implementation project(':libringclient')
