@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.google.android.material.badge.BadgeDrawable;
@@ -193,7 +194,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
         mOutlineProvider = binding.appBar.getOutlineProvider();
 
-        if (!DeviceUtils.isTablet(this)) {
+        if (!DeviceUtils.isTablet(this) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.bottom_navigation));
         }
 
