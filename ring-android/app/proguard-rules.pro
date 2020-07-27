@@ -4,6 +4,10 @@
 
 -keepattributes InnerClasses
 
+# To be able to see line numbers in stack traces
+-renamesourcefileattribute SourceFile
+-keepattributes SourceFile,LineNumberTable
+
 -keep class android.support.v7.widget.LinearLayoutManager { *; }
 -keep,includedescriptorclasses class androidx.core.content.FileProvider { *; }
 
