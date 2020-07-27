@@ -34,7 +34,7 @@
   <string name="account_delete_dialog_title">Ștergi contul ?</string>
   <string name="account_delete_dialog_message">Această acțiune este ireversibilă.</string>
   <!--AccountManagementFragment-->
-  <string name="empty_account_list">Nu este înregistrat niciun cont</string>
+  <string name="empty_account_list">Nu este înscris niciun cont</string>
   <string name="normal_accounts_titles">Conturi</string>
   <string name="normal_devices_titles">Dispozitivele cunoscute asociate acestui cont Jami</string>
   <string name="account_device_revoke">Elimină dispozitivul</string>
@@ -68,14 +68,14 @@
   <string name="account_ringtone_path_label">Parcursul soneriei</string>
   <string name="account_ringtone_custom_label">Folosește o sonerie personalizată</string>
   <string name="account_ringtone_title">Alege o sonerie</string>
-  <string name="account_ringtone_summary">Selecționează o sonerie sau alege una personală</string>
+  <string name="account_ringtone_summary">Alege o sonerie sau alege una personală</string>
   <!--Video Details-->
   <string name="account_video_label">Video</string>
   <string name="account_video_enable">Activează Video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avansate</string>
   <string name="account_dht_public_in_calls_label">Permite apelurile primite de la contacte necunoscute</string>
-  <string name="account_registration_exp_label">Înregistrarea Expiră</string>
+  <string name="account_registration_exp_label">Înscrierea Expiră</string>
   <string name="account_local_interface_label">Interfață locală</string>
   <string name="account_local_port_label">Port local</string>
   <string name="account_stun_enable_label">Folosește STUN</string>
@@ -138,8 +138,8 @@
   <string name="account_export_end_error_title">Eroare</string>
   <string name="account_export_end_error_message">Contul nu poate fi exportat. A apărut o eroare necunoscută.</string>
   <string name="account_enter_password">Introdu parola</string>
-  <string name="account_share_body">Contactează-mă folosind \'%1$s\' pe platforma de comunicare distribuită Jami: %2$s</string>
-  <string name="account_share_body_with_username">Contactează-mă folosind \'%1$s\' sau numele meu public de utilizator  \'%2$s\' pe platforma de comunicare distribuită Jami: %3$s </string>
+  <string name="account_share_body">Contactează-mă folosind \'%1$s\' pe platforma distribuită de comunicare Jami: %2$s</string>
+  <string name="account_share_body_with_username">Contactează-mă folosind \'%1$s\' sau numele meu public de utilizator  \'%2$s\' pe platforma distribuită de comunicare Jami: %3$s </string>
   <string name="account_contact_me">Contactează-mă pe Jami !</string>
   <string name="update_account">Actualizează contul</string>
   <string name="account_migration">Contul tău Jami poate fi actualizat.\nIntrodu parola ta.</string>
@@ -158,8 +158,8 @@
   <string name="account_device_updated_title">Dispozitiv actualizat</string>
   <string name="account_device_updated_message">Ai actualizat cu succes contul tău Jami.</string>
   <string name="account_cannot_be_updated_message">Dispozitivul asociat nu poate fi actualizat. Verifică parola.</string>
-  <string name="account_sip_success_title">Cont SIP înregistrat</string>
-  <string name="account_sip_success_message">Ai înregistrat cu succes contul tău SIP.</string>
+  <string name="account_sip_success_title">Cont SIP înscris</string>
+  <string name="account_sip_success_message">Ai înscris cu succes contul tău SIP.</string>
   <string name="account_sip_register_anyway">Înscrie-te oricum</string>
   <string name="account_link_device">Conectează-te de la alt dispozitiv</string>
   <string name="account_link_button">Conectează-te dintr-o rețea</string>
@@ -203,7 +203,7 @@
   <string name="account_creation_profile">Creează profilul tău</string>
   <string name="account_creation_ring">Creează contul tău Jami</string>
   <string name="account_link_title">Asociază acest dispozitiv</string>
-  <string name="account_sip_cannot_be_registered">Nu pot înregistra contul</string>
+  <string name="account_sip_cannot_be_registered">Nu pot înscrie contul</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Modifică profilul tău</string>
   <!--Devices-->

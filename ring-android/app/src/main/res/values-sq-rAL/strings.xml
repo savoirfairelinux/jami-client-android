@@ -83,6 +83,7 @@
   <string name="notif_location_action_stop">Ndale dhënien e vendndodhjes</string>
   <string name="location_share_action_start">Fillo ta japësh</string>
   <string name="location_share_action_stop">Resht së dhëni</string>
+  <string name="location_share_about_title">Të dhëna harte</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ju:</string>
   <string name="action_call_hangup">Mbylle thirrjen</string>

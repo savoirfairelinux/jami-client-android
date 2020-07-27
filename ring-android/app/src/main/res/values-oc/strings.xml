@@ -21,6 +21,7 @@
   <!--Notifications-->
   <!--Call Fragment-->
   <string name="action_call_decline">Regetar</string>
+  <string name="ab_action_contact_add">Ajustar als contactes</string>
   <string name="hist_contact_added">Contacte ajustat</string>
   <string name="hist_invitation_received">Invitacion recebuda</string>
   <!--Text messages-->

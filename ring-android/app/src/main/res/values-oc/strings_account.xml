@@ -23,6 +23,7 @@
   <string name="account_preferences_media_tab">Mèdia</string>
   <!--Video Details-->
   <string name="account_video_label">Vidèo</string>
+  <string name="account_video_enable">Activar la vidèo</string>
   <!--Advanced Details-->
   <string name="account_turn_enable_label">Utilizar TURN</string>
   <!--Security Details-->

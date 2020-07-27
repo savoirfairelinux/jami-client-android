@@ -82,6 +82,7 @@
   <string name="notif_location_action_stop">停止分享位置</string>
   <string name="location_share_action_start">開始分享</string>
   <string name="location_share_action_stop">停止分享</string>
+  <string name="location_share_about_title">地圖資訊</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">你：</string>
   <string name="action_call_hangup">掛斷</string>

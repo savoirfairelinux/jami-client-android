@@ -83,6 +83,7 @@
   <string name="notif_location_action_stop">Tarzózkodási hely megosztásának leállítása</string>
   <string name="location_share_action_start">Megosztás indítása</string>
   <string name="location_share_action_stop">Megosztás leállítása</string>
+  <string name="location_share_about_title">Térkép adatai</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ön:</string>
   <string name="action_call_hangup">Hívás befejezése</string>

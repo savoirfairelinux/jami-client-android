@@ -83,6 +83,7 @@
   <string name="notif_location_action_stop">Lopeta sijainnin jakaminen</string>
   <string name="location_share_action_start">Aloita jakaminen</string>
   <string name="location_share_action_stop">Lopeta jakaminen</string>
+  <string name="location_share_about_title">Karttatiedot</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Sinä:</string>
   <string name="action_call_hangup">Katkaise puhelu</string>

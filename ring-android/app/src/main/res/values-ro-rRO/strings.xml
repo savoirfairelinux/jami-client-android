@@ -2,15 +2,15 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Părere</string>
-  <string name="report"><u>Trimite-ne un mesaj</u></string>
+  <string name="report"><u>Trimite-ne un e-mail</u></string>
   <string name="section_license">Licență</string>
   <string name="sponsor_section">Jami este un program liber, creat și susținut de</string>
   <string name="copyright_section">Drepturi de autor</string>
   <string name="contribute_section">Contribuie</string>
   <string name="version_section">Versiune</string>
-  <string name="no_email_app_installed">Nu a fost găsită o aplicație de poștă electronică. Instalează una pentru a ne putea trimite un raport.</string>
+  <string name="no_email_app_installed">Nu a fost găsită o app e-mail. Instalează una pentru a ne putea trimite un raport.</string>
   <string name="no_browser_app_installed">Nu a fost găsită o aplicație navigator web. Instalează una pentru a vedea această pagină.</string>
-  <string name="email_chooser_title">Trimite mesaj folosind...</string>
+  <string name="email_chooser_title">Trimite e-mail folosind...</string>
   <string name="website_chooser_title">Vezi adresa de internet folosind...</string>
   <string name="license">Acest program este furnizat \"așa cum este\", fără nicio garanție. Pentru detalii, vezi <u>GNU General Public License versiunea 3 sau următoarele</u></string>
   <string name="description">Jami este un program liber pentru comunicare universală care respectă libertățile și intimitatea utilizatorilor săi.</string>
@@ -31,7 +31,7 @@
   <string name="menu_item_accounts">Gestionează conturile</string>
   <string name="menu_item_account">Gestionează contul</string>
   <string name="menu_item_settings">Reglări</string>
-  <string name="menu_item_plugin_list">Reglări Extensii</string>
+  <string name="menu_item_plugin_list">Reglările Extensiilor</string>
   <string name="menu_item_share">Distribuie contactul meu</string>
   <string name="menu_item_about">Despre Jami</string>
   <!--Dialing Fragment-->
@@ -84,6 +84,7 @@
   <string name="notif_location_action_stop">Oprește distribuirea poziției</string>
   <string name="location_share_action_start">Pornește distribuirea</string>
   <string name="location_share_action_stop">Oprește distribuirea</string>
+  <string name="location_share_about_title">Detalii pe Hartă</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Tu:</string>
   <string name="action_call_hangup">Închide</string>
@@ -117,8 +118,8 @@
   <string name="send_file">Trimite fișierul</string>
   <string name="hist_file_sent">Fișier trimis</string>
   <string name="hist_file_received">Fișier primit</string>
-  <string name="conversation_send_audio">Înregistrează mesaj vocal</string>
-  <string name="conversation_send_video">Înregistrează mesaj video</string>
+  <string name="conversation_send_audio">Înregistrează un mesaj vocal</string>
+  <string name="conversation_send_video">Înregistrează un mesaj video</string>
   <string name="conversation_share_location">Distribuie poziția ta</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permisiune pentru videocameră</string>
@@ -174,7 +175,7 @@
   <string name="account_create_title">Creează un cont Jami</string>
   <string name="prompt_new_username">Introdu un nou nume de utilizator</string>
   <string name="prompt_hint_username">Nume de Utilizator</string>
-  <string name="help_password_choose">Alege o parolă complexă pe care să ți-o amintești pentru a proteja contul tău Jami.</string>
+  <string name="help_password_choose">Alege o parolă complexă pe care să ți-o amintești, pentru a proteja contul tău Jami.</string>
   <string name="help_password_enter">Introdu parola principală a contului tău Jami.</string>
   <string name="help_server_enter">Introdu URL-ul serverului de administrare</string>
   <string name="help_pin_enter">Introdu codul PIN obținut prin crearea unui alt cont Jami. Folosește opțiunea \"Exportă contul Jami\" pentru a obține un cod PIN.</string>
@@ -189,7 +190,7 @@
   <string name="profile_name_hint">Introdu numele tău</string>
   <!--Share fragment-->
   <string name="share_message">Scanează acest cod cu Jami</string>
-  <string name="share_message_no_account">Selecționează un cont pentru distribuire.</string>
+  <string name="share_message_no_account">Alege un cont pentru distribuire.</string>
   <string name="share_your_account_information">Distribuie detaliile mele de contact</string>
   <string name="share_label">Distribuie</string>
   <string name="generic_error_migration">Eroare</string>
@@ -219,7 +220,7 @@
   <string name="search_results">Rezultatele căutării</string>
   <string name="tv_contact_row_header">Contacte</string>
   <string name="gallery_error_title">Aplicația Galerie nu a fost găsită</string>
-  <string name="gallery_error_message">Nu a fost găsită nicio aplicație pe dispozitiv pentru a deschide galeria</string>
+  <string name="gallery_error_message">Nu a fost găsită nicio aplicație instalată care să deschidă galeria</string>
   <string name="generic_error">A apărut o eroare necunoscută</string>
   <!--File Transfer-->
   <string name="invalid_file">Fișier greșit</string>
