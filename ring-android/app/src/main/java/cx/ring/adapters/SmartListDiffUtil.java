@@ -47,7 +47,9 @@ public class SmartListDiffUtil extends DiffUtil.Callback {
 
     @Override
     public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-        return mNewList.get(newItemPosition).getContact() == mOldList.get(oldItemPosition).getContact();
+        SmartListViewModel oldItem = mOldList.get(oldItemPosition);
+        SmartListViewModel newItem = mNewList.get(newItemPosition);
+        return newItem.getHeaderTitle() == oldItem.getHeaderTitle() && newItem.getContact() == oldItem.getContact();
     }
 
     @Override
