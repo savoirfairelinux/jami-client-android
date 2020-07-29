@@ -397,6 +397,10 @@ public class Account {
         return mDetails.get(ConfigKey.ACCOUNT_USERNAME);
     }
 
+    public String getDisplayname() {
+        return mDetails.get(ConfigKey.ACCOUNT_DISPLAYNAME);
+    }
+
     public String getDisplayUsername() {
         if (isJami()) {
             String registeredName = getRegisteredName();
