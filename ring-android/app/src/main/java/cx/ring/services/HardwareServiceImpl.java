@@ -415,6 +415,8 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         Point minVideoSize;
         if (useLargerSize)
             minVideoSize = parseResolution(mPreferenceService.getResolution());
+        else if (mPreferenceService.isHardwareAccelerationEnabled())
+            minVideoSize = VIDEO_SIZE_HD;
         else
             minVideoSize = VIDEO_SIZE_LOW;
 
