@@ -63,6 +63,7 @@ public enum ConfigKey {
     ACCOUNT_PEER_DISCOVERY("Account.peerDiscovery"),
     ACCOUNT_DISCOVERY("Account.accountDiscovery"),
     ACCOUNT_PUBLISH("Account.accountPublish"),
+    ACCOUNT_DISPLAYNAME("Account.displayName"),
     VIDEO_ENABLED("Account.videoEnabled"),
     VIDEO_PORT_MIN("Account.videoPortMin"),
     VIDEO_PORT_MAX("Account.videoPortMax"),
