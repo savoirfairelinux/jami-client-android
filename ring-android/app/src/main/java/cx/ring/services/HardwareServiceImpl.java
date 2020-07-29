@@ -410,11 +410,14 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     @Override
     public void getCameraInfo(String camId, IntVect formats, UintVect sizes, UintVect rates) {
         // Use a larger resolution for Android 6.0+, 64 bits devices
-        final boolean useLargerSize = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.SUPPORTED_64_BIT_ABIS.length > 0;
+        final boolean isRecentSdk = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
+        final boolean is64Bits = Build.SUPPORTED_64_BIT_ABIS.length > 0;
         //int MIN_WIDTH = useLargerSize ? (useHD ? VIDEO_WIDTH_HD : VIDEO_WIDTH) : VIDEO_WIDTH_MIN;
         Point minVideoSize;
-        if (useLargerSize)
+        if (isRecentSdk && is64Bits)
             minVideoSize = parseResolution(mPreferenceService.getResolution());
+        else if (isRecentSdk && mPreferenceService.isHardwareAccelerationEnabled())
+            minVideoSize = VIDEO_SIZE_HD;
         else
             minVideoSize = VIDEO_SIZE_LOW;
 
