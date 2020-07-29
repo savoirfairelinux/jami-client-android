@@ -1288,6 +1288,15 @@ public class AccountService {
         accountSubject.onNext(account);
     }
 
+    public void accountAvatarReceived(String accountId, String photo) {
+        Account account = getAccount(accountId);
+        if (account == null)
+            return;
+        mVCardService.saveVCardProfile(accountId, account.getUri(), account.getDisplayname(), photo)
+                .subscribeOn(Schedulers.io())
+                .subscribe(account::setProfile, e -> Log.e(TAG, "Error saving profile", e));
+    }
+
     void incomingAccountMessage(String accountId, String messageId, String callId, String from, Map<String, String> messages) {
         Log.d(TAG, "incomingAccountMessage: " + accountId + " " + messages.size());
         Message message = new Message();

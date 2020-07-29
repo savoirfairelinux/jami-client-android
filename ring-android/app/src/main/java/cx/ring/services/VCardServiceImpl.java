@@ -21,6 +21,7 @@ package cx.ring.services;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Base64;
 
 import androidx.annotation.NonNull;
 
@@ -80,6 +81,16 @@ public class VCardServiceImpl extends VCardService {
                     }
                     return vcard;
                 });
+    }
+
+    @Override
+    public Single<VCard> saveVCardProfile(String accountId, String uri, String displayName, String picture)
+    {
+        return Single.fromCallable(() -> {
+            VCard vcard = VCardUtils.writeData(uri, displayName, Base64.decode(picture, Base64.DEFAULT));
+            VCardUtils.saveLocalProfileToDisk(vcard, accountId, mContext.getFilesDir());
+            return vcard;
+        });
     }
 
     @Override

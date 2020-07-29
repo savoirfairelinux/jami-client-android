@@ -146,6 +146,11 @@ public class DaemonService {
         }
 
         @Override
+        public void accountAvatarReceived(String account_id, String photo) {
+            mExecutor.submit(() -> mAccountService.accountAvatarReceived(account_id, photo));
+        }
+
+        @Override
         public void incomingAccountMessage(String accountId, String messageId, String from, StringMap messages) {
             if (messages == null || messages.isEmpty())
                 return;
