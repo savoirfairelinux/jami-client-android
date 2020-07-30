@@ -25,7 +25,7 @@ along with this program; if not, write to the Free Software
         <Preference
             android:key="ringtone"
             android:summary="@string/account_ringtone_summary"
-            android:title="Set a ringtone"
+            android:title="@string/account_ringtone_title"
             android:icon="@drawable/baseline_notifications_active_24"/>
 
     </PreferenceCategory>

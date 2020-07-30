@@ -126,7 +126,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:dependency="TLS.enable"
             android:key="TLS.requireClientCertificate"
             android:persistent="false"
-            android:title="TLS Require Client Certificate" />
+            android:title="@string/account_require_client_certificate_label" />
     </androidx.preference.PreferenceCategory>
 
 </androidx.preference.PreferenceScreen>
