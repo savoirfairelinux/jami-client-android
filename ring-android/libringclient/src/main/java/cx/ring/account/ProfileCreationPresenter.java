@@ -101,7 +101,9 @@ public class ProfileCreationPresenter extends RootPresenter<ProfileCreationView>
 
     public void cameraPermissionChanged(boolean isGranted) {
         if (isGranted && mHardwareService.isVideoAvailable()) {
-            mHardwareService.initVideo().subscribe();
+            mHardwareService.initVideo()
+                    .onErrorComplete()
+                    .subscribe();
         }
     }
 
