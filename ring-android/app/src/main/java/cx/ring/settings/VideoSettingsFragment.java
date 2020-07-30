@@ -52,7 +52,7 @@ public class VideoSettingsFragment extends PreferenceFragmentCompat {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (DeviceUtils.isTablet(getContext())) {
-            Toolbar toolbar = getActivity().findViewById(R.id.main_toolbar);
+            Toolbar toolbar = requireActivity().findViewById(R.id.main_toolbar);
             TextView title = toolbar.findViewById(R.id.contact_title);
             ImageView logo = toolbar.findViewById(R.id.contact_image);
 
