@@ -29,6 +29,7 @@ import cx.ring.model.Account;
 import cx.ring.model.ConfigKey;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
+import cx.ring.services.HardwareService;
 import io.reactivex.Scheduler;
 
 public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> {
@@ -37,14 +38,17 @@ public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> {
 
     protected AccountService mAccountService;
 
+    protected HardwareService mHardwareService;
+
     private Account mAccount;
     @Inject
     @Named("UiScheduler")
     protected Scheduler mUiScheduler;
 
     @Inject
-    GeneralAccountPresenter(AccountService accountService) {
+    GeneralAccountPresenter(AccountService accountService, HardwareService hardwareService) {
         this.mAccountService = accountService;
+        this.mHardwareService = hardwareService;
     }
 
     // Init with current account
@@ -73,6 +77,10 @@ public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> {
             Log.e(TAG, "init: No currentAccount available");
             getView().finish();
         }
+    }
+
+    public HardwareService getHardwareService() {
+        return mHardwareService;
     }
 
     void setEnabled(boolean enabled) {
