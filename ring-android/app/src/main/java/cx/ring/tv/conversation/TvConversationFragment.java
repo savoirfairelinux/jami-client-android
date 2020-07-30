@@ -568,7 +568,11 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     }
 
     private void sendAudio() {
-        Log.w(TAG, "onActivityResult: fileName " + fileName.getAbsolutePath() + " " + fileName.exists() + " " + fileName.length());
+        if (fileName == null) {
+            Log.e(TAG, "No name for audio file");
+            return;
+        }
+        Log.w(TAG, "fileName " + fileName.getAbsolutePath() + " " + fileName.exists() + " " + fileName.length());
         Single<File> file = Single.just(fileName);
         fileName = null;
         if (file == null) {
