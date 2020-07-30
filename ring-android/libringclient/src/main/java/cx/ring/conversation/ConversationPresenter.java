@@ -405,7 +405,9 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
 
     public void cameraPermissionChanged(boolean isGranted) {
         if (isGranted && mHardwareService.isVideoAvailable()) {
-            mHardwareService.initVideo().subscribe();
+            mHardwareService.initVideo()
+                    .onErrorComplete()
+                    .subscribe();
         }
     }
 

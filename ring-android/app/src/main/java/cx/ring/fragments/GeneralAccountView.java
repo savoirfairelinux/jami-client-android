@@ -22,6 +22,7 @@ package cx.ring.fragments;
 import androidx.annotation.NonNull;
 
 import cx.ring.model.Account;
+import cx.ring.utils.Tuple;
 
 public interface GeneralAccountView {
 
@@ -32,4 +33,6 @@ public interface GeneralAccountView {
     void accountChanged(@NonNull Account account);
 
     void finish();
+
+    void updateResolutions(Tuple<Integer, Integer> maxResolution);
 }

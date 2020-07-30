@@ -25,6 +25,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.leanback.preference.LeanbackSettingsFragmentCompat;
+import androidx.preference.ListPreference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreference;
@@ -33,6 +34,9 @@ import androidx.preference.PreferenceScreen;
 
 import android.view.View;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.fragments.GeneralAccountPresenter;
@@ -40,6 +44,7 @@ import cx.ring.fragments.GeneralAccountView;
 import cx.ring.model.Account;
 import cx.ring.model.ConfigKey;
 import cx.ring.services.SharedPreferencesServiceImpl;
+import cx.ring.utils.Tuple;
 
 public class TVSettingsFragment extends LeanbackSettingsFragmentCompat {
 
@@ -103,11 +108,41 @@ public class TVSettingsFragment extends LeanbackSettingsFragmentCompat {
         }
 
         @Override
+        public void updateResolutions(Tuple<Integer, Integer> maxResolution) {
+            String[] videoResolutionsNames = getResources().getStringArray(R.array.video_resolutionStrings);
+            String[] videoResolutionsValues = getResources().getStringArray(R.array.video_resolutions);
+
+            int currentResolution = presenter.getPreferenceService().getResolution();
+            videoResolutionsValues = filterResolutions(videoResolutionsValues, currentResolution, maxResolution);
+
+            ListPreference lpVideoResolution = findPreference("video_resolution");
+            if (lpVideoResolution != null) {
+                lpVideoResolution.setEntries(Arrays.copyOfRange(videoResolutionsNames, 0, videoResolutionsValues.length));
+                lpVideoResolution.setEntryValues(videoResolutionsValues);
+            }
+        }
+
+        @Override
         public void onCreatePreferences(Bundle bundle, String rootKey) {
             PreferenceManager pm = getPreferenceManager();
             pm.setSharedPreferencesMode(Context.MODE_PRIVATE);
             pm.setSharedPreferencesName(SharedPreferencesServiceImpl.PREFS_VIDEO);
             setPreferencesFromResource(R.xml.tv_account_general_pref, rootKey);
+        }
+
+        private String[] filterResolutions(String[] videoResolutionsValues, int currentResolution, Tuple<Integer, Integer> maxResolution) {
+            if (maxResolution == null) return videoResolutionsValues;
+            if (currentResolution > maxResolution.second) return videoResolutionsValues;
+
+            ArrayList<String> resolutions = new ArrayList<>();
+            for (String videoResolutionsValue : videoResolutionsValues) {
+                int resolutionValueInt = Integer.parseInt(videoResolutionsValue);
+                if (resolutionValueInt <= maxResolution.second) {
+                    resolutions.add(videoResolutionsValue);
+                }
+            }
+
+            return resolutions.toArray(new String[0]);
         }
 
         @Override
