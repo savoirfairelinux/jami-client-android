@@ -164,7 +164,7 @@ public class AccountWizardActivity extends BaseActivity<AccountWizardPresenter> 
             if (fragment instanceof JamiLinkAccountFragment) {
                 ((JamiLinkAccountFragment) fragment).scrollPagerFragment(model);
             } else if (fragment instanceof JamiAccountConnectFragment) {
-                ((JamiAccountConnectFragment) fragment).scrollPagerFragment(model);
+                profileCreated(model, false);
             }
         }
     }
