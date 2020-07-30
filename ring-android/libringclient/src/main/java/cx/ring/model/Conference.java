@@ -86,6 +86,11 @@ public class Conference {
         }
         return mConfState;
     }
+
+    public void setState(String state) {
+        mConfState = SipCall.CallStatus.fromConferenceString(state);
+    }
+
     public List<SipCall> getParticipants() {
         return mParticipants;
     }

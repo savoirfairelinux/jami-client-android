@@ -289,6 +289,19 @@ public class SipCall extends Interaction {
                     return NONE;
             }
         }
+
+        public static CallStatus fromConferenceString(String state) {
+            switch (state) {
+                case "ACTIVE_ATTACHED":
+                    return CURRENT;
+                case "ACTIVE_DETACHED":
+                case "HOLD":
+                    return HOLD;
+                default:
+                    return NONE;
+            }
+        }
+
     }
 
     public enum  Direction {
