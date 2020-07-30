@@ -3,6 +3,7 @@
  *
  *  Author: Thibault Wittemberg <thibault.wittemberg@savoirfairelinux.com>
  *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+ *  Author: Raphaël Brulé <raphael.brule@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -129,12 +130,21 @@ public class AccountService {
         Map<String, String> messages;
     }
     public static class Location {
+        public enum Type {
+            position,
+            stop
+        }
+        Type type;
         String accountId;
         String callId;
         Uri peer;
         long time;
         double latitude;
         double longitude;
+
+        public Type getType() {
+            return type;
+        }
 
         public String getAccount() {
             return accountId;
@@ -182,8 +192,14 @@ public class AccountService {
                     if (obj.size() < 2)
                         return Maybe.empty();
                     Location l = new Location();
-                    l.latitude = obj.get("lat").getAsDouble();
-                    l.longitude = obj.get("long").getAsDouble();
+
+                    if (obj.get("type") == null || obj.get("type").getAsString().equals(Location.Type.position.toString())) {
+                        l.type = Location.Type.position;
+                        l.latitude = obj.get("lat").getAsDouble();
+                        l.longitude = obj.get("long").getAsDouble();
+                    } else if (obj.get("type").getAsString().equals(Location.Type.stop.toString())) {
+                        l.type = Location.Type.stop;
+                    }
                     l.time = obj.get("time").getAsLong();
                     l.accountId = msg.accountId;
                     l.callId = msg.callId;
