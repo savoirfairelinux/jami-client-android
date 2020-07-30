@@ -689,6 +689,7 @@ public class CallService {
                 conf = new Conference(confId);
                 currentConferences.put(confId, conf);
             }
+            conf.setState(state);
             Set<String> participants = new HashSet<>(Ringservice.getParticipantList(confId));
             // Add new participants
             for (String callId : participants) {
