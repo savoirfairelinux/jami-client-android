@@ -134,7 +134,7 @@ public final class VCardUtils {
             peerProfilesFile.mkdirs();
         }
 
-        File file = new File(path + File.separator + filename);
+        File file = new File(peerProfilesFile, filename);
         try (VCardWriter writer = new VCardWriter(file, VCardVersion.V2_1)) {
             writer.getVObjectWriter().getFoldedLineWriter().setLineLength(null);
             writer.write(vcard);

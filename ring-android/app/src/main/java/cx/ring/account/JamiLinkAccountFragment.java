@@ -124,6 +124,11 @@ public class JamiLinkAccountFragment extends BaseSupportFragment {
             return;
         }
         mBinding.pager.setCurrentItem(mBinding.pager.getCurrentItem() + 1);
+        for (Fragment fragment : getChildFragmentManager().getFragments()) {
+            if (fragment instanceof JamiAccountPasswordFragment) {
+                ((JamiAccountPasswordFragment) fragment).setUsername(accountCreationModel.getUsername());
+            }
+        }
     }
 
     private static class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
