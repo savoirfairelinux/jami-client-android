@@ -1,8 +1,9 @@
 /*
- *  Copyright (C) 2004-2019 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2020 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+ *  Author: Raphaël Brulé <raphael.brule@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -900,26 +901,45 @@ public class Account {
         Log.w(TAG, "onLocationUpdate " + location.getPeer() + " " + location.getLatitude() + ",  " + location.getLongitude());
         CallContact contact = getContactFromCache(location.getPeer());
 
-        ContactLocation cl = new ContactLocation();
-        cl.timestamp = location.getDate();
-        cl.latitude = location.getLatitude();
-        cl.longitude = location.getLongitude();
-        cl.receivedDate = new Date();
+        switch (location.getType()) {
+            case position:
+                ContactLocation cl = new ContactLocation();
+                cl.timestamp = location.getDate();
+                cl.latitude = location.getLatitude();
+                cl.longitude = location.getLongitude();
+                cl.receivedDate = new Date();
 
-        Observable<ContactLocation> ls = contactLocations.get(contact);
-        if (ls == null) {
-            ls = BehaviorSubject.createDefault(cl);
-            contactLocations.put(contact, ls);
-            mLocationSubject.onNext(contactLocations);
-            ContactLocationEntry entry = new ContactLocationEntry();
-            entry.contact = contact;
-            entry.location = ls;
-            mLocationStartedSubject.onNext(entry);
-        } else {
-            if (ls.blockingFirst().timestamp < cl.timestamp)
-                ((Subject<ContactLocation>) ls).onNext(cl);
+                Observable<ContactLocation> ls = contactLocations.get(contact);
+                if (ls == null) {
+                    ls = BehaviorSubject.createDefault(cl);
+                    contactLocations.put(contact, ls);
+                    mLocationSubject.onNext(contactLocations);
+                    ContactLocationEntry entry = new ContactLocationEntry();
+                    entry.contact = contact;
+                    entry.location = ls;
+                    mLocationStartedSubject.onNext(entry);
+                } else {
+                    if (ls.blockingFirst().timestamp < cl.timestamp)
+                        ((Subject<ContactLocation>) ls).onNext(cl);
+                }
+                break;
+
+            case stop:
+                forceExpireContact(contact);
+                break;
         }
-        return cl.receivedDate.getTime() + LOCATION_SHARING_EXPIRATION_MS;
+
+        return LOCATION_SHARING_EXPIRATION_MS;
+    }
+
+    synchronized private void forceExpireContact(CallContact contact) {
+        Log.w(TAG, "forceExpireContact " + contactLocations.size());
+        Observable<ContactLocation> cl = contactLocations.remove(contact);
+        if (cl != null) {
+            Log.w(TAG, "Contact stopped sharing location: " + contact.getDisplayName());
+            ((Subject<ContactLocation>) cl).onComplete();
+            mLocationSubject.onNext(contactLocations);
+        }
     }
 
     synchronized public void maintainLocation() {
