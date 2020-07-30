@@ -158,7 +158,9 @@ public abstract class JamiApplication extends Application {
                 if (mDeviceRuntimeService.hasVideoPermission() && mHardwareService.isVideoAvailable()) {
                     //initVideo is called here to give time to the application to initialize hardware cameras
                     Log.d(TAG, "bootstrapDaemon: At least one camera available. Initializing video...");
-                    mHardwareService.initVideo().subscribe();
+                    mHardwareService.initVideo()
+                            .onErrorComplete()
+                            .subscribe();
                 } else {
                     Log.d(TAG, "bootstrapDaemon: No camera available");
                 }
