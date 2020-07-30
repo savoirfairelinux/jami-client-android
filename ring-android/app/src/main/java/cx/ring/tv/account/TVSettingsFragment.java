@@ -72,13 +72,13 @@ public class TVSettingsFragment extends LeanbackSettingsFragmentCompat {
 
         @Override
         public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-            ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
+            ((JamiApplication) requireActivity().getApplication()).getInjectionComponent().inject(this);
             super.onViewCreated(view, savedInstanceState);
             presenter.init();
         }
 
         @Override
-        public void addJamiPreferences(String acccouontId) {
+        public void addJamiPreferences(String accountId) {
 
         }
 
@@ -93,12 +93,13 @@ public class TVSettingsFragment extends LeanbackSettingsFragmentCompat {
             autoAnswer = account.getConfig().getBool(ConfigKey.ACCOUNT_AUTOANSWER);
 
             SwitchPreference pref = findPreference(ConfigKey.ACCOUNT_AUTOANSWER.key());
-            pref.setChecked(autoAnswer);
+            if (pref != null)
+                pref.setChecked(autoAnswer);
         }
 
         @Override
         public void finish() {
-            getActivity().onBackPressed();
+            requireActivity().onBackPressed();
         }
 
         @Override
