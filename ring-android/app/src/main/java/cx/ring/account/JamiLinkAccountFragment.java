@@ -47,11 +47,11 @@ import cx.ring.mvp.AccountCreationModel;
 public class JamiLinkAccountFragment extends BaseSupportFragment {
 
     public static final String TAG = JamiLinkAccountFragment.class.getSimpleName();
-    private static final int NUM_PAGES = 2;
-
     private AccountCreationModel model;
     private FragAccJamiLinkBinding mBinding;
     private Fragment mCurrentFragment;
+
+    private static final int NUM_PAGES = 2;
 
     private final OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(false) {
         @Override
@@ -89,7 +89,7 @@ public class JamiLinkAccountFragment extends BaseSupportFragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ScreenSlidePagerAdapter pagerAdapter = new ScreenSlidePagerAdapter(getChildFragmentManager(), model);
+        JamiLinkAccountFragment.ScreenSlidePagerAdapter pagerAdapter = new JamiLinkAccountFragment.ScreenSlidePagerAdapter(getChildFragmentManager(), model);
         mBinding.pager.setAdapter(pagerAdapter);
         mBinding.pager.disableScroll(true);
 
@@ -124,6 +124,11 @@ public class JamiLinkAccountFragment extends BaseSupportFragment {
             return;
         }
         mBinding.pager.setCurrentItem(mBinding.pager.getCurrentItem() + 1);
+        for (Fragment fragment : getChildFragmentManager().getFragments()) {
+            if (fragment instanceof JamiAccountPasswordFragment) {
+                ((JamiAccountPasswordFragment) fragment).setUsername(accountCreationModel.getUsername());
+            }
+        }
     }
 
     private static class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
