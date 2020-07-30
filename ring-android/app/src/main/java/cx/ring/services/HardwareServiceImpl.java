@@ -54,6 +54,7 @@ import cx.ring.model.SipCall.CallStatus;
 import cx.ring.utils.BluetoothWrapper;
 import cx.ring.utils.Log;
 import cx.ring.utils.Ringer;
+import cx.ring.utils.Tuple;
 import io.reactivex.Completable;
 
 public class HardwareServiceImpl extends HardwareService implements AudioManager.OnAudioFocusChangeListener, BluetoothWrapper.BluetoothChangeListener {
@@ -705,6 +706,17 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     @Override
     public int getCameraCount() {
         return cameraService.getCameraCount();
+    }
+
+    @Override
+    public Tuple<Integer, Integer> getMaxResolution() {
+        return getMaxResolution(mCapturingId);
+    }
+
+    @Override
+    public Tuple<Integer, Integer> getMaxResolution(String camId) {
+        Point maxResolution = cameraService.getMaxResolution(camId);
+        return new Tuple<>(maxResolution.x, maxResolution.y);
     }
 
     @Override

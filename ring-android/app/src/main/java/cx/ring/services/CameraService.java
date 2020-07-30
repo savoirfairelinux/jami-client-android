@@ -211,11 +211,13 @@ public class CameraService {
         Log.d(TAG, "getCameraInfo: " + camId + " min. size: " + minVideoSize);
         DeviceParams p = new CameraService.DeviceParams();
         p.size = new Point(0, 0);
+        p.maxSize = new Point(0, 0);
         p.infos = new Camera.CameraInfo();
 
         rates.clear();
 
-        fillCameraInfo(p, camId, formats, sizes, rates, minVideoSize);
+        fillCameraInfo(p, camId, formats, rates, minVideoSize);
+        sizes.clear();
         sizes.add((long) p.size.x);
         sizes.add((long) p.size.y);
         sizes.add((long) p.size.y);
@@ -226,6 +228,13 @@ public class CameraService {
 
     public DeviceParams getNativeParams(String camId) {
         return mNativeParams.get(camId);
+    }
+
+    public Point getMaxResolution(String camId) {
+        DeviceParams deviceParams = mNativeParams.get(camId);
+        if (deviceParams == null)
+            return null;
+        return deviceParams.maxSize;
     }
 
     public boolean isPreviewFromFrontCamera() {
@@ -281,6 +290,7 @@ public class CameraService {
 
     static class DeviceParams {
         Point size;
+        Point maxSize;
         long rate;
         Camera.CameraInfo infos;
 
@@ -869,7 +879,7 @@ public class CameraService {
         }
     }
 
-    void fillCameraInfo(DeviceParams p, String camId, IntVect formats, UintVect sizes, UintVect rates, Point minVideoSize) {
+    void fillCameraInfo(DeviceParams p, String camId, IntVect formats, UintVect rates, Point minVideoSize) {
         if (manager == null)
             return;
         try {
@@ -893,6 +903,10 @@ public class CameraService {
                             && newSize.getWidth() < minVideoSize.x
                                     ? s.getWidth() > newSize.getWidth()
                                     : (s.getWidth() >= minVideoSize.x && s.getWidth() < newSize.getWidth()))) {
+                    if (s.getWidth() * s.getHeight() > p.maxSize.x * p.maxSize.y) {
+                        p.maxSize.x = s.getWidth();
+                        p.maxSize.y = s.getHeight();
+                    }
                     newSize = s;
                 }
             }
