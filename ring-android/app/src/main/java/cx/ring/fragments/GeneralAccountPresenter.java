@@ -29,7 +29,11 @@ import cx.ring.model.Account;
 import cx.ring.model.ConfigKey;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
+import cx.ring.services.HardwareService;
+import cx.ring.services.PreferencesService;
+import cx.ring.utils.Tuple;
 import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> {
 
@@ -37,14 +41,20 @@ public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> {
 
     protected AccountService mAccountService;
 
+    protected HardwareService mHardwareService;
+
+    protected PreferencesService mPreferenceService;
+
     private Account mAccount;
     @Inject
     @Named("UiScheduler")
     protected Scheduler mUiScheduler;
 
     @Inject
-    GeneralAccountPresenter(AccountService accountService) {
+    GeneralAccountPresenter(AccountService accountService, HardwareService hardwareService, PreferencesService preferencesService) {
         this.mAccountService = accountService;
+        this.mHardwareService = hardwareService;
+        this.mPreferenceService = preferencesService;
     }
 
     // Init with current account
@@ -57,6 +67,7 @@ public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> {
     }
 
     private void init(Account account) {
+        mCompositeDisposable.clear();
         mAccount = account;
         if (account != null) {
             if (account.isJami()) {
@@ -65,14 +76,33 @@ public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> {
                 getView().addSipPreferences();
             }
             getView().accountChanged(account);
-            mCompositeDisposable.clear();
             mCompositeDisposable.add(mAccountService.getObservableAccount(account.getAccountID())
                     .observeOn(mUiScheduler)
                     .subscribe(acc -> getView().accountChanged(acc)));
+
+            Tuple<Integer, Integer> maxResolution;
+            try {
+                maxResolution = mHardwareService.getMaxResolution();
+            } catch (NullPointerException e) {
+                maxResolution = null;
+            }
+            getView().updateResolutions(maxResolution);
+            mCompositeDisposable.add(mHardwareService.getMaxResolutions()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(res -> getView().updateResolutions(res),
+                            e -> getView().updateResolutions(null)));
         } else {
             Log.e(TAG, "init: No currentAccount available");
             getView().finish();
         }
+    }
+
+    public HardwareService getHardwareService() {
+        return mHardwareService;
+    }
+
+    public PreferencesService getPreferenceService() {
+        return mPreferenceService;
     }
 
     void setEnabled(boolean enabled) {
