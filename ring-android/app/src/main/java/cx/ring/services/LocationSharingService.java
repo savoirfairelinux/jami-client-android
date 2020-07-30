@@ -44,6 +44,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Date;
@@ -192,6 +193,7 @@ public class LocationSharingService extends Service implements LocationListener 
                         .throttleLatest(10, TimeUnit.SECONDS)
                         .map(location -> {
                             JSONObject out = new JSONObject();
+                            out.put("type", AccountService.Location.Type.position.toString());
                             out.put("lat", location.getLatitude());
                             out.put("long", location.getLongitude());
                             out.put("alt", location.getAltitude());
@@ -220,8 +222,22 @@ public class LocationSharingService extends Service implements LocationListener 
         else if (ACTION_STOP.equals(action)) {
             if (path == null)
                 contactLocationShare.clear();
-            else
+            else {
                 contactLocationShare.remove(path);
+
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("type", AccountService.Location.Type.stop.toString());
+                    jsonObject.put("time", Long.MAX_VALUE);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                Log.w(TAG, "location send " + jsonObject + " to " + contactLocationShare.size());
+                StringMap msgs = new StringMap();
+                msgs.setRaw(CallService.MIME_GEOLOCATION, Blob.fromString(jsonObject.toString()));
+                Ringservice.sendAccountTextMessage(path.getAccountId(), path.getContactId(), msgs);
+            }
 
             mContactSharingSubject.onNext(contactLocationShare.keySet());
 

@@ -896,26 +896,56 @@ public class Account {
         Log.w(TAG, "onLocationUpdate " + location.getPeer() + " " + location.getLatitude() + ",  " + location.getLongitude());
         CallContact contact = getContactFromCache(location.getPeer());
 
-        ContactLocation cl = new ContactLocation();
-        cl.timestamp = location.getDate();
-        cl.latitude = location.getLatitude();
-        cl.longitude = location.getLongitude();
-        cl.receivedDate = new Date();
+        switch (location.getType()) {
+            case position:
+                ContactLocation cl = new ContactLocation();
+                cl.timestamp = location.getDate();
+                cl.latitude = location.getLatitude();
+                cl.longitude = location.getLongitude();
+                cl.receivedDate = new Date();
 
-        Observable<ContactLocation> ls = contactLocations.get(contact);
-        if (ls == null) {
-            ls = BehaviorSubject.createDefault(cl);
-            contactLocations.put(contact, ls);
-            mLocationSubject.onNext(contactLocations);
-            ContactLocationEntry entry = new ContactLocationEntry();
-            entry.contact = contact;
-            entry.location = ls;
-            mLocationStartedSubject.onNext(entry);
-        } else {
-            if (ls.blockingFirst().timestamp < cl.timestamp)
-                ((Subject<ContactLocation>) ls).onNext(cl);
+                Observable<ContactLocation> ls = contactLocations.get(contact);
+                if (ls == null) {
+                    ls = BehaviorSubject.createDefault(cl);
+                    contactLocations.put(contact, ls);
+                    mLocationSubject.onNext(contactLocations);
+                    ContactLocationEntry entry = new ContactLocationEntry();
+                    entry.contact = contact;
+                    entry.location = ls;
+                    mLocationStartedSubject.onNext(entry);
+                } else {
+                    if (ls.blockingFirst().timestamp < cl.timestamp)
+                        ((Subject<ContactLocation>) ls).onNext(cl);
+                }
+                break;
+
+            case stop:
+                forceExpireContact(contact);
+                break;
         }
-        return cl.receivedDate.getTime() + LOCATION_SHARING_EXPIRATION_MS;
+
+        return LOCATION_SHARING_EXPIRATION_MS;
+    }
+
+    synchronized private void forceExpireContact(CallContact contact) {
+        Log.w(TAG, "forceExpireContact " + contactLocations.size());
+        if (contactLocations.isEmpty())
+            return;
+        boolean changed = false;
+
+        Iterator<Map.Entry<CallContact, Observable<ContactLocation>>> it = contactLocations.entrySet().iterator();
+        while (it.hasNext())  {
+            Map.Entry<CallContact, Observable<ContactLocation>> e = it.next();
+            if (e.getKey().equals(contact)) {
+                Log.w(TAG, "forceExpireContact clearing " + e.getKey().getDisplayName());
+                ((Subject<ContactLocation>) e.getValue()).onComplete();
+                changed = true;
+                it.remove();
+            }
+        }
+
+        if (changed)
+            mLocationSubject.onNext(contactLocations);
     }
 
     synchronized public void maintainLocation() {
