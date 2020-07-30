@@ -43,6 +43,7 @@ import cx.ring.model.ConfigKey;
 import cx.ring.mvp.BasePreferenceFragment;
 import cx.ring.services.SharedPreferencesServiceImpl;
 import cx.ring.utils.Log;
+import cx.ring.utils.Tuple;
 import cx.ring.views.EditTextIntegerPreference;
 import cx.ring.views.EditTextPreferenceDialog;
 import cx.ring.views.PasswordPreference;
@@ -131,6 +132,10 @@ public class GeneralAccountFragment extends BasePreferenceFragment<GeneralAccoun
             activity.onBackPressed();
     }
 
+    @Override
+    public void updateResolutions(Tuple<Integer, Integer> maxResolution, int currentResolution) {
+    }
+
     private CharSequence getFileSizeSummary(int size, int maxSize) {
         if (size == 0)  {
             return getText(R.string.account_accept_files_never);
@@ -162,7 +167,7 @@ public class GeneralAccountFragment extends BasePreferenceFragment<GeneralAccoun
 
     @Override
     public void onDisplayPreferenceDialog(Preference preference) {
-        FragmentManager fragmentManager = requireFragmentManager();
+        FragmentManager fragmentManager = getParentFragmentManager();
         if (fragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) != null) {
             return;
         }
