@@ -29,7 +29,10 @@ import cx.ring.model.Account;
 import cx.ring.model.ConfigKey;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
+import cx.ring.services.HardwareService;
+import cx.ring.services.PreferencesService;
 import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> {
 
@@ -37,14 +40,20 @@ public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> {
 
     protected AccountService mAccountService;
 
+    protected HardwareService mHardwareService;
+
+    protected PreferencesService mPreferenceService;
+
     private Account mAccount;
     @Inject
     @Named("UiScheduler")
     protected Scheduler mUiScheduler;
 
     @Inject
-    GeneralAccountPresenter(AccountService accountService) {
+    GeneralAccountPresenter(AccountService accountService, HardwareService hardwareService, PreferencesService preferencesService) {
         this.mAccountService = accountService;
+        this.mHardwareService = hardwareService;
+        this.mPreferenceService = preferencesService;
     }
 
     // Init with current account
@@ -57,6 +66,7 @@ public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> {
     }
 
     private void init(Account account) {
+        mCompositeDisposable.clear();
         mAccount = account;
         if (account != null) {
             if (account.isJami()) {
@@ -65,10 +75,21 @@ public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> {
                 getView().addSipPreferences();
             }
             getView().accountChanged(account);
-            mCompositeDisposable.clear();
             mCompositeDisposable.add(mAccountService.getObservableAccount(account.getAccountID())
                     .observeOn(mUiScheduler)
                     .subscribe(acc -> getView().accountChanged(acc)));
+
+            getView().updateResolutions(null, mPreferenceService.getResolution());
+            mCompositeDisposable.add(mHardwareService.getMaxResolutions()
+                    .observeOn(mUiScheduler)
+                    .subscribe(res -> {
+                        if (res.first == null) {
+                            getView().updateResolutions(null, mPreferenceService.getResolution());
+                        } else {
+                            getView().updateResolutions(res, mPreferenceService.getResolution());
+                        }
+                    },
+                    e -> getView().updateResolutions(null, mPreferenceService.getResolution())));
         } else {
             Log.e(TAG, "init: No currentAccount available");
             getView().finish();
