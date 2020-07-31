@@ -51,7 +51,11 @@ public class TVJamiAccountCreationFragment
     private static final int PASSWORD_CONFIRMATION = 2;
     private static final int CHECK = 3;
     private static final int CONTINUE = 4;
+
     private AccountCreationModelImpl model;
+    private boolean mIsPasswordCorrect = true;
+    private String mPassword;
+    private String mPasswordConfirm;
 
     private TextWatcher mUsernameWatcher = new TextWatcher() {
         @Override
@@ -116,7 +120,7 @@ public class TVJamiAccountCreationFragment
         addDisabledNonFocusableAction(getActivity(), actions, CHECK, "", "", null);
         addPasswordAction(getActivity(), actions, PASSWORD, getString(R.string.prompt_new_password_optional), getString(R.string.enter_password), "");
         addPasswordAction(getActivity(), actions, PASSWORD_CONFIRMATION, getString(R.string.prompt_new_password_repeat), getString(R.string.enter_password), "");
-        addDisabledAction(getActivity(), actions, CONTINUE, getString(R.string.action_create), "", null, true);
+        addAction(getActivity(), actions, CONTINUE, getString(R.string.action_create), "", true);
     }
 
     @Override
@@ -173,25 +177,25 @@ public class TVJamiAccountCreationFragment
     }
 
     private void passwordChanged(GuidedAction action) {
-        String password = action.getEditDescription().toString();
-        if (password.length() > 0) {
-            action.setDescription(StringUtils.toPassword(password));
+        mPassword = action.getEditDescription().toString();
+        if (mPassword.length() > 0) {
+            action.setDescription(StringUtils.toPassword(mPassword));
         } else {
             action.setDescription(getString(R.string.account_enter_password));
         }
         notifyActionChanged(findActionPositionById(PASSWORD));
-        presenter.passwordChanged(password);
+        presenter.passwordChanged(mPassword);
     }
 
     private void confirmPasswordChanged(GuidedAction action) {
-        String passwordConfirm = action.getEditDescription().toString();
-        if (passwordConfirm.length() > 0) {
-            action.setDescription(StringUtils.toPassword(passwordConfirm));
+        mPasswordConfirm = action.getEditDescription().toString();
+        if (mPasswordConfirm.length() > 0) {
+            action.setDescription(StringUtils.toPassword(mPasswordConfirm));
         } else {
             action.setDescription(getString(R.string.account_enter_password));
         }
         notifyActionChanged(findActionPositionById(PASSWORD_CONFIRMATION));
-        presenter.passwordConfirmChanged(passwordConfirm);
+        presenter.passwordConfirmChanged(mPasswordConfirm);
     }
 
     @Override
@@ -206,27 +210,32 @@ public class TVJamiAccountCreationFragment
             case ERROR:
                 actionCheck.setTitle(getResources().getString(R.string.generic_error));
                 displayErrorIconTitle(actionCheck, getString(R.string.unknown_error));
+                enableNextButton(false);
                 break;
             case ERROR_USERNAME_INVALID:
                 displayErrorIconTitle(actionCheck,getString(R.string.invalid_username));
+                enableNextButton(false);
                 break;
             case ERROR_USERNAME_TAKEN:
                 displayErrorIconTitle(actionCheck,
                         getString(R.string.username_already_taken));
+                enableNextButton(false);
                 break;
             case LOADING:
                 actionCheck.setIcon(null);
                 actionCheck.setTitle(getResources().
                         getString(R.string.looking_for_username_availability));
+                enableNextButton(false);
                 break;
             case AVAILABLE:
                 actionCheck.setTitle(getString(R.string.username_available));
                 actionCheck.setIcon(requireContext().getDrawable(R.drawable.ic_good_green));
+                enableNextButton(true);
                 break;
             case RESET:
                 actionCheck.setIcon(null);
                 actionCheck.setTitle("");
-                enableNextButton(false);
+                enableNextButton(true);
             default:
                 actionCheck.setIcon(null);
                 break;
@@ -240,9 +249,12 @@ public class TVJamiAccountCreationFragment
         GuidedAction action = findActionById(CONTINUE);
         if (display) {
             displayErrorIconDescription(action,getString(R.string.error_password_char_count));
+            mIsPasswordCorrect = false;
             action.setEnabled(false);
         } else {
             action.setDescription("");
+            mIsPasswordCorrect = true;
+            action.setEnabled(true);
         }
         notifyActionChanged(findActionPositionById(CONTINUE));
     }
@@ -252,15 +264,22 @@ public class TVJamiAccountCreationFragment
         GuidedAction action = findActionById(CONTINUE);
         if (display) {
             displayErrorIconDescription(action,getString(R.string.error_passwords_not_equals));
+            mIsPasswordCorrect = false;
             action.setEnabled(false);
         } else {
             action.setDescription("");
+            mIsPasswordCorrect = true;
+            action.setEnabled(true);
         }
         notifyActionChanged(findActionPositionById(CONTINUE));
     }
 
     @Override
     public void enableNextButton(boolean enabled) {
+        if (StringUtils.isEmpty(mPassword) && StringUtils.isEmpty(mPasswordConfirm)) {
+            mIsPasswordCorrect = true;
+        }
+        enabled = mIsPasswordCorrect && enabled;
         Log.d(TAG, "enableNextButton: " + enabled);
         GuidedAction actionContinue = findActionById(CONTINUE);
         if (enabled)
