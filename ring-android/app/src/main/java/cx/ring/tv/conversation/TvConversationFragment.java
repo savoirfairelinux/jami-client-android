@@ -90,6 +90,7 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     private static final String TAG = TvConversationFragment.class.getSimpleName();
 
     private static final String ARG_MODEL = "model";
+    private static final String KEY_AUDIOFILE = "audiofile";
 
     private static final int REQUEST_CODE_PHOTO = 101;
     private static final int REQUEST_SPEECH_CODE = 102;
@@ -135,6 +136,17 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mTvListViewModel = getArguments().getParcelable(ARG_MODEL);
+        }
+        String audiofile = savedInstanceState == null ? null : savedInstanceState.getString(KEY_AUDIOFILE);
+        if (audiofile != null) {
+            fileName = new File(audiofile);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        if (fileName != null) {
+            outState.putString(KEY_AUDIOFILE, fileName.getAbsolutePath());
         }
     }
 
@@ -568,14 +580,11 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     }
 
     private void sendAudio() {
-        Log.w(TAG, "onActivityResult: fileName " + fileName.getAbsolutePath() + " " + fileName.exists() + " " + fileName.length());
-        Single<File> file = Single.just(fileName);
-        fileName = null;
-        if (file == null) {
-            Toast.makeText(getActivity(), "Can't find picture", Toast.LENGTH_SHORT).show();
-            return;
+        if (fileName != null) {
+            Single<File> file = Single.just(fileName);
+            fileName = null;
+            startFileSend(file.flatMapCompletable(this::sendFile));
         }
-        startFileSend(file.flatMapCompletable(this::sendFile));
     }
 
     private void startFileSend(Completable op) {
