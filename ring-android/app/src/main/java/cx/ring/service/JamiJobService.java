@@ -37,9 +37,9 @@ public class JamiJobService extends JobService
 {
     private static final String TAG = JamiJobService.class.getName();
 
-    public static final long JOB_INTERVAL = 120 * DateUtils.MINUTE_IN_MILLIS;
-    public static final long JOB_FLEX = 20 * DateUtils.MINUTE_IN_MILLIS;
-    public static final long JOB_DURATION = 15 * DateUtils.SECOND_IN_MILLIS;
+    public static final long JOB_INTERVAL = 6 * DateUtils.HOUR_IN_MILLIS;
+    public static final long JOB_FLEX = 30 * DateUtils.MINUTE_IN_MILLIS;
+    public static final long JOB_DURATION = 10 * DateUtils.SECOND_IN_MILLIS;
     public static final int JOB_ID = 3905;
 
     @Override
@@ -48,7 +48,6 @@ public class JamiJobService extends JobService
             return false;
         Log.w(TAG, "onStartJob() " + params);
         try {
-            JamiApplication.getInstance().startDaemon();
             try {
                 ContextCompat.startForegroundService(this, new Intent(SyncService.ACTION_START)
                         .setClass(this, SyncService.class));
@@ -63,6 +62,7 @@ public class JamiJobService extends JobService
                 }
                 jobFinished(params, false);
             }, JOB_DURATION);
+            JamiApplication.getInstance().startDaemon();
         } catch (Exception e) {
             Log.e(TAG, "onStartJob failed", e);
         }
