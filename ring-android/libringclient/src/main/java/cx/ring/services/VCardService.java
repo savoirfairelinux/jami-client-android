@@ -33,6 +33,7 @@ public abstract class VCardService {
     public static final int MAX_SIZE_REQUEST = 64 * 1024;
 
     public abstract Single<VCard> loadSmallVCard(String accountId, int maxSize);
+    public abstract Single<VCard> saveVCardProfile(String accountId, String uri, String displayName, String picture);
     public abstract Single<Tuple<String, Object>> loadVCardProfile(VCard vcard);
     public abstract void migrateContact(Map<String, CallContact> contacts, String accountId);
     public abstract void migrateProfiles(List<String> accountIds);
