@@ -128,10 +128,6 @@ public class ContactSearchPresenter extends RootPresenter<ContactSearchView> {
     }
 
     public void contactClicked(TVListViewModel model) {
-        if (!mHardwareService.isVideoAvailable() && !mHardwareService.hasMicrophone()) {
-            getView().displayErrorToast(Error.NO_INPUT);
-            return;
-        }
         getView().displayContactDetails(model);
     }
 }
