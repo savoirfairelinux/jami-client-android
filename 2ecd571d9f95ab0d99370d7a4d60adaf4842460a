@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "521cb42c_515af12f",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/Account.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 949,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-07-31T15:22:06Z",
+      "side": 1,
+      "message": "Observable\u003cContactLocation\u003e cl \u003d contactLocations.remove(contact);\nif (cl !\u003d null) {\n    Log.w(TAG, \"Contact stopped sharing location: \" + contact.getDisplayName());\n    cl.onComplete();\n    mLocationSubject.onNext(contactLocations);\n}",
+      "range": {
+        "startLine": 933,
+        "startChar": 8,
+        "endLine": 949,
+        "endChar": 54
+      },
+      "revId": "2ecd571d9f95ab0d99370d7a4d60adaf4842460a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac6f04d6_9f05062d",
         "filename": "ring-android/libringclient/src/main/java/cx/ring/services/AccountService.java",
         "patchSetId": 2
