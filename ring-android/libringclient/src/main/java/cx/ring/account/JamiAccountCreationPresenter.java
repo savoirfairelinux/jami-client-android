@@ -101,7 +101,8 @@ public class JamiAccountCreationPresenter extends RootPresenter<JamiAccountCreat
     }
 
     public void passwordUnset() {
-        mAccountCreationModel.setPassword(null);
+        if (mAccountCreationModel != null)
+            mAccountCreationModel.setPassword(null);
         isPasswordCorrect = true;
         isConfirmCorrect = true;
         getView().showInvalidPasswordError(false);
@@ -114,7 +115,8 @@ public class JamiAccountCreationPresenter extends RootPresenter<JamiAccountCreat
     }
 
     public void passwordChanged(String password) {
-        mAccountCreationModel.setPassword(password);
+        if (mAccountCreationModel != null)
+            mAccountCreationModel.setPassword(password);
         if (!StringUtils.isEmpty(password) && password.length() < PASSWORD_MIN_LENGTH) {
             getView().showInvalidPasswordError(true);
             isPasswordCorrect = false;
@@ -154,7 +156,7 @@ public class JamiAccountCreationPresenter extends RootPresenter<JamiAccountCreat
 
     private boolean isInputValid() {
         boolean passwordOk = isPasswordCorrect && isConfirmCorrect;
-        boolean usernameOk = mAccountCreationModel.getUsername() != null || isUsernameCorrect;
+        boolean usernameOk = mAccountCreationModel != null && mAccountCreationModel.getUsername() != null || isUsernameCorrect;
         return passwordOk && usernameOk;
     }
 
