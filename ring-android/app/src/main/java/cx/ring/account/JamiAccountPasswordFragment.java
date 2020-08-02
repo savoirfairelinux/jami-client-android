@@ -19,21 +19,16 @@
  */
 package cx.ring.account;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.CompoundButton;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -47,6 +42,7 @@ import cx.ring.mvp.BaseSupportFragment;
 public class JamiAccountPasswordFragment extends BaseSupportFragment<JamiAccountCreationPresenter>
         implements JamiAccountCreationView {
 
+    private static final String KEY_MODEL = "model";
     private AccountCreationModel model;
     private FragAccJamiPasswordBinding binding;
 
@@ -56,6 +52,12 @@ public class JamiAccountPasswordFragment extends BaseSupportFragment<JamiAccount
         JamiAccountPasswordFragment fragment = new JamiAccountPasswordFragment();
         fragment.model = ringAccountViewModel;
         return fragment;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        if (model != null)
+            outState.putSerializable(KEY_MODEL, model);
     }
 
     @Nullable
@@ -76,6 +78,9 @@ public class JamiAccountPasswordFragment extends BaseSupportFragment<JamiAccount
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setRetainInstance(true);
+        if (savedInstanceState != null) {
+            model = (AccountCreationModelImpl) savedInstanceState.getSerializable(KEY_MODEL);
+        }
 
         binding.createAccount.setOnClickListener(v -> presenter.createAccount());
         binding.ringPasswordSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {

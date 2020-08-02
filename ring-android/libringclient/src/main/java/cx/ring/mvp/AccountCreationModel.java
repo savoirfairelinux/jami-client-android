@@ -20,6 +20,7 @@
 package cx.ring.mvp;
 
 import java.io.File;
+import java.io.Serializable;
 
 import cx.ring.model.Account;
 import ezvcard.VCard;
@@ -28,7 +29,7 @@ import io.reactivex.Single;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.Subject;
 
-public abstract class AccountCreationModel {
+public abstract class AccountCreationModel implements Serializable {
 
     private String mManagementServer = null;
     private String mFullName = "";
@@ -39,11 +40,11 @@ public abstract class AccountCreationModel {
 
     private boolean link = false;
     private boolean mPush = true;
-    private Account newAccount = null;
-    private Object photo = null;
+    transient private Account newAccount = null;
+    transient private Object photo = null;
 
-    private Observable<Account> account;
-    protected final Subject<AccountCreationModel> profile = BehaviorSubject.createDefault(this);
+    transient private Observable<Account> account;
+    transient protected final Subject<AccountCreationModel> profile = BehaviorSubject.createDefault(this);
 
     public AccountCreationModel() {
     }

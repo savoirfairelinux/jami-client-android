@@ -21,6 +21,8 @@ package cx.ring.account;
 
 import android.graphics.Bitmap;
 
+import java.io.Serializable;
+
 import cx.ring.mvp.AccountCreationModel;
 import cx.ring.utils.BitmapUtils;
 import ezvcard.VCard;
@@ -30,7 +32,7 @@ import ezvcard.property.RawProperty;
 import ezvcard.property.Uid;
 import io.reactivex.Single;
 
-public class AccountCreationModelImpl extends AccountCreationModel {
+public class AccountCreationModelImpl extends AccountCreationModel implements Serializable {
 
     @Override
     public Single<VCard> toVCard() {
