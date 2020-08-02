@@ -28,8 +28,6 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import cx.ring.daemon.Ringservice;
-import cx.ring.daemon.RingserviceJNI;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
