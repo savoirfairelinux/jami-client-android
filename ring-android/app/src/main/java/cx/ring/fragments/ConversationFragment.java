@@ -35,6 +35,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.IBinder;
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -87,7 +88,6 @@ import cx.ring.client.HomeActivity;
 import cx.ring.contacts.AvatarFactory;
 import cx.ring.conversation.ConversationPresenter;
 import cx.ring.conversation.ConversationView;
-import cx.ring.daemon.Ringservice;
 import cx.ring.databinding.FragConversationBinding;
 import cx.ring.interfaces.Colorable;
 import cx.ring.model.Account;
@@ -100,10 +100,8 @@ import cx.ring.model.Error;
 import cx.ring.model.Uri;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.services.LocationSharingService;
-import cx.ring.plugins.PluginUtils;
 import cx.ring.services.NotificationService;
 import cx.ring.services.NotificationServiceImpl;
-import cx.ring.settings.pluginssettings.PluginDetails;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
@@ -629,21 +627,20 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         // File download trough SAF
         else if(requestCode == ConversationFragment.REQUEST_CODE_SAVE_FILE
                 && resultCode == RESULT_OK){
-            if(resultData != null && resultData.getData() != null ) {
-                //Get the Uri of the file that was created by the app that received our intent
-                android.net.Uri createdUri = resultData.getData();
-
-                //Try to copy the data of the current file into the newly created one
-                File input = new File(mCurrentFileAbsolutePath);
-                if(requireContext().getContentResolver() != null)
-                    mCompositeDisposable.add(AndroidFileUtils.copyFileToUri(requireContext().getContentResolver(), input, createdUri).
-                            observeOn(AndroidSchedulers.mainThread()).
-                            subscribe(()-> Toast.makeText(getContext(), R.string.file_saved_successfully, Toast.LENGTH_SHORT).show(),
-                                    error-> Toast.makeText(getContext(), R.string.generic_error, Toast.LENGTH_SHORT).show()));
-
+            if (resultData != null && resultData.getData() != null ) {
+                writeToFile(resultData.getData());
             }
         }
 
+    }
+
+    private void writeToFile(android.net.Uri data) {
+        File input = new File(mCurrentFileAbsolutePath);
+        if (requireContext().getContentResolver() != null)
+            mCompositeDisposable.add(AndroidFileUtils.copyFileToUri(requireContext().getContentResolver(), input, data).
+                    observeOn(AndroidSchedulers.mainThread()).
+                    subscribe(() -> Toast.makeText(getContext(), R.string.file_saved_successfully, Toast.LENGTH_SHORT).show(),
+                            error -> Toast.makeText(getContext(), R.string.generic_error, Toast.LENGTH_SHORT).show()));
     }
 
     @Override
@@ -1149,13 +1146,22 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         //Get the current file absolute path and store it
         mCurrentFileAbsolutePath = currentFileAbsolutePath;
 
-        //Use Android Storage File Access to download the file
-        Intent downloadFileIntent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-        downloadFileIntent.setType(AndroidFileUtils.getMimeTypeFromExtension(file.getExtension()));
-        downloadFileIntent.addCategory(Intent.CATEGORY_OPENABLE);
-        downloadFileIntent.putExtra(Intent.EXTRA_TITLE,file.getDisplayName());
+        try {
+            //Use Android Storage File Access to download the file
+            Intent downloadFileIntent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+            downloadFileIntent.setType(AndroidFileUtils.getMimeTypeFromExtension(file.getExtension()));
+            downloadFileIntent.addCategory(Intent.CATEGORY_OPENABLE);
+            downloadFileIntent.putExtra(Intent.EXTRA_TITLE,file.getDisplayName());
 
-        startActivityForResult(downloadFileIntent, ConversationFragment.REQUEST_CODE_SAVE_FILE);
+            startActivityForResult(downloadFileIntent, ConversationFragment.REQUEST_CODE_SAVE_FILE);
+        } catch (Exception e) {
+            Log.i(TAG, "No app detected for saving files.");
+            File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+            writeToFile(android.net.Uri.fromFile(new File(directory, file.getDisplayName())));
+        }
     }
 
     @Override
