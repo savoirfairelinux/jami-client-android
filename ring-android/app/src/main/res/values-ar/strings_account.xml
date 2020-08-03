@@ -1,36 +1,55 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings related to account edition screen-->
-  <string name="ic_delete_menu">إحذف</string>
+  <string name="ic_delete_menu">حذف</string>
+  <string name="ic_advanced_menu">إعدادات متقدمة</string>
+  <string name="ic_blacklist_menu">جهات إتصال محظورة</string>
   <!--Strings related to account creation-->
+  <string name="add_ring_account_title">إضافة حساب جامي</string>
   <string name="add_sip_account_title">إضافة حساب SIP</string>
+  <string name="ring_account_default_name">حساب جامي %1$s</string>
   <string name="prompt_alias">الاسم المستعار</string>
   <string name="prompt_hostname">اسم المضيف</string>
   <string name="prompt_username">اسم المستخدم</string>
   <string name="prompt_password">كلمة السر</string>
   <string name="action_create">إنشاء حساب</string>
-  <string name="action_create_short">أحدث</string>
+  <string name="action_create_short">إنشاء</string>
   <string name="action_register">سجل</string>
   <string name="action_settings">إعدادات</string>
   <string name="error_field_required">هذا الحقل مطلوب</string>
   <string name="dialog_wait_create">في طور إضافة حساب</string>
-  <string name="dialog_wait_create_details">الرجاء الإنتظار في حين نظيف حسابك</string>
+  <string name="dialog_wait_create_details">الرجاء الإنتظار بينما يتم إضافة حسابك...</string>
   <string name="dialog_wait_update">تحديث الحساب</string>
   <string name="dialog_wait_update_details">يرجى الانتظار حتى يتم تحديث حسابك الجديد</string>
-  <string name="help_ring">يسمح لك حساب جامي بالتواصل مع الآخرين بأمان عبر طريقة P2P نظير إلى نظير من خلال شبكة موزعة بالكامل.</string>
+  <string name="dialog_warn_ip2ip_account_title">إنشاء حساب SIP فارغ؟</string>
+  <string name="dialog_warn_ip2ip_account_message">انت تقوم بإنشاء حساب SIP بـ اسم مستضيف غير صالح.
+        فقط ستكون قادرا على إجراء وإستقبال مكالمات بعنوان الانترنت الخاص بك مباشرة 
+يمكنك تعديل حسابك فيما بعد</string>
+  <string name="account_type_ip2ip">حساب عنوان الانترنت</string>
+  <string name="help_ring">يسمح لك حساب جامي بالتواصل مع الآخرين بأمان عبر طريق الند للند من خلال شبكة موزعة بالكامل.</string>
   <string name="help_sip_title">أضف حساب SIP الخاص بك</string>
-  <string name="help_sip">ترتيب حساب SIP موجود</string>
+  <string name="help_sip">تهيئة حساب SIP موجود</string>
   <string name="create_sip_account">إضافة حساب SIP</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">هل تريد حذف الحساب؟</string>
   <string name="account_delete_dialog_message">لا يمكن التراجع عن هذا الإجراء.</string>
   <!--AccountManagementFragment-->
-  <string name="empty_account_list">لا حساب مسجل</string>
+  <string name="empty_account_list">لا يوجد حساب مسجل</string>
   <string name="normal_accounts_titles">حسابات</string>
   <string name="normal_devices_titles">الأجهزة المعروفة المتصلة بحساب جامي هذا </string>
+  <string name="account_device_revoke">إبطال جهاز</string>
+  <string name="account_device_revocation_success_title">نجاح</string>
+  <string name="account_device_revocation_success">تم إبطال الجهاز الان</string>
+  <string name="account_device_revocation_error_title">لم يتم التمكن من إبطال الجهاز</string>
+  <string name="account_device_revocation_wrong_password">كلمة مرور خاطئة.</string>
+  <string name="account_device_revocation_unknown_device">جهاز غير معلوم.</string>
+  <string name="account_device_revocation_error_unknown">خطأ غير معروف.</string>
+  <string name="account_password_change">تغيير كلمة المرور</string>
+  <string name="account_password_set">تعيين كلمة المرور</string>
+  <string name="account_password_change_wait_message">تغيير كلمة مرور الحساب</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">عام</string>
-  <string name="account_basic_category">إعدادات أساسية</string>
+  <string name="account_basic_category">إعدادات أولية</string>
   <string name="account_alias_label">اسم الحساب</string>
   <string name="account_hostname_label">اسم المضيف</string>
   <string name="account_bootstrap_label">تشغيل ذاتي</string>
@@ -45,18 +64,27 @@
   <string name="account_audio_label">صوت</string>
   <string name="account_preferences_media_tab">ميديا</string>
   <string name="account_ringtone_label">النغمات</string>
-  <string name="account_ringtone_enabled_label">فعل نغمات</string>
-  <string name="account_ringtone_path_label">موقع النغمة</string>
+  <string name="account_ringtone_enabled_label">تفعيل نغمات</string>
+  <string name="account_ringtone_path_label">إمتداد النغمة</string>
+  <string name="account_ringtone_custom_label">إستخدم نغمة مخصصة</string>
+  <string name="account_ringtone_title">إختار نغمة</string>
+  <string name="account_ringtone_summary">حدد نغمة او إختار نغمتك</string>
   <!--Video Details-->
   <string name="account_video_label">فيديو</string>
   <string name="account_video_enable">فعل الفيديو</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">إعدادات متقدمة</string>
+  <string name="account_dht_public_in_calls_label">السماح بمكالمات من جهات إتصال غير معروفة</string>
   <string name="account_registration_exp_label">إنقضاء فترة التسجيل</string>
   <string name="account_local_interface_label">واجهة محلية</string>
-  <string name="account_local_port_label">نقطة عبور ( port ) محلية</string>
-  <string name="account_stun_enable_label">إستعمل STUN</string>
+  <string name="account_local_port_label">منفذ عبور محلي</string>
+  <string name="account_stun_enable_label">إستعمال خادم STUN</string>
   <string name="account_stun_server_label">خادم STUN</string>
+  <string name="account_accept_files">السماح بالملفات الواردة تلقائيا</string>
+  <string name="account_accept_files_max_size">الحد الاقصى لحجم الملف كي يتم إستقباله تلقائيا</string>
+  <string name="account_accept_files_never">عدم السماح بالاستقبال التلقائي نهائيا</string>
+  <string name="account_accept_files_always">السماح بالإستقبال التلقائي دائما</string>
+  <string name="size_mb">%1$d ميجابايت</string>
   <string name="account_turn_enable_label">إستعمل TURN</string>
   <string name="account_turn_server_label">سيرفر بروتوكول TURN</string>
   <string name="account_turn_username_label">اسم المستخدم لبروتوكول TURN</string>
@@ -94,6 +122,7 @@
   <string name="error_passwords_not_equals">كلمة المرور غير متطابقة</string>
   <string name="account_export_end_error_title">خطأ</string>
   <string name="account_enter_password">أدخِل كلمة المرور</string>
+  <string name="ring_account">حساب جامي</string>
   <string name="account_cannot_be_found_title">لم يعثر على الحساب</string>
   <string name="account_no_network_title">لا يستطيع الاتصال بالشبكة</string>
   <string name="account_link_prompt_pin">أدخِل رمز الأمان</string>
@@ -102,6 +131,7 @@
   <string name="account_connect_prompt_username">اسم المستخدم</string>
   <!--Name registration-->
   <string name="register_username">سجل اسم المستخدم العام</string>
+  <string name="register_recommended">موصى به</string>
   <string name="account_status_connecting">يتم الإتصال</string>
   <string name="account_status_unknown">مجهول</string>
   <string name="account_status_error">خطأ</string>
@@ -111,4 +141,5 @@
   <!--Edit profile-->
   <!--Devices-->
   <string name="enter_password">أدخِل كلمة المرور</string>
+  <string name="revoke_device_title">إبطال جهاز</string>
 </resources>

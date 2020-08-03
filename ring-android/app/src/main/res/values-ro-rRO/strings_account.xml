@@ -52,7 +52,7 @@
   <string name="account_basic_category">Reglări Simple</string>
   <string name="account_alias_label">Numele contului</string>
   <string name="account_hostname_label">Numele serverului</string>
-  <string name="account_bootstrap_label">Pornire</string>
+  <string name="account_bootstrap_label">Server de conectare</string>
   <string name="account_username_label">Nume de Utilizator</string>
   <string name="account_password_label">Parolă</string>
   <string name="account_optionnal_category">Reglări Facultative</string>
