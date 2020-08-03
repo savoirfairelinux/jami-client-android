@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ae652a3_25364fb3",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/call/CallPresenter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-08-03T16:27:19Z",
+      "side": 1,
+      "message": "should also work with conferences, could be removed",
+      "range": {
+        "startLine": 456,
+        "startChar": 45,
+        "endLine": 456,
+        "endChar": 93
+      },
+      "revId": "a2a86b6ac6fd475720fb0ec54191b64cab296782",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
