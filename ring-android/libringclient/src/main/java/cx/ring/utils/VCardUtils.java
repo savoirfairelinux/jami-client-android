@@ -187,7 +187,9 @@ public final class VCardUtils {
                 return null;
             }
 
-            return Ezvcard.parse(vcardPath).first();
+            VCard vCard = Ezvcard.parse(vcardPath).first();
+            vCard.removeProperties(RawProperty.class);
+            return vCard;
         } catch (Exception e) {
             Log.e(TAG, "Error while loading VCard from disk", e);
             return null;

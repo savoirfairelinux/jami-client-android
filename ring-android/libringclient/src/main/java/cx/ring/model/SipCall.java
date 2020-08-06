@@ -31,6 +31,7 @@ import cx.ring.utils.StringUtils;
 import cx.ring.utils.VCardUtils;
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
+import ezvcard.property.RawProperty;
 
 public class SipCall extends Interaction {
 
@@ -238,6 +239,7 @@ public class SipCall extends Interaction {
             mProfileChunk.addPartAtIndex(message.getValue(), part);
             if (mProfileChunk.isProfileComplete()) {
                 VCard ret = Ezvcard.parse(mProfileChunk.getCompleteProfile()).first();
+                ret.removeProperties(RawProperty.class);
                 mProfileChunk = null;
                 return ret;
             }
