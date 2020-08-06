@@ -308,17 +308,14 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     private void sendTrustRequest() {
         final String accountId = mAccountId;
         final Uri contactId = mContactUri;
+        CallContact contact = mContactService.findContact(mAccountService.getAccount(accountId), contactId);
+        if (contact != null) {
+            contact.setStatus(CallContact.Status.REQUEST_SENT);
+        }
         mVCardService.loadSmallVCard(accountId, VCardService.MAX_SIZE_REQUEST)
                 .subscribeOn(Schedulers.computation())
-                .subscribe(vCard -> {
-                    mAccountService.sendTrustRequest(accountId, contactId.getRawRingId(), Blob.fromString(VCardUtils.vcardToString(vCard)));
-                    CallContact contact = mContactService.findContact(mAccountService.getAccount(accountId), contactId);
-                    if (contact == null) {
-                        Log.e(TAG, "sendTrustRequest: not able to find contact");
-                        return;
-                    }
-                    contact.setStatus(CallContact.Status.REQUEST_SENT);
-                });
+                .subscribe(vCard -> mAccountService.sendTrustRequest(accountId, contactId.getRawRingId(), Blob.fromString(VCardUtils.vcardToString(vCard))),
+                        e -> mAccountService.sendTrustRequest(accountId, contactId.getRawRingId(), null));
     }
 
     public void clickOnGoingPane() {

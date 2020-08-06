@@ -584,7 +584,7 @@ public class AccountService {
 
     private Single<Account> loadAccountProfile(Account account) {
         if (account.getProfile() == null)
-            return VCardUtils.loadLocalProfileFromDisk(mDeviceRuntimeService.provideFilesDir(), account.getAccountID())
+            return VCardUtils.loadLocalProfileFromDiskWithDefault(mDeviceRuntimeService.provideFilesDir(), account.getAccountID())
                     .subscribeOn(Schedulers.io())
                     .map(vCard -> {
                         account.setProfile(vCard);
@@ -644,7 +644,7 @@ public class AccountService {
                         }
                         i++;
                     }
-                });
+                }, e -> Log.w(TAG, "Not sending empty profile", e));
     }
 
     public void setMessageDisplayed(String accountId, String contactId, String messageId) {
@@ -1164,9 +1164,8 @@ public class AccountService {
     public void sendTrustRequest(final String accountId, final String to, final Blob message) {
         Log.i(TAG, "sendTrustRequest() " + accountId + " " + to);
         handleTrustRequest(accountId, new Uri(to).getUri(), null, ContactType.ADDED);
-        mExecutor.execute(() -> Ringservice.sendTrustRequest(accountId, to, message));
+        mExecutor.execute(() -> Ringservice.sendTrustRequest(accountId, to, message == null ? new Blob() : message));
     }
-
 
     /**
      * Add a new contact for the account Id on the Daemon

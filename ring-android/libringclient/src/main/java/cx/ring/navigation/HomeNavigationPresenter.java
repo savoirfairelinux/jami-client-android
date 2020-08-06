@@ -94,7 +94,7 @@ public class HomeNavigationPresenter extends RootPresenter<HomeNavigationView> {
         File filesDir = mDeviceRuntimeService.provideFilesDir();
 
         mCompositeDisposable.add(Single.zip(
-                VCardUtils.loadLocalProfileFromDisk(filesDir, accountId)
+                VCardUtils.loadLocalProfileFromDiskWithDefault(filesDir, accountId)
                         .subscribeOn(Schedulers.io()),
                 photo
                         .subscribeOn(Schedulers.io()),
@@ -119,7 +119,7 @@ public class HomeNavigationPresenter extends RootPresenter<HomeNavigationView> {
         File filesDir = mDeviceRuntimeService.provideFilesDir();
 
         mCompositeDisposable.add(VCardUtils
-                .loadLocalProfileFromDisk(filesDir, accountId)
+                .loadLocalProfileFromDiskWithDefault(filesDir, accountId)
                 .doOnSuccess(vcard -> {
                     vcard.setFormattedName(username);
                     vcard.removeProperties(RawProperty.class);
@@ -137,7 +137,7 @@ public class HomeNavigationPresenter extends RootPresenter<HomeNavigationView> {
         String ringId = account.getUsername();
         File filesDir = mDeviceRuntimeService.provideFilesDir();
         mCompositeDisposable.add(Single.zip(
-                VCardUtils.loadLocalProfileFromDisk(filesDir, accountId).subscribeOn(Schedulers.io()),
+                VCardUtils.loadLocalProfileFromDiskWithDefault(filesDir, accountId).subscribeOn(Schedulers.io()),
                 photo, (vcard, pic) -> {
                     vcard.setUid(new Uid(ringId));
                     if (!StringUtils.isEmpty(username)) {

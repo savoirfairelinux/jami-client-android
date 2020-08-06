@@ -100,12 +100,8 @@ public class TVContactPresenter extends RootPresenter<TVContactView> {
 
     private void sendTrustRequest(String accountId, String ringId) {
         mVCardService.loadSmallVCard(accountId, VCardService.MAX_SIZE_REQUEST)
-                .subscribe(vCard -> {
-                    mAccountService.sendTrustRequest(accountId,
-                            ringId,
-                            Blob.fromString(VCardUtils.vcardToString(vCard)));
-
-                });
+                .subscribe(vCard -> mAccountService.sendTrustRequest(accountId, ringId, Blob.fromString(VCardUtils.vcardToString(vCard))),
+                        e -> mAccountService.sendTrustRequest(accountId, ringId, null));
     }
 
     public void acceptTrustRequest(Uri viewModel) {
