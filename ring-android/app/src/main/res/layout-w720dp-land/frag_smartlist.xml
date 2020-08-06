@@ -13,10 +13,9 @@
         android:layout_height="match_parent"
         android:layout_marginTop="?actionBarSize">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:layout_height="match_parent" >
 
             <LinearLayout
                 android:id="@+id/placeholder"
@@ -62,7 +61,7 @@
                 tools:listitem="@layout/item_smartlist"
                 android:layout_marginBottom="@dimen/navigation_bottom_height"/>
 
-        </LinearLayout>
+        </FrameLayout>
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             style="@style/Widget.AppTheme.MainActionButton"
