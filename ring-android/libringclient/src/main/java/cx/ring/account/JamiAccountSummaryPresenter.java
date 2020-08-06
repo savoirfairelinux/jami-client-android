@@ -168,7 +168,7 @@ public class JamiAccountSummaryPresenter extends RootPresenter<JamiAccountSummar
         Account account = mAccountService.getAccount(mAccountID);
         File filesDir = mDeviceRuntimeService.provideFilesDir();
 
-        mCompositeDisposable.add(VCardUtils.loadLocalProfileFromDisk(filesDir, mAccountID)
+        mCompositeDisposable.add(VCardUtils.loadLocalProfileFromDiskWithDefault(filesDir, mAccountID)
                 .doOnSuccess(vcard -> {
                     vcard.setFormattedName(username);
                     vcard.removeProperties(RawProperty.class);
@@ -187,7 +187,7 @@ public class JamiAccountSummaryPresenter extends RootPresenter<JamiAccountSummar
         String ringId = account.getUsername();
         File filesDir = mDeviceRuntimeService.provideFilesDir();
         mCompositeDisposable.add(Single.zip(
-                VCardUtils.loadLocalProfileFromDisk(filesDir, mAccountID).subscribeOn(Schedulers.io()),
+                VCardUtils.loadLocalProfileFromDiskWithDefault(filesDir, mAccountID).subscribeOn(Schedulers.io()),
                 photo, (vcard, pic) -> {
                     vcard.setUid(new Uid(ringId));
                     if (!StringUtils.isEmpty(username)) {

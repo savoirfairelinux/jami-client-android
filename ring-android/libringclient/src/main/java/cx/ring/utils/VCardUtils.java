@@ -143,29 +143,21 @@ public final class VCardUtils {
         }
     }
 
-    public static VCard loadPeerProfileFromDisk(File filesDir, String filename, String accountId) {
+    public static VCard loadPeerProfileFromDisk(File filesDir, String filename, String accountId) throws IOException {
         File profileFolder = peerProfilePath(filesDir, accountId);
-        File profilePath = new File(profileFolder, filename);
-        return loadFromDisk(profilePath.getAbsolutePath());
+        return loadFromDisk(new File(profileFolder, filename));
     }
 
     public static Single<VCard> loadLocalProfileFromDisk(File filesDir, String accountId) {
         return Single.fromCallable(() -> {
             String path = localProfilePath(filesDir, accountId).getAbsolutePath();
-            try {
-                if (!"".equals(path)) {
-                    File vcardPath = new File(path, LOCAL_USER_VCARD_NAME);
-                    if (vcardPath.exists()) {
-                        VCard vcard = loadFromDisk(vcardPath.getAbsolutePath());
-                        if (vcard != null)
-                            return vcard;
-                    }
-                }
-            } catch (Exception e) {
-                Log.e(TAG, "Can't load vcard");
-            }
-            return setupDefaultProfile(filesDir, accountId);
+            return loadFromDisk(new File(path, LOCAL_USER_VCARD_NAME));
         });
+    }
+
+    public static Single<VCard> loadLocalProfileFromDiskWithDefault(File filesDir, String accountId) {
+        return loadLocalProfileFromDisk(filesDir, accountId)
+                .onErrorReturn(e -> setupDefaultProfile(filesDir, accountId));
     }
 
     /**
@@ -174,24 +166,12 @@ public final class VCardUtils {
      * @param path the filename of the vcard
      * @return the VCard or null
      */
-    private static VCard loadFromDisk(String path) {
-        try {
-            if (path == null || path.isEmpty()) {
-                Log.d(TAG, "Empty file or error with the context");
-                return null;
-            }
-
-            File vcardPath = new File(path);
-            if (!vcardPath.exists()) {
-                Log.d(TAG, "vcardPath not exist " + vcardPath);
-                return null;
-            }
-
-            return Ezvcard.parse(vcardPath).first();
-        } catch (Exception e) {
-            Log.e(TAG, "Error while loading VCard from disk", e);
+    private static VCard loadFromDisk(File path) throws IOException {
+        if (path == null || !path.exists()) {
+            Log.d(TAG, "vcardPath not exist " + path);
             return null;
         }
+        return Ezvcard.parse(path).first();
     }
 
     public static String vcardToString(VCard vcard) {
@@ -210,6 +190,10 @@ public final class VCardUtils {
         }
 
         return stringVCard;
+    }
+
+    public static boolean isEmpty(VCard vCard) {
+        return vCard.getFormattedName().getValue().isEmpty() && vCard.getPhotos().isEmpty();
     }
 
     private static File peerProfilePath(File filesDir, String accountId) {
