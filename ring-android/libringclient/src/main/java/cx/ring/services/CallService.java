@@ -43,6 +43,7 @@ import cx.ring.model.Conversation;
 import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
 import cx.ring.utils.Log;
+import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
@@ -500,7 +501,7 @@ public class CallService {
             return;
         }
         VCard vcard = sipCall.appendToVCard(messages);
-        if (vcard != null) {
+        if (vcard != null && !VCardUtils.isEmpty(vcard)) {
             mContactService.saveVCardContactData(sipCall.getContact(), sipCall.getAccount(), vcard);
         }
         if (messages.containsKey(MIME_TEXT_PLAIN)) {

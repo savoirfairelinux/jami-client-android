@@ -623,6 +623,7 @@ public class AccountService {
         mVCardService.loadSmallVCard(accountId, VCardService.MAX_SIZE_SIP)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(Schedulers.from(mExecutor))
+                .filter( vcard -> !VCardUtils.isEmpty(vcard))
                 .subscribe(vcard -> {
                     String stringVCard = VCardUtils.vcardToString(vcard);
                     int nbTotal = stringVCard.length() / VCARD_CHUNK_SIZE + (stringVCard.length() % VCARD_CHUNK_SIZE != 0 ? 1 : 0);

@@ -212,6 +212,10 @@ public final class VCardUtils {
         return stringVCard;
     }
 
+    public static boolean isEmpty(VCard vCard) {
+        return vCard.getFormattedName().getValue().isEmpty() && vCard.getPhotos().isEmpty();
+    }
+
     private static File peerProfilePath(File filesDir, String accountId) {
         File accountDir = new File(filesDir, accountId);
         File profileDir = new File(accountDir, "profiles");
