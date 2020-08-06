@@ -5,7 +5,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     // VCard parsing
-    compile 'com.googlecode.ez-vcard:ez-vcard:0.10.5'
+    compile 'com.googlecode.ez-vcard:ez-vcard:0.11.0'
 
     // QRCode encoding
     compile 'com.google.zxing:core:3.3.3'
