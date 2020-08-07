@@ -35,8 +35,8 @@ import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 import androidx.media.AudioAttributesCompat;
-import androidx.media.AudioManagerCompat;
 import androidx.media.AudioFocusRequestCompat;
+import androidx.media.AudioManagerCompat;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -90,7 +90,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
         mHasSpeakerPhone = hasSpeakerphone();
         mRinger = new Ringer(mContext);
-        cameraService = new CameraService(mContext);
+        cameraService = new CameraService(mContext, this);
     }
 
     public Completable initVideo() {
