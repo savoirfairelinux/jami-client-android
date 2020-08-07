@@ -24,6 +24,7 @@ import android.bluetooth.BluetoothHeadset;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
+import android.hardware.camera2.CameraManager;
 import android.media.AudioDeviceInfo;
 import android.media.AudioManager;
 import android.media.MediaRecorder;
@@ -33,10 +34,11 @@ import android.view.SurfaceHolder;
 import android.view.TextureView;
 import android.view.WindowManager;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.media.AudioAttributesCompat;
-import androidx.media.AudioManagerCompat;
 import androidx.media.AudioFocusRequestCompat;
+import androidx.media.AudioManagerCompat;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -85,12 +87,28 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     private boolean mShouldSpeakerphone = false;
     private final boolean mHasSpeakerPhone;
 
+    private final CameraManager.AvailabilityCallback availabilityCallback = new CameraManager.AvailabilityCallback() {
+        @Override
+        public void onCameraAvailable(@NonNull String cameraId) {
+            initVideo()
+                .onErrorComplete()
+                .subscribe();
+        }
+
+        @Override
+        public void onCameraUnavailable(@NonNull String cameraId) {
+            initVideo()
+                .onErrorComplete()
+                .subscribe();
+        }
+    };
+
     public HardwareServiceImpl(Context context) {
         mContext = context;
         mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
         mHasSpeakerPhone = hasSpeakerphone();
         mRinger = new Ringer(mContext);
-        cameraService = new CameraService(mContext);
+        cameraService = new CameraService(mContext, availabilityCallback);
     }
 
     public Completable initVideo() {
@@ -740,5 +758,10 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         String id;
         int w, h;
         long window = 0;
+    }
+
+    @Override
+    public void unregisterCameraDetectionCallback() {
+        cameraService.unregisterCameraDetectionCallback();
     }
 }
