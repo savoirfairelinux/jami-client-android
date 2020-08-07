@@ -51,6 +51,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -536,7 +537,15 @@ public class DRingService extends Service {
                 }
                 case UsbManager.ACTION_USB_DEVICE_ATTACHED:
                 case UsbManager.ACTION_USB_DEVICE_DETACHED: {
-                    mHardwareService.initVideo();
+                    // Here we wait for the CameraManager to update CameraIdList
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(800);
+                    } catch (InterruptedException e) {
+                        Log.e(TAG, "Not able to wait for camera API update", e);
+                    }
+                    mHardwareService.initVideo()
+                            .onErrorComplete()
+                            .subscribe();
                     break;
                 }
                 case PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED: {
