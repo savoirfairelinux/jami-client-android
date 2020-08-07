@@ -106,6 +106,7 @@ along with this program; if not, write to the Free Software
 
     <!-- Advanced Details -->
     <string name="account_preferences_advanced_tab">Advanced</string>
+    <string name="account_call_settings_title">Call settings</string>
     <string name="account_dht_public_in_calls_label">Allow incoming calls from unknown contacts</string>
     <string name="account_registration_exp_label">Registration Expire</string>
     <string name="account_local_interface_label">Local Interface</string>
@@ -113,6 +114,7 @@ along with this program; if not, write to the Free Software
     <string name="account_stun_enable_label">Use Stun</string>
     <string name="account_stun_server_label">Stun Server</string>
     <string name="account_accept_files">Accept incoming files automatically</string>
+    <string name="account_conversation_settings_title">Conversation settings</string>
     <string name="account_accept_files_max_size">Maximum file size to accept automatically</string>
     <string name="account_accept_files_never">Never accept automatically</string>
     <string name="account_accept_files_always">Always accept automatically</string>
