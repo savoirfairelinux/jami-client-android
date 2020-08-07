@@ -89,14 +89,37 @@ public class CameraService {
     private final HashMap<String, VideoParams> mParams = new HashMap<>();
     private final Map<String, DeviceParams> mNativeParams = new HashMap<>();
     private final HandlerThread t = new HandlerThread("videoHandler");
+    private final HardwareServiceImpl mHardwareService;
     private Handler videoHandler = null;
     private CameraDevice previewCamera;
     private MediaProjection currentMediaProjection;
     private VirtualDisplay virtualDisplay;
     private MediaCodec currentCodec;
 
-    CameraService(@NonNull Context c) {
+    private final CameraManager.AvailabilityCallback availabilityCallback = new CameraManager.AvailabilityCallback() {
+        @Override
+        public void onCameraAvailable(@NonNull String cameraId) {
+            mHardwareService.initVideo()
+                    .onErrorComplete()
+                    .subscribe();
+        }
+
+        @Override
+        public void onCameraUnavailable(@NonNull String cameraId) {
+            mHardwareService.initVideo()
+                    .onErrorComplete()
+                    .subscribe();
+        }
+    };
+
+    CameraService(@NonNull Context c, HardwareServiceImpl hardwareService) {
+        this.mHardwareService = hardwareService;
         manager = (CameraManager) c.getSystemService(Context.CAMERA_SERVICE);
+        if (manager == null) {
+            android.util.Log.e(TAG, "Not able to initialize camera detection");
+        } else {
+            manager.registerAvailabilityCallback(availabilityCallback, getVideoHandler());
+        }
     }
 
     public Handler getVideoHandler() {
@@ -937,5 +960,10 @@ public class CameraService {
             return Long.signum((long) lhs.getWidth() * lhs.getHeight() -
                     (long) rhs.getWidth() * rhs.getHeight());
         }
+    }
+
+    public void unregisterCameraDetectionCallback() {
+        if (manager != null)
+            manager.unregisterAvailabilityCallback(availabilityCallback);
     }
 }
