@@ -30,6 +30,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.ContentObserver;
+import android.hardware.camera2.CameraManager;
 import android.hardware.usb.UsbManager;
 import android.net.ConnectivityManager;
 import android.os.Build;
@@ -51,6 +52,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -62,7 +64,6 @@ import cx.ring.client.ConversationActivity;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Codec;
 import cx.ring.model.Settings;
-import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
@@ -76,6 +77,8 @@ import cx.ring.services.PreferencesService;
 import cx.ring.tv.call.TVCallActivity;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
+import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
 public class DRingService extends Service {
@@ -534,11 +537,6 @@ public class DRingService extends Service {
                     updateConnectivityState();
                     break;
                 }
-                case UsbManager.ACTION_USB_DEVICE_ATTACHED:
-                case UsbManager.ACTION_USB_DEVICE_DETACHED: {
-                    mHardwareService.initVideo();
-                    break;
-                }
                 case PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED: {
                     mConnectivityChecker.run();
                     mHandler.postDelayed(mConnectivityChecker, 100);
@@ -565,14 +563,40 @@ public class DRingService extends Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             intentFilter.addAction(PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED);
         }
-        intentFilter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
-        intentFilter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
         registerReceiver(receiver, intentFilter);
         updateConnectivityState();
 
         mDisposableBag.add(mPreferencesService.getSettingsSubject().subscribe(s -> {
             showSystemNotification(s);
         }));
+
+        CameraManager manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+        if (manager == null) {
+            Log.e(TAG, "Not able to initialize camera detection");
+        } else {
+            manager.registerAvailabilityCallback(new CameraManager.AvailabilityCallback() {
+                @Override
+                public void onCameraAvailable(@NonNull String cameraId) {
+                    super.onCameraAvailable(cameraId);
+                    mHardwareService.initVideo()
+                            .onErrorComplete()
+                            .subscribe();
+                }
+
+                @Override
+                public void onCameraUnavailable(@NonNull String cameraId) {
+                    super.onCameraUnavailable(cameraId);
+                    mHardwareService.initVideo()
+                            .onErrorComplete()
+                            .subscribe();
+                }
+
+                @Override
+                public void onCameraAccessPrioritiesChanged() {
+                    super.onCameraAccessPrioritiesChanged();
+                }
+            }, null);
+        }
 
         JamiApplication.getInstance().bindDaemon();
         JamiApplication.getInstance().bootstrapDaemon();
