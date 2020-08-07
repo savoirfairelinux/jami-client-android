@@ -161,6 +161,8 @@ public abstract class HardwareService {
 
     public abstract boolean shouldPlaySpeaker();
 
+    public abstract void unregisterCameraDetectionCallback();
+
     public void connectivityChanged(boolean isConnected) {
         Log.i(TAG, "connectivityChange() " + isConnected);
         connectivityEvents.onNext(isConnected);

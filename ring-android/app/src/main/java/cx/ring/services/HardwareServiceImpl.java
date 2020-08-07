@@ -24,6 +24,7 @@ import android.bluetooth.BluetoothHeadset;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
+import android.hardware.camera2.CameraManager;
 import android.media.AudioDeviceInfo;
 import android.media.AudioManager;
 import android.media.MediaRecorder;
@@ -33,10 +34,11 @@ import android.view.SurfaceHolder;
 import android.view.TextureView;
 import android.view.WindowManager;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.media.AudioAttributesCompat;
-import androidx.media.AudioManagerCompat;
 import androidx.media.AudioFocusRequestCompat;
+import androidx.media.AudioManagerCompat;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -740,5 +742,10 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         String id;
         int w, h;
         long window = 0;
+    }
+
+    @Override
+    public void unregisterCameraDetectionCallback() {
+        cameraService.unregisterCameraDetectionCallback();
     }
 }

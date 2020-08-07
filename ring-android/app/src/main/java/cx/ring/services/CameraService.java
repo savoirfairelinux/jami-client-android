@@ -94,6 +94,21 @@ public class CameraService {
     private MediaProjection currentMediaProjection;
     private VirtualDisplay virtualDisplay;
     private MediaCodec currentCodec;
+    private final CameraManager.AvailabilityCallback availabilityCallback = new CameraManager.AvailabilityCallback() {
+        @Override
+        public void onCameraAvailable(@NonNull String cameraId) {
+            init()
+                .onErrorComplete()
+                .subscribe();
+        }
+
+        @Override
+        public void onCameraUnavailable(@NonNull String cameraId) {
+            init()
+                .onErrorComplete()
+                .subscribe();
+        }
+    };
 
     CameraService(@NonNull Context c) {
         manager = (CameraManager) c.getSystemService(Context.CAMERA_SERVICE);
@@ -368,6 +383,7 @@ public class CameraService {
                 })
                 .ignoreElement()
                 .doOnError(e -> Log.e(TAG, "Error initializing video device", e))
+                .doOnComplete(() -> manager.registerAvailabilityCallback(availabilityCallback, getVideoHandler()))
                 .onErrorComplete();
     }
 
@@ -937,5 +953,10 @@ public class CameraService {
             return Long.signum((long) lhs.getWidth() * lhs.getHeight() -
                     (long) rhs.getWidth() * rhs.getHeight());
         }
+    }
+
+    public void unregisterCameraDetectionCallback() {
+        if (manager != null && availabilityCallback != null)
+            manager.unregisterAvailabilityCallback(availabilityCallback);
     }
 }
