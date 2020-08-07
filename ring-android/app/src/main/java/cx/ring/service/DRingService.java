@@ -30,7 +30,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.ContentObserver;
-import android.hardware.usb.UsbManager;
+import android.hardware.camera2.CameraManager;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -62,7 +62,6 @@ import cx.ring.client.ConversationActivity;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Codec;
 import cx.ring.model.Settings;
-import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
@@ -140,6 +139,7 @@ public class DRingService extends Service {
     private final CompositeDisposable mDisposableBag = new CompositeDisposable();
     private final Runnable mConnectivityChecker = this::updateConnectivityState;
     public static boolean isRunning = false;
+    private CameraManager manager;
 
     protected final IDRingService.Stub mBinder = new IDRingService.Stub() {
 
@@ -534,16 +534,33 @@ public class DRingService extends Service {
                     updateConnectivityState();
                     break;
                 }
-                case UsbManager.ACTION_USB_DEVICE_ATTACHED:
-                case UsbManager.ACTION_USB_DEVICE_DETACHED: {
-                    mHardwareService.initVideo();
-                    break;
-                }
                 case PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED: {
                     mConnectivityChecker.run();
                     mHandler.postDelayed(mConnectivityChecker, 100);
                 }
             }
+        }
+    };
+    private final CameraManager.AvailabilityCallback availabilityCallback = new CameraManager.AvailabilityCallback() {
+        @Override
+        public void onCameraAvailable(@NonNull String cameraId) {
+            super.onCameraAvailable(cameraId);
+            mHardwareService.initVideo()
+                    .onErrorComplete()
+                    .subscribe();
+        }
+
+        @Override
+        public void onCameraUnavailable(@NonNull String cameraId) {
+            super.onCameraUnavailable(cameraId);
+            mHardwareService.initVideo()
+                    .onErrorComplete()
+                    .subscribe();
+        }
+
+        @Override
+        public void onCameraAccessPrioritiesChanged() {
+            super.onCameraAccessPrioritiesChanged();
         }
     };
 
@@ -565,14 +582,19 @@ public class DRingService extends Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             intentFilter.addAction(PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED);
         }
-        intentFilter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
-        intentFilter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
         registerReceiver(receiver, intentFilter);
         updateConnectivityState();
 
         mDisposableBag.add(mPreferencesService.getSettingsSubject().subscribe(s -> {
             showSystemNotification(s);
         }));
+
+        manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+        if (manager == null) {
+            Log.e(TAG, "Not able to initialize camera detection");
+        } else {
+            manager.registerAvailabilityCallback(availabilityCallback, null);
+        }
 
         JamiApplication.getInstance().bindDaemon();
         JamiApplication.getInstance().bootstrapDaemon();
@@ -584,6 +606,8 @@ public class DRingService extends Service {
         Log.i(TAG, "onDestroy()");
         unregisterReceiver(receiver);
         getContentResolver().unregisterContentObserver(contactContentObserver);
+        if (manager != null)
+            manager.unregisterAvailabilityCallback(availabilityCallback);
 
         mDisposableBag.clear();
         isRunning = false;
