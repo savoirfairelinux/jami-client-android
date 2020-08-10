@@ -86,11 +86,8 @@ public class VCardServiceImpl extends VCardService {
     @Override
     public Single<VCard> saveVCardProfile(String accountId, String uri, String displayName, String picture)
     {
-        return Single.fromCallable(() -> {
-            VCard vcard = VCardUtils.writeData(uri, displayName, Base64.decode(picture, Base64.DEFAULT));
-            VCardUtils.saveLocalProfileToDisk(vcard, accountId, mContext.getFilesDir());
-            return vcard;
-        });
+        return Single.fromCallable(() -> VCardUtils.writeData(uri, displayName, Base64.decode(picture, Base64.DEFAULT)))
+                .flatMap(vcard -> VCardUtils.saveLocalProfileToDisk(vcard, accountId, mContext.getFilesDir()));
     }
 
     @Override

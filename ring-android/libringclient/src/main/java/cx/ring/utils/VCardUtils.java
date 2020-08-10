@@ -106,14 +106,12 @@ public final class VCardUtils {
     }
 
     public static void savePeerProfileToDisk(VCard vcard, String accountId, String filename, File filesDir) {
-        String path = peerProfilePath(filesDir, accountId).getAbsolutePath();
-        saveToDisk(vcard, filename, path);
+        saveToDisk(vcard, filename, peerProfilePath(filesDir, accountId));
     }
 
     public static Single<VCard> saveLocalProfileToDisk(VCard vcard, String accountId, File filesDir) {
         return Single.fromCallable(() -> {
-            String path = localProfilePath(filesDir, accountId).getAbsolutePath();
-            saveToDisk(vcard, LOCAL_USER_VCARD_NAME, path);
+            saveToDisk(vcard, LOCAL_USER_VCARD_NAME, localProfilePath(filesDir, accountId));
             return vcard;
         });
     }
@@ -125,16 +123,15 @@ public final class VCardUtils {
      * @param filename the filename of the vcf
      * @param path     the path of the vcf
      */
-    private static void saveToDisk(VCard vcard, String filename, String path) {
-        if (vcard == null || filename == null || filename.equals("")) {
+    private static void saveToDisk(VCard vcard, String filename, File path) {
+        if (vcard == null || StringUtils.isEmpty(filename)) {
             return;
         }
-        File peerProfilesFile = new File(path);
-        if (!peerProfilesFile.exists()) {
-            peerProfilesFile.mkdirs();
+        if (!path.exists()) {
+            path.mkdirs();
         }
 
-        File file = new File(peerProfilesFile, filename);
+        File file = new File(path, filename);
         try (VCardWriter writer = new VCardWriter(file, VCardVersion.V2_1)) {
             writer.getVObjectWriter().getFoldedLineWriter().setLineLength(null);
             writer.write(vcard);
