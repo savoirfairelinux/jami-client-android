@@ -62,6 +62,7 @@
   <string name="account_video_enable">Gaitu bideoa</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Aurreratua</string>
+  <string name="account_call_settings_title">Dei-ezarpenak</string>
   <string name="account_local_interface_label">Interfaze lokala</string>
   <string name="account_local_port_label">Ataka lokala</string>
   <string name="account_published_port_label">Argitaratutako ataka</string>

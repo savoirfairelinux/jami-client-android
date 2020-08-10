@@ -72,7 +72,8 @@
   <string name="account_video_enable">Video päälle</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Edistyneet asetukset</string>
-  <string name="account_dht_public_in_calls_label">Salli saapuvat puhelut tuntemattomilta</string>
+  <string name="account_call_settings_title">Puheluasetukset</string>
+  <string name="account_dht_public_in_calls_label">Salli tuntemattomien yhteyshenkilöiden saapuvat puhelut</string>
   <string name="account_registration_exp_label">Rekistöröinti vanhentuu</string>
   <string name="account_local_interface_label">Paikallinen liitäntä</string>
   <string name="account_local_port_label">Paikallinen portti</string>
@@ -119,6 +120,7 @@
   <string name="account_tls_server_name_label">Palvelinnimi</string>
   <string name="account_tls_verify_server_label">Vahvista palvelin</string>
   <string name="account_tls_verify_client_label">Vahvista asiakasohjelma</string>
+  <string name="account_require_client_certificate_label">TLS vaatii asiakasvarmenteen</string>
   <string name="account_tls_negotiation_timeout_sec">Neuvottelun aikakatkaisu (s)</string>
   <string name="account_rtp_max_port">Maksimi</string>
   <string name="account_rtp_min_port">Minimi</string>

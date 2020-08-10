@@ -78,7 +78,7 @@
   <string name="notif_incoming_picture">Fotografie de la %1$s</string>
   <string name="notif_sync_title">Sincronizarea datelor...</string>
   <string name="notif_location_title">Distribuirea poziției către %1$s</string>
-  <string name="location_share_contact">%1$s împărtășește poziția cu tine</string>
+  <string name="location_share_contact">%1$s îți trimite poziția</string>
   <string name="notif_location_multi_title">Distribuirea poziției către %1$d contacte</string>
   <string name="notif_location_remaining">%1$d minute rămase</string>
   <string name="notif_location_action_stop">Oprește distribuirea poziției</string>

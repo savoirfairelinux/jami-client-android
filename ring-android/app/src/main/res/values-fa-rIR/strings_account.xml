@@ -74,6 +74,7 @@
   <string name="account_video_enable">فعال کردن ویدیو</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">پیشرفته</string>
+  <string name="account_call_settings_title">تنظیمات تماس</string>
   <string name="account_dht_public_in_calls_label">اجازه تماس ورودی به مخاطبان ناشناخته</string>
   <string name="account_registration_exp_label">ثبت‌نام منقضی شد</string>
   <string name="account_local_interface_label">رابط محلی</string>

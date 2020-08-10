@@ -25,6 +25,7 @@
   <string name="account_video_label">Vidèo</string>
   <string name="account_video_enable">Activar la vidèo</string>
   <!--Advanced Details-->
+  <string name="account_call_settings_title">Paramètres sonada</string>
   <string name="account_turn_enable_label">Utilizar TURN</string>
   <!--Security Details-->
   <!--SRTP Details-->

@@ -74,7 +74,7 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_video_enable">Įjungti vaizdą</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Išplėstiniai</string>
-  <string name="account_dht_public_in_calls_label">Leisti įeinančius skambučius iš nežinomų kontaktų</string>
+  <string name="account_call_settings_title">Skambučio nustatymai</string>
   <string name="account_registration_exp_label">Registracijos galiojimo laikas</string>
   <string name="account_local_interface_label">Vietinė sąsaja</string>
   <string name="account_local_port_label">Vietinis prievadas</string>

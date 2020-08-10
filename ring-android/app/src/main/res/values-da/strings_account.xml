@@ -66,6 +66,7 @@ Du kan rette din konto senere</string>
   <string name="account_video_enable">Aktiver video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avanceret</string>
+  <string name="account_call_settings_title">Opkaldsindstillinger</string>
   <string name="account_registration_exp_label">Registreringsudløb</string>
   <string name="account_local_interface_label">Lokal grænseflade</string>
   <string name="account_local_port_label">Lokal port</string>

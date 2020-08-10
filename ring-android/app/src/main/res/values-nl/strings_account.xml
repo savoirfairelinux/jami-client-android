@@ -74,6 +74,7 @@ U kunt uw account later bewerken</string>
   <string name="account_video_enable">Video inschakelen</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Geavanceerd</string>
+  <string name="account_call_settings_title">Oproepinstellingen</string>
   <string name="account_registration_exp_label">Verval registratie</string>
   <string name="account_local_interface_label">Lokale interface</string>
   <string name="account_local_port_label">Lokale poort</string>

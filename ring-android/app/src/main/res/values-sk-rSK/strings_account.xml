@@ -74,6 +74,7 @@
   <string name="account_video_enable">Povoliť video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Pokročilé</string>
+  <string name="account_call_settings_title">Nastavenia hovoru</string>
   <string name="account_dht_public_in_calls_label">Povoliť prichádzajúce hovory od neznámych kontaktov</string>
   <string name="account_registration_exp_label">Expirácia registrácie</string>
   <string name="account_local_interface_label">Lokálne rozhranie</string>

@@ -18,6 +18,8 @@
   <string name="account_video_label">Vidéo</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Options avancées</string>
+  <string name="account_call_settings_title">Paramètres appels</string>
+  <string name="account_dht_public_in_calls_label">Autoriser les appels entrants de contacts inconnus</string>
   <string name="account_turn_enable_label">Utiliser le TURN</string>
   <string name="account_turn_username_label">Nom d\'utilisateur TURN</string>
   <string name="account_turn_password_label">Mot de passe TURN</string>

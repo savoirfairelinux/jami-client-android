@@ -69,6 +69,7 @@
   <string name="account_video_enable">Увімкнути відео</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Продвинуті</string>
+  <string name="account_call_settings_title">Налаштування дзвінків</string>
   <string name="account_registration_exp_label">Реєстрація спливла</string>
   <string name="account_local_interface_label">Локальний інтерфейс</string>
   <string name="account_local_port_label">Локальний порт</string>

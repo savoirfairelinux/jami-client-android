@@ -68,6 +68,7 @@ Możesz edytować swoje konto później</string>
   <string name="account_video_enable">Włącz video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Zaawansowane</string>
+  <string name="account_call_settings_title">Ustawienia rozmowy</string>
   <string name="account_registration_exp_label">Rejestracja Wygasła</string>
   <string name="account_local_interface_label">Lokalny Interfejs</string>
   <string name="account_local_port_label">Port Lokalny</string>

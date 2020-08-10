@@ -72,6 +72,7 @@
   <string name="account_video_enable">Ativar Vídeo</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avançado</string>
+  <string name="account_call_settings_title">Configurações de chamada</string>
   <string name="account_registration_exp_label">O Registo Expirou</string>
   <string name="account_local_interface_label">Interface Local</string>
   <string name="account_local_port_label">Porta Local</string>

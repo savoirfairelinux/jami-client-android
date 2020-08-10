@@ -74,6 +74,7 @@
   <string name="account_video_enable">啟用視訊</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">進階</string>
+  <string name="account_call_settings_title">通話設定</string>
   <string name="account_dht_public_in_calls_label">允許未知聯絡人的來電</string>
   <string name="account_registration_exp_label">註冊過期</string>
   <string name="account_local_interface_label">本機介面</string>
@@ -121,6 +122,7 @@
   <string name="account_tls_server_name_label">伺服器名稱</string>
   <string name="account_tls_verify_server_label">驗證伺服器</string>
   <string name="account_tls_verify_client_label">驗證客戶端</string>
+  <string name="account_require_client_certificate_label">TLS 需要客戶端憑證</string>
   <string name="account_tls_negotiation_timeout_sec">協商逾時（秒）</string>
   <string name="account_rtp_max_port">最大值</string>
   <string name="account_rtp_min_port">最小值</string>
