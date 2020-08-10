@@ -77,17 +77,18 @@ public abstract class HardwareService {
         private final AudioOutput outputType;
         private final String outputName;
 
-        AudioState() {outputType = AudioOutput.INTERNAL; outputName = null;}
-        AudioState(AudioOutput ot) { outputType = ot; outputName = null; }
-        AudioState(AudioOutput ot, String name) { outputType = ot; outputName = name; }
+        protected AudioState(AudioOutput ot) { outputType = ot; outputName = null; }
+        protected AudioState(AudioOutput ot, String name) { outputType = ot; outputName = name; }
 
         public AudioOutput getOutputType() { return outputType; }
         public String getOutputName() { return outputName; }
     }
+    protected static final AudioState STATE_SPEAKERS = new AudioState(AudioOutput.SPEAKERS);
+    protected static final AudioState STATE_INTERNAL = new AudioState(AudioOutput.INTERNAL);
 
     protected final Subject<VideoEvent> videoEvents = PublishSubject.create();
     protected final Subject<BluetoothEvent> bluetoothEvents = PublishSubject.create();
-    protected final Subject<AudioState> audioStateSubject = BehaviorSubject.createDefault(new AudioState());
+    protected final Subject<AudioState> audioStateSubject = BehaviorSubject.createDefault(STATE_INTERNAL);
     protected final Subject<Boolean> connectivityEvents = BehaviorSubject.create();
 
     public Observable<VideoEvent> getVideoEvents() {

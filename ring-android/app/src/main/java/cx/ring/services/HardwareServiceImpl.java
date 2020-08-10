@@ -314,7 +314,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
             mAudioManager.setMode(oldMode);
         }
         mAudioManager.setSpeakerphoneOn(true);
-        audioStateSubject.onNext(new AudioState(AudioOutput.SPEAKERS));
+        audioStateSubject.onNext(STATE_SPEAKERS);
     }
 
     /**
@@ -324,7 +324,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         if (mBluetoothWrapper != null)
             mBluetoothWrapper.setBluetoothOn(false);
         mAudioManager.setSpeakerphoneOn(false);
-        audioStateSubject.onNext(new AudioState(AudioOutput.INTERNAL));
+        audioStateSubject.onNext(STATE_INTERNAL);
     }
 
     @Override
