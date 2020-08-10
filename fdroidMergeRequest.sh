@@ -55,8 +55,10 @@ echo "  - versionName: ${versionName}
     subdir: client-android/ring-android/app
     submodules: true
     sudo:
-      - apt update || apt update
-      - apt install -y -t testing swig
+      - apt-get update || apt-get update
+      - apt-get install -y -t testing swig
+      - apt-get install -y -t stretch-backports-sloppy libarchive13
+      - apt-get install -y -t stretch-backports cmake
     gradle:
       - noPush
     rm:
