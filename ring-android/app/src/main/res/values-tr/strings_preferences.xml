@@ -13,7 +13,6 @@
   <string name="pref_video_advanced_summary">Video bit hızını ve çözünürlüğü değiştirin, hem de deneysel özelliklere erişin</string>
   <string name="pref_hd_summary">Yüksek çözünürlüklü görüntü göndermeyi etkinleştir</string>
   <string name="pref_hwEncode_title">Hızlandırılmış kodlamayı etkinleştir</string>
-  <string name="pref_hwEncode_summary">Deneysel özellik</string>
   <string name="pref_systemContacts_title">Sistem bağlantılarını kullan</string>
   <string name="pref_systemContacts_summary">Arayan detaylarını göstermek için sistem bağlantılarını kullan</string>
   <string name="pref_systemDialer_title">Jami kullanarak sistem çağrıları yapın</string>

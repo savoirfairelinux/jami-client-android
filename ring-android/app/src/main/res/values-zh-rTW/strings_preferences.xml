@@ -13,7 +13,6 @@
   <string name="pref_video_advanced_summary">變更視訊位元率、解析度並存取實驗性功能</string>
   <string name="pref_hd_summary">啟用傳送高畫質視訊</string>
   <string name="pref_hwEncode_title">啟用加速編碼</string>
-  <string name="pref_hwEncode_summary">實驗性功能</string>
   <string name="pref_videoBitrate_title">視訊位元率</string>
   <string name="pref_videoBitrate_summary">選取預設的傳出視訊位元率 (KB/s)</string>
   <string name="pref_videoResolution_title">視訊解析度</string>

@@ -13,7 +13,6 @@
   <string name="pref_video_advanced_summary">Canvia el bitrate de vídeo, resolució així com l\'accés a característiques experimentals</string>
   <string name="pref_hd_summary">Habilita vídeo en HD</string>
   <string name="pref_hwEncode_title">Habilita l\'acceleració de codificació</string>
-  <string name="pref_hwEncode_summary">Característica experimental</string>
   <string name="pref_systemContacts_title">Usa contactes del sistema</string>
   <string name="pref_systemContacts_summary">Usa contactes del sistema per mostrar detalls del que truca</string>
   <string name="pref_systemDialer_title">Fer trucades del sistema amb Jami</string>

@@ -13,7 +13,6 @@
   <string name="pref_video_advanced_summary">Modifier le débit vidéo, la résolution et d\'autres fonctionnalités expérimentales</string>
   <string name="pref_hd_summary">Activer l\'envoi de vidéo HD</string>
   <string name="pref_hwEncode_title">Activer l\'encodage matériel</string>
-  <string name="pref_hwEncode_summary">Fonctionnalité expérimentale</string>
   <string name="pref_systemContacts_title">Utiliser les contacts de l\'appareil</string>
   <string name="pref_systemContacts_summary">Utiliser les contacts de l\'appareil pour afficher les détails du correspondant.</string>
   <string name="pref_systemDialer_title">Utiliser Jami par défaut pour les appels</string>

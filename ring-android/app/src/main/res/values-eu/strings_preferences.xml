@@ -12,7 +12,6 @@
   <string name="pref_video_advanced_title">Bideo ezarpen aurreratuak</string>
   <string name="pref_hd_summary">Gaitu HD bideoa bidaltzea</string>
   <string name="pref_hwEncode_title">Gaitu kodetze azeleratua</string>
-  <string name="pref_hwEncode_summary">Ezaugarri esperimentala</string>
   <string name="pref_systemContacts_title">Erabili sistemako kontaktuak</string>
   <string name="pref_systemContacts_summary">Erakutsi sistemako kontaktuak deitzailearen xehetasunak erakusteko.</string>
   <string name="pref_systemDialer_title">Egin sistemako deiak Jami erabiliz</string>

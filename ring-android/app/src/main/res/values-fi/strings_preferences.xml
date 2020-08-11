@@ -13,7 +13,6 @@
   <string name="pref_video_advanced_summary">Muuta videon bittinopeutta, tarkkuutta sekä kokeellisia ominaisuuksia</string>
   <string name="pref_hd_summary">Käytä HD-videon lähettämistä</string>
   <string name="pref_hwEncode_title">Käytä kiihdytettyä koodausta</string>
-  <string name="pref_hwEncode_summary">Kokeellinen ominaisuus</string>
   <string name="pref_videoBitrate_title">Videon laatu</string>
   <string name="pref_videoBitrate_summary">Valitse lähtevän videon oletuslaaduksi (KB/s)</string>
   <string name="pref_videoResolution_title">Videon tarkkuus</string>

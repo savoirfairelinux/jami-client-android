@@ -11,7 +11,6 @@
   <string name="pref_pushNotifications_summary">Używaj serwerów Google, by umożliwić odbieranie wiadomości i rozmów w tle</string>
   <string name="pref_hd_summary">Zezwól na wysyłane wideo w jakości HD</string>
   <string name="pref_hwEncode_title">Włącz przyspieszone kodowanie</string>
-  <string name="pref_hwEncode_summary">Funkcja eksperymentalna</string>
   <string name="pref_systemContacts_title">Użyj kontakty z systemu</string>
   <string name="pref_systemContacts_summary">Użyj kontakty z systemu aby pokazać detale tego który dzwoni</string>
   <string name="pref_systemDialer_title">Użyj Jami jako zastępstwa dla rozmów systemowych</string>

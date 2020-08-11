@@ -5,7 +5,6 @@
         android:defaultValue="true"
         android:icon="@drawable/baseline_memory_24"
         android:key="video_hwenc"
-        android:summary="@string/pref_hwEncode_summary"
         android:title="@string/pref_hwEncode_title" />
 
     <ListPreference

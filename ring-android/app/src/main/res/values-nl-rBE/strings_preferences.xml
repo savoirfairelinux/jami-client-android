@@ -13,7 +13,6 @@
   <string name="pref_video_advanced_summary">Wijzig de videobitrate en -resolutie, evenals de toegang tot experimentele functies</string>
   <string name="pref_hd_summary">Versturen van video in HD inschakelen</string>
   <string name="pref_hwEncode_title">Versnelde codering inschakelen</string>
-  <string name="pref_hwEncode_summary">Experimentele functie</string>
   <string name="pref_systemContacts_title">Systeemcontacten gebruiken</string>
   <string name="pref_systemContacts_summary">Gebruik systeemcontacten om gegevens over de beller te tonen</string>
   <string name="pref_systemDialer_title">Systeemoproepen plaatsen met Jami</string>

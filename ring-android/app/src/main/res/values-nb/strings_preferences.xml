@@ -13,7 +13,6 @@
   <string name="pref_video_advanced_summary">Endre videobitrate og oppløsning, samt få tilgang til eksperimentelle funksjoner</string>
   <string name="pref_hd_summary">Aktiver sending av HD-video</string>
   <string name="pref_hwEncode_title">Aktiver aksellerert koding</string>
-  <string name="pref_hwEncode_summary">Eksperimentelt valg</string>
   <string name="pref_systemContacts_title">Bruk systemkontakter</string>
   <string name="pref_systemContacts_summary">Bruk systemkontakter for å vise innringerdetaljer</string>
   <string name="pref_systemDialer_title">Gjennomfør systemanrop med Jami</string>

@@ -19,7 +19,6 @@
     <string name="label_hd_720p" translatable="false">HD 720P</string>
 
     <string name="pref_hwEncode_title">Enable accelerated encoding</string>
-    <string name="pref_hwEncode_summary">Experimental feature</string>
     <string name="pref_videoBitrate_title">Video bitrate</string>
     <string name="pref_videoBitrate_summary">Select default outgoing video bitrate (KB/s)</string>
     <string name="pref_videoResolution_title">Video resolution</string>

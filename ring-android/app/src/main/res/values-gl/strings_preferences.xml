@@ -13,7 +13,6 @@
   <string name="pref_video_advanced_summary">Cambiar a taxa de bits, resolución e acceso a características experimentais</string>
   <string name="pref_hd_summary">Activar vídeo HD</string>
   <string name="pref_hwEncode_title">Activar codificación acelerada</string>
-  <string name="pref_hwEncode_summary">Característica experimental</string>
   <string name="pref_systemContacts_title">Usar contactos do sistema</string>
   <string name="pref_systemContacts_summary">Usar contactos do sistema para mostrar detalles do contacto.</string>
   <string name="pref_systemDialer_title">Facer as chamadas dos sistema usando Jami</string>

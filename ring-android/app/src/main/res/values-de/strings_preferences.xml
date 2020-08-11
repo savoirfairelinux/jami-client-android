@@ -13,7 +13,6 @@
   <string name="pref_video_advanced_summary">Ändern Sie die Videobitrate, die Auflösung und den Zugriff auf experimentelle Funktionen</string>
   <string name="pref_hd_summary">Senden von HD-Video aktivieren</string>
   <string name="pref_hwEncode_title">Hardwarebeschleunigtes Encoding aktivieren</string>
-  <string name="pref_hwEncode_summary">Experimentelles Feature</string>
   <string name="pref_systemContacts_title">Systemkontakte benutzen</string>
   <string name="pref_systemContacts_summary">Systemkontakte benutzen, um Anruferdetails anzuzeigen</string>
   <string name="pref_systemDialer_title">Jami für normale Anrufe benutzen</string>

@@ -13,7 +13,6 @@
   <string name="pref_video_advanced_summary">更改视频比特率，分辨率以及访问实验性功能</string>
   <string name="pref_hd_summary">启用发送高清视频</string>
   <string name="pref_hwEncode_title">启用加速编码</string>
-  <string name="pref_hwEncode_summary">实验性功能</string>
   <string name="pref_videoBitrate_title">视频比特率</string>
   <string name="pref_videoBitrate_summary">选择默认出站视频比特率 (KB/s)</string>
   <string name="pref_videoResolution_title">视频分辨率</string>

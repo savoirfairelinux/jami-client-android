@@ -13,7 +13,6 @@
   <string name="pref_video_advanced_summary">Keisti vaizdo pralaidumą, raišką, o taip pat eksperimentines ypatybes</string>
   <string name="pref_hd_summary">Įjungti aukštos raiškos (HD) vaizdo siuntimą</string>
   <string name="pref_hwEncode_title">Įjungti paspartintą kodavimą</string>
-  <string name="pref_hwEncode_summary">Eksperimentinė ypatybė</string>
   <string name="pref_systemContacts_title">Naudoti sistemos adresatus</string>
   <string name="pref_systemContacts_summary">Naudoti sistemos adresatus, kad būtų rodoma skambinančio asmens informacija.</string>
   <string name="pref_systemDialer_title">Inicijuoti sistemos skambučius, naudojant Jami</string>
