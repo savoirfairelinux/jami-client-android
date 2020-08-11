@@ -8,7 +8,6 @@
   <string name="pref_mobileData_title">Date mobile</string>
   <string name="pref_pushNotifications_title">Notificări Push</string>
   <string name="pref_video_advanced_title">Setări video avansate</string>
-  <string name="pref_hwEncode_summary">Funcționalități experimentale</string>
   <string name="pref_systemContacts_title">Folosește contactele din sistem</string>
   <string name="pref_startOnBoot_title">Pornește Jami la startup</string>
   <string name="pref_clearHistory_title">Ștergere istoric</string>

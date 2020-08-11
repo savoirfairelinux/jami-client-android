@@ -13,7 +13,6 @@
   <string name="pref_video_advanced_summary">Modifica il bitrate del video, la risoluzione e accedi alle funzioni sperimentali</string>
   <string name="pref_hd_summary">Abilita l\'invio di video HD</string>
   <string name="pref_hwEncode_title">Attiva la codifica accelerata</string>
-  <string name="pref_hwEncode_summary">Funzioni sperimentali</string>
   <string name="pref_systemContacts_title">Usa la rubrica</string>
   <string name="pref_systemContacts_summary">Usa i contatti della rubrica per mostrare i dettagli del chiamante</string>
   <string name="pref_systemDialer_title">Effettua le chiamate usando Jami</string>

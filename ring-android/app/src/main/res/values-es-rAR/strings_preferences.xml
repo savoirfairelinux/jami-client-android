@@ -13,7 +13,6 @@
   <string name="pref_video_advanced_summary">Cambiá la tasa de bits y la resolución de video y accedé a características experimentales</string>
   <string name="pref_hd_summary">Permitir enviar video en HD</string>
   <string name="pref_hwEncode_title">Habilitar cifrado acelerado</string>
-  <string name="pref_hwEncode_summary">Característica experimental</string>
   <string name="pref_systemContacts_title">Usar contactos del sistema</string>
   <string name="pref_systemContacts_summary">Usar contactos del sistema para mostrar detalles del interlocutor</string>
   <string name="pref_systemDialer_title">Realizar llamadas del sistema mediante Jami</string>

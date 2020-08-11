@@ -13,7 +13,6 @@
   <string name="pref_video_advanced_summary">تغییر نرخ بیت ویدیو، تفکیک‌پذیری تصویر و همچنین دسترسی به ویژگی‌های آزمایشی</string>
   <string name="pref_hd_summary">فعال‌سازی ارسال ویدیوی HD</string>
   <string name="pref_hwEncode_title">فعال‌سازی کدگذاری شتاب‌داده</string>
-  <string name="pref_hwEncode_summary">ویژگی آزمایشی</string>
   <string name="pref_systemContacts_title">استفاده از مخاطبان سیستم</string>
   <string name="pref_systemContacts_summary">استفاده از مخاطبان سیستم برای نمایش جزییات تماس‌گیرنده.</string>
   <string name="pref_systemDialer_title">انجام تماس‌های سیستم با استفاده از جمی</string>

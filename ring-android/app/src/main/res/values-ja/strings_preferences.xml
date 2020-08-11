@@ -13,7 +13,6 @@
   <string name="pref_video_advanced_summary">動画のビットレートと解像度の変更、実験的な機能を試す</string>
   <string name="pref_hd_summary">HDビデオの送信を有効にする</string>
   <string name="pref_hwEncode_title">高速エンコードを有効にする</string>
-  <string name="pref_hwEncode_summary">実験的機能</string>
   <string name="pref_systemContacts_title">システムの連絡先を使用する</string>
   <string name="pref_systemContacts_summary">システムの連絡先を使用して通話先の詳細を表示します。</string>
   <string name="pref_systemDialer_title">Jamiを使用して発信する</string>

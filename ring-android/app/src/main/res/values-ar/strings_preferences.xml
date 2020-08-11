@@ -13,7 +13,6 @@
   <string name="pref_video_advanced_summary">تغيير معدل البت والدقة للفيديو والوصول إلى الميزات التجريبية</string>
   <string name="pref_hd_summary">تفعيل إرسال فيديو بدقة عالية HD</string>
   <string name="pref_hwEncode_title">تفعيل الترميز المُسرَّع</string>
-  <string name="pref_hwEncode_summary">ميزة تجريبية</string>
   <string name="pref_systemContacts_title">استخدام جهات إتصال النظام</string>
   <string name="pref_systemContacts_summary">استخدام جهات إتصال النظام لإظهار تفاصيل المتصل.</string>
   <string name="pref_systemDialer_title">إجراء مكالمات النظام باستخدام جامي</string>

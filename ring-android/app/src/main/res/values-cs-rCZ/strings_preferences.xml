@@ -10,7 +10,6 @@
   <string name="pref_pushNotifications_summary">Použít servery Google pro umožnění přijímání hovorů/zpráv na pozadí</string>
   <string name="pref_hd_summary">Povolit posílání obrazu ve vysokém rozlišení (HD)</string>
   <string name="pref_hwEncode_title">Povolit  zrychlené kódování</string>
-  <string name="pref_hwEncode_summary">Pokusná funkce</string>
   <string name="pref_systemContacts_title">Použít systémové kontakty</string>
   <string name="pref_systemContacts_summary">Použít systémové kontakty pro zobrazení údajů volajícího.</string>
   <string name="pref_systemDialer_title">Vykonávat systémové hovory skrze Jami</string>

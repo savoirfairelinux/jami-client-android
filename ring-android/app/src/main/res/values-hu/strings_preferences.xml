@@ -13,7 +13,6 @@
   <string name="pref_video_advanced_summary">Videó bitsebesség és felbontás módosítása. Kísérleti jellemzők elérése.</string>
   <string name="pref_hd_summary">Engedélyezze a HD videó küldését</string>
   <string name="pref_hwEncode_title">Hardveres gyorsítás</string>
-  <string name="pref_hwEncode_summary">Kísérleti jellemző</string>
   <string name="pref_videoBitrate_title">Videó átviteli sebessége</string>
   <string name="pref_videoBitrate_summary">Alapértelmezett kimenő videó átviteli sebesség választása (KB/mp)</string>
   <string name="pref_videoResolution_title">Videó felbontás</string>

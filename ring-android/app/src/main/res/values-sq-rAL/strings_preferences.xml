@@ -13,7 +13,6 @@
   <string name="pref_video_advanced_summary">Ndryshimi bitrate-in, qartësinë e videove, si dhe përdorni veçori eksperimentale</string>
   <string name="pref_hd_summary">Aktivizoni dërgim videosh HD</string>
   <string name="pref_hwEncode_title">Aktivizo kodim të përshpejtuar</string>
-  <string name="pref_hwEncode_summary">Veçori eksperimentale</string>
   <string name="pref_videoResolution_title">Qartësi videoje</string>
   <string name="pref_videoResolution_summary">Përzgjidhni qartësi parazgjedhje videoje në dalje</string>
   <string name="pref_systemContacts_title">Përdor kontakte sistemi</string>

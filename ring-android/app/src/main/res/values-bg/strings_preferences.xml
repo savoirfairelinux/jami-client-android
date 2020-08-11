@@ -11,7 +11,6 @@
   <string name="pref_pushNotifications_summary">Използвайте Google сървъри, за да получавате повиквания/съобщения във фонов режим</string>
   <string name="pref_hd_summary">Активиране на изпращане на HD видео</string>
   <string name="pref_hwEncode_title">Активиране на ускорено кодиране</string>
-  <string name="pref_hwEncode_summary">Експериментална функция</string>
   <string name="pref_systemContacts_title">Използване на системните контакти</string>
   <string name="pref_systemContacts_summary">Използване на системните контакти за показване на информация при обаждане.</string>
   <string name="pref_systemDialer_title">Системни повиквания с Jami </string>

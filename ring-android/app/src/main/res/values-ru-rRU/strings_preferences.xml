@@ -13,7 +13,6 @@
   <string name="pref_video_advanced_summary">Изменить битрейт видео, разрешение, а также получите доступ к экспериментальным функциям</string>
   <string name="pref_hd_summary">Включить отправку HD-видео</string>
   <string name="pref_hwEncode_title">Включить ускоренное кодирование</string>
-  <string name="pref_hwEncode_summary">Экспериментальная возможность</string>
   <string name="pref_systemContacts_title">Использовать системные контакты</string>
   <string name="pref_systemContacts_summary">Использовать системные контакты для входящих.</string>
   <string name="pref_systemDialer_title">Выполнение системных вызовов с помощью Jami</string>
