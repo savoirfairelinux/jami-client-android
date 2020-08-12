@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a42d341c_43f22ed8",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/HardwareServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-08-12T18:11:53Z",
+      "side": 1,
+      "message": "move inside CameraService (in cameraService.init(), since before that we might not have permission and we are not interested by camera).",
+      "range": {
+        "startLine": 90,
+        "startChar": 4,
+        "endLine": 104,
+        "endChar": 6
+      },
+      "revId": "aac877a47099bce9029e64aefaaa4f210278d92f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
