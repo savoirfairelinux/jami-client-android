@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7d276a6f_c6174faf",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/GeneralAccountPresenter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2020-08-12T19:00:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1b25fd9_988ba6e0",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 55
+      },
+      "revId": "d5bebf062ca5afefcca7ad027690e84e5ae41885",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8f39aa4_9aaa4634",
         "filename": "ring-android/app/src/main/java/cx/ring/fragments/GeneralAccountPresenter.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "269ea747_65fca627",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/GeneralAccountPresenter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2020-08-12T19:00:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8f39aa4_9aaa4634",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 0
+      },
+      "revId": "d5bebf062ca5afefcca7ad027690e84e5ae41885",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4522207_6cb256bd",
         "filename": "ring-android/app/src/main/java/cx/ring/tv/account/TVSettingsFragment.java",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "d5bebf062ca5afefcca7ad027690e84e5ae41885",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4740a61e_1d0ea437",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/account/TVSettingsFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2020-08-12T19:00:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4522207_6cb256bd",
+      "range": {
+        "startLine": 115,
+        "startChar": 12,
+        "endLine": 115,
+        "endChar": 85
+      },
+      "revId": "d5bebf062ca5afefcca7ad027690e84e5ae41885",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
