@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "691d31f7_75562af5",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2020-08-12T17:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3855514f_869cfad6",
+      "range": {
+        "startLine": 576,
+        "startChar": 20,
+        "endLine": 576,
+        "endChar": 54
+      },
+      "revId": "49949d8bccb07209cbd45c5c70015905f5359668",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e657594d_c48d70df",
         "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "49949d8bccb07209cbd45c5c70015905f5359668",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "874b7d09_e23b9c12",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2020-08-12T17:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e657594d_c48d70df",
+      "range": {
+        "startLine": 584,
+        "startChar": 20,
+        "endLine": 584,
+        "endChar": 56
+      },
+      "revId": "49949d8bccb07209cbd45c5c70015905f5359668",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fd798f64_193899ec",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2020-08-12T17:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92b2e939_00b5b31d",
+      "range": {
+        "startLine": 589,
+        "startChar": 0,
+        "endLine": 593,
+        "endChar": 17
+      },
+      "revId": "49949d8bccb07209cbd45c5c70015905f5359668",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f7bd6c7_63fd82a7",
         "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "d564b08c_3e64dbcd",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2020-08-12T17:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f7bd6c7_63fd82a7",
+      "range": {
+        "startLine": 594,
+        "startChar": 15,
+        "endLine": 594,
+        "endChar": 19
+      },
+      "revId": "49949d8bccb07209cbd45c5c70015905f5359668",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3baa6d6a_3cb01718",
         "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
         "patchSetId": 4
@@ -114,6 +210,30 @@
       "revId": "49949d8bccb07209cbd45c5c70015905f5359668",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3f254d2_10338bcb",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2020-08-12T17:25:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3baa6d6a_3cb01718",
+      "range": {
+        "startLine": 569,
+        "startChar": 8,
+        "endLine": 595,
+        "endChar": 9
+      },
+      "revId": "49949d8bccb07209cbd45c5c70015905f5359668",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
