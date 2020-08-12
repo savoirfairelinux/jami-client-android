@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3855514f_869cfad6",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-08-12T16:16:47Z",
+      "side": 1,
+      "message": "not needed",
+      "range": {
+        "startLine": 576,
+        "startChar": 20,
+        "endLine": 576,
+        "endChar": 54
+      },
+      "revId": "49949d8bccb07209cbd45c5c70015905f5359668",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e657594d_c48d70df",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-08-12T16:16:47Z",
+      "side": 1,
+      "message": "not needed",
+      "range": {
+        "startLine": 584,
+        "startChar": 20,
+        "endLine": 584,
+        "endChar": 56
+      },
+      "revId": "49949d8bccb07209cbd45c5c70015905f5359668",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92b2e939_00b5b31d",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-08-12T16:16:47Z",
+      "side": 1,
+      "message": "not needed",
+      "range": {
+        "startLine": 589,
+        "startChar": 0,
+        "endLine": 593,
+        "endChar": 17
+      },
+      "revId": "49949d8bccb07209cbd45c5c70015905f5359668",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f7bd6c7_63fd82a7",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-08-12T16:16:47Z",
+      "side": 1,
+      "message": "In CameraService, use getVideoHandler() to schedule the callback on the videoHandler",
+      "range": {
+        "startLine": 594,
+        "startChar": 15,
+        "endLine": 594,
+        "endChar": 19
+      },
+      "revId": "49949d8bccb07209cbd45c5c70015905f5359668",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3baa6d6a_3cb01718",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-08-12T16:16:47Z",
+      "side": 1,
+      "message": "move to CaameraService",
+      "range": {
+        "startLine": 569,
+        "startChar": 8,
+        "endLine": 595,
+        "endChar": 9
+      },
+      "revId": "49949d8bccb07209cbd45c5c70015905f5359668",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
