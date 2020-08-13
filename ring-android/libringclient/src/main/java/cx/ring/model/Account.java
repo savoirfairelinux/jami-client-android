@@ -58,6 +58,8 @@ public class Account {
 
     private AccountConfig mVolatileDetails;
     private AccountConfig mDetails;
+    private String mUsername;
+
     private final ArrayList<AccountCredentials> credentialsDetails = new ArrayList<>();
     private Map<String, String> devices = new HashMap<>();
     private final Map<String, CallContact> mContacts = new HashMap<>();
@@ -128,7 +130,7 @@ public class Account {
                    final List<Map<String, String>> credentials,
                    final Map<String, String> volDetails) {
         accountID = bAccountID;
-        mDetails = new AccountConfig(details);
+        setDetails(details);
         mVolatileDetails = new AccountConfig(volDetails);
         setCredentials(credentials);
     }
@@ -371,7 +373,8 @@ public class Account {
     }
 
     public void setDetails(Map<String, String> details) {
-        this.mDetails = new AccountConfig(details);
+        mDetails = new AccountConfig(details);
+        mUsername = mDetails.get(ConfigKey.ACCOUNT_USERNAME);
     }
 
     public void setDetail(ConfigKey key, String val) {
@@ -395,7 +398,7 @@ public class Account {
     }
 
     public String getUsername() {
-        return mDetails.get(ConfigKey.ACCOUNT_USERNAME);
+        return mUsername;
     }
 
     public String getDisplayname() {
