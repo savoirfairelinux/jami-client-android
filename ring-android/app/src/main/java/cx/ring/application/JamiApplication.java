@@ -34,6 +34,8 @@ import android.os.IBinder;
 import android.system.Os;
 import android.util.Log;
 
+import androidx.annotation.RequiresApi;
+
 import com.bumptech.glide.Glide;
 
 import java.io.File;
@@ -44,9 +46,6 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import androidx.annotation.RequiresApi;
-import androidx.core.content.ContextCompat;
 
 import cx.ring.BuildConfig;
 import cx.ring.R;
@@ -158,7 +157,7 @@ public abstract class JamiApplication extends Application {
                 if (mDeviceRuntimeService.hasVideoPermission() && mHardwareService.isVideoAvailable()) {
                     //initVideo is called here to give time to the application to initialize hardware cameras
                     Log.d(TAG, "bootstrapDaemon: At least one camera available. Initializing video...");
-                    mHardwareService.initVideo()
+                    mHardwareService.initVideo(false)
                             .onErrorComplete()
                             .subscribe();
                 } else {

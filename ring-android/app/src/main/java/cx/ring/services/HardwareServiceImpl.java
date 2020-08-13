@@ -99,9 +99,9 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         cameraService = new CameraService(mContext);
     }
 
-    public Completable initVideo() {
+    public Completable initVideo(boolean resetDevices) {
         Log.i(TAG, "initVideo()");
-        return cameraService.init()
+        return cameraService.init(resetDevices)
                 .toSingle(this::getMaxResolution)
                 .doOnSuccess(r -> maxResolutionSubject.onNext(r))
                 .doOnError(t -> maxResolutionSubject.onNext(new Tuple<>(null, null)))
@@ -431,6 +431,8 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
             minVideoSize = parseResolution(mPreferenceService.getResolution());
         else
             minVideoSize = VIDEO_SIZE_LOW;
+
+        mPreferenceService.setInitialResolution(minVideoSize.y);
 
         cameraService.getCameraInfo(camId, formats, sizes, rates, minVideoSize);
     }

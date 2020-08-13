@@ -21,18 +21,17 @@ package cx.ring.tv.account;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.leanback.preference.LeanbackSettingsFragmentCompat;
 import androidx.preference.ListPreference;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
-import androidx.preference.SwitchPreference;
-import androidx.preference.Preference;
 import androidx.preference.PreferenceScreen;
-
-import android.view.View;
+import androidx.preference.SwitchPreference;
 
 import java.util.ArrayList;
 import java.util.Arrays;
