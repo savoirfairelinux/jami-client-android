@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7f1b7b86_48bf2476",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/CameraService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2020-08-13T19:41:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99b1ae97_30d724fe",
+      "range": {
+        "startLine": 92,
+        "startChar": 53,
+        "endLine": 92,
+        "endChar": 73
+      },
+      "revId": "4d86fbfc3888d81bb088e6dc465d30d5b461f048",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8097655_105f6db6",
         "filename": "ring-android/app/src/main/java/cx/ring/services/HardwareServiceImpl.java",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "84960d33_cd8c967f",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/HardwareServiceImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2020-08-13T19:41:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8097655_105f6db6",
+      "range": {
+        "startLine": 90,
+        "startChar": 4,
+        "endLine": 104,
+        "endChar": 6
+      },
+      "revId": "4d86fbfc3888d81bb088e6dc465d30d5b461f048",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e360ebff_50297c80",
         "filename": "ring-android/app/src/main/java/cx/ring/services/HardwareServiceImpl.java",
         "patchSetId": 9
@@ -68,6 +116,30 @@
       "revId": "4d86fbfc3888d81bb088e6dc465d30d5b461f048",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfa841e6_902d5af0",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/HardwareServiceImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2020-08-13T19:41:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e360ebff_50297c80",
+      "range": {
+        "startLine": 111,
+        "startChar": 50,
+        "endLine": 111,
+        "endChar": 72
+      },
+      "revId": "4d86fbfc3888d81bb088e6dc465d30d5b461f048",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
