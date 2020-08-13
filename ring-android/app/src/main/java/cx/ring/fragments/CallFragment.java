@@ -108,14 +108,12 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.SipCall;
 import cx.ring.mvp.BaseSupportFragment;
-import cx.ring.plugins.PluginUtils;
 import cx.ring.plugins.RecyclerPicker.RecyclerPicker;
 import cx.ring.plugins.RecyclerPicker.RecyclerPickerLayoutManager;
 import cx.ring.service.DRingService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.NotificationService;
-import cx.ring.settings.pluginssettings.PluginDetails;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.ConversationPath;
@@ -325,7 +323,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-
         ((JamiApplication) requireActivity().getApplication()).getInjectionComponent().inject(this);
         binding = DataBindingUtil.inflate(inflater, R.layout.frag_call, container, false);
         binding.setPresenter(this);
@@ -1022,7 +1019,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     @Override
     public void initMenu(boolean isSpeakerOn, boolean displayFlip, boolean canDial,
                          boolean showPluginBtn, boolean onGoingCall) {
-        if (binding.callCameraFlipBtn != null) {
+        if (binding != null) {
             binding.callCameraFlipBtn.setVisibility(displayFlip ? View.VISIBLE : View.GONE);
         }
         if (dialPadBtn != null) {
@@ -1124,7 +1121,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     private void configureTransform(int viewWidth, int viewHeight) {
         Activity activity = getActivity();
-        if (null == binding.previewSurface || null == activity) {
+        if (null == binding || null == activity) {
             return;
         }
         int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
@@ -1374,7 +1371,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     public void toggleVideoPluginsCarousel(boolean toggle) {
         toggleVideoPluginsCarousel = toggle;
         if (choosePluginMode) {
-            if (toggleVideoPluginsCarousel) {
+            if (toggle) {
                 binding.recyclerPicker.setVisibility(View.VISIBLE);
                 movePreview(true);
             } else {
