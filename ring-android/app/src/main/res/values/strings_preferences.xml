@@ -24,6 +24,9 @@
     <string name="pref_videoBitrate_summary">Select default outgoing video bitrate (KB/s)</string>
     <string name="pref_videoResolution_title">Video resolution</string>
     <string name="pref_videoResolution_summary">Select default outgoing video resolution</string>
+    <string name="pref_restart_dialog">You have to restart Jami for the new parameters to be taken into account</string>
+    <string name="pref_restart_dialog_no">later</string>
+    <string name="pref_restart_dialog_yes">restart</string>
 
     <string name="pref_systemContacts_key" translatable="false">pref_systemContacts</string>
     <string name="pref_systemContacts_title">Use system contacts</string>

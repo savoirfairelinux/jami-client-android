@@ -94,4 +94,8 @@ public abstract class PreferencesService {
     public abstract void loadDarkMode();
 
     public abstract int getMaxFileAutoAccept(String accountId);
+
+    public abstract int getInitialResolution();
+
+    public abstract void setInitialResolution(int initialResolution);
 }
