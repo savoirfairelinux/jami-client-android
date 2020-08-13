@@ -35,4 +35,6 @@ public interface GeneralAccountView {
     void finish();
 
     void updateResolutions(Tuple<Integer, Integer> maxResolution, int currentResolution);
+
+    void displayRestartDialog();
 }

@@ -22,12 +22,12 @@ package cx.ring.services;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
+import android.text.TextUtils;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
-
-import android.os.Build;
-import android.text.TextUtils;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -61,6 +61,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
     public static final String PREF_DARK_MODE= "darkMode";
     private  static final String PREF_ACCEPT_IN_MAX_SIZE = "acceptIncomingFilesMaxSize";
     public static final String PREF_PLUGINS = "plugins";
+    public static final String PREF_INITIAL_RESOLUTION = "video_initial_resolution";
     private final Map<String, Set<String>> mNotifiedRequests = new HashMap<>();
 
     @Inject
@@ -198,5 +199,15 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
 
     private SharedPreferences getThemePreferences() {
         return PreferenceManager.getDefaultSharedPreferences(mContext);
+    }
+
+    @Override
+    public int getInitialResolution() {
+        return getVideoPreferences().getInt(PREF_INITIAL_RESOLUTION, 0);
+    }
+
+    @Override
+    public void setInitialResolution(int initialResolution) {
+        getVideoPreferences().edit().putInt(PREF_INITIAL_RESOLUTION, initialResolution).apply();
     }
 }
