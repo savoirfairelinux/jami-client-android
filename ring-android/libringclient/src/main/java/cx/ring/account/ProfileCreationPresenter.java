@@ -21,13 +21,11 @@ package cx.ring.account;
 
 import javax.inject.Inject;
 
-import cx.ring.model.Account;
 import cx.ring.mvp.AccountCreationModel;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.utils.Log;
-import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
 
@@ -101,7 +99,7 @@ public class ProfileCreationPresenter extends RootPresenter<ProfileCreationView>
 
     public void cameraPermissionChanged(boolean isGranted) {
         if (isGranted && mHardwareService.isVideoAvailable()) {
-            mHardwareService.initVideo()
+            mHardwareService.initVideo(false)
                     .onErrorComplete()
                     .subscribe();
         }
