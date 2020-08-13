@@ -42,7 +42,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.percentlayout.widget.PercentFrameLayout;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.Rational;
 import android.view.LayoutInflater;
@@ -54,6 +56,7 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 
@@ -75,6 +78,7 @@ import cx.ring.fragments.CallFragment;
 import cx.ring.adapters.ConfParticipantAdapter;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.CallContact;
+import cx.ring.model.Conference;
 import cx.ring.model.SipCall;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.services.DeviceRuntimeService;
@@ -636,6 +640,24 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
     @Override
     public boolean displayPluginsButton() {
         return false;
+    }
+
+    @Override
+    public void updateConfInfo(List<Conference.ParticipantInfo> info) {
+        int pad = getResources().getDimensionPixelSize(R.dimen.padding_small);
+        binding.participantLabelContainer.removeAllViews();
+        for (Conference.ParticipantInfo i : info) {
+            String displayName = i.contact.getDisplayName();
+            if (!TextUtils.isEmpty(displayName)) {
+                TextView text = new TextView(binding.participantLabelContainer.getContext());
+                text.setPadding(pad, pad, pad, pad);
+                PercentFrameLayout.LayoutParams params = new PercentFrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.getPercentLayoutInfo().leftMarginPercent = i.x / (float)mVideoWidth;
+                params.getPercentLayoutInfo().topMarginPercent = i.y / (float)mVideoHeight;
+                text.setText(displayName);
+                binding.participantLabelContainer.addView(text, params);
+            }
+        }
     }
 
     @Override

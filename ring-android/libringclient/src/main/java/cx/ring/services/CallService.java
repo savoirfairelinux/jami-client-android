@@ -122,6 +122,28 @@ public class CallService {
         mExecutor.execute(() -> Ringservice.setIsComposing(accountId, uri, isComposing));
     }
 
+    public void onConferenceInfoUpdated(String confId, ArrayList<Map<String, String>> info) {
+        Conference conference = getConference(confId);
+        if (conference != null) {
+            List<Conference.ParticipantInfo> newInfo = new ArrayList<>(info.size());
+            if (conference.isConference()) {
+                for (Map<String, String> i : info) {
+                    SipCall call = conference.findCallByContact(new Uri(i.get("uri")));
+                    if (call != null) {
+                        newInfo.add(new Conference.ParticipantInfo(call.getContact(), i));
+                    } else {
+                        // TODO
+                    }
+                }
+            } else {
+                Account account = mAccountService.getAccount(conference.getCall().getAccount());
+                for (Map<String, String> i : info)
+                    newInfo.add(new Conference.ParticipantInfo(account.getContactFromCache(new Uri(i.get("uri"))), i));
+            }
+            conference.setInfo(newInfo);
+        }
+    }
+
     private static class ConferenceEntity {
         Conference conference;
         ConferenceEntity(Conference conf) {

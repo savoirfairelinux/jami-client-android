@@ -47,6 +47,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:visibility="gone"
                 tools:visibility="visible" />
 
+            <androidx.percentlayout.widget.PercentFrameLayout
+                android:layout_gravity="center"
+                android:id="@+id/participant_label_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignTop="@id/video_surface"
+                android:layout_alignBottom="@id/video_surface"
+                android:layout_alignLeft="@id/video_surface"
+                android:layout_alignRight="@id/video_surface"/>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/plugin_preview_container"
                 android:layout_width="wrap_content"

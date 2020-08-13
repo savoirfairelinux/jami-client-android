@@ -161,10 +161,13 @@ public class CallPresenter extends RootPresenter<CallView> {
         }
         //getView().blockScreenRotation();
 
-        mCompositeDisposable.add(mCallService
+        Observable<Conference> callObservable = mCallService
                 .placeCall(accountId, StringUtils.toNumber(contactRingId), audioOnly)
                 //.map(mCallService::getConference)
                 .flatMapObservable(call -> mCallService.getConfUpdates(call))
+                .share();
+
+        mCompositeDisposable.add(callObservable
                 .observeOn(mUiScheduler)
                 .subscribe(conference -> {
                     contactUpdate(conference);
@@ -173,6 +176,8 @@ public class CallPresenter extends RootPresenter<CallView> {
                     hangupCall();
                     Log.e(TAG, "Error with initOutgoing: " + e.getMessage());
                 }));
+
+        showConference(callObservable);
     }
 
     /**
@@ -217,6 +222,17 @@ public class CallPresenter extends RootPresenter<CallView> {
                     hangupCall();
                     Log.e(TAG, "Error with initIncoming, action view flow: ", e);
                 }));
+
+        showConference(callObservable);
+    }
+
+    private void showConference(Observable<Conference> conference) {
+        mCompositeDisposable.add(conference
+                .distinctUntilChanged()
+                .switchMap(Conference::getParticipantInfo)
+                .observeOn(mUiScheduler)
+                .subscribe(info -> getView().updateConfInfo(info),
+                        e -> Log.e(TAG, "Error with initIncoming, action view flow: ", e)));
     }
 
     public void prepareOptionMenu() {
