@@ -19,20 +19,22 @@
  */
 package cx.ring.tv.account;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.leanback.preference.LeanbackSettingsFragmentCompat;
 import androidx.preference.ListPreference;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
-import androidx.preference.SwitchPreference;
-import androidx.preference.Preference;
 import androidx.preference.PreferenceScreen;
-
-import android.view.View;
+import androidx.preference.SwitchPreference;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,6 +46,8 @@ import cx.ring.fragments.GeneralAccountView;
 import cx.ring.model.Account;
 import cx.ring.model.ConfigKey;
 import cx.ring.services.SharedPreferencesServiceImpl;
+import cx.ring.tv.main.HomeActivity;
+import cx.ring.utils.Log;
 import cx.ring.utils.Tuple;
 
 public class TVSettingsFragment extends LeanbackSettingsFragmentCompat {
@@ -151,6 +155,21 @@ public class TVSettingsFragment extends LeanbackSettingsFragmentCompat {
                 this.autoAnswer = !autoAnswer;
             }
             return super.onPreferenceTreeClick(preference);
+        }
+
+        private void restartApplication() {
+            PackageManager packageManager = requireContext().getPackageManager();
+            Intent intent = packageManager.getLaunchIntentForPackage(requireContext().getPackageName());
+            if (intent == null) {
+                Log.e(TAG, "Not able to trigger restart");
+                return;
+            }
+            ComponentName componentName = intent.getComponent();
+            Intent mainIntent = Intent.makeRestartActivityTask(componentName);
+            // force AndroidTV activity
+            mainIntent.setClass(requireContext(), HomeActivity.class);
+            requireContext().startActivity(mainIntent);
+            Runtime.getRuntime().exit(0);
         }
     }
 }
