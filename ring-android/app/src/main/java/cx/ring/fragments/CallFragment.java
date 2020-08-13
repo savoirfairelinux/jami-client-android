@@ -326,8 +326,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         ((JamiApplication) requireActivity().getApplication()).getInjectionComponent().inject(this);
         binding = DataBindingUtil.inflate(inflater, R.layout.frag_call, container, false);
         binding.setPresenter(this);
-        rp = new RecyclerPicker(requireActivity(),
-                binding.recyclerPicker,
+        rp = new RecyclerPicker(binding.recyclerPicker,
                 R.layout.item_picker,
                 LinearLayout.HORIZONTAL, this);
         rp.setFirstLastElementsWidths(112, 112);
@@ -1271,13 +1270,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     private void stopShareScreen() {
-        if(choosePluginMode)
-        {
-            binding.previewSurface.setVisibility(View.VISIBLE);
-        }
-        else {
-            binding.previewSurface.setVisibility(View.VISIBLE);
-        }
+        binding.previewSurface.setVisibility(View.VISIBLE);
         presenter.stopScreenShare();
     }
 
@@ -1354,7 +1347,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         // Reset the padding of the RecyclerPicker on each
         rp.setFirstLastElementsWidths(112, 112);
         binding.recyclerPicker.setVisibility(View.GONE);
-        Log.i("ZZZ", "Height: " + binding.recyclerPicker.getHeight());
         if (choosePluginMode) {
             displayHangupButton(false);
             binding.recyclerPicker.setVisibility(View.VISIBLE);

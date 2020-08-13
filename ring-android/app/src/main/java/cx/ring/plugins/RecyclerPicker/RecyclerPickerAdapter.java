@@ -1,5 +1,6 @@
 package cx.ring.plugins.RecyclerPicker;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,23 +19,19 @@ public class RecyclerPickerAdapter extends RecyclerView.Adapter<RecyclerPickerAd
     private List<Drawable> mList;
     private ItemClickListener mItemClickListener;
     private int mItemLayoutResource;
+    private final LayoutInflater mInflater;
 
-    public RecyclerPickerAdapter(@LayoutRes int recyclerItemLayout, ItemClickListener itemClickListener) {
+    public RecyclerPickerAdapter(Context ctx, @LayoutRes int recyclerItemLayout, ItemClickListener itemClickListener) {
         this.mItemLayoutResource = recyclerItemLayout;
         this.mItemClickListener = itemClickListener;
+        mInflater = LayoutInflater.from(ctx);
     }
 
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(mItemLayoutResource, parent, false);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mItemClickListener.onItemClicked(v);
-            }
-        });
+        View view = mInflater.inflate(mItemLayoutResource, parent, false);
+        view.setOnClickListener(v -> mItemClickListener.onItemClicked(v));
         return new ItemViewHolder(view);
     }
 
