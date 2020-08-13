@@ -450,6 +450,8 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         else
             minVideoSize = VIDEO_SIZE_LOW;
 
+        mPreferenceService.setInitialResolution(minVideoSize.y);
+
         cameraService.getCameraInfo(camId, formats, sizes, rates, minVideoSize);
     }
 
