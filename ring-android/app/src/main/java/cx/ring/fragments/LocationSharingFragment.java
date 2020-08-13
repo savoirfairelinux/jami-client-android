@@ -294,16 +294,18 @@ public class LocationSharingFragment extends Fragment {
         mDisposableBag.add(mServiceDisposableBag);
         mDisposableBag.add(mShowControlsSubject.subscribe(this::setShowControls));
         mDisposableBag.add(mIsSharingSubject.subscribe(this::setIsSharing));
-        mDisposableBag.add(mShowMapSubject.subscribe(state -> {
-            Fragment p = getParentFragment();
-            if (p instanceof ConversationFragment) {
-                ConversationFragment parent = (ConversationFragment) p;
-                if (state == MapState.FULL)
-                    parent.openLocationSharing();
-                else
-                    parent.closeLocationSharing(state == MapState.MINI);
-            }
-        }));
+        mDisposableBag.add(mShowMapSubject
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(state -> {
+                    Fragment p = getParentFragment();
+                    if (p instanceof ConversationFragment) {
+                        ConversationFragment parent = (ConversationFragment) p;
+                        if (state == MapState.FULL)
+                            parent.openLocationSharing();
+                        else
+                            parent.closeLocationSharing(state == MapState.MINI);
+                    }
+                }));
         mDisposableBag.add(mIsContactSharingSubject
                 .distinctUntilChanged()
                 .observeOn(AndroidSchedulers.mainThread())
