@@ -105,7 +105,7 @@ public abstract class HardwareService {
         return connectivityEvents;
     }
 
-    public abstract Completable initVideo();
+    public abstract Completable initVideo(boolean resetDevices);
 
     public abstract boolean isVideoAvailable();
 
