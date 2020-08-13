@@ -22,6 +22,30 @@
       "revId": "f8b5fee1b2383ba9d39d53f45e903175bb0cbf9a",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f70fab21_c110feca",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/GeneralAccountPresenter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2020-08-13T13:58:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a493f36d_b8b6212a",
+      "range": {
+        "startLine": 91,
+        "startChar": 31,
+        "endLine": 91,
+        "endChar": 61
+      },
+      "revId": "f8b5fee1b2383ba9d39d53f45e903175bb0cbf9a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
