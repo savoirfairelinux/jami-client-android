@@ -33,6 +33,7 @@ import androidx.annotation.RequiresApi;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -97,6 +98,7 @@ public class JamiChooserTargetService extends ChooserTargetService {
                             }
                             return choosers;
                         }))
+                .timeout(5, TimeUnit.SECONDS)
                 .onErrorReturn(e -> new ArrayList<>())
                 .blockingGet();
     }
