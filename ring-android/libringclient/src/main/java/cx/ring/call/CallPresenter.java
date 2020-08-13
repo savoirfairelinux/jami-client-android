@@ -104,7 +104,7 @@ public class CallPresenter extends RootPresenter<CallView> {
 
     public void cameraPermissionChanged(boolean isGranted) {
         if (isGranted && mHardwareService.isVideoAvailable()) {
-            mHardwareService.initVideo()
+            mHardwareService.initVideo(false)
                     .onErrorComplete()
                     .blockingAwait();
             permissionChanged = true;

@@ -100,14 +100,14 @@ public class CameraService {
     private final CameraManager.AvailabilityCallback availabilityCallback = new CameraManager.AvailabilityCallback() {
         @Override
         public void onCameraAvailable(@NonNull String cameraId) {
-            init()
+            init(false)
                 .onErrorComplete()
                 .subscribe();
         }
 
         @Override
         public void onCameraUnavailable(@NonNull String cameraId) {
-            init()
+            init(false)
                 .onErrorComplete()
                 .subscribe();
         }
@@ -366,7 +366,7 @@ public class CameraService {
         }).subscribeOn(AndroidSchedulers.from(getVideoLooper()));
     }
 
-    Completable init() {
+    Completable init(boolean resetDevices) {
         if (manager == null)
             return Completable.error(new IllegalStateException("Video manager not available"));
         return loadDevices(manager)
@@ -377,7 +377,7 @@ public class CameraService {
                         // Removed devices
                         if (old != null) {
                             for (String oldId : old.cameras) {
-                                if (!devs.cameras.contains(oldId)) {
+                                if (!devs.cameras.contains(oldId) || resetDevices) {
                                     if (addedDevices.remove(oldId))
                                         RingserviceJNI.removeVideoDevice(oldId);
                                 }
@@ -899,6 +899,10 @@ public class CameraService {
         }
     }
 
+    public void resetCameraDevices() {
+        devices = null;
+    }
+
     void fillCameraInfo(DeviceParams p, String camId, IntVect formats, UintVect rates, Point minVideoSize) {
         if (manager == null)
             return;
@@ -974,7 +978,7 @@ public class CameraService {
     }
 
     public void unregisterCameraDetectionCallback() {
-        if (manager != null && availabilityCallback != null)
+        if (manager != null)
             manager.unregisterAvailabilityCallback(availabilityCallback);
     }
 }
