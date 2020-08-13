@@ -81,8 +81,8 @@ public class CallService {
     private final PublishSubject<SipCall> callSubject = PublishSubject.create();
     private final PublishSubject<Conference> conferenceSubject = PublishSubject.create();
 
-    private final Set<String> currentConnections = new HashSet<>();
-    private final BehaviorSubject<Integer> connectionSubject = BehaviorSubject.createDefault(0);
+    // private final Set<String> currentConnections = new HashSet<>();
+    // private final BehaviorSubject<Integer> connectionSubject = BehaviorSubject.createDefault(0);
 
     public Observable<Conference> getConfsUpdates() {
         return conferenceSubject;
@@ -109,11 +109,11 @@ public class CallService {
                 .filter(c -> c.getId().equals(confId));//getConfUpdates(call);*/
     }
 
-    public Observable<Boolean> getConnectionUpdates() {
+    /*public Observable<Boolean> getConnectionUpdates() {
         return connectionSubject
                 .map(i -> i > 0)
                 .distinctUntilChanged();
-    }
+    }*/
 
     private void updateConnectionCount() {
         //connectionSubject.onNext(currentConnections.size() - 2*currentCalls.size());
@@ -478,8 +478,8 @@ public class CallService {
 
 
     public void connectionUpdate(String id, int state) {
-        Log.d(TAG, "connectionUpdate: " + id + " " + state);
-        switch(state) {
+        // Log.d(TAG, "connectionUpdate: " + id + " " + state);
+        /*switch(state) {
             case 0:
                 currentConnections.add(id);
                 break;
@@ -488,7 +488,7 @@ public class CallService {
                 currentConnections.remove(id);
                 break;
         }
-        updateConnectionCount();
+        updateConnectionCount();*/
     }
 
     void callStateChanged(String callId, String newState, int detailCode) {
