@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a493f36d_b8b6212a",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/GeneralAccountPresenter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-08-13T12:46:12Z",
+      "side": 1,
+      "message": "mUiScheduler\n\nmore generally, presenters should not depend on Android code (ideally they should be in the LRC package)",
+      "range": {
+        "startLine": 91,
+        "startChar": 31,
+        "endLine": 91,
+        "endChar": 61
+      },
+      "revId": "f8b5fee1b2383ba9d39d53f45e903175bb0cbf9a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
