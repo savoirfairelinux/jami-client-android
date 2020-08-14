@@ -259,6 +259,11 @@ public class DaemonService {
         }
 
         @Override
+        public void onConferenceInfosUpdated(String confId, VectMap infos) {
+            mCallService.onConferenceInfoUpdated(confId, infos.toNative());
+        }
+
+        @Override
         public void incomingMessage(String callId, String from, StringMap messages) {
             if (messages == null || messages.isEmpty())
                 return;
