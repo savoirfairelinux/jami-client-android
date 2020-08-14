@@ -25,50 +25,26 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
-import com.google.android.material.badge.BadgeDrawable;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
-import androidx.core.util.Pair;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
-
-import javax.inject.Inject;
-import javax.inject.Named;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.core.content.ContextCompat;
+import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -87,19 +63,17 @@ import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.interfaces.Colorable;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
-import cx.ring.plugins.PluginUtils;
 import cx.ring.service.DRingService;
 import cx.ring.services.AccountService;
 import cx.ring.services.NotificationService;
+import cx.ring.settings.SettingsFragment;
+import cx.ring.settings.VideoSettingsFragment;
 import cx.ring.settings.pluginssettings.PluginDetails;
 import cx.ring.settings.pluginssettings.PluginSettingsFragment;
 import cx.ring.settings.pluginssettings.PluginsListSettingsFragment;
-import cx.ring.settings.SettingsFragment;
-import cx.ring.settings.VideoSettingsFragment;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -525,7 +499,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         .replace(R.id.main_frame, fContent, HOME_TAG)
                         .setReorderingAllowed(true)
-                        .addToBackStack(HOME_TAG)
                         .commit();
                 conversationSelected = false;
                 showProfileInfo();
