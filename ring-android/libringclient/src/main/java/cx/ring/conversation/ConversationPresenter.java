@@ -319,7 +319,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     }
 
     public void clickOnGoingPane() {
-        Conference conf = mConversation.getCurrentCall();
+        Conference conf = mConversation == null ? null : mConversation.getCurrentCall();
         if (conf != null) {
             getView().goToCallActivity(conf.getId());
         } else {

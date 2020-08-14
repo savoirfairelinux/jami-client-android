@@ -560,7 +560,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void toggleButtonClicked() {
-        if (!(mConference.isRinging() && mConference.isIncoming())) {
+        if (mConference != null && !(mConference.isRinging() && mConference.isIncoming())) {
             hangupCall();
         }
     }
