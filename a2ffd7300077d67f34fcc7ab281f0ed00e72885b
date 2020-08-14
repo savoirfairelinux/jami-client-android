@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46a13f46_641451f4",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2020-08-14T16:15:59Z",
+      "side": 1,
+      "message": "callCameraFlipBtn not checked?",
+      "range": {
+        "startLine": 1026,
+        "startChar": 20,
+        "endLine": 1026,
+        "endChar": 37
+      },
+      "revId": "a2ffd7300077d67f34fcc7ab281f0ed00e72885b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
