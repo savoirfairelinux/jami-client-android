@@ -370,20 +370,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 app:useCompatPadding="true" />
 
         </RelativeLayout>
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_picker"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:layout_marginBottom="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:clipToPadding="false"
-                tools:listitem="@layout/item_picker"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_picker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="bottom"
+            android:clipToPadding="false"
+            tools:listitem="@layout/item_picker"
+            android:orientation="horizontal"
+            app:layoutManager="LinearLayoutManager"/>
     </FrameLayout>
 </layout>
