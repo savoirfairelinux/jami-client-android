@@ -90,6 +90,7 @@ public class AccountMigrationFragment extends Fragment {
         });
 
         binding.ringMigrateBtn.setOnClickListener(v -> initAccountMigration(binding.ringPassword.getText().toString()));
+        binding.deleteBtn.setOnClickListener(v -> initAccountDelete());
     }
 
     @Override
@@ -100,11 +101,26 @@ public class AccountMigrationFragment extends Fragment {
         }
     }
 
-    private void initAccountMigration(String password) {
-        if (migratingAccount) {
+    private void initAccountDelete() {
+        if (migratingAccount)
             return;
-        }
 
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.account_delete_dialog_title)
+                .setMessage(R.string.account_delete_dialog_message)
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton(R.string.menu_delete, (d, w) -> deleteAccount())
+                .create()
+                .show();
+    }
+
+    private void deleteAccount() {
+        mAccountService.removeAccount(mAccountId);
+    }
+
+    private void initAccountMigration(String password) {
+        if (migratingAccount)
+            return;
         migratingAccount = true;
 
         //orientation is locked during the migration of account to avoid the destruction of the thread
