@@ -33,7 +33,7 @@ along with this program; if not, write to the Free Software
         android:descendantFocusability="beforeDescendants"
         android:focusableInTouchMode="true"
         android:orientation="vertical"
-        app:bounded_width="320dp">
+        app:bounded_width="380dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -57,36 +57,48 @@ along with this program; if not, write to the Free Software
                     android:contentDescription="@string/app_name"
                     app:srcCompat="@drawable/ic_jami_48" />
 
-                <LinearLayout
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/password_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_below="@id/textView"
-                    android:orientation="vertical">
+                    android:layout_margin="16dp"
+                    app:passwordToggleEnabled="true">
 
-                    <com.google.android.material.textfield.TextInputLayout
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/ring_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        app:passwordToggleEnabled="true">
+                        android:hint="@string/account_enter_password"
+                        android:imeOptions="actionDone"
+                        android:inputType="textPassword" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/ring_password"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/account_enter_password"
-                            android:imeOptions="actionDone"
-                            android:inputType="textPassword"  />
-                    </com.google.android.material.textfield.TextInputLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/password_layout"
+                    android:orientation="horizontal"
+                    android:layout_margin="8dp">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/delete_btn"
+                        style="@style/Widget.MaterialComponents.Button.TextButton.Dialog.Flush"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:text="@string/menu_delete"
+                        android:textColor="@color/red_800"/>
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/ring_migrate_btn"
                         style="@style/Widget.MaterialComponents.Button.TextButton.Dialog.Flush"
                         android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="@string/update_account"/>
+                        android:layout_weight="1"
+                        android:text="@string/update_account" />
                 </LinearLayout>
 
                 <TextView
@@ -98,7 +110,7 @@ along with this program; if not, write to the Free Software
                     android:paddingLeft="16dp"
                     android:paddingTop="16dp"
                     android:paddingRight="16dp"
-                    android:paddingBottom="24dp"
+                    android:paddingBottom="16dp"
                     android:text="@string/account_migration"
                     android:textSize="14sp" />
 
@@ -113,7 +125,7 @@ along with this program; if not, write to the Free Software
                     android:paddingTop="24dp"
                     android:paddingRight="16dp"
                     android:text="@string/ring_account"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"/>
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
 
             </RelativeLayout>
 
