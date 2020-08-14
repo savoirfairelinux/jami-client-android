@@ -95,6 +95,7 @@ dependencies {
     implementation "androidx.leanback:leanback:1.1.0-alpha03"
     implementation "androidx.leanback:leanback-preference:1.1.0-alpha03"
     implementation "androidx.media:media:${android_support_core_version}"
+    implementation "androidx.percentlayout:percentlayout:1.0.0"
     implementation "com.google.android.material:material:1.1.0"
     implementation 'com.google.android:flexbox:1.1.1'
     implementation 'org.osmdroid:osmdroid-android:6.1.6'

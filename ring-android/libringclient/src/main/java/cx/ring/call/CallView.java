@@ -22,6 +22,7 @@ package cx.ring.call;
 import java.util.List;
 
 import cx.ring.model.CallContact;
+import cx.ring.model.Conference;
 import cx.ring.model.SipCall.CallStatus;
 import cx.ring.model.SipCall;
 import cx.ring.services.HardwareService;
@@ -81,4 +82,6 @@ public interface CallView {
     void goToContact(String accountId, CallContact contact);
 
     boolean displayPluginsButton();
+
+    void updateConfInfo(List<Conference.ParticipantInfo> info);
 }
