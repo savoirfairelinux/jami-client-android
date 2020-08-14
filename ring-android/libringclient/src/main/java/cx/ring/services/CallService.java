@@ -36,6 +36,7 @@ import cx.ring.daemon.Blob;
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.StringVect;
+import cx.ring.daemon.VectMap;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
@@ -120,6 +121,28 @@ public class CallService {
 
     public void setIsComposing(String accountId, String uri, boolean isComposing) {
         mExecutor.execute(() -> Ringservice.setIsComposing(accountId, uri, isComposing));
+    }
+
+    public void onConferenceInfoUpdated(String confId, List<Map<String, String>> info) {
+        Conference conference = getConference(confId);
+        if (conference != null) {
+            List<Conference.ParticipantInfo> newInfo = new ArrayList<>(info.size());
+            if (conference.isConference()) {
+                for (Map<String, String> i : info) {
+                    SipCall call = conference.findCallByContact(new Uri(i.get("uri")));
+                    if (call != null) {
+                        newInfo.add(new Conference.ParticipantInfo(call.getContact(), i));
+                    } else {
+                        // TODO
+                    }
+                }
+            } else {
+                Account account = mAccountService.getAccount(conference.getCall().getAccount());
+                for (Map<String, String> i : info)
+                    newInfo.add(new Conference.ParticipantInfo(account.getContactFromCache(new Uri(i.get("uri"))), i));
+            }
+            conference.setInfo(newInfo);
+        }
     }
 
     private static class ConferenceEntity {

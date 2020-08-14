@@ -30,7 +30,6 @@ import android.app.RemoteAction;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Matrix;
@@ -47,7 +46,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Rational;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -67,6 +68,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -78,7 +80,7 @@ import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
-import androidx.preference.PreferenceManager;
+import androidx.percentlayout.widget.PercentFrameLayout;
 
 import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 
@@ -102,7 +104,9 @@ import cx.ring.client.ConversationSelectionActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.daemon.Ringservice;
 import cx.ring.databinding.FragCallBinding;
+import cx.ring.databinding.ItemParticipantLabelBinding;
 import cx.ring.model.CallContact;
+import cx.ring.model.Conference;
 import cx.ring.model.SipCall;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.plugins.PluginUtils;
@@ -118,7 +122,6 @@ import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.KeyboardVisibilityManager;
-import cx.ring.utils.Log;
 import cx.ring.utils.MediaButtonsHelper;
 import cx.ring.utils.StringUtils;
 import cx.ring.views.AvatarDrawable;
@@ -992,6 +995,26 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             if (binding.confControlGroup.getAdapter() == null)
                 binding.confControlGroup.setAdapter(confAdapter);
         }
+    }
+
+    @Override
+    public void updateConfInfo(List<Conference.ParticipantInfo> info) {
+        binding.participantLabelContainer.removeAllViews();
+        if (!info.isEmpty()) {
+            LayoutInflater inflater = LayoutInflater.from(binding.participantLabelContainer.getContext());
+            for (Conference.ParticipantInfo i : info) {
+                String displayName = i.contact.getDisplayName();
+                if (!TextUtils.isEmpty(displayName)) {
+                    ItemParticipantLabelBinding label = ItemParticipantLabelBinding.inflate(inflater);
+                    PercentFrameLayout.LayoutParams params = new PercentFrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    params.getPercentLayoutInfo().leftMarginPercent = i.x / (float) mVideoWidth;
+                    params.getPercentLayoutInfo().topMarginPercent = i.y / (float) mVideoHeight;
+                    label.participantName.setText(displayName);
+                    binding.participantLabelContainer.addView(label.getRoot(), params);
+                }
+            }
+        }
+        binding.participantLabelContainer.setVisibility(info.isEmpty() ? View.GONE : View.VISIBLE);
     }
 
     @Override
