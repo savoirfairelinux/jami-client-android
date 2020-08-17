@@ -83,6 +83,7 @@
   <string name="notif_location_action_stop">اشتراک مکان را متوقف کنید</string>
   <string name="location_share_action_start">شروع اشتراک‌گذاری</string>
   <string name="location_share_action_stop">توقف اشتراک‌گذاری</string>
+  <string name="location_share_about_title">اطلاعات نقشه</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">شما:</string>
   <string name="action_call_hangup">قطع‌کردن</string>
@@ -92,6 +93,8 @@
   <string name="start_error_title">نمی‌توان جمی را راه‌اندازی کرد!</string>
   <string name="start_error_mic_required">جمی برای کار به مجوز میکروفون نیاز دارد.</string>
   <string name="action_call_accept">پذیرش تماس</string>
+  <string name="action_call_hold_accept">این را نگه‌دار و تماس بعدی را بپذیر</string>
+  <string name="action_call_end_accept">این را قطع کن و تماس بعدی را بپذیر</string>
   <string name="action_call_decline">ردکردن</string>
   <string name="action_call_mic_mute">قطع میکروفون</string>
   <string name="action_load_plugin">بارگذاری افزونه</string>

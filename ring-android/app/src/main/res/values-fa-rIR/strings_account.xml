@@ -82,6 +82,7 @@
   <string name="account_stun_enable_label">استفاده از Stun</string>
   <string name="account_stun_server_label">سرور Stun</string>
   <string name="account_accept_files">پذیرش خودکار فایل‌های ورودی</string>
+  <string name="account_conversation_settings_title">تنظیمات گفتگو</string>
   <string name="account_accept_files_max_size">بیشینه اندازه فایل برای پذیرش خودکار</string>
   <string name="account_accept_files_never">هرگز به صورت خودکار قبول نکن</string>
   <string name="account_accept_files_always">همواره به صورت خودکار پذیرش کن</string>
@@ -122,6 +123,7 @@
   <string name="account_tls_server_name_label">نام سرور</string>
   <string name="account_tls_verify_server_label">تأیید سرور</string>
   <string name="account_tls_verify_client_label">تأیید مشتری</string>
+  <string name="account_require_client_certificate_label">TLS نیاز به گواهی‌نامه کارخواه دارد</string>
   <string name="account_tls_negotiation_timeout_sec">مهلت مذاکره (ثانیه)</string>
   <string name="account_rtp_max_port">بیشینه</string>
   <string name="account_rtp_min_port">کمینه</string>

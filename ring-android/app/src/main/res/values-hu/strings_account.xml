@@ -82,6 +82,7 @@
   <string name="account_stun_enable_label">STUN használata</string>
   <string name="account_stun_server_label">STUN-kiszolgáló</string>
   <string name="account_accept_files">A bejövő fájlok automatikus elfogadása</string>
+  <string name="account_conversation_settings_title">Beszélgetés beállításai</string>
   <string name="account_accept_files_max_size">Az automatikus elfogadás legnagyobb fájlmérete</string>
   <string name="account_accept_files_never">Soha sem fogadja el automatikusan</string>
   <string name="account_accept_files_always">Mindig fogadja el automatikusan</string>

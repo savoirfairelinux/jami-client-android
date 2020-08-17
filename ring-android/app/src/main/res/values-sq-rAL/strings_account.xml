@@ -82,6 +82,7 @@
   <string name="account_stun_enable_label">Përdor Stun</string>
   <string name="account_stun_server_label">Shërbyes Stun</string>
   <string name="account_accept_files">Lejo automatikisht kartela ardhëse </string>
+  <string name="account_conversation_settings_title">Rregullime bisedash</string>
   <string name="account_accept_files_max_size">Madhësi maksimum kartelash për t’u pranuar automatikisht</string>
   <string name="account_accept_files_never">Mos i prano kurrë automatikisht</string>
   <string name="account_accept_files_always">Pranoji përherë automatikisht</string>
