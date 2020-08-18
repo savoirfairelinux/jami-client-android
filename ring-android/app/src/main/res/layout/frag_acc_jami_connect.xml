@@ -51,6 +51,7 @@
             android:layout_alignParentTop="true"
             android:layout_margin="@dimen/text_margin"
             android:gravity="center"
+            android:layout_centerHorizontal="true"
             android:text="@string/account_connect_server_button"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
             android:textColor="@color/color_primary_light"
