@@ -22,9 +22,29 @@
 package cx.ring.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+
+import io.reactivex.Observable;
+import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.Subject;
 
 public class Conference {
+
+    public static class ParticipantInfo {
+        public CallContact contact;
+        public int x, y, w, h;
+
+        public ParticipantInfo(CallContact c, Map<String, String> i) {
+            contact = c;
+            x = Integer.parseInt(i.get("x"));
+            y = Integer.parseInt(i.get("y"));
+            w = Integer.parseInt(i.get("w"));
+            h = Integer.parseInt(i.get("h"));
+        }
+    }
+    private final Subject<List<ParticipantInfo>> mParticipantInfo = BehaviorSubject.createDefault(Collections.emptyList());
 
     private String mId;
     private SipCall.CallStatus mConfState;
@@ -119,6 +139,14 @@ public class Conference {
         return null;
     }
 
+    public SipCall findCallByContact(Uri uri) {
+        for (SipCall call : mParticipants) {
+            if (call.getContact().getPrimaryUri().toString().equals(uri.toString()))
+                return call;
+        }
+        return null;
+    }
+
     public boolean isIncoming() {
         return mParticipants.size() == 1 && mParticipants.get(0).isIncoming();
     }
@@ -143,5 +171,13 @@ public class Conference {
 
     public void removeParticipants() {
         mParticipants.clear();
+    }
+
+    public void setInfo(List<ParticipantInfo> info) {
+        mParticipantInfo.onNext(info);
+    }
+
+    public Observable<List<ParticipantInfo>> getParticipantInfo() {
+        return mParticipantInfo;
     }
 }

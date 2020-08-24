@@ -42,7 +42,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.percentlayout.widget.PercentFrameLayout;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.Rational;
 import android.view.LayoutInflater;
@@ -54,6 +56,7 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 
@@ -69,12 +72,14 @@ import cx.ring.call.CallPresenter;
 import cx.ring.call.CallView;
 import cx.ring.client.ContactDetailsActivity;
 import cx.ring.client.ConversationSelectionActivity;
+import cx.ring.databinding.ItemParticipantLabelBinding;
 import cx.ring.databinding.TvFragCallBinding;
 import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.fragments.CallFragment;
 import cx.ring.adapters.ConfParticipantAdapter;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.CallContact;
+import cx.ring.model.Conference;
 import cx.ring.model.SipCall;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.services.DeviceRuntimeService;
@@ -636,6 +641,26 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
     @Override
     public boolean displayPluginsButton() {
         return false;
+    }
+
+    @Override
+    public void updateConfInfo(List<Conference.ParticipantInfo> info) {
+        binding.participantLabelContainer.removeAllViews();
+        if (!info.isEmpty()) {
+            LayoutInflater inflater = LayoutInflater.from(binding.participantLabelContainer.getContext());
+            for (Conference.ParticipantInfo i : info) {
+                String displayName = i.contact.getDisplayName();
+                if (!TextUtils.isEmpty(displayName)) {
+                    ItemParticipantLabelBinding label = ItemParticipantLabelBinding.inflate(inflater);
+                    PercentFrameLayout.LayoutParams params = new PercentFrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    params.getPercentLayoutInfo().leftMarginPercent = i.x / (float) mVideoWidth;
+                    params.getPercentLayoutInfo().topMarginPercent = i.y / (float) mVideoHeight;
+                    label.participantName.setText(displayName);
+                    binding.participantLabelContainer.addView(label.getRoot(), params);
+                }
+            }
+        }
+        binding.participantLabelContainer.setVisibility(info.isEmpty() ? View.GONE : View.VISIBLE);
     }
 
     @Override
