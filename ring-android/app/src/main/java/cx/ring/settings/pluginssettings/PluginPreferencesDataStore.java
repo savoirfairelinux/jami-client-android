@@ -1,9 +1,12 @@
 package cx.ring.settings.pluginssettings;
 
+import android.content.Intent;
+
 import androidx.annotation.Nullable;
 import androidx.preference.PreferenceDataStore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -16,13 +19,25 @@ import static cx.ring.plugins.PluginUtils.stringListToListString;
 
 public class PluginPreferencesDataStore extends PreferenceDataStore {
 
+    public static final int GET_FILE = 1;
     private PluginDetails mPluginDetails;
+    private Map<String, String> mPreferenceTypes = new HashMap<>();
     private Map<String, String> preferencesValues;
     private ReadWriteLock lock = new ReentrantReadWriteLock();
 
     public PluginPreferencesDataStore(PluginDetails pluginDetails) {
         mPluginDetails = pluginDetails;
         preferencesValues = mPluginDetails.getPluginPreferencesValues();
+    }
+
+    public void addTomPreferenceTypes(Map<String, String> preferenceModel) {
+        Lock writeLock = lock.writeLock();
+        try {
+            writeLock.lock();
+            mPreferenceTypes.put(preferenceModel.get("key"), preferenceModel.get("type"));
+        } finally {
+            writeLock.unlock();
+        }
     }
 
     @Override
@@ -150,7 +165,7 @@ public class PluginPreferencesDataStore extends PreferenceDataStore {
      *  Updates the preferencesValues map
      *  Use locks since the PreferenceInteraction is asynchronous
      */
-    private void notifyPreferencesValuesChange() {
+    public void notifyPreferencesValuesChange() {
         Lock writeLock = lock.writeLock();
         try {
             writeLock.lock();

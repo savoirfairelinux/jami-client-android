@@ -1,7 +1,10 @@
 package cx.ring.settings.pluginssettings;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +33,7 @@ import androidx.preference.SwitchPreference;
 import androidx.preference.TwoStatePreference;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -42,16 +47,28 @@ import cx.ring.client.HomeActivity;
 import cx.ring.daemon.Ringservice;
 import cx.ring.plugins.ButtonPreference.ButtonPreference;
 import cx.ring.plugins.PluginPreferences;
+import cx.ring.utils.AndroidFileUtils;
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 import static android.content.Context.MODE_PRIVATE;
+import static android.content.Intent.getIntent;
+import static android.content.Intent.getIntentOld;
+import static cx.ring.daemon.RingserviceJNI.addValueToPreference;
 import static cx.ring.plugins.PluginUtils.getOrElse;
+import static cx.ring.plugins.PluginUtils.listAvailablePlugins;
 import static cx.ring.plugins.PluginUtils.stringListToListString;
 
 public class PluginSettingsFragment extends PreferenceFragmentCompat {
     public static final String TAG = PluginSettingsFragment.class.getSimpleName();
+    private static final int SELECT_FILE = 1;
     private Context mContext;
     private List<Map<String, String>> mPreferencesAttributes;
     private PluginDetails pluginDetails;
+    private PluginPreferencesDataStore ppds;
+    private String mPreferenceKey = "";
 
     public static PluginSettingsFragment newInstance(PluginDetails pluginDetails) {
         Bundle args = new Bundle();
@@ -83,7 +100,7 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
             mPreferencesAttributes = pluginDetails.getPluginPreferences();
 
             PreferenceManager preferenceManager = getPreferenceManager();
-            PluginPreferencesDataStore ppds = new PluginPreferencesDataStore(pluginDetails);
+            ppds = new PluginPreferencesDataStore(pluginDetails);
             preferenceManager.setPreferenceDataStore(ppds);
             setHasOptionsMenu(true);
         }
@@ -137,6 +154,9 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
                             break;
                         case "List":
                             preferencesViews.add(createListPreference(preferenceAttributes));
+                            break;
+			            case "UserList":
+                            preferencesViews.add(createUserListPreference(preferenceAttributes));
                             break;
                         case "MultiSelectList":
                             preferencesViews.
@@ -199,6 +219,7 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
         CheckBoxPreference preference = new CheckBoxPreference(mContext);
         setPreferenceAttributes(preference, preferenceModel);
         setTwoStatePreferenceAttributes(preference, preferenceModel);
+        ppds.addTomPreferenceTypes(preferenceModel);
         return preference;
     }
 
@@ -206,6 +227,7 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
         DropDownPreference preference = new DropDownPreference(mContext);
         setPreferenceAttributes(preference, preferenceModel);
         setListPreferenceAttributes(preference, preferenceModel);
+        ppds.addTomPreferenceTypes(preferenceModel);
         return preference;
     }
 
@@ -214,6 +236,7 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
         setPreferenceAttributes(preference, preferenceModel);
         setDialogPreferenceAttributes(preference, preferenceModel);
         setEditTextAttributes(preference, preferenceModel);
+        ppds.addTomPreferenceTypes(preferenceModel);
         return preference;
     }
 
@@ -221,9 +244,90 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
         ListPreference preference = new ListPreference(mContext);
         setPreferenceAttributes(preference, preferenceModel);
         setListPreferenceAttributes(preference, preferenceModel);
+        ppds.addTomPreferenceTypes(preferenceModel);
         return preference;
     }
 
+    private ListPreference createUserListPreference(Map<String, String> preferenceModel){
+        ListPreference preference = new ListPreference(mContext);
+        preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                if (newValue.toString().isEmpty()) {
+                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+                    intent.setType("*/*");
+                    mPreferenceKey = preferenceModel.get("key");
+                    startActivityForResult(intent, SELECT_FILE);
+                    return false;
+                }
+                return true;
+            }
+        });
+        setPreferenceAttributes(preference, preferenceModel);
+        setListPreferenceAttributes(preference, preferenceModel);
+        ppds.addTomPreferenceTypes(preferenceModel);
+        return preference;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == SELECT_FILE && resultCode == Activity.RESULT_OK) {
+            if(data != null) {
+                Uri uri = data.getData();
+                if (uri != null) {
+                    Log.d("PLUGIN PREF", "here!");
+                    AndroidFileUtils.getCacheFile(requireContext(), uri)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .map(file -> {return file.getAbsolutePath();})
+                            .subscribe(new SingleObserver<String>() {
+                                @Override
+                                public void onSubscribe(Disposable d) {
+
+                                }
+
+                                @Override
+                                public void onSuccess(String filename) {
+                                    String[] ext = filename.split("\\.");
+                                    if (ext[ext.length-1].equals("png")) {
+                                        Toast.makeText(mContext, "File: " + filename +
+                                                " successfully read", Toast.LENGTH_LONG).show();
+                                        boolean success = addValueToPreference(pluginDetails.getRootPath(), mPreferenceKey, filename);
+                                        if(success) {
+                                            mPreferencesAttributes = pluginDetails.getPluginPreferences();
+                                            PreferenceScreen screen = getPreferenceManager().getPreferenceScreen();
+
+                                            for (int i = 0; i < screen.getPreferenceCount(); i++){
+                                                Preference preference = screen.getPreference(i);
+                                                if (preference.getKey() != null && preference.getKey().equals(mPreferenceKey)) {
+                                                    for (Map<String, String> preferenceModel: mPreferencesAttributes){
+                                                        if(preferenceModel.get("key").equals(mPreferenceKey)){
+                                                            setListPreferenceAttributes((ListPreference)preference, preferenceModel);
+                                                            String[] splitPath = filename.split("/");
+                                                            ((ListPreference) preference).setValue(splitPath[splitPath.length - 1]);
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            setPreferenceScreen(screen);
+                                            ppds.notifyPreferencesValuesChange();
+                                        }
+                                    } else {
+                                        Toast.makeText(mContext, "Choose a PNG image!", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+                                    Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_LONG).show();
+                                }
+                            });
+                }
+            }
+        }
+
+    }
     private MultiSelectListPreference createMultiSelectListPreference(
             Map<String, String> preferenceModel) {
         MultiSelectListPreference preference = new MultiSelectListPreference(mContext);
@@ -307,10 +411,10 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
     private void setListPreferenceAttributes(ListPreference preference,
                                              Map<String, String> preferenceModel) {
         setDialogPreferenceAttributes(preference, preferenceModel);
-        String entries = getOrElse(preferenceModel.get("entries"), "[]");
+        String entries = getOrElse(preferenceModel.get("entries"), "");
         preference.setEntries(stringListToListString(entries).
                 toArray(new CharSequence[ 0 ]));
-        String entryValues = getOrElse(preferenceModel.get("entryValues"), "[]");
+        String entryValues = getOrElse(preferenceModel.get("entryValues"), "");
         preference.setEntryValues(stringListToListString(entryValues).
                 toArray(new CharSequence[ 0 ]));
         preference.setDefaultValue(preferenceModel.get("defaultValue"));
@@ -376,5 +480,9 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
     private void setTwoStatePreferenceAttributes(TwoStatePreference preference,
                                                  Map<String, String> preferenceModel) {
         preference.setDefaultValue(Boolean.valueOf(preferenceModel.get("defaultValue")));
+    }
+
+    private void onSetUserList(){
+
     }
 }
