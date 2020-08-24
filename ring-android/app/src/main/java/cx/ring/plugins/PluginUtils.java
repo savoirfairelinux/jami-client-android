@@ -130,16 +130,14 @@ public class PluginUtils {
      */
     public static String listStringToStringList(List<String> listString) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append('[');
 
         if(!listString.isEmpty()) {
-            for(int i=0; i< listString.size()-1; i++){
+            for(int i=0; i< listString.size(); i++){
                 stringBuilder.append(listString.get(i)).append(",");
             }
-            stringBuilder.append(listString.get(listString.size()-1));
+            stringBuilder.append(listString.get(listString.size()));
         }
 
-        stringBuilder.append(']');
         return stringBuilder.toString();
     }
 
@@ -153,7 +151,7 @@ public class PluginUtils {
         List<String> listString = new ArrayList<>();
         StringBuilder currentWord = new StringBuilder();
         if(!stringList.isEmpty()) {
-            for (int i = 1; i < stringList.length() - 1; i++) {
+            for (int i = 0; i < stringList.length(); i++) {
                 char currentChar = stringList.charAt(i);
                 if (currentChar != ',') {
                     currentWord.append(currentChar);
@@ -162,7 +160,7 @@ public class PluginUtils {
                     currentWord = new StringBuilder();
                 }
 
-                if (i == stringList.length() - 2) {
+                if (i == stringList.length() - 1) {
                     listString.add(currentWord.toString());
                     break;
                 }
