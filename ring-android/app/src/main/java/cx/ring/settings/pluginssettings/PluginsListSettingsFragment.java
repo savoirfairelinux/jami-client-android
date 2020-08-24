@@ -1,9 +1,7 @@
 package cx.ring.settings.pluginssettings;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,12 +12,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
@@ -29,12 +23,11 @@ import java.util.List;
 import cx.ring.R;
 import cx.ring.client.HomeActivity;
 import cx.ring.daemon.Ringservice;
+import cx.ring.databinding.FragPluginsListSettingsBinding;
 import cx.ring.plugins.PluginUtils;
 import cx.ring.utils.AndroidFileUtils;
-import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 
 import static cx.ring.plugins.PluginUtils.listAvailablePlugins;
 
@@ -43,57 +36,38 @@ public class PluginsListSettingsFragment extends Fragment implements PluginsList
     public static final String TAG = PluginsListSettingsFragment.class.getSimpleName();
     private static final int ARCHIVE_REQUEST_CODE = 42;
 
-    private Context mContext;
-    private CoordinatorLayout mCoordinatorLayout;
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private FloatingActionButton fab;
-    private CompositeDisposable mCompositeDisposable = new CompositeDisposable();;
+    private FragPluginsListSettingsBinding binding;
+    private PluginsListAdapter mAdapter;
+    private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mContext = requireActivity();
+        binding = FragPluginsListSettingsBinding.inflate(inflater, container, false);
 
-        View pluginsSettingsList = inflater.inflate(R.layout.frag_plugins_list_settings,
-                container, false);
-        mCoordinatorLayout = pluginsSettingsList.
-                findViewById(R.id.plugins_list_settings_coordinator_layout);
-        mRecyclerView = pluginsSettingsList.findViewById(R.id.plugins_list);
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
-
-        // use a linear layout manager
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(mContext);
-        mRecyclerView.setLayoutManager(layoutManager);
+        binding.pluginsList.setHasFixedSize(true);
 
         // specify an adapter (see also next example)
-
-        mAdapter = new PluginsListAdapter(listAvailablePlugins(mContext), this);
-        mRecyclerView.setAdapter(mAdapter);
+        mAdapter = new PluginsListAdapter(listAvailablePlugins(binding.pluginsList.getContext()), this);
+        binding.pluginsList.setAdapter(mAdapter);
 
         //Fab
-        fab = pluginsSettingsList.findViewById(R.id.plugins_list_settings_fab);
-
-        fab.setOnClickListener(view -> {
+        binding.pluginsListSettingsFab.setOnClickListener(view -> {
             Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
             intent.addCategory(Intent.CATEGORY_OPENABLE);
             intent.setType("*/*");
             startActivityForResult(intent, ARCHIVE_REQUEST_CODE);
         });
 
-        ((HomeActivity) requireActivity()).
-                setToolbarState(R.string.menu_item_plugin_list);
-
-        return pluginsSettingsList;
+        return binding.getRoot();
     }
 
     @Override
     public void onResume() {
-        ((HomeActivity) requireActivity()).
-                setToolbarState(R.string.menu_item_plugin_list);
+        ((HomeActivity) requireActivity()).setToolbarTitle(R.string.menu_item_plugin_list);
         super.onResume();
     }
 
@@ -104,7 +78,7 @@ public class PluginsListSettingsFragment extends Fragment implements PluginsList
      */
     @Override
     public void onPluginItemClicked(PluginDetails pluginDetails) {
-        ((HomeActivity) mContext).gotToPluginSettings(pluginDetails);
+        ((HomeActivity) requireActivity()).gotToPluginSettings(pluginDetails);
     }
 
     /**
@@ -121,7 +95,7 @@ public class PluginsListSettingsFragment extends Fragment implements PluginsList
             PluginUtils.unloadPlugin(pluginDetails.getRootPath());
         }
         String status = pluginDetails.isEnabled()?"ON":"OFF";
-        Toast.makeText(mContext,pluginDetails.getName() + " " + status,
+        Toast.makeText(requireContext(), pluginDetails.getName() + " " + status,
                 Toast.LENGTH_SHORT).show();
     }
 
@@ -131,9 +105,6 @@ public class PluginsListSettingsFragment extends Fragment implements PluginsList
             if(data != null) {
                 Uri uri = data.getData();
                 if (uri != null) {
-                    if(mCompositeDisposable.isDisposed()){
-                        mCompositeDisposable = new CompositeDisposable();
-                    }
                     installPluginFromUri(uri, false);
                 }
             }
@@ -142,10 +113,7 @@ public class PluginsListSettingsFragment extends Fragment implements PluginsList
 
     private String installPluginFile(File pluginFile, boolean force) throws IOException{
         int i = Ringservice.installPlugin(pluginFile.getAbsolutePath(), force);
-
-        // Free the cache
-        boolean cacheFileFreed = pluginFile.delete();
-        if(!cacheFileFreed) {
+        if (!pluginFile.delete()) {
             Log.e(TAG,"Plugin Jpl file in the cache not freed");
         }
         switch (i) {
@@ -167,46 +135,34 @@ public class PluginsListSettingsFragment extends Fragment implements PluginsList
     }
 
     private void installPluginFromUri(Uri uri, boolean force) {
-        AndroidFileUtils.getCacheFile(requireContext(), uri)
+        mCompositeDisposable.add(AndroidFileUtils.getCacheFile(requireContext(), uri)
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(file -> installPluginFile(file, force))
-                .subscribe(new SingleObserver<String>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        mCompositeDisposable.add(d);
-                    }
-
-                    @Override
-                    public void onSuccess(String filename) {
-
+                .subscribe(filename -> {
                         String[] plugin = filename.split(".jpl");
-                        List<PluginDetails> availablePlugins = listAvailablePlugins(mContext);
-                        for (PluginDetails availablePlugin : availablePlugins){
-                            if (availablePlugin.getName().equals(plugin[0]))
-                            {
+                        List<PluginDetails> availablePlugins = listAvailablePlugins(requireContext());
+                        for (PluginDetails availablePlugin : availablePlugins) {
+                            if (availablePlugin.getName().equals(plugin[0])) {
                                 availablePlugin.setEnabled(true);
                                 onPluginEnabled(availablePlugin);
                             }
                         }
-                        ((PluginsListAdapter) mAdapter)
-                                .updatePluginsList(listAvailablePlugins(mContext));
-                        Toast.makeText(mContext, "Plugin: " + filename +
-                                " successfully installed", Toast.LENGTH_LONG).show();
+                        mAdapter.updatePluginsList(listAvailablePlugins(requireContext()));
+                        Toast.makeText(requireContext(), "Plugin: " + filename + " successfully installed", Toast.LENGTH_LONG).show();
                         mCompositeDisposable.dispose();
-                    }
+                    }, e -> {
+                        if (binding != null) {
+                            Snackbar sb = Snackbar.make(binding.listLayout, "" + e.getMessage(), Snackbar.LENGTH_LONG);
+                            sb.setAction(R.string.plugin_force_install, v -> installPluginFromUri(uri, true));
+                            sb.show();
+                        }
+                    }));
+    }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Snackbar sb = Snackbar.make(mCoordinatorLayout,
-                                "" +
-                                        e.getMessage(), Snackbar.LENGTH_LONG);
-                        sb.setAction(R.string.plugin_force_install,
-                                v -> installPluginFromUri(uri, true));
-
-                        sb.show();
-                        mCompositeDisposable.clear();
-                    }
-                });
+    @Override
+    public void onDestroyView() {
+        binding = null;
+        super.onDestroyView();
     }
 
     @Override

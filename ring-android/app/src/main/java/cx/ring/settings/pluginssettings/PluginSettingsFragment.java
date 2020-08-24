@@ -1,7 +1,6 @@
 package cx.ring.settings.pluginssettings;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,7 +12,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.preference.CheckBoxPreference;
 import androidx.preference.DialogPreference;
 import androidx.preference.DropDownPreference;
@@ -35,15 +33,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.prefs.Preferences;
 
 import cx.ring.R;
 import cx.ring.client.HomeActivity;
 import cx.ring.daemon.Ringservice;
-import cx.ring.plugins.ButtonPreference.ButtonPreference;
 import cx.ring.plugins.PluginPreferences;
 
-import static android.content.Context.MODE_PRIVATE;
 import static cx.ring.plugins.PluginUtils.getOrElse;
 import static cx.ring.plugins.PluginUtils.stringListToListString;
 
@@ -52,6 +47,7 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
     private Context mContext;
     private List<Map<String, String>> mPreferencesAttributes;
     private PluginDetails pluginDetails;
+    private PluginPreferencesDataStore ppds;
 
     public static PluginSettingsFragment newInstance(PluginDetails pluginDetails) {
         Bundle args = new Bundle();
@@ -83,7 +79,7 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
             mPreferencesAttributes = pluginDetails.getPluginPreferences();
 
             PreferenceManager preferenceManager = getPreferenceManager();
-            PluginPreferencesDataStore ppds = new PluginPreferencesDataStore(pluginDetails);
+            ppds = new PluginPreferencesDataStore(pluginDetails);
             preferenceManager.setPreferenceDataStore(ppds);
             setHasOptionsMenu(true);
         }
@@ -138,6 +134,9 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
                         case "List":
                             preferencesViews.add(createListPreference(preferenceAttributes));
                             break;
+                        case "Path":
+                            preferencesViews.add(createPathPreference(preferenceAttributes));
+                            break;
                         case "MultiSelectList":
                             preferencesViews.
                                     add(createMultiSelectListPreference(preferenceAttributes));
@@ -161,37 +160,27 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
     private Preference createHeadPreference()
     {
         PluginPreferences preference = new PluginPreferences(mContext, pluginDetails);
-        preference.setResetClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new MaterialAlertDialogBuilder(mContext)
-                        .setTitle(preference.getTitle())
-                        .setMessage(R.string.plugin_reset_preferences_ask)
-                        .setPositiveButton(android.R.string.ok, (dialog, id) -> {
-                            Ringservice.resetPluginPreferencesValues(pluginDetails.getRootPath());
-                            ((HomeActivity) requireActivity()).popFragmentImmediate();
-                        })
-                        .setNegativeButton(android.R.string.cancel, (dialog, whichButton) -> {
-                            /* Terminate with no action */
-                        })
-                        .show();
-            }
-        });
-        preference.setInstallClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new MaterialAlertDialogBuilder(mContext)
-                        .setMessage(R.string.account_delete_dialog_message)
-                        .setTitle(R.string.plugin_uninstall_title)
-                        .setPositiveButton(android.R.string.ok, (dialog, whichButton) -> {
-                            pluginDetails.setEnabled(false);
-                            Ringservice.uninstallPlugin(pluginDetails.getRootPath());
-                            ((HomeActivity) requireActivity()).popFragmentImmediate();
-                        })
-                        .setNegativeButton(android.R.string.cancel, null)
-                        .show();
-            }
-        });
+        preference.setResetClickListener(v -> new MaterialAlertDialogBuilder(mContext)
+                .setTitle(preference.getTitle())
+                .setMessage(R.string.plugin_reset_preferences_ask)
+                .setPositiveButton(android.R.string.ok, (dialog, id) -> {
+                    Ringservice.resetPluginPreferencesValues(pluginDetails.getRootPath());
+                    ((HomeActivity) requireActivity()).popFragmentImmediate();
+                })
+                .setNegativeButton(android.R.string.cancel, (dialog, whichButton) -> {
+                    /* Terminate with no action */
+                })
+                .show());
+        preference.setInstallClickListener(v -> new MaterialAlertDialogBuilder(mContext)
+                .setMessage(R.string.account_delete_dialog_message)
+                .setTitle(R.string.plugin_uninstall_title)
+                .setPositiveButton(android.R.string.ok, (dialog, whichButton) -> {
+                    pluginDetails.setEnabled(false);
+                    Ringservice.uninstallPlugin(pluginDetails.getRootPath());
+                    ((HomeActivity) requireActivity()).popFragmentImmediate();
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show());
         return preference;
     }
 
@@ -199,6 +188,7 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
         CheckBoxPreference preference = new CheckBoxPreference(mContext);
         setPreferenceAttributes(preference, preferenceModel);
         setTwoStatePreferenceAttributes(preference, preferenceModel);
+        ppds.addTomPreferenceTypes(preferenceModel);
         return preference;
     }
 
@@ -206,6 +196,7 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
         DropDownPreference preference = new DropDownPreference(mContext);
         setPreferenceAttributes(preference, preferenceModel);
         setListPreferenceAttributes(preference, preferenceModel);
+        ppds.addTomPreferenceTypes(preferenceModel);
         return preference;
     }
 
@@ -214,6 +205,7 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
         setPreferenceAttributes(preference, preferenceModel);
         setDialogPreferenceAttributes(preference, preferenceModel);
         setEditTextAttributes(preference, preferenceModel);
+        ppds.addTomPreferenceTypes(preferenceModel);
         return preference;
     }
 
@@ -221,6 +213,18 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
         ListPreference preference = new ListPreference(mContext);
         setPreferenceAttributes(preference, preferenceModel);
         setListPreferenceAttributes(preference, preferenceModel);
+        ppds.addTomPreferenceTypes(preferenceModel);
+        return preference;
+    }
+
+    private Preference createPathPreference(Map<String, String> preferenceModel){
+        Preference preference = new Preference(mContext);
+        preference.setOnPreferenceClickListener(p -> {
+            ((HomeActivity) mContext).gotToPluginPathPreference(pluginDetails, preferenceModel.get("key"));
+            return false;
+        });
+        setPreferenceAttributes(preference, preferenceModel);
+        ppds.addTomPreferenceTypes(preferenceModel);
         return preference;
     }
 
@@ -307,10 +311,10 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
     private void setListPreferenceAttributes(ListPreference preference,
                                              Map<String, String> preferenceModel) {
         setDialogPreferenceAttributes(preference, preferenceModel);
-        String entries = getOrElse(preferenceModel.get("entries"), "[]");
+        String entries = getOrElse(preferenceModel.get("entries"), "");
         preference.setEntries(stringListToListString(entries).
                 toArray(new CharSequence[ 0 ]));
-        String entryValues = getOrElse(preferenceModel.get("entryValues"), "[]");
+        String entryValues = getOrElse(preferenceModel.get("entryValues"), "");
         preference.setEntryValues(stringListToListString(entryValues).
                 toArray(new CharSequence[ 0 ]));
         preference.setDefaultValue(preferenceModel.get("defaultValue"));
@@ -360,8 +364,7 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
         preference.setMin(min);
         preference.setMax(max);
         preference.setSeekBarIncrement(increment);
-        preference.setAdjustable(Boolean.valueOf(getOrElse(preferenceModel.get("adjustable"),
-                "true")));
+        preference.setAdjustable(Boolean.parseBoolean(getOrElse(preferenceModel.get("adjustable"), "true")));
         preference.setDefaultValue(defaultValue);
         preference.setShowSeekBarValue(true);
         preference.setUpdatesContinuously(true);

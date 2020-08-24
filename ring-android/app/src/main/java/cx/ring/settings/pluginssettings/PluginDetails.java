@@ -1,3 +1,21 @@
+/*
+ *  Copyright (C) 2004-2019 Savoir-faire Linux Inc.
+ *
+ *  Author: Aline Gondim Santos <aline.gondimsantos@savoirfairelinux.com>
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package cx.ring.settings.pluginssettings;
 
 import android.graphics.drawable.Drawable;
@@ -7,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 
 import cx.ring.daemon.Ringservice;
-import cx.ring.utils.Log;
 
 /**
  * Class that contains PluginDetails like name, rootPath
@@ -16,7 +33,7 @@ public class PluginDetails {
     public static final String TAG = PluginDetails.class.getSimpleName();
     private String name;
     private String rootPath;
-    private Map<String, String>  details;
+    private final Map<String, String>  details;
     private Drawable icon;
     private boolean enabled;
 
@@ -41,17 +58,6 @@ public class PluginDetails {
     }
 
     /**
-     * @return String: absolute path to the so file
-     */
-    public String getSoPath() {
-        return details.get("soPath") != null ? details.get("soPath") : "";
-    }
-
-    public void setRootPath(String rootPath) {
-        this.rootPath = rootPath;
-    }
-
-    /**
      * Returns the plugin activation status by the user
      * @return boolean
      */
@@ -65,12 +71,8 @@ public class PluginDetails {
 
     public void setIcon() {
         String iconPath = details.get("iconPath");
-
-        if(iconPath != null) {
+        if (iconPath != null) {
             File file = new File(iconPath);
-
-            Log.i(TAG, "Plugin icon path: " + iconPath);
-
             if(file.exists()) {
                 icon = Drawable.createFromPath(iconPath);
             }
@@ -90,7 +92,7 @@ public class PluginDetails {
     }
 
     public Map<String, String> getPluginPreferencesValues() {
-        return Ringservice.getPluginPreferencesValues(getRootPath()).toNative();
+        return Ringservice.getPluginPreferencesValues(getRootPath());
     }
 
     public boolean setPluginPreference(String key, String value) {
