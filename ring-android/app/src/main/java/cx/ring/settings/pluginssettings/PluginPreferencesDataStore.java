@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.preference.PreferenceDataStore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -17,12 +18,23 @@ import static cx.ring.plugins.PluginUtils.stringListToListString;
 public class PluginPreferencesDataStore extends PreferenceDataStore {
 
     private PluginDetails mPluginDetails;
+    private Map<String, String> mPreferenceTypes = new HashMap<>();
     private Map<String, String> preferencesValues;
     private ReadWriteLock lock = new ReentrantReadWriteLock();
 
     public PluginPreferencesDataStore(PluginDetails pluginDetails) {
         mPluginDetails = pluginDetails;
         preferencesValues = mPluginDetails.getPluginPreferencesValues();
+    }
+
+    public void addTomPreferenceTypes(Map<String, String> preferenceModel) {
+        Lock writeLock = lock.writeLock();
+        try {
+            writeLock.lock();
+            mPreferenceTypes.put(preferenceModel.get("key"), preferenceModel.get("type"));
+        } finally {
+            writeLock.unlock();
+        }
     }
 
     @Override
@@ -111,7 +123,7 @@ public class PluginPreferencesDataStore extends PreferenceDataStore {
         int returnValue = defValue;
         String value = getPreferencesValues().get(key);
         if (value != null) {
-            returnValue = Integer.valueOf(value);
+            returnValue = Integer.parseInt(value);
         }
         return returnValue;
     }
@@ -121,7 +133,7 @@ public class PluginPreferencesDataStore extends PreferenceDataStore {
         long returnValue = defValue;
         String value = getPreferencesValues().get(key);
         if (value != null) {
-            returnValue = Long.valueOf(value);
+            returnValue = Long.parseLong(value);
         }
         return returnValue;
     }
@@ -131,7 +143,7 @@ public class PluginPreferencesDataStore extends PreferenceDataStore {
         float returnValue = defValue;
         String value = getPreferencesValues().get(key);
         if (value != null) {
-            returnValue = Float.valueOf(value);
+            returnValue = Float.parseFloat(value);
         }
         return returnValue;
     }
@@ -141,7 +153,7 @@ public class PluginPreferencesDataStore extends PreferenceDataStore {
         boolean returnValue = defValue;
         String value = getPreferencesValues().get(key);
         if (value != null) {
-            returnValue = Boolean.valueOf(value);
+            returnValue = Boolean.parseBoolean(value);
         }
         return returnValue;
     }
@@ -150,7 +162,7 @@ public class PluginPreferencesDataStore extends PreferenceDataStore {
      *  Updates the preferencesValues map
      *  Use locks since the PreferenceInteraction is asynchronous
      */
-    private void notifyPreferencesValuesChange() {
+    public void notifyPreferencesValuesChange() {
         Lock writeLock = lock.writeLock();
         try {
             writeLock.lock();

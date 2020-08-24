@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/path_preference_coordinator_layout"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/plugin_setting_subtitle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            tools:text="Plugin Name + Preference Name"
+            android:layout_marginHorizontal="16dp"
+            android:textSize="18sp"/>
+
+        <ImageView
+            android:id="@+id/current_path_item_icon"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@+id/current_path_item_name"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_below="@+id/plugin_setting_subtitle"
+            app:srcCompat="@drawable/baseline_insert_drive_file_24">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/current_path_item_name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            tools:text="File.ext"
+            android:layout_above="@+id/path_preferences"
+            android:textAlignment="center"
+            android:textSize="16sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_toEndOf="@+id/plugins_path_preference_fab"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/path_preferences"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation = "horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/frag_path_list_item"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/plugins_path_preference_fab"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:gravity="center"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignBaseline="@+id/path_preferences"
+            android:src="@drawable/baseline_add_24"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/fab_plugins_add" />
+    </RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -49,7 +49,6 @@ public class PluginsListAdapter extends RecyclerView.Adapter<PluginsListAdapter.
 
     public void updatePluginsList(List<PluginDetails> listPlugins) {
         mList = listPlugins;
-
         notifyDataSetChanged();
     }
 

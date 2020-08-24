@@ -564,4 +564,16 @@ public class AndroidFileUtils {
         }
     }
 
+    public static boolean isImage(String s) {
+        String[] parts = s.split("\\.");
+        String ext = parts[parts.length - 1];
+        if (ext.equals("png") || ext.equals("jpg") || ext.equals("jpeg"))
+            return true;
+        return false;
+    }
+
+    public static String getFileName(String s) {
+        String[] parts = s.split("\\/");
+        return parts[parts.length - 1];
+    }
 }
