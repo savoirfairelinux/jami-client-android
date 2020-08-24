@@ -138,6 +138,9 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
                         case "List":
                             preferencesViews.add(createListPreference(preferenceAttributes));
                             break;
+			case "UserList":
+                            preferencesViews.add(createListPreference(preferenceAttributes));
+                            break;
                         case "MultiSelectList":
                             preferencesViews.
                                     add(createMultiSelectListPreference(preferenceAttributes));
