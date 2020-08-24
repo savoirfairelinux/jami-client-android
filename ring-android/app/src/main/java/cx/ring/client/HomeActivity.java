@@ -42,9 +42,13 @@ import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.preference.Preference;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
+import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -69,6 +73,7 @@ import cx.ring.services.NotificationService;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.settings.VideoSettingsFragment;
 import cx.ring.settings.pluginssettings.PluginDetails;
+import cx.ring.settings.pluginssettings.PluginPathPreferenceFragment;
 import cx.ring.settings.pluginssettings.PluginSettingsFragment;
 import cx.ring.settings.pluginssettings.PluginsListSettingsFragment;
 import cx.ring.utils.ContentUriHandler;
@@ -104,6 +109,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
     public static final String PLUGINS_LIST_SETTINGS_TAG = "PluginsListSettings";
     public static final String PLUGIN_SETTINGS_TAG = "PluginSettings";
+    public static final String PLUGIN_PATH_PREFERENCE_TAG = "PluginPathPreference";
 
     private static final String NAVIGATION_TAG = "Navigation";
 
@@ -678,6 +684,21 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(R.id.main_frame, fContent, PLUGIN_SETTINGS_TAG)
                 .addToBackStack(PLUGIN_SETTINGS_TAG).commit();
+    }
+
+    /**
+     * Changes the current main fragment to a plugin PATH preference fragment
+     */
+    public void gotToPluginPathPreference(PluginDetails pluginDetails, String preferenceKey){
+        if (fContent instanceof PluginPathPreferenceFragment) {
+            return;
+        }
+        fContent = PluginPathPreferenceFragment.newInstance(pluginDetails, preferenceKey);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .replace(R.id.main_frame, fContent, PLUGIN_PATH_PREFERENCE_TAG)
+                .addToBackStack(PLUGIN_PATH_PREFERENCE_TAG).commit();
     }
 
     @Override

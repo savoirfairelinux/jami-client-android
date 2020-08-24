@@ -1,7 +1,9 @@
 package cx.ring.settings.pluginssettings;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,10 +12,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.preference.CheckBoxPreference;
 import androidx.preference.DialogPreference;
 import androidx.preference.DropDownPreference;
@@ -35,15 +37,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.prefs.Preferences;
 
 import cx.ring.R;
 import cx.ring.client.HomeActivity;
 import cx.ring.daemon.Ringservice;
-import cx.ring.plugins.ButtonPreference.ButtonPreference;
 import cx.ring.plugins.PluginPreferences;
 
-import static android.content.Context.MODE_PRIVATE;
 import static cx.ring.plugins.PluginUtils.getOrElse;
 import static cx.ring.plugins.PluginUtils.stringListToListString;
 
@@ -52,6 +51,7 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
     private Context mContext;
     private List<Map<String, String>> mPreferencesAttributes;
     private PluginDetails pluginDetails;
+    private PluginPreferencesDataStore ppds;
 
     public static PluginSettingsFragment newInstance(PluginDetails pluginDetails) {
         Bundle args = new Bundle();
@@ -83,7 +83,7 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
             mPreferencesAttributes = pluginDetails.getPluginPreferences();
 
             PreferenceManager preferenceManager = getPreferenceManager();
-            PluginPreferencesDataStore ppds = new PluginPreferencesDataStore(pluginDetails);
+            ppds = new PluginPreferencesDataStore(pluginDetails);
             preferenceManager.setPreferenceDataStore(ppds);
             setHasOptionsMenu(true);
         }
@@ -137,6 +137,9 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
                             break;
                         case "List":
                             preferencesViews.add(createListPreference(preferenceAttributes));
+                            break;
+                        case "Path":
+                            preferencesViews.add(createPathPreference(preferenceAttributes));
                             break;
                         case "MultiSelectList":
                             preferencesViews.
@@ -199,6 +202,7 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
         CheckBoxPreference preference = new CheckBoxPreference(mContext);
         setPreferenceAttributes(preference, preferenceModel);
         setTwoStatePreferenceAttributes(preference, preferenceModel);
+        ppds.addTomPreferenceTypes(preferenceModel);
         return preference;
     }
 
@@ -206,6 +210,7 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
         DropDownPreference preference = new DropDownPreference(mContext);
         setPreferenceAttributes(preference, preferenceModel);
         setListPreferenceAttributes(preference, preferenceModel);
+        ppds.addTomPreferenceTypes(preferenceModel);
         return preference;
     }
 
@@ -214,6 +219,7 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
         setPreferenceAttributes(preference, preferenceModel);
         setDialogPreferenceAttributes(preference, preferenceModel);
         setEditTextAttributes(preference, preferenceModel);
+        ppds.addTomPreferenceTypes(preferenceModel);
         return preference;
     }
 
@@ -221,6 +227,21 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
         ListPreference preference = new ListPreference(mContext);
         setPreferenceAttributes(preference, preferenceModel);
         setListPreferenceAttributes(preference, preferenceModel);
+        ppds.addTomPreferenceTypes(preferenceModel);
+        return preference;
+    }
+
+    private Preference createPathPreference(Map<String, String> preferenceModel){
+        Preference preference = new Preference(mContext);
+        preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                ((HomeActivity) mContext).gotToPluginPathPreference(pluginDetails, preferenceModel.get("key"));
+                return false;
+            }
+        });
+        setPreferenceAttributes(preference, preferenceModel);
+        ppds.addTomPreferenceTypes(preferenceModel);
         return preference;
     }
 
@@ -307,10 +328,10 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
     private void setListPreferenceAttributes(ListPreference preference,
                                              Map<String, String> preferenceModel) {
         setDialogPreferenceAttributes(preference, preferenceModel);
-        String entries = getOrElse(preferenceModel.get("entries"), "[]");
+        String entries = getOrElse(preferenceModel.get("entries"), "");
         preference.setEntries(stringListToListString(entries).
                 toArray(new CharSequence[ 0 ]));
-        String entryValues = getOrElse(preferenceModel.get("entryValues"), "[]");
+        String entryValues = getOrElse(preferenceModel.get("entryValues"), "");
         preference.setEntryValues(stringListToListString(entryValues).
                 toArray(new CharSequence[ 0 ]));
         preference.setDefaultValue(preferenceModel.get("defaultValue"));
@@ -376,5 +397,9 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
     private void setTwoStatePreferenceAttributes(TwoStatePreference preference,
                                                  Map<String, String> preferenceModel) {
         preference.setDefaultValue(Boolean.valueOf(preferenceModel.get("defaultValue")));
+    }
+
+    private void onSetUserList(){
+
     }
 }
