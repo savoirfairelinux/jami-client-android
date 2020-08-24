@@ -14,6 +14,10 @@
   <string name="pref_hd_summary">فعال‌سازی ارسال ویدیوی HD</string>
   <string name="pref_hwEncode_title">فعال‌سازی کدگذاری شتاب‌داده</string>
   <string name="pref_hwEncode_summary">ویژگی آزمایشی</string>
+  <string name="pref_videoBitrate_title">نرخ بیت ویدیو</string>
+  <string name="pref_videoBitrate_summary">انتخاب نرخ بیت پیش‌فرض ویدیوی خروجی (کیلوبایت بر ثانیه)</string>
+  <string name="pref_videoResolution_title">وضوح ویدیو</string>
+  <string name="pref_videoResolution_summary">انتخاب وضوح پیش‌فرض ویدیوی خروجی</string>
   <string name="pref_systemContacts_title">استفاده از مخاطبان سیستم</string>
   <string name="pref_systemContacts_summary">استفاده از مخاطبان سیستم برای نمایش جزییات تماس‌گیرنده.</string>
   <string name="pref_systemDialer_title">انجام تماس‌های سیستم با استفاده از جمی</string>

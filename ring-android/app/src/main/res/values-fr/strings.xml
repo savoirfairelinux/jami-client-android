@@ -83,6 +83,7 @@
   <string name="notif_location_action_stop">Arrêter le partage de position</string>
   <string name="location_share_action_start">Démarrer le partage</string>
   <string name="location_share_action_stop">Arrêter le partage</string>
+  <string name="location_share_about_title">Information sur la carte</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Vous :</string>
   <string name="action_call_hangup">Raccrochez</string>
@@ -92,6 +93,8 @@
   <string name="start_error_title">Jami n\'arrive pas à se lancer !</string>
   <string name="start_error_mic_required">Jami demande pour fonctionner votre autorisation d\'utiliser votre microphone .</string>
   <string name="action_call_accept">Répondre</string>
+  <string name="action_call_hold_accept">Mettre en attente et prendre l\'appel</string>
+  <string name="action_call_end_accept">Raccrocher et prendre l\'appel</string>
   <string name="action_call_decline">Décliner</string>
   <string name="action_call_mic_mute">Rendre votre microphone muet</string>
   <string name="action_load_plugin">Charger le module d\'extension</string>

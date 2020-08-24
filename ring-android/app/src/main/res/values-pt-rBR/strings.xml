@@ -32,6 +32,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="menu_item_accounts">Gerenciar contas</string>
   <string name="menu_item_account">Administrar conta</string>
   <string name="menu_item_settings">Configurações</string>
+  <string name="menu_item_plugin_list">Configurações dos complementos</string>
   <string name="menu_item_share">Compartilhar meu contato</string>
   <string name="menu_item_about">Sobre Jami</string>
   <!--Dialing Fragment-->
@@ -83,6 +84,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="notif_location_action_stop">Parar de compartilhar a localização</string>
   <string name="location_share_action_start">Começar a compartilhar</string>
   <string name="location_share_action_stop">Parar de compartilhar</string>
+  <string name="location_share_about_title">Informações do mapa</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Você:</string>
   <string name="action_call_hangup">Desligar</string>
@@ -92,8 +94,11 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="start_error_title">Não é possível iniciar o Jami!</string>
   <string name="start_error_mic_required">O Jami requer permissão para uso do microfone para funcionar.</string>
   <string name="action_call_accept">Atender chamada</string>
+  <string name="action_call_hold_accept">Coloque em espera e receba chamada</string>
+  <string name="action_call_end_accept">Finalizar e receba chamada</string>
   <string name="action_call_decline">Rejeitar</string>
   <string name="action_call_mic_mute">Desativar microfone</string>
+  <string name="action_load_plugin">Carregue complemento</string>
   <string name="ab_action_speakerphone">Habilitar viva-voz</string>
   <string name="ab_action_contact_add">Adicionar aos contatos</string>
   <string name="ab_action_contact_add_question">Adicionar aos contatos?</string>
@@ -106,6 +111,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="write_a_message">Escrever uma mensagem</string>
   <string name="scan_qr">Escanear Código QR</string>
   <string name="ab_action_flipcamera">Virar câmera</string>
+  <string name="ab_action_hidepreview">Oculta visualização</string>
   <!--Text messages-->
   <string name="send_message">Enviar mensagem</string>
   <string name="message_sending">Enviando mensagem...</string>
@@ -172,6 +178,8 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="prompt_new_username">Entre novo nome de usuário</string>
   <string name="prompt_hint_username">Nome de usuário</string>
   <string name="help_password_choose">Escolha uma senha difícil que você poderá lembrar para proteger a sua conta Jami. </string>
+  <string name="help_password_enter">Digite a senha principal da sua conta Jami.</string>
+  <string name="help_server_enter">Digite URL do servidor de gerenciamento.</string>
   <string name="help_pin_enter">Entre com o PIN de uma outra conta Jami já configurada. Utilize a opção \"exportar conta do Jami\" para obter um novo PIN.</string>
   <string name="wizard_next">Próximo</string>
   <string name="wizard_back">Voltar</string>
@@ -181,6 +189,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="profile_message_warning">Seu perfil é compartilhado apenas com seus contatos</string>
   <string name="open_the_gallery">Abrir a galeria</string>
   <string name="take_a_photo">Tirar uma foto</string>
+  <string name="profile_name_hint">Digite seu nome</string>
   <!--Share fragment-->
   <string name="share_message">Digitalize este código com Jami</string>
   <string name="share_message_no_account">Por favor selecione uma conta para compartilhar.</string>
@@ -196,6 +205,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="contact_request_title">Nova requisição de contato</string>
   <string name="contact_request_msg">Você tem %1$s requisição de contato</string>
   <string name="contact_request_account">Para %1$s</string>
+  <string name="no_requests">Você não tem nenhum pedido de contato</string>
   <string name="message_contact_not_trusted_yet">%s não está em seus contatos ainda.\nVocê aceita ou recusa esta solicitação de contato?</string>
   <string name="message_contact_not_trusted">%s não está em seus contatos.\nDeseja adicionar novo contato?</string>
   <!--Send contact requests-->
@@ -206,6 +216,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="no_blocked_contact">Nenhum contato bloqueado</string>
   <!--Smartlist-->
   <string name="no_contact_request">Nenhuma solicitação de contato enviada</string>
+  <string name="conversation_placeholder">Você ainda não tem conversas</string>
   <string name="contact_request_sent">Solicitação de contato enviada</string>
   <string name="start_conversation">Iniciar conversa</string>
   <string name="search_results">Resultados da Busca</string>
@@ -263,5 +274,19 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="tv_send_video">Enviar Mídia</string>
   <string name="conversation_input_speech_hint">Fale algo...</string>
   <!--WIZARD-->
+  <string name="wizard_status_recommended">Recomendado</string>
+  <string name="wizard_status_optional">Opcional</string>
+  <string name="wizard_status_required">Requerido</string>
+  <string name="wizard_username_info">Escolha nome de usuário para sua conta</string>
+  <string name="wizard_username_button">Escolha nome de usuário</string>
+  <string name="wizard_username_skip">Pular a escolha do nome do usuário</string>
+  <string name="wizard_password_info">Senha da conta</string>
+  <string name="wizard_password_placeholder">Escolha uma senha para criptografar a chave da conta neste dispositivo</string>
+  <string name="wizard_password_button">Escolha senha</string>
   <string name="wizard_password_skip">Criar conta</string>
+  <string name="wizard_password_switch">Criptografar conta com senha</string>
+  <string name="wizard_password_warning">Note que a senha não pode ser recuperada</string>
+  <string name="wizard_profile_info">O perfil só é compartilhado com contatos</string>
+  <string name="wizard_profile_button">Salvar perfil</string>
+  <string name="wizard_profile_skip">Pular e fazer depois</string>
 </resources>

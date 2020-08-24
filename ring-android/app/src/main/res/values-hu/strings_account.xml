@@ -82,6 +82,7 @@
   <string name="account_stun_enable_label">STUN használata</string>
   <string name="account_stun_server_label">STUN-kiszolgáló</string>
   <string name="account_accept_files">A bejövő fájlok automatikus elfogadása</string>
+  <string name="account_conversation_settings_title">Beszélgetés beállításai</string>
   <string name="account_accept_files_max_size">Az automatikus elfogadás legnagyobb fájlmérete</string>
   <string name="account_accept_files_never">Soha sem fogadja el automatikusan</string>
   <string name="account_accept_files_always">Mindig fogadja el automatikusan</string>
@@ -97,8 +98,8 @@
   <string name="account_proxy_enable_label">DHT proxy használata</string>
   <string name="account_proxy_server_label">DHT proxy címe</string>
   <string name="account_proxy_server_list_label">DHT proxy lista URL-je</string>
-  <string name="account_peer_discovery_label">Helyi partnerfelfedezés</string>
-  <string name="account_peer_discovery_enable_label">Helyi pertnerfelfedezés engedélyezése</string>
+  <string name="account_peer_discovery_label">Helyi partner felderítése</string>
+  <string name="account_peer_discovery_enable_label">Helyi partner felderítése engedélyezése</string>
   <string name="account_peer_discovery_enable_summary">Csatlakozás más DHT-csomópontokhoz, amelyek a helyi hálózaton hirdetnek</string>
   <!--Security Details-->
   <string name="account_credentials_label">Hitelesítő adatok</string>

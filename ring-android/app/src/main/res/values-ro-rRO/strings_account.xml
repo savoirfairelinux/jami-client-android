@@ -26,7 +26,7 @@
         Vei putea face și primi doar apeluri IP directe.
         Îți vei putea modifica contul mai tîrziu</string>
   <string name="account_type_ip2ip">Cont IP</string>
-  <string name="help_ring">Un cont Jami îți permite să comunici cu alții în siguranță, în peer to peer, printr-o rețea complet distribuită.</string>
+  <string name="help_ring">Un cont Jami îți permite să comunici direct cu alții, în siguranță, fără server, printr-o rețea complet distribuită.</string>
   <string name="help_sip_title">Adaugă contul tău SIP</string>
   <string name="help_sip">Configurează un cont SIP existent.</string>
   <string name="create_sip_account">Adaugă un cont SIP</string>
@@ -82,6 +82,7 @@
   <string name="account_stun_enable_label">Folosește STUN</string>
   <string name="account_stun_server_label">Server STUN</string>
   <string name="account_accept_files">Acceptă automat fișierele primite</string>
+  <string name="account_conversation_settings_title">Reglările conversației</string>
   <string name="account_accept_files_max_size">Dimensiunea maximă a fișierului acceptat automat</string>
   <string name="account_accept_files_never">Nu accepta niciodată automat</string>
   <string name="account_accept_files_always">Acceptă mereu automat</string>

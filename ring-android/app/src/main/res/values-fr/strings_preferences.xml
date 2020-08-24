@@ -14,6 +14,10 @@
   <string name="pref_hd_summary">Activer l\'envoi de vidéo HD</string>
   <string name="pref_hwEncode_title">Activer l\'encodage matériel</string>
   <string name="pref_hwEncode_summary">Fonctionnalité expérimentale</string>
+  <string name="pref_videoBitrate_title">Débit binaire de la vidéo</string>
+  <string name="pref_videoBitrate_summary">Choisissez le débit binaire de la vidéo sortante par défaut (KB/s)</string>
+  <string name="pref_videoResolution_title">Résolution de la vidéo</string>
+  <string name="pref_videoResolution_summary">Choisissez la résolution sortante de la vidéo par défaut</string>
   <string name="pref_systemContacts_title">Utiliser les contacts de l\'appareil</string>
   <string name="pref_systemContacts_summary">Utiliser les contacts de l\'appareil pour afficher les détails du correspondant.</string>
   <string name="pref_systemDialer_title">Utiliser Jami par défaut pour les appels</string>

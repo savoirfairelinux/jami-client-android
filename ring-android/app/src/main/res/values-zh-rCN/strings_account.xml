@@ -26,12 +26,12 @@
         这样的话，您只能拨打和接听 ip 通话。
         您可以稍后编辑该账户。</string>
   <string name="account_type_ip2ip">IP 账户</string>
-  <string name="help_ring">Jami 账户允许您通过完全的分布式网络以点对点的方式安全地与其他人员联系。</string>
+  <string name="help_ring">使用 Jami 账户您可以通过完全分布式的网络以点对点的方式安全地与其他人联系。</string>
   <string name="help_sip_title">添加您的 SIP 账户</string>
   <string name="help_sip">配置已有的 SIP 账户。</string>
   <string name="create_sip_account">添加 SIP 账户</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">删除账户吗？</string>
+  <string name="account_delete_dialog_title">是否删除账户？</string>
   <string name="account_delete_dialog_message">该操作不可撤销。</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">没有已注册账户</string>
@@ -82,6 +82,7 @@
   <string name="account_stun_enable_label">使用 Stun</string>
   <string name="account_stun_server_label">Stun 服务器</string>
   <string name="account_accept_files">自动接收传入的文件</string>
+  <string name="account_conversation_settings_title">会话设置</string>
   <string name="account_accept_files_max_size">允许自动接收文件的最大大小</string>
   <string name="account_accept_files_never">从不自动接收</string>
   <string name="account_accept_files_always">总是自动接收</string>
@@ -212,7 +213,7 @@
   <string name="account_revoke_device_hint">输入密码以确认</string>
   <string name="enter_password">输入密码</string>
   <string name="revoke_device_title">吊销设备</string>
-  <string name="revoke_device_message">确定吊销设备%1$s吗？</string>
+  <string name="revoke_device_message">您确定要吊销设备 %1$s 吗？</string>
   <string name="revoke_device_wait_title">请稍等…</string>
   <string name="revoke_device_wait_message">正在吊销设备</string>
   <string name="rename_device_title">重命名该设备</string>

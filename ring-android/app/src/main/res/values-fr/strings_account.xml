@@ -82,6 +82,7 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="account_stun_enable_label">Utiliser STUN</string>
   <string name="account_stun_server_label">Serveur STUN</string>
   <string name="account_accept_files">Accepter les fichiers entrants automatiquement</string>
+  <string name="account_conversation_settings_title">Paramètres des conversations</string>
   <string name="account_accept_files_max_size">Accepter automatiquement les fichiers de taille maximum</string>
   <string name="account_accept_files_never">Ne jamais accepter automatiquement</string>
   <string name="account_accept_files_always">Toujours accepter automatiquement
@@ -124,6 +125,7 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="account_tls_server_name_label">Serveur pour connections sortantes</string>
   <string name="account_tls_verify_server_label">TLS Verify Server</string>
   <string name="account_tls_verify_client_label">TLS Verify Client</string>
+  <string name="account_require_client_certificate_label">Le protocole TLS exige un certificat client</string>
   <string name="account_tls_negotiation_timeout_sec">Negotiation Timeout (sec)</string>
   <string name="account_rtp_max_port">Maximum</string>
   <string name="account_rtp_min_port">Minimum</string>

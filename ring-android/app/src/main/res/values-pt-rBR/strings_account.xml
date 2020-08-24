@@ -187,6 +187,7 @@
   <string name="trying_to_register_name">Tentando registrar nome</string>
   <string name="registered_username">Nome de usuário registrado</string>
   <string name="register_username">Registrar nome de usuário público</string>
+  <string name="register_recommended">Recomendado</string>
   <string name="username_already_taken">Nome de usuário já em uso</string>
   <string name="invalid_username">Nome de usuário inválido</string>
   <string name="unknown_error">Erro desconhecido. Por favor, verifique sua conexão de rede!</string>
