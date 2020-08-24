@@ -1,7 +1,6 @@
 package cx.ring.settings.pluginssettings;
 
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +15,9 @@ import java.util.List;
 
 import cx.ring.R;
 
-
 public class PluginsListAdapter extends RecyclerView.Adapter<PluginsListAdapter.PluginViewHolder> {
     private List<PluginDetails> mList;
-    private PluginListItemListener listener;
+    private final PluginListItemListener listener;
     public static final String TAG = PluginsListAdapter.class.getSimpleName();
 
     PluginsListAdapter(List<PluginDetails> pluginsList, PluginListItemListener listener) {
@@ -27,13 +25,10 @@ public class PluginsListAdapter extends RecyclerView.Adapter<PluginsListAdapter.
         this.listener = listener;
     }
 
-
     @NonNull
     @Override
     public PluginViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.frag_plugins_list_item, parent, false);
-
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.frag_plugins_list_item, parent, false);
         return new PluginViewHolder(view, listener);
     }
 
@@ -49,14 +44,13 @@ public class PluginsListAdapter extends RecyclerView.Adapter<PluginsListAdapter.
 
     public void updatePluginsList(List<PluginDetails> listPlugins) {
         mList = listPlugins;
-
         notifyDataSetChanged();
     }
 
-    class PluginViewHolder extends RecyclerView.ViewHolder{
-        private ImageView pluginIcon;
-        private TextView pluginNameTextView;
-        private CheckBox pluginItemEnableCheckbox;
+    static class PluginViewHolder extends RecyclerView.ViewHolder{
+        private final ImageView pluginIcon;
+        private final TextView pluginNameTextView;
+        private final CheckBox pluginItemEnableCheckbox;
         private PluginDetails details = null;
 
         PluginViewHolder(@NonNull View itemView, PluginListItemListener listener) {
@@ -68,19 +62,17 @@ public class PluginsListAdapter extends RecyclerView.Adapter<PluginsListAdapter.
 
             // Set listeners, we set the listeners on creation so details can be null
             itemView.setOnClickListener(v -> {
-                Log.i(TAG, "CLICK");
                 if (details != null) {
                     listener.onPluginItemClicked(details);
                 }
             });
 
-            pluginItemEnableCheckbox.setOnClickListener(
-                    v -> {
-                        if (details != null) {
-                            this.details.setEnabled(!this.details.isEnabled());
-                            listener.onPluginEnabled(details);
-                        }
-                    });
+            pluginItemEnableCheckbox.setOnClickListener(v -> {
+                if (details != null) {
+                    details.setEnabled(!details.isEnabled());
+                    listener.onPluginEnabled(details);
+                }
+            });
         }
 
         public void setDetails(PluginDetails details) {
@@ -94,7 +86,7 @@ public class PluginsListAdapter extends RecyclerView.Adapter<PluginsListAdapter.
             pluginItemEnableCheckbox.setChecked(details.isEnabled());
             // Set the plugin icon
             Drawable icon = details.getIcon();
-            if(icon != null) {
+            if (icon != null) {
                 pluginIcon.setImageDrawable(icon);
             }
         }

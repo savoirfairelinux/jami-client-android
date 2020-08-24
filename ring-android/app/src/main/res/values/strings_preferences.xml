@@ -57,4 +57,5 @@
     <string name="plugin_recent_version_exception">You have a more recent version of: <b>%1$s</b></string>
     <string name="plugin_same_version_exception">You have the same version of <b>%1$s</b> installed</string>
     <string name="plugin_force_install">force \n install</string>
+    <string name="plugin_path_image_add">Add a new image</string>
 </resources>

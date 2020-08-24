@@ -69,6 +69,7 @@ import cx.ring.services.NotificationService;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.settings.VideoSettingsFragment;
 import cx.ring.settings.pluginssettings.PluginDetails;
+import cx.ring.settings.pluginssettings.PluginPathPreferenceFragment;
 import cx.ring.settings.pluginssettings.PluginSettingsFragment;
 import cx.ring.settings.pluginssettings.PluginsListSettingsFragment;
 import cx.ring.utils.ContentUriHandler;
@@ -104,6 +105,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
     public static final String PLUGINS_LIST_SETTINGS_TAG = "PluginsListSettings";
     public static final String PLUGIN_SETTINGS_TAG = "PluginSettings";
+    public static final String PLUGIN_PATH_PREFERENCE_TAG = "PluginPathPreference";
 
     private static final String NAVIGATION_TAG = "Navigation";
 
@@ -660,7 +662,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         getSupportFragmentManager()
                 .beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.main_frame, fContent, PLUGINS_LIST_SETTINGS_TAG)
+                .replace(getFragmentContainerId(), fContent, PLUGINS_LIST_SETTINGS_TAG)
                 .addToBackStack(PLUGINS_LIST_SETTINGS_TAG).commit();
     }
 
@@ -676,8 +678,23 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         getSupportFragmentManager()
                 .beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.main_frame, fContent, PLUGIN_SETTINGS_TAG)
+                .replace(getFragmentContainerId(), fContent, PLUGIN_SETTINGS_TAG)
                 .addToBackStack(PLUGIN_SETTINGS_TAG).commit();
+    }
+
+    /**
+     * Changes the current main fragment to a plugin PATH preference fragment
+     */
+    public void gotToPluginPathPreference(PluginDetails pluginDetails, String preferenceKey){
+        if (fContent instanceof PluginPathPreferenceFragment) {
+            return;
+        }
+        fContent = PluginPathPreferenceFragment.newInstance(pluginDetails, preferenceKey);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .replace(getFragmentContainerId(), fContent, PLUGIN_PATH_PREFERENCE_TAG)
+                .addToBackStack(PLUGIN_PATH_PREFERENCE_TAG).commit();
     }
 
     @Override
