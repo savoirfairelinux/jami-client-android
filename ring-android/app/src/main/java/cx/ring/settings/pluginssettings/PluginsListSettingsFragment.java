@@ -48,7 +48,7 @@ public class PluginsListSettingsFragment extends Fragment implements PluginsList
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private FloatingActionButton fab;
-    private CompositeDisposable mCompositeDisposable = new CompositeDisposable();;
+    private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
     @Nullable
     @Override
