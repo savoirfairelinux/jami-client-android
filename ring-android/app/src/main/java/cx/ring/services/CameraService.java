@@ -741,7 +741,7 @@ public class CameraService {
                     videoParams.width, videoParams.height,
                     new Size(videoParams.width, videoParams.height));
             Log.d(TAG, "Selected preview size: " + previewSize + ", fps range: " + fpsRange + " rate: "+videoParams.rate);
-            view.setAspectRatio(previewSize.getHeight(), previewSize.getWidth());
+            view.setAspectRatio(previewSize.getWidth(), previewSize.getHeight());
 
             SurfaceTexture texture = view.getSurfaceTexture();
             Surface s = new Surface(texture);

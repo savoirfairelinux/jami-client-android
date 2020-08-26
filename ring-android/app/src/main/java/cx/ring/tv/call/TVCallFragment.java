@@ -22,8 +22,8 @@ package cx.ring.tv.call;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.ComponentName;
 import android.app.PictureInPictureParams;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -36,14 +36,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.view.menu.MenuBuilder;
-import androidx.appcompat.view.menu.MenuPopupHelper;
-import androidx.appcompat.widget.PopupMenu;
-import androidx.percentlayout.widget.PercentFrameLayout;
-
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Rational;
@@ -56,7 +48,13 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.view.menu.MenuBuilder;
+import androidx.appcompat.view.menu.MenuPopupHelper;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.percentlayout.widget.PercentFrameLayout;
 
 import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 
@@ -67,6 +65,7 @@ import java.util.Locale;
 import javax.inject.Inject;
 
 import cx.ring.R;
+import cx.ring.adapters.ConfParticipantAdapter;
 import cx.ring.application.JamiApplication;
 import cx.ring.call.CallPresenter;
 import cx.ring.call.CallView;
@@ -74,9 +73,7 @@ import cx.ring.client.ContactDetailsActivity;
 import cx.ring.client.ConversationSelectionActivity;
 import cx.ring.databinding.ItemParticipantLabelBinding;
 import cx.ring.databinding.TvFragCallBinding;
-import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.fragments.CallFragment;
-import cx.ring.adapters.ConfParticipantAdapter;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
@@ -114,7 +111,7 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
     private Runnable runnable;
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     private int mPreviewWidth = 720, mPreviewHeight = 1280;
-    private int mPreviewWidthRot = 720, mPreviewHeightRot = 1280;
+    private static final int PREVIEW_WIDTH_ROT = 720, PREVIEW_HEIGHT_ROT = 1280;
     private PowerManager.WakeLock mScreenWakeLock;
 
     private boolean mBackstackLost = false;
@@ -539,11 +536,7 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
     }
 
     private void configureTransform(int viewWidth, int viewHeight) {
-        Activity activity = getActivity();
-        if (null == binding.previewSurface || null == activity) {
-            return;
-        }
-        int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+        int rotation = requireActivity().getWindowManager().getDefaultDisplay().getRotation();
         boolean rot = Surface.ROTATION_90 == rotation || Surface.ROTATION_270 == rotation;
         cx.ring.utils.Log.w(TAG, "configureTransform " + viewWidth + "x" + viewHeight + " rot=" + rot + " mPreviewWidth=" + mPreviewWidth + " mPreviewHeight=" + mPreviewHeight);
         Matrix matrix = new Matrix();
@@ -551,12 +544,12 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
         float centerX = viewRect.centerX();
         float centerY = viewRect.centerY();
         if (rot) {
-            RectF bufferRect = new RectF(0, 0, mPreviewHeightRot, mPreviewWidthRot);
+            RectF bufferRect = new RectF(0, 0, PREVIEW_HEIGHT_ROT, PREVIEW_WIDTH_ROT);
             bufferRect.offset(centerX - bufferRect.centerX(), centerY - bufferRect.centerY());
             matrix.setRectToRect(viewRect, bufferRect, Matrix.ScaleToFit.FILL);
             float scale = Math.max(
-                    (float) viewHeight / mPreviewHeightRot,
-                    (float) viewWidth / mPreviewWidthRot);
+                    (float) viewHeight / PREVIEW_HEIGHT_ROT,
+                    (float) viewWidth / PREVIEW_WIDTH_ROT);
             matrix.postScale(scale, scale, centerX, centerY);
             matrix.postRotate(90 * (rotation - 2), centerX, centerY);
         } else if (Surface.ROTATION_180 == rotation) {
