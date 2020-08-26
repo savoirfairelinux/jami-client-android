@@ -21,7 +21,6 @@ package cx.ring.about;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -31,15 +30,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import cx.ring.BuildConfig;
 import cx.ring.R;
@@ -47,7 +40,6 @@ import cx.ring.client.HomeActivity;
 import cx.ring.databinding.FragAboutBinding;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.mvp.RootPresenter;
-import cx.ring.utils.DeviceUtils;
 
 public class AboutFragment extends BaseSupportFragment<RootPresenter> {
 
@@ -120,14 +112,14 @@ public class AboutFragment extends BaseSupportFragment<RootPresenter> {
 
     private void creditsClicked() {
         BottomSheetDialogFragment dialog = new AboutBottomSheetDialogFragment();
-        dialog.show(getActivity().getSupportFragmentManager(), dialog.getTag());
+        dialog.show(getChildFragmentManager(), dialog.getTag());
     }
 
     private void launchSystemIntent(Intent intentToLaunch,
                                     String intentChooserTitle,
                                     String intentMissingTitle) {
         // Check if an app can handle this intent
-        boolean isResolvable = getActivity().getPackageManager().queryIntentActivities(intentToLaunch,
+        boolean isResolvable = requireContext().getPackageManager().queryIntentActivities(intentToLaunch,
                 PackageManager.MATCH_DEFAULT_ONLY).size() > 0;
 
         if (isResolvable) {
