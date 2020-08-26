@@ -540,7 +540,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     private void onVideoEvent(HardwareService.VideoEvent event) {
-        Log.d(TAG, "VIDEO_EVENT: " + event.start + " " + event.callId + " " + event.w + "x" + event.h);
+        Log.d(TAG, "VIDEO_EVENT: start=" + event.start + ", started=" + event.started + ", callId=" + event.callId + ", w=" + event.w + ", h=" + event.h);
 
         if (event.start) {
             getView().displayVideoSurface(true, !isPipMode() && mDeviceRuntimeService.hasVideoPermission());
