@@ -20,6 +20,7 @@
  */
 package cx.ring.views;
 
+import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.animation.ValueAnimator;
@@ -30,7 +31,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import cx.ring.R;
@@ -54,7 +54,7 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
     public ViewGroup mAnswerLayout;
     public View btnAccept;
     public View btnRefuse;
-    public ProgressBar progress;
+    public ContentLoadingProgressBar progress;
     public MediaPlayer player;
     public TextureView video;
     public Surface surface = null;

@@ -92,6 +92,15 @@
                     android:textSize="16sp"
                     tools:text="long_file_name_gtest_long_file_name_gtest.jpg" />
 
+                <androidx.core.widget.ContentLoadingProgressBar
+                    android:id="@+id/progress"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="false"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
                 <TextView
                     android:id="@+id/file_details_txt"
                     android:layout_width="wrap_content"
@@ -103,15 +112,6 @@
                     android:textColor="@color/textColorSecondary"
                     android:textSize="12sp"
                     tools:text="1 mo - 12 mars" />
-
-                <ProgressBar
-                    android:id="@+id/progress"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:indeterminate="false"
-                    android:paddingBottom="8dp"
-                    android:visibility="gone"
-                    tools:visibility="gone" />
 
                 <LinearLayout
                     android:id="@+id/llAnswer"
