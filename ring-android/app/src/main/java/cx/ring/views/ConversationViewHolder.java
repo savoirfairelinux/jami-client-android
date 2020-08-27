@@ -39,6 +39,7 @@ import cx.ring.utils.UiUpdater;
 import io.reactivex.disposables.CompositeDisposable;
 
 public class ConversationViewHolder extends RecyclerView.ViewHolder {
+    public ConversationAdapter.MessageType type;
     public View mItem;
     public TextView mMsgTxt;
     public TextView mMsgDetailTxt;
@@ -66,6 +67,7 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
 
     public ConversationViewHolder(ViewGroup v, ConversationAdapter.MessageType type) {
         super(v);
+        this.type = type;
         if (type == ConversationAdapter.MessageType.CONTACT_EVENT) {
             mMsgTxt = v.findViewById(R.id.contact_event_txt);
             mMsgDetailTxt = v.findViewById(R.id.contact_event_details_txt);

@@ -580,7 +580,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                                       @NonNull final Interaction interaction, int position) {
         DataTransfer file = (DataTransfer) interaction;
         File path = presenter.getDeviceRuntimeService().getConversationPath(file.getPeerId(), file.getStoragePath());
-        file.setSize(path.length());
+        if (file.isComplete())
+            file.setSize(path.length());
 
         String timeString = timestampToDetailString(viewHolder.itemView.getContext(), file.getTimestamp());
         viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe(t -> {
@@ -594,21 +595,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             }
         }));
 
-        TransferMsgType type;
-        if (!file.isComplete()) {
-            type = TransferMsgType.FILE;
-        } else if (file.isPicture()) {
-            type = TransferMsgType.IMAGE;
-        } else if (file.isAudio()) {
-            type = TransferMsgType.AUDIO;
-        } else if (file.isVideo()) {
-            type = TransferMsgType.VIDEO;
-        } else {
-            type = TransferMsgType.FILE;
-        }
-
+        TransferMsgType type = viewHolder.type.getTransferType();
         viewHolder.compositeDisposable.clear();
-
         if (hasPermanentTimeString(file, position)) {
             viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe(t -> {
                 String timeSeparationString = timestampToDetailString(viewHolder.itemView.getContext(), file.getTimestamp());
@@ -651,6 +639,9 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                 viewHolder.mImage : (type == TransferMsgType.VIDEO) ?
                 viewHolder.video : (type == TransferMsgType.AUDIO) ?
                 viewHolder.mAudioInfoLayout : viewHolder.mFileInfoLayout;
+        if (longPressView == null) {
+            return;
+        }
         if (type == TransferMsgType.AUDIO || type == TransferMsgType.FILE) {
             longPressView.getBackground().setTintList(null);
         }
@@ -1163,6 +1154,12 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         SINGLE;
     }
 
+    private enum TransferMsgType {
+        FILE,
+        IMAGE,
+        AUDIO,
+        VIDEO;
+    }
     public enum MessageType {
         INCOMING_FILE(R.layout.item_conv_file_peer),
         INCOMING_IMAGE(R.layout.item_conv_image_peer),
@@ -1183,12 +1180,26 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         MessageType(int l) {
             layout = l;
         }
+
+        boolean isFile() {
+            return this == INCOMING_FILE || this == OUTGOING_FILE;
+        }
+        boolean isAudio() {
+            return this == INCOMING_AUDIO || this == OUTGOING_AUDIO;
+        }
+        boolean isVideo() {
+            return this == INCOMING_VIDEO || this == OUTGOING_VIDEO;
+        }
+        boolean isImage() {
+            return this == INCOMING_IMAGE || this == OUTGOING_IMAGE;
+        }
+
+        public TransferMsgType getTransferType() {
+            return isFile() ? TransferMsgType.FILE
+                    : (isImage() ? TransferMsgType.IMAGE
+                    : (isAudio() ? TransferMsgType.AUDIO
+                    : (isVideo() ? TransferMsgType.VIDEO : TransferMsgType.FILE)));
+        }
     }
 
-    private enum TransferMsgType {
-        FILE,
-        IMAGE,
-        AUDIO,
-        VIDEO;
-    }
 }
