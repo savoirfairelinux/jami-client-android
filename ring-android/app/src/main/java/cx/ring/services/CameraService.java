@@ -23,7 +23,6 @@ import android.content.Context;
 import android.graphics.ImageFormat;
 import android.graphics.Point;
 import android.graphics.SurfaceTexture;
-import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraCharacteristics;
@@ -46,6 +45,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.Range;
 import android.util.Size;
 import android.view.Surface;
@@ -58,7 +58,6 @@ import androidx.annotation.RequiresApi;
 import androidx.core.util.Pair;
 
 import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -73,13 +72,15 @@ import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.RingserviceJNI;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.UintVect;
-import cx.ring.utils.Log;
+import cx.ring.utils.Tuple;
 import cx.ring.views.AutoFitTextureView;
 import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.Subject;
 
 public class CameraService {
     private static final String TAG = CameraService.class.getSimpleName();
@@ -98,22 +99,38 @@ public class CameraService {
     private MediaCodec currentCodec;
     // SPS and PPS NALs (Config Data).
     private ByteBuffer codecData = null;
+    private static final Tuple<Integer, Integer> RESOLUTION_NONE = new Tuple<>(null, null);
+    private final Subject<Tuple<Integer, Integer>> maxResolutionSubject = BehaviorSubject.createDefault(RESOLUTION_NONE);
 
-    /*private final CameraManager.AvailabilityCallback availabilityCallback = new CameraManager.AvailabilityCallback() {
+    private final CameraManager.AvailabilityCallback availabilityCallback = new CameraManager.AvailabilityCallback() {
         @Override
         public void onCameraAvailable(@NonNull String cameraId) {
-            init()
-                .onErrorComplete()
-                .subscribe();
+            Log.w(TAG, "onCameraAvailable " + cameraId);
+            filterCompatibleCamera(Observable.just(cameraId), manager).blockingSubscribe(camera -> {
+                synchronized (addedDevices) {
+                    if (addedDevices.add(camera.first)) {
+                        if (!devices.cameras.contains(camera.first))
+                            devices.cameras.add(camera.first);
+                        Log.w(TAG, "RingserviceJNI.addVideoDevice cb " + camera.first);
+                        RingserviceJNI.addVideoDevice(camera.first);
+                    }
+                }
+            });
         }
 
         @Override
         public void onCameraUnavailable(@NonNull String cameraId) {
-            init()
-                .onErrorComplete()
-                .subscribe();
+            Log.w(TAG, "onCameraUnavailable " + cameraId + " current:" + previewCamera);
+            if (previewCamera == null || !previewCamera.getId().equals(cameraId)) {
+                synchronized (addedDevices) {
+                    if (addedDevices.remove(cameraId)) {
+                        devices.cameras.remove(cameraId);
+                        RingserviceJNI.removeVideoDevice(cameraId);
+                    }
+                }
+            }
         }
-    };*/
+    };
 
     CameraService(@NonNull Context c) {
         manager = (CameraManager) c.getSystemService(Context.CAMERA_SERVICE);
@@ -160,11 +177,14 @@ public class CameraService {
     }
 
     public VideoParams getParams(String camId) {
+        Log.w(TAG, "getParams()" + camId);
         if (camId != null) {
             return mParams.get(camId);
         } else if (previewParams != null) {
+            Log.w(TAG, "getParams() previewParams");
             return previewParams;
         } else if (devices != null && !devices.cameras.isEmpty()) {
+            Log.w(TAG, "getParams() fallback");
             devices.currentId = devices.cameras.get(0);
             return mParams.get(devices.currentId);
         }
@@ -176,13 +196,16 @@ public class CameraService {
     }
 
     public void setParameters(String camId, int format, int width, int height, int rate, int rotation) {
+        Log.w(TAG, "setParameters() " + camId + " " + format + " " + width + " " + height + " " + rate + " " + rotation);
         DeviceParams deviceParams = mNativeParams.get(camId);
-        if (deviceParams == null)
+        if (deviceParams == null) {
+            Log.w(TAG, "setParameters() can't find device");
             return;
+        }
 
-        CameraService.VideoParams params = mParams.get(camId);
+        VideoParams params = mParams.get(camId);
         if (params == null) {
-            params = new CameraService.VideoParams(camId, format, deviceParams.size.x, deviceParams.size.y, rate);
+            params = new VideoParams(camId, format, deviceParams.size.x, deviceParams.size.y, rate);
             mParams.put(camId, params);
         } else {
             params.id = camId;
@@ -191,25 +214,24 @@ public class CameraService {
             params.height = deviceParams.size.y;
             params.rate = rate;
         }
-        if (deviceParams.infos != null) {
-            params.rotation = getCameraDisplayRotation(deviceParams, rotation);
-        }
-        int r = params.rotation;
-        getVideoHandler().post(() -> Ringservice.setDeviceOrientation(camId, r));
+        params.rotation = getCameraDisplayRotation(deviceParams, rotation);
+        Ringservice.setDeviceOrientation(camId, params.rotation);
     }
 
     public void setOrientation(int rotation) {
+        Log.w(TAG, "setOrientation() " + rotation);
         for (String id : getCameraIds())
             setDeviceOrientation(id, rotation);
     }
 
     private void setDeviceOrientation(String camId, int screenRotation) {
+        Log.w(TAG, "setDeviceOrientation() " + camId + " " + screenRotation);
         DeviceParams deviceParams = mNativeParams.get(camId);
         int rotation = 0;
-        if (deviceParams != null && deviceParams.infos != null) {
+        if (deviceParams != null) {
             rotation = getCameraDisplayRotation(deviceParams, screenRotation);
         }
-        CameraService.VideoParams params = mParams.get(camId);
+        VideoParams params = mParams.get(camId);
         if (params != null) {
             params.rotation = rotation;
         }
@@ -217,12 +239,12 @@ public class CameraService {
     }
 
     private static int getCameraDisplayRotation(DeviceParams device, int screenRotation) {
-        return getCameraDisplayRotation(device.infos.orientation, rotationToDegrees(screenRotation), device.infos.facing);
+        return getCameraDisplayRotation(device.orientation, rotationToDegrees(screenRotation), device.facing);
     }
 
     private static int getCameraDisplayRotation(int sensorOrientation, int screenOrientation, int cameraFacing) {
         int rotation = 0;
-        if (cameraFacing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+        if (cameraFacing == CameraCharacteristics.LENS_FACING_FRONT) {
             rotation = (sensorOrientation + screenOrientation + 360) % 360;
         } else {
             rotation = (sensorOrientation - screenOrientation + 360) % 360;
@@ -235,15 +257,15 @@ public class CameraService {
         Log.d(TAG, "getCameraInfo: " + camId + " min. size: " + minVideoSize);
         DeviceParams p = new CameraService.DeviceParams();
         p.size = new Point(0, 0);
-        p.infos = new Camera.CameraInfo();
+        p.maxSize = new Point(0, 0);
 
         rates.clear();
 
         fillCameraInfo(p, camId, formats, sizes, rates, minVideoSize);
         sizes.add((long) p.size.x);
         sizes.add((long) p.size.y);
-        sizes.add((long) p.size.y);
-        sizes.add((long) p.size.x);
+        /*sizes.add((long) p.size.y);
+        sizes.add((long) p.size.x);*/
 
         mNativeParams.put(camId, p);
     }
@@ -305,8 +327,10 @@ public class CameraService {
 
     static class DeviceParams {
         Point size;
+        Point maxSize;
         long rate;
-        Camera.CameraInfo infos;
+        int facing;
+        int orientation;
 
         StringMap toMap() {
             StringMap map = new StringMap();
@@ -316,9 +340,8 @@ public class CameraService {
         }
     }
 
-    static private Observable<Pair<String, CameraCharacteristics>> filterCompatibleCamera(String[] cameraIds, CameraManager cameraManager) {
-        return Observable.fromArray(cameraIds)
-                .map(id -> new Pair<>(id, cameraManager.getCameraCharacteristics(id)))
+    static private Observable<Pair<String, CameraCharacteristics>> filterCompatibleCamera(Observable<String> cameras, CameraManager cameraManager) {
+        return cameras.map(id -> new Pair<>(id, cameraManager.getCameraCharacteristics(id)))
                 .filter(camera -> {
                     try {
                         for (int c : camera.second.get(CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES))
@@ -340,7 +363,7 @@ public class CameraService {
     private Single<VideoDevices> loadDevices(CameraManager manager) {
         return Single.fromCallable(() -> {
             VideoDevices devices = new VideoDevices();
-            List<Pair<String, CameraCharacteristics>> cameras = filterCompatibleCamera(manager.getCameraIdList(), manager).toList().blockingGet();
+            List<Pair<String, CameraCharacteristics>> cameras = filterCompatibleCamera(Observable.fromArray(manager.getCameraIdList()), manager).toList().blockingGet();
             Maybe<String> backCamera = filterCameraIdsFacing(cameras, CameraCharacteristics.LENS_FACING_BACK).firstElement();
             Maybe<String> frontCamera = filterCameraIdsFacing(cameras, CameraCharacteristics.LENS_FACING_FRONT).firstElement();
             Observable<String> externalCameras;
@@ -362,6 +385,7 @@ public class CameraService {
     }
 
     Completable init() {
+        boolean resetCamera = false;
         if (manager == null)
             return Completable.error(new IllegalStateException("Video manager not available"));
         return loadDevices(manager)
@@ -372,7 +396,7 @@ public class CameraService {
                         // Removed devices
                         if (old != null) {
                             for (String oldId : old.cameras) {
-                                if (!devs.cameras.contains(oldId)) {
+                                if (!devs.cameras.contains(oldId) || resetCamera) {
                                     if (addedDevices.remove(oldId))
                                         RingserviceJNI.removeVideoDevice(oldId);
                                 }
@@ -380,6 +404,7 @@ public class CameraService {
                         }
                         // Added devices
                         for (String camera : devs.cameras) {
+                            Log.w(TAG, "RingserviceJNI.addVideoDevice init " + camera);
                             if (addedDevices.add(camera))
                                 RingserviceJNI.addVideoDevice(camera);
                         }
@@ -392,7 +417,7 @@ public class CameraService {
                 })
                 .ignoreElement()
                 .doOnError(e -> Log.e(TAG, "Error initializing video device", e))
-                //.doOnComplete(() -> manager.registerAvailabilityCallback(availabilityCallback, getVideoHandler()))
+                .doOnComplete(() -> manager.registerAvailabilityCallback(availabilityCallback, getVideoHandler()))
                 .onErrorComplete();
     }
 
@@ -641,7 +666,7 @@ public class CameraService {
         } else if (notBigEnough.size() > 0) {
             return Collections.max(notBigEnough, new CompareSizesByArea());
         } else {
-            android.util.Log.e(TAG, "Couldn't find any suitable preview size");
+            Log.e(TAG, "Couldn't find any suitable preview size");
             return choices[0];
         }
     }
@@ -676,7 +701,7 @@ public class CameraService {
 
         Pair<MediaCodec, Surface> r = null;
         while (screenWidth >= 320) {
-            CameraService.VideoParams params = new CameraService.VideoParams(null, 0, screenWidth, screenHeight, 24);
+            VideoParams params = new VideoParams(null, 0, screenWidth, screenHeight, 24);
             r = openEncoder(params, MediaFormat.MIMETYPE_VIDEO_AVC, handler, 720, 0);
             if (r.first == null) {
                 screenWidth /= 2;
@@ -684,6 +709,8 @@ public class CameraService {
             } else
                 break;
         }
+        if (r == null)
+            return null;
 
         final Surface surface = r.second;
         final MediaCodec codec = r.first;
@@ -956,10 +983,8 @@ public class CameraService {
             long fps = (long) maxfps;
             rates.add(fps);
             p.rate = fps;
-
-            int facing = cc.get(CameraCharacteristics.LENS_FACING);
-            p.infos.orientation = cc.get(CameraCharacteristics.SENSOR_ORIENTATION);
-            p.infos.facing = facing == CameraCharacteristics.LENS_FACING_FRONT ? Camera.CameraInfo.CAMERA_FACING_FRONT : Camera.CameraInfo.CAMERA_FACING_BACK;
+            p.orientation = cc.get(CameraCharacteristics.SENSOR_ORIENTATION);
+            p.facing = cc.get(CameraCharacteristics.LENS_FACING);
         } catch (Exception e) {
             Log.e(TAG, "An error occurred getting camera info", e);
         }
@@ -992,7 +1017,7 @@ public class CameraService {
     }
 
     public void unregisterCameraDetectionCallback() {
-        /*if (manager != null && availabilityCallback != null)
-            manager.unregisterAvailabilityCallback(availabilityCallback);*/
+        if (manager != null)
+            manager.unregisterAvailabilityCallback(availabilityCallback);
     }
 }

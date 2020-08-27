@@ -35,6 +35,7 @@ import cx.ring.daemon.UintVect;
 import cx.ring.model.Conference;
 import cx.ring.model.SipCall;
 import cx.ring.utils.Log;
+import cx.ring.utils.Tuple;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
@@ -156,6 +157,9 @@ public abstract class HardwareService {
 
     public abstract boolean hasCamera();
     public abstract int getCameraCount();
+    public abstract Observable<Tuple<Integer, Integer>> getMaxResolutions();
+    public abstract Tuple<Integer, Integer> getMaxResolution();
+    public abstract Tuple<Integer, Integer> getMaxResolution(String camId);
 
     public abstract boolean isPreviewFromFrontCamera();
 

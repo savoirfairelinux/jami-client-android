@@ -43,6 +43,7 @@ import cx.ring.model.ConfigKey;
 import cx.ring.mvp.BasePreferenceFragment;
 import cx.ring.services.SharedPreferencesServiceImpl;
 import cx.ring.utils.Log;
+import cx.ring.utils.Tuple;
 import cx.ring.views.EditTextIntegerPreference;
 import cx.ring.views.EditTextPreferenceDialog;
 import cx.ring.views.PasswordPreference;
@@ -129,6 +130,10 @@ public class GeneralAccountFragment extends BasePreferenceFragment<GeneralAccoun
         Activity activity = getActivity();
         if (activity != null)
             activity.onBackPressed();
+    }
+
+    @Override
+    public void updateResolutions(Tuple<Integer, Integer> maxResolution, int currentResolution) {
     }
 
     private CharSequence getFileSizeSummary(int size, int maxSize) {
