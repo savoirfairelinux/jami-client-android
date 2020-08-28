@@ -44,6 +44,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.util.Range;
 import android.util.Size;
@@ -77,7 +78,7 @@ import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class CameraService {
     private static final String TAG = CameraService.class.getSimpleName();
@@ -114,11 +115,14 @@ public class CameraService {
         manager = (CameraManager) c.getSystemService(Context.CAMERA_SERVICE);
     }
 
-    public Handler getVideoHandler() {
+    public Looper getVideoLooper() {
         if (t.getState() == Thread.State.NEW)
             t.start();
+        return t.getLooper();
+    }
+    public Handler getVideoHandler() {
         if (videoHandler == null)
-            videoHandler = new Handler(t.getLooper());
+            videoHandler = new Handler(getVideoLooper());
         return videoHandler;
     }
 
@@ -186,7 +190,8 @@ public class CameraService {
         if (deviceParams.infos != null) {
             params.rotation = getCameraDisplayRotation(deviceParams, rotation);
         }
-        Ringservice.setDeviceOrientation(camId, params.rotation);
+        int r = params.rotation;
+        getVideoHandler().post(() -> Ringservice.setDeviceOrientation(camId, r));
     }
 
     public void setOrientation(int rotation) {
@@ -349,7 +354,7 @@ public class CameraService {
             devices.cameraFront = frontCamera.blockingGet();
             Log.w(TAG, "Loading video devices: found " + devices.cameras.size());
             return devices;
-        }).subscribeOn(Schedulers.io());
+        }).subscribeOn(AndroidSchedulers.from(getVideoLooper()));
     }
 
     Completable init() {
