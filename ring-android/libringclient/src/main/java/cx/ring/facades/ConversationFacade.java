@@ -290,13 +290,17 @@ public class ConversationFacade {
     public void deleteConversationItem(Interaction element) {
         if (element.getType() == InteractionType.DATA_TRANSFER) {
             DataTransfer transfer = (DataTransfer) element;
-            File file = mDeviceRuntimeService.getConversationPath(transfer.getPeerId(), transfer.getStoragePath());
-            mDisposableBag.add(Completable.mergeArrayDelayError(
-                    mHistoryService.deleteInteraction(element.getId(), element.getAccount()),
-                    Completable.fromAction(file::delete).subscribeOn(Schedulers.io()))
-                    .andThen(startConversation(transfer.getAccount(), new Uri(transfer.getConversation().getParticipant())))
-                    .subscribe(c -> c.removeInteraction(transfer),
-                            e -> Log.e(TAG, "Can't delete file transfer", e)));
+            if (transfer.getStatus() == InteractionStatus.TRANSFER_ONGOING) {
+                mAccountService.cancelDataTransfer(transfer.getDaemonId());
+            } else {
+                File file = mDeviceRuntimeService.getConversationPath(transfer.getPeerId(), transfer.getStoragePath());
+                mDisposableBag.add(Completable.mergeArrayDelayError(
+                        mHistoryService.deleteInteraction(element.getId(), element.getAccount()),
+                        Completable.fromAction(file::delete).subscribeOn(Schedulers.io()))
+                        .andThen(startConversation(transfer.getAccount(), new Uri(transfer.getConversation().getParticipant())))
+                        .subscribe(c -> c.removeInteraction(transfer),
+                                e -> Log.e(TAG, "Can't delete file transfer", e)));
+            }
         } else {
             // handling is the same for calls and texts
             mDisposableBag.add(Completable.mergeArrayDelayError(mHistoryService.deleteInteraction(element.getId(), element.getAccount()).subscribeOn(Schedulers.io()))
