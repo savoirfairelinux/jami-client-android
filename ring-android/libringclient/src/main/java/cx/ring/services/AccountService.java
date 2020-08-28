@@ -35,8 +35,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -1518,8 +1519,9 @@ public class AccountService {
         mExecutor.execute(() -> Ringservice.cancelDataTransfer(dataTransferId));
     }
 
-    private class DataTransferRefreshTask extends TimerTask {
+    private class DataTransferRefreshTask implements Runnable {
         private final DataTransfer mToUpdate;
+        public ScheduledFuture<?> scheduledTask;
 
         DataTransferRefreshTask(DataTransfer t) {
             mToUpdate = t;
@@ -1527,13 +1529,12 @@ public class AccountService {
 
         @Override
         public void run() {
-            Interaction.InteractionStatus transferStatus;
             synchronized (mToUpdate) {
-                transferStatus = mToUpdate.getStatus();
-                if (transferStatus == Interaction.InteractionStatus.TRANSFER_ONGOING) {
+                if (mToUpdate.getStatus() == Interaction.InteractionStatus.TRANSFER_ONGOING) {
                     dataTransferEvent(mToUpdate.getDaemonId(), 5);
                 } else {
-                    cancel();
+                    scheduledTask.cancel(false);
+                    scheduledTask = null;
                 }
             }
         }
@@ -1568,12 +1569,10 @@ public class AccountService {
             InteractionStatus oldState = transfer.getStatus();
             if (oldState != transferStatus) {
                 if (transferStatus == Interaction.InteractionStatus.TRANSFER_ONGOING) {
-                    if (mTransferRefreshTimer == null)
-                        mTransferRefreshTimer = new Timer();
-                    mTransferRefreshTimer.scheduleAtFixedRate(
-                            new DataTransferRefreshTask(transfer),
+                    DataTransferRefreshTask task = new DataTransferRefreshTask(transfer);
+                    task.scheduledTask = mExecutor.scheduleAtFixedRate(task,
                             DATA_TRANSFER_REFRESH_PERIOD,
-                            DATA_TRANSFER_REFRESH_PERIOD);
+                            DATA_TRANSFER_REFRESH_PERIOD, TimeUnit.MILLISECONDS);
                 } else if (transferStatus.isError()) {
                     if (!transfer.isOutgoing()) {
                         File tmpPath = mDeviceRuntimeService.getTemporaryPath(transfer.getPeerId(), transfer.getStoragePath());

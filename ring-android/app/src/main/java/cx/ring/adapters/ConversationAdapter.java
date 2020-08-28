@@ -31,6 +31,7 @@ import android.graphics.SurfaceTexture;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.text.format.DateUtils;
 import android.text.format.Formatter;
 import android.util.Log;
@@ -588,6 +589,10 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             if (file.getStatus() == InteractionStatus.TRANSFER_FINISHED) {
                 viewHolder.mMsgDetailTxt.setText(String.format("%s - %s",
                         timeString, Formatter.formatFileSize(viewHolder.itemView.getContext(), file.getTotalSize())));
+            } else if (file.getStatus() == InteractionStatus.TRANSFER_ONGOING) {
+                viewHolder.mMsgDetailTxt.setText(String.format("%s / %s - %s",
+                        Formatter.formatFileSize(viewHolder.itemView.getContext(), file.getBytesProgress()), Formatter.formatFileSize(viewHolder.itemView.getContext(), file.getTotalSize()),
+                        ResourceMapper.getReadableFileTransferStatus(conversationFragment.getActivity(), file.getStatus())));
             } else {
                 viewHolder.mMsgDetailTxt.setText(String.format("%s - %s - %s",
                         timeString, Formatter.formatFileSize(viewHolder.itemView.getContext(), file.getTotalSize()),
@@ -648,13 +653,19 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
         longPressView.setOnCreateContextMenuListener((menu, v, menuInfo) -> {
             menu.setHeaderTitle(file.getDisplayName());
-            conversationFragment.onCreateContextMenu(menu, v, menuInfo);
-            MenuInflater inflater = conversationFragment.getActivity().getMenuInflater();
-            inflater.inflate(R.menu.conversation_item_actions_file, menu);
-            if (!file.isComplete()) {
+            new MenuInflater(v.getContext()).inflate(R.menu.conversation_item_actions_file, menu);
+            if (file.getStatus() == InteractionStatus.TRANSFER_ONGOING) {
+                menu.findItem(R.id.conv_action_delete).setTitle(android.R.string.cancel);
                 menu.removeItem(R.id.conv_action_download);
                 menu.removeItem(R.id.conv_action_share);
+                menu.removeItem(R.id.conv_action_open);
+            } else {
+                if (!file.isComplete()) {
+                    menu.removeItem(R.id.conv_action_download);
+                    menu.removeItem(R.id.conv_action_share);
+                }
             }
+            conversationFragment.onCreateContextMenu(menu, v, menuInfo);
         });
         longPressView.setOnLongClickListener(v -> {
             if (type == TransferMsgType.AUDIO || type == TransferMsgType.FILE) {
@@ -706,6 +717,17 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                 });
             } else {
                 viewHolder.mAnswerLayout.setVisibility(View.GONE);
+                if (file.getStatus() == InteractionStatus.TRANSFER_ONGOING) {
+                    viewHolder.progress.setMax((int) (file.getTotalSize() / 1024));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        viewHolder.progress.setProgress((int) (file.getBytesProgress() / 1024), true);
+                    } else {
+                        viewHolder.progress.setProgress((int) (file.getBytesProgress() / 1024));
+                    }
+                    viewHolder.progress.show();
+                } else {
+                    viewHolder.progress.hide();
+                }
             }
         }
     }
