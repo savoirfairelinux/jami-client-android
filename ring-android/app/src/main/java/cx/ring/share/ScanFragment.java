@@ -32,8 +32,6 @@ import androidx.core.content.ContextCompat;
 
 
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -58,6 +56,9 @@ import cx.ring.mvp.BaseSupportFragment;
 public class ScanFragment extends BaseSupportFragment {
 
     public static final String TAG = ScanFragment.class.getSimpleName();
+
+    private boolean mIsVisible;
+    private boolean mIsStarted;
 
     private DecoratedBarcodeView barcodeView;
     private TextView mErrorMessageTextView;
@@ -84,14 +85,9 @@ public class ScanFragment extends BaseSupportFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            if (!hasCameraPermission()) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    requestPermissions(new String[]{Manifest.permission.CAMERA}, JamiApplication.PERMISSIONS_REQUEST);
-                } else {
-                    displayNoPermissionsError();
-                }
-            }
+        mIsVisible = isVisibleToUser;
+        if (mIsVisible && mIsStarted) {
+            checkPermission();
         }
     }
 
@@ -115,13 +111,17 @@ public class ScanFragment extends BaseSupportFragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, @NonNull MenuInflater inflater) {
-        menu.clear();
+    public void onStart() {
+        super.onStart();
+        mIsStarted = true;
+        if (mIsVisible)
+            checkPermission();
     }
 
     @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        menu.clear();
+    public void onStop() {
+        super.onStop();
+        mIsStarted = false;
     }
 
     private void showErrorPanel(final int textResId) {
@@ -146,7 +146,6 @@ public class ScanFragment extends BaseSupportFragment {
     private void displayNoPermissionsError() {
         showErrorPanel(R.string.error_scan_no_camera_permissions);
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -198,4 +197,15 @@ public class ScanFragment extends BaseSupportFragment {
         getActivity().setResult(Activity.RESULT_OK, intent);
         getActivity().finish();
     }
+
+    private void checkPermission() {
+        if (!hasCameraPermission()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.CAMERA}, JamiApplication.PERMISSIONS_REQUEST);
+            } else {
+                displayNoPermissionsError();
+            }
+        }
+    }
+
 }

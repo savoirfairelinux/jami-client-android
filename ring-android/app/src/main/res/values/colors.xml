@@ -43,4 +43,6 @@
     <color name="background_status_recommended">#8ee0d0</color>
     <color name="background_status_required">#fee4e9</color>
 
+    <color name="bottom_sheet_dim">#99000000</color>
+
 </resources>

@@ -65,7 +65,8 @@ along with this program; if not, write to the Free Software
     <dimen name="fab_margin_mini">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
 
-    <dimen name="qr_code_size">300dp</dimen>
+    <dimen name="qr_code_size">250dp</dimen>
+    <dimen name="qr_code_scanner_size">300dp</dimen>
 
     <dimen name="tv_avatar_size">320dp</dimen>
 
@@ -92,5 +93,8 @@ along with this program; if not, write to the Free Software
 
     <!--  Account Summary  -->
     <dimen name="summary_scrollview_padding_bottom">45dp</dimen>
+
+
+    <dimen name="bottom_sheet_radius">16dp</dimen>
 
 </resources>

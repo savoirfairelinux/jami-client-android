@@ -44,6 +44,7 @@ import android.provider.MediaStore;
 import android.text.Layout;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.style.AlignmentSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
@@ -72,6 +73,7 @@ import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.databinding.FragAccSummaryBinding;
+import cx.ring.fragments.QRCodeFragment;
 import cx.ring.model.Account;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.services.AccountService;
@@ -80,6 +82,7 @@ import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.KeyboardVisibilityManager;
+import cx.ring.utils.StringUtils;
 import cx.ring.views.AvatarDrawable;
 import ezvcard.VCard;
 import ezvcard.property.FormattedName;
@@ -298,6 +301,8 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         binding.accountSwitch.setChecked(account.isEnabled());
         binding.accountAliasTxt.setText(getString(R.string.profile));
         binding.accountIdTxt.setText(account.getUsername());
+        binding.btnQr.setOnClickListener(v -> QRCodeFragment.newInstance(QRCodeFragment.INDEX_CODE).show(getParentFragmentManager(), QRCodeFragment.TAG));
+        binding.btnShare.setOnClickListener(v -> shareAccount(account.getUsername()));
         mAccountId = account.getAccountID();
         mBestName = account.getRegisteredName();
         if (mBestName.isEmpty()) {
@@ -796,5 +801,15 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
 
     public void setFragmentVisibility(boolean isVisible) {
         mIsVisible = isVisible;
+    }
+
+    private void shareAccount(String username) {
+        if (!StringUtils.isEmpty(username)) {
+            Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+            sharingIntent.setType("text/plain");
+            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, getText(R.string.account_contact_me));
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.account_share_body, username, getText(R.string.app_website)));
+            startActivity(Intent.createChooser(sharingIntent, getText(R.string.share_via)));
+        }
     }
 }
