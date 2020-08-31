@@ -24,9 +24,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -69,27 +66,6 @@ public class ShareFragment extends BaseSupportFragment<SharePresenter> implement
         });
     }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.qr_menu, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.menu_qr_share:
-                if (!isShareLocked) {
-                    shareAccount();
-                    return true;
-                } else {
-                    return false;
-                }
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
     private void shareAccount() {
         if (!TextUtils.isEmpty(mUriToShow)) {
             Intent sharingIntent = new Intent(Intent.ACTION_SEND);
@@ -105,7 +81,8 @@ public class ShareFragment extends BaseSupportFragment<SharePresenter> implement
         if (binding == null)
             return;
 
-        final QRCodeUtils.QRCodeData qrCodeData = viewModel.getAccountQRCodeData(0xFF000000, 0xFFFFFFFF);
+        final QRCodeUtils.QRCodeData qrCodeData = viewModel.getAccountQRCodeData(
+                getResources().getColor(R.color.colorPrimary), getResources().getColor(R.color.transparent));
         if (qrCodeData == null) {
             binding.qrImage.setVisibility(View.INVISIBLE);
             binding.shareInstruction.setText(R.string.share_message_no_account);
