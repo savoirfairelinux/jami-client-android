@@ -83,6 +83,7 @@
   <string name="notif_location_action_stop">Interrompere condivisione della posizione</string>
   <string name="location_share_action_start">Inizia a condividere</string>
   <string name="location_share_action_stop">Ferma condivisione</string>
+  <string name="location_share_about_title">Informazioni mappa</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Tu:</string>
   <string name="action_call_hangup">Chiudi</string>
