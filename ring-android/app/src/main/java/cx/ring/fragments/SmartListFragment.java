@@ -44,6 +44,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.os.Handler;
 import android.text.InputType;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -64,7 +65,6 @@ import cx.ring.application.JamiApplication;
 import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
-import cx.ring.client.QRCodeActivity;
 import cx.ring.databinding.FragSmartlistBinding;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
@@ -115,6 +115,8 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
                 binding.newconvFab.show();
                 setOverflowMenuVisible(menu, true);
                 changeSeparatorHeight(false);
+                binding.qrCode.setVisibility(View.GONE);
+                setTabletQRLayout(false);
                 return true;
             }
 
@@ -124,6 +126,8 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
                 binding.newconvFab.hide();
                 setOverflowMenuVisible(menu, false);
                 changeSeparatorHeight(true);
+                binding.qrCode.setVisibility(View.VISIBLE);
+                setTabletQRLayout(true);
                 return true;
             }
         });
@@ -188,9 +192,6 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
                     mDialpadMenuItem.setIcon(R.drawable.baseline_keyboard_24);
                 }
                 return true;
-            case R.id.menu_scan_qr:
-                presenter.clickQRSearch();
-                return true;
             case R.id.menu_settings:
                 ((HomeActivity) getActivity()).goToSettings();
                 return true;
@@ -241,6 +242,8 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onViewCreated(view, savedInstanceState);
+
+        binding.qrCode.setOnClickListener(v -> presenter.clickQRSearch());
 
         binding.confsList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -459,10 +462,11 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     }
 
     @Override
-    public void goToQRActivity() {
-        Intent intent = new Intent(QRCodeActivity.ACTION_SCAN)
-                .setClass(requireActivity(), QRCodeActivity.class);
-        startActivityForResult(intent, HomeActivity.REQUEST_CODE_QR_CONVERSATION);
+    public void goToQRFragment() {
+        QRCodeFragment qrCodeFragment = QRCodeFragment.newInstance();
+        qrCodeFragment.show(getParentFragmentManager(), QRCodeFragment.TAG);
+        binding.qrCode.setVisibility(View.GONE);
+        setTabletQRLayout(false);
     }
 
     @Override
@@ -508,6 +512,25 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
 
             }, 100);
         }
+    }
+
+    private void setTabletQRLayout(boolean show) {
+        if (!DeviceUtils.isTablet(getContext()))
+            return;
+
+        RelativeLayout.LayoutParams params =
+                (RelativeLayout.LayoutParams) binding.listCoordinator.getLayoutParams();
+        if (show) {
+            params.addRule(RelativeLayout.BELOW, R.id.qr_code);
+            params.topMargin = 0;
+        } else {
+            params.removeRule(RelativeLayout.BELOW);
+            TypedValue value = new TypedValue();
+            if (getActivity().getTheme().resolveAttribute(android.R.attr.actionBarSize, value, true)) {
+                params.topMargin = TypedValue.complexToDimensionPixelSize(value.data, getResources().getDisplayMetrics());
+            }
+        }
+        binding.listCoordinator.setLayoutParams(params);
     }
 
 }

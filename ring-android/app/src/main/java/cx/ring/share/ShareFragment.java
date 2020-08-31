@@ -24,9 +24,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -67,27 +64,6 @@ public class ShareFragment extends BaseSupportFragment<SharePresenter> implement
         binding.shareButton.setOnClickListener(v -> {
             if (!isShareLocked) shareAccount();
         });
-    }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.qr_menu, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.menu_qr_share:
-                if (!isShareLocked) {
-                    shareAccount();
-                    return true;
-                } else {
-                    return false;
-                }
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
     private void shareAccount() {

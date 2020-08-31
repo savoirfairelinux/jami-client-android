@@ -1,0 +1,167 @@
+/*
+ * Copyright (C) 2004-2020 Savoir-faire Linux Inc.
+ *
+ * Authors:    AmirHossein Naghshzan <amirhossein.naghshzan@savoirfairelinux.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+package cx.ring.fragments;
+
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.tabs.TabLayout;
+
+import cx.ring.R;
+import cx.ring.share.ScanFragment;
+import cx.ring.share.ShareFragment;
+import cx.ring.utils.DeviceUtils;
+
+public class QRCodeFragment extends BottomSheetDialogFragment {
+
+    public static final String TAG = QRCodeFragment.class.getSimpleName();
+
+    private static final String mDimColor = "#99000000";
+
+    public static QRCodeFragment newInstance() {
+        return new QRCodeFragment();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+
+        View view = inflater.inflate(R.layout.frag_qrcode, container, false);
+        ViewPager viewPager = view.findViewById(R.id.view_pager);
+        viewPager.setAdapter(new SectionsPagerAdapter(getContext(), getChildFragmentManager()));
+        TabLayout tabs = view.findViewById(R.id.tabs);
+        tabs.setupWithViewPager(viewPager);
+
+        return view;
+    }
+
+    @Override
+    public void setupDialog(@NonNull Dialog dialog, int style) {
+        super.setupDialog(dialog, style);
+
+        dialog.getWindow().setDimAmount(0);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor(mDimColor)));
+    }
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        final Dialog dialog = super.onCreateDialog(savedInstanceState);
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogINterface) {
+                if (DeviceUtils.isTablet(getContext())) {
+                    dialog.getWindow().setLayout(
+                            ViewGroup.LayoutParams.WRAP_CONTENT,
+                            ViewGroup.LayoutParams.MATCH_PARENT);
+                }
+            }
+        });
+        return dialog;
+    }
+
+    class SectionsPagerAdapter extends FragmentPagerAdapter {
+        @StringRes
+        private final int[] TAB_TITLES = new int[]{R.string.tab_code, R.string.tab_scan};
+        private final Context mContext;
+
+        SectionsPagerAdapter(Context context, FragmentManager fm) {
+            super(fm);
+            mContext = context;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+                    return new ShareFragment();
+                case 1:
+                    return new ScanFragment();
+                default:
+                    return null;
+            }
+        }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mContext.getResources().getString(TAB_TITLES[position]);
+        }
+
+        @Override
+        public int getCount() {
+            return TAB_TITLES.length;
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        addGlobalLayoutListener(getView());
+    }
+
+    private void addGlobalLayoutListener(final View view) {
+        view.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                setPeekHeight(v.getMeasuredHeight());
+                v.removeOnLayoutChangeListener(this);
+            }
+        });
+    }
+
+    public void setPeekHeight(int peekHeight) {
+        BottomSheetBehavior behavior = getBottomSheetBehaviour();
+        if (behavior == null) {
+            return;
+        }
+
+        behavior.setPeekHeight(peekHeight);
+    }
+
+    private BottomSheetBehavior getBottomSheetBehaviour() {
+        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) ((View) getView().getParent()).getLayoutParams();
+        CoordinatorLayout.Behavior behavior = layoutParams.getBehavior();
+        if (behavior != null && behavior instanceof BottomSheetBehavior) {
+            return (BottomSheetBehavior) behavior;
+        }
+
+        return null;
+    }
+
+}

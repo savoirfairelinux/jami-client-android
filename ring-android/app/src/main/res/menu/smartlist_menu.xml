@@ -25,12 +25,6 @@
     http://creativecommons.org/licenses/by/3.0/us/legalcode
     Used without any modification.
     -->
-    <item
-        android:id="@+id/menu_scan_qr"
-        android:icon="@drawable/ic_action_scan_qr"
-        android:title="@string/scan_qr"
-        app:showAsAction="always"
-        app:iconTint="?attr/colorControlNormal"/>
 
     <item
         android:id="@+id/menu_overflow"

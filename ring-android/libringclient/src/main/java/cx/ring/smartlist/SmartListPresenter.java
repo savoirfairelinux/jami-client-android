@@ -173,7 +173,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
     }
 
     public void clickQRSearch() {
-        getView().goToQRActivity();
+        getView().goToQRFragment();
     }
 
     void showConversations(Observable<List<Observable<SmartListViewModel>>> conversations) {

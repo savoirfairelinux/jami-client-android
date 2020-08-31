@@ -7,11 +7,36 @@
     android:animateLayoutChanges="true"
     tools:context=".client.HomeActivity">
 
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/qr_code"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_toLeftOf="@+id/separator"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="?actionBarSize"
+        android:visibility="gone"
+        tools:visibility="visible" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="QR Code"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            android:layout_gravity="center"
+            android:drawableLeft="@drawable/ic_qr_code_2_black_24dp"
+            android:drawableTint="@color/colorPrimary"/>
+
+    </com.google.android.material.card.MaterialCardView>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/list_coordinator"
         android:layout_width="320dp"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?actionBarSize">
+        android:layout_marginTop="?actionBarSize"
+        android:layout_height="match_parent">
 
         <FrameLayout
             android:layout_width="match_parent"
