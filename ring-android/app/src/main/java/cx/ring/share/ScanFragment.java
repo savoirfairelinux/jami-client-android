@@ -32,8 +32,6 @@ import androidx.core.content.ContextCompat;
 
 
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -114,16 +112,6 @@ public class ScanFragment extends BaseSupportFragment {
         }
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, @NonNull MenuInflater inflater) {
-        menu.clear();
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        menu.clear();
-    }
-
     private void showErrorPanel(final int textResId) {
         if (mErrorMessageTextView != null) {
             mErrorMessageTextView.setText(textResId);
@@ -146,7 +134,6 @@ public class ScanFragment extends BaseSupportFragment {
     private void displayNoPermissionsError() {
         showErrorPanel(R.string.error_scan_no_camera_permissions);
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
