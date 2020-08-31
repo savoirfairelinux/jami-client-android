@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a3b0edc_e73238c8",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/QRCodeFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-08-31T20:12:25Z",
+      "side": 1,
+      "message": "don\u0027t hardcode color value in java file",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 56
+      },
+      "revId": "4c77ad35c9f7a8f930dec9f345703ea1fd1ad077",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7678fc70_17a27c51",
+        "filename": "ring-android/app/src/main/res/layout/frag_scan.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-08-31T20:12:25Z",
+      "side": 1,
+      "message": "take full available space",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 52
+      },
+      "revId": "4c77ad35c9f7a8f930dec9f345703ea1fd1ad077",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9fa7a40_9ddba31e",
+        "filename": "ring-android/app/src/main/res/layout/frag_share.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-08-31T20:12:25Z",
+      "side": 1,
+      "message": "wrong button style",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "4c77ad35c9f7a8f930dec9f345703ea1fd1ad077",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2109d371_7b2b9410",
+        "filename": "ring-android/app/src/main/res/layout/frag_smartlist.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-08-31T20:12:25Z",
+      "side": 1,
+      "message": "should be a material button, not card view",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 56
+      },
+      "revId": "4c77ad35c9f7a8f930dec9f345703ea1fd1ad077",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
