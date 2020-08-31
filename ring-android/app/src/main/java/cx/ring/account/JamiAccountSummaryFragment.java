@@ -72,6 +72,7 @@ import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.databinding.FragAccSummaryBinding;
+import cx.ring.fragments.QRCodeFragment;
 import cx.ring.model.Account;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.services.AccountService;
@@ -298,6 +299,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         binding.accountSwitch.setChecked(account.isEnabled());
         binding.accountAliasTxt.setText(getString(R.string.profile));
         binding.accountIdTxt.setText(account.getUsername());
+        binding.accountIdTxt.setOnClickListener(v -> QRCodeFragment.newInstance(QRCodeFragment.INDEX_CODE).show(getParentFragmentManager(), QRCodeFragment.TAG));
         mAccountId = account.getAccountID();
         mBestName = account.getRegisteredName();
         if (mBestName.isEmpty()) {

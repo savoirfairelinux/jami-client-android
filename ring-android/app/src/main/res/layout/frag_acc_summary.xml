@@ -149,6 +149,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:singleLine="true"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
                 android:textIsSelectable="true"
+                android:padding="4dp"
                 tools:text="ring:8F29045378ACA68F2ACA2346078ACA68F2ACA290" />
 
             <LinearLayout
@@ -328,7 +329,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:layout_height="wrap_content"
             android:layout_marginBottom="-16dp"
             android:elevation="4dp"
-            app:cardCornerRadius="16dp">
+            app:cardCornerRadius="@dimen/bottom_sheet_radius">
 
             <LinearLayout
                 android:layout_width="match_parent"

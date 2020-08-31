@@ -22,6 +22,8 @@
 
         <item name="colorPrimaryDark">@color/background</item>
         <!--<item name="android:windowContentTransitions">true</item>-->
+
+        <item name="shapeAppearanceLargeComponent">@style/CustomShapeAppearanceOverlay</item>
     </style>
 
     <!-- Main dark base theme -->
@@ -297,6 +299,11 @@
         <item name="android:padding">@dimen/wizard_button_padding</item>
         <item name="android:backgroundTint">@drawable/wizard_button_background_selector</item>
         <item name="android:textSize">@dimen/wizard_text_size</item>
+    </style>
+
+    <style name="CustomShapeAppearanceOverlay">
+        <item name="cornerSize">@dimen/bottom_sheet_radius</item>
+        <item name="cornerFamily">rounded</item>
     </style>
 
 </resources>
