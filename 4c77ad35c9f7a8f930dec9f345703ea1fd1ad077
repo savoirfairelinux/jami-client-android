@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1e52b367_4db229b4",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/QRCodeFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2020-09-01T17:38:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a3b0edc_e73238c8",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 56
+      },
+      "revId": "4c77ad35c9f7a8f930dec9f345703ea1fd1ad077",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7678fc70_17a27c51",
         "filename": "ring-android/app/src/main/res/layout/frag_scan.xml",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "77efc0e5_05e30838",
+        "filename": "ring-android/app/src/main/res/layout/frag_scan.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2020-09-01T17:38:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7678fc70_17a27c51",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 52
+      },
+      "revId": "4c77ad35c9f7a8f930dec9f345703ea1fd1ad077",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9fa7a40_9ddba31e",
         "filename": "ring-android/app/src/main/res/layout/frag_share.xml",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "4c77ad35c9f7a8f930dec9f345703ea1fd1ad077",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d14ba6ec_782e407c",
+        "filename": "ring-android/app/src/main/res/layout/frag_share.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2020-09-01T17:38:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9fa7a40_9ddba31e",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "4c77ad35c9f7a8f930dec9f345703ea1fd1ad077",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     },
     {
       "key": {
