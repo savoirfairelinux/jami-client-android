@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40cefd05_69ac35a0",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/account/TVSettingsFragment.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-09-01T16:56:04Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 159,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 9
+      },
+      "revId": "39eea0d1421d2f6bb43b758345886991cae3b84a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
