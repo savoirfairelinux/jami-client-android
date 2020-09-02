@@ -164,12 +164,13 @@ public class LocationSharingFragment extends Fragment {
         }
 
         Context ctx = requireContext();
+        File osmPath = new File(ctx.getCacheDir(), "osm");
         IConfigurationProvider configuration = Configuration.getInstance();
-        configuration.setOsmdroidBasePath(new File(ctx.getCacheDir(), "osm"));
-        configuration.load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
+        configuration.setOsmdroidBasePath(osmPath);
+        configuration.setOsmdroidTileCache(new File(osmPath, "tiles"));
         configuration.setUserAgentValue("net.jami.android");
         configuration.setMapViewHardwareAccelerated(true);
-
+        configuration.setMapViewRecyclerFriendly(false);
         bubbleSize = ctx.getResources().getDimensionPixelSize(R.dimen.location_sharing_avatar_size);
     }
 
