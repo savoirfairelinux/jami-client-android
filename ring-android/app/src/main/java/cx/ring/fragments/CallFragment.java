@@ -68,7 +68,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -380,6 +379,8 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
         animation.setDuration(150);
         animation.addUpdateListener(valueAnimator -> {
+            if (binding == null)
+                return;
             int upBy = (int) valueAnimator.getAnimatedValue();
             RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) binding.previewContainer.getLayoutParams();
             layoutParams.setMargins(0, 0, 0, (int) (upBy * dpRatio));
@@ -1244,17 +1245,12 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     public void finish() {
         Activity activity = getActivity();
         if (activity != null) {
+            activity.finishAndRemoveTask();
             if (mBackstackLost) {
-                activity.finishAndRemoveTask();
-                startActivity(
-                        Intent.makeMainActivity(
-                                new ComponentName(activity, HomeActivity.class)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-            } else {
-                activity.finish();
+                startActivity(Intent.makeMainActivity(new ComponentName(activity, HomeActivity.class)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             }
         }
     }
-
 
     public void speakerClicked() {
         presenter.speakerClick(binding.callSpeakerBtn.isChecked());
