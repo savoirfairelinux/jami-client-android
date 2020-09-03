@@ -172,7 +172,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     private List<String> callMediaHandlers;
     private int previousPluginPosition = -1;
     private RecyclerPicker rp;
-    private boolean toggleVideoPluginsCarousel = true;
     private final ValueAnimator animation = new ValueAnimator();
 
     private PointF previewDrag = null;
@@ -911,7 +910,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     @Override
     public void updateTime(final long duration) {
         if (binding != null) {
-            if (duration == 0)
+            if (duration <= 0)
                 binding.callStatusTxt.setText(null);
             else
                 binding.callStatusTxt.setText(String.format(Locale.getDefault(), "%d:%02d:%02d", duration / 3600, duration % 3600 / 60, duration % 60));
@@ -967,23 +966,39 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             binding.confControlGroup.setVisibility(View.VISIBLE);
             if (confAdapter == null) {
                 confAdapter = new ConfParticipantAdapter((view, call) -> {
+                    if (presenter == null)
+                        return;
+                    boolean maximized = presenter.isMaximized(call);
                     PopupMenu popup = new PopupMenu(view.getContext(), view);
                     popup.inflate(R.menu.conference_participant_actions);
+                    MenuBuilder menu = (MenuBuilder) popup.getMenu();
+                    MenuItem maxItem = menu.findItem(R.id.conv_contact_maximize);
+                    if (maximized) {
+                        maxItem.setTitle(R.string.action_call_minimize);
+                        maxItem.setIcon(R.drawable.baseline_close_fullscreen_24);
+                    } else {
+                        maxItem.setTitle(R.string.action_call_maximize);
+                        maxItem.setIcon(R.drawable.baseline_open_in_full_24);
+                    }
                     popup.setOnMenuItemClickListener(item -> {
-                        if (presenter != null)
-                            switch (item.getItemId()) {
-                                case R.id.conv_contact_details:
-                                    presenter.openParticipantContact(call);
-                                    break;
-                                case R.id.conv_contact_hangup:
-                                    presenter.hangupParticipant(call);
-                                    break;
-                                default:
-                                    return false;
-                            }
+                        if (presenter == null)
+                            return false;
+                        switch (item.getItemId()) {
+                            case R.id.conv_contact_details:
+                                presenter.openParticipantContact(call);
+                                break;
+                            case R.id.conv_contact_hangup:
+                                presenter.hangupParticipant(call);
+                                break;
+                            case R.id.conv_contact_maximize:
+                                presenter.maximizeParticipant(call);
+                                break;
+                            default:
+                                return false;
+                        }
                         return true;
                     });
-                    MenuPopupHelper menuHelper = new MenuPopupHelper(view.getContext(), (MenuBuilder) popup.getMenu(), view);
+                    MenuPopupHelper menuHelper = new MenuPopupHelper(view.getContext(), menu, view);
                     menuHelper.setForceShowIcon(true);
                     menuHelper.show();
                 });
@@ -1360,7 +1375,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     public void toggleVideoPluginsCarousel(boolean toggle) {
-        toggleVideoPluginsCarousel = toggle;
         if (choosePluginMode) {
             if (toggle) {
                 binding.recyclerPicker.setVisibility(View.VISIBLE);
@@ -1370,7 +1384,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                 movePreview(false);
             }
         }
-
     }
 
     public void movePreview(boolean up) {

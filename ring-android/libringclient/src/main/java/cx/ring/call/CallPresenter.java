@@ -514,6 +514,17 @@ public class CallPresenter extends RootPresenter<CallView> {
         }
     }
 
+    public void maximizeParticipant(SipCall call) {
+        if (mConference.getMaximizedCall() == call)
+            call = null;
+        mConference.setMaximizedCall(call);
+        if (call != null) {
+            mCallService.setConfMaximizedParticipant(mConference.getConfId(), call.getDaemonIdString());
+        } else {
+            mCallService.setConfGridLayout(mConference.getConfId());
+        }
+    }
+
     private void updateTime() {
         CallView view = getView();
         if (view != null && mConference != null) {
@@ -704,5 +715,9 @@ public class CallPresenter extends RootPresenter<CallView> {
 
     public void stopScreenShare() {
         mHardwareService.stopScreenShare();
+    }
+
+    public boolean isMaximized(SipCall call) {
+        return mConference.getMaximizedCall() == call;
     }
 }
