@@ -129,7 +129,7 @@
 
                     <Button
                         android:id="@+id/btnRefuse"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        style="@style/TextButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
@@ -139,7 +139,7 @@
 
                     <Button
                         android:id="@+id/btnAccept"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        style="@style/TextButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"

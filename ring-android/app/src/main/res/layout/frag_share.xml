@@ -28,6 +28,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="@string/share_your_account_information"
-        android:theme="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+        style="@style/ButtonColored" />
 
 </LinearLayout>

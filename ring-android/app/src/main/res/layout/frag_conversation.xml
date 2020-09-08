@@ -147,7 +147,7 @@
 
                 <Button
                     android:id="@+id/btnAddContact"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    style="@style/TextButton"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="0dp"
@@ -183,7 +183,7 @@
 
                     <Button
                         android:id="@+id/btnBlock"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        style="@style/TextButton"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -195,7 +195,7 @@
 
                     <Button
                         android:id="@+id/btnRefuse"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        style="@style/TextButton"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -207,7 +207,7 @@
 
                     <Button
                         android:id="@+id/btnAccept"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        style="@style/TextButton"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
