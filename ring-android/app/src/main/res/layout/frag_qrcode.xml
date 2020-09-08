@@ -14,7 +14,7 @@
         android:textStyle="bold"
         android:layout_gravity="center_horizontal"
         android:textColor="@color/colorPrimary"
-        android:drawableLeft="@drawable/baseline_qr_code_2_black_24dp"
+        android:drawableStart="@drawable/baseline_qr_code_2_black_24dp"
         android:drawableTint="@color/colorPrimary"/>
 
     <com.google.android.material.tabs.TabLayout
