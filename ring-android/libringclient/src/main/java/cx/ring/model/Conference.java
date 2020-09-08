@@ -50,6 +50,7 @@ public class Conference {
     private SipCall.CallStatus mConfState;
     private final ArrayList<SipCall> mParticipants;
     private boolean mRecording;
+    private SipCall mMaximizedCall;
 
     public Conference(SipCall call) {
         this(call.getDaemonIdString());
@@ -90,6 +91,14 @@ public class Conference {
         } else {
             return mId;
         }
+    }
+
+    public void setMaximizedCall(SipCall call) {
+        mMaximizedCall = call;
+    }
+
+    public SipCall getMaximizedCall() {
+        return mMaximizedCall;
     }
 
     public String getPluginId() {

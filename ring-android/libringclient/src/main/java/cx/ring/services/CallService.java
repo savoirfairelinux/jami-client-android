@@ -145,6 +145,17 @@ public class CallService {
         }
     }
 
+    public void setConfMaximizedParticipant(String confId, String callId) {
+        mExecutor.execute(() -> {
+            Ringservice.setActiveParticipant(confId, callId);
+            Ringservice.setConferenceLayout(confId, 1);
+        });
+    }
+
+    public void setConfGridLayout(String confId) {
+        mExecutor.execute(() -> Ringservice.setConferenceLayout(confId, 0));
+    }
+
     private static class ConferenceEntity {
         Conference conference;
         ConferenceEntity(Conference conf) {
