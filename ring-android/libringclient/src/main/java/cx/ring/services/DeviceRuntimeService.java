@@ -42,8 +42,6 @@ public abstract class DeviceRuntimeService implements DaemonService.SystemInfoCa
 
     public abstract boolean isConnectedBluetooth();
 
-    public abstract long provideDaemonThreadId();
-
     public abstract boolean hasVideoPermission();
 
     public abstract boolean hasAudioPermission();
