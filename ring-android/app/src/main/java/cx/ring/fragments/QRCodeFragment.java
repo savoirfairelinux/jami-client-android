@@ -21,9 +21,6 @@ package cx.ring.fragments;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,11 +33,9 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.google.android.material.tabs.TabLayout;
 
 import cx.ring.R;
 import cx.ring.databinding.FragQrcodeBinding;
@@ -66,7 +61,7 @@ public class QRCodeFragment extends BottomSheetDialogFragment {
         return fragment;
     }
 
-    private FragQrcodeBinding mBinding;
+    private FragQrcodeBinding mBinding = null;
     private int mStartPageIndex;
 
     @Nullable
@@ -94,22 +89,26 @@ public class QRCodeFragment extends BottomSheetDialogFragment {
     }
 
     @Override
+    public void onDestroyView() {
+        mBinding = null;
+        super.onDestroyView();
+    }
+
+    @NonNull
+    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final Dialog dialog = super.onCreateDialog(savedInstanceState);
-        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogINterface) {
-                if (DeviceUtils.isTablet(getContext())) {
-                    dialog.getWindow().setLayout(
-                            ViewGroup.LayoutParams.WRAP_CONTENT,
-                            ViewGroup.LayoutParams.MATCH_PARENT);
-                }
+        dialog.setOnShowListener(dialogINterface -> {
+            if (DeviceUtils.isTablet(getContext())) {
+                dialog.getWindow().setLayout(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT);
             }
         });
         return dialog;
     }
 
-    class SectionsPagerAdapter extends FragmentPagerAdapter {
+    static class SectionsPagerAdapter extends FragmentPagerAdapter {
         @StringRes
         private final int[] TAB_TITLES = new int[]{R.string.tab_code, R.string.tab_scan};
         private final Context mContext;
@@ -119,6 +118,7 @@ public class QRCodeFragment extends BottomSheetDialogFragment {
             mContext = context;
         }
 
+        @NonNull
         @Override
         public Fragment getItem(int position) {
             switch (position) {
@@ -160,7 +160,7 @@ public class QRCodeFragment extends BottomSheetDialogFragment {
     }
 
     public void setPeekHeight(int peekHeight) {
-        BottomSheetBehavior behavior = getBottomSheetBehaviour();
+        BottomSheetBehavior<?> behavior = getBottomSheetBehaviour();
         if (behavior == null) {
             return;
         }
@@ -168,11 +168,11 @@ public class QRCodeFragment extends BottomSheetDialogFragment {
         behavior.setPeekHeight(peekHeight);
     }
 
-    private BottomSheetBehavior getBottomSheetBehaviour() {
+    private BottomSheetBehavior<?> getBottomSheetBehaviour() {
         CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) ((View) getView().getParent()).getLayoutParams();
-        CoordinatorLayout.Behavior behavior = layoutParams.getBehavior();
-        if (behavior != null && behavior instanceof BottomSheetBehavior) {
-            return (BottomSheetBehavior) behavior;
+        CoordinatorLayout.Behavior<?> behavior = layoutParams.getBehavior();
+        if (behavior instanceof BottomSheetBehavior) {
+            return (BottomSheetBehavior<?>) behavior;
         }
 
         return null;
