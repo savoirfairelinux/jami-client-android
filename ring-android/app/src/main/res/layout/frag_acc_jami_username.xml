@@ -105,7 +105,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/skip"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
+            style="@style/TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/wizard_username_skip"
