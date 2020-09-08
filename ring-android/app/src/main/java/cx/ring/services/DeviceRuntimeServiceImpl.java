@@ -55,7 +55,6 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
     @Inject
     @Named("DaemonExecutor")
     ScheduledExecutorService mExecutor;
-    private long mDaemonThreadId = -1;
 
     private void copyAssets() {
         File pluginsPath = new File(mContext.getFilesDir(), "plugins");
@@ -64,21 +63,16 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
         AndroidFileUtils.copyAssetFolder(mContext.getAssets(), "plugins", pluginsPath);
     }
 
-
     @Override
     public void loadNativeLibrary() {
-        mExecutor.submit(() -> {
+        mExecutor.execute(() -> {
             try {
-                mDaemonThreadId = Thread.currentThread().getId();
                 System.loadLibrary("ring");
-                return true;
             } catch (Exception e) {
                 Log.e(TAG, "Could not load Jami library", e);
-                return false;
             }
         });
     }
-
 
     @Override
     public File provideFilesDir() {
@@ -133,11 +127,6 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
     @Override
     public boolean isConnectedEthernet() {
         return isNetworkConnectedForType(ConnectivityManager.TYPE_ETHERNET);
-    }
-
-    @Override
-    public long provideDaemonThreadId() {
-        return mDaemonThreadId;
     }
 
     @Override
