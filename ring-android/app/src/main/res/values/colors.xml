@@ -6,6 +6,7 @@
     <color name="app_bar">@color/grey_25</color>
 
     <color name="colorPrimary">@color/color_primary_dark</color>
+    <color name="colorPrimaryLight">#0f426b</color>
     <color name="colorPrimaryTranslucent">@color/color_primary_dark_translucent</color>
     <color name="colorOnPrimary">@color/white</color>
 

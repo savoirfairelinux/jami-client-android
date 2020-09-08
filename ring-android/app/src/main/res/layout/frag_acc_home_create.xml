@@ -63,7 +63,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/ring_import_account"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                style="@style/ButtonOutLined"
                 android:layout_width="@dimen/wizard_button_width"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -76,7 +76,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/account_connect_server"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                style="@style/ButtonOutLined"
                 android:layout_width="@dimen/wizard_button_width"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

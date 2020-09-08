@@ -187,7 +187,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/export_account_btn"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    style="@style/ButtonOutLined"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -197,7 +197,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/change_password_btn"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    style="@style/ButtonOutLined"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -228,12 +228,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/register_name_btn"
-                    style="@style/Widget.MaterialComponents.Button"
+                    style="@style/ButtonColored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
+                    android:backgroundTint="@color/colorPrimaryLight"
                     android:text="@string/register_name" />
 
             </LinearLayout>
@@ -335,7 +336,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
+                android:background="@color/colorPrimaryLight"
                 android:orientation="vertical"
                 android:paddingBottom="15dp">
 
@@ -395,7 +396,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btn_start_export"
-                            style="@style/Widget.MaterialComponents.Button"
+                            style="@style/ButtonColored"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"

@@ -145,8 +145,17 @@
     </style>
 
     <style name="ButtonColored" parent="Widget.MaterialComponents.Button">
-       <!-- <item name="colorButtonNormal">@color/color_primary_light</item>
-        <item name="android:textColor">@color/text_color_primary_dark</item>-->
+        <item name="android:textColor">@color/colorOnPrimary</item>
+        <item name="cornerRadius">@dimen/button_corner_radius</item>
+        <item name="android:paddingTop">@dimen/button_padding</item>
+        <item name="android:paddingBottom">@dimen/button_padding</item>
+    </style>
+
+    <style name="ButtonOutLined" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="cornerRadius">@dimen/button_corner_radius</item>
+        <item name="android:paddingTop">@dimen/button_padding</item>
+        <item name="android:paddingBottom">@dimen/button_padding</item>
     </style>
 
     <!-- AndroidTV Style -->
@@ -292,8 +301,7 @@
         <item name="colorControlActivated">@color/conversation_primary_selection_handles</item>
     </style>
 
-    <style name="WizardButton" parent="Widget.MaterialComponents.Button">
-        <item name="cornerRadius">@dimen/wizard_button_corner_radius</item>
+    <style name="WizardButton" parent="ButtonColored">
         <item name="android:padding">@dimen/wizard_button_padding</item>
         <item name="android:backgroundTint">@drawable/wizard_button_background_selector</item>
         <item name="android:textSize">@dimen/wizard_text_size</item>

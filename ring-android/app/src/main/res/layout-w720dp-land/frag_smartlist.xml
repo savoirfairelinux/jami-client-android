@@ -11,11 +11,12 @@
         android:id="@+id/qr_code"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        style="@style/ButtonOutLined"
         android:layout_toLeftOf="@+id/separator"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        app:cardCornerRadius="@dimen/button_corner_radius"
         android:layout_marginTop="?actionBarSize"
         android:visibility="gone"
         tools:visibility="visible" >
