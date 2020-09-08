@@ -30,9 +30,10 @@ along with this program; if not, write to the Free Software
         android:id="@+id/qr_code"
         android:layout_width="@dimen/wizard_button_width"
         android:layout_height="wrap_content"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        style="@style/ButtonOutLined"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
+        app:cardCornerRadius="@dimen/button_corner_radius"
         android:visibility="gone"
         tools:visibility="visible" >
 
