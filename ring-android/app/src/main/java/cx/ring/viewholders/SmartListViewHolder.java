@@ -94,7 +94,8 @@ public class SmartListViewHolder extends RecyclerView.ViewHolder {
                 binding.convLastItem.setTypeface(null, Typeface.NORMAL);
             }
 
-            CallContact contact = smartListViewModel.getContact();
+            //TODO haandle group
+            CallContact contact = smartListViewModel.getContact().get(0);
             if (contact != null) {
                 binding.photo.setImageDrawable(
                         new AvatarDrawable.Builder()

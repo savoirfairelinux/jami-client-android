@@ -30,6 +30,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.SocketException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -265,7 +266,7 @@ public class AccountService {
         public List<Observable<SmartListViewModel>> getResultsViewModels() {
             List<Observable<SmartListViewModel>> vms = new ArrayList<>(results.size());
             for (User user : results) {
-                vms.add(Observable.just(new SmartListViewModel(accountId, user)));
+                //vms.add(Observable.just(new SmartListViewModel(accountId, user)));
             }
             return vms;
         }
@@ -648,6 +649,20 @@ public class AccountService {
 
     public void setMessageDisplayed(String accountId, String contactId, String messageId) {
         mExecutor.execute(() -> Ringservice.setMessageDisplayed(accountId, contactId, messageId, 3));
+    }
+
+    public Single<Conversation> startConversation(String accountId, Collection<String> initialMembers) {
+        Account account = getAccount(accountId);
+        return Single.fromCallable(() -> {
+            String id = Ringservice.startConversation(accountId);
+            Conversation conversation = new Conversation(accountId, new Uri(id));
+            for (String member : initialMembers) {
+                Ringservice.addConversationMember(accountId, id, member);
+                conversation.addContact(account.getContactFromCache(member));
+            }
+            account.conversationStarted(conversation);
+            return conversation;
+        }).subscribeOn(Schedulers.from(mExecutor));
     }
 
     /**

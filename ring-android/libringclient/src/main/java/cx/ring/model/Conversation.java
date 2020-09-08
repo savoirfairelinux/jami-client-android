@@ -39,12 +39,11 @@ import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
 public class Conversation extends ConversationHistory {
-
-
     private static final String TAG = Conversation.class.getSimpleName();
 
     private final String mAccountId;
-    private final CallContact mContact;
+    private final Uri mKey;
+    private final List<CallContact> mContacts;
 
     private final NavigableMap<Long, Interaction> mHistory = new TreeMap<>();
     private final ArrayList<Conference> mCurrentCalls = new ArrayList<>();
@@ -68,8 +67,15 @@ public class Conversation extends ConversationHistory {
 
     public Conversation(String accountId, CallContact contact) {
         mAccountId = accountId;
-        mContact = contact;
+        mContacts = Collections.singletonList(contact);
+        mKey = contact.getPrimaryUri();
         mParticipant = contact.getPrimaryUri().getUri();
+    }
+
+    public Conversation(String accountId, Uri uri) {
+        mAccountId = accountId;
+        mKey = uri;
+        mContacts = new ArrayList<>(3);
     }
 
     public Conference getConference(String id) {
@@ -82,6 +88,26 @@ public class Conversation extends ConversationHistory {
 
     public void composingStatusChanged(CallContact contact, Account.ComposingStatus composing) {
         composingStatusSubject.onNext(composing);
+    }
+
+    public Uri getUri() {
+        return mKey;
+    }
+
+    public boolean matches(String query) {
+        for (CallContact contact : getContact()) {
+            if (contact.matches(query))
+                return true;
+        }
+        return false;
+    }
+
+    public CharSequence getDisplayName() {
+        return mContacts.get(0).getDisplayName();
+    }
+
+    public void addContact(CallContact contact) {
+        mContacts.add(contact);
     }
 
     public enum ElementStatus {
@@ -147,8 +173,8 @@ public class Conversation extends ConversationHistory {
         mVisible = visible;
     }
 
-    public CallContact getContact() {
-        return mContact;
+    public List<CallContact> getContact() {
+        return mContacts;
     }
 
     public void addCall(SipCall call) {
@@ -160,15 +186,23 @@ public class Conversation extends ConversationHistory {
         updatedElementSubject.onNext(new Tuple<>(call, ElementStatus.ADD));
     }
 
+    private void setInteractionProperties(Interaction interaction) {
+        interaction.setAccount(getAccountId());
+        if (interaction.getContact() == null) {
+            if (mContacts.size() == 1)
+                interaction.setContact(mContacts.get(0));
+            else
+                interaction.setContact(findContact(new Uri(interaction.getAuthor())));
+        }
+    }
+
     public void addTextMessage(TextMessage txt) {
         if (mVisible) {
             txt.read();
         }
+        setInteractionProperties(txt);
         if (txt.getConversation() == null) {
             Log.e(TAG, "Error in conversation class... No conversation is attached to this interaction");
-        }
-        if (txt.getContact() == null) {
-            txt.setContact(getContact());
         }
         mHistory.put(txt.getTimestamp(), txt);
         mDirty = true;
@@ -176,15 +210,25 @@ public class Conversation extends ConversationHistory {
         updatedElementSubject.onNext(new Tuple<>(txt, ElementStatus.ADD));
     }
 
+    public CallContact findContact(Uri uri) {
+        for (CallContact contact : mContacts)  {
+            if (contact.getPrimaryUri().equals(uri)) {
+                return contact;
+            }
+        }
+        return null;
+    }
+
     public void addRequestEvent(TrustRequest request) {
-        ContactEvent event = new ContactEvent(mContact, request);
+        CallContact contact = findContact(new Uri(request.getContactId()));
+        ContactEvent event = new ContactEvent(contact, request);
         mDirty = true;
         mAggregateHistory.add(event);
         updatedElementSubject.onNext(new Tuple<>(event, ElementStatus.ADD));
     }
 
-    public void addContactEvent() {
-        ContactEvent event = new ContactEvent(mContact);
+    public void addContactEvent(CallContact contact) {
+        ContactEvent event = new ContactEvent(contact);
         mDirty = true;
         mAggregateHistory.add(event);
         updatedElementSubject.onNext(new Tuple<>(event, ElementStatus.ADD));
@@ -206,7 +250,7 @@ public class Conversation extends ConversationHistory {
     }
 
     public void updateTextMessage(TextMessage text) {
-        text.setContact(getContact());
+        setInteractionProperties(text);
         long time = text.getTimestamp();
         NavigableMap<Long, Interaction> msgs = mHistory.subMap(time, true, time, true);
         for (Interaction txt : msgs.values()) {
@@ -327,8 +371,8 @@ public class Conversation extends ConversationHistory {
         mAggregateHistory.clear();
         mHistory.clear();
         mDirty = false;
-        if(!delete)
-            mAggregateHistory.add(new ContactEvent(mContact));
+        if (!delete && mContacts.size() == 1)
+            mAggregateHistory.add(new ContactEvent(mContacts.get(0)));
         clearedSubject.onNext(mAggregateHistory);
     }
 
@@ -351,8 +395,7 @@ public class Conversation extends ConversationHistory {
         Interaction last = null;
         for (Interaction i : loadedConversation) {
             Interaction interaction = getTypedInteraction(i);
-            interaction.setAccount(mAccountId);
-            interaction.setContact(mContact);
+            setInteractionProperties(interaction);
             mAggregateHistory.add(interaction);
             mHistory.put(interaction.getTimestamp(), interaction);
             if (!i.isIncoming() && i.getStatus() == Interaction.InteractionStatus.DISPLAYED)
@@ -366,8 +409,7 @@ public class Conversation extends ConversationHistory {
     }
 
     public void addElement(Interaction interaction) {
-        interaction.setAccount(mAccountId);
-        interaction.setContact(mContact);
+        setInteractionProperties(interaction);
         if (interaction.getType() == InteractionType.TEXT) {
             TextMessage msg = new TextMessage(interaction);
             addTextMessage(msg);
@@ -418,9 +460,9 @@ public class Conversation extends ConversationHistory {
 
     public interface ConversationActionCallback {
 
-        void removeConversation(CallContact callContact);
+        void removeConversation(Uri callContact);
 
-        void clearConversation(CallContact callContact);
+        void clearConversation(Uri callContact);
 
         void copyContactNumberToClipboard(String contactNumber);
 

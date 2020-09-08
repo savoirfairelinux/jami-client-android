@@ -93,6 +93,15 @@ public class Account {
         return !StringUtils.isEmpty(getDetail(ConfigKey.MANAGER_URI));
     }
 
+    public boolean isContact(Conversation conversation) {
+        return conversation.getContact().size() == 1 && getContact(conversation.getContact().get(0).getPrimaryUri().getRawRingId()) != null;
+    }
+
+    public void conversationStarted(Conversation conversation) {
+        conversations.put(conversation.getUri().getUri(), conversation);
+        conversationChanged();
+    }
+
     public static class ContactLocation {
         public double latitude;
         public double longitude;
@@ -152,7 +161,7 @@ public class Account {
                 .map(conversations -> {
                     ArrayList<SmartListViewModel> viewModel = new ArrayList<>(conversations.size());
                     for (Conversation c : conversations)
-                        viewModel.add(new SmartListViewModel(accountID, c.getContact(), c.getLastEvent()));
+                        viewModel.add(new SmartListViewModel(accountID, c.getUri(), c.getContact(), c.getLastEvent()));
                     return viewModel;
                 });
     }
@@ -161,9 +170,9 @@ public class Account {
         return conversationSubject;
     }
 
-    public Observable<SmartListViewModel> getConversationViewModel() {
+    /*public Observable<SmartListViewModel> getConversationViewModel() {
         return conversationSubject.map(c -> new SmartListViewModel(accountID, c.getContact(), c.getLastEvent()));
-    }
+    }*/
 
     public Observable<List<Conversation>> getPendingSubject() {
         return pendingSubject;
@@ -282,7 +291,7 @@ public class Account {
     }
 
     public void updated(Conversation conversation) {
-        String key = conversation.getContact().getPrimaryUri().getUri();
+        String key = conversation.getUri().getUri();//.getContact().getPrimaryUri().getUri();
         if (conversation == conversations.get(key))
             conversationUpdated(conversation);
         else if (conversation == pending.get(key))
@@ -313,7 +322,7 @@ public class Account {
         }
         if (conversation == null) {
             conversation = getByKey(txt.getConversation().getParticipant());
-            txt.setContact(conversation.getContact());
+            txt.setContact(conversation.getContact().get(0));
         }
         conversation.addTextMessage(txt);
         updated(conversation);
@@ -849,7 +858,7 @@ public class Account {
                     conversations.put(key, pendingConversation);
                     pendingChanged();
                 }
-                pendingConversation.addContactEvent();
+                pendingConversation.addContactEvent(contact);
             }
             conversationChanged();
         }

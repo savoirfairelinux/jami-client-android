@@ -44,7 +44,7 @@ public interface NotificationService {
 
     void cancelTextNotification(Uri contact);
 
-    void cancelTextNotification(String ringId);
+    void cancelTextNotification(String accountId, Uri conversationUri);
 
     void cancelAll();
 
@@ -64,7 +64,7 @@ public interface NotificationService {
 
     void handleCallNotification(Conference conference, boolean remove);
 
-    void handleDataTransferNotification(DataTransfer transfer, CallContact contact, boolean remove);
+    void handleDataTransferNotification(DataTransfer transfer, Conversation contact, boolean remove);
 
     void removeTransferNotification(long transferId);
 

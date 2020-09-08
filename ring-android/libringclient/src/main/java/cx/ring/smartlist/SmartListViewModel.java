@@ -25,6 +25,7 @@ import java.util.List;
 
 import cx.ring.model.CallContact;
 import cx.ring.model.Interaction;
+import cx.ring.model.Uri;
 import cx.ring.services.AccountService;
 import io.reactivex.Observable;
 import io.reactivex.Single;
@@ -37,7 +38,8 @@ public class SmartListViewModel
     public static final Observable<List<SmartListViewModel>> EMPTY_RESULTS = Observable.just(Collections.emptyList());
 
     private final String accountId;
-    private final CallContact contact;
+    private final Uri uri;
+    private final List<CallContact> contact;
     private final String uuid;
     private final String contactName;
     private final boolean hasUnreadTextMessage;
@@ -54,9 +56,22 @@ public class SmartListViewModel
 
     public String picture_b64 = null;
 
+    public SmartListViewModel(String accountId, CallContact contact, Interaction lastEvent) {
+        this.accountId = accountId;
+        this.contact = Collections.singletonList(contact);
+        this.uri = contact.getPrimaryUri();
+        uuid = uri.getRawUriString();
+        this.contactName = contact.getDisplayName();
+        hasUnreadTextMessage = (lastEvent != null) && !lastEvent.isRead();
+        this.hasOngoingCall = false;
+        this.lastEvent = lastEvent;
+        isOnline = contact.isOnline();
+        title = Title.None;
+    }
     public SmartListViewModel(String accountId, CallContact contact, String id, Interaction lastEvent) {
         this.accountId = accountId;
-        this.contact = contact;
+        this.contact = Collections.singletonList(contact);
+        uri = contact.getPrimaryUri();
         this.uuid = id;
         this.contactName = contact.getDisplayName();
         hasUnreadTextMessage = (lastEvent != null) && !lastEvent.isRead();
@@ -65,19 +80,20 @@ public class SmartListViewModel
         isOnline = contact.isOnline();
         title = Title.None;
     }
-    public SmartListViewModel(String accountId, CallContact contact, Interaction lastEvent) {
+    public SmartListViewModel(String accountId, Uri conversationUri, List<CallContact> contact, Interaction lastEvent) {
         this.accountId = accountId;
         this.contact = contact;
-        this.uuid = contact.getIds().get(0);
-        this.contactName = contact.getDisplayName();
+        uri = conversationUri;
+        this.uuid = conversationUri.getRawUriString();//contact.getIds().get(0);
+        this.contactName = contact.get(0).getDisplayName();
         hasUnreadTextMessage = (lastEvent != null) && !lastEvent.isRead();
         this.hasOngoingCall = false;
         this.lastEvent = lastEvent;
-        isOnline = contact.isOnline();
+        //isOnline = contact.isOnline();
         title = Title.None;
     }
 
-    public SmartListViewModel(String accountId, AccountService.User user) {
+    /*public SmartListViewModel(String accountId, AccountService.User user) {
         contactName = user.firstName + " " + user.lastName;
         this.accountId = accountId;
         this.contact = null;
@@ -86,20 +102,25 @@ public class SmartListViewModel
         lastEvent = null;
         picture_b64 = user.picture_b64;
         title = Title.None;
-    }
+    }*/
 
     private SmartListViewModel(Title title) {
         contactName = null;
         this.accountId = null;
         this.contact = null;
         this.uuid = null;
+        uri = null;
         hasUnreadTextMessage = false;
         lastEvent = null;
         picture_b64 = null;
         this.title = title;
     }
 
-    public CallContact getContact() {
+    public Uri getUri() {
+        return uri;
+    }
+
+    public List<CallContact> getContact() {
         return contact;
     }
 

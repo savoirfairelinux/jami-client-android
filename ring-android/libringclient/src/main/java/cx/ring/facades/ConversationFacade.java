@@ -22,9 +22,11 @@ package cx.ring.facades;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.NavigableMap;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -204,9 +206,9 @@ public class ConversationFacade {
             String lastMessage = readMessages(conversation);
             if (lastMessage != null) {
                 account.refreshed(conversation);
-                mAccountService.setMessageDisplayed(account.getAccountID(), conversation.getContact().getPrimaryNumber(), lastMessage);
+                mAccountService.setMessageDisplayed(account.getAccountID(), conversation.getUri().getUriString(), lastMessage);
                 if (cancelNotification) {
-                    mNotificationService.cancelTextNotification(conversation.getContact().getPrimaryUri());
+                    mNotificationService.cancelTextNotification(account.getAccountID(), conversation.getUri());
                 }
             }
         }
@@ -363,8 +365,8 @@ public class ConversationFacade {
                 .filter(c -> c == conversation)
                 .startWith(conversation)
                 .switchMap(c -> mContactService
-                        .observeContact(conversation.getAccountId(), conversation.getContact())
-                        .map(contact -> new SmartListViewModel(conversation.getAccountId(), contact, conversation.getLastEvent())));
+                        .observeContact(c.getAccountId(), c.getContact())
+                        .map(contact -> new SmartListViewModel(c.getAccountId(), c.getUri(), contact, c.getLastEvent())));
     }
     public Observable<List<Observable<SmartListViewModel>>> getSmartList(Observable<Account> currentAccount) {
         return currentAccount.switchMap(account -> account.getConversationsSubject()
@@ -372,15 +374,19 @@ public class ConversationFacade {
                         .map(conv -> observeConversation(account, conv))
                         .toList()));
     }
+
+    public Observable<List<Observable<SmartListViewModel>>> getSmartList() {
+        return getSmartList(mAccountService.getCurrentAccountSubject());
+    }
     private Single<List<Observable<SmartListViewModel>>> getSearchResults(Account account, String query) {
         Uri uri = new Uri(query);
         if (account.isSip()) {
             CallContact contact = account.getContactFromCache(uri);
             return mContactService.loadContactData(contact, account.getAccountID())
-                    .andThen(Single.just(Collections.singletonList(Observable.just(new SmartListViewModel(account.getAccountID(), contact, null)))));
+                    .andThen(Single.just(Collections.singletonList(Observable.just(new SmartListViewModel(account.getAccountID(), contact, contact.getPrimaryNumber(), null)))));
         } else if (uri.isRingId()) {
             return mContactService.getLoadedContact(account.getAccountID(), account.getContactFromCache(uri))
-                    .map(contact -> Collections.singletonList(Observable.just(new SmartListViewModel(account.getAccountID(), contact, null))));
+                    .map(contact -> Collections.singletonList(Observable.just(new SmartListViewModel(account.getAccountID(), contact, contact.getPrimaryNumber(), null))));
         } else if (account.canSearch() && !query.contains("@")) {
             return mAccountService.searchUser(account.getAccountID(), query)
                     .map(AccountService.UserSearchResult::getResultsViewModels);
@@ -415,7 +421,7 @@ public class ConversationFacade {
                             newList.add(SmartListViewModel.TITLE_CONVERSATIONS);
                             int nRes = 0;
                             for (Conversation conversation : conversations) {
-                                if (conversation.getContact().matches(lq)) {
+                                if (conversation.matches(lq)) {
                                     newList.add(observeConversation(account, conversation));
                                     nRes++;
                                 }
@@ -536,7 +542,7 @@ public class ConversationFacade {
                 mAccountService.acceptFileTransfer(transfer);
             }
         }
-        mNotificationService.handleDataTransferNotification(transfer, conversation.getContact(), conversation.isVisible());
+        mNotificationService.handleDataTransferNotification(transfer, conversation, conversation.isVisible());
     }
 
     private void onConfStateChange(Conference conference) {
@@ -630,5 +636,12 @@ public class ConversationFacade {
                     account.clearHistory(contact, true);
                     mAccountService.removeContact(accountId, contact.getRawRingId(), false);
                 });
+    }
+
+    public Single<Conversation> createConversation(String accountId, Collection<CallContact> currentSelection) {
+        List<String> contactIds = new ArrayList<>(currentSelection.size());
+        for (CallContact contact : currentSelection)
+            contactIds.add(contact.getPrimaryNumber());
+        return mAccountService.startConversation(accountId, contactIds);
     }
 }

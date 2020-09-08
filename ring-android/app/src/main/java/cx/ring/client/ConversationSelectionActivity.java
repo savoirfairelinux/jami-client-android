@@ -81,7 +81,7 @@ public class ConversationSelectionActivity extends AppCompatActivity {
             @Override
             public void onItemClick(SmartListViewModel smartListViewModel) {
                 Intent intent = new Intent();
-                intent.setData(ConversationPath.toUri(smartListViewModel.getAccountId(), smartListViewModel.getContact().getPrimaryNumber()));
+                intent.setData(ConversationPath.toUri(smartListViewModel.getAccountId(), smartListViewModel.getUri()));
                 setResult(Activity.RESULT_OK, intent);
                 finish();
             }

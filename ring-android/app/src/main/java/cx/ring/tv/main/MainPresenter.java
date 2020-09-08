@@ -79,7 +79,7 @@ public class MainPresenter extends RootPresenter<MainView> {
                         .map(conversations -> {
                             ArrayList<TVListViewModel> viewModel = new ArrayList<>(conversations.size());
                             for (Conversation c : conversations)
-                                viewModel.add(new TVListViewModel(a.getAccountID(), c.getContact()));
+                                viewModel.add(new TVListViewModel(a.getAccountID(), c.getContact().get(0)));
                             return viewModel;
                         }))
                 .observeOn(mUiScheduler);
@@ -138,7 +138,7 @@ public class MainPresenter extends RootPresenter<MainView> {
         mCompositeDisposable.add(accountSubject
                 .switchMap(a -> a
                         .getConversationSubject()
-                        .map(c -> new TVListViewModel(a.getAccountID(), c.getContact())))
+                        .map(c -> new TVListViewModel(a.getAccountID(), c.getContact().get(0))))
                 .observeOn(mUiScheduler)
                 .subscribe(vm -> {
                     Log.d(TAG, "getConversationSubject " + vm);
@@ -162,8 +162,8 @@ public class MainPresenter extends RootPresenter<MainView> {
                             Log.d(TAG, "getPendingSubject " + pending.size());
                             ArrayList<TVListViewModel> viewmodel = new ArrayList<>(pending.size());
                             for (Conversation c : pending) {
-                                mContactService.loadContactData(c.getContact(), c.getAccountId()).subscribe(() -> {}, e -> Log.e(TAG, "Can't load contact data"));
-                                viewmodel.add(new TVListViewModel(a.getAccountID(), c.getContact()));
+                                mContactService.loadContactData(c.getContact().get(0), c.getAccountId()).subscribe(() -> {}, e -> Log.e(TAG, "Can't load contact data"));
+                                viewmodel.add(new TVListViewModel(a.getAccountID(), c.getContact().get(0)));
                             }
                             return viewmodel;
                         }))

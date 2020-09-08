@@ -41,6 +41,7 @@ import cx.ring.application.JamiApplication;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.databinding.FragPendingContactRequestsBinding;
+import cx.ring.model.Uri;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.ConversationPath;
@@ -144,7 +145,7 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
     }
 
     @Override
-    public void goToConversation(String accountId, String contactId) {
+    public void goToConversation(String accountId, Uri contactId) {
         Context context = requireContext();
         if (DeviceUtils.isTablet(context)) {
             Activity activity = getActivity();
@@ -158,7 +159,7 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
 
     @Override
     public void onItemClick(SmartListViewModel viewModel) {
-        presenter.contactRequestClicked(viewModel.getAccountId(), viewModel.getContact());
+        presenter.contactRequestClicked(viewModel.getAccountId(), viewModel.getUri());
     }
 
     @Override

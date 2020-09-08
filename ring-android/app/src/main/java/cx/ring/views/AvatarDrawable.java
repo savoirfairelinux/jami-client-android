@@ -47,6 +47,8 @@ import android.graphics.drawable.VectorDrawable;
 import android.text.TextUtils;
 import android.util.TypedValue;
 
+import java.util.List;
+
 public class AvatarDrawable extends Drawable {
     private static final int SIZE_AB = 36;
     private static final float DEFAULT_TEXT_SIZE_PERCENTAGE = 0.5f;
@@ -140,6 +142,11 @@ public class AvatarDrawable extends Drawable {
             withOnlineState(contact.isOnline());
             withNameData(contact.getProfileName(), contact.getUsername());
             return this;
+        }
+
+        public Builder withContacts(List<CallContact> contacts) {
+            //TODO handle groups
+            return withContact(contacts.get(0));
         }
 
         public AvatarDrawable build(Context context) {
