@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "abd3191d_838488d1",
+        "filename": "ring-android/app/src/main/java/cx/ring/settings/pluginssettings/PluginSettingsFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 859
+      },
+      "writtenOn": "2020-09-09T21:13:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f390991_4f98dad2",
+      "range": {
+        "startLine": 141,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 3
+      },
+      "revId": "5d40e0ae23d2e947ca0ddcb376dec57f86572232",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e64024b6_9305b978",
         "filename": "ring-android/app/src/main/java/cx/ring/utils/AndroidFileUtils.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2020-09-09T17:52:01Z",
       "side": 1,
       "message": "use getMimeType ?",
+      "range": {
+        "startLine": 567,
+        "startChar": 0,
+        "endLine": 578,
+        "endChar": 5
+      },
+      "revId": "5d40e0ae23d2e947ca0ddcb376dec57f86572232",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c6c84ef_80adf982",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/AndroidFileUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 859
+      },
+      "writtenOn": "2020-09-09T21:13:36Z",
+      "side": 1,
+      "message": "MimeType is taken from preferences.\n\u003e PluginPathPreferenceFragmente, line 92: SUPPORTED_MIME_TYPES \u003d preferenceAttributes.get(\"mimeType\");",
+      "parentUuid": "e64024b6_9305b978",
       "range": {
         "startLine": 567,
         "startChar": 0,
