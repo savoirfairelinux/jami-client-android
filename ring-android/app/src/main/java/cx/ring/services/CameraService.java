@@ -58,7 +58,6 @@ import androidx.annotation.RequiresApi;
 import androidx.core.util.Pair;
 
 import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -96,9 +95,6 @@ public class CameraService {
     private MediaProjection currentMediaProjection;
     private VirtualDisplay virtualDisplay;
     private MediaCodec currentCodec;
-    // SPS and PPS NALs (Config Data).
-    private ByteBuffer codecData = null;
-
     private final CameraManager.AvailabilityCallback availabilityCallback = new CameraManager.AvailabilityCallback() {
         @Override
         public void onCameraAvailable(@NonNull String cameraId) {
@@ -459,7 +455,7 @@ public class CameraService {
         }
     }
 
-    public Pair<MediaCodec, Surface> openEncoder(VideoParams videoParams, String mimeType, Handler handler, int resolution, int bitrate) {
+    public static Pair<MediaCodec, Surface> openEncoder(VideoParams videoParams, String mimeType, Handler handler, int resolution, int bitrate) {
         Log.d(TAG, "Video with codec " + mimeType + " resolution: " + videoParams.width + "x" + videoParams.height + " Bitrate: " + bitrate);
         int bitrateValue;
         if(bitrate == 0)
@@ -510,36 +506,9 @@ public class CameraService {
                     public void onOutputBufferAvailable(@NonNull MediaCodec codec, int index, @NonNull MediaCodec.BufferInfo info) {
                         try {
                             if ((info.flags & MediaCodec.BUFFER_FLAG_END_OF_STREAM) == 0) {
-                                // Get and cache the codec data (SPS/PPS NALs)
-                                boolean isConfigFrame = (info.flags & MediaCodec.BUFFER_FLAG_CODEC_CONFIG) != 0;
-                                if (isConfigFrame) {
-                                    ByteBuffer outputBuffer = codec.getOutputBuffer(index);
-                                    outputBuffer.position(info.offset);
-                                    outputBuffer.limit(info.offset + info.size);
-                                    codecData = ByteBuffer.allocateDirect(info.size);
-                                    codecData.put(outputBuffer);
-                                    codecData.rewind();
-                                    StringBuilder cd = new StringBuilder();
-                                    for (int i = 0; i < info.size; i++) {
-                                       cd.append(Integer.toHexString(codecData.get(i) & 0xff));
-                                    }
-                                    Log.i(TAG, "Cache new codec data (SPS/PPS, ...): " + cd.toString());
-                                    // Release the buffer.
-                                    codec.releaseOutputBuffer(index, false);
-                                }
-                                else {
-                                    boolean isKeyFrame = (info.flags & MediaCodec.BUFFER_FLAG_KEY_FRAME) != 0;
-                                    // If it's a key-frame, send the cached SPS/PPS NALs prior to
-                                    // sending key-frame.
-                                    if (isKeyFrame && codecData != null) {
-                                        RingserviceJNI.captureVideoPacket(codecData, codecData.capacity(), 0, false, info.presentationTimeUs, videoParams.rotation);
-                                    }
-
-                                    // Send the encoded frame
-                                    ByteBuffer buffer = codec.getOutputBuffer(index);
-                                    RingserviceJNI.captureVideoPacket(buffer, info.size, info.offset, isKeyFrame, info.presentationTimeUs, videoParams.rotation);
-                                    codec.releaseOutputBuffer(index, false);
-                                }
+                                ByteBuffer buffer = codec.getOutputBuffer(index);
+                                RingserviceJNI.captureVideoPacket(buffer, info.size, info.offset, (info.flags & MediaCodec.BUFFER_FLAG_KEY_FRAME) != 0, info.presentationTimeUs, videoParams.rotation);
+                                codec.releaseOutputBuffer(index, false);
                             }
                         } catch (IllegalStateException e) {
                             Log.e(TAG, "MediaCodec can't process buffer", e);
@@ -677,7 +646,7 @@ public class CameraService {
         Pair<MediaCodec, Surface> r = null;
         while (screenWidth >= 320) {
             CameraService.VideoParams params = new CameraService.VideoParams(null, 0, screenWidth, screenHeight, 24);
-            r = openEncoder(params, MediaFormat.MIMETYPE_VIDEO_AVC, handler, 720, 0);
+            r = CameraService.openEncoder(params, MediaFormat.MIMETYPE_VIDEO_AVC, handler, 720, 0);
             if (r.first == null) {
                 screenWidth /= 2;
                 screenHeight /= 2;
