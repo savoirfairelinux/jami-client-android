@@ -502,6 +502,9 @@ public class AccountService {
     public Account getCurrentAccount() {
         return mCurrentAccount;
     }
+    public int getCurrentAccountIndex() {
+        return mAccountList.indexOf(mCurrentAccount);
+    }
 
     /**
      * Sets the current Account in the local cache (also sends a ACCOUNTS_CHANGED event)
@@ -653,16 +656,9 @@ public class AccountService {
     /**
      * @return Account Ids list from Daemon
      */
-    public List<String> getAccountList() {
-        try {
-            return mExecutor.submit(() -> {
-                Log.i(TAG, "getAccountList() running...");
-                return new ArrayList<>(Ringservice.getAccountList());
-            }).get();
-        } catch (Exception e) {
-            Log.e(TAG, "Error running getAccountList()", e);
-        }
-        return new ArrayList<>();
+    public Single<List<String>> getAccountList() {
+        return Single.fromCallable(() -> (List<String>)new ArrayList<>(Ringservice.getAccountList()))
+                .subscribeOn(Schedulers.from(mExecutor));
     }
 
     /**

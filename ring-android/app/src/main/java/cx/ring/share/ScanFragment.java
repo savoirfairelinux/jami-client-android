@@ -50,6 +50,7 @@ import java.util.List;
 
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
+import cx.ring.client.HomeActivity;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.mvp.BaseSupportFragment;
 
@@ -83,24 +84,12 @@ public class ScanFragment extends BaseSupportFragment {
     }
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        mIsVisible = isVisibleToUser;
-        if (mIsVisible && mIsStarted) {
-            checkPermission();
-        }
-    }
-
-
-    @Override
     public void onResume() {
         super.onResume();
-        if (hasCameraPermission() && barcodeView != null) {
+        if (checkPermission() && barcodeView != null) {
             barcodeView.resume();
         }
-
     }
-
 
     @Override
     public void onPause() {
@@ -175,7 +164,7 @@ public class ScanFragment extends BaseSupportFragment {
         }
     }
 
-    private BarcodeCallback callback = new BarcodeCallback() {
+    private final BarcodeCallback callback = new BarcodeCallback() {
         @Override
         public void barcodeResult(@NonNull BarcodeResult result) {
             if (result.getText() != null) {
@@ -192,20 +181,19 @@ public class ScanFragment extends BaseSupportFragment {
     };
 
     private void goToConversation(String contactId) {
-        Intent intent = new Intent().
-                putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
-        getActivity().setResult(Activity.RESULT_OK, intent);
-        getActivity().finish();
+        ((HomeActivity) requireActivity()).startConversation(contactId);
     }
 
-    private void checkPermission() {
+    private boolean checkPermission() {
         if (!hasCameraPermission()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{Manifest.permission.CAMERA}, JamiApplication.PERMISSIONS_REQUEST);
             } else {
                 displayNoPermissionsError();
             }
+            return false;
         }
+        return true;
     }
 
 }
