@@ -361,7 +361,21 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         mDisposable.clear();
     }
 
-    public void startConversationTablet(Bundle bundle) {
+    public void startConversation(String conversationId) {
+        mDisposable.add(mAccountService.getCurrentAccountSubject()
+                .firstElement()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(account -> startConversation(account.getAccountID(), new cx.ring.model.Uri(conversationId))));
+    }
+    public void startConversation(String accountId, cx.ring.model.Uri conversationId) {
+        if (!DeviceUtils.isTablet(this)) {
+            startActivity(new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, conversationId.toString()), this, ConversationActivity.class));
+        } else {
+            startConversationTablet(ConversationPath.toBundle(accountId, conversationId.toString()));
+        }
+    }
+
+    private void startConversationTablet(Bundle bundle) {
         fConversation = new ConversationFragment();
         fConversation.setArguments(bundle);
 
@@ -553,11 +567,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 intent.setAction(AccountConfig.ACCOUNT_TYPE_SIP);
             }
             startActivity(intent);
-
-            Account account = mAccountService.getCurrentAccount();
-            if (account != null) {
-                binding.spinnerToolbar.setSelection(mAccountService.getAccountList().indexOf(account.getAccountID()));
-            }
+            binding.spinnerToolbar.setSelection(mAccountService.getCurrentAccountIndex());
         }
     }
 

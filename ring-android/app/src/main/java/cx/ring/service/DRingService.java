@@ -197,7 +197,7 @@ public class DRingService extends Service {
 
         @Override
         public List<String> getAccountList() {
-            return mAccountService.getAccountList();
+            return mAccountService.getAccountList().blockingGet();
         }
 
         @Override
