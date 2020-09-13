@@ -182,15 +182,15 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
 
         updateUserView(mAccountService.getCurrentAccount());
         binding.scrollview.getViewTreeObserver().addOnScrollChangedListener(this);
-        binding.btnAddDevice.setOnClickListener(v -> flipForm());
+        binding.linkDevice.setOnClickListener(v -> flipForm());
         binding.btnStartExport.setOnClickListener(v -> onClickStart());
         binding.btnEndExport.setOnClickListener(v -> hidePopWizard());
         binding.exportAccountBtn.setOnClickListener(v -> onClickExport());
         binding.profileContainer.setOnClickListener(v -> profileContainerClicked());
-        binding.userProfileEdit.setOnClickListener(v -> profileContainerClicked());
+        binding.username.setRightDrawableOnClickListener(v -> profileContainerClicked());
         binding.accountSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> presenter.enableAccount(isChecked));
         binding.changePasswordBtn.setOnClickListener(v -> onPasswordChangeAsked());
-        binding.registerNameBtn.setOnClickListener(v -> showUsernameRegistrationPopup());
+        binding.registeredName.setRightDrawableOnClickListener(v -> showUsernameRegistrationPopup());
         binding.ringPassword.setOnEditorActionListener(this::onPasswordEditorAction);
     }
 
@@ -211,7 +211,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(d -> {
                     binding.username.setText(getAccountAlias(d.first));
-                    binding.subtitle.setText(getUri(d.first,  getString(R.string.account_type_ip2ip)));
+//                    binding.subtitle.setText(getUri(d.first,  getString(R.string.account_type_ip2ip)));
                     binding.userPhoto.setImageDrawable(d.second);
                 }, e -> Log.e(TAG, "Error loading avatar", e)));
     }
@@ -285,7 +285,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
 
         binding.accountSwitch.setChecked(account.isEnabled());
         binding.accountAliasTxt.setText(getString(R.string.profile));
-        binding.accountIdTxt.setText(account.getUsername());
+        binding.identity.setText(account.getUsername());
         mAccountId = account.getAccountID();
         mBestName = account.getRegisteredName();
         if (mBestName.isEmpty()) {
@@ -299,13 +299,12 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         boolean currentRegisteredName = account.registeringUsername;
         boolean hasRegisteredName = !currentRegisteredName && username != null && !username.isEmpty();
         binding.groupRegisteringName.setVisibility(currentRegisteredName ? View.VISIBLE : View.GONE);
-        binding.groupRegisterName.setVisibility((!hasRegisteredName && !currentRegisteredName) ? View.VISIBLE : View.GONE);
-        binding.groupRegisteredName.setVisibility(hasRegisteredName ? View.VISIBLE : View.GONE);
-        binding.btnQr.setOnClickListener(v -> QRCodeFragment.newInstance(QRCodeFragment.INDEX_CODE).show(getParentFragmentManager(), QRCodeFragment.TAG));
-        binding.btnShare.setOnClickListener(v -> shareAccount(hasRegisteredName? username : account.getUsername()));
-        if (hasRegisteredName) {
-            binding.registeredNameTxt.setText(username);
-        }
+//        binding.groupRegisterName.setVisibility((!hasRegisteredName && !currentRegisteredName) ? View.VISIBLE : View.GONE);
+//        binding.groupRegisteredName.setVisibility(hasRegisteredName ? View.VISIBLE : View.GONE);
+        binding.registeredName.setRightDrawable(hasRegisteredName? R.drawable.baseline_share_twoton_24dp : R.drawable.baseline_edit_twoton_24dp);
+        binding.registeredName.setText(hasRegisteredName? username : getResources().getString(R.string.no_registered_name));
+        binding.identity.setRightDrawableOnClickListener(v -> QRCodeFragment.newInstance(QRCodeFragment.INDEX_CODE).show(getParentFragmentManager(), QRCodeFragment.TAG));
+//        binding.registeredName.setRightDrawableOnClickListener(v -> shareAccount(hasRegisteredName? username : account.getUsername()));
 
         int color = R.color.red_400;
         String status;
@@ -338,7 +337,6 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         binding.passwordLayout.setVisibility(mAccountHasPassword ? View.VISIBLE : View.GONE);
         binding.layoutAddDevice.setVisibility(mAccountHasManager ? View.GONE : View.VISIBLE);
         binding.layoutAccountOptions.setVisibility(mAccountHasManager ? View.GONE : View.VISIBLE);
-        binding.scrollview.setPadding(0, 0, 0, mAccountHasManager? 0 : getResources().getDimensionPixelSize(R.dimen.summary_scrollview_padding_bottom));
     }
 
     public boolean onBackPressed() {
@@ -797,4 +795,5 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
             startActivity(Intent.createChooser(sharingIntent, getText(R.string.share_via)));
         }
     }
+
 }

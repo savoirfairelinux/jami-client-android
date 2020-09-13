@@ -19,78 +19,89 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="72dp"
+    android:layout_height="wrap_content"
     android:paddingHorizontal="8dp"
-    android:paddingVertical="16dp">
+    android:paddingVertical="8dp">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        app:srcCompat="@drawable/baseline_desktop_windows_24" />
-
-    <TextView
-        android:id="@+id/txt_device_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="56dp"
-        android:layout_toStartOf="@+id/txt_device_thisflag"
-        android:ellipsize="end"
-        android:lines="1"
-        android:textAppearance="@style/ListPrimary"
-        tools:text="My device" />
-
-    <TextView
+    <cx.ring.views.JamiEditText
         android:id="@+id/txt_device_id"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txt_device_label"
-        android:layout_alignStart="@+id/txt_device_label"
-        android:layout_toStartOf="@+id/rename_button"
-        android:ellipsize="middle"
+        app:drawable_right="@drawable/baseline_cancel_24"
+        app:drawable_left="@drawable/baseline_edit_24"
+        android:tint="@color/colorPrimary"
         android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-        android:textColor="?android:attr/textColorTertiary"
-        tools:text="b982672502b9f1236a68353d74734cb82f9d1fab" />
+        android:enabled="false"
+        />
 
-    <TextView
-        android:id="@+id/txt_device_thisflag"
-        style="@style/TextAppearance.AppCompat.Small"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/txt_device_label"
-        android:layout_marginStart="8dp"
-        android:layout_toStartOf="@+id/rename_button"
-        android:text="@string/account_device_this_indicator"
-        android:textStyle="italic" />
+<!--    <ImageView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_centerVertical="true"-->
+<!--        app:srcCompat="@drawable/baseline_desktop_windows_24" />-->
 
-    <ImageButton
-        android:id="@+id/rename_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignWithParentIfMissing="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="8dp"
-        android:layout_toStartOf="@+id/revoke_button"
-        android:background="?selectableItemBackgroundBorderless"
-        android:contentDescription="@string/account_device_revoke"
-        android:padding="8dp"
-        app:srcCompat="@drawable/baseline_edit_24" />
+<!--    <TextView-->
+<!--        android:id="@+id/txt_device_label"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_centerVertical="true"-->
+<!--        android:layout_marginStart="56dp"-->
+<!--        android:layout_toStartOf="@+id/txt_device_thisflag"-->
+<!--        android:ellipsize="end"-->
+<!--        android:lines="1"-->
+<!--        android:textAppearance="@style/ListPrimary"-->
+<!--        tools:text="My device" />-->
 
-    <ImageButton
-        android:id="@+id/revoke_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="8dp"
-        android:background="?selectableItemBackgroundBorderless"
-        android:contentDescription="@string/account_device_revoke"
-        android:padding="8dp"
-        app:srcCompat="@drawable/baseline_cancel_24" />
+<!--    <TextView-->
+<!--        android:id="@+id/txt_device_id"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/txt_device_label"-->
+<!--        android:layout_alignStart="@+id/txt_device_label"-->
+<!--        android:layout_toStartOf="@+id/rename_button"-->
+<!--        android:ellipsize="middle"-->
+<!--        android:singleLine="true"-->
+<!--        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"-->
+<!--        android:textColor="?android:attr/textColorTertiary"-->
+<!--        tools:text="b982672502b9f1236a68353d74734cb82f9d1fab" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/txt_device_thisflag"-->
+<!--        style="@style/TextAppearance.AppCompat.Small"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignBaseline="@+id/txt_device_label"-->
+<!--        android:layout_marginStart="8dp"-->
+<!--        android:layout_toStartOf="@+id/rename_button"-->
+<!--        android:text="@string/account_device_this_indicator"-->
+<!--        android:textStyle="italic" />-->
+
+<!--    <ImageButton-->
+<!--        android:id="@+id/rename_button"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignWithParentIfMissing="true"-->
+<!--        android:layout_centerVertical="true"-->
+<!--        android:layout_marginStart="8dp"-->
+<!--        android:layout_toStartOf="@+id/revoke_button"-->
+<!--        android:background="?selectableItemBackgroundBorderless"-->
+<!--        android:contentDescription="@string/account_device_revoke"-->
+<!--        android:padding="8dp"-->
+<!--        app:srcCompat="@drawable/baseline_edit_24" />-->
+
+<!--    <ImageButton-->
+<!--        android:id="@+id/revoke_button"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_centerVertical="true"-->
+<!--        android:layout_marginStart="8dp"-->
+<!--        android:background="?selectableItemBackgroundBorderless"-->
+<!--        android:contentDescription="@string/account_device_revoke"-->
+<!--        android:padding="8dp"-->
+<!--        app:srcCompat="@drawable/baseline_cancel_24" />-->
 
 </RelativeLayout>
