@@ -24,13 +24,11 @@ import java.util.Map;
 
 import cx.ring.model.Account;
 
-public interface JamiAccountSummaryView {
+public interface LinkDeviceView {
 
-    void showExportingProgressDialog();
+    void showExportingProgress();
 
-    void showRevokingProgressDialog();
-
-    void showPasswordProgressDialog();
+    void dismissExportingProgress();
 
     void accountChanged(final Account account);
 
@@ -41,23 +39,5 @@ public interface JamiAccountSummaryView {
     void showGenericError();
 
     void showPIN(String pin);
-
-    void updateDeviceList(Map<String, String> devices, String currentDeviceId);
-
-    void deviceRevocationEnded(String device, int status);
-
-    void passwordChangeEnded(boolean ok);
-
-    void displayCompleteArchive(File dest);
-
-    void gotToImageCapture();
-
-    void askCameraPermission();
-
-    void goToGallery();
-
-    void askGalleryPermission();
-
-    void updateUserView(Account account);
 
 }
