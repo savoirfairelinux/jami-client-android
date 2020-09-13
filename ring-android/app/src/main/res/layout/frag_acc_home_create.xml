@@ -45,7 +45,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/account_new_button"
-                android:textSize="@dimen/wizard_button_text_size"
                 android:drawableLeft="@drawable/baseline_account_circle_white_36"
                 android:drawableRight="@drawable/baseline_arrow_forward_white_18"/>
 
@@ -56,7 +55,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="12dp"
-                android:textSize="@dimen/wizard_button_text_size"
                 android:text="@string/account_link_device"
                 android:drawableLeft="@drawable/baseline_devices_white_36"
                 android:drawableRight="@drawable/baseline_arrow_forward_white_18"/>
@@ -69,7 +67,6 @@
                 android:layout_gravity="center"
                 app:cornerRadius="@dimen/wizard_button_corner_radius"
                 android:text="@string/account_link_archive_button"
-                android:textSize="@dimen/wizard_button_text_size"
                 android:padding="@dimen/wizard_button_padding"
                 android:drawableTint="@color/color_primary_dark"
                 android:drawableLeft="@drawable/baseline_backup_black_36"
@@ -82,7 +79,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 app:cornerRadius="@dimen/wizard_button_corner_radius"
-                android:textSize="@dimen/wizard_button_text_size"
                 android:padding="@dimen/wizard_button_padding"
                 android:text="@string/account_connect_server_button"
                 android:drawableTint="@color/color_primary_dark"
