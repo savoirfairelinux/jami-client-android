@@ -19,17 +19,21 @@
 package cx.ring.account;
 
 import android.content.Context;
+import android.graphics.Typeface;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Map;
 
 import cx.ring.R;
+import cx.ring.views.TwoButtonEditText;
 
 public class DeviceAdapter extends BaseAdapter {
     private final Context mContext;
@@ -77,30 +81,29 @@ public class DeviceAdapter extends BaseAdapter {
         }
         boolean isCurrentDevice = mDevices.get(i).getKey().contentEquals(mCurrentDeviceId);
 
-        TextView devId = view.findViewById(R.id.txt_device_id);
-        devId.setText(mDevices.get(i).getKey());
+        TwoButtonEditText devId = view.findViewById(R.id.txt_device_id);
+        devId.setText(mDevices.get(i).getValue());
+        String hint = mDevices.get(i).getKey();
+        hint = hint.substring(0, (int) (hint.length() * 0.66));
+        devId.setHint(hint);
 
-        TextView devName = view.findViewById(R.id.txt_device_label);
-        devName.setText(mDevices.get(i).getValue());
-        ImageButton revokeButton = view.findViewById(R.id.revoke_button);
-        ImageButton editButton = view.findViewById(R.id.rename_button);
-        revokeButton.setVisibility(isCurrentDevice ? View.GONE : View.VISIBLE);
-        editButton.setVisibility(isCurrentDevice ? View.VISIBLE : View.GONE);
-        TextView thisDeviceText = view.findViewById(R.id.txt_device_thisflag);
-        thisDeviceText.setVisibility(isCurrentDevice ? View.VISIBLE : View.GONE);
         if (isCurrentDevice) {
-            editButton.setOnClickListener(view1 -> {
+            TextView thisDevice = view.findViewById(R.id.txt_device_thisflag);
+            thisDevice.setVisibility(View.VISIBLE);
+            devId.setLeftDrawable(R.drawable.baseline_edit_24);
+            devId.setLeftDrawableOnClickListener(view1 -> {
                 if (mListener != null) {
                     mListener.onDeviceRename();
                 }
             });
+        } else {
+            devId.setLeftDrawable(R.drawable.baseline_cancel_24);
+            devId.setLeftDrawableOnClickListener(view12 -> {
+                if (mListener != null) {
+                    mListener.onDeviceRevocationAsked(mDevices.get(i).getKey());
+                }
+            });
         }
-
-        revokeButton.setOnClickListener(view12 -> {
-            if (mListener != null) {
-                mListener.onDeviceRevocationAsked(mDevices.get(i).getKey());
-            }
-        });
 
         return view;
     }
