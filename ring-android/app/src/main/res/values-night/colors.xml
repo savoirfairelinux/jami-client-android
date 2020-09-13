@@ -22,4 +22,10 @@
     <color name="conversation_primary_background">@color/blue_600</color>
     <color name="conversation_secondary_background">@color/grey_700</color>
 
+    <!--  Jami EditText  -->
+    <color name="edit_text_background">#2e2e2e</color>
+    <color name="text_color">@color/colorPrimary</color>
+    <color name="text_hint">@color/colorPrimary</color>
+    <color name="button_border">@color/colorPrimary</color>
+
 </resources>
