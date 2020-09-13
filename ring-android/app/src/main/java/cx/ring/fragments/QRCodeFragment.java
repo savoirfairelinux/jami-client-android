@@ -178,9 +178,4 @@ public class QRCodeFragment extends BottomSheetDialogFragment {
         return null;
     }
 
-    @Override
-    public int getTheme() {
-        return R.style.BottomSheetDialogTheme;
-    }
-
 }
