@@ -74,14 +74,5 @@
 
         </RelativeLayout>
 
-        <EditText
-            android:id="@+id/user_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/profile_name_hint"
-            android:inputType="textCapWords"
-            android:maxLines="1"
-            android:textAlignment="center" />
-
     </LinearLayout>
 </ScrollView>

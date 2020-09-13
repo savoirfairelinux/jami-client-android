@@ -22,6 +22,11 @@
 
         <item name="colorPrimaryDark">@color/background</item>
         <!--<item name="android:windowContentTransitions">true</item>-->
+
+        <item name="textInputStyle">@style/Widget.Jami.TextInputLayout</item>
+
+        <item name="materialAlertDialogTheme">@style/RoundedMaterialAlertDialog</item>
+        <item name="bottomSheetDialogTheme">@style/BottomSheetDialogTheme</item>
     </style>
 
     <!-- Main dark base theme -->
@@ -127,14 +132,6 @@
         <item name="android:textColor">@color/textColorSecondary</item>
     </style>
 
-    <!--
-    <style name="Wizard" parent="Theme.MaterialComponents.Light">
-        <item name="colorSecondary">@color/color_primary_light</item>
-        <item name="colorAccent">@color/color_primary_light</item>
-        <item name="colorPrimary">@color/color_primary_light</item>
-        <item name="colorPrimaryDark">@color/color_primary_dark</item>
-    </style>-->
-
     <style name="ButtonColoredInverse" parent="Widget.MaterialComponents.Button">
         <item name="colorButtonNormal">@color/color_primary_light</item>
         <item name="android:textColor">@color/text_color_primary_dark</item>
@@ -149,18 +146,27 @@
         <item name="cornerRadius">@dimen/button_corner_radius</item>
         <item name="android:paddingTop">@dimen/button_padding</item>
         <item name="android:paddingBottom">@dimen/button_padding</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppTheme.MainActionButton</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="ButtonOutLined" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="cornerRadius">@dimen/button_corner_radius</item>
         <item name="android:paddingTop">@dimen/button_padding</item>
         <item name="android:paddingBottom">@dimen/button_padding</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppTheme.MainActionButton</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="TextButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="cornerRadius">@dimen/button_corner_radius</item>
         <item name="android:paddingTop">@dimen/button_padding</item>
         <item name="android:paddingBottom">@dimen/button_padding</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppTheme.MainActionButton</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="WizardButton" parent="ButtonColored">
@@ -311,11 +317,6 @@
         <item name="colorControlActivated">@color/conversation_primary_selection_handles</item>
     </style>
 
-    <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog">
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@color/background</item>
-    </style>
-
     <style name="BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/background_bottom_sheet</item>
     </style>
@@ -323,6 +324,34 @@
     <style name="BaseBottomSheetDialog" parent="@style/Theme.Design.Light.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
         <item name="bottomSheetStyle">@style/BottomSheet</item>
+    </style>
+
+    <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/background</item>
+    </style>
+
+    <style name="Widget.Jami.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+    </style>
+
+    <style name="RoundedMaterialAlertDialog" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.Dialog.Rounded</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textSize">16sp</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/TitleTextStyle</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.Dialog.Rounded" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/dialog_radius</item>
+    </style>
+
+    <style name="TitleTextStyle" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
 </resources>
