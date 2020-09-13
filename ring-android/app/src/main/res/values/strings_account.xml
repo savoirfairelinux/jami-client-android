@@ -64,7 +64,7 @@ along with this program; if not, write to the Free Software
     <!-- AccountManagementFragment -->
     <string name="empty_account_list">No account registered</string>
     <string name="normal_accounts_titles">Accounts</string>
-    <string name="normal_devices_titles">Known devices linked to this Jami account</string>
+    <string name="normal_devices_titles">Linked Devices</string>
     <string name="account_device_revoke">Revoke device</string>
     <string name="account_device_revocation_success_title">Success</string>
     <string name="account_device_revocation_success">Device is now revoked!</string>
