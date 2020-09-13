@@ -144,8 +144,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/wizard_profile_skip"
-                    android:textColor="@color/grey_500"
-                    android:textSize="12sp"/>
+                    android:textColor="@color/grey_500" />
 
             </LinearLayout>
 
