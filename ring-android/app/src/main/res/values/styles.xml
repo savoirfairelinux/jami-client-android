@@ -22,6 +22,8 @@
 
         <item name="colorPrimaryDark">@color/background</item>
         <!--<item name="android:windowContentTransitions">true</item>-->
+
+        <item name="textInputStyle">@style/Widget.Jami.TextInputLayout</item>
     </style>
 
     <!-- Main dark base theme -->
@@ -149,18 +151,27 @@
         <item name="cornerRadius">@dimen/button_corner_radius</item>
         <item name="android:paddingTop">@dimen/button_padding</item>
         <item name="android:paddingBottom">@dimen/button_padding</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppTheme.MainActionButton</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="ButtonOutLined" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="cornerRadius">@dimen/button_corner_radius</item>
         <item name="android:paddingTop">@dimen/button_padding</item>
         <item name="android:paddingBottom">@dimen/button_padding</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppTheme.MainActionButton</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="TextButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="cornerRadius">@dimen/button_corner_radius</item>
         <item name="android:paddingTop">@dimen/button_padding</item>
         <item name="android:paddingBottom">@dimen/button_padding</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppTheme.MainActionButton</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="WizardButton" parent="ButtonColored">
@@ -323,6 +334,11 @@
     <style name="BaseBottomSheetDialog" parent="@style/Theme.Design.Light.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
         <item name="bottomSheetStyle">@style/BottomSheet</item>
+    </style>
+
+    <style name="Widget.Jami.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
     </style>
 
 </resources>
