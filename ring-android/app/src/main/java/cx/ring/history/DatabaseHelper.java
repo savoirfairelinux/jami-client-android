@@ -200,31 +200,31 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
                 db.execSQL("CREATE INDEX IF NOT EXISTS `historytext_TIMESTAMP_idx` ON `historytext` ( `TIMESTAMP` );");
                 db.execSQL("CREATE INDEX IF NOT EXISTS `historytext_id_idx` ON `historytext` ( `id` );");
 
-                Cursor hasATable = db.rawQuery("SELECT name FROM sqlite_master WHERE type=? AND name=?;",
-                        new String[]{"table", "a"});
-                if (hasATable.getCount() > 0) {
-                    //~ Copying data from the old table "a"
-                    db.execSQL("INSERT INTO `historycall` (TIMESTAMP_START, call_end, number, missed," +
-                            "direction, recordPath, accountID, contactID, contactKey, callID) " +
-                            "SELECT TIMESTAMP_START,b,c,d,e,f,g,h,i,j FROM a;");
-                    db.execSQL("DROP TABLE IF EXISTS a_TIMESTAMP_START_idx;");
-                    db.execSQL("DROP TABLE a;");
+                try (Cursor hasATable = db.rawQuery("SELECT name FROM sqlite_master WHERE type=? AND name=?;",
+                        new String[]{"table", "a"})) {
+                    if (hasATable.getCount() > 0) {
+                        //~ Copying data from the old table "a"
+                        db.execSQL("INSERT INTO `historycall` (TIMESTAMP_START, call_end, number, missed," +
+                                "direction, recordPath, accountID, contactID, contactKey, callID) " +
+                                "SELECT TIMESTAMP_START,b,c,d,e,f,g,h,i,j FROM a;");
+                        db.execSQL("DROP TABLE IF EXISTS a_TIMESTAMP_START_idx;");
+                        db.execSQL("DROP TABLE a;");
+                    }
                 }
-                hasATable.close();
 
-                Cursor hasETable = db.rawQuery("SELECT name FROM sqlite_master WHERE type=? AND name=?;",
-                        new String[]{"table", "e"});
-                if (hasETable.getCount() > 0) {
-                    //~ Copying data from the old table "e"
-                    db.execSQL("INSERT INTO historytext (id, TIMESTAMP, number, direction, accountID," +
-                            "contactID, contactKey, callID, message, read) " +
-                            "SELECT id,TIMESTAMP,c,d,e,f,g,h,i,j FROM e;");
-                    //~ Remove old tables "a" and "e"
-                    db.execSQL("DROP TABLE IF EXISTS e_TIMESTAMP_idx;");
-                    db.execSQL("DROP TABLE IF EXISTS e_id_idx;");
-                    db.execSQL("DROP TABLE e;");
+                try (Cursor hasETable = db.rawQuery("SELECT name FROM sqlite_master WHERE type=? AND name=?;",
+                        new String[]{"table", "e"})) {
+                    if (hasETable.getCount() > 0) {
+                        //~ Copying data from the old table "e"
+                        db.execSQL("INSERT INTO historytext (id, TIMESTAMP, number, direction, accountID," +
+                                "contactID, contactKey, callID, message, read) " +
+                                "SELECT id,TIMESTAMP,c,d,e,f,g,h,i,j FROM e;");
+                        //~ Remove old tables "a" and "e"
+                        db.execSQL("DROP TABLE IF EXISTS e_TIMESTAMP_idx;");
+                        db.execSQL("DROP TABLE IF EXISTS e_id_idx;");
+                        db.execSQL("DROP TABLE e;");
+                    }
                 }
-                hasETable.close();
 
                 db.setTransactionSuccessful();
                 db.endTransaction();
@@ -414,14 +414,12 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         if (db != null && db.isOpen()) {
             Log.d(TAG, "clearDatabase: Will clear database.");
             ArrayList<String> tableNames = new ArrayList<>();
-            Cursor c = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
-            if (c.moveToFirst()) {
-                while (!c.isAfterLast()) {
+
+            try (Cursor c = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null)) {
+                tableNames.ensureCapacity(c.getCount());
+                while (c.moveToNext())
                     tableNames.add(c.getString(0));
-                    c.moveToNext();
-                }
             }
-            c.close();
 
             try {
                 db.beginTransaction();

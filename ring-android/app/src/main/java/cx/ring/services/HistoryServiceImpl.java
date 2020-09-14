@@ -49,15 +49,15 @@ import io.reactivex.subjects.Subject;
  */
 public class HistoryServiceImpl extends HistoryService {
     private static final String TAG = HistoryServiceImpl.class.getSimpleName();
-
-    @Inject
-    protected Context mContext;
-
-    private ConcurrentHashMap<String, DatabaseHelper> databaseHelpers = new ConcurrentHashMap<>();
     private final static String DATABASE_NAME = "history.db";
     private final static String LEGACY_DATABASE_KEY = "legacy";
     private static boolean migrationInitialized = false;
-    private Subject<MigrationStatus> migrationStatusSubject = BehaviorSubject.create();
+
+    private final ConcurrentHashMap<String, DatabaseHelper> databaseHelpers = new ConcurrentHashMap<>();
+    private final Subject<MigrationStatus> migrationStatusSubject = BehaviorSubject.create();
+
+    @Inject
+    protected Context mContext;
 
     public HistoryServiceImpl() {
     }
@@ -76,7 +76,7 @@ public class HistoryServiceImpl extends HistoryService {
         try {
             return getHelper(dbName).getInteractionDataDao();
         } catch (SQLException e) {
-            cx.ring.utils.Log.e(TAG, "Unable to get a interactionDataDao");
+            Log.e(TAG, "Unable to get a interactionDataDao");
             return null;
         }
     }
@@ -86,7 +86,7 @@ public class HistoryServiceImpl extends HistoryService {
         try {
             return getHelper(dbName).getConversationDataDao();
         } catch (SQLException e) {
-            cx.ring.utils.Log.e(TAG, "Unable to get a conversationDataDao");
+            Log.e(TAG, "Unable to get a conversationDataDao");
             return null;
         }
     }
@@ -99,8 +99,7 @@ public class HistoryServiceImpl extends HistoryService {
      * @return the database helper
      */
     private DatabaseHelper initHelper(String accountId) {
-        File dbPath = new File(mContext.getFilesDir(), accountId);
-        File db = new File(dbPath, DATABASE_NAME);
+        File db = new File(new File(mContext.getFilesDir(), accountId), DATABASE_NAME);
         DatabaseHelper helper = new DatabaseHelper(mContext, db.getAbsolutePath());
         databaseHelpers.put(accountId, helper);
         return helper;
@@ -120,7 +119,6 @@ public class HistoryServiceImpl extends HistoryService {
             return initLegacyDb();
         }
 
-
         if (databaseHelpers.containsKey(accountId))
             return databaseHelpers.get(accountId);
         else
@@ -135,7 +133,11 @@ public class HistoryServiceImpl extends HistoryService {
      * @return true if history.db exists in the database folder
      */
     private Boolean checkForLegacyDb() {
-        return mContext.getDatabasePath(DATABASE_NAME).exists();
+        try {
+            return mContext.getDatabasePath(DATABASE_NAME).exists();
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     /**
@@ -204,7 +206,6 @@ public class HistoryServiceImpl extends HistoryService {
      */
     @Override
     protected void migrateDatabase(List<String> accounts) {
-
         if (!checkForLegacyDb()) {
             migrationStatusSubject.onNext(MigrationStatus.LEGACY_DELETED);
             return;
@@ -217,16 +218,13 @@ public class HistoryServiceImpl extends HistoryService {
 
         Log.i(TAG, "Initializing database migration...");
 
-        SQLiteDatabase db = mContext.openOrCreateDatabase(mContext.getDatabasePath(DATABASE_NAME).getAbsolutePath(), Context.MODE_PRIVATE, null);
-
-        try {
+        try (SQLiteDatabase db = mContext.openOrCreateDatabase(mContext.getDatabasePath(DATABASE_NAME).getAbsolutePath(), Context.MODE_PRIVATE, null)) {
 
             if (accounts == null || accounts.isEmpty()) {
                 Log.i(TAG, "No existing accounts found in directory, aborting migration...");
                 migrationStatusSubject.onNext(MigrationStatus.FAILED);
                 return;
             }
-
 
             // create new database for each account
             for (String newDb : accounts) {
@@ -275,12 +273,10 @@ public class HistoryServiceImpl extends HistoryService {
             Log.i(TAG, "Migration complete. Each account now has its own database");
 
         } catch (SQLiteException e) {
-            db.close();
             migrationStatusSubject.onNext(MigrationStatus.FAILED);
             migrationInitialized = false;
             Log.e(TAG, "Error migrating database.", e);
         } catch (NullPointerException e) {
-            db.close();
             migrationStatusSubject.onNext(MigrationStatus.FAILED);
             migrationInitialized = false;
             Log.e(TAG, "An unexpected error occurred. The migration will run again when the helper is called again", e);
