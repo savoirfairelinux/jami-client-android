@@ -43,6 +43,11 @@ for i in ${ANDROID_ABI_LIST}; do
     echo "$i build OK"
 done
 
+echo "Archiving native debug symbols"
+cd $TOP/app/src/main/libs
+zip -r $TOP/app/symbols.zip .
+cd $TOP
+
 if [[ $NO_GRADLE -eq 0 ]]; then
     if [ -z "$RING_BUILD_FIREBASE" ]; then
         echo "Building without Firebase support"
