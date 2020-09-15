@@ -394,13 +394,13 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     private void presentTrustRequestFragment(String accountID) {
-        Bundle bundle = new Bundle();
-        bundle.putString(ContactRequestsFragment.ACCOUNT_ID, accountID);
         mNotificationService.cancelTrustRequestNotification(accountID);
         if (fContent instanceof ContactRequestsFragment) {
             ((ContactRequestsFragment) fContent).presentForAccount(accountID);
             return;
         }
+        Bundle bundle = new Bundle();
+        bundle.putString(ContactRequestsFragment.ACCOUNT_ID, accountID);
         fContent = new ContactRequestsFragment();
         fContent.setArguments(bundle);
         binding.navigationView.getMenu().getItem(NAVIGATION_CONTACT_REQUESTS).setChecked(true);

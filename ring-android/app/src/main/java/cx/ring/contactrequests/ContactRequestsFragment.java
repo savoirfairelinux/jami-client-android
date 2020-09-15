@@ -75,10 +75,11 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
     }
 
     public void presentForAccount(@NonNull String accountId) {
-        presenter.updateAccount(accountId);
         Bundle arguments = getArguments();
         if (arguments != null)
             arguments.putString(ACCOUNT_ID, accountId);
+        if (presenter != null)
+            presenter.updateAccount(accountId);
     }
 
     @Override
