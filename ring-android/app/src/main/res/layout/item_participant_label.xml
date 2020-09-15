@@ -8,9 +8,11 @@
         android:id="@+id/participant_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Mia"
+        tools:text="Georges Longnom de Chateaubrillant"
         android:background="@drawable/background_conference_label"
         android:padding="6dp"
         android:textColor="@color/white"
-        android:layout_margin="8dp"/>
+        android:layout_margin="8dp"
+        android:ellipsize="marquee"
+        android:singleLine="true" />
 </LinearLayout>
