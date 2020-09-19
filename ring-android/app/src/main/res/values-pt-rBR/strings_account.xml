@@ -82,6 +82,7 @@
   <string name="account_stun_enable_label">Usar Stun</string>
   <string name="account_stun_server_label">Servidor Stun</string>
   <string name="account_accept_files">Aceitar arquivos recebidos automaticamente</string>
+  <string name="account_conversation_settings_title">Configurações de conversa</string>
   <string name="account_accept_files_max_size">Tamanho máximo de arquivo para aceitar automaticamente</string>
   <string name="account_accept_files_never">Nunca aceite automaticamente</string>
   <string name="account_accept_files_always">Sempre aceite automaticamente</string>
@@ -122,6 +123,7 @@
   <string name="account_tls_server_name_label">Nome do servidor</string>
   <string name="account_tls_verify_server_label">Verificar Servidor</string>
   <string name="account_tls_verify_client_label">Verificar Cliente</string>
+  <string name="account_require_client_certificate_label">TLS Requer Certificado de Cliente</string>
   <string name="account_tls_negotiation_timeout_sec">Tempo espera negociação (seg)</string>
   <string name="account_rtp_max_port">Máximo</string>
   <string name="account_rtp_min_port">Mínimo</string>
@@ -162,6 +164,7 @@
   <string name="account_sip_success_title">Conta SIP registrada</string>
   <string name="account_sip_success_message">Você registrou sua conta SIP com sucesso.</string>
   <string name="account_sip_register_anyway">Registrar mesmo assim</string>
+  <string name="account_link_device">Conectar de outro dispositivo</string>
   <string name="account_link_button">Conecte-se de outra rede</string>
   <string name="account_link_archive_button">Conectar-se a partir do backup</string>
   <string name="account_link_prompt_pin">Entre o PIN</string>

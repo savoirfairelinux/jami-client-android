@@ -14,6 +14,10 @@
   <string name="pref_hd_summary">Habilitar envio de vídeo em HD</string>
   <string name="pref_hwEncode_title">Ativar codificação acelerada</string>
   <string name="pref_hwEncode_summary">Função experimental</string>
+  <string name="pref_videoBitrate_title">Taxa de bits de vídeo</string>
+  <string name="pref_videoBitrate_summary">Selecione a taxa de bits padrão de saída de vídeo (KB/s)</string>
+  <string name="pref_videoResolution_title">Resolução de vídeo</string>
+  <string name="pref_videoResolution_summary">Selecione a resolução padrão de saída de vídeo</string>
   <string name="pref_systemContacts_title">Usar contatos do sistema</string>
   <string name="pref_systemContacts_summary">Usar contatos do sistema para mostrar detalhes da chamada</string>
   <string name="pref_systemDialer_title">Fazer chamadas do sistema usando o Jami</string>
@@ -25,4 +29,16 @@
   <string name="pref_persistNotification_title">Executar em segundo-plano</string>
   <string name="pref_persistNotification_summary">Permitir execução em segundo-plano para receber chamadas e mensagens.</string>
   <!--Plugin-->
+  <string name="pref_plugins_title">Complementos</string>
+  <string name="pref_plugins_summary">Ativar os complementos e definir seus parâmetros</string>
+  <string name="fab_plugins_add">Adicionar um novo complemento</string>
+  <string name="plugin_uninstall_title">Desinstalar Complemento ?</string>
+  <string name="plugin_reset_preferences">Redefinir preferências de complemento</string>
+  <string name="plugin_reset_preferences_summary">Suas configurações de complemento serão padronizadas</string>
+  <string name="plugin_reset_preferences_ask">Você deseja redefinir as configurações dos complementos ?</string>
+  <string name="plugin_successfully_installed">Complemento <b>%1$s</b> instalado com êxito</string>
+  <string name="plugin_install_failure">Falha na instalação do complemento: <b>%1$s</b></string>
+  <string name="plugin_recent_version_exception">Você tem uma versão mais recente de: <b>%1$s</b></string>
+  <string name="plugin_same_version_exception">Você tem a mesma versão de <b>%1$s</b> instalada</string>
+  <string name="plugin_force_install">forçar a instalação</string>
 </resources>

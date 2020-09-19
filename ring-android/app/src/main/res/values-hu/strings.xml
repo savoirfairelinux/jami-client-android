@@ -128,7 +128,7 @@
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Hiba</string>
   <string name="ringtone_error_format_not_supported">Ez a formátum nem támogatott</string>
-  <string name="ringtone_error_size_too_big">Ez a fájl túl nagy. A maximum méret %1$d kB.</string>
+  <string name="ringtone_error_size_too_big">Ez a fájl túl nagy. A legnagyobb méret %1$d kB.</string>
   <string name="ringtone_custom_prompt">Egyéni csengőhang beállítása</string>
   <string name="ringtone_custom_label">Szokás</string>
   <string name="ringtone_jami_tones">Jami hangok</string>
@@ -179,7 +179,7 @@
   <string name="help_password_choose">Válasszon erős jelszót, amelyre emlékezni fog, hogy megvédje a Jami fiókját.</string>
   <string name="help_password_enter">Adja meg a fő Jami fiókja jelszót.</string>
   <string name="help_server_enter">Adja meg a felügyeleti kiszolgáló URL-jét.</string>
-  <string name="help_pin_enter">Adja meg egy másik beállított Jami fiók PIN-jét! Használja a „Fiók exportálása a Jami-n” működést a PIN eléréséhez!</string>
+  <string name="help_pin_enter">Adja meg egy másik beállított Jami fiók PIN-kodját. Használja a „Fiók exportálása a Jami-n” működést a PIN-kod eléréséhez.</string>
   <string name="wizard_next">Tovább</string>
   <string name="wizard_back">Vissza</string>
   <string name="wizard_skip">Átugrani</string>
@@ -226,7 +226,7 @@
   <!--File Transfer-->
   <string name="invalid_file">Érvénytelen fájl</string>
   <string name="not_able_to_write_file">Nem lehet írni a fájlt</string>
-  <string name="file_transfer_status_created">az átvitel szignálása</string>
+  <string name="file_transfer_status_created">Átvitel előkészítése</string>
   <string name="file_transfer_status_unsupported">nem támogatott</string>
   <string name="file_transfer_status_wait_peer_acceptance">várakozó egyenrangú elfogadás</string>
   <string name="file_transfer_status_wait_host_acceptance">várakozás a fogadó elfogadásra</string>

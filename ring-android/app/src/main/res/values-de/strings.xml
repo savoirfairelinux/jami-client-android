@@ -8,8 +8,8 @@
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Beitragen</string>
   <string name="version_section">Version</string>
-  <string name="no_email_app_installed">Es konnte keine E-Mail-Anwendung gefunden werden, installieren Sie eine, um uns einen Bericht zu senden</string>
-  <string name="no_browser_app_installed">Es konnte keine Browser-Anwendung gefunden werden, installieren Sie einen, um die Webseite anzusehen</string>
+  <string name="no_email_app_installed">Es konnte keine E-Mail-Anwendung gefunden werden, installiere eine, um uns einen Bericht zu senden</string>
+  <string name="no_browser_app_installed">Es konnte keine Browser-Anwendung gefunden werden, installiere einen, um die Webseite anzusehen</string>
   <string name="email_chooser_title">E-Mail wird gesendet mit...</string>
   <string name="website_chooser_title">Webseite anzeigen mit...</string>
   <string name="license">Diese Software wird \"wie sie ist\" ohne Gewährleistung irgendwelcher Art zur Verfügung gestellt. Details finden Sie unter <u>GNU General Public License Version 3 oder höher</u></string>
@@ -23,7 +23,7 @@
   <string name="ringtones_by">Klingeltöne von</string>
   <!--RingActivity-->
   <string name="error_no_network">Keine Netzwerkverbindung</string>
-  <string name="error_mobile_network_available_but_disabled">Bitte erlauben Sie den Zugang zum Mobilfunknetz in den Einstellungen</string>
+  <string name="error_mobile_network_available_but_disabled">Bitte erlaube den Zugang zum Mobilfunknetz in den Einstellungen</string>
   <!--AB menus-->
   <string name="ab_action_chat">Textnachrichten</string>
   <!--Sections-->
@@ -31,6 +31,7 @@
   <string name="menu_item_accounts">Konten verwalten</string>
   <string name="menu_item_account">Konto verwalten</string>
   <string name="menu_item_settings">Einstellungen</string>
+  <string name="menu_item_plugin_list">Plugin-Einstellungen</string>
   <string name="menu_item_share">Meinen Kontakt teilen</string>
   <string name="menu_item_about">Über Jami</string>
   <!--Dialing Fragment-->
@@ -82,8 +83,9 @@
   <string name="notif_location_action_stop">Standort teilen beenden</string>
   <string name="location_share_action_start">Teilen starten</string>
   <string name="location_share_action_stop">Teilen beenden</string>
+  <string name="location_share_about_title">Informationen zur Karte</string>
   <!--Call Fragment-->
-  <string name="you_txt_prefix">Sie:</string>
+  <string name="you_txt_prefix">Du:</string>
   <string name="action_call_hangup">Auflegen</string>
   <string name="ongoing_call">Derzeitiger Anruf</string>
   <string name="hist_in_call">Eingehender Anruf von %1$s</string>
@@ -91,8 +93,11 @@
   <string name="start_error_title">Jami konnte nicht gestartet werden!</string>
   <string name="start_error_mic_required">Jami benötigt die Erlaubnis, auf das Mikrofon zuzugreifen.</string>
   <string name="action_call_accept">Anruf annehmen</string>
+  <string name="action_call_hold_accept">Anruf halten und entgegennehmen</string>
+  <string name="action_call_end_accept">Anruf beenden und entgegennehmen</string>
   <string name="action_call_decline">Ablehnen</string>
   <string name="action_call_mic_mute">Mikrofon stummschalten</string>
+  <string name="action_load_plugin">Lade Plugin</string>
   <string name="ab_action_speakerphone">Lautsprecher einschalten</string>
   <string name="ab_action_contact_add">Kontakte hinzufügen</string>
   <string name="ab_action_contact_add_question">Zu Kontakten hinzufügen?</string>
@@ -105,6 +110,7 @@
   <string name="write_a_message">Sende eine Nachricht</string>
   <string name="scan_qr">QR-Code scannen</string>
   <string name="ab_action_flipcamera">Kamerabild kippen</string>
+  <string name="ab_action_hidepreview">Vorschau ausblenden</string>
   <!--Text messages-->
   <string name="send_message">Nachricht senden</string>
   <string name="message_sending">Nachricht wird gesendet…</string>
@@ -118,7 +124,7 @@
   <string name="conversation_share_location">Standort teilen</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera Berechtigung</string>
-  <string name="permission_dialog_camera_message">Für Video-Konversationen benötigt die Anwendung Zugriff auf die Kamera. Bitte erteilen Sie diese Berechtigung.</string>
+  <string name="permission_dialog_camera_message">Für Video-Konversationen benötigt die Anwendung Zugriff auf die Kamera. Bitte erteile diese Berechtigung.</string>
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Fehler</string>
   <string name="ringtone_error_format_not_supported">Dieses Format wird nicht unterstützt.</string>
@@ -127,11 +133,11 @@
   <string name="ringtone_custom_label">Benutzerdefiniert</string>
   <string name="ringtone_jami_tones">Jami Töne</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Jami benötigt die Berechtigung \"Kontaktdaten lesen\" für diese Funktion. Bitte erteilen Sie diese.</string>
+  <string name="permission_dialog_read_contacts_message">Jami benötigt die Berechtigung \"Kontaktdaten lesen\" für diese Funktion. Bitte erteile diese.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Jami benötigt die Berechtigung \"Anruflisten schreiben\" für diese Funktion. Bitte erteilen Sie diese.</string>
+  <string name="permission_dialog_write_call_log_message">Jami benötigt die Berechtigung \"Anruflisten schreiben\" für diese Funktion. Bitte erteile diese.</string>
   <!--QRCode Scan-->
-  <string name="scan_qr_account_message">Scannen Sie den QR-Code des Kontos, das Sie hinzufügen möchten.</string>
+  <string name="scan_qr_account_message">Scanne den QR-Code des Kontos, das du hinzufügen möchtest.</string>
   <string name="title_activity_qrcode">Mein Konto teilen</string>
   <string name="error_scan_no_camera_permissions">Der QR-Scanner benötigt die Erlaubnis, auf die Kamera zuzugreifen. </string>
   <string name="tab_code">Mein Code</string>
@@ -154,13 +160,13 @@
   <string name="conversation_action_copy_peer_number">Nummer kopieren</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s in die Zwischenablage kopiert</string>
   <string name="conversation_action_select_peer_number">Eine Nummer auswählen</string>
-  <string name="conversation_action_block_this">Kontakt blockieren</string>
+  <string name="conversation_action_block_this">Kontakt sperren</string>
   <string name="conversation_action_go_to_call">Zurück zum laufenden Anruf</string>
   <string name="conversation_open_file_error">Es gibt keine installierte App, die diesen Dateityp öffnen kann.</string>
   <string name="clip_contact_uri">Kontakt-Addresse</string>
-  <string name="block_contact_dialog_title">%1$s blockieren?</string>
-  <string name="block_contact_dialog_message">%1$s wird nicht in der Lage sein, Sie zu kontaktieren, bis Sie die Blockierung entfernen.</string>
-  <string name="block_contact_completed">%1$s wurde blockiert.</string>
+  <string name="block_contact_dialog_title">%1$s sperren?</string>
+  <string name="block_contact_dialog_message">%1$s wird nicht in der Lage sein, dich zu kontaktieren, bis du die Sperre entfernst.</string>
+  <string name="block_contact_completed">%1$s wurde gesperrt.</string>
   <string name="conversation_contact_is_typing">Kontakt tippt...</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s hinzufügen?</string>
@@ -170,8 +176,10 @@
   <string name="account_create_title">Ein Jami-Konto erstellen</string>
   <string name="prompt_new_username">Neuen Benutzernamen eingeben</string>
   <string name="prompt_hint_username">Benutzername</string>
-  <string name="help_password_choose">Wählen Sie ein sicheres Passwort, an das Sie sich erinnern können, um ihr Jami-Konto zu schützen.</string>
-  <string name="help_pin_enter">Geben Sie die PIN eines anderen konfigurierten Jami-Kontos ein. Benutzen Sie die Funktion \"Exportiere Jami-Konto\", um eine PIN zu erhalten.</string>
+  <string name="help_password_choose">Wähle ein sicheres Passwort, an das du dich erinnern kannst, um dein Jami-Konto zu schützen.</string>
+  <string name="help_password_enter">Gib dein Passwort für das Jami-Hauptkonto ein.</string>
+  <string name="help_server_enter">URL des Management-Servers eingeben.</string>
+  <string name="help_pin_enter">Gib die PIN eines anderen konfigurierten Jami-Kontos ein. Benutze die Funktion \"Exportiere Jami-Konto\", um eine PIN zu erhalten.</string>
   <string name="wizard_next">Weiter</string>
   <string name="wizard_back">Zurück</string>
   <string name="wizard_skip">Überspringen</string>
@@ -180,6 +188,7 @@
   <string name="profile_message_warning">Dein Profil wird nur mit deinen Kontakten geteilt</string>
   <string name="open_the_gallery">Galerie öffnen</string>
   <string name="take_a_photo">Foto machen</string>
+  <string name="profile_name_hint">Namen eingeben</string>
   <!--Share fragment-->
   <string name="share_message">Diesen Code mit Jami scannen</string>
   <string name="share_message_no_account">Bitte wähle ein Konto zum Teilen aus.</string>
@@ -195,6 +204,7 @@
   <string name="contact_request_title">Neue Kontaktanfrage</string>
   <string name="contact_request_msg">Du hast %1$s Kontaktanfragen</string>
   <string name="contact_request_account">Für %1$s</string>
+  <string name="no_requests">Du hast keine Kontaktanfragen</string>
   <string name="message_contact_not_trusted_yet">%s ist noch nicht in deiner Kontaktliste.\nDiese Kontaktanfrage annehmen oder ablehnen?</string>
   <string name="message_contact_not_trusted">%s ist nicht in deiner Kontaktliste.\nNeuen Kontakt hinzufügen?</string>
   <!--Send contact requests-->
@@ -205,6 +215,7 @@
   <string name="no_blocked_contact">Keine gesperrten Kontakte</string>
   <!--Smartlist-->
   <string name="no_contact_request">Keine Kontaktanfrage gesendet</string>
+  <string name="conversation_placeholder">Du hast bisher noch keine Unterhaltungen</string>
   <string name="contact_request_sent">Kontaktanfrage gesendet</string>
   <string name="start_conversation">Unterhaltung starten</string>
   <string name="search_results">Suchergebnisse</string>
@@ -263,10 +274,17 @@
   <string name="conversation_input_speech_hint">Sag etwas...</string>
   <!--WIZARD-->
   <string name="wizard_status_recommended">Empfohlen</string>
+  <string name="wizard_status_optional">Optional</string>
+  <string name="wizard_status_required">Notwendig</string>
+  <string name="wizard_username_info">Benutzernamen für dein Konto wählen</string>
+  <string name="wizard_username_button">Benutzernamen wählen</string>
+  <string name="wizard_username_skip">Auswahl des Benutzernamens überspringen</string>
   <string name="wizard_password_info">Kontopasswort</string>
+  <string name="wizard_password_placeholder">Wähle ein Passwort zum Verschlüsseln des Kontoschlüssels auf diesem Gerät</string>
   <string name="wizard_password_button">Passwort wählen</string>
   <string name="wizard_password_skip">Konto erstellen</string>
-  <string name="wizard_password_warning">Beachten Sie, dass das Passwort nicht wiederhergestellt werden kann</string>
+  <string name="wizard_password_switch">Konto mit Passwort verschlüsseln</string>
+  <string name="wizard_password_warning">Beachte, dass das Passwort nicht wiederhergestellt werden kann</string>
   <string name="wizard_profile_info">Profil wird nur mit Kontakten geteilt</string>
   <string name="wizard_profile_button">Profil speichern</string>
   <string name="wizard_profile_skip">Überspringen und später durchführen</string>

@@ -1,6 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="report"><u>Enviar coma corrièl</u></string>
+  <string name="email_chooser_title">Mandadís del messatge…</string>
   <string name="description">Jami es un logicial liure per comunicacions universalas que respèctan la libertat e la vida privada de sos utilizaires.</string>
   <string name="credits">Crèdit</string>
   <!--About dialog-->
@@ -19,12 +21,16 @@
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_outgoing_file_transfer_title">Mandadís del fichièr a %1$s</string>
   <!--Call Fragment-->
   <string name="action_call_decline">Regetar</string>
   <string name="ab_action_contact_add">Ajustar als contactes</string>
   <string name="hist_contact_added">Contacte ajustat</string>
   <string name="hist_invitation_received">Invitacion recebuda</string>
   <!--Text messages-->
+  <string name="send_message">Enviar messatge</string>
+  <string name="message_sending">Mandadís del messatge…</string>
+  <string name="send_file">Enviar un fichiè</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
   <string name="ringtone_error_title">Error</string>
@@ -52,6 +58,7 @@
   <string name="block">Blocar</string>
   <!--Send contact requests-->
   <string name="send_request_button">Enviar</string>
+  <string name="send_request_title">Enviar una demanda de contacte</string>
   <!--Blacklist-->
   <!--Smartlist-->
   <!--File Transfer-->
@@ -62,6 +69,11 @@
   <string name="navigation_item_contact_request">Demanda de contacte</string>
   <string name="navigation_item_account">Compte</string>
   <!--TV-->
+  <string name="tv_send_image_dialog_message">Enviar un imatge ?</string>
+  <string name="tv_send_video_dialog_message">Enviar una vidèo ?</string>
   <string name="tv_dialog_send">Enviar</string>
+  <string name="tv_send_text">Enviar un tèxt</string>
+  <string name="tv_send_audio">Enviar un àudio</string>
+  <string name="tv_send_video">Enviar un mèdia</string>
   <!--WIZARD-->
 </resources>

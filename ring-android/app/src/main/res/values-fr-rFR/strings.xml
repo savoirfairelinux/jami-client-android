@@ -31,6 +31,7 @@
   <string name="menu_item_accounts">Gérer des comptes</string>
   <string name="menu_item_account">Gérer le compte</string>
   <string name="menu_item_settings">Réglages</string>
+  <string name="menu_item_plugin_list">Paramètres des plugins</string>
   <string name="menu_item_share">Partager mes contacts</string>
   <string name="menu_item_about">À propos de Jami</string>
   <!--Dialing Fragment-->
@@ -82,6 +83,7 @@
   <string name="notif_location_action_stop">Arrêter le partage de géolocalisation</string>
   <string name="location_share_action_start">Commencer le partage</string>
   <string name="location_share_action_stop">Arrêter le partage</string>
+  <string name="location_share_about_title">Informations sur la carte</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Vous:</string>
   <string name="action_call_hangup">Raccrocher</string>
@@ -91,8 +93,11 @@
   <string name="start_error_title">Impossible de démarrer Jami !</string>
   <string name="start_error_mic_required">Jami requiert la permission d\'accéder à votre microphone pour fonctionner.</string>
   <string name="action_call_accept">Prendre un appel</string>
+  <string name="action_call_hold_accept">Mettre en attente et prendre l\'appel</string>
+  <string name="action_call_end_accept">Terminer et prendre l\'appel</string>
   <string name="action_call_decline">Refuser</string>
   <string name="action_call_mic_mute">Couper le micro</string>
+  <string name="action_load_plugin">Charger le plugin</string>
   <string name="ab_action_speakerphone">Activer le haut-parleur</string>
   <string name="ab_action_contact_add">Ajouter dans les contacts</string>
   <string name="ab_action_contact_add_question">Ajouter aux contacts ?</string>
@@ -105,6 +110,7 @@
   <string name="write_a_message">Écrire un message</string>
   <string name="scan_qr">Scanner un code QR</string>
   <string name="ab_action_flipcamera">Inverser la caméra</string>
+  <string name="ab_action_hidepreview">Cacher la prévisualisation</string>
   <!--Text messages-->
   <string name="send_message">Envoyer un message</string>
   <string name="message_sending">Envoi du message en cours</string>
@@ -171,6 +177,8 @@
   <string name="prompt_new_username">Saisir un nouveau nom d\'utilisateur</string>
   <string name="prompt_hint_username">nom d\'utilisateur</string>
   <string name="help_password_choose">Choisir un mot de passe robuste dont vous vous rappellerez pour protéger votre compte Jami.</string>
+  <string name="help_password_enter">Saisissez le mot de passe principal de votre compte Jami.</string>
+  <string name="help_server_enter">Entrez l\'URL du serveur de gestion</string>
   <string name="help_pin_enter">Saisissez le code PIN d\'un autre compte Jami configuré. Utilisez la fonction \"exporter le compte Jami\" pour obtenir un code PIN.</string>
   <string name="wizard_next">Suivant</string>
   <string name="wizard_back">Retour</string>
@@ -180,6 +188,7 @@
   <string name="profile_message_warning">Votre profil n\'est partagé qu\'avec vos contacts</string>
   <string name="open_the_gallery">Ouvrir la galerie</string>
   <string name="take_a_photo">Prendre une photo</string>
+  <string name="profile_name_hint">Entrez votre nom</string>
   <!--Share fragment-->
   <string name="share_message">Numériser ce code avec Jami</string>
   <string name="share_message_no_account">Sélectionnez un compte à partager.</string>
@@ -195,6 +204,7 @@
   <string name="contact_request_title">Nouvelle demande de contact</string>
   <string name="contact_request_msg">Vous avez %1$s demandes de contact</string>
   <string name="contact_request_account">Pour %1$s</string>
+  <string name="no_requests">Vous n\'avez pas de demande de contact</string>
   <string name="message_contact_not_trusted_yet">%s n\'est pas encore dans vos contacts.\nAcceptez-vous ou non cette demande de contact ?</string>
   <string name="message_contact_not_trusted">%s n\'est pas dans vos contacts.\nAjouter un nouveau contact ?</string>
   <!--Send contact requests-->
@@ -205,6 +215,7 @@
   <string name="no_blocked_contact">Aucun contact bloqué</string>
   <!--Smartlist-->
   <string name="no_contact_request">Aucune demande de contact envoyée</string>
+  <string name="conversation_placeholder">Vous n\'avez pas encore de conversations</string>
   <string name="contact_request_sent">Demande de contact envoyée</string>
   <string name="start_conversation">Démarrer la conversation</string>
   <string name="search_results">Résultats de recherche</string>
@@ -247,12 +258,34 @@
   <string name="navigation_item_conversation">Conversations</string>
   <string name="navigation_item_contact_request">Demandes de contact</string>
   <string name="navigation_item_account">Compte</string>
+  <string name="search_results_public_directory">Répertoire public </string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">Envoyer un message audio ?</string>
+  <string name="tv_send_image_dialog_message">Envoyer l\'image ? </string>
+  <string name="tv_send_video_dialog_message">Envoyer la vidéo ? </string>
+  <string name="tv_media_preview">Prévisualisation</string>
   <string name="tv_audio_play">Jouer</string>
   <string name="tv_audio_pause">Pause</string>
   <string name="tv_dialog_send">Envoyer</string>
+  <string name="tv_audio_recording">Enregistrement...</string>
   <string name="tv_send_text">Envoyer du texte</string>
   <string name="tv_send_audio">Envoyer de l\'audio</string>
+  <string name="tv_send_video">Envoyer le média</string>
+  <string name="conversation_input_speech_hint">Dites quelque chose..</string>
   <!--WIZARD-->
+  <string name="wizard_status_recommended">Recommandé</string>
+  <string name="wizard_status_optional">Optionnel</string>
+  <string name="wizard_status_required">Requis</string>
+  <string name="wizard_username_info">Choisissez un nom d\'utilisateur pour votre compte</string>
+  <string name="wizard_username_button">Choisissez un nom d\'utilisateur</string>
+  <string name="wizard_username_skip">Passer le choix du nom d’utilisateur</string>
+  <string name="wizard_password_info">Mot de passe du compte</string>
+  <string name="wizard_password_placeholder">Choisir un mot de passe pour chiffrer la clé du compte sur cet appareil</string>
+  <string name="wizard_password_button">Choisir un mot de passe</string>
+  <string name="wizard_password_skip">Créer un compte</string>
+  <string name="wizard_password_switch">Chiffrer le compte avec un mot de passe</string>
+  <string name="wizard_password_warning">Noté que le mot de passe ne peut pas être récupéré</string>
+  <string name="wizard_profile_info">Votre profil n\'est partagé qu\'avec vos contacts</string>
+  <string name="wizard_profile_button">Sauvegarder votre profil</string>
+  <string name="wizard_profile_skip">Passer et faire ça plus tard</string>
 </resources>

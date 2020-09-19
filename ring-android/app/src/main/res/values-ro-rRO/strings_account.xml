@@ -22,7 +22,7 @@
   <string name="dialog_wait_update">Se actualizează contul</string>
   <string name="dialog_wait_update_details">Așteaptă în timp ce noul tău cont este actualizat...</string>
   <string name="dialog_warn_ip2ip_account_title">Creezi un cont SIP gol ?</string>
-  <string name="dialog_warn_ip2ip_account_message">Ești pe cale să creezi un cont SIP fără nume de gazdă valabil.
+  <string name="dialog_warn_ip2ip_account_message">Ești pe cale să creezi un cont SIP fără nume de server valabil.
         Vei putea face și primi doar apeluri IP directe.
         Îți vei putea modifica contul mai tîrziu</string>
   <string name="account_type_ip2ip">Cont IP</string>
@@ -76,7 +76,7 @@
   <string name="account_preferences_advanced_tab">Avansate</string>
   <string name="account_call_settings_title">Reglările apelului</string>
   <string name="account_dht_public_in_calls_label">Permite apelurile primite de la contacte necunoscute</string>
-  <string name="account_registration_exp_label">Înscrierea Expiră</string>
+  <string name="account_registration_exp_label">Înscrierea a expirat</string>
   <string name="account_local_interface_label">Interfață locală</string>
   <string name="account_local_port_label">Port local</string>
   <string name="account_stun_enable_label">Folosește STUN</string>
@@ -107,7 +107,7 @@
   <string name="account_credentials_add">Adaugă date de autentificare</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Protecție</string>
-  <string name="account_srtp_switch_label">Cifrează fluxurile media (SRTP)</string>
+  <string name="account_srtp_switch_label">Cifrează fluxurile Media (SRTP)</string>
   <string name="account_srtp_enable_sdes">Activează SDES ca protocol pentru schimbul de chei</string>
   <string name="account_srtp_rtp_fallback">Folosește RTP dacă SRTP eșuează</string>
   <!--SIP-->
@@ -127,7 +127,7 @@
   <string name="account_tls_negotiation_timeout_sec">Timp de negociere (sec)</string>
   <string name="account_rtp_max_port">Maxim</string>
   <string name="account_rtp_min_port">Minim</string>
-  <string name="account_rtp_port_range">Interval Audio RTP Port</string>
+  <string name="account_rtp_port_range">Interval Port RTP Audio</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Introdu parola principală pentru a debloca contul</string>
   <string name="error_password_char_count">6 caractere minim</string>
@@ -192,7 +192,7 @@
   <string name="register_username">Înscrie numele de utilizator public</string>
   <string name="register_recommended">Recomandat</string>
   <string name="username_already_taken">Nume de utilizator deja ales</string>
-  <string name="invalid_username">Numele de utilizator este greșit</string>
+  <string name="invalid_username">Nume greșit</string>
   <string name="unknown_error">Eroare necunoscută. Verifică conectarea la rețea!</string>
   <string name="looking_for_username_availability">Caut disponibilitatea numelui de utilizator...</string>
   <string name="account_status_connecting">Se conectează</string>

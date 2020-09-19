@@ -31,7 +31,7 @@
   <string name="menu_item_accounts">Gestionează conturile</string>
   <string name="menu_item_account">Gestionează contul</string>
   <string name="menu_item_settings">Reglări</string>
-  <string name="menu_item_plugin_list">Reglările Extensiilor</string>
+  <string name="menu_item_plugin_list">Reglări Extensii</string>
   <string name="menu_item_share">Distribuie contactul meu</string>
   <string name="menu_item_about">Despre Jami</string>
   <!--Dialing Fragment-->
