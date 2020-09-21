@@ -45,6 +45,16 @@ public class TextMessage extends Interaction {
         mBody = message;
     }
 
+    public TextMessage(String author, String account, long timestamp, ConversationHistory conversation, String message) {
+        mAuthor = author;
+        mAccount = account;
+        mTimestamp = timestamp;
+        mType = InteractionType.TEXT.toString();
+        mConversation = conversation;
+        mIsIncoming = author != null;
+        mBody = message;
+    }
+
     public TextMessage(Interaction interaction) {
         mId = interaction.getId();
         mAuthor = interaction.getAuthor();

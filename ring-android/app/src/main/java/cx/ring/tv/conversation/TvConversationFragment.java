@@ -183,7 +183,7 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
         super.onViewCreated(view, savedInstanceState);
 
         ConversationPath path = ConversationPath.fromIntent(requireActivity().getIntent());
-        presenter.init(new cx.ring.model.Uri(path.getContactId()), path.getAccountId());
+        presenter.init(new cx.ring.model.Uri(path.getConversationId()), path.getAccountId());
         mAdapter = new TvConversationAdapter(this, presenter);
 
         binding.buttonText.setOnClickListener(v -> displaySpeechRecognizer());
@@ -618,19 +618,20 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     }
 
     @Override
-    public void displayContact(CallContact contact) {
+    public void displayContact(Conversation conversation) {
+        List<CallContact> contacts = conversation.getContact();
         mCompositeDisposable.clear();
-        mCompositeDisposable.add(AvatarFactory.getAvatar(requireContext(), contact)
+        mCompositeDisposable.add(AvatarFactory.getAvatar(requireContext(), contacts)
                 .doOnSuccess(d -> {
                     mConversationAvatar = (AvatarDrawable) d;
-                    mParticipantAvatars.put(contact.getPrimaryNumber(),
+                    mParticipantAvatars.put(contacts.get(0).getPrimaryNumber(),
                             new AvatarDrawable((AvatarDrawable) d));
                 })
-                .flatMapObservable(d -> contact.getUpdatesSubject())
+                .flatMapObservable(d -> contacts.get(0).getUpdatesSubject())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(c -> {
                     mConversationAvatar.update(c);
-                    String uri = contact.getPrimaryNumber();
+                    String uri = contacts.get(0).getPrimaryNumber();
                     AvatarDrawable a = mParticipantAvatars.get(uri);
                     if (a != null)
                         a.update(c);
@@ -737,12 +738,12 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     }
 
     @Override
-    public void goToCallActivityWithResult(String accountId, String contactRingId, boolean audioOnly) {
+    public void goToCallActivityWithResult(String accountId, cx.ring.model.Uri contactRingId, boolean audioOnly) {
 
     }
 
     @Override
-    public void goToContactActivity(String accountId, String contactRingId) {
+    public void goToContactActivity(String accountId, cx.ring.model.Uri contactRingId) {
 
     }
 

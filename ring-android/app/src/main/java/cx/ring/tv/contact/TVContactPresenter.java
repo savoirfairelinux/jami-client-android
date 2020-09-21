@@ -59,11 +59,11 @@ public class TVContactPresenter extends RootPresenter<TVContactView> {
 
     public void setContact(ConversationPath path) {
         mAccountId = path.getAccountId();
-        mUri = new Uri(path.getContactId());
+        mUri = new Uri(path.getConversationId());
         mCompositeDisposable.clear();
         mCompositeDisposable.add(mConversationService
                 .getAccountSubject(path.getAccountId())
-                .map(a -> new TVListViewModel(a.getAccountID(), a.getByUri(mUri).getContact()))
+                .map(a -> new TVListViewModel(a.getAccountID(), a.getByUri(mUri).getContact().get(0)))
                 .observeOn(mUiScheduler)
                 .subscribe(c -> getView().showContact(c)));
     }

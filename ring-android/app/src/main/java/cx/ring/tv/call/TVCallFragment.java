@@ -304,7 +304,7 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
             if (resultCode == Activity.RESULT_OK && data != null) {
                 ConversationPath path = ConversationPath.fromUri(data.getData());
                 if (path != null) {
-                    presenter.addConferenceParticipant(path.getAccountId(), path.getContactId());
+                    presenter.addConferenceParticipant(path.getAccountId(), path.getConversationId());
                 }
             }
         }
