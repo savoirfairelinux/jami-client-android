@@ -86,6 +86,8 @@
   <!--Call Fragment-->
   <string name="you_txt_prefix">你：</string>
   <string name="action_call_hangup">掛斷</string>
+  <string name="action_call_maximize">最大化</string>
+  <string name="action_call_minimize">減少</string>
   <string name="ongoing_call">尚在進行中的通話</string>
   <string name="hist_in_call">%1$s 的來電</string>
   <string name="hist_out_call">%1$s 的去電</string>
@@ -287,4 +289,5 @@
   <string name="wizard_profile_info">個人檔案僅與聯絡人分享</string>
   <string name="wizard_profile_button">儲存個人檔案</string>
   <string name="wizard_profile_skip">略過並在稍後執行此動作</string>
+  <string name="fab_path_choose">選擇其他檔案</string>
 </resources>

@@ -287,4 +287,5 @@
   <string name="wizard_profile_info">资料仅会与联系人分享</string>
   <string name="wizard_profile_button">保存资料</string>
   <string name="wizard_profile_skip">跳过此步骤稍后进行</string>
+  <string name="fab_path_choose">选择另一个文件</string>
 </resources>

@@ -41,4 +41,5 @@
   <string name="plugin_recent_version_exception">Ai o versiune mai recentă de: <b>%1$s</b></string>
   <string name="plugin_same_version_exception">Ai aceeași versiune de <b>%1$s</b> instalată</string>
   <string name="plugin_force_install">forțează \n instalarea</string>
+  <string name="plugin_path_image_add">Adaugă o imagine nouă</string>
 </resources>

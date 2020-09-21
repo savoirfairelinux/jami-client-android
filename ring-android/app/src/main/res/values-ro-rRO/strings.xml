@@ -88,6 +88,8 @@
   <!--Call Fragment-->
   <string name="you_txt_prefix">Tu:</string>
   <string name="action_call_hangup">Închide</string>
+  <string name="action_call_maximize">Mărește</string>
+  <string name="action_call_minimize">Micșorează</string>
   <string name="ongoing_call">Apel în curs</string>
   <string name="hist_in_call">Apel primit de la %1$s</string>
   <string name="hist_out_call">Apel efectuat de %1$s</string>
@@ -289,4 +291,5 @@
   <string name="wizard_profile_info">Profilul este distribuit doar contactelor</string>
   <string name="wizard_profile_button">Salvează Profilul</string>
   <string name="wizard_profile_skip">Saltă și fă asta mai tîrziu</string>
+  <string name="fab_path_choose">Alege alt fișier</string>
 </resources>

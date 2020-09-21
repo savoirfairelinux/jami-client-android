@@ -14,6 +14,8 @@
   <string name="pref_hd_summary">Aktivizoni dërgim videosh HD</string>
   <string name="pref_hwEncode_title">Aktivizo kodim të përshpejtuar</string>
   <string name="pref_hwEncode_summary">Veçori eksperimentale</string>
+  <string name="pref_videoBitrate_title">Shpejtësi transmetimi videoje</string>
+  <string name="pref_videoBitrate_summary">Përzgjidhni shpejtësi parazgjedhje transmetimi video në dalje (KB/s)</string>
   <string name="pref_videoResolution_title">Qartësi videoje</string>
   <string name="pref_videoResolution_summary">Përzgjidhni qartësi parazgjedhje videoje në dalje</string>
   <string name="pref_systemContacts_title">Përdor kontakte sistemi</string>
@@ -39,4 +41,5 @@
   <string name="plugin_recent_version_exception">Keni një version më të freskët të: <b>%1$s</b></string>
   <string name="plugin_same_version_exception">Keni të instaluar të njëjtin version të <b>%1$s</b></string>
   <string name="plugin_force_install">detyro \n instalim</string>
+  <string name="plugin_path_image_add">Shtoni një figurë të re</string>
 </resources>

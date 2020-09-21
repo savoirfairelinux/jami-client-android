@@ -10,7 +10,7 @@
   <string name="pref_pushNotifications_title">Push-értesítések</string>
   <string name="pref_pushNotifications_summary">Használja a Google kiszolgálóit a háttérben lévő hívások és üzenetek fogadásához</string>
   <string name="pref_video_advanced_title">Haladó videóbeállítások</string>
-  <string name="pref_video_advanced_summary">Videó bitsebesség és felbontás módosítása. Kísérleti jellemzők elérése.</string>
+  <string name="pref_video_advanced_summary">Videó bitsebesség és felbontás megváltoztatása. Kísérleti jellemzők elérése.</string>
   <string name="pref_hd_summary">Engedélyezze a HD videó küldését</string>
   <string name="pref_hwEncode_title">Hardveres gyorsítás</string>
   <string name="pref_hwEncode_summary">Kísérleti jellemző</string>
@@ -41,4 +41,5 @@
   <string name="plugin_recent_version_exception">A(z) <b>%1$s</b> újabb verziója már telepítve van</string>
   <string name="plugin_same_version_exception">A(z) <b>%1$s</b> ugyanazon verziója már telepítve van</string>
   <string name="plugin_force_install">Telepítés\nkényszerítése</string>
+  <string name="plugin_path_image_add">Új kép hozzáadása</string>
 </resources>

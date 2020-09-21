@@ -87,6 +87,8 @@
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ju:</string>
   <string name="action_call_hangup">Mbylle thirrjen</string>
+  <string name="action_call_maximize">Maksimizoje</string>
+  <string name="action_call_minimize">Reduktoje</string>
   <string name="ongoing_call">Thirrje në kryerje e sipër</string>
   <string name="hist_in_call">Thirrje nga %1$s</string>
   <string name="hist_out_call">Thirrje për %1$s</string>
@@ -288,4 +290,5 @@
   <string name="wizard_profile_info">Profili ndahet vetëm me kontaktet</string>
   <string name="wizard_profile_button">Ruaje Profilin</string>
   <string name="wizard_profile_skip">Anashakalojeni dhe bëjeni këtë më vonë</string>
+  <string name="fab_path_choose">Zgjidhni kartelë tjetër</string>
 </resources>

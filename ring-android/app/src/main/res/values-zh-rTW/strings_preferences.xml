@@ -41,4 +41,5 @@
   <string name="plugin_recent_version_exception">您有更新的版本可供安裝： <b>%1$s</b></string>
   <string name="plugin_same_version_exception">您已安裝了相同的版本 <b>%1$s</b></string>
   <string name="plugin_force_install">強制 \n 安裝</string>
+  <string name="plugin_path_image_add">新增新圖片</string>
 </resources>

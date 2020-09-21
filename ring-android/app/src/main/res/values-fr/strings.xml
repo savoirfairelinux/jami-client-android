@@ -87,6 +87,8 @@
   <!--Call Fragment-->
   <string name="you_txt_prefix">Vous :</string>
   <string name="action_call_hangup">Raccrochez</string>
+  <string name="action_call_maximize">Maximiser</string>
+  <string name="action_call_minimize">Réduire</string>
   <string name="ongoing_call">Appel en cours</string>
   <string name="hist_in_call">Appel entrant de %1$s</string>
   <string name="hist_out_call">Appel sortant de %1$s</string>
@@ -288,4 +290,5 @@
   <string name="wizard_profile_info">Votre profil n\'est partagé qu\'avec vos contacts</string>
   <string name="wizard_profile_button">Sauvegardez votre profile</string>
   <string name="wizard_profile_skip">Passez cette étape et faire cela ultérieurement</string>
+  <string name="fab_path_choose">Choisir un autre fichier</string>
 </resources>
