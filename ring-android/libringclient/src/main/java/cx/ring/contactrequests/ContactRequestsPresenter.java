@@ -27,6 +27,7 @@ import javax.inject.Named;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
+import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.ContactService;
 import cx.ring.smartlist.SmartListViewModel;
@@ -63,7 +64,7 @@ public class ContactRequestsPresenter extends RootPresenter<ContactRequestsView>
                         .map(pending -> {
                             ArrayList<SmartListViewModel> viewmodel = new ArrayList<>(pending.size());
                             for (Conversation c : pending) {
-                                SmartListViewModel vm = new SmartListViewModel(a.getAccountID(), c.getContact(), c.getContact().getPrimaryNumber(), c.getLastEvent());
+                                SmartListViewModel vm = new SmartListViewModel(a.getAccountID(), c.getUri(), c.getContact(), c.getLastEvent(), true);
                                 viewmodel.add(vm);
                             }
                             return viewmodel;
@@ -73,7 +74,7 @@ public class ContactRequestsPresenter extends RootPresenter<ContactRequestsView>
                     getView().updateView(viewModels);
                     CompositeDisposable disposable = new CompositeDisposable();
                     for (SmartListViewModel vm : viewModels) {
-                        disposable.add(mContactService.observeContact(vm.getAccountId(), vm.getContact())
+                        disposable.add(mContactService.observeContact(vm.getAccountId(), vm.getContact(), true)
                                 .observeOn(mUiScheduler)
                                 .subscribe(contact -> getView().updateItem(vm), e -> Log.d(TAG, "updateContact onError", e)));
                     }
@@ -92,7 +93,7 @@ public class ContactRequestsPresenter extends RootPresenter<ContactRequestsView>
         mAccount.onNext(accountId);
     }
 
-    public void contactRequestClicked(String accountId, CallContact contactId) {
-        getView().goToConversation(accountId, contactId.getPrimaryNumber());
+    public void contactRequestClicked(String accountId, Uri uri) {
+        getView().goToConversation(accountId, uri);
     }
 }

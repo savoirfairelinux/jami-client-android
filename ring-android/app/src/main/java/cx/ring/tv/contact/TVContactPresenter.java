@@ -63,7 +63,7 @@ public class TVContactPresenter extends RootPresenter<TVContactView> {
         mCompositeDisposable.clear();
         mCompositeDisposable.add(mConversationService
                 .getAccountSubject(path.getAccountId())
-                .map(a -> new TVListViewModel(a.getAccountID(), a.getByUri(mUri).getContact()))
+                .map(a -> new TVListViewModel(a.getAccountID(), a.getByUri(mUri).getContact().get(0)))
                 .observeOn(mUiScheduler)
                 .subscribe(c -> getView().showContact(c)));
     }

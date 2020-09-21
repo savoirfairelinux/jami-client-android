@@ -37,6 +37,7 @@ public class Uri implements Serializable {
     private static final Pattern URI_PATTERN = Pattern.compile("^\\s*(\\w+:)?(?:([\\w.]+)@)?(?:([\\d\\w\\.\\-]+)(?::(\\d+))?)\\s*$", Pattern.CASE_INSENSITIVE);
     public static final String RING_URI_SCHEME = "ring:";
     public static final String JAMI_URI_SCHEME = "jami:";
+    public static final String SWARM_URI_SCHEME = "swarm:";
 
     private static final String ipv4Pattern = "(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])";
     private static final String ipv6Pattern = "([0-9a-f]{1,4}:){7}([0-9a-f]){1,4}";
