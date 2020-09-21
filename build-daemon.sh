@@ -12,6 +12,9 @@ if [ -z "$ANDROID_ABI" ]; then
    exit 1
 fi
 
+platform=$(echo "`uname`" | tr '[:upper:]' '[:lower:]')
+arch=`uname -m`
+
 ANDROID_TOPLEVEL_DIR="`pwd`"
 ANDROID_APP_DIR="${ANDROID_TOPLEVEL_DIR}/ring-android"
 
@@ -48,22 +51,20 @@ else
     PLATFORM_SHORT_ARCH="arm"
 fi
 
-if [ "${HAVE_64}" = 1 ];then
-    LIBDIR=lib64
-else
-    LIBDIR=lib
-fi
 ANDROID_API_VERS=21
 ANDROID_API=android-$ANDROID_API_VERS
 
-export ANDROID_TOOLCHAIN="`pwd`/android-toolchain-$ANDROID_API_VERS-$PLATFORM_SHORT_ARCH"
-if [ ! -d "$ANDROID_TOOLCHAIN" ]; then
-    $ANDROID_NDK/build/tools/make_standalone_toolchain.py \
-        --arch=$PLATFORM_SHORT_ARCH \
-        --api $ANDROID_API_VERS \
-        --stl libc++ \
-        --install-dir=$ANDROID_TOOLCHAIN
-fi
+export TOOLCHAIN=$ANDROID_NDK/toolchains/llvm/prebuilt/$platform-$arch
+export TARGET=${TARGET_TUPLE}
+export API=$ANDROID_API_VERS
+
+export AR=$TOOLCHAIN/bin/$TARGET-ar
+export AS=$TOOLCHAIN/bin/$TARGET-as
+export CC=$TOOLCHAIN/bin/$TARGET$API-clang
+export CXX=$TOOLCHAIN/bin/$TARGET$API-clang++
+export LD=$TOOLCHAIN/bin/$TARGET-ld
+export RANLIB=$TOOLCHAIN/bin/$TARGET-ranlib
+export STRIP=$TOOLCHAIN/bin/$TARGET-strip
 
 export ANDROID_API
 export TARGET_TUPLE
@@ -74,10 +75,6 @@ export HAVE_64
 # Add the NDK toolchain to the PATH, needed both for contribs and for building
 # stub libraries
 NDK_TOOLCHAIN_PATH="${ANDROID_TOOLCHAIN}/bin"
-CROSS_COMPILE=${NDK_TOOLCHAIN_PATH}/${TARGET_TUPLE}-
-export PATH=${NDK_TOOLCHAIN_PATH}:${PATH}
-export CROSS_COMPILE="${CROSS_COMPILE}"
-export SYSROOT=$ANDROID_TOOLCHAIN/sysroot
 
 if [ -z "$DAEMON_DIR" ]; then
     DAEMON_DIR="$(pwd)/../daemon"
@@ -99,33 +96,22 @@ if [ ${ANDROID_ABI} = "armeabi-v7a" ] ; then
     EXTRA_CFLAGS="${EXTRA_CFLAGS} -march=armv7-a -mthumb -mfpu=vfpv3-d16"
     EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -march=armv7-a -mthumb -mfpu=vfpv3-d16"
 elif [ ${ANDROID_ABI} = "arm64-v8a" ] ; then
-    EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${SYSROOT}/usr/lib -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/lib"
+    EXTRA_LDFLAGS="${EXTRA_LDFLAGS}"
 fi
-EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/${LIBDIR}/${ANDROID_ABI} -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/${LIBDIR}"
-EXTRA_CFLAGS="${EXTRA_CFLAGS} -fPIC"
-EXTRA_CXXFLAGS="${EXTRA_CXXFLAGS} -fPIC"
-EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${SYSROOT}/usr/${LIBDIR}"
-echo "EXTRA_CFLAGS= ${EXTRA_CFLAGS}" >> config.mak
-echo "EXTRA_CXXFLAGS= ${EXTRA_CXXFLAGS}" >> config.mak
-echo "EXTRA_LDFLAGS= ${EXTRA_LDFLAGS}" >> config.mak
 
 if [ "${RELEASE}" -eq 1 ]; then
     echo "Daemon in release mode."
     OPTS=""
-    STRIP_ARG="-s "
 else
     echo "Daemon in debug mode."
     OPTS="--enable-debug"
 fi
 
 # Make in //
-UNAMES=$(uname -s)
 MAKEFLAGS=
-if which nproc >/dev/null
-then
+if which nproc >/dev/null; then
 MAKEFLAGS=-j`nproc`
-elif [ "$UNAMES" == "Darwin" ] && which sysctl >/dev/null
-then
+elif [ "$platform" == "darwin" ] && which sysctl >/dev/null; then
 MAKEFLAGS=-j`sysctl -n machdep.cpu.thread_count`
 fi
 
@@ -168,15 +154,24 @@ make $MAKEFLAGS
 DAEMON_BUILD_DIR="${DAEMON_DIR}/build-android-${TARGET_TUPLE}"
 mkdir -p ${DAEMON_BUILD_DIR}
 
-if [ ! -f config.h ]; then
-    cd ${DAEMON_DIR}
+cd ${DAEMON_DIR}
+if [ ! -f configure ]; then
     ./autogen.sh
-    cd "${DAEMON_BUILD_DIR}"
+fi
+
+cd "${DAEMON_BUILD_DIR}"
+if [ ! -f config.h ]; then
     echo "Configuring with ${OPTS}"
     CFLAGS="${EXTRA_CFLAGS}" \
     CXXFLAGS="${EXTRA_CXXFLAGS}" \
     LDFLAGS="${EXTRA_LDFLAGS}" \
-    ${ANDROID_TOPLEVEL_DIR}/configure.sh ${OPTS}
+    CPPFLAGS="${CPPFLAGS} -I${DAEMON_DIR}/contrib/${TARGET_TUPLE}/include " \
+    LDFLAGS="${LDFLAGS} -L${DAEMON_DIR}/contrib/${TARGET_TUPLE}/lib " \
+    PKG_CONFIG_LIBDIR=$DAEMON_DIR/contrib/$TARGET_TUPLE/lib/pkgconfig \
+    ${DAEMON_DIR}/configure --host=$TARGET_TUPLE $EXTRA_PARAMS \
+                   --disable-shared --with-opensl --without-dbus --without-alsa --without-pulse --enable-accel\
+                   --prefix=$DAEMON_DIR/install-android-$TARGET_TUPLE \
+                   ${OPTS}
 fi
 
 if [ ${ANDROID_API} = "android-21" ] ; then
@@ -223,17 +218,16 @@ mkdir -p ${LIBRING_JNI_DIR}
 cp $ANDROID_NDK/sources/cxx-stl/llvm-libc++/libs/${ANDROID_ABI}/libc++_shared.so $LIBRING_JNI_DIR
 
 # Use a shared libc++_shared.so (shared by jami and all other plugins)
-${NDK_TOOLCHAIN_PATH}/clang++ \
-                --shared \
-                -Wall -Wextra \
-                -Wno-unused-variable \
-                -Wno-unused-function \
-                -Wno-unused-parameter \
-                ${JNIDIR}/ring_wrapper.cpp \
-                ${DAEMON_BUILD_DIR}/src/.libs/libring.a \
-                -isystem ${DAEMON_DIR}/contrib/${TARGET_TUPLE}/include \
-                -I${DAEMON_DIR}/src \
-                -L${DAEMON_DIR}/contrib/${TARGET_TUPLE}/lib \
-                ${STATIC_LIBS_ALL} \
-                ${STRIP_ARG} --std=c++14 -O3 -fPIC \
-                -o ${LIBRING_JNI_DIR}/libring.so
+${CXX} --shared \
+       -Wall -Wextra \
+       -Wno-unused-variable \
+       -Wno-unused-function \
+       -Wno-unused-parameter \
+       ${JNIDIR}/ring_wrapper.cpp \
+       ${DAEMON_BUILD_DIR}/src/.libs/libring.a \
+       -isystem ${DAEMON_DIR}/contrib/${TARGET_TUPLE}/include \
+       -I${DAEMON_DIR}/src \
+       -L${DAEMON_DIR}/contrib/${TARGET_TUPLE}/lib \
+       ${STATIC_LIBS_ALL} \
+       ${EXTRA_CXXFLAGS} -O3 --std=c++17 \
+       -o ${LIBRING_JNI_DIR}/libring.so
