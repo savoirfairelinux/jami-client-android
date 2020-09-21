@@ -44,6 +44,7 @@ import cx.ring.facades.ConversationFacade;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
+import cx.ring.utils.ConversationPath;
 import io.reactivex.schedulers.Schedulers;
 
 @RequiresApi(api = Build.VERSION_CODES.M)
@@ -74,25 +75,25 @@ public class JamiChooserTargetService extends ChooserTargetService {
                         .map(conversations -> {
                             List<Future<Bitmap>> futureIcons = new ArrayList<>(conversations.size());
                             for (Conversation conversation : conversations) {
-                                CallContact contact = conversation.getContact();
-                                futureIcons.add(AvatarFactory.getBitmapAvatar(this, contact, targetSize)
+                                futureIcons.add(AvatarFactory.getBitmapAvatar(this, conversation.getContact(), targetSize, false)
                                         .subscribeOn(Schedulers.computation())
                                         .toFuture());
                             }
                             int i=0;
                             List<ChooserTarget> choosers = new ArrayList<>(conversations.size());
                             for (Conversation conversation : conversations) {
-                                CallContact contact = conversation.getContact();
-                                Bundle bundle = new Bundle();
-                                bundle.putString(ConversationFragment.KEY_ACCOUNT_ID, a.getAccountID());
-                                bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, contact.getPrimaryNumber());
+                                Bundle bundle = ConversationPath.toBundle(a.getAccountID(), conversation.getUri());
+                                //CallContact contact = conversation.getContact();
+                                //Bundle bundle = new Bundle();
+                                //bundle.putString(ConversationFragment.KEY_ACCOUNT_ID, a.getAccountID());
+                                //bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, contact.getPrimaryNumber());
                                 Icon icon = null;
                                 try {
                                     icon = Icon.createWithBitmap(futureIcons.get(i).get());
                                 } catch (Exception e) {
                                     Log.w("RingChooserService", "Failed to load icon", e);
                                 }
-                                ChooserTarget target = new ChooserTarget(contact.getDisplayName(), icon, 1.f-(i/(float)conversations.size()), componentName, bundle);
+                                ChooserTarget target = new ChooserTarget(conversation.getDisplayName(), icon, 1.f-(i/(float)conversations.size()), componentName, bundle);
                                 choosers.add(target);
                                 i++;
                             }

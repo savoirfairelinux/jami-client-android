@@ -25,6 +25,7 @@ import cx.ring.account.AccountEditionFragment;
 import cx.ring.account.JamiAccountPasswordFragment;
 import cx.ring.account.JamiAccountUsernameFragment;
 import cx.ring.account.JamiLinkAccountPasswordFragment;
+import cx.ring.fragments.ContactPickerFragment;
 import cx.ring.fragments.LocationSharingFragment;
 import cx.ring.account.AccountWizardActivity;
 import cx.ring.account.HomeAccountCreationFragment;
@@ -233,4 +234,6 @@ public interface JamiInjectionComponent {
     void inject(LocationSharingService service);
 
     void inject(SyncService syncService);
+
+    void inject(ContactPickerFragment contactPickerFragment);
 }

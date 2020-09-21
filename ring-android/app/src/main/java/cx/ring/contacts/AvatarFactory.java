@@ -34,6 +34,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.RequestManager;
 
+import java.util.List;
+
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.views.AvatarDrawable;
@@ -58,10 +60,25 @@ public class AvatarFactory {
                         .withPresence(presence)
                         .build(context));
     }
+    public static Single<Drawable> getAvatar(Context context, List<CallContact> contacts, boolean presence) {
+        return Single.fromCallable(() ->
+                new AvatarDrawable.Builder()
+                        .withContacts(contacts)
+                        .withCircleCrop(true)
+                        .withPresence(presence)
+                        .build(context));
+    }
     public static Single<Drawable> getAvatar(Context context, CallContact contact) {
         return getAvatar(context, contact, true);
     }
+    public static Single<Drawable> getAvatar(Context context, List<CallContact> contacts) {
+        return getAvatar(context, contacts, true);
+    }
 
+    public static Single<Bitmap> getBitmapAvatar(Context context, List<CallContact> contacts, int size, boolean presence) {
+        return getAvatar(context, contacts, presence)
+                .map(d -> drawableToBitmap(d, size));
+    }
     public static Single<Bitmap> getBitmapAvatar(Context context, CallContact contact, int size, boolean presence) {
         return getAvatar(context, contact, presence)
                 .map(d -> drawableToBitmap(d, size));

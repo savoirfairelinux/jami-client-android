@@ -47,7 +47,7 @@ public class SmartListViewHolder extends RecyclerView.ViewHolder {
     public ItemSmartlistBinding binding;
     public ItemSmartlistHeaderBinding headerBinding;
 
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     public SmartListViewHolder(@NonNull ItemSmartlistBinding b) {
         super(b.getRoot());
@@ -94,12 +94,15 @@ public class SmartListViewHolder extends RecyclerView.ViewHolder {
                 binding.convLastItem.setTypeface(null, Typeface.NORMAL);
             }
 
-            CallContact contact = smartListViewModel.getContact();
+            //TODO handle group
+            CallContact contact = smartListViewModel.getContact().get(0);
             if (contact != null) {
                 binding.photo.setImageDrawable(
                         new AvatarDrawable.Builder()
                                 .withContact(contact)
                                 .withCircleCrop(true)
+                                .withPresence(smartListViewModel.showPresence())
+                                .withCheck(smartListViewModel.isChecked())
                                 .build(binding.photo.getContext()));
             } else {
                 binding.photo.setImageDrawable(

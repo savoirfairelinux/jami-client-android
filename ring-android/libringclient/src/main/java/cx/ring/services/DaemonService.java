@@ -28,6 +28,7 @@ import javax.inject.Named;
 import cx.ring.daemon.Blob;
 import cx.ring.daemon.Callback;
 import cx.ring.daemon.ConfigurationCallback;
+import cx.ring.daemon.ConversationCallback;
 import cx.ring.daemon.DataTransferCallback;
 import cx.ring.daemon.IntVect;
 import cx.ring.daemon.IntegerMap;
@@ -68,6 +69,7 @@ public class DaemonService {
     private DaemonCallAndConferenceCallback mCallAndConferenceCallback;
     private DaemonConfigurationCallback mConfigurationCallback;
     private DaemonDataTransferCallback mDataCallback;
+    private ConversationCallback mConversationCallback;
 
     private boolean mDaemonStarted = false;
 
@@ -96,7 +98,8 @@ public class DaemonService {
             mCallAndConferenceCallback = new DaemonCallAndConferenceCallback();
             mConfigurationCallback = new DaemonConfigurationCallback();
             mDataCallback = new DaemonDataTransferCallback();
-            Ringservice.init(mConfigurationCallback, mCallAndConferenceCallback, mPresenceCallback, mDataCallback, mHardwareCallback);
+            mConversationCallback = new ConversationCallbackImpl();
+            Ringservice.init(mConfigurationCallback, mCallAndConferenceCallback, mPresenceCallback, mDataCallback, mHardwareCallback, mConversationCallback);
             Log.i(TAG, "DaemonService started");
         }
     }
@@ -147,7 +150,7 @@ public class DaemonService {
 
         @Override
         public void accountProfileReceived(String account_id, String name, String photo) {
-            mExecutor.submit(() -> mAccountService.accountProfileReceived(account_id, name, photo));
+            mAccountService.accountProfileReceived(account_id, name, photo);
         }
 
         @Override
@@ -369,6 +372,28 @@ public class DaemonService {
         public void dataTransferEvent(long transferId, int eventCode) {
             Log.d(TAG, "dataTransferEvent: transferId=" + transferId + ", eventCode=" + eventCode);
             mAccountService.dataTransferEvent(transferId, eventCode);
+        }
+    }
+
+    class ConversationCallbackImpl extends ConversationCallback {
+        @Override
+        public void conversationLoaded(String accountId, String conversationId, VectMap messages) {
+            Log.w(TAG, "ConversationCallback: conversationLoaded " + accountId + "/" + conversationId + " " + messages.size());
+        }
+
+        @Override
+        public void conversationReady(String accountId, String conversationId) {
+            Log.w(TAG, "ConversationCallback: conversationReady " + accountId + "/" + conversationId);
+        }
+
+        @Override
+        public void conversationRequestReceived(String accountId, String conversationId, StringMap metadata) {
+            Log.w(TAG, "ConversationCallback: conversationRequestReceived " + accountId + "/" + conversationId + " " + metadata.size());
+        }
+
+        @Override
+        public void messageReceived(String accountId, String conversationId, StringMap message) {
+            Log.w(TAG, "ConversationCallback: " + accountId + "/" + conversationId + " " + message.size());
         }
     }
 }
