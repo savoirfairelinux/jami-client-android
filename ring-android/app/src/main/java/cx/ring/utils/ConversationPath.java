@@ -43,10 +43,10 @@ public class ConversationPath {
                 .appendEncodedPath(contactId)
                 .build();
     }
-    public static Uri toUri(String accountId, @NonNull cx.ring.model.Uri contactUri) {
+    public static Uri toUri(String accountId, @NonNull cx.ring.model.Uri conversationUri) {
         return ContentUriHandler.CONVERSATION_CONTENT_URI.buildUpon()
                 .appendEncodedPath(accountId)
-                .appendEncodedPath(contactUri.getUri())
+                .appendEncodedPath(conversationUri.getUri())
                 .build();
     }
     public static Uri toUri(@NonNull Interaction interaction) {
@@ -60,11 +60,14 @@ public class ConversationPath {
         bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
         bundle.putString(ConversationFragment.KEY_ACCOUNT_ID, accountId);
     }
-    public static Bundle toBundle(String accountId, String contactId) {
+    public static Bundle toBundle(String accountId, String uri) {
         Bundle bundle = new Bundle();
-        bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
+        bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, uri);
         bundle.putString(ConversationFragment.KEY_ACCOUNT_ID, accountId);
         return bundle;
+    }
+    public static Bundle toBundle(String accountId, cx.ring.model.Uri uri) {
+        return toBundle(accountId, uri.getUri());
     }
 
     public static ConversationPath fromUri(Uri uri) {

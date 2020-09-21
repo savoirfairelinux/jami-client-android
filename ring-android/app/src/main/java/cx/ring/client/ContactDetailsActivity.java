@@ -183,91 +183,87 @@ public class ContactDetailsActivity extends AppCompatActivity {
         fab.setOnClickListener(view -> goToConversationActivity(mConversation.getAccountId(), mContact.getPrimaryNumber()));
 
         Intent intent = getIntent();
-        Uri uri = intent.getData();
-        if (uri != null) {
-            List<String> segments = uri.getPathSegments();
-            if (segments.size() >= 3) {
-                String account = segments.get(1);
-                String contactUri = segments.get(2);
-                mDisposableBag.add(mConversationFacade
-                        .startConversation(account, new cx.ring.model.Uri(contactUri))
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(conversation -> {
-                            CallContact contact = conversation.getContact();
-                            mPreferences = getSharedPreferences(conversation.getAccountId() + "_" + conversation.getContact().getPrimaryNumber(), Context.MODE_PRIVATE);
-                            int color = mPreferences.getInt(ConversationFragment.KEY_PREFERENCE_CONVERSATION_COLOR, getResources().getColor(R.color.color_primary_light));
-                            colorAction.setIconTint(color);
-                            adapter.notifyItemChanged(colorActionPosition);
-                            contactAction.setTitle(contact.getRingUsername());
-                            adapter.notifyItemChanged(contactIdPosition);
-                            collapsingToolbarLayout.setBackgroundColor(color);
-                            collapsingToolbarLayout.setTitle(contact.getDisplayName());
-                            collapsingToolbarLayout.setContentScrimColor(color);
-                            collapsingToolbarLayout.setStatusBarScrimColor(color);
-                            //collapsingToolbarLayout.setCollapsedTitleTextColor();
-                            binding.contactImage.setImageDrawable(
-                                    new AvatarDrawable.Builder()
-                                            .withContact(contact)
-                                            .withPresence(false)
-                                            .withCircleCrop(false)
-                                            .build(this)
-                            );
-                            mConversation = conversation;
-                            mContact = contact;
-                        }));
+        ConversationPath path = ConversationPath.fromIntent(intent);
+        if (path != null) {
+            mDisposableBag.add(mConversationFacade
+                .startConversation(path.getAccountId(), new cx.ring.model.Uri(path.getContactId()))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(conversation -> {
+                    // TODO handle group
+                    CallContact contact = conversation.getContact().get(0);
+                    mPreferences = getSharedPreferences(conversation.getAccountId() + "_" + conversation.getUri().getUri(), Context.MODE_PRIVATE);
+                    int color = mPreferences.getInt(ConversationFragment.KEY_PREFERENCE_CONVERSATION_COLOR, getResources().getColor(R.color.color_primary_light));
+                    colorAction.setIconTint(color);
+                    adapter.notifyItemChanged(colorActionPosition);
+                    contactAction.setTitle(contact.getRingUsername());
+                    adapter.notifyItemChanged(contactIdPosition);
+                    collapsingToolbarLayout.setBackgroundColor(color);
+                    collapsingToolbarLayout.setTitle(contact.getDisplayName());
+                    collapsingToolbarLayout.setContentScrimColor(color);
+                    collapsingToolbarLayout.setStatusBarScrimColor(color);
+                    //collapsingToolbarLayout.setCollapsedTitleTextColor();
+                    binding.contactImage.setImageDrawable(
+                            new AvatarDrawable.Builder()
+                                    .withContact(contact)
+                                    .withPresence(false)
+                                    .withCircleCrop(false)
+                                    .build(this)
+                    );
+                    mConversation = conversation;
+                    mContact = contact;
+                }));
 
-                colorAction = new ContactAction(R.drawable.item_color_background, 0, "Choose color", () -> {
-                    ColorChooserBottomSheet frag = new ColorChooserBottomSheet();
-                    frag.setCallback(color -> {
-                        collapsingToolbarLayout.setBackgroundColor(color);
-                        collapsingToolbarLayout.setContentScrimColor(color);
-                        collapsingToolbarLayout.setStatusBarScrimColor(color);
-                        colorAction.setIconTint(color);
-                        adapter.notifyItemChanged(colorActionPosition);
-                        mPreferences.edit().putInt(ConversationFragment.KEY_PREFERENCE_CONVERSATION_COLOR, color).apply();
-                    });
-                    frag.show(getSupportFragmentManager(), "colorChooser");
+            colorAction = new ContactAction(R.drawable.item_color_background, 0, "Choose color", () -> {
+                ColorChooserBottomSheet frag = new ColorChooserBottomSheet();
+                frag.setCallback(color -> {
+                    collapsingToolbarLayout.setBackgroundColor(color);
+                    collapsingToolbarLayout.setContentScrimColor(color);
+                    collapsingToolbarLayout.setStatusBarScrimColor(color);
+                    colorAction.setIconTint(color);
+                    adapter.notifyItemChanged(colorActionPosition);
+                    mPreferences.edit().putInt(ConversationFragment.KEY_PREFERENCE_CONVERSATION_COLOR, color).apply();
                 });
-                adapter.actions.add(colorAction);
-                adapter.actions.add(new ContactAction(R.drawable.baseline_call_24, getText(R.string.ab_action_audio_call), () ->
-                        goToCallActivity(mConversation.getAccountId(), mContact.getPrimaryNumber(), true)));
-                adapter.actions.add(new ContactAction(R.drawable.baseline_videocam_24, getText(R.string.ab_action_video_call), () ->
-                        goToCallActivity(mConversation.getAccountId(), mContact.getPrimaryNumber(), false)));
-                adapter.actions.add(new ContactAction(R.drawable.baseline_clear_all_24, getText(R.string.conversation_action_history_clear), () ->
-                        new MaterialAlertDialogBuilder(ContactDetailsActivity.this)
-                                .setTitle(R.string.clear_history_dialog_title)
-                                .setMessage(R.string.clear_history_dialog_message)
-                                .setPositiveButton(R.string.conversation_action_history_clear, (b, i) -> {
-                                    mConversationFacade.clearHistory(mConversation.getAccountId(), mContact.getPrimaryUri()).subscribe();
-                                    Snackbar.make(binding.getRoot(), R.string.clear_history_completed, Snackbar.LENGTH_LONG).show();
-                                })
-                                .setNegativeButton(android.R.string.cancel, null)
-                                .create()
-                                .show()));
-                adapter.actions.add(new ContactAction(R.drawable.baseline_block_24, getText(R.string.conversation_action_block_this), () ->
-                        new MaterialAlertDialogBuilder(ContactDetailsActivity.this)
-                                .setTitle(getString(R.string.block_contact_dialog_title, contactAction.title))
-                                .setMessage(getString(R.string.block_contact_dialog_message, contactAction.title))
-                                .setPositiveButton(R.string.conversation_action_block_this, (b, i) -> {
-                                    mAccountService.removeContact(mConversation.getAccountId(), mContact.getPrimaryUri().getRawRingId(), true);
-                                    Toast.makeText(getApplicationContext(), getString(R.string.block_contact_completed, contactAction.title), Toast.LENGTH_LONG).show();
-                                    finish();
-                                })
-                                .setNegativeButton(android.R.string.cancel, null)
-                                .create()
-                                .show()));
-                contactAction = new ContactAction(R.drawable.baseline_person_24, "", () -> {
-                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                    if (clipboard != null) {
-                        clipboard.setPrimaryClip(ClipData.newPlainText(getText(R.string.clip_contact_uri), contactUri));
-                        Snackbar.make(binding.getRoot(), getString(R.string.conversation_action_copied_peer_number_clipboard, contactUri), Snackbar.LENGTH_LONG).show();
-                    }
-                });
-                adapter.actions.add(contactAction);
-                colorActionPosition = 0;
-                contactIdPosition = adapter.actions.size() - 1;
-                binding.contactActionList.setAdapter(adapter);
-            }
+                frag.show(getSupportFragmentManager(), "colorChooser");
+            });
+            adapter.actions.add(colorAction);
+            adapter.actions.add(new ContactAction(R.drawable.baseline_call_24, getText(R.string.ab_action_audio_call), () ->
+                    goToCallActivity(mConversation.getAccountId(), mContact.getPrimaryNumber(), true)));
+            adapter.actions.add(new ContactAction(R.drawable.baseline_videocam_24, getText(R.string.ab_action_video_call), () ->
+                    goToCallActivity(mConversation.getAccountId(), mContact.getPrimaryNumber(), false)));
+            adapter.actions.add(new ContactAction(R.drawable.baseline_clear_all_24, getText(R.string.conversation_action_history_clear), () ->
+                    new MaterialAlertDialogBuilder(ContactDetailsActivity.this)
+                            .setTitle(R.string.clear_history_dialog_title)
+                            .setMessage(R.string.clear_history_dialog_message)
+                            .setPositiveButton(R.string.conversation_action_history_clear, (b, i) -> {
+                                mConversationFacade.clearHistory(mConversation.getAccountId(), mContact.getPrimaryUri()).subscribe();
+                                Snackbar.make(binding.getRoot(), R.string.clear_history_completed, Snackbar.LENGTH_LONG).show();
+                            })
+                            .setNegativeButton(android.R.string.cancel, null)
+                            .create()
+                            .show()));
+            adapter.actions.add(new ContactAction(R.drawable.baseline_block_24, getText(R.string.conversation_action_block_this), () ->
+                    new MaterialAlertDialogBuilder(ContactDetailsActivity.this)
+                            .setTitle(getString(R.string.block_contact_dialog_title, contactAction.title))
+                            .setMessage(getString(R.string.block_contact_dialog_message, contactAction.title))
+                            .setPositiveButton(R.string.conversation_action_block_this, (b, i) -> {
+                                mAccountService.removeContact(mConversation.getAccountId(), mContact.getPrimaryUri().getRawRingId(), true);
+                                Toast.makeText(getApplicationContext(), getString(R.string.block_contact_completed, contactAction.title), Toast.LENGTH_LONG).show();
+                                finish();
+                            })
+                            .setNegativeButton(android.R.string.cancel, null)
+                            .create()
+                            .show()));
+            contactAction = new ContactAction(R.drawable.baseline_person_24, "", () -> {
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                if (clipboard != null) {
+                    clipboard.setPrimaryClip(ClipData.newPlainText(getText(R.string.clip_contact_uri), path.getContactId()));
+                    Snackbar.make(binding.getRoot(), getString(R.string.conversation_action_copied_peer_number_clipboard, path.getContactId()), Snackbar.LENGTH_LONG).show();
+                }
+            });
+            adapter.actions.add(contactAction);
+            colorActionPosition = 0;
+            contactIdPosition = adapter.actions.size() - 1;
+            binding.contactActionList.setAdapter(adapter);
         }
     }
 

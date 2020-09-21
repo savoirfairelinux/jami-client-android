@@ -40,6 +40,7 @@ import cx.ring.application.JamiApplication;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.fragments.CallFragment;
 import cx.ring.model.Account;
+import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.SipCall;
 import cx.ring.services.CallService;
@@ -81,7 +82,7 @@ public class ConversationSelectionActivity extends AppCompatActivity {
             @Override
             public void onItemClick(SmartListViewModel smartListViewModel) {
                 Intent intent = new Intent();
-                intent.setData(ConversationPath.toUri(smartListViewModel.getAccountId(), smartListViewModel.getContact().getPrimaryNumber()));
+                intent.setData(ConversationPath.toUri(smartListViewModel.getAccountId(), smartListViewModel.getUri()));
                 setResult(Activity.RESULT_OK, intent);
                 finish();
             }
@@ -110,14 +111,17 @@ public class ConversationSelectionActivity extends AppCompatActivity {
         final Conference conf = conference;
         mDisposable.add(mConversationFacade
                 .getCurrentAccountSubject()
-                .switchMap(Account::getConversationsViewModels)
+                .switchMap(a -> a.getConversationsViewModels(false))
                 .map(vm -> {
                     if (conf == null)
                         return vm;
                     List<SmartListViewModel> filteredVms = new ArrayList<>(vm.size());
                     models: for (SmartListViewModel v : vm) {
+                        List<CallContact> contacts = v.getContact();
+                        if (contacts.size() != 1)
+                            continue;
                         for (SipCall call : conf.getParticipants()) {
-                            if (call.getContact() == v.getContact()) {
+                            if (call.getContact() == v.getContact().get(0)) {
                                 continue models;
                             }
                         }

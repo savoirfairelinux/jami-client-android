@@ -30,6 +30,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.SocketException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +48,7 @@ import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.StringVect;
 import cx.ring.daemon.UintVect;
+import cx.ring.daemon.VectMap;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.CallContact;
@@ -265,7 +267,7 @@ public class AccountService {
         public List<Observable<SmartListViewModel>> getResultsViewModels() {
             List<Observable<SmartListViewModel>> vms = new ArrayList<>(results.size());
             for (User user : results) {
-                vms.add(Observable.just(new SmartListViewModel(accountId, user)));
+                //vms.add(Observable.just(new SmartListViewModel(accountId, user)));
             }
             return vms;
         }
@@ -341,6 +343,9 @@ public class AccountService {
         mExecutor.execute(() -> {
             refreshAccountsCacheFromDaemon();
             setAccountsActive(isConnected);
+            for (Account account : mAccountList) {
+                Ringservice.getConversations(account.getAccountID());
+            }
         });
     }
 
@@ -379,12 +384,22 @@ public class AccountService {
                 account.setVolatileDetails(volatileAccountDetails);
             }
 
-
             if (account.isSip()) {
                 hasSip = true;
             } else if (account.isJami()) {
                 hasJami = true;
                 boolean enabled = account.isEnabled();
+                List<String> conversations = Ringservice.getConversations(account.getAccountID());
+                for (String conversationId : conversations) {
+                    List<Map<String, String>> members = Ringservice.getConversationMembers(accountId, conversationId).toNative();
+                    for (Map<String, String> member : members) {
+                        for (Map.Entry<String, String> minfo : member.entrySet()) {
+                            Log.w(TAG, accountId + " " + conversationId + " member " + minfo.getKey() + " -> " + minfo.getValue());
+                        }
+                    }
+                    //account.addSwarmConversation(conversationId, members);
+                }
+                account.setSwarmConversations(conversations);
 
                 account.setDevices(Ringservice.getKnownRingDevices(accountId).toNative());
                 account.setContacts(Ringservice.getContacts(accountId).toNative());
@@ -422,7 +437,7 @@ public class AccountService {
         }
 
         // migration to multi accounts
-        mHistoryService.migrateDatabase(accountIds);
+        /*mHistoryService.migrateDatabase(accountIds);
         mHistoryService.getMigrationStatus().firstOrError().subscribe(migrationStatus -> {
             if (migrationStatus == HistoryService.MigrationStatus.SUCCESSFUL) {
                 mVCardService.migrateProfiles(accountIds);
@@ -435,7 +450,7 @@ public class AccountService {
                 }
                 mVCardService.deleteLegacyProfiles();
             }
-        }, e -> Log.e(TAG, "Error completing profile migration", e));
+        }, e -> Log.e(TAG, "Error completing profile migration", e));*/
 
         accountsSubject.onNext(newAccounts);
     }
@@ -651,6 +666,21 @@ public class AccountService {
 
     public void setMessageDisplayed(String accountId, String contactId, String messageId) {
         mExecutor.execute(() -> Ringservice.setMessageDisplayed(accountId, contactId, messageId, 3));
+    }
+
+    public Single<Conversation> startConversation(String accountId, Collection<String> initialMembers) {
+        Account account = getAccount(accountId);
+        return Single.fromCallable(() -> {
+            String id = Ringservice.startConversation(accountId);
+            Conversation conversation = new Conversation(accountId, new Uri(id));
+            for (String member : initialMembers) {
+                Ringservice.addConversationMember(accountId, id, member);
+                conversation.addContact(account.getContactFromCache(member));
+            }
+            account.conversationStarted(conversation);
+            Ringservice.loadConversationMessages(accountId, id, id, 16);
+            return conversation;
+        }).subscribeOn(Schedulers.from(mExecutor));
     }
 
     /**

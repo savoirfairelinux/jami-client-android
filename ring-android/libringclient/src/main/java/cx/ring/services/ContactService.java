@@ -20,7 +20,9 @@
  */
 package cx.ring.services;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -85,7 +87,7 @@ public abstract class ContactService {
         });
     }
 
-    public Observable<CallContact> observeContact(String accountId, CallContact contact) {
+    public Observable<CallContact> observeContact(String accountId, CallContact contact, boolean withPresence) {
         Uri uri = contact.getPrimaryUri();
         String uriString = uri.getRawUriString();
         synchronized (contact) {
@@ -108,10 +110,26 @@ public abstract class ContactService {
             return contact.getUpdates();
         }
     }
+    public Observable<List<CallContact>> observeContact(String accountId, List<CallContact> contacts, boolean withPresence) {
+        //TODO handle groups
+        return observeContact(accountId, contacts.get(0), withPresence).map(Collections::singletonList);
+    }
 
     public Single<CallContact> getLoadedContact(String accountId, CallContact contact) {
-        return observeContact(accountId, contact)
+        return observeContact(accountId, contact, false)
                 .filter(c -> c.isUsernameLoaded() && c.detailsLoaded)
+                .firstOrError();
+    }
+
+    public Single<List<CallContact>> getLoadedContact(String accountId, List<CallContact> contacts) {
+        return observeContact(accountId, contacts, false)
+                .filter(cts -> {
+                    for (CallContact c : cts) {
+                        if (!c.isUsernameLoaded() || !c.detailsLoaded)
+                            return false;
+                    }
+                    return true;
+                })
                 .firstOrError();
     }
 

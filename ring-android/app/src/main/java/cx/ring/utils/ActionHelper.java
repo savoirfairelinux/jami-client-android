@@ -50,14 +50,14 @@ public class ActionHelper {
     }
 
     public static void launchClearAction(final Context context,
-                                                 final CallContact callContact,
+                                                 final Uri uri,
                                                  final Conversation.ConversationActionCallback callback) {
         if (context == null) {
             Log.d(TAG, "launchClearAction: activity is null");
             return;
         }
 
-        if (callContact == null) {
+        if (uri == null) {
             Log.d(TAG, "launchClearAction: conversation is null");
             return;
         }
@@ -67,7 +67,7 @@ public class ActionHelper {
                 .setMessage(R.string.conversation_action_history_clear_message)
                 .setPositiveButton(android.R.string.ok, (dialog, whichButton) -> {
                     if (callback != null) {
-                        callback.clearConversation(callContact);
+                        callback.clearConversation(uri);
                     }
                 })
                 .setNegativeButton(android.R.string.cancel, (dialog, whichButton) -> {
@@ -77,14 +77,14 @@ public class ActionHelper {
     }
 
     public static void launchDeleteAction(final Context context,
-                                                 final CallContact callContact,
+                                                 final Uri uri,
                                                  final Conversation.ConversationActionCallback callback) {
         if (context == null) {
             Log.d(TAG, "launchDeleteAction: activity is null");
             return;
         }
 
-        if (callContact == null) {
+        if (uri == null) {
             Log.d(TAG, "launchDeleteAction: conversation is null");
             return;
         }
@@ -94,7 +94,7 @@ public class ActionHelper {
                 .setMessage(R.string.conversation_action_remove_this_message)
                 .setPositiveButton(android.R.string.ok, (dialog, whichButton) -> {
                     if (callback != null) {
-                        callback.removeConversation(callContact);
+                        callback.removeConversation(uri);
                     }
                 })
                 .setNegativeButton(android.R.string.cancel, (dialog, whichButton) -> {
@@ -104,9 +104,9 @@ public class ActionHelper {
     }
 
     public static void launchCopyNumberToClipboardFromContact(final Context context,
-                                                              final CallContact callContact,
+                                                              final Uri callContact,
                                                               final Conversation.ConversationActionCallback callback) {
-        if (callContact == null) {
+        /*if (callContact == null) {
             Log.d(TAG, "launchCopyNumberToClipboardFromContact: callContact is null");
             return;
         }
@@ -140,7 +140,7 @@ public class ActionHelper {
                     .getDimension(R.dimen.alert_dialog_side_padding_list_view);
             alertDialog.getListView().setPadding(listViewSidePadding, 0, listViewSidePadding, 0);
             alertDialog.show();
-        }
+        }*/
     }
 
     public static Intent getAddNumberIntentForContact(CallContact contact) {
