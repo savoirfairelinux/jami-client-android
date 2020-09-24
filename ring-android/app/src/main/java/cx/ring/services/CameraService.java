@@ -99,7 +99,7 @@ public class CameraService {
     // SPS and PPS NALs (Config Data).
     private ByteBuffer codecData = null;
 
-    private final CameraManager.AvailabilityCallback availabilityCallback = new CameraManager.AvailabilityCallback() {
+    /*private final CameraManager.AvailabilityCallback availabilityCallback = new CameraManager.AvailabilityCallback() {
         @Override
         public void onCameraAvailable(@NonNull String cameraId) {
             init()
@@ -113,7 +113,7 @@ public class CameraService {
                 .onErrorComplete()
                 .subscribe();
         }
-    };
+    };*/
 
     CameraService(@NonNull Context c) {
         manager = (CameraManager) c.getSystemService(Context.CAMERA_SERVICE);
@@ -392,7 +392,7 @@ public class CameraService {
                 })
                 .ignoreElement()
                 .doOnError(e -> Log.e(TAG, "Error initializing video device", e))
-                .doOnComplete(() -> manager.registerAvailabilityCallback(availabilityCallback, getVideoHandler()))
+                //.doOnComplete(() -> manager.registerAvailabilityCallback(availabilityCallback, getVideoHandler()))
                 .onErrorComplete();
     }
 
@@ -992,7 +992,7 @@ public class CameraService {
     }
 
     public void unregisterCameraDetectionCallback() {
-        if (manager != null && availabilityCallback != null)
-            manager.unregisterAvailabilityCallback(availabilityCallback);
+        /*if (manager != null && availabilityCallback != null)
+            manager.unregisterAvailabilityCallback(availabilityCallback);*/
     }
 }
