@@ -38,6 +38,12 @@ for i in ${ANDROID_ABI_LIST}; do
     echo "$i build OK"
 done
 
+if [[ $RELEASE -eq 1 ]]; then
+    echo "Archiving native debug symbols"
+    cd $TOP/app/src/main/libs
+    zip -r $TOP/app/symbols.zip .
+fi
+
 if [[ $DAEMON_ONLY -eq 0 ]]; then
     if [ -z "$RING_BUILD_FIREBASE" ]; then
         echo "Building without Firebase support"
@@ -46,9 +52,6 @@ if [[ $DAEMON_ONLY -eq 0 ]]; then
         echo "Building with Firebase support"
     fi
     if [[ $RELEASE -eq 1 ]]; then
-        echo "Archiving native debug symbols"
-        cd $TOP/app/src/main/libs
-        zip -r $TOP/app/symbols.zip .
         cd $TOP && gradle $GRADLE_PROPERTIES assembleRelease
     else
         cd $TOP && gradle $GRADLE_PROPERTIES assembleDebug
