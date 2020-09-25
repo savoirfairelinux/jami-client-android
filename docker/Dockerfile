@@ -39,20 +39,20 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	&& locale-gen $LANG $LC_ALL && update-locale $LANG $LC_ALL
 
 # Android SDK tools
+ENV ANDROID_HOME=/opt/android-sdk
+ENV ANDROID_SDK_ROOT=${ANDROID_HOME}
 RUN wget -O /tmp/android-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-6609375_latest.zip && \
-	mkdir -p /opt/android-sdk && \
-	unzip -q -d /opt/android-sdk /tmp/android-tools.zip && \
+	mkdir -p ${ANDROID_HOME} && \
+	unzip -q -d ${ANDROID_HOME} /tmp/android-tools.zip && \
 	rm -f /tmp/android-tools.zip && \
-	chown -R root:root /opt/android-sdk
+	chown -R root:root ${ANDROID_HOME}
+ENV PATH=${PATH}:${ANDROID_HOME}/tools/bin
 
 # Swig 4.0.1
 RUN wget -O /tmp/swig.tar.gz https://github.com/swig/swig/archive/rel-4.0.1.tar.gz && \
 	tar xzf  /tmp/swig.tar.gz -C /opt && \
 	cd /opt/swig-rel-4.0.1/ && ./autogen.sh && ./configure && make && make install && \
 	cd .. && rm -rf /opt/swig-rel-4.0.1 /tmp/swig.tar.gz
-
-ENV ANDROID_HOME=/opt/android-sdk
-ENV PATH=${PATH}:${ANDROID_HOME}/tools/bin
 
 # Android SDK libraries, NDK
 RUN sdkmanager --sdk_root=${ANDROID_HOME} --update
