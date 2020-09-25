@@ -20,21 +20,20 @@ platform :android do
 
   desc "Submit a new Beta Build to the Play Store Beta channel"
   lane :beta do |options|
-    sign_apk(
-      apk_path: options[:apk_path],
-      signed_apk_path: options[:signed_apk_path],
-      keystore_path: options[:keystore_path],
-      alias: options[:keyalias],
-      storepass: options[:storepass],
-      keypass: options[:keypass]
+    gradle(
+      task: "assemble",
+      flavor: "withFirebase",
+      build_type: "Release",
+      print_command: false,
+      properties: {
+        "android.injected.signing.store.file" => options[:keystore_path],
+        "android.injected.signing.store.password" => options[:storepass],
+        "android.injected.signing.key.alias" => options[:keyalias],
+        "android.injected.signing.key.password" => options[:keypass],
+      }
     )
 
-    zipalign(
-        apk_path: options[:signed_apk_path]
-    )
-
-    supply(
-      apk: options[:signed_apk_path],
+    upload_to_play_store(
       track: "beta",
       json_key: options[:json_key],
       mapping: options[:mapping]
@@ -43,21 +42,20 @@ platform :android do
 
   desc "Submit a new Build to the Play Store"
   lane :production do |options|
-    sign_apk(
-      apk_path: options[:apk_path],
-      signed_apk_path: options[:signed_apk_path],
-      keystore_path: options[:keystore_path],
-      alias: options[:keyalias],
-      storepass: options[:storepass],
-      keypass: options[:keypass]
+    gradle(
+      task: "assemble",
+      flavor: "withFirebase",
+      build_type: "Release",
+      print_command: false,
+      properties: {
+        "android.injected.signing.store.file" => options[:keystore_path],
+        "android.injected.signing.store.password" => options[:storepass],
+        "android.injected.signing.key.alias" => options[:keyalias],
+        "android.injected.signing.key.password" => options[:keypass],
+      }
     )
 
-    zipalign(
-        apk_path: options[:signed_apk_path]
-    )
-
-    supply(
-      apk: options[:signed_apk_path],
+    upload_to_play_store(
       track: "production",
       json_key: options[:json_key],
       mapping: options[:mapping]
@@ -66,19 +64,18 @@ platform :android do
 
   desc "So far, we just sign and align the APK"
   lane :nopush do |options|
-    sign_apk(
-      apk_path: options[:apk_path],
-      signed_apk_path: options[:signed_apk_path],
-      keystore_path: options[:keystore_path],
-      alias: options[:keyalias],
-      storepass: options[:storepass],
-      keypass: options[:keypass]
-    )
-
-    zipalign(
-        apk_path: options[:signed_apk_path]
+    gradle(
+      task: "assemble",
+      flavor: "noPush",
+      build_type: "Release",
+      print_command: false,
+      properties: {
+        "android.injected.signing.store.file" => options[:keystore_path],
+        "android.injected.signing.store.password" => options[:storepass],
+        "android.injected.signing.key.alias" => options[:keyalias],
+        "android.injected.signing.key.password" => options[:keypass],
+      }
     )
   end
 
 end
-
