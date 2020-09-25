@@ -9,8 +9,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 259
-        versionName "20200913-01"
+        versionCode 260
+        versionName "20200925-01"
     }
     sourceSets {
         main {
