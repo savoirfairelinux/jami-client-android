@@ -39,7 +39,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	&& locale-gen $LANG $LC_ALL && update-locale $LANG $LC_ALL
 
 # Android SDK tools
-RUN wget -O /tmp/android-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-6200805_latest.zip && \
+RUN wget -O /tmp/android-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-6609375_latest.zip && \
 	mkdir -p /opt/android-sdk && \
 	unzip -q -d /opt/android-sdk /tmp/android-tools.zip && \
 	rm -f /tmp/android-tools.zip && \
