@@ -9,6 +9,8 @@
 
 # If you want to automatically update fastlane if a new version is available:
 # update_fastlane
+opt_out_usage
+skip_docs
 
 # This is the minimum version number required.
 # Update this, if you use features of a newer version
