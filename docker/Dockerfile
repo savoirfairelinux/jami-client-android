@@ -2,8 +2,6 @@ FROM gradle:jdk8
 
 ENV LANG en_US.utf8
 ENV LC_ALL en_US.utf8
-ENV HOME /home/builder
-ENV SSH_AUTH_SOCK /home/builder/.sockets/ssh
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
 	asciidoc \
@@ -67,6 +65,3 @@ ENV ANDROID_NDK=${ANDROID_HOME}/ndk/21.3.6528147
 
 # Fastlane
 RUN gem install fastlane -NV
-
-WORKDIR /home/builder/src
-VOLUME /home/builder/src

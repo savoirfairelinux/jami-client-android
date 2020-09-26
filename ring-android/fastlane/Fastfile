@@ -63,7 +63,7 @@ platform :android do
   end
 
   desc "So far, we just sign and align the APK"
-  lane :nopush do |options|
+  lane :ci do |options|
     gradle(
       task: "assemble",
       flavor: "noPush",
