@@ -36,6 +36,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	zip \
 	libpcre3 \
 	libpcre3-dev \
+	ruby ruby-dev \
 	&& locale-gen $LANG $LC_ALL && update-locale $LANG $LC_ALL
 
 # Android SDK tools
@@ -63,6 +64,9 @@ RUN (while sleep 1; do echo "y"; done) | sdkmanager --sdk_root=${ANDROID_HOME} '
 	'ndk;21.3.6528147'
 ENV ANDROID_SDK=${ANDROID_HOME}
 ENV ANDROID_NDK=${ANDROID_HOME}/ndk/21.3.6528147
+
+# Fastlane
+RUN gem install fastlane -NV
 
 WORKDIR /home/builder/src
 VOLUME /home/builder/src
