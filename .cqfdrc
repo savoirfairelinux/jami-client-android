@@ -1,0 +1,17 @@
+[project]
+org='jami'
+name='client-android'
+
+[build]
+command='./compile.sh'
+flavors='ci release daemon'
+
+[ci]
+command='./compile.sh'
+
+[daemon]
+command='./compile.sh --daemon'
+
+[release]
+command='./compile.sh --release'
+
