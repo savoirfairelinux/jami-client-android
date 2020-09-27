@@ -65,3 +65,4 @@ ENV ANDROID_NDK=${ANDROID_HOME}/ndk/21.3.6528147
 
 # Fastlane
 RUN gem install fastlane -NV
+ENV HOME=/var/lib/jenkins
