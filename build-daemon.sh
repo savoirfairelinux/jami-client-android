@@ -201,13 +201,10 @@ LIBCPP=$ANDROID_NDK/sources/cxx-stl/llvm-libc++/libs/${ANDROID_ABI}/libc++_share
 
 echo "Building Jami JNI library for Android to ${LIBRING_JNI_DIR}"
 mkdir -p ${LIBRING_JNI_DIR}
-mkdir -p ${LIBRING_JNI_UNSTRIPPED_DIR}
-
-# Use a shared stl
-cp $LIBCPP $LIBRING_JNI_DIR
-cp $LIBCPP $LIBRING_JNI_UNSTRIPPED_DIR
 
 # Use a shared libc++_shared.so (shared by jami and all other plugins)
+cp $LIBCPP $LIBRING_JNI_DIR
+
 ${CXX} --shared \
        -Wall -Wextra \
        -Wno-unused-variable \
@@ -220,8 +217,11 @@ ${CXX} --shared \
        -L${DAEMON_DIR}/contrib/${TARGET}/lib \
        ${STATIC_LIBS_ALL} \
        ${FLAGS_COMMON} -O3 --std=c++17 \
-       -o ${LIBRING_JNI_UNSTRIPPED_DIR}/libring.so
+       -o ${LIBRING_JNI_DIR}/libring.so
 
-cp ${LIBRING_JNI_UNSTRIPPED_DIR}/libring.so ${LIBRING_JNI_DIR}
-${STRIP} ${LIBRING_JNI_DIR}/libring.so
-ls -la ${LIBRING_JNI_DIR}/libring.so
+if [ "${RELEASE}" -eq 1 ]; then
+    mkdir -p ${LIBRING_JNI_UNSTRIPPED_DIR}
+    cp ${LIBCPP} ${LIBRING_JNI_UNSTRIPPED_DIR}
+    cp ${LIBRING_JNI_DIR}/libring.so ${LIBRING_JNI_UNSTRIPPED_DIR}
+    ${STRIP} ${LIBRING_JNI_DIR}/libring.so
+fi
