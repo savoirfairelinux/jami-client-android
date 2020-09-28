@@ -158,8 +158,6 @@ public abstract class HardwareService {
     public abstract boolean hasCamera();
     public abstract int getCameraCount();
     public abstract Observable<Tuple<Integer, Integer>> getMaxResolutions();
-    public abstract Tuple<Integer, Integer> getMaxResolution();
-    public abstract Tuple<Integer, Integer> getMaxResolution(String camId);
 
     public abstract boolean isPreviewFromFrontCamera();
 

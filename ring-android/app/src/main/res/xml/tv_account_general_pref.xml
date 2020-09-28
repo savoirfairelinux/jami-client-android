@@ -31,6 +31,8 @@
             android:defaultValue="@string/video_resolution_default_tv"
             android:icon="@drawable/baseline_hd_24"
             android:key="video_resolution"
+            android:entries="@array/video_resolutionStrings"
+            android:entryValues="@array/video_resolutions"
             android:summary="@string/pref_videoResolution_summary"
             android:title="@string/pref_videoResolution_title" />
     </PreferenceCategory>

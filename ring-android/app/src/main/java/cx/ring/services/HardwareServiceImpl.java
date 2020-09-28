@@ -58,8 +58,6 @@ import cx.ring.utils.Ringer;
 import cx.ring.utils.Tuple;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
-import io.reactivex.subjects.BehaviorSubject;
-import io.reactivex.subjects.Subject;
 
 import static cx.ring.daemon.Ringservice.getCallMediaHandlerStatus;
 import static cx.ring.daemon.RingserviceJNI.toggleCallMediaHandler;
@@ -96,8 +94,6 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     private String mMediaHandlerId = "";
     private String mPluginCallId = "";
 
-    private Subject<Tuple<Integer, Integer>> maxResolutionSubject = BehaviorSubject.create();
-
     public HardwareServiceImpl(Context context) {
         mContext = context;
         mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
@@ -108,15 +104,11 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
 
     public Completable initVideo() {
         Log.i(TAG, "initVideo()");
-        return cameraService.init()
-                .toSingle(this::getMaxResolution)
-                .doOnSuccess(r -> maxResolutionSubject.onNext(r))
-                .doOnError(t -> maxResolutionSubject.onNext(new Tuple<>(null, null)))
-                .ignoreElement();
+        return cameraService.init();
     }
 
     public Observable<Tuple<Integer, Integer>> getMaxResolutions() {
-        return maxResolutionSubject;
+        return cameraService.getMaxResolutions();
     }
 
     public boolean isVideoAvailable() {
@@ -438,7 +430,6 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
             minVideoSize = parseResolution(mPreferenceService.getResolution());
         else
             minVideoSize = VIDEO_SIZE_LOW;
-
         cameraService.getCameraInfo(camId, formats, sizes, rates, minVideoSize);
     }
 
@@ -750,24 +741,6 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     @Override
     public int getCameraCount() {
         return cameraService.getCameraCount();
-    }
-
-    @Override
-    public Tuple<Integer, Integer> getMaxResolution() {
-        String camId = null;
-        if (mCapturingId != null)
-            camId = mCapturingId;
-        else if (cameraService.getCameraCount() == 1)
-            camId = cameraService.getCameraIds().get(0);
-        return getMaxResolution(camId);
-    }
-
-    @Override
-    public Tuple<Integer, Integer> getMaxResolution(String camId) {
-        if (camId == null) throw new NullPointerException();
-        Point maxResolution = cameraService.getMaxResolution(camId);
-        if (maxResolution == null) throw new NullPointerException();
-        return new Tuple<>(maxResolution.x, maxResolution.y);
     }
 
     @Override

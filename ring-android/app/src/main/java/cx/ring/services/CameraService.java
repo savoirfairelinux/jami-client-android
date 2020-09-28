@@ -102,6 +102,9 @@ public class CameraService {
     private static final Tuple<Integer, Integer> RESOLUTION_NONE = new Tuple<>(null, null);
     private final Subject<Tuple<Integer, Integer>> maxResolutionSubject = BehaviorSubject.createDefault(RESOLUTION_NONE);
 
+    protected VideoDevices devices = null;
+    private VideoParams previewParams = null;
+
     private final CameraManager.AvailabilityCallback availabilityCallback = new CameraManager.AvailabilityCallback() {
         @Override
         public void onCameraAvailable(@NonNull String cameraId) {
@@ -121,7 +124,7 @@ public class CameraService {
         @Override
         public void onCameraUnavailable(@NonNull String cameraId) {
             Log.w(TAG, "onCameraUnavailable " + cameraId + " current:" + previewCamera);
-            if (previewCamera == null || !previewCamera.getId().equals(cameraId)) {
+            if (devices == null || !devices.getCurrentId().equals(cameraId)) {
                 synchronized (addedDevices) {
                     if (addedDevices.remove(cameraId)) {
                         devices.cameras.remove(cameraId);
@@ -147,6 +150,10 @@ public class CameraService {
         return videoHandler;
     }
 
+    public Observable<Tuple<Integer, Integer>> getMaxResolutions() {
+        return maxResolutionSubject;
+    }
+
     static class VideoDevices {
         final List<String> cameras = new ArrayList<>();
         String currentId;
@@ -165,11 +172,11 @@ public class CameraService {
             }
             return currentId;
         }
+
+        public String getCurrentId() {
+            return currentId;
+        }
     }
-
-    protected VideoDevices devices = null;
-    private VideoParams previewParams = null;
-
     public String switchInput(boolean setDefaultCamera) {
         if (devices == null)
             return null;
@@ -215,7 +222,8 @@ public class CameraService {
             params.rate = rate;
         }
         params.rotation = getCameraDisplayRotation(deviceParams, rotation);
-        Ringservice.setDeviceOrientation(camId, params.rotation);
+        int r = params.rotation;
+        videoHandler.post(() -> Ringservice.setDeviceOrientation(camId, r));
     }
 
     public void setOrientation(int rotation) {
@@ -272,6 +280,15 @@ public class CameraService {
 
     public DeviceParams getNativeParams(String camId) {
         return mNativeParams.get(camId);
+    }
+
+    private Point getMaxResolution() {
+        Point max = null;
+        for (DeviceParams deviceParams : mNativeParams.values()) {
+            if (max == null || max.x * max.y < deviceParams.maxSize.x * deviceParams.maxSize.y)
+                max = deviceParams.maxSize;
+        }
+        return max;
     }
 
     public boolean isPreviewFromFrontCamera() {
@@ -416,8 +433,16 @@ public class CameraService {
                     return devs;
                 })
                 .ignoreElement()
-                .doOnError(e -> Log.e(TAG, "Error initializing video device", e))
-                .doOnComplete(() -> manager.registerAvailabilityCallback(availabilityCallback, getVideoHandler()))
+                .doOnError(e -> {
+                    Log.e(TAG, "Error initializing video device", e);
+                    maxResolutionSubject.onNext(RESOLUTION_NONE);
+                })
+                .doOnComplete(() -> {
+                    Point max = getMaxResolution();
+                    Log.w(TAG, "Found max resolution: " + max);
+                    maxResolutionSubject.onNext(max == null ? RESOLUTION_NONE : new Tuple<>(max.x, max.y));
+                    manager.registerAvailabilityCallback(availabilityCallback, getVideoHandler());
+                })
                 .onErrorComplete();
     }
 
