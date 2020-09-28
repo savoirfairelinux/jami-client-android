@@ -361,7 +361,11 @@ public class CameraService {
         return cameras.map(id -> new Pair<>(id, cameraManager.getCameraCharacteristics(id)))
                 .filter(camera -> {
                     try {
-                        for (int c : camera.second.get(CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES))
+                        int[] caps = camera.second.get(CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES);
+                        for (int c : caps)
+                            if (c == CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES_MONOCHROME)
+                                return false;
+                        for (int c : caps)
                             if (c == CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES_BACKWARD_COMPATIBLE)
                                 return true;
                     } catch (Exception e) {
