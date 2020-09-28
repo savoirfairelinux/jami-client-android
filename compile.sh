@@ -40,7 +40,7 @@ done
 
 if [[ $RELEASE -eq 1 ]]; then
     echo "Archiving native debug symbols"
-    cd $TOP/app/src/main/libs
+    cd $TOP/unstripped
     zip -r $TOP/app/symbols.zip .
 fi
 
