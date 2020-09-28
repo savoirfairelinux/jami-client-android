@@ -2,6 +2,7 @@ bin/
 gen/
 out/
 libs/
+unstripped/
 *.swp
 tags
 TAGS.LST
@@ -9,8 +10,6 @@ ID
 
 **/.idea/
 *.iml
-
-AndroidUnusedResources1.6.2.jar
 
 .classpath
 .project
@@ -23,10 +22,6 @@ gradle/wrapper/
 
 ant.properties
 *.keystore
-CallManager.java
-CallManagerCallback.java
-ConfigurationManager.java
-ManagerImpl.java
 SWIGTYPE*
 *.o
 tests/bin
