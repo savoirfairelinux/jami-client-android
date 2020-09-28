@@ -22,12 +22,12 @@ package cx.ring.services;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
+import android.text.TextUtils;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
-
-import android.os.Build;
-import android.text.TextUtils;
 
 import java.util.HashMap;
 import java.util.HashSet;

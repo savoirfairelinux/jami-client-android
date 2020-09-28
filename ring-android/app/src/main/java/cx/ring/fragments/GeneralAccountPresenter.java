@@ -67,6 +67,7 @@ public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> {
     private void init(Account account) {
         mCompositeDisposable.clear();
         mAccount = account;
+
         if (account != null) {
             if (account.isJami()) {
                 getView().addJamiPreferences(account.getAccountID());
@@ -78,7 +79,6 @@ public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> {
                     .observeOn(mUiScheduler)
                     .subscribe(acc -> getView().accountChanged(acc)));
 
-            getView().updateResolutions(null, mPreferenceService.getResolution());
             mCompositeDisposable.add(mHardwareService.getMaxResolutions()
                     .observeOn(mUiScheduler)
                     .subscribe(res -> {

@@ -20,19 +20,19 @@
 package cx.ring.tv.account;
 
 import android.content.Context;
+
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.leanback.preference.LeanbackSettingsFragmentCompat;
 import androidx.preference.ListPreference;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
-import androidx.preference.SwitchPreference;
-import androidx.preference.Preference;
 import androidx.preference.PreferenceScreen;
-
-import android.view.View;
+import androidx.preference.SwitchPreference;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -110,11 +110,9 @@ public class TVSettingsFragment extends LeanbackSettingsFragmentCompat {
         @Override
         public void updateResolutions(Tuple<Integer, Integer> maxResolution, int currentResolution) {
             String[] videoResolutionsNames = getResources().getStringArray(R.array.video_resolutionStrings);
-            String[] videoResolutionsValues = getResources().getStringArray(R.array.video_resolutions);
+            String[] videoResolutionsValues = filterResolutions(getResources().getStringArray(R.array.video_resolutions), currentResolution, maxResolution);
 
-            videoResolutionsValues = filterResolutions(videoResolutionsValues, currentResolution, maxResolution);
-
-            ListPreference lpVideoResolution = findPreference("video_resolution");
+            ListPreference lpVideoResolution = findPreference(SharedPreferencesServiceImpl.PREF_RESOLUTION);
             if (lpVideoResolution != null) {
                 lpVideoResolution.setEntries(Arrays.copyOfRange(videoResolutionsNames, 0, videoResolutionsValues.length));
                 lpVideoResolution.setEntryValues(videoResolutionsValues);
