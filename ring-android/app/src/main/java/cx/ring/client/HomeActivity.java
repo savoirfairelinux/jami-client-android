@@ -118,6 +118,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     private ViewOutlineProvider mOutlineProvider;
 
     private int mOrientation;
+    private boolean mNewOrientation = false;
 
     @Inject
     AccountService mAccountService;
@@ -156,8 +157,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
         // dependency injection
         JamiApplication.getInstance().getInjectionComponent().inject(this);
-
-        mOrientation = getResources().getConfiguration().orientation;
 
         setSupportActionBar(binding.mainToolbar);
         ActionBar ab = getSupportActionBar();
@@ -215,6 +214,15 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         fContent = null;
         mDisposable.dispose();
         binding = null;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mNewOrientation && !DeviceUtils.isTablet(this)) {
+            binding.navigationView.getMenu().getItem(NAVIGATION_CONVERSATIONS).setChecked(true);
+            mNewOrientation = false;
+        }
     }
 
     private void handleShareIntent(Intent intent) {
@@ -348,11 +356,34 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         int newOrientation = getResources().getConfiguration().orientation;
         if (mOrientation != newOrientation) {
             mOrientation = newOrientation;
-            hideTabletToolbar();
-            if (DeviceUtils.isTablet(this)) {
+            mNewOrientation = true;
+            if (!DeviceUtils.isTablet(this)) {
+                hideTabletToolbar();
                 selectNavigationItem(R.id.navigation_home);
+            } else {
                 showTabletToolbar();
+                Fragment preFrag = fContent;
                 conversationSelected = true;
+                selectNavigationItem(R.id.navigation_home);
+                if (preFrag.getTag() != null) {
+                    switch (preFrag.getTag()){
+                        case CONTACT_REQUESTS_TAG:
+                            selectNavigationItem(R.id.navigation_requests);
+                            break;
+                        case ACCOUNTS_TAG:
+                            selectNavigationItem(R.id.navigation_settings);
+                            break;
+                        case ABOUT_TAG:
+                            goToAbout();
+                            break;
+                        case SETTINGS_TAG:
+                            goToSettings();
+                            break;
+                        case VIDEO_SETTINGS_TAG:
+                            goToVideoSettings();
+                            break;
+                    }
+                }
             }
         }
     }
@@ -506,7 +537,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 showToolbarSpinner();
                 break;
             case R.id.navigation_home:
-                if (fContent instanceof SmartListFragment) {
+                if (fContent instanceof SmartListFragment && !mNewOrientation) {
                     break;
                 }
                 popCustomBackStack();
@@ -521,7 +552,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 showToolbarSpinner();
                 break;
             case R.id.navigation_settings:
-
                 if (account.needsMigration()) {
                     Log.d(TAG, "launchAccountMigrationActivity: Launch account migration activity");
 
