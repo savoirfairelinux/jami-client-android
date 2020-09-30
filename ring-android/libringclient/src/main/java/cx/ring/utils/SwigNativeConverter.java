@@ -21,8 +21,8 @@
 package cx.ring.utils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cx.ring.daemon.Message;
 import cx.ring.daemon.MessageVect;
@@ -32,24 +32,21 @@ import cx.ring.daemon.VectMap;
 
 public class SwigNativeConverter {
 
-    public static VectMap toSwig(List creds) {
-        ArrayList<HashMap<String, String>> todecode = (ArrayList<HashMap<String, String>>) creds;
+    public static VectMap toSwig(List<Map<String, String>> creds) {
         VectMap toReturn = new VectMap();
-
-        for (HashMap<String, String> aTodecode : todecode) {
+        toReturn.reserve(creds.size());
+        for (Map<String, String> aTodecode : creds) {
             toReturn.add(StringMap.toSwig(aTodecode));
         }
         return toReturn;
     }
 
     public static ArrayList<String> toJava(StringVect vector) {
-        ArrayList<String> toReturn = new ArrayList<>();
-        toReturn.addAll(vector);
-        return toReturn;
+        return new ArrayList<>(vector);
     }
 
     public static ArrayList<Message> toJava(MessageVect vector) {
-        int size = (int)vector.size();
+        int size = vector.size();
         ArrayList<Message> toReturn = new ArrayList<>(size);
         for (int i = 0; i < size; i++)
             toReturn.add(vector.get(i));

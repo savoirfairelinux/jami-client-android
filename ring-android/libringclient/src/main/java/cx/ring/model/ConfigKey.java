@@ -19,27 +19,23 @@
  */
 package cx.ring.model;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
 public enum ConfigKey {
     MAILBOX("Account.mailbox"),
     REGISTRATION_EXPIRE("Account.registrationExpire"),
     CREDENTIAL_NUMBER("Credential.count"),
     ACCOUNT_DTMF_TYPE("Account.dtmfType"),
     RINGTONE_PATH("Account.ringtonePath"),
-    RINGTONE_ENABLED("Account.ringtoneEnabled"),
+    RINGTONE_ENABLED("Account.ringtoneEnabled", true),
     RINGTONE_CUSTOM("Account.ringtoneCustom"),
-    KEEP_ALIVE_ENABLED("Account.keepAliveEnabled"),
+    KEEP_ALIVE_ENABLED("Account.keepAliveEnabled", true),
     LOCAL_INTERFACE("Account.localInterface"),
-    PUBLISHED_SAMEAS_LOCAL("Account.publishedSameAsLocal"),
+    PUBLISHED_SAMEAS_LOCAL("Account.publishedSameAsLocal", true),
     LOCAL_PORT("Account.localPort"),
     PUBLISHED_PORT("Account.publishedPort"),
     PUBLISHED_ADDRESS("Account.publishedAddress"),
     STUN_SERVER("STUN.server"),
-    STUN_ENABLE("STUN.enable"),
-    TURN_ENABLE("TURN.enable"),
+    STUN_ENABLE("STUN.enable", true),
+    TURN_ENABLE("TURN.enable", true),
     TURN_SERVER("TURN.server"),
     TURN_USERNAME("TURN.username"),
     TURN_PASSWORD("TURN.password"),
@@ -47,29 +43,30 @@ public enum ConfigKey {
     AUDIO_PORT_MIN("Account.audioPortMin"),
     AUDIO_PORT_MAX("Account.audioPortMax"),
     ACCOUNT_USERAGENT("Account.useragent"),
-    ACCOUNT_UPNP_ENABLE("Account.upnpEnabled"),
+    ACCOUNT_UPNP_ENABLE("Account.upnpEnabled", true),
     ACCOUNT_ROUTESET("Account.routeset"),
-    ACCOUNT_AUTOANSWER("Account.autoAnswer"),
+    ACCOUNT_AUTOANSWER("Account.autoAnswer", true),
+    ACCOUNT_ISRENDEZVOUS("Account.rendezVous", true),
     ACCOUNT_ALIAS("Account.alias"),
     ACCOUNT_HOSTNAME("Account.hostname"),
     ACCOUNT_USERNAME("Account.username"),
     ACCOUNT_PASSWORD("Account.password"),
     ACCOUNT_REALM("Account.realm"),
     ACCOUNT_TYPE("Account.type"),
-    ACCOUNT_ENABLE("Account.enable"),
-    ACCOUNT_ACTIVE("Account.active"),
+    ACCOUNT_ENABLE("Account.enable", true),
+    ACCOUNT_ACTIVE("Account.active", true),
     ACCOUNT_DEVICE_ID("Account.deviceID"),
     ACCOUNT_DEVICE_NAME("Account.deviceName"),
-    ACCOUNT_PEER_DISCOVERY("Account.peerDiscovery"),
-    ACCOUNT_DISCOVERY("Account.accountDiscovery"),
-    ACCOUNT_PUBLISH("Account.accountPublish"),
+    ACCOUNT_PEER_DISCOVERY("Account.peerDiscovery",true),
+    ACCOUNT_DISCOVERY("Account.accountDiscovery", true),
+    ACCOUNT_PUBLISH("Account.accountPublish", true),
     ACCOUNT_DISPLAYNAME("Account.displayName"),
-    VIDEO_ENABLED("Account.videoEnabled"),
+    VIDEO_ENABLED("Account.videoEnabled", true),
     VIDEO_PORT_MIN("Account.videoPortMin"),
     VIDEO_PORT_MAX("Account.videoPortMax"),
-    PRESENCE_ENABLE("Account.presenceEnabled"),
+    PRESENCE_ENABLE("Account.presenceEnabled", true),
     ARCHIVE_PASSWORD("Account.archivePassword"),
-    ARCHIVE_HAS_PASSWORD("Account.archiveHasPassword"),
+    ARCHIVE_HAS_PASSWORD("Account.archiveHasPassword", true),
     ARCHIVE_PIN("Account.archivePIN"),
     ARCHIVE_PATH("Account.archivePath"),
     DISPLAY_NAME("Account.displayName"),
@@ -98,34 +95,24 @@ public enum ConfigKey {
     RINGNS_ACCOUNT("RingNS.account"),
     RINGNS_HOST("RingNS.host"),
     DHT_PORT("DHT.port"),
-    DHT_PUBLIC_IN("DHT.PublicInCalls"),
-    PROXY_ENABLED("Account.proxyEnabled"),
+    DHT_PUBLIC_IN("DHT.PublicInCalls", true),
+    PROXY_ENABLED("Account.proxyEnabled", true),
     PROXY_SERVER("Account.proxyServer"),
     PROXY_SERVER_LIST("Account.dhtProxyListUrl"),
     PROXY_PUSH_TOKEN("Account.proxyPushToken"),
     MANAGER_URI("Account.managerUri"),
     MANAGER_USERNAME("Account.managerUsername");
 
-    private static final Set<ConfigKey> TWO_STATES = new HashSet<>(Arrays.asList(
-            ACCOUNT_ENABLE,
-            ACCOUNT_ACTIVE,
-            VIDEO_ENABLED,
-            RINGTONE_ENABLED,
-            KEEP_ALIVE_ENABLED,
-            PUBLISHED_SAMEAS_LOCAL,
-            STUN_ENABLE, TURN_ENABLE,
-            ACCOUNT_AUTOANSWER,
-            ACCOUNT_UPNP_ENABLE,
-            DHT_PUBLIC_IN,
-            PROXY_ENABLED,
-            ACCOUNT_PEER_DISCOVERY,
-            ACCOUNT_DISCOVERY,
-            ACCOUNT_PUBLISH));
-
     private final String mKey;
+    private final boolean mIsBool;
 
     ConfigKey(String key) {
         mKey = key;
+        mIsBool = false;
+    }
+    ConfigKey(String key, boolean isBool) {
+        mKey = key;
+        mIsBool = isBool;
     }
 
     public String key() {
@@ -137,7 +124,7 @@ public enum ConfigKey {
     }
 
     public boolean isTwoState() {
-        return TWO_STATES.contains(this);
+        return mIsBool;
     }
 
     public static ConfigKey fromString(String stringKey) {

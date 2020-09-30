@@ -7,6 +7,14 @@
             android:persistent="false"
             android:title="@string/account_autoanswer_label"
             android:icon="@drawable/baseline_call_24"/>
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="Account.rendezVous"
+            android:persistent="false"
+            android:title="@string/account_rendezvous_label"
+            android:summary="@string/account_rendezvous_summary"
+            android:icon="@drawable/baseline_group_24"/>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_category_video">
