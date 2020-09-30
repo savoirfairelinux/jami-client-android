@@ -65,6 +65,7 @@ public class TVSettingsFragment extends LeanbackSettingsFragmentCompat {
 
     public static class PrefsFragment extends JamiPreferenceFragment<GeneralAccountPresenter> implements GeneralAccountView {
         private boolean autoAnswer;
+        private boolean rendezvousMode;
 
         public static PrefsFragment newInstance() {
             return new PrefsFragment();
@@ -91,10 +92,15 @@ public class TVSettingsFragment extends LeanbackSettingsFragmentCompat {
         public void accountChanged(@NonNull Account account) {
             // load information from account to ui
             autoAnswer = account.getConfig().getBool(ConfigKey.ACCOUNT_AUTOANSWER);
+            rendezvousMode = account.getConfig().getBool(ConfigKey.ACCOUNT_ISRENDEZVOUS);
 
             SwitchPreference pref = findPreference(ConfigKey.ACCOUNT_AUTOANSWER.key());
             if (pref != null)
                 pref.setChecked(autoAnswer);
+
+            SwitchPreference prefRdv = findPreference(ConfigKey.ACCOUNT_ISRENDEZVOUS.key());
+            if (prefRdv != null)
+                prefRdv.setChecked(rendezvousMode);
         }
 
         @Override
@@ -114,7 +120,10 @@ public class TVSettingsFragment extends LeanbackSettingsFragmentCompat {
         public boolean onPreferenceTreeClick(Preference preference) {
             if (preference.getKey().equals(ConfigKey.ACCOUNT_AUTOANSWER.key())) {
                 presenter.twoStatePreferenceChanged(ConfigKey.ACCOUNT_AUTOANSWER, !autoAnswer);
-                this.autoAnswer = !autoAnswer;
+                autoAnswer = !autoAnswer;
+            } else if (preference.getKey().equals(ConfigKey.ACCOUNT_ISRENDEZVOUS.key())) {
+                presenter.twoStatePreferenceChanged(ConfigKey.ACCOUNT_ISRENDEZVOUS, !rendezvousMode);
+                rendezvousMode = !rendezvousMode;
             }
             return super.onPreferenceTreeClick(preference);
         }

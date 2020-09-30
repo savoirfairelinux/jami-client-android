@@ -547,8 +547,8 @@ public class Account {
         credentialsDetails.remove(accountCredentials);
     }
 
-    public List getCredentialsHashMapList() {
-        ArrayList<HashMap<String, String>> result = new ArrayList<>();
+    public List<Map<String, String>> getCredentialsHashMapList() {
+        ArrayList<Map<String, String>> result = new ArrayList<>(credentialsDetails.size());
         for (AccountCredentials cred : credentialsDetails) {
             result.add(cred.getDetails());
         }

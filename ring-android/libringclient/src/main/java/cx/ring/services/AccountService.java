@@ -973,7 +973,7 @@ public class AccountService {
     /**
      * Sets the account's credentials in the Daemon
      */
-    public void setCredentials(final String accountId, final List credentials) {
+    public void setCredentials(final String accountId, final List<Map<String, String>> credentials) {
         Log.i(TAG, "setCredentials() " + accountId);
         mExecutor.execute(() -> Ringservice.setCredentials(accountId, SwigNativeConverter.toSwig(credentials)));
     }

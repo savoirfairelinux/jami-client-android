@@ -87,6 +87,8 @@ along with this program; if not, write to the Free Software
     <string name="account_optionnal_category">Optional Settings</string>
     <string name="account_useragent_label">User Agent</string>
     <string name="account_autoanswer_label">Auto Answer</string>
+    <string name="account_rendezvous_label">Rendez-Vous Mode</string>
+    <string name="account_rendezvous_summary">In Rendez-Vous mode, incoming calls will be added to a conference room.</string>
     <string name="account_upnp_label">Enable UPnP</string>
     <string name="account_proxy_field">Proxy</string>
 
