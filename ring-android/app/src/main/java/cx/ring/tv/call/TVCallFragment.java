@@ -56,7 +56,6 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 
@@ -74,7 +73,6 @@ import cx.ring.client.ContactDetailsActivity;
 import cx.ring.client.ConversationSelectionActivity;
 import cx.ring.databinding.ItemParticipantLabelBinding;
 import cx.ring.databinding.TvFragCallBinding;
-import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.fragments.CallFragment;
 import cx.ring.adapters.ConfParticipantAdapter;
 import cx.ring.fragments.ConversationFragment;
@@ -159,7 +157,6 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
     @Override
     protected void initPresenter(CallPresenter presenter) {
         super.initPresenter(presenter);
-
         String action = getArguments().getString(KEY_ACTION);
         if (action != null) {
             if (action.equals(ACTION_PLACE_CALL)) {
@@ -182,7 +179,7 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
         return binding.getRoot();
     }
 
-    private TextureView.SurfaceTextureListener listener = new TextureView.SurfaceTextureListener() {
+    private final TextureView.SurfaceTextureListener listener = new TextureView.SurfaceTextureListener() {
         @Override
         public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
             configureTransform(width, height);
@@ -210,7 +207,7 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        PowerManager powerManager = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
+        PowerManager powerManager = (PowerManager) view.getContext().getSystemService(Context.POWER_SERVICE);
         mScreenWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "ring:callLock");
         mScreenWakeLock.setReferenceCounted(false);
 
@@ -260,6 +257,7 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
         }
         presenter.hangupCall();
         runnable = null;
+        binding = null;
     }
 
     @Override
@@ -384,13 +382,12 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
 
     @Override
     public void updateTime(final long duration) {
-        if (binding.callStatusTxt != null)
+        if (binding != null)
             binding.callStatusTxt.setText(String.format(Locale.getDefault(), "%d:%02d:%02d", duration / 3600, duration % 3600 / 60, duration % 60));
     }
 
     @Override
     public void updateContactBubble(@NonNull final List<SipCall> calls) {
-
         mConferenceMode = calls.size() > 1;
         String username = mConferenceMode ? "Conference with " + calls.size() + " people" : calls.get(0).getContact().getRingUsername();
         String displayName = mConferenceMode ? null : calls.get(0).getContact().getDisplayName();
@@ -400,7 +397,6 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
         Log.d(TAG, "updateContactBubble: username=" + username + ", ringId=" + ringId + " photo:" + contact.getPhoto());
 
         boolean hasProfileName = displayName != null && !displayName.contentEquals(username);
-
         if (hasProfileName) {
             binding.contactBubbleNumTxt.setVisibility(View.VISIBLE);
             binding.contactBubbleTxt.setText(displayName);
@@ -513,6 +509,7 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
 
     @Override
     public void resetVideoSize(final int videoWidth, final int videoHeight) {
+        Log.w(TAG, "resetVideoSize " + videoWidth + "x" + videoHeight);
         ViewGroup rootView = (ViewGroup) getView();
         if (rootView == null)
             return;
@@ -540,12 +537,12 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
 
     private void configureTransform(int viewWidth, int viewHeight) {
         Activity activity = getActivity();
-        if (null == binding.previewSurface || null == activity) {
+        if (null == binding || null == activity) {
             return;
         }
         int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
         boolean rot = Surface.ROTATION_90 == rotation || Surface.ROTATION_270 == rotation;
-        cx.ring.utils.Log.w(TAG, "configureTransform " + viewWidth + "x" + viewHeight + " rot=" + rot + " mPreviewWidth=" + mPreviewWidth + " mPreviewHeight=" + mPreviewHeight);
+        Log.w(TAG, "configureTransform " + viewWidth + "x" + viewHeight + " rot=" + rot + " mPreviewWidth=" + mPreviewWidth + " mPreviewHeight=" + mPreviewHeight);
         Matrix matrix = new Matrix();
         RectF viewRect = new RectF(0, 0, viewWidth, viewHeight);
         float centerX = viewRect.centerX();
