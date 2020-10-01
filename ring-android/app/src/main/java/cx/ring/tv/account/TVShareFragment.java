@@ -40,6 +40,7 @@ import cx.ring.share.ShareViewModel;
 import cx.ring.utils.Log;
 import cx.ring.utils.QRCodeUtils;
 import cx.ring.views.AvatarDrawable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
 public class TVShareFragment extends BaseSupportFragment<SharePresenter> implements GenericView<ShareViewModel> {
@@ -70,16 +71,14 @@ public class TVShareFragment extends BaseSupportFragment<SharePresenter> impleme
 
     @Override
     public void showViewModel(final ShareViewModel viewModel) {
+        if (binding == null)
+            return;
+
         final QRCodeUtils.QRCodeData qrCodeData = viewModel.getAccountQRCodeData(0x00000000, 0xFFFFFFFF);
         getUserAvatar(viewModel.getAccount());
 
-        if (binding == null) {
-            return;
-        }
-
         if (qrCodeData == null) {
             binding.qrImage.setVisibility(View.INVISIBLE);
-
         } else {
             Bitmap bitmap = Bitmap.createBitmap(qrCodeData.getWidth(), qrCodeData.getHeight(), Bitmap.Config.ARGB_8888);
             bitmap.setPixels(qrCodeData.getData(), 0, qrCodeData.getWidth(), 0, 0, qrCodeData.getWidth(), qrCodeData.getHeight());
@@ -92,18 +91,19 @@ public class TVShareFragment extends BaseSupportFragment<SharePresenter> impleme
     private void getUserAvatar(Account account) {
         disposable.add(VCardServiceImpl
                 .loadProfile(account)
+                .observeOn(AndroidSchedulers.mainThread())
                 .doOnSuccess(profile -> {
-                    binding.shareUri.setVisibility(View.VISIBLE);
-                    if (profile.first != null && !profile.first.isEmpty()) {
-                        binding.shareUri.setText(profile.first);
-                    } else {
-                        binding.shareUri.setText(account.getDisplayUri());
+                    if (binding != null) {
+                        binding.shareUri.setVisibility(View.VISIBLE);
+                        binding.shareUri.setText(account.getDisplayUsername());
                     }
                 })
-                .flatMap(p -> AvatarDrawable.load(getActivity(), account))
+                .flatMap(p -> AvatarDrawable.load(requireContext(), account))
                 .subscribe(a -> {
-                    binding.qrUserPhoto.setVisibility(View.VISIBLE);
-                    binding.qrUserPhoto.setImageDrawable(a);
+                    if (binding != null) {
+                        binding.qrUserPhoto.setVisibility(View.VISIBLE);
+                        binding.qrUserPhoto.setImageDrawable(a);
+                    }
                 }, e-> Log.e(TVShareFragment.class.getSimpleName(), e.getMessage())));
     }
 }

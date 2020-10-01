@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <ImageView
         android:id="@+id/qr_image"
         android:layout_width="300dp"
@@ -41,6 +40,5 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_conversion_wrapHeight="215"
         tools:layout_conversion_wrapWidth="1440" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
