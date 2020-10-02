@@ -1,4 +1,4 @@
-A Jami (GNU csomag, korábban Ring) egy univerzális és elosztott közlés emelvény, amely tiszteletben tartja a felhasználók szabadságait és magánéletét.
+A Jami (GNU csomag) egy univerzális és elosztott közlés emelvény, amely tiszteletben tartja a felhasználók szabadságait és magánéletét.
 Szabad szoftver. Minden emelvényhez elérhető.
 
 ★ Közlékaljon ingyenesen a Jami-el:
