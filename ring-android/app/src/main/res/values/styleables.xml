@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="TwoButtonEditText">
+        <attr name="android:text" format="string" />
+        <attr name="android:hint" format="string"/>
+        <attr name="android:tint" format="reference"/>
+        <attr name="drawable_right" format="reference"/>
+        <attr name="drawable_left" format="reference"/>
+        <attr name="android:enabled" format="boolean"/>
+        <attr name="android:singleLine" format="boolean"/>
+    </declare-styleable>
+
+</resources>
