@@ -32,8 +32,8 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.DataTransfer;
-import cx.ring.model.Interaction;
 import cx.ring.model.Error;
+import cx.ring.model.Interaction;
 import cx.ring.model.SipCall;
 import cx.ring.model.TrustRequest;
 import cx.ring.model.Uri;
@@ -402,7 +402,9 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
 
     public void cameraPermissionChanged(boolean isGranted) {
         if (isGranted && mHardwareService.isVideoAvailable()) {
-            mHardwareService.initVideo().subscribe();
+            mHardwareService.initVideo()
+                    .onErrorComplete()
+                    .subscribe();
         }
     }
 

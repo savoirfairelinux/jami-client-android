@@ -22,6 +22,9 @@ package cx.ring.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.format.Formatter;
+import android.view.inputmethod.EditorInfo;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.preference.EditTextPreference;
@@ -30,9 +33,6 @@ import androidx.preference.PreferenceManager;
 import androidx.preference.SeekBarPreference;
 import androidx.preference.SwitchPreference;
 import androidx.preference.TwoStatePreference;
-
-import android.text.format.Formatter;
-import android.view.inputmethod.EditorInfo;
 
 import cx.ring.R;
 import cx.ring.account.AccountEditionFragment;
@@ -43,6 +43,7 @@ import cx.ring.model.ConfigKey;
 import cx.ring.mvp.BasePreferenceFragment;
 import cx.ring.services.SharedPreferencesServiceImpl;
 import cx.ring.utils.Log;
+import cx.ring.utils.Tuple;
 import cx.ring.views.EditTextIntegerPreference;
 import cx.ring.views.EditTextPreferenceDialog;
 import cx.ring.views.PasswordPreference;
@@ -129,6 +130,10 @@ public class GeneralAccountFragment extends BasePreferenceFragment<GeneralAccoun
         Activity activity = getActivity();
         if (activity != null)
             activity.onBackPressed();
+    }
+
+    @Override
+    public void updateResolutions(Tuple<Integer, Integer> maxResolution, int currentResolution) {
     }
 
     private CharSequence getFileSizeSummary(int size, int maxSize) {

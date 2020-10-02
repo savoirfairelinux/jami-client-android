@@ -24,7 +24,6 @@ import android.bluetooth.BluetoothHeadset;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
-import android.hardware.camera2.CameraManager;
 import android.media.AudioDeviceInfo;
 import android.media.AudioManager;
 import android.media.MediaRecorder;
@@ -34,7 +33,6 @@ import android.view.SurfaceHolder;
 import android.view.TextureView;
 import android.view.WindowManager;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.media.AudioAttributesCompat;
 import androidx.media.AudioFocusRequestCompat;
@@ -57,7 +55,9 @@ import cx.ring.model.SipCall.CallStatus;
 import cx.ring.utils.BluetoothWrapper;
 import cx.ring.utils.Log;
 import cx.ring.utils.Ringer;
+import cx.ring.utils.Tuple;
 import io.reactivex.Completable;
+import io.reactivex.Observable;
 
 import static cx.ring.daemon.Ringservice.getCallMediaHandlerStatus;
 import static cx.ring.daemon.RingserviceJNI.toggleCallMediaHandler;
@@ -105,6 +105,10 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     public Completable initVideo() {
         Log.i(TAG, "initVideo()");
         return cameraService.init();
+    }
+
+    public Observable<Tuple<Integer, Integer>> getMaxResolutions() {
+        return cameraService.getMaxResolutions();
     }
 
     public boolean isVideoAvailable() {
@@ -426,7 +430,6 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
             minVideoSize = parseResolution(mPreferenceService.getResolution());
         else
             minVideoSize = VIDEO_SIZE_LOW;
-
         cameraService.getCameraInfo(camId, formats, sizes, rates, minVideoSize);
     }
 
