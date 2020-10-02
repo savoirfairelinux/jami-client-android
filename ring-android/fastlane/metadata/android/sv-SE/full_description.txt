@@ -1,4 +1,4 @@
-Jami (ett GNU-paket, före detta Ring) är fri mjukvara för universell kommunikation, med respekt för användarens frihet och integritet.
+Jami (ett GNU-paket) är fri mjukvara för universell kommunikation, med respekt för användarens frihet och integritet.
 Det är 100% fri mjukvara. Tillgängligt på alla plattformar.
 
 ★ Kommunicera fritt med Jami:

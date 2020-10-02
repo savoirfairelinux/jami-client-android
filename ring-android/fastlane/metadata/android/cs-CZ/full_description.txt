@@ -1,4 +1,4 @@
-Jami (balíček GNU, dříve Ring) je univerzální a rozptýlený komunikační program, který si váží svobod a práv uživatelů.
+Jami (balíček GNU) je univerzální a rozptýlený komunikační program, který si váží svobod a práv uživatelů.
 Je to 100 % svobodný software. Dostupný pro všechny systémy.
 
 ★ Hovořte volně s Jami:

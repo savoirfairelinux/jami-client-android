@@ -1,4 +1,4 @@
-Jami (anciennement Ring) est une plateforme de communication universelle qui respecte les libertés et la vie privés de ses utilisateurs.
+Jami est une plateforme de communication universelle qui respecte les libertés et la vie privés de ses utilisateurs.
 C'est un logiciel 100% libre. Disponible sur toutes les plateformes.
 
 ★ Communiquer librement et gratuitement avec Jami
