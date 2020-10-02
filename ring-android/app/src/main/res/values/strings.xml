@@ -248,8 +248,9 @@ along with this program; if not, write to the Free Software
     <string name="wizard_back">Back</string>
     <string name="wizard_skip">Skip</string>
 
-    <!-- MenuHeaderView -->
+    <!-- Account Summary -->
     <string name="profile">Profile</string>
+    <string name="profile_name">Profile Name</string>
     <string name="profile_message_warning">Your profile is only shared with your contacts</string>
     <string name="open_the_gallery">Open the gallery</string>
     <string name="take_a_photo">Take a photo</string>
@@ -348,7 +349,7 @@ along with this program; if not, write to the Free Software
     <string name="tv_send_video">Send Media</string>
     <string name="conversation_input_speech_hint">Say something…</string>
 
-    <!-- WIZARD -->
+    <!-- Wizard -->
     <string name="wizard_status_recommended">Recommended</string>
     <string name="wizard_status_optional">Optional</string>
     <string name="wizard_status_required">Required</string>
