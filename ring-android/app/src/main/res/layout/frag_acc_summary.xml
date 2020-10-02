@@ -25,8 +25,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <ScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="@dimen/summary_scrollview_padding_bottom">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,7 +34,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:paddingStart="16dp"
             android:paddingTop="12dp"
             android:paddingEnd="16dp"
-            android:paddingBottom="16dp">
+            android:paddingBottom="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true" >
 
             <RelativeLayout
                 android:id="@+id/ring_account_status_container"
@@ -66,176 +68,90 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
-                tools:text="@string/profile" />
+                tools:text="@string/profile"
+                android:layout_marginStart="@dimen/title_margin"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:textSize="18sp"/>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/profile_container"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
                 <ImageView
                     android:id="@+id/user_photo"
-                    android:layout_width="72dp"
-                    android:layout_height="72dp"
+                    android:layout_width="82dp"
+                    android:layout_height="82dp"
                     android:src="@drawable/ic_contact_picture_fallback"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <View
-                    android:id="@+id/anchor"
-                    android:layout_width="12dp"
-                    android:layout_height="48dp"
-                    app:layout_constraintBottom_toBottomOf="@id/user_photo"
-                    app:layout_constraintEnd_toEndOf="@id/user_photo"
-                    app:layout_constraintStart_toStartOf="@id/user_photo" />
+<!--                <View-->
+<!--                    android:id="@+id/anchor"-->
+<!--                    android:layout_width="12dp"-->
+<!--                    android:layout_height="48dp"-->
+<!--                    app:layout_constraintBottom_toBottomOf="@id/user_photo"-->
+<!--                    app:layout_constraintEnd_toEndOf="@id/user_photo"-->
+<!--                    app:layout_constraintStart_toStartOf="@id/user_photo" />-->
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/user_profile_edit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:fabSize="mini"
-                    app:layout_constraintStart_toStartOf="@id/anchor"
-                    app:layout_constraintTop_toTopOf="@id/anchor"
-                    app:srcCompat="@drawable/baseline_edit_24"
-                    app:useCompatPadding="true" />
+<!--                <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--                    android:id="@+id/user_profile_edit"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    app:fabSize="mini"-->
+<!--                    app:layout_constraintStart_toStartOf="@id/anchor"-->
+<!--                    app:layout_constraintTop_toTopOf="@id/anchor"-->
+<!--                    app:srcCompat="@drawable/baseline_edit_24"-->
+<!--                    app:useCompatPadding="true" />-->
 
-                <TextView
+                <cx.ring.views.TwoButtonEditText
                     android:id="@+id/username"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/user_photo"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-                    android:textSize="18sp"
-                    app:layout_constraintBottom_toTopOf="@id/subtitle"
-                    app:layout_constraintStart_toStartOf="@id/subtitle"
-                    app:layout_constraintTop_toTopOf="@id/user_photo"
-                    app:layout_constraintVertical_chainStyle="packed"
-                    tools:text="@string/profile" />
+                    app:drawable_right="@drawable/baseline_share_twoton_24dp"
+                    app:drawable_left="@drawable/baseline_edit_twoton_24dp"
+                    android:hint="@string/profile_name"
+                    android:layout_marginStart="12dp"
+                />
 
-                <TextView
-                    android:id="@+id/subtitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:textColor="@color/darker_gray"
-                    android:textSize="14sp"
-                    app:layout_constrainedWidth="true"
-                    app:layout_constraintBottom_toBottomOf="@id/user_photo"
-                    app:layout_constraintEnd_toStartOf="@+id/btn_share"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintStart_toEndOf="@+id/user_photo"
-                    app:layout_constraintTop_toBottomOf="@+id/username"
-                    tools:text="@string/registered_username" />
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/btn_share"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/baseline_share_24"
-                    android:background="?selectableItemBackgroundBorderless"
-                    android:tint="@color/colorPrimary"
-                    android:padding="8dp"
-                    app:layout_constraintRight_toLeftOf="@+id/btn_qr"
-                    app:layout_constraintTop_toTopOf="@id/subtitle"
-                    app:layout_constraintBottom_toBottomOf="@id/subtitle" />
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/btn_qr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/baseline_qr_code_2_black_24dp"
-                    android:background="?selectableItemBackgroundBorderless"
-                    android:tint="@color/colorPrimary"
-                    android:padding="8dp"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/btn_share"
-                    app:layout_constraintBottom_toBottomOf="@id/btn_share" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
-                android:text="@string/ring_account_identity"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline" />
-
-            <TextView
-                android:id="@+id/account_id_txt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:ellipsize="middle"
-                android:singleLine="true"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-                android:textIsSelectable="true"
-                android:padding="4dp"
-                tools:text="ring:8F29045378ACA68F2ACA2346078ACA68F2ACA290" />
-
-            <LinearLayout
-                android:id="@+id/layout_account_options"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="8dp"
-                android:baselineAligned="false"
-                android:orientation="horizontal">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/export_account_btn"
-                    style="@style/ButtonOutLined"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_weight="1"
-                    android:text="@string/account_export_file" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/change_password_btn"
-                    style="@style/ButtonOutLined"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_weight="1"
-                    android:text="@string/account_password_change" />
             </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp"
-                android:text="@string/registered_username"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline" />
+                android:layout_marginBottom="16dp"
+                android:text="@string/navigation_item_account"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginStart="@dimen/title_margin"
+                android:textStyle="bold"
+                android:textSize="18sp"/>
 
             <LinearLayout
-                android:id="@+id/group_register_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                tools:visibility="gone">
+                android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <cx.ring.views.TwoButtonEditText
+                    android:id="@+id/registered_name"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/no_registered_name_for_account" />
+                    android:hint="@string/registered_username"
+                    android:enabled="false"
+                    android:layout_weight="1.5" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/register_name_btn"
+                    android:id="@+id/register_name"
                     style="@style/ButtonColored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:backgroundTint="@color/colorPrimary"
-                    android:text="@string/register_name" />
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="4dp"
+                    android:text="@string/register_name"
+                    android:visibility="gone"
+                    tools:visibility="visible"/>
 
             </LinearLayout>
 
@@ -260,33 +176,72 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/group_registered_name"
+            <cx.ring.views.TwoButtonEditText
+                android:id="@+id/identity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
+                android:hint="@string/ring_account_identity"
+                app:drawable_right="@drawable/baseline_qr_code_twotone_24dp"
+                android:enabled="false"
+                android:layout_marginTop="12dp" />
+
+            <LinearLayout
+                android:id="@+id/layout_account_options"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:baselineAligned="false"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/registered_name_txt"
-                    android:layout_width="wrap_content"
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/export_account_btn"
+                    style="@style/ButtonColored"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="4dp"
                     android:layout_weight="1"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                    android:textIsSelectable="true"
-                    tools:text="registered_name" />
+                    android:text="@string/account_export_file" />
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/change_password_btn"
+                    style="@style/ButtonColored"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_weight="1"
+                    android:text="@string/account_password_change" />
             </LinearLayout>
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="4dp"
                 android:gravity="center_vertical"
                 android:text="@string/normal_devices_titles"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline" />
+                android:textColor="@color/colorPrimary"
+                android:layout_marginStart="@dimen/title_margin"
+                android:textStyle="bold"
+                android:textSize="18sp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/link_device"
+                style="@style/TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="center"
+                android:drawableLeft="@drawable/baseline_add_24"
+                android:drawableTint="@color/colorPrimary"
+                android:text="@string/account_link_export_button"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true"/>
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -296,10 +251,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:id="@+id/device_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:divider="@color/surface"
-                    android:dividerHeight="1dp"
-                    android:footerDividersEnabled="true"
-                    android:headerDividersEnabled="true"
+                    android:divider="@null"
                     android:nestedScrollingEnabled="true" />
 
                 <TextView
@@ -317,110 +269,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         </LinearLayout>
     </ScrollView>
-
-    <FrameLayout
-        android:id="@+id/layout_add_device"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:behavior_hideable="false"
-        app:behavior_peekHeight="50dp"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="-16dp"
-            android:elevation="4dp"
-            app:cardCornerRadius="@dimen/bottom_sheet_radius">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:orientation="vertical"
-                android:paddingBottom="15dp">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_add_device"
-                    style="@style/TextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="@string/account_link_export_button"
-                    android:textColor="@color/colorOnPrimary" />
-
-                <ScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/account_link_info"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="top"
-                            android:paddingLeft="16dp"
-                            android:paddingTop="5dp"
-                            android:paddingRight="16dp"
-                            android:paddingBottom="8dp"
-                            android:text="@string/account_link_export_info"
-                            android:textColor="@color/colorOnPrimary"
-                            android:textIsSelectable="true"
-                            android:textSize="14sp" />
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/password_layout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:paddingLeft="16dp"
-                            android:paddingRight="16dp"
-                            android:textColorHint="@color/colorPrimary"
-                            app:passwordToggleEnabled="true"
-                            app:passwordToggleTint="@color/colorPrimary">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/ring_password"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:backgroundTint="@color/colorOnPrimary"
-                                android:hint="@string/account_enter_password"
-                                android:imeOptions="actionDone"
-                                android:inputType="textPassword"
-                                android:textColor="@color/colorPrimary" />
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btn_start_export"
-                            style="@style/ButtonColored"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginBottom="8dp"
-                            android:text="@string/account_start_export_button"
-                            android:textColor="@color/colorOnSecondary"
-                            app:backgroundTint="@color/colorSecondary" />
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btn_end_export"
-                            style="@style/TextButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:text="@string/account_end_export_button"
-                            android:textColor="@color/colorOnPrimary"
-                            android:visibility="gone" />
-
-                    </LinearLayout>
-                </ScrollView>
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-    </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

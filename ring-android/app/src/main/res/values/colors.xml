@@ -43,4 +43,10 @@
     <color name="background_status_recommended">#8ee0d0</color>
     <color name="background_status_required">#fee4e9</color>
 
+    <!--  TwoButton EditText  -->
+    <color name="edit_text_background">#f5f5f5</color>
+    <color name="text_color">#414141</color>
+    <color name="text_hint">@color/color_primary_dark</color>
+    <color name="button_border">@color/color_primary_dark</color>
+
 </resources>
