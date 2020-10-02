@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84c54e31_cf0b8deb",
+        "filename": "ring-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 19
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-10-02T19:08:45Z",
+      "side": 1,
+      "message": "duplicated strings",
+      "range": {
+        "startLine": 258,
+        "startChar": 0,
+        "endLine": 262,
+        "endChar": 61
+      },
+      "revId": "40807fd74618fb3277c862eebd810f70058f2259",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
