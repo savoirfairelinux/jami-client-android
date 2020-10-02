@@ -8,7 +8,6 @@
 -renamesourcefileattribute SourceFile
 -keepattributes SourceFile,LineNumberTable
 
--keep class android.support.v7.widget.LinearLayoutManager { *; }
 -keep,includedescriptorclasses class androidx.core.content.FileProvider { *; }
 
 -keepnames class * implements android.os.Parcelable {
@@ -17,11 +16,6 @@
 
 -keep,includedescriptorclasses class cx.ring.** { *; }
 -keepclassmembers class cx.ring.** { *; }
-
-# Firebase
--keep class com.firebase.** { *; }
--keep class com.google.firebase.** { *; }
--dontwarn com.google.firebase.analytics.connector.AnalyticsConnector
 
 # ORMLite
 -keep class com.j256.**
@@ -55,18 +49,6 @@
 -keepclassmembers class com.journeyapps.barcodescanner.** { *; }
 -keep,includedescriptorclasses class com.google.zxing.** { *; }
 -keepclassmembers class com.google.zxing.** { *; }
-
-# Butterknife
--keep class butterknife.** { *; }
--dontwarn butterknife.**
--dontwarn butterknife.internal.**
--keep class **$$ViewBinder { *; }
--keepclasseswithmembernames class * {
-    @butterknife.* <fields>;
-}
--keepclasseswithmembernames class * {
-    @butterknife.* <methods>;
-}
 
 # Glide
 -keep public class * implements com.bumptech.glide.module.GlideModule
