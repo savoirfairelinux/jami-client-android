@@ -1,4 +1,4 @@
-Jami (GNU paketas, anksčiau žinomas kaip Ring) yra universali ir paskirstytoji bendravimo platforma, kuri gerbia naudotojų laisves ir privatumą.
+Jami (GNU paketas) yra universali ir paskirstytoji bendravimo platforma, kuri gerbia naudotojų laisves ir privatumą.
 Tai yra 100% laisvoji programinė įranga. Prieinama visose platformose.
 
 ★ Laisvai bendraukite, naudodami Jami:

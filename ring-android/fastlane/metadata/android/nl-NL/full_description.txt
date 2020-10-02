@@ -1,4 +1,4 @@
-Jami (een GNU-pakket, voorheen bekend als Ring) is een universeel en gedistribueerd communicatieplatform, dat de privacy en vrijheden van haar gebruikers eerbiedigt.
+Jami (een GNU-pakket) is een universeel en gedistribueerd communicatieplatform, dat de privacy en vrijheden van haar gebruikers eerbiedigt.
 Het is 100% vrije software, beschikbaar op alle platformen.
 
 ★ Communiceer vrij met Jami:

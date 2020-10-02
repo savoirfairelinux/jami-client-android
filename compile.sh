@@ -1,5 +1,5 @@
 #! /bin/bash
-# Build Ring daemon and client APK for Android
+# Build Jami daemon and client APK for Android
 
 if [ -z "$ANDROID_ABI" ]; then
     ANDROID_ABI="armeabi-v7a arm64-v8a x86_64"
