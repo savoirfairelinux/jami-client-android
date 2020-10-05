@@ -36,7 +36,7 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nėra užregistruotų paskyrų</string>
   <string name="normal_accounts_titles">Paskyros</string>
-  <string name="normal_devices_titles">Žinomi, su šia Jami paskyra susieti, įrenginiai</string>
+  <string name="normal_devices_titles">Susieti įrenginiai</string>
   <string name="account_device_revoke">Panaikinti įrenginį</string>
   <string name="account_device_revocation_success_title">Pavyko</string>
   <string name="account_device_revocation_success">Dabar įrenginys yra panaikintas!</string>
@@ -45,7 +45,6 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_device_revocation_unknown_device">Nežinomas įrenginys.</string>
   <string name="account_device_revocation_error_unknown">Nežinoma klaida.</string>
   <string name="account_password_change">Pakeisti slaptažodį</string>
-  <string name="account_password_set">Nustatyti slaptažodį</string>
   <string name="account_password_change_wait_message">Keičiamas paskyros slaptažodis</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Bendra</string>
@@ -131,7 +130,6 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="error_passwords_not_equals">Slaptažodžiai nesutampa</string>
   <string name="export_account_wait_title">Prašome palaukti...</string>
   <string name="export_account_wait_message">Eksportuojama paskyros informacija</string>
-  <string name="account_export_file">Padaryti paskyros atsarginę kopiją</string>
   <string name="account_export_end_decryption_message">Naudojant pateiktą slaptažodį, nepavyko atrakinti jūsų paskyros.</string>
   <string name="account_export_end_network_title">Tinklo klaida</string>
   <string name="account_export_end_network_message">Nepavyko eksportuoti paskyrą tinkle. Patikrinkite savo tinklo ryšį.</string>
@@ -181,7 +179,6 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="error_username_empty">Įveskite naudotojo vardą</string>
   <string name="no_registered_name_for_account">Šiai paskyrai nerasta jokio registruoto vardo</string>
   <string name="username_available">Naudotojo vardas prieinamas!</string>
-  <string name="register_name">Registruoti vardą</string>
   <string name="trying_to_register_name">Bandoma užregistruoti vardą</string>
   <string name="registered_username">Registruotas naudotojo vardas</string>
   <string name="register_username">Registruoti viešąjį naudotojo vardą</string>

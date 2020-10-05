@@ -36,7 +36,7 @@
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Fiók nincs bejegyezve</string>
   <string name="normal_accounts_titles">Fiókok</string>
-  <string name="normal_devices_titles">A Jami-fiókhoz kapcsolt ismert eszközök</string>
+  <string name="normal_devices_titles">Összekapcsolt eszközök</string>
   <string name="account_device_revoke">Eszköz visszavonása</string>
   <string name="account_device_revocation_success_title">Sikeres</string>
   <string name="account_device_revocation_success">Az eszköz most visszavonásra került.</string>
@@ -134,7 +134,6 @@
   <string name="error_passwords_not_equals">A jelszavak nem egyeznek</string>
   <string name="export_account_wait_title">Kérem várjon…</string>
   <string name="export_account_wait_message">Fiókadatok exportálása</string>
-  <string name="account_export_file">Fiók biztonsági mentése</string>
   <string name="account_export_end_decryption_message">Nem sikerült feloldani fiókját a megadott jelszó használatával.</string>
   <string name="account_export_end_network_title">Hálózati hiba</string>
   <string name="account_export_end_network_message">Nem sikerült exportálni a fiókot a hálózaton. Ellenőrizze a kapcsolatot.</string>
@@ -186,7 +185,6 @@
   <string name="error_username_empty">Adjon meg egy felhasználónevet</string>
   <string name="no_registered_name_for_account">Nem található regisztrált név ehhez a fiókhoz</string>
   <string name="username_available">A felhasználónév elérhető.</string>
-  <string name="register_name">Név regisztrációja</string>
   <string name="trying_to_register_name">A név regisztrációjának megkísérlése</string>
   <string name="registered_username">Felhasználónév regisztrálva</string>
   <string name="register_username">Nyilvános felhasználónév bejegyeztetése</string>

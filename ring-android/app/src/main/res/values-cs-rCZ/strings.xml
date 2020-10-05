@@ -47,7 +47,7 @@
   </plurals>
   <!--ContactList Fragment-->
   <string name="searchbar_hint">Vyhledat jméno nebo telefonní číslo…</string>
-  <string name="choose_number">Vyberte číslo</string>
+  <string name="choose_number">Zvolte číslo</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
@@ -89,6 +89,8 @@
   <!--Call Fragment-->
   <string name="you_txt_prefix">Vy:</string>
   <string name="action_call_hangup">Zavěsit</string>
+  <string name="action_call_maximize">Maximalizovat</string>
+  <string name="action_call_minimize">Minimalizovat</string>
   <string name="ongoing_call">Probíhající hovor</string>
   <string name="hist_in_call">Příchozí hovor %1$s</string>
   <string name="hist_out_call">Odchozí hovor %1$s</string>
@@ -185,7 +187,7 @@
   <string name="wizard_next">Další</string>
   <string name="wizard_back">Zpět</string>
   <string name="wizard_skip">Přeskočit</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <string name="profile">Profil</string>
   <string name="profile_message_warning">Váš profil je sdílen jen s vašimi kontakty</string>
   <string name="open_the_gallery">Otevřít galerii</string>
@@ -274,7 +276,7 @@
   <string name="tv_send_audio">Poslat zvuk</string>
   <string name="tv_send_video">Poslat média</string>
   <string name="conversation_input_speech_hint">Řekněte něco…</string>
-  <!--WIZARD-->
+  <!--Wizard-->
   <string name="wizard_status_recommended">Doporučeno</string>
   <string name="wizard_status_optional">Volitelné</string>
   <string name="wizard_status_required">Vyžadováno</string>
@@ -290,4 +292,5 @@
   <string name="wizard_profile_info">Profil je sdílen jen s kontakty</string>
   <string name="wizard_profile_button">Uložit profil</string>
   <string name="wizard_profile_skip">Odložit na později</string>
+  <string name="fab_path_choose">Vybrat jiný soubor</string>
 </resources>

@@ -139,7 +139,7 @@
   <string name="wizard_next">Slijedeće</string>
   <string name="wizard_back">Natrag</string>
   <string name="wizard_skip">Preskoči</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <string name="profile">Profil</string>
   <string name="profile_message_warning">Vaš profil je podjeljen samo sa vašim kontaktima</string>
   <string name="open_the_gallery">Otvorite galeriju</string>
@@ -181,6 +181,6 @@
   <string name="tv_audio_play">izvodi</string>
   <string name="tv_audio_pause">Pauza</string>
   <string name="tv_dialog_send">Pošalji</string>
-  <!--WIZARD-->
+  <!--Wizard-->
   <string name="wizard_password_skip">Napravi račun</string>
 </resources>

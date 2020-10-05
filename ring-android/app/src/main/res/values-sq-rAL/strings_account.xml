@@ -36,7 +36,7 @@
   <!--AccountManagementFragment-->
   <string name="empty_account_list">S\’ka llogari të regjistruar</string>
   <string name="normal_accounts_titles">Llogari</string>
-  <string name="normal_devices_titles">Pajisje të njohura që lidhen te kjo llogari Jami</string>
+  <string name="normal_devices_titles">Pajisje të Lidhura</string>
   <string name="account_device_revoke">Shfuqizoje pajisjes</string>
   <string name="account_device_revocation_success_title">Sukses</string>
   <string name="account_device_revocation_success">Pajisja tani është shfuqizuar!</string>
@@ -44,8 +44,8 @@
   <string name="account_device_revocation_wrong_password">Fjalëkalim gabuar.</string>
   <string name="account_device_revocation_unknown_device">Pajisje e panjohur.</string>
   <string name="account_device_revocation_error_unknown">Gabim i panjohur.</string>
-  <string name="account_password_change">Ndryshoni fjalëkalimin</string>
-  <string name="account_password_set">Caktoni fjalëkalimin</string>
+  <string name="account_password_change">Ndryshoni Fjalëkalimin</string>
+  <string name="account_password_set">Caktoni Fjalëkalimin</string>
   <string name="account_password_change_wait_message">Po ndryshohet fjalëkalim llogarie</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Të përgjithshme</string>
@@ -134,7 +134,6 @@
   <string name="error_passwords_not_equals">Fjalëkalimet nuk përputhen</string>
   <string name="export_account_wait_title">Ju lutemi, pritni…</string>
   <string name="export_account_wait_message">Po eksportohen të dhëna llogarie</string>
-  <string name="account_export_file">Kopjeruaje llogarinë</string>
   <string name="account_export_end_decryption_message">S\’u zhbllokua dot llogaria juaj duke përdorur fjalëkalimin e dhënë.</string>
   <string name="account_export_end_network_title">Gabim rrjeti</string>
   <string name="account_export_end_network_message">S\’u eksportua dot llogari te rrjeti. Kontrolloni lidhjen tuaj në rrjet.</string>
@@ -186,7 +185,6 @@
   <string name="error_username_empty">Jepni një emër përdoruesi</string>
   <string name="no_registered_name_for_account">S\’u gjet emër i regjistruar për këtë llogari</string>
   <string name="username_available">Emër përdoruesi i pazënë!</string>
-  <string name="register_name">Regjistroni emër</string>
   <string name="trying_to_register_name">Po provohet të regjistrohet emri</string>
   <string name="registered_username">Emër përdoruesi i regjistruar</string>
   <string name="register_username">Regjistroni emër publik përdoruesi</string>

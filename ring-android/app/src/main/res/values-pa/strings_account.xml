@@ -36,7 +36,6 @@
   <!--AccountManagementFragment-->
   <string name="empty_account_list">ਕਿਸੇ ਖਾਤੇ ਦਾ ਪੰਜੀਕਰਨ ਨਹੀਂ ਕੀਤਾ ਗਿਆ</string>
   <string name="normal_accounts_titles">ਖਾਤੇ</string>
-  <string name="normal_devices_titles">ਇਸ Jami ਖਾਤੇ ਨਾਲ ਲਿੰਕ ਕੀਤੇ ਜਾਣੇ-ਪਛਾਣੇ ਡੀਵਾਈਸ</string>
   <string name="account_device_revoke">ਡੀਵਾਈਸ ਹਟਾਓ</string>
   <string name="account_device_revocation_success_title">ਸਫਲਤਾ</string>
   <string name="account_device_revocation_success">ਡੀਵਾਈਸ ਹੁਣ ਹਟ ਗਿਆ ਹੈ!</string>
@@ -44,8 +43,6 @@
   <string name="account_device_revocation_wrong_password">ਗਲਤ ਪਾਸਵਰਡ।</string>
   <string name="account_device_revocation_unknown_device">ਅਣਪਛਾਤਾ ਡੀਵਾਈਸ।</string>
   <string name="account_device_revocation_error_unknown">ਅਣਪਛਾਤੀ ਗੜਬੜ।</string>
-  <string name="account_password_change">ਪਾਸਵਰਡ ਬਦਲੋ</string>
-  <string name="account_password_set">ਪਾਸਵਰਡ ਸੈੱਟ ਕਰੋ</string>
   <string name="account_password_change_wait_message">ਖਾਤਾ ਪਾਸਵਰਡ ਬਦਲਿਆ ਜਾ ਰਿਹਾ ਹੈ</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">ਸਧਾਰਨ</string>
@@ -116,7 +113,6 @@
   <string name="error_passwords_not_equals">ਪਾਸਵਰਡ ਮੇਲ ਨਹੀਂ ਖਾਂਦੇ</string>
   <string name="export_account_wait_title">ਕਿਰਪਾ ਕਰਕੇ ਉਡੀਕ ਕਰੋ…</string>
   <string name="export_account_wait_message">ਖਾਤਾ ਜਾਣਕਾਰੀ ਨਿਰਯਾਤ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ</string>
-  <string name="account_export_file">ਬੈਕਅੱਪ ਖਾਤਾ</string>
   <string name="account_export_end_decryption_message">ਦਿੱਤੇ ਪਾਸਵਰਡ ਨਾਲ ਤੁਹਾਡਾ ਖਾਤਾ ਅਣਲਾਕ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ।</string>
   <string name="account_export_end_network_title">ਨੈੱਟਵਰਕ ਗੜਬੜ</string>
   <string name="account_export_end_network_message">ਨੈੱਟਵਰਕ \'ਤੇ ਖਾਤੇ ਦਾ ਨਿਰਯਾਤ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ। ਕਨੈਕਸ਼ਨ ਦੀ ਜਾਂਚ ਕਰੋ।</string>
@@ -161,7 +157,6 @@
   <!--Name registration-->
   <string name="error_username_empty">ਵਰਤੋਂਕਾਰ ਨਾਂ ਦਾਖਲ ਕਰੋ</string>
   <string name="no_registered_name_for_account">ਇਸ ਖਾਤੇ ਲਈ ਕੋਈ ਪੰਜੀਕਿਰਤ ਨਾਂ ਨਹੀਂ ਮਿਲਿਆ</string>
-  <string name="register_name">ਨਾਂ ਦਾ ਪੰਜੀਕਰਨ ਕਰੋ</string>
   <string name="trying_to_register_name">ਨਾਂ ਦੇ ਪੰਜੀਕਰਨ ਦੀ ਕੋਸ਼ਿਸ਼ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ</string>
   <string name="registered_username">ਪੰਜੀਕਿਰਤ ਵਰਤੋਂਕਾਰ ਨਾਂ</string>
   <string name="username_already_taken">ਵਰਤੋਂਕਾਰ ਨਾਂ ਪਹਿਲਾਂ ਹੀ ਲਿਆ ਗਿਆ</string>

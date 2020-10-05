@@ -170,7 +170,7 @@
   <string name="wizard_next">Seguente</string>
   <string name="wizard_back">Indietro</string>
   <string name="wizard_skip">Salta</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <string name="profile">Profilo</string>
   <string name="profile_message_warning">Il tuo profilo è condiviso solo con i tuoi contatti</string>
   <string name="open_the_gallery">Apri la galleria</string>
@@ -243,6 +243,6 @@
   <!--TV-->
   <string name="tv_audio_play">Play</string>
   <string name="tv_dialog_send">Invia</string>
-  <!--WIZARD-->
+  <!--Wizard-->
   <string name="wizard_password_skip">Crea account</string>
 </resources>

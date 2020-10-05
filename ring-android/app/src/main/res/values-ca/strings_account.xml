@@ -36,7 +36,7 @@ Podeu editar el vostre compte més endavant.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">No hi ha cap compte registrat</string>
   <string name="normal_accounts_titles">Comptes</string>
-  <string name="normal_devices_titles">Dispositius coneguts vinculats amb aquest compte de Jami</string>
+  <string name="normal_devices_titles">Dispositius vinculats</string>
   <string name="account_device_revoke">Revoca el dispositiu</string>
   <string name="account_device_revocation_success_title">Èxit</string>
   <string name="account_device_revocation_success">S\'ha revocat el dispositiu!</string>
@@ -45,7 +45,6 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="account_device_revocation_unknown_device">Dispositiu desconegut.</string>
   <string name="account_device_revocation_error_unknown">Error desconegut.</string>
   <string name="account_password_change">Canvia la contrasenya</string>
-  <string name="account_password_set">Estableix contrasenya</string>
   <string name="account_password_change_wait_message">Canviant contrasenya del compte</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">General</string>
@@ -130,7 +129,6 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="error_passwords_not_equals">No coincideixen les contrasenyes</string>
   <string name="export_account_wait_title">Si us plau espereu...</string>
   <string name="export_account_wait_message">Exportant informació del compte</string>
-  <string name="account_export_file">Fes còpia de seguretat del compte</string>
   <string name="account_export_end_decryption_message">No s\'ha pogut desbloquejar el vostre compte amb la contrasenya que heu proveït</string>
   <string name="account_export_end_network_title">Error de xarxa</string>
   <string name="account_export_end_network_message">No s\'ha pogut exportar el vostre compte per la xarxa. Comproveu la vostre connectivitat.</string>
@@ -181,7 +179,6 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="error_username_empty">Inseriu el vostre nom d\'usuari</string>
   <string name="no_registered_name_for_account">No s\'ha trobat cap nom registrat per aquest compte</string>
   <string name="username_available">Nom d\'usuari disponible !</string>
-  <string name="register_name">Registrar nom</string>
   <string name="trying_to_register_name">Provant de registrar nom d\'usuari</string>
   <string name="registered_username">Nom d\'usuari registrat</string>
   <string name="register_username">Registra nom d\'usuari públic</string>

@@ -184,7 +184,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="wizard_next">Próximo</string>
   <string name="wizard_back">Voltar</string>
   <string name="wizard_skip">Pular</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <string name="profile">Perfil</string>
   <string name="profile_message_warning">Seu perfil é compartilhado apenas com seus contatos</string>
   <string name="open_the_gallery">Abrir a galeria</string>
@@ -273,7 +273,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="tv_send_audio">Enviar Áudio</string>
   <string name="tv_send_video">Enviar Mídia</string>
   <string name="conversation_input_speech_hint">Fale algo...</string>
-  <!--WIZARD-->
+  <!--Wizard-->
   <string name="wizard_status_recommended">Recomendado</string>
   <string name="wizard_status_optional">Opcional</string>
   <string name="wizard_status_required">Requerido</string>

@@ -178,7 +178,7 @@
   <string name="wizard_next">Ďalej</string>
   <string name="wizard_back">Späť</string>
   <string name="wizard_skip">Preskočiť</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <string name="profile">Profil</string>
   <string name="profile_message_warning">Váš profil je zdieľaný iba s vašimi kontaktmi</string>
   <string name="open_the_gallery">Otvoriť galériu</string>
@@ -264,6 +264,6 @@
   <string name="tv_send_audio">Poslať Audio</string>
   <string name="tv_send_video">Poslať Médiá</string>
   <string name="conversation_input_speech_hint">Povedzte niečo...</string>
-  <!--WIZARD-->
+  <!--Wizard-->
   <string name="wizard_password_skip">Vytvoriť účet</string>
 </resources>

@@ -41,4 +41,5 @@
   <string name="plugin_recent_version_exception">Máte novější verzi <b>%1$s</b></string>
   <string name="plugin_same_version_exception">Máte nainstalovanou stejnou verzi <b>%1$s</b></string>
   <string name="plugin_force_install">vynutit instalaci</string>
+  <string name="plugin_path_image_add">Přidat nový obrázek</string>
 </resources>

@@ -40,4 +40,6 @@
   <string name="plugin_install_failure">Installation des Plugins ist fehlgeschlagen: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Sie haben eine neuere Version von: <b>%1$s</b></string>
   <string name="plugin_same_version_exception">Sie haben die gleiche Version von <b>%1$s</b> installiert</string>
+  <string name="plugin_force_install">Erzwinge \n Installation</string>
+  <string name="plugin_path_image_add">Ein neues Bild hinzufügen</string>
 </resources>

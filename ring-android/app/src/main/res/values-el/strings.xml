@@ -112,7 +112,7 @@
   <string name="prompt_hint_username">Όνομα χρήστη</string>
   <string name="wizard_next">Επόμενο</string>
   <string name="wizard_back">Πίσω</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <string name="profile">Προφίλ</string>
   <string name="profile_message_warning">Το προφίλ σας διαμοιράζεται μόνο με τις επαφές σας</string>
   <string name="open_the_gallery">Άνοιγμα έκθεσης</string>
@@ -150,6 +150,6 @@
   <!--TV-->
   <string name="tv_audio_play">Αναπαραγωγή</string>
   <string name="tv_dialog_send">Αποστολή</string>
-  <!--WIZARD-->
+  <!--Wizard-->
   <string name="wizard_password_skip">Δημιουργία λογαριασμού</string>
 </resources>

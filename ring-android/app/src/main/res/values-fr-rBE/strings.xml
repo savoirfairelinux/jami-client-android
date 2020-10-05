@@ -32,7 +32,7 @@
   <string name="account_create_title">Créer un compte Jami</string>
   <string name="wizard_next">Suivant</string>
   <string name="wizard_skip">Passer</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <string name="profile">Profil</string>
   <!--Share fragment-->
   <string name="share_label">Partager</string>
@@ -52,5 +52,5 @@
   <string name="navigation_item_account">Compte</string>
   <!--TV-->
   <string name="tv_dialog_send">Envoyer</string>
-  <!--WIZARD-->
+  <!--Wizard-->
 </resources>

@@ -182,11 +182,11 @@
   <string name="help_password_choose">Alege o parolă complexă pe care să ți-o amintești, pentru a proteja contul tău Jami.</string>
   <string name="help_password_enter">Introdu parola principală a contului tău Jami.</string>
   <string name="help_server_enter">Introdu URL-ul serverului de administrare</string>
-  <string name="help_pin_enter">Introdu codul PIN obținut prin crearea unui alt cont Jami. Folosește opțiunea \"Exportă contul Jami\" pentru a obține un cod PIN.</string>
+  <string name="help_pin_enter">Introdu codul PIN obținut de la un cont Jami. Folosește opțiunea \"Exportă contul Jami\" pentru a obține codul PIN.</string>
   <string name="wizard_next">Înainte</string>
   <string name="wizard_back">Înapoi</string>
   <string name="wizard_skip">Omite</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <string name="profile">Profil</string>
   <string name="profile_message_warning">Profilul tău este distribuit doar contactelor tale</string>
   <string name="open_the_gallery">Deschide galeria</string>
@@ -275,7 +275,7 @@
   <string name="tv_send_audio">Trimite Audio</string>
   <string name="tv_send_video">Trimite Media</string>
   <string name="conversation_input_speech_hint">Spune ceva...</string>
-  <!--WIZARD-->
+  <!--Wizard-->
   <string name="wizard_status_recommended">Recomandat</string>
   <string name="wizard_status_optional">Facultativ</string>
   <string name="wizard_status_required">Obligatoriu</string>
@@ -283,7 +283,7 @@
   <string name="wizard_username_button">Alege Numele de Utilizator</string>
   <string name="wizard_username_skip">Saltă alegerea numelui de utilizator</string>
   <string name="wizard_password_info">Parola contului</string>
-  <string name="wizard_password_placeholder">Alege o parolă pentru a cifra cheia contului pe acest dispozitiv</string>
+  <string name="wizard_password_placeholder">Alege o parolă pentru a cifra contul tău pe acest dispozitiv</string>
   <string name="wizard_password_button">Alege parola</string>
   <string name="wizard_password_skip">Creează contul</string>
   <string name="wizard_password_switch">Cifrează contul cu parolă</string>

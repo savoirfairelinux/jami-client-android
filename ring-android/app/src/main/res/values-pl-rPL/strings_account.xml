@@ -34,7 +34,6 @@ Możesz edytować swoje konto później</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nie masz zarejestrowanego konta</string>
   <string name="normal_accounts_titles">Konta</string>
-  <string name="normal_devices_titles">Znane urządzenia połączone z tym kontem Jami</string>
   <string name="account_device_revoke">Odwołaj urządzenie</string>
   <string name="account_device_revocation_success_title">Sukces</string>
   <string name="account_device_revocation_success">Urządzenie jest odwołane!</string>
@@ -42,7 +41,6 @@ Możesz edytować swoje konto później</string>
   <string name="account_device_revocation_wrong_password">Błędne hasło.</string>
   <string name="account_device_revocation_unknown_device">Nieznane urządzenie.</string>
   <string name="account_device_revocation_error_unknown">Nieznany błąd.</string>
-  <string name="account_password_change">Zmień hasło</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Generalne</string>
   <string name="account_basic_category">Ustawienia Podstawowe</string>
@@ -148,7 +146,6 @@ Możesz edytować swoje konto później</string>
   <!--Name registration-->
   <string name="error_username_empty">Wprowadź nazwę użytkownika</string>
   <string name="no_registered_name_for_account">Nie znaleziono żadnej nazwy zarejestrowanej dla tego konta </string>
-  <string name="register_name">Zarejestruj nazwę</string>
   <string name="trying_to_register_name">Trwa próba rejestracji nazwy</string>
   <string name="registered_username">Zarejestruj nazwę użytkownika</string>
   <string name="register_username">Zarejestruj publiczną nazwę użytkownika</string>

@@ -86,6 +86,8 @@
   <!--Call Fragment-->
   <string name="you_txt_prefix">您：</string>
   <string name="action_call_hangup">挂断</string>
+  <string name="action_call_maximize">最大化</string>
+  <string name="action_call_minimize">减少</string>
   <string name="ongoing_call">正在通话</string>
   <string name="hist_in_call">来电：%1$s</string>
   <string name="hist_out_call">去电：%1$s</string>
@@ -182,7 +184,7 @@
   <string name="wizard_next">下一步</string>
   <string name="wizard_back">上一步</string>
   <string name="wizard_skip">跳过</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <string name="profile">账户资料</string>
   <string name="profile_message_warning">您的账户资料仅与您的通讯录共享</string>
   <string name="open_the_gallery">打开照片库</string>
@@ -271,7 +273,7 @@
   <string name="tv_send_audio">发送音频</string>
   <string name="tv_send_video">发送媒体文件</string>
   <string name="conversation_input_speech_hint">说点什么…</string>
-  <!--WIZARD-->
+  <!--Wizard-->
   <string name="wizard_status_recommended">推荐</string>
   <string name="wizard_status_optional">选填</string>
   <string name="wizard_status_required">必填</string>

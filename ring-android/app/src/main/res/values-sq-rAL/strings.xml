@@ -185,7 +185,7 @@
   <string name="wizard_next">Pasuesi</string>
   <string name="wizard_back">Mbrapsht</string>
   <string name="wizard_skip">Anashkaloje</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <string name="profile">Profil</string>
   <string name="profile_message_warning">Profili juaj ndahet vetëm me kontaktet tuaja</string>
   <string name="open_the_gallery">Hape galerinë</string>
@@ -274,7 +274,7 @@
   <string name="tv_send_audio">Dërgoni Audio</string>
   <string name="tv_send_video">Dërgoni Media</string>
   <string name="conversation_input_speech_hint">Thoni diçka…</string>
-  <!--WIZARD-->
+  <!--Wizard-->
   <string name="wizard_status_recommended">E rekomanduar</string>
   <string name="wizard_status_optional">Opsionale</string>
   <string name="wizard_status_required">E domosdoshme</string>

@@ -175,7 +175,7 @@
   <string name="wizard_next">Neste</string>
   <string name="wizard_back">Tilbake</string>
   <string name="wizard_skip">Hopp over</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <string name="profile">Profil</string>
   <string name="profile_message_warning">Din profil deles bare med dine kontakter</string>
   <string name="open_the_gallery">Åpne galleriet</string>
@@ -257,6 +257,6 @@
   <string name="tv_send_text">Send tekst</string>
   <string name="tv_send_audio">Send lyd</string>
   <string name="tv_send_video">Send media</string>
-  <!--WIZARD-->
+  <!--Wizard-->
   <string name="wizard_password_skip">Opprett kongo</string>
 </resources>

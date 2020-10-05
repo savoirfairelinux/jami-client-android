@@ -21,7 +21,7 @@
   <string name="dialog_wait_create_details">Prosím vyčkejte, než bude váš účet přidán…</string>
   <string name="dialog_wait_update">Aktualizuje se účet</string>
   <string name="dialog_wait_update_details">Počkejte prosím, než bude váš účet aktualizován…</string>
-  <string name="dialog_warn_ip2ip_account_title">Vytvořit prázdný účet SIP ?</string>
+  <string name="dialog_warn_ip2ip_account_title">Vytvořit prázdný účet SIP?</string>
   <string name="dialog_warn_ip2ip_account_message">Vytváříte prázdný účet SIP bez platného hostitelského jména.
 Budete moci pouze vytvářet a přijímat přímé ip hovory.
 Svůj účet můžete upravit později</string>
@@ -36,7 +36,7 @@ Svůj účet můžete upravit později</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Žádný registrovaný účet</string>
   <string name="normal_accounts_titles">Účty</string>
-  <string name="normal_devices_titles">Známá zařízení připojená k tomuto účtu Jami</string>
+  <string name="normal_devices_titles">Připojená zařízení</string>
   <string name="account_device_revoke">Odebrat zařízení</string>
   <string name="account_device_revocation_success_title">Úspěch</string>
   <string name="account_device_revocation_success">Zařízení je nyní odebráno!</string>
@@ -134,7 +134,6 @@ Svůj účet můžete upravit později</string>
   <string name="error_passwords_not_equals">Hesla se neshodují</string>
   <string name="export_account_wait_title">Počkejte prosím…</string>
   <string name="export_account_wait_message">Exportují se údaje o účtu</string>
-  <string name="account_export_file">Zálohovat účet</string>
   <string name="account_export_end_decryption_message">Zadaným heslem nebylo možné váš účet odemknout.</string>
   <string name="account_export_end_network_title">Chyba sítě</string>
   <string name="account_export_end_network_message">Nebylo možné exportovat účet do sítě. Zkontrolujte si připojení.</string>
@@ -178,7 +177,7 @@ Prověřte, prosím, své heslo.</string>
   <string name="account_end_export_infos">Váš PIN je:\n\n%%\n\nK dokončení tohoto procesu otevřete Jami na novém zařízení. Přihlaste se k účtu pomocí „Připojit toto zařízení k účtu“. Váš PIN zůstává platný 10 minut.</string>
   <string name="account_link_export_info_light">Pro použití tohoto účtu na dalších zařízeních jej musíte nejdříve vystavit na Jami. Tím se vytvoří kód PIN, který musíte pro nastavení účtu zadat na novém zařízení. PIN zůstává platný po 0 minut.</string>
   <string name="account_export_title">Přidat zařízení</string>
-  <string name="account_connect_server_button">Připojit se ke správcovskému serveru.</string>
+  <string name="account_connect_server_button">Připojit se ke správcovskému serveru</string>
   <string name="account_connect_button">Připojit</string>
   <string name="prompt_server">Adresa URL správcovského serveru Jami</string>
   <string name="help_credentials_enter">Zadejte přihlašovací údaje vaší organizace</string>
@@ -188,7 +187,6 @@ Prověřte, prosím, své heslo.</string>
   <string name="error_username_empty">Zadejte uživatelské jméno</string>
   <string name="no_registered_name_for_account">Pro tento účet nenalezeno žádné registrované jméno</string>
   <string name="username_available">Uživatelské jméno je dostupné!</string>
-  <string name="register_name">Zaregistrovat jméno</string>
   <string name="trying_to_register_name">Pokus o registraci jména</string>
   <string name="registered_username">Registrované uživatelské jméno</string>
   <string name="register_username">Zaregistrovat veřejné uživatelské jméno</string>
@@ -219,9 +217,9 @@ Prověřte, prosím, své heslo.</string>
   <string name="revoke_device_wait_title">Počkejte prosím…</string>
   <string name="revoke_device_wait_message">Odebírá se účet</string>
   <string name="rename_device_title">Přejmenovat toto zařízení</string>
-  <string name="rename_device_message">Vyberte nový název pro rozeznání tohoto zařízení ve vašem účtu Jami</string>
+  <string name="rename_device_message">Zvolte si nový název pro rozeznání tohoto zařízení ve vašem účtu Jami</string>
   <string name="rename_device_button">Přejmenovat zařízení</string>
-  <string name="account_rename_device_hint">Vybrat název nového zařízení</string>
+  <string name="account_rename_device_hint">Zvolit si název nového zařízení</string>
   <string name="account_device_name_empty">Název zařízení nemůže být prázdný</string>
   <string name="account_device_this_indicator">toto zařízení</string>
   <string name="account_disabled_indicator">zakázáno</string>

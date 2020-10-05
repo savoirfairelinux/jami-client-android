@@ -175,7 +175,7 @@
   <string name="wizard_next">Hurrengoa</string>
   <string name="wizard_back">Atzera</string>
   <string name="wizard_skip">Jauzi</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <string name="profile">Profila</string>
   <string name="profile_message_warning">Zure profila zure kontaktuekin partekatzen da soilik</string>
   <string name="open_the_gallery">Ireki galeria</string>
@@ -253,6 +253,6 @@
   <string name="tv_dialog_send">Bidali</string>
   <string name="tv_send_text">Bidali testua</string>
   <string name="tv_send_audio">Bidali audioa</string>
-  <!--WIZARD-->
+  <!--Wizard-->
   <string name="wizard_password_skip">Sortu kontua</string>
 </resources>

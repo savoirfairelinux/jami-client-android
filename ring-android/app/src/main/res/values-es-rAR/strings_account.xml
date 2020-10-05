@@ -36,7 +36,7 @@ Podrá editar su cuenta más tarde.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">No hay cuenta registrada</string>
   <string name="normal_accounts_titles">Cuentas</string>
-  <string name="normal_devices_titles">Dispositivos conocidos conectados a esta cuenta de Jami</string>
+  <string name="normal_devices_titles">Dispositvos vinculados</string>
   <string name="account_device_revoke">Revocar dispositivo</string>
   <string name="account_device_revocation_success_title">Éxito</string>
   <string name="account_device_revocation_success">¡Se ha revocado el dispositivo!</string>
@@ -45,7 +45,6 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_device_revocation_unknown_device">Dispositivo desconocido.</string>
   <string name="account_device_revocation_error_unknown">Error desconocido.</string>
   <string name="account_password_change">Cambiar contraseña</string>
-  <string name="account_password_set">Establecer contraseña</string>
   <string name="account_password_change_wait_message">Cambiando la contraseña de la cuenta</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">General</string>
@@ -132,7 +131,6 @@ Podrá editar su cuenta más tarde.</string>
   <string name="error_passwords_not_equals">Las contraseñas no coinciden</string>
   <string name="export_account_wait_title">Por favor espere...</string>
   <string name="export_account_wait_message">Exportando la información de la cuenta</string>
-  <string name="account_export_file">Crear copia de seguridad de la cuenta</string>
   <string name="account_export_end_decryption_message">No se pudo desbloquear la cuenta con la contraseña ingresada.</string>
   <string name="account_export_end_network_title">Error de red</string>
   <string name="account_export_end_network_message">No se pudo exportar su cuenta. Compruebe su conexión a internet.</string>
@@ -184,7 +182,6 @@ Podrá editar su cuenta más tarde.</string>
   <string name="error_username_empty">Ingresá un nombre de usuario</string>
   <string name="no_registered_name_for_account">No se encontró ningún nombre registrado para esta cuenta</string>
   <string name="username_available">¡Nombre de usuario disponible!</string>
-  <string name="register_name">Registrar nombre</string>
   <string name="trying_to_register_name">Intentanto registrar nombre</string>
   <string name="registered_username">Nombre de usuario registrado</string>
   <string name="register_username">Registrar nombre de usuario público</string>

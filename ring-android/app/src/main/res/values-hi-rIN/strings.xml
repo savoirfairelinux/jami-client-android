@@ -33,7 +33,7 @@
   <!--Settings-->
   <!--Conversation-->
   <!--Contacts-->
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <!--Share fragment-->
   <!--Pending contact requests-->
   <!--Send contact requests-->
@@ -44,5 +44,5 @@
   <string name="navigation_item_account">खाता</string>
   <!--TV-->
   <string name="tv_audio_play">शुरू करें</string>
-  <!--WIZARD-->
+  <!--Wizard-->
 </resources>

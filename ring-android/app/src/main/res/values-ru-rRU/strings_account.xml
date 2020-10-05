@@ -36,7 +36,7 @@
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Нет зарегистрированного аккаунта</string>
   <string name="normal_accounts_titles">Учетные записи</string>
-  <string name="normal_devices_titles">Устройства, привязанные к этому аккаунту Jami</string>
+  <string name="normal_devices_titles">Привязанные Устройства</string>
   <string name="account_device_revoke">Отозвать устройство</string>
   <string name="account_device_revocation_success_title">Успешно</string>
   <string name="account_device_revocation_success">Устройство отвязано! </string>
@@ -44,8 +44,7 @@
   <string name="account_device_revocation_wrong_password">Неверный пароль</string>
   <string name="account_device_revocation_unknown_device">Неизвестное устройство</string>
   <string name="account_device_revocation_error_unknown">Неизвестная ошибка</string>
-  <string name="account_password_change">Изменить пароль</string>
-  <string name="account_password_set">Задать пароль</string>
+  <string name="account_password_change">Изменить Пароль</string>
   <string name="account_password_change_wait_message">Изменение пароля аккаунта</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Основные</string>
@@ -120,7 +119,6 @@
   <string name="error_passwords_not_equals">Пароли не совпадают</string>
   <string name="export_account_wait_title">Пожалуйста, подождите...</string>
   <string name="export_account_wait_message">Экспортировать информацию об аккаунте</string>
-  <string name="account_export_file">Резервная копия аккаунта</string>
   <string name="account_export_end_decryption_message">Не удалось разблокировать аккаунт с помощью этого пароля.</string>
   <string name="account_export_end_network_title">Ошибка сети</string>
   <string name="account_export_end_network_message">Не удалось экспортировать аккаунт в сети. Проверьте подключение.</string>
@@ -171,7 +169,6 @@
   <string name="error_username_empty">Введите имя пользователя</string>
   <string name="no_registered_name_for_account">Не найдено зарегистрированных имён для этого аккаунта</string>
   <string name="username_available">Имя пользователя доступно !</string>
-  <string name="register_name">Зарегистрировать имя пользователя</string>
   <string name="trying_to_register_name">Попробовать зарегистрировать имя</string>
   <string name="registered_username">Зарегистрированное имя пользователя</string>
   <string name="register_username">Зарегистрировать общедоступное имя пользователя</string>

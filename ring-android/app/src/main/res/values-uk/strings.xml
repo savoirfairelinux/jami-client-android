@@ -154,7 +154,7 @@
   <string name="wizard_next">Далі</string>
   <string name="wizard_back">Назад</string>
   <string name="wizard_skip">Пропустити</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <string name="profile">Профіль</string>
   <string name="profile_message_warning">Ваш профіль бачитимуть лише ваші контакти</string>
   <string name="open_the_gallery">Відкрити галерею</string>
@@ -199,6 +199,6 @@
   <string name="tv_audio_play">Програти</string>
   <string name="tv_audio_pause">Пауза</string>
   <string name="tv_dialog_send">Відправити</string>
-  <!--WIZARD-->
+  <!--Wizard-->
   <string name="wizard_password_skip">Створити обліковий запис</string>
 </resources>

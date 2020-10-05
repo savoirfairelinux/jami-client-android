@@ -152,7 +152,7 @@
   <string name="wizard_next">ਅੱਗੇ</string>
   <string name="wizard_back">ਪਿੱਛੇ</string>
   <string name="wizard_skip">ਲੰਘਾਓ</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <string name="profile_message_warning">ਤੁਹਾਡਾ ਪ੍ਰੋਫਾਈਲ ਸਿਰਫ਼ ਤੁਹਾਡੇ ਸੰਪਰਕਾਂ ਨਾਲ ਸਾਂਝਾ ਕੀਤਾ ਜਾਂਦਾ ਹੈ</string>
   <string name="open_the_gallery">ਗੈਲਰੀ ਖੋਲ੍ਹੋ</string>
   <string name="take_a_photo">ਫ਼ੋਟੋ ਖਿੱਚੋ</string>
@@ -216,6 +216,6 @@
   <!--TV-->
   <string name="tv_audio_play">ਚਲਾਓ</string>
   <string name="tv_dialog_send">ਭੇਜੋ</string>
-  <!--WIZARD-->
+  <!--Wizard-->
   <string name="wizard_password_skip">ਖਾਤਾ ਬਣਾਓ</string>
 </resources>

@@ -28,7 +28,7 @@
   <!--Settings-->
   <!--Conversation-->
   <!--Contacts-->
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <!--Share fragment-->
   <!--Pending contact requests-->
   <!--Send contact requests-->
@@ -38,5 +38,5 @@
   <!--Bottom Navigation-->
   <!--TV-->
   <string name="tv_audio_play">प्ले करा</string>
-  <!--WIZARD-->
+  <!--Wizard-->
 </resources>

@@ -36,7 +36,7 @@ U kunt uw account later bewerken</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Geen account geregistreerd</string>
   <string name="normal_accounts_titles">Accounts</string>
-  <string name="normal_devices_titles">Gekende apparaten gekoppeld aan deze Jami-account</string>
+  <string name="normal_devices_titles">Gekoppelde apparaten</string>
   <string name="account_device_revoke">Apparaat intrekken</string>
   <string name="account_device_revocation_success_title">Klaar</string>
   <string name="account_device_revocation_success">Het apparaat is nu ingetrokken!</string>
@@ -45,7 +45,6 @@ U kunt uw account later bewerken</string>
   <string name="account_device_revocation_unknown_device">Onbekend apparaat.</string>
   <string name="account_device_revocation_error_unknown">Onbekende fout.</string>
   <string name="account_password_change">Paswoord wijzigen</string>
-  <string name="account_password_set">Paswoord instellen</string>
   <string name="account_password_change_wait_message">Accountpaswoord wordt gewijzigd</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Algemeen</string>
@@ -120,7 +119,6 @@ U kunt uw account later bewerken</string>
   <string name="error_passwords_not_equals">Paswoorden komen niet overeen</string>
   <string name="export_account_wait_title">Even geduld…</string>
   <string name="export_account_wait_message">Accountinformatie wordt geëxporteerd</string>
-  <string name="account_export_file">Back-up maken van account</string>
   <string name="account_export_end_decryption_message">Kon uw account niet ontgrendelen met het ingegeven paswoord.</string>
   <string name="account_export_end_network_title">Netwerkfout</string>
   <string name="account_export_end_network_message">Kon account niet exporteren over het netwerk. Controleer uw netwerkverbinding.</string>
@@ -171,7 +169,6 @@ U kunt uw account later bewerken</string>
   <string name="error_username_empty">Geef een gebruikersnaam in</string>
   <string name="no_registered_name_for_account">Geen geregistreerde naam gevonden voor deze account</string>
   <string name="username_available">Gebruikersnaam is beschikbaar!</string>
-  <string name="register_name">Naam registreren</string>
   <string name="trying_to_register_name">Naam wordt geregistreerd</string>
   <string name="registered_username">Geregistreerde gebruikersnaam</string>
   <string name="register_username">Registreer een openbare gebruikersnaam</string>

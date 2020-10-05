@@ -148,7 +148,7 @@
   <string name="wizard_next">Kitas</string>
   <string name="wizard_back">Atgal</string>
   <string name="wizard_skip">Praleisti</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <string name="profile">Profilis</string>
   <string name="profile_message_warning">Jūsų profilis yra bendrinamas tik su jūsų adresatais</string>
   <string name="open_the_gallery">Atverti galeriją</string>
@@ -222,7 +222,7 @@
   <string name="tv_dialog_send">Siųsti</string>
   <string name="tv_send_text">Siųsti tekstą</string>
   <string name="tv_send_audio">Siųsti garsą</string>
-  <!--WIZARD-->
+  <!--Wizard-->
   <string name="wizard_status_recommended">Rekomenduojamas</string>
   <string name="wizard_password_skip">Sukurti paskyrą</string>
 </resources>

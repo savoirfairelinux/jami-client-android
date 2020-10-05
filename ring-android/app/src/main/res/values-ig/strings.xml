@@ -26,7 +26,7 @@
   <!--Conversation-->
   <!--Contacts-->
   <string name="wizard_next">Nke na-abịa</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <!--Share fragment-->
   <!--Pending contact requests-->
   <!--Send contact requests-->
@@ -37,5 +37,5 @@
   <!--Bottom Navigation-->
   <!--TV-->
   <string name="tv_dialog_send">Zie</string>
-  <!--WIZARD-->
+  <!--Wizard-->
 </resources>

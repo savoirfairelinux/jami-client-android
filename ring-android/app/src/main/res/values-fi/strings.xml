@@ -183,7 +183,7 @@
   <string name="wizard_next">Seuraava</string>
   <string name="wizard_back">Takaisin</string>
   <string name="wizard_skip">Ohita</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <string name="profile">Profiili</string>
   <string name="profile_message_warning">Profiilisi jaetaan vain yhteystietojesi kanssa</string>
   <string name="open_the_gallery">Avaa valokuvat</string>
@@ -272,7 +272,7 @@
   <string name="tv_send_audio">Lähetä ääni</string>
   <string name="tv_send_video">Lähetä media</string>
   <string name="conversation_input_speech_hint">Sano jotakin...</string>
-  <!--WIZARD-->
+  <!--Wizard-->
   <string name="wizard_status_recommended">Suositus</string>
   <string name="wizard_status_optional">Valinnainen</string>
   <string name="wizard_status_required">Vaaditaan</string>

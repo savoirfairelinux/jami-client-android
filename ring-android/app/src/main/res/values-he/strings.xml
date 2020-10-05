@@ -41,7 +41,7 @@
   <!--Contacts-->
   <string name="prompt_hint_username">שם משתמש</string>
   <string name="wizard_next">קדימה</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <string name="profile">פרופיל</string>
   <!--Share fragment-->
   <string name="generic_error_migration">שגיאה</string>
@@ -63,5 +63,5 @@
   <string name="navigation_item_account">חשבון</string>
   <!--TV-->
   <string name="tv_dialog_send">שלח</string>
-  <!--WIZARD-->
+  <!--Wizard-->
 </resources>

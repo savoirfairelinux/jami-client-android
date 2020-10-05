@@ -35,7 +35,6 @@
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Няма регистриран профил</string>
   <string name="normal_accounts_titles">Профили</string>
-  <string name="normal_devices_titles">Познати устройства, свързани с този профил в Jami</string>
   <string name="account_device_revoke">Премахване на устройство</string>
   <string name="account_device_revocation_success_title">Успешно</string>
   <string name="account_device_revocation_success">Устройството е премахнато!</string>
@@ -43,7 +42,7 @@
   <string name="account_device_revocation_wrong_password">Грешна парола.</string>
   <string name="account_device_revocation_unknown_device">Неизвестно устройство.</string>
   <string name="account_device_revocation_error_unknown">Неизвестна грешка.</string>
-  <string name="account_password_change">Промяна на парола</string>
+  <string name="account_password_change">Промяна на паролата</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Общи</string>
   <string name="account_basic_category">Общи настройки</string>
@@ -135,7 +134,6 @@
   <!--Name registration-->
   <string name="error_username_empty">Въведете потребителско име</string>
   <string name="no_registered_name_for_account">Няма открито регистрирано име за този профил</string>
-  <string name="register_name">Регистриране на име</string>
   <string name="trying_to_register_name">Протича опит за регистриране на името</string>
   <string name="registered_username">Регистрирано потребителско име</string>
   <string name="register_username">Регистриране на публично потребителско име</string>

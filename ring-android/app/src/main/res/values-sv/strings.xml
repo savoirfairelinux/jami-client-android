@@ -158,7 +158,7 @@
   <string name="wizard_next">Nästa</string>
   <string name="wizard_back">Tillbaka</string>
   <string name="wizard_skip">Hopa över</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <string name="profile">Profil</string>
   <string name="profile_message_warning">Din profil delas endast med dina kontakter</string>
   <string name="open_the_gallery">Öppna galleriet</string>
@@ -227,6 +227,6 @@
   <string name="tv_audio_play">Spela</string>
   <string name="tv_audio_pause">Paus</string>
   <string name="tv_dialog_send">Skicka</string>
-  <!--WIZARD-->
+  <!--Wizard-->
   <string name="wizard_password_skip">Skapa konto</string>
 </resources>

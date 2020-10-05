@@ -87,6 +87,7 @@
   <!--Call Fragment-->
   <string name="you_txt_prefix">Tu:</string>
   <string name="action_call_hangup">Chiudi</string>
+  <string name="action_call_maximize">Massimizza</string>
   <string name="ongoing_call">Chiamata in corso</string>
   <string name="hist_in_call">Chiamata in arrivo di %1$s</string>
   <string name="hist_out_call">Chiamata in uscita di %1$s</string>
@@ -181,7 +182,7 @@
   <string name="wizard_next">Prossimo</string>
   <string name="wizard_back">Indietro</string>
   <string name="wizard_skip">Salta</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <string name="profile">Profilo</string>
   <string name="profile_message_warning">Il tuo profilo è condiviso solo con i tuoi contatti</string>
   <string name="open_the_gallery">Apri la galleria immagini</string>
@@ -270,7 +271,7 @@
   <string name="tv_send_audio">Invia audio</string>
   <string name="tv_send_video">Inviare media</string>
   <string name="conversation_input_speech_hint">Di\' qualcosa…</string>
-  <!--WIZARD-->
+  <!--Wizard-->
   <string name="wizard_status_recommended">Consigliato</string>
   <string name="wizard_status_optional">Opzionale</string>
   <string name="wizard_status_required">Necessario</string>

@@ -175,7 +175,7 @@
   <string name="wizard_next">Endavant</string>
   <string name="wizard_back">Enrere</string>
   <string name="wizard_skip">Salta</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <string name="profile">Perfil</string>
   <string name="profile_message_warning">El vostre perfil només es comparteix amb els vostres contactes</string>
   <string name="open_the_gallery">Obre la galeria</string>
@@ -260,6 +260,6 @@
   <string name="tv_send_audio">Envia àudio</string>
   <string name="tv_send_video">Envia mitjans</string>
   <string name="conversation_input_speech_hint">Digui alguna cosa…</string>
-  <!--WIZARD-->
+  <!--Wizard-->
   <string name="wizard_password_skip">Crea compte</string>
 </resources>

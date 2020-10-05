@@ -36,7 +36,7 @@
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Нет зарегистрированных аккаунтов</string>
   <string name="normal_accounts_titles">Аккаунты</string>
-  <string name="normal_devices_titles">Устройства, привязанные к этому аккаунту Jami</string>
+  <string name="normal_devices_titles">Привязанные устройства</string>
   <string name="account_device_revoke">Отозвать доступ устройства</string>
   <string name="account_device_revocation_success_title">Успешно</string>
   <string name="account_device_revocation_success">Доступ устройства отозван!</string>
@@ -45,7 +45,6 @@
   <string name="account_device_revocation_unknown_device">Неизвестное устройство.</string>
   <string name="account_device_revocation_error_unknown">Неизвестная ошибка.</string>
   <string name="account_password_change">Изменить пароль</string>
-  <string name="account_password_set">Установить пароль</string>
   <string name="account_password_change_wait_message">Смена пароля учетной записи</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Общее</string>
@@ -130,7 +129,6 @@
   <string name="error_passwords_not_equals">Пароли не совпадают</string>
   <string name="export_account_wait_title">Пожалуйста, подождите…</string>
   <string name="export_account_wait_message">Экспортирование аккаунта…</string>
-  <string name="account_export_file">Создать резервную копию аккаунта</string>
   <string name="account_export_end_decryption_message">Не удалось разблокировать аккаунт указанным паролем.</string>
   <string name="account_export_end_network_title">Ошибка сети</string>
   <string name="account_export_end_network_message">Не удалось экспортировать аккаунт по сети. Проверьте ваше сетевое соединение.</string>
@@ -181,7 +179,6 @@
   <string name="error_username_empty">Введите имя пользователя</string>
   <string name="no_registered_name_for_account">Не найдено зарегистрированного имени для этого аккаунта</string>
   <string name="username_available">Имя доступно !</string>
-  <string name="register_name">Зарегистрировать имя</string>
   <string name="trying_to_register_name">Попытка зарегистрировать имя</string>
   <string name="registered_username">Зарегистрированное имя пользователя</string>
   <string name="register_username">Зарегистрировать публичное имя</string>

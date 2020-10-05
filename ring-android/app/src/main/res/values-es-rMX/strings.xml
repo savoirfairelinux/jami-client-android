@@ -26,7 +26,7 @@
   <!--Conversation-->
   <!--Contacts-->
   <string name="wizard_next">Siguiente</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <!--Share fragment-->
   <!--Pending contact requests-->
   <!--Send contact requests-->
@@ -38,5 +38,5 @@
   <string name="navigation_item_account">Cuenta</string>
   <!--TV-->
   <string name="tv_audio_play">Reproducir</string>
-  <!--WIZARD-->
+  <!--Wizard-->
 </resources>

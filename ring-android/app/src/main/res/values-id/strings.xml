@@ -108,7 +108,7 @@
   <string name="prompt_new_username">Masukkan username baru</string>
   <string name="wizard_next">Selanjutnya</string>
   <string name="wizard_back">Kembali</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <string name="profile">Profil</string>
   <string name="profile_message_warning">Profil Anda hanya dibagikan kepada kontak Anda</string>
   <string name="open_the_gallery">Buka galeri</string>
@@ -136,5 +136,5 @@
   <!--TV-->
   <string name="tv_audio_play">Mainkan</string>
   <string name="tv_dialog_send">Kirim</string>
-  <!--WIZARD-->
+  <!--Wizard-->
 </resources>

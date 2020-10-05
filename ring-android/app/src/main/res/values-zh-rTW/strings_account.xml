@@ -36,7 +36,7 @@
   <!--AccountManagementFragment-->
   <string name="empty_account_list">沒有註冊的帳號</string>
   <string name="normal_accounts_titles">帳號</string>
-  <string name="normal_devices_titles">連結到這個 Jami 帳號的已知裝置</string>
+  <string name="normal_devices_titles">已連結的裝置</string>
   <string name="account_device_revoke">撤銷裝置</string>
   <string name="account_device_revocation_success_title">成功</string>
   <string name="account_device_revocation_success">裝置現在已撤銷！</string>
@@ -134,7 +134,6 @@
   <string name="error_passwords_not_equals">密碼不相符</string>
   <string name="export_account_wait_title">請等待...</string>
   <string name="export_account_wait_message">正在匯出帳號資訊</string>
-  <string name="account_export_file">備份帳號</string>
   <string name="account_export_end_decryption_message">無法使用您提供的密碼來解鎖您的帳號。</string>
   <string name="account_export_end_network_title">網路錯誤</string>
   <string name="account_export_end_network_message">無法在網路上匯出帳號。檢查您的連線。</string>
@@ -186,7 +185,6 @@
   <string name="error_username_empty">輸入使用者名稱</string>
   <string name="no_registered_name_for_account">找不到這個帳號已註冊的名稱</string>
   <string name="username_available">使用者名稱可用！</string>
-  <string name="register_name">註冊名稱</string>
   <string name="trying_to_register_name">正在嘗試註冊名稱</string>
   <string name="registered_username">已註冊的使用者名稱</string>
   <string name="register_username">註冊公開使用者名稱</string>

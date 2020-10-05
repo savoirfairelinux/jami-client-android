@@ -148,7 +148,7 @@
   <string name="wizard_next">Напред</string>
   <string name="wizard_back">Назад</string>
   <string name="wizard_skip">Пропускане</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <string name="profile">Профил</string>
   <string name="profile_message_warning">Профилът Ви се споделя само с контактите Ви</string>
   <string name="open_the_gallery">Отваряне на галерията</string>
@@ -208,6 +208,6 @@
   <string name="tv_audio_play">Пускане</string>
   <string name="tv_audio_pause">Пауза</string>
   <string name="tv_dialog_send">Изпращане</string>
-  <!--WIZARD-->
+  <!--Wizard-->
   <string name="wizard_password_skip">Създаване на профил</string>
 </resources>

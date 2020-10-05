@@ -35,7 +35,6 @@
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Немає зареєстрованного облікового запису</string>
   <string name="normal_accounts_titles">Облікові записи</string>
-  <string name="normal_devices_titles">Відомі пристрої, приєднані до цього облікового запису Джамі</string>
   <string name="account_device_revoke">Відкликати пристрій</string>
   <string name="account_device_revocation_success_title">Успішно</string>
   <string name="account_device_revocation_success">Пристрій тепер відкликано!</string>
@@ -43,7 +42,6 @@
   <string name="account_device_revocation_wrong_password">Неправильний пароль.</string>
   <string name="account_device_revocation_unknown_device">Невідомий пристрій.</string>
   <string name="account_device_revocation_error_unknown">Невідома помилка.</string>
-  <string name="account_password_change">Змінити пароль</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Головні</string>
   <string name="account_basic_category">Базові налаштування</string>
@@ -153,7 +151,6 @@
   <!--Name registration-->
   <string name="error_username_empty">Ввести ім\'я користувача</string>
   <string name="no_registered_name_for_account">Не знайдено зареєстрованого імені для цього облікового запису</string>
-  <string name="register_name">Зареєструвати ім\'я</string>
   <string name="trying_to_register_name">Спроба реєстрації імені</string>
   <string name="registered_username">Зареєстроване ім\'я користувача</string>
   <string name="register_username">Зареєструвати публічне ум\'я користувача</string>

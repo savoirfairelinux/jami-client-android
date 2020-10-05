@@ -156,7 +156,7 @@
   <string name="wizard_next">Próximo</string>
   <string name="wizard_back">Voltar</string>
   <string name="wizard_skip">Ignorar</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <string name="profile">Perfil</string>
   <string name="profile_message_warning">O seu perfil é partilhado apenas com seus contactos</string>
   <string name="open_the_gallery">Abrir a galeria</string>
@@ -225,6 +225,6 @@
   <string name="tv_audio_play">Reproduzir</string>
   <string name="tv_audio_pause">Pausa</string>
   <string name="tv_dialog_send">Enviar</string>
-  <!--WIZARD-->
+  <!--Wizard-->
   <string name="wizard_password_skip">Criar conta</string>
 </resources>

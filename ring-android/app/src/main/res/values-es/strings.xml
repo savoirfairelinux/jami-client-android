@@ -184,7 +184,7 @@
   <string name="wizard_next">Siguiente</string>
   <string name="wizard_back">Volver</string>
   <string name="wizard_skip">Saltar</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <string name="profile">Perfil</string>
   <string name="profile_message_warning">Tu perfil solamente se comparte con tus contactos</string>
   <string name="open_the_gallery">Abrir la galería</string>
@@ -273,7 +273,7 @@
   <string name="tv_send_audio">Enviar audio</string>
   <string name="tv_send_video">Enviar contenido</string>
   <string name="conversation_input_speech_hint">Di algo…</string>
-  <!--WIZARD-->
+  <!--Wizard-->
   <string name="wizard_status_recommended">Recomendado</string>
   <string name="wizard_status_optional">Opcional</string>
   <string name="wizard_status_required">Requerido</string>

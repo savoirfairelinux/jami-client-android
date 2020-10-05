@@ -130,7 +130,7 @@
   <string name="wizard_next">Næste</string>
   <string name="wizard_back">Tilbage</string>
   <string name="wizard_skip">Spring over</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <string name="profile">Profil</string>
   <string name="profile_message_warning">Din profil vil kun blive delt med dine kontakter</string>
   <string name="open_the_gallery">Åbn galleriet</string>
@@ -192,6 +192,6 @@
   <string name="tv_audio_play">Afspil</string>
   <string name="tv_audio_pause">Pause</string>
   <string name="tv_dialog_send">Send</string>
-  <!--WIZARD-->
+  <!--Wizard-->
   <string name="wizard_password_skip">Opret konto</string>
 </resources>

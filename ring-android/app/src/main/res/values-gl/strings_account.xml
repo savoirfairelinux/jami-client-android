@@ -36,7 +36,6 @@
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Non hai conta rexistrada</string>
   <string name="normal_accounts_titles">Contas</string>
-  <string name="normal_devices_titles">Dispositivos coñecidos ligados a esta conta Jami</string>
   <string name="account_device_revoke">Revogar dispositivo</string>
   <string name="account_device_revocation_success_title">Feito</string>
   <string name="account_device_revocation_success">O dispositivo foi revogado!</string>
@@ -45,7 +44,6 @@
   <string name="account_device_revocation_unknown_device">Dispositivo descoñecido.</string>
   <string name="account_device_revocation_error_unknown">Erro descoñecido.</string>
   <string name="account_password_change">Cambiar contrasinal</string>
-  <string name="account_password_set">Escribe contrasinal</string>
   <string name="account_password_change_wait_message">Cambiando contrasinal da conta</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Xeral</string>
@@ -130,7 +128,6 @@
   <string name="error_passwords_not_equals">Non concordan os contrasinais</string>
   <string name="export_account_wait_title">Agarda por favor...</string>
   <string name="export_account_wait_message">Exportando información da conta</string>
-  <string name="account_export_file">Copia de apoio da conta</string>
   <string name="account_export_end_decryption_message">Non se pode desbloquear a conta co contrasinal escrito.</string>
   <string name="account_export_end_network_title">Fallo na rede</string>
   <string name="account_export_end_network_message">Non se pode exportar a conta a rede. Comproba a conectividade.</string>
@@ -181,7 +178,6 @@
   <string name="error_username_empty">Escribe nome de usuaria</string>
   <string name="no_registered_name_for_account">Non se atopou nome rexistrado para esta conta</string>
   <string name="username_available">Nome de usuaria dispoñible!</string>
-  <string name="register_name">Rexistrar nome</string>
   <string name="trying_to_register_name">Intentando rexistrar nome</string>
   <string name="registered_username">Nome de usuaria rexistrado</string>
   <string name="register_username">Rexistrar o nome público de usuaria</string>

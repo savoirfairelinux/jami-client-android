@@ -36,7 +36,7 @@
   <!--AccountManagementFragment-->
   <string name="empty_account_list">アカウントが登録されていません</string>
   <string name="normal_accounts_titles">アカウント</string>
-  <string name="normal_devices_titles">このJamiアカウントにリンクされている既知のデバイス</string>
+  <string name="normal_devices_titles">リンクされたデバイス</string>
   <string name="account_device_revoke">デバイスを取り消し</string>
   <string name="account_device_revocation_success_title">成功</string>
   <string name="account_device_revocation_success">デバイスを取り消しました</string>
@@ -44,8 +44,7 @@
   <string name="account_device_revocation_wrong_password">パスワードが正しくありません</string>
   <string name="account_device_revocation_unknown_device">未知のデバイスです。</string>
   <string name="account_device_revocation_error_unknown">未知のエラー。</string>
-  <string name="account_password_change">パスワードを変更</string>
-  <string name="account_password_set">パスワードを設定</string>
+  <string name="account_password_change">パスワードの変更</string>
   <string name="account_password_change_wait_message">アカウントのパスワードを変更中</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">全般</string>
@@ -130,7 +129,6 @@
   <string name="error_passwords_not_equals">パスワードが一致しません</string>
   <string name="export_account_wait_title">しばらくお待ちください…</string>
   <string name="export_account_wait_message">アカウント情報をエクスポートしています</string>
-  <string name="account_export_file">アカウントをバックアップ</string>
   <string name="account_export_end_decryption_message">提供されたパスワードを使用してアカウントをロック解除できませんでした。</string>
   <string name="account_export_end_network_title">ネットワークエラー</string>
   <string name="account_export_end_network_message">ネットワーク上でアカウントをエクスポートできませんでした。 接続を確認してください。</string>
@@ -181,7 +179,6 @@
   <string name="error_username_empty">ユーザー名を入力してください</string>
   <string name="no_registered_name_for_account">このアカウントの登録名が見つかりません</string>
   <string name="username_available">使用可能なユーザー名です</string>
-  <string name="register_name">登録名</string>
   <string name="trying_to_register_name">名前を登録しようとしています</string>
   <string name="registered_username">登録ユーザー名</string>
   <string name="register_username">公開ユーザー名を登録</string>

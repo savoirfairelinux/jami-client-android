@@ -117,7 +117,6 @@
   <string name="account_connect_prompt_username">Uporabnik</string>
   <!--Name registration-->
   <string name="error_username_empty">Vnesi uporabniško ime</string>
-  <string name="register_name">Prijavi ime</string>
   <string name="trying_to_register_name">Poskusi prijaviti ime</string>
   <string name="registered_username">Prijavljeno uporabniško ime</string>
   <string name="register_username">Prijavi javno ime</string>

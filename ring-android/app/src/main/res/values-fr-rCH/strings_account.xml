@@ -8,7 +8,6 @@
   <!--Strings related to account deletion-->
   <!--AccountManagementFragment-->
   <string name="normal_accounts_titles">Comptes</string>
-  <string name="account_password_change">Changer mot de passe</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Général</string>
   <string name="account_bootstrap_label">Amorcer</string>

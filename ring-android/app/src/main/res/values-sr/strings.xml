@@ -39,7 +39,7 @@
   <!--Contacts-->
   <string name="account_create_title">Napravi Jami profil</string>
   <string name="wizard_back">Nazad</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <!--Share fragment-->
   <!--Pending contact requests-->
   <!--Send contact requests-->
@@ -48,5 +48,5 @@
   <!--File Transfer-->
   <!--Bottom Navigation-->
   <!--TV-->
-  <!--WIZARD-->
+  <!--Wizard-->
 </resources>

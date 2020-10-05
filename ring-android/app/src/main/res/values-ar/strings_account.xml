@@ -36,7 +36,6 @@
   <!--AccountManagementFragment-->
   <string name="empty_account_list">لا يوجد حساب مسجل</string>
   <string name="normal_accounts_titles">حسابات</string>
-  <string name="normal_devices_titles">الأجهزة المعروفة المتصلة بحساب جامي هذا </string>
   <string name="account_device_revoke">إبطال جهاز</string>
   <string name="account_device_revocation_success_title">نجاح</string>
   <string name="account_device_revocation_success">تم إبطال الجهاز الان</string>
@@ -44,8 +43,6 @@
   <string name="account_device_revocation_wrong_password">كلمة مرور خاطئة.</string>
   <string name="account_device_revocation_unknown_device">جهاز غير معلوم.</string>
   <string name="account_device_revocation_error_unknown">خطأ غير معروف.</string>
-  <string name="account_password_change">تغيير كلمة المرور</string>
-  <string name="account_password_set">تعيين كلمة المرور</string>
   <string name="account_password_change_wait_message">تغيير كلمة مرور الحساب</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">عام</string>
@@ -82,6 +79,7 @@
   <string name="account_stun_enable_label">إستعمال خادم STUN</string>
   <string name="account_stun_server_label">خادم STUN</string>
   <string name="account_accept_files">السماح بالملفات الواردة تلقائيا</string>
+  <string name="account_conversation_settings_title"> إعدادات المحادثات</string>
   <string name="account_accept_files_max_size">الحد الاقصى لحجم الملف كي يتم إستقباله تلقائيا</string>
   <string name="account_accept_files_never">عدم السماح بالاستقبال التلقائي نهائيا</string>
   <string name="account_accept_files_always">السماح بالإستقبال التلقائي دائما</string>

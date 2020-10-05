@@ -32,7 +32,7 @@
   <string name="pref_plugins_title">Extensii</string>
   <string name="pref_plugins_summary">Activează extensiile și reglează-le parametrii</string>
   <string name="fab_plugins_add">Adaugă o extensie nouă</string>
-  <string name="plugin_uninstall_title">Dezinstalezi extensia ?</string>
+  <string name="plugin_uninstall_title">Dezinstalezi extensia?</string>
   <string name="plugin_reset_preferences">Restabilește reglările inițiale ale extensiei</string>
   <string name="plugin_reset_preferences_summary">Reglările extensiei vor reveni ca la început</string>
   <string name="plugin_reset_preferences_ask">Vrei să restabilești reglările inițiale ale extensiei ?</string>

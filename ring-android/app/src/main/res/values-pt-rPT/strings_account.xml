@@ -36,7 +36,7 @@
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nenhuma conta registada</string>
   <string name="normal_accounts_titles">Contas</string>
-  <string name="normal_devices_titles">Dispositivos conhecidos ligados a esta conta Jami...</string>
+  <string name="normal_devices_titles">Dispositivos associados</string>
   <string name="account_device_revoke">Revogar dispositivo</string>
   <string name="account_device_revocation_success_title">Sucesso</string>
   <string name="account_device_revocation_success">O dispositivo foi revogado!</string>
@@ -45,7 +45,6 @@
   <string name="account_device_revocation_unknown_device">Dispositivo desconhecido.</string>
   <string name="account_device_revocation_error_unknown">Erro desconhecido.</string>
   <string name="account_password_change">Alterar palavra-chave</string>
-  <string name="account_password_set">Definir palavra-chave</string>
   <string name="account_password_change_wait_message">Alterar palavra-chave da conta</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Geral</string>
@@ -129,7 +128,6 @@
   <string name="error_passwords_not_equals">As palavras-chave não são iguais</string>
   <string name="export_account_wait_title">Por favor aguarde...</string>
   <string name="export_account_wait_message">Exportar a informação da conta</string>
-  <string name="account_export_file">Conta de cópia de segurança</string>
   <string name="account_export_end_decryption_message">Não foi possível desbloquear a sua conta utilizando a palavra-chave fornecida.</string>
   <string name="account_export_end_network_title">Erro de rede</string>
   <string name="account_export_end_network_message">Não foi possível exportar a conta na rede. Verifique a sua conexão..</string>
@@ -180,7 +178,6 @@
   <string name="error_username_empty">Introduza um nome de utilizador</string>
   <string name="no_registered_name_for_account">Não foi encontrado nenhum nome registado para esta conta</string>
   <string name="username_available">Nome de utilizador disponível!</string>
-  <string name="register_name">Registar nome</string>
   <string name="trying_to_register_name">A tentar registar o nome</string>
   <string name="registered_username">Nome de utilizador registado</string>
   <string name="register_username">Registar nome de utilizador público</string>

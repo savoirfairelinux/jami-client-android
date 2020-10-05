@@ -28,7 +28,7 @@
   <!--Settings-->
   <!--Conversation-->
   <!--Contacts-->
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <!--Share fragment-->
   <!--Pending contact requests-->
   <!--Send contact requests-->
@@ -37,5 +37,5 @@
   <!--File Transfer-->
   <!--Bottom Navigation-->
   <!--TV-->
-  <!--WIZARD-->
+  <!--Wizard-->
 </resources>

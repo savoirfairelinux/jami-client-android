@@ -158,7 +158,7 @@
   <string name="wizard_next">Następne</string>
   <string name="wizard_back">Wstecz</string>
   <string name="wizard_skip">Pomiń</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <string name="profile">Profil</string>
   <string name="profile_message_warning">Twój profil jest udostępniany tylko twoim kontaktom</string>
   <string name="open_the_gallery">Otwórz galerię</string>
@@ -230,6 +230,6 @@
   <string name="tv_audio_play">Odtwarzaj</string>
   <string name="tv_audio_pause">Pauza</string>
   <string name="tv_dialog_send">Wyślij</string>
-  <!--WIZARD-->
+  <!--Wizard-->
   <string name="wizard_password_skip">Stwórz konto</string>
 </resources>

@@ -45,7 +45,7 @@
   <string name="conversation_action_select_peer_number">Selecteer een nummer</string>
   <!--Contacts-->
   <string name="prompt_hint_username">Gebruikersnaam</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <!--Share fragment-->
   <!--Pending contact requests-->
   <!--Send contact requests-->
@@ -56,5 +56,5 @@
   <!--Bottom Navigation-->
   <!--TV-->
   <string name="tv_audio_play">Spelen</string>
-  <!--WIZARD-->
+  <!--Wizard-->
 </resources>

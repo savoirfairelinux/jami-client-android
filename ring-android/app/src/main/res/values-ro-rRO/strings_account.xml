@@ -36,7 +36,7 @@
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nu este înscris niciun cont</string>
   <string name="normal_accounts_titles">Conturi</string>
-  <string name="normal_devices_titles">Dispozitivele cunoscute asociate acestui cont Jami</string>
+  <string name="normal_devices_titles">Dispozitive asociate</string>
   <string name="account_device_revoke">Elimină dispozitivul</string>
   <string name="account_device_revocation_success_title">Succes</string>
   <string name="account_device_revocation_success">Dispozitivul este acum eliminat!</string>
@@ -44,8 +44,8 @@
   <string name="account_device_revocation_wrong_password">Parolă greșită.</string>
   <string name="account_device_revocation_unknown_device">Dispozitiv necunoscut.</string>
   <string name="account_device_revocation_error_unknown">Eroare necunoscută.</string>
-  <string name="account_password_change">Schimbă parola</string>
-  <string name="account_password_set">Alege parola</string>
+  <string name="account_password_change">Schimbă Parola</string>
+  <string name="account_password_set">Pune o parolă</string>
   <string name="account_password_change_wait_message">Se schimbă parola contului </string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Generale</string>
@@ -100,7 +100,7 @@
   <string name="account_proxy_server_list_label">Adresa URL a listei de proxy DHT</string>
   <string name="account_peer_discovery_label">Descoperă utilizatori locali</string>
   <string name="account_peer_discovery_enable_label">Activează Descoperă utilizatori locali</string>
-  <string name="account_peer_discovery_enable_summary">Conectează-te la alte noduri DHT afișate în rețeaua noastră locală</string>
+  <string name="account_peer_discovery_enable_summary">Conectează-te la alte noduri DHT afișate în rețeaua locală</string>
   <!--Security Details-->
   <string name="account_credentials_label">Date de autentificare</string>
   <string name="account_credentials_edit">Modifică datele de autentificare</string>
@@ -134,7 +134,6 @@
   <string name="error_passwords_not_equals">Parolele nu se potrivesc</string>
   <string name="export_account_wait_title">Așteaptă...</string>
   <string name="export_account_wait_message">Exportă contul Jami</string>
-  <string name="account_export_file">Copie de rezervă a contului</string>
   <string name="account_export_end_decryption_message">Contul tău nu poate fi deblocat cu parola furnizată.</string>
   <string name="account_export_end_network_title">Eroare de rețea</string>
   <string name="account_export_end_network_message">Contul nu poate fi exportat în rețea. Verifică conectarea la rețea.</string>
@@ -186,7 +185,6 @@
   <string name="error_username_empty">Introdu un nume de utilizator</string>
   <string name="no_registered_name_for_account">Nu a fost găsit niciun nume înscris pentru acest cont</string>
   <string name="username_available">Nume de utilizator disponibil !</string>
-  <string name="register_name">Înscrie numele</string>
   <string name="trying_to_register_name">Se înscrie numele</string>
   <string name="registered_username">Nume de utilizator înscris</string>
   <string name="register_username">Înscrie numele de utilizator public</string>

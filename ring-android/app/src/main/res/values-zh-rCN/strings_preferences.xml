@@ -41,4 +41,5 @@
   <string name="plugin_recent_version_exception">您的<b>%1$s</b>版本更新</string>
   <string name="plugin_same_version_exception">已安装<b>%1$s</b>版本和在线相同</string>
   <string name="plugin_force_install">强制 \n 安装</string>
+  <string name="plugin_path_image_add">添加一个新图片</string>
 </resources>

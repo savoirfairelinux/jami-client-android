@@ -36,7 +36,7 @@ Potrai modificare il tuo account successivamente</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nessun account registrato</string>
   <string name="normal_accounts_titles">Accounts</string>
-  <string name="normal_devices_titles">Dispositivi noti collegati a questo account Jami</string>
+  <string name="normal_devices_titles">Dispositivi collegati</string>
   <string name="account_device_revoke">Revoca dispositivo</string>
   <string name="account_device_revocation_success_title">Successo</string>
   <string name="account_device_revocation_success">Il dispositivo è ora revocato!</string>
@@ -45,7 +45,6 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_device_revocation_unknown_device">Dispositivo sconosciuto.</string>
   <string name="account_device_revocation_error_unknown">Errore sconosciuto.</string>
   <string name="account_password_change">Cambia password</string>
-  <string name="account_password_set">Imposta password</string>
   <string name="account_password_change_wait_message">Modifica della password dell\'account</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Generale</string>
@@ -134,7 +133,6 @@ Potrai modificare il tuo account successivamente</string>
   <string name="error_passwords_not_equals">Le password non corrispondono</string>
   <string name="export_account_wait_title">Prego attendere...</string>
   <string name="export_account_wait_message">Esportazione informazioni sull\'account</string>
-  <string name="account_export_file">Backup account</string>
   <string name="account_export_end_decryption_message">Impossibile sbloccare l\'account x la con la password inserita.</string>
   <string name="account_export_end_network_title">Errore di rete</string>
   <string name="account_export_end_network_message">Impossibile esportare l\'account sulla rete. Controlla la tua connettività.</string>
@@ -186,7 +184,6 @@ Potrai modificare il tuo account successivamente</string>
   <string name="error_username_empty">Inserire un nome utente</string>
   <string name="no_registered_name_for_account">Nessun nome registrato è stato trovato per questo account</string>
   <string name="username_available">Nome utente disponibile !</string>
-  <string name="register_name">Nome registrazione</string>
   <string name="trying_to_register_name">Tentativo di registrazione del nome</string>
   <string name="registered_username">Nome utente registrato</string>
   <string name="register_username">Registra nome utente pubblico</string>

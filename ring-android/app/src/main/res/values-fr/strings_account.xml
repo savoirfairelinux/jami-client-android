@@ -36,7 +36,7 @@ Vous pouvez modifier votre compte plus tard.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Aucun compte enregistré</string>
   <string name="normal_accounts_titles">Comptes</string>
-  <string name="normal_devices_titles">Appareils connus associés à ce compte Jami</string>
+  <string name="normal_devices_titles">Appareils associés</string>
   <string name="account_device_revoke">Révoquer l\'appareil</string>
   <string name="account_device_revocation_success_title">Succès</string>
   <string name="account_device_revocation_success">L\'appareil est maintenant révoqué !</string>
@@ -45,7 +45,7 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="account_device_revocation_unknown_device">Appareil inconnu.</string>
   <string name="account_device_revocation_error_unknown">Erreur inconnue.</string>
   <string name="account_password_change">Changer le mot de passe</string>
-  <string name="account_password_set">Définir un mot de passe</string>
+  <string name="account_password_set">Mettre un mot de passe</string>
   <string name="account_password_change_wait_message">Changement du mot de passe du compte</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Général</string>
@@ -136,7 +136,6 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="error_passwords_not_equals">Les mots de passe ne sont pas identiques</string>
   <string name="export_account_wait_title">Veuillez patienter</string>
   <string name="export_account_wait_message">Exporter les informations du compte</string>
-  <string name="account_export_file">Sauvegarder le compte</string>
   <string name="account_export_end_decryption_message">Impossible de déverrouiller votre compte en utilisant le mot de passe fourni.</string>
   <string name="account_export_end_network_title">Erreur de réseau</string>
   <string name="account_export_end_network_message">Impossible d\'exporter le compte sur le réseau. Veuillez vérifier votre connexion. </string>
@@ -188,7 +187,6 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="error_username_empty">Entrer un nom d\'utilisateur</string>
   <string name="no_registered_name_for_account">Aucun nom n\'a été trouvé pour ce compte.</string>
   <string name="username_available">Identifiant disponible !</string>
-  <string name="register_name">Enregistrer un nom</string>
   <string name="trying_to_register_name">Enregistrement du nom en cours</string>
   <string name="registered_username">Nom d\'utilisateur enregistré</string>
   <string name="register_username">Enregistrer un nom d\'utilisateur public</string>

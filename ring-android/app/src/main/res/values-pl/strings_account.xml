@@ -36,7 +36,7 @@ Możesz edytować swoje konto później</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nie masz zarejestrowanego konta</string>
   <string name="normal_accounts_titles">Konta</string>
-  <string name="normal_devices_titles">Znane urządzenia połączone z tym kontem Jami</string>
+  <string name="normal_devices_titles">Połączone Urządzenia</string>
   <string name="account_device_revoke">Odwołaj urządzenie</string>
   <string name="account_device_revocation_success_title">Sukces</string>
   <string name="account_device_revocation_success">Urządzenie jest odwołane!</string>
@@ -44,8 +44,7 @@ Możesz edytować swoje konto później</string>
   <string name="account_device_revocation_wrong_password">Błędne hasło.</string>
   <string name="account_device_revocation_unknown_device">Nieznane urządzenie.</string>
   <string name="account_device_revocation_error_unknown">Nieznany błąd.</string>
-  <string name="account_password_change">Zmień hasło</string>
-  <string name="account_password_set">Ustaw hasło</string>
+  <string name="account_password_change">Zmień Hasło</string>
   <string name="account_password_change_wait_message">Zmienianie hasła do konta</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Generalne</string>
@@ -118,7 +117,6 @@ Możesz edytować swoje konto później</string>
   <string name="error_passwords_not_equals">Hasła nie pasują do siebie</string>
   <string name="export_account_wait_title">Proszę czekać…</string>
   <string name="export_account_wait_message">Eksportowanie informacji o koncie</string>
-  <string name="account_export_file">Wykonaj kopię zapasową</string>
   <string name="account_export_end_decryption_message">Nie można było odblokować twojego konta podanym hasłem.</string>
   <string name="account_export_end_network_title">Błąd sieci</string>
   <string name="account_export_end_network_message">Nie można eksportować konta w tej sieci. Sprawdź swoje połączenie.</string>
@@ -164,7 +162,6 @@ Możesz edytować swoje konto później</string>
   <string name="error_username_empty">Wprowadź nazwę użytkownika</string>
   <string name="no_registered_name_for_account">Nie znaleziono żadnej nazwy zarejestrowanej dla tego konta </string>
   <string name="username_available">Nazwa dostępna!</string>
-  <string name="register_name">Zarejestruj nazwę</string>
   <string name="trying_to_register_name">Trwa próba rejestracji nazwy</string>
   <string name="registered_username">Zarejestruj nazwę użytkownika</string>
   <string name="register_username">Zarejestruj publiczną nazwę użytkownika</string>

@@ -37,7 +37,6 @@
   <string name="account_device_revocation_unknown_device">Gailu ezezaguna.</string>
   <string name="account_device_revocation_error_unknown">Errore ezezaguna.</string>
   <string name="account_password_change">Aldatu pasahitza</string>
-  <string name="account_password_set">Ezarri pasahitza</string>
   <string name="account_password_change_wait_message">Kontuaren pasahitza aldatzen</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Orokorra</string>
@@ -91,7 +90,6 @@
   <string name="error_passwords_not_equals">Pasahitzak ez datoz bat</string>
   <string name="export_account_wait_title">Itxaron mesedez...</string>
   <string name="export_account_wait_message">Kontuaren informazioa esportatzen</string>
-  <string name="account_export_file">Egin kontuaren babes-kopia</string>
   <string name="account_export_end_network_title">Sare errorea</string>
   <string name="account_export_end_error_title">Errorea</string>
   <string name="account_enter_password">Sartu pasahitza</string>
@@ -117,7 +115,6 @@
   <!--Name registration-->
   <string name="error_username_empty">Sartu erabiltzaile-izen bat</string>
   <string name="username_available">Erabiltzaile-izena eskuragarri dago!</string>
-  <string name="register_name">Erregistratu izena</string>
   <string name="trying_to_register_name">Izena erregistratzen saiatzen</string>
   <string name="registered_username">Erregistratutako erabiltzaile-izena</string>
   <string name="register_username">Erregistratu izen publikoa</string>

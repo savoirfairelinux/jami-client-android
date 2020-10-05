@@ -36,7 +36,6 @@ Du kan ändra kontot senare.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Inget konto registrerat</string>
   <string name="normal_accounts_titles">Konton</string>
-  <string name="normal_devices_titles">Kända enheter, kopplade till detta Jami-konto</string>
   <string name="account_device_revoke">Återkalla enhet</string>
   <string name="account_device_revocation_success_title">Slutfört</string>
   <string name="account_device_revocation_success">Enheten är inte återkallad!</string>
@@ -44,8 +43,6 @@ Du kan ändra kontot senare.</string>
   <string name="account_device_revocation_wrong_password">Fel lösenord.</string>
   <string name="account_device_revocation_unknown_device">Okänd enhet.</string>
   <string name="account_device_revocation_error_unknown">Okänt fel.</string>
-  <string name="account_password_change">Byt lösenord</string>
-  <string name="account_password_set">Ange lösenord</string>
   <string name="account_password_change_wait_message">Ändrar kontolösenord</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Allmänt</string>
@@ -119,7 +116,6 @@ Du kan ändra kontot senare.</string>
   <string name="error_passwords_not_equals">Lösenorden stämmer inte</string>
   <string name="export_account_wait_title">Vänta...</string>
   <string name="export_account_wait_message">Exporterar kontoinformation</string>
-  <string name="account_export_file">Säkerhetskopiera konto</string>
   <string name="account_export_end_decryption_message">Kunde inte låsa upp ditt konto med det givna lösenordet.</string>
   <string name="account_export_end_network_title">Nätverksfel</string>
   <string name="account_export_end_network_message">Kunde inte exportera kontot över nätverket. Kontrollera din uppkoppling.</string>
@@ -165,7 +161,6 @@ Du kan ändra kontot senare.</string>
   <string name="error_username_empty">Ange ett användarnamn</string>
   <string name="no_registered_name_for_account">Inget registrerat namn hittades för detta konto</string>
   <string name="username_available">Användarnamnet tillgängligt!</string>
-  <string name="register_name">Registrera namn</string>
   <string name="trying_to_register_name">Försöker registrera namnet</string>
   <string name="registered_username">Registrerat namn</string>
   <string name="register_username">Registrera offentligt användarnamn</string>

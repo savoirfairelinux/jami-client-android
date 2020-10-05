@@ -27,7 +27,7 @@
   <!--Contacts-->
   <string name="prompt_hint_username">사용자명</string>
   <string name="wizard_next">다음</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <string name="profile">프로필</string>
   <!--Share fragment-->
   <!--Pending contact requests-->
@@ -44,5 +44,5 @@
   <!--TV-->
   <string name="tv_audio_play">재생</string>
   <string name="tv_audio_pause">멈춤</string>
-  <!--WIZARD-->
+  <!--Wizard-->
 </resources>

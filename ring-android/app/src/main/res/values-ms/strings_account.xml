@@ -112,7 +112,6 @@ Anda masih akan dapat mengubah maklumat akaun anda pada masa hadapan</string>
   <!--Name registration-->
   <string name="error_username_empty">Masukkan nama pengguna</string>
   <string name="no_registered_name_for_account">Tiada nama berdaftar dengan akaun ini ditemui</string>
-  <string name="register_name">Daftarkan nama</string>
   <string name="trying_to_register_name">Sedang mencuba untuk mendaftarkan nama</string>
   <string name="registered_username">Nama telah didaftarkan</string>
   <string name="username_already_taken">Nama pengguna telah digunakan pengguna lain</string>

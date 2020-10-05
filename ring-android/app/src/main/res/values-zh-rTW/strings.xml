@@ -184,7 +184,7 @@
   <string name="wizard_next">下一個</string>
   <string name="wizard_back">前一個</string>
   <string name="wizard_skip">略過</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <string name="profile">介紹</string>
   <string name="profile_message_warning">您的介紹僅與您的聯絡人分享</string>
   <string name="open_the_gallery">開啟相簿</string>
@@ -273,7 +273,7 @@
   <string name="tv_send_audio">傳送音訊</string>
   <string name="tv_send_video">傳送媒體</string>
   <string name="conversation_input_speech_hint">說點東西……</string>
-  <!--WIZARD-->
+  <!--Wizard-->
   <string name="wizard_status_recommended">建議</string>
   <string name="wizard_status_optional">選擇性</string>
   <string name="wizard_status_required">必填</string>

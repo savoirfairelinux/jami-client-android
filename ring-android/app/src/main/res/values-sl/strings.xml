@@ -98,7 +98,7 @@
   <string name="prompt_hint_username">Uporabnik</string>
   <string name="wizard_next">Naprej</string>
   <string name="wizard_back">Nazaj</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <string name="profile">Profil</string>
   <string name="profile_message_warning">Tvoj profil je deljen samo s tvojimi stiki</string>
   <string name="open_the_gallery">Odpri galerijo</string>
@@ -136,6 +136,6 @@
   <string name="tv_audio_play">Predvajaj</string>
   <string name="tv_audio_pause">Pavza</string>
   <string name="tv_dialog_send">Pošlji</string>
-  <!--WIZARD-->
+  <!--Wizard-->
   <string name="wizard_password_skip">Ustvari račun</string>
 </resources>

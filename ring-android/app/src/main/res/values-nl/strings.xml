@@ -175,7 +175,7 @@
   <string name="wizard_next">Volgende</string>
   <string name="wizard_back">Terug</string>
   <string name="wizard_skip">Overslaan</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <string name="profile">Profiel</string>
   <string name="profile_message_warning">Uw profiel wordt enkel gedeeld met uw contacten</string>
   <string name="open_the_gallery">Galerij openen</string>
@@ -257,6 +257,6 @@
   <string name="tv_send_text">Verstuur Tekst</string>
   <string name="tv_send_audio">Verstuur Audio</string>
   <string name="tv_send_video">Verstuur Media</string>
-  <!--WIZARD-->
+  <!--Wizard-->
   <string name="wizard_password_skip">Account aanmaken</string>
 </resources>

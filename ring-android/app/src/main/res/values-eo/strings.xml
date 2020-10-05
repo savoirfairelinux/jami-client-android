@@ -80,7 +80,7 @@
   <string name="prompt_new_password">Nova pasvorto</string>
   <string name="prompt_hint_username">Uzantnomo</string>
   <string name="wizard_next">Sekva</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <string name="profile">Profilo</string>
   <!--Share fragment-->
   <string name="share_label">Kunhavi</string>
@@ -104,5 +104,5 @@
   <string name="tv_audio_play">Ludi</string>
   <string name="tv_audio_pause">Paŭzi</string>
   <string name="tv_dialog_send">Sendi</string>
-  <!--WIZARD-->
+  <!--Wizard-->
 </resources>

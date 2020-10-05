@@ -36,7 +36,7 @@
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Žiadny registrovaný účet</string>
   <string name="normal_accounts_titles">Účty</string>
-  <string name="normal_devices_titles">Zariadenia prepojené s týmto Jami účtom</string>
+  <string name="normal_devices_titles">Prepojené zariadenia</string>
   <string name="account_device_revoke">Odobrať zariadenie</string>
   <string name="account_device_revocation_success_title">Úspech</string>
   <string name="account_device_revocation_success">Zariadenie bolo odobrané!</string>
@@ -45,7 +45,6 @@
   <string name="account_device_revocation_unknown_device">Neznáme zariadenie.</string>
   <string name="account_device_revocation_error_unknown">Neznáma chyba.</string>
   <string name="account_password_change">Zmeniť heslo</string>
-  <string name="account_password_set">Nastaviť heslo</string>
   <string name="account_password_change_wait_message">Zmena hesla účtu</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Všeobecné</string>
@@ -130,7 +129,6 @@
   <string name="error_passwords_not_equals">Heslá sa nezhodujú</string>
   <string name="export_account_wait_title">Čakajte, prosím...</string>
   <string name="export_account_wait_message">Exportovanie údajov o účte</string>
-  <string name="account_export_file">Zálohovať účet</string>
   <string name="account_export_end_decryption_message">Nemohli sme odomknúť váš účet na základe zadaného hesla.</string>
   <string name="account_export_end_network_title">Chyba siete</string>
   <string name="account_export_end_network_message">Účet sa nedal exportovať na sieť. Skontrolujte pripojenie vášho zariadenia.</string>
@@ -181,7 +179,6 @@
   <string name="error_username_empty">Zadajte používateľské meno</string>
   <string name="no_registered_name_for_account">Pre tento účet nebolo nájdené zaregistrované meno</string>
   <string name="username_available">Používateľské meno dostupné!</string>
-  <string name="register_name">Registrovať meno</string>
   <string name="trying_to_register_name">Pokus o registráciu mena</string>
   <string name="registered_username">Registrované používateľské meno</string>
   <string name="register_username">Registrovať verejné používateľské meno</string>

@@ -182,7 +182,7 @@
   <string name="wizard_next">Далее</string>
   <string name="wizard_back">Назад</string>
   <string name="wizard_skip">Пропустить</string>
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <string name="profile">Профиль</string>
   <string name="profile_message_warning">Ваш профиль доступен только вашим контактам</string>
   <string name="open_the_gallery">Открыть галерею</string>
@@ -271,7 +271,7 @@
   <string name="tv_send_audio">Отправить аудио</string>
   <string name="tv_send_video">Отправить медиа</string>
   <string name="conversation_input_speech_hint">Скажите что-нибудь...</string>
-  <!--WIZARD-->
+  <!--Wizard-->
   <string name="wizard_status_recommended">Рекомендуется</string>
   <string name="wizard_status_optional">По желанию</string>
   <string name="wizard_status_required">Требуется</string>

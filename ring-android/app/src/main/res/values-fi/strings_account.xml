@@ -34,7 +34,7 @@
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Ei rekistöröityjä tunnuksia</string>
   <string name="normal_accounts_titles">Tunnukset</string>
-  <string name="normal_devices_titles">Tähän Jami-tunnukseen linkitetyt laitteet</string>
+  <string name="normal_devices_titles">Linkitetyt laitteet</string>
   <string name="account_device_revoke">Peruuta laite</string>
   <string name="account_device_revocation_success_title">Onnistui</string>
   <string name="account_device_revocation_success">Laite on nyt peruttu!</string>
@@ -132,7 +132,6 @@
   <string name="error_passwords_not_equals">Salasanat eivät täsmää</string>
   <string name="export_account_wait_title">Odota hetki...</string>
   <string name="export_account_wait_message">Tilitietojen vieminen</string>
-  <string name="account_export_file">Varakäyttäjätunnus</string>
   <string name="account_export_end_decryption_message">Tiliäsi ei voitu avata toimitetulla salasanalla.</string>
   <string name="account_export_end_network_title">Verkkovirhe</string>
   <string name="account_export_end_network_message">Tunnusta ei voitu viedä verkkoon. Tarkista yhteys.</string>
@@ -184,7 +183,6 @@
   <string name="error_username_empty">Anna käyttäjänimi</string>
   <string name="no_registered_name_for_account">Tälle tilille ei löytynyt rekisteröityä nimeä</string>
   <string name="username_available">Käyttäjänimi saatavilla !</string>
-  <string name="register_name">Rekisteröi nimi</string>
   <string name="trying_to_register_name">Yritetään rekisteröidä nimeä</string>
   <string name="registered_username">Rekisteröity käyttäjänimi</string>
   <string name="register_username">Rekisteröi julkinen käyttäjänimi</string>

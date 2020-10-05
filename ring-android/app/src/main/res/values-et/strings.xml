@@ -25,7 +25,7 @@
   <string name="conversation_action_history_clear">Kustuta ajalugu</string>
   <string name="conversation_action_block_this">Blokeeri kontakt</string>
   <!--Contacts-->
-  <!--MenuHeaderView-->
+  <!--Account Summary-->
   <!--Share fragment-->
   <!--Pending contact requests-->
   <!--Send contact requests-->
@@ -35,5 +35,5 @@
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Vestlused</string>
   <!--TV-->
-  <!--WIZARD-->
+  <!--Wizard-->
 </resources>
