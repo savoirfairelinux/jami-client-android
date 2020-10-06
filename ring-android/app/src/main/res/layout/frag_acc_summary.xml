@@ -196,7 +196,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/export_account_btn"
-                    style="@style/ButtonColored"
+                    style="@style/ButtonOutLined"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
@@ -206,7 +206,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/change_password_btn"
-                    style="@style/ButtonColored"
+                    style="@style/ButtonOutLined"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
@@ -229,17 +229,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/link_device"
-                style="@style/TextButton"
+                style="@style/ButtonColored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:layout_gravity="center"
                 android:drawableLeft="@drawable/baseline_add_24"
-                android:drawableTint="@color/colorPrimary"
+                android:drawableTint="@color/colorOnPrimary"
                 android:text="@string/account_link_export_button"
-                android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
-                android:textStyle="bold"
                 android:clickable="true"
                 android:focusable="true"/>
 
