@@ -222,7 +222,7 @@ public class CameraService {
         }
         params.rotation = getCameraDisplayRotation(deviceParams, rotation);
         int r = params.rotation;
-        videoHandler.post(() -> Ringservice.setDeviceOrientation(camId, r));
+        getVideoHandler().post(() -> Ringservice.setDeviceOrientation(camId, r));
     }
 
     public void setOrientation(int rotation) {
