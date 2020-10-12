@@ -134,6 +134,7 @@ Svůj účet můžete upravit později</string>
   <string name="error_passwords_not_equals">Hesla se neshodují</string>
   <string name="export_account_wait_title">Počkejte prosím…</string>
   <string name="export_account_wait_message">Exportují se údaje o účtu</string>
+  <string name="account_export_file">Zálohovat účet</string>
   <string name="account_export_end_decryption_message">Zadaným heslem nebylo možné váš účet odemknout.</string>
   <string name="account_export_end_network_title">Chyba sítě</string>
   <string name="account_export_end_network_message">Nebylo možné exportovat účet do sítě. Zkontrolujte si připojení.</string>
@@ -170,7 +171,7 @@ Prověřte, prosím, své heslo.</string>
   <string name="account_link_archive_button">Připojit ze zálohy</string>
   <string name="account_link_prompt_pin">Zadejte PIN</string>
   <string name="account_new_button">Vytvořit účet Jami</string>
-  <string name="account_link_export_button">Připojit k tomuto účtu další zařízení</string>
+  <string name="account_link_export_button">Připojit nové zařízení</string>
   <string name="account_link_export_info">Pro použití tohoto účtu na dalších zařízeních jej musíte nejdříve vystavit na Jami. Tím se vytvoří kód PIN, který musíte zadat na novém zařízení, kde nastavujete účet. PIN zůstává platný 10 minut.</string>
   <string name="account_start_export_button">Vytvořit PIN</string>
   <string name="account_end_export_button">zavřít</string>
@@ -187,6 +188,7 @@ Prověřte, prosím, své heslo.</string>
   <string name="error_username_empty">Zadejte uživatelské jméno</string>
   <string name="no_registered_name_for_account">Pro tento účet nenalezeno žádné registrované jméno</string>
   <string name="username_available">Uživatelské jméno je dostupné!</string>
+  <string name="register_name">Zaregistrovat jméno</string>
   <string name="trying_to_register_name">Pokus o registraci jména</string>
   <string name="registered_username">Registrované uživatelské jméno</string>
   <string name="register_username">Zaregistrovat veřejné uživatelské jméno</string>

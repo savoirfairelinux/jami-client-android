@@ -131,7 +131,7 @@ Du kan rette din konto senere</string>
   <string name="account_sip_success_message">Din SIP-konto blev registreret korrekt.</string>
   <string name="account_sip_register_anyway">Registrer alligevel</string>
   <string name="account_link_prompt_pin">Indtast PIN-kode</string>
-  <string name="account_link_export_button">Tilknyt en anden enhed til denne konto</string>
+  <string name="account_link_export_button">Tilknyt en ny enhed</string>
   <string name="account_start_export_button">Generer PIN</string>
   <string name="account_end_export_button">luk</string>
   <string name="account_export_title">Tilføj enheder</string>

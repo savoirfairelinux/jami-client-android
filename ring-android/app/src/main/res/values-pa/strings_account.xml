@@ -146,7 +146,6 @@
   <string name="account_link_archive_button">ਬੈਕਅੱਪ ਤੋਂ ਕਨੈਕਟ ਕਰੋ</string>
   <string name="account_link_prompt_pin">ਪਿੰਨ ਦਾਖਲ ਕਰੋ</string>
   <string name="account_new_button">Jami ਖਾਤਾ ਬਣਾਓ</string>
-  <string name="account_link_export_button">ਕਿਸੇ ਹੋਰ ਡੀਵਾਈਸ ਨੂੰ ਇਸ ਖਾਤੇ ਨਾਲ ਲਿੰਕ ਕਰੋ</string>
   <string name="account_link_export_info">ਹੋਰਾਂ ਡੀਵਾਈਸਾਂ \'ਤੇ ਇਹ ਖਾਤਾ ਵਰਤਣ ਲਈ, ਤੁਹਾਨੂੰ ਪਹਿਲਾਂ Jami \'ਤੇ ਇਸਨੂੰ ਨਿਰਯਾਤ ਕਰਨਾ ਪਵੇਗਾ। ਇੰਝ ਕਰਨ ਨਾਲ ਪਿੰਨ ਕੋਡ ਸਿਰਜਿਆ ਜਾਵੇਗਾ ਜਿਸਨੂੰ ਤੁਹਾਨੂੰ ਖਾਤੇ ਦੇ ਸੈੱਟਅੱਪ ਵੇਲੇ ਨਵੇਂ ਡੀਵਾਈਸ \'ਤੇ ਦਾਖਲ ਕਰਨਾ ਪਵੇਗਾ। ਪਿੰਨ 10 ਮਿੰਟਾਂ ਲਈ ਵੈਧ ਰਹਿੰਦਾ ਹੈ।</string>
   <string name="account_start_export_button">ਪਿੰਨ ਸਿਰਜੋ</string>
   <string name="account_end_export_button">ਬੰਦ ਕਰੋ</string>
@@ -159,6 +158,7 @@
   <string name="no_registered_name_for_account">ਇਸ ਖਾਤੇ ਲਈ ਕੋਈ ਪੰਜੀਕਿਰਤ ਨਾਂ ਨਹੀਂ ਮਿਲਿਆ</string>
   <string name="trying_to_register_name">ਨਾਂ ਦੇ ਪੰਜੀਕਰਨ ਦੀ ਕੋਸ਼ਿਸ਼ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ</string>
   <string name="registered_username">ਪੰਜੀਕਿਰਤ ਵਰਤੋਂਕਾਰ ਨਾਂ</string>
+  <string name="register_recommended">ਸਿਫ਼ਾਰਸ਼ੀ</string>
   <string name="username_already_taken">ਵਰਤੋਂਕਾਰ ਨਾਂ ਪਹਿਲਾਂ ਹੀ ਲਿਆ ਗਿਆ</string>
   <string name="invalid_username">ਅਵੈਧ ਵਰਤੋਂਕਾਰ ਨਾਂ</string>
   <string name="looking_for_username_availability">ਵਰਤੋਂਕਾਰ ਨਾਂ ਦੀ ਉਪਲਬਧਤਾ ਲੱਭੀ ਜਾ ਰਹੀ ਹੈ…</string>

@@ -152,7 +152,7 @@ U kunt uw account later bewerken</string>
   <string name="account_link_archive_button">Verbinden uit back-up</string>
   <string name="account_link_prompt_pin">Geef pincode in</string>
   <string name="account_new_button">Een Jami-account aanmaken</string>
-  <string name="account_link_export_button">Een ander apparaat aan deze account koppelen</string>
+  <string name="account_link_export_button">Een nieuw apparaat koppelen</string>
   <string name="account_link_export_info">Om deze account op andere apparaten te gebruiken moet u deze eerst op Jami blootstellen. Er zal een pincode gegenereerd worden die u op het nieuwe apparaat ingeeft om de account in te stellen. De pincode is 10 minuten geldig.</string>
   <string name="account_start_export_button">Pincode genereren</string>
   <string name="account_end_export_button">sluiten</string>

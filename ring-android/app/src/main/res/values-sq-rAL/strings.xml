@@ -187,6 +187,7 @@
   <string name="wizard_skip">Anashkaloje</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
+  <string name="profile_name">Emër Profili</string>
   <string name="profile_message_warning">Profili juaj ndahet vetëm me kontaktet tuaja</string>
   <string name="open_the_gallery">Hape galerinë</string>
   <string name="take_a_photo">Bëni një foto</string>

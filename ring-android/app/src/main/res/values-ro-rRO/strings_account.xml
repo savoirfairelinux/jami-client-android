@@ -134,6 +134,7 @@
   <string name="error_passwords_not_equals">Parolele nu se potrivesc</string>
   <string name="export_account_wait_title">Așteaptă...</string>
   <string name="export_account_wait_message">Exportă contul Jami</string>
+  <string name="account_export_file">Copie de rezervă a contului</string>
   <string name="account_export_end_decryption_message">Contul tău nu poate fi deblocat cu parola furnizată.</string>
   <string name="account_export_end_network_title">Eroare de rețea</string>
   <string name="account_export_end_network_message">Contul nu poate fi exportat în rețea. Verifică conectarea la rețea.</string>
@@ -168,7 +169,7 @@
   <string name="account_link_archive_button">Conectează-te de la o copie de rezervă</string>
   <string name="account_link_prompt_pin">Introdu codul PIN</string>
   <string name="account_new_button">Creează un cont Jami</string>
-  <string name="account_link_export_button">Asociază alt dispozitiv acestui cont</string>
+  <string name="account_link_export_button">Asociază un nou dispozitiv</string>
   <string name="account_link_export_info">Pentru a utiliza acest cont pe alte dispozitive, trebuie să îl expui mai întîi pe Jami. Asta va genera un cod PIN pe care trebuie să-l introduci pe noul dispozitiv pentru a configura contul. Acest PIN este valabil 10 minute.</string>
   <string name="account_start_export_button">Generează PIN</string>
   <string name="account_end_export_button">închide</string>
@@ -185,6 +186,7 @@
   <string name="error_username_empty">Introdu un nume de utilizator</string>
   <string name="no_registered_name_for_account">Nu a fost găsit niciun nume înscris pentru acest cont</string>
   <string name="username_available">Nume de utilizator disponibil !</string>
+  <string name="register_name">Înscrie numele</string>
   <string name="trying_to_register_name">Se înscrie numele</string>
   <string name="registered_username">Nume de utilizator înscris</string>
   <string name="register_username">Înscrie numele de utilizator public</string>

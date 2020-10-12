@@ -14,6 +14,10 @@
   <string name="pref_hd_summary">HDビデオの送信を有効にする</string>
   <string name="pref_hwEncode_title">高速エンコードを有効にする</string>
   <string name="pref_hwEncode_summary">実験的機能</string>
+  <string name="pref_videoBitrate_title">ビデオのビットレート</string>
+  <string name="pref_videoBitrate_summary">デフォルトの送信ビデオビットレート (KB/s) を選択</string>
+  <string name="pref_videoResolution_title">ビデオの解像度</string>
+  <string name="pref_videoResolution_summary">送信するビデオのデフォルト解像度を選択</string>
   <string name="pref_systemContacts_title">システムの連絡先を使用する</string>
   <string name="pref_systemContacts_summary">システムの連絡先を使用して通話先の詳細を表示します。</string>
   <string name="pref_systemDialer_title">Jamiを使用して発信する</string>
@@ -25,4 +29,17 @@
   <string name="pref_persistNotification_title">バックグラウンドで実行</string>
   <string name="pref_persistNotification_summary">通話とメッセージの受信をバックグラウンドでも許可する</string>
   <!--Plugin-->
+  <string name="pref_plugins_title">プラグイン</string>
+  <string name="pref_plugins_summary">プラグインを有効にしてパラメータを設定</string>
+  <string name="fab_plugins_add">新しいプラグインを追加</string>
+  <string name="plugin_uninstall_title">プラグインをアンインストールしますか？</string>
+  <string name="plugin_reset_preferences">プラグインの設定をリセット</string>
+  <string name="plugin_reset_preferences_summary">プラグインの設定がデフォルトになります</string>
+  <string name="plugin_reset_preferences_ask">プラグインの設定をリセットしますか？</string>
+  <string name="plugin_successfully_installed">プラグイン <b>%1$s</b> が正しくインストールされました</string>
+  <string name="plugin_install_failure">次のプラグインのインストールに失敗しました: <b>%1$s</b></string>
+  <string name="plugin_recent_version_exception">新しいバージョンがインストール済みです: <b>%1$s</b></string>
+  <string name="plugin_same_version_exception">同じバージョンの <b>%1$s</b> がインストール済みです</string>
+  <string name="plugin_force_install">強制インストール</string>
+  <string name="plugin_path_image_add">新しい画像を追加</string>
 </resources>

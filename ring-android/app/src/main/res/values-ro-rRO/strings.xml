@@ -188,6 +188,7 @@
   <string name="wizard_skip">Omite</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
+  <string name="profile_name">Numele profilului</string>
   <string name="profile_message_warning">Profilul tău este distribuit doar contactelor tale</string>
   <string name="open_the_gallery">Deschide galeria</string>
   <string name="take_a_photo">Fă o poză</string>

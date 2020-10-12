@@ -115,8 +115,8 @@
   <string name="account_tls_transport_switch_label">TLS titkosítás használata</string>
   <string name="account_tls_port_label">TLS figyelő kikötő</string>
   <string name="account_tls_certificate_list_label">Hitelesítésszolgáltatók</string>
-  <string name="account_tls_certificate_file_label">Tanúsítvány fájl</string>
-  <string name="account_tls_private_key_file_label">Titkos kulcs fájl</string>
+  <string name="account_tls_certificate_file_label">Tanúsítványfájl</string>
+  <string name="account_tls_private_key_file_label">Titkos kulcs fájlja</string>
   <string name="account_tls_password_label">Titkos kulcs jelszava</string>
   <string name="account_tls_method_label">TLS eljárás</string>
   <string name="account_tls_ciphers_label">TLS kódolások</string>
@@ -134,6 +134,7 @@
   <string name="error_passwords_not_equals">A jelszavak nem egyeznek</string>
   <string name="export_account_wait_title">Kérem várjon…</string>
   <string name="export_account_wait_message">Fiókadatok exportálása</string>
+  <string name="account_export_file">Fiók biztonsági mentése</string>
   <string name="account_export_end_decryption_message">Nem sikerült feloldani fiókját a megadott jelszó használatával.</string>
   <string name="account_export_end_network_title">Hálózati hiba</string>
   <string name="account_export_end_network_message">Nem sikerült exportálni a fiókot a hálózaton. Ellenőrizze a kapcsolatot.</string>
@@ -185,6 +186,7 @@
   <string name="error_username_empty">Adjon meg egy felhasználónevet</string>
   <string name="no_registered_name_for_account">Nem található regisztrált név ehhez a fiókhoz</string>
   <string name="username_available">A felhasználónév elérhető.</string>
+  <string name="register_name">Név bejegyzése</string>
   <string name="trying_to_register_name">A név regisztrációjának megkísérlése</string>
   <string name="registered_username">Felhasználónév regisztrálva</string>
   <string name="register_username">Nyilvános felhasználónév bejegyeztetése</string>

@@ -186,6 +186,7 @@
   <string name="wizard_skip">跳过</string>
   <!--Account Summary-->
   <string name="profile">账户资料</string>
+  <string name="profile_name">账户资料名称</string>
   <string name="profile_message_warning">您的账户资料仅与您的通讯录共享</string>
   <string name="open_the_gallery">打开照片库</string>
   <string name="take_a_photo">拍照</string>

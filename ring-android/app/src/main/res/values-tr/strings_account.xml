@@ -162,7 +162,7 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="account_link_archive_button">Yedeklemeden bağlan</string>
   <string name="account_link_prompt_pin">PIN\'i gir</string>
   <string name="account_new_button">Bir Jami hesabı oluştur</string>
-  <string name="account_link_export_button">Başka aygıtı bu hesaba bağla</string>
+  <string name="account_link_export_button">Yeni bir aygıt bağlayın</string>
   <string name="account_link_export_info">Bu hesabı başka aygıtlarda kullanmak için önce Jami\'de açmalısınız. Bu, hesabı kurmak için yeni aygıtta girmeniz gereken bir PIN kodu oluşturacak. PIN 10 dakikalığına geçerlidir.</string>
   <string name="account_start_export_button">PIN oluştur</string>
   <string name="account_end_export_button">kapat</string>

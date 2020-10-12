@@ -36,6 +36,7 @@
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Non hai conta rexistrada</string>
   <string name="normal_accounts_titles">Contas</string>
+  <string name="normal_devices_titles">Dispositivos ligados</string>
   <string name="account_device_revoke">Revogar dispositivo</string>
   <string name="account_device_revocation_success_title">Feito</string>
   <string name="account_device_revocation_success">O dispositivo foi revogado!</string>
@@ -44,6 +45,7 @@
   <string name="account_device_revocation_unknown_device">Dispositivo descoñecido.</string>
   <string name="account_device_revocation_error_unknown">Erro descoñecido.</string>
   <string name="account_password_change">Cambiar contrasinal</string>
+  <string name="account_password_set">Establecer contrasinal</string>
   <string name="account_password_change_wait_message">Cambiando contrasinal da conta</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Xeral</string>
@@ -80,6 +82,7 @@
   <string name="account_stun_enable_label">Utilizar Stun</string>
   <string name="account_stun_server_label">Servidor Stun</string>
   <string name="account_accept_files">Aceptar ficheiros entrantes automáticamente</string>
+  <string name="account_conversation_settings_title">Axustes da conversa</string>
   <string name="account_accept_files_max_size">Tamaño máximo para aceptar ficheiros de xeito automático</string>
   <string name="account_accept_files_never">Nunca aceptar de xeito automático</string>
   <string name="account_accept_files_always">Aceptar sempre de xeito automático</string>
@@ -105,6 +108,8 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Seguridade</string>
   <string name="account_srtp_switch_label">Cifrar fluxos de medios(SRTP)</string>
+  <string name="account_srtp_enable_sdes">Activar SDES como protocolo de intercambio de chaves</string>
+  <string name="account_srtp_rtp_fallback">Se SRTP falla utilizar RTP</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Utilizar transporte TLS</string>
@@ -118,6 +123,7 @@
   <string name="account_tls_server_name_label">Nome de servidor</string>
   <string name="account_tls_verify_server_label">Verificar servidor</string>
   <string name="account_tls_verify_client_label">Verificar cliente</string>
+  <string name="account_require_client_certificate_label">TLS require Certificado Cliente</string>
   <string name="account_tls_negotiation_timeout_sec">Caducidade da negociación (seg)</string>
   <string name="account_rtp_max_port">Máximo</string>
   <string name="account_rtp_min_port">Mínimo</string>
@@ -128,6 +134,7 @@
   <string name="error_passwords_not_equals">Non concordan os contrasinais</string>
   <string name="export_account_wait_title">Agarda por favor...</string>
   <string name="export_account_wait_message">Exportando información da conta</string>
+  <string name="account_export_file">Copia de apoio da conta</string>
   <string name="account_export_end_decryption_message">Non se pode desbloquear a conta co contrasinal escrito.</string>
   <string name="account_export_end_network_title">Fallo na rede</string>
   <string name="account_export_end_network_message">Non se pode exportar a conta a rede. Comproba a conectividade.</string>
@@ -157,11 +164,11 @@
   <string name="account_sip_success_title">Conta SIP rexistrada.</string>
   <string name="account_sip_success_message">Rexistraches correctamente a conta SIP.</string>
   <string name="account_sip_register_anyway">Rexistrar igualmente</string>
+  <string name="account_link_device">Conectar desde outro dispositivo</string>
   <string name="account_link_button">Conectar desde a rede</string>
   <string name="account_link_archive_button">Conectar desde copia de apoio</string>
   <string name="account_link_prompt_pin">Escribe o PIN</string>
   <string name="account_new_button">Crear conta Jami</string>
-  <string name="account_link_export_button">Ligar outro dispositivo a esta conta</string>
   <string name="account_link_export_info">Para usar esta conta en outros dispositivos primeiro tes que exportala en Jami. Esto creará un código PIN que tes que escribir no novo dispositivo para configuralo. O PIN é válido durante 10 minutos.</string>
   <string name="account_start_export_button">Crear PIN</string>
   <string name="account_end_export_button">pechar</string>
@@ -178,9 +185,11 @@
   <string name="error_username_empty">Escribe nome de usuaria</string>
   <string name="no_registered_name_for_account">Non se atopou nome rexistrado para esta conta</string>
   <string name="username_available">Nome de usuaria dispoñible!</string>
+  <string name="register_name">Rexistrar nome</string>
   <string name="trying_to_register_name">Intentando rexistrar nome</string>
   <string name="registered_username">Nome de usuaria rexistrado</string>
   <string name="register_username">Rexistrar o nome público de usuaria</string>
+  <string name="register_recommended">Recomendado</string>
   <string name="username_already_taken">Este nome de usuaria xa está collido</string>
   <string name="invalid_username">Nome de usuaria non válido</string>
   <string name="unknown_error">Erro descoñecido. Comproba a conexión a rede!</string>

@@ -140,7 +140,6 @@
   <string name="account_sip_register_anyway">Зареєструвати все одно</string>
   <string name="account_link_prompt_pin">Ввести PIN-код</string>
   <string name="account_new_button">Створити обліковий запис Джамі</string>
-  <string name="account_link_export_button">Прив\'язати інший пристрій до цього облікового запису</string>
   <string name="account_link_export_info">Для використання цього облікового запису на інших пристроях, вам необхідно надати доступ до нього в Джамі. При цьому буде згенеровано PIN-код, який вам необхідно буде ввести на іншому пристрої, щоб налаштувати обліковий запис. PIN-код дійсний протягом 10 хвилин.</string>
   <string name="account_start_export_button">Отримати новий PIN-код</string>
   <string name="account_end_export_button">закрити</string>
