@@ -49,6 +49,12 @@ along with this program; if not, write to the Free Software
             android:persistent="false"
             android:summary=""
             android:title="@string/account_password_label" />
+        <Preference
+            android:key="Account.delete"
+            android:persistent="false"
+            android:summary=""
+            android:title="@string/pref_delete_account_title"
+            />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/account_optionnal_category" >
         <EditTextPreference

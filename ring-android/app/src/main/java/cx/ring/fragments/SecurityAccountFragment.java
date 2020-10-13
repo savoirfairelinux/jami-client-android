@@ -48,6 +48,8 @@ import cx.ring.views.CredentialPreferenceDialog;
 import cx.ring.views.CredentialsPreference;
 
 public class SecurityAccountFragment extends BasePreferenceFragment<SecurityAccountPresenter> implements SecurityAccountView {
+    public static final String TAG = SecurityAccountFragment.class.getSimpleName();
+
     private static final String DIALOG_FRAGMENT_TAG = "android.support.v14.preference.PreferenceFragment.DIALOG";
     private static final int SELECT_CA_LIST_RC = 42;
     private static final int SELECT_PRIVATE_KEY_RC = 43;

@@ -20,17 +20,11 @@ package cx.ring.account;
 
 public interface AccountEditionView {
 
-    void goToWizardActivity();
-
     void exit();
 
     void displaySummary(String accountId);
 
     void initViewPager(String accountId, boolean isRing);
-
-    void showAdvancedOption(boolean show);
-
-    void showBlacklistOption(boolean show);
 
     void goToBlackList(String accountId);
 

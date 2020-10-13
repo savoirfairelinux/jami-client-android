@@ -34,39 +34,42 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:paddingStart="16dp"
             android:paddingTop="12dp"
             android:paddingEnd="16dp"
-            android:paddingBottom="16dp"
             android:clickable="true"
             android:focusable="true"
             android:focusableInTouchMode="true" >
 
-            <RelativeLayout
-                android:id="@+id/ring_account_status_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+<!--            <RelativeLayout-->
+<!--                android:id="@+id/ring_account_status_container"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content">-->
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/account_status"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:textColor="@color/white"
-                    tools:chipBackgroundColor="@color/green_400"
-                    tools:text="Registered" />
+<!--                <com.google.android.material.chip.Chip-->
+<!--                    android:id="@+id/account_status"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_alignParentStart="true"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    tools:chipBackgroundColor="@color/green_400"-->
+<!--                    tools:text="Registered"/>-->
 
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/account_switch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_gravity="end" />
+<!--                <cx.ring.views.SwitchButton-->
+<!--                    android:id="@+id/account_switch"-->
+<!--                    android:layout_width="80dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    app:textOn="on"-->
+<!--                    app:textOff="off"-->
+<!--                    app:thumbColor="@color/white"-->
+<!--                    app:showText="true"-->
+<!--                    android:layout_alignParentEnd="true"-->
+<!--                    android:layout_gravity="end"-->
+<!--                    />-->
 
-            </RelativeLayout>
+<!--            </RelativeLayout>-->
 
             <TextView
                 android:id="@+id/account_alias_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 tools:text="@string/profile"
                 android:layout_marginStart="@dimen/title_margin"
@@ -88,72 +91,126 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-<!--                <View-->
-<!--                    android:id="@+id/anchor"-->
-<!--                    android:layout_width="12dp"-->
-<!--                    android:layout_height="48dp"-->
-<!--                    app:layout_constraintBottom_toBottomOf="@id/user_photo"-->
-<!--                    app:layout_constraintEnd_toEndOf="@id/user_photo"-->
-<!--                    app:layout_constraintStart_toStartOf="@id/user_photo" />-->
-
-<!--                <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--                    android:id="@+id/user_profile_edit"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    app:fabSize="mini"-->
-<!--                    app:layout_constraintStart_toStartOf="@id/anchor"-->
-<!--                    app:layout_constraintTop_toTopOf="@id/anchor"-->
-<!--                    app:srcCompat="@drawable/baseline_edit_24"-->
-<!--                    app:useCompatPadding="true" />-->
-
                 <cx.ring.views.TwoButtonEditText
                     android:id="@+id/username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:drawable_right="@drawable/baseline_share_twoton_24dp"
-                    app:drawable_left="@drawable/baseline_edit_twoton_24dp"
+                    app:drawable_right="@drawable/baseline_edit_twoton_24dp"
                     android:hint="@string/profile_name"
                     android:layout_marginStart="12dp"
                 />
 
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:text="@string/navigation_item_account"
-                android:textColor="@color/colorPrimary"
-                android:layout_marginStart="@dimen/title_margin"
-                android:textStyle="bold"
-                android:textSize="18sp"/>
-
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="6dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/navigation_item_account"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginStart="@dimen/title_margin"
+                    android:textStyle="bold"
+                    android:textSize="18sp"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/btn_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toStartOf="@+id/btn_qr"
+                    app:chipIcon="@drawable/baseline_share_twoton_24dp"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/share_label"
+                    android:layout_marginEnd="4dp"
+                    app:chipBackgroundColor="@color/colorPrimary"
+                    android:textColor="@color/colorOnPrimary"
+                    app:chipIconTint="@color/colorOnPrimary"
+                    />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/btn_qr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerHorizontal="true"
+                    app:chipIcon="@drawable/baseline_qr_code_2_black_24dp"
+                    app:chipBackgroundColor="@color/colorPrimary"
+                    android:textColor="@color/colorOnPrimary"
+                    app:chipIconTint="@color/colorOnPrimary"
+                    android:text="@string/qr_code"
+                    />
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    android:background="@drawable/background_share"-->
+<!--                    android:layout_alignParentEnd="true"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    android:paddingBottom="6dp"-->
+<!--                    android:paddingTop="6dp"-->
+<!--                    android:paddingStart="12dp"-->
+<!--                    android:paddingEnd="12dp">-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="@string/share_label"-->
+<!--                        android:layout_gravity="center_vertical"-->
+<!--                        android:textColor="@color/text_color"-->
+<!--                        android:textStyle="bold"-->
+<!--                        android:textSize="14sp"-->
+<!--                        android:layout_marginRight="12dp"/>-->
+
+<!--                    <ImageButton-->
+<!--                        android:id="@+id/btn_share"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:src="@drawable/baseline_share_twoton_24dp"-->
+<!--                        android:background="?selectableItemBackgroundBorderless"-->
+<!--                        android:layout_marginEnd="6dp"/>-->
+
+<!--                    <ImageButton-->
+<!--                        android:id="@+id/btn_qr"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:src="@drawable/baseline_qr_code_twotone_24dp"-->
+<!--                        android:background="?selectableItemBackgroundBorderless"/>-->
+
+<!--                </LinearLayout>-->
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <cx.ring.views.TwoButtonEditText
                     android:id="@+id/registered_name"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/registered_username"
-                    android:enabled="false"
-                    android:layout_weight="1.5" />
+                    android:enabled="false"/>
 
-                <com.google.android.material.button.MaterialButton
+                <com.google.android.material.chip.Chip
                     android:id="@+id/register_name"
-                    style="@style/ButtonColored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginEnd="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
                     android:text="@string/register_name"
+                    android:textColor="@color/colorOnPrimary"
+                    app:chipBackgroundColor="@color/colorPrimary"
                     android:visibility="gone"
                     tools:visibility="visible"/>
 
-            </LinearLayout>
+            </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/group_registering_name"
@@ -181,91 +238,70 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/ring_account_identity"
-                app:drawable_right="@drawable/baseline_qr_code_twotone_24dp"
                 android:enabled="false"
                 android:layout_marginTop="12dp" />
 
-            <LinearLayout
-                android:id="@+id/layout_account_options"
+            <cx.ring.views.TwoButtonEditText
+                android:id="@+id/linked_devices"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="8dp"
-                android:baselineAligned="false"
-                android:orientation="horizontal">
+                android:enabled="false"
+                android:hint="@string/account_device_this_indicator"
+                app:drawable_right="@drawable/baseline_edit_twoton_24dp"
+                android:layout_marginTop="12dp" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/export_account_btn"
-                    style="@style/ButtonOutLined"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginEnd="4dp"
-                    android:layout_weight="1"
-                    android:text="@string/account_export_file" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="6dp"
+                app:chipBackgroundColor="@color/edit_text_background"/>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/change_password_btn"
-                    style="@style/ButtonOutLined"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginEnd="12dp"
-                    android:layout_weight="1"
-                    android:text="@string/account_password_change" />
-            </LinearLayout>
+            <ListView
+                android:id="@+id/devices_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="true"
+                android:divider="@null"
+                android:visibility="gone"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/link_new_device"
+                style="@style/ButtonColored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/baseline_add_24"
+                android:drawableTint="@color/colorOnPrimary"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/link_new_device"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
                 android:gravity="center_vertical"
-                android:text="@string/normal_devices_titles"
+                android:text="@string/menu_item_settings"
                 android:textColor="@color/colorPrimary"
                 android:layout_marginStart="@dimen/title_margin"
                 android:textStyle="bold"
                 android:textSize="18sp"/>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/link_device"
-                style="@style/ButtonColored"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_gravity="center"
-                android:drawableLeft="@drawable/baseline_add_24"
-                android:drawableTint="@color/colorOnPrimary"
-                android:text="@string/account_link_export_button"
-                android:clickable="true"
-                android:focusable="true"/>
-
-            <FrameLayout
+            <ListView
+                android:id="@+id/settings_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ListView
-                    android:id="@+id/device_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:divider="@null"
-                    android:nestedScrollingEnabled="true"
-                    tools:listitem="@layout/item_device"/>
-
-                <TextView
-                    android:id="@+id/empty_account_list"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="@string/empty_account_list"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/textColorSecondary"
-                    android:visibility="gone" />
-
-            </FrameLayout>
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="true" />
 
         </LinearLayout>
     </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/fragment"
+        android:background="@color/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

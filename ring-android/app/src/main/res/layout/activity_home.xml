@@ -38,7 +38,20 @@ along with this program; if not, write to the Free Software
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:contentInsetStart="16dp"
-            android:layout_alignParentTop="true">
+            android:layout_alignParentTop="true"
+            android:clipChildren="false"
+            android:clipToPadding="false">
+
+            <cx.ring.views.SwitchButton
+                android:id="@+id/account_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="end"
+                app:showText="true"
+                android:visibility="gone"
+                />
 
             <Spinner
                 android:id="@+id/spinner_toolbar"
