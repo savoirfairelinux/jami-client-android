@@ -107,8 +107,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     public static final String PLUGIN_SETTINGS_TAG = "PluginSettings";
     public static final String PLUGIN_PATH_PREFERENCE_TAG = "PluginPathPreference";
 
-    private static final String NAVIGATION_TAG = "Navigation";
-
     protected Fragment fContent;
     protected ConversationFragment fConversation;
 
@@ -156,8 +154,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
         // dependency injection
         JamiApplication.getInstance().getInjectionComponent().inject(this);
-
-        mOrientation = getResources().getConfiguration().orientation;
 
         setSupportActionBar(binding.mainToolbar);
         ActionBar ab = getSupportActionBar();

@@ -74,6 +74,7 @@ along with this program; if not, write to the Free Software
     <string name="account_device_revocation_error_unknown">Unknown error.</string>
     <string name="account_password_change">Change Password</string>
     <string name="account_password_set">Set Password</string>
+    <string name="account_password_summary">Manage your account password.</string>
     <string name="account_password_change_wait_message">Changing account password</string>
 
     <!-- Basic Details -->
@@ -179,6 +180,7 @@ along with this program; if not, write to the Free Software
     <string name="export_account_wait_title">Please wait…</string>
     <string name="export_account_wait_message">Exporting account information</string>
     <string name="account_export_file">Backup Account</string>
+    <string name="account_export_file_summary">Backup your account on your device to restore it later.</string>
     <string name="account_export_end_decryption_message">Couldn\'t unlock your account using the provided password.</string>
     <string name="account_export_end_network_title">Network error</string>
     <string name="account_export_end_network_message">Couldn\'t export account on the network. Check your connectivity.</string>

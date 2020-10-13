@@ -18,10 +18,14 @@
  */
 package cx.ring.contactrequests;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,6 +37,7 @@ import java.util.Collection;
 
 import cx.ring.R;
 import cx.ring.account.AccountEditionFragment;
+import cx.ring.account.JamiAccountSummaryFragment;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.databinding.FragBlacklistBinding;
@@ -44,6 +49,17 @@ public class BlackListFragment extends BaseSupportFragment<BlackListPresenter> i
         BlackListViewHolder.BlackListListeners {
 
     public static final String TAG = BlackListFragment.class.getSimpleName();
+
+    private final OnBackPressedCallback mOnBackPressedCallback = new OnBackPressedCallback(false) {
+        @Override
+        public void handleOnBackPressed() {
+            mOnBackPressedCallback.setEnabled(false);
+            JamiAccountSummaryFragment fragment = (JamiAccountSummaryFragment) getParentFragment();
+            if (fragment != null) {
+                fragment.popBackStack();
+            }
+        }
+    };
 
     private BlackListAdapter mAdapter;
     private FragBlacklistBinding binding;
@@ -69,21 +85,15 @@ public class BlackListFragment extends BaseSupportFragment<BlackListPresenter> i
         if (getArguments() == null || getArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY) == null) {
             return;
         }
-        presenter.setAccountId(getArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY));
-        HomeActivity activity = (HomeActivity) getActivity();
-        if (activity != null && DeviceUtils.isTablet(activity)) {
-            activity.setTabletTitle(R.string.ic_blacklist_menu);
-        }
+        String mAccountId = getArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY);
+        mOnBackPressedCallback.setEnabled(true);
+        presenter.setAccountId(mAccountId);
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, @NonNull MenuInflater inflater) {
-        menu.clear();
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        menu.clear();
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, mOnBackPressedCallback);
     }
 
     @Override
