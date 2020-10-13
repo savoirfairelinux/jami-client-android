@@ -123,7 +123,7 @@ public class TVProfileEditingFragment extends JamiGuidedStepFragment<HomeNavigat
         String title = getString(R.string.profile);
         String breadcrumb = "";
         String description = getString(R.string.profile_message_warning);
-        Drawable icon = getResources().getDrawable(R.drawable.ic_contact_picture_fallback);
+        Drawable icon = requireContext().getDrawable(R.drawable.ic_contact_picture_fallback);
         return new GuidanceStylist.Guidance(title, description, breadcrumb, icon);
     }
 
@@ -169,7 +169,7 @@ public class TVProfileEditingFragment extends JamiGuidedStepFragment<HomeNavigat
             return;
         }
 
-        String alias = presenter.getAlias(account);
+        String alias = viewModel.getAlias();
         GuidedAction action = actions.isEmpty() ? null : actions.get(0);
         if (action != null && action.getId() == USER_NAME) {
             if (TextUtils.isEmpty(alias)) {

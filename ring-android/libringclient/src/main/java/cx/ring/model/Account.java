@@ -988,9 +988,26 @@ public class Account {
     }
 
     public Single<String> getAccountAlias() {
-        if (mLoadedProfile == null)
-            return Single.just(getAlias());
-        return mLoadedProfile.map(p -> StringUtils.isEmpty(p.first) ? getAlias() : p.first);
+        if (isJami()) {
+            if (mLoadedProfile == null)
+                return Single.just(getJamiAlias());
+            return mLoadedProfile.map(p -> StringUtils.isEmpty(p.first) ? getJamiAlias() : p.first);
+        } else {
+            if (mLoadedProfile == null)
+                return Single.just(getAlias());
+            return mLoadedProfile.map(p -> StringUtils.isEmpty(p.first) ? getAlias() : p.first);
+        }
+    }
+
+    /**
+     * Registered name, fallback to Alias
+     */
+    private String getJamiAlias() {
+        String registeredName = getRegisteredName();
+        if (StringUtils.isEmpty(registeredName))
+            return getAlias();
+        else
+            return registeredName;
     }
 
     public void setProfile(VCard vcard) {

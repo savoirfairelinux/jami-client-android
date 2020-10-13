@@ -189,7 +189,7 @@ public class MainPresenter extends RootPresenter<MainView> {
                 .observeOn(mUiScheduler)
                 .subscribe(
                         accounts -> getView().displayAccountInfos(
-                                new HomeNavigationViewModel(accounts.isEmpty() ? null : accounts.get(0), accounts)),
+                                new HomeNavigationViewModel(accounts.isEmpty() ? null : accounts.get(0), null)),
                         e-> Log.d(TAG, "reloadAccountInfos getProfileAccountList onError", e)));
         mCompositeDisposable.add(mAccountService.getObservableAccounts()
                 .observeOn(mUiScheduler)
@@ -197,7 +197,7 @@ public class MainPresenter extends RootPresenter<MainView> {
                     MainView v = getView();
                     if (v != null)
                         v.updateModel(account);
-                }, e ->  cx.ring.utils.Log.e(TAG, "Error loading account list !", e)));
+                }, e ->  Log.e(TAG, "Error loading account list !", e)));
     }
 
     public void onExportClicked() {

@@ -226,32 +226,4 @@ public class JamiAccountSummaryPresenter extends RootPresenter<JamiAccountSummar
         }
     }
 
-    public String getAlias(Account account) {
-        if (account == null) {
-            Log.e(TAG, "Not able to get alias");
-            return null;
-        }
-        VCard vcard = account.getProfile();
-        if (vcard != null) {
-            FormattedName name = vcard.getFormattedName();
-            if (name != null) {
-                String name_value = name.getValue();
-                if (name_value != null && !name_value.isEmpty()) {
-                    return name_value;
-                }
-            }
-        }
-        return null;
-    }
-
-    public String getAccountAlias(Account account) {
-        if (account == null) {
-            cx.ring.utils.Log.e(TAG, "Not able to get account alias");
-            return null;
-        }
-        String alias = getAlias(account);
-        return (alias == null) ? account.getAlias() : alias;
-    }
-
-
 }

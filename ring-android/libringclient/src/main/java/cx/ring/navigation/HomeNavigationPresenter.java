@@ -33,9 +33,8 @@ import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
+import cx.ring.utils.Tuple;
 import cx.ring.utils.VCardUtils;
-import ezvcard.VCard;
-import ezvcard.property.FormattedName;
 import ezvcard.property.Photo;
 import ezvcard.property.RawProperty;
 import ezvcard.property.Uid;
@@ -68,11 +67,13 @@ public class HomeNavigationPresenter extends RootPresenter<HomeNavigationView> {
     public void bindView(HomeNavigationView view) {
         super.bindView(view);
         mCompositeDisposable.add(mAccountService.getProfileAccountList()
+                .filter(accounts -> !accounts.isEmpty())
+                .switchMapSingle(accounts -> accounts.get(0).getAccountAlias().map(alias -> new Tuple<>(accounts.get(0), alias)))
                 .observeOn(mUiScheduler)
-                .subscribe(accounts -> {
+                .subscribe(alias -> {
                     HomeNavigationView v = getView();
                     if (v != null)
-                        v.showViewModel(new HomeNavigationViewModel(accounts.isEmpty() ? null : accounts.get(0), accounts));
+                        v.showViewModel(new HomeNavigationViewModel(alias.first, alias.second));
                 }, e ->  Log.e(TAG, "Error loading account list !", e)));
         mCompositeDisposable.add(mAccountService.getObservableAccounts()
                 .observeOn(mUiScheduler)
@@ -143,10 +144,8 @@ public class HomeNavigationPresenter extends RootPresenter<HomeNavigationView> {
                     if (!StringUtils.isEmpty(username)) {
                         vcard.setFormattedName(username);
                     }
-                    if (photo != null) {
-                        vcard.removeProperties(Photo.class);
-                        vcard.addPhoto(pic);
-                    }
+                    vcard.removeProperties(Photo.class);
+                    vcard.addPhoto(pic);
                     vcard.removeProperties(RawProperty.class);
                     return vcard;
                 })
@@ -156,33 +155,6 @@ public class HomeNavigationPresenter extends RootPresenter<HomeNavigationView> {
                     account.setProfile(vcard);
                     mAccountService.refreshAccounts();
                 }, e -> Log.e(TAG, "Error saving vCard !", e)));
-    }
-
-    public String getAlias(Account account) {
-        if (account == null) {
-            Log.e(TAG, "Not able to get alias");
-            return null;
-        }
-        VCard vcard = account.getProfile();
-        if (vcard != null) {
-            FormattedName name = vcard.getFormattedName();
-            if (name != null) {
-                String name_value = name.getValue();
-                if (name_value != null && !name_value.isEmpty()) {
-                    return name_value;
-                }
-            }
-        }
-        return null;
-    }
-
-    public String getAccountAlias(Account account) {
-        if (account == null) {
-            Log.e(TAG, "Not able to get account alias");
-            return null;
-        }
-        String alias = getAlias(account);
-        return (alias == null) ? account.getAlias() : alias;
     }
 
     public String getUri(Account account, CharSequence defaultNameSip) {

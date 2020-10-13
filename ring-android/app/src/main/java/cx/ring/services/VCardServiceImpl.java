@@ -45,7 +45,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class VCardServiceImpl extends VCardService {
 
-    private Context mContext;
+    private final Context mContext;
 
     public VCardServiceImpl(Context context) {
         this.mContext = context;
