@@ -8,16 +8,4 @@
         android:title="@string/ic_delete_menu"
         app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/menuitem_advanced"
-        android:icon="@drawable/baseline_settings_24"
-        android:title="@string/ic_advanced_menu"
-        app:showAsAction="ifRoom" />
-
-    <item
-        android:id="@+id/menuitem_blacklist"
-        android:icon="@drawable/baseline_block_24"
-        android:title="@string/ic_blacklist_menu"
-        app:showAsAction="ifRoom" />
-
 </menu>

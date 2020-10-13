@@ -49,8 +49,7 @@ import cx.ring.application.JamiApplication;
 import cx.ring.model.Account;
 import cx.ring.utils.AndroidFileUtils;
 
-public class TVAccountExport
-        extends JamiGuidedStepFragment<JamiAccountSummaryPresenter>
+public class TVAccountExport extends JamiGuidedStepFragment<JamiAccountSummaryPresenter>
         implements JamiAccountSummaryView {
 
     private static final long PASSWORD = 1L;
@@ -102,11 +101,6 @@ public class TVAccountExport
         mWaitDialog = ProgressDialog.show(getActivity(),
                 getString(R.string.export_account_wait_title),
                 getString(R.string.export_account_wait_message));
-    }
-
-    @Override
-    public void showRevokingProgressDialog() {
-
     }
 
     @Override
@@ -166,16 +160,6 @@ public class TVAccountExport
     }
 
     @Override
-    public void updateDeviceList(Map<String, String> devices, String currentDeviceId) {
-
-    }
-
-    @Override
-    public void deviceRevocationEnded(String device, int status) {
-
-    }
-
-    @Override
     public void passwordChangeEnded(boolean ok) {
 
     }
@@ -215,6 +199,46 @@ public class TVAccountExport
 
     @Override
     public void updateUserView(Account account) {
+
+    }
+
+    @Override
+    public void goToMedia(String accountId) {
+
+    }
+
+    @Override
+    public void goToSystem(String accountId) {
+
+    }
+
+    @Override
+    public void goToAdvanced(String accountId) {
+
+    }
+
+    @Override
+    public void goToAccount(String accountId) {
+
+    }
+
+    @Override
+    public void setSwitchStatus(Account account) {
+
+    }
+
+    @Override
+    public void showRevokingProgressDialog() {
+
+    }
+
+    @Override
+    public void deviceRevocationEnded(String device, int status) {
+
+    }
+
+    @Override
+    public void updateDeviceList(Map<String, String> devices, String currentDeviceId) {
 
     }
 

@@ -67,24 +67,4 @@ public class AccountEditionPresenter extends RootPresenter<AccountEditionView> {
         view.initViewPager(account.getAccountID(), account.isJami());
     }
 
-    public void goToBlackList() {
-        getView().goToBlackList(mAccount.getAccountID());
-    }
-
-    public void removeAccount() {
-        mAccountService.removeAccount(mAccount.getAccountID());
-    }
-
-    public void prepareOptionsMenu() {
-        if (mAccount != null)
-            prepareOptionsMenu(mAccount.isJami());
-    }
-
-    public void prepareOptionsMenu(boolean isJami) {
-        AccountEditionView view = getView();
-        if (view != null) {
-            view.showAdvancedOption(isJami);
-            view.showBlacklistOption(isJami);
-        }
-    }
 }

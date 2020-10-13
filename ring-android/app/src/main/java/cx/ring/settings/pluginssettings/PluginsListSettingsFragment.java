@@ -1,6 +1,7 @@
 package cx.ring.settings.pluginssettings;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -21,6 +23,7 @@ import java.io.IOException;
 import java.util.List;
 
 import cx.ring.R;
+import cx.ring.account.JamiAccountSummaryFragment;
 import cx.ring.client.HomeActivity;
 import cx.ring.daemon.Ringservice;
 import cx.ring.databinding.FragPluginsListSettingsBinding;
@@ -34,6 +37,18 @@ import static cx.ring.plugins.PluginUtils.listAvailablePlugins;
 public class PluginsListSettingsFragment extends Fragment implements PluginsListAdapter.PluginListItemListener {
 
     public static final String TAG = PluginsListSettingsFragment.class.getSimpleName();
+
+    private final OnBackPressedCallback mOnBackPressedCallback = new OnBackPressedCallback(false) {
+        @Override
+        public void handleOnBackPressed() {
+            mOnBackPressedCallback.setEnabled(false);
+            JamiAccountSummaryFragment fragment = (JamiAccountSummaryFragment) getParentFragment();
+            if (fragment != null) {
+                fragment.popBackStack();
+            }
+        }
+    };
+
     private static final int ARCHIVE_REQUEST_CODE = 42;
 
     private FragPluginsListSettingsBinding binding;
@@ -67,8 +82,14 @@ public class PluginsListSettingsFragment extends Fragment implements PluginsList
 
     @Override
     public void onResume() {
-        ((HomeActivity) requireActivity()).setToolbarTitle(R.string.menu_item_plugin_list);
+        mOnBackPressedCallback.setEnabled(true);
         super.onResume();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, mOnBackPressedCallback);
     }
 
     /**
