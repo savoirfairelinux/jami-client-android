@@ -20,7 +20,6 @@
 package cx.ring.fragments;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Layout;
@@ -168,7 +167,7 @@ public class LinkDeviceFragment extends BaseBottomSheetFragment<LinkDevicePresen
         mBinding.progressBar.setVisibility(View.GONE);
         mBinding.accountLinkInfo.setVisibility(View.VISIBLE);
         mBinding.btnStartExport.setVisibility(View.VISIBLE);
-        mBinding.passwordLayout.setVisibility(View.VISIBLE);
+        mBinding.passwordLayout.setVisibility(mAccountHasPassword ? View.VISIBLE : View.GONE);
     }
 
     @Override

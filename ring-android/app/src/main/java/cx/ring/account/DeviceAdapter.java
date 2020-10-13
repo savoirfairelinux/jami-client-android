@@ -56,6 +56,11 @@ public class DeviceAdapter extends BaseAdapter {
             mDevices.ensureCapacity(devices.size());
             mDevices.addAll(devices.entrySet());
         }
+        for (int i = 0; i < mDevices.size(); i++) {
+            if(mDevices.get(i).getKey().contentEquals(mCurrentDeviceId)) {
+                mDevices.remove(mDevices.get(i));
+            }
+        }
         notifyDataSetChanged();
     }
 
@@ -82,21 +87,22 @@ public class DeviceAdapter extends BaseAdapter {
         boolean isCurrentDevice = mDevices.get(i).getKey().contentEquals(mCurrentDeviceId);
 
         TwoButtonEditText devId = view.findViewById(R.id.txt_device_id);
+        TextView thisDevice = view.findViewById(R.id.txt_device_thisflag);
         devId.setText(mDevices.get(i).getValue());
         String hint = mDevices.get(i).getKey();
         hint = hint.substring(0, (int) (hint.length() * 0.66));
         devId.setHint(hint);
 
         if (isCurrentDevice) {
-            TextView thisDevice = view.findViewById(R.id.txt_device_thisflag);
             thisDevice.setVisibility(View.VISIBLE);
-            devId.setLeftDrawable(R.drawable.baseline_edit_24);
+            devId.setLeftDrawable(R.drawable.baseline_edit_twoton_24dp);
             devId.setLeftDrawableOnClickListener(view1 -> {
                 if (mListener != null) {
                     mListener.onDeviceRename();
                 }
             });
         } else {
+            thisDevice.setVisibility(View.GONE);
             devId.setLeftDrawable(R.drawable.baseline_cancel_24);
             devId.setLeftDrawableOnClickListener(view12 -> {
                 if (mListener != null) {

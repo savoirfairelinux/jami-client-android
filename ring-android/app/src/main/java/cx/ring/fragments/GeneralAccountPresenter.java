@@ -133,4 +133,9 @@ public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> {
         mAccountService.setCredentials(mAccount.getAccountID(), mAccount.getCredentialsHashMapList());
         mAccountService.setAccountDetails(mAccount.getAccountID(), mAccount.getDetails());
     }
+
+    public void removeAccount() {
+        mAccountService.removeAccount(mAccount.getAccountID());
+    }
+
 }

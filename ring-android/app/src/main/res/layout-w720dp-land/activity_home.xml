@@ -18,6 +18,18 @@
             android:layout_alignParentTop="true"
             app:contentInsetStart="20dp">
 
+            <cx.ring.views.SwitchButton
+                android:id="@+id/account_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:textOff="Offline"
+                app:showText="true"
+                android:layout_marginEnd="12dp"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="end"
+                android:visibility="gone"
+                />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -35,7 +47,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="12dp"
-                    android:layout_toEndOf="@id/spinner_toolbar">
+                    android:layout_toEndOf="@id/spinner_toolbar"
+                    android:gravity="center_vertical">
 
                     <ImageView
                         android:id="@+id/contact_image"
