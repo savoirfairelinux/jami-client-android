@@ -66,7 +66,7 @@ import cx.ring.model.AccountConfig;
 import cx.ring.service.DRingService;
 import cx.ring.services.AccountService;
 import cx.ring.services.NotificationService;
-import cx.ring.settings.SettingsFragment;
+import cx.ring.settings.GeneralFragment;
 import cx.ring.settings.VideoSettingsFragment;
 import cx.ring.settings.pluginssettings.PluginDetails;
 import cx.ring.settings.pluginssettings.PluginPathPreferenceFragment;
@@ -106,8 +106,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     public static final String PLUGINS_LIST_SETTINGS_TAG = "PluginsListSettings";
     public static final String PLUGIN_SETTINGS_TAG = "PluginSettings";
     public static final String PLUGIN_PATH_PREFERENCE_TAG = "PluginPathPreference";
-
-    private static final String NAVIGATION_TAG = "Navigation";
 
     protected Fragment fContent;
     protected ConversationFragment fConversation;
@@ -156,8 +154,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
         // dependency injection
         JamiApplication.getInstance().getInjectionComponent().inject(this);
-
-        mOrientation = getResources().getConfiguration().orientation;
 
         setSupportActionBar(binding.mainToolbar);
         ActionBar ab = getSupportActionBar();
@@ -439,12 +435,12 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     public void goToSettings() {
-        if (fContent instanceof SettingsFragment) {
+        if (fContent instanceof GeneralFragment) {
             return;
         }
         popCustomBackStack();
         hideToolbarSpinner();
-        fContent = new SettingsFragment();
+        fContent = new GeneralFragment();
         getSupportFragmentManager()
                 .beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)

@@ -16,18 +16,23 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 package cx.ring.account;
 
-public interface AccountEditionView {
+import java.util.Map;
 
-    void exit();
+import cx.ring.model.Account;
 
-    void displaySummary(String accountId);
+public interface LinkedDevicesView {
 
-    void initViewPager(String accountId, boolean isRing);
+    void accountChanged(final Account account);
 
-    void goToBlackList(String accountId);
+    void showPasswordError();
 
-    void displaySIPView(String accountID);
+    void showRevokingProgressDialog();
+
+    void deviceRevocationEnded(String device, int status);
+
+    void updateDeviceList(Map<String, String> devices, String currentDeviceId);
 
 }

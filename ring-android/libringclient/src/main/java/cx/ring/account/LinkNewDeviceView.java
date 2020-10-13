@@ -19,12 +19,9 @@
 
 package cx.ring.account;
 
-import java.io.File;
-import java.util.Map;
-
 import cx.ring.model.Account;
 
-public interface LinkDeviceView {
+public interface LinkNewDeviceView {
 
     void showExportingProgress();
 

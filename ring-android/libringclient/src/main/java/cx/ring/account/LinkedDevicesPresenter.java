@@ -28,11 +28,12 @@ import javax.inject.Named;
 import cx.ring.model.Account;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
+import cx.ring.utils.Log;
 import io.reactivex.Scheduler;
 
-public class LinkDevicePresenter extends RootPresenter<LinkDeviceView> {
+public class LinkedDevicesPresenter extends RootPresenter<LinkedDevicesView> {
 
-    private static final String TAG = LinkDevicePresenter.class.getSimpleName();
+    private static final String TAG = LinkedDevicesPresenter.class.getSimpleName();
 
     private AccountService mAccountService;
     private String mAccountID;
@@ -42,45 +43,50 @@ public class LinkDevicePresenter extends RootPresenter<LinkDeviceView> {
     protected Scheduler mUiScheduler;
 
     @Inject
-    public LinkDevicePresenter(AccountService accountService) {
+    public LinkedDevicesPresenter(AccountService accountService) {
         mAccountService = accountService;
-    }
-
-    public void startAccountExport(String password) {
-        if (getView() == null) {
-            return;
-        }
-        getView().showExportingProgress();
-        mCompositeDisposable.add(mAccountService
-                .exportOnRing(mAccountID, password)
-                .observeOn(mUiScheduler)
-                .subscribe(pin -> getView().showPIN(pin),
-                           error -> {
-                    getView().dismissExportingProgress();
-                    if (error instanceof IllegalArgumentException) {
-                        getView().showPasswordError();
-                    } else if (error instanceof SocketException) {
-                        getView().showNetworkError();
-                    } else {
-                        getView().showGenericError();
-                    }
-                }));
     }
 
     public void setAccountId(String accountID) {
         mCompositeDisposable.clear();
         mAccountID = accountID;
-        LinkDeviceView v = getView();
+        LinkedDevicesView v = getView();
         Account account = mAccountService.getAccount(mAccountID);
         if (v != null && account != null)
             v.accountChanged(account);
         mCompositeDisposable.add(mAccountService.getObservableAccountUpdates(mAccountID)
                 .observeOn(mUiScheduler)
                 .subscribe(a -> {
-                    LinkDeviceView view = getView();
+                    LinkedDevicesView view = getView();
                     if (view != null)
                         view.accountChanged(a);
                 }));
+    }
+
+    public void revokeDevice(final String deviceId, String password) {
+        if (getView() != null) {
+            getView().showRevokingProgressDialog();
+        }
+        mCompositeDisposable.add(mAccountService
+                .revokeDevice(mAccountID, password, deviceId)
+                .observeOn(mUiScheduler)
+                .subscribe(result -> {
+                    getView().deviceRevocationEnded(deviceId, result);
+                    getView().updateDeviceList(mAccountService.getAccount(mAccountID).getDevices(), mAccountID);
+                }));
+    }
+
+    public void renameDevice(String newName) {
+        mAccountService.renameDevice(mAccountID, newName);
+    }
+
+    public String getDeviceName() {
+        Account account = mAccountService.getAccount(mAccountID);
+        if (account == null) {
+            Log.w(TAG, "account not found!");
+            return null;
+        }
+        return account.getDeviceName();
     }
 
 }
