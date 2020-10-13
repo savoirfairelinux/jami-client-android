@@ -119,20 +119,7 @@ public class JamiAccountSummaryPresenter extends RootPresenter<JamiAccountSummar
 
         account.setEnabled(newValue);
         mAccountService.setAccountEnabled(account.getAccountID(), newValue);
-    }
-
-    public void revokeDevice(final String deviceId, String password) {
-        if (getView() != null) {
-            getView().showRevokingProgressDialog();
-        }
-        mCompositeDisposable.add(mAccountService
-                .revokeDevice(mAccountID, password, deviceId)
-                .observeOn(mUiScheduler)
-                .subscribe(result -> getView().deviceRevocationEnded(deviceId, result)));
-    }
-
-    public void renameDevice(String newName) {
-        mAccountService.renameDevice(mAccountID, newName);
+        getView().setSwitchStatus(account);
     }
 
     public void changePassword(String oldPassword, String newPassword) {
@@ -224,6 +211,49 @@ public class JamiAccountSummaryPresenter extends RootPresenter<JamiAccountSummar
         } else {
             getView().askGalleryPermission();
         }
+    }
+
+    public String getAlias(Account account) {
+        if (account == null) {
+            Log.e(TAG, "Not able to get alias");
+            return null;
+        }
+        VCard vcard = account.getProfile();
+        if (vcard != null) {
+            FormattedName name = vcard.getFormattedName();
+            if (name != null) {
+                String name_value = name.getValue();
+                if (name_value != null && !name_value.isEmpty()) {
+                    return name_value;
+                }
+            }
+        }
+        return null;
+    }
+
+    public String getAccountAlias(Account account) {
+        if (account == null) {
+            cx.ring.utils.Log.e(TAG, "Not able to get account alias");
+            return null;
+        }
+        String alias = getAlias(account);
+        return (alias == null) ? account.getAlias() : alias;
+    }
+
+    public void goToAccount() {
+        getView().goToAccount(mAccountID);
+    }
+
+    public void goToMedia() {
+        getView().goToMedia(mAccountID);
+    }
+
+    public void goToSystem() {
+        getView().goToSystem(mAccountID);
+    }
+
+    public void goToAdvanced() {
+        getView().goToAdvanced(mAccountID);
     }
 
 }

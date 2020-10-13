@@ -40,6 +40,18 @@ along with this program; if not, write to the Free Software
             app:contentInsetStart="16dp"
             android:layout_alignParentTop="true">
 
+            <cx.ring.views.SwitchButton
+                android:id="@+id/account_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:textOff="Offline"
+                android:layout_marginEnd="12dp"
+                app:showText="true"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="end"
+                android:visibility="gone"
+                />
+
             <Spinner
                 android:id="@+id/spinner_toolbar"
                 android:layout_width="match_parent"

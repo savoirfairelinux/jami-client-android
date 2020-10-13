@@ -19,49 +19,20 @@
 
 package cx.ring.account;
 
-import java.io.File;
 import java.util.Map;
 
 import cx.ring.model.Account;
 
-public interface JamiAccountSummaryView {
-
-    void showExportingProgressDialog();
-
-    void showPasswordProgressDialog();
+public interface LinkedDevicesView {
 
     void accountChanged(final Account account);
 
-    void showNetworkError();
-
     void showPasswordError();
 
-    void showGenericError();
+    void showRevokingProgressDialog();
 
-    void showPIN(String pin);
+    void deviceRevocationEnded(String device, int status);
 
-    void passwordChangeEnded(boolean ok);
-
-    void displayCompleteArchive(File dest);
-
-    void gotToImageCapture();
-
-    void askCameraPermission();
-
-    void goToGallery();
-
-    void askGalleryPermission();
-
-    void updateUserView(Account account);
-
-    void goToMedia(String accountId);
-
-    void goToSystem(String accountId);
-
-    void goToAdvanced(String accountId);
-
-    void goToAccount(String accountId);
-
-    void setSwitchStatus(Account account);
+    void updateDeviceList(Map<String, String> devices, String currentDeviceId);
 
 }

@@ -43,6 +43,8 @@ import cx.ring.views.PasswordPreference;
 
 public class AdvancedAccountFragment extends BasePreferenceFragment<AdvancedAccountPresenter> implements AdvancedAccountView, Preference.OnPreferenceChangeListener {
 
+    public static final String TAG = AdvancedAccountFragment.class.getSimpleName();
+
     private static final String DIALOG_FRAGMENT_TAG = "androidx.preference.PreferenceFragment.DIALOG";
 
     @Override

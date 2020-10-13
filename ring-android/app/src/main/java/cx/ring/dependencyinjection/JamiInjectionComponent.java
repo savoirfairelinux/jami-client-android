@@ -25,21 +25,21 @@ import cx.ring.account.AccountEditionFragment;
 import cx.ring.account.JamiAccountPasswordFragment;
 import cx.ring.account.JamiAccountUsernameFragment;
 import cx.ring.account.JamiLinkAccountPasswordFragment;
-import cx.ring.fragments.LinkDeviceFragment;
+import cx.ring.contactrequests.BlockListFragment;
+import cx.ring.fragments.GeneralAccountFragment;
+import cx.ring.fragments.LinkNewDeviceFragment;
+import cx.ring.fragments.LinkedDevicesFragment;
 import cx.ring.fragments.LocationSharingFragment;
 import cx.ring.account.AccountWizardActivity;
 import cx.ring.account.HomeAccountCreationFragment;
 import cx.ring.account.JamiAccountConnectFragment;
 import cx.ring.account.ProfileCreationFragment;
 import cx.ring.account.RegisterNameDialog;
-import cx.ring.account.JamiAccountCreationFragment;
 import cx.ring.account.JamiAccountSummaryFragment;
-import cx.ring.account.JamiLinkAccountFragment;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.ContactDetailsActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.client.RingtoneActivity;
-import cx.ring.contactrequests.BlackListFragment;
 import cx.ring.contactrequests.ContactRequestsFragment;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.fragments.AccountMigrationFragment;
@@ -47,7 +47,6 @@ import cx.ring.fragments.AdvancedAccountFragment;
 import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.client.ConversationSelectionActivity;
-import cx.ring.fragments.GeneralAccountFragment;
 import cx.ring.fragments.MediaPreferenceFragment;
 import cx.ring.fragments.SIPAccountCreationFragment;
 import cx.ring.fragments.SecurityAccountFragment;
@@ -73,6 +72,7 @@ import cx.ring.services.NotificationServiceImpl;
 import cx.ring.services.JamiChooserTargetService;
 import cx.ring.services.SharedPreferencesServiceImpl;
 import cx.ring.services.SyncService;
+import cx.ring.settings.AccountFragment;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.share.ShareFragment;
 import cx.ring.tv.account.TVAccountExport;
@@ -132,6 +132,8 @@ public interface JamiInjectionComponent {
 
     void inject(SettingsFragment fragment);
 
+    void inject(AccountFragment fragment);
+
     void inject(ProfileCreationFragment fragment);
 
     void inject(RegisterNameDialog dialog);
@@ -140,7 +142,7 @@ public interface JamiInjectionComponent {
 
     void inject(ContactRequestsFragment fragment);
 
-    void inject(BlackListFragment fragment);
+    void inject(BlockListFragment fragment);
 
     void inject(DRingService service);
 
@@ -235,5 +237,7 @@ public interface JamiInjectionComponent {
 
     void inject(SyncService syncService);
 
-    void inject(LinkDeviceFragment linkDeviceFragment);
+    void inject(LinkNewDeviceFragment linkNewDeviceFragment);
+
+    void inject(LinkedDevicesFragment linkedDevicesFragment);
 }

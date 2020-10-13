@@ -21,6 +21,8 @@
 package cx.ring.account;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -33,6 +35,7 @@ import android.os.Bundle;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -43,27 +46,42 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.File;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
+import cx.ring.contactrequests.BlockListFragment;
 import cx.ring.databinding.FragAccSummaryBinding;
-import cx.ring.fragments.LinkDeviceFragment;
+import cx.ring.fragments.AdvancedAccountFragment;
+import cx.ring.fragments.GeneralAccountFragment;
+import cx.ring.fragments.LinkNewDeviceFragment;
+import cx.ring.fragments.LinkedDevicesFragment;
+import cx.ring.fragments.MediaPreferenceFragment;
 import cx.ring.fragments.QRCodeFragment;
 import cx.ring.model.Account;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.services.AccountService;
 import cx.ring.services.VCardServiceImpl;
+import cx.ring.settings.AccountFragment;
+import cx.ring.settings.SettingsFragment;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.ContentUriHandler;
@@ -76,33 +94,47 @@ import io.reactivex.schedulers.Schedulers;
 
 public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountSummaryPresenter> implements
         RegisterNameDialog.RegisterNameDialogListener,
-        RenameDeviceDialog.RenameDeviceListener,
-        DeviceAdapter.DeviceRevocationListener,
-        ConfirmRevocationDialog.ConfirmRevocationListener,
         JamiAccountSummaryView, ChangePasswordDialog.PasswordChangedListener,
         BackupAccountDialog.UnlockAccountListener,
-        ViewTreeObserver.OnScrollChangedListener {
+        ViewTreeObserver.OnScrollChangedListener,
+        RenameDeviceDialog.RenameDeviceListener,
+        DeviceAdapter.DeviceRevocationListener,
+        ConfirmRevocationDialog.ConfirmRevocationListener {
 
     public static final String TAG = JamiAccountSummaryFragment.class.getSimpleName();
-    private static final String FRAGMENT_DIALOG_REVOCATION = TAG + ".dialog.deviceRevocation";
-    private static final String FRAGMENT_DIALOG_RENAME = TAG + ".dialog.deviceRename";
+
     private static final String FRAGMENT_DIALOG_PASSWORD = TAG + ".dialog.changePassword";
     private static final String FRAGMENT_DIALOG_BACKUP = TAG + ".dialog.backup";
     private static final int WRITE_REQUEST_CODE = 43;
     private static final int SCROLL_DIRECTION_UP = -1;
+    public static final String ACCOUNT_ID_KEY = AccountEditionFragment.class.getCanonicalName() + "accountid";
+
+    private static final int SETTINGS_ACCOUNT = 0;
+    private static final int SETTINGS_MEDIA = 1;
+    private static final int SETTINGS_SYSTEM = 2;
+    private static final int SETTINGS_ADVANCED = 3;
+
+    private final OnBackPressedCallback mOnBackPressedCallback = new OnBackPressedCallback(false) {
+        @Override
+        public void handleOnBackPressed() {
+            if (mBinding.fragment.getVisibility() == View.VISIBLE) {
+                mBinding.fragment.setVisibility(View.GONE);
+                mOnBackPressedCallback.setEnabled(false);
+                getChildFragmentManager().popBackStack();
+            }
+        }
+    };
 
     private boolean mIsVisible = true;
-    private DeviceAdapter mDeviceAdapter;
     private ProgressDialog mWaitDialog;
     private boolean mAccountHasPassword = true;
-    private boolean mAccountHasManager = true;
     private String mBestName = "";
     private String mAccountId = "";
     private File mCacheArchive = null;
-
     private ImageView mProfilePhoto;
     private Bitmap mSourcePhoto;
     private Uri tmpProfilePhotoUri;
+    private DeviceAdapter mDeviceAdapter;
 
     private final CompositeDisposable mDisposableBag = new CompositeDisposable();
     private final CompositeDisposable mProfileDisposable = new CompositeDisposable();
@@ -122,6 +154,12 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
     }
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, mOnBackPressedCallback);
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         mDisposableBag.clear();
@@ -138,24 +176,105 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        String accountId = null;
         if (getArguments() != null) {
-            accountId = getArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY);
-            if (accountId != null) {
-                presenter.setAccountId(accountId);
+            mAccountId = getArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY);
+            if (mAccountId != null) {
+                presenter.setAccountId(mAccountId);
             }
         }
 
         updateUserView(mAccountService.getCurrentAccount());
         mBinding.scrollview.getViewTreeObserver().addOnScrollChangedListener(this);
-        String finalAccountId = accountId;
-        mBinding.linkDevice.setOnClickListener(v -> showWizard(finalAccountId));
-        mBinding.exportAccountBtn.setOnClickListener(v -> onClickExport());
-        mBinding.username.setLeftDrawableOnClickListener(v -> profileContainerClicked());
+        mBinding.linkNewDevice.setOnClickListener(v -> showWizard(mAccountId));
+        mBinding.linkedDevices.setRightDrawableOnClickListener(v ->
+                changeFragment(LinkedDevicesFragment.newInstance(mAccountId), LinkedDevicesFragment.TAG));
+        mBinding.username.setRightDrawableOnClickListener(v -> profileContainerClicked());
         mBinding.userPhoto.setOnClickListener(v -> profileContainerClicked());
-        mBinding.accountSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> presenter.enableAccount(isChecked));
-        mBinding.changePasswordBtn.setOnClickListener(v -> onPasswordChangeAsked());
         mBinding.registerName.setOnClickListener(v -> showUsernameRegistrationPopup());
+
+        Account account = mAccountService.getCurrentAccount();
+        if (mDeviceAdapter == null) {
+            mDeviceAdapter = new DeviceAdapter(requireContext(), account.getDevices(), account.getDeviceId(), JamiAccountSummaryFragment.this);
+            mBinding.devicesList.setAdapter(mDeviceAdapter);
+        } else {
+            mDeviceAdapter.setData(account.getDevices(), account.getDeviceId());
+        }
+
+        ((HomeActivity) requireActivity()).getSwitchButton().setOnCheckedChangeListener((buttonView, isChecked) -> presenter.enableAccount(isChecked));
+
+        List<SettingItem> items = new ArrayList<>();
+
+        SettingItem accountItem = new SettingItem(R.string.account, R.drawable.baseline_account_card_details);
+        SettingItem mediaItem = new SettingItem(R.string.account_preferences_media_tab, R.drawable.outline_file_copy_24);
+        SettingItem systemItem = new SettingItem(R.string.notif_channel_messages, R.drawable.baseline_chat_24);
+        SettingItem advancedItem = new SettingItem(R.string.account_preferences_advanced_tab, R.drawable.round_check_circle_24);
+
+        items.add(accountItem);
+        items.add(mediaItem);
+        items.add(systemItem);
+        items.add(advancedItem);
+
+        SettingsAdapter adapter = new SettingsAdapter(getContext(), R.layout.item_setting, items);
+        mBinding.settingsList.setAdapter(adapter);
+        mBinding.settingsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (i) {
+                    case SETTINGS_ACCOUNT:
+                        presenter.goToAccount();
+                        break;
+                    case SETTINGS_MEDIA:
+                        presenter.goToMedia();
+                        break;
+                    case SETTINGS_SYSTEM:
+                        presenter.goToSystem();
+                        break;
+                    case SETTINGS_ADVANCED:
+                        presenter.goToAdvanced();
+                        break;
+                }
+            }
+        });
+
+        int totalHeight = 0;
+        for (int i = 0; i < adapter.getCount(); i++) {
+            View listItem = adapter.getView(i, null, mBinding.settingsList);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams par = mBinding.settingsList.getLayoutParams();
+        par.height = totalHeight + (mBinding.settingsList.getDividerHeight() * (adapter.getCount() - 1));
+        mBinding.settingsList.setLayoutParams(par);
+        mBinding.settingsList.requestLayout();
+
+        mBinding.more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mBinding.devicesList.getVisibility() == View.GONE) {
+                    expand(mBinding.devicesList);
+                    mBinding.more.setChipIcon(null);
+                    mBinding.more.setText("Hide linked device");
+                } else {
+                    mBinding.more.setText("Show 1 more linked device");
+                    mBinding.more.setChipIcon(ContextCompat.getDrawable(requireContext(), R.drawable.baseline_add_24));
+                    collapse(mBinding.devicesList);
+                }
+
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((HomeActivity) requireActivity()).showAccountStatus(true);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        ((HomeActivity) requireActivity()).showAccountStatus(false);
     }
 
     public void setAccount(String accountId) {
@@ -221,31 +340,19 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
     @Override
     public void accountChanged(@NonNull final Account account) {
         updateUserView(account);
+        mBinding.linkedDevices.setText(account.getDeviceName());
+
         if (mDeviceAdapter == null) {
             mDeviceAdapter = new DeviceAdapter(requireContext(), account.getDevices(), account.getDeviceId(),
                     JamiAccountSummaryFragment.this);
-            mBinding.deviceList.setAdapter(mDeviceAdapter);
+            mBinding.devicesList.setAdapter(mDeviceAdapter);
         } else {
             mDeviceAdapter.setData(account.getDevices(), account.getDeviceId());
         }
 
-        int totalHeight = 0;
-        for (int i = 0; i < mDeviceAdapter.getCount(); i++) {
-            View listItem = mDeviceAdapter.getView(i, null, mBinding.deviceList);
-            listItem.measure(0, 0);
-            totalHeight += listItem.getMeasuredHeight();
-        }
-
-        ViewGroup.LayoutParams par = mBinding.deviceList.getLayoutParams();
-        par.height = totalHeight + (mBinding.deviceList.getDividerHeight() * (mDeviceAdapter.getCount() - 1));
-        mBinding.deviceList.setLayoutParams(par);
-        mBinding.deviceList.requestLayout();
         mAccountHasPassword = account.hasPassword();
-        mAccountHasManager = account.hasManager();
 
-        mBinding.changePasswordBtn.setText(mAccountHasPassword ? R.string.account_password_change : R.string.account_password_set);
-
-        mBinding.accountSwitch.setChecked(account.isEnabled());
+        ((HomeActivity) requireActivity()).getSwitchButton().setChecked(account.isEnabled());
         mBinding.accountAliasTxt.setText(getString(R.string.profile));
         mBinding.identity.setText(account.getUsername());
         mAccountId = account.getAccountID();
@@ -261,10 +368,10 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         boolean currentRegisteredName = account.registeringUsername;
         boolean hasRegisteredName = !currentRegisteredName && username != null && !username.isEmpty();
         mBinding.groupRegisteringName.setVisibility(currentRegisteredName ? View.VISIBLE : View.GONE);
-        mBinding.username.setRightDrawableOnClickListener(v -> shareAccount(hasRegisteredName? username : account.getUsername()));
+        mBinding.btnShare.setOnClickListener(v -> shareAccount(hasRegisteredName? username : account.getUsername()));
         mBinding.registerName.setVisibility(hasRegisteredName? View.GONE : View.VISIBLE);
         mBinding.registeredName.setText(hasRegisteredName? username : getResources().getString(R.string.no_registered_name_for_account));
-        mBinding.identity.setRightDrawableOnClickListener(v -> QRCodeFragment.newInstance(QRCodeFragment.INDEX_CODE).show(getParentFragmentManager(), QRCodeFragment.TAG));
+        mBinding.btnQr.setOnClickListener(v -> QRCodeFragment.newInstance(QRCodeFragment.INDEX_CODE).show(getParentFragmentManager(), QRCodeFragment.TAG));
         mBinding.username.getEditText().setOnFocusChangeListener((v, hasFocus) -> {
             String name = mBinding.username.getText();
             if (!hasFocus && !TextUtils.isEmpty(name)) {
@@ -272,34 +379,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
             }
         });
 
-        int color = R.color.red_400;
-        String status;
-
-        if (account.isEnabled()) {
-            if (account.isTrying()) {
-                color = R.color.orange_400;
-                status = getString(R.string.account_status_connecting);
-            } else if (account.needsMigration()) {
-                status = getString(R.string.account_update_needed);
-            } else if (account.isInError()) {
-                status = getString(R.string.account_status_connection_error);
-            } else if (account.isRegistered()) {
-                status = getString(R.string.account_status_online);
-                color = R.color.green_400;
-            } else if (!account.isRegistered()){
-                color = R.color.grey_400;
-                status = getString(R.string.account_status_offline);
-            } else {
-                status = getString(R.string.account_status_error);
-            }
-        } else {
-            color = R.color.grey_400;
-            status = getString(R.string.account_status_offline);
-        }
-
-        mBinding.accountStatus.setText(status);
-        mBinding.accountStatus.setChipBackgroundColorResource(color);
-        mBinding.layoutAccountOptions.setVisibility(mAccountHasManager ? View.GONE : View.VISIBLE);
+        setSwitchStatus(account);
     }
 
     public boolean onBackPressed() {
@@ -307,7 +387,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
     }
 
     private void showWizard(String accountId) {
-        LinkDeviceFragment.newInstance(accountId).show(getParentFragmentManager(), LinkDeviceFragment.TAG);
+        LinkNewDeviceFragment.newInstance(accountId).show(getParentFragmentManager(), LinkNewDeviceFragment.TAG);
     }
 
     @Override
@@ -367,7 +447,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
                 .show();
     }
 
-    private void onClickExport() {
+    public void onClickExport() {
         if (mAccountHasPassword) {
             onBackupAccount();
         } else {
@@ -398,13 +478,6 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
     }
 
     @Override
-    public void showRevokingProgressDialog() {
-        mWaitDialog = ProgressDialog.show(getActivity(),
-                getString(R.string.revoke_device_wait_title),
-                getString(R.string.revoke_device_wait_message));
-    }
-
-    @Override
     public void showPasswordProgressDialog() {
         mWaitDialog = ProgressDialog.show(getActivity(),
                 getString(R.string.export_account_wait_title),
@@ -419,14 +492,6 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
     }
 
     @Override
-    public void updateDeviceList(final Map<String, String> devices, final String currentDeviceId) {
-        if (mDeviceAdapter == null) {
-            return;
-        }
-        mDeviceAdapter.setData(devices, currentDeviceId);
-    }
-
-    @Override
     public void passwordChangeEnded(boolean ok) {
         dismissWaitDialog();
         if (!ok) {
@@ -436,36 +501,6 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
                     .setPositiveButton(android.R.string.ok, null)
                     .show();
         }
-    }
-
-    @Override
-    public void deviceRevocationEnded(final String device, final int status) {
-        dismissWaitDialog();
-        int message, title = R.string.account_device_revocation_error_title;
-        switch (status) {
-            case 0:
-                title = R.string.account_device_revocation_success_title;
-                message = R.string.account_device_revocation_success;
-                break;
-            case 1:
-                message = R.string.account_device_revocation_wrong_password;
-                break;
-            case 2:
-                message = R.string.account_device_revocation_unknown_device;
-                break;
-            default:
-                message = R.string.account_device_revocation_error_unknown;
-        }
-        new MaterialAlertDialogBuilder(requireContext())
-                .setTitle(title)
-                .setMessage(message)
-                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
-                    dialog.dismiss();
-                    if (status == 1) {
-                        onDeviceRevocationAsked(device);
-                    }
-                })
-                .show();
     }
 
     private void createFile(String mimeType, String fileName) {
@@ -484,11 +519,6 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         createFile(type, mBestName);
     }
 
-    @Override
-    public void onConfirmRevocation(String deviceId, String password) {
-        presenter.revokeDevice(deviceId, password);
-    }
-
     private void onBackupAccount() {
         BackupAccountDialog dialog = new BackupAccountDialog();
         Bundle args = new Bundle();
@@ -498,29 +528,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         dialog.show(requireFragmentManager(), FRAGMENT_DIALOG_BACKUP);
     }
 
-    @Override
-    public void onDeviceRevocationAsked(String deviceId) {
-        ConfirmRevocationDialog dialog = new ConfirmRevocationDialog();
-        Bundle args = new Bundle();
-        args.putString(ConfirmRevocationDialog.DEVICEID_KEY, deviceId);
-        args.putBoolean(ConfirmRevocationDialog.HAS_PASSWORD_KEY, mAccountHasPassword);
-        dialog.setArguments(args);
-        dialog.setListener(this);
-        dialog.show(requireFragmentManager(), FRAGMENT_DIALOG_REVOCATION);
-    }
-
-    @Override
-    public void onDeviceRename() {
-        final String dev_name = presenter.getDeviceName();
-        RenameDeviceDialog dialog = new RenameDeviceDialog();
-        Bundle args = new Bundle();
-        args.putString(RenameDeviceDialog.DEVICENAME_KEY, dev_name);
-        dialog.setArguments(args);
-        dialog.setListener(this);
-        dialog.show(requireFragmentManager(), FRAGMENT_DIALOG_RENAME);
-    }
-
-    private void onPasswordChangeAsked() {
+    public void onPasswordChangeAsked() {
         ChangePasswordDialog dialog = new ChangePasswordDialog();
         Bundle args = new Bundle();
         args.putString(AccountEditionFragment.ACCOUNT_ID_KEY, getArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY));
@@ -528,12 +536,6 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         dialog.setArguments(args);
         dialog.setListener(this);
         dialog.show(requireFragmentManager(), FRAGMENT_DIALOG_PASSWORD);
-    }
-
-    @Override
-    public void onDeviceRename(String newName) {
-        Log.d(TAG, "onDeviceRename: " + presenter.getDeviceName() + " -> " + newName);
-        presenter.renameDevice(newName);
     }
 
     @Override
@@ -641,6 +643,45 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         }
     }
 
+    @Override
+    public void setSwitchStatus(Account account) {
+        int color = R.color.red_400;
+        String status;
+
+        if (account.isEnabled()) {
+            if (account.isTrying()) {
+                color = R.color.orange_400;
+                status = getString(R.string.account_status_connecting);
+                ((HomeActivity) requireActivity()).getSwitchButton().setTextOn(status);
+            } else if (account.needsMigration()) {
+                status = getString(R.string.account_update_needed);
+                ((HomeActivity) requireActivity()).getSwitchButton().setTextOn(status);
+            } else if (account.isInError()) {
+                status = getString(R.string.account_status_connection_error);
+                ((HomeActivity) requireActivity()).getSwitchButton().setTextOn(status);
+            } else if (account.isRegistered()) {
+                status = getString(R.string.account_status_online);
+                color = R.color.green_400;
+                ((HomeActivity) requireActivity()).getSwitchButton().setTextOn(status);
+            } else if (!account.isRegistered()){
+                color = R.color.grey_400;
+                status = getString(R.string.account_status_offline);
+                ((HomeActivity) requireActivity()).getSwitchButton().setTextOff(status);
+                ((HomeActivity) requireActivity()).getSwitchButton().setChecked(false);
+            } else {
+                status = getString(R.string.account_status_error);
+                ((HomeActivity) requireActivity()).getSwitchButton().setTextOff(status);
+            }
+        } else {
+            color = R.color.grey_400;
+            status = getString(R.string.account_status_offline);
+            ((HomeActivity) requireActivity()).getSwitchButton().setTextOff(status);
+            ((HomeActivity) requireActivity()).getSwitchButton().setChecked(false);
+        }
+
+        ((HomeActivity) requireActivity()).getSwitchButton().setBackColor(ContextCompat.getColor(requireContext(), color));
+    }
+
     public void setFragmentVisibility(boolean isVisible) {
         mIsVisible = isVisible;
     }
@@ -653,6 +694,128 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
             sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.account_share_body, username, getText(R.string.app_website)));
             startActivity(Intent.createChooser(sharingIntent, getText(R.string.share_via)));
         }
+    }
+
+    private Fragment fragmentWithBundle(Fragment result, String accountId) {
+        Bundle args = new Bundle();
+        args.putString(ACCOUNT_ID_KEY, accountId);
+        result.setArguments(args);
+        return result;
+    }
+
+    private void changeFragment(Fragment fragment, String tag) {
+        getChildFragmentManager()
+                .beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .replace(R.id.fragment, fragment, tag)
+                .addToBackStack(tag).commit();
+        mBinding.fragment.setVisibility(View.VISIBLE);
+        mOnBackPressedCallback.setEnabled(true);
+    }
+
+    public void goToAccount(String accountId) {
+        changeFragment(AccountFragment.newInstance(accountId), MediaPreferenceFragment.TAG);
+    }
+
+    public void goToMedia(String accountId) {
+        changeFragment(MediaPreferenceFragment.newInstance(accountId), MediaPreferenceFragment.TAG);
+    }
+
+    public void goToSystem(String accountId) {
+        changeFragment(GeneralAccountFragment.newInstance(accountId), GeneralAccountFragment.TAG);
+    }
+
+    public void goToAdvanced(String accountId) {
+        changeFragment(fragmentWithBundle(new AdvancedAccountFragment(), accountId), SettingsFragment.TAG);
+    }
+
+    public void goToBlackList(String accountId) {
+        BlockListFragment blockListFragment = new BlockListFragment();
+        Bundle args = new Bundle();
+        args.putString(ACCOUNT_ID_KEY, accountId);
+        blockListFragment.setArguments(args);
+        changeFragment(blockListFragment, BlockListFragment.TAG);
+    }
+
+    public void popBackStack() {
+        getChildFragmentManager().popBackStackImmediate();
+        String fragmentTag = getChildFragmentManager().getBackStackEntryAt(getChildFragmentManager().getBackStackEntryCount() - 1).getName();
+        Fragment fragment = getChildFragmentManager().findFragmentByTag(fragmentTag);
+        changeFragment(fragment, fragmentTag);
+    }
+
+    @Override
+    public void onConfirmRevocation(String deviceId, String password) {
+
+    }
+
+    @Override
+    public void onDeviceRevocationAsked(String deviceId) {
+
+    }
+
+    @Override
+    public void onDeviceRename() {
+
+    }
+
+    @Override
+    public void onDeviceRename(String newName) {
+
+    }
+
+    private void expand(View summary) {
+        //set Visible
+        summary.setVisibility(View.VISIBLE);
+
+        final int widthSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        summary.measure(widthSpec, 300);
+
+        ValueAnimator mAnimator = slideAnimator(0, 300, summary);
+
+        mAnimator.start();
+    }
+
+    private void collapse(final View summary) {
+        int finalHeight = summary.getHeight();
+        ValueAnimator mAnimator = slideAnimator(finalHeight, 0, summary);
+        mAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                // Height=0, but it set visibility to GONE
+                summary.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationStart(Animator animator) {
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+            }
+        });
+
+        mAnimator.start();
+    }
+
+    private ValueAnimator slideAnimator(int start, int end, final View summary) {
+        ValueAnimator animator = ValueAnimator.ofInt(start, end);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                // Update Height
+                int value = (Integer) valueAnimator.getAnimatedValue();
+                ViewGroup.LayoutParams layoutParams = summary.getLayoutParams();
+                layoutParams.height = value;
+                summary.setLayoutParams(layoutParams);
+            }
+        });
+
+        return animator;
     }
 
 }
