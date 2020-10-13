@@ -112,7 +112,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     protected Fragment fContent;
     protected ConversationFragment fConversation;
 
-    private ToolbarSpinnerAdapter mAccountAdapter;
+    private AccountSpinnerAdapter mAccountAdapter;
     private BackHandlerInterface mAccountFragmentBackHandlerInterface;
 
     private ViewOutlineProvider mOutlineProvider;
@@ -317,7 +317,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(accounts -> {
                     if (mAccountAdapter == null) {
-                        mAccountAdapter = new ToolbarSpinnerAdapter(HomeActivity.this, accounts);
+                        mAccountAdapter = new AccountSpinnerAdapter(HomeActivity.this, accounts);
                         mAccountAdapter.setNotifyOnChange(false);
                         binding.spinnerToolbar.setAdapter(mAccountAdapter);
                     } else {
@@ -561,11 +561,11 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         int type = mAccountAdapter.getItemViewType(position);
-        if (type == ToolbarSpinnerAdapter.TYPE_ACCOUNT) {
+        if (type == AccountSpinnerAdapter.TYPE_ACCOUNT) {
             mAccountService.setCurrentAccount(mAccountAdapter.getItem(position));
         } else {
             Intent intent = new Intent(HomeActivity.this, AccountWizardActivity.class);
-            if (type == ToolbarSpinnerAdapter.TYPE_CREATE_SIP) {
+            if (type == AccountSpinnerAdapter.TYPE_CREATE_SIP) {
                 intent.setAction(AccountConfig.ACCOUNT_TYPE_SIP);
             }
             startActivity(intent);

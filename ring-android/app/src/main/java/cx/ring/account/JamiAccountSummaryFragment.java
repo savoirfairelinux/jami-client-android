@@ -27,7 +27,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -38,26 +37,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import android.provider.MediaStore;
-import android.text.Editable;
-import android.text.Layout;
-import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.text.style.AlignmentSpan;
-import android.text.style.RelativeSizeSpan;
-import android.text.style.StyleSpan;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -66,7 +53,6 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import androidx.core.content.FileProvider;
-import androidx.core.util.Pair;
 
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
@@ -188,13 +174,10 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
 
         mProfileDisposable.clear();
         mProfileDisposable.add(AvatarDrawable.load(context, account)
-                .map(avatar -> new Pair<>(account, avatar))
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(d -> {
-                    mBinding.userPhoto.setImageDrawable(d.second);
-                    if (!mBinding.username.getText().equals(getAccountAlias(d.first))) {
-                        mBinding.username.setText(getAccountAlias(d.first));
-                    }
+                .subscribe(avatar -> {
+                    mBinding.userPhoto.setImageDrawable(avatar);
+                    mBinding.username.setText(account.getLoadedProfile().blockingGet().first);
                 }, e -> Log.e(TAG, "Error loading avatar", e)));
     }
 
@@ -271,7 +254,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         mAccountId = account.getAccountID();
         mBestName = account.getRegisteredName();
         if (mBestName.isEmpty()) {
-            mBestName = account.getAlias();
+            mBestName = account.getDisplayUsername();
             if (mBestName.isEmpty()) {
                 mBestName = account.getUsername();
             }
@@ -633,40 +616,6 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(avatar -> mProfilePhoto.setImageDrawable(avatar), e-> Log.e(TAG, "Error loading image", e)));
-    }
-
-    private String getAccountAlias(Account account) {
-        if (account == null) {
-            cx.ring.utils.Log.e(TAG, "Not able to get account alias");
-            return null;
-        }
-        String alias = getAlias(account);
-        return (alias == null) ? account.getAlias() : alias;
-    }
-
-    private String getAlias(Account account) {
-        if (account == null) {
-            cx.ring.utils.Log.e(TAG, "Not able to get alias");
-            return null;
-        }
-        VCard vcard = account.getProfile();
-        if (vcard != null) {
-            FormattedName name = vcard.getFormattedName();
-            if (name != null) {
-                String name_value = name.getValue();
-                if (name_value != null && !name_value.isEmpty()) {
-                    return name_value;
-                }
-            }
-        }
-        return null;
-    }
-
-    private String getUri(Account account, CharSequence defaultNameSip) {
-        if (account.isIP2IP()) {
-            return defaultNameSip.toString();
-        }
-        return account.getDisplayUri();
     }
 
     @Override

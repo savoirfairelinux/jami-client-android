@@ -1,7 +1,8 @@
 /*
- *  Copyright (C) 2004-2019 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2020 Savoir-faire Linux Inc.
  *
  *  Author: Aline Bonnet <aline.bonnet@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,24 +21,22 @@
 
 package cx.ring.navigation;
 
-import java.util.List;
-
 import cx.ring.model.Account;
 
 public class HomeNavigationViewModel {
     final private Account mAccount;
-    final private List<Account> mAccounts;
+    final private String mAlias;
 
-    public HomeNavigationViewModel(Account account, List<Account> accounts) {
+    public HomeNavigationViewModel(Account account, String alias) {
         mAccount = account;
-        mAccounts = accounts;
+        mAlias = alias;
     }
 
     public Account getAccount() {
         return mAccount;
     }
 
-    public List<Account> getAccounts() {
-        return mAccounts;
+    public String getAlias() {
+        return mAlias;
     }
 }
