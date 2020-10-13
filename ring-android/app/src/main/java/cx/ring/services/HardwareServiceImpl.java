@@ -29,6 +29,7 @@ import android.media.AudioManager;
 import android.media.MediaRecorder;
 import android.media.projection.MediaProjection;
 import android.os.Build;
+import android.text.TextUtils;
 import android.view.SurfaceHolder;
 import android.view.TextureView;
 import android.view.WindowManager;
@@ -550,15 +551,15 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                 new CameraService.CameraListener() {
                     @Override
                     public void onOpened() {
-                        String currentCall = conf.getConfId();
-                        if (!mPluginCallId.isEmpty() && !currentCall.equals(mPluginCallId)) {
+                        String currentCall = conf != null ? conf.getConfId() : null;
+                        if (!TextUtils.isEmpty(mPluginCallId) && !mPluginCallId.equals(currentCall)) {
                             toggleCallMediaHandler("", false);
                             mIsChoosePlugin = false;
                             mMediaHandlerId = "";
                             mPluginCallId = "";
                         }
-                        else if(mIsChoosePlugin && !mMediaHandlerId.isEmpty())
-                            mPluginCallId = conf.getConfId();
+                        else if (mIsChoosePlugin && !mMediaHandlerId.isEmpty())
+                            mPluginCallId = conf != null ? conf.getConfId() : null;
                             toggleMediaHandler();
                     }
 
