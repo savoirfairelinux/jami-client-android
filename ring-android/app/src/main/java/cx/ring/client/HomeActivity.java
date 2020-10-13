@@ -75,6 +75,7 @@ import cx.ring.settings.pluginssettings.PluginsListSettingsFragment;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
+import cx.ring.views.SwitchButton;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -107,8 +108,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     public static final String PLUGIN_SETTINGS_TAG = "PluginSettings";
     public static final String PLUGIN_PATH_PREFERENCE_TAG = "PluginPathPreference";
 
-    private static final String NAVIGATION_TAG = "Navigation";
-
     protected Fragment fContent;
     protected ConversationFragment fConversation;
 
@@ -124,7 +123,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     @Inject
     NotificationService mNotificationService;
 
-    private ActivityHomeBinding binding;
+    private ActivityHomeBinding mBinding;
 
     private AlertDialog mMigrationDialog;
     private String mAccountWithPendingrequests = null;
@@ -151,30 +150,29 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         super.onCreate(savedInstanceState);
         JamiApplication.getInstance().startDaemon();
 
-        binding = ActivityHomeBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        mBinding = ActivityHomeBinding.inflate(getLayoutInflater());
+        setContentView(mBinding.getRoot());
 
         // dependency injection
         JamiApplication.getInstance().getInjectionComponent().inject(this);
 
-        mOrientation = getResources().getConfiguration().orientation;
-
-        setSupportActionBar(binding.mainToolbar);
+        setSupportActionBar(mBinding.mainToolbar);
         ActionBar ab = getSupportActionBar();
         if (ab != null) {
             ab.setTitle("");
         }
 
-        binding.navigationView.setOnNavigationItemSelectedListener(this);
-        binding.navigationView.getMenu().getItem(NAVIGATION_CONVERSATIONS).setChecked(true);
+        mBinding.navigationView.setOnNavigationItemSelectedListener(this);
+        mBinding.navigationView.getMenu().getItem(NAVIGATION_CONVERSATIONS).setChecked(true);
 
-        mOutlineProvider = binding.appBar.getOutlineProvider();
+        mOutlineProvider = mBinding.appBar.getOutlineProvider();
 
         if (!DeviceUtils.isTablet(this) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.bottom_navigation));
         }
 
-        binding.spinnerToolbar.setOnItemSelectedListener(this);
+        mBinding.spinnerToolbar.setOnItemSelectedListener(this);
+        mBinding.accountSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> enableAccount(isChecked));
 
         // if app opened from notification display trust request fragment when mService will connected
         Intent intent = getIntent();
@@ -214,7 +212,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         }
         fContent = null;
         mDisposable.dispose();
-        binding = null;
+        mBinding = null;
     }
 
     private void handleShareIntent(Intent intent) {
@@ -272,27 +270,27 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     public void setToolbarState(String title, String subtitle) {
-        binding.mainToolbar.setLogo(null);
-        binding.mainToolbar.setTitle(title);
+        mBinding.mainToolbar.setLogo(null);
+        mBinding.mainToolbar.setTitle(title);
 
         if (subtitle != null) {
-            binding.mainToolbar.setSubtitle(subtitle);
+            mBinding.mainToolbar.setSubtitle(subtitle);
         } else {
-            binding.mainToolbar.setSubtitle(null);
+            mBinding.mainToolbar.setSubtitle(null);
         }
     }
 
     private void showProfileInfo() {
-        binding.spinnerToolbar.setVisibility(View.VISIBLE);
-        binding.mainToolbar.setTitle(null);
-        binding.mainToolbar.setSubtitle(null);
+        mBinding.spinnerToolbar.setVisibility(View.VISIBLE);
+        mBinding.mainToolbar.setTitle(null);
+        mBinding.mainToolbar.setSubtitle(null);
 
         int targetSize = (int) (AvatarFactory.SIZE_AB * getResources().getDisplayMetrics().density);
         mDisposable.add(mAccountService.getCurrentAccountSubject()
                 .switchMapSingle(account -> AvatarFactory.getBitmapAvatar(HomeActivity.this, account, targetSize)
                         .map(avatar -> new Pair<>(account, avatar)))
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(d -> binding.mainToolbar.setLogo(new BitmapDrawable(getResources(), d.second)),
+                .subscribe(d -> mBinding.mainToolbar.setLogo(new BitmapDrawable(getResources(), d.second)),
                         e -> Log.e(TAG, "Error loading avatar", e)));
     }
 
@@ -319,13 +317,13 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                     if (mAccountAdapter == null) {
                         mAccountAdapter = new AccountSpinnerAdapter(HomeActivity.this, accounts);
                         mAccountAdapter.setNotifyOnChange(false);
-                        binding.spinnerToolbar.setAdapter(mAccountAdapter);
+                        mBinding.spinnerToolbar.setAdapter(mAccountAdapter);
                     } else {
                         mAccountAdapter.clear();
                         mAccountAdapter.addAll(accounts);
                         mAccountAdapter.notifyDataSetChanged();
                         if (accounts.size() > 0) {
-                            binding.spinnerToolbar.setSelection(0);
+                            mBinding.spinnerToolbar.setSelection(0);
                         }
                     }
                     if (fContent instanceof SmartListFragment) {
@@ -405,7 +403,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         bundle.putString(ContactRequestsFragment.ACCOUNT_ID, accountID);
         fContent = new ContactRequestsFragment();
         fContent.setArguments(bundle);
-        binding.navigationView.getMenu().getItem(NAVIGATION_CONTACT_REQUESTS).setChecked(true);
+        mBinding.navigationView.getMenu().getItem(NAVIGATION_CONTACT_REQUESTS).setChecked(true);
         getSupportFragmentManager().beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(R.id.main_frame, fContent, CONTACT_REQUESTS_TAG)
@@ -420,7 +418,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         super.onBackPressed();
         fContent = getSupportFragmentManager().findFragmentById(R.id.main_frame);
         if (fContent instanceof SmartListFragment) {
-            binding.navigationView.getMenu().getItem(NAVIGATION_CONVERSATIONS).setChecked(true);
+            mBinding.navigationView.getMenu().getItem(NAVIGATION_CONVERSATIONS).setChecked(true);
             showProfileInfo();
             showToolbarSpinner();
             hideTabletToolbar();
@@ -569,7 +567,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 intent.setAction(AccountConfig.ACCOUNT_TYPE_SIP);
             }
             startActivity(intent);
-            binding.spinnerToolbar.setSelection(mAccountService.getCurrentAccountIndex());
+            mBinding.spinnerToolbar.setSelection(mAccountService.getCurrentAccountIndex());
         }
     }
 
@@ -584,32 +582,32 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
     public void setBadge(int menuId, int number) {
         if (number == 0)
-            binding.navigationView.removeBadge(menuId);
+            mBinding.navigationView.removeBadge(menuId);
         else
-            binding.navigationView.getOrCreateBadge(menuId).setNumber(number);
+            mBinding.navigationView.getOrCreateBadge(menuId).setNumber(number);
     }
 
     private void hideTabletToolbar() {
-        if (binding != null) {
-            binding.contactTitle.setText(null);
-            binding.contactSubtitle.setText(null);
-            binding.contactImage.setImageDrawable(null);
-            binding.tabletToolbar.setVisibility(View.GONE);
+        if (mBinding != null) {
+            mBinding.contactTitle.setText(null);
+            mBinding.contactSubtitle.setText(null);
+            mBinding.contactImage.setImageDrawable(null);
+            mBinding.tabletToolbar.setVisibility(View.GONE);
         }
     }
 
     private void showTabletToolbar() {
-        if (binding != null && DeviceUtils.isTablet(this)) {
-            binding.tabletToolbar.setVisibility(View.VISIBLE);
+        if (mBinding != null && DeviceUtils.isTablet(this)) {
+            mBinding.tabletToolbar.setVisibility(View.VISIBLE);
         }
     }
 
     public void setTabletTitle(@StringRes int titleRes) {
-        binding.tabletToolbar.setVisibility(View.VISIBLE);
-        binding.contactTitle.setText(titleRes);
-        binding.contactTitle.setTextSize(19);
-        binding.contactTitle.setTypeface(null, Typeface.BOLD);
-        binding.contactImage.setVisibility(View.GONE);
+        mBinding.tabletToolbar.setVisibility(View.VISIBLE);
+        mBinding.contactTitle.setText(titleRes);
+        mBinding.contactTitle.setTextSize(19);
+        mBinding.contactTitle.setTypeface(null, Typeface.BOLD);
+        mBinding.contactImage.setVisibility(View.GONE);
         /*RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.contactTitle.getLayoutParams();
         params.removeRule(RelativeLayout.ALIGN_TOP);
         params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
@@ -624,13 +622,17 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         }
     }
 
+    public void showAccountStatus(boolean show){
+        mBinding.accountSwitch.setVisibility(show? View.VISIBLE : View.GONE);
+    }
+
     private void showToolbarSpinner() {
-        binding.spinnerToolbar.setVisibility(View.VISIBLE);
+        mBinding.spinnerToolbar.setVisibility(View.VISIBLE);
     }
 
     private void hideToolbarSpinner() {
-        if (binding != null && !DeviceUtils.isTablet(this)) {
-            binding.spinnerToolbar.setVisibility(View.GONE);
+        if (mBinding != null && !DeviceUtils.isTablet(this)) {
+            mBinding.spinnerToolbar.setVisibility(View.GONE);
         }
     }
 
@@ -703,16 +705,16 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     public void setToolbarElevation(boolean enable) {
-        if (binding != null)
-            binding.appBar.setElevation(enable ? getResources().getDimension(R.dimen.toolbar_elevation) : 0);
+        if (mBinding != null)
+            mBinding.appBar.setElevation(enable ? getResources().getDimension(R.dimen.toolbar_elevation) : 0);
     }
 
     public void setToolbarOutlineState(boolean enabled) {
-        if (binding != null) {
+        if (mBinding != null) {
             if (!enabled) {
-                binding.appBar.setOutlineProvider(null);
+                mBinding.appBar.setOutlineProvider(null);
             } else {
-                binding.appBar.setOutlineProvider(mOutlineProvider);
+                mBinding.appBar.setOutlineProvider(mOutlineProvider);
             }
         }
 	}
@@ -725,8 +727,23 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     public void selectNavigationItem(int id) {
-        if (binding != null)
-            binding.navigationView.setSelectedItemId(id);
+        if (mBinding != null)
+            mBinding.navigationView.setSelectedItemId(id);
+    }
+
+    public void enableAccount(boolean newValue) {
+        Account account = mAccountService.getAccount(mAccountService.getCurrentAccount().getAccountID());
+        if (account == null) {
+            cx.ring.utils.Log.w(TAG, "account not found!");
+            return;
+        }
+
+        account.setEnabled(newValue);
+        mAccountService.setAccountEnabled(account.getAccountID(), newValue);
+    }
+
+    public SwitchButton getSwitchButton() {
+        return mBinding.accountSwitch;
     }
 
 }

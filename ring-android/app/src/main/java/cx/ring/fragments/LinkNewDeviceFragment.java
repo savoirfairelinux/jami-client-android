@@ -20,7 +20,6 @@
 package cx.ring.fragments;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Layout;
@@ -46,21 +45,21 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import cx.ring.R;
 import cx.ring.account.AccountEditionFragment;
-import cx.ring.account.LinkDevicePresenter;
-import cx.ring.account.LinkDeviceView;
+import cx.ring.account.LinkNewDevicePresenter;
+import cx.ring.account.LinkNewDeviceView;
 import cx.ring.application.JamiApplication;
-import cx.ring.databinding.FragLinkDeviceBinding;
+import cx.ring.databinding.FragLinkNewDeviceBinding;
 import cx.ring.model.Account;
 import cx.ring.mvp.BaseBottomSheetFragment;
 import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.KeyboardVisibilityManager;
 
-public class LinkDeviceFragment extends BaseBottomSheetFragment<LinkDevicePresenter> implements LinkDeviceView {
+public class LinkNewDeviceFragment extends BaseBottomSheetFragment<LinkNewDevicePresenter> implements LinkNewDeviceView {
 
-    public static final String TAG = LinkDeviceFragment.class.getSimpleName();
+    public static final String TAG = LinkNewDeviceFragment.class.getSimpleName();
 
-    public static LinkDeviceFragment newInstance(String accountId) {
-        LinkDeviceFragment fragment = new LinkDeviceFragment();
+    public static LinkNewDeviceFragment newInstance(String accountId) {
+        LinkNewDeviceFragment fragment = new LinkNewDeviceFragment();
 
         Bundle args = new Bundle();
         args.putString(AccountEditionFragment.ACCOUNT_ID_KEY, accountId);
@@ -69,7 +68,7 @@ public class LinkDeviceFragment extends BaseBottomSheetFragment<LinkDevicePresen
         return fragment;
     }
 
-    private FragLinkDeviceBinding mBinding = null;
+    private FragLinkNewDeviceBinding mBinding = null;
 
     private boolean mAccountHasPassword = true;
 
@@ -79,7 +78,7 @@ public class LinkDeviceFragment extends BaseBottomSheetFragment<LinkDevicePresen
         super.onCreateView(inflater, container, savedInstanceState);
 
         ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
-        mBinding = FragLinkDeviceBinding.inflate(inflater, container, false);
+        mBinding = FragLinkNewDeviceBinding.inflate(inflater, container, false);
 
         return mBinding.getRoot();
     }
