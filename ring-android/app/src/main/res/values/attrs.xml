@@ -5,4 +5,10 @@
         <attr name="bounded_height" format="dimension" />
     </declare-styleable>
 
+    <declare-styleable name="SwitchButton">
+        <attr name="backColor" format="color|reference"/>
+        <attr name="textOn" format="string"/>
+        <attr name="textOff" format="string"/>
+    </declare-styleable>
+
 </resources>

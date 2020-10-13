@@ -46,6 +46,12 @@ import cx.ring.model.Settings;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.mvp.GenericView;
 
+import static cx.ring.daemon.Ringservice.getPluginsEnabled;
+import static cx.ring.daemon.Ringservice.setPluginsEnabled;
+
+/**
+ * TODO: improvements : handle multiples permissions for feature.
+ */
 public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> implements GenericView<Settings>, ViewTreeObserver.OnScrollChangedListener {
 
     private static final int SCROLL_DIRECTION_UP = -1;
@@ -59,7 +65,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragSettingsBinding.inflate(inflater, container, false);
-        ((JamiApplication) requireActivity().getApplication()).getInjectionComponent().inject(this);
+        ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         return binding.getRoot();
     }
 
@@ -74,17 +80,17 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         setHasOptionsMenu(true);
         super.onViewCreated(view, savedInstanceState);
         binding.settingsDarkTheme.setChecked(presenter.getDarkMode());
-        binding.settingsPluginsSwitch.setChecked(Ringservice.getPluginsEnabled());
+        binding.settingsPluginsSwitch.setChecked(getPluginsEnabled());
         if (TextUtils.isEmpty(JamiApplication.getInstance().getPushToken())) {
             binding.settingsPushNotificationsLayout.setVisibility(View.GONE);
         }
         // loading preferences
         presenter.loadSettings();
-        ((HomeActivity) requireActivity()).setToolbarTitle(R.string.menu_item_settings);
+        ((HomeActivity) getActivity()).setToolbarTitle(R.string.menu_item_settings);
 
         binding.scrollview.getViewTreeObserver().addOnScrollChangedListener(this);
         binding.settingsDarkTheme.setOnCheckedChangeListener((buttonView, isChecked) -> presenter.setDarkMode(isChecked));
-        binding.settingsPluginsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> Ringservice.setPluginsEnabled(isChecked));
+        binding.settingsPluginsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> setPluginsEnabled(isChecked));
 
         CompoundButton.OnCheckedChangeListener save = (buttonView, isChecked) -> {
             if (!mIsRefreshingViewFromPresenter)
@@ -116,7 +122,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
                 .show());
         binding.settingsPluginsLayout.setOnClickListener(v -> {
             HomeActivity activity = (HomeActivity) getActivity();
-            if (activity != null && Ringservice.getPluginsEnabled()){
+            if (activity != null && getPluginsEnabled()){
                 activity.goToPluginsListSettings();
             }
         });
@@ -125,7 +131,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
     @Override
     public void onResume() {
         super.onResume();
-        ((HomeActivity) requireActivity()).setToolbarTitle(R.string.menu_item_settings);
+        ((HomeActivity) getActivity()).setToolbarTitle(R.string.menu_item_settings);
     }
 
     @Override
@@ -148,12 +154,28 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         presenter.saveSettings(newSettings);
     }
 
+    /**
+     * Presents a Toast explaining why the Read Contacts permission is required to display the devi-
+     * ces contacts in Ring.
+     */
     private void presentReadContactPermissionExplanationToast() {
-        Toast.makeText(requireContext(), getString(R.string.permission_dialog_read_contacts_message), Toast.LENGTH_LONG).show();
+        Activity activity = getActivity();
+        if (null != activity) {
+            String toastMessage = getString(R.string.permission_dialog_read_contacts_message);
+            Toast.makeText(activity, toastMessage, Toast.LENGTH_LONG).show();
+        }
     }
 
+    /**
+     * Presents a Toast explaining why the Write Call Log permission is required to enable the cor-
+     * responding feature.
+     */
     private void presentWriteCallLogPermissionExplanationToast() {
-        Toast.makeText(requireContext(), getString(R.string.permission_dialog_write_call_log_message), Toast.LENGTH_LONG).show();
+        Activity activity = getActivity();
+        if (null != activity) {
+            String toastMessage = getString(R.string.permission_dialog_write_call_log_message);
+            Toast.makeText(activity, toastMessage, Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

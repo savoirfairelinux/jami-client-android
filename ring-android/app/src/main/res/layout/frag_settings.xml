@@ -176,7 +176,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
             </RelativeLayout>
 
-
             <!-- Contacts settings -->
 
             <!--
@@ -495,6 +494,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_below="@id/system_clear_history_title"/>
 
             </RelativeLayout>
+
         </LinearLayout>
     </cx.ring.views.BoundedScrollView>
 </RelativeLayout>

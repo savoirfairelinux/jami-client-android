@@ -20,6 +20,7 @@ package cx.ring.settings;
 
 import android.content.Context;
 import android.os.Bundle;
+
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
@@ -29,6 +30,7 @@ import cx.ring.client.HomeActivity;
 import cx.ring.services.SharedPreferencesServiceImpl;
 
 public class VideoSettingsFragment extends PreferenceFragmentCompat {
+
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         PreferenceManager pm = getPreferenceManager();

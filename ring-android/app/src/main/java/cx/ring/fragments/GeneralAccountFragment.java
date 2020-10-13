@@ -26,6 +26,7 @@ import android.text.format.Formatter;
 import android.view.inputmethod.EditorInfo;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentManager;
 import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
@@ -33,6 +34,8 @@ import androidx.preference.PreferenceManager;
 import androidx.preference.SeekBarPreference;
 import androidx.preference.SwitchPreference;
 import androidx.preference.TwoStatePreference;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import cx.ring.R;
 import cx.ring.account.AccountEditionFragment;
@@ -50,7 +53,8 @@ import cx.ring.views.PasswordPreference;
 
 public class GeneralAccountFragment extends BasePreferenceFragment<GeneralAccountPresenter> implements GeneralAccountView {
 
-    private static final String TAG = GeneralAccountFragment.class.getSimpleName();
+    public static final String TAG = GeneralAccountFragment.class.getSimpleName();
+
     private static final String DIALOG_FRAGMENT_TAG = "androidx.preference.PreferenceFragment.DIALOG";
     private final Preference.OnPreferenceChangeListener changeAccountStatusListener = (preference, newValue) -> {
         presenter.setEnabled((Boolean) newValue);
@@ -163,6 +167,18 @@ public class GeneralAccountFragment extends BasePreferenceFragment<GeneralAccoun
             });
             filePref.setSummary(getFileSizeSummary(filePref.getValue(), filePref.getMax()));
         }
+
+        Preference deletePref = findPreference("Account.delete");
+        if (deletePref != null) {
+            deletePref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    AlertDialog deleteDialog = createDeleteDialog();
+                    deleteDialog.show();
+                    return false;
+                }
+            });
+        }
     }
 
     @Override
@@ -230,4 +246,19 @@ public class GeneralAccountFragment extends BasePreferenceFragment<GeneralAccoun
     public void addSipPreferences() {
         addPreferencesFromResource(R.xml.account_general_prefs);
     }
+
+    @NonNull
+    private AlertDialog createDeleteDialog() {
+        AlertDialog alertDialog = new MaterialAlertDialogBuilder(requireContext())
+                .setMessage(R.string.account_delete_dialog_message)
+                .setTitle(R.string.account_delete_dialog_title)
+                .setPositiveButton(R.string.menu_delete, (dialog, whichButton) -> presenter.removeAccount())
+                .setNegativeButton(android.R.string.cancel, null)
+                .create();
+        Activity activity = getActivity();
+        if (activity != null)
+            alertDialog.setOwnerActivity(getActivity());
+        return alertDialog;
+    }
+
 }
