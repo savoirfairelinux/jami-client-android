@@ -255,6 +255,13 @@ along with this program; if not, write to the Free Software
     <string name="open_the_gallery">Open the gallery</string>
     <string name="take_a_photo">Take a photo</string>
     <string name="profile_name_hint">Enter your name</string>
+    <string name="registered_name">Registered Name</string>
+    <string name="no_registered_name">No name registered</string>
+    <string name="identity">Identity</string>
+    <string name="account">Account</string>
+    <string name="link_new_device">Link a new device</string>
+    <string name="devices">Linked devices</string>
+    <string name="total_devices">Total devices: </string>
 
     <!-- Share fragment -->
     <string name="share_message">Scan this code with Jami</string>

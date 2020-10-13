@@ -50,7 +50,8 @@ import cx.ring.views.PasswordPreference;
 
 public class GeneralAccountFragment extends BasePreferenceFragment<GeneralAccountPresenter> implements GeneralAccountView {
 
-    private static final String TAG = GeneralAccountFragment.class.getSimpleName();
+    public static final String TAG = GeneralAccountFragment.class.getSimpleName();
+
     private static final String DIALOG_FRAGMENT_TAG = "androidx.preference.PreferenceFragment.DIALOG";
     private final Preference.OnPreferenceChangeListener changeAccountStatusListener = (preference, newValue) -> {
         presenter.setEnabled((Boolean) newValue);

@@ -24,8 +24,6 @@ package cx.ring.account;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,7 +31,6 @@ import androidx.annotation.StringRes;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -49,10 +46,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
@@ -82,9 +76,6 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
     private FragAccountSettingsBinding binding;
 
     private boolean mIsVisible;
-
-    private MenuItem mItemAdvanced;
-    private MenuItem mItemBlacklist;
 
     private String mAccountId;
     private boolean mAccountIsJami;
@@ -162,20 +153,6 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
     }
 
     @Override
-    public void showAdvancedOption(boolean show) {
-        if (mItemAdvanced != null) {
-            mItemAdvanced.setVisible(show);
-        }
-    }
-
-    @Override
-    public void showBlacklistOption(boolean show) {
-        if (mItemBlacklist != null) {
-            mItemBlacklist.setVisible(show);
-        }
-    }
-
-    @Override
     public void goToBlackList(String accountId) {
         BlackListFragment blackListFragment = new BlackListFragment();
         Bundle args = new Bundle();
@@ -195,14 +172,11 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.account_edition, menu);
-        mItemAdvanced = menu.findItem(R.id.menuitem_advanced);
-        mItemBlacklist = menu.findItem(R.id.menuitem_blacklist);
     }
 
     @Override
     public void onPrepareOptionsMenu(@NonNull Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        presenter.prepareOptionsMenu();
     }
 
     @Override
@@ -238,7 +212,6 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
         binding.slidingTabs.setVisibility(isJami? View.GONE : View.VISIBLE);
         binding.pager.setVisibility(isJami? View.GONE : View.VISIBLE);
         binding.fragmentContainer.setVisibility(isJami? View.VISIBLE : View.GONE);
-        presenter.prepareOptionsMenu(isJami);
         setBackListenerEnabled(isJami);
     }
 
@@ -252,22 +225,6 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
             case R.id.menuitem_delete:
                 AlertDialog deleteDialog = createDeleteDialog();
                 deleteDialog.show();
-                break;
-            case R.id.menuitem_advanced:
-                binding.slidingTabs.setVisibility(View.VISIBLE);
-                binding.pager.setVisibility(View.VISIBLE);
-                binding.fragmentContainer.setVisibility(View.GONE);
-                JamiAccountSummaryFragment fragment = (JamiAccountSummaryFragment) getChildFragmentManager().findFragmentByTag(JamiAccountSummaryFragment.TAG);
-                if (fragment != null)
-                    fragment.setFragmentVisibility(false);
-                mIsVisible = true;
-                setupElevation();
-                break;
-            case R.id.menuitem_blacklist:
-                presenter.goToBlackList();
-                if (getActivity() instanceof HomeActivity)
-                    ((HomeActivity) getActivity()).setToolbarElevation(false);
-            default:
                 break;
         }
         return true;
@@ -285,14 +242,6 @@ public class AccountEditionFragment extends BaseSupportFragment<AccountEditionPr
         if (activity != null)
             alertDialog.setOwnerActivity(getActivity());
         return alertDialog;
-    }
-
-    @Override
-    public void goToWizardActivity() {
-        Intent intent = new Intent(getActivity(), AccountWizardActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
     }
 
     @Override

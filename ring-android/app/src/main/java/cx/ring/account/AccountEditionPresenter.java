@@ -75,16 +75,4 @@ public class AccountEditionPresenter extends RootPresenter<AccountEditionView> {
         mAccountService.removeAccount(mAccount.getAccountID());
     }
 
-    public void prepareOptionsMenu() {
-        if (mAccount != null)
-            prepareOptionsMenu(mAccount.isJami());
-    }
-
-    public void prepareOptionsMenu(boolean isJami) {
-        AccountEditionView view = getView();
-        if (view != null) {
-            view.showAdvancedOption(isJami);
-            view.showBlacklistOption(isJami);
-        }
-    }
 }
