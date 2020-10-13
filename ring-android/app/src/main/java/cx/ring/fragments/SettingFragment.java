@@ -48,9 +48,10 @@ import cx.ring.views.EditTextIntegerPreference;
 import cx.ring.views.EditTextPreferenceDialog;
 import cx.ring.views.PasswordPreference;
 
-public class GeneralAccountFragment extends BasePreferenceFragment<GeneralAccountPresenter> implements GeneralAccountView {
+public class SettingFragment extends BasePreferenceFragment<GeneralAccountPresenter> implements GeneralAccountView {
 
-    private static final String TAG = GeneralAccountFragment.class.getSimpleName();
+    public static final String TAG = SettingFragment.class.getSimpleName();
+
     private static final String DIALOG_FRAGMENT_TAG = "androidx.preference.PreferenceFragment.DIALOG";
     private final Preference.OnPreferenceChangeListener changeAccountStatusListener = (preference, newValue) -> {
         presenter.setEnabled((Boolean) newValue);
@@ -78,12 +79,12 @@ public class GeneralAccountFragment extends BasePreferenceFragment<GeneralAccoun
         return true;
     };
 
-    public static GeneralAccountFragment newInstance(@NonNull String accountId) {
+    public static SettingFragment newInstance(@NonNull String accountId) {
         Bundle bundle = new Bundle();
         bundle.putString(AccountEditionFragment.ACCOUNT_ID_KEY, accountId);
-        GeneralAccountFragment generalAccountFragment = new GeneralAccountFragment();
-        generalAccountFragment.setArguments(bundle);
-        return generalAccountFragment;
+        SettingFragment settingFragment = new SettingFragment();
+        settingFragment.setArguments(bundle);
+        return settingFragment;
     }
 
     @Override
