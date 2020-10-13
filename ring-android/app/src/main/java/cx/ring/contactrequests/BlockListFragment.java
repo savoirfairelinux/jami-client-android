@@ -18,40 +18,49 @@
  */
 package cx.ring.contactrequests;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.Collection;
 
-import cx.ring.R;
 import cx.ring.account.AccountEditionFragment;
+import cx.ring.account.JamiAccountSummaryFragment;
 import cx.ring.application.JamiApplication;
-import cx.ring.client.HomeActivity;
-import cx.ring.databinding.FragBlacklistBinding;
+import cx.ring.databinding.FragBlocklistBinding;
 import cx.ring.model.CallContact;
 import cx.ring.mvp.BaseSupportFragment;
-import cx.ring.utils.DeviceUtils;
 
-public class BlackListFragment extends BaseSupportFragment<BlackListPresenter> implements BlackListView,
+public class BlockListFragment extends BaseSupportFragment<BlackListPresenter> implements BlackListView,
         BlackListViewHolder.BlackListListeners {
 
-    public static final String TAG = BlackListFragment.class.getSimpleName();
+    public static final String TAG = BlockListFragment.class.getSimpleName();
+
+    private final OnBackPressedCallback mOnBackPressedCallback = new OnBackPressedCallback(false) {
+        @Override
+        public void handleOnBackPressed() {
+            mOnBackPressedCallback.setEnabled(false);
+            JamiAccountSummaryFragment fragment = (JamiAccountSummaryFragment) getParentFragment();
+            if (fragment != null) {
+                fragment.popBackStack();
+            }
+        }
+    };
 
     private BlackListAdapter mAdapter;
-    private FragBlacklistBinding binding;
+    private FragBlocklistBinding binding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragBlacklistBinding.inflate(inflater, container, false);
+        binding = FragBlocklistBinding.inflate(inflater, container, false);
         ((JamiApplication) getActivity().getApplication()).getInjectionComponent().inject(this);
         setHasOptionsMenu(true);
         return binding.getRoot();
@@ -69,21 +78,15 @@ public class BlackListFragment extends BaseSupportFragment<BlackListPresenter> i
         if (getArguments() == null || getArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY) == null) {
             return;
         }
-        presenter.setAccountId(getArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY));
-        HomeActivity activity = (HomeActivity) getActivity();
-        if (activity != null && DeviceUtils.isTablet(activity)) {
-            activity.setTabletTitle(R.string.ic_blacklist_menu);
-        }
+        String mAccountId = getArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY);
+        mOnBackPressedCallback.setEnabled(true);
+        presenter.setAccountId(mAccountId);
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, @NonNull MenuInflater inflater) {
-        menu.clear();
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        menu.clear();
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, mOnBackPressedCallback);
     }
 
     @Override
@@ -93,20 +96,20 @@ public class BlackListFragment extends BaseSupportFragment<BlackListPresenter> i
 
     @Override
     public void updateView(final Collection<CallContact> list) {
-        binding.blacklist.setVisibility(View.VISIBLE);
-        if (binding.blacklist.getAdapter() != null) {
+        binding.blocklist.setVisibility(View.VISIBLE);
+        if (binding.blocklist.getAdapter() != null) {
             mAdapter.replaceAll(list);
         } else {
-            mAdapter = new BlackListAdapter(list, BlackListFragment.this);
+            mAdapter = new BlackListAdapter(list, BlockListFragment.this);
             LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-            binding.blacklist.setLayoutManager(layoutManager);
-            binding.blacklist.setAdapter(mAdapter);
+            binding.blocklist.setLayoutManager(layoutManager);
+            binding.blocklist.setAdapter(mAdapter);
         }
     }
 
     @Override
     public void hideListView() {
-        binding.blacklist.setVisibility(View.GONE);
+        binding.blocklist.setVisibility(View.GONE);
     }
 
     @Override

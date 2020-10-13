@@ -5,4 +5,15 @@
         <attr name="bounded_height" format="dimension" />
     </declare-styleable>
 
+    <declare-styleable name="SwitchButton">
+        <attr name="thumbColor" format="color|reference"/>
+        <attr name="thumbWidth" format="dimension|reference"/>
+        <attr name="thumbHeight" format="dimension|reference"/>
+        <attr name="backColor" format="color|reference"/>
+        <attr name="textOn" format="string"/>
+        <attr name="textOff" format="string"/>
+        <attr name="textExtra" format="dimension"/>
+        <attr name="textAdjust" format="dimension"/>
+    </declare-styleable>
+
 </resources>
