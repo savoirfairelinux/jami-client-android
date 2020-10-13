@@ -28,8 +28,6 @@ public interface JamiAccountSummaryView {
 
     void showExportingProgressDialog();
 
-    void showRevokingProgressDialog();
-
     void showPasswordProgressDialog();
 
     void accountChanged(final Account account);
@@ -41,10 +39,6 @@ public interface JamiAccountSummaryView {
     void showGenericError();
 
     void showPIN(String pin);
-
-    void updateDeviceList(Map<String, String> devices, String currentDeviceId);
-
-    void deviceRevocationEnded(String device, int status);
 
     void passwordChangeEnded(boolean ok);
 
@@ -59,5 +53,15 @@ public interface JamiAccountSummaryView {
     void askGalleryPermission();
 
     void updateUserView(Account account);
+
+    void goToGeneral(String accountId);
+
+    void goToMedia(String accountId);
+
+    void goToSystem(String accountId);
+
+    void goToAdvanced(String accountId);
+
+    void goToAbout();
 
 }

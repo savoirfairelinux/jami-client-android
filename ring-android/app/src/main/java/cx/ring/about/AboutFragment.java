@@ -70,22 +70,6 @@ public class AboutFragment extends BaseSupportFragment<RootPresenter> {
         binding.credits.setOnClickListener(v -> creditsClicked());
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        ((HomeActivity) requireActivity()).setToolbarTitle(R.string.menu_item_about);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, @NonNull MenuInflater inflater) {
-        menu.clear();
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        menu.clear();
-    }
-
     private void webSiteToView(View view) {
         Uri uriToView;
         switch (view.getId()) {

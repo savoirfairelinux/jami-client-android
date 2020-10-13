@@ -176,6 +176,35 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/settings_export"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:padding="@dimen/padding_large">
+
+                <ImageView
+                    android:id="@+id/system_export_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:contentDescription="@string/pref_clearHistory_summary"
+                    android:src="@drawable/baseline_file_download_24"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="32dp" />
+
+                <TextView
+                    style="@style/ListPrimary"
+                    android:id="@+id/system_export_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="@string/account_export_file"
+                    android:layout_toEndOf="@+id/system_export_image"/>
+
+            </RelativeLayout>
 
             <!-- Contacts settings -->
 
@@ -459,6 +488,36 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:textSize="18sp" />
 
             <RelativeLayout
+                android:id="@+id/settings_change_password"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:padding="@dimen/padding_large">
+
+                <ImageView
+                    android:id="@+id/system_change_password_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:contentDescription="@string/pref_clearHistory_summary"
+                    android:src="@drawable/baseline_lock_24"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="32dp" />
+
+                <TextView
+                    style="@style/ListPrimary"
+                    android:id="@+id/system_change_password_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="@string/pref_blackList_title"
+                    android:layout_toEndOf="@+id/system_change_password_image"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/settings_clear_history"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -495,6 +554,45 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_below="@id/system_clear_history_title"/>
 
             </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/settings_black_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:padding="@dimen/padding_large">
+
+                <ImageView
+                    android:id="@+id/system_black_list_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:contentDescription="@string/pref_clearHistory_summary"
+                    android:src="@drawable/baseline_block_24"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="32dp" />
+
+                <TextView
+                    style="@style/ListPrimary"
+                    android:id="@+id/system_black_list_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="@string/pref_blackList_title"
+                    android:layout_toEndOf="@+id/system_black_list_image"/>
+
+                <TextView
+                    style="@style/ListSecondary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pref_blackList_summary"
+                    android:layout_toEndOf="@+id/system_black_list_image"
+                    android:layout_below="@id/system_black_list_title"/>
+
+            </RelativeLayout>
+
         </LinearLayout>
     </cx.ring.views.BoundedScrollView>
 </RelativeLayout>

@@ -121,20 +121,6 @@ public class JamiAccountSummaryPresenter extends RootPresenter<JamiAccountSummar
         mAccountService.setAccountEnabled(account.getAccountID(), newValue);
     }
 
-    public void revokeDevice(final String deviceId, String password) {
-        if (getView() != null) {
-            getView().showRevokingProgressDialog();
-        }
-        mCompositeDisposable.add(mAccountService
-                .revokeDevice(mAccountID, password, deviceId)
-                .observeOn(mUiScheduler)
-                .subscribe(result -> getView().deviceRevocationEnded(deviceId, result)));
-    }
-
-    public void renameDevice(String newName) {
-        mAccountService.renameDevice(mAccountID, newName);
-    }
-
     public void changePassword(String oldPassword, String newPassword) {
         JamiAccountSummaryView view = getView();
         if (view != null)
@@ -253,5 +239,24 @@ public class JamiAccountSummaryPresenter extends RootPresenter<JamiAccountSummar
         return (alias == null) ? account.getAlias() : alias;
     }
 
+    public void goToGeneral() {
+        getView().goToGeneral(mAccountID);
+    }
+
+    public void goToMedia() {
+        getView().goToMedia(mAccountID);
+    }
+
+    public void goToSystem() {
+        getView().goToSystem(mAccountID);
+    }
+
+    public void goToAdvanced() {
+        getView().goToAdvanced(mAccountID);
+    }
+
+    public void goToAbout() {
+        getView().goToAbout();
+    }
 
 }

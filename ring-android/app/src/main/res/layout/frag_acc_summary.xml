@@ -34,7 +34,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:paddingStart="16dp"
             android:paddingTop="12dp"
             android:paddingEnd="16dp"
-            android:paddingBottom="16dp"
             android:clickable="true"
             android:focusable="true"
             android:focusableInTouchMode="true" >
@@ -87,24 +86,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:src="@drawable/ic_contact_picture_fallback"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
-<!--                <View-->
-<!--                    android:id="@+id/anchor"-->
-<!--                    android:layout_width="12dp"-->
-<!--                    android:layout_height="48dp"-->
-<!--                    app:layout_constraintBottom_toBottomOf="@id/user_photo"-->
-<!--                    app:layout_constraintEnd_toEndOf="@id/user_photo"-->
-<!--                    app:layout_constraintStart_toStartOf="@id/user_photo" />-->
-
-<!--                <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--                    android:id="@+id/user_profile_edit"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    app:fabSize="mini"-->
-<!--                    app:layout_constraintStart_toStartOf="@id/anchor"-->
-<!--                    app:layout_constraintTop_toTopOf="@id/anchor"-->
-<!--                    app:srcCompat="@drawable/baseline_edit_24"-->
-<!--                    app:useCompatPadding="true" />-->
 
                 <cx.ring.views.TwoButtonEditText
                     android:id="@+id/username"
@@ -185,35 +166,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:enabled="false"
                 android:layout_marginTop="12dp" />
 
-            <LinearLayout
-                android:id="@+id/layout_account_options"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="8dp"
-                android:baselineAligned="false"
-                android:orientation="horizontal">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/export_account_btn"
-                    style="@style/ButtonOutLined"
-                    android:layout_width="0dp"
+                <cx.ring.views.TwoButtonEditText
+                    android:id="@+id/linked_devices"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginEnd="4dp"
-                    android:layout_weight="1"
-                    android:text="@string/account_export_file" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/change_password_btn"
-                    style="@style/ButtonOutLined"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginEnd="12dp"
-                    android:layout_weight="1"
-                    android:text="@string/account_password_change" />
-            </LinearLayout>
+                    android:enabled="false"
+                    android:hint="@string/link_new_device"
+                    app:drawable_right="@drawable/baseline_add_24"
+                    app:drawable_left="@drawable/baseline_edit_twoton_24dp"
+                    android:layout_marginTop="12dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -221,50 +182,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="4dp"
                 android:gravity="center_vertical"
-                android:text="@string/normal_devices_titles"
+                android:text="@string/menu_item_settings"
                 android:textColor="@color/colorPrimary"
                 android:layout_marginStart="@dimen/title_margin"
                 android:textStyle="bold"
                 android:textSize="18sp"/>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/link_device"
-                style="@style/ButtonColored"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_gravity="center"
-                android:drawableLeft="@drawable/baseline_add_24"
-                android:drawableTint="@color/colorOnPrimary"
-                android:text="@string/account_link_export_button"
-                android:clickable="true"
-                android:focusable="true"/>
-
-            <FrameLayout
+            <ListView
+                android:id="@+id/settings_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ListView
-                    android:id="@+id/device_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:divider="@null"
-                    android:nestedScrollingEnabled="true" />
-
-                <TextView
-                    android:id="@+id/empty_account_list"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="@string/empty_account_list"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/textColorSecondary"
-                    android:visibility="gone" />
-
-            </FrameLayout>
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="true" />
 
         </LinearLayout>
     </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/fragment"
+        android:background="@color/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

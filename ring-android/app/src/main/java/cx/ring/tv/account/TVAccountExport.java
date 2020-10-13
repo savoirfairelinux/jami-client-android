@@ -105,11 +105,6 @@ public class TVAccountExport
     }
 
     @Override
-    public void showRevokingProgressDialog() {
-
-    }
-
-    @Override
     public void showPasswordProgressDialog() {
 
     }
@@ -166,16 +161,6 @@ public class TVAccountExport
     }
 
     @Override
-    public void updateDeviceList(Map<String, String> devices, String currentDeviceId) {
-
-    }
-
-    @Override
-    public void deviceRevocationEnded(String device, int status) {
-
-    }
-
-    @Override
     public void passwordChangeEnded(boolean ok) {
 
     }
@@ -215,6 +200,31 @@ public class TVAccountExport
 
     @Override
     public void updateUserView(Account account) {
+
+    }
+
+    @Override
+    public void goToGeneral(String accountId) {
+
+    }
+
+    @Override
+    public void goToMedia(String accountId) {
+
+    }
+
+    @Override
+    public void goToSystem(String accountId) {
+
+    }
+
+    @Override
+    public void goToAdvanced(String accountId) {
+
+    }
+
+    @Override
+    public void goToAbout() {
 
     }
 

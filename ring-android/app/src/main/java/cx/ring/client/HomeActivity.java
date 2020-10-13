@@ -50,7 +50,6 @@ import javax.inject.Inject;
 
 import cx.ring.BuildConfig;
 import cx.ring.R;
-import cx.ring.about.AboutFragment;
 import cx.ring.account.AccountEditionFragment;
 import cx.ring.account.AccountWizardActivity;
 import cx.ring.application.JamiApplication;
@@ -66,12 +65,9 @@ import cx.ring.model.AccountConfig;
 import cx.ring.service.DRingService;
 import cx.ring.services.AccountService;
 import cx.ring.services.NotificationService;
-import cx.ring.settings.SettingsFragment;
-import cx.ring.settings.VideoSettingsFragment;
 import cx.ring.settings.pluginssettings.PluginDetails;
 import cx.ring.settings.pluginssettings.PluginPathPreferenceFragment;
 import cx.ring.settings.pluginssettings.PluginSettingsFragment;
-import cx.ring.settings.pluginssettings.PluginsListSettingsFragment;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
@@ -106,8 +102,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     public static final String PLUGINS_LIST_SETTINGS_TAG = "PluginsListSettings";
     public static final String PLUGIN_SETTINGS_TAG = "PluginSettings";
     public static final String PLUGIN_PATH_PREFERENCE_TAG = "PluginPathPreference";
-
-    private static final String NAVIGATION_TAG = "Navigation";
 
     protected Fragment fContent;
     protected ConversationFragment fConversation;
@@ -156,8 +150,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
         // dependency injection
         JamiApplication.getInstance().getInjectionComponent().inject(this);
-
-        mOrientation = getResources().getConfiguration().orientation;
 
         setSupportActionBar(binding.mainToolbar);
         ActionBar ab = getSupportActionBar();
@@ -438,46 +430,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         setToolbarElevation(false);
     }
 
-    public void goToSettings() {
-        if (fContent instanceof SettingsFragment) {
-            return;
-        }
-        popCustomBackStack();
-        hideToolbarSpinner();
-        fContent = new SettingsFragment();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(getFragmentContainerId(), fContent, SETTINGS_TAG)
-                .addToBackStack(SETTINGS_TAG).commit();
-    }
-
-    public void goToAbout() {
-        if (fContent instanceof AboutFragment) {
-            return;
-        }
-        popCustomBackStack();
-        hideToolbarSpinner();
-        fContent = new AboutFragment();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(getFragmentContainerId(), fContent, ABOUT_TAG)
-                .addToBackStack(ABOUT_TAG).commit();
-    }
-
-    public void goToVideoSettings() {
-        if (fContent instanceof VideoSettingsFragment) {
-            return;
-        }
-        fContent = new VideoSettingsFragment();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(getFragmentContainerId(), fContent, VIDEO_SETTINGS_TAG)
-                .addToBackStack(VIDEO_SETTINGS_TAG).commit();
-    }
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Account account = mAccountService.getCurrentAccount();
@@ -648,22 +600,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
     public void setAccountFragmentOnBackPressedListener(BackHandlerInterface backPressedListener) {
         mAccountFragmentBackHandlerInterface = backPressedListener;
-    }
-
-    /**
-     * Changes the current main fragment to a plugins list settings fragment
-     */
-    public void goToPluginsListSettings() {
-        if (fContent instanceof PluginsListSettingsFragment) {
-            return;
-        }
-
-        fContent = new PluginsListSettingsFragment();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(getFragmentContainerId(), fContent, PLUGINS_LIST_SETTINGS_TAG)
-                .addToBackStack(PLUGINS_LIST_SETTINGS_TAG).commit();
     }
 
     /**

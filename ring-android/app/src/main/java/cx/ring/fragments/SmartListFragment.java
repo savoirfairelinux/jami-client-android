@@ -113,7 +113,6 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
             public boolean onMenuItemActionCollapse(MenuItem item) {
                 mDialpadMenuItem.setVisible(false);
                 binding.newconvFab.show();
-                setOverflowMenuVisible(menu, true);
                 changeSeparatorHeight(false);
                 binding.qrCode.setVisibility(View.GONE);
                 setTabletQRLayout(false);
@@ -124,7 +123,6 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
             public boolean onMenuItemActionExpand(MenuItem item) {
                 mDialpadMenuItem.setVisible(true);
                 binding.newconvFab.hide();
-                setOverflowMenuVisible(menu, false);
                 changeSeparatorHeight(true);
                 binding.qrCode.setVisibility(View.VISIBLE);
                 setTabletQRLayout(true);
@@ -191,12 +189,6 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
                     mSearchView.setInputType(EditorInfo.TYPE_CLASS_PHONE);
                     mDialpadMenuItem.setIcon(R.drawable.baseline_keyboard_24);
                 }
-                return true;
-            case R.id.menu_settings:
-                ((HomeActivity) getActivity()).goToSettings();
-                return true;
-            case R.id.menu_about:
-                ((HomeActivity) getActivity()).goToAbout();
                 return true;
             default:
                 return false;
@@ -279,21 +271,6 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     @Override
     public void setLoading(final boolean loading) {
         binding.loadingIndicator.setVisibility(loading ? View.VISIBLE : View.GONE);
-    }
-
-    /**
-     * Handles the visibility of some menus to hide / show the overflow menu
-     *
-     * @param menu    the menu containing the menuitems we need to access
-     * @param visible true to display the overflow menu, false otherwise
-     */
-    private void setOverflowMenuVisible(final Menu menu, boolean visible) {
-        if (null != menu) {
-            MenuItem overflowMenuItem = menu.findItem(R.id.menu_overflow);
-            if (null != overflowMenuItem) {
-                overflowMenuItem.setVisible(visible);
-            }
-        }
     }
 
     @Override

@@ -20,15 +20,33 @@ package cx.ring.settings;
 
 import android.content.Context;
 import android.os.Bundle;
+
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
 import cx.ring.R;
+import cx.ring.account.JamiAccountSummaryFragment;
 import cx.ring.client.HomeActivity;
 import cx.ring.services.SharedPreferencesServiceImpl;
 
 public class VideoSettingsFragment extends PreferenceFragmentCompat {
+
+    public static final String TAG = VideoSettingsFragment.class.getSimpleName();
+
+    private final OnBackPressedCallback mOnBackPressedCallback = new OnBackPressedCallback(false) {
+        @Override
+        public void handleOnBackPressed() {
+            mOnBackPressedCallback.setEnabled(false);
+            JamiAccountSummaryFragment fragment = (JamiAccountSummaryFragment) getParentFragment();
+            if (fragment != null) {
+                fragment.popBackStack();
+            }
+        }
+    };
+
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         PreferenceManager pm = getPreferenceManager();
@@ -49,7 +67,13 @@ public class VideoSettingsFragment extends PreferenceFragmentCompat {
     @Override
     public void onResume() {
         super.onResume();
-        ((HomeActivity) requireActivity()).setToolbarTitle(R.string.menu_item_settings);
+        mOnBackPressedCallback.setEnabled(true);
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, mOnBackPressedCallback);
     }
 
     private static void handleResolutionIcon(Preference resolutionPref, String resolution) {
