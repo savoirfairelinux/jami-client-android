@@ -23,8 +23,6 @@ package cx.ring.contacts;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
 import android.text.TextUtils;
@@ -36,6 +34,7 @@ import com.bumptech.glide.RequestManager;
 
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
+import cx.ring.utils.BitmapUtils;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.Single;
 
@@ -43,6 +42,7 @@ public class AvatarFactory {
 
     public static final int SIZE_AB = 36;
     public static final int SIZE_NOTIF = 48;
+    public static final int SIZE_PADDING = 8;
 
     private AvatarFactory() {}
 
@@ -64,7 +64,7 @@ public class AvatarFactory {
 
     public static Single<Bitmap> getBitmapAvatar(Context context, CallContact contact, int size, boolean presence) {
         return getAvatar(context, contact, presence)
-                .map(d -> drawableToBitmap(d, size));
+                .map(d -> BitmapUtils.drawableToBitmap(d, size));
     }
     public static Single<Bitmap> getBitmapAvatar(Context context, CallContact contact, int size) {
         return getBitmapAvatar(context, contact, size, true);
@@ -72,7 +72,7 @@ public class AvatarFactory {
 
     public static Single<Bitmap> getBitmapAvatar(Context context, Account account, int size) {
         return AvatarDrawable.load(context, account)
-                .map(d -> drawableToBitmap(d, size));
+                .map(d -> BitmapUtils.drawableToBitmap(d, size));
     }
 
     private static Drawable getDrawable(Context context, Bitmap photo, String profileName, String username, String id) {
@@ -93,24 +93,6 @@ public class AvatarFactory {
 
     private static RequestBuilder<Drawable> getGlideAvatar(Context context, RequestManager manager, CallContact contact) {
         return getGlideRequest(context, manager.asDrawable(), (Bitmap)contact.getPhoto(), contact.getProfileName(), contact.getUsername(), contact.getPrimaryNumber());
-    }
-
-    public static Bitmap drawableToBitmap(Drawable drawable, int size) {
-        if (drawable instanceof BitmapDrawable) {
-            return ((BitmapDrawable)drawable).getBitmap();
-        }
-
-        int width = drawable.getIntrinsicWidth();
-        width = width > 0 ? width : size;
-        int height = drawable.getIntrinsicHeight();
-        height = height > 0 ? height : size;
-
-        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawable.draw(canvas);
-
-        return bitmap;
     }
 
     private static RequestBuilder<Drawable> getGlideAvatar(Context context, CallContact contact) {

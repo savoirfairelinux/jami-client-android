@@ -68,7 +68,9 @@ public class ConversationPath {
     }
 
     public static ConversationPath fromUri(Uri uri) {
-        if (uri != null && uri.toString().startsWith(ContentUriHandler.CONVERSATION_CONTENT_URI.toString())) {
+        if (uri == null)
+            return null;
+        if (ContentUriHandler.SCHEME_TV.equals(uri.getScheme()) || uri.toString().startsWith(ContentUriHandler.CONVERSATION_CONTENT_URI.toString())) {
             List<String> pathSegments = uri.getPathSegments();
             if (pathSegments.size() > 2) {
                 return new ConversationPath(pathSegments.get(pathSegments.size() - 2), pathSegments.get(pathSegments.size() - 1));
