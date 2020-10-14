@@ -122,7 +122,7 @@ dependencies {
 
     implementation 'com.jsibbold:zoomage:1.2.0'
 
-    withFirebaseImplementation('com.google.firebase:firebase-messaging:20.2.4') {
+    withFirebaseImplementation('com.google.firebase:firebase-messaging:20.3.0') {
         exclude group: 'com.google.firebase', module: 'firebase-core'
         exclude group: 'com.google.firebase', module: 'firebase-analytics'
         exclude group: 'com.google.firebase', module: 'firebase-measurement-connector'
