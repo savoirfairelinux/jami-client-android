@@ -20,10 +20,16 @@
 package cx.ring.tv.main;
 
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -34,6 +40,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.content.FileProvider;
 import androidx.leanback.app.GuidedStepSupportFragment;
 import androidx.leanback.widget.ArrayObjectAdapter;
 import androidx.leanback.widget.HeaderItem;
@@ -43,12 +50,21 @@ import androidx.leanback.widget.OnItemViewClickedListener;
 import androidx.leanback.widget.Presenter;
 import androidx.leanback.widget.Row;
 import androidx.leanback.widget.RowPresenter;
+import androidx.tvprovider.media.tv.Channel;
+import androidx.tvprovider.media.tv.ChannelLogoUtils;
+import androidx.tvprovider.media.tv.PreviewProgram;
+import androidx.tvprovider.media.tv.TvContractCompat;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
+import cx.ring.contacts.AvatarFactory;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.Account;
 import cx.ring.navigation.HomeNavigationViewModel;
@@ -71,11 +87,17 @@ import cx.ring.tv.contact.TVContactActivity;
 import cx.ring.tv.model.TVListViewModel;
 import cx.ring.tv.search.SearchActivity;
 import cx.ring.tv.views.CustomTitleView;
+import cx.ring.utils.AndroidFileUtils;
+import cx.ring.utils.BitmapUtils;
+import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.QRCodeUtils;
 import cx.ring.views.AvatarDrawable;
+import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class MainFragment extends BaseBrowseFragment<MainPresenter> implements MainView {
 
@@ -85,6 +107,16 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     private static final long HEADER_MISC = 1;
     private static final int TRUST_REQUEST_ROW_POSITION = 1;
     private static final int QR_ITEM_POSITION = 2;
+
+    private static final String PREFERENCES_CHANNELS = "channels";
+    private static final String KEY_CHANNEL_CONVERSATIONS = "conversations";
+
+    private static final Uri HOME_URI = new Uri.Builder()
+            .scheme(ContentUriHandler.SCHEME_TV)
+            .authority(ContentUriHandler.AUTHORITY)
+            .appendPath(ContentUriHandler.PATH_TV_HOME)
+            .build();
+
     private SpinnerFragment mSpinnerFragment;
     private ArrayObjectAdapter mRowsAdapter;
     private ArrayObjectAdapter cardRowAdapter;
@@ -148,9 +180,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         setAdapter(mRowsAdapter);
 
         // listeners
-        setOnSearchClickedListener(view -> {
-            startActivity(new Intent(getActivity(), SearchActivity.class));
-        });
+        setOnSearchClickedListener(view -> startActivity(new Intent(getActivity(), SearchActivity.class)));
 
         setOnItemViewClickedListener(new ItemViewClickedListener());
     }
@@ -206,9 +236,9 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     public void showLoading(final boolean show) {
         if (show) {
             mSpinnerFragment = new SpinnerFragment();
-            getFragmentManager().beginTransaction().replace(R.id.main_browse_fragment, mSpinnerFragment).commitAllowingStateLoss();
+            getParentFragmentManager().beginTransaction().replace(R.id.main_browse_fragment, mSpinnerFragment).commitAllowingStateLoss();
         } else {
-            getFragmentManager().beginTransaction().remove(mSpinnerFragment).commitAllowingStateLoss();
+            getParentFragmentManager().beginTransaction().remove(mSpinnerFragment).commitAllowingStateLoss();
         }
     }
 
@@ -224,7 +254,89 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         List<ContactCard> cards = new ArrayList<>(contacts.size());
         for (TVListViewModel contact : contacts)
             cards.add(new ContactCard(contact));
-        cardRowAdapter.setItems(cards,null);
+        cardRowAdapter.setItems(cards, null);
+        buildHomeChannel(requireContext().getApplicationContext(), contacts);
+    }
+
+    private static long createHomeChannel(Context context)  {
+        Channel channel = new Channel.Builder()
+                .setType(TvContractCompat.Channels.TYPE_PREVIEW)
+                .setDisplayName(context.getString(R.string.navigation_item_conversation))
+                .setAppLinkIntentUri(HOME_URI)
+                .build();
+        ContentResolver cr = context.getContentResolver();
+        SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCES_CHANNELS, Context.MODE_PRIVATE);
+        long channelId = sharedPref.getLong(KEY_CHANNEL_CONVERSATIONS, -1);
+        if (channelId == -1) {
+            Uri channelUri = cr.insert(TvContractCompat.Channels.CONTENT_URI, channel.toContentValues());
+            channelId = ContentUris.parseId(channelUri);
+            sharedPref.edit().putLong(KEY_CHANNEL_CONVERSATIONS, channelId).apply();
+            int targetSize = (int) (AvatarFactory.SIZE_NOTIF * context.getResources().getDisplayMetrics().density);
+            int targetPaddingSize = (int) (AvatarFactory.SIZE_PADDING * context.getResources().getDisplayMetrics().density);
+            ChannelLogoUtils.storeChannelLogo(context, channelId, BitmapUtils.drawableToBitmap(context.getDrawable(R.drawable.ic_jami_48), targetSize, targetPaddingSize));
+            TvContractCompat.requestChannelBrowsable(context, channelId);
+        } else {
+            cr.update(TvContractCompat.buildChannelUri(channelId), channel.toContentValues(), null, null);
+        }
+        return channelId;
+    }
+
+    private static Single<PreviewProgram> buildProgram(Context context, TVListViewModel vm, String launcherName, long channelId) {
+        return new AvatarDrawable.Builder()
+                .withContact(vm.getContact())
+                .withPresence(false)
+                .buildAsync(context)
+                .map(avatar -> {
+                    File file = AndroidFileUtils.createImageFile(context);
+                    Bitmap bitmapAvatar = BitmapUtils.drawableToBitmap(avatar, 256);
+                    try (OutputStream os = new BufferedOutputStream(new FileOutputStream(file))) {
+                        bitmapAvatar.compress(Bitmap.CompressFormat.PNG, 100, os);
+                    }
+                    bitmapAvatar.recycle();
+                    Uri uri = FileProvider.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, file);
+
+                    // Grant permission to launcher
+                    if (launcherName != null)
+                        context.grantUriPermission(launcherName, uri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+
+                    PreviewProgram.Builder contactBuilder = new PreviewProgram.Builder()
+                            .setChannelId(channelId)
+                            .setType(TvContractCompat.PreviewPrograms.TYPE_CLIP)
+                            .setTitle(vm.getContact().getDisplayName())
+                            .setAuthor(vm.getContact().getRingUsername())
+                            .setPosterArtAspectRatio(TvContractCompat.PreviewPrograms.ASPECT_RATIO_1_1)
+                            .setPosterArtUri(uri)
+                            .setIntentUri(new Uri.Builder()
+                                    .scheme(ContentUriHandler.SCHEME_TV)
+                                    .authority(ContentUriHandler.AUTHORITY)
+                                    .appendPath(ContentUriHandler.PATH_TV_CONVERSATION)
+                                    .appendPath(vm.getAccountId())
+                                    .appendPath(vm.getContact().getPrimaryNumber())
+                                    .build())
+                            .setInternalProviderId(vm.getContact().getPrimaryUri().getUriString());
+                    return contactBuilder.build();
+                });
+    }
+
+    private static void buildHomeChannel(Context context, List<TVListViewModel> contacts) {
+        if (contacts.isEmpty())
+            return;
+
+        // Get launcher package name
+        ResolveInfo resolveInfo = context.getPackageManager().resolveActivity(
+                new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME), PackageManager.MATCH_DEFAULT_ONLY);
+        String launcherName = resolveInfo == null ? null : resolveInfo.activityInfo.packageName;
+
+        ContentResolver cr = context.getContentResolver();
+        Single.fromCallable(() -> createHomeChannel(context))
+                .doOnSuccess(channelId -> cr.delete(TvContractCompat.buildPreviewProgramsUriForChannel(channelId), null, null))
+                .flatMapObservable(channelId -> Observable.fromIterable(contacts)
+                        .concatMapEager(contact -> buildProgram(context, contact, launcherName, channelId)
+                                .toObservable()
+                                .subscribeOn(Schedulers.io()), 8, 1))
+                .subscribeOn(Schedulers.io())
+                .subscribe(program -> cr.insert(TvContractCompat.PreviewPrograms.CONTENT_URI, program.toContentValues()),
+                        e -> Log.w(TAG, "Error updating home channel", e));
     }
 
     @Override
@@ -252,7 +364,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         Intent intent = new Intent(getActivity(), TVCallActivity.class);
         intent.putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountID);
         intent.putExtra(ConversationFragment.KEY_CONTACT_RING_ID, number);
-        getActivity().startActivity(intent, null);
+        startActivity(intent, null);
     }
 
     static private BitmapDrawable prepareAccountQr(Context context, String accountId) {
@@ -304,12 +416,12 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     @Override
     public void showExportDialog(String pAccountID) {
         GuidedStepSupportFragment wizard = TVAccountExport.createInstance(pAccountID);
-        GuidedStepSupportFragment.add(getFragmentManager(), wizard, R.id.main_browse_fragment);
+        GuidedStepSupportFragment.add(getParentFragmentManager(), wizard, R.id.main_browse_fragment);
     }
 
     @Override
     public void showProfileEditing() {
-        GuidedStepSupportFragment.add(getFragmentManager(), new TVProfileEditingFragment(), R.id.main_browse_fragment);
+        GuidedStepSupportFragment.add(getParentFragmentManager(), new TVProfileEditingFragment(), R.id.main_browse_fragment);
     }
 
     @Override
@@ -327,8 +439,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
 
     @Override
     public void showSettings() {
-        Intent intent = new Intent(getActivity(), TVSettingsActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(getActivity(), TVSettingsActivity.class));
     }
 
     private final class ItemViewClickedListener implements OnItemViewClickedListener {
@@ -344,17 +455,17 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
                     intent.setDataAndType(ConversationPath.toUri(model.getAccountId(), model.getContact().getPrimaryUri()), TVContactActivity.TYPE_CONTACT_REQUEST_INCOMING);
 
                     Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                            getActivity(),
+                            requireActivity(),
                             ((ImageCardView) itemViewHolder.view).getMainImageView(),
                             TVContactActivity.SHARED_ELEMENT_NAME).toBundle();
-                    getActivity().startActivity(intent, bundle);
+                    startActivity(intent, bundle);
                 } else {
                     Intent intent = new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(model.getAccountId(), model.getContact().getPrimaryUri()), getActivity(), TVContactActivity.class);
 
-                    Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+                    Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(),
                             ((ImageCardView) itemViewHolder.view).getMainImageView(),
                             TVContactActivity.SHARED_ELEMENT_NAME).toBundle();
-                    getActivity().startActivity(intent, bundle);
+                    startActivity(intent, bundle);
                 }
             } else if (item instanceof IconCard) {
                 IconCard card = (IconCard) item;

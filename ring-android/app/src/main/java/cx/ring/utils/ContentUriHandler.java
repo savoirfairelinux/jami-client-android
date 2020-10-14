@@ -19,7 +19,9 @@
  */
 package cx.ring.utils;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 
@@ -38,6 +40,9 @@ public class ContentUriHandler {
 
     public static final String AUTHORITY = BuildConfig.APPLICATION_ID;
     public static final String AUTHORITY_FILES = AUTHORITY + ".file_provider";
+    public static final String SCHEME_TV = "jamitv";
+    public static final String PATH_TV_HOME = "home";
+    public static final String PATH_TV_CONVERSATION = "conversation";
 
     private static final Uri AUTHORITY_URI = Uri.parse("content://" + AUTHORITY);
 
@@ -55,6 +60,16 @@ public class ContentUriHandler {
      * https://stackoverflow.com/a/41309223
      */
     private static final String HUAWEI_MANUFACTURER = "Huawei";
+
+    public static Uri getUriForResource(@NonNull Context context, int resourceId) {
+        Resources resources = context.getResources();
+        return new Uri.Builder()
+                .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
+                .authority(resources.getResourcePackageName(resourceId))
+                .appendPath(resources.getResourceTypeName(resourceId))
+                .appendPath(resources.getResourceEntryName(resourceId))
+                .build();
+    }
 
     public static Uri getUriForFile(@NonNull Context context, @NonNull String authority, @NonNull File file) {
         if (HUAWEI_MANUFACTURER.equalsIgnoreCase(Build.MANUFACTURER)) {

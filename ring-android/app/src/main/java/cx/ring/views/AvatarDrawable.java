@@ -149,6 +149,10 @@ public class AvatarDrawable extends Drawable {
             avatarDrawable.showPresence = this.showPresence;
             return avatarDrawable;
         }
+
+        public Single<AvatarDrawable> buildAsync(Context context) {
+            return Single.fromCallable(() -> build(context));
+        }
     }
 
     public static Single<AvatarDrawable> load(Context context, Account account, boolean crop) {
