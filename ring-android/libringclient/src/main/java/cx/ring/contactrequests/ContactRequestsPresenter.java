@@ -27,6 +27,7 @@ import javax.inject.Named;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
+import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.ContactService;
 import cx.ring.smartlist.SmartListViewModel;
@@ -92,7 +93,7 @@ public class ContactRequestsPresenter extends RootPresenter<ContactRequestsView>
         mAccount.onNext(accountId);
     }
 
-    public void contactRequestClicked(String accountId, CallContact contactId) {
-        getView().goToConversation(accountId, contactId.getPrimaryNumber());
+    public void contactRequestClicked(String accountId, Uri uri) {
+        getView().goToConversation(accountId, uri);
     }
 }

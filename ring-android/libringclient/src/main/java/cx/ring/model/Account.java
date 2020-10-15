@@ -65,6 +65,7 @@ public class Account {
     private final Map<String, CallContact> mContacts = new HashMap<>();
     private final Map<String, TrustRequest> mRequests = new HashMap<>();
     private final Map<String, CallContact> mContactCache = new HashMap<>();
+    private final Map<String, Conversation> swarmConversations = new HashMap<>();
 
     private final Map<String, Conversation> conversations = new HashMap<>();
     private final Map<String, Conversation> pending = new HashMap<>();
@@ -91,6 +92,37 @@ public class Account {
 
     public boolean canSearch() {
         return !StringUtils.isEmpty(getDetail(ConfigKey.MANAGER_URI));
+    }
+
+    public boolean isContact(Conversation conversation) {
+        return conversation.getContacts().size() == 1 && getContact(conversation.getContact().getPrimaryUri().getRawRingId()) != null;
+    }
+
+    public void conversationStarted(Conversation conversation) {
+        conversations.put(conversation.getUri().getUri(), conversation);
+        if (conversation.isSwarm())
+            swarmConversations.put(conversation.getUri().getRawRingId(), conversation);
+        conversationChanged();
+    }
+
+    public void setSwarmConversations(List<String> conversation) {
+        for (String conversationId : conversation) {
+            getSwarm(conversationId);
+        }
+    }
+
+    public Conversation getSwarm(String conversationId) {
+        Conversation c = swarmConversations.get(conversationId);
+        if (c == null) {
+            c = new Conversation(accountID, new Uri(Uri.SWARM_URI_SCHEME + conversationId));
+            swarmConversations.put(conversationId, c);
+            conversationStarted(c);
+        }
+        return c;
+    }
+
+    public void addSwarmConversation(String conversationId, ArrayList<Map<String, String>> toNative) {
+        Conversation conversation = getSwarm(conversationId);
     }
 
     public static class ContactLocation {
@@ -161,9 +193,9 @@ public class Account {
         return conversationSubject;
     }
 
-    public Observable<SmartListViewModel> getConversationViewModel() {
+    /*public Observable<SmartListViewModel> getConversationViewModel() {
         return conversationSubject.map(c -> new SmartListViewModel(accountID, c.getContact(), c.getLastEvent()));
-    }
+    }*/
 
     public Observable<List<Conversation>> getPendingSubject() {
         return pendingSubject;
@@ -217,7 +249,7 @@ public class Account {
         }
     }
 
-    private void conversationChanged() {
+    public void conversationChanged() {
         conversationsChanged = true;
         if (historyLoaded) {
             conversationsSubject.onNext(new ArrayList<>(getSortedConversations()));
@@ -282,7 +314,7 @@ public class Account {
     }
 
     public void updated(Conversation conversation) {
-        String key = conversation.getContact().getPrimaryUri().getUri();
+        String key = conversation.getUri().getUri();//.getContact().getPrimaryUri().getUri();
         if (conversation == conversations.get(key))
             conversationUpdated(conversation);
         else if (conversation == pending.get(key))
@@ -769,6 +801,9 @@ public class Account {
     }
 
     public Conversation getByUri(Uri uri) {
+        Log.w(TAG, "getByUri " + uri);
+        if (uri.isSwarm())
+            return getSwarm(uri.getRawRingId());
         if (uri != null && !uri.isEmpty()) {
             return getByKey(uri.getUri());
         }
@@ -851,7 +886,7 @@ public class Account {
                     conversations.put(key, pendingConversation);
                     pendingChanged();
                 }
-                pendingConversation.addContactEvent();
+                pendingConversation.addContactEvent(contact);
             }
             conversationChanged();
         }

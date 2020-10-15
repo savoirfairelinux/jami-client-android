@@ -52,6 +52,12 @@ public class Uri implements Serializable {
             parseUri(uri);
         }
     }
+    public Uri(String scheme, String uri) {
+        if (uri != null) {
+            parseUri(uri);
+        }
+        mScheme = scheme;
+    }
 
     public String getRawUriString() {
         if (isRingId()) {

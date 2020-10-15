@@ -47,6 +47,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import androidx.annotation.RequiresApi;
+
 import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.contacts.AvatarFactory;

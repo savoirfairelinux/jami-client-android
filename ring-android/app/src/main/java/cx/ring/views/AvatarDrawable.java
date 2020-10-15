@@ -40,6 +40,7 @@ import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.services.VCardServiceImpl;
+import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.HashUtils;
 import io.reactivex.Single;
@@ -146,7 +147,11 @@ public class AvatarDrawable extends Drawable {
             return withName(TextUtils.isEmpty(profileName) ? username : profileName);
         }
         public Builder withContact(CallContact contact){
-            return withPhoto((Bitmap)contact.getPhoto())
+            Object photo = contact.getPhoto();
+            if (photo instanceof String) {
+                photo = BitmapUtils.base64ToBitmap((String) photo);
+            }
+            return withPhoto((Bitmap)photo)
                     .withId(contact.getPrimaryNumber())
                     .withOnlineState(contact.isOnline())
                     .withNameData(contact.getProfileName(), contact.getUsername());

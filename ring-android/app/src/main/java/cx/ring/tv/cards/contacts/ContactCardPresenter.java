@@ -74,7 +74,7 @@ public class ContactCardPresenter extends AbstractCardPresenter<ImageCardView> {
         cardView.setBackgroundColor(cardView.getResources().getColor(R.color.color_primary_dark));
         cardView.setMainImage(
                 new AvatarDrawable.Builder()
-                        .withContact(model.getContact())
+                        .withContacts(model.getContact())
                         .withPresence(false)
                         .withCircleCrop(false)
                         .build(getContext())

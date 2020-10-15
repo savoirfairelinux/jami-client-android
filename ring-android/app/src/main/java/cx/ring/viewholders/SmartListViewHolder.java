@@ -42,13 +42,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jakewharton.rxbinding3.view.RxView;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class SmartListViewHolder extends RecyclerView.ViewHolder {
     public ItemSmartlistBinding binding;
     public ItemSmartlistHeaderBinding headerBinding;
 
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     public SmartListViewHolder(@NonNull ItemSmartlistBinding b) {
         super(b.getRoot());
@@ -95,11 +96,12 @@ public class SmartListViewHolder extends RecyclerView.ViewHolder {
                 binding.convLastItem.setTypeface(null, Typeface.NORMAL);
             }
 
-            binding.photo.setImageDrawable(
-                    new AvatarDrawable.Builder()
-                            .withContact(smartListViewModel.getContact())
-                            .withCircleCrop(true)
-                            .build(binding.photo.getContext()));
+            binding.photo.setImageDrawable(new AvatarDrawable.Builder()
+                    .withContacts(smartListViewModel.getContact())
+                    .withCircleCrop(true)
+                    .withPresence(smartListViewModel.showPresence())
+                    .withCheck(smartListViewModel.isChecked())
+                    .build(binding.photo.getContext()));
         } else if (headerBinding != null) {
             headerBinding.headerTitle.setText(smartListViewModel.getHeaderTitle() == SmartListViewModel.Title.Conversations
                     ? R.string.navigation_item_conversation : R.string.search_results_public_directory);

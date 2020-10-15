@@ -370,10 +370,11 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 .subscribe(account -> startConversation(account.getAccountID(), new cx.ring.model.Uri(conversationId))));
     }
     public void startConversation(String accountId, cx.ring.model.Uri conversationId) {
+        Log.w(TAG, "startConversation " + accountId + " " + conversationId);
         if (!DeviceUtils.isTablet(this)) {
-            startActivity(new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, conversationId.toString()), this, ConversationActivity.class));
+            startActivity(new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, conversationId), this, ConversationActivity.class));
         } else {
-            startConversationTablet(ConversationPath.toBundle(accountId, conversationId.toString()));
+            startConversationTablet(ConversationPath.toBundle(accountId, conversationId));
         }
     }
 

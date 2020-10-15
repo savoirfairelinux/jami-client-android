@@ -30,6 +30,10 @@ import java.io.UnsupportedEncodingException;
 import java.net.SocketException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -364,12 +368,27 @@ public class AccountService {
                 account.setVolatileDetails(volatileAccountDetails);
             }
 
-
             if (account.isSip()) {
                 hasSip = true;
             } else if (account.isJami()) {
                 hasJami = true;
                 boolean enabled = account.isEnabled();
+                List<String> conversations = Ringservice.getConversations(account.getAccountID());
+                for (String conversationId : conversations) {
+                    Conversation conversation = account.getSwarm(conversationId);
+                    for (Map<String, String> member : Ringservice.getConversationMembers(accountId, conversationId)) {
+                        for (Map.Entry<String, String> minfo : member.entrySet()) {
+                            Log.w(TAG, accountId + " " + conversationId + " member " + minfo.getKey() + " -> " + minfo.getValue());
+                        }
+                        conversation.addContact(account.getContactFromCache(member.get("uri")));
+                    }
+
+                    //account.addSwarmConversation(conversationId, members);
+                }
+                mExecutor.execute(() -> {
+                    for (String conversationId : conversations)
+                        Ringservice.loadConversationMessages(accountId, conversationId, "", 2);
+                });
 
                 account.setDevices(Ringservice.getKnownRingDevices(accountId).toNative());
                 account.setContacts(Ringservice.getContacts(accountId).toNative());
@@ -387,6 +406,7 @@ public class AccountService {
                     if (enabled)
                         Ringservice.lookupAddress(accountId, "", request.getContactId());
                 }
+
                 if (enabled) {
                     for (CallContact contact : account.getContacts().values()) {
                         if (!contact.isUsernameLoaded())
@@ -407,7 +427,7 @@ public class AccountService {
         }
 
         // migration to multi accounts
-        mHistoryService.migrateDatabase(accountIds);
+        /*mHistoryService.migrateDatabase(accountIds);
         mHistoryService.getMigrationStatus().firstOrError().subscribe(migrationStatus -> {
             if (migrationStatus == HistoryService.MigrationStatus.SUCCESSFUL) {
                 mVCardService.migrateProfiles(accountIds);
@@ -420,7 +440,7 @@ public class AccountService {
                 }
                 mVCardService.deleteLegacyProfiles();
             }
-        }, e -> Log.e(TAG, "Error completing profile migration", e));
+        }, e -> Log.e(TAG, "Error completing profile migration", e));*/
 
         accountsSubject.onNext(newAccounts);
     }
@@ -636,6 +656,30 @@ public class AccountService {
 
     public void setMessageDisplayed(String accountId, String contactId, String messageId) {
         mExecutor.execute(() -> Ringservice.setMessageDisplayed(accountId, contactId, messageId, 3));
+    }
+
+    public Single<Conversation> startConversation(String accountId, Collection<String> initialMembers) {
+        Account account = getAccount(accountId);
+        return Single.fromCallable(() -> {
+            String id = Ringservice.startConversation(accountId);
+            Conversation conversation = new Conversation(accountId, new Uri(Uri.SWARM_URI_SCHEME, id));
+            for (String member : initialMembers) {
+                Ringservice.addConversationMember(accountId, id, member);
+                conversation.addContact(account.getContactFromCache(member));
+            }
+            account.conversationStarted(conversation);
+            Ringservice.loadConversationMessages(accountId, id, id, 2);
+            Log.w(TAG, "startConversation end " + conversation.getContacts());
+            return conversation;
+        }).subscribeOn(Schedulers.from(mExecutor));
+    }
+
+    public void loadConversationHistory(String accountId, Uri conversationUri, String root, long n) {
+        Ringservice.loadConversationMessages(accountId, conversationUri.getRawRingId(), root, n);
+    }
+
+    public void sendConversationMessage(String accountId, String conversationId, String txt) {
+        mExecutor.execute(() -> Ringservice.sendMessage(accountId, conversationId, txt, ""));
     }
 
     /**
@@ -1470,6 +1514,68 @@ public class AccountService {
             }
         }
         searchResultSubject.onNext(r);
+    }
+
+    private void onSwarmInteraction(Conversation conversation, Map<String, String> message) {
+        String id = message.get("id");
+        List<String> parents = Arrays.asList(message.get("parents").split(","));
+        if (parents.size() == 1 && parents.get(0).isEmpty())
+            parents = Collections.emptyList();
+        String type = message.get("type");
+        if (StringUtils.isEmpty(type))
+            return;
+        String author = message.get("author");
+        CallContact contact = conversation.findContact(new Uri(author));
+        if (contact == null) {
+            Log.w(TAG, "Can't find contact in conversation: " + author);
+            return;
+        }
+        long timestamp = Long.parseLong(message.get("timestamp")) * 1000;
+        Interaction interaction;
+        if (type.equals("member")) {
+            contact.setAddedDate(new Date(timestamp));
+            interaction = new ContactEvent(contact);
+        } else if (type.equals("text/plain")) {
+            TextMessage txt = new TextMessage(author, conversation.getAccountId(), timestamp, conversation, message.get("body"));
+            txt.setContact(contact);
+            interaction = txt;
+        } else {
+            Log.w(TAG, "ConversationCallback: unknown type  " + type);
+            return;
+        }
+        interaction.setSwarmInfo(id, parents);
+        conversation.addSwarmElement(interaction);
+    }
+
+    public void conversationLoaded(String accountId, String conversationId, List<Map<String, String>> messages) {
+        try {
+            Log.w(TAG, "ConversationCallback: conversationLoaded " + accountId + "/" + conversationId + " " + messages.size());
+            Account account = getAccount(accountId);
+            Conversation conversation = account.getSwarm(conversationId);
+            for (Map<String, String> message : messages) {
+                onSwarmInteraction(conversation, message);
+            }
+            account.conversationChanged();
+        } catch (Exception e) {
+            Log.e(TAG, "Exception loading message", e);
+        }
+    }
+
+    public void conversationReady(String accountId, String conversationId) {
+        Log.w(TAG, "ConversationCallback: conversationReady " + accountId + "/" + conversationId);
+        Account account = getAccount(accountId);
+        Conversation conversation = account.getSwarm(conversationId);
+    }
+
+    public void conversationRequestReceived(String accountId, String conversationId, Map<String, String> metadata) {
+        Log.w(TAG, "ConversationCallback: conversationRequestReceived " + accountId + "/" + conversationId + " " + metadata.size());
+    }
+
+    public void messageReceived(String accountId, String conversationId, Map<String, String> message) {
+        Log.w(TAG, "ConversationCallback: messageReceived " + accountId + "/" + conversationId + " " + message.size());
+        Account account = getAccount(accountId);
+        Conversation conversation = account.getSwarm(conversationId);
+        onSwarmInteraction(conversation, message);
     }
 
     public DataTransferError sendFile(final DataTransfer dataTransfer, File file) {
