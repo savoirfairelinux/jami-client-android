@@ -100,18 +100,6 @@ public class SmartListViewModel
         showPresence = presence;
         title = Title.None;
     }
-    public SmartListViewModel(String accountId, AccountService.User user) {
-        contactName = user.firstName + " " + user.lastName;
-        uri = new Uri(user.uri);
-        this.accountId = accountId;
-        this.contact = null;
-        this.uuid = user.username;
-        showPresence = false;
-        hasUnreadTextMessage = false;
-        lastEvent = null;
-        picture_b64 = user.picture_b64;
-        title = Title.None;
-    }
     public SmartListViewModel(Conversation conversation, boolean presence) {
         this(conversation, Collections.singletonList(conversation.getContact()), presence);
     }
