@@ -227,29 +227,12 @@ public class AccountService {
         public String address;
         public int state;
     }
-    public static class User {
-        public String uri;
-        public String username;
-        public String firstName;
-        public String lastName;
-        public String organization;
-        public String picture_b64;
-
-        public User(Map<String, String> m) {
-            uri = m.get("uri");
-            username = m.get("username");
-            firstName = m.get("firstName");
-            lastName = m.get("lastName");
-            organization = m.get("organization");
-            picture_b64 = m.get("profilePicture");
-        }
-    }
     public static class UserSearchResult {
-        private String accountId;
-        private String query;
+        private final String accountId;
+        private final String query;
 
         public int state;
-        public List<User> results;
+        public List<CallContact> results;
 
         public UserSearchResult(String account, String query) {
             accountId = account;
@@ -266,8 +249,8 @@ public class AccountService {
 
         public List<Observable<SmartListViewModel>> getResultsViewModels() {
             List<Observable<SmartListViewModel>> vms = new ArrayList<>(results.size());
-            for (User user : results) {
-                vms.add(Observable.just(new SmartListViewModel(accountId, user)));
+            for (CallContact user : results) {
+                vms.add(Observable.just(new SmartListViewModel(accountId, user, null)));
             }
             return vms;
         }
@@ -1459,11 +1442,21 @@ public class AccountService {
     }
 
     public void userSearchEnded(String accountId, int state, String query, ArrayList<Map<String, String>> results) {
+        Account account = getAccount(accountId);
         UserSearchResult r = new UserSearchResult(accountId, query);
         r.state = state;
-        r.results = new ArrayList(results.size());//results.stream().map(item -> new User(item)).collect(Collectors.toList());
+        r.results = new ArrayList<>(results.size());//results.stream().map(item -> new User(item)).collect(Collectors.toList());
         for (Map<String, String> m : results) {
-            r.results.add(new User(m));
+            String uri = m.get("uri");
+            String username = m.get("username");
+            String firstName = m.get("firstName");
+            String lastName = m.get("lastName");
+            //String organization = m.get("organization");
+            String picture_b64 = m.get("profilePicture");
+            CallContact contact = account.getContactFromCache(uri);
+            contact.setUsername(username);
+            contact.setProfile(firstName + " " + lastName, picture_b64);
+            r.results.add(contact);
         }
         searchResultSubject.onNext(r);
     }
