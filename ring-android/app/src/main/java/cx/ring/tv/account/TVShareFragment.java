@@ -80,8 +80,9 @@ public class TVShareFragment extends BaseSupportFragment<SharePresenter> impleme
         if (qrCodeData == null) {
             binding.qrImage.setVisibility(View.INVISIBLE);
         } else {
-            Bitmap bitmap = Bitmap.createBitmap(qrCodeData.getWidth(), qrCodeData.getHeight(), Bitmap.Config.ARGB_8888);
-            bitmap.setPixels(qrCodeData.getData(), 0, qrCodeData.getWidth(), 0, 0, qrCodeData.getWidth(), qrCodeData.getHeight());
+            int pad = 56;
+            Bitmap bitmap = Bitmap.createBitmap(qrCodeData.getWidth() + (2 * pad), qrCodeData.getHeight() + (2 * pad), Bitmap.Config.ARGB_8888);
+            bitmap.setPixels(qrCodeData.getData(), 0, qrCodeData.getWidth(), pad, pad, qrCodeData.getWidth(), qrCodeData.getHeight());
             binding.qrImage.setImageBitmap(bitmap);
             binding.shareQrInstruction.setText(R.string.share_message);
             binding.qrImage.setVisibility(View.VISIBLE);

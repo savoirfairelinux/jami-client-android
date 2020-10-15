@@ -374,9 +374,10 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         Log.w(TAG, "prepareAccountQr " + accountId);
         if (TextUtils.isEmpty(accountId))
             return null;
+        int pad = 16;
         QRCodeUtils.QRCodeData qrCodeData = QRCodeUtils.encodeStringAsQRCodeData(accountId, 0X00000000, 0xFFFFFFFF);
-        Bitmap bitmap = Bitmap.createBitmap(qrCodeData.getWidth(), qrCodeData.getHeight(), Bitmap.Config.ARGB_8888);
-        bitmap.setPixels(qrCodeData.getData(), 0, qrCodeData.getWidth(), 0, 0, qrCodeData.getWidth(), qrCodeData.getHeight());
+        Bitmap bitmap = Bitmap.createBitmap(qrCodeData.getWidth() + 2 * pad, qrCodeData.getHeight() + 2 * pad, Bitmap.Config.ARGB_8888);
+        bitmap.setPixels(qrCodeData.getData(), 0, qrCodeData.getWidth(), pad, pad, qrCodeData.getWidth(), qrCodeData.getHeight());
         return new BitmapDrawable(context.getResources(), bitmap);
     }
 

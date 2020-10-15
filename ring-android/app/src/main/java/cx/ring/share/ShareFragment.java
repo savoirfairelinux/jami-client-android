@@ -82,7 +82,7 @@ public class ShareFragment extends BaseSupportFragment<SharePresenter> implement
             return;
 
         final QRCodeUtils.QRCodeData qrCodeData = viewModel.getAccountQRCodeData(
-                getResources().getColor(R.color.colorPrimary), getResources().getColor(R.color.transparent));
+                getResources().getColor(R.color.color_primary_dark), getResources().getColor(R.color.transparent));
         if (qrCodeData == null) {
             binding.qrImage.setVisibility(View.INVISIBLE);
             binding.shareInstruction.setText(R.string.share_message_no_account);

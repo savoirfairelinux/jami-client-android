@@ -32,8 +32,8 @@ public class QRCodeUtils {
 
     private final static String TAG = QRCodeUtils.class.getName();
 
-    private final static int QRCODE_IMAGE_SIZE = 300;
-    private final static int QRCODE_IMAGE_PADDING = 0;
+    private final static int QRCODE_IMAGE_SIZE = 256;
+    private final static int QRCODE_IMAGE_PADDING = 1;
 
     /**
      * @param input uri to be displayed
@@ -73,9 +73,9 @@ public class QRCodeUtils {
     }
 
     public static class QRCodeData {
-        private int[] mData;
-        private int mWidth;
-        private int mHeight;
+        private final int[] mData;
+        private final int mWidth;
+        private final int mHeight;
 
         public QRCodeData(int[] data, int width, int height) {
             mData = data;
