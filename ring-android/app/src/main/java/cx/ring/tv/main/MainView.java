@@ -23,18 +23,18 @@ import java.util.List;
 
 import cx.ring.model.Account;
 import cx.ring.navigation.HomeNavigationViewModel;
-import cx.ring.tv.model.TVListViewModel;
+import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.model.Error;
 
 public interface MainView {
 
     void showLoading(boolean show);
 
-    void refreshContact(int index, TVListViewModel contact);
+    void refreshContact(int index, SmartListViewModel contact);
 
-    void showContacts(List<TVListViewModel> contacts);
+    void showContacts(List<SmartListViewModel> contacts);
 
-    void showContactRequests(List<TVListViewModel> contactRequests);
+    void showContactRequests(List<SmartListViewModel> contactRequests);
 
     void callContact(String accountID, String ringID);
 

@@ -64,7 +64,7 @@ public class HomeActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mBackgroundManager.setDrawable(getResources().getDrawable(R.drawable.tv_background));
+        mBackgroundManager.setDrawable(getDrawable(R.drawable.tv_background));
         mDisposable.clear();
         mDisposable.add(mAccountService.getObservableAccountList()
                 .observeOn(AndroidSchedulers.mainThread())

@@ -32,6 +32,7 @@ import com.bumptech.glide.request.transition.Transition;
 import cx.ring.R;
 import cx.ring.contacts.AvatarFactory;
 import cx.ring.model.CallContact;
+import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.tv.cards.AbstractCardPresenter;
 import cx.ring.tv.cards.Card;
 import cx.ring.views.AvatarDrawable;
@@ -53,25 +54,27 @@ public class ContactCardPresenter extends AbstractCardPresenter<ImageCardView> {
     public void onBindViewHolder(Card card, ImageCardView cardView) {
         ContactCard contact = (ContactCard) card;
 
-        CallContact model = contact.getModel().getContact();
-        String username = model.getUsername();
+        SmartListViewModel model = contact.getModel();
+        /*String username = model.getContact().getUsername();
 
         if (username == null) {
-            username = model.getIds().get(0);
+            username = model.getUri().getRawUriString();
         }
 
-        if (username != null && (username.isEmpty() || model.getDisplayName().equals(username))) {
+        if (username != null && (username.isEmpty() || username.equals(model.getContactName()))) {
             cardView.setTitleText(username);
             cardView.setContentText("");
         } else {
-            cardView.setTitleText(model.getDisplayName());
+            cardView.setTitleText(model.getContactName());
             cardView.setContentText(username);
-        }
+        }*/
+        cardView.setTitleText(card.getTitle());
+        cardView.setContentText(card.getDescription());
 
         cardView.setBackgroundColor(cardView.getResources().getColor(R.color.color_primary_dark));
         cardView.setMainImage(
                 new AvatarDrawable.Builder()
-                        .withContact(model)
+                        .withContact(model.getContact())
                         .withPresence(false)
                         .withCircleCrop(false)
                         .build(getContext())

@@ -28,8 +28,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.leanback.widget.Presenter;
 
 import cx.ring.R;
+import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.tv.conversation.TvConversationFragment;
-import cx.ring.tv.model.TVListViewModel;
+import cx.ring.utils.ConversationPath;
 
 public class TVContactDetailPresenter extends Presenter {
 
@@ -42,7 +43,7 @@ public class TVContactDetailPresenter extends Presenter {
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, Object object) {
-        ((CustomViewHolder) viewHolder).bind((TVListViewModel) object);
+        ((CustomViewHolder) viewHolder).bind((SmartListViewModel) object);
     }
 
     @Override
@@ -56,8 +57,8 @@ public class TVContactDetailPresenter extends Presenter {
             super(view);
         }
 
-        void bind(TVListViewModel object) {
-            Fragment fragment = TvConversationFragment.newInstance(object);
+        void bind(SmartListViewModel object) {
+            Fragment fragment = TvConversationFragment.newInstance(ConversationPath.toBundle(object.getAccountId(), object.getUri()));
             FragmentManager fragmentManager = ((TVContactActivity) view.getContext()).getSupportFragmentManager();
 
             fragmentManager.beginTransaction()
