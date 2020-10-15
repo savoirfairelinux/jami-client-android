@@ -30,7 +30,7 @@ import io.reactivex.Single;
 public abstract class VCardService {
 
     public static final int MAX_SIZE_SIP = 256 * 1024;
-    public static final int MAX_SIZE_REQUEST = 64 * 1024;
+    public static final int MAX_SIZE_REQUEST = 32 * 1024;
 
     public abstract Single<VCard> loadSmallVCard(String accountId, int maxSize);
     public abstract Single<VCard> saveVCardProfile(String accountId, String uri, String displayName, String picture);

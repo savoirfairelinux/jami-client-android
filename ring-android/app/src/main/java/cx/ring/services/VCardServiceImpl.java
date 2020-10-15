@@ -70,9 +70,9 @@ public class VCardServiceImpl extends VCardService {
                 .filter( vcard -> !VCardUtils.isEmpty(vcard)).toSingle()
                 .map(vcard -> {
                     if (!vcard.getPhotos().isEmpty()) {
-                        // Reduce photo size to fit in one DHT packet
-                        Bitmap photo = BitmapUtils.bytesToBitmap(vcard.getPhotos().get(0).getData(), maxSize);
-                        //photo = BitmapUtils.reduceBitmap(photo, maxSize);
+                        // Reduce photo to fit in maxSize, assuming JPEG compress with ratio of at least 8
+                        byte[] data = vcard.getPhotos().get(0).getData();
+                        Bitmap photo = BitmapUtils.bytesToBitmap(data, maxSize * 8);
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
                         photo.compress(Bitmap.CompressFormat.JPEG, 88, stream);
                         vcard.removeProperties(Photo.class);
