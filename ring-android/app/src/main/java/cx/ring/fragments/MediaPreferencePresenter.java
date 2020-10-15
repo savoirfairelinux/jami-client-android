@@ -59,11 +59,6 @@ public class MediaPreferencePresenter extends RootPresenter<MediaPreferenceView>
         super.unbindView();
     }
 
-    @Override
-    public void bindView(MediaPreferenceView view) {
-        super.bindView(view);
-    }
-
     void init(String accountId) {
         mAccount = mAccountService.getAccount(accountId);
         mCompositeDisposable.clear();

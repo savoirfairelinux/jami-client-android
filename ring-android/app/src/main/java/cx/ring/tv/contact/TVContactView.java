@@ -22,10 +22,10 @@ package cx.ring.tv.contact;
 
 import cx.ring.model.Uri;
 import cx.ring.mvp.BaseView;
-import cx.ring.tv.model.TVListViewModel;
+import cx.ring.smartlist.SmartListViewModel;
 
 public interface TVContactView extends BaseView {
-    void showContact(TVListViewModel model);
+    void showContact(SmartListViewModel model);
 
     void callContact(String accountID, Uri uri);
 

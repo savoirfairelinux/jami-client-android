@@ -137,26 +137,24 @@ public final class BitmapUtils
     }
 
     public static Bitmap drawableToBitmap(Drawable drawable) {
-        if (drawable == null) {
-            throw new IllegalArgumentException();
-        }
-
-        Bitmap bitmap;
+        return drawableToBitmap(drawable, -1);
+    }
+    public static Bitmap drawableToBitmap(Drawable drawable, int size) {
+        return drawableToBitmap(drawable, size, 0);
+    }
+    public static Bitmap drawableToBitmap(Drawable drawable, int size, int padding) {
         if (drawable instanceof BitmapDrawable) {
-            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
-            if (bitmapDrawable.getBitmap() != null) {
-                return bitmapDrawable.getBitmap();
-            }
+            return ((BitmapDrawable)drawable).getBitmap();
         }
 
-        if (drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
-            bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
-        } else {
-            bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        }
+        int width = drawable.getIntrinsicWidth();
+        width = width > 0 ? width : size;
+        int height = drawable.getIntrinsicHeight();
+        height = height > 0 ? height : size;
 
+        Bitmap bitmap = Bitmap.createBitmap(width + 2*padding, height + 2*padding, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.setBounds(padding, padding, canvas.getWidth()-padding, canvas.getHeight()-padding);
         drawable.draw(canvas);
         return bitmap;
     }

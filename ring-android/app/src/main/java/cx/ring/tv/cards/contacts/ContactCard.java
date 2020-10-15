@@ -19,44 +19,39 @@
  */
 package cx.ring.tv.cards.contacts;
 
-import android.graphics.Bitmap;
-
-import java.util.Arrays;
-
 import cx.ring.model.CallContact;
+import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.tv.cards.Card;
-import cx.ring.tv.model.TVListViewModel;
 
 public class ContactCard extends Card {
-    private TVListViewModel mModel;
-    private Bitmap mPhoto = null;
+    private SmartListViewModel mModel;
 
     public ContactCard(String accountId, CallContact pCallContact, Type type) {
-        mModel =  new TVListViewModel(accountId, pCallContact);
+        mModel =  new SmartListViewModel(accountId, pCallContact, null);
         setId(pCallContact.getId());
         setTitle(pCallContact.getDisplayName());
         setDescription(pCallContact.getRingUsername());
-        if (pCallContact.getPhoto() != null) {
-            mPhoto = (Bitmap) pCallContact.getPhoto();
-        }
         setType(type);
     }
 
-    public ContactCard(TVListViewModel model) {
+    public ContactCard(SmartListViewModel model) {
+        setModel(model);
+    }
+
+    public void setModel(SmartListViewModel model) {
         mModel = model;
         setTitle(mModel.getContact().getDisplayName());
-        setDescription(mModel.getContact().getRingUsername());
-        if (mModel.getContact().getPhoto() != null) {
-            mPhoto = (Bitmap) mModel.getContact().getPhoto();
-        }
-        if (mModel.getContact().getDisplayName().equals(mModel.getContact().getRingUsername())) {
-            if (model.isOnline()) {
+        String username = mModel.getContact().getRingUsername();
+        setDescription(username);
+        boolean isOnline = mModel.getContact().isOnline();
+        if (mModel.getContactName().equals(username)) {
+            if (isOnline) {
                 setType(Type.CONTACT_ONLINE);
             } else {
                 setType(Type.CONTACT);
             }
         } else {
-            if (model.isOnline()) {
+            if (isOnline) {
                 setType(Type.CONTACT_WITH_USERNAME_ONLINE);
             } else {
                 setType(Type.CONTACT_WITH_USERNAME);
@@ -64,30 +59,7 @@ public class ContactCard extends Card {
         }
     }
 
-    public void setModel(TVListViewModel model) {
-        mModel = model;
-
-        setTitle(model.getContact().getDisplayName());
-        setDescription(model.getContact().getRingUsername());
-
-        if (model.isOnline()) {
-            setType(Type.CONTACT_WITH_USERNAME_ONLINE);
-        } else {
-            setType(Type.CONTACT_WITH_USERNAME);
-        }
-
-        if (model.getContact().getPhoto() != null) {
-            mPhoto = (Bitmap) model.getContact().getPhoto();
-        }
-    }
-
-    public TVListViewModel getModel() {
+    public SmartListViewModel getModel() {
         return mModel;
     }
-
-
-    public Bitmap getPhoto() {
-        return mPhoto;
-    }
-
 }

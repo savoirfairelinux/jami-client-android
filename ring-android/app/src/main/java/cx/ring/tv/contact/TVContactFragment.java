@@ -45,10 +45,10 @@ import cx.ring.application.JamiApplication;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.Uri;
 import cx.ring.services.NotificationService;
+import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.tv.call.TVCallActivity;
 import cx.ring.tv.contactrequest.TVContactRequestDetailPresenter;
 import cx.ring.tv.main.BaseDetailFragment;
-import cx.ring.tv.model.TVListViewModel;
 import cx.ring.utils.ConversationPath;
 import cx.ring.views.AvatarDrawable;
 
@@ -67,8 +67,6 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
 
     private boolean isIncomingRequest = false;
     private boolean isOutgoingRequest = false;
-
-    private Uri mSelectedContactRequest;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -90,8 +88,6 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
                     isOutgoingRequest = true;
                     break;
             }
-            mSelectedContactRequest = (Uri) getActivity().getIntent()
-                    .getSerializableExtra(TVContactActivity.CONTACT_REQUEST_URI);
         }
 
         // Override down navigation as we do not use it in this screen
@@ -144,13 +140,13 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
             } else if (action.getId() == ACTION_CLEAR_HISTORY) {
                 presenter.clearHistory();
             } else if (action.getId() == ACTION_ADD_CONTACT) {
-                presenter.onAddContact(mSelectedContactRequest);
+                presenter.onAddContact();
             } else if (action.getId() == ACTION_ACCEPT) {
-                presenter.acceptTrustRequest(mSelectedContactRequest);
+                presenter.acceptTrustRequest();
             } else if (action.getId() == ACTION_REFUSE) {
-                presenter.refuseTrustRequest(mSelectedContactRequest);
+                presenter.refuseTrustRequest();
             } else if (action.getId() == ACTION_BLOCK) {
-                presenter.blockTrustRequest(mSelectedContactRequest);
+                presenter.blockTrustRequest();
             }
         });
 
@@ -161,7 +157,7 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
         setAdapter(mAdapter);
     }
 
-    public void showContact(TVListViewModel model) {
+    public void showContact(SmartListViewModel model) {
         final DetailsOverviewRow row = new DetailsOverviewRow(model);
         AvatarDrawable avatar =
                 new AvatarDrawable.Builder()

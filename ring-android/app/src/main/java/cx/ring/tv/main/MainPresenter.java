@@ -30,7 +30,6 @@ import javax.inject.Named;
 
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Account;
-import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.model.Error;
 import cx.ring.mvp.RootPresenter;
@@ -38,11 +37,9 @@ import cx.ring.navigation.HomeNavigationViewModel;
 import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.services.HardwareService;
-import cx.ring.tv.model.TVListViewModel;
+import cx.ring.smartlist.SmartListViewModel;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
 
 public class MainPresenter extends RootPresenter<MainView> {
 
@@ -50,14 +47,9 @@ public class MainPresenter extends RootPresenter<MainView> {
 
     private final AccountService mAccountService;
     private final ContactService mContactService;
+    private final ConversationFacade mConversationFacade;
     private final HardwareService mHardwareService;
-    private List<TVListViewModel> mTvListViewModels;
-
     private final Scheduler mUiScheduler;
-
-    private final Observable<Account> accountSubject;
-    private final Observable<ArrayList<TVListViewModel>> conversationViews;
-    private final CompositeDisposable mContactDisposable = new CompositeDisposable();
 
     @Inject
     public MainPresenter(AccountService accountService,
@@ -67,103 +59,46 @@ public class MainPresenter extends RootPresenter<MainView> {
                          @Named("UiScheduler") Scheduler uiScheduler) {
         mAccountService = accountService;
         mContactService = contactService;
+        mConversationFacade = conversationFacade;
         mHardwareService = hardwareService;
         mUiScheduler = uiScheduler;
-
-        accountSubject = conversationFacade
-                .getCurrentAccountSubject();
-
-        conversationViews = accountSubject
-                .switchMap(a -> a
-                        .getConversationsSubject()
-                        .map(conversations -> {
-                            ArrayList<TVListViewModel> viewModel = new ArrayList<>(conversations.size());
-                            for (Conversation c : conversations)
-                                viewModel.add(new TVListViewModel(a.getAccountID(), c.getContact()));
-                            return viewModel;
-                        }))
-                .observeOn(mUiScheduler);
     }
 
     @Override
     public void bindView(MainView view) {
         super.bindView(view);
         loadConversations();
-    }
-
-    private void refreshContact(CallContact buddy) {
-        Log.w(TAG, "refreshContact() " + buddy.isOnline());
-
-        for (int i = 0; i < mTvListViewModels.size(); i++) {
-            TVListViewModel viewModel = mTvListViewModels.get(i);
-            CallContact callContact = viewModel.getContact();
-            if (callContact == buddy) {
-                viewModel.setOnline(callContact.isOnline());
-                getView().refreshContact(i, viewModel);
-                break;
-            }
-        }
+        reloadAccountInfos();
     }
 
     private void loadConversations() {
-        mCompositeDisposable.clear();
-        mCompositeDisposable.add(mContactDisposable);
-
         getView().showLoading(true);
 
-        mCompositeDisposable.add(conversationViews
+        mCompositeDisposable.add(mConversationFacade.getSmartList(true)
+                .switchMap(viewModels -> viewModels.isEmpty() ? SmartListViewModel.EMPTY_RESULTS
+                        : Observable.combineLatest(viewModels, obs -> {
+                    List<SmartListViewModel> vms = new ArrayList<>(obs.length);
+                    for (Object ob : obs)
+                        vms.add((SmartListViewModel) ob);
+                    return vms;
+                }))
+                //.throttleLatest(150, TimeUnit.MILLISECONDS, mUiScheduler)
+                .observeOn(mUiScheduler)
                 .subscribe(viewModels -> {
-                    Log.w(TAG, "loadConversations() update");
                     final MainView view = getView();
                     view.showLoading(false);
-                    mTvListViewModels = viewModels;
-
-                    CompositeDisposable cd = new CompositeDisposable();
-                    for (TVListViewModel vm : viewModels) {
-                        cd.add(mContactService.observeContact(vm.getAccountId(), vm.getContact())
-                                .subscribeOn(Schedulers.computation())
-                                .observeOn(mUiScheduler)
-                                .subscribe(this::refreshContact, e -> Log.d(TAG, "error loading contact", e)));
-                    }
-                    mContactDisposable.clear();
-                    mContactDisposable.add(cd);
-
-                    getView().showContacts(viewModels);
-                }, e -> {
-                    getView().showLoading(false);
-                    Log.d(TAG, "loadConversations conversationViews onError", e);
-                }));
-
-        Log.w(TAG, "loadConversations() subscribe");
-        mCompositeDisposable.add(accountSubject
-                .switchMap(a -> a
-                        .getConversationSubject()
-                        .map(c -> new TVListViewModel(a.getAccountID(), c.getContact())))
-                .observeOn(mUiScheduler)
-                .subscribe(vm -> {
-                    Log.d(TAG, "getConversationSubject " + vm);
-                    if (mTvListViewModels == null)
-                        return;
-                    for (int i=0; i<mTvListViewModels.size(); i++) {
-                        if (mTvListViewModels.get(i).getContact() == vm.getContact()) {
-                            getView().refreshContact(i, vm);
-                            break;
-                        }
-                    }
-                }, e-> {
-                    Log.d(TAG, "loadConversations getConversationSubject onError", e);
-                }));
+                    view.showContacts(viewModels);
+                }, e -> Log.w(TAG, "showConversations error ", e)));
 
         Log.d(TAG, "getPendingSubject subscribe");
-        mCompositeDisposable.add(accountSubject
-                .switchMap(a -> a
-                        .getPendingSubject()
+        mCompositeDisposable.add(mConversationFacade.getCurrentAccountSubject()
+                .switchMap(a -> a.getPendingSubject()
                         .map(pending -> {
                             Log.d(TAG, "getPendingSubject " + pending.size());
-                            ArrayList<TVListViewModel> viewmodel = new ArrayList<>(pending.size());
+                            ArrayList<SmartListViewModel> viewmodel = new ArrayList<>(pending.size());
                             for (Conversation c : pending) {
                                 mContactService.loadContactData(c.getContact(), c.getAccountId()).subscribe(() -> {}, e -> Log.e(TAG, "Can't load contact data"));
-                                viewmodel.add(new TVListViewModel(a.getAccountID(), c.getContact()));
+                                viewmodel.add(new SmartListViewModel(c.getAccountId(), c.getContact(), null));
                             }
                             return viewmodel;
                         }))
@@ -173,15 +108,14 @@ public class MainPresenter extends RootPresenter<MainView> {
 
     }
 
-    public void contactClicked(TVListViewModel item) {
+    public void contactClicked(SmartListViewModel item) {
         if (!mHardwareService.isVideoAvailable() && !mHardwareService.hasMicrophone()) {
             getView().displayErrorToast(Error.NO_INPUT);
             return;
         }
 
-        Account account = mAccountService.getCurrentAccount();
-        String ringID = item.getContact().getPrimaryNumber();
-        getView().callContact(account.getAccountID(), ringID);
+        Account account = mAccountService.getAccount(item.getAccountId());
+        getView().callContact(account.getAccountID(), item.getUri().getRawUriString());
     }
 
     public void reloadAccountInfos() {

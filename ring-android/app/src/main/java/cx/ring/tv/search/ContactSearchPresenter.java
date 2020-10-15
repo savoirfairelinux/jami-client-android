@@ -25,17 +25,14 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import cx.ring.daemon.Blob;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
-import cx.ring.model.Error;
 import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.VCardService;
-import cx.ring.tv.model.TVListViewModel;
-import cx.ring.utils.VCardUtils;
+import cx.ring.smartlist.SmartListViewModel;
 import io.reactivex.Scheduler;
 import io.reactivex.subjects.PublishSubject;
 
@@ -127,7 +124,7 @@ public class ContactSearchPresenter extends RootPresenter<ContactSearchView> {
         }
     }
 
-    public void contactClicked(TVListViewModel model) {
+    public void contactClicked(SmartListViewModel model) {
         getView().displayContactDetails(model);
     }
 }

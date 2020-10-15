@@ -31,7 +31,7 @@ import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.VCardService;
-import cx.ring.tv.model.TVListViewModel;
+import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.VCardUtils;
 import io.reactivex.Scheduler;
@@ -59,11 +59,11 @@ public class TVContactPresenter extends RootPresenter<TVContactView> {
 
     public void setContact(ConversationPath path) {
         mAccountId = path.getAccountId();
-        mUri = new Uri(path.getContactId());
+        mUri = path.getConversationUri();
         mCompositeDisposable.clear();
         mCompositeDisposable.add(mConversationService
                 .getAccountSubject(path.getAccountId())
-                .map(a -> new TVListViewModel(a.getAccountID(), a.getByUri(mUri).getContact()))
+                .map(a -> new SmartListViewModel(a.getByUri(mUri), true))
                 .observeOn(mUiScheduler)
                 .subscribe(c -> getView().showContact(c)));
     }
@@ -92,34 +92,30 @@ public class TVContactPresenter extends RootPresenter<TVContactView> {
         mConversationService.clearHistory(mAccountId, mUri).subscribe();
     }
 
-    public void onAddContact(Uri viewModel) {
-        String accountId = mAccountService.getCurrentAccount().getAccountID();
-        sendTrustRequest(accountId, viewModel.getRawRingId());
+    public void onAddContact() {
+        sendTrustRequest(mAccountId, mUri);
         getView().switchToConversationView();
     }
 
-    private void sendTrustRequest(String accountId, String ringId) {
+    private void sendTrustRequest(String accountId, Uri conversationUri) {
         mVCardService.loadSmallVCard(accountId, VCardService.MAX_SIZE_REQUEST)
-                .subscribe(vCard -> mAccountService.sendTrustRequest(accountId, ringId, Blob.fromString(VCardUtils.vcardToString(vCard))),
-                        e -> mAccountService.sendTrustRequest(accountId, ringId, null));
+                .subscribe(vCard -> mAccountService.sendTrustRequest(accountId, conversationUri.getRawRingId(), Blob.fromString(VCardUtils.vcardToString(vCard))),
+                        e -> mAccountService.sendTrustRequest(accountId, conversationUri.getRawRingId(), null));
     }
 
-    public void acceptTrustRequest(Uri viewModel) {
-        String accountId = mAccountService.getCurrentAccount().getAccountID();
-        mConversationService.acceptRequest(accountId, viewModel);
+    public void acceptTrustRequest() {
+        mConversationService.acceptRequest(mAccountId, mUri);
         getView().switchToConversationView();
     }
 
-    public void refuseTrustRequest(Uri viewModel) {
-        String accountId = mAccountService.getCurrentAccount().getAccountID();
-        mConversationService.discardRequest(accountId, viewModel);
+    public void refuseTrustRequest() {
+        mConversationService.discardRequest(mAccountId, mUri);
         getView().finishView();
     }
 
-    public void blockTrustRequest(Uri viewModel) {
-        String accountId = mAccountService.getCurrentAccount().getAccountID();
-        mConversationService.discardRequest(accountId, viewModel);
-        mAccountService.removeContact(accountId, viewModel.getRawRingId(), true);
+    public void blockTrustRequest() {
+        mConversationService.discardRequest(mAccountId, mUri);
+        mAccountService.removeContact(mAccountId, mUri.getRawRingId(), true);
         getView().finishView();
     }
 

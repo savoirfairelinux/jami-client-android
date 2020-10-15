@@ -21,16 +21,16 @@ package cx.ring.tv.contactrequest;
 
 import androidx.leanback.widget.AbstractDetailsDescriptionPresenter;
 
-import cx.ring.tv.model.TVListViewModel;
+import cx.ring.smartlist.SmartListViewModel;
 
 public class TVContactRequestDetailPresenter extends AbstractDetailsDescriptionPresenter {
 
     @Override
     protected void onBindDescription(ViewHolder viewHolder, Object item) {
-        TVListViewModel viewModel = (TVListViewModel) item;
+        SmartListViewModel viewModel = (SmartListViewModel) item;
         if (viewModel != null) {
             String id = viewModel.getContact().getRingUsername();
-            String displayName = viewModel.getContact().getDisplayName();
+            String displayName = viewModel.getContactName();
             viewHolder.getTitle().setText(displayName);
             if (!displayName.equals(id))
                 viewHolder.getSubtitle().setText(id);

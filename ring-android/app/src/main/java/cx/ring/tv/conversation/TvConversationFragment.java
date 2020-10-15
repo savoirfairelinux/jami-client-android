@@ -75,7 +75,6 @@ import cx.ring.model.Error;
 import cx.ring.model.Interaction;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.tv.camera.CustomCameraActivity;
-import cx.ring.tv.model.TVListViewModel;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.ConversationPath;
@@ -99,34 +98,31 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     private static final int DIALOG_WIDTH = 900;
     private static final int DIALOG_HEIGHT = 400;
 
-    private TVListViewModel mTvListViewModel;
+    private ConversationPath mConversationPath;
 
     private int mSelectedPosition;
 
+    private static final String[] permissions = { Manifest.permission.RECORD_AUDIO };
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private static File fileName = null;
 
     private MediaRecorder recorder = null;
     private MediaPlayer player = null;
 
-    private String[] permissions = { Manifest.permission.RECORD_AUDIO };
-
     boolean mStartRecording = true;
     boolean mStartPlaying = true;
 
     private TvConversationAdapter mAdapter = null;
     private AvatarDrawable mConversationAvatar;
-    private Map<String, AvatarDrawable> mParticipantAvatars = new HashMap<>();
+    private final Map<String, AvatarDrawable> mParticipantAvatars = new HashMap<>();
 
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     private FragConversationTvBinding binding;
 
     private String mCurrentFileAbsolutePath = null;
 
-    public static TvConversationFragment newInstance(TVListViewModel param) {
+    public static TvConversationFragment newInstance(Bundle args) {
         TvConversationFragment fragment = new TvConversationFragment();
-        Bundle args = new Bundle();
-        args.putParcelable(ARG_MODEL, param);
         fragment.setArguments(args);
         return fragment;
     }
@@ -135,7 +131,7 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mTvListViewModel = getArguments().getParcelable(ARG_MODEL);
+            mConversationPath = ConversationPath.fromBundle(getArguments());
         }
         String audiofile = savedInstanceState == null ? null : savedInstanceState.getString(KEY_AUDIOFILE);
         if (audiofile != null) {
@@ -182,8 +178,8 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ConversationPath path = ConversationPath.fromIntent(requireActivity().getIntent());
-        presenter.init(new cx.ring.model.Uri(path.getContactId()), path.getAccountId());
+        //ConversationPath path = ConversationPath.fromIntent(requireActivity().getIntent());
+        presenter.init(mConversationPath.getConversationUri(), mConversationPath.getAccountId());
         mAdapter = new TvConversationAdapter(this, presenter);
 
         binding.buttonText.setOnClickListener(v -> displaySpeechRecognizer());
@@ -212,17 +208,6 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
             TransitionManager.beginDelayedTransition(binding.videoContainer);
             binding.textVideo.setVisibility(hasFocus ? View.VISIBLE : View.GONE);
         });
-
-        CallContact contact = mTvListViewModel.getContact();
-        if (contact != null) {
-            String id = contact.getRingUsername();
-            String displayName = contact.getDisplayName();
-            binding.title.setText(displayName);
-            if (TextUtils.isEmpty(displayName) || !displayName.equals(id))
-                binding.subtitle.setText(id);
-            else
-                binding.subtitle.setVisibility(View.GONE);
-        }
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setReverseLayout(true);
@@ -629,6 +614,13 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
                 .flatMapObservable(d -> contact.getUpdatesSubject())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(c -> {
+                    String id = c.getRingUsername();
+                    String displayName = c.getDisplayName();
+                    binding.title.setText(displayName);
+                    if (TextUtils.isEmpty(displayName) || !displayName.equals(id))
+                        binding.subtitle.setText(id);
+                    else
+                        binding.subtitle.setVisibility(View.GONE);
                     mConversationAvatar.update(c);
                     String uri = contact.getPrimaryNumber();
                     AvatarDrawable a = mParticipantAvatars.get(uri);

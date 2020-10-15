@@ -39,7 +39,6 @@ import cx.ring.adapters.SmartListAdapter;
 import cx.ring.application.JamiApplication;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.fragments.CallFragment;
-import cx.ring.model.Account;
 import cx.ring.model.Conference;
 import cx.ring.model.SipCall;
 import cx.ring.services.CallService;
