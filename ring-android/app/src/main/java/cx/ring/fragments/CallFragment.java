@@ -791,7 +791,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             if (resultCode == Activity.RESULT_OK && data != null) {
                 ConversationPath path = ConversationPath.fromUri(data.getData());
                 if (path != null) {
-                    presenter.addConferenceParticipant(path.getAccountId(), path.getContactId());
+                    presenter.addConferenceParticipant(path.getAccountId(), path.getConversationId());
                 }
             }
         } else if (requestCode == REQUEST_CODE_SCREEN_SHARE) {

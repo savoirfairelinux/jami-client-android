@@ -38,6 +38,7 @@ import androidx.core.content.ContextCompat;
 import cx.ring.R;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
+import cx.ring.model.Conversation;
 import cx.ring.services.VCardServiceImpl;
 import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.HashUtils;
@@ -47,10 +48,13 @@ import android.graphics.drawable.VectorDrawable;
 import android.text.TextUtils;
 import android.util.TypedValue;
 
+import java.util.List;
+
 public class AvatarDrawable extends Drawable {
     private static final int SIZE_AB = 36;
     private static final float DEFAULT_TEXT_SIZE_PERCENTAGE = 0.5f;
     private static final int PLACEHOLDER_ICON = R.drawable.baseline_account_crop_24;
+    private static final int CHECKED_ICON = R.drawable.baseline_check_circle_24;
     private static final int PRESENCE_COLOR = R.color.green_A700;
 
     private static final int[] contactColors = {
@@ -74,6 +78,7 @@ public class AvatarDrawable extends Drawable {
     private Bitmap workspace;
     private Bitmap bitmap;
     private VectorDrawable placeholder;
+    private VectorDrawable checkedIcon;
     private final RectF backgroundBounds = new RectF();
     private String avatarText;
     private float textStartXPoint;
@@ -83,8 +88,9 @@ public class AvatarDrawable extends Drawable {
     private final Paint clipPaint = new Paint();
     private final Paint textPaint = new Paint();
     private static final Paint drawPaint = new Paint();
-    private Paint presenceFillPaint = new Paint();
-    private Paint presenceStrokePaint = new Paint();
+    private final Paint presenceFillPaint;
+    private final Paint presenceStrokePaint;
+    private final Paint checkedPaint;
     static {
         drawPaint.setAntiAlias(true);
         drawPaint.setFilterBitmap(true);
@@ -92,6 +98,7 @@ public class AvatarDrawable extends Drawable {
 
     private final boolean cropCircle;
     private boolean isOnline;
+    private boolean isChecked;
     private boolean showPresence;
 
     public static class Builder {
@@ -102,6 +109,7 @@ public class AvatarDrawable extends Drawable {
         private boolean circleCrop = false;
         private boolean isOnline = false;
         private boolean showPresence = true;
+        private boolean isChecked = false;
 
         public Builder() {}
 
@@ -129,23 +137,37 @@ public class AvatarDrawable extends Drawable {
             this.showPresence = showPresence;
             return this;
         }
-
-        public Builder withNameData(String profileName, String username) {
-            withName(TextUtils.isEmpty(profileName) ? username : profileName);
+        public Builder withCheck(boolean checked) {
+            this.isChecked = checked;
             return this;
         }
+
+        public Builder withNameData(String profileName, String username) {
+            return withName(TextUtils.isEmpty(profileName) ? username : profileName);
+        }
         public Builder withContact(CallContact contact){
-            withPhoto((Bitmap)contact.getPhoto());
-            withId(contact.getPrimaryNumber());
-            withOnlineState(contact.isOnline());
-            withNameData(contact.getProfileName(), contact.getUsername());
-            return this;
+            return withPhoto((Bitmap)contact.getPhoto())
+                    .withId(contact.getPrimaryNumber())
+                    .withOnlineState(contact.isOnline())
+                    .withNameData(contact.getProfileName(), contact.getUsername());
+        }
+
+        public Builder withContacts(List<CallContact> contacts) {
+            if (contacts.size() == 1) {
+                return withContact(contacts.get(0));
+            } else {
+                return withName("G");
+            }
+        }
+        public Builder withConversation(Conversation conversation) {
+            return withContacts(conversation.getContacts());
         }
 
         public AvatarDrawable build(Context context) {
             AvatarDrawable avatarDrawable = new AvatarDrawable(
                     context, photo, name, id, circleCrop);
             avatarDrawable.setOnline(isOnline);
+            avatarDrawable.setChecked(isChecked);
             avatarDrawable.showPresence = this.showPresence;
             return avatarDrawable;
         }
@@ -181,8 +203,12 @@ public class AvatarDrawable extends Drawable {
         bitmap = photo;
         update = true;
     }
-    public void setOnline(boolean isOnline) {
-        this.isOnline = isOnline;
+    public void setOnline(boolean online) {
+        isOnline = online;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 
     private AvatarDrawable(Context context, Bitmap photo, String name, String id, boolean crop) {
@@ -203,21 +229,26 @@ public class AvatarDrawable extends Drawable {
                 textPaint.setTypeface(Typeface.SANS_SERIF);
             }
         }
-
-        int presenceColor = ContextCompat.getColor(context, PRESENCE_COLOR);
-        presenceFillPaint.setColor(presenceColor);
+        presenceFillPaint = new Paint();
+        presenceFillPaint.setColor(ContextCompat.getColor(context, PRESENCE_COLOR));
         presenceFillPaint.setStyle(Paint.Style.FILL);
         presenceFillPaint.setAntiAlias(true);
 
-        int backgroundColor;
-        if (DeviceUtils.isTv(context)) {
-            backgroundColor = ContextCompat.getColor(context, R.color.grey_900);
-        } else {
-            backgroundColor = ContextCompat.getColor(context, R.color.background);
-        }
-        presenceStrokePaint.setColor(backgroundColor);
+        presenceFillPaint.setColor(ContextCompat.getColor(context, PRESENCE_COLOR));
+        presenceFillPaint.setStyle(Paint.Style.FILL);
+        presenceFillPaint.setAntiAlias(true);
+
+        presenceStrokePaint = new Paint();
+        presenceStrokePaint.setColor(ContextCompat.getColor(context, DeviceUtils.isTv(context) ? R.color.grey_900 : R.color.background));
         presenceStrokePaint.setStyle(Paint.Style.STROKE);
         presenceStrokePaint.setAntiAlias(true);
+
+        checkedIcon = (VectorDrawable) context.getDrawable(CHECKED_ICON);
+        checkedIcon.setTint(ContextCompat.getColor(context, R.color.colorPrimary));
+        checkedPaint = new Paint();
+        checkedPaint.setColor(ContextCompat.getColor(context, R.color.background));
+        checkedPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        checkedPaint.setAntiAlias(true);
 
         clipPaint.setAntiAlias(true);
         textPaint.setAntiAlias(true);
@@ -234,9 +265,11 @@ public class AvatarDrawable extends Drawable {
         avatarText = other.avatarText;
 
         isOnline = other.isOnline;
+        isChecked = other.isChecked;
         showPresence = other.showPresence;
         presenceFillPaint = other.presenceFillPaint;
         presenceStrokePaint = other.presenceStrokePaint;
+        checkedPaint = other.checkedPaint;
 
         clipPaint.setAntiAlias(true);
         textPaint.setAntiAlias(true);
@@ -262,6 +295,9 @@ public class AvatarDrawable extends Drawable {
         if (showPresence && isOnline) {
             drawPresence(finalCanvas);
         }
+        if (isChecked) {
+            drawChecked(finalCanvas);
+        }
     }
 
     private void drawActual(@NonNull Canvas canvas) {
@@ -284,18 +320,28 @@ public class AvatarDrawable extends Drawable {
         presence.cy = bounds.bottom - presence.radius;
         int presenceStrokeWidth = presence.radius / 3;
         presenceStrokePaint.setStrokeWidth(presenceStrokeWidth);
+        checkedPaint.setStrokeWidth(presenceStrokeWidth);
         presence.radius -= presenceStrokeWidth * 0.5;
+
+        if (checkedIcon != null)
+            checkedIcon.setBounds(presence.cx - presence.radius, presence.cy - presence.radius, presence.cx + presence.radius,  presence.cy + presence.radius);
     }
 
     private void drawPresence(@NonNull Canvas canvas) {
         canvas.drawCircle(presence.cx, presence.cy, presence.radius - 1, presenceFillPaint);
         canvas.drawCircle(presence.cx, presence.cy, presence.radius, presenceStrokePaint);
     }
+    private void drawChecked(@NonNull Canvas canvas) {
+        if (checkedIcon != null) {
+            canvas.drawCircle(presence.cx, presence.cy, presence.radius, checkedPaint);
+            checkedIcon.draw(canvas);
+        }
+    }
 
     @Override
     protected void onBoundsChange(Rect bounds) {
-        if (showPresence)
-            setupPresenceIndicator(bounds);
+        //if (showPresence)
+        setupPresenceIndicator(bounds);
         int d = Math.min(bounds.width(), bounds.height());
         if (placeholder != null) {
             int cx = (bounds.width()-d)/2;

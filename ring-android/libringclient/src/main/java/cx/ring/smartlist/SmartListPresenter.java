@@ -204,7 +204,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
     }
 
     private void loadConversations() {
-        showConversations(mConversationFacade.getFullList(accountSubject, mCurrentQuery));
+        showConversations(mConversationFacade.getFullList(accountSubject, mCurrentQuery, true));
     }
 
     public void banContact(SmartListViewModel smartListViewModel) {

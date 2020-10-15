@@ -23,6 +23,8 @@ import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import cx.ring.utils.StringUtils;
+
 public class Uri implements Serializable {
 
     private String mDisplayName = null;
@@ -37,6 +39,7 @@ public class Uri implements Serializable {
     private static final Pattern URI_PATTERN = Pattern.compile("^\\s*(\\w+:)?(?:([\\w.]+)@)?(?:([\\d\\w\\.\\-]+)(?::(\\d+))?)\\s*$", Pattern.CASE_INSENSITIVE);
     public static final String RING_URI_SCHEME = "ring:";
     public static final String JAMI_URI_SCHEME = "jami:";
+    public static final String SWARM_URI_SCHEME = "swarm:";
 
     private static final String ipv4Pattern = "(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])";
     private static final String ipv6Pattern = "([0-9a-f]{1,4}:){7}([0-9a-f]){1,4}";
@@ -52,6 +55,8 @@ public class Uri implements Serializable {
 
     public String getRawUriString() {
         if (isRingId()) {
+            if (isSwarm())
+                return getScheme() + getRawRingId();
             return RING_URI_SCHEME + getRawRingId();
         }
 
@@ -88,6 +93,9 @@ public class Uri implements Serializable {
         return (getHost() != null && RING_ID_PATTERN.matcher(getHost()).find())
                 || (getUsername() != null && RING_ID_PATTERN.matcher(getUsername()).find());
     }
+    public boolean isSwarm() {
+        return SWARM_URI_SCHEME.equals(getScheme());
+    }
 
     public String getRawRingId() {
         if (getUsername() != null) {
@@ -120,11 +128,13 @@ public class Uri implements Serializable {
     }
 
     public String getUri() {
+        if (isSwarm())
+            return getScheme() + getRawRingId();
         if (isRingId())
             return getRawRingId();
         else {
             StringBuilder builder = new StringBuilder(64);
-            if (getUsername() != null && !getUsername().isEmpty()) {
+            if (!StringUtils.isEmpty(getUsername())) {
                 builder.append(getUsername()).append("@");
             }
             if (getHost() != null) {

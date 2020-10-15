@@ -816,7 +816,8 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         mIsBubble = getArguments().getBoolean(NotificationServiceImpl.EXTRA_BUBBLE);
         if (path == null)
             return;
-        Uri contactUri = new Uri(path.getContactId());
+
+        Uri contactUri = path.getConversationUri();
         mAdapter = new ConversationAdapter(this, presenter);
         presenter.init(contactUri, path.getAccountId());
         try {

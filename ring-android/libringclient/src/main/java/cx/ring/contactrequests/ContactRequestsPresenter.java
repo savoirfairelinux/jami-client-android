@@ -63,7 +63,7 @@ public class ContactRequestsPresenter extends RootPresenter<ContactRequestsView>
                         .map(pending -> {
                             ArrayList<SmartListViewModel> viewmodel = new ArrayList<>(pending.size());
                             for (Conversation c : pending) {
-                                SmartListViewModel vm = new SmartListViewModel(a.getAccountID(), c.getContact(), c.getContact().getPrimaryNumber(), c.getLastEvent());
+                                SmartListViewModel vm = new SmartListViewModel(c, true);
                                 viewmodel.add(vm);
                             }
                             return viewmodel;
@@ -73,7 +73,7 @@ public class ContactRequestsPresenter extends RootPresenter<ContactRequestsView>
                     getView().updateView(viewModels);
                     CompositeDisposable disposable = new CompositeDisposable();
                     for (SmartListViewModel vm : viewModels) {
-                        disposable.add(mContactService.observeContact(vm.getAccountId(), vm.getContact())
+                        disposable.add(mContactService.observeContact(vm.getAccountId(), vm.getContact(), true)
                                 .observeOn(mUiScheduler)
                                 .subscribe(contact -> getView().updateItem(vm), e -> Log.d(TAG, "updateContact onError", e)));
                     }

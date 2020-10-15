@@ -169,7 +169,7 @@ public class ShareWithFragment extends Fragment {
             getActivity().finish();
         mDisposable.add(mConversationFacade
                 .getCurrentAccountSubject()
-                .switchMap(Account::getConversationsViewModels)
+                .switchMap(a -> a.getConversationsViewModels(false))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(list -> {
                     if (adapter != null)

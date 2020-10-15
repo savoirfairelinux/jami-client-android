@@ -753,13 +753,13 @@ public class DRingService extends Service {
     private void handleConvAction(Intent intent, String action, Bundle extras) {
         ConversationPath path = ConversationPath.fromIntent(intent);
 
-        if (path == null || path.getContactId().isEmpty()) {
+        if (path == null || path.getConversationId().isEmpty()) {
             return;
         }
 
         switch (action) {
             case ACTION_CONV_READ:
-                mConversationFacade.readMessages(path.getAccountId(), new Uri(path.getContactId()));
+                mConversationFacade.readMessages(path.getAccountId(), new Uri(path.getConversationId()));
                 break;
             case ACTION_CONV_DISMISS:
                 break;
@@ -768,7 +768,7 @@ public class DRingService extends Service {
                 if (remoteInput != null) {
                     CharSequence reply = remoteInput.getCharSequence(KEY_TEXT_REPLY);
                     if (!TextUtils.isEmpty(reply)) {
-                        Uri uri = new Uri(path.getContactId());
+                        Uri uri = new Uri(path.getConversationId());
                         String message = reply.toString();
                         mConversationFacade.startConversation(path.getAccountId(), uri)
                                 .flatMap(c -> mConversationFacade.sendTextMessage(path.getAccountId(), c, uri, message)

@@ -228,6 +228,7 @@ public class AccountService {
         public int state;
     }
     public static class User {
+        public String uri;
         public String username;
         public String firstName;
         public String lastName;
@@ -235,6 +236,7 @@ public class AccountService {
         public String picture_b64;
 
         public User(Map<String, String> m) {
+            uri = m.get("uri");
             username = m.get("username");
             firstName = m.get("firstName");
             lastName = m.get("lastName");

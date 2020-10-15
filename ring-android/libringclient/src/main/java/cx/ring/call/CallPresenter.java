@@ -439,7 +439,7 @@ public class CallPresenter extends RootPresenter<CallView> {
             Observable<List<Observable<SipCall>>> contactsObservable = callsObservable
                     .flatMapSingle(calls -> Observable
                             .fromIterable(calls)
-                            .map(call -> mContactService.observeContact(call.getAccount(), call.getContact())
+                            .map(call -> mContactService.observeContact(call.getAccount(), call.getContact(), false)
                                     .map(contact -> call))
                             .toList(calls.size()));
 

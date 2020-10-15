@@ -110,7 +110,7 @@ public class ConversationSelectionActivity extends AppCompatActivity {
         final Conference conf = conference;
         mDisposable.add(mConversationFacade
                 .getCurrentAccountSubject()
-                .switchMap(Account::getConversationsViewModels)
+                .switchMap(a -> a.getConversationsViewModels(false))
                 .map(vm -> {
                     if (conf == null)
                         return vm;

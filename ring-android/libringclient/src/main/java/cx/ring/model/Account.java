@@ -147,12 +147,12 @@ public class Account {
         return conversationsSubject;
     }
 
-    public Observable<List<SmartListViewModel>> getConversationsViewModels() {
+    public Observable<List<SmartListViewModel>> getConversationsViewModels(boolean withPresence) {
         return conversationsSubject
                 .map(conversations -> {
                     ArrayList<SmartListViewModel> viewModel = new ArrayList<>(conversations.size());
                     for (Conversation c : conversations)
-                        viewModel.add(new SmartListViewModel(accountID, c.getContact(), c.getLastEvent()));
+                        viewModel.add(new SmartListViewModel(c, withPresence));
                     return viewModel;
                 });
     }

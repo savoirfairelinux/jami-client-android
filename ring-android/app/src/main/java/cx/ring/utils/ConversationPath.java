@@ -17,25 +17,31 @@ import cx.ring.model.Interaction;
 
 public class ConversationPath {
     private final String accountId;
-    private final String contactId;
+    private final String conversationId;
     public ConversationPath(String account, String contact) {
         accountId = account;
-        contactId = contact;
+        conversationId = contact;
     }
 
     public ConversationPath(@NonNull Tuple<String, String> path) {
         accountId = path.first;
-        contactId = path.second;
+        conversationId = path.second;
     }
 
     public String getAccountId() {
         return accountId;
     }
-    public String getContactId() {
-        return contactId;
+    public String getConversationId() {
+        return conversationId;
     }
+
+    @Deprecated
+    public String getContactId() {
+        return conversationId;
+    }
+
     public Uri toUri() {
-        return toUri(accountId, contactId);
+        return toUri(accountId, conversationId);
     }
     public static Uri toUri(String accountId, String contactId) {
         return ContentUriHandler.CONVERSATION_CONTENT_URI.buildUpon()
@@ -43,10 +49,10 @@ public class ConversationPath {
                 .appendEncodedPath(contactId)
                 .build();
     }
-    public static Uri toUri(String accountId, @NonNull cx.ring.model.Uri contactUri) {
+    public static Uri toUri(String accountId, @NonNull cx.ring.model.Uri conversationUri) {
         return ContentUriHandler.CONVERSATION_CONTENT_URI.buildUpon()
                 .appendEncodedPath(accountId)
-                .appendEncodedPath(contactUri.getUri())
+                .appendEncodedPath(conversationUri.getUri())
                 .build();
     }
     public static Uri toUri(@NonNull Interaction interaction) {
@@ -54,17 +60,20 @@ public class ConversationPath {
     }
 
     public Bundle toBundle() {
-        return toBundle(accountId, contactId);
+        return toBundle(accountId, conversationId);
     }
     public void toBundle(Bundle bundle) {
-        bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
+        bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, conversationId);
         bundle.putString(ConversationFragment.KEY_ACCOUNT_ID, accountId);
     }
-    public static Bundle toBundle(String accountId, String contactId) {
+    public static Bundle toBundle(String accountId, String uri) {
         Bundle bundle = new Bundle();
-        bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
+        bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, uri);
         bundle.putString(ConversationFragment.KEY_ACCOUNT_ID, accountId);
         return bundle;
+    }
+    public static Bundle toBundle(String accountId, cx.ring.model.Uri uri) {
+        return toBundle(accountId, uri.getUri());
     }
 
     public static ConversationPath fromUri(Uri uri) {
@@ -109,11 +118,15 @@ public class ConversationPath {
             return false;
         ConversationPath o = (ConversationPath) obj;
         return Objects.equals(o.accountId, accountId)
-                && Objects.equals(o.contactId, contactId);
+                && Objects.equals(o.conversationId, conversationId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(accountId, contactId);
+        return Objects.hash(accountId, conversationId);
+    }
+
+    public cx.ring.model.Uri getConversationUri() {
+        return new cx.ring.model.Uri(conversationId);
     }
 }

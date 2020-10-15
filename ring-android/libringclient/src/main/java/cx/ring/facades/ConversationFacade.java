@@ -358,20 +358,25 @@ public class ConversationFacade {
         }
     }
 
-    private Observable<SmartListViewModel> observeConversation(Account account, Conversation conversation) {
+    private Observable<SmartListViewModel> observeConversation(Account account, Conversation conversation, boolean hasPresence) {
         return account.getConversationSubject()
                 .filter(c -> c == conversation)
                 .startWith(conversation)
                 .switchMap(c -> mContactService
-                        .observeContact(conversation.getAccountId(), conversation.getContact())
-                        .map(contact -> new SmartListViewModel(conversation.getAccountId(), contact, conversation.getLastEvent())));
+                        .observeContact(c.getAccountId(), c.getContact(), hasPresence)
+                        .map(contact -> new SmartListViewModel(c, hasPresence)));
     }
-    public Observable<List<Observable<SmartListViewModel>>> getSmartList(Observable<Account> currentAccount) {
+    public Observable<List<Observable<SmartListViewModel>>> getSmartList(Observable<Account> currentAccount, boolean hasPresence) {
         return currentAccount.switchMap(account -> account.getConversationsSubject()
                 .switchMapSingle(conversations -> Observable.fromIterable(conversations)
-                        .map(conv -> observeConversation(account, conv))
+                        .map(conv -> observeConversation(account, conv, hasPresence))
                         .toList()));
     }
+
+    public Observable<List<Observable<SmartListViewModel>>> getSmartList(boolean hasPresence) {
+        return getSmartList(mAccountService.getCurrentAccountSubject(), hasPresence);
+    }
+
     private Single<List<Observable<SmartListViewModel>>> getSearchResults(Account account, String query) {
         Uri uri = new Uri(query);
         if (account.isSip()) {
@@ -386,7 +391,7 @@ public class ConversationFacade {
                     .map(AccountService.UserSearchResult::getResultsViewModels);
         } else {
             return mAccountService.findRegistrationByName(account.getAccountID(), "", query)
-                    .map(result -> result.state == 0 ? Collections.singletonList(observeConversation(account, account.getByUri(result.address))) : Collections.emptyList());
+                    .map(result -> result.state == 0 ? Collections.singletonList(observeConversation(account, account.getByUri(result.address), false)) : Collections.emptyList());
         }
     }
     private Observable<List<Observable<SmartListViewModel>>> getSearchResults(Account account, Observable<String> query) {
@@ -395,7 +400,7 @@ public class ConversationFacade {
                         : getSearchResults(account, q))
                 .distinctUntilChanged();
     }
-    public Observable<List<Observable<SmartListViewModel>>> getFullList(Observable<Account> currentAccount, Observable<String> query) {
+    public Observable<List<Observable<SmartListViewModel>>> getFullList(Observable<Account> currentAccount, Observable<String> query, boolean hasPresence) {
         return currentAccount.switchMap(account -> Observable.combineLatest(
                 account.getConversationsSubject(),
                 getSearchResults(account, query),
@@ -409,14 +414,14 @@ public class ConversationFacade {
                     if (!conversations.isEmpty()) {
                         if (q.isEmpty()) {
                             for (Conversation conversation : conversations)
-                                newList.add(observeConversation(account, conversation));
+                                newList.add(observeConversation(account, conversation, hasPresence));
                         } else {
                             String lq = q.toLowerCase();
                             newList.add(SmartListViewModel.TITLE_CONVERSATIONS);
                             int nRes = 0;
                             for (Conversation conversation : conversations) {
                                 if (conversation.getContact().matches(lq)) {
-                                    newList.add(observeConversation(account, conversation));
+                                    newList.add(observeConversation(account, conversation, hasPresence));
                                     nRes++;
                                 }
                             }

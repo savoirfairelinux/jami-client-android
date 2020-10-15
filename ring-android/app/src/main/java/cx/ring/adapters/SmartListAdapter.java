@@ -39,7 +39,7 @@ import java.util.List;
 public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> {
 
     private List<SmartListViewModel> mSmartListViewModels = new ArrayList<>();
-    private SmartListViewHolder.SmartListListeners listener;
+    private final SmartListViewHolder.SmartListListeners listener;
     private RecyclerView recyclerView;
 
     public SmartListAdapter(List<SmartListViewModel> smartListViewModels, SmartListViewHolder.SmartListListeners listener) {
@@ -108,6 +108,7 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
             if (old.getContact() == smartListViewModel.getContact()) {
                 mSmartListViewModels.set(i, smartListViewModel);
                 notifyItemChanged(i);
+                return;
             }
         }
     }

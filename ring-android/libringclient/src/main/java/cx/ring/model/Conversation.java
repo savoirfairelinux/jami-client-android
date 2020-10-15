@@ -44,7 +44,8 @@ public class Conversation extends ConversationHistory {
     private static final String TAG = Conversation.class.getSimpleName();
 
     private final String mAccountId;
-    private final CallContact mContact;
+    private final Uri mKey;
+    private final List<CallContact> mContacts;
 
     private final NavigableMap<Long, Interaction> mHistory = new TreeMap<>();
     private final ArrayList<Conference> mCurrentCalls = new ArrayList<>();
@@ -68,7 +69,8 @@ public class Conversation extends ConversationHistory {
 
     public Conversation(String accountId, CallContact contact) {
         mAccountId = accountId;
-        mContact = contact;
+        mContacts = Collections.singletonList(contact);
+        mKey = contact.getPrimaryUri();
         mParticipant = contact.getPrimaryUri().getUri();
     }
 
@@ -82,6 +84,52 @@ public class Conversation extends ConversationHistory {
 
     public void composingStatusChanged(CallContact contact, Account.ComposingStatus composing) {
         composingStatusSubject.onNext(composing);
+    }
+
+    public Uri getUri() {
+        return mKey;
+    }
+
+    public CharSequence getDisplayName() {
+        return mContacts.get(0).getDisplayName();
+    }
+
+    public void addContact(CallContact contact) {
+        mContacts.add(contact);
+    }
+
+    public String getTitle() {
+        if (mContacts.isEmpty()) {
+            return null;
+        } else if (mContacts.size() == 1) {
+            return mContacts.get(0).getDisplayName();
+        }
+        StringBuilder ret = new StringBuilder();
+        Iterator<CallContact> it = mContacts.iterator();
+        while (it.hasNext()) {
+            CallContact c = it.next();
+            ret.append(c.getDisplayName());
+            if (it.hasNext())
+                ret.append(", ");
+        }
+        return ret.toString();
+    }
+
+    public String getUriTitle() {
+        if (mContacts.isEmpty()) {
+            return null;
+        } else if (mContacts.size() == 1) {
+            return mContacts.get(0).getDisplayName();
+        }
+        StringBuilder ret = new StringBuilder();
+        Iterator<CallContact> it = mContacts.iterator();
+        while (it.hasNext()) {
+            CallContact c = it.next();
+            ret.append(c.getDisplayName());
+            if (it.hasNext())
+                ret.append(", ");
+        }
+        return ret.toString();
     }
 
     public enum ElementStatus {
@@ -147,8 +195,13 @@ public class Conversation extends ConversationHistory {
         mVisible = visible;
     }
 
+    public List<CallContact> getContacts() {
+        return mContacts;
+    }
+
+    @Deprecated
     public CallContact getContact() {
-        return mContact;
+        return mContacts.get(0);
     }
 
     public void addCall(SipCall call) {
@@ -177,14 +230,14 @@ public class Conversation extends ConversationHistory {
     }
 
     public void addRequestEvent(TrustRequest request) {
-        ContactEvent event = new ContactEvent(mContact, request);
+        ContactEvent event = new ContactEvent(getContact(), request);
         mDirty = true;
         mAggregateHistory.add(event);
         updatedElementSubject.onNext(new Tuple<>(event, ElementStatus.ADD));
     }
 
     public void addContactEvent() {
-        ContactEvent event = new ContactEvent(mContact);
+        ContactEvent event = new ContactEvent(getContact());
         mDirty = true;
         mAggregateHistory.add(event);
         updatedElementSubject.onNext(new Tuple<>(event, ElementStatus.ADD));
@@ -328,7 +381,7 @@ public class Conversation extends ConversationHistory {
         mHistory.clear();
         mDirty = false;
         if(!delete)
-            mAggregateHistory.add(new ContactEvent(mContact));
+            mAggregateHistory.add(new ContactEvent(getContact()));
         clearedSubject.onNext(mAggregateHistory);
     }
 
@@ -352,7 +405,7 @@ public class Conversation extends ConversationHistory {
         for (Interaction i : loadedConversation) {
             Interaction interaction = getTypedInteraction(i);
             interaction.setAccount(mAccountId);
-            interaction.setContact(mContact);
+            interaction.setContact(getContact());
             mAggregateHistory.add(interaction);
             mHistory.put(interaction.getTimestamp(), interaction);
             if (!i.isIncoming() && i.getStatus() == Interaction.InteractionStatus.DISPLAYED)
@@ -367,7 +420,7 @@ public class Conversation extends ConversationHistory {
 
     public void addElement(Interaction interaction) {
         interaction.setAccount(mAccountId);
-        interaction.setContact(mContact);
+        interaction.setContact(getContact());
         if (interaction.getType() == InteractionType.TEXT) {
             TextMessage msg = new TextMessage(interaction);
             addTextMessage(msg);
