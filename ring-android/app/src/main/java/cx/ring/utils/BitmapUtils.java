@@ -38,7 +38,7 @@ import java.nio.ByteBuffer;
  */
 public final class BitmapUtils
 {
-    private static final String TAG = BitmapUtils.class.getName();
+    private static final String TAG = BitmapUtils.class.getSimpleName();
     private BitmapUtils() {}
 
     public static Photo bitmapToPhoto(@NonNull Bitmap image) {
