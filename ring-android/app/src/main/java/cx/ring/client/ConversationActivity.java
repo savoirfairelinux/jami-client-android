@@ -62,11 +62,21 @@ public class ConversationActivity extends AppCompatActivity implements Colorable
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        String action = intent == null ? null : intent.getAction();
 
-        JamiApplication.getInstance().startDaemon();
-
+        if (intent != null) {
+            conversationPath = ConversationPath.fromIntent(intent);
+        } else if (savedInstanceState != null) {
+            conversationPath = ConversationPath.fromBundle(savedInstanceState);
+        }
+        if (conversationPath == null) {
+            finish();
+            return;
+        }
         mIsBubble = getIntent().getBooleanExtra(NotificationServiceImpl.EXTRA_BUBBLE, false);
 
+        JamiApplication.getInstance().startDaemon();
         binding = ActivityConversationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -91,14 +101,6 @@ public class ConversationActivity extends AppCompatActivity implements Colorable
             return insets;
         });
 
-        Intent intent = getIntent();
-        String action = intent == null ? null : intent.getAction();
-
-        if (intent != null) {
-            conversationPath = ConversationPath.fromIntent(intent);
-        } else if (savedInstanceState != null) {
-            conversationPath = ConversationPath.fromBundle(savedInstanceState);
-        }
         if (mConversationFragment == null) {
             Bundle bundle = conversationPath.toBundle();
             bundle.putBoolean(NotificationServiceImpl.EXTRA_BUBBLE, mIsBubble);
