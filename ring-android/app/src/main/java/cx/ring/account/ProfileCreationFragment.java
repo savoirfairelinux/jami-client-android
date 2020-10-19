@@ -39,10 +39,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
 
+import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.databinding.FragAccProfileCreateBinding;
 import cx.ring.model.Account;
@@ -175,18 +177,22 @@ public class ProfileCreationFragment extends BaseSupportFragment<ProfileCreation
 
     @Override
     public void goToGallery() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, REQUEST_CODE_GALLERY);
+        try {
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, REQUEST_CODE_GALLERY);
+        } catch (Exception e) {
+            Toast.makeText(requireContext(), R.string.gallery_error_message, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     public void goToPhotoCapture() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         try {
             Context context = requireContext();
             File file = AndroidFileUtils.createImageFile(context);
             Uri uri = ContentUriHandler.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, file);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                    .putExtra(MediaStore.EXTRA_OUTPUT, uri)
                     .addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
                     .putExtra("android.intent.extras.CAMERA_FACING", 1)
                     .putExtra("android.intent.extras.LENS_FACING_FRONT", 1)
