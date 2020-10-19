@@ -943,9 +943,9 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     @Override
-    public void goToContactActivity(String accountId, String contactRingId) {
-        startActivity(new Intent(Intent.ACTION_VIEW, android.net.Uri.withAppendedPath(android.net.Uri.withAppendedPath(ContentUriHandler.CONTACT_CONTENT_URI, accountId), contactRingId))
-                .setClass(requireActivity().getApplicationContext(), ContactDetailsActivity.class));
+    public void goToContactActivity(String accountId, String contactId) {
+        startActivity(new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, contactId),
+                requireActivity().getApplicationContext(), ContactDetailsActivity.class));
     }
 
     @Override
