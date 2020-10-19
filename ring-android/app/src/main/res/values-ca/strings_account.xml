@@ -162,7 +162,6 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="account_link_archive_button">Connecta des d\'una còpia de seguretat</string>
   <string name="account_link_prompt_pin">Introdueix PIN</string>
   <string name="account_new_button">Crear un compte Jami</string>
-  <string name="account_link_export_button">Vincula un altre dispositiu a aquest compte</string>
   <string name="account_link_export_info">Per a utilitzar aquest compte en altres dispositius, primer ha d\'exposar-lo a Jami. Això generarà un codi PIN que ha d\'inserir en el nou dispositiu per configurar el compte. El PIN té una validesa de 10 minuts.</string>
   <string name="account_start_export_button">Genera el PIN</string>
   <string name="account_end_export_button">tanca</string>

@@ -55,12 +55,13 @@
   <string name="account_enter_password">Entrez votre mot de passe</string>
   <string name="account_link_prompt_pin">Saisissez le code PIN</string>
   <string name="account_new_button">Créer un compte Jami</string>
-  <string name="account_link_export_button">Connecter un autre appareil à ce compte</string>
+  <string name="account_link_export_button">Associer un nouvel appareil</string>
   <string name="account_connect_prompt_username">nom d\'utilisateur</string>
   <!--Name registration-->
   <string name="register_username">Enregistrer un nom d\'utilisateur public</string>
   <string name="register_recommended">Recommandé</string>
   <string name="invalid_username">Nom d\'utilisateur incorrect</string>
+  <string name="account_status_connecting">En cours de connexion</string>
   <string name="account_status_unknown">Inconnu</string>
   <string name="account_status_error">Erreur</string>
   <!--Create account-->

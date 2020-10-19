@@ -41,4 +41,5 @@
   <string name="plugin_recent_version_exception">Sinulla on uudempi versio: <b>%1$s</b></string>
   <string name="plugin_same_version_exception">Sinulla on sama versio <b>%1$s</b> asennettuna</string>
   <string name="plugin_force_install">pakota \n asennus</string>
+  <string name="plugin_path_image_add">Lisää uusi kuva</string>
 </resources>

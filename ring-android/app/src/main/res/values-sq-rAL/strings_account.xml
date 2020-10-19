@@ -58,6 +58,8 @@
   <string name="account_optionnal_category">Rregullime Opsionale</string>
   <string name="account_useragent_label">Agjent Përdoruesi</string>
   <string name="account_autoanswer_label">Vetëpërgjigje</string>
+  <string name="account_rendezvous_label">Mënyra Rendezvous</string>
+  <string name="account_rendezvous_summary">Nën mënyrën Rendezvous, thirrjet ardhëse do të shtohen te një dhomë konference.</string>
   <string name="account_upnp_label">Aktivizo UPnP</string>
   <string name="account_proxy_field">Ndërmjetës</string>
   <!--Audio Details-->
@@ -134,6 +136,7 @@
   <string name="error_passwords_not_equals">Fjalëkalimet nuk përputhen</string>
   <string name="export_account_wait_title">Ju lutemi, pritni…</string>
   <string name="export_account_wait_message">Po eksportohen të dhëna llogarie</string>
+  <string name="account_export_file">Kopjeruani Llogari</string>
   <string name="account_export_end_decryption_message">S\’u zhbllokua dot llogaria juaj duke përdorur fjalëkalimin e dhënë.</string>
   <string name="account_export_end_network_title">Gabim rrjeti</string>
   <string name="account_export_end_network_message">S\’u eksportua dot llogari te rrjeti. Kontrolloni lidhjen tuaj në rrjet.</string>
@@ -168,7 +171,7 @@
   <string name="account_link_archive_button">Lidhje prej kopjeruajtjeje</string>
   <string name="account_link_prompt_pin">Jepni PIN-in</string>
   <string name="account_new_button">Krijoni një llogari Jami</string>
-  <string name="account_link_export_button">Lidhni te kjo llogari një pajisje tjetër</string>
+  <string name="account_link_export_button">Lidhni një pajisje të re</string>
   <string name="account_link_export_info">Që të përdorni këtë llogari në pajisje të tjera, së pari duhet t\ia ekspozoni atë Jami-t. Kështu do të prodhohet një kod PIN që duhet ta jepni te pajisja e re për të rregulluar llogarinë. PIN-i vlen për 10 minuta.</string>
   <string name="account_start_export_button">Prodho PIN</string>
   <string name="account_end_export_button">mbylle</string>
@@ -185,6 +188,7 @@
   <string name="error_username_empty">Jepni një emër përdoruesi</string>
   <string name="no_registered_name_for_account">S\’u gjet emër i regjistruar për këtë llogari</string>
   <string name="username_available">Emër përdoruesi i pazënë!</string>
+  <string name="register_name">Regjistroni Emër</string>
   <string name="trying_to_register_name">Po provohet të regjistrohet emri</string>
   <string name="registered_username">Emër përdoruesi i regjistruar</string>
   <string name="register_username">Regjistroni emër publik përdoruesi</string>

@@ -14,6 +14,10 @@
   <string name="pref_hd_summary">Activar vídeo HD</string>
   <string name="pref_hwEncode_title">Activar codificación acelerada</string>
   <string name="pref_hwEncode_summary">Característica experimental</string>
+  <string name="pref_videoBitrate_title">Bitrate do vídeo</string>
+  <string name="pref_videoBitrate_summary">Establecer bitrate por omisión (KB/s)</string>
+  <string name="pref_videoResolution_title">Resolución de vídeo</string>
+  <string name="pref_videoResolution_summary">Establecer a resolución por omisión</string>
   <string name="pref_systemContacts_title">Usar contactos do sistema</string>
   <string name="pref_systemContacts_summary">Usar contactos do sistema para mostrar detalles do contacto.</string>
   <string name="pref_systemDialer_title">Facer as chamadas dos sistema usando Jami</string>
@@ -25,4 +29,17 @@
   <string name="pref_persistNotification_title">Executar en segundo plano</string>
   <string name="pref_persistNotification_summary">Permitir a execución en segundo plano para recibir mensaxe e chamadas.</string>
   <!--Plugin-->
+  <string name="pref_plugins_title">Plugins</string>
+  <string name="pref_plugins_summary">Activar plugins e establecer os seus parámetros</string>
+  <string name="fab_plugins_add">Engadir un novo plugin</string>
+  <string name="plugin_uninstall_title">Desinstalar plugin ?</string>
+  <string name="plugin_reset_preferences">Restablecer preferencias do plugin</string>
+  <string name="plugin_reset_preferences_summary">Restableceranse os axustes do plugin</string>
+  <string name="plugin_reset_preferences_ask">Desexas restablecer os axustes do plugin ?</string>
+  <string name="plugin_successfully_installed">Plugin <b>%1$s</b> instalado correctamente</string>
+  <string name="plugin_install_failure">Fallo ó instalar o plugin: <b>%1$s</b></string>
+  <string name="plugin_recent_version_exception">Tes unha versión máis recente de: <b>%1$s</b></string>
+  <string name="plugin_same_version_exception">Tes a mesma versión de <b>%1$s</b> instalada</string>
+  <string name="plugin_force_install">forzar \n instalación</string>
+  <string name="plugin_path_image_add">Engadir nova imaxe</string>
 </resources>

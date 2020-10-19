@@ -189,6 +189,7 @@
   <string name="wizard_skip">Přeskočit</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
+  <string name="profile_name">Název profilu</string>
   <string name="profile_message_warning">Váš profil je sdílen jen s vašimi kontakty</string>
   <string name="open_the_gallery">Otevřít galerii</string>
   <string name="take_a_photo">Pořídit fotku</string>

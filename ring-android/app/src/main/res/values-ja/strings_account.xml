@@ -162,7 +162,7 @@
   <string name="account_link_archive_button">バックアップから接続</string>
   <string name="account_link_prompt_pin">PINを入力してください</string>
   <string name="account_new_button">Jamiアカウントを作成</string>
-  <string name="account_link_export_button">別のデバイスをこのアカウントへリンク</string>
+  <string name="account_link_export_button">新しいデバイスをリンク</string>
   <string name="account_link_export_info">別のデバイスでこのアカウントを使用するには、最初にJamiでそれを公開する必要があります。これにより、アカウントを設定するために新しいデバイスに入力するためのPINコードが生成されます。PINコードの有効期限は10分間です。</string>
   <string name="account_start_export_button">PINを生成</string>
   <string name="account_end_export_button">閉じる</string>

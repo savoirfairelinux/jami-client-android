@@ -188,6 +188,7 @@
   <string name="wizard_skip">Omite</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
+  <string name="profile_name">Numele profilului</string>
   <string name="profile_message_warning">Profilul tău este distribuit doar contactelor tale</string>
   <string name="open_the_gallery">Deschide galeria</string>
   <string name="take_a_photo">Fă o poză</string>
@@ -283,7 +284,7 @@
   <string name="wizard_username_button">Alege Numele de Utilizator</string>
   <string name="wizard_username_skip">Saltă alegerea numelui de utilizator</string>
   <string name="wizard_password_info">Parola contului</string>
-  <string name="wizard_password_placeholder">Alege o parolă pentru a cifra contul tău pe acest dispozitiv</string>
+  <string name="wizard_password_placeholder">Alege o parolă pentru a cifra contul tău pe acest aparat</string>
   <string name="wizard_password_button">Alege parola</string>
   <string name="wizard_password_skip">Creează contul</string>
   <string name="wizard_password_switch">Cifrează contul cu parolă</string>

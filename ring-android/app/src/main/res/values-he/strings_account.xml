@@ -64,12 +64,16 @@
   <string name="account_rtp_min_port">נומינלי</string>
   <!--restore/backup-->
   <string name="account_export_end_error_title">שגיאה</string>
+  <string name="account_new_button">יצירת חשבון Jami</string>
   <string name="account_connect_prompt_username">שם משתמש</string>
   <!--Name registration-->
   <string name="account_status_connecting">מתחבר</string>
   <string name="account_status_unknown">לא מוכר</string>
   <string name="account_status_error">שגיאה</string>
   <!--Create account-->
+  <string name="account_creation_home">ברוך בואך אל Jami</string>
+  <string name="account_creation_profile">יצירת הפרופיל שלך</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">עריכת הפרופיל שלך</string>
   <!--Devices-->
 </resources>

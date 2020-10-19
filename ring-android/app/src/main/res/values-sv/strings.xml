@@ -228,5 +228,10 @@
   <string name="tv_audio_pause">Paus</string>
   <string name="tv_dialog_send">Skicka</string>
   <!--Wizard-->
+  <string name="wizard_status_recommended">Rekommendera</string>
+  <string name="wizard_status_optional">Valfri</string>
+  <string name="wizard_status_required">Obligatorisk</string>
+  <string name="wizard_username_info">Välj användarnamn för ditt konto</string>
   <string name="wizard_password_skip">Skapa konto</string>
+  <string name="wizard_password_switch">Kryptera kontot med lösenord</string>
 </resources>

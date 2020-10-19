@@ -20,6 +20,11 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
+    <!-- SipCalls -->
+    <string name="call_human_state_searching">Recherche en cours</string>
+    <string name="call_human_state_incoming">Appel entrant</string>
+    <string name="call_human_state_current">Appel en cours</string>
     <string name="call_human_state_failure">Échec</string>
+    <string name="call_human_state_hold">Mettre en attente</string>
     <!-- Conferences -->
 </resources>

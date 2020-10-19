@@ -126,7 +126,6 @@
   <string name="account_no_network_title">لا يستطيع الاتصال بالشبكة</string>
   <string name="account_link_prompt_pin">أدخِل رمز الأمان</string>
   <string name="account_new_button">كوّن حساب جامي</string>
-  <string name="account_link_export_button">اربط جهازاً آخر مع هذا الحساب</string>
   <string name="account_connect_prompt_username">اسم المستخدم</string>
   <!--Name registration-->
   <string name="register_username">سجل اسم المستخدم العام</string>

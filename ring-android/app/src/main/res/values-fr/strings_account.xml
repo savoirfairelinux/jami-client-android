@@ -58,6 +58,8 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="account_optionnal_category">Réglages optionnels</string>
   <string name="account_useragent_label">User-agent</string>
   <string name="account_autoanswer_label">Décrochage automatique</string>
+  <string name="account_rendezvous_label">Mode rendez-vous</string>
+  <string name="account_rendezvous_summary">Avec le point de rendez-vous, les appels entrants sont rajoutés à un salon de conférence</string>
   <string name="account_upnp_label">Activer UPnP</string>
   <string name="account_proxy_field">Serveur mandataire</string>
   <!--Audio Details-->
@@ -136,6 +138,7 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="error_passwords_not_equals">Les mots de passe ne sont pas identiques</string>
   <string name="export_account_wait_title">Veuillez patienter</string>
   <string name="export_account_wait_message">Exporter les informations du compte</string>
+  <string name="account_export_file">Sauvegarder votre compte</string>
   <string name="account_export_end_decryption_message">Impossible de déverrouiller votre compte en utilisant le mot de passe fourni.</string>
   <string name="account_export_end_network_title">Erreur de réseau</string>
   <string name="account_export_end_network_message">Impossible d\'exporter le compte sur le réseau. Veuillez vérifier votre connexion. </string>
@@ -170,7 +173,7 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="account_link_archive_button">Se Connecter à partir d\'une sauvegarde</string>
   <string name="account_link_prompt_pin">Entrer votre NIP</string>
   <string name="account_new_button">Créer un compte Jami</string>
-  <string name="account_link_export_button">Lier un autre appareil à ce compte</string>
+  <string name="account_link_export_button">Associer un nouvel appareil</string>
   <string name="account_link_export_info">Pour utiliser ce compte sur d\'autres appareils, vous devez d\'abord l\'afficher sur Jami. Ceci générera un code PIN que vous devrez entrer sur le nouvel appareil pour configurer le compte. Le PIN sera valable pendant 10 minutes. </string>
   <string name="account_start_export_button">Générer un NIP</string>
   <string name="account_end_export_button">fermer</string>
@@ -187,6 +190,7 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="error_username_empty">Entrer un nom d\'utilisateur</string>
   <string name="no_registered_name_for_account">Aucun nom n\'a été trouvé pour ce compte.</string>
   <string name="username_available">Identifiant disponible !</string>
+  <string name="register_name">Enregistrer un nom</string>
   <string name="trying_to_register_name">Enregistrement du nom en cours</string>
   <string name="registered_username">Nom d\'utilisateur enregistré</string>
   <string name="register_username">Enregistrer un nom d\'utilisateur public</string>

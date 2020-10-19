@@ -113,7 +113,6 @@ Sie können Ihr Konto später ändern.</string>
   <string name="account_sip_success_title">SIP-Konto registriert</string>
   <string name="account_link_prompt_pin">PIN eingeben</string>
   <string name="account_new_button">Jami-Konto erstellen</string>
-  <string name="account_link_export_button">Ein anderes Gerät mit diesem Konto verknüpfen</string>
   <string name="account_link_export_info">Um dieses Konto auf anderen Geräten zu verwenden, müssen Sie es zuerst auf Jami veröffentlichen. Dadurch wird ein PIN-Code erzeugt, den Sie auf dem neuen Gerät bei der Einrichtung des Kontos eingeben müssen. Diese PIN ist für 10 Minuten gültig.</string>
   <string name="account_start_export_button">PIN generieren</string>
   <string name="account_end_export_infos">Ihre PIN ist:\n\n%%\n\nUm diesen Vorgang abzuschließen, müssen Sie Jami auf dem neuen Gerät starten. Erzeugen Sie ein neues Konto mittels \"Dieses Gerät mit einem Konto verknüpfen\". Ihre PIN ist für 10 Minuten gültig.</string>

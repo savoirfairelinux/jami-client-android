@@ -88,6 +88,8 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <!--Call Fragment-->
   <string name="you_txt_prefix">Você:</string>
   <string name="action_call_hangup">Desligar</string>
+  <string name="action_call_maximize">Maximizar</string>
+  <string name="action_call_minimize">Reduzir</string>
   <string name="ongoing_call">Chamada em andamento</string>
   <string name="hist_in_call">Recebimento de chamada %1$s</string>
   <string name="hist_out_call">Chamada de saída %1$s</string>
@@ -186,6 +188,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="wizard_skip">Pular</string>
   <!--Account Summary-->
   <string name="profile">Perfil</string>
+  <string name="profile_name">Nome do perfil</string>
   <string name="profile_message_warning">Seu perfil é compartilhado apenas com seus contatos</string>
   <string name="open_the_gallery">Abrir a galeria</string>
   <string name="take_a_photo">Tirar uma foto</string>
@@ -289,4 +292,5 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="wizard_profile_info">O perfil só é compartilhado com contatos</string>
   <string name="wizard_profile_button">Salvar perfil</string>
   <string name="wizard_profile_skip">Pular e fazer depois</string>
+  <string name="fab_path_choose">Escolha outro arquivo</string>
 </resources>

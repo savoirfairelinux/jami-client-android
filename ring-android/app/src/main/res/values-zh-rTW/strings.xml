@@ -186,6 +186,7 @@
   <string name="wizard_skip">略過</string>
   <!--Account Summary-->
   <string name="profile">介紹</string>
+  <string name="profile_name">設定檔名稱</string>
   <string name="profile_message_warning">您的介紹僅與您的聯絡人分享</string>
   <string name="open_the_gallery">開啟相簿</string>
   <string name="take_a_photo">照相</string>

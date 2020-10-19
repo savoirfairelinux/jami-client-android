@@ -106,7 +106,7 @@
   <string name="hist_contact_added">Kapcsolat hozzáadva</string>
   <string name="hist_invitation_received">Meghívás megérkezett</string>
   <string name="ab_action_audio_call">Hanghívás</string>
-  <string name="ab_action_video_call">Videóhívás</string>
+  <string name="ab_action_video_call">Videohívás</string>
   <string name="ab_action_change_screen_orientation">Képernyő tájolásának megváltoztatása</string>
   <string name="share_via">Megosztás a következőn keresztül:</string>
   <string name="write_a_message">Üzenet írása</string>
@@ -187,6 +187,7 @@
   <string name="wizard_skip">Átugrani</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
+  <string name="profile_name">Profilnév</string>
   <string name="profile_message_warning">A profilja csak a kapcsolataival kerül megosztásra</string>
   <string name="open_the_gallery">Galéria megnyitása</string>
   <string name="take_a_photo">Fotó készítése</string>
@@ -207,8 +208,8 @@
   <string name="contact_request_msg">%1$s kapcsolatkérelme van</string>
   <string name="contact_request_account">Ehhez: %1$s</string>
   <string name="no_requests">Nincs kapcsolatfelvételi kérelem</string>
-  <string name="message_contact_not_trusted_yet">%smég nincs a kapcsolatban Önnel.\nAkkor elfogadja vagy elutasítja ezt a felkérést?</string>
-  <string name="message_contact_not_trusted">%snincs a kapcsolataiban.\nÚj kapcsolat hozzáadása?</string>
+  <string name="message_contact_not_trusted_yet">%s még nincs a kapcsolatban Önnel.\nAkkor elfogadja vagy elutasítja ezt a felkérést?</string>
+  <string name="message_contact_not_trusted">%s nincs a kapcsolataiban.\nÚj kapcsolat hozzáadása?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Elküld</string>
   <string name="send_request_title">Kapcsolatkérelem küldése</string>
@@ -231,10 +232,10 @@
   <string name="file_transfer_status_created">Átvitel előkészítése</string>
   <string name="file_transfer_status_unsupported">nem támogatott</string>
   <string name="file_transfer_status_wait_peer_acceptance">várakozó egyenrangú elfogadás</string>
-  <string name="file_transfer_status_wait_host_acceptance">várakozás a fogadó elfogadásra</string>
+  <string name="file_transfer_status_wait_host_acceptance">várakozó gazdagép elfogadása</string>
   <string name="file_transfer_status_ongoing">folyamatban lévő</string>
   <string name="file_transfer_status_finished">befejezett</string>
-  <string name="file_transfer_status_closed_by_host">bezárva a fogadóval</string>
+  <string name="file_transfer_status_closed_by_host">gazdagép bezárta</string>
   <string name="file_transfer_status_closed_by_peer">bezárva a egyenrangúról</string>
   <string name="file_transfer_status_invalid_pathname">érvénytelen elérési útvonala</string>
   <string name="file_transfer_status_unjoinable_peer">egyenrangú nem csatlakoztatható</string>

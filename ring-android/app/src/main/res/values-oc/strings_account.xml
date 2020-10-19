@@ -7,13 +7,19 @@
   <!--Strings related to account creation-->
   <string name="prompt_username">Nom d’utilizaire</string>
   <string name="prompt_password">Senha</string>
+  <string name="action_create">Crear compte</string>
   <string name="action_create_short">Crear</string>
   <string name="action_settings">Paramètres</string>
+  <string name="dialog_wait_create">Apondon de compte</string>
+  <string name="dialog_wait_create_details">Esperatz pendent la creacion del compte…</string>
+  <string name="dialog_wait_update">Mesa a nivèl del compte</string>
   <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_title">Suprimir lo compte ?</string>
   <!--AccountManagementFragment-->
   <string name="normal_accounts_titles">Comptes</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">General</string>
+  <string name="account_alias_label">Nom de compte</string>
   <string name="account_username_label">Nom d’utilizaire</string>
   <string name="account_password_label">Senha</string>
   <string name="account_proxy_field">Servidor mandatari</string>
@@ -34,6 +40,8 @@
   <!--restore/backup-->
   <string name="account_export_end_network_title">Error ret</string>
   <string name="account_export_end_error_title">Error</string>
+  <string name="ring_account">Compte Jami</string>
+  <string name="account_migration_title_dialog">Migracion de compte</string>
   <string name="account_cannot_be_found_title">Impossible de trobar aqueste compte</string>
   <string name="account_no_network_title">Connexion impossibla a la ret</string>
   <string name="account_new_button">Crear un compte Jami</string>

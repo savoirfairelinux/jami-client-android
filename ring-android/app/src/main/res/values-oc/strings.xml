@@ -2,6 +2,7 @@
 <resources>
   <!--About-->
   <string name="report"><u>Enviar coma corrièl</u></string>
+  <string name="sponsor_section">Jami es un logicial liure desvolopat e sostengut per</string>
   <string name="email_chooser_title">Mandadís del messatge…</string>
   <string name="description">Jami es un logicial liure per comunicacions universalas que respèctan la libertat e la vida privada de sos utilizaires.</string>
   <string name="credits">Crèdit</string>
@@ -11,6 +12,7 @@
   <!--AB menus-->
   <!--Sections-->
   <string name="menu_item_contact_request">Demanda de contacte</string>
+  <string name="menu_item_accounts">Gerir los comptes</string>
   <string name="menu_item_settings">Paramètres</string>
   <string name="menu_item_about">A prepaus de Jami</string>
   <!--Dialing Fragment-->
@@ -21,6 +23,9 @@
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">Sonada dintrada mancada</string>
+  <string name="notif_missed_outgoing_call">Sonada sortissenta mancada</string>
+  <string name="notif_channel_missed_calls">Sonadas mancadas</string>
   <string name="notif_outgoing_file_transfer_title">Mandadís del fichièr a %1$s</string>
   <!--Call Fragment-->
   <string name="action_call_maximize">Maximizar</string>
@@ -77,4 +82,5 @@
   <string name="tv_send_audio">Enviar un àudio</string>
   <string name="tv_send_video">Enviar un mèdia</string>
   <!--Wizard-->
+  <string name="wizard_password_skip">Crear compte</string>
 </resources>

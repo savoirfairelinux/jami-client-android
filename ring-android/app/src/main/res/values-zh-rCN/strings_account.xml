@@ -58,6 +58,8 @@
   <string name="account_optionnal_category">可选设置</string>
   <string name="account_useragent_label">用户代理</string>
   <string name="account_autoanswer_label">自动应答</string>
+  <string name="account_rendezvous_label">集合点模式</string>
+  <string name="account_rendezvous_summary">在集合点模式中，传入呼叫将加入会议房间。</string>
   <string name="account_upnp_label">启用 UPnP</string>
   <string name="account_proxy_field">代理</string>
   <!--Audio Details-->
@@ -134,6 +136,7 @@
   <string name="error_passwords_not_equals">密码不匹配</string>
   <string name="export_account_wait_title">请稍等…</string>
   <string name="export_account_wait_message">导出用户信息</string>
+  <string name="account_export_file">备份账户</string>
   <string name="account_export_end_decryption_message">使用该密码无法解锁您的账户。</string>
   <string name="account_export_end_network_title">网络错误</string>
   <string name="account_export_end_network_message">无法进行账户在线导出。请检查您的网络连接。</string>
@@ -168,7 +171,7 @@
   <string name="account_link_archive_button">从备份文件关联</string>
   <string name="account_link_prompt_pin">输入 PIN 码</string>
   <string name="account_new_button">创建一个 Jami 账户</string>
-  <string name="account_link_export_button">将另一设备与该账户进行连接</string>
+  <string name="account_link_export_button">关联新设备</string>
   <string name="account_link_export_info">要在其他设备上使用此账户，您必须先在 Jami 上公开它。这将生成一个 PIN 码，您必须在新设备上输入该 PIN 码才能设置此账户。PIN 码有效期为 10 分钟。</string>
   <string name="account_start_export_button">生成 PIN 码</string>
   <string name="account_end_export_button">关闭</string>
@@ -185,6 +188,7 @@
   <string name="error_username_empty">输入用户名</string>
   <string name="no_registered_name_for_account">该账户尚未注册用户名</string>
   <string name="username_available">用户名可用！</string>
+  <string name="register_name">注册名称</string>
   <string name="trying_to_register_name">正在尝试注册用户名</string>
   <string name="registered_username">已注册的用户名</string>
   <string name="register_username">注册公共用户名</string>

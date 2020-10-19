@@ -162,7 +162,7 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_link_archive_button">Prijungti iš atsarginės kopijos</string>
   <string name="account_link_prompt_pin">Įveskite PIN</string>
   <string name="account_new_button">Susikurti Jami paskyrą</string>
-  <string name="account_link_export_button">Susieti kitą įrenginį su šia paskyra</string>
+  <string name="account_link_export_button">Susieti naują įrenginį</string>
   <string name="account_link_export_info">Jei norite naudoti šią paskyrą kituose įrenginiuose, pirmiausia turite ją atskleisti „Jami“. Tai sugeneruos PIN kodą, kurį turite įvesti naujame įrenginyje, kad nustatytumėte paskyrą. PIN kodas galioja 10 minučių.</string>
   <string name="account_start_export_button">Generuoti PIN</string>
   <string name="account_end_export_button">užverti</string>
