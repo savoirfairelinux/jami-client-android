@@ -36,6 +36,7 @@
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nenhuma conta registrada</string>
   <string name="normal_accounts_titles">Contas</string>
+  <string name="normal_devices_titles">Dispositivos associados</string>
   <string name="account_device_revoke">Revogar dispositivo</string>
   <string name="account_device_revocation_success_title">Sucesso</string>
   <string name="account_device_revocation_success">Dispositivo foi revogado!</string>
@@ -44,6 +45,7 @@
   <string name="account_device_revocation_unknown_device">Dispositivo desconhecido.</string>
   <string name="account_device_revocation_error_unknown">Erro desconhecido.</string>
   <string name="account_password_change">Alterar senha</string>
+  <string name="account_password_set">Configurar senha</string>
   <string name="account_password_change_wait_message">Alterando senha da conta</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Geral</string>
@@ -56,6 +58,8 @@
   <string name="account_optionnal_category">Configurações opcionais</string>
   <string name="account_useragent_label">Agente de usuário</string>
   <string name="account_autoanswer_label">Resposta automática</string>
+  <string name="account_rendezvous_label">Modo de Encontro</string>
+  <string name="account_rendezvous_summary">No Modo de Encontro, as chamadas recebidas serão adicionadas a uma sala de conferência.</string>
   <string name="account_upnp_label">Habilitar UPnP</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Audio Details-->
@@ -132,6 +136,7 @@
   <string name="error_passwords_not_equals">Senhas não correspondem</string>
   <string name="export_account_wait_title">Por favor, aguarde...</string>
   <string name="export_account_wait_message">Exportando informações da conta</string>
+  <string name="account_export_file">Backup da conta</string>
   <string name="account_export_end_decryption_message">Não foi possível desbloquear sua conta utilizando a senha fornecida.</string>
   <string name="account_export_end_network_title">Erro de rede</string>
   <string name="account_export_end_network_message">Não foi possível exportar a conta na rede. Verifique sua conexão.</string>
@@ -166,7 +171,7 @@
   <string name="account_link_archive_button">Conectar-se a partir do backup</string>
   <string name="account_link_prompt_pin">Entre o PIN</string>
   <string name="account_new_button">Criar uma conta no Jami</string>
-  <string name="account_link_export_button">Associar outro dispositivo à esta conta</string>
+  <string name="account_link_export_button">Associar um novo dispositivo</string>
   <string name="account_link_export_info">Para usar esta conta em outros dispositivos, você deve antes expô-la no Jami. Isso gerará um código PIN que você deverá entrar no novo dispositivo para configurar a conta. Este PIN é válido por 10 minutos.</string>
   <string name="account_start_export_button">Gerar código PIN</string>
   <string name="account_end_export_button">fechar</string>
@@ -183,6 +188,7 @@
   <string name="error_username_empty">Entre um nome de usuário</string>
   <string name="no_registered_name_for_account">Nenhum nome registrado encontrado para esta conta</string>
   <string name="username_available">Nome de usuário disponível !</string>
+  <string name="register_name">Nome de registro</string>
   <string name="trying_to_register_name">Tentando registrar nome</string>
   <string name="registered_username">Nome de usuário registrado</string>
   <string name="register_username">Registrar nome de usuário público</string>

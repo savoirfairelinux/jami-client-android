@@ -162,7 +162,7 @@
   <string name="account_link_archive_button">Подключиться из резервной копии</string>
   <string name="account_link_prompt_pin">Введите PIN</string>
   <string name="account_new_button">Создать учётную запись Jami</string>
-  <string name="account_link_export_button">Привязать другое устройство к этому аккаунту</string>
+  <string name="account_link_export_button">Привязать новое устройство</string>
   <string name="account_link_export_info">Чтобы использовать этот аккаунт на других устройствах, вам необходимо сначала скопировать его в сеть Jami. При этом будет сгенерирован PIN-код, который вы должны будете ввести на новом устройстве для установки аккаунта. PIN-код действителен в течение 10 минут.</string>
   <string name="account_start_export_button">Сгенерировать PIN</string>
   <string name="account_end_export_button">закрыть</string>

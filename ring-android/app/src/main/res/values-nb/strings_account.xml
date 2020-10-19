@@ -132,7 +132,7 @@ Du kan endre kontoen din senere</string>
   <string name="account_sip_register_anyway">Registrer uansett</string>
   <string name="account_link_prompt_pin">Skriv inn PIN</string>
   <string name="account_new_button">Opprett en Jami-konto</string>
-  <string name="account_link_export_button">Lenk en annen enhet til denne kontoen</string>
+  <string name="account_link_export_button">Lenk en ny enhet</string>
   <string name="account_start_export_button">Oppretter PIN</string>
   <string name="account_end_export_button">lukk</string>
   <string name="account_export_title">Legg til enheter</string>

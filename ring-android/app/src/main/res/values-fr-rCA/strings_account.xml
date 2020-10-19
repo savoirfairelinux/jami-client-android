@@ -128,7 +128,7 @@ Vous pourrez modifier votre compte plus tard.</string>
   <string name="account_sip_register_anyway">S\'inscrire de toute façon</string>
   <string name="account_link_prompt_pin">Entrer le NIP</string>
   <string name="account_new_button">Créer un compte Jami</string>
-  <string name="account_link_export_button">Associer un autre appareil à ce compte</string>
+  <string name="account_link_export_button">Associer un nouvel appareil</string>
   <string name="account_start_export_button">Générer le NIP</string>
   <string name="account_end_export_button">fermer</string>
   <string name="account_export_title">ajouter un périphérique </string>

@@ -187,6 +187,7 @@
   <string name="wizard_skip">Überspringen</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
+  <string name="profile_name">Name des Profils</string>
   <string name="profile_message_warning">Dein Profil wird nur mit deinen Kontakten geteilt</string>
   <string name="open_the_gallery">Galerie öffnen</string>
   <string name="take_a_photo">Foto machen</string>

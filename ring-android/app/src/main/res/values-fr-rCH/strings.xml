@@ -14,6 +14,8 @@
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_incoming_call">Appel entrant</string>
+  <string name="notif_outgoing_call">Appel sortant</string>
   <!--Call Fragment-->
   <string name="ab_action_contact_add">Ajouter aux contacts</string>
   <string name="hist_contact_added">Contact ajouté</string>

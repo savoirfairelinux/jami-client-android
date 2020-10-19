@@ -30,6 +30,7 @@
   <!--restore/backup-->
   <string name="account_enter_password">Entrez votre mot de passe</string>
   <string name="account_new_button">Créer un compte Jami</string>
+  <string name="account_link_export_button">Associer un nouvel appareil</string>
   <!--Name registration-->
   <string name="register_username">Enregistrer un nom d\'utilisateur public</string>
   <string name="invalid_username">Nom d\'utilisateur incorrect</string>

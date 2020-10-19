@@ -161,7 +161,7 @@
   <string name="account_link_archive_button">Conectar da cópia de segurança</string>
   <string name="account_link_prompt_pin">Introduza o PIN</string>
   <string name="account_new_button">Criar uma conta Jami</string>
-  <string name="account_link_export_button">Associar outro dispositivo a esta conta</string>
+  <string name="account_link_export_button">Associar a um novo dispositivo</string>
   <string name="account_link_export_info">Para usar esta conta noutros dispositivos, necessita primeiro de expo-lo ao Jami. Isto irá gerar um código PIN que necessita de introduzir no novo dispositivo para configurar a sua conta. O PIN é válido por apenas 10 minutos.</string>
   <string name="account_start_export_button">Gerar código PIN</string>
   <string name="account_end_export_button">fechar</string>

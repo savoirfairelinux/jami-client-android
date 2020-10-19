@@ -126,7 +126,6 @@
   <string name="account_sip_register_anyway">Регистриране въпреки това</string>
   <string name="account_link_prompt_pin">Въведете ПИН</string>
   <string name="account_new_button">Създаване на профил в Jami</string>
-  <string name="account_link_export_button">Свързване на друго устройство с този акаунт</string>
   <string name="account_start_export_button">Генериране на PIN код</string>
   <string name="account_end_export_button">затваряне</string>
   <string name="account_export_title">Добавяне на устройства</string>

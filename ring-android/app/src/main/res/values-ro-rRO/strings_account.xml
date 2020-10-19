@@ -36,13 +36,13 @@
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nu este înscris niciun cont</string>
   <string name="normal_accounts_titles">Conturi</string>
-  <string name="normal_devices_titles">Dispozitive asociate</string>
-  <string name="account_device_revoke">Elimină dispozitivul</string>
+  <string name="normal_devices_titles">Aparate asociate</string>
+  <string name="account_device_revoke">Elimină aparatul</string>
   <string name="account_device_revocation_success_title">Succes</string>
-  <string name="account_device_revocation_success">Dispozitivul este acum eliminat!</string>
-  <string name="account_device_revocation_error_title">Dispozitivul nu poate fi eliminat</string>
+  <string name="account_device_revocation_success">Aparatul este acum eliminat!</string>
+  <string name="account_device_revocation_error_title">Aparatul nu poate fi eliminat</string>
   <string name="account_device_revocation_wrong_password">Parolă greșită.</string>
-  <string name="account_device_revocation_unknown_device">Dispozitiv necunoscut.</string>
+  <string name="account_device_revocation_unknown_device">Aparat necunoscut.</string>
   <string name="account_device_revocation_error_unknown">Eroare necunoscută.</string>
   <string name="account_password_change">Schimbă Parola</string>
   <string name="account_password_set">Pune o parolă</string>
@@ -58,6 +58,8 @@
   <string name="account_optionnal_category">Reglări Facultative</string>
   <string name="account_useragent_label">User Agent</string>
   <string name="account_autoanswer_label">Răspuns Automat</string>
+  <string name="account_rendezvous_label">Modalitate Întîlnire</string>
+  <string name="account_rendezvous_summary">În modalitatea Întîlnire, apelurile primite vor fi adăugate la o sală de conferințe.</string>
   <string name="account_upnp_label">Activează UPnP</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Audio Details-->
@@ -134,6 +136,7 @@
   <string name="error_passwords_not_equals">Parolele nu se potrivesc</string>
   <string name="export_account_wait_title">Așteaptă...</string>
   <string name="export_account_wait_message">Exportă contul Jami</string>
+  <string name="account_export_file">Copie de rezervă a contului</string>
   <string name="account_export_end_decryption_message">Contul tău nu poate fi deblocat cu parola furnizată.</string>
   <string name="account_export_end_network_title">Eroare de rețea</string>
   <string name="account_export_end_network_message">Contul nu poate fi exportat în rețea. Verifică conectarea la rețea.</string>
@@ -151,30 +154,30 @@
   <string name="account_migration_message_dialog">Conturile tale trebuie actualizate. Vrei să te duci la \"Gestionează cont\" pentru a face acest lucru ?</string>
   <string name="account_update_needed">Actualizare necesară</string>
   <string name="account_cannot_be_found_title">Nu pot găsi contul</string>
-  <string name="account_cannot_be_found_message">Contul nu poate fi găsit în rețeaua Jami.\nAsigură-te că a fost exportat pe Jami de pe un dispozitiv existent și datele de autentificare sînt corecte.</string>
+  <string name="account_cannot_be_found_message">Contul nu poate fi găsit în rețeaua Jami.\nAsigură-te că a fost exportat pe Jami dintr-un aparat existent și datele de autentificare sînt corecte.</string>
   <string name="account_sip_cannot_be_registered_message">Poți continua cu procesul de creare a contului sau poți modifica informațiile tale aici. Modificarea e posibilă ulterior în reglările contului.</string>
   <string name="account_no_network_title">Nu mă pot conecta la rețea</string>
   <string name="account_no_network_message">Contul nu poate fi adăugat deoarece Jami nu se poate conecta la rețea. Verifică conectarea la rețea.</string>
-  <string name="account_device_added_title">Cont adăugat</string>
-  <string name="account_device_added_message">Ai configurat cu succes contul Jami pe acest dispozitiv.</string>
-  <string name="account_device_updated_title">Dispozitiv actualizat</string>
+  <string name="account_device_added_title">Aparat adăugat</string>
+  <string name="account_device_added_message">Ai configurat cu succes contul Jami în acest aparat.</string>
+  <string name="account_device_updated_title">Aparat actualizat</string>
   <string name="account_device_updated_message">Ai actualizat cu succes contul tău Jami.</string>
-  <string name="account_cannot_be_updated_message">Dispozitivul asociat nu poate fi actualizat. Verifică parola.</string>
+  <string name="account_cannot_be_updated_message">Aparatul asociat nu poate fi actualizat. Verifică parola.</string>
   <string name="account_sip_success_title">Cont SIP înscris</string>
   <string name="account_sip_success_message">Ai înscris cu succes contul tău SIP.</string>
   <string name="account_sip_register_anyway">Înscrie-te oricum</string>
-  <string name="account_link_device">Conectează-te de la alt dispozitiv</string>
+  <string name="account_link_device">Conectează-te de la alt aparat</string>
   <string name="account_link_button">Conectează-te dintr-o rețea</string>
   <string name="account_link_archive_button">Conectează-te de la o copie de rezervă</string>
   <string name="account_link_prompt_pin">Introdu codul PIN</string>
   <string name="account_new_button">Creează un cont Jami</string>
-  <string name="account_link_export_button">Asociază alt dispozitiv acestui cont</string>
-  <string name="account_link_export_info">Pentru a utiliza acest cont pe alte dispozitive, trebuie să îl expui mai întîi pe Jami. Asta va genera un cod PIN pe care trebuie să-l introduci pe noul dispozitiv pentru a configura contul. Acest PIN este valabil 10 minute.</string>
+  <string name="account_link_export_button">Asociază un nou aparat</string>
+  <string name="account_link_export_info">Pentru a folosi acest cont în alte aparate, trebuie să îl expui mai întîi pe Jami. Asta va genera un cod PIN care trebuie introdus în noul aparat pentru a configura contul. Acest PIN e valabil 10 minute.</string>
   <string name="account_start_export_button">Generează PIN</string>
   <string name="account_end_export_button">închide</string>
-  <string name="account_end_export_infos">PIN-ul tău este:\n\n%%\n\nPentru a completa procesul, trebuie să deschizi Jami pe noul dispozitiv. Creează un cont nou cu \"Asociază acest dispozitiv unui cont\". Codul tău PIN este valabil 10 minute.</string>
-  <string name="account_link_export_info_light">Pentru a utiliza acest cont pe alte dispozitive, trebuie să îl expui mai întîi pe Jami. Asta va genera un cod PIN pe care trebuie să-l introduci pe noul dispozitiv pentru a configura contul. Acest PIN este valabil 10 minute.</string>
-  <string name="account_export_title">Adaugă dispozitive</string>
+  <string name="account_end_export_infos">PIN-ul tău este:\n\n%%\n\nPentru a completa procesul, trebuie să deschizi Jami în noul aparat. Creează un cont nou cu \"Asociază acest aparat unui cont\". Codul tău PIN este valabil 10 minute.</string>
+  <string name="account_link_export_info_light">Pentru a folosi acest cont în alte aparate, trebuie să îl expui mai întîi pe Jami. Asta va genera un cod PIN care trebuie introdus în noul aparat pentru a configura contul. Acest PIN e valabil 10 minute.</string>
+  <string name="account_export_title">Adaugă aparate</string>
   <string name="account_connect_server_button">Conectează-te la serverul de administrare</string>
   <string name="account_connect_button">Conectează</string>
   <string name="prompt_server">URL-ul serverului de administrare Jami</string>
@@ -185,6 +188,7 @@
   <string name="error_username_empty">Introdu un nume de utilizator</string>
   <string name="no_registered_name_for_account">Nu a fost găsit niciun nume înscris pentru acest cont</string>
   <string name="username_available">Nume de utilizator disponibil !</string>
+  <string name="register_name">Înscrie numele</string>
   <string name="trying_to_register_name">Se înscrie numele</string>
   <string name="registered_username">Nume de utilizator înscris</string>
   <string name="register_username">Înscrie numele de utilizator public</string>
@@ -203,22 +207,22 @@
   <string name="account_creation_home">Bine ai venit pe Jami</string>
   <string name="account_creation_profile">Creează profilul tău</string>
   <string name="account_creation_ring">Creează contul tău Jami</string>
-  <string name="account_link_title">Asociază acest dispozitiv</string>
+  <string name="account_link_title">Asociază acest aparat</string>
   <string name="account_sip_cannot_be_registered">Nu pot înscrie contul</string>
   <!--Edit profile-->
   <string name="account_edit_profile">Modifică profilul tău</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Introdu parola pentru confirmare</string>
   <string name="enter_password">Introdu parola</string>
-  <string name="revoke_device_title">Elimină dispozitivul</string>
+  <string name="revoke_device_title">Elimină aparatul</string>
   <string name="revoke_device_message">Sigur vrei să elimini %1$s ?</string>
   <string name="revoke_device_wait_title">Te rog așteaptă...</string>
-  <string name="revoke_device_wait_message">Se elimină dispozitivul</string>
-  <string name="rename_device_title">Redenumește acest dispozitiv</string>
-  <string name="rename_device_message">Alege un nume nou pentru a identifica acest dispozitiv în contul tău Jami</string>
-  <string name="rename_device_button">Redenumește dispozitivul</string>
-  <string name="account_rename_device_hint">Alege un nume nou pentru dispozitiv</string>
-  <string name="account_device_name_empty">Numele dispozitivului nu poate fi gol</string>
-  <string name="account_device_this_indicator">acest dispozitiv</string>
+  <string name="revoke_device_wait_message">Se elimină aparatul</string>
+  <string name="rename_device_title">Redenumește acest aparat</string>
+  <string name="rename_device_message">Alege un nume nou pentru a identifica acest aparat în contul tău Jami</string>
+  <string name="rename_device_button">Redenumește aparatul</string>
+  <string name="account_rename_device_hint">Alege un nume nou pentru aparat</string>
+  <string name="account_device_name_empty">Numele aparatului nu poate fi gol</string>
+  <string name="account_device_this_indicator">acest aparat</string>
   <string name="account_disabled_indicator">dezactivat</string>
 </resources>

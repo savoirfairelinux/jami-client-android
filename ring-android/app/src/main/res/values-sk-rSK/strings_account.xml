@@ -162,7 +162,7 @@
   <string name="account_link_archive_button">Pripojiť zo zálohy</string>
   <string name="account_link_prompt_pin">Zadajte PIN</string>
   <string name="account_new_button">Vytvoriť Jami účet</string>
-  <string name="account_link_export_button">Prepojiť ďalšie zariadenie s týmto účtom</string>
+  <string name="account_link_export_button">Prepojiť nové zariadenie</string>
   <string name="account_link_export_info">Aby ste mohli tento účet používať na viacerých zariadeniach, musíte ho najprv sprístupniť na Jami. Vygeneruje sa PIN kód, ktorý je potrebný zadať na novom zariadení. Tento kód bude funkčný 10 minút.</string>
   <string name="account_start_export_button">Vygenerovať PIN</string>
   <string name="account_end_export_button">Zavrieť</string>

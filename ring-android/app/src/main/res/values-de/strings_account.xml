@@ -45,6 +45,7 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_device_revocation_unknown_device">Unbekanntes Gerät.</string>
   <string name="account_device_revocation_error_unknown">Unbekannter Fehler.</string>
   <string name="account_password_change">Passwort ändern</string>
+  <string name="account_password_set">Passwort festlegen</string>
   <string name="account_password_change_wait_message">Kontopasswort ändern</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Allgemein</string>
@@ -57,6 +58,8 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_optionnal_category">Weitere Einstellungen</string>
   <string name="account_useragent_label">User Agent</string>
   <string name="account_autoanswer_label">Automatisch antworten</string>
+  <string name="account_rendezvous_label">Rendezvous-Modus</string>
+  <string name="account_rendezvous_summary">Im Rendezvous-Modus werden eingehende Anrufe einem Konferenzraum hinzugefügt.</string>
   <string name="account_upnp_label"> UPnP aktivieren</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Audio Details-->
@@ -133,6 +136,7 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="error_passwords_not_equals">Die Passwörter stimmen nicht überein</string>
   <string name="export_account_wait_title">Bitte warten…</string>
   <string name="export_account_wait_message">Kontodaten werden exportiert</string>
+  <string name="account_export_file">Backup Konto</string>
   <string name="account_export_end_decryption_message">Ihr Konto konnte mit dem angegebenen Passwort nicht entsperrt werden</string>
   <string name="account_export_end_network_title">Netzwerkfehler</string>
   <string name="account_export_end_network_message">Das Konto konnte nicht in das Netzwerk exportiert werden. Überprüfen sie ihre Verbindung.</string>
@@ -167,7 +171,7 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_link_archive_button">Verbindung vom Backup</string>
   <string name="account_link_prompt_pin">PIN eingeben</string>
   <string name="account_new_button">Ein Jami-Konto erstellen</string>
-  <string name="account_link_export_button">Weiteres Gerät mit diesem Konto verknüpfen</string>
+  <string name="account_link_export_button">Verbinde ein neues Gerät</string>
   <string name="account_link_export_info">Um dieses Konto auf weiteren Geräten zu verwenden, müssen Sie zuerst eine PIN generieren. Diese muss auf dem neuen Gerät eingeben werden, um das Konto zu importieren. Die PIN ist für 10 Minuten gültig.</string>
   <string name="account_start_export_button">PIN generieren</string>
   <string name="account_end_export_button">Schließen</string>
@@ -184,6 +188,7 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="error_username_empty">Benutzername eingeben</string>
   <string name="no_registered_name_for_account">Es wurde kein registrierter Name für dieses Konto gefunden</string>
   <string name="username_available">Benutzername verfügbar !</string>
+  <string name="register_name">Registriere Namen</string>
   <string name="trying_to_register_name">Name wird registriert</string>
   <string name="registered_username">Benutzername wurde registriert</string>
   <string name="register_username">Öffentlichen Benutzernamen registrieren</string>

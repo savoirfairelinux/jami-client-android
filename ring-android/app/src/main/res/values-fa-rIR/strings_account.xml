@@ -167,7 +167,7 @@
   <string name="account_link_archive_button">اتصال از طریق پشتیبان</string>
   <string name="account_link_prompt_pin">پین را وارد کنید</string>
   <string name="account_new_button">ایجاد یک حساب جمی</string>
-  <string name="account_link_export_button">پیوند دستگاهی دیگر به این حساب</string>
+  <string name="account_link_export_button">پیوند یک دستگاه جدید</string>
   <string name="account_link_export_info">برای استفاده از این حساب روی دستگاه‌های دیگر، باید ابتدا آن را روی جمی آشکار کنید. این کار یک کد پین تولید خواهد کرد که باید برای برپایی حساب، روی دستگاه جدید وارد کنید. این پین تا 10 دقیقه معتبر است.</string>
   <string name="account_start_export_button">تولید پین</string>
   <string name="account_end_export_button">بستن</string>
