@@ -77,7 +77,7 @@ echo "  - versionName: ${versionName}
     build:
       - cd ../..
       - export ANDROID_NDK_ROOT=\"\$ANDROID_NDK\"
-      - export ANDROID_ABI=\"armeabi-v7a arm64-v8a x86\"
+      - export ANDROID_ABI=\"armeabi-v7a arm64-v8a x86_64\"
       - ./compile.sh --release --daemon
     ndk: ${ndkVersion}" >> ${METADATA_FOLDER}/cx.ring.yml
 
