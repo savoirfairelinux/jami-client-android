@@ -130,7 +130,7 @@ public class ContactDetailsActivity extends AppCompatActivity {
         }
     }
 
-    static class ContactActionAdapter extends RecyclerView.Adapter<ContactActionView> {
+    private static class ContactActionAdapter extends RecyclerView.Adapter<ContactActionView> {
         private final ArrayList<ContactAction> actions = new ArrayList<>();
 
         @NonNull
