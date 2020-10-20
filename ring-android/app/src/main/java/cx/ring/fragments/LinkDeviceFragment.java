@@ -168,6 +168,7 @@ public class LinkDeviceFragment extends BaseBottomSheetFragment<LinkDevicePresen
         mBinding.progressBar.setVisibility(View.GONE);
         mBinding.accountLinkInfo.setVisibility(View.VISIBLE);
         mBinding.btnStartExport.setVisibility(View.VISIBLE);
+        mBinding.passwordLayout.setVisibility(View.VISIBLE);
     }
 
     @Override
