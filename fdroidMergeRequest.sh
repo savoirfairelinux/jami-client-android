@@ -67,7 +67,8 @@ echo "  - versionName: ${versionName}
       - client-ios
       - client-macosx
       - client-uwp
-      - client-windows
+      - client-qt
+      - plugins
       - docker
       - docs
       - lrc
