@@ -167,7 +167,7 @@ public class GeneralAccountFragment extends BasePreferenceFragment<GeneralAccoun
 
     @Override
     public void onDisplayPreferenceDialog(Preference preference) {
-        FragmentManager fragmentManager = getChildFragmentManager();
+        FragmentManager fragmentManager = getParentFragmentManager();
         if (fragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) != null) {
             return;
         }
