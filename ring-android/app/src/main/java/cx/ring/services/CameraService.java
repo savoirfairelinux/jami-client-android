@@ -930,23 +930,28 @@ public class CameraService {
                 @Override
                 public void onClosed(@NonNull CameraDevice camera) {
                     Log.w(TAG, "onClosed");
-                    if (previewCamera == camera)
-                        previewCamera = null;
-                    if (codec != null) {
-                        if (codec.first != null) {
-                            if (codecStarted[0])
-                                codec.first.signalEndOfInputStream();
-                            codec.first.release();
-                            if (codec.first == currentCodec)
-                                currentCodec = null;
+                    try {
+                        if (previewCamera == camera)
+                            previewCamera = null;
+                        if (codec != null) {
+                            if (codec.first != null) {
+                                if (codecStarted[0])
+                                    codec.first.signalEndOfInputStream();
+                                codec.first.release();
+                                if (codec.first == currentCodec)
+                                    currentCodec = null;
+                                codecStarted[0] = false;
+                            }
+                            if (codec.second != null)
+                                codec.second.release();
                         }
-                        if (codec.second != null)
-                            codec.second.release();
+                        if (reader != null) {
+                            reader.close();
+                        }
+                        s.release();
+                    } catch (Exception e) {
+                        Log.w(TAG, "Error stopping codec", e);
                     }
-                    if (reader != null) {
-                        reader.close();
-                    }
-                    s.release();
                 }
             }, handler);
         } catch (SecurityException e) {
