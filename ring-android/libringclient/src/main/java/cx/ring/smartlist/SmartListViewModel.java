@@ -58,8 +58,6 @@ public class SmartListViewModel
     }
     private final Title title;
 
-    public String picture_b64 = null;
-
     public SmartListViewModel(String accountId, CallContact contact, Interaction lastEvent) {
         this.accountId = accountId;
         this.contact = Collections.singletonList(contact);
@@ -112,7 +110,6 @@ public class SmartListViewModel
         uri = null;
         hasUnreadTextMessage = false;
         lastEvent = null;
-        picture_b64 = null;
         showPresence = false;
         this.title = title;
     }

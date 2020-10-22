@@ -94,21 +94,11 @@ public class SmartListViewHolder extends RecyclerView.ViewHolder {
                 binding.convLastItem.setTypeface(null, Typeface.NORMAL);
             }
 
-            CallContact contact = smartListViewModel.getContact();
-            if (contact != null) {
-                binding.photo.setImageDrawable(
-                        new AvatarDrawable.Builder()
-                                .withContact(contact)
-                                .withCircleCrop(true)
-                                .build(binding.photo.getContext()));
-            } else {
-                binding.photo.setImageDrawable(
-                        new AvatarDrawable.Builder()
-                                .withPhoto(BitmapUtils.base64ToBitmap(smartListViewModel.picture_b64))
-                                .withNameData(smartListViewModel.getContactName(), smartListViewModel.getUuid())
-                                .withCircleCrop(true)
-                                .build(binding.photo.getContext()));
-            }
+            binding.photo.setImageDrawable(
+                    new AvatarDrawable.Builder()
+                            .withContact(smartListViewModel.getContact())
+                            .withCircleCrop(true)
+                            .build(binding.photo.getContext()));
         } else if (headerBinding != null) {
             headerBinding.headerTitle.setText(smartListViewModel.getHeaderTitle() == SmartListViewModel.Title.Conversations
                     ? R.string.navigation_item_conversation : R.string.search_results_public_directory);

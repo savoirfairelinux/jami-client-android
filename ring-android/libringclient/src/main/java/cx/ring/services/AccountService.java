@@ -1455,7 +1455,7 @@ public class AccountService {
             String picture_b64 = m.get("profilePicture");
             CallContact contact = account.getContactFromCache(uri);
             contact.setUsername(username);
-            contact.setProfile(firstName + " " + lastName, picture_b64);
+            contact.setProfile(firstName + " " + lastName, mVCardService.base64ToBitmap(picture_b64));
             r.results.add(contact);
         }
         searchResultSubject.onNext(r);
