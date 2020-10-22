@@ -103,26 +103,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
     }
 
     public void conversationClicked(SmartListViewModel viewModel) {
-        if (viewModel.getContact() != null)
-            startConversation(viewModel.getAccountId(), viewModel.getContact());
-        else if (viewModel.getUuid() != null) {
-            // Search results with no ID
-            mCompositeDisposable.add(mAccountService
-                    .findRegistrationByName(viewModel.getAccountId(), "", viewModel.getUuid())
-                    .observeOn(Schedulers.io())
-                    .flatMap(r -> mConversationFacade.startConversation(viewModel.getAccountId(), new Uri(r.address)))
-                    .map(c -> {
-                        CallContact contact = c.getContact();
-                        contact.setUsername(viewModel.getUuid());
-                        contact.setProfile(viewModel.getContactName(), mContactService.base64ToBitmap(viewModel.picture_b64));
-                        mContactService.saveVCardContact(viewModel.getAccountId(), contact.getPrimaryNumber(), viewModel.getContactName(), viewModel.picture_b64)
-                                .subscribe();
-                        return contact;
-                    })
-                    .observeOn(mUiScheduler)
-                    .subscribe(contact -> startConversation(viewModel.getAccountId(), contact)
-                            , e -> Log.e(TAG, "Error opening conversation", e)));
-        }
+        startConversation(viewModel.getAccountId(), viewModel.getContact());
     }
 
     public void conversationLongClicked(SmartListViewModel smartListViewModel) {

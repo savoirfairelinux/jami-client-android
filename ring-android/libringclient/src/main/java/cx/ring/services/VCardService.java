@@ -38,5 +38,6 @@ public abstract class VCardService {
     public abstract void migrateContact(Map<String, CallContact> contacts, String accountId);
     public abstract void migrateProfiles(List<String> accountIds);
     public abstract void deleteLegacyProfiles();
+    public abstract Object base64ToBitmap(String base64);
 
 }

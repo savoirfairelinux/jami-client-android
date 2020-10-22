@@ -336,6 +336,8 @@ public class Account {
     }
 
     public CallContact getContactFromCache(String key) {
+        if (StringUtils.isEmpty(key))
+            return null;
         synchronized (mContactCache) {
             CallContact contact = mContactCache.get(key);
             if (contact == null) {

@@ -190,4 +190,9 @@ public class VCardServiceImpl extends VCardService {
 
         legacyProfileFolder.delete();
     }
+
+    @Override
+    public Object base64ToBitmap(String base64) {
+        return BitmapUtils.base64ToBitmap(base64);
+    }
 }

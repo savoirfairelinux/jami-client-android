@@ -449,9 +449,4 @@ public class ContactServiceImpl extends ContactService {
                 .subscribeOn(Schedulers.io());
     }
 
-    @Override
-    public Object base64ToBitmap(String base64) {
-        return BitmapUtils.base64ToBitmap(base64);
-    }
-
 }
