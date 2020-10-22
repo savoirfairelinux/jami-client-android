@@ -1445,18 +1445,19 @@ public class AccountService {
         Account account = getAccount(accountId);
         UserSearchResult r = new UserSearchResult(accountId, query);
         r.state = state;
-        r.results = new ArrayList<>(results.size());//results.stream().map(item -> new User(item)).collect(Collectors.toList());
+        r.results = new ArrayList<>(results.size());
         for (Map<String, String> m : results) {
-            String uri = m.get("uri");
+            String uri = m.get("id");
             String username = m.get("username");
             String firstName = m.get("firstName");
             String lastName = m.get("lastName");
-            //String organization = m.get("organization");
             String picture_b64 = m.get("profilePicture");
             CallContact contact = account.getContactFromCache(uri);
-            contact.setUsername(username);
-            contact.setProfile(firstName + " " + lastName, picture_b64);
-            r.results.add(contact);
+            if (contact != null) {
+                contact.setUsername(username);
+                contact.setProfile(firstName + " " + lastName, mVCardService.base64ToBitmap(picture_b64));
+                r.results.add(contact);
+            }
         }
         searchResultSubject.onNext(r);
     }
