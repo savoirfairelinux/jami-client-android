@@ -581,24 +581,22 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent resultData) {
         Log.w(TAG, "onActivityResult: " + requestCode + " " + resultCode + " " + resultData);
-        super.onActivityResult(requestCode, resultCode, resultData);
-
-        if (requestCode == REQUEST_CODE_FILE_PICKER && resultCode == RESULT_OK) {
-            if (resultData == null) {
-                return;
+        if (resultData == null) {
+            return;
+        }
+        android.net.Uri uri = resultData.getData();
+        if (requestCode == REQUEST_CODE_FILE_PICKER) {
+            if (resultCode == RESULT_OK && uri != null) {
+                startFileSend(AndroidFileUtils.getCacheFile(requireContext(), uri)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .flatMapCompletable(this::sendFile));
             }
-            android.net.Uri uri = resultData.getData();
-            if (uri == null) {
-                return;
-            }
-            startFileSend(AndroidFileUtils.getCacheFile(requireContext(), uri)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .flatMapCompletable(this::sendFile));
         } else if (requestCode == REQUEST_CODE_TAKE_PICTURE
                 || requestCode == REQUEST_CODE_CAPTURE_AUDIO
-                || requestCode == REQUEST_CODE_CAPTURE_VIDEO) {
+                || requestCode == REQUEST_CODE_CAPTURE_VIDEO)
+        {
             if (resultCode != RESULT_OK) {
                 mCurrentPhoto = null;
                 return;
@@ -606,9 +604,8 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             Log.w(TAG, "onActivityResult: mCurrentPhoto " + mCurrentPhoto.getAbsolutePath() + " " + mCurrentPhoto.exists() + " " + mCurrentPhoto.length());
             Single<File> file = null;
             if (mCurrentPhoto == null || !mCurrentPhoto.exists() || mCurrentPhoto.length() == 0) {
-                android.net.Uri createdUri = resultData.getData();
-                if (createdUri != null) {
-                    file = AndroidFileUtils.getCacheFile(requireContext(), createdUri);
+                if (uri != null) {
+                    file = AndroidFileUtils.getCacheFile(requireContext(), uri);
                 }
             } else {
                 file = Single.just(mCurrentPhoto);
@@ -621,13 +618,11 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             startFileSend(file.flatMapCompletable(this::sendFile));
         }
         // File download trough SAF
-        else if(requestCode == ConversationFragment.REQUEST_CODE_SAVE_FILE
-                && resultCode == RESULT_OK){
-            if (resultData != null && resultData.getData() != null ) {
-                writeToFile(resultData.getData());
+        else if (requestCode == ConversationFragment.REQUEST_CODE_SAVE_FILE) {
+            if (resultCode == RESULT_OK &&  uri != null) {
+                writeToFile(uri);
             }
         }
-
     }
 
     private void writeToFile(android.net.Uri data) {
