@@ -1338,8 +1338,8 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     @Override
-    public void toggleCallMediaHandler(String id, boolean toggle) {
-        Ringservice.toggleCallMediaHandler(id, toggle);
+    public void toggleCallMediaHandler(String id, String callId, boolean toggle) {
+        Ringservice.toggleCallMediaHandler(id, callId, toggle);
     }
 
     public Map<String, String> getCallMediaHandlerDetails(String id) {
