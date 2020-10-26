@@ -95,6 +95,13 @@ public class VCardServiceImpl extends VCardService {
         return Single.fromCallable(() -> readData(vcard));
     }
 
+    @Override
+    public Single<Tuple<String, Object>> peerProfileReceived(String accountId, String peerId, File vcard)
+    {
+        return VCardUtils.peerProfileReceived(mContext.getFilesDir(), accountId, peerId, vcard)
+                .map(VCardServiceImpl::readData);
+    }
+
     public static Tuple<String, Object> readData(VCard vcard) {
         return readData(VCardUtils.readData(vcard));
     }

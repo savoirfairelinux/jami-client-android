@@ -19,6 +19,7 @@
  */
 package cx.ring.services;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +36,8 @@ public abstract class VCardService {
     public abstract Single<VCard> loadSmallVCard(String accountId, int maxSize);
     public abstract Single<VCard> saveVCardProfile(String accountId, String uri, String displayName, String picture);
     public abstract Single<Tuple<String, Object>> loadVCardProfile(VCard vcard);
+    public abstract Single<Tuple<String, Object>> peerProfileReceived(String accountId, String peerId, File vcard);
+
     public abstract void migrateContact(Map<String, CallContact> contacts, String accountId);
     public abstract void migrateProfiles(List<String> accountIds);
     public abstract void deleteLegacyProfiles();

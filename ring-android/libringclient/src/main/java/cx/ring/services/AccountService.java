@@ -1294,6 +1294,16 @@ public class AccountService {
                 .subscribe(account::setProfile, e -> Log.e(TAG, "Error saving profile", e));
     }
 
+    void profileReceived(String accountId, String peerId, String vcardPath) {
+        Account account = getAccount(accountId);
+        if (account == null)
+            return;
+        Log.w(TAG, "profileReceived: " + accountId + ", " + peerId + ", " + vcardPath);
+        CallContact contact = account.getContactFromCache(peerId);
+        mVCardService.peerProfileReceived(accountId, peerId, new File(vcardPath))
+                .subscribe(profile -> contact.setProfile(profile.first, profile.second), e -> Log.e(TAG, "Error saving contact profile", e));
+    }
+
     void incomingAccountMessage(String accountId, String messageId, String callId, String from, Map<String, String> messages) {
         Log.d(TAG, "incomingAccountMessage: " + accountId + " " + messages.size());
         Message message = new Message();

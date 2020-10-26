@@ -214,4 +214,14 @@ public final class VCardUtils {
                 .subscribe(vc -> {}, e -> Log.e(TAG, "Error while saving vcard", e));
         return vcard;
     }
+
+    public static Single<VCard> peerProfileReceived(File filesDir, String accountId, String peerId, File vcard) {
+        return Single.fromCallable(() -> {
+            String filename = peerId + ".vcf";
+            File peerProfilePath = VCardUtils.peerProfilePath(filesDir, accountId);
+            File file = new File(peerProfilePath, filename);
+            FileUtils.moveFile(vcard, file);
+            return VCardUtils.loadFromDisk(file);
+        }).subscribeOn(Schedulers.io());
+    }
 }

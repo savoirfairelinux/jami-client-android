@@ -146,6 +146,11 @@ public class DaemonService {
         }
 
         @Override
+        public void profileReceived(String accountId, String peerId, String path) {
+            mExecutor.submit(() -> mAccountService.profileReceived(accountId, peerId, path));
+        }
+
+        @Override
         public void accountProfileReceived(String account_id, String name, String photo) {
             mExecutor.submit(() -> mAccountService.accountProfileReceived(account_id, name, photo));
         }
