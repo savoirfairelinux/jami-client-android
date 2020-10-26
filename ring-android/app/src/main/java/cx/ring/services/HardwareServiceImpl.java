@@ -494,8 +494,8 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         mMediaHandlerId = mediaHandlerId;
     }
 
-    private void toggleMediaHandler() {
-        toggleCallMediaHandler(mMediaHandlerId, true);
+    private void toggleMediaHandler(String callId) {
+        toggleCallMediaHandler(mMediaHandlerId, callId, true);
     }
 
     public void stopMediaHandler() {
@@ -553,14 +553,14 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                     public void onOpened() {
                         String currentCall = conf != null ? conf.getConfId() : null;
                         if (!TextUtils.isEmpty(mPluginCallId) && !mPluginCallId.equals(currentCall)) {
-                            toggleCallMediaHandler("", false);
+                            toggleCallMediaHandler("", conf.getId(), false);
                             mIsChoosePlugin = false;
                             mMediaHandlerId = "";
                             mPluginCallId = "";
                         }
                         else if (mIsChoosePlugin && !mMediaHandlerId.isEmpty())
                             mPluginCallId = conf != null ? conf.getConfId() : null;
-                            toggleMediaHandler();
+                            toggleMediaHandler(conf.getId());
                     }
 
                     @Override

@@ -622,7 +622,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     public void toggleCallMediaHandler(String id, boolean toggle)
     {
         if (mConference != null && mConference.isOnGoing() && mConference.hasVideo()) {
-            getView().toggleCallMediaHandler(id, toggle);
+            getView().toggleCallMediaHandler(id, mConference.getId(), toggle);
         }
     }
 
