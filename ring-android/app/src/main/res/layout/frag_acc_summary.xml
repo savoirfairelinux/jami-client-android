@@ -249,7 +249,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:divider="@null"
-                    android:nestedScrollingEnabled="true" />
+                    android:nestedScrollingEnabled="true"
+                    tools:listitem="@layout/item_device"/>
 
                 <TextView
                     android:id="@+id/empty_account_list"

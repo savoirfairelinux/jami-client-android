@@ -71,7 +71,7 @@ public class TwoButtonEditText extends LinearLayout {
         mContext = context;
 
         setOrientation(HORIZONTAL);
-        setBackground(getResources().getDrawable(R.drawable.background_jami_edittext));
+        setBackground(context.getDrawable(R.drawable.background_jami_edittext));
 
         LayoutInflater.from(context).inflate(R.layout.item_two_button_edittext, this, true);
 

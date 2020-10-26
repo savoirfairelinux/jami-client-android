@@ -8,21 +8,21 @@
         android:id="@+id/edit_text_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:textColorHint="@color/text_hint"
-        app:hintTextColor="@color/text_hint"
-        android:layout_weight="1">
+        app:hintTextColor="@color/text_hint">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/transparent"
-            android:textStyle="bold"
-            android:lines="1"
             android:ellipsize="end"
+            android:lines="1"
             android:singleLine="true"
             android:textColor="@color/text_color"
-            />
+            android:textIsSelectable="true"
+            android:textStyle="bold" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -30,23 +30,21 @@
         android:id="@+id/btn_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="?selectableItemBackgroundBorderless"
         android:layout_gravity="center_vertical"
         android:layout_marginEnd="2dp"
+        android:background="?selectableItemBackgroundBorderless"
         android:padding="2dp"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btn_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="?selectableItemBackgroundBorderless"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="2dp"
         android:layout_marginEnd="4dp"
+        android:background="?selectableItemBackgroundBorderless"
         android:padding="2dp"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
 
 </merge>
