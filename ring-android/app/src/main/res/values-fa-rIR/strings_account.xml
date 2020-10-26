@@ -45,6 +45,7 @@
   <string name="account_device_revocation_unknown_device">دستگاه ناشناس.</string>
   <string name="account_device_revocation_error_unknown">خطای ناشناخته.</string>
   <string name="account_password_change">تغییر گذرواژه</string>
+  <string name="account_password_set">تعیین گذرواژه</string>
   <string name="account_password_change_wait_message">تغییر گذرواژه حساب</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">عمومی</string>
@@ -133,6 +134,7 @@
   <string name="error_passwords_not_equals">گذرواژه‌ها یکسان نیستند</string>
   <string name="export_account_wait_title">لطفا صبر کنید…</string>
   <string name="export_account_wait_message">برون‌برد اطلاعات حساب</string>
+  <string name="account_export_file">پشتیبان‌گیری حساب</string>
   <string name="account_export_end_decryption_message">نمی‌توان قفل حسابتان را با گذرواژه  ارائه‌شده گشود.</string>
   <string name="account_export_end_network_title">خطای شبکه</string>
   <string name="account_export_end_network_message">برون‌برد حساب روی شبکه مقدور نبود. اتصال خود را بررسی کنید.</string>
@@ -184,6 +186,7 @@
   <string name="error_username_empty">یک نام کاربری وارد کنید</string>
   <string name="no_registered_name_for_account">هیچ نام ثبت‌شده‌ای برای این حساب پیدا نشد</string>
   <string name="username_available">نام کاربری در‌دسترس است!</string>
+  <string name="register_name">ثبت نام</string>
   <string name="trying_to_register_name">در حال تلاش برای ثبت نام</string>
   <string name="registered_username">نام کاربری ثبت‌شده</string>
   <string name="register_username">ثبت نام کاربری عمومی</string>

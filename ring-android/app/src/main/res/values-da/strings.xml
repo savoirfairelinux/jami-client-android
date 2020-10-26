@@ -2,7 +2,9 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Tilbagemelding</string>
+  <string name="report">Send os en email</string>
   <string name="section_license">Licens</string>
+  <string name="sponsor_section">Jami er fri software udviklet og understøttet af</string>
   <string name="copyright_section">Ophavsret</string>
   <string name="contribute_section">Bidrag</string>
   <string name="version_section">Version</string>
@@ -12,9 +14,12 @@
   <string name="website_chooser_title">Vis websted med...</string>
   <string name="description">Jami is free software for universal communication which respects the freedoms and privacy of its users. (Näcken)</string>
   <string name="credits">Krediteringer</string>
+  <string name="call_service_description">Denne service er nødvendig for at holde opkald kørende i baggrunden. Den kører kun under opkald.</string>
+  <string name="data_transfer_service_description">Denne service er nødvendig for at vise persistente notifikationer under fil overførelser. Den kører kunder under fil overførelser.</string>
   <!--About dialog-->
   <string name="developed_by">Udviklet af</string>
   <string name="designed_by">Designet af</string>
+  <string name="ringtones_by">Ringetoner af</string>
   <!--RingActivity-->
   <string name="error_no_network">Ingen netværksforbindelse</string>
   <string name="error_mobile_network_available_but_disabled">Venligst tillad adgang til telefon netværk under Indstillinger.</string>
@@ -25,6 +30,7 @@
   <string name="menu_item_accounts">Håndtér konti</string>
   <string name="menu_item_account">Håndter konto</string>
   <string name="menu_item_settings">Indstillinger</string>
+  <string name="menu_item_plugin_list">Plugin Indstillinger</string>
   <string name="menu_item_share">Del min kontakt</string>
   <string name="menu_item_about">Om Jami</string>
   <!--Dialing Fragment-->
@@ -37,6 +43,7 @@
     <item quantity="other">%d samtaler</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Søg efter navn og telefonnummer...</string>
   <string name="choose_number">Vælg et nummer</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -47,27 +54,51 @@
   <string name="notif_incoming_call">Indgående opkald</string>
   <string name="notif_outgoing_call_title">Udgående opkald til %1$s</string>
   <string name="notif_outgoing_call">Udgående opkald</string>
+  <string name="notif_current_call_title">Igangværende opkald med %1$s</string>
   <string name="notif_current_call">Igangværende opkald</string>
+  <string name="notif_channel_call_in_progress">Igangværende Opkald</string>
   <string name="notif_channel_calls">Opkald</string>
   <string name="notif_channel_missed_calls">Ubesvarede opkald</string>
+  <string name="notif_channel_incoming_calls">Indkommende opkald</string>
   <string name="notif_channel_messages">Beskeder</string>
   <string name="notif_channel_requests">Forespørgsler</string>
   <string name="notif_channel_file_transfer">Filoverførsler</string>
+  <string name="notif_channel_sync">Data synkronisering</string>
+  <string name="notif_channel_background_service">Baggrundsservice</string>
+  <string name="notif_channel_background_service_descr">Tillader modtagelse af opkald og meddelelser til enhver tid.</string>
   <string name="notif_group_calls">Opkald</string>
+  <string name="notif_background_service">Jami kører for nuværende i baggrunden</string>
   <string name="notif_mark_as_read">Marker som læst</string>
   <string name="notif_dismiss">Afvis</string>
   <string name="notif_reply">Svar</string>
   <string name="notif_incoming_file_transfer_title">Indgående fil fra %1$s</string>
   <string name="notif_outgoing_file_transfer_title">Sender fil til %1$s</string>
   <string name="notif_incoming_picture">Billede fra %1$s</string>
+  <string name="notif_sync_title">Synkroniserer data...</string>
+  <string name="notif_location_title">Deler lokation med %1$s</string>
+  <string name="location_share_contact">%1$s deler sin lokation med dig</string>
+  <string name="notif_location_multi_title">Deler lokation med %1$d kontakter</string>
+  <string name="notif_location_remaining">%1$dminutter tilbage</string>
+  <string name="notif_location_action_stop">Stop deling af lokation</string>
+  <string name="location_share_action_start">Start deling</string>
+  <string name="location_share_action_stop">Stop deling</string>
+  <string name="location_share_about_title">Kort information</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Dig:</string>
   <string name="action_call_hangup">Læg på</string>
+  <string name="action_call_maximize">Maksimer</string>
+  <string name="action_call_minimize">Reducer</string>
   <string name="ongoing_call">Igangværende opkald</string>
   <string name="hist_in_call">Indgående opkald af %1$s</string>
   <string name="hist_out_call">Udgående opkald af %1$s</string>
+  <string name="start_error_title">Kan ikke starte Jami!</string>
+  <string name="start_error_mic_required">Jami kræver adgang til mikrofonen for at virke.</string>
   <string name="action_call_accept">Besvar opkald</string>
+  <string name="action_call_hold_accept">Put på hold og tag besvar opkald</string>
+  <string name="action_call_end_accept">Afslut og besvar opkald</string>
   <string name="action_call_decline">Afvis</string>
+  <string name="action_call_mic_mute">Sluk mikrofon</string>
+  <string name="action_load_plugin">Indlæs plugin</string>
   <string name="ab_action_speakerphone">Aktiver højtaler</string>
   <string name="ab_action_contact_add">Tilføj til kontakt</string>
   <string name="ab_action_contact_add_question">Tilføj til kontakter?</string>
@@ -80,6 +111,7 @@
   <string name="write_a_message">Skriv en besked</string>
   <string name="scan_qr">Scan QR-kode</string>
   <string name="ab_action_flipcamera">Flip-kamera</string>
+  <string name="ab_action_hidepreview">Skjul forhåndsvisning</string>
   <!--Text messages-->
   <string name="send_message">Send besked</string>
   <string name="message_sending">Sender besked...</string>
@@ -88,6 +120,9 @@
   <string name="send_file">Send fil</string>
   <string name="hist_file_sent">Fil sendt</string>
   <string name="hist_file_received">Fil modtaget</string>
+  <string name="conversation_send_audio">Optag lyd klip</string>
+  <string name="conversation_send_video">Optag video klip</string>
+  <string name="conversation_share_location">Del lokation</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera-tilladelse</string>
   <string name="permission_dialog_camera_message">Video-samtaler kræver kamera-tilladelse for at fungere. Overvej venligst at give denne tilladelse.</string>
@@ -95,6 +130,7 @@
   <string name="ringtone_error_title">Fejl</string>
   <string name="ringtone_error_format_not_supported">Dette format understøttes ikke.</string>
   <string name="ringtone_error_size_too_big">Filen er for stor. Maksimumstørrelsen er %1$dkB.</string>
+  <string name="ringtone_custom_prompt">Anvend en brugerdefineret ringetone</string>
   <string name="ringtone_custom_label">Brugerdefineret</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
@@ -193,5 +229,6 @@
   <string name="tv_audio_pause">Pause</string>
   <string name="tv_dialog_send">Send</string>
   <!--Wizard-->
+  <string name="wizard_username_info">Vælg et brugernavn til din konto</string>
   <string name="wizard_password_skip">Opret konto</string>
 </resources>

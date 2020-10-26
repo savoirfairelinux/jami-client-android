@@ -58,6 +58,8 @@
   <string name="account_optionnal_category">Axustes optativos</string>
   <string name="account_useragent_label">User Agent</string>
   <string name="account_autoanswer_label">Resposta automática</string>
+  <string name="account_rendezvous_label">Modo Xuntanza</string>
+  <string name="account_rendezvous_summary">No modo Xuntanza as chamadas entrantes engadiranse a unha sala de conferencia.</string>
   <string name="account_upnp_label">Activar UPnP</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Audio Details-->
@@ -169,6 +171,7 @@
   <string name="account_link_archive_button">Conectar desde copia de apoio</string>
   <string name="account_link_prompt_pin">Escribe o PIN</string>
   <string name="account_new_button">Crear conta Jami</string>
+  <string name="account_link_export_button">Ligar un novo dispositio</string>
   <string name="account_link_export_info">Para usar esta conta en outros dispositivos primeiro tes que exportala en Jami. Esto creará un código PIN que tes que escribir no novo dispositivo para configuralo. O PIN é válido durante 10 minutos.</string>
   <string name="account_start_export_button">Crear PIN</string>
   <string name="account_end_export_button">pechar</string>
