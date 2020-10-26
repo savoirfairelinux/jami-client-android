@@ -35,6 +35,13 @@ along with this program; if not, write to the Free Software
             android:key="Account.autoAnswer"
             android:persistent="false"
             android:title="@string/account_autoanswer_label" />
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="Account.rendezVous"
+            android:persistent="false"
+            android:title="@string/account_rendezvous_label"
+            android:summary="@string/account_rendezvous_summary"
+            android:icon="@drawable/baseline_group_24" />
     </androidx.preference.PreferenceCategory>
 
     <androidx.preference.PreferenceCategory android:title="@string/account_conversation_settings_title">
