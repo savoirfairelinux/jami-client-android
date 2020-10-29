@@ -150,8 +150,7 @@ public class ConversationActivity extends AppCompatActivity implements Colorable
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        return MediaButtonsHelper.handleMediaKeyCode(keyCode, mConversationFragment)
-                || super.onKeyDown(keyCode, event);
+        return super.onKeyDown(keyCode, event);
     }
 
     public void setColor(@ColorInt int color) {
