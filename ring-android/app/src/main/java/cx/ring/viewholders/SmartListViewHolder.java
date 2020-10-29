@@ -28,6 +28,7 @@ import cx.ring.model.Interaction;
 import cx.ring.model.SipCall;
 import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.BitmapUtils;
+import cx.ring.utils.ResourceMapper;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -134,11 +135,14 @@ public class SmartListViewHolder extends RecyclerView.ViewHolder {
                 return context.getString(R.string.hist_invitation_received);
             }
         } else if (e.getType() == (Interaction.InteractionType.DATA_TRANSFER)) {
-            if (!e.isIncoming()) {
-                return context.getString(R.string.hist_file_sent);
-            } else {
-                return context.getString(R.string.hist_file_received);
+            if (e.getStatus() == Interaction.InteractionStatus.TRANSFER_FINISHED) {
+                if (!e.isIncoming()) {
+                    return context.getString(R.string.hist_file_sent);
+                } else {
+                    return context.getString(R.string.hist_file_received);
+                }
             }
+            return ResourceMapper.getReadableFileTransferStatus(context, e.getStatus());
         }
         return null;
     }
