@@ -148,12 +148,6 @@ public class ConversationActivity extends AppCompatActivity implements Colorable
         super.onSaveInstanceState(outState);
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        return MediaButtonsHelper.handleMediaKeyCode(keyCode, mConversationFragment)
-                || super.onKeyDown(keyCode, event);
-    }
-
     public void setColor(@ColorInt int color) {
         colouriseToolbar(binding.mainToolbar, color);
         //mToolbar.setBackground(new ColorDrawable(color));
