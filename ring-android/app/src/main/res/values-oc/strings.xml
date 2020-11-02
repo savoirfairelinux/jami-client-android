@@ -36,6 +36,7 @@
   <!--Text messages-->
   <string name="send_message">Enviar messatge</string>
   <string name="message_sending">Mandadís del messatge…</string>
+  <string name="time_just_now">Ara meteis</string>
   <string name="send_file">Enviar un fichiè</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
