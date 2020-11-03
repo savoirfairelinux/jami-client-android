@@ -39,7 +39,7 @@ public class JamiFirebaseMessagingService extends FirebaseMessagingService {
             PowerManager pm = (PowerManager)getSystemService(Context.POWER_SERVICE);
             PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "wake:push");
             wl.setReferenceCounted(false);
-            wl.acquire(20 * 1000);
+            wl.acquire(10 * 1000);
         } catch (Exception e) {
             Log.w("JamiFirebaseMessaging", "Can't acquire wake lock", e);
         }

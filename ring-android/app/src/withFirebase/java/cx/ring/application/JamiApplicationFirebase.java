@@ -21,11 +21,11 @@ package cx.ring.application;
 import android.util.Log;
 
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.RemoteMessage;
 
 public class JamiApplicationFirebase extends JamiApplication {
-    static private String TAG = JamiApplicationFirebase.class.getSimpleName();
+    static private final String TAG = JamiApplicationFirebase.class.getSimpleName();
     private String pushToken = null;
 
     @Override
@@ -33,10 +33,10 @@ public class JamiApplicationFirebase extends JamiApplication {
         super.onCreate();
         try {
             FirebaseApp.initializeApp(this);
-            FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(c -> {
+            FirebaseMessaging.getInstance().getToken().addOnSuccessListener(token -> {
                 Log.w(TAG, "Found push token");
                 try {
-                    setPushToken(c.getResult().getToken());
+                    setPushToken(token);
                 } catch (Exception e) {
                     Log.e(TAG, "Can't set push token", e);
                 }
