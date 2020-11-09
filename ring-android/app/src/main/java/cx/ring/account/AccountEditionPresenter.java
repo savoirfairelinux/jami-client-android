@@ -40,7 +40,9 @@ public class AccountEditionPresenter extends RootPresenter<AccountEditionView> {
     }
 
     public void init(String accountId) {
-        init(mAccountService.getAccount(accountId));
+        Account account = mAccountService.getAccount(accountId);
+        if (account != null)
+            init(account);
         mCompositeDisposable.add(mAccountService
                 .getCurrentAccountSubject()
                 .observeOn(mUiScheduler)

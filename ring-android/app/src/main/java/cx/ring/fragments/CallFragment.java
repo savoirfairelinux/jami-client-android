@@ -796,7 +796,11 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             }
         } else if (requestCode == REQUEST_CODE_SCREEN_SHARE) {
             if (resultCode == Activity.RESULT_OK && data != null) {
-                startScreenShare(mProjectionManager.getMediaProjection(resultCode, data));
+                try {
+                    startScreenShare(mProjectionManager.getMediaProjection(resultCode, data));
+                } catch (Exception e) {
+                    Log.w(TAG, "Error starting screen sharing", e);
+                }
             } else {
                 binding.callScreenshareBtn.setChecked(false);
             }
@@ -850,7 +854,10 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     @Override
     public void displayContactBubble(final boolean display) {
-        binding.contactBubbleLayout.getHandler().post(() -> binding.contactBubbleLayout.setVisibility(display ? View.VISIBLE : View.GONE));
+        if (binding != null)
+            binding.contactBubbleLayout.getHandler().post(() -> {
+                if (binding != null) binding.contactBubbleLayout.setVisibility(display ? View.VISIBLE : View.GONE);
+            });
     }
 
     @Override
