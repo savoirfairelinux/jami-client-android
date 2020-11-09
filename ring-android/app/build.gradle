@@ -77,7 +77,7 @@ android {
 }
 
 dependencies {
-    def dagger_version = '2.28.3'
+    def dagger_version = '2.29.1'
 
     implementation fileTree(include: '*.jar', dir: 'libs')
     implementation project(':libringclient')
