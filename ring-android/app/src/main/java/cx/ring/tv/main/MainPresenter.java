@@ -24,6 +24,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -82,7 +83,7 @@ public class MainPresenter extends RootPresenter<MainView> {
                         vms.add((SmartListViewModel) ob);
                     return vms;
                 }))
-                //.throttleLatest(150, TimeUnit.MILLISECONDS, mUiScheduler)
+                .throttleLatest(150, TimeUnit.MILLISECONDS, mUiScheduler)
                 .observeOn(mUiScheduler)
                 .subscribe(viewModels -> {
                     final MainView view = getView();
@@ -90,22 +91,20 @@ public class MainPresenter extends RootPresenter<MainView> {
                     view.showContacts(viewModels);
                 }, e -> Log.w(TAG, "showConversations error ", e)));
 
-        Log.d(TAG, "getPendingSubject subscribe");
-        mCompositeDisposable.add(mConversationFacade.getCurrentAccountSubject()
-                .switchMap(a -> a.getPendingSubject()
-                        .map(pending -> {
-                            Log.d(TAG, "getPendingSubject " + pending.size());
-                            ArrayList<SmartListViewModel> viewmodel = new ArrayList<>(pending.size());
-                            for (Conversation c : pending) {
-                                mContactService.loadContactData(c.getContact(), c.getAccountId()).subscribe(() -> {}, e -> Log.e(TAG, "Can't load contact data"));
-                                viewmodel.add(new SmartListViewModel(c.getAccountId(), c.getContact(), null));
-                            }
-                            return viewmodel;
-                        }))
+        mCompositeDisposable.add(mConversationFacade.getPendingList()
+                .switchMap(viewModels -> viewModels.isEmpty() ? SmartListViewModel.EMPTY_RESULTS
+                        : Observable.combineLatest(viewModels, obs -> {
+                    List<SmartListViewModel> vms = new ArrayList<>(obs.length);
+                    for (Object ob : obs)
+                        vms.add((SmartListViewModel) ob);
+                    return vms;
+                }))
+                .throttleLatest(150, TimeUnit.MILLISECONDS, mUiScheduler)
                 .observeOn(mUiScheduler)
-                .subscribe(viewModels -> getView().showContactRequests(viewModels),
-                        e -> Log.d(TAG, "updateList getPendingSubject onError", e)));
-
+                .subscribe(viewModels -> {
+                    final MainView view = getView();
+                    view.showContactRequests(viewModels);
+                }, e -> Log.w(TAG, "showConversations error ", e)));
     }
 
     public void contactClicked(SmartListViewModel item) {

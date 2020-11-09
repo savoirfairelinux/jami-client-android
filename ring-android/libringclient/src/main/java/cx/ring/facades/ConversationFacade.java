@@ -372,9 +372,18 @@ public class ConversationFacade {
                         .map(conv -> observeConversation(account, conv, hasPresence))
                         .toList()));
     }
+    public Observable<List<Observable<SmartListViewModel>>> getPendingList(Observable<Account> currentAccount) {
+        return currentAccount.switchMap(account -> account.getPendingSubject()
+                .switchMapSingle(conversations -> Observable.fromIterable(conversations)
+                        .map(conv -> observeConversation(account, conv, false))
+                        .toList()));
+    }
 
     public Observable<List<Observable<SmartListViewModel>>> getSmartList(boolean hasPresence) {
         return getSmartList(mAccountService.getCurrentAccountSubject(), hasPresence);
+    }
+    public Observable<List<Observable<SmartListViewModel>>> getPendingList() {
+        return getPendingList(mAccountService.getCurrentAccountSubject());
     }
 
     private Single<List<Observable<SmartListViewModel>>> getSearchResults(Account account, String query) {
