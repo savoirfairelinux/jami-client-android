@@ -185,6 +185,7 @@
   <string name="wizard_skip">پرش</string>
   <!--Account Summary-->
   <string name="profile">نمایه</string>
+  <string name="profile_name">نام نمایه</string>
   <string name="profile_message_warning">نمایه شما تنها با مخاطبانتان هم‌رسانی می‌شود</string>
   <string name="open_the_gallery">گالری را باز کنید</string>
   <string name="take_a_photo">عکسی بگیرید</string>
@@ -288,4 +289,5 @@
   <string name="wizard_profile_info">نمایه فقط با مخاطبین به اشتراک گذاشته می‌شود</string>
   <string name="wizard_profile_button">ذخیره نمایه</string>
   <string name="wizard_profile_skip">رد شوید و این کار را بعدا انجام دهید</string>
+  <string name="fab_path_choose">انتخاب یک فایل دیگر</string>
 </resources>

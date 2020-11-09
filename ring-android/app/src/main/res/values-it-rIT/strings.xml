@@ -88,12 +88,14 @@
   <string name="you_txt_prefix">Tu:</string>
   <string name="action_call_hangup">Chiudi</string>
   <string name="action_call_maximize">Massimizza</string>
+  <string name="action_call_minimize">Riduci</string>
   <string name="ongoing_call">Chiamata in corso</string>
   <string name="hist_in_call">Chiamata in arrivo di %1$s</string>
   <string name="hist_out_call">Chiamata in uscita di %1$s</string>
   <string name="start_error_title">Jami non si avvia !</string>
   <string name="start_error_mic_required">Jami richiede il controllo del microfono per funzionare</string>
   <string name="action_call_accept">Rispondi</string>
+  <string name="action_call_hold_accept">Attendi e rispondi alla chiamata</string>
   <string name="action_call_decline">Rifiuta</string>
   <string name="action_call_mic_mute">Microfono muto</string>
   <string name="action_load_plugin">Carica plugin</string>
@@ -184,6 +186,7 @@
   <string name="wizard_skip">Salta</string>
   <!--Account Summary-->
   <string name="profile">Profilo</string>
+  <string name="profile_name">Nome Profilo</string>
   <string name="profile_message_warning">Il tuo profilo è condiviso solo con i tuoi contatti</string>
   <string name="open_the_gallery">Apri la galleria immagini</string>
   <string name="take_a_photo">Scatta una foto</string>
@@ -287,4 +290,5 @@
   <string name="wizard_profile_info">Il profilo è condiviso solo con i contatti</string>
   <string name="wizard_profile_button">Salva il profilo</string>
   <string name="wizard_profile_skip">Salta e fallo più tardi</string>
+  <string name="fab_path_choose">Scegli un altro file</string>
 </resources>

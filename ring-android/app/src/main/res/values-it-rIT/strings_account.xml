@@ -45,6 +45,7 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_device_revocation_unknown_device">Dispositivo sconosciuto.</string>
   <string name="account_device_revocation_error_unknown">Errore sconosciuto.</string>
   <string name="account_password_change">Cambia password</string>
+  <string name="account_password_set">Impostare  password</string>
   <string name="account_password_change_wait_message">Modifica della password dell\'account</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Generale</string>
@@ -184,6 +185,7 @@ Potrai modificare il tuo account successivamente</string>
   <string name="error_username_empty">Inserire un nome utente</string>
   <string name="no_registered_name_for_account">Nessun nome registrato è stato trovato per questo account</string>
   <string name="username_available">Nome utente disponibile !</string>
+  <string name="register_name">Nome registro</string>
   <string name="trying_to_register_name">Tentativo di registrazione del nome</string>
   <string name="registered_username">Nome utente registrato</string>
   <string name="register_username">Registra nome utente pubblico</string>

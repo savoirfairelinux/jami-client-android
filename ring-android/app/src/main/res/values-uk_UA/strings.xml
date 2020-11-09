@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <string name="feedback_section">Зворотній зв\'язок</string>
+  <string name="report"><u>Надішліть нам email-повідомлення</u></string>
+  <string name="section_license">Ліцензія</string>
+  <string name="sponsor_section">Jami - безкоштовне програмне забезпечення, розроблене та підтримується</string>
+  <string name="version_section">Версія</string>
+  <string name="no_email_app_installed">Не знайдено застосунку для відпраки email-повідомлень, встановіть поштовий клієнт для відправки нам email-повідомлення</string>
+  <string name="no_browser_app_installed">Не знайдено застосунку для відтворення веб-сторінок, встановіть веб-браузер для перегляду цієї сторінки</string>
+  <string name="email_chooser_title">Відправити листа використовуючи...</string>
+  <string name="website_chooser_title">Переглянути веб-сторінку використовуючи...</string>
+  <string name="license">Це програмне забезпечення надається \"як є\", без жодних гарантій будь якого типу. Детальніше, див. <u>GNU General Public License version 3 or later</u></string>
+  <!--About dialog-->
+  <!--RingActivity-->
+  <string name="error_no_network">Відсутній зв\'язок з мережею</string>
+  <!--AB menus-->
+  <!--Sections-->
+  <string name="menu_item_settings">Налаштування</string>
+  <!--Dialing Fragment-->
+  <!--History Fragment-->
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <!--ContactList Fragment-->
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <string name="notif_channel_call_in_progress">Виклик</string>
+  <string name="notif_channel_messages">Повідомлення</string>
+  <string name="notif_sync_title">Синхронізація даних...</string>
+  <!--Call Fragment-->
+  <string name="action_call_accept">Прийняти виклик</string>
+  <string name="action_call_mic_mute">Відключити мікрофон</string>
+  <string name="ab_action_change_screen_orientation">Змінити орієнтацію екрана</string>
+  <string name="write_a_message">Написати повідомлення</string>
+  <!--Text messages-->
+  <string name="send_message">Відправити повідомлення</string>
+  <string name="message_sending">Відправка повідомлення...</string>
+  <string name="send_file">Відправити файл</string>
+  <string name="hist_file_sent">Файл відправлено</string>
+  <string name="hist_file_received">Файл прийнято</string>
+  <string name="conversation_send_audio">Записати аудіо</string>
+  <string name="conversation_send_video">Записати відео</string>
+  <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_message">Відеозв\'язок потребує доступ до камери. Перевірте, будь-ласка, щоб використання камери було дозволене.</string>
+  <!--Ringtone activity-->
+  <string name="ringtone_error_title">Помилка</string>
+  <string name="ringtone_error_format_not_supported">Цей формат не підтримується.</string>
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
+  <string name="clear_history_dialog_title">Видалити історію?</string>
+  <!--Conversation-->
+  <string name="conversation_action_history_clear">Видалити історію</string>
+  <string name="conversation_action_remove_this">Видалити контакт</string>
+  <string name="conversation_action_remove_this_title">Видалити цей контакт?</string>
+  <string name="conversation_action_remove_this_message">Ця дія видалить контакт, і як результат видалить всю історію спілкування.</string>
+  <string name="conversation_action_copy_peer_number">Копіювати номер</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s скопійовано в буфер обміну</string>
+  <string name="conversation_action_select_peer_number">Обрати номер</string>
+  <string name="conversation_action_block_this">Заблокувати контакт</string>
+  <string name="block_contact_dialog_title">Заблокувати %1$s?</string>
+  <string name="block_contact_dialog_message">%1$s не зможе з вами зв\'язатися до тих пір, поки ви його не розблокуєте.</string>
+  <string name="block_contact_completed">%1$s заблоковано.</string>
+  <string name="conversation_contact_is_typing">Друкує повідомлення...</string>
+  <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">Додати %1$s?</string>
+  <string name="prompt_new_password">Новий пароль</string>
+  <string name="prompt_new_password_optional">Новий пароль (опційно)</string>
+  <string name="prompt_new_password_repeat">Повторити новий пароль</string>
+  <string name="account_create_title">Створити акаунт Jami</string>
+  <!--Account Summary-->
+  <!--Share fragment-->
+  <string name="generic_error_migration">Помилка</string>
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
+  <!--Blacklist-->
+  <!--Smartlist-->
+  <!--File Transfer-->
+  <!--Bottom Navigation-->
+  <!--TV-->
+  <!--Wizard-->
+</resources>

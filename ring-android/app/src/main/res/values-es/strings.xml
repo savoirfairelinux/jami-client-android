@@ -88,6 +88,7 @@
   <!--Call Fragment-->
   <string name="you_txt_prefix">Tú:</string>
   <string name="action_call_hangup">Colgar</string>
+  <string name="action_call_maximize">Maximizar</string>
   <string name="ongoing_call">Llamada en curso</string>
   <string name="hist_in_call">Llamada entrante de %1$s</string>
   <string name="hist_out_call">Llamada saliente a %1$s</string>

@@ -31,6 +31,7 @@
   <string name="menu_item_accounts">Учетные записи</string>
   <string name="menu_item_account">Учетные записи</string>
   <string name="menu_item_settings">Настройки</string>
+  <string name="menu_item_plugin_list">Настройки плагинов</string>
   <string name="menu_item_share">Поделиться моей контактной информацией</string>
   <string name="menu_item_about">О Jami</string>
   <!--Dialing Fragment-->
@@ -263,5 +264,10 @@
   <string name="tv_send_video">Отправить Медиа</string>
   <string name="conversation_input_speech_hint">Скажите что-нибудь...</string>
   <!--Wizard-->
+  <string name="wizard_password_info">Пароль аккаунта</string>
+  <string name="wizard_password_button">Выберите пароль</string>
   <string name="wizard_password_skip">Создать аккаунт</string>
+  <string name="wizard_password_switch">Зашифровать аккаунт с помощью пароля</string>
+  <string name="wizard_password_warning">Учтите, что пароль не может быть восстановлен</string>
+  <string name="wizard_profile_button">Сохранить профиль</string>
 </resources>

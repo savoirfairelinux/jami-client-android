@@ -45,6 +45,7 @@ Puedes editar tu cuenta luego</string>
   <string name="account_device_revocation_unknown_device">Dispositivo desconocido</string>
   <string name="account_device_revocation_error_unknown">Error desconocido.</string>
   <string name="account_password_change">Cambiar contraseña</string>
+  <string name="account_password_set">Establece una contraseña</string>
   <string name="account_password_change_wait_message">Cambiar contraseña de cuenta</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">General</string>
@@ -133,6 +134,7 @@ Puedes editar tu cuenta luego</string>
   <string name="error_passwords_not_equals">Las contraseñas no coinciden</string>
   <string name="export_account_wait_title">Por favor, espera...</string>
   <string name="export_account_wait_message">Exportando información de cuenta</string>
+  <string name="account_export_file">Crear copia de seguridad de la cuenta</string>
   <string name="account_export_end_decryption_message">Error al desbloquear tu cuenta con la contraseña provista</string>
   <string name="account_export_end_network_title">Error en la red</string>
   <string name="account_export_end_network_message">Error al exportar la cuenta a la red. Verifica tu conectividad.</string>
@@ -184,6 +186,7 @@ Puedes editar tu cuenta luego</string>
   <string name="error_username_empty">Ingresa un nombre de usuario</string>
   <string name="no_registered_name_for_account">No se ha encontrado un nombre registrado con esta cuenta</string>
   <string name="username_available">¡Nombre de usuario disponible!</string>
+  <string name="register_name">Registra tu nombre</string>
   <string name="trying_to_register_name">Intentando registrar nombre</string>
   <string name="registered_username">Nombre de usuario registrado</string>
   <string name="register_username">Registrar nombre de usuario público</string>
