@@ -49,7 +49,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ContactServiceImpl extends ContactService {
 
-    private static final String TAG = ContactServiceImpl.class.getName();
+    private static final String TAG = ContactServiceImpl.class.getSimpleName();
 
     private static final String[] CONTACTS_SUMMARY_PROJECTION = new String[]{
             ContactsContract.Contacts._ID,

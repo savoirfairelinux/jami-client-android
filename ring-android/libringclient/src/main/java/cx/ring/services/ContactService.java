@@ -21,7 +21,6 @@
 package cx.ring.services;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -92,25 +91,40 @@ public abstract class ContactService {
         Uri uri = contact.getPrimaryUri();
         String uriString = uri.getRawUriString();
         synchronized (contact) {
+            if (contact.getPresenceUpdates() == null) {
+                contact.setPresenceUpdates(Observable.<Boolean>create(emitter -> {
+                    emitter.onNext(false);
+                    contact.setPresenceEmitter(emitter);
+                    mAccountService.subscribeBuddy(accountId, uriString, true);
+                    emitter.setCancellable(() -> {
+                        mAccountService.subscribeBuddy(accountId, uriString, false);
+                        contact.setPresenceEmitter(null);
+                        emitter.onNext(false);
+                    });
+                })
+                        .replay(1)
+                        .refCount(5, TimeUnit.SECONDS));
+            }
+
             if (contact.getUpdates() == null) {
                 contact.setUpdates(contact.getUpdatesSubject()
                         .doOnSubscribe(d -> {
-                            mAccountService.subscribeBuddy(accountId, uriString, true);
                             if (!contact.isUsernameLoaded())
                                 mAccountService.lookupAddress(accountId, "", uri.getRawRingId());
                             loadContactData(contact, accountId)
                                     .subscribe(() -> {}, e -> {/*Log.e(TAG, "Error loading contact data: " + e.getMessage())*/});
                         })
-                        .doOnDispose(() -> {
-                            mAccountService.subscribeBuddy(accountId, uriString, false);
-                        })
                         .filter(c -> c.isUsernameLoaded() && c.detailsLoaded)
                         .replay(1)
-                        .refCount(20, TimeUnit.SECONDS));
+                        .refCount(5, TimeUnit.SECONDS));
             }
-            return contact.getUpdates();
+
+            return withPresence
+                    ? Observable.combineLatest(contact.getUpdates(), contact.getPresenceUpdates(), (c, p) -> c)
+                    : contact.getUpdates();
         }
     }
+
     public Observable<List<CallContact>> observeContact(String accountId, List<CallContact> contacts, boolean withPresence) {
         if (contacts.size() == 1) {
             return observeContact(accountId, contacts.get(0), withPresence).map(Collections::singletonList);

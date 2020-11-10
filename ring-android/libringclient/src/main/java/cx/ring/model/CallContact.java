@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import cx.ring.utils.StringUtils;
+import io.reactivex.Emitter;
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.Subject;
@@ -42,7 +43,7 @@ public class CallContact {
     private String mUsername = null;
     private long mPhotoId;
     private final ArrayList<Phone> mPhones;
-    private boolean isUser;
+    private final boolean isUser;
     private boolean stared = false;
     private boolean isFromSystem = false;
     private Status mStatus = Status.NO_REQUEST;
@@ -58,6 +59,9 @@ public class CallContact {
 
     private final Subject<CallContact> mContactUpdates = BehaviorSubject.create();
     private Observable<CallContact> mContactObservable;
+
+    private Observable<Boolean> mContactPresenceObservable;
+    private Emitter<Boolean> mContactPresenceEmitter;
 
     public CallContact(long cID) {
         this(cID, null, null, UNKNOWN_ID);
@@ -103,6 +107,19 @@ public class CallContact {
         mContactObservable = observable;
     }
 
+    public Observable<Boolean> getPresenceUpdates() {
+        return mContactPresenceObservable;
+    }
+    public void setPresenceUpdates(Observable<Boolean> observable) {
+        mContactPresenceObservable = observable;
+    }
+    public void setPresenceEmitter(Emitter<Boolean> emitter) {
+        if (mContactPresenceEmitter != null && mContactPresenceEmitter != emitter) {
+            mContactPresenceEmitter.onComplete();
+        }
+        mContactPresenceEmitter = emitter;
+    }
+
     public boolean matches(String query) {
         return (mDisplayName != null && mDisplayName.toLowerCase().contains(query))
                 || (mUsername != null && mUsername.contains(query))
@@ -114,6 +131,8 @@ public class CallContact {
     }
 
     public void setOnline(boolean present) {
+        if (mContactPresenceEmitter != null)
+            mContactPresenceEmitter.onNext(present);
         mOnline = present;
         mContactUpdates.onNext(this);
     }
