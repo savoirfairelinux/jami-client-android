@@ -46,6 +46,7 @@ public final class VCardUtils {
     public static final String VCARD_KEY_OF = "of";
 
     public static final String LOCAL_USER_VCARD_NAME = "profile.vcf";
+    private static final long VCARD_MAX_SIZE = 1024 * 1024 * 8;
 
     private VCardUtils() {
         // Hidden default constructor
@@ -166,6 +167,10 @@ public final class VCardUtils {
     private static VCard loadFromDisk(File path) throws IOException {
         if (path == null || !path.exists()) {
             Log.d(TAG, "vcardPath not exist " + path);
+            return null;
+        }
+        if (path.length() > VCARD_MAX_SIZE) {
+            Log.w(TAG, "vcardPath too big: " + path.length() / 1024 + " kB");
             return null;
         }
         return Ezvcard.parse(path).first();
