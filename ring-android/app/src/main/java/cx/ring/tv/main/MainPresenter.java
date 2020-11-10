@@ -30,14 +30,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import cx.ring.facades.ConversationFacade;
-import cx.ring.model.Account;
-import cx.ring.model.Conversation;
-import cx.ring.model.Error;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.navigation.HomeNavigationViewModel;
 import cx.ring.services.AccountService;
-import cx.ring.services.ContactService;
-import cx.ring.services.HardwareService;
 import cx.ring.smartlist.SmartListViewModel;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
@@ -47,21 +42,15 @@ public class MainPresenter extends RootPresenter<MainView> {
     private static final String TAG = MainPresenter.class.getSimpleName();
 
     private final AccountService mAccountService;
-    private final ContactService mContactService;
     private final ConversationFacade mConversationFacade;
-    private final HardwareService mHardwareService;
     private final Scheduler mUiScheduler;
 
     @Inject
     public MainPresenter(AccountService accountService,
-                         ContactService contactService,
                          ConversationFacade conversationFacade,
-                         HardwareService hardwareService,
                          @Named("UiScheduler") Scheduler uiScheduler) {
         mAccountService = accountService;
-        mContactService = contactService;
         mConversationFacade = conversationFacade;
-        mHardwareService = hardwareService;
         mUiScheduler = uiScheduler;
     }
 
@@ -105,16 +94,6 @@ public class MainPresenter extends RootPresenter<MainView> {
                     final MainView view = getView();
                     view.showContactRequests(viewModels);
                 }, e -> Log.w(TAG, "showConversations error ", e)));
-    }
-
-    public void contactClicked(SmartListViewModel item) {
-        if (!mHardwareService.isVideoAvailable() && !mHardwareService.hasMicrophone()) {
-            getView().displayErrorToast(Error.NO_INPUT);
-            return;
-        }
-
-        Account account = mAccountService.getAccount(item.getAccountId());
-        getView().callContact(account.getAccountID(), item.getUri().getRawUriString());
     }
 
     public void reloadAccountInfos() {
