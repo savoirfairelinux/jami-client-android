@@ -148,13 +148,25 @@ public class ConversationActivity extends AppCompatActivity implements Colorable
         super.onSaveInstanceState(outState);
     }
 
+    @Override
+    public boolean dispatchKeyEvent(@NonNull KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN && event.isCtrlPressed()) {
+            if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                if (mConversationFragment != null)
+                    mConversationFragment.sendMessageText();
+                return true;
+            }
+        }
+        return super.dispatchKeyEvent(event);
+    }
+
     public void setColor(@ColorInt int color) {
         colouriseToolbar(binding.mainToolbar, color);
         //mToolbar.setBackground(new ColorDrawable(color));
         //getWindow().setStatusBarColor(color);
     }
 
-    public static void colouriseToolbar(Toolbar toolbar, @ColorInt int foreground) {
+    public static void colouriseToolbar(@NonNull Toolbar toolbar, @ColorInt int foreground) {
         final PorterDuffColorFilter colorFilter = new PorterDuffColorFilter(foreground, PorterDuff.Mode.MULTIPLY);
 
         for (int i = 0; i < toolbar.getChildCount(); i++) {
