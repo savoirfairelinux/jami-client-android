@@ -104,7 +104,7 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
 
     private static final String[] permissions = { Manifest.permission.RECORD_AUDIO };
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
-    private static File fileName = null;
+    private File fileName = null;
 
     private MediaRecorder recorder = null;
     private MediaPlayer player = null;
@@ -489,6 +489,8 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     }
 
     private void startPlaying() {
+        if (fileName == null)
+            return;
         player = new MediaPlayer();
         try {
             player.setDataSource(fileName.getAbsolutePath());
