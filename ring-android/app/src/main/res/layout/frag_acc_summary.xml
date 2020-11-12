@@ -123,6 +123,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toStartOf="@+id/btn_qr"
+                    app:chipIconSize="18dp"
                     app:chipIcon="@drawable/baseline_share_twoton_24dp"
                     android:layout_centerHorizontal="true"
                     android:text="@string/share_label"
@@ -138,6 +139,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerHorizontal="true"
+                    app:chipIconSize="18dp"
                     app:chipIcon="@drawable/baseline_qr_code_2_black_24dp"
                     app:chipBackgroundColor="@color/colorPrimary"
                     android:textColor="@color/colorOnPrimary"
@@ -205,8 +207,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
                     android:text="@string/register_name"
-                    android:textColor="@color/colorOnPrimary"
-                    app:chipBackgroundColor="@color/colorPrimary"
+                    android:textColor="@color/colorPrimary"
+                    app:chipBackgroundColor="#330f426b"
                     android:visibility="gone"
                     tools:visibility="visible"/>
 
