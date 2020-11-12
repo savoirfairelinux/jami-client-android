@@ -190,6 +190,7 @@ along with this program; if not, write to the Free Software
     <string name="ringtone_custom_label">Custom</string>
     <string name="ringtone_jami_tones">Jami Tones</string>
     <string name="ringtone_default_name" translatable="false">1 AfroNigeria.opus</string>
+    <string name="ca_root_file" translatable="false">cacert.pem</string>
 
     <!-- Read contacts permission -->
     <string name="permission_dialog_read_contacts_message">Jami needs the "Read contacts" permission to enable this feature. Please grant it.</string>

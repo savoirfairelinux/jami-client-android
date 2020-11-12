@@ -258,6 +258,11 @@ public abstract class JamiApplication extends Application {
             if (!defaultLink.exists()) {
                 Os.symlink(defaultRingtone.getAbsolutePath(), defaultLink.getAbsolutePath());
             }
+
+            String caRootFile = getString(R.string.ca_root_file);
+            File dest = new File(getFilesDir(), caRootFile);
+            AndroidFileUtils.copyAsset(getAssets(), caRootFile, dest);
+            Os.setenv("CA_ROOT_FILE", dest.getAbsolutePath(), true);
         })
         .subscribeOn(Schedulers.io())
         .subscribe();
