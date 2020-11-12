@@ -80,12 +80,10 @@ public class AndroidFileUtils {
             // List the files of this asset directory
             String[] files = assetManager.list(fromAssetPath);
 
-            if(files != null){
+            if (files != null) {
                 for (String file : files) {
-
                     String subAsset = fromAssetPath + File.separator + file;
-
-                    if(isAssetDirectory(assetManager, subAsset)){
+                    if (isAssetDirectory(assetManager, subAsset)) {
                         String destination = toPath.getAbsolutePath() + File.separator + file;
                         File newDir = new File(destination);
                         copyAssetFolder(assetManager, subAsset, newDir);
@@ -113,18 +111,15 @@ public class AndroidFileUtils {
      * @return boolean directory or not
      */
     public static boolean isAssetDirectory( @NonNull AssetManager assetManager, String fromAssetPath) {
-        boolean res = false;
-        try{
+        try {
             String[] files = assetManager.list(fromAssetPath);
-            if(files !=null) {
-                if(files.length > 0) {
-                    res = true;
-                }
+            if (files != null && files.length > 0) {
+                return true;
             }
         } catch (IOException e) {
             Log.e(TAG, "Error while reading an asset ", e);
         }
-        return res;
+        return false;
     }
 
     /**
@@ -158,17 +153,11 @@ public class AndroidFileUtils {
         }
     }
 
-    private static boolean copyAsset(AssetManager assetManager, String fromAssetPath, File toPath) {
-        InputStream in;
-        OutputStream out;
-        try {
-            in = assetManager.open(fromAssetPath);
-            toPath.createNewFile();
-            out = new FileOutputStream(toPath);
+    public static boolean copyAsset(AssetManager assetManager, String fromAssetPath, File toPath) {
+        try (InputStream in = assetManager.open(fromAssetPath);
+             OutputStream out = new FileOutputStream(toPath)) {
             FileUtils.copyFile(in, out);
-            in.close();
             out.flush();
-            out.close();
             return true;
         } catch (IOException e) {
             Log.e(TAG, "Error while copying asset", e);
