@@ -38,34 +38,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:focusable="true"
             android:focusableInTouchMode="true" >
 
-<!--            <RelativeLayout-->
-<!--                android:id="@+id/ring_account_status_container"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content">-->
-
-<!--                <com.google.android.material.chip.Chip-->
-<!--                    android:id="@+id/account_status"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_alignParentStart="true"-->
-<!--                    android:textColor="@color/white"-->
-<!--                    tools:chipBackgroundColor="@color/green_400"-->
-<!--                    tools:text="Registered"/>-->
-
-<!--                <cx.ring.views.SwitchButton-->
-<!--                    android:id="@+id/account_switch"-->
-<!--                    android:layout_width="80dp"-->
-<!--                    android:layout_height="30dp"-->
-<!--                    app:textOn="on"-->
-<!--                    app:textOff="off"-->
-<!--                    app:thumbColor="@color/white"-->
-<!--                    app:showText="true"-->
-<!--                    android:layout_alignParentEnd="true"-->
-<!--                    android:layout_gravity="end"-->
-<!--                    />-->
-
-<!--            </RelativeLayout>-->
-
             <TextView
                 android:id="@+id/account_alias_txt"
                 android:layout_width="wrap_content"
@@ -123,6 +95,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toStartOf="@+id/btn_qr"
+                    app:chipIconSize="18dp"
+                    app:iconStartPadding="6dp"
                     app:chipIcon="@drawable/baseline_share_twoton_24dp"
                     android:layout_centerHorizontal="true"
                     android:text="@string/share_label"
@@ -138,51 +112,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerHorizontal="true"
+                    app:chipIconSize="18dp"
+                    app:iconStartPadding="6dp"
                     app:chipIcon="@drawable/baseline_qr_code_2_black_24dp"
                     app:chipBackgroundColor="@color/colorPrimary"
                     android:textColor="@color/colorOnPrimary"
                     app:chipIconTint="@color/colorOnPrimary"
                     android:text="@string/qr_code"
                     />
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="horizontal"-->
-<!--                    android:background="@drawable/background_share"-->
-<!--                    android:layout_alignParentEnd="true"-->
-<!--                    android:layout_centerVertical="true"-->
-<!--                    android:paddingBottom="6dp"-->
-<!--                    android:paddingTop="6dp"-->
-<!--                    android:paddingStart="12dp"-->
-<!--                    android:paddingEnd="12dp">-->
-
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/share_label"-->
-<!--                        android:layout_gravity="center_vertical"-->
-<!--                        android:textColor="@color/text_color"-->
-<!--                        android:textStyle="bold"-->
-<!--                        android:textSize="14sp"-->
-<!--                        android:layout_marginRight="12dp"/>-->
-
-<!--                    <ImageButton-->
-<!--                        android:id="@+id/btn_share"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:src="@drawable/baseline_share_twoton_24dp"-->
-<!--                        android:background="?selectableItemBackgroundBorderless"-->
-<!--                        android:layout_marginEnd="6dp"/>-->
-
-<!--                    <ImageButton-->
-<!--                        android:id="@+id/btn_qr"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:src="@drawable/baseline_qr_code_twotone_24dp"-->
-<!--                        android:background="?selectableItemBackgroundBorderless"/>-->
-
-<!--                </LinearLayout>-->
 
             </RelativeLayout>
 
@@ -205,8 +142,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
                     android:text="@string/register_name"
-                    android:textColor="@color/colorOnPrimary"
-                    app:chipBackgroundColor="@color/colorPrimary"
+                    android:textColor="@color/colorPrimary"
+                    app:chipBackgroundColor="@color/chip_background"
                     android:visibility="gone"
                     tools:visibility="visible"/>
 
@@ -295,6 +232,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:nestedScrollingEnabled="true" />
 
         </LinearLayout>
+
     </ScrollView>
 
     <FrameLayout

@@ -48,5 +48,6 @@
     <color name="text_color">#414141</color>
     <color name="text_hint">@color/color_primary_dark</color>
     <color name="button_border">@color/color_primary_dark</color>
+    <color name="chip_background">#330f426b</color>
 
 </resources>

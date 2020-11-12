@@ -27,5 +27,6 @@
     <color name="text_color">@color/colorPrimary</color>
     <color name="text_hint">@color/colorPrimary</color>
     <color name="button_border">@color/colorPrimary</color>
+    <color name="chip_background">#4dffffff</color>
 
 </resources>
