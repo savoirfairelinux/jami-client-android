@@ -84,11 +84,11 @@ public class SIPAccountCreationFragment extends BaseSupportFragment<SIPCreationP
         //orientation is locked during the create of account to avoid the destruction of the thread
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
-        String alias = binding.alias.getText().toString();
         String hostname = binding.hostname.getText().toString();
+        String proxy = binding.proxy.getText().toString();
         String username = binding.username.getText().toString();
         String password = binding.password.getText().toString();
-        presenter.startCreation(alias, hostname, username, password, bypassWarnings);
+        presenter.startCreation(hostname, proxy, username, password, bypassWarnings);
     }
 
     @Override
@@ -109,14 +109,7 @@ public class SIPAccountCreationFragment extends BaseSupportFragment<SIPCreationP
 
     @Override
     public void resetErrors() {
-        binding.alias.setError(null);
         binding.password.setError(null);
-    }
-
-    @Override
-    public void showAliasError() {
-        binding.alias.setError(getString(R.string.error_field_required));
-        binding.alias.requestFocus();
     }
 
     @Override

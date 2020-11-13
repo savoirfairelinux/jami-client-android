@@ -137,6 +137,8 @@ along with this program; if not, write to the Free Software
     <string name="account_proxy_server_label">DHT proxy address</string>
     <string name="account_proxy_server_list_label">DHT proxy list URL</string>
 
+    <string name="account_sip_proxy_label">Proxy</string>
+
     <string name="account_peer_discovery_label">Local peer discovery</string>
     <string name="account_peer_discovery_enable_label">Enable local peer discovery</string>
     <string name="account_peer_discovery_enable_summary">Connect to other DHT nodes advertising on our local network</string>

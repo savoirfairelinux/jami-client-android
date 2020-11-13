@@ -47,7 +47,6 @@ import cx.ring.fragments.ConversationFragment;
 import cx.ring.interfaces.Colorable;
 import cx.ring.services.NotificationServiceImpl;
 import cx.ring.utils.ConversationPath;
-import cx.ring.utils.MediaButtonsHelper;
 
 public class ConversationActivity extends AppCompatActivity implements Colorable {
 

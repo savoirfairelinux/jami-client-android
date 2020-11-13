@@ -83,18 +83,12 @@ public class SIPCreationPresenter extends RootPresenter<SIPCreationView> {
      * @param password      password account value
      * @param bypassWarning Report eventual warning to the user
      */
-    public void startCreation(String alias, String hostname, String username, String password, boolean bypassWarning) {
+    public void startCreation(String hostname, String proxy, String username, String password, boolean bypassWarning) {
 
         getView().resetErrors();
 
         // Store values at the time of the login attempt.
         boolean warningIPAccount = false;
-
-        // Alias is mandatory
-        if (alias == null || alias.isEmpty()) {
-            getView().showAliasError();
-            return;
-        }
 
         if (hostname != null && hostname.isEmpty()) {
             warningIPAccount = true;
@@ -116,9 +110,10 @@ public class SIPCreationPresenter extends RootPresenter<SIPCreationView> {
             HashMap<String, String> accountDetails = initAccountDetails();
 
             if (accountDetails != null) {
-                accountDetails.put(ConfigKey.ACCOUNT_ALIAS.key(), alias);
+                accountDetails.put(ConfigKey.ACCOUNT_ALIAS.key(), username);
                 if (hostname != null && !hostname.isEmpty()) {
                     accountDetails.put(ConfigKey.ACCOUNT_HOSTNAME.key(), hostname);
+                    accountDetails.put(ConfigKey.ACCOUNT_ROUTESET.key(), proxy);
                     accountDetails.put(ConfigKey.ACCOUNT_USERNAME.key(), username);
                     accountDetails.put(ConfigKey.ACCOUNT_PASSWORD.key(), password);
                 }

@@ -27,8 +27,6 @@ public interface SIPCreationView {
 
     void resetErrors();
 
-    void showAliasError();
-
     void showPasswordError();
 
     void showIP2IPWarning();
