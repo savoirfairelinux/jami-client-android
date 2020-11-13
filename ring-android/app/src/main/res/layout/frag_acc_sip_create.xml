@@ -112,24 +112,6 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/alias"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:hint="@string/prompt_alias"
-                            android:drawableStart="@drawable/baseline_account_crop_24"
-                            android:drawablePadding="5dp"
-                            android:imeOptions="flagNoExtractUi"
-                            android:maxLines="1"
-                            android:singleLine="true" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/hostname"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -141,6 +123,24 @@
                             android:maxLines="1"
                             android:singleLine="true"
                             android:typeface="monospace" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/proxy"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:hint="@string/account_sip_proxy_label"
+                            android:drawableStart="@drawable/baseline_dns_24"
+                            android:drawablePadding="5dp"
+                            android:imeOptions="flagNoExtractUi"
+                            android:maxLines="1"
+                            android:singleLine="true" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
