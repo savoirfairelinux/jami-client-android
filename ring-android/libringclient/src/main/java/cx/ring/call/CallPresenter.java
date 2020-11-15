@@ -162,6 +162,10 @@ public class CallPresenter extends RootPresenter<CallView> {
         }
         //getView().blockScreenRotation();
 
+        if (!audioOnly) {
+            getView().startCameraPreview();
+        }
+
         Observable<Conference> callObservable = mCallService
                 .placeCall(accountId, StringUtils.toNumber(contactRingId), audioOnly)
                 //.map(mCallService::getConference)

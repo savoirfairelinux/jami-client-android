@@ -666,6 +666,11 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
     }
 
     @Override
+    public void startCameraPreview() {
+
+    }
+
+    @Override
     public void goToConversation(String accountId, String conversationId) {
 
     }
