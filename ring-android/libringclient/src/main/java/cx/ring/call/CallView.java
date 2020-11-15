@@ -55,7 +55,7 @@ public interface CallView {
 
     void initNormalStateDisplay(boolean audioOnly, boolean muted);
 
-    void initIncomingCallDisplay();
+    void initIncomingCallDisplay(boolean audioOnly);
 
     void initOutGoingCallDisplay();
 
@@ -86,4 +86,7 @@ public interface CallView {
     void updateConfInfo(List<Conference.ParticipantInfo> info);
 
     void toggleCallMediaHandler(String id, String callId, boolean toggle);
+
+    void startCameraPreview();
+
 }

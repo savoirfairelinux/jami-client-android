@@ -77,10 +77,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.camera.core.CameraSelector;
+import androidx.camera.core.Preview;
+import androidx.camera.lifecycle.ProcessCameraProvider;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
 import androidx.percentlayout.widget.PercentFrameLayout;
 
+import com.google.common.util.concurrent.ListenableFuture;
 import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 
 import java.util.ArrayList;
@@ -88,6 +93,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
 
@@ -180,6 +186,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     private float previewHiddenState = 0;
     private enum PreviewPosition {LEFT, RIGHT}
     private PreviewPosition previewPosition = PreviewPosition.RIGHT;
+    private ProcessCameraProvider mProcessCameraProvider;
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
@@ -745,6 +752,9 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        if (mProcessCameraProvider != null) {
+            mProcessCameraProvider.unbindAll();
+        }
         if (mOrientationListener != null) {
             mOrientationListener.disable();
             mOrientationListener = null;
@@ -863,6 +873,10 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     @Override
     public void displayVideoSurface(final boolean displayVideoSurface, final boolean displayPreviewContainer) {
         binding.videoSurface.setVisibility(displayVideoSurface ? View.VISIBLE : View.GONE);
+        binding.cameraContainer.setVisibility(displayVideoSurface ? View.GONE : View.VISIBLE);
+        if (displayVideoSurface && mProcessCameraProvider != null) {
+            mProcessCameraProvider.unbindAll();
+        }
         if (choosePluginMode) {
             binding.pluginPreviewSurface.setVisibility(displayPreviewContainer ? View.VISIBLE : View.GONE);
             binding.pluginPreviewContainer.setVisibility(displayPreviewContainer ? View.VISIBLE : View.GONE);
@@ -1075,7 +1089,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     @Override
-    public void initIncomingCallDisplay() {
+    public void initIncomingCallDisplay(boolean audioOnly) {
         Log.w(TAG, "initIncomingCallDisplay");
 
         binding.callAcceptBtn.setVisibility(View.VISIBLE);
@@ -1085,6 +1099,10 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
         binding.contactBubbleLayout.setVisibility(View.VISIBLE);
         requireActivity().invalidateOptionsMenu();
+
+        if (!audioOnly) {
+            startCameraPreview();
+        }
     }
 
     @Override
@@ -1527,4 +1545,36 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             displayVideoPluginsCarousel();
         }
     }
+
+    @Override
+    public void startCameraPreview() {
+        binding.cameraContainer.setVisibility(View.VISIBLE);
+
+        final ListenableFuture<ProcessCameraProvider> cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext());
+        cameraProviderFuture.addListener(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    mProcessCameraProvider = cameraProviderFuture.get();
+                    bindPreview();
+                } catch (ExecutionException | InterruptedException e) {
+                    // This should never be reached.
+                }
+            }
+        }, ContextCompat.getMainExecutor(requireContext()));
+    }
+
+    void bindPreview() {
+        try {
+            Preview preview = new Preview.Builder().build();
+            mProcessCameraProvider.unbindAll();
+            mProcessCameraProvider.bindToLifecycle(
+                    this, CameraSelector.DEFAULT_FRONT_CAMERA, preview);
+            // Attach the viewfinder's surface provider to preview use case
+            preview.setSurfaceProvider(binding.previewCamera.getSurfaceProvider());
+        } catch (Exception ex) {
+            Log.e(TAG, "preview binding failed", ex);
+        }
+    }
+
 }

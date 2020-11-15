@@ -479,7 +479,7 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
     }
 
     @Override
-    public void initIncomingCallDisplay() {
+    public void initIncomingCallDisplay(boolean audioOnly) {
         binding.callAcceptBtn.setVisibility(View.VISIBLE);
         binding.callAcceptBtn.requestFocus();
         binding.callRefuseBtn.setVisibility(View.VISIBLE);
@@ -663,6 +663,11 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
     @Override
     public void toggleCallMediaHandler(String id, String callId, boolean toggle) {
         cx.ring.daemon.RingserviceJNI.toggleCallMediaHandler(id, callId, toggle);
+    }
+
+    @Override
+    public void startCameraPreview() {
+
     }
 
     @Override

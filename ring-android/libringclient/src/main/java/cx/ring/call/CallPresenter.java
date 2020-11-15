@@ -162,6 +162,10 @@ public class CallPresenter extends RootPresenter<CallView> {
         }
         //getView().blockScreenRotation();
 
+        if (!audioOnly) {
+            getView().startCameraPreview();
+        }
+
         Observable<Conference> callObservable = mCallService
                 .placeCall(accountId, StringUtils.toNumber(contactRingId), audioOnly)
                 //.map(mCallService::getConference)
@@ -503,7 +507,7 @@ public class CallPresenter extends RootPresenter<CallView> {
                     mCallService.accept(scall.getDaemonIdString());
                     // only display the incoming call screen if the notification is a full screen intent
                 } else if (incomingIsFullIntent) {
-                    view.initIncomingCallDisplay();
+                    view.initIncomingCallDisplay(isAudioOnly());
                 }
             } else {
                 mOnGoingCall = false;
