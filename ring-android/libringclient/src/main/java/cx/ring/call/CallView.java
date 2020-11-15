@@ -86,4 +86,7 @@ public interface CallView {
     void updateConfInfo(List<Conference.ParticipantInfo> info);
 
     void toggleCallMediaHandler(String id, String callId, boolean toggle);
+
+    void startCameraPreview();
+
 }

@@ -34,6 +34,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:keepScreenOn="true"
         tools:background="@color/cardview_dark_background">
 
+        <FrameLayout
+            android:id="@+id/camera_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <androidx.camera.view.PreviewView
+                android:id="@+id/preview_camera"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/black"
+                android:alpha="0.5"/>
+
+        </FrameLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
