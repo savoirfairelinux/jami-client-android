@@ -696,6 +696,11 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     }
 
     @Override
+    public void displayAccountOfflineErrorPanel() {
+
+    }
+
+    @Override
     public void displayOnGoingCallPane(boolean display) {
 
     }
