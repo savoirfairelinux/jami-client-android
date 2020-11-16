@@ -28,13 +28,14 @@
   <string name="ab_action_chat">Tekstmelding</string>
   <!--Sections-->
   <string name="menu_item_contact_request">Kontaktforespørsler</string>
-  <string name="menu_item_accounts">Styr kontoer</string>
+  <string name="menu_item_accounts">Behandle kontoer</string>
   <string name="menu_item_account">Behandle konto</string>
   <string name="menu_item_settings">Innstillinger</string>
+  <string name="menu_item_plugin_list">Innstillinger tillegg</string>
   <string name="menu_item_share">Del min kontakt</string>
   <string name="menu_item_about">Om Jami</string>
   <!--Dialing Fragment-->
-  <string name="dial_number">Slå et nummer</string>
+  <string name="dial_number">Tast et nummer</string>
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
@@ -43,7 +44,7 @@
     <item quantity="other">%d samtaler</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Søk etter navn eller telefonnummer...</string>
+  <string name="searchbar_hint">Søk navn eller telefonnummer...</string>
   <string name="choose_number">Velg et nummer</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -80,19 +81,25 @@
   <string name="notif_location_multi_title">Deling av lokasjon med %1$d kontakter</string>
   <string name="notif_location_remaining">%1$d minutter igjen</string>
   <string name="notif_location_action_stop">Slutt å dele lokasjon</string>
-  <string name="location_share_action_start">Begynn å dele</string>
+  <string name="location_share_action_start">Start delingen</string>
   <string name="location_share_action_stop">Stopp delingen</string>
+  <string name="location_share_about_title">Kartinformasjon</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Deg:</string>
   <string name="action_call_hangup">Legg på</string>
+  <string name="action_call_maximize">Maksimer</string>
+  <string name="action_call_minimize">Reduser</string>
   <string name="ongoing_call">Pågående samtale</string>
   <string name="hist_in_call">Innkommende samtale med %1$s</string>
   <string name="hist_out_call">Utgående samtale med %1$s</string>
   <string name="start_error_title">Klarte ikke starte Jami!</string>
   <string name="start_error_mic_required">Jami krever tilgang til mikrofonen for å virke.</string>
   <string name="action_call_accept">Ta samtale</string>
+  <string name="action_call_hold_accept">Sett på vent og svar</string>
+  <string name="action_call_end_accept">Legg på og svar</string>
   <string name="action_call_decline">Avslå</string>
   <string name="action_call_mic_mute">Koble ut mikrofon</string>
+  <string name="action_load_plugin">Last tillegg</string>
   <string name="ab_action_speakerphone">Aktiver høytaler</string>
   <string name="ab_action_contact_add">Legg til kontakter</string>
   <string name="ab_action_contact_add_question">Legg til kontakter?</string>
@@ -104,7 +111,9 @@
   <string name="share_via">Del via</string>
   <string name="write_a_message">Skriv en melding</string>
   <string name="scan_qr">Skann QR-kode</string>
+  <string name="qr_code">QR kode</string>
   <string name="ab_action_flipcamera">Snu kamera</string>
+  <string name="ab_action_hidepreview">Skjul forhåndsvisning</string>
   <!--Text messages-->
   <string name="send_message">Send melding</string>
   <string name="message_sending">Sender melding…</string>
@@ -135,7 +144,7 @@
   <string name="title_activity_qrcode">Del kontoen min</string>
   <string name="error_scan_no_camera_permissions">QR-skanneren krever tilgang til kamera for å virke</string>
   <string name="tab_code">Min kode</string>
-  <string name="tab_scan">Les av kode</string>
+  <string name="tab_scan">Skann kode</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Nullstill historikk?</string>
   <string name="clear_history_dialog_message">Denne handlingen kan ikke tilbakestilles.</string>
@@ -171,15 +180,24 @@
   <string name="prompt_new_username">Skriv inn nytt brukernavn</string>
   <string name="prompt_hint_username">Brukernavn</string>
   <string name="help_password_choose">Velg et sterkt passord som du husker, for å beskytte Jami-kontoen din.</string>
+  <string name="help_password_enter">Tast inn ditt Jami konto passord.</string>
+  <string name="help_server_enter">Fyll ut URL til administrasjonstjener</string>
   <string name="help_pin_enter">Skriv inn PIN fra en annen ferdig oppsatt Jami-konto.  Bruk «Eksporter Jami-konto»-valget for å få tak i en PIN.</string>
   <string name="wizard_next">Neste</string>
   <string name="wizard_back">Tilbake</string>
   <string name="wizard_skip">Hopp over</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
+  <string name="profile_name">Profilnavn</string>
   <string name="profile_message_warning">Din profil deles bare med dine kontakter</string>
   <string name="open_the_gallery">Åpne galleriet</string>
   <string name="take_a_photo">Ta et bilde</string>
+  <string name="profile_name_hint">Tast inn ditt navn</string>
+  <string name="registered_name">Registrert navn</string>
+  <string name="identity">Identitet</string>
+  <string name="account">Konto</string>
+  <string name="link_new_device">Koble til en ny enhet</string>
+  <string name="devices">Koblede enheter</string>
   <!--Share fragment-->
   <string name="share_message">Søk etter denne koden med Jami</string>
   <string name="share_message_no_account">Velg en konto å dele.</string>
@@ -195,6 +213,7 @@
   <string name="contact_request_title">Ny kontaktforespørsel</string>
   <string name="contact_request_msg">Du har %1$s kontaktforspørsler</string>
   <string name="contact_request_account">For %1$s</string>
+  <string name="no_requests">Du har ingen kontaktforespørsler</string>
   <string name="message_contact_not_trusted_yet">%s er ikke i din kontaktliste enda.\nØnsker du å godta eller avslå denne kontaktforespørselen?</string>
   <string name="message_contact_not_trusted">%s er ikke blant dine kontakter.\nLegg til ny kontakt?</string>
   <!--Send contact requests-->
@@ -202,10 +221,12 @@
   <string name="send_request_title">Send en kontaktforespørsel</string>
   <string name="send_request_msg">Du må sende en kontaktforespørsel for å kommunisere med denne brukeren. Så lenge din kontakt ikke har godtatt forespørselen, kan du sende meldinger som din kontakt ikke kan lese.</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">Ingen blokkerte kontakter</string>
   <!--Smartlist-->
   <string name="no_contact_request">Ingen kontaktforespørsel sendt</string>
+  <string name="conversation_placeholder">Du har ingen samtaler foreløpig</string>
   <string name="contact_request_sent">Kontaktforespørsel sendt</string>
-  <string name="start_conversation">Start samtalen</string>
+  <string name="start_conversation">Ny samtale</string>
   <string name="search_results">Søkeresultater</string>
   <string name="tv_contact_row_header">Kontakter</string>
   <string name="gallery_error_title">Fant ingen galleriprogrammer</string>
@@ -215,15 +236,15 @@
   <string name="invalid_file">Ugyldig fil</string>
   <string name="not_able_to_write_file">Kunne ikke skrive fil</string>
   <string name="file_transfer_status_created">igangsetter overføring</string>
-  <string name="file_transfer_status_unsupported">ustøttet</string>
-  <string name="file_transfer_status_wait_peer_acceptance">venter på godkjenning fra likemann</string>
+  <string name="file_transfer_status_unsupported">ikke støttet</string>
+  <string name="file_transfer_status_wait_peer_acceptance">venter på godkjenning fra node</string>
   <string name="file_transfer_status_wait_host_acceptance">venter på godkjenning fra vert</string>
   <string name="file_transfer_status_ongoing">pågår</string>
   <string name="file_transfer_status_finished">fullført</string>
   <string name="file_transfer_status_closed_by_host">lukket av vert</string>
-  <string name="file_transfer_status_closed_by_peer">lukket av likemann</string>
+  <string name="file_transfer_status_closed_by_peer">lukket av node</string>
   <string name="file_transfer_status_invalid_pathname">ugyldig stinavn</string>
-  <string name="file_transfer_status_unjoinable_peer">likemann det ikke går an å koble til</string>
+  <string name="file_transfer_status_unjoinable_peer">node det ikke går an å koble til</string>
   <string name="file_transfer_status_cancelled">avbrutt</string>
   <string name="file_transfer_status_error">mislyktes på grunn av feil</string>
   <string name="file_transfer_status_timed_out">tidsavbrudd</string>
@@ -246,6 +267,7 @@
   <string name="navigation_item_conversation">Samtaler</string>
   <string name="navigation_item_contact_request">Kontaktforespørsler</string>
   <string name="navigation_item_account">Konto</string>
+  <string name="search_results_public_directory">Offentlig katalog</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">Vil du sende lydmelding?</string>
   <string name="tv_send_image_dialog_message">Vil du sende bildet?</string>
@@ -254,9 +276,26 @@
   <string name="tv_audio_play">Spill av</string>
   <string name="tv_audio_pause">Pause</string>
   <string name="tv_dialog_send">Send</string>
+  <string name="tv_audio_recording">Opptak pågår...</string>
   <string name="tv_send_text">Send tekst</string>
   <string name="tv_send_audio">Send lyd</string>
   <string name="tv_send_video">Send media</string>
+  <string name="conversation_input_speech_hint">Si noe...</string>
   <!--Wizard-->
-  <string name="wizard_password_skip">Opprett kongo</string>
+  <string name="wizard_status_recommended">Anbefalt</string>
+  <string name="wizard_status_optional">Valgfritt</string>
+  <string name="wizard_status_required">Obligatorisk</string>
+  <string name="wizard_username_info">Velg brukernavn for din konto</string>
+  <string name="wizard_username_button">Velg brukernavn</string>
+  <string name="wizard_username_skip">Hopp over å velge brukernavn</string>
+  <string name="wizard_password_info">Passord konto</string>
+  <string name="wizard_password_placeholder">Velg et passord for å kryptere kontonøkkel på denne enheten</string>
+  <string name="wizard_password_button">Velg passord</string>
+  <string name="wizard_password_skip">Opprett konto</string>
+  <string name="wizard_password_switch">Krypter konto med passord</string>
+  <string name="wizard_password_warning">Legg merke til at passordet ikke kan bli gjenopprettet</string>
+  <string name="wizard_profile_info">Profil deles bare med kontakter</string>
+  <string name="wizard_profile_button">Lagre profil</string>
+  <string name="wizard_profile_skip">Hopp over og gjør dette senere</string>
+  <string name="fab_path_choose">Velg en annen fil</string>
 </resources>

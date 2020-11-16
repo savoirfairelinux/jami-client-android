@@ -98,6 +98,7 @@ Svůj účet můžete upravit později</string>
   <string name="account_proxy_enable_label">Použít proxy DHT</string>
   <string name="account_proxy_server_label">Adresa proxy DHT</string>
   <string name="account_proxy_server_list_label">URL seznamu proxy DHT</string>
+  <string name="account_sip_proxy_label">Proxy</string>
   <string name="account_peer_discovery_label">Zjištění místních klientů</string>
   <string name="account_peer_discovery_enable_label">Povolit zjištění místních klientů</string>
   <string name="account_peer_discovery_enable_summary">Připojit se k ostatním uzlům DHT vysílajícím na naší místní síti</string>
@@ -186,7 +187,6 @@ Prověřte, prosím, své heslo.</string>
   <string name="account_connect_prompt_username">Uživatelské jméno</string>
   <!--Name registration-->
   <string name="error_username_empty">Zadejte uživatelské jméno</string>
-  <string name="no_registered_name_for_account">Pro tento účet nenalezeno žádné registrované jméno</string>
   <string name="username_available">Uživatelské jméno je dostupné!</string>
   <string name="register_name">Zaregistrovat jméno</string>
   <string name="trying_to_register_name">Pokus o registraci jména</string>
@@ -223,6 +223,6 @@ Prověřte, prosím, své heslo.</string>
   <string name="rename_device_button">Přejmenovat zařízení</string>
   <string name="account_rename_device_hint">Zvolit si název nového zařízení</string>
   <string name="account_device_name_empty">Název zařízení nemůže být prázdný</string>
-  <string name="account_device_this_indicator">toto zařízení</string>
+  <string name="account_device_this_indicator">Toto zařízení</string>
   <string name="account_disabled_indicator">zakázáno</string>
 </resources>

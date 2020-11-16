@@ -111,6 +111,7 @@
   <string name="share_via">Jaa</string>
   <string name="write_a_message">Kirjoita viesti</string>
   <string name="scan_qr">Skannaa QR-koodi</string>
+  <string name="qr_code">QR-koodi</string>
   <string name="ab_action_flipcamera">Käännä kamera</string>
   <string name="ab_action_hidepreview">Piilota esikatselu</string>
   <!--Text messages-->
@@ -192,6 +193,11 @@
   <string name="open_the_gallery">Avaa valokuvat</string>
   <string name="take_a_photo">Ota valokuva</string>
   <string name="profile_name_hint">Kirjoita nimesi</string>
+  <string name="registered_name">Rekisteröity nimi</string>
+  <string name="identity">Tunnistetiedot</string>
+  <string name="account">Tili</string>
+  <string name="link_new_device">Linkitä uusi laite</string>
+  <string name="devices">Linkitetyt laitteet</string>
   <!--Share fragment-->
   <string name="share_message">Skannaa tämä koodi Jamilla</string>
   <string name="share_message_no_account">Valitse jaettava tili.</string>

@@ -30,6 +30,7 @@
   <string name="account_preferences_advanced_tab">進階</string>
   <string name="account_turn_enable_label">使用</string>
   <string name="account_published_address_label">公開發佈地址</string>
+  <string name="account_sip_proxy_label">代理</string>
   <!--Security Details-->
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">安全</string>

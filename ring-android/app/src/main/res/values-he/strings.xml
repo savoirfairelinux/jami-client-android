@@ -59,6 +59,7 @@
   <!--Account Summary-->
   <string name="profile">פרופיל</string>
   <string name="profile_name">שם הפרופיל</string>
+  <string name="account">חשבון</string>
   <!--Share fragment-->
   <string name="share_label">שיתוף</string>
   <string name="generic_error_migration">שגיאה</string>

@@ -102,6 +102,7 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="account_proxy_enable_label"> Utiliser un serveur délégataire </string>
   <string name="account_proxy_server_label">Adresse du DHT mandataire</string>
   <string name="account_proxy_server_list_label">URL de la liste des DHT proxy</string>
+  <string name="account_sip_proxy_label">Serveur mandataire</string>
   <string name="account_peer_discovery_label">Découverte des utilisateurs locaux</string>
   <string name="account_peer_discovery_enable_label">Activer la découverte des utilisateurs locaux</string>
   <string name="account_peer_discovery_enable_summary">Se connecter à d\'autres nœuds DHT affichés sur notre réseau local</string>
@@ -188,7 +189,6 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="account_connect_prompt_username">Nom d\'utilisateur</string>
   <!--Name registration-->
   <string name="error_username_empty">Entrer un nom d\'utilisateur</string>
-  <string name="no_registered_name_for_account">Aucun nom n\'a été trouvé pour ce compte.</string>
   <string name="username_available">Identifiant disponible !</string>
   <string name="register_name">Enregistrer un nom</string>
   <string name="trying_to_register_name">Enregistrement du nom en cours</string>
@@ -225,6 +225,6 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="rename_device_button">Renommer l\'appareil</string>
   <string name="account_rename_device_hint">Choisissez un nouveau nom d\'appareil</string>
   <string name="account_device_name_empty">Le nom d\'appareil ne peut être vide</string>
-  <string name="account_device_this_indicator">cet appareil</string>
+  <string name="account_device_this_indicator">Cet appareil</string>
   <string name="account_disabled_indicator">désactivé</string>
 </resources>

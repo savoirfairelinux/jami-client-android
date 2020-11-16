@@ -104,6 +104,7 @@
   <string name="share_via">Comparteix via</string>
   <string name="write_a_message">Escriu un missatge</string>
   <string name="scan_qr">Escaneja un codi QR</string>
+  <string name="qr_code">Codi QR</string>
   <string name="ab_action_flipcamera">Canvia la càmera</string>
   <!--Text messages-->
   <string name="send_message">Envia el missatge</string>
@@ -180,6 +181,8 @@
   <string name="profile_message_warning">El vostre perfil només es comparteix amb els vostres contactes</string>
   <string name="open_the_gallery">Obre la galeria</string>
   <string name="take_a_photo">Fes una foto</string>
+  <string name="identity">Identitat</string>
+  <string name="account">Compte</string>
   <!--Share fragment-->
   <string name="share_message">Escaneja aquest codi amb Jami</string>
   <string name="share_message_no_account">Seleccioneu un compte per compartir</string>

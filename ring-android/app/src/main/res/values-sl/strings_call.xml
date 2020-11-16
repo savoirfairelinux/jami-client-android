@@ -20,17 +20,21 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
+    <!-- Call error -->
+    <string name="call_error_no_microphone">Klic je bil prekinjen, ker ni bilo mogoče najti mikrofona.</string>
+    <string name="call_error_no_camera_no_microphone">Klic je bil prekinjen, ker ni bilo mogoče najti mikrofona ali kamere.</string>
+
     <!-- SipCalls -->
-    <string name="call_human_state_searching">Iščem</string>
+    <string name="call_human_state_searching">Iskanje</string>
     <string name="call_human_state_incoming">Dohodni</string>
     <string name="call_human_state_connecting">Povezujem</string>
     <string name="call_human_state_ringing">Zvoni</string>
-    <string name="call_human_state_current">Sprejemam</string>
-    <string name="call_human_state_hungup">Končano</string>
+    <string name="call_human_state_current">Pogovor</string>
+    <string name="call_human_state_hungup">Končan</string>
     <string name="call_human_state_busy">Zasedeno</string>
     <string name="call_human_state_failure">Neuspelo</string>
-    <string name="call_human_state_hold">Čakanje</string>
-    <string name="call_human_state_unhold">Vrnjen</string>
+    <string name="call_human_state_hold">Zadržano</string>
+    <string name="call_human_state_unhold">Sproščen</string>
     <string name="call_human_state_over">Končano</string>
     <!-- Conferences -->
 </resources>

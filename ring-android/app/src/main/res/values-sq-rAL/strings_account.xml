@@ -100,6 +100,7 @@
   <string name="account_proxy_enable_label">Përdor ndërmjetës DHT</string>
   <string name="account_proxy_server_label">Adresë ndërmjetësi DHT</string>
   <string name="account_proxy_server_list_label">URL liste ndërmjetësish DHT</string>
+  <string name="account_sip_proxy_label">Ndërmjetës</string>
   <string name="account_peer_discovery_label">Pikasje ortakësh vendorë</string>
   <string name="account_peer_discovery_enable_label">Aktivizo pikasje ortakësh vendorë</string>
   <string name="account_peer_discovery_enable_summary">Lidhu me nyje të tjera DHT që reklamohen në rrjetin tonë vendor</string>
@@ -186,7 +187,6 @@
   <string name="account_connect_prompt_username">Emër përdoruesi</string>
   <!--Name registration-->
   <string name="error_username_empty">Jepni një emër përdoruesi</string>
-  <string name="no_registered_name_for_account">S\’u gjet emër i regjistruar për këtë llogari</string>
   <string name="username_available">Emër përdoruesi i pazënë!</string>
   <string name="register_name">Regjistroni Emër</string>
   <string name="trying_to_register_name">Po provohet të regjistrohet emri</string>
@@ -223,6 +223,6 @@
   <string name="rename_device_button">Riemërtoje pajisjen</string>
   <string name="account_rename_device_hint">Zgjidhni një emër të ri për pajisjen</string>
   <string name="account_device_name_empty">Emri i pajisjes s\’mund të jetë i zbrazët</string>
-  <string name="account_device_this_indicator">këtë pajisje</string>
+  <string name="account_device_this_indicator">Këtë pajisje</string>
   <string name="account_disabled_indicator">e çaktivizuar</string>
 </resources>

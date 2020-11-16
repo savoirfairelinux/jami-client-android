@@ -100,6 +100,7 @@
   <string name="account_proxy_enable_label">使用 DHT 代理伺服器</string>
   <string name="account_proxy_server_label">DHT 代理伺服器位置</string>
   <string name="account_proxy_server_list_label">DHT 代理伺服器清單 URL</string>
+  <string name="account_sip_proxy_label">代理服務器</string>
   <string name="account_peer_discovery_label">區域夥伴探索</string>
   <string name="account_peer_discovery_enable_label">啟用區域夥伴探索</string>
   <string name="account_peer_discovery_enable_summary">連線到我們的區域網路上發佈的其他 DHT 節點</string>
@@ -186,7 +187,6 @@
   <string name="account_connect_prompt_username">使用者名稱</string>
   <!--Name registration-->
   <string name="error_username_empty">輸入使用者名稱</string>
-  <string name="no_registered_name_for_account">找不到這個帳號已註冊的名稱</string>
   <string name="username_available">使用者名稱可用！</string>
   <string name="register_name">註冊名稱</string>
   <string name="trying_to_register_name">正在嘗試註冊名稱</string>

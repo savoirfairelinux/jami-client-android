@@ -32,6 +32,7 @@
   <!--Advanced Details-->
   <string name="account_call_settings_title">Paramètres sonada</string>
   <string name="account_turn_enable_label">Utilizar TURN</string>
+  <string name="account_sip_proxy_label">Servidor mandatari</string>
   <!--Security Details-->
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Seguretat</string>

@@ -29,6 +29,7 @@
   <string name="wizard_next">다음</string>
   <!--Account Summary-->
   <string name="profile">프로필</string>
+  <string name="account">계정</string>
   <!--Share fragment-->
   <!--Pending contact requests-->
   <string name="accept">수락</string>

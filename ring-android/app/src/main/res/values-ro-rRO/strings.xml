@@ -67,7 +67,7 @@
   <string name="notif_channel_file_transfer">Transfer de fișier</string>
   <string name="notif_channel_sync">Sincronizarea datelor</string>
   <string name="notif_channel_background_service">Serviciu ascuns</string>
-  <string name="notif_channel_background_service_descr">Permite primirea de apeluri și mesaje oricînd.</string>
+  <string name="notif_channel_background_service_descr">Permite mereu primirea de apeluri și mesaje.</string>
   <string name="notif_group_calls">Apeluri</string>
   <string name="notif_background_service">Jami funcționează acum ascuns</string>
   <string name="notif_mark_as_read">Bifează ca citit</string>
@@ -112,6 +112,7 @@
   <string name="share_via">Distribuie prin</string>
   <string name="write_a_message">Scrie un mesaj</string>
   <string name="scan_qr">Scanează Codul QR</string>
+  <string name="qr_code">Cod QR</string>
   <string name="ab_action_flipcamera">Schimbă videocamera</string>
   <string name="ab_action_hidepreview">Ascunde previzualizarea</string>
   <!--Text messages-->
@@ -193,6 +194,11 @@
   <string name="open_the_gallery">Deschide galeria</string>
   <string name="take_a_photo">Fă o poză</string>
   <string name="profile_name_hint">Introdu numele tău</string>
+  <string name="registered_name">Nume Înscris</string>
+  <string name="identity">Identitate</string>
+  <string name="account">Cont</string>
+  <string name="link_new_device">Asociază un nou aparat</string>
+  <string name="devices">Aparate asociate</string>
   <!--Share fragment-->
   <string name="share_message">Scanează acest cod cu Jami</string>
   <string name="share_message_no_account">Alege un cont pentru distribuire.</string>
@@ -232,8 +238,8 @@
   <string name="not_able_to_write_file">Fișierul nu poate fi scris</string>
   <string name="file_transfer_status_created">Inițializarea transferului</string>
   <string name="file_transfer_status_unsupported">Neacceptat</string>
-  <string name="file_transfer_status_wait_peer_acceptance">Așteaptă autorizarea destinatarului</string>
-  <string name="file_transfer_status_wait_host_acceptance">Așteaptă autorizarea dispozitivului</string>
+  <string name="file_transfer_status_wait_peer_acceptance">Se așteaptă acceptarea</string>
+  <string name="file_transfer_status_wait_host_acceptance">Se așteaptă acceptarea</string>
   <string name="file_transfer_status_ongoing">în curs</string>
   <string name="file_transfer_status_finished">terminat</string>
   <string name="file_transfer_status_closed_by_host">închisă de dispozitiv</string>

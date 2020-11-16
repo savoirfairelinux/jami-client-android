@@ -14,6 +14,10 @@
   <string name="pref_hd_summary">Aktiver sending av HD-video</string>
   <string name="pref_hwEncode_title">Aktiver aksellerert koding</string>
   <string name="pref_hwEncode_summary">Eksperimentelt valg</string>
+  <string name="pref_videoBitrate_title">Video bitrate</string>
+  <string name="pref_videoBitrate_summary">Velg standardverdi på utgående video bitrate (KB/s)</string>
+  <string name="pref_videoResolution_title">Video oppløsning</string>
+  <string name="pref_videoResolution_summary">Velg standard utgående video oppløsning</string>
   <string name="pref_systemContacts_title">Bruk systemkontakter</string>
   <string name="pref_systemContacts_summary">Bruk systemkontakter for å vise innringerdetaljer</string>
   <string name="pref_systemDialer_title">Gjennomfør systemanrop med Jami</string>
@@ -22,7 +26,21 @@
   <string name="pref_startOnBoot_summary">Kjør Jami i bakgrunnen når systemet starter.</string>
   <string name="pref_clearHistory_title">Slett historikk</string>
   <string name="pref_clearHistory_summary">Tøm samtalehistorikken. Denne handlingen kan ikke angres.</string>
+  <string name="pref_delete_account_title">Slett konto</string>
   <string name="pref_persistNotification_title">Kjør i bakgrunnen</string>
   <string name="pref_persistNotification_summary">Tillater kjøring i bakgrunnen for å motta samtaler og meldinger.</string>
   <!--Plugin-->
+  <string name="pref_plugins_title">Programvareutvidelse</string>
+  <string name="pref_plugins_summary">Aktiver programvareutvidelser og angi parametre</string>
+  <string name="fab_plugins_add">Legg til ny plugin</string>
+  <string name="plugin_uninstall_title">Avinstaller plugin ?</string>
+  <string name="plugin_reset_preferences">Nullstill plugin preferanser</string>
+  <string name="plugin_reset_preferences_summary">Innstillinger for programvareutvidelser vil bli nullstilt</string>
+  <string name="plugin_reset_preferences_ask">Ønsker du å nullstille innstillinger for programvareutvidelser ?</string>
+  <string name="plugin_successfully_installed">Programvareutvidelse <b>%1$s</b> installert</string>
+  <string name="plugin_install_failure">Installasjon av programutvidelse feilet: <b>%1$s</b></string>
+  <string name="plugin_recent_version_exception">Du har en nyere versjon av: <b>%1$s</b></string>
+  <string name="plugin_same_version_exception">Du har samme versjon av <b>%1$s</b> installert</string>
+  <string name="plugin_force_install">tving \n installasjon</string>
+  <string name="plugin_path_image_add">Legg til et nytt bilde</string>
 </resources>

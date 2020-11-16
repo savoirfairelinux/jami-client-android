@@ -87,6 +87,7 @@ Możesz edytować swoje konto później</string>
   <string name="account_proxy_label">Proxy DHT</string>
   <string name="account_proxy_enable_label">Używaj proxy DHT</string>
   <string name="account_proxy_server_label">Adres proxy DHT</string>
+  <string name="account_sip_proxy_label">Pełnomocnik</string>
   <!--Security Details-->
   <string name="account_credentials_label">Detale</string>
   <string name="account_credentials_edit">Edytuj detale</string>
@@ -160,7 +161,6 @@ Możesz edytować swoje konto później</string>
   <string name="account_connect_prompt_username">Nazwa użytkownika</string>
   <!--Name registration-->
   <string name="error_username_empty">Wprowadź nazwę użytkownika</string>
-  <string name="no_registered_name_for_account">Nie znaleziono żadnej nazwy zarejestrowanej dla tego konta </string>
   <string name="username_available">Nazwa dostępna!</string>
   <string name="trying_to_register_name">Trwa próba rejestracji nazwy</string>
   <string name="registered_username">Zarejestruj nazwę użytkownika</string>
@@ -195,6 +195,6 @@ Możesz edytować swoje konto później</string>
   <string name="rename_device_button">Przemianuj urządzenie</string>
   <string name="account_rename_device_hint">Wybierz nową nazwę dla urządzenia</string>
   <string name="account_device_name_empty">Nazwa urządzenia nie może być pusta</string>
-  <string name="account_device_this_indicator">to urządzenie</string>
+  <string name="account_device_this_indicator">To urządzenie</string>
   <string name="account_disabled_indicator">wyłączone</string>
 </resources>

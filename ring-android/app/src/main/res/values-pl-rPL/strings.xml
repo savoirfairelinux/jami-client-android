@@ -153,6 +153,9 @@
   <string name="profile_message_warning">Twój profil jest udostępniany tylko twoim kontaktom</string>
   <string name="open_the_gallery">Otwórz galerię</string>
   <string name="take_a_photo">Zrób zdjęcie</string>
+  <string name="registered_name">Zarejestrowana nazwa</string>
+  <string name="identity">Tożsamość</string>
+  <string name="account">Konto</string>
   <!--Share fragment-->
   <string name="share_message_no_account">Wybierz, proszę, konto które chcesz udostępnić.</string>
   <string name="share_your_account_information">Udostępnij informacje o moim kontakcie</string>

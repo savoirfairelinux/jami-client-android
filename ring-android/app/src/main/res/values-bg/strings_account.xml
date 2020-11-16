@@ -80,6 +80,7 @@
   <string name="account_published_port_label">Публикуван порт</string>
   <string name="account_published_address_label">Публикуван адрес</string>
   <string name="account_proxy_label">DHT прокси</string>
+  <string name="account_sip_proxy_label">Посредник</string>
   <!--Security Details-->
   <string name="account_credentials_label">Идентификационни данни</string>
   <string name="account_credentials_edit">Редактиране на идентификационните данни</string>
@@ -132,7 +133,6 @@
   <string name="account_connect_prompt_username">Потребителско име</string>
   <!--Name registration-->
   <string name="error_username_empty">Въведете потребителско име</string>
-  <string name="no_registered_name_for_account">Няма открито регистрирано име за този профил</string>
   <string name="trying_to_register_name">Протича опит за регистриране на името</string>
   <string name="registered_username">Регистрирано потребителско име</string>
   <string name="register_username">Регистриране на публично потребителско име</string>
@@ -163,6 +163,5 @@
   <string name="rename_device_button">Преименуване на устройството</string>
   <string name="account_rename_device_hint">Изберете ново име за устройството</string>
   <string name="account_device_name_empty">Името на устройството не може да бъде празно</string>
-  <string name="account_device_this_indicator">това устройство</string>
   <string name="account_disabled_indicator">изключено</string>
 </resources>

@@ -108,6 +108,7 @@
   <string name="share_via">共有...</string>
   <string name="write_a_message">メッセージを入力</string>
   <string name="scan_qr">QR コードをスキャン</string>
+  <string name="qr_code">QRコード</string>
   <string name="ab_action_flipcamera">カメラを押す</string>
   <string name="ab_action_hidepreview">プレビューを隠す</string>
   <!--Text messages-->
@@ -187,6 +188,11 @@
   <string name="open_the_gallery">ギャラリーを開く</string>
   <string name="take_a_photo">写真を撮る</string>
   <string name="profile_name_hint">名前を入力</string>
+  <string name="registered_name">登録名</string>
+  <string name="identity">ID</string>
+  <string name="account">アカウント</string>
+  <string name="link_new_device">新しいデバイスをリンク</string>
+  <string name="devices">リンクされたデバイス</string>
   <!--Share fragment-->
   <string name="share_message">このコードをJamiでスキャンしてください</string>
   <string name="share_message_no_account">共有するアカウントを選択してください。</string>

@@ -31,6 +31,7 @@
   <string name="menu_item_accounts">Учетные записи</string>
   <string name="menu_item_account">Учетные записи</string>
   <string name="menu_item_settings">Настройки</string>
+  <string name="menu_item_plugin_list">Настройки плагинов</string>
   <string name="menu_item_share">Поделиться моей контактной информацией</string>
   <string name="menu_item_about">О Jami</string>
   <!--Dialing Fragment-->
@@ -106,6 +107,7 @@
   <string name="share_via">Поделится</string>
   <string name="write_a_message">Написать сообщение</string>
   <string name="scan_qr">Сканировать QR-код</string>
+  <string name="qr_code">QR-код</string>
   <string name="ab_action_flipcamera">Перевернуть камеру</string>
   <!--Text messages-->
   <string name="send_message">Отправить сообщение</string>
@@ -182,6 +184,9 @@
   <string name="profile_message_warning">Ваш профиль доступен только для ваших контактов</string>
   <string name="open_the_gallery">Открыть галерею</string>
   <string name="take_a_photo">Сфотографировать</string>
+  <string name="registered_name">Зарегистрированное имя</string>
+  <string name="identity">Идентичность</string>
+  <string name="account">Учётная запись</string>
   <!--Share fragment-->
   <string name="share_message">Отсканируйте код с помощью Jami</string>
   <string name="share_message_no_account">Выберите контакт, чтобы поделиться</string>
@@ -263,5 +268,10 @@
   <string name="tv_send_video">Отправить Медиа</string>
   <string name="conversation_input_speech_hint">Скажите что-нибудь...</string>
   <!--Wizard-->
+  <string name="wizard_password_info">Пароль аккаунта</string>
+  <string name="wizard_password_button">Выберите пароль</string>
   <string name="wizard_password_skip">Создать аккаунт</string>
+  <string name="wizard_password_switch">Зашифровать аккаунт с помощью пароля</string>
+  <string name="wizard_password_warning">Учтите, что пароль не может быть восстановлен</string>
+  <string name="wizard_profile_button">Сохранить профиль</string>
 </resources>

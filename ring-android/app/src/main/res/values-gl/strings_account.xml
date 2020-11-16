@@ -58,6 +58,8 @@
   <string name="account_optionnal_category">Axustes optativos</string>
   <string name="account_useragent_label">User Agent</string>
   <string name="account_autoanswer_label">Resposta automática</string>
+  <string name="account_rendezvous_label">Modo Xuntanza</string>
+  <string name="account_rendezvous_summary">No modo Xuntanza as chamadas entrantes engadiranse a unha sala de conferencia.</string>
   <string name="account_upnp_label">Activar UPnP</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Audio Details-->
@@ -98,6 +100,7 @@
   <string name="account_proxy_enable_label">Utilizar proxy DHT</string>
   <string name="account_proxy_server_label">Enderezo proxy DHT</string>
   <string name="account_proxy_server_list_label">Lista URL do proxy DHT</string>
+  <string name="account_sip_proxy_label">Proxy</string>
   <string name="account_peer_discovery_label">Descubrimento de pares locais</string>
   <string name="account_peer_discovery_enable_label">Activar o descubrimento de pares locais</string>
   <string name="account_peer_discovery_enable_summary">Conectar a outros nodos DHT que se anuncian na túa rede local</string>
@@ -169,6 +172,7 @@
   <string name="account_link_archive_button">Conectar desde copia de apoio</string>
   <string name="account_link_prompt_pin">Escribe o PIN</string>
   <string name="account_new_button">Crear conta Jami</string>
+  <string name="account_link_export_button">Ligar un novo dispositio</string>
   <string name="account_link_export_info">Para usar esta conta en outros dispositivos primeiro tes que exportala en Jami. Esto creará un código PIN que tes que escribir no novo dispositivo para configuralo. O PIN é válido durante 10 minutos.</string>
   <string name="account_start_export_button">Crear PIN</string>
   <string name="account_end_export_button">pechar</string>
@@ -183,7 +187,6 @@
   <string name="account_connect_prompt_username">Nome de usuaria</string>
   <!--Name registration-->
   <string name="error_username_empty">Escribe nome de usuaria</string>
-  <string name="no_registered_name_for_account">Non se atopou nome rexistrado para esta conta</string>
   <string name="username_available">Nome de usuaria dispoñible!</string>
   <string name="register_name">Rexistrar nome</string>
   <string name="trying_to_register_name">Intentando rexistrar nome</string>
@@ -220,6 +223,5 @@
   <string name="rename_device_button">Cambiar nome</string>
   <string name="account_rename_device_hint">Escolle un novo nome</string>
   <string name="account_device_name_empty">O nome non pode quedar baleiro</string>
-  <string name="account_device_this_indicator">este dispositivo</string>
   <string name="account_disabled_indicator">desactivado</string>
 </resources>

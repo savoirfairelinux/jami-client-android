@@ -60,6 +60,7 @@
   <string name="account_published_same_as_local_label">Publikita same kiel local</string>
   <string name="account_published_port_label">Publikito Pordo</string>
   <string name="account_published_address_label">Publikita Adreso</string>
+  <string name="account_sip_proxy_label">Prokura Servilo</string>
   <!--Security Details-->
   <string name="account_credentials_label">Ensalutiloj</string>
   <string name="account_credentials_edit">Redakti ensalutilojn</string>

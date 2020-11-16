@@ -104,6 +104,7 @@
   <string name="share_via">Paylaş</string>
   <string name="write_a_message">Bir ileti yaz</string>
   <string name="scan_qr">Kare Kod Tara</string>
+  <string name="qr_code">QR kod</string>
   <string name="ab_action_flipcamera">Kamerayı ters çevir</string>
   <!--Text messages-->
   <string name="send_message">İleti gönder</string>
@@ -180,6 +181,11 @@
   <string name="profile_message_warning">Profiliniz sadece kayıtlı kişilerinizle paylaşılıyor</string>
   <string name="open_the_gallery">Galeriyi aç</string>
   <string name="take_a_photo">Fotoğraf çek</string>
+  <string name="registered_name">Kayıtlı Ad</string>
+  <string name="identity">Kimlik</string>
+  <string name="account">Hesap</string>
+  <string name="link_new_device">Yeni bir aygıt bağlayın</string>
+  <string name="devices">Bağlı Aygıtlar</string>
   <!--Share fragment-->
   <string name="share_message">Bu kodu Jami ile tarayın</string>
   <string name="share_message_no_account">Lütfen paylaşmak için bir hesap seçin.</string>

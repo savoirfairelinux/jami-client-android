@@ -42,6 +42,7 @@
   <string name="account_preferences_advanced_tab">Για προχωρημένους</string>
   <string name="account_turn_enable_label">Χρήση TURN</string>
   <string name="account_published_address_label">Δημοσιευμένη διεύθυνση</string>
+  <string name="account_sip_proxy_label">Διαμεσολαβητής</string>
   <!--Security Details-->
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Ασφάλεια</string>

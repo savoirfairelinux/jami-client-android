@@ -113,6 +113,7 @@
   <string name="share_via">Отправить с помощью</string>
   <string name="write_a_message">Написать сообщение</string>
   <string name="scan_qr">Сканировать QR код</string>
+  <string name="qr_code">QR-код</string>
   <string name="ab_action_flipcamera">Переключить камеру</string>
   <string name="ab_action_hidepreview">Скрыть предпросмотр</string>
   <!--Text messages-->
@@ -194,6 +195,11 @@
   <string name="open_the_gallery">Открыть галерею</string>
   <string name="take_a_photo">Сфотографировать</string>
   <string name="profile_name_hint">Введите своё имя</string>
+  <string name="registered_name">Зарегистрированное Имя</string>
+  <string name="identity">Идентификатор</string>
+  <string name="account">Аккаунт</string>
+  <string name="link_new_device">Привязать новое устройство</string>
+  <string name="devices">Привязанные устройства</string>
   <!--Share fragment-->
   <string name="share_message">Отсканируйте этот код Jami</string>
   <string name="share_message_no_account">Выберите аккаунт, которым хотите поделиться.</string>

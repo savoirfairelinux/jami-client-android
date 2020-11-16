@@ -111,6 +111,7 @@
   <string name="share_via">Compartir vía</string>
   <string name="write_a_message">Escribe unha mensaxe</string>
   <string name="scan_qr">Escanear código QR</string>
+  <string name="qr_code">Código QR</string>
   <string name="ab_action_flipcamera">Cambiar de cámara</string>
   <string name="ab_action_hidepreview">Agochar vista previa</string>
   <!--Text messages-->
@@ -192,6 +193,11 @@
   <string name="open_the_gallery">Abrir a galería</string>
   <string name="take_a_photo">Tomar fotografía</string>
   <string name="profile_name_hint">Escribe o teu nome</string>
+  <string name="registered_name">Nome rexistrado</string>
+  <string name="identity">Identidade</string>
+  <string name="account">Conta</string>
+  <string name="link_new_device">Ligar un novo dispositio</string>
+  <string name="devices">Dispositivos ligados</string>
   <!--Share fragment-->
   <string name="share_message">Escanea este código con Jami</string>
   <string name="share_message_no_account">Escolle a conta a compartir.</string>

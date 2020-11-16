@@ -144,6 +144,7 @@
   <string name="profile_message_warning">Vaš profil je podjeljen samo sa vašim kontaktima</string>
   <string name="open_the_gallery">Otvorite galeriju</string>
   <string name="take_a_photo">Fotografiraj</string>
+  <string name="account">Račun</string>
   <!--Share fragment-->
   <string name="share_message_no_account">Molim odaberite račun za djeljenje</string>
   <string name="share_label">Podijeli</string>

@@ -8,7 +8,7 @@
   <string name="copyright_section">droit d\'auteur</string>
   <string name="contribute_section">Contribuer</string>
   <string name="version_section">Version</string>
-  <string name="no_email_app_installed">Aucun logiciel de messagerie n\'a été trouvé, merci d\'installer un logiciel de messagerie pour nous envoyer un rapport</string>
+  <string name="no_email_app_installed">Aucun logiciel de messagerie n\'a été trouvé, veuillez installer un logiciel de messagerie pour nous envoyer un rapport</string>
   <string name="no_browser_app_installed">Aucun navigateur web trouvé, installez-en un pour voir cette page</string>
   <string name="email_chooser_title">Envoyer un courriel en utilisant...</string>
   <string name="website_chooser_title">Voir le site web en utilisant...</string>
@@ -87,6 +87,8 @@
   <!--Call Fragment-->
   <string name="you_txt_prefix">Vous:</string>
   <string name="action_call_hangup">Raccrocher</string>
+  <string name="action_call_maximize">Agrandir</string>
+  <string name="action_call_minimize">Réduire</string>
   <string name="ongoing_call">Appel en cours</string>
   <string name="hist_in_call">Appel entrant de %1$s</string>
   <string name="hist_out_call">Appel sortant de %1$s</string>
@@ -185,10 +187,14 @@
   <string name="wizard_skip">Passer</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
+  <string name="profile_name">Nom du profil</string>
   <string name="profile_message_warning">Votre profil n\'est partagé qu\'avec vos contacts</string>
   <string name="open_the_gallery">Ouvrir la galerie</string>
   <string name="take_a_photo">Prendre une photo</string>
   <string name="profile_name_hint">Entrez votre nom</string>
+  <string name="account">Compte</string>
+  <string name="link_new_device">Associer un nouvel appareil</string>
+  <string name="devices">Appareils liés</string>
   <!--Share fragment-->
   <string name="share_message">Numériser ce code avec Jami</string>
   <string name="share_message_no_account">Sélectionnez un compte à partager.</string>
@@ -217,7 +223,7 @@
   <string name="no_contact_request">Aucune demande de contact envoyée</string>
   <string name="conversation_placeholder">Vous n\'avez pas encore de conversations</string>
   <string name="contact_request_sent">Demande de contact envoyée</string>
-  <string name="start_conversation">Démarrer la conversation</string>
+  <string name="start_conversation">Démarrer une conversation</string>
   <string name="search_results">Résultats de recherche</string>
   <string name="tv_contact_row_header">Contacts</string>
   <string name="gallery_error_title">Aucune application de galerie trouvée</string>
@@ -288,4 +294,5 @@
   <string name="wizard_profile_info">Votre profil n\'est partagé qu\'avec vos contacts</string>
   <string name="wizard_profile_button">Sauvegarder votre profil</string>
   <string name="wizard_profile_skip">Passer et faire ça plus tard</string>
+  <string name="fab_path_choose">Choisir un autre fichier</string>
 </resources>

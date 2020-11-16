@@ -113,6 +113,7 @@
   <string name="share_via">Sdílet přes</string>
   <string name="write_a_message">Napsat zprávu</string>
   <string name="scan_qr">Skenovat kód QR</string>
+  <string name="qr_code">Kód QR</string>
   <string name="ab_action_flipcamera">Otočit kameru</string>
   <string name="ab_action_hidepreview">Skrýt náhled</string>
   <!--Text messages-->
@@ -194,6 +195,11 @@
   <string name="open_the_gallery">Otevřít galerii</string>
   <string name="take_a_photo">Pořídit fotku</string>
   <string name="profile_name_hint">Zadejte své jméno</string>
+  <string name="registered_name">Registrované jméno</string>
+  <string name="identity">Totožnost</string>
+  <string name="account">Účet</string>
+  <string name="link_new_device">Připojit nové zařízení</string>
+  <string name="devices">Připojená zařízení</string>
   <!--Share fragment-->
   <string name="share_message">Skenovat tento kód s Jami</string>
   <string name="share_message_no_account">Vyberte, prosím, účet ke sdílení.</string>

@@ -69,6 +69,7 @@
   <string name="account_proxy_label">DHT proxya</string>
   <string name="account_proxy_enable_label">Erabili DHT proxya</string>
   <string name="account_proxy_server_label">DHT proxyaren helbidea</string>
+  <string name="account_sip_proxy_label">Proxya</string>
   <!--Security Details-->
   <string name="account_credentials_label">Kredentzialak</string>
   <string name="account_credentials_edit">Editatu kredentzialak</string>
@@ -141,6 +142,6 @@
   <string name="rename_device_button">Aldatu izena gailuari</string>
   <string name="account_rename_device_hint">Aukeratu gailuaren izen berria</string>
   <string name="account_device_name_empty">Gailuaren izena ezin da hutsik laga</string>
-  <string name="account_device_this_indicator">gailu hau</string>
+  <string name="account_device_this_indicator">Gailu hau</string>
   <string name="account_disabled_indicator">desgaituta</string>
 </resources>

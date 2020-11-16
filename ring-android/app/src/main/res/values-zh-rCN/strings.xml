@@ -110,6 +110,7 @@
   <string name="share_via">通过…共享</string>
   <string name="write_a_message">写消息</string>
   <string name="scan_qr">扫描二维码</string>
+  <string name="qr_code">二维码</string>
   <string name="ab_action_flipcamera">翻转摄像头</string>
   <string name="ab_action_hidepreview">隐藏预览</string>
   <!--Text messages-->
@@ -191,6 +192,11 @@
   <string name="open_the_gallery">打开照片库</string>
   <string name="take_a_photo">拍照</string>
   <string name="profile_name_hint">输入您的名字</string>
+  <string name="registered_name">已注册名称</string>
+  <string name="identity">身份</string>
+  <string name="account">账户</string>
+  <string name="link_new_device">关联新设备</string>
+  <string name="devices">链接设备</string>
   <!--Share fragment-->
   <string name="share_message">用 Jami 扫描此码</string>
   <string name="share_message_no_account">请选择要共享的账户。</string>

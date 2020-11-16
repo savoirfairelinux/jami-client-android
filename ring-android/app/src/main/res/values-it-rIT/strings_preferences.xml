@@ -26,6 +26,7 @@
   <string name="pref_startOnBoot_summary">Esegui Jami in background all\'avvio del sistema.</string>
   <string name="pref_clearHistory_title">Elimina cronologia</string>
   <string name="pref_clearHistory_summary">Cancella tutta la cronologia delle conversazioni. Questa azione non può essere annullata.</string>
+  <string name="pref_delete_account_title">Eliminare l\'account</string>
   <string name="pref_persistNotification_title">Esegui in background</string>
   <string name="pref_persistNotification_summary">Consenti l\'esecuzione in background per ricevere chiamate e messaggi.</string>
   <!--Plugin-->
@@ -41,4 +42,5 @@
   <string name="plugin_recent_version_exception">Hai una versione più recente di: <b>%1$s</b></string>
   <string name="plugin_same_version_exception">Hai la stessa versione di <b>%1$s</b> installata</string>
   <string name="plugin_force_install">forza \n installazione</string>
+  <string name="plugin_path_image_add">Aggiungi una nuova immagine</string>
 </resources>

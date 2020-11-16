@@ -195,6 +195,8 @@
   <string name="open_the_gallery">فتح المعرض</string>
   <string name="take_a_photo">إلتقاط صورة</string>
   <string name="profile_name_hint">إدخال إسمك</string>
+  <string name="account">حساب</string>
+  <string name="devices">الأجهزة المتصلة</string>
   <!--Share fragment-->
   <string name="share_message">إمسح هذا الكود بإستعمال جامي</string>
   <string name="share_message_no_account">الرجاء إختيار حساب للمشاركة.</string>

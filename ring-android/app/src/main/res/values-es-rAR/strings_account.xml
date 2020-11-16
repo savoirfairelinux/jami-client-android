@@ -96,6 +96,7 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_proxy_enable_label">Usar proxy DHT</string>
   <string name="account_proxy_server_label">Dirección del proxy DHT</string>
   <string name="account_proxy_server_list_label">Dirección URL del proxy DHT</string>
+  <string name="account_sip_proxy_label">Proxy</string>
   <string name="account_peer_discovery_label">Descubrimiento de pares locales</string>
   <string name="account_peer_discovery_enable_label">Habilitar descubrimiento de pares locales</string>
   <string name="account_peer_discovery_enable_summary">Conéctese a otros nodos DHT que se anuncian en nuestra red local</string>
@@ -180,7 +181,6 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_connect_prompt_username">Nombre de usuario</string>
   <!--Name registration-->
   <string name="error_username_empty">Ingresá un nombre de usuario</string>
-  <string name="no_registered_name_for_account">No se encontró ningún nombre registrado para esta cuenta</string>
   <string name="username_available">¡Nombre de usuario disponible!</string>
   <string name="trying_to_register_name">Intentanto registrar nombre</string>
   <string name="registered_username">Nombre de usuario registrado</string>

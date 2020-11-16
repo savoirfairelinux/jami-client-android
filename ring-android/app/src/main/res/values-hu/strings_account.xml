@@ -100,6 +100,7 @@
   <string name="account_proxy_enable_label">DHT proxy használata</string>
   <string name="account_proxy_server_label">DHT proxy címe</string>
   <string name="account_proxy_server_list_label">DHT proxy lista URL-je</string>
+  <string name="account_sip_proxy_label">Proxy</string>
   <string name="account_peer_discovery_label">Helyi partner felderítése</string>
   <string name="account_peer_discovery_enable_label">Helyi partner felderítése engedélyezése</string>
   <string name="account_peer_discovery_enable_summary">Csatlakozás más DHT-csomópontokhoz, amelyek a helyi hálózaton hirdetnek</string>
@@ -186,7 +187,6 @@
   <string name="account_connect_prompt_username">Felhasználónév</string>
   <!--Name registration-->
   <string name="error_username_empty">Adjon meg egy felhasználónevet</string>
-  <string name="no_registered_name_for_account">Nem található regisztrált név ehhez a fiókhoz</string>
   <string name="username_available">A felhasználónév elérhető.</string>
   <string name="register_name">Név bejegyzése</string>
   <string name="trying_to_register_name">A név regisztrációjának megkísérlése</string>
@@ -223,6 +223,6 @@
   <string name="rename_device_button">Eszköz átnevezése</string>
   <string name="account_rename_device_hint">Válasszon új eszköznevet</string>
   <string name="account_device_name_empty">Az eszköz neve nem lehet üres</string>
-  <string name="account_device_this_indicator">ez az eszköz</string>
+  <string name="account_device_this_indicator">Ez az eszköz</string>
   <string name="account_disabled_indicator">letiltva</string>
 </resources>

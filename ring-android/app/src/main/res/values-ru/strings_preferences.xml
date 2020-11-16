@@ -14,6 +14,10 @@
   <string name="pref_hd_summary">Разрешить отправку видео высокого разрешения</string>
   <string name="pref_hwEncode_title">Включить аппаратное кодирование</string>
   <string name="pref_hwEncode_summary">Экспериментальная опция</string>
+  <string name="pref_videoBitrate_title">Скорость передачи видео</string>
+  <string name="pref_videoBitrate_summary">Выбрать битрейт исходящего видео по умолчанию (кБ/с)</string>
+  <string name="pref_videoResolution_title">Разрешение видео</string>
+  <string name="pref_videoResolution_summary">Выбрать разрешение исходящего видео по умолчанию</string>
   <string name="pref_systemContacts_title">Использовать контакты из адресной книги</string>
   <string name="pref_systemContacts_summary">Использовать данные из адресной книги для отображения информации о звонящем.</string>
   <string name="pref_systemDialer_title">Совершать системные звонки с помощью Jami</string>
@@ -22,8 +26,21 @@
   <string name="pref_startOnBoot_summary">Запускать Jami в фоновом режиме во время старта системы.</string>
   <string name="pref_clearHistory_title">Очистить историю</string>
   <string name="pref_clearHistory_summary">Очистить всю историю разговоров. Это действие нельзя отменить.</string>
+  <string name="pref_delete_account_title">Удалить аккаунт</string>
   <string name="pref_persistNotification_title">Работа в фоновом режиме</string>
   <string name="pref_persistNotification_summary">Разрешить работу в фоновом режиме для принятия звонков и сообщений.</string>
   <!--Plugin-->
   <string name="pref_plugins_title">Плагины</string>
+  <string name="pref_plugins_summary">Включить плагины и установить их параметры</string>
+  <string name="fab_plugins_add">Добавить новый плагин</string>
+  <string name="plugin_uninstall_title">Удалить плагин ?</string>
+  <string name="plugin_reset_preferences">Сбросить настройки плагина</string>
+  <string name="plugin_reset_preferences_summary">Настройки вашего плагина будут установлены по умолчанию</string>
+  <string name="plugin_reset_preferences_ask">Вы хотите сбросить настройки плагина ?</string>
+  <string name="plugin_successfully_installed">Плагин <b>%1$s</b> успешно установлен</string>
+  <string name="plugin_install_failure">Не удалось установить плагин: <b>%1$s</b></string>
+  <string name="plugin_recent_version_exception">У вас версия более свежая: <b>%1$s</b> </string>
+  <string name="plugin_same_version_exception">У вас установлена та же самая<b>%1$s</b>версия</string>
+  <string name="plugin_force_install">принудительная установка</string>
+  <string name="plugin_path_image_add">Добавить новое изображение</string>
 </resources>

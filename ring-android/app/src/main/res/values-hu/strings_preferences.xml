@@ -26,6 +26,7 @@
   <string name="pref_startOnBoot_summary">Alkalmazás háttérfuttatása rendszerindításkor</string>
   <string name="pref_clearHistory_title">Előzmények törlése</string>
   <string name="pref_clearHistory_summary">Minden beszélgetés előzmény törlése. Ez a művelet nem vonható vissza.</string>
+  <string name="pref_delete_account_title">Fiók törlése</string>
   <string name="pref_persistNotification_title">Háttérfolyamat engedélyezése</string>
   <string name="pref_persistNotification_summary">Háttérfolyamat engedélyezése hívások és üzenetek fogadásához.</string>
   <!--Plugin-->

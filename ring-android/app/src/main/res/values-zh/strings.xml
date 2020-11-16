@@ -31,6 +31,7 @@
   <string name="wizard_next">下一步</string>
   <!--Account Summary-->
   <string name="profile">個人檔案</string>
+  <string name="account">帳號</string>
   <!--Share fragment-->
   <string name="share_label">分享</string>
   <!--Pending contact requests-->

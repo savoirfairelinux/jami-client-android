@@ -111,6 +111,7 @@
   <string name="share_via">Megosztás a következőn keresztül:</string>
   <string name="write_a_message">Üzenet írása</string>
   <string name="scan_qr">QR-kód beolvasása</string>
+  <string name="qr_code">QR-kód</string>
   <string name="ab_action_flipcamera">Kamera megfordítása</string>
   <string name="ab_action_hidepreview">Előnézet elrejtése</string>
   <!--Text messages-->
@@ -192,6 +193,11 @@
   <string name="open_the_gallery">Galéria megnyitása</string>
   <string name="take_a_photo">Fotó készítése</string>
   <string name="profile_name_hint">Név megadása</string>
+  <string name="registered_name">Bejegyzett név</string>
+  <string name="identity">Személyazonosság</string>
+  <string name="account">Fiók</string>
+  <string name="link_new_device">Eszköz összekapcsolása fiókhoz</string>
+  <string name="devices">Összekapcsolt eszközök</string>
   <!--Share fragment-->
   <string name="share_message">Olvassa be a kódot a Jami programmal</string>
   <string name="share_message_no_account">Válassza ki a megosztandó fiókot.</string>

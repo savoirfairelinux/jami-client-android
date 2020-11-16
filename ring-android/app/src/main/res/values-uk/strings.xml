@@ -159,6 +159,10 @@
   <string name="profile_message_warning">Ваш профіль бачитимуть лише ваші контакти</string>
   <string name="open_the_gallery">Відкрити галерею</string>
   <string name="take_a_photo">Зробити фото</string>
+  <string name="registered_name">Зареєстроване ім\'я</string>
+  <string name="identity">Особа</string>
+  <string name="account">Аккаунт</string>
+  <string name="devices">Прив\'язані пристрої</string>
   <!--Share fragment-->
   <string name="share_message">Зіскануйте цей код у Джамі</string>
   <string name="share_message_no_account">Будь ласка, оберіть обліковий запис, щоб поділитися.</string>
