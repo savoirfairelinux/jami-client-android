@@ -30,7 +30,6 @@ import cx.ring.model.Account;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
-import cx.ring.services.HardwareService;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
 import cx.ring.utils.VCardUtils;
@@ -48,8 +47,7 @@ public class JamiAccountSummaryPresenter extends RootPresenter<JamiAccountSummar
     private static final String TAG = JamiAccountSummaryPresenter.class.getSimpleName();
 
     private final DeviceRuntimeService mDeviceRuntimeService;
-    private final HardwareService mHardwareService;
-    private AccountService mAccountService;
+    private final AccountService mAccountService;
     private String mAccountID;
 
     @Inject
@@ -58,10 +56,8 @@ public class JamiAccountSummaryPresenter extends RootPresenter<JamiAccountSummar
 
     @Inject
     public JamiAccountSummaryPresenter(AccountService accountService,
-                                       HardwareService hardwareService,
                                        DeviceRuntimeService deviceRuntimeService) {
         mAccountService = accountService;
-        mHardwareService = hardwareService;
         mDeviceRuntimeService = deviceRuntimeService;
     }
 
@@ -119,7 +115,9 @@ public class JamiAccountSummaryPresenter extends RootPresenter<JamiAccountSummar
 
         account.setEnabled(newValue);
         mAccountService.setAccountEnabled(account.getAccountID(), newValue);
-        getView().setSwitchStatus(account);
+        JamiAccountSummaryView view = getView();
+        if (view != null)
+            view.setSwitchStatus(account);
     }
 
     public void changePassword(String oldPassword, String newPassword) {
