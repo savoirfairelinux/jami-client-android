@@ -91,4 +91,7 @@ public interface ConversationView extends BaseView {
     void hideErrorPanel();
 
     void displayNetworkErrorPanel();
+
+    void displayAccountOfflineErrorPanel();
+
 }
