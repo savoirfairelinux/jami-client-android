@@ -60,6 +60,7 @@ along with this program; if not, write to the Free Software
 
     <!-- RingActivity -->
     <string name="error_no_network">No network connectivity</string>
+    <string name="error_account_offline">The account is offline</string>
     <string name="error_mobile_network_available_but_disabled">Please grant access to cellular network in the settings screen.</string>
 
     <!-- AB menus -->

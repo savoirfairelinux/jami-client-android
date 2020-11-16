@@ -122,10 +122,14 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                 .subscribe(isOk -> {
                     ConversationView view = getView();
                     if (view != null) {
-                        if (isOk)
-                            view.hideErrorPanel();
-                        else
+                        if (!isOk)
                             view.displayNetworkErrorPanel();
+                        else if(!mAccountService.getCurrentAccount().isEnabled()) {
+                            view.displayAccountOfflineErrorPanel();
+                        }
+                        else {
+                            view.hideErrorPanel();
+                        }
                     }
                 }));
     }

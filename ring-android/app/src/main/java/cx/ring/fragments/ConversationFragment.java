@@ -1166,6 +1166,18 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     @Override
+    public void displayAccountOfflineErrorPanel() {
+        if (binding != null) {
+            binding.errorMsgPane.setVisibility(View.VISIBLE);
+            binding.errorMsgPane.setOnClickListener(null);
+            binding.errorMsgPane.setText(R.string.error_account_offline);
+            for ( int idx = 0 ; idx < binding.btnContainer.getChildCount() ; idx++) {
+                binding.btnContainer.getChildAt(idx).setEnabled(false);
+            }
+        }
+    }
+
+    @Override
     public void hideErrorPanel() {
         if (binding != null) {
             binding.errorMsgPane.setVisibility(View.GONE);
