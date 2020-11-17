@@ -74,6 +74,7 @@
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Дополнительно</string>
   <string name="account_call_settings_title">Настройки вызовов</string>
+  <string name="account_dht_public_in_calls_label">Разрешить входящие звонки от незнакомых контактов</string>
   <string name="account_registration_exp_label">Регистрация истекает</string>
   <string name="account_local_interface_label">Локальный интерфейс</string>
   <string name="account_local_port_label">Локальный порт</string>
@@ -89,6 +90,7 @@
   <string name="account_proxy_label">DHT прокси</string>
   <string name="account_proxy_enable_label">Использовать DHT прокси</string>
   <string name="account_proxy_server_label">адрес прокси для DHT</string>
+  <string name="account_sip_proxy_label">Прокси</string>
   <!--Security Details-->
   <string name="account_credentials_label">Учетные данные</string>
   <string name="account_credentials_edit">Редактировать учетные данные</string>
@@ -166,7 +168,6 @@
   <string name="account_connect_prompt_username">Имя пользователя</string>
   <!--Name registration-->
   <string name="error_username_empty">Введите имя пользователя</string>
-  <string name="no_registered_name_for_account">Не найдено зарегистрированных имён для этого аккаунта</string>
   <string name="username_available">Имя пользователя доступно !</string>
   <string name="trying_to_register_name">Попробовать зарегистрировать имя</string>
   <string name="registered_username">Зарегистрированное имя пользователя</string>
@@ -201,6 +202,5 @@
   <string name="rename_device_button">Переименовать устройство</string>
   <string name="account_rename_device_hint">Выберите новое имя для устройства</string>
   <string name="account_device_name_empty">В имени устройства должно быть не пусто</string>
-  <string name="account_device_this_indicator">это устройство</string>
   <string name="account_disabled_indicator">отключено</string>
 </resources>

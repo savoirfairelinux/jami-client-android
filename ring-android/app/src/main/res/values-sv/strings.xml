@@ -93,6 +93,7 @@
   <string name="share_via">Dela via</string>
   <string name="write_a_message">Skriv ett meddelande</string>
   <string name="scan_qr">Skanna QR-kod</string>
+  <string name="qr_code">QR-kod</string>
   <string name="ab_action_flipcamera">Vänd kameran</string>
   <!--Text messages-->
   <string name="send_message">Skicka meddelande</string>
@@ -163,6 +164,11 @@
   <string name="profile_message_warning">Din profil delas endast med dina kontakter</string>
   <string name="open_the_gallery">Öppna galleriet</string>
   <string name="take_a_photo">Ta ett foto</string>
+  <string name="registered_name">Registrerat namn</string>
+  <string name="identity">Identitet</string>
+  <string name="account">Konto</string>
+  <string name="link_new_device">Koppla en ny enhet</string>
+  <string name="devices">Kopplade enheter</string>
   <!--Share fragment-->
   <string name="share_message">Skanna den här koden med Jami</string>
   <string name="share_message_no_account">Välj ett konto att dela.</string>

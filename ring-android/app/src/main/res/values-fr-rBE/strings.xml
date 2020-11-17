@@ -36,6 +36,9 @@
   <string name="wizard_skip">Passer</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
+  <string name="account">Compte</string>
+  <string name="link_new_device">Associer un nouvel appareil</string>
+  <string name="devices">Appareils liés</string>
   <!--Share fragment-->
   <string name="share_label">Partager</string>
   <!--Pending contact requests-->

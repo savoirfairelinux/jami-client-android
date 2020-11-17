@@ -82,6 +82,7 @@
   <string name="wizard_next">Sekva</string>
   <!--Account Summary-->
   <string name="profile">Profilo</string>
+  <string name="account">Konto</string>
   <!--Share fragment-->
   <string name="share_label">Kunhavi</string>
   <string name="generic_error_migration">Eraro</string>

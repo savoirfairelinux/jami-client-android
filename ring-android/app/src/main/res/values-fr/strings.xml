@@ -83,7 +83,7 @@
   <string name="notif_location_action_stop">Arrêter le partage de position</string>
   <string name="location_share_action_start">Démarrer le partage</string>
   <string name="location_share_action_stop">Arrêter le partage</string>
-  <string name="location_share_about_title">Information sur la carte</string>
+  <string name="location_share_about_title">Informations sur la carte</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Vous :</string>
   <string name="action_call_hangup">Raccrochez</string>
@@ -111,6 +111,7 @@
   <string name="share_via">Partager</string>
   <string name="write_a_message">Ecrire un message</string>
   <string name="scan_qr">Scanner un code QR</string>
+  <string name="qr_code">Code QR</string>
   <string name="ab_action_flipcamera">Changer de caméra</string>
   <string name="ab_action_hidepreview">Masquer l\'aperçu</string>
   <!--Text messages-->
@@ -187,11 +188,18 @@
   <string name="wizard_skip">Passez</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
-  <string name="profile_name">Nom de profile</string>
+  <string name="profile_name">Nom de profil</string>
   <string name="profile_message_warning">Votre profil n\'est partagé qu\'avec vos contacts</string>
   <string name="open_the_gallery">Ouvrir la galerie</string>
   <string name="take_a_photo">Prendre une photo</string>
-  <string name="profile_name_hint">Entrer votre nom</string>
+  <string name="profile_name_hint">Entrez votre nom</string>
+  <string name="registered_name">Nom enregistré</string>
+  <string name="no_registered_name">Aucun nom d\'utilisateur enregistré</string>
+  <string name="identity">Identité</string>
+  <string name="account">Compte</string>
+  <string name="link_new_device">Associer un nouvel appareil</string>
+  <string name="devices">Appareils associés</string>
+  <string name="total_devices">Total des appareils</string>
   <!--Share fragment-->
   <string name="share_message">Numériser cet identifiant avec Jami</string>
   <string name="share_message_no_account">Svp, sélectionnez le compte à partager</string>
@@ -283,13 +291,13 @@
   <string name="wizard_username_button">Choisissez un nom d\'utilisateur</string>
   <string name="wizard_username_skip">Passer cette étape</string>
   <string name="wizard_password_info">Mot  de passe du compte</string>
-  <string name="wizard_password_placeholder">Choisissez un mot de passe pour encrypter la clé de votre compte sur cet appareil</string>
+  <string name="wizard_password_placeholder">Choisissez un mot de passe pour chiffrer la clé de votre compte sur cet appareil</string>
   <string name="wizard_password_button">Choisir un mot de passe</string>
   <string name="wizard_password_skip">Créer le compte</string>
-  <string name="wizard_password_switch">Encrypter mon compte avec un mot de passe</string>
+  <string name="wizard_password_switch">Chiffrer le compte avec un mot de passe</string>
   <string name="wizard_password_warning">Notez que le mot de passe ne peut pas être récupéré</string>
   <string name="wizard_profile_info">Votre profil n\'est partagé qu\'avec vos contacts</string>
-  <string name="wizard_profile_button">Sauvegardez votre profile</string>
-  <string name="wizard_profile_skip">Passez cette étape et faire cela ultérieurement</string>
+  <string name="wizard_profile_button">Sauvegardez votre profil</string>
+  <string name="wizard_profile_skip">Passer cette étape et faire cela ultérieurement</string>
   <string name="fab_path_choose">Choisir un autre fichier</string>
 </resources>

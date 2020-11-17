@@ -23,6 +23,7 @@
   <!--Advanced Details-->
   <string name="account_turn_enable_label">TURN 사용</string>
   <string name="account_published_address_label">공개 주소</string>
+  <string name="account_sip_proxy_label">프록시</string>
   <!--Security Details-->
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">보안</string>

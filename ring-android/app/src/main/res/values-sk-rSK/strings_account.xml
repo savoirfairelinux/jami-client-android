@@ -96,6 +96,7 @@
   <string name="account_proxy_enable_label">Použiť DHT proxy</string>
   <string name="account_proxy_server_label">DHT proxy adresa</string>
   <string name="account_proxy_server_list_label">DHT proxy list URL</string>
+  <string name="account_sip_proxy_label">Proxy</string>
   <string name="account_peer_discovery_label">Lokálne vyhľadávanie peerov</string>
   <string name="account_peer_discovery_enable_label">Povoliť lokálne vyhľadávanie peerov</string>
   <string name="account_peer_discovery_enable_summary">Pripojiť k iným DHT uzlom na rovnakej lokálnej sieti</string>
@@ -177,7 +178,6 @@
   <string name="account_connect_prompt_username">Používateľské meno</string>
   <!--Name registration-->
   <string name="error_username_empty">Zadajte používateľské meno</string>
-  <string name="no_registered_name_for_account">Pre tento účet nebolo nájdené zaregistrované meno</string>
   <string name="username_available">Používateľské meno dostupné!</string>
   <string name="trying_to_register_name">Pokus o registráciu mena</string>
   <string name="registered_username">Registrované používateľské meno</string>
@@ -212,6 +212,6 @@
   <string name="rename_device_button">Premenovať zariadenie</string>
   <string name="account_rename_device_hint">Zvoľte nový názov zariadenia</string>
   <string name="account_device_name_empty">Názov zariadenia nesmie byť prázdny </string>
-  <string name="account_device_this_indicator">toto zariadenie</string>
+  <string name="account_device_this_indicator">Toto zariadenie</string>
   <string name="account_disabled_indicator">vypnuté</string>
 </resources>

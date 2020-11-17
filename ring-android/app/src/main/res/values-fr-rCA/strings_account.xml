@@ -78,6 +78,7 @@ Vous pourrez modifier votre compte plus tard.</string>
   <string name="account_turn_password_label">Mot de passe TURN</string>
   <string name="account_published_port_label">Port publié</string>
   <string name="account_published_address_label">Adresse publiée</string>
+  <string name="account_sip_proxy_label">Proxy</string>
   <!--Security Details-->
   <string name="account_credentials_label">Informations de connexion</string>
   <string name="account_credentials_edit">Modifier les informations de connexion</string>
@@ -135,7 +136,6 @@ Vous pourrez modifier votre compte plus tard.</string>
   <string name="account_connect_prompt_username">Nom d\'utilisateur</string>
   <!--Name registration-->
   <string name="error_username_empty">Entrer le nom d\'utilisateur</string>
-  <string name="no_registered_name_for_account">Aucun nom enregistré trouvé pour ce compte</string>
   <string name="trying_to_register_name">Enregistrement du nom en cours</string>
   <string name="registered_username">Nom d\'utilisateur enregistré</string>
   <string name="register_username">Enregistrer un nom d\'utilisateur public</string>
@@ -166,6 +166,5 @@ Vous pourrez modifier votre compte plus tard.</string>
   <string name="rename_device_button">Renommer l\'appareil</string>
   <string name="account_rename_device_hint">Choisir un nouveau nom d\'appareil</string>
   <string name="account_device_name_empty">Le champ \"nom de l\'appareil\" ne peut être vide</string>
-  <string name="account_device_this_indicator">cet appareil</string>
   <string name="account_disabled_indicator">désactivé</string>
 </resources>

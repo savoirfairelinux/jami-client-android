@@ -88,6 +88,7 @@
   <!--Call Fragment-->
   <string name="you_txt_prefix">Tú:</string>
   <string name="action_call_hangup">Colgar</string>
+  <string name="action_call_maximize">Maximizar</string>
   <string name="ongoing_call">Llamada en curso</string>
   <string name="hist_in_call">Llamada entrante de %1$s</string>
   <string name="hist_out_call">Llamada saliente a %1$s</string>
@@ -110,6 +111,7 @@
   <string name="share_via">Compatir via</string>
   <string name="write_a_message">Escribir un mensaje</string>
   <string name="scan_qr">Escanear código QR</string>
+  <string name="qr_code">Código QR</string>
   <string name="ab_action_flipcamera">Cambiar de cámara</string>
   <string name="ab_action_hidepreview">Ocultar vista previa</string>
   <!--Text messages-->
@@ -190,6 +192,11 @@
   <string name="open_the_gallery">Abrir la galería</string>
   <string name="take_a_photo">Tomar una foto</string>
   <string name="profile_name_hint">Escribe tu nombre</string>
+  <string name="registered_name">Nombre registrado</string>
+  <string name="identity">Identidad</string>
+  <string name="account">Cuenta</string>
+  <string name="link_new_device">Vincular un nuevo dispositivo</string>
+  <string name="devices">Dispositivos vinculados</string>
   <!--Share fragment-->
   <string name="share_message">Escanear este código con Jami</string>
   <string name="share_message_no_account">Seleccione una cuenta para compartir.</string>

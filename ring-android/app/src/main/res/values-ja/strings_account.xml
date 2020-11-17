@@ -96,6 +96,7 @@
   <string name="account_proxy_enable_label">DHTプロキシを使う</string>
   <string name="account_proxy_server_label">DHTプロキシアドレス</string>
   <string name="account_proxy_server_list_label">DHTプロキシリストURL</string>
+  <string name="account_sip_proxy_label">プロキシ</string>
   <string name="account_peer_discovery_label">ローカルピアの探索</string>
   <string name="account_peer_discovery_enable_label">ローカルピアの探索を有効化</string>
   <string name="account_peer_discovery_enable_summary">ローカルネットワーク上の他のDHTノードに接続します</string>
@@ -177,7 +178,6 @@
   <string name="account_connect_prompt_username">ユーザー名</string>
   <!--Name registration-->
   <string name="error_username_empty">ユーザー名を入力してください</string>
-  <string name="no_registered_name_for_account">このアカウントの登録名が見つかりません</string>
   <string name="username_available">使用可能なユーザー名です</string>
   <string name="trying_to_register_name">名前を登録しようとしています</string>
   <string name="registered_username">登録ユーザー名</string>

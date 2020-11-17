@@ -64,6 +64,7 @@ Anda masih akan dapat mengubah maklumat akaun anda pada masa hadapan</string>
   <string name="account_published_same_as_local_label">Alamat pengagihan sama dengan lokal</string>
   <string name="account_published_port_label">Port pengagihan</string>
   <string name="account_published_address_label">Alamat server pengagihan</string>
+  <string name="account_sip_proxy_label">Proksi</string>
   <!--Security Details-->
   <string name="account_credentials_label">Maklumat</string>
   <string name="account_credentials_edit">Ubah maklumat</string>
@@ -110,7 +111,6 @@ Anda masih akan dapat mengubah maklumat akaun anda pada masa hadapan</string>
   <string name="account_connect_prompt_username">Nama pengguna</string>
   <!--Name registration-->
   <string name="error_username_empty">Masukkan nama pengguna</string>
-  <string name="no_registered_name_for_account">Tiada nama berdaftar dengan akaun ini ditemui</string>
   <string name="trying_to_register_name">Sedang mencuba untuk mendaftarkan nama</string>
   <string name="registered_username">Nama telah didaftarkan</string>
   <string name="username_already_taken">Nama pengguna telah digunakan pengguna lain</string>

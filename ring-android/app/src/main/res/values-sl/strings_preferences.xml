@@ -1,13 +1,46 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="pref_category_network">Mreža</string>
+  <string name="pref_category_network">Omrežje</string>
   <string name="pref_category_contacts">Stiki</string>
   <string name="pref_category_video">Video</string>
   <string name="pref_category_system">Sistem</string>
   <string name="pref_category_privacy">Zasebnost</string>
   <string name="pref_mobileData_title">Mobilni podatki</string>
+  <string name="pref_mobileData_summary">Dovoli da Jami poleg Wifi uporablja tudi 3G/LTE omrežja</string>
+  <string name="pref_pushNotifications_title">Potisna sporočila</string>
+  <string name="pref_pushNotifications_summary">Uporaba Google strežnikov sprejemanje klicev/sporočil v ozadju</string>
+  <string name="pref_video_advanced_title">Napredne nastavitve videa</string>
+  <string name="pref_video_advanced_summary">Spremeni bitno hitrost videa, ločljivost, kot tudi eksperimentalne funkcije</string>
+  <string name="pref_hd_summary">Omogoči pošiljanje HD videa</string>
+  <string name="pref_hwEncode_title">Vklppi pospešeno kodiranje</string>
+  <string name="pref_hwEncode_summary">Eksperimentalno</string>
+  <string name="pref_videoBitrate_title">Bitna hitrost videa</string>
+  <string name="pref_videoBitrate_summary">Izberite privzeto izhodno bitno hitrost videa (kB/s)</string>
+  <string name="pref_videoResolution_title">Video ločljivost</string>
+  <string name="pref_videoResolution_summary">Izberite privzeto izhodno ločljivost videa</string>
   <string name="pref_systemContacts_title">Uporabi sistemske stike</string>
-  <string name="pref_systemContacts_summary">Uporabi sistemske stike za prikaz podatkov klicatelja.</string>
-  <string name="pref_clearHistory_title">Pobriši zgodovino</string>
+  <string name="pref_systemContacts_summary">Uporabi sistemske stike za prikaz podrobnosti o klicatelju.</string>
+  <string name="pref_systemDialer_title">Uporabi Jami za izvedbo klicev sistema</string>
+  <string name="pref_systemDialer_summary">Kadar je to mogoče, za izvedbo klicev sistema uporabi Jami.</string>
+  <string name="pref_startOnBoot_title">Zaženi Jami ob zagonu</string>
+  <string name="pref_startOnBoot_summary">Ob zagonu sistema zaženi Jami v ozadju.</string>
+  <string name="pref_clearHistory_title">Počisti zgodovino</string>
+  <string name="pref_clearHistory_summary">Izbriše vso zgodovino pogovorov. Tega dejanja ni mogoče razveljaviti.</string>
+  <string name="pref_delete_account_title">Izbriši račun</string>
+  <string name="pref_persistNotification_title">Zagon v ozadju</string>
+  <string name="pref_persistNotification_summary">Dovoli izvajanje v ozadju za sprejemanje klicev in sporočil.</string>
   <!--Plugin-->
+  <string name="pref_plugins_title">Vtičniki</string>
+  <string name="pref_plugins_summary">Vklopite vtičnike in določite njihove parametre</string>
+  <string name="fab_plugins_add">Dodaj nov vtičnik</string>
+  <string name="plugin_uninstall_title">Odtrsanim vtičnik?</string>
+  <string name="plugin_reset_preferences">Ponastavi nastavitve vtičnika</string>
+  <string name="plugin_reset_preferences_summary">Nastavitve vašega vtičnika bodo ponastavljene</string>
+  <string name="plugin_reset_preferences_ask">Ali bi radi ponastavili nastavitve vtičnika?</string>
+  <string name="plugin_successfully_installed">Vtičnik <b>%1$s</b> je bil uspešno nameščen</string>
+  <string name="plugin_install_failure">Namestiev vtičnika ni uspela: <b>%1$s</b></string>
+  <string name="plugin_recent_version_exception">Nameščeno imate novejšo različico <b>%1$s</b></string>
+  <string name="plugin_same_version_exception">Nameščeno imate isto različico <b>%1$s</b></string>
+  <string name="plugin_force_install">prisili \n namestitev</string>
+  <string name="plugin_path_image_add">Dodaj novo sliko</string>
 </resources>

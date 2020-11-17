@@ -100,6 +100,7 @@
   <string name="account_proxy_enable_label">Usar proxy DHT</string>
   <string name="account_proxy_server_label">Endereço do proxy DHT</string>
   <string name="account_proxy_server_list_label">URL da lista de proxy DHT</string>
+  <string name="account_sip_proxy_label">Proxy</string>
   <string name="account_peer_discovery_label">Descoberta local de pares</string>
   <string name="account_peer_discovery_enable_label">Ativar descoberta local de pares</string>
   <string name="account_peer_discovery_enable_summary">Conecte-se a outros nós DHT que anunciam em nossa rede local</string>
@@ -186,7 +187,6 @@
   <string name="account_connect_prompt_username">Nome de usuário</string>
   <!--Name registration-->
   <string name="error_username_empty">Entre um nome de usuário</string>
-  <string name="no_registered_name_for_account">Nenhum nome registrado encontrado para esta conta</string>
   <string name="username_available">Nome de usuário disponível !</string>
   <string name="register_name">Nome de registro</string>
   <string name="trying_to_register_name">Tentando registrar nome</string>
@@ -223,6 +223,6 @@
   <string name="rename_device_button">Renomear dispositivo</string>
   <string name="account_rename_device_hint">Escolher novo nome de dispositivo</string>
   <string name="account_device_name_empty">Nome do dispositivo não pode estar vazio</string>
-  <string name="account_device_this_indicator">este dispositivo</string>
+  <string name="account_device_this_indicator">Este dispositivo</string>
   <string name="account_disabled_indicator">desabilitado</string>
 </resources>

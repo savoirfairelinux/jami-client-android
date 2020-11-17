@@ -45,6 +45,7 @@
   <string name="account_device_revocation_unknown_device">Неизвестное устройство.</string>
   <string name="account_device_revocation_error_unknown">Неизвестная ошибка.</string>
   <string name="account_password_change">Изменить пароль</string>
+  <string name="account_password_set">Установить пароль</string>
   <string name="account_password_change_wait_message">Смена пароля учетной записи</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Общее</string>
@@ -57,6 +58,8 @@
   <string name="account_optionnal_category">Дополнительные настройки</string>
   <string name="account_useragent_label">Aгент пользователя</string>
   <string name="account_autoanswer_label">Автоответ</string>
+  <string name="account_rendezvous_label">Режим рандеву</string>
+  <string name="account_rendezvous_summary">В режиме Rendezvous входящие звонки будут добавляться в конференц-зал.</string>
   <string name="account_upnp_label">Включить UPnP</string>
   <string name="account_proxy_field">Прокси</string>
   <!--Audio Details-->
@@ -81,6 +84,7 @@
   <string name="account_stun_enable_label">Использовать STUN</string>
   <string name="account_stun_server_label">Сервер STUN</string>
   <string name="account_accept_files">Принимать входящие файлы автоматически</string>
+  <string name="account_conversation_settings_title">Настройки разговора</string>
   <string name="account_accept_files_max_size">Максимальный размер файла для автоматической загрузки</string>
   <string name="account_accept_files_never">Никогда не принимать автоматически</string>
   <string name="account_accept_files_always">Всегда принимать автоматически</string>
@@ -96,6 +100,7 @@
   <string name="account_proxy_enable_label">Использовать DHT прокси</string>
   <string name="account_proxy_server_label">Адрес DHT прокси</string>
   <string name="account_proxy_server_list_label">DHT прокси список URL</string>
+  <string name="account_sip_proxy_label">Прокси</string>
   <string name="account_peer_discovery_label">Обнаружение локальных пиров</string>
   <string name="account_peer_discovery_enable_label">Включить обнаружение локальных пиров</string>
   <string name="account_peer_discovery_enable_summary">Подключаться к другим DHT узлам в локальной сети</string>
@@ -106,6 +111,8 @@
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Безопасность</string>
   <string name="account_srtp_switch_label">Шифровать медиа потоки (SRTP)</string>
+  <string name="account_srtp_enable_sdes">Включить SDES в качестве протокола обмена ключами</string>
+  <string name="account_srtp_rtp_fallback">Возврат к RTP в случае сбоя SRTP</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Использовать TLS</string>
@@ -119,6 +126,7 @@
   <string name="account_tls_server_name_label">Имя сервера</string>
   <string name="account_tls_verify_server_label">Проверка сервера</string>
   <string name="account_tls_verify_client_label">Проверка клиента</string>
+  <string name="account_require_client_certificate_label">TLS требует сертификат клиента</string>
   <string name="account_tls_negotiation_timeout_sec">Тайм-аут согласования (сек)</string>
   <string name="account_rtp_max_port">Максимум</string>
   <string name="account_rtp_min_port">Минимум</string>
@@ -129,6 +137,7 @@
   <string name="error_passwords_not_equals">Пароли не совпадают</string>
   <string name="export_account_wait_title">Пожалуйста, подождите…</string>
   <string name="export_account_wait_message">Экспортирование аккаунта…</string>
+  <string name="account_export_file">Создать резервную копию учётной записи</string>
   <string name="account_export_end_decryption_message">Не удалось разблокировать аккаунт указанным паролем.</string>
   <string name="account_export_end_network_title">Ошибка сети</string>
   <string name="account_export_end_network_message">Не удалось экспортировать аккаунт по сети. Проверьте ваше сетевое соединение.</string>
@@ -158,6 +167,7 @@
   <string name="account_sip_success_title">SIP-аккаунт зарегистрирован</string>
   <string name="account_sip_success_message">Вы успешно зарегистрировали свой SIP-аккаунт.</string>
   <string name="account_sip_register_anyway">Все равно зарегистрироваться</string>
+  <string name="account_link_device">Подключиться с другого устройства</string>
   <string name="account_link_button">Подключение из сети</string>
   <string name="account_link_archive_button">Подключиться из резервной копии</string>
   <string name="account_link_prompt_pin">Введите PIN</string>
@@ -177,8 +187,8 @@
   <string name="account_connect_prompt_username">Имя пользователя</string>
   <!--Name registration-->
   <string name="error_username_empty">Введите имя пользователя</string>
-  <string name="no_registered_name_for_account">Не найдено зарегистрированного имени для этого аккаунта</string>
   <string name="username_available">Имя доступно !</string>
+  <string name="register_name">Зарегистрировать имя</string>
   <string name="trying_to_register_name">Попытка зарегистрировать имя</string>
   <string name="registered_username">Зарегистрированное имя пользователя</string>
   <string name="register_username">Зарегистрировать публичное имя</string>
@@ -213,6 +223,6 @@
   <string name="rename_device_button">Переименовать устройство</string>
   <string name="account_rename_device_hint">Выберите новое название для устройства</string>
   <string name="account_device_name_empty">Название устройства не может быть пустым</string>
-  <string name="account_device_this_indicator">это устройство</string>
+  <string name="account_device_this_indicator">Это устройство</string>
   <string name="account_disabled_indicator">отключен</string>
 </resources>

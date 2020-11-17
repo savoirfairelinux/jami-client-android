@@ -180,6 +180,8 @@
   <string name="profile_message_warning">Zure profila zure kontaktuekin partekatzen da soilik</string>
   <string name="open_the_gallery">Ireki galeria</string>
   <string name="take_a_photo">Atera argazkia</string>
+  <string name="identity">Identitatea</string>
+  <string name="account">Kontua</string>
   <!--Share fragment-->
   <string name="share_message">Eskaneatu kode hau Jami erabiliz</string>
   <string name="share_message_no_account">Hautatu kontu bat partekatzeko.</string>

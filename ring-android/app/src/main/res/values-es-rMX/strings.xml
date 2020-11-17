@@ -27,6 +27,7 @@
   <!--Contacts-->
   <string name="wizard_next">Siguiente</string>
   <!--Account Summary-->
+  <string name="account">Cuenta</string>
   <!--Share fragment-->
   <!--Pending contact requests-->
   <!--Send contact requests-->

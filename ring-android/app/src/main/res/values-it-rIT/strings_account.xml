@@ -45,6 +45,7 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_device_revocation_unknown_device">Dispositivo sconosciuto.</string>
   <string name="account_device_revocation_error_unknown">Errore sconosciuto.</string>
   <string name="account_password_change">Cambia password</string>
+  <string name="account_password_set">Impostare  password</string>
   <string name="account_password_change_wait_message">Modifica della password dell\'account</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Generale</string>
@@ -57,6 +58,8 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_optionnal_category">Impostazioni aggiuntive</string>
   <string name="account_useragent_label">User Agent</string>
   <string name="account_autoanswer_label">Risposta automatica</string>
+  <string name="account_rendezvous_label">Modalità Rendezvous </string>
+  <string name="account_rendezvous_summary">In modalità Rendezvous, le chiamate in arrivo verranno aggiunte a una sala conferenze.</string>
   <string name="account_upnp_label">Attiva UPnP</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Audio Details-->
@@ -97,6 +100,7 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_proxy_enable_label">Usa il proxy DHT</string>
   <string name="account_proxy_server_label">Indirizzo proxy DHT</string>
   <string name="account_proxy_server_list_label">DHT proxy list URL</string>
+  <string name="account_sip_proxy_label">Proxy</string>
   <string name="account_peer_discovery_label">Rilevamento peer locali</string>
   <string name="account_peer_discovery_enable_label">Abilita rilevamento peer locale</string>
   <string name="account_peer_discovery_enable_summary">Connettiti ad altri nodi DHT pubblicizzati sulla nostra rete locale</string>
@@ -133,6 +137,7 @@ Potrai modificare il tuo account successivamente</string>
   <string name="error_passwords_not_equals">Le password non corrispondono</string>
   <string name="export_account_wait_title">Prego attendere...</string>
   <string name="export_account_wait_message">Esportazione informazioni sull\'account</string>
+  <string name="account_export_file">Account di backup</string>
   <string name="account_export_end_decryption_message">Impossibile sbloccare l\'account x la con la password inserita.</string>
   <string name="account_export_end_network_title">Errore di rete</string>
   <string name="account_export_end_network_message">Impossibile esportare l\'account sulla rete. Controlla la tua connettività.</string>
@@ -182,8 +187,8 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_connect_prompt_username">Utente</string>
   <!--Name registration-->
   <string name="error_username_empty">Inserire un nome utente</string>
-  <string name="no_registered_name_for_account">Nessun nome registrato è stato trovato per questo account</string>
   <string name="username_available">Nome utente disponibile !</string>
+  <string name="register_name">Nome registro</string>
   <string name="trying_to_register_name">Tentativo di registrazione del nome</string>
   <string name="registered_username">Nome utente registrato</string>
   <string name="register_username">Registra nome utente pubblico</string>
@@ -218,6 +223,6 @@ Potrai modificare il tuo account successivamente</string>
   <string name="rename_device_button">Rinomina il dispositivo</string>
   <string name="account_rename_device_hint">Scegli un nuovo nome per il dispositivo</string>
   <string name="account_device_name_empty">Il nome del dispositivo non può essere vuoto</string>
-  <string name="account_device_this_indicator">questo dispositivo</string>
+  <string name="account_device_this_indicator">Questo dispositivo</string>
   <string name="account_disabled_indicator">disabilitato</string>
 </resources>

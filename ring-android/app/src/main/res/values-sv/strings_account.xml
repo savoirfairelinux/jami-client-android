@@ -87,6 +87,7 @@ Du kan ändra kontot senare.</string>
   <string name="account_proxy_label">DHT proxy</string>
   <string name="account_proxy_enable_label">Använd DHT proxy</string>
   <string name="account_proxy_server_label">DHT proxyadress</string>
+  <string name="account_sip_proxy_label">Proxy</string>
   <!--Security Details-->
   <string name="account_credentials_label">Inloggningsuppgifter</string>
   <string name="account_credentials_edit">Redigera inloggningsuppgifter</string>
@@ -161,7 +162,6 @@ Du kan ändra kontot senare.</string>
   <string name="account_connect_prompt_username">Användarnamn</string>
   <!--Name registration-->
   <string name="error_username_empty">Ange ett användarnamn</string>
-  <string name="no_registered_name_for_account">Inget registrerat namn hittades för detta konto</string>
   <string name="username_available">Användarnamnet tillgängligt!</string>
   <string name="trying_to_register_name">Försöker registrera namnet</string>
   <string name="registered_username">Registrerat namn</string>
@@ -197,6 +197,6 @@ Du kan ändra kontot senare.</string>
   <string name="rename_device_button">Byt namn på enhet</string>
   <string name="account_rename_device_hint">Välj nytt enhetsnamn</string>
   <string name="account_device_name_empty">Enhetsnamnet kan inte lämnas tomt</string>
-  <string name="account_device_this_indicator">denna enhet</string>
+  <string name="account_device_this_indicator">Denna enhet</string>
   <string name="account_disabled_indicator">inaktiverad</string>
 </resources>

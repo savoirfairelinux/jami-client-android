@@ -111,6 +111,7 @@
   <string name="share_via">Ndajeni përmes</string>
   <string name="write_a_message">Shkruani një mesazh</string>
   <string name="scan_qr">Skanoni Kodin QR</string>
+  <string name="qr_code">Kod QR</string>
   <string name="ab_action_flipcamera">Rrotulloni kamerën</string>
   <string name="ab_action_hidepreview">Fshihe paraparjen</string>
   <!--Text messages-->
@@ -192,6 +193,13 @@
   <string name="open_the_gallery">Hape galerinë</string>
   <string name="take_a_photo">Bëni një foto</string>
   <string name="profile_name_hint">Jepni emrin tuaj</string>
+  <string name="registered_name">Emër i Regjistruar</string>
+  <string name="no_registered_name">Pa emër të regjistruar</string>
+  <string name="identity">Identitet</string>
+  <string name="account">Llogari</string>
+  <string name="link_new_device">Lidhni një pajisje të re</string>
+  <string name="devices">Pajisje të lidhura</string>
+  <string name="total_devices">Pajisje gjithsej:</string>
   <!--Share fragment-->
   <string name="share_message">Skanojeni këtë kod me Jami-n</string>
   <string name="share_message_no_account">Ju lutemi, përzgjidhni një llogari për ndarje me të.</string>

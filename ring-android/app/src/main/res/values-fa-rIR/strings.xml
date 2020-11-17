@@ -109,6 +109,7 @@
   <string name="share_via">اشتراک از طریق</string>
   <string name="write_a_message">پیامی بنویسید</string>
   <string name="scan_qr">اسکن کد QR</string>
+  <string name="qr_code">کد کیوآر</string>
   <string name="ab_action_flipcamera">چرخاندن دوربین</string>
   <string name="ab_action_hidepreview">مخفی‌کردن پیش‌نمایش</string>
   <!--Text messages-->
@@ -185,10 +186,16 @@
   <string name="wizard_skip">پرش</string>
   <!--Account Summary-->
   <string name="profile">نمایه</string>
+  <string name="profile_name">نام نمایه</string>
   <string name="profile_message_warning">نمایه شما تنها با مخاطبانتان هم‌رسانی می‌شود</string>
   <string name="open_the_gallery">گالری را باز کنید</string>
   <string name="take_a_photo">عکسی بگیرید</string>
   <string name="profile_name_hint">نام خود را وارد کنید</string>
+  <string name="registered_name">نام ثبت شده</string>
+  <string name="identity">هویت</string>
+  <string name="account">حساب</string>
+  <string name="link_new_device">پیوند یک دستگاه جدید</string>
+  <string name="devices">دستگاه‌های پیوند‌ داده‌شده</string>
   <!--Share fragment-->
   <string name="share_message">این رمز را با جمی اسکن کنید</string>
   <string name="share_message_no_account">لطفا برای هم‌رسانی، حسابی را انتخاب کنید.</string>
@@ -288,4 +295,5 @@
   <string name="wizard_profile_info">نمایه فقط با مخاطبین به اشتراک گذاشته می‌شود</string>
   <string name="wizard_profile_button">ذخیره نمایه</string>
   <string name="wizard_profile_skip">رد شوید و این کار را بعدا انجام دهید</string>
+  <string name="fab_path_choose">انتخاب یک فایل دیگر</string>
 </resources>

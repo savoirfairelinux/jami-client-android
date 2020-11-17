@@ -88,6 +88,7 @@
   <!--Account Summary-->
   <string name="open_the_gallery">Buka galeri</string>
   <string name="take_a_photo">Ambil gambar</string>
+  <string name="account">Akaun</string>
   <!--Share fragment-->
   <string name="share_your_account_information">Sila pilih akaun untuk dikongsi</string>
   <string name="generic_error_migration">Gagal</string>

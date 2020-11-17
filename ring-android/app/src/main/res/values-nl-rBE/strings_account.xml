@@ -89,6 +89,7 @@ U kunt uw account later bewerken</string>
   <string name="account_proxy_label">DHT-proxy</string>
   <string name="account_proxy_enable_label">DHT-proxy gebruiken</string>
   <string name="account_proxy_server_label">DHT-proxyadres</string>
+  <string name="account_sip_proxy_label">Proxy</string>
   <!--Security Details-->
   <string name="account_credentials_label">Legitimatie</string>
   <string name="account_credentials_edit">Legitimatie wijzigen</string>
@@ -167,7 +168,6 @@ U kunt uw account later bewerken</string>
   <string name="account_connect_prompt_username">Gebruikersnaam</string>
   <!--Name registration-->
   <string name="error_username_empty">Geef een gebruikersnaam in</string>
-  <string name="no_registered_name_for_account">Geen geregistreerde naam gevonden voor deze account</string>
   <string name="username_available">Gebruikersnaam is beschikbaar!</string>
   <string name="trying_to_register_name">Naam wordt geregistreerd</string>
   <string name="registered_username">Geregistreerde gebruikersnaam</string>
@@ -202,6 +202,6 @@ U kunt uw account later bewerken</string>
   <string name="rename_device_button">Apparaat hernoemen</string>
   <string name="account_rename_device_hint">Kies een nieuwe apparaatnaam</string>
   <string name="account_device_name_empty">Apparaatnaam kan niet leeg zijn</string>
-  <string name="account_device_this_indicator">dit apparaat</string>
+  <string name="account_device_this_indicator">Dit apparaat</string>
   <string name="account_disabled_indicator">uitgeschakeld</string>
 </resources>

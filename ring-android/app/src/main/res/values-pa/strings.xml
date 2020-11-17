@@ -192,6 +192,9 @@
   <string name="open_the_gallery">ਗੈਲਰੀ ਖੋਲ੍ਹੋ</string>
   <string name="take_a_photo">ਫ਼ੋਟੋ ਖਿੱਚੋ</string>
   <string name="profile_name_hint">ਆਪਣਾ ਨਾਂ ਦਾਖਲ ਕਰੋ</string>
+  <string name="identity">ਪਛਾਣ</string>
+  <string name="account">ਖਾਤਾ</string>
+  <string name="link_new_device">ਨਵਾਂ ਡੀਵਾਈਸ ਜੋੜੋ</string>
   <!--Share fragment-->
   <string name="share_message">Jami ਨਾਲ ਇਹ ਕੋਡ ਸਕੈਨ ਕਰੋ</string>
   <string name="share_message_no_account">ਕਿਰਪਾ ਕਰਕੇ ਸਾਂਝਾ ਕਰਨ ਲਈ ਕੋਈ ਖਾਤਾ ਚੁਣੋ।</string>

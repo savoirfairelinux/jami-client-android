@@ -80,6 +80,7 @@
   <string name="account_published_same_as_local_label">Опубліковано такий же як і локальний</string>
   <string name="account_published_port_label">Публічний порт</string>
   <string name="account_published_address_label">Опублікована адреса</string>
+  <string name="account_sip_proxy_label">Проксі</string>
   <!--Security Details-->
   <string name="account_credentials_label">Облікові дані</string>
   <string name="account_credentials_edit">Змінити облікові дані</string>
@@ -149,7 +150,6 @@
   <string name="account_connect_prompt_username">Ім’я</string>
   <!--Name registration-->
   <string name="error_username_empty">Ввести ім\'я користувача</string>
-  <string name="no_registered_name_for_account">Не знайдено зареєстрованого імені для цього облікового запису</string>
   <string name="trying_to_register_name">Спроба реєстрації імені</string>
   <string name="registered_username">Зареєстроване ім\'я користувача</string>
   <string name="register_username">Зареєструвати публічне ум\'я користувача</string>
@@ -181,6 +181,6 @@
   <string name="rename_device_button">Перейменувати пристрій</string>
   <string name="account_rename_device_hint">Вибрати нову назву для пристрою</string>
   <string name="account_device_name_empty">Назва пристрою не може бути порожньою</string>
-  <string name="account_device_this_indicator">цей пристрій</string>
+  <string name="account_device_this_indicator">Цей пристрій</string>
   <string name="account_disabled_indicator">вимкнено</string>
 </resources>

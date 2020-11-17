@@ -114,6 +114,10 @@
   <string name="profile_message_warning">Votre profil est partagé avec vos contacts uniquement</string>
   <string name="open_the_gallery">Ouvrir la galerie</string>
   <string name="take_a_photo">Prendre un photo.</string>
+  <string name="identity">Identité</string>
+  <string name="account">Compte</string>
+  <string name="link_new_device">Associer un nouvel appareil</string>
+  <string name="devices">Appareils liés</string>
   <!--Share fragment-->
   <string name="share_message_no_account">S\'il vous plaît, sélectionnez un compte à partager.</string>
   <string name="share_your_account_information">Partager mes informations de contact</string>

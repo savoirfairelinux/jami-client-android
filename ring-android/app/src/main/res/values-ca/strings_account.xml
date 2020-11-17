@@ -96,6 +96,7 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="account_proxy_enable_label">Utilitza servidor intermediari DHT</string>
   <string name="account_proxy_server_label">Direcció de l\'intermediari DHT</string>
   <string name="account_proxy_server_list_label">URL de la llista d\'intermediaris DHT</string>
+  <string name="account_sip_proxy_label">Intermediari</string>
   <string name="account_peer_discovery_label">Descobriment local de parells</string>
   <string name="account_peer_discovery_enable_label">Activa el descobriment local de parells</string>
   <string name="account_peer_discovery_enable_summary">Connecta a altres nodes DHT anunciats en la nostra xarxa local</string>
@@ -176,7 +177,6 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="account_connect_prompt_username">Nom d\'usuari</string>
   <!--Name registration-->
   <string name="error_username_empty">Inseriu el vostre nom d\'usuari</string>
-  <string name="no_registered_name_for_account">No s\'ha trobat cap nom registrat per aquest compte</string>
   <string name="username_available">Nom d\'usuari disponible !</string>
   <string name="trying_to_register_name">Provant de registrar nom d\'usuari</string>
   <string name="registered_username">Nom d\'usuari registrat</string>
@@ -211,6 +211,5 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="rename_device_button">Canvia el nom del dispositiu</string>
   <string name="account_rename_device_hint">Esculli nou nom de dispositiu</string>
   <string name="account_device_name_empty">El nom del dispositiu no pot estar buit</string>
-  <string name="account_device_this_indicator">aquest dispositiu</string>
   <string name="account_disabled_indicator">deshabilitat</string>
 </resources>

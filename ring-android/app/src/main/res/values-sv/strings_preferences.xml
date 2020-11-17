@@ -19,6 +19,7 @@
   <string name="pref_startOnBoot_title">Starta Jami vid systemstart</string>
   <string name="pref_startOnBoot_summary">Kör Jami i bakgrunden när systemet startas</string>
   <string name="pref_clearHistory_title">Rensa historik</string>
+  <string name="pref_delete_account_title">Ta bort konto</string>
   <string name="pref_persistNotification_title">Kör i bakgrunden</string>
   <string name="pref_persistNotification_summary">Tillåt bakgrundskörning för inkommande samtal och meddelanden.</string>
   <!--Plugin-->

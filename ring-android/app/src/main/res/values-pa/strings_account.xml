@@ -100,6 +100,7 @@
   <string name="account_proxy_enable_label">DHT ਪ੍ਰੌਕਸੀ ਵਰਤੋ</string>
   <string name="account_proxy_server_label">DHT ਪ੍ਰੌਕਸੀ ਪਤਾ</string>
   <string name="account_proxy_server_list_label">DHT ਪ੍ਰੌਕਸੀ ਸੂਚੀ ਦਾ URL</string>
+  <string name="account_sip_proxy_label">ਪ੍ਰੌਕਸੀ</string>
   <string name="account_peer_discovery_label">ਸਥਾਨਕ ਸਾਥੀ ਦੀ ਭਾਲ</string>
   <string name="account_peer_discovery_enable_label">ਸਥਾਨਕ ਸਾਥੀ ਦੀ ਭਾਲ ਚਾਲੂ ਕਰੋ</string>
   <string name="account_peer_discovery_enable_summary">ਸਾਡੇ ਸਥਾਨਕ ਨੈੱਟਵਰਕ \'ਤੇ ਪੇਸ਼ ਕੀਤੀਆਂ ਹੋਰਾਂ DHT ਗੰਢਾਂ ਨਾਲ ਜੁੜੋ</string>
@@ -186,7 +187,6 @@
   <string name="account_connect_prompt_username">ਵਰਤੋਂਕਾਰ ਨਾਂ</string>
   <!--Name registration-->
   <string name="error_username_empty">ਵਰਤੋਂਕਾਰ ਨਾਂ ਦਾਖਲ ਕਰੋ</string>
-  <string name="no_registered_name_for_account">ਇਸ ਖਾਤੇ ਲਈ ਕੋਈ ਪੰਜੀਕਿਰਤ ਨਾਂ ਨਹੀਂ ਮਿਲਿਆ</string>
   <string name="username_available">ਵਰਤੋਂਕਾਰ ਨਾਂ ਲੈ ਸਕਦੇ ਹੋ !</string>
   <string name="register_name">ਨਾਂ ਦਰਜ ਕਰੋ</string>
   <string name="trying_to_register_name">ਨਾਂ ਦੇ ਪੰਜੀਕਰਨ ਦੀ ਕੋਸ਼ਿਸ਼ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ</string>
@@ -223,6 +223,5 @@
   <string name="rename_device_button">ਡੀਵਾਈਸ ਦਾ ਨਾਂ ਬਦਲੋ</string>
   <string name="account_rename_device_hint">ਨਵਾਂ ਡੀਵਾਈਸ ਨਾਂ ਚੁਣੋ</string>
   <string name="account_device_name_empty">ਡੀਵਾਈਸ ਦਾ ਨਾਂ ਲਿਖਣਾ ਲਾਜ਼ਮੀ ਹੈ</string>
-  <string name="account_device_this_indicator">ਇਹ ਡੀਵਾਈਸ</string>
   <string name="account_disabled_indicator">ਬੰਦ ਕੀਤਾ ਗਿਆ</string>
 </resources>

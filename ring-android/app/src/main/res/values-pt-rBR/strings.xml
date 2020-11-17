@@ -112,6 +112,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="share_via">Compartilhar via</string>
   <string name="write_a_message">Escrever uma mensagem</string>
   <string name="scan_qr">Escanear Código QR</string>
+  <string name="qr_code">Código QR</string>
   <string name="ab_action_flipcamera">Virar câmera</string>
   <string name="ab_action_hidepreview">Oculta visualização</string>
   <!--Text messages-->
@@ -193,6 +194,11 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="open_the_gallery">Abrir a galeria</string>
   <string name="take_a_photo">Tirar uma foto</string>
   <string name="profile_name_hint">Digite seu nome</string>
+  <string name="registered_name">Nome Registrado</string>
+  <string name="identity">Identificação</string>
+  <string name="account">Conta</string>
+  <string name="link_new_device">Associar um novo dispositivo</string>
+  <string name="devices">Dispositivos vinculados</string>
   <!--Share fragment-->
   <string name="share_message">Digitalize este código com Jami</string>
   <string name="share_message_no_account">Por favor selecione uma conta para compartilhar.</string>

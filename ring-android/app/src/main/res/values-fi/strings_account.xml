@@ -98,6 +98,7 @@
   <string name="account_proxy_enable_label">Käytä DHT välityspalvelinta</string>
   <string name="account_proxy_server_label">DHT välityspalvelimen osoite</string>
   <string name="account_proxy_server_list_label">DHT-välityspalvelimen luettelon verkko-osoite</string>
+  <string name="account_sip_proxy_label">Välityspalvelin</string>
   <string name="account_peer_discovery_label">Paikallisten vertaislaitteiden haku</string>
   <string name="account_peer_discovery_enable_label">Salli paikallisten vertaislaitteiden haku</string>
   <string name="account_peer_discovery_enable_summary">Yhdistä muihin DHT-solmuihin, jotka ilmoittautuu paikallisessa verkossa</string>
@@ -184,7 +185,6 @@
   <string name="account_connect_prompt_username">Käyttäjänimi</string>
   <!--Name registration-->
   <string name="error_username_empty">Anna käyttäjänimi</string>
-  <string name="no_registered_name_for_account">Tälle tilille ei löytynyt rekisteröityä nimeä</string>
   <string name="username_available">Käyttäjänimi saatavilla !</string>
   <string name="register_name">Rekisteröi nimi</string>
   <string name="trying_to_register_name">Yritetään rekisteröidä nimeä</string>
@@ -221,6 +221,6 @@
   <string name="rename_device_button">Nimeä laite uudelleen</string>
   <string name="account_rename_device_hint">Valitse laitteen uusi nimi</string>
   <string name="account_device_name_empty">Laitteen nimi ei voi olla tyhjä</string>
-  <string name="account_device_this_indicator">tämä laite</string>
+  <string name="account_device_this_indicator">Tämä laite</string>
   <string name="account_disabled_indicator">poistettu</string>
 </resources>

@@ -77,6 +77,7 @@ Sie können Ihr Konto später ändern.</string>
   <string name="account_proxy_label">DHT Proxy</string>
   <string name="account_proxy_enable_label">DHT Proxy verwenden</string>
   <string name="account_proxy_server_label">DHT Proxy Adresse</string>
+  <string name="account_sip_proxy_label">Proxy</string>
   <!--Security Details-->
   <string name="account_credentials_label">Anmeldeinformationen</string>
   <string name="account_credentials_edit">Anmeldeinformationen bearbeiten</string>
@@ -142,5 +143,4 @@ Sie können Ihr Konto später ändern.</string>
   <string name="rename_device_button">Gerät umbenennen</string>
   <string name="account_rename_device_hint">Wählen Sie einen neuen Gerätenamen</string>
   <string name="account_device_name_empty">Der Gerätename darf nicht leer sein</string>
-  <string name="account_device_this_indicator">dieses Gerät</string>
 </resources>

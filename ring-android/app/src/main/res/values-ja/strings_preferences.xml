@@ -26,6 +26,7 @@
   <string name="pref_startOnBoot_summary">端末の起動時にバックグラウンドで Jami を実行します</string>
   <string name="pref_clearHistory_title">履歴をクリア</string>
   <string name="pref_clearHistory_summary">すべての会話履歴を消去します。この操作は元に戻せません。</string>
+  <string name="pref_delete_account_title">アカウントの削除</string>
   <string name="pref_persistNotification_title">バックグラウンドで実行</string>
   <string name="pref_persistNotification_summary">通話とメッセージの受信をバックグラウンドでも許可する</string>
   <!--Plugin-->

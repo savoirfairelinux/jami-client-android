@@ -46,6 +46,7 @@
   <string name="account_device_revocation_error_unknown">未知的錯誤。</string>
   <string name="account_password_change">變更密碼</string>
   <string name="account_password_set">設定密碼</string>
+  <string name="account_password_summary">管理您的帳號密碼。</string>
   <string name="account_password_change_wait_message">正在變更帳號密碼</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">一般</string>
@@ -100,6 +101,7 @@
   <string name="account_proxy_enable_label">使用 DHT 代理伺服器</string>
   <string name="account_proxy_server_label">DHT 代理伺服器位置</string>
   <string name="account_proxy_server_list_label">DHT 代理伺服器清單 URL</string>
+  <string name="account_sip_proxy_label">代理服務器</string>
   <string name="account_peer_discovery_label">區域夥伴探索</string>
   <string name="account_peer_discovery_enable_label">啟用區域夥伴探索</string>
   <string name="account_peer_discovery_enable_summary">連線到我們的區域網路上發佈的其他 DHT 節點</string>
@@ -137,6 +139,7 @@
   <string name="export_account_wait_title">請等待...</string>
   <string name="export_account_wait_message">正在匯出帳號資訊</string>
   <string name="account_export_file">備份帳號</string>
+  <string name="account_export_file_summary">將您的帳號備份到裝置上以便稍後復原。</string>
   <string name="account_export_end_decryption_message">無法使用您提供的密碼來解鎖您的帳號。</string>
   <string name="account_export_end_network_title">網路錯誤</string>
   <string name="account_export_end_network_message">無法在網路上匯出帳號。檢查您的連線。</string>
@@ -172,6 +175,8 @@
   <string name="account_link_prompt_pin">輸入 PIN 碼</string>
   <string name="account_new_button">建立 Jami 帳號</string>
   <string name="account_link_export_button">連結新裝置</string>
+  <string name="account_link_show_button">顯示 %d 個已連結的裝置</string>
+  <string name="account_link_hide_button">隱藏已連結的裝置</string>
   <string name="account_link_export_info">要在其他裝置上使用這個帳號，您必須先在 Jami 上揭露它。這將會生成一個您必須在新裝置上輸入以設定帳號的 PIN 碼。PIN 碼在 10 分鐘內有效。</string>
   <string name="account_start_export_button">生成 PIN 碼</string>
   <string name="account_end_export_button">關閉</string>
@@ -186,7 +191,7 @@
   <string name="account_connect_prompt_username">使用者名稱</string>
   <!--Name registration-->
   <string name="error_username_empty">輸入使用者名稱</string>
-  <string name="no_registered_name_for_account">找不到這個帳號已註冊的名稱</string>
+  <string name="no_registered_name_for_account">無已註冊的名稱</string>
   <string name="username_available">使用者名稱可用！</string>
   <string name="register_name">註冊名稱</string>
   <string name="trying_to_register_name">正在嘗試註冊名稱</string>

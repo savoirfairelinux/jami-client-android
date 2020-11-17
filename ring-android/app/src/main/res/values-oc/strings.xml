@@ -33,9 +33,11 @@
   <string name="ab_action_contact_add">Ajustar als contactes</string>
   <string name="hist_contact_added">Contacte ajustat</string>
   <string name="hist_invitation_received">Invitacion recebuda</string>
+  <string name="qr_code">Còdi QR</string>
   <!--Text messages-->
   <string name="send_message">Enviar messatge</string>
   <string name="message_sending">Mandadís del messatge…</string>
+  <string name="time_just_now">Ara meteis</string>
   <string name="send_file">Enviar un fichiè</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
@@ -56,6 +58,7 @@
   <string name="wizard_skip">Saultar</string>
   <!--Account Summary-->
   <string name="profile">Perfil</string>
+  <string name="account">Compte</string>
   <!--Share fragment-->
   <string name="generic_error_migration">Error</string>
   <!--Pending contact requests-->

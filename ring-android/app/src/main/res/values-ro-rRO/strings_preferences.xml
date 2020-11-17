@@ -8,7 +8,7 @@
   <string name="pref_mobileData_title">Date mobile</string>
   <string name="pref_mobileData_summary">Permite Jami pe rețelele 3G/LTE în plus față de Wi-Fi</string>
   <string name="pref_pushNotifications_title">Notificări</string>
-  <string name="pref_pushNotifications_summary">Utilizează serverele Google pentru a permite primirea de apeluri/mesaje cînd Jami e ascuns</string>
+  <string name="pref_pushNotifications_summary">Utilizează serverele Google pentru a primi apeluri/mesaje cînd Jami e ascuns</string>
   <string name="pref_video_advanced_title">Reglări video avansate</string>
   <string name="pref_video_advanced_summary">Schimbă calitatea video, claritatea și accesul la caracteristicile experimentale</string>
   <string name="pref_hd_summary">Activează trimiterea de video HD</string>
@@ -25,7 +25,11 @@
   <string name="pref_startOnBoot_title">Deschide Jami la pornirea aparatului</string>
   <string name="pref_startOnBoot_summary">Deschide Jami în ascuns la pornirea aparatului.</string>
   <string name="pref_clearHistory_title">Șterge cronologia</string>
-  <string name="pref_clearHistory_summary">Șterge toată cronologia conversațiilor. Această acțiune este ireversibilă.</string>
+  <string name="pref_clearHistory_summary">Șterge cronologia  conversațiilor. Această acțiune este ireversibilă.</string>
+  <string name="pref_blackList_title">Lista de Blocate</string>
+  <string name="pref_blackList_summary">Verifică lista de Blocate.</string>
+  <string name="pref_delete_account_title">Șterge contul</string>
+  <string name="pref_delete_account_summary">Șterge contul tău de pe acest aparat.</string>
   <string name="pref_persistNotification_title">Folosește în ascuns</string>
   <string name="pref_persistNotification_summary">Permite funcționarea în ascuns pentru a primi apeluri și mesaje.</string>
   <!--Plugin-->

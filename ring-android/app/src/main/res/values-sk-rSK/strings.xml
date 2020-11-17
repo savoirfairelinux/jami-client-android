@@ -106,6 +106,7 @@
   <string name="share_via">Zdieľať pomocou</string>
   <string name="write_a_message">Napísať správu</string>
   <string name="scan_qr">Nasnímať QR kód</string>
+  <string name="qr_code">QR kód</string>
   <string name="ab_action_flipcamera">Otočiť kameru</string>
   <string name="ab_action_hidepreview">Skryť náhľad</string>
   <!--Text messages-->
@@ -183,6 +184,11 @@
   <string name="profile_message_warning">Váš profil je zdieľaný iba s vašimi kontaktmi</string>
   <string name="open_the_gallery">Otvoriť galériu</string>
   <string name="take_a_photo">Zhotoviť fotografiu</string>
+  <string name="registered_name">Registrované meno</string>
+  <string name="identity">Identita</string>
+  <string name="account">Účet</string>
+  <string name="link_new_device">Prepojiť nové zariadenie</string>
+  <string name="devices">Prepojené zariadenia</string>
   <!--Share fragment-->
   <string name="share_message">Nasnímajte tento kód aplikáciou Jami</string>
   <string name="share_message_no_account">Vyberte účet, ktorý chcete zdieľať.</string>

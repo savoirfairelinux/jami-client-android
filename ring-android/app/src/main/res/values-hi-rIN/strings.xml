@@ -34,6 +34,7 @@
   <!--Conversation-->
   <!--Contacts-->
   <!--Account Summary-->
+  <string name="account">खाता</string>
   <!--Share fragment-->
   <!--Pending contact requests-->
   <!--Send contact requests-->

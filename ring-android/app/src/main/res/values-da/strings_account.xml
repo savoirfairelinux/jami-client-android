@@ -81,6 +81,7 @@ Du kan rette din konto senere</string>
   <string name="account_proxy_label">DHT-proxy</string>
   <string name="account_proxy_enable_label">Brug DHT-proxy</string>
   <string name="account_proxy_server_label">Adresse til DHT-proxy</string>
+  <string name="account_sip_proxy_label">Stedfortræder</string>
   <!--Security Details-->
   <string name="account_credentials_label">Legitimeringsoplysninger</string>
   <string name="account_credentials_edit">Rediger Legitimeringsoplysninger</string>
@@ -138,7 +139,6 @@ Du kan rette din konto senere</string>
   <string name="account_connect_prompt_username">Brugernavn</string>
   <!--Name registration-->
   <string name="error_username_empty">Indtast et brugernavn</string>
-  <string name="no_registered_name_for_account">Intet registreret navn fundet for denne konto</string>
   <string name="trying_to_register_name">Forsøger at registrere navn</string>
   <string name="registered_username">Registreret brugernavn</string>
   <string name="register_username">Registrer offentligt brugernavn</string>
@@ -168,6 +168,6 @@ Du kan rette din konto senere</string>
   <string name="rename_device_button">Omdøb enhed</string>
   <string name="account_rename_device_hint">Vælg nyt enhedsnavn</string>
   <string name="account_device_name_empty">Enhedsnavn kan ikke være tom</string>
-  <string name="account_device_this_indicator">denne enhed</string>
+  <string name="account_device_this_indicator">Denne enhed</string>
   <string name="account_disabled_indicator">deaktiveret</string>
 </resources>

@@ -153,6 +153,8 @@
   <string name="profile_message_warning">Профилът Ви се споделя само с контактите Ви</string>
   <string name="open_the_gallery">Отваряне на галерията</string>
   <string name="take_a_photo">Снимане</string>
+  <string name="registered_name">Регистрирано име</string>
+  <string name="account">Профил</string>
   <!--Share fragment-->
   <string name="share_message">Сканирайте този код с Jami</string>
   <string name="share_message_no_account">Моля, изберете кой профил искате да споделите.</string>

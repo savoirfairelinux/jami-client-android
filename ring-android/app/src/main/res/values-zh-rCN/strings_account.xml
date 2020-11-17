@@ -100,6 +100,7 @@
   <string name="account_proxy_enable_label">使用 DHT 代理</string>
   <string name="account_proxy_server_label">DHT 代理地址</string>
   <string name="account_proxy_server_list_label">DHT 代理列表 URL </string>
+  <string name="account_sip_proxy_label">代理</string>
   <string name="account_peer_discovery_label">本地对等方发现</string>
   <string name="account_peer_discovery_enable_label">启用本地对等方发现</string>
   <string name="account_peer_discovery_enable_summary">连接至在本地网络宣告的 DHT 节点</string>
@@ -186,7 +187,6 @@
   <string name="account_connect_prompt_username">用户名</string>
   <!--Name registration-->
   <string name="error_username_empty">输入用户名</string>
-  <string name="no_registered_name_for_account">该账户尚未注册用户名</string>
   <string name="username_available">用户名可用！</string>
   <string name="register_name">注册名称</string>
   <string name="trying_to_register_name">正在尝试注册用户名</string>

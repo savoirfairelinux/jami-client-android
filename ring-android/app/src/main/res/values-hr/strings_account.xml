@@ -65,6 +65,7 @@ Moćete urediti vaš račun kasnije</string>
   <string name="account_turn_server_label">TURN poslužitelj</string>
   <string name="account_turn_username_label">TURN korisničko ime</string>
   <string name="account_turn_password_label">TURN lozinka</string>
+  <string name="account_sip_proxy_label">Proxy</string>
   <!--Security Details-->
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Sigurnost</string>

@@ -22,6 +22,7 @@
   <string name="pref_startOnBoot_summary">Spustiť Jami na pozadí pri štarte systému.</string>
   <string name="pref_clearHistory_title">Vymazať históriu</string>
   <string name="pref_clearHistory_summary">Vymazať históriu konverzácie. Táto operácia nemôže byť vrátená. </string>
+  <string name="pref_delete_account_title">Odstrániť účet</string>
   <string name="pref_persistNotification_title">Spustiť na pozadí</string>
   <string name="pref_persistNotification_summary">Povoliť spustenie na pozadí na prijímanie hovorov a spáv.</string>
   <!--Plugin-->
