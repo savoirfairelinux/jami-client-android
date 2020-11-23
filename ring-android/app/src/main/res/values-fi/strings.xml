@@ -194,10 +194,12 @@
   <string name="take_a_photo">Ota valokuva</string>
   <string name="profile_name_hint">Kirjoita nimesi</string>
   <string name="registered_name">Rekisteröity nimi</string>
+  <string name="no_registered_name">Nimeä ei ole rekisteröity</string>
   <string name="identity">Tunnistetiedot</string>
   <string name="account">Tili</string>
   <string name="link_new_device">Linkitä uusi laite</string>
   <string name="devices">Linkitetyt laitteet</string>
+  <string name="total_devices">Laitteita yhteensä: </string>
   <!--Share fragment-->
   <string name="share_message">Skannaa tämä koodi Jamilla</string>
   <string name="share_message_no_account">Valitse jaettava tili.</string>

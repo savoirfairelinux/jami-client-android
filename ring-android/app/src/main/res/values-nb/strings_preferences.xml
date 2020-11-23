@@ -33,15 +33,15 @@
   <string name="pref_persistNotification_title">Kjør i bakgrunnen</string>
   <string name="pref_persistNotification_summary">Tillater kjøring i bakgrunnen for å motta samtaler og meldinger.</string>
   <!--Plugin-->
-  <string name="pref_plugins_title">Tillegg</string>
-  <string name="pref_plugins_summary">Aktiver tillegg og angi deres innstillinger</string>
-  <string name="fab_plugins_add">Legg til nytt tillegg</string>
-  <string name="plugin_uninstall_title">Avinstaller tillegg ?</string>
-  <string name="plugin_reset_preferences">Nullstill innstillinger for tillegg</string>
-  <string name="plugin_reset_preferences_summary">Innstillinger for tillegg vil bli nullstilt</string>
-  <string name="plugin_reset_preferences_ask">Ønsker du å nullstille innstillinger for tillegg ?</string>
-  <string name="plugin_successfully_installed">Tillegget <b>%1$s</b> installert</string>
-  <string name="plugin_install_failure">Installasjon av tillegg feilet: <b>%1$s</b></string>
+  <string name="pref_plugins_title">Utvidelser</string>
+  <string name="pref_plugins_summary">Aktiver utvidelser og angi innstillinger</string>
+  <string name="fab_plugins_add">Legg til ny utvidelse</string>
+  <string name="plugin_uninstall_title">Avinstaller utvidelse ?</string>
+  <string name="plugin_reset_preferences">Nullstill innstillinger for utvidelse</string>
+  <string name="plugin_reset_preferences_summary">Innstillinger for utvidelse vil bli nullstilt</string>
+  <string name="plugin_reset_preferences_ask">Ønsker du å nullstille innstillinger for utvidelse ?</string>
+  <string name="plugin_successfully_installed">Utvidelsen <b>%1$s</b> installert</string>
+  <string name="plugin_install_failure">Installasjon av utvidelsen feilet: <b>%1$s</b></string>
   <string name="plugin_recent_version_exception">Du har en nyere versjon av: <b>%1$s</b></string>
   <string name="plugin_same_version_exception">Du har samme versjon av <b>%1$s</b> installert</string>
   <string name="plugin_force_install">tving \n installasjon</string>

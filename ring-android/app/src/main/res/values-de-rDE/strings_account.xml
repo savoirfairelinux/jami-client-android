@@ -7,6 +7,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Jami-Konto hinzufügen</string>
   <string name="add_sip_account_title">SIP-Konto hinzufügen</string>
+  <string name="ring_account_default_name">Jami Benutzerkonto %1$s</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Hostname</string>
   <string name="prompt_username">Benutzername</string>
@@ -25,6 +26,7 @@
 Sie werden nur Gespräche mit direkten IP-Adressen führen können.
 Sie können Ihr Konto später ändern.</string>
   <string name="account_type_ip2ip">IP Konto</string>
+  <string name="help_ring">Ein Jami Benutzerkonto ermöglicht es ihnen, mit anderen Menschen sicher zu kommunizieren, ohne einen Zentralen Dienst im Hintergrund. Das wird durch ein sog. Peer-to-Peer Netzwerk ermöglicht. Hierbei kommunizieren die Partner direkt  und abhörsicher miteinander.</string>
   <string name="help_sip_title">Ihr SIP-Konto hinzufügen</string>
   <string name="help_sip">Richte ein bestehendes SIP-Konto ein.</string>
   <string name="create_sip_account">SIP-Konto hinzufügen</string>
@@ -34,12 +36,18 @@ Sie können Ihr Konto später ändern.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Es ist kein Konto registriert</string>
   <string name="normal_accounts_titles">Konten</string>
+  <string name="normal_devices_titles">Verknüpfte Gräte</string>
   <string name="account_device_revoke">Gerät widerrufen</string>
   <string name="account_device_revocation_success_title">Erfolg</string>
+  <string name="account_device_revocation_success">Das Gerät ist jetzt widerrufen! </string>
+  <string name="account_device_revocation_error_title">Ich kann das Gerät aus irgendeinem Grund nicht wiederrufen!</string>
   <string name="account_device_revocation_wrong_password">Falsches Passwort.</string>
   <string name="account_device_revocation_unknown_device">Unbekanntes Gerät.</string>
   <string name="account_device_revocation_error_unknown">Unbekannter Fehler.</string>
   <string name="account_password_change">Ändere das Passwort</string>
+  <string name="account_password_set">Ein Passwort setzen</string>
+  <string name="account_password_summary">Bearbeiten des Passworts für das Benutzerkonto</string>
+  <string name="account_password_change_wait_message">Ändere das Passwort für das Benutzerkonto</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Allgemein</string>
   <string name="account_basic_category">Grundeinstellungen</string>
@@ -108,12 +116,14 @@ Sie können Ihr Konto später ändern.</string>
   <string name="account_contact_me">Kontaktiere mich bei Jami!</string>
   <string name="update_account">Konto aktualisieren</string>
   <string name="ring_account">Jami-Konto</string>
+  <string name="ring_account_identity">Identität</string>
   <string name="account_update_needed">Update benötigt</string>
   <string name="account_cannot_be_found_title">Konto nicht gefunden</string>
   <string name="account_no_network_title">Kann keine Verbindung zum Netzwerk herstellen</string>
   <string name="account_sip_success_title">SIP-Konto registriert</string>
   <string name="account_link_prompt_pin">PIN eingeben</string>
   <string name="account_new_button">Jami-Konto erstellen</string>
+  <string name="account_link_export_button">Ein neues Gerät verknüpfen</string>
   <string name="account_link_export_info">Um dieses Konto auf anderen Geräten zu verwenden, müssen Sie es zuerst auf Jami veröffentlichen. Dadurch wird ein PIN-Code erzeugt, den Sie auf dem neuen Gerät bei der Einrichtung des Kontos eingeben müssen. Diese PIN ist für 10 Minuten gültig.</string>
   <string name="account_start_export_button">PIN generieren</string>
   <string name="account_end_export_infos">Ihre PIN ist:\n\n%%\n\nUm diesen Vorgang abzuschließen, müssen Sie Jami auf dem neuen Gerät starten. Erzeugen Sie ein neues Konto mittels \"Dieses Gerät mit einem Konto verknüpfen\". Ihre PIN ist für 10 Minuten gültig.</string>
@@ -122,6 +132,7 @@ Sie können Ihr Konto später ändern.</string>
   <string name="account_connect_prompt_username">Benutzername</string>
   <!--Name registration-->
   <string name="error_username_empty">Einen Benutzernamen eingeben</string>
+  <string name="register_recommended">Empfohlen</string>
   <string name="username_already_taken">Benutzername bereits vergeben</string>
   <string name="invalid_username">Ungültiger Benutzername</string>
   <string name="looking_for_username_availability">Prüfe auf Verfügbarkeit des Benutzernamens...</string>

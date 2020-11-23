@@ -44,6 +44,7 @@
   <string name="account_device_revocation_error_unknown">Tuntematon virhe.</string>
   <string name="account_password_change">Vaihda salasana</string>
   <string name="account_password_set">Aseta salasana</string>
+  <string name="account_password_summary">Hallitse tilisi salasanaa.</string>
   <string name="account_password_change_wait_message">Tunnuksen salasanan vaihtaminen</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Yleiset</string>
@@ -136,6 +137,7 @@
   <string name="export_account_wait_title">Odota hetki...</string>
   <string name="export_account_wait_message">Tilitietojen vieminen</string>
   <string name="account_export_file">Varmuuskopioi tili</string>
+  <string name="account_export_file_summary">Varmuuskopioi tili laitteellesi niin voit palauttaa sen myöhemmin.</string>
   <string name="account_export_end_decryption_message">Tiliäsi ei voitu avata toimitetulla salasanalla.</string>
   <string name="account_export_end_network_title">Verkkovirhe</string>
   <string name="account_export_end_network_message">Tunnusta ei voitu viedä verkkoon. Tarkista yhteys.</string>
@@ -171,6 +173,8 @@
   <string name="account_link_prompt_pin">Syötä PIN-koodi</string>
   <string name="account_new_button">Luo Jami-tili</string>
   <string name="account_link_export_button">Linkitä uusi laite</string>
+  <string name="account_link_show_button">Näytä %d lisää linkitettyä laitetta</string>
+  <string name="account_link_hide_button">Piilota linkitetty laite</string>
   <string name="account_link_export_info">Jos haluat käyttää tätä tiliä muissa laitteissa, sinun on ensin siirrettävä se Jamiin. Tämä luo PIN-koodin, joka on syötetään uuteen laitteeseen tilin määrittämiseksi. PIN-koodi on voimassa 10 minuuttia.</string>
   <string name="account_start_export_button">Luo PIN-koodi</string>
   <string name="account_end_export_button">sulje</string>
@@ -185,6 +189,7 @@
   <string name="account_connect_prompt_username">Käyttäjänimi</string>
   <!--Name registration-->
   <string name="error_username_empty">Anna käyttäjänimi</string>
+  <string name="no_registered_name_for_account">Ei rekisteröityä nimeä</string>
   <string name="username_available">Käyttäjänimi saatavilla !</string>
   <string name="register_name">Rekisteröi nimi</string>
   <string name="trying_to_register_name">Yritetään rekisteröidä nimeä</string>

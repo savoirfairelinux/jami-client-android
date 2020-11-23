@@ -46,6 +46,7 @@
   <string name="account_device_revocation_error_unknown">Neznana napaka</string>
   <string name="account_password_change">Spremeni geslo</string>
   <string name="account_password_set">Določi geslo</string>
+  <string name="account_password_summary">Upravljanje gesla računa</string>
   <string name="account_password_change_wait_message">Spreminjanje gesla računa</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Splošno</string>
@@ -138,6 +139,7 @@
   <string name="export_account_wait_title">Počakajte...</string>
   <string name="export_account_wait_message">Izvažanje podatkov računa</string>
   <string name="account_export_file">Varnostno kopiranje računa</string>
+  <string name="account_export_file_summary">Varnostno kopiranje računa za kasnejšo obnovitev.</string>
   <string name="account_export_end_decryption_message">Vašega računa ni bilo mogoče odkleniti s podanim geslom.</string>
   <string name="account_export_end_network_title">Napaka na omrežju</string>
   <string name="account_export_end_network_message">Računa ni bilo mogoče izvoziti preko omrežja. Preverite povezavo.</string>
@@ -173,6 +175,8 @@
   <string name="account_link_prompt_pin">Vnesite PIN</string>
   <string name="account_new_button">Ustvari Jami račun</string>
   <string name="account_link_export_button">Poveži novo napravo</string>
+  <string name="account_link_show_button">Prikaži %d več povezanih naprav</string>
+  <string name="account_link_hide_button">Skrij povezano napravo</string>
   <string name="account_link_export_info">Da bi uporabili ta račun na drugo napravi, jo morate najprej razkriti na Jamiju. To bo ustvarilo PIN kodo, ki jo morate vnesti v novo napravo, da bi ustvarili račun. PIN je veljaven 10 minut.</string>
   <string name="account_start_export_button">Ustvari PIN</string>
   <string name="account_end_export_button">zapri</string>
@@ -187,6 +191,7 @@
   <string name="account_connect_prompt_username">Uporabnik</string>
   <!--Name registration-->
   <string name="error_username_empty">Vnesite uporabniško ime</string>
+  <string name="no_registered_name_for_account">Ni registriranega imena</string>
   <string name="username_available">Uporabniško ime je na voljo!</string>
   <string name="register_name">Registriraj ime</string>
   <string name="trying_to_register_name">Poskus registracije imena</string>

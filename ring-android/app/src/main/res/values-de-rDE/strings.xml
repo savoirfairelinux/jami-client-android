@@ -10,7 +10,7 @@
   <string name="version_section">Version</string>
   <string name="no_email_app_installed">Keine E-Mail-App gefunden, installieren Sie eine, um uns einen Bericht zu schicken</string>
   <string name="no_browser_app_installed">Keine Browser-App gefunden, installieren Sie eine, um die Homepage darzustellen</string>
-  <string name="email_chooser_title">Senden von E-Mails über...</string>
+  <string name="email_chooser_title">Senden von E-Mails mit ...</string>
   <string name="website_chooser_title">Darstellung der Homepage mit...</string>
   <string name="license">Diese Software wird \"wie sie ist\" ohne Gewährleistung irgendwelcher Art zur Verfügung gestellt. Details finden Sie unter <u>GNU General Public License Version 3 oder später</u></string>
   <string name="description">Jami ist Freie Software für universelle Kommunikation, die die Freiheiten und die Privatsphäre ihrer Nutzer respektiert.</string>
@@ -20,6 +20,7 @@
   <!--About dialog-->
   <string name="developed_by">Entwickelt von</string>
   <string name="designed_by">Entworfen von</string>
+  <string name="ringtones_by">Klingeltöne von</string>
   <!--RingActivity-->
   <string name="error_no_network">Keine Netzwerkkonnektivität</string>
   <string name="error_mobile_network_available_but_disabled">Bitte in den Einstellungen Zugriff auf mobile Daten erlauben.</string>
@@ -30,6 +31,7 @@
   <string name="menu_item_accounts">Konten verwalten</string>
   <string name="menu_item_account">Konto verwalten</string>
   <string name="menu_item_settings">Einstellungen</string>
+  <string name="menu_item_plugin_list">Einstellungen für Plugins (Zusatzmodule)</string>
   <string name="menu_item_share">Teile meine RING-ID</string>
   <string name="menu_item_about">Über Jami</string>
   <!--Dialing Fragment-->
@@ -42,6 +44,7 @@
     <item quantity="other">%d Gespräche</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Suche nach Namen oder Telefonnummer</string>
   <string name="choose_number">Nummer auswählen</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -52,12 +55,16 @@
   <string name="notif_incoming_call">Eingehender Anruf</string>
   <string name="notif_outgoing_call_title">Ausgehende Anruf zu %1$s</string>
   <string name="notif_outgoing_call">Ausgehende Anruf</string>
+  <string name="notif_current_call_title">aktiver Anruf mit %1$s</string>
   <string name="notif_current_call">Aktiver Anruf</string>
+  <string name="notif_channel_call_in_progress">Verbindung wird hergestellt</string>
   <string name="notif_channel_calls">Anrufe</string>
   <string name="notif_channel_missed_calls">Verpasste Anrufe</string>
+  <string name="notif_channel_incoming_calls">Eingehende Anrufe</string>
   <string name="notif_channel_messages">Nachrichten</string>
   <string name="notif_channel_requests">Anfragen</string>
   <string name="notif_channel_file_transfer">Dateiübertragung</string>
+  <string name="notif_channel_sync">Datenabgleich</string>
   <string name="notif_channel_background_service">Hintergrundprozess</string>
   <string name="notif_channel_background_service_descr">Ermöglicht den Empfang von Anrufen und Nachrichten zu jeder Zeit.</string>
   <string name="notif_group_calls">Anrufe</string>
@@ -68,17 +75,31 @@
   <string name="notif_incoming_file_transfer_title">Einkommende Datei von %1$s</string>
   <string name="notif_outgoing_file_transfer_title">Sende Datei an %1$s</string>
   <string name="notif_incoming_picture">Bild von %1$s</string>
+  <string name="notif_sync_title">Gleiche Daten ab ...</string>
+  <string name="notif_location_title">Der aktuelle Standort wird mit %1$s geteilt</string>
+  <string name="location_share_contact">%1$s teilt den aktuellen Standort mit Dir</string>
+  <string name="notif_location_multi_title">Mit %1$d Kontakten wird der Standort geteilt</string>
+  <string name="notif_location_remaining">Noch %1$d Minuten</string>
+  <string name="notif_location_action_stop">Den Standort NICHT mehr teilen</string>
+  <string name="location_share_action_start">Teilen starten</string>
+  <string name="location_share_action_stop">NICHT mehr teilen</string>
+  <string name="location_share_about_title">Karteninformation</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Sie:</string>
   <string name="action_call_hangup">Auflegen</string>
+  <string name="action_call_maximize">Maximale Größe</string>
+  <string name="action_call_minimize">Verkleinern</string>
   <string name="ongoing_call">Aktiver Anruf</string>
   <string name="hist_in_call">Eingehender Anruf von %1$s</string>
   <string name="hist_out_call">Ausgehende Anruf von %1$s</string>
   <string name="start_error_title">Kann Jami nicht starten!</string>
   <string name="start_error_mic_required">Jami benötigt Mikrofon-Zugriff.</string>
   <string name="action_call_accept">Annehmen</string>
+  <string name="action_call_hold_accept">Aktuellen Anruf halten und Neuen annehmen</string>
+  <string name="action_call_end_accept">Aktuellen Anruf beenden und Neuen annehmen</string>
   <string name="action_call_decline">Ablehnen</string>
   <string name="action_call_mic_mute">Mikrofon stummschalten</string>
+  <string name="action_load_plugin">ein Plugin (Zusatzmodul) laden</string>
   <string name="ab_action_speakerphone">Lautsprecher aktivieren</string>
   <string name="ab_action_contact_add">Kontakt hinzufügen</string>
   <string name="ab_action_contact_add_question">Zu Kontakten hinzufügen?</string>
@@ -90,7 +111,9 @@
   <string name="share_via">Teilen über</string>
   <string name="write_a_message">Eine Nachricht schreiben</string>
   <string name="scan_qr">QR-Code scannen</string>
+  <string name="qr_code">QR Code -- so ein schwarzweiß-Dingsbums-Quadrat</string>
   <string name="ab_action_flipcamera">Kamera wechseln</string>
+  <string name="ab_action_hidepreview">Vorschau ausblenden</string>
   <!--Text messages-->
   <string name="send_message">Nachricht senden</string>
   <string name="message_sending">Nachricht senden...</string>
@@ -99,6 +122,9 @@
   <string name="send_file">Datei senden</string>
   <string name="hist_file_sent">Datei gesendet</string>
   <string name="hist_file_received">Datei empfangen</string>
+  <string name="conversation_send_audio">Sprachdatei aufnehmen</string>
+  <string name="conversation_send_video">Videodatei aufnehmen</string>
+  <string name="conversation_share_location">Den Standort teilen</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera-Berechtigung</string>
   <string name="permission_dialog_camera_message">Video-Konferenzen benötigen Zugriff auf die Kamera. Bitte erlauben Sie diesen Zugriff.</string>
@@ -106,12 +132,19 @@
   <string name="ringtone_error_title">Fehler</string>
   <string name="ringtone_error_format_not_supported">Dieses Format wird nicht unterstützt.</string>
   <string name="ringtone_error_size_too_big">Diese Datei ist zu groß. Maximal %1$dkB sind erlaubt.</string>
+  <string name="ringtone_custom_prompt">Einen anderen Bimmelton einstellen</string>
+  <string name="ringtone_custom_label">Individuell</string>
+  <string name="ringtone_jami_tones">Jami Töne</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Jami benötigt für diese Funktion die Erlaubnis \"Kontakte lesen\". Bitte zulassen.</string>
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Jami benötigt für diese Funktion die Erlaubnis \"Anruf-Log schreiben\". Bitte zulassen.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Scannen Sie den QR-Code des Kontos, das Sie hinzufügen möchten.</string>
+  <string name="title_activity_qrcode">Teile meinen Jami Accountnamen</string>
+  <string name="error_scan_no_camera_permissions">Um QR-Codes zu scannen benötigt Jami das Recht auf die Kamera zuzugreifen</string>
+  <string name="tab_code">Mein Account</string>
+  <string name="tab_scan">Scanne einen Account</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Verlauf löschen?</string>
   <string name="clear_history_dialog_message">Diese Aktion kann nicht rückgängig gemacht werden.</string>
@@ -132,10 +165,12 @@
   <string name="conversation_action_select_peer_number">Nummer auswählen</string>
   <string name="conversation_action_block_this">Kontakt blockieren</string>
   <string name="conversation_action_go_to_call">Zu laufendem Gespräch zurückkehren</string>
+  <string name="conversation_open_file_error">Sie benötigen eine spezielle Anwendung um diesen Dateityp öffnen zu können. Auf Ihrem Gerät hat Jami leider keine Anwendung finden können.</string>
   <string name="clip_contact_uri">Kontaktadresse</string>
   <string name="block_contact_dialog_title">%1$s blockieren?</string>
   <string name="block_contact_dialog_message">%1$s kann Sie nicht kontaktieren, bis Sie die Blockierung aufheben.</string>
   <string name="block_contact_completed">%1$s wurde blockiert.</string>
+  <string name="conversation_contact_is_typing">Kontakt tippt etwas ...</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s hinzufügen?</string>
   <string name="prompt_new_password">Neues Passwort</string>
@@ -145,16 +180,26 @@
   <string name="prompt_new_username">Neuen Benutzername eingeben</string>
   <string name="prompt_hint_username">Benutzername</string>
   <string name="help_password_choose">Wählen Sie ein sicheres Passwort und merken Sie es sich um Ihre Jami-Zugangsdaten zu schützen.</string>
+  <string name="help_password_enter">Geben Sie das Passwort für Ihr Jami-Konto ein.</string>
+  <string name="help_server_enter">Geben Sie die Internet-Adresse (URL) des Management-Servers ein (beginnt z.B. mit https://)</string>
   <string name="help_pin_enter">Geben Sie die PIN eines anderen konfigurierten Jami-Kontos ein. Verwenden Sie die Funktion \"Jami-Konto exportieren\", um eine PIN zu erhalten.</string>
   <string name="wizard_next">Weiter</string>
   <string name="wizard_back">Zurück</string>
   <string name="wizard_skip">Überspringen</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
+  <string name="profile_name">Profilname</string>
   <string name="profile_message_warning">Ihr Profil wird nur mit Ihren Kontakten geteilt</string>
   <string name="open_the_gallery">Galerie öffnen</string>
   <string name="take_a_photo">Mache ein Foto</string>
+  <string name="profile_name_hint">Geben Sie Ihren Namen ein</string>
+  <string name="registered_name">Registrierter Name</string>
+  <string name="no_registered_name">Noch kein Name registriert</string>
+  <string name="identity">Identität</string>
   <string name="account">Konto</string>
+  <string name="link_new_device">Ein neues Gerät verknüpfen</string>
+  <string name="devices">Verknüpfte Geräte</string>
+  <string name="total_devices">Alle Geräte:</string>
   <!--Share fragment-->
   <string name="share_message">Diesen Code mit Jami scannen</string>
   <string name="share_message_no_account">Bitte wählen Sie ein Konto, das Sie teilen wollen.</string>
@@ -162,6 +207,7 @@
   <string name="share_label">Freigeben</string>
   <string name="generic_error_migration">Fehler</string>
   <string name="generic_error_migration_message">Ein Fehler ist während der Datenübernahme aufgetreten</string>
+  <string name="title_share_with">Teile mit ...</string>
   <!--Pending contact requests-->
   <string name="accept">Akzeptieren</string>
   <string name="refuse">Ablehnen</string>
@@ -169,6 +215,7 @@
   <string name="contact_request_title">Neue Kontaktanfrage</string>
   <string name="contact_request_msg">Du hast %1$s Kontaktanfragen</string>
   <string name="contact_request_account">Für %1$s</string>
+  <string name="no_requests">Sie haben keine neuen Kontaktanfragen</string>
   <string name="message_contact_not_trusted_yet">%s ist noch nicht in Ihrer Kontaktliste.\nWollen Sie diese Kontaktanfrage annehmen oder ablehnen?</string>
   <string name="message_contact_not_trusted">%s ist nicht in Ihrer Kontaktliste.\nEinen neuen Kontakt hinzufügen?</string>
   <!--Send contact requests-->
@@ -176,9 +223,12 @@
   <string name="send_request_title">Eine Kontaktanfrage verschicken</string>
   <string name="send_request_msg">Es ist eine Kontaktanfrage nötig, um mit dem Kontakt zu kommunizieren. So lange diese Anfrage vom Gegenüber nicht akzeptiert wurde, können weiterhin Nachrichten gesendet werden, aber dieser kann nicht antworten.</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">Keine blockierten Kontakte</string>
   <!--Smartlist-->
   <string name="no_contact_request">Keine Kontaktanfrage verschickt</string>
+  <string name="conversation_placeholder">Noch keine Gesprächsverläufe</string>
   <string name="contact_request_sent">Kontaktanfrage verschickt</string>
+  <string name="start_conversation">Ein Gespräch starten</string>
   <string name="search_results">Suchergebnisse</string>
   <string name="tv_contact_row_header">Kontakte</string>
   <string name="gallery_error_title">Keine Gallerie-Anwendung gefunden</string>
@@ -197,22 +247,57 @@
   <string name="file_transfer_status_closed_by_peer">vom Partner geschlossen</string>
   <string name="file_transfer_status_invalid_pathname">ungültiger Pfad</string>
   <string name="file_transfer_status_unjoinable_peer">Partner nicht erreichbar</string>
+  <string name="file_transfer_status_cancelled">Abgebrochen</string>
+  <string name="file_transfer_status_error">Aufgrund eines Fehlers fehlgeschlagen</string>
+  <string name="file_transfer_status_timed_out">Zeitüberschreitung</string>
   <string name="file_saved_in">Datei gespeichert unter %s</string>
+  <string name="file_saved_successfully">Die Datei wurde erfolgreich gespeichert</string>
   <string name="no_space_left_on_device">Kein Speicherplatz mehr frei!</string>
   <string name="title_media_viewer">Dateibetrachter</string>
   <string name="menu_file_open">Datei öffnen</string>
   <string name="menu_file_download">Datei herunterladen</string>
+  <string name="menu_file_save">Datei abspeichern</string>
   <string name="menu_file_delete">Datei löschen</string>
   <string name="menu_file_share">Datei teilen</string>
   <string name="menu_message_copy">Kopieren</string>
+  <string name="menu_message_delete">Diese Nachricht löschen</string>
+  <string name="menu_message_cancel">Abbruch mit folgendem Hinweis:</string>
   <string name="menu_delete">Löschen</string>
+  <string name="pref_darkTheme_title">Dunkles Aussehen der Anwendung (theme)</string>
+  <string name="pref_darkTheme_summary">Immer das \"Dunkle Aussehen\" (dark theme) einschalten statt den Systemstandard zu verwenden</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Gespräche</string>
   <string name="navigation_item_contact_request">Kontaktanfragen</string>
   <string name="navigation_item_account">Konto</string>
+  <string name="search_results_public_directory">Öffentlich einsehbares Verzeichnis</string>
   <!--TV-->
+  <string name="tv_send_audio_dialog_message">Eine Audio-Nachricht senden?</string>
+  <string name="tv_send_image_dialog_message">Ein Bild senden?</string>
+  <string name="tv_send_video_dialog_message">Ein Video senden?</string>
+  <string name="tv_media_preview">Vorschau</string>
   <string name="tv_audio_play">Wiedergeben</string>
+  <string name="tv_audio_pause">Pause</string>
   <string name="tv_dialog_send">Senden</string>
+  <string name="tv_audio_recording">Nehme auf...</string>
+  <string name="tv_send_text">Sende einen Text</string>
+  <string name="tv_send_audio">Sende eine Sprachnachricht</string>
+  <string name="tv_send_video">Sende eine Datei</string>
+  <string name="conversation_input_speech_hint">Sprechen sie jetzt ...</string>
   <!--Wizard-->
+  <string name="wizard_status_recommended">Empfohlen</string>
+  <string name="wizard_status_optional">Nicht zwingend erforderlich</string>
+  <string name="wizard_status_required">Benötigt</string>
+  <string name="wizard_username_info">Wählen Sie einen Namen für Ihr Benutzerkonto</string>
+  <string name="wizard_username_button">Wählen Sie einen Benutzernamen</string>
+  <string name="wizard_username_skip">Keinen Benutzernamen wählen</string>
+  <string name="wizard_password_info">Ein sicheres Passwort für Ihre Anmeldung</string>
+  <string name="wizard_password_placeholder">Wählen Sie ein sicheres Passwort um den Schlüssel für Ihre Anmeldedaten auf diesem Gerät sicher zu verschlüsseln</string>
+  <string name="wizard_password_button">Wählen Sie ein Passwort</string>
   <string name="wizard_password_skip">Konto erstellen</string>
+  <string name="wizard_password_switch">Sichern Sie Ihre Anmeldedaten mit einem Passwort ab!</string>
+  <string name="wizard_password_warning">ACHTUNG! Notieren Sie dieses Passwort an einem sicheren Ort. Es kann nicht wieder hergestellt werden!</string>
+  <string name="wizard_profile_info">Ihe Benutzerkennnung soll nur mit Kontakten geteilt werden können</string>
+  <string name="wizard_profile_button">Sichen der Benutzerkennung und deren Einstellungen</string>
+  <string name="wizard_profile_skip">Abbrechen, das mache ich später ...</string>
+  <string name="fab_path_choose">Eine andere Datei wählen</string>
 </resources>

@@ -46,6 +46,7 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_device_revocation_error_unknown">Errore sconosciuto.</string>
   <string name="account_password_change">Cambia password</string>
   <string name="account_password_set">Impostare  password</string>
+  <string name="account_password_summary">Gestisci la password del tuo account.</string>
   <string name="account_password_change_wait_message">Modifica della password dell\'account</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Generale</string>
@@ -138,6 +139,7 @@ Potrai modificare il tuo account successivamente</string>
   <string name="export_account_wait_title">Prego attendere...</string>
   <string name="export_account_wait_message">Esportazione informazioni sull\'account</string>
   <string name="account_export_file">Account di backup</string>
+  <string name="account_export_file_summary">Esegui il backup del tuo account sul tuo dispositivo per ripristinarlo in seguito.</string>
   <string name="account_export_end_decryption_message">Impossibile sbloccare l\'account x la con la password inserita.</string>
   <string name="account_export_end_network_title">Errore di rete</string>
   <string name="account_export_end_network_message">Impossibile esportare l\'account sulla rete. Controlla la tua connettività.</string>
@@ -173,6 +175,8 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_link_prompt_pin">Inserisci il PIN</string>
   <string name="account_new_button">Crea un account Jami</string>
   <string name="account_link_export_button">Collega un nuovo dispositivo</string>
+  <string name="account_link_show_button">Mostra %d altri dispositivi collegati</string>
+  <string name="account_link_hide_button">Nascondi dispositivo collegato</string>
   <string name="account_link_export_info">Per utilizzare questo account su altri dispositivi, devi prima esporlo su Jami. Questo sarà un codice che devi configurare. Il PIN è valido per 10 minuti.</string>
   <string name="account_start_export_button">Genera PIN</string>
   <string name="account_end_export_button">chiudi</string>
@@ -187,6 +191,7 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_connect_prompt_username">Utente</string>
   <!--Name registration-->
   <string name="error_username_empty">Inserire un nome utente</string>
+  <string name="no_registered_name_for_account">Nessun nome registrato</string>
   <string name="username_available">Nome utente disponibile !</string>
   <string name="register_name">Nome registro</string>
   <string name="trying_to_register_name">Tentativo di registrazione del nome</string>

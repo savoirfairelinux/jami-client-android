@@ -46,6 +46,7 @@
   <string name="account_device_revocation_error_unknown">Ismeretlen hiba.</string>
   <string name="account_password_change">Jelszó megváltoztatása</string>
   <string name="account_password_set">Jelszó beállítása</string>
+  <string name="account_password_summary">Fiók jelszava kezelése.</string>
   <string name="account_password_change_wait_message">Fiókjelszó megváltoztatása</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Általános</string>
@@ -138,6 +139,7 @@
   <string name="export_account_wait_title">Kérem várjon…</string>
   <string name="export_account_wait_message">Fiókadatok exportálása</string>
   <string name="account_export_file">Fiók biztonsági mentése</string>
+  <string name="account_export_file_summary">Készítsen biztonsági másolatot a fiókjáról eszközén, hogy később visszaállítsa.</string>
   <string name="account_export_end_decryption_message">Nem sikerült feloldani fiókját a megadott jelszó használatával.</string>
   <string name="account_export_end_network_title">Hálózati hiba</string>
   <string name="account_export_end_network_message">Nem sikerült exportálni a fiókot a hálózaton. Ellenőrizze a kapcsolatot.</string>
@@ -173,6 +175,8 @@
   <string name="account_link_prompt_pin">PIN-kód megadása</string>
   <string name="account_new_button">Jami-fiók létrehozása</string>
   <string name="account_link_export_button">Eszköz összekapcsolása fiókhoz</string>
+  <string name="account_link_show_button">További %d összekapcsolt eszköz megjelenítése</string>
+  <string name="account_link_hide_button">Összekapcsolt eszköz elrejtése</string>
   <string name="account_link_export_info">Ha ezt a fiókot más eszközökön szeretné használni, először meg kell jeleníteni a Jamin. Ez létrehoz egy PIN-kódot, amelyet meg kell adnia az új eszközön a fiók beállításához. A PIN-kód 10 percig érvényes.</string>
   <string name="account_start_export_button">PIN-kód létrehozása</string>
   <string name="account_end_export_button">bezárás</string>
@@ -187,6 +191,7 @@
   <string name="account_connect_prompt_username">Felhasználónév</string>
   <!--Name registration-->
   <string name="error_username_empty">Adjon meg egy felhasználónevet</string>
+  <string name="no_registered_name_for_account">Nincs bejegyzett név</string>
   <string name="username_available">A felhasználónév elérhető.</string>
   <string name="register_name">Név bejegyzése</string>
   <string name="trying_to_register_name">A név regisztrációjának megkísérlése</string>

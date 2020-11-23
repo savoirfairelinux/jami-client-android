@@ -196,10 +196,12 @@
   <string name="take_a_photo">Slikaj</string>
   <string name="profile_name_hint">Vnesite svoje ime</string>
   <string name="registered_name">Registrirano ime</string>
+  <string name="no_registered_name">Ni registriranega imena</string>
   <string name="identity">Identiteta</string>
   <string name="account">Račun</string>
   <string name="link_new_device">Poveži novo napravo</string>
   <string name="devices">Povezane naprave</string>
+  <string name="total_devices">Skupaj naprav:</string>
   <!--Share fragment-->
   <string name="share_message">Preberi kodo z Jamijem.</string>
   <string name="share_message_no_account">Izberi račun, ki ga želiš deliti.</string>

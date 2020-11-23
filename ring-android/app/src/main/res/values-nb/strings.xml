@@ -31,7 +31,7 @@
   <string name="menu_item_accounts">Behandle kontoer</string>
   <string name="menu_item_account">Behandle konto</string>
   <string name="menu_item_settings">Innstillinger</string>
-  <string name="menu_item_plugin_list">Innstillinger tillegg</string>
+  <string name="menu_item_plugin_list">Innstillinger utvidelser</string>
   <string name="menu_item_share">Del min kontakt</string>
   <string name="menu_item_about">Om Jami</string>
   <!--Dialing Fragment-->
@@ -99,7 +99,7 @@
   <string name="action_call_end_accept">Legg på og svar</string>
   <string name="action_call_decline">Avslå</string>
   <string name="action_call_mic_mute">Koble ut mikrofon</string>
-  <string name="action_load_plugin">Last tillegg</string>
+  <string name="action_load_plugin">Last utvidelse</string>
   <string name="ab_action_speakerphone">Aktiver høytaler</string>
   <string name="ab_action_contact_add">Legg til kontakter</string>
   <string name="ab_action_contact_add_question">Legg til kontakter?</string>

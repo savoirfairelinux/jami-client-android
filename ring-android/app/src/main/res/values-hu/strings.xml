@@ -194,10 +194,12 @@
   <string name="take_a_photo">Fotó készítése</string>
   <string name="profile_name_hint">Név megadása</string>
   <string name="registered_name">Bejegyzett név</string>
+  <string name="no_registered_name">Nincs bejegyzett név</string>
   <string name="identity">Személyazonosság</string>
   <string name="account">Fiók</string>
   <string name="link_new_device">Eszköz összekapcsolása fiókhoz</string>
   <string name="devices">Összekapcsolt eszközök</string>
+  <string name="total_devices">Összes eszköz: </string>
   <!--Share fragment-->
   <string name="share_message">Olvassa be a kódot a Jami programmal</string>
   <string name="share_message_no_account">Válassza ki a megosztandó fiókot.</string>

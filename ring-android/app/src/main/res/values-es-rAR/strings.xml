@@ -31,6 +31,7 @@
   <string name="menu_item_accounts">Gestionar cuentas</string>
   <string name="menu_item_account">Gestionar cuenta</string>
   <string name="menu_item_settings">Ajustes</string>
+  <string name="menu_item_plugin_list">Ajustes de complementos</string>
   <string name="menu_item_share">Compartir mi contacto</string>
   <string name="menu_item_about">Acerca de Jami</string>
   <!--Dialing Fragment-->
@@ -82,17 +83,23 @@
   <string name="notif_location_action_stop">Dejar de compartir ubicación</string>
   <string name="location_share_action_start">Comenzar a compartir</string>
   <string name="location_share_action_stop">Dejar de compartir</string>
+  <string name="location_share_about_title">Información del mapa</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Vos:</string>
   <string name="action_call_hangup">Colgar</string>
+  <string name="action_call_maximize">Maximizar</string>
+  <string name="action_call_minimize">Reducir</string>
   <string name="ongoing_call">Llamada en curso</string>
   <string name="hist_in_call">Llamada entrante de %1$s</string>
   <string name="hist_out_call">Llamada saliente de %1$s</string>
   <string name="start_error_title">¡No se ha podido iniciar Jami!</string>
   <string name="start_error_mic_required">Jami requiere permisos para acceder al micrófono para funcionar.</string>
   <string name="action_call_accept">Atender</string>
+  <string name="action_call_hold_accept">Mantener en espera y responder llamada</string>
+  <string name="action_call_end_accept">Finalizar y responder llamada</string>
   <string name="action_call_decline">Rechazar</string>
   <string name="action_call_mic_mute">Enmudecer micrófono</string>
+  <string name="action_load_plugin">Cargar complemento</string>
   <string name="ab_action_speakerphone">Activar altavoz</string>
   <string name="ab_action_contact_add">Agregar a contactos</string>
   <string name="ab_action_contact_add_question">¿Agregar a contactos?</string>
@@ -173,7 +180,7 @@
   <string name="prompt_new_username">Escribir nuevo usuario</string>
   <string name="prompt_hint_username">Nombre de usuario</string>
   <string name="help_password_choose">Elegí una contraseña robusta que recuerdes para proteger tu cuenta de Jami.</string>
-  <string name="help_password_enter">Ingrese la contraseña de su cuenta principal Jami.</string>
+  <string name="help_password_enter">Ingresá la contraseña maestra de tu cuenta Jami.</string>
   <string name="help_server_enter">Ingrese la URL del servidor de administración.</string>
   <string name="help_pin_enter">Ingresá el PIN de la cuenta de Jami configurada en el otro dispositivo. Para obtener el PIN seleccioná la opción \"Exportar cuenta de Jami\".</string>
   <string name="wizard_next">Siguiente</string>
@@ -181,15 +188,18 @@
   <string name="wizard_skip">Saltar</string>
   <!--Account Summary-->
   <string name="profile">Perfil</string>
+  <string name="profile_name">Nombre de perfil</string>
   <string name="profile_message_warning">Tu perfil sólo es compartido con tus contactos</string>
   <string name="open_the_gallery">Abrir galería</string>
   <string name="take_a_photo">Tomar foto</string>
   <string name="profile_name_hint">Ingresá tu nombre</string>
   <string name="registered_name">Nombre Registrado</string>
+  <string name="no_registered_name">Ningún nombre registrado</string>
   <string name="identity">Identidad</string>
   <string name="account">Cuenta</string>
   <string name="link_new_device">Vincular un nuevo dispositivo</string>
   <string name="devices">Dispositivos vinculados</string>
+  <string name="total_devices">Dispositivos totales:</string>
   <!--Share fragment-->
   <string name="share_message">Escaneá este código con Jami</string>
   <string name="share_message_no_account">Selecciona una cuenta que quieras compartir.</string>
@@ -289,4 +299,5 @@
   <string name="wizard_profile_info">Tu perfil sólo es compartido con tus contactos</string>
   <string name="wizard_profile_button">Guardar perfil</string>
   <string name="wizard_profile_skip">Saltear y hacerlo más tarde</string>
+  <string name="fab_path_choose">Elegí otro archivo</string>
 </resources>

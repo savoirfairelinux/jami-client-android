@@ -26,7 +26,10 @@
   <string name="pref_startOnBoot_summary">Esegui Jami in background all\'avvio del sistema.</string>
   <string name="pref_clearHistory_title">Elimina cronologia</string>
   <string name="pref_clearHistory_summary">Cancella tutta la cronologia delle conversazioni. Questa azione non può essere annullata.</string>
+  <string name="pref_blackList_title">Lista blocco</string>
+  <string name="pref_blackList_summary">Controlla il tuo elenco di blocco.</string>
   <string name="pref_delete_account_title">Eliminare l\'account</string>
+  <string name="pref_delete_account_summary">Elimina il tuo account da questo dispositivo</string>
   <string name="pref_persistNotification_title">Esegui in background</string>
   <string name="pref_persistNotification_summary">Consenti l\'esecuzione in background per ricevere chiamate e messaggi.</string>
   <!--Plugin-->

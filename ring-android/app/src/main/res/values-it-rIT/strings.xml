@@ -194,10 +194,12 @@
   <string name="take_a_photo">Scatta una foto</string>
   <string name="profile_name_hint">Inserisci il tuo nome</string>
   <string name="registered_name">Nome Registrato</string>
+  <string name="no_registered_name">Nessun nome registrato</string>
   <string name="identity">Indentità</string>
   <string name="account">Account</string>
   <string name="link_new_device">Collega un nuovo dispositivo</string>
   <string name="devices">Dispositivi collegati</string>
+  <string name="total_devices">Dispositivi totali:</string>
   <!--Share fragment-->
   <string name="share_message">Scansione questo codice con Jami</string>
   <string name="share_message_no_account">Seleziona un account per la condivisione.</string>

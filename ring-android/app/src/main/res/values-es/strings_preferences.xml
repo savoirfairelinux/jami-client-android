@@ -26,7 +26,10 @@
   <string name="pref_startOnBoot_summary">Ejecutar Jami en segundo plano cuando se inicie el sistema.</string>
   <string name="pref_clearHistory_title">Limpiar historial</string>
   <string name="pref_clearHistory_summary">Limpiar el historial de todas las conversaciones. Esta acción no se puede deshacer.</string>
+  <string name="pref_blackList_title">Lista de bloqueos</string>
+  <string name="pref_blackList_summary">Revisa tu lista de bloqueos</string>
   <string name="pref_delete_account_title">Borrar cuenta</string>
+  <string name="pref_delete_account_summary">Elimina la cuenta de este dispositivo</string>
   <string name="pref_persistNotification_title">Ejecutar en segundo plano</string>
   <string name="pref_persistNotification_summary">Permite ejecutar en segundo plano para recibir llamadas y mensajes.</string>
   <!--Plugin-->
@@ -42,4 +45,5 @@
   <string name="plugin_recent_version_exception">Tienes una versión más reciente de: <b>%1$s</b></string>
   <string name="plugin_same_version_exception">Tienes instalada la misma versión de <b>%1$s</b></string>
   <string name="plugin_force_install">forzar \n la instalación</string>
+  <string name="plugin_path_image_add">Añadir nueva imagen</string>
 </resources>

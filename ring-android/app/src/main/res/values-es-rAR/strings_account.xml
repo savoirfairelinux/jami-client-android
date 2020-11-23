@@ -45,6 +45,8 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_device_revocation_unknown_device">Dispositivo desconocido.</string>
   <string name="account_device_revocation_error_unknown">Error desconocido.</string>
   <string name="account_password_change">Cambiar contraseña</string>
+  <string name="account_password_set">Establecé una contraseña</string>
+  <string name="account_password_summary">Administrar la contraseña de la cuenta</string>
   <string name="account_password_change_wait_message">Cambiando la contraseña de la cuenta</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">General</string>
@@ -57,6 +59,8 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_optionnal_category">Parámetros Opcionales</string>
   <string name="account_useragent_label">Agente de usuario</string>
   <string name="account_autoanswer_label">Responder automáticamente</string>
+  <string name="account_rendezvous_label">Modo \'Punto de encuentro\'</string>
+  <string name="account_rendezvous_summary">En modo \'Punto de encuentro\' las llamadas entrantes se añadirán a una sala de conferencias.</string>
   <string name="account_upnp_label">Activar UPnP</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Audio Details-->
@@ -81,6 +85,7 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_stun_enable_label">Usar STUN</string>
   <string name="account_stun_server_label">Servidor STUN</string>
   <string name="account_accept_files">Aceptar archivos entrantes automáticamente</string>
+  <string name="account_conversation_settings_title">Ajustes de conversación</string>
   <string name="account_accept_files_max_size">Tamaño máximo de archivo para aceptación automática</string>
   <string name="account_accept_files_never">Nunca aceptar automáticamente</string>
   <string name="account_accept_files_always">Siempre aceptar automáticamente</string>
@@ -122,16 +127,19 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_tls_server_name_label">Nombre del servidor</string>
   <string name="account_tls_verify_server_label">Verificar servidor</string>
   <string name="account_tls_verify_client_label">Verificar cliente</string>
+  <string name="account_require_client_certificate_label">TLS requiere certificado del cliente</string>
   <string name="account_tls_negotiation_timeout_sec">Tiempo de espera de negociación (s)</string>
   <string name="account_rtp_max_port">Máximo</string>
   <string name="account_rtp_min_port">Mínimo</string>
   <string name="account_rtp_port_range">Intervalo para puertos de audio RTP</string>
   <!--restore/backup-->
-  <string name="account_new_device_password">Indroduzca la contraseña principal para desbloquear su cuenta</string>
+  <string name="account_new_device_password">Indroducí la contraseña maestra para desbloquear tu cuenta</string>
   <string name="error_password_char_count">6 carateres mínimo</string>
   <string name="error_passwords_not_equals">Las contraseñas no coinciden</string>
   <string name="export_account_wait_title">Por favor espere...</string>
   <string name="export_account_wait_message">Exportando la información de la cuenta</string>
+  <string name="account_export_file">Respaldá tu cuenta</string>
+  <string name="account_export_file_summary">Creá una copia de respaldo en tu dispositivo para luego poder recuperar tu cuenta.</string>
   <string name="account_export_end_decryption_message">No se pudo desbloquear la cuenta con la contraseña ingresada.</string>
   <string name="account_export_end_network_title">Error de red</string>
   <string name="account_export_end_network_message">No se pudo exportar su cuenta. Compruebe su conexión a internet.</string>
@@ -167,6 +175,8 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_link_prompt_pin">Introducir PIN</string>
   <string name="account_new_button">Crear una cuenta de Jami</string>
   <string name="account_link_export_button">Vincular un nuevo dispositivo</string>
+  <string name="account_link_show_button">Mostrar %d dispositivo(s) vinculado(s) más</string>
+  <string name="account_link_hide_button">Ocultar dispositivo vinculado</string>
   <string name="account_link_export_info">Para usar esta cuenta en otros dispositivos, primero debés exponerla en Jami. Esto generará un código PIN que deberás introducir en el nuevo dispositivo para configurar la cuenta. El PIN será válido durante 10 minutos.</string>
   <string name="account_start_export_button">Generar PIN</string>
   <string name="account_end_export_button">Cerrar</string>
@@ -181,7 +191,9 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_connect_prompt_username">Nombre de usuario</string>
   <!--Name registration-->
   <string name="error_username_empty">Ingresá un nombre de usuario</string>
+  <string name="no_registered_name_for_account">El nombre de usuario no está registrado</string>
   <string name="username_available">¡Nombre de usuario disponible!</string>
+  <string name="register_name">Registrá tu nombre</string>
   <string name="trying_to_register_name">Intentanto registrar nombre</string>
   <string name="registered_username">Nombre de usuario registrado</string>
   <string name="register_username">Registrar nombre de usuario público</string>

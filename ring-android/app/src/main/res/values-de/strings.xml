@@ -194,10 +194,12 @@
   <string name="take_a_photo">Foto machen</string>
   <string name="profile_name_hint">Namen eingeben</string>
   <string name="registered_name">Registrierter Name</string>
+  <string name="no_registered_name">Kein Name registriert</string>
   <string name="identity">Identität</string>
   <string name="account">Konto</string>
   <string name="link_new_device">Verbinde ein neues Gerät</string>
   <string name="devices">Verbundene Geräte</string>
+  <string name="total_devices">Gesamtzahl der Geräte:</string>
   <!--Share fragment-->
   <string name="share_message">Diesen Code mit Jami scannen</string>
   <string name="share_message_no_account">Bitte wähle ein Konto zum Teilen aus.</string>

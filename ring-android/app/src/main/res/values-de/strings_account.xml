@@ -46,6 +46,7 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_device_revocation_error_unknown">Unbekannter Fehler.</string>
   <string name="account_password_change">Passwort ändern</string>
   <string name="account_password_set">Passwort festlegen</string>
+  <string name="account_password_summary">Anpassen des Passworts für Ihre Benutzerkennung.</string>
   <string name="account_password_change_wait_message">Kontopasswort ändern</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Allgemein</string>
@@ -138,6 +139,7 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="export_account_wait_title">Bitte warten…</string>
   <string name="export_account_wait_message">Kontodaten werden exportiert</string>
   <string name="account_export_file">Backup Konto</string>
+  <string name="account_export_file_summary">Machen Sie eine Sicherheitskopie Ihrer Benutzerkennung auf ihrem Gerät um sie im Fehlerfall wiederherstellen zu können.</string>
   <string name="account_export_end_decryption_message">Ihr Konto konnte mit dem angegebenen Passwort nicht entsperrt werden</string>
   <string name="account_export_end_network_title">Netzwerkfehler</string>
   <string name="account_export_end_network_message">Das Konto konnte nicht in das Netzwerk exportiert werden. Überprüfen sie ihre Verbindung.</string>
@@ -173,6 +175,8 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_link_prompt_pin">PIN eingeben</string>
   <string name="account_new_button">Ein Jami-Konto erstellen</string>
   <string name="account_link_export_button">Verbinde ein neues Gerät</string>
+  <string name="account_link_show_button">Zeige weitere %d verbundene Geräte</string>
+  <string name="account_link_hide_button">Verstecke dieses verbundene Gerät</string>
   <string name="account_link_export_info">Um dieses Konto auf weiteren Geräten zu verwenden, müssen Sie zuerst eine PIN generieren. Diese muss auf dem neuen Gerät eingeben werden, um das Konto zu importieren. Die PIN ist für 10 Minuten gültig.</string>
   <string name="account_start_export_button">PIN generieren</string>
   <string name="account_end_export_button">Schließen</string>
@@ -187,6 +191,7 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_connect_prompt_username">Benutzername</string>
   <!--Name registration-->
   <string name="error_username_empty">Benutzername eingeben</string>
+  <string name="no_registered_name_for_account">Kein registrierter Name</string>
   <string name="username_available">Benutzername verfügbar !</string>
   <string name="register_name">Registriere Namen</string>
   <string name="trying_to_register_name">Name wird registriert</string>
