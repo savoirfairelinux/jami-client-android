@@ -65,6 +65,7 @@ public class SwitchButton extends CompoundButton {
     private boolean mReady = false;
     private boolean mCatch = false;
     private boolean mShowImage = false;
+    private boolean mIsChecked = false;
     private RectF mThumbRectF, mBackRectF, mSafeRectF, mTextOnRectF, mTextOffRectF;
     private RectF mThumbMargin;
     private RectF mPresentThumbRectF;
@@ -155,7 +156,7 @@ public class SwitchButton extends CompoundButton {
         mProgressAnimator.setDuration(mAnimationDuration);
 
         // sync checked status
-        if (isChecked()) {
+        if (mIsChecked) {
             setProgress(1);
         }
     }
@@ -490,7 +491,7 @@ public class SwitchButton extends CompoundButton {
                     performClick();
                 } else {
                     boolean nextStatus = getStatusBasedOnPos();
-                    if (nextStatus != isChecked()) {
+                    if (nextStatus != mIsChecked) {
                         playSoundEffect(SoundEffectConstants.CLICK);
                         setChecked(nextStatus);
                     } else {
@@ -556,50 +557,18 @@ public class SwitchButton extends CompoundButton {
 
     @Override
     public void setChecked(final boolean checked) {
-        if (isChecked() != checked) {
-            animateToState(checked);
+        if (mIsChecked != checked) {
+            mIsChecked = checked;
+            animateToState(mIsChecked);
         }
 
-        super.setChecked(checked);
+        super.setChecked(mIsChecked);
     }
 
-    public void setCheckedNoEvent(final boolean checked) {
-        if (mChildOnCheckedChangeListener == null) {
-            setChecked(checked);
-        } else {
-            super.setOnCheckedChangeListener(null);
-            setChecked(checked);
-            super.setOnCheckedChangeListener(mChildOnCheckedChangeListener);
-        }
-    }
-
-    public void setCheckedImmediatelyNoEvent(boolean checked) {
-        if (mChildOnCheckedChangeListener == null) {
-            setCheckedImmediately(checked);
-        } else {
-            super.setOnCheckedChangeListener(null);
-            setCheckedImmediately(checked);
-            super.setOnCheckedChangeListener(mChildOnCheckedChangeListener);
-        }
-    }
-
-    public void toggleNoEvent() {
-        if (mChildOnCheckedChangeListener == null) {
-            toggle();
-        } else {
-            super.setOnCheckedChangeListener(null);
-            toggle();
-            super.setOnCheckedChangeListener(mChildOnCheckedChangeListener);
-        }
-    }
-
-    public void toggleImmediatelyNoEvent() {
-        if (mChildOnCheckedChangeListener == null) {
-            toggleImmediately();
-        } else {
-            super.setOnCheckedChangeListener(null);
-            toggleImmediately();
-            super.setOnCheckedChangeListener(mChildOnCheckedChangeListener);
+    public void changeStatus(final boolean checked) {
+        if (mIsChecked != checked) {
+            mIsChecked = checked;
+            animateToState(mIsChecked);
         }
     }
 
@@ -607,19 +576,6 @@ public class SwitchButton extends CompoundButton {
     public void setOnCheckedChangeListener(OnCheckedChangeListener onCheckedChangeListener) {
         super.setOnCheckedChangeListener(onCheckedChangeListener);
         mChildOnCheckedChangeListener = onCheckedChangeListener;
-    }
-
-    public void setCheckedImmediately(boolean checked) {
-        super.setChecked(checked);
-        if (mProgressAnimator != null && mProgressAnimator.isRunning()) {
-            mProgressAnimator.cancel();
-        }
-        setProgress(checked ? 1 : 0);
-        invalidate();
-    }
-
-    public void toggleImmediately() {
-        setCheckedImmediately(!isChecked());
     }
 
     public int getBackColor() {
