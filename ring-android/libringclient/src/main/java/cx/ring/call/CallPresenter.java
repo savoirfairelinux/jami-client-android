@@ -239,7 +239,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     public void prepareOptionMenu() {
         boolean isSpeakerOn = mHardwareService.isSpeakerPhoneOn();
         //boolean hasContact = mSipCall != null && null != mSipCall.getContact() && mSipCall.getContact().isUnknown();
-        boolean canDial = mOnGoingCall && mConference != null && !mConference.isIncoming();
+        boolean canDial = mOnGoingCall && mConference != null;
         // get the preferences
         boolean displayPluginsButton = getView().displayPluginsButton();
         boolean showPluginBtn = displayPluginsButton && mOnGoingCall && mConference != null;
