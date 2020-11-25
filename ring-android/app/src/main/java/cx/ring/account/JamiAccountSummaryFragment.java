@@ -651,7 +651,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
                 status = getString(R.string.account_status_offline);
                 switchButton.showImage(false);
                 switchButton.setTextOff(status);
-                switchButton.setChecked(false);
+                switchButton.changeStatus(false);
             } else {
                 status = getString(R.string.account_status_error);
                 switchButton.showImage(false);
