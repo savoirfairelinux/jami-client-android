@@ -1438,9 +1438,11 @@ public class AccountService {
     void registeredNameFound(String accountId, int state, String address, String name) {
         // Log.d(TAG, "registeredNameFound: " + accountId + ", " + state + ", " + name + ", " + address);
 
-        Account account = getAccount(accountId);
-        if (account != null) {
-            account.registeredNameFound(state, address, name);
+        if (state == 0) {
+            Account account = getAccount(accountId);
+            if (account != null) {
+                account.registeredNameFound(state, address, name);
+            }
         }
 
         RegisteredName r = new RegisteredName();
