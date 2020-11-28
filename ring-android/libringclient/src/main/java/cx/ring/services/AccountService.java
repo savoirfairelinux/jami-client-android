@@ -1438,7 +1438,7 @@ public class AccountService {
     void registeredNameFound(String accountId, int state, String address, String name) {
         // Log.d(TAG, "registeredNameFound: " + accountId + ", " + state + ", " + name + ", " + address);
 
-        if (state == 0) {
+        if (!StringUtils.isEmpty(address)) {
             Account account = getAccount(accountId);
             if (account != null) {
                 account.registeredNameFound(state, address, name);
