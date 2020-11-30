@@ -46,6 +46,7 @@
   <string name="account_device_revocation_error_unknown">Erro descoñecido.</string>
   <string name="account_password_change">Cambiar contrasinal</string>
   <string name="account_password_set">Establecer contrasinal</string>
+  <string name="account_password_summary">Xestiona o teu contrasinal.</string>
   <string name="account_password_change_wait_message">Cambiando contrasinal da conta</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Xeral</string>
@@ -138,6 +139,7 @@
   <string name="export_account_wait_title">Agarda por favor...</string>
   <string name="export_account_wait_message">Exportando información da conta</string>
   <string name="account_export_file">Copia de apoio da conta</string>
+  <string name="account_export_file_summary">Fai copia da conta no dispositivo para restaurala máis tarde.</string>
   <string name="account_export_end_decryption_message">Non se pode desbloquear a conta co contrasinal escrito.</string>
   <string name="account_export_end_network_title">Fallo na rede</string>
   <string name="account_export_end_network_message">Non se pode exportar a conta a rede. Comproba a conectividade.</string>
@@ -173,6 +175,8 @@
   <string name="account_link_prompt_pin">Escribe o PIN</string>
   <string name="account_new_button">Crear conta Jami</string>
   <string name="account_link_export_button">Ligar un novo dispositio</string>
+  <string name="account_link_show_button">Mostar %ddispositivo ligado</string>
+  <string name="account_link_hide_button">Agochar dispositivo ligado</string>
   <string name="account_link_export_info">Para usar esta conta en outros dispositivos primeiro tes que exportala en Jami. Esto creará un código PIN que tes que escribir no novo dispositivo para configuralo. O PIN é válido durante 10 minutos.</string>
   <string name="account_start_export_button">Crear PIN</string>
   <string name="account_end_export_button">pechar</string>
@@ -187,6 +191,7 @@
   <string name="account_connect_prompt_username">Nome de usuaria</string>
   <!--Name registration-->
   <string name="error_username_empty">Escribe nome de usuaria</string>
+  <string name="no_registered_name_for_account">Sen nome rexistrado</string>
   <string name="username_available">Nome de usuaria dispoñible!</string>
   <string name="register_name">Rexistrar nome</string>
   <string name="trying_to_register_name">Intentando rexistrar nome</string>
@@ -223,5 +228,6 @@
   <string name="rename_device_button">Cambiar nome</string>
   <string name="account_rename_device_hint">Escolle un novo nome</string>
   <string name="account_device_name_empty">O nome non pode quedar baleiro</string>
+  <string name="account_device_this_indicator">Este dispositivo</string>
   <string name="account_disabled_indicator">desactivado</string>
 </resources>

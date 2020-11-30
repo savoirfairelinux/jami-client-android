@@ -26,7 +26,10 @@
   <string name="pref_startOnBoot_summary">Запускать Jami в фоновом режиме во время старта системы.</string>
   <string name="pref_clearHistory_title">Очистить историю</string>
   <string name="pref_clearHistory_summary">Очистить всю историю разговоров. Это действие нельзя отменить.</string>
+  <string name="pref_blackList_title">Черный список</string>
+  <string name="pref_blackList_summary">Проверить список блокировок</string>
   <string name="pref_delete_account_title">Удалить аккаунт</string>
+  <string name="pref_delete_account_summary">Удалить ваш аккаунт с этого устройства</string>
   <string name="pref_persistNotification_title">Работа в фоновом режиме</string>
   <string name="pref_persistNotification_summary">Разрешить работу в фоновом режиме для принятия звонков и сообщений.</string>
   <!--Plugin-->

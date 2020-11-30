@@ -194,10 +194,12 @@
   <string name="take_a_photo">Tomar fotografía</string>
   <string name="profile_name_hint">Escribe o teu nome</string>
   <string name="registered_name">Nome rexistrado</string>
+  <string name="no_registered_name">Sen nome rexistrado</string>
   <string name="identity">Identidade</string>
   <string name="account">Conta</string>
   <string name="link_new_device">Ligar un novo dispositio</string>
   <string name="devices">Dispositivos ligados</string>
+  <string name="total_devices">Total de dispositivos:</string>
   <!--Share fragment-->
   <string name="share_message">Escanea este código con Jami</string>
   <string name="share_message_no_account">Escolle a conta a compartir.</string>

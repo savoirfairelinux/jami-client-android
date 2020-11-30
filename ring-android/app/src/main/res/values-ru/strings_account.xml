@@ -46,6 +46,7 @@
   <string name="account_device_revocation_error_unknown">Неизвестная ошибка.</string>
   <string name="account_password_change">Изменить пароль</string>
   <string name="account_password_set">Установить пароль</string>
+  <string name="account_password_summary">Управление паролем вашей учетной записи.</string>
   <string name="account_password_change_wait_message">Смена пароля учетной записи</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Общее</string>
@@ -138,6 +139,7 @@
   <string name="export_account_wait_title">Пожалуйста, подождите…</string>
   <string name="export_account_wait_message">Экспортирование аккаунта…</string>
   <string name="account_export_file">Создать резервную копию учётной записи</string>
+  <string name="account_export_file_summary">Сделать резервную копию своей учетной записи на устройстве, чтобы восстановить ее позже.</string>
   <string name="account_export_end_decryption_message">Не удалось разблокировать аккаунт указанным паролем.</string>
   <string name="account_export_end_network_title">Ошибка сети</string>
   <string name="account_export_end_network_message">Не удалось экспортировать аккаунт по сети. Проверьте ваше сетевое соединение.</string>
@@ -173,6 +175,8 @@
   <string name="account_link_prompt_pin">Введите PIN</string>
   <string name="account_new_button">Создать учётную запись Jami</string>
   <string name="account_link_export_button">Привязать новое устройство</string>
+  <string name="account_link_show_button">Показать еще %d присоединенных устройств</string>
+  <string name="account_link_hide_button">Скрыть присоединенное устройство</string>
   <string name="account_link_export_info">Чтобы использовать этот аккаунт на других устройствах, вам необходимо сначала скопировать его в сеть Jami. При этом будет сгенерирован PIN-код, который вы должны будете ввести на новом устройстве для установки аккаунта. PIN-код действителен в течение 10 минут.</string>
   <string name="account_start_export_button">Сгенерировать PIN</string>
   <string name="account_end_export_button">закрыть</string>
@@ -187,6 +191,7 @@
   <string name="account_connect_prompt_username">Имя пользователя</string>
   <!--Name registration-->
   <string name="error_username_empty">Введите имя пользователя</string>
+  <string name="no_registered_name_for_account">Нет зарегистрированного имени</string>
   <string name="username_available">Имя доступно !</string>
   <string name="register_name">Зарегистрировать имя</string>
   <string name="trying_to_register_name">Попытка зарегистрировать имя</string>
