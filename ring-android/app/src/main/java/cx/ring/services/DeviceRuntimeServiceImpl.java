@@ -65,13 +65,13 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
 
     @Override
     public void loadNativeLibrary() {
-        mExecutor.execute(() -> {
+        //mExecutor.execute(() -> {
             try {
                 System.loadLibrary("ring");
             } catch (Exception e) {
                 Log.e(TAG, "Could not load Jami library", e);
             }
-        });
+       // });
     }
 
     @Override
