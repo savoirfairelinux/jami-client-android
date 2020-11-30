@@ -37,6 +37,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	ruby ruby-dev \
 	&& locale-gen $LANG $LC_ALL && update-locale $LANG $LC_ALL
 
+RUN ln -s /usr/bin/python3 /usr/bin/python
+
 # Android SDK tools
 ENV ANDROID_HOME=/opt/android-sdk
 ENV ANDROID_SDK_ROOT=${ANDROID_HOME}
