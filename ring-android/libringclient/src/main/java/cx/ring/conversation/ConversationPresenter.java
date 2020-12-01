@@ -42,6 +42,7 @@ import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
+import cx.ring.services.PreferencesService;
 import cx.ring.services.VCardService;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
@@ -63,6 +64,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     private final ConversationFacade mConversationFacade;
     private final VCardService mVCardService;
     private final DeviceRuntimeService mDeviceRuntimeService;
+    private final PreferencesService mPreferencesService;
 
     private Conversation mConversation;
     private Uri mContactUri;
@@ -83,13 +85,14 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                                  HardwareService hardwareService,
                                  ConversationFacade conversationFacade,
                                  VCardService vCardService,
-                                 DeviceRuntimeService deviceRuntimeService) {
+                                 DeviceRuntimeService deviceRuntimeService, PreferencesService preferencesService) {
         mContactService = contactService;
         mAccountService = accountService;
         mHardwareService = hardwareService;
         mConversationFacade = conversationFacade;
         mVCardService = vCardService;
         mDeviceRuntimeService = deviceRuntimeService;
+        mPreferencesService = preferencesService;
     }
 
     @Override
@@ -223,9 +226,11 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                             break;
                     }
                 }, e -> Log.e(TAG, "Can't update element", e)));
-        mConversationDisposable.add(c.getComposingStatus()
-                .observeOn(mUiScheduler)
-                .subscribe(view::setComposingStatus));
+        if (showTypingIndicator()) {
+            mConversationDisposable.add(c.getComposingStatus()
+                    .observeOn(mUiScheduler)
+                    .subscribe(view::setComposingStatus));
+        }
         mConversationDisposable.add(c.getLastDisplayed()
                 .observeOn(mUiScheduler)
                 .subscribe(view::setLastDisplayed));
@@ -417,9 +422,14 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     }
 
     public void onComposingChanged(boolean hasMessage) {
-        if (mConversation == null) {
+        if (mConversation == null || !showTypingIndicator()) {
             return;
         }
         mConversationFacade.setIsComposing(mAccountId, mContactUri, hasMessage);
     }
+
+    public boolean showTypingIndicator() {
+        return mPreferencesService.getSettings().isAllowTypingIndicator();
+    }
+
 }
