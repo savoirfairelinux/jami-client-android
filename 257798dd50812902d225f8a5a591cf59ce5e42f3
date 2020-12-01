@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c8bcc35_b66f3691",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-12-01T16:04:43Z",
+      "side": 1,
+      "message": "not needed, just don\u0027t call it if disabled",
+      "range": {
+        "startLine": 345,
+        "startChar": 74,
+        "endLine": 345,
+        "endChar": 94
+      },
+      "revId": "257798dd50812902d225f8a5a591cf59ce5e42f3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bb97ac6_0d0c5cdf",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-12-01T16:04:43Z",
+      "side": 1,
+      "message": "no business logic in the fragment, should all be in presenter",
+      "range": {
+        "startLine": 683,
+        "startChar": 51,
+        "endLine": 683,
+        "endChar": 84
+      },
+      "revId": "257798dd50812902d225f8a5a591cf59ce5e42f3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdd85a55_697b1da9",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/conversation/ConversationPresenter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-12-01T16:04:43Z",
+      "side": 1,
+      "message": "simply don\u0027t subscribe if disabled",
+      "range": {
+        "startLine": 229,
+        "startChar": 38,
+        "endLine": 229,
+        "endChar": 56
+      },
+      "revId": "257798dd50812902d225f8a5a591cf59ce5e42f3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3acd5e13_3299c53b",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/conversation/ConversationPresenter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-12-01T16:04:43Z",
+      "side": 1,
+      "message": "not needed",
+      "range": {
+        "startLine": 428,
+        "startChar": 0,
+        "endLine": 432,
+        "endChar": 0
+      },
+      "revId": "257798dd50812902d225f8a5a591cf59ce5e42f3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffbd5ae7_ede9448e",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/Settings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-12-01T16:04:43Z",
+      "side": 1,
+      "message": "isAllowTypingIndicator",
+      "range": {
+        "startLine": 90,
+        "startChar": 19,
+        "endLine": 90,
+        "endChar": 42
+      },
+      "revId": "257798dd50812902d225f8a5a591cf59ce5e42f3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
