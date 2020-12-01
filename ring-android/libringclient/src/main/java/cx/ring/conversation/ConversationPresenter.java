@@ -132,6 +132,8 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                             view.displayNetworkErrorPanel();
                     }
                 }));
+
+        getView().setReadIndicatorStatus(setReadIndicatorStatus());
     }
 
     private void setConversation(final Conversation conversation) {
@@ -431,6 +433,10 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
 
     public boolean showTypingIndicator() {
         return mPreferencesService.getSettings().isAllowTypingIndicator();
+    }
+
+    private boolean setReadIndicatorStatus() {
+        return mPreferencesService.getSettings().isAllowReadIndicator();
     }
 
 }

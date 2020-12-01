@@ -1163,6 +1163,13 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     @Override
+    public void setReadIndicatorStatus(boolean show) {
+        if (mAdapter != null) {
+            mAdapter.setReadIndicatorStatus(show);
+        }
+    }
+
+    @Override
     public void hideErrorPanel() {
         if (binding != null) {
             binding.errorMsgPane.setVisibility(View.GONE);
