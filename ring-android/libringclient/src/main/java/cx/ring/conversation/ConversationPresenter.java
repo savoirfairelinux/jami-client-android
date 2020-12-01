@@ -131,6 +131,8 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                             view.displayNetworkErrorPanel();
                     }
                 }));
+
+        getView().setReadIndicatorStatus(setReadIndicatorStatus());
     }
 
     private void setConversation(final Conversation conversation) {
@@ -420,14 +422,18 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     }
 
     public void onComposingChanged(boolean hasMessage) {
-        if (mConversation == null || !showTypingIndicator()) {
+        if (mConversation == null || !setTypingIndicatorStatus()) {
             return;
         }
         mConversationFacade.setIsComposing(mAccountId, mContactUri, hasMessage);
     }
 
-    public boolean showTypingIndicator() {
+    public boolean setTypingIndicatorStatus() {
         return mPreferencesService.getSettings().ismAllowTypingIndicator();
+    }
+
+    private boolean setReadIndicatorStatus() {
+        return mPreferencesService.getSettings().ismAllowReadIndicator();
     }
 
 }

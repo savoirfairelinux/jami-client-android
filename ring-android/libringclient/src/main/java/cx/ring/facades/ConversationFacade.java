@@ -204,7 +204,9 @@ public class ConversationFacade {
             String lastMessage = readMessages(conversation);
             if (lastMessage != null) {
                 account.refreshed(conversation);
-                mAccountService.setMessageDisplayed(account.getAccountID(), conversation.getContact().getPrimaryNumber(), lastMessage);
+                if (mPreferencesService.getSettings().ismAllowReadIndicator()) {
+                    mAccountService.setMessageDisplayed(account.getAccountID(), conversation.getContact().getPrimaryNumber(), lastMessage);
+                }
                 if (cancelNotification) {
                     mNotificationService.cancelTextNotification(conversation.getContact().getPrimaryUri());
                 }
@@ -521,7 +523,9 @@ public class ConversationFacade {
     private void parseNewMessage(final TextMessage txt) {
         if (txt.isRead()) {
             mHistoryService.updateInteraction(txt, txt.getAccount()).subscribe();
-            mAccountService.setMessageDisplayed(txt.getAccount(), txt.getAuthor(), Long.toString(txt.getDaemonId(), 16));
+            if (mPreferencesService.getSettings().ismAllowReadIndicator()) {
+                mAccountService.setMessageDisplayed(txt.getAccount(), txt.getAuthor(), Long.toString(txt.getDaemonId(), 16));
+            }
         }
         getAccountSubject(txt.getAccount())
                 .flatMapObservable(Account::getConversationsSubject)
