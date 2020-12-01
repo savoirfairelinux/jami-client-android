@@ -94,7 +94,6 @@ import cx.ring.utils.StringUtils;
 import cx.ring.views.ConversationViewHolder;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHolder> {
     private final static String TAG = ConversationAdapter.class.getSimpleName();
@@ -117,6 +116,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     private int lastMsgPos = -1;
 
     private boolean isComposing = false;
+    private boolean mShowReadIndicator = true;
 
     private static int[] msgBGLayouts = new int[] {
             R.drawable.textmsg_bg_out_first,
@@ -351,6 +351,10 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             else
                 notifyItemRemoved(mInteractions.size());
         }
+    }
+
+    public void setReadIndicatorStatus(boolean show) {
+        mShowReadIndicator = show;
     }
 
     public void setLastDisplayed(Interaction interaction) {
@@ -630,7 +634,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                     viewHolder.mStatusIcon.setImageResource(R.drawable.round_highlight_off_24);
                     break;
                 case DISPLAYED:
-                    viewHolder.mStatusIcon.setVisibility(View.VISIBLE);
+                    viewHolder.mStatusIcon.setVisibility(mShowReadIndicator ? View.VISIBLE : View.GONE);
                     viewHolder.mStatusIcon.setImageDrawable(conversationFragment.getSmallConversationAvatar(contact.getPrimaryNumber()));
                     break;
                 default:
@@ -862,7 +866,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                     break;
                 case DISPLAYED:
                     if (lastDisplayedPosition == position) {
-                        convViewHolder.mStatusIcon.setVisibility(View.VISIBLE);
+                        convViewHolder.mStatusIcon.setVisibility(mShowReadIndicator ? View.VISIBLE : View.GONE);
                         convViewHolder.mStatusIcon.setImageDrawable(conversationFragment.getSmallConversationAvatar(contact.getPrimaryNumber()));
                     } else {
                         convViewHolder.mStatusIcon.setVisibility(View.GONE);
