@@ -696,6 +696,11 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     }
 
     @Override
+    public void setReadIndicatorStatus(boolean show) {
+
+    }
+
+    @Override
     public void displayOnGoingCallPane(boolean display) {
 
     }

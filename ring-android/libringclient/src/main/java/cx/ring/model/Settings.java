@@ -26,6 +26,7 @@ public class Settings {
     private boolean mAllowPlaceSystemCalls;
     private boolean mAllowOnStartup;
     private boolean mAllowTypingIndicator;
+    private boolean mAllowReadIndicator;
     private boolean mHwEncoding;
 
     public Settings() {
@@ -39,6 +40,7 @@ public class Settings {
             mAllowPlaceSystemCalls = s.mAllowPlaceSystemCalls;
             mAllowOnStartup = s.mAllowOnStartup;
             mAllowTypingIndicator = s.mAllowTypingIndicator;
+            mAllowReadIndicator = s.mAllowReadIndicator;
             mHwEncoding = s.mHwEncoding;
         }
     }
@@ -90,4 +92,13 @@ public class Settings {
     public boolean ismAllowTypingIndicator() {
         return mAllowTypingIndicator;
     }
+
+    public void setAllowReadIndicator(boolean checked) {
+        this.mAllowReadIndicator = checked;
+    }
+
+    public boolean isAllowReadIndicator() {
+        return mAllowReadIndicator;
+    }
+
 }

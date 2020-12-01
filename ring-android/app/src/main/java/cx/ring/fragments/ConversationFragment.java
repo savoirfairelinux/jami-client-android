@@ -680,7 +680,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
 
     @Override
     public void setComposingStatus(Account.ComposingStatus composingStatus) {
-        mAdapter.setComposingStatus(composingStatus, presenter.showTypingIndicator());
+        mAdapter.setComposingStatus(composingStatus, presenter.setTypingIndicatorStatus());
         if (composingStatus == Account.ComposingStatus.Active)
             scrollToEnd();
     }
@@ -1162,6 +1162,13 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             binding.errorMsgPane.setVisibility(View.VISIBLE);
             binding.errorMsgPane.setOnClickListener(null);
             binding.errorMsgPane.setText(R.string.error_no_network);
+        }
+    }
+
+    @Override
+    public void setReadIndicatorStatus(boolean show) {
+        if (mAdapter != null) {
+            mAdapter.setReadIndicatorStatus(show);
         }
     }
 

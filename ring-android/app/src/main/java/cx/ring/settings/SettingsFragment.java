@@ -40,7 +40,6 @@ import android.widget.Toast;
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
-import cx.ring.daemon.Ringservice;
 import cx.ring.databinding.FragSettingsBinding;
 import cx.ring.model.Settings;
 import cx.ring.mvp.BaseSupportFragment;
@@ -100,6 +99,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         binding.settingsStartup.setOnCheckedChangeListener(save);
         binding.settingsPersistNotification.setOnCheckedChangeListener(save);
         binding.settingsTyping.setOnCheckedChangeListener(save);
+        binding.settingsRead.setOnCheckedChangeListener(save);
 
         binding.settingsVideoLayout.setOnClickListener(v -> {
             HomeActivity activity = (HomeActivity) getActivity();
@@ -152,6 +152,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         newSettings.setAllowPersistentNotification(binding.settingsPersistNotification.isChecked());
         newSettings.setAllowPersistentNotification(binding.settingsPersistNotification.isChecked());
         newSettings.setAllowTypingIndicator(binding.settingsTyping.isChecked());
+        newSettings.setAllowReadIndicator(binding.settingsRead.isChecked());
 
         // save settings according to UI inputs
         presenter.saveSettings(newSettings);
@@ -189,6 +190,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         binding.settingsPersistNotification.setChecked(viewModel.isAllowPersistentNotification());
         binding.settingsStartup.setChecked(viewModel.isAllowOnStartup());
         binding.settingsTyping.setChecked(viewModel.ismAllowTypingIndicator());
+        binding.settingsRead.setChecked(viewModel.isAllowReadIndicator());
         mIsRefreshingViewFromPresenter = false;
     }
 
