@@ -22,6 +22,30 @@
       "revId": "0ff4565eb5f93879b5ce396b835c8eb3cb91bd61",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0acfdfe3_1763ae0a",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1176,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2020-12-01T00:15:47Z",
+      "side": 1,
+      "message": "It does not make any problem because the user needs to go to settings to enable the account and when he comes back to the conversation we create a new fragment and the views are enabled by default",
+      "parentUuid": "8f5145d1_89605b15",
+      "range": {
+        "startLine": 1174,
+        "startChar": 0,
+        "endLine": 1176,
+        "endChar": 13
+      },
+      "revId": "0ff4565eb5f93879b5ce396b835c8eb3cb91bd61",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
     }
   ]
 }
