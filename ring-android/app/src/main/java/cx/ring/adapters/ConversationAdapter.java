@@ -342,8 +342,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         notifyDataSetChanged();
     }
 
-    public void setComposingStatus(Account.ComposingStatus composingStatus) {
-        boolean composing = composingStatus == Account.ComposingStatus.Active;
+    public void setComposingStatus(Account.ComposingStatus composingStatus, boolean showTyping) {
+        boolean composing = composingStatus == Account.ComposingStatus.Active && showTyping;
         if (isComposing != composing) {
             isComposing = composing;
             if (composing)

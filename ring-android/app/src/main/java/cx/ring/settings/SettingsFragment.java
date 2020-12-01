@@ -99,6 +99,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         binding.settingsPushNotifications.setOnCheckedChangeListener(save);
         binding.settingsStartup.setOnCheckedChangeListener(save);
         binding.settingsPersistNotification.setOnCheckedChangeListener(save);
+        binding.settingsTyping.setOnCheckedChangeListener(save);
 
         binding.settingsVideoLayout.setOnClickListener(v -> {
             HomeActivity activity = (HomeActivity) getActivity();
@@ -149,6 +150,8 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         newSettings.setAllowRingOnStartup(binding.settingsStartup.isChecked());
         newSettings.setAllowPushNotifications(binding.settingsPushNotifications.isChecked());
         newSettings.setAllowPersistentNotification(binding.settingsPersistNotification.isChecked());
+        newSettings.setAllowPersistentNotification(binding.settingsPersistNotification.isChecked());
+        newSettings.setAllowTypingIndicator(binding.settingsTyping.isChecked());
 
         // save settings according to UI inputs
         presenter.saveSettings(newSettings);
@@ -185,6 +188,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         binding.settingsPushNotifications.setChecked(viewModel.isAllowPushNotifications());
         binding.settingsPersistNotification.setChecked(viewModel.isAllowPersistentNotification());
         binding.settingsStartup.setChecked(viewModel.isAllowOnStartup());
+        binding.settingsTyping.setChecked(viewModel.ismAllowTypingIndicator());
         mIsRefreshingViewFromPresenter = false;
     }
 

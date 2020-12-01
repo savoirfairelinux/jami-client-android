@@ -25,6 +25,7 @@ public class Settings {
     private boolean mAllowSystemContacts;
     private boolean mAllowPlaceSystemCalls;
     private boolean mAllowOnStartup;
+    private boolean mAllowTypingIndicator;
     private boolean mHwEncoding;
 
     public Settings() {
@@ -37,6 +38,7 @@ public class Settings {
             mAllowSystemContacts = s.mAllowSystemContacts;
             mAllowPlaceSystemCalls = s.mAllowPlaceSystemCalls;
             mAllowOnStartup = s.mAllowOnStartup;
+            mAllowTypingIndicator = s.mAllowTypingIndicator;
             mHwEncoding = s.mHwEncoding;
         }
     }
@@ -79,5 +81,13 @@ public class Settings {
 
     public boolean isAllowPersistentNotification() {
         return mAllowPersistentNotification;
+    }
+
+    public void setAllowTypingIndicator(boolean checked) {
+        this.mAllowTypingIndicator = checked;
+    }
+
+    public boolean ismAllowTypingIndicator() {
+        return mAllowTypingIndicator;
     }
 }

@@ -680,7 +680,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
 
     @Override
     public void setComposingStatus(Account.ComposingStatus composingStatus) {
-        mAdapter.setComposingStatus(composingStatus);
+        mAdapter.setComposingStatus(composingStatus, presenter.showTypingIndicator());
         if (composingStatus == Account.ComposingStatus.Active)
             scrollToEnd();
     }
