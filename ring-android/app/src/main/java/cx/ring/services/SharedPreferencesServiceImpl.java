@@ -52,6 +52,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
 
     private static final String PREF_PUSH_NOTIFICATIONS = "push_notifs";
     private static final String PREF_PERSISTENT_NOTIFICATION = "persistent_notif";
+    private static final String PREF_SHOW_TYPING = "persistent_typing";
     private static final String PREF_HW_ENCODING = "video_hwenc";
     public static final String PREF_BITRATE = "video_bitrate";
     public static final String PREF_RESOLUTION = "video_resolution";
@@ -76,6 +77,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         edit.putBoolean(PREF_ON_STARTUP, settings.isAllowOnStartup());
         edit.putBoolean(PREF_PUSH_NOTIFICATIONS, settings.isAllowPushNotifications());
         edit.putBoolean(PREF_PERSISTENT_NOTIFICATION, settings.isAllowPersistentNotification());
+        edit.putBoolean(PREF_SHOW_TYPING, settings.isAllowTypingIndicator());
         edit.apply();
     }
 
@@ -91,6 +93,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         settings.setAllowRingOnStartup(appPrefs.getBoolean(PREF_ON_STARTUP, true));
         settings.setAllowPushNotifications(appPrefs.getBoolean(PREF_PUSH_NOTIFICATIONS, false));
         settings.setAllowPersistentNotification(appPrefs.getBoolean(PREF_PERSISTENT_NOTIFICATION, false));
+        settings.setAllowTypingIndicator(appPrefs.getBoolean(PREF_SHOW_TYPING, true));
         return settings;
     }
 
