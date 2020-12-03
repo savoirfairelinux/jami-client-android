@@ -40,6 +40,7 @@ import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.services.VCardServiceImpl;
+import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.HashUtils;
 import io.reactivex.Single;
@@ -48,6 +49,9 @@ import android.graphics.drawable.VectorDrawable;
 import android.text.TextUtils;
 import android.util.TypedValue;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class AvatarDrawable extends Drawable {
@@ -76,10 +80,11 @@ public class AvatarDrawable extends Drawable {
 
     private final int minSize;
     private Bitmap workspace;
-    private Bitmap bitmap;
+    private final List<Bitmap> bitmaps;
     private VectorDrawable placeholder;
     private VectorDrawable checkedIcon;
-    private final RectF backgroundBounds = new RectF();
+    private final List<RectF> backgroundBounds;
+    private final List<Rect> inBounds;
     private String avatarText;
     private float textStartXPoint;
     private float textStartYPoint;
@@ -103,7 +108,7 @@ public class AvatarDrawable extends Drawable {
 
     public static class Builder {
 
-        private Bitmap photo = null;
+        private List<Bitmap> photos = null;
         private String name = null;
         private String id = null;
         private boolean circleCrop = false;
@@ -118,7 +123,11 @@ public class AvatarDrawable extends Drawable {
             return this;
         }
         public Builder withPhoto(Bitmap photo) {
-            this.photo = photo;
+            this.photos = photo == null ? null : Arrays.asList(photo); // list elements must be mutable
+            return this;
+        }
+        public Builder withPhotos(List<Bitmap> photos) {
+            this.photos = photos;
             return this;
         }
         public Builder withName(String name) {
@@ -156,16 +165,34 @@ public class AvatarDrawable extends Drawable {
             if (contacts.size() == 1) {
                 return withContact(contacts.get(0));
             } else {
-                return withName("G");
+                List<Bitmap> bitmaps = new ArrayList<>(contacts.size());
+                for (CallContact contact : contacts) {
+                    if (contact.isUser())
+                        continue;
+                    Bitmap bitmap = (Bitmap) contact.getPhoto();
+                    if (bitmap != null) {
+                        bitmaps.add(bitmap);
+                    }
+                    if (bitmaps.size() == 4)
+                        break;;
+                }
+                return withPhotos(bitmaps);
             }
         }
         public Builder withConversation(Conversation conversation) {
-            return withContacts(conversation.getContacts());
+            return withContacts(conversation.getContacts())
+                    .withName(conversation.getDisplayName());
+        }
+        public Builder withViewModel(SmartListViewModel vm) {
+            return withContacts(vm.getContact())
+                    .withPresence(vm.showPresence())
+                    .withName(vm.getContactName())
+                    .withCheck(vm.isChecked());
         }
 
         public AvatarDrawable build(Context context) {
             AvatarDrawable avatarDrawable = new AvatarDrawable(
-                    context, photo, name, id, circleCrop);
+                    context, photos, name, id, circleCrop);
             avatarDrawable.setOnline(isOnline);
             avatarDrawable.setChecked(isChecked);
             avatarDrawable.showPresence = this.showPresence;
@@ -195,7 +222,9 @@ public class AvatarDrawable extends Drawable {
         String username = contact.getUsername();
         avatarText = convertNameToAvatarText(
                 TextUtils.isEmpty(profileName) ? username : profileName);
-        bitmap = (Bitmap)contact.getPhoto();
+        if (bitmaps != null) {
+            bitmaps.set(0, (Bitmap)contact.getPhoto());
+        }
         isOnline = contact.isOnline();
         update = true;
     }
@@ -204,7 +233,7 @@ public class AvatarDrawable extends Drawable {
         update = true;
     }
     public void setPhoto(Bitmap photo) {
-        bitmap = photo;
+        bitmaps.set(0, photo);
         update = true;
     }
     public void setOnline(boolean online) {
@@ -215,15 +244,28 @@ public class AvatarDrawable extends Drawable {
         isChecked = checked;
     }
 
-    private AvatarDrawable(Context context, Bitmap photo, String name, String id, boolean crop) {
+    private AvatarDrawable(Context context, List<Bitmap> photos, String name, String id, boolean crop) {
         cropCircle = crop;
         minSize = (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, SIZE_AB, context.getResources().getDisplayMetrics());
-        if (photo != null) {
+        if (photos != null && photos.size() > 0) {
             avatarText = null;
-            bitmap = photo;
+            bitmaps = photos;
+            if (photos.size() == 1) {
+                backgroundBounds = Collections.singletonList(new RectF());
+                inBounds = Collections.singletonList(null);
+            } else {
+                backgroundBounds = new ArrayList<>(bitmaps.size());
+                inBounds = new ArrayList<>(bitmaps.size());
+                for (Bitmap ignored : bitmaps) {
+                    backgroundBounds.add(new RectF());
+                    inBounds.add(new Rect());
+                }
+            }
         } else {
-            bitmap = null;
+            bitmaps = null;
+            backgroundBounds = null;
+            inBounds = null;
             avatarText = convertNameToAvatarText(name);
             color = ContextCompat.getColor(context, getAvatarColor(id));
             if (avatarText == null) {
@@ -263,7 +305,9 @@ public class AvatarDrawable extends Drawable {
     public AvatarDrawable(AvatarDrawable other) {
         cropCircle = other.cropCircle;
         minSize = other.minSize;
-        bitmap = other.bitmap;
+        bitmaps = other.bitmaps;
+        backgroundBounds = other.backgroundBounds;
+        inBounds = other.inBounds;
         color = other.color;
         placeholder = other.placeholder;
         avatarText = other.avatarText;
@@ -305,8 +349,11 @@ public class AvatarDrawable extends Drawable {
     }
 
     private void drawActual(@NonNull Canvas canvas) {
-        if (bitmap != null) {
-            canvas.drawBitmap(bitmap, null, backgroundBounds, drawPaint);
+        if (bitmaps != null) {
+            if (backgroundBounds.size() == bitmaps.size())
+                for (int i=0, s=bitmaps.size(); i<s; i++) {
+                    canvas.drawBitmap(bitmaps.get(i), inBounds.get(i), backgroundBounds.get(i), drawPaint);
+                }
         } else {
             canvas.drawColor(color);
             if (avatarText != null) {
@@ -342,6 +389,54 @@ public class AvatarDrawable extends Drawable {
         }
     }
 
+    private static Rect getSubBounds(@NonNull Rect bounds, int total, int i)  {
+        if (total == 1)
+            return bounds;
+
+        if (total == 2 || (total == 3 && i == 0)) {
+            //Rect zone = getSubZone(bounds, 2, 1);
+            int w = bounds.width() / 2;
+            return (i == 0)
+                    ? new Rect(bounds.left, bounds.top, bounds.left + w, bounds.bottom)
+                    : new Rect(bounds.left + w, bounds.top, bounds.right, bounds.bottom);
+        }
+        if (total == 3 || (total == 4 && (i == 1 || i == 2))) {
+            int w = bounds.width() / 2;
+            int h = bounds.height() / 2;
+            return (i == 1)
+                    ? new Rect(bounds.left + w, bounds.top, bounds.right, bounds.top + h)
+                    : new Rect(bounds.left + w, bounds.top + h, bounds.right, bounds.bottom);
+        }
+        if (total == 4) {
+            int w = bounds.width() / 2;
+            int h = bounds.height() / 2;
+            return (i == 0)
+                    ? new Rect(bounds.left, bounds.top, bounds.left + w, bounds.top + h)
+                    : new Rect(bounds.left, bounds.top + h, bounds.left + w, bounds.bottom);
+        }
+        return null;
+    }
+
+    private static <T> void fit(int iw, int ih, int bw, int bh, boolean outfit, T ret)  {
+        int a = bw * ih;
+        int b = bh * iw;
+        int w;
+        int h;
+        if (outfit == (a < b)) {
+            w = iw;
+            h = (iw * bh) / bw;
+        } else {
+            w = (ih * bw) / bh;
+            h = ih;
+        }
+        int x = (iw - w) / 2;
+        int y = (ih - h) / 2;
+        if (ret instanceof Rect)
+            ((Rect)ret).set(x, y, x + w, y + h);
+        else if (ret instanceof RectF)
+            ((RectF)ret).set(x, y, x + w, y + h);
+    }
+
     @Override
     protected void onBoundsChange(Rect bounds) {
         //if (showPresence)
@@ -352,41 +447,36 @@ public class AvatarDrawable extends Drawable {
             int cy = (bounds.height()-d)/2;
             placeholder.setBounds(cx, cy, cx + d, cy + d);
         }
-        if (bitmap != null) {
-            int iw = cropCircle ? d : bounds.width();
-            int ih = cropCircle ? d : bounds.height();
-            int a = bitmap.getWidth() * ih;
-            int b = bitmap.getHeight() * iw;
-            int w;
-            int h;
-            if (a < b) {
-                w = iw;
-                h  = (iw * bitmap.getHeight())/bitmap.getWidth();
-            } else {
-                w  = (ih * bitmap.getWidth())/bitmap.getHeight();
-                h = ih;
-            }
-            int cx = (iw - w)/2;
-            int cy = (ih - h)/2;
-            backgroundBounds.set(cx, cy, cx + w, h + cy);
-        } else {
-            setAvatarTextValues(bounds);
+        int iw = cropCircle ? d : bounds.width();
+        int ih = cropCircle ? d : bounds.height();
+        if (iw <= 0 || ih <= 0) {
+            clipPaint.setShader(null);
+            return;
         }
+        if (workspace != null)
+            workspace.recycle();
+        workspace = Bitmap.createBitmap(iw, ih, Bitmap.Config.ARGB_8888);
         if (cropCircle) {
-            if (d > 0) {
-                workspace = Bitmap.createBitmap(d, d, Bitmap.Config.ARGB_8888);
-                clipPaint.setShader(new BitmapShader(workspace, BitmapShader.TileMode.CLAMP,
-                                    BitmapShader.TileMode.CLAMP));
+            clipPaint.setShader(new BitmapShader(workspace, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP));
+        }
+
+        if (bitmaps != null) {
+            if (bitmaps.size() == 1) {
+                Bitmap bitmap = bitmaps.get(0);
+                fit(iw, ih, bitmap.getWidth(), bitmap.getHeight(), true, backgroundBounds.get(0));
             } else {
-                clipPaint.setShader(null);
-                if (workspace != null) {
-                    workspace.recycle();
-                    workspace = null;
+                Rect realBounds = cropCircle ? new Rect(0, 0, iw, ih) : bounds;
+                for (int i=0; i<bitmaps.size(); i++) {
+                    Bitmap bitmap = bitmaps.get(i);
+                    Rect subBounds = getSubBounds(realBounds, bitmaps.size(), i);
+                    if (subBounds != null) {
+                        fit(bitmap.getWidth(), bitmap.getHeight(), subBounds.width(), subBounds.height(), false, inBounds.get(i));
+                        backgroundBounds.get(i).set(subBounds);
+                    }
                 }
             }
         } else {
-            workspace = Bitmap.createBitmap(bounds.width(), bounds.height(),
-                                            Bitmap.Config.ARGB_8888);
+            setAvatarTextValues(bounds);
         }
         update = true;
     }

@@ -23,10 +23,12 @@ package cx.ring.model;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NavigableMap;
+import java.util.Set;
 import java.util.TreeMap;
 
 import cx.ring.model.Interaction.InteractionType;
@@ -39,8 +41,6 @@ import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
 public class Conversation extends ConversationHistory {
-
-
     private static final String TAG = Conversation.class.getSimpleName();
 
     private final String mAccountId;
@@ -61,6 +61,10 @@ public class Conversation extends ConversationHistory {
 
     private Single<Conversation> isLoaded = null;
 
+    //private final Set<String> mRoots = new HashSet<>(2);
+    private final Set<String> mRoots = new HashSet<>(2);
+    private final Set<String> mMessages = new HashSet<>(16);
+
     // runtime flag set to true if the user is currently viewing this conversation
     private boolean mVisible = false;
 
@@ -72,6 +76,12 @@ public class Conversation extends ConversationHistory {
         mContacts = Collections.singletonList(contact);
         mKey = contact.getPrimaryUri();
         mParticipant = contact.getPrimaryUri().getUri();
+    }
+
+    public Conversation(String accountId, Uri uri) {
+        mAccountId = accountId;
+        mKey = uri;
+        mContacts = new ArrayList<>(3);
     }
 
     public Conference getConference(String id) {
@@ -90,7 +100,19 @@ public class Conversation extends ConversationHistory {
         return mKey;
     }
 
-    public CharSequence getDisplayName() {
+    public boolean isSwarm() {
+        return Uri.SWARM_URI_SCHEME.equals(getUri().getScheme());
+    }
+
+    public boolean matches(String query) {
+        for (CallContact contact : getContacts()) {
+            if (contact.matches(query))
+                return true;
+        }
+        return false;
+    }
+
+    public String getDisplayName() {
         return mContacts.get(0).getDisplayName();
     }
 
@@ -108,6 +130,8 @@ public class Conversation extends ConversationHistory {
         Iterator<CallContact> it = mContacts.iterator();
         while (it.hasNext()) {
             CallContact c = it.next();
+            if (c.isUser())
+                continue;
             ret.append(c.getDisplayName());
             if (it.hasNext())
                 ret.append(", ");
@@ -119,13 +143,15 @@ public class Conversation extends ConversationHistory {
         if (mContacts.isEmpty()) {
             return null;
         } else if (mContacts.size() == 1) {
-            return mContacts.get(0).getDisplayName();
+            return mContacts.get(0).getRingUsername();
         }
         StringBuilder ret = new StringBuilder();
         Iterator<CallContact> it = mContacts.iterator();
         while (it.hasNext()) {
             CallContact c = it.next();
-            ret.append(c.getDisplayName());
+            if (c.isUser())
+                continue;
+            ret.append(c.getRingUsername());
             if (it.hasNext())
                 ret.append(", ");
         }
@@ -213,15 +239,23 @@ public class Conversation extends ConversationHistory {
         updatedElementSubject.onNext(new Tuple<>(call, ElementStatus.ADD));
     }
 
+    private void setInteractionProperties(Interaction interaction) {
+        interaction.setAccount(getAccountId());
+        if (interaction.getContact() == null) {
+            if (mContacts.size() == 1)
+                interaction.setContact(mContacts.get(0));
+            else
+                interaction.setContact(findContact(new Uri(interaction.getAuthor())));
+        }
+    }
+
     public void addTextMessage(TextMessage txt) {
         if (mVisible) {
             txt.read();
         }
+        setInteractionProperties(txt);
         if (txt.getConversation() == null) {
             Log.e(TAG, "Error in conversation class... No conversation is attached to this interaction");
-        }
-        if (txt.getContact() == null) {
-            txt.setContact(getContact());
         }
         mHistory.put(txt.getTimestamp(), txt);
         mDirty = true;
@@ -229,15 +263,25 @@ public class Conversation extends ConversationHistory {
         updatedElementSubject.onNext(new Tuple<>(txt, ElementStatus.ADD));
     }
 
+    public CallContact findContact(Uri uri) {
+        for (CallContact contact : mContacts)  {
+            if (contact.getPrimaryUri().equals(uri)) {
+                return contact;
+            }
+        }
+        return null;
+    }
+
     public void addRequestEvent(TrustRequest request) {
-        ContactEvent event = new ContactEvent(getContact(), request);
+        CallContact contact = findContact(new Uri(request.getContactId()));
+        ContactEvent event = new ContactEvent(contact, request);
         mDirty = true;
         mAggregateHistory.add(event);
         updatedElementSubject.onNext(new Tuple<>(event, ElementStatus.ADD));
     }
 
-    public void addContactEvent() {
-        ContactEvent event = new ContactEvent(getContact());
+    public void addContactEvent(CallContact contact) {
+        ContactEvent event = new ContactEvent(contact);
         mDirty = true;
         mAggregateHistory.add(event);
         updatedElementSubject.onNext(new Tuple<>(event, ElementStatus.ADD));
@@ -259,7 +303,7 @@ public class Conversation extends ConversationHistory {
     }
 
     public void updateTextMessage(TextMessage text) {
-        text.setContact(getContact());
+        setInteractionProperties(text);
         long time = text.getTimestamp();
         NavigableMap<Long, Interaction> msgs = mHistory.subMap(time, true, time, true);
         for (Interaction txt : msgs.values()) {
@@ -380,8 +424,8 @@ public class Conversation extends ConversationHistory {
         mAggregateHistory.clear();
         mHistory.clear();
         mDirty = false;
-        if(!delete)
-            mAggregateHistory.add(new ContactEvent(getContact()));
+        if (!delete && mContacts.size() == 1)
+            mAggregateHistory.add(new ContactEvent(mContacts.get(0)));
         clearedSubject.onNext(mAggregateHistory);
     }
 
@@ -404,8 +448,7 @@ public class Conversation extends ConversationHistory {
         Interaction last = null;
         for (Interaction i : loadedConversation) {
             Interaction interaction = getTypedInteraction(i);
-            interaction.setAccount(mAccountId);
-            interaction.setContact(getContact());
+            setInteractionProperties(interaction);
             mAggregateHistory.add(interaction);
             mHistory.put(interaction.getTimestamp(), interaction);
             if (!i.isIncoming() && i.getStatus() == Interaction.InteractionStatus.DISPLAYED)
@@ -419,8 +462,7 @@ public class Conversation extends ConversationHistory {
     }
 
     public void addElement(Interaction interaction) {
-        interaction.setAccount(mAccountId);
-        interaction.setContact(getContact());
+        setInteractionProperties(interaction);
         if (interaction.getType() == InteractionType.TEXT) {
             TextMessage msg = new TextMessage(interaction);
             addTextMessage(msg);
@@ -434,6 +476,30 @@ public class Conversation extends ConversationHistory {
             DataTransfer dataTransfer = new DataTransfer(interaction);
             addFileTransfer(dataTransfer);
         }
+    }
+
+    public void addSwarmElement(Interaction interaction) {
+        if (!mMessages.add(interaction.mMessageId)) {
+            return;
+        }
+        if (mRoots.isEmpty() || mRoots.contains(interaction.mMessageId)) {
+            mRoots.remove(interaction.mMessageId);
+            mRoots.addAll(interaction.mParentIds);
+            Log.w(TAG, "Found new roots for " + getUri() + " " + mRoots);
+        }
+        if (interaction.getType() == InteractionType.TEXT) {
+            addTextMessage((TextMessage) interaction);
+        } else if (interaction.getType() == InteractionType.CALL) {
+            addCall((SipCall) interaction);
+        } else if (interaction.getType() == InteractionType.CONTACT) {
+            addContactEvent((ContactEvent) interaction);
+        } else if (interaction.getType() == InteractionType.DATA_TRANSFER) {
+            addFileTransfer((DataTransfer) interaction);
+        }
+    }
+
+    public Collection<String> getSwarmRoot() {
+        return mRoots;
     }
 
     public void updateFileTransfer(DataTransfer transfer, Interaction.InteractionStatus eventCode) {
@@ -471,9 +537,9 @@ public class Conversation extends ConversationHistory {
 
     public interface ConversationActionCallback {
 
-        void removeConversation(CallContact callContact);
+        void removeConversation(Uri callContact);
 
-        void clearConversation(CallContact callContact);
+        void clearConversation(Uri callContact);
 
         void copyContactNumberToClipboard(String contactNumber);
 

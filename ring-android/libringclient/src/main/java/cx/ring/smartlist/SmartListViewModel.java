@@ -27,7 +27,6 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.model.Interaction;
 import cx.ring.model.Uri;
-import cx.ring.services.AccountService;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
@@ -99,7 +98,7 @@ public class SmartListViewModel
         title = Title.None;
     }
     public SmartListViewModel(Conversation conversation, boolean presence) {
-        this(conversation, Collections.singletonList(conversation.getContact()), presence);
+        this(conversation, conversation.getContacts(), presence);
     }
 
     private SmartListViewModel(Title title) {
@@ -118,8 +117,8 @@ public class SmartListViewModel
         return uri;
     }
 
-    public CallContact getContact() {
-        return contact == null ? null : contact.get(0);
+    public List<CallContact> getContact() {
+        return contact;
     }
 
     public String getContactName() {
