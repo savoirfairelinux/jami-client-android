@@ -734,7 +734,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     public void enableAccount(boolean newValue) {
-        Account account = mAccountService.getAccount(mAccountService.getCurrentAccount().getAccountID());
+        Account account = mAccountService.getCurrentAccount();
         if (account == null) {
             cx.ring.utils.Log.w(TAG, "account not found!");
             return;
