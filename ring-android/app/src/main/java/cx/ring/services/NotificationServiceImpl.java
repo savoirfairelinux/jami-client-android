@@ -108,10 +108,6 @@ public class NotificationServiceImpl implements NotificationService {
     public static final String NOTIF_CHANNEL_SYNC = "sync";
     private static final String NOTIF_CHANNEL_SERVICE = "service";
 
-    // old channel codes that were replaced or split
-    private static final String NOTIF_CHANNEL_CALL_LEGACY = "call";
-    private static final String NOTIF_CHANNEL_MISSED_CALL_LEGACY = "missed_call";
-
     private static final String NOTIF_CALL_GROUP = "calls";
 
     private static final int NOTIF_CALL_ID = 1001;
@@ -152,9 +148,6 @@ public class NotificationServiceImpl implements NotificationService {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         if (notificationManager == null)
             return;
-
-        notificationManager.deleteNotificationChannel(NOTIF_CHANNEL_MISSED_CALL_LEGACY);
-        notificationManager.deleteNotificationChannel(NOTIF_CHANNEL_CALL_LEGACY);
 
         // Setting up groups
         notificationManager.createNotificationChannelGroup(new NotificationChannelGroup(NOTIF_CALL_GROUP, context.getString(R.string.notif_group_calls)));
