@@ -112,11 +112,12 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                     .subscribe(this::setConversation, e -> getView().goToHome()));
         } else {
             getView().goToHome();
+            return;
         }
 
         mCompositeDisposable.add(Observable.combineLatest(
                 mHardwareService.getConnectivityState(),
-                mAccountService.getObservableAccount(mAccountId),
+                mAccountService.getObservableAccount(account),
                 (isConnected, a) -> isConnected || a.isRegistered())
                 .observeOn(mUiScheduler)
                 .subscribe(isOk -> {

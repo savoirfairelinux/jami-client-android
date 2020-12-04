@@ -594,6 +594,10 @@ public class AccountService {
         return Observable.fromCallable(() -> getAccount(accountId))
                 .concatWith(getObservableAccountUpdates(accountId));
     }
+    public Observable<Account> getObservableAccount(Account account) {
+        return Observable.just(account)
+                .concatWith(accountSubject.filter(acc -> acc == account));
+    }
 
     public Observable<Account> getCurrentAccountSubject() {
         return currentAccountSubject;
