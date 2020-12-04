@@ -583,10 +583,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent resultData) {
         Log.w(TAG, "onActivityResult: " + requestCode + " " + resultCode + " " + resultData);
-        if (resultData == null) {
-            return;
-        }
-        android.net.Uri uri = resultData.getData();
+        android.net.Uri uri = resultData == null ? null : resultData.getData();
         if (requestCode == REQUEST_CODE_FILE_PICKER) {
             if (resultCode == RESULT_OK && uri != null) {
                 startFileSend(AndroidFileUtils.getCacheFile(requireContext(), uri)
