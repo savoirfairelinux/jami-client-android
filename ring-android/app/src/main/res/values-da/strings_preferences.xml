@@ -6,12 +6,22 @@
   <string name="pref_category_system">System</string>
   <string name="pref_category_privacy">Privatliv</string>
   <string name="pref_mobileData_title">Mobildata</string>
+  <string name="pref_mobileData_summary">Tillad Jami at bruge mobilnetværket i tillæg til Wi-Fi</string>
   <string name="pref_pushNotifications_title">Push-notifikationer</string>
   <string name="pref_pushNotifications_summary">Brug Google-servere for at tillade modtagelse af opkald/beskeder i baggrunden</string>
   <string name="pref_hd_summary">Aktivér afsendelse af HD-video</string>
+  <string name="pref_hwEncode_title">Tillad accelereret indkodning</string>
+  <string name="pref_hwEncode_summary">Eksperimentel funktion</string>
   <string name="pref_systemContacts_title">Brug systemkontakter</string>
   <string name="pref_systemContacts_summary">Brug systemkontakter til at vise opkaldsdetaljer</string>
+  <string name="pref_systemDialer_title">Foretag systemopkald med Jami</string>
+  <string name="pref_systemDialer_summary">Brug Jami til at foretage systemopkald, når muligt.</string>
+  <string name="pref_startOnBoot_title">Kør Jami ved opstart</string>
+  <string name="pref_startOnBoot_summary">Kør Jami i baggrunden, når systemet starter.</string>
   <string name="pref_clearHistory_title">Ryd historiken</string>
+  <string name="pref_clearHistory_summary">Ryd al samtale-historik. Denne handling kan ikke fortrydes.</string>
   <string name="pref_delete_account_title">Slet konto</string>
+  <string name="pref_persistNotification_title">Kør i baggrunden</string>
+  <string name="pref_persistNotification_summary">Tillad at køre i baggrunden for at modtage opkald og beskeder.</string>
   <!--Plugin-->
 </resources>

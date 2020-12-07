@@ -1,18 +1,69 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings related to account edition screen-->
+  <string name="ic_delete_menu">Supprimer</string>
+  <string name="ic_advanced_menu">Paramètres avancés</string>
   <string name="ic_blacklist_menu">Contacts bloqués</string>
   <!--Strings related to account creation-->
+  <string name="add_ring_account_title">Ajouter un compte Jami</string>
+  <string name="add_sip_account_title">Ajouter un compte SIP</string>
+  <string name="ring_account_default_name">Compte Jami%1$s</string>
+  <string name="prompt_alias">Alias</string>
+  <string name="prompt_hostname">Nom d\'hôte</string>
+  <string name="prompt_username">Nom d\'utilisateur</string>
+  <string name="prompt_password">Mot de passe</string>
+  <string name="action_create">Créer un compte</string>
   <string name="action_create_short">Créer</string>
   <string name="action_register">Enregistrer</string>
+  <string name="action_settings">Paramètres</string>
+  <string name="error_field_required">Ce champ est obligatoire</string>
+  <string name="dialog_wait_create">Ajout d\'un compte</string>
+  <string name="dialog_wait_create_details">Veuillez patienter pendant que votre nouveau compte est ajouté...</string>
+  <string name="dialog_wait_update">Mise à jour du compte</string>
+  <string name="dialog_wait_update_details">Veuillez patienter pendant que votre nouveau compte est mis à jour...</string>
+  <string name="dialog_warn_ip2ip_account_title">Créer un compte SIP vide ?</string>
+  <string name="dialog_warn_ip2ip_account_message">Vous êtes sur le point de créer un compte SIP avec d\'hôte invalide.
+Vous pourrez uniquement passer et recevoir des appels IP directs.
+Vous pouvez modifier votre compte ultérieurement</string>
+  <string name="account_type_ip2ip">Compte IP</string>
+  <string name="help_ring">Un compte Jami vous permet d\'atteindre des personnes en toute sécurité en peer to peer via un réseau entièrement distribué.</string>
+  <string name="help_sip_title">Ajoutez votre compte SIP</string>
+  <string name="help_sip">Configurer un compte SIP existant.</string>
+  <string name="create_sip_account">Ajouter un compte SIP</string>
   <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_title">Supprimer un compte ?</string>
+  <string name="account_delete_dialog_message">Cette action ne peut pas être annulée.</string>
   <!--AccountManagementFragment-->
+  <string name="empty_account_list">Aucun compte n\'est enregistré</string>
   <string name="normal_accounts_titles">Comptes</string>
+  <string name="normal_devices_titles">Appareils liés</string>
+  <string name="account_device_revocation_success_title">Réussite</string>
+  <string name="account_device_revocation_wrong_password">Mot de passe invalide.</string>
+  <string name="account_device_revocation_unknown_device">Appareil inconnu.</string>
+  <string name="account_device_revocation_error_unknown">Erreur inconnue.</string>
+  <string name="account_password_change">Changer le mot de passe</string>
+  <string name="account_password_set">Définir le mot de passe</string>
+  <string name="account_password_summary">Gérez le mot de passe de votre compte.</string>
+  <string name="account_password_change_wait_message">Modification du mot de passe du compte</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Général</string>
+  <string name="account_basic_category">Paramètres de base</string>
+  <string name="account_alias_label">Nom du compte</string>
+  <string name="account_hostname_label">Nom d\'hôte</string>
   <string name="account_bootstrap_label">Amorcer</string>
+  <string name="account_username_label">Nom d\'utilisateur</string>
+  <string name="account_password_label">Mot de passe</string>
+  <string name="account_optionnal_category">Paramètres optionnels</string>
+  <string name="account_autoanswer_label">Réponse automatique</string>
+  <string name="account_rendezvous_label">Mode Rendez-vous</string>
+  <string name="account_rendezvous_summary">En mode \"Rendez-vous\", les appels entrants seront ajoutés à une salle de conférence.</string>
+  <string name="account_upnp_label">Activer l\'UPnP</string>
+  <string name="account_proxy_field">Proxy</string>
   <!--Audio Details-->
   <string name="account_audio_label">Audio</string>
+  <string name="account_preferences_media_tab">Media</string>
+  <string name="account_ringtone_label">Sonneries</string>
+  <string name="account_ringtone_enabled_label">Activer les sonneries</string>
   <!--Video Details-->
   <string name="account_video_label">Vidéo</string>
   <!--Advanced Details-->
@@ -22,6 +73,7 @@
   <string name="account_turn_enable_label">Utiliser le TURN</string>
   <string name="account_turn_username_label">Nom d\'utilisateur TURN</string>
   <string name="account_turn_password_label">Mot de passe TURN</string>
+  <string name="account_sip_proxy_label">Proxy</string>
   <!--Security Details-->
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Sécurité</string>
@@ -31,6 +83,7 @@
   <string name="account_enter_password">Entrez votre mot de passe</string>
   <string name="account_new_button">Créer un compte Jami</string>
   <string name="account_link_export_button">Associer un nouvel appareil</string>
+  <string name="account_connect_prompt_username">Nom d\'utilisateur</string>
   <!--Name registration-->
   <string name="register_username">Enregistrer un nom d\'utilisateur public</string>
   <string name="invalid_username">Nom d\'utilisateur incorrect</string>

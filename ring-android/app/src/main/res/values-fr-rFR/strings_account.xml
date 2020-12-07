@@ -18,7 +18,12 @@
   <string name="action_settings">Réglages</string>
   <string name="error_field_required">Ce champ est requis</string>
   <string name="dialog_wait_create">Ajout du compte</string>
+  <string name="dialog_wait_create_details">Veuillez patienter pendant que votre nouveau compte est ajouté...</string>
   <string name="dialog_wait_update">Mettre à jour le compte</string>
+  <string name="dialog_wait_update_details">Veuillez patienter pendant que votre nouveau compte est mis à jour...</string>
+  <string name="dialog_warn_ip2ip_account_title">Créer un compte SIP vide ?</string>
+  <string name="dialog_warn_ip2ip_account_message">Vous êtes sur le point de créer un compte SIP sans nom d\'hôte valide.
+</string>
   <string name="account_type_ip2ip">Compte IP</string>
   <string name="help_sip_title">Ajouter votre compte SIP</string>
   <string name="create_sip_account">Ajouter un compte SIP</string>
@@ -53,6 +58,7 @@
   <string name="error_password_char_count">6 caractères minimum</string>
   <string name="account_export_end_error_title">Erreur</string>
   <string name="account_enter_password">Entrez votre mot de passe</string>
+  <string name="ring_account_identity">Identité</string>
   <string name="account_link_prompt_pin">Saisissez le code PIN</string>
   <string name="account_new_button">Créer un compte Jami</string>
   <string name="account_link_export_button">Associer un nouvel appareil</string>

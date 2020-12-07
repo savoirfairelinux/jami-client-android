@@ -46,7 +46,7 @@ Puedes editar tu cuenta luego</string>
   <string name="account_device_revocation_error_unknown">Error desconocido.</string>
   <string name="account_password_change">Cambiar contraseña</string>
   <string name="account_password_set">Establece una contraseña</string>
-  <string name="account_password_summary">Administrar la contraseña de la cuenta</string>
+  <string name="account_password_summary">Administra la contraseña de la cuenta</string>
   <string name="account_password_change_wait_message">Cambiar contraseña de cuenta</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">General</string>
@@ -138,7 +138,7 @@ Puedes editar tu cuenta luego</string>
   <string name="error_passwords_not_equals">Las contraseñas no coinciden</string>
   <string name="export_account_wait_title">Por favor, espera...</string>
   <string name="export_account_wait_message">Exportando información de la cuenta</string>
-  <string name="account_export_file">Crear archivo de respaldo de la cuenta</string>
+  <string name="account_export_file">Crear respaldo de la cuenta</string>
   <string name="account_export_file_summary">Crea un archivo de respaldo en tu dispositivo para luego poder recuperar tu cuenta.</string>
   <string name="account_export_end_decryption_message">Error al desbloquear tu cuenta con la contraseña provista</string>
   <string name="account_export_end_network_title">Error en la red</string>
