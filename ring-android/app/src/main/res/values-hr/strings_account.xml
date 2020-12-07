@@ -5,7 +5,9 @@
   <string name="ic_advanced_menu">Napredne postavke</string>
   <string name="ic_blacklist_menu">Blokirani kontakti</string>
   <!--Strings related to account creation-->
+  <string name="add_ring_account_title">Dodaj Jami račun</string>
   <string name="add_sip_account_title">Dodajte SIP račun</string>
+  <string name="ring_account_default_name">Jami račun %1$s</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Ime poslužitelja</string>
   <string name="prompt_username">Korisničko ime</string>
@@ -33,6 +35,10 @@ Moćete urediti vaš račun kasnije</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nema registriranih računa</string>
   <string name="normal_accounts_titles">Računi</string>
+  <string name="account_device_revocation_wrong_password">Pogrešna lozinka.</string>
+  <string name="account_device_revocation_unknown_device">Nepoznati uređaj.</string>
+  <string name="account_device_revocation_error_unknown">Nepoznata greška.</string>
+  <string name="account_password_change">Promijeni lozinku</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Opće</string>
   <string name="account_basic_category">Osnovne postavke</string>
@@ -50,21 +56,31 @@ Moćete urediti vaš račun kasnije</string>
   <string name="account_ringtone_label">Melodije zvona</string>
   <string name="account_ringtone_enabled_label">Aktivirajte melodije zvona</string>
   <string name="account_ringtone_path_label">Putanja melodije zvona</string>
+  <string name="account_ringtone_title">Odaberite zvuk zvona</string>
+  <string name="account_ringtone_summary">Izaberite zvuk zvona ili odaberite vaš vlastiti</string>
   <!--Video Details-->
   <string name="account_video_label">Video</string>
   <string name="account_video_enable">Omogući video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Napredno</string>
   <string name="account_call_settings_title">Postavke zvanja</string>
+  <string name="account_dht_public_in_calls_label">Dozvoli dolazne pozive od nepoznatih kontakata</string>
   <string name="account_registration_exp_label">Registracija istjeće</string>
   <string name="account_local_interface_label">Lokalno sučelje</string>
   <string name="account_local_port_label">Lokalni port</string>
   <string name="account_stun_enable_label">Koristi Stun</string>
   <string name="account_stun_server_label">Stun poslužitelj</string>
+  <string name="account_conversation_settings_title">Postavke razgovora</string>
+  <string name="account_accept_files_never">Nikada ne prihvaćaj automatski</string>
+  <string name="account_accept_files_always">Uvijek prihvati automatski</string>
+  <string name="size_mb">%1$d MB</string>
   <string name="account_turn_enable_label">Koristi TURN</string>
   <string name="account_turn_server_label">TURN poslužitelj</string>
   <string name="account_turn_username_label">TURN korisničko ime</string>
   <string name="account_turn_password_label">TURN lozinka</string>
+  <string name="account_proxy_label">DHT proxy</string>
+  <string name="account_proxy_enable_label">Koristi DHT proxy</string>
+  <string name="account_proxy_server_label">DHT proxy adresa</string>
   <string name="account_sip_proxy_label">Proxy</string>
   <!--Security Details-->
   <!--SRTP Details-->

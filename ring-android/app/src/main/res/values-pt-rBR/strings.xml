@@ -195,10 +195,12 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="take_a_photo">Tirar uma foto</string>
   <string name="profile_name_hint">Digite seu nome</string>
   <string name="registered_name">Nome Registrado</string>
+  <string name="no_registered_name">Sem nome registrado</string>
   <string name="identity">Identificação</string>
   <string name="account">Conta</string>
   <string name="link_new_device">Associar um novo dispositivo</string>
   <string name="devices">Dispositivos vinculados</string>
+  <string name="total_devices">Total de dispositivos:</string>
   <!--Share fragment-->
   <string name="share_message">Digitalize este código com Jami</string>
   <string name="share_message_no_account">Por favor selecione uma conta para compartilhar.</string>

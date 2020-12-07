@@ -36,7 +36,7 @@
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nenhuma conta registrada</string>
   <string name="normal_accounts_titles">Contas</string>
-  <string name="normal_devices_titles">Dispositivos associados</string>
+  <string name="normal_devices_titles">Dispositivos ligados</string>
   <string name="account_device_revoke">Revogar dispositivo</string>
   <string name="account_device_revocation_success_title">Sucesso</string>
   <string name="account_device_revocation_success">Dispositivo foi revogado!</string>
@@ -46,6 +46,7 @@
   <string name="account_device_revocation_error_unknown">Erro desconhecido.</string>
   <string name="account_password_change">Alterar senha</string>
   <string name="account_password_set">Configurar senha</string>
+  <string name="account_password_summary">Gerenciar a senha da sua conta.</string>
   <string name="account_password_change_wait_message">Alterando senha da conta</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Geral</string>
@@ -138,6 +139,7 @@
   <string name="export_account_wait_title">Por favor, aguarde...</string>
   <string name="export_account_wait_message">Exportando informações da conta</string>
   <string name="account_export_file">Backup da conta</string>
+  <string name="account_export_file_summary">Faça backup de sua conta no dispositivo para restaurá-la mais tarde.</string>
   <string name="account_export_end_decryption_message">Não foi possível desbloquear sua conta utilizando a senha fornecida.</string>
   <string name="account_export_end_network_title">Erro de rede</string>
   <string name="account_export_end_network_message">Não foi possível exportar a conta na rede. Verifique sua conexão.</string>
@@ -173,6 +175,8 @@
   <string name="account_link_prompt_pin">Entre o PIN</string>
   <string name="account_new_button">Criar uma conta no Jami</string>
   <string name="account_link_export_button">Associar um novo dispositivo</string>
+  <string name="account_link_show_button">Mostrar %d mais dispositivos vinculados</string>
+  <string name="account_link_hide_button">Ocultar dispositivo vinculado</string>
   <string name="account_link_export_info">Para usar esta conta em outros dispositivos, você deve antes expô-la no Jami. Isso gerará um código PIN que você deverá entrar no novo dispositivo para configurar a conta. Este PIN é válido por 10 minutos.</string>
   <string name="account_start_export_button">Gerar código PIN</string>
   <string name="account_end_export_button">fechar</string>
@@ -187,6 +191,7 @@
   <string name="account_connect_prompt_username">Nome de usuário</string>
   <!--Name registration-->
   <string name="error_username_empty">Entre um nome de usuário</string>
+  <string name="no_registered_name_for_account">Sem nome registrado</string>
   <string name="username_available">Nome de usuário disponível !</string>
   <string name="register_name">Nome de registro</string>
   <string name="trying_to_register_name">Tentando registrar nome</string>

@@ -1,12 +1,30 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="feedback_section">Retour d\'information</string>
+  <string name="report"><u>Envoyer nous un e-mail</u></string>
+  <string name="section_license">Licence</string>
+  <string name="sponsor_section">Jami est un logiciel gratuit développé et soutenu par</string>
+  <string name="copyright_section">Copyright</string>
+  <string name="contribute_section">Contribuer</string>
+  <string name="version_section">Version</string>
+  <string name="no_email_app_installed">Aucune application de messagerie électronique trouvée, installez-en une pour nous envoyer un rapport</string>
+  <string name="no_browser_app_installed">Aucune navigateur internet trouvée, installez en un pour voir cette page</string>
+  <string name="email_chooser_title">Envoyer du courrier en utilisant...</string>
   <string name="description">Jami est un logiciel libre de communication universel qui respecte la vie privée et l\'intimité de ses utilisateurs.</string>
+  <string name="credits">Crédits</string>
   <!--About dialog-->
+  <string name="developed_by">Développé par</string>
   <!--RingActivity-->
   <!--AB menus-->
   <!--Sections-->
+  <string name="menu_item_accounts">Gérer vos comptes</string>
+  <string name="menu_item_account">Gérer votre compte</string>
+  <string name="menu_item_settings">Paramètres</string>
+  <string name="menu_item_share">Partager mes contacts</string>
+  <string name="menu_item_about">À propos de Jami</string>
   <!--Dialing Fragment-->
+  <string name="dial_number">Composer un numéro</string>
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
@@ -16,12 +34,27 @@
   <!--Notifications-->
   <string name="notif_incoming_call">Appel entrant</string>
   <string name="notif_outgoing_call">Appel sortant</string>
+  <string name="notif_channel_calls">Appels</string>
+  <string name="notif_channel_file_transfer">Transfert de fichier</string>
+  <string name="notif_group_calls">Appels</string>
+  <string name="location_share_action_start">Commencer le partage</string>
   <!--Call Fragment-->
+  <string name="you_txt_prefix">Vous:</string>
+  <string name="action_call_minimize">Réduire</string>
+  <string name="action_call_decline">Décliner</string>
   <string name="ab_action_contact_add">Ajouter aux contacts</string>
+  <string name="ab_action_contact_add_question">Ajouter au contacts ?</string>
   <string name="hist_contact_added">Contact ajouté</string>
   <string name="hist_invitation_received">Invitation reçue</string>
+  <string name="ab_action_audio_call">Appel audio</string>
+  <string name="ab_action_video_call">Appel vidéo</string>
+  <string name="ab_action_change_screen_orientation">Changer l\'orientation de l\'écran </string>
+  <string name="write_a_message">Ecrire un message</string>
   <!--Text messages-->
+  <string name="send_message">Envoyer message</string>
   <string name="message_failed">Échec</string>
+  <string name="time_just_now">À l\'instant</string>
+  <string name="send_file">Envoyer fichier</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
   <!--Read contacts permission-->
@@ -29,9 +62,11 @@
   <!--QRCode Scan-->
   <!--Settings-->
   <!--Conversation-->
+  <string name="conversation_action_delete_this_message">Cette action ne peut pas être annulée.</string>
   <string name="conversation_action_block_this">Bloquer le contact</string>
   <!--Contacts-->
   <string name="account_create_title">Créer un compte Jami</string>
+  <string name="prompt_hint_username">Nom d\'utilisateur</string>
   <string name="wizard_next">Suivant</string>
   <string name="wizard_skip">Passer</string>
   <!--Account Summary-->
@@ -51,11 +86,22 @@
   <!--Smartlist-->
   <string name="tv_contact_row_header">Contacts</string>
   <!--File Transfer-->
+  <string name="menu_file_save">Sauvegarder fichier</string>
   <string name="menu_message_copy">Copier</string>
+  <string name="menu_message_delete">Supprimer message</string>
+  <string name="menu_message_cancel">Annuler message</string>
+  <string name="menu_delete">Supprimer</string>
+  <string name="pref_darkTheme_title">Thème sombre</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Conversations</string>
   <string name="navigation_item_account">Compte</string>
   <!--TV-->
+  <string name="tv_audio_play">Jouer</string>
+  <string name="tv_audio_pause">Pause</string>
   <string name="tv_dialog_send">Envoyer</string>
   <!--Wizard-->
+  <string name="wizard_status_optional">Optionnel</string>
+  <string name="wizard_password_skip">Créer un compte</string>
+  <string name="wizard_profile_button">Sauvegarder votre profil</string>
+  <string name="fab_path_choose">Choisir un autre fichier</string>
 </resources>
