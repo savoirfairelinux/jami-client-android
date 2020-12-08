@@ -613,11 +613,9 @@ public class DRingService extends Service {
 
     private void updateConnectivityState() {
         if (mDaemonService.isStarted()) {
-            boolean isConnected = mPreferencesService.hasNetworkConnected();
-            mAccountService.setAccountsActive(isConnected);
             // Execute connectivityChanged to reload UPnP
             // and reconnect active accounts if necessary.
-            mHardwareService.connectivityChanged(isConnected);
+            mHardwareService.connectivityChanged(mPreferencesService.hasNetworkConnected());
         }
     }
 
