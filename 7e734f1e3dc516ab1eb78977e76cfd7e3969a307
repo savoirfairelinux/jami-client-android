@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "017f082e_88a82995",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-12-08T16:08:19Z",
+      "side": 0,
+      "message": "that\u0027s the whole point (and the only use) of setAccountsActive",
+      "range": {
+        "startLine": 617,
+        "startChar": 28,
+        "endLine": 617,
+        "endChar": 45
+      },
+      "revId": "7e734f1e3dc516ab1eb78977e76cfd7e3969a307",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
