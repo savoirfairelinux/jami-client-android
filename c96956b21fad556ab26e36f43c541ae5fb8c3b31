@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09de1ecf_e42eaf08",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-12-08T21:20:19Z",
+      "side": 1,
+      "message": "don\u0027t run if disabled",
+      "range": {
+        "startLine": 638,
+        "startChar": 20,
+        "endLine": 638,
+        "endChar": 137
+      },
+      "revId": "c96956b21fad556ab26e36f43c541ae5fb8c3b31",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
