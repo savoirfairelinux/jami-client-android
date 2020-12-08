@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d861641_cb669b79",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/conversation/ConversationPresenter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2020-12-08T21:52:17Z",
+      "side": 1,
+      "message": "account for this conversation might not be current account (account is available above as \"a\")",
+      "range": {
+        "startLine": 131,
+        "startChar": 33,
+        "endLine": 131,
+        "endChar": 68
+      },
+      "revId": "c3aba7fa0ac27d2267379e35be2aadf1b0da1ef8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
