@@ -28,6 +28,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="end"
                 app:showText="true"
+                app:status="@string/account_status_offline"
                 android:visibility="gone"
                 />
 

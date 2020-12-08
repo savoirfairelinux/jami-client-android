@@ -636,33 +636,31 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
             } else if (account.needsMigration()) {
                 status = getString(R.string.account_update_needed);
                 switchButton.showImage(false);
-                switchButton.setTextOn(status);
+                switchButton.setStatus(status);
             } else if (account.isInError()) {
                 status = getString(R.string.account_status_connection_error);
                 switchButton.showImage(false);
-                switchButton.setTextOn(status);
+                switchButton.setStatus(status);
             } else if (account.isRegistered()) {
                 status = getString(R.string.account_status_online);
                 color = R.color.green_400;
                 switchButton.showImage(false);
-                switchButton.setTextOn(status);
+                switchButton.setStatus(status);
             } else if (!account.isRegistered()){
                 color = R.color.grey_400;
                 status = getString(R.string.account_status_offline);
                 switchButton.showImage(false);
-                switchButton.setTextOff(status);
-                switchButton.changeStatus(false);
+                switchButton.setStatus(status);
             } else {
                 status = getString(R.string.account_status_error);
                 switchButton.showImage(false);
-                switchButton.setTextOff(status);
+                switchButton.setStatus(status);
             }
         } else {
             color = R.color.grey_400;
             status = getString(R.string.account_status_offline);
             switchButton.showImage(false);
-            switchButton.setChecked(false);
-            switchButton.setTextOff(status);
+            switchButton.setStatus(status);
         }
 
         switchButton.setBackColor(ContextCompat.getColor(requireContext(), color));

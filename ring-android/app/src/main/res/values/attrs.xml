@@ -7,8 +7,7 @@
 
     <declare-styleable name="SwitchButton">
         <attr name="backColor" format="color|reference"/>
-        <attr name="textOn" format="string"/>
-        <attr name="textOff" format="string"/>
+        <attr name="status" format="string"/>
     </declare-styleable>
 
 </resources>

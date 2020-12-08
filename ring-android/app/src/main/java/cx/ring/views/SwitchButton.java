@@ -1,7 +1,5 @@
 package cx.ring.views;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -10,12 +8,9 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.RotateDrawable;
-import android.os.Handler;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
@@ -24,13 +19,9 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.SoundEffectConstants;
-import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewParent;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
 import android.widget.CompoundButton;
 
 import androidx.core.content.ContextCompat;
@@ -65,15 +56,13 @@ public class SwitchButton extends CompoundButton {
     private boolean mReady = false;
     private boolean mCatch = false;
     private boolean mShowImage = false;
-    private boolean mIsChecked = false;
     private RectF mThumbRectF, mBackRectF, mSafeRectF, mTextOnRectF, mTextOffRectF;
     private RectF mThumbMargin;
     private RectF mPresentThumbRectF;
     private Paint mPaint;
     private Paint mRectPaint;
     private ValueAnimator mProgressAnimator;
-    private CharSequence mTextOn;
-    private CharSequence mTextOff;
+    private CharSequence mStatus;
     private TextPaint mTextPaint;
     private Layout mOnLayout;
     private Layout mOffLayout;
@@ -129,22 +118,19 @@ public class SwitchButton extends CompoundButton {
         float margin = density * DEFAULT_THUMB_MARGIN_DP;
         int backColor = 0;
         float thumbRangeRatio = DEFAULT_THUMB_RANGE_RATIO;
-        String textOn = null;
-        String textOff = null;
+        String status = null;
 
         TypedArray ta = attrs == null ? null : getContext().obtainStyledAttributes(attrs, R.styleable.SwitchButton);
         if (ta != null) {
-            backColor = ta.getColor(R.styleable.SwitchButton_backColor, Color.GRAY);
-            textOn = ta.getString(R.styleable.SwitchButton_textOn);
-            textOff = ta.getString(R.styleable.SwitchButton_textOff);
+            backColor = ta.getColor(R.styleable.SwitchButton_backColor, getResources().getColor(R.color.grey_400));
+            status = ta.getString(R.styleable.SwitchButton_status);
             ta.recycle();
         }
 
         setFocusable(true);
         setClickable(true);
 
-        mTextOn = textOn;
-        mTextOff = textOff;
+        mStatus = status;
 
         mBackColor = backColor;
 
@@ -156,7 +142,7 @@ public class SwitchButton extends CompoundButton {
         mProgressAnimator.setDuration(mAnimationDuration);
 
         // sync checked status
-        if (mIsChecked) {
+        if (isChecked()) {
             setProgress(1);
         }
     }
@@ -167,11 +153,11 @@ public class SwitchButton extends CompoundButton {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if (mOnLayout == null && !TextUtils.isEmpty(mTextOn)) {
-            mOnLayout = makeLayout(mTextOn);
+        if (mOnLayout == null && !TextUtils.isEmpty(mStatus)) {
+            mOnLayout = makeLayout(mStatus);
         }
-        if (mOffLayout == null && !TextUtils.isEmpty(mTextOff)) {
-            mOffLayout = makeLayout(mTextOff);
+        if (mOffLayout == null && !TextUtils.isEmpty(mStatus)) {
+            mOffLayout = makeLayout(mStatus);
         }
 
         float onWidth = mOnLayout != null ? mOnLayout.getWidth() : 0;
@@ -491,7 +477,7 @@ public class SwitchButton extends CompoundButton {
                     performClick();
                 } else {
                     boolean nextStatus = getStatusBasedOnPos();
-                    if (nextStatus != mIsChecked) {
+                    if (nextStatus != isChecked()) {
                         playSoundEffect(SoundEffectConstants.CLICK);
                         setChecked(nextStatus);
                     } else {
@@ -531,7 +517,7 @@ public class SwitchButton extends CompoundButton {
         invalidate();
     }
 
-    protected void animateToState(boolean checked) {
+    public void animateToState(boolean checked) {
         if (mProgressAnimator == null) {
             return;
         }
@@ -557,19 +543,11 @@ public class SwitchButton extends CompoundButton {
 
     @Override
     public void setChecked(final boolean checked) {
-        if (mIsChecked != checked) {
-            mIsChecked = checked;
-            animateToState(mIsChecked);
+        if (isChecked() != checked) {
+            animateToState(checked);
         }
 
-        super.setChecked(mIsChecked);
-    }
-
-    public void changeStatus(final boolean checked) {
-        if (mIsChecked != checked) {
-            mIsChecked = checked;
-            animateToState(mIsChecked);
-        }
+        super.setChecked(checked);
     }
 
     @Override
@@ -591,9 +569,8 @@ public class SwitchButton extends CompoundButton {
         setBackColor(backColorRes);
     }
 
-    public void setText(CharSequence onText, CharSequence offText) {
-        mTextOn = onText;
-        mTextOff = offText;
+    public void setStatus(CharSequence status) {
+        mStatus = status;
 
         mOnLayout = null;
         mOffLayout = null;
@@ -603,26 +580,8 @@ public class SwitchButton extends CompoundButton {
         invalidate();
     }
 
-    public CharSequence getTextOn() {
-        return mTextOn;
-    }
-
-    public void setTextOn(String textOn) {
-        mTextOn = textOn;
-        mReady = false;
-        requestLayout();
-        invalidate();
-    }
-
-    public CharSequence getTextOff() {
-        return mTextOff;
-    }
-
-    public void setTextOff(String textOff) {
-        mTextOff = textOff;
-        mReady = false;
-        requestLayout();
-        invalidate();
+    public CharSequence getStatus() {
+        return mStatus;
     }
 
     public void showImage(boolean show) {
