@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    tools:context=".fragments.PluginHandlersListFragment">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/chat_plugins_toolbar"
+        style="@style/Widget.MaterialComponents.Toolbar.Surface"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        app:navigationIcon="@drawable/baseline_close_24"
+        app:title="@string/chat_plugins"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/handler_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/frag_plugins_list_item"
+        android:layout_below="@+id/chat_plugins_toolbar"/>
+</RelativeLayout>
