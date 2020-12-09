@@ -125,6 +125,7 @@ import cx.ring.views.AvatarDrawable;
 import io.reactivex.disposables.CompositeDisposable;
 
 import static cx.ring.daemon.Ringservice.getPluginsEnabled;
+import static cx.ring.daemon.Ringservice.getCallMediaHandlers;
 
 public class CallFragment extends BaseSupportFragment<CallPresenter> implements CallView, MediaButtonsHelper.MediaButtonsHelperCallback, RecyclerPickerLayoutManager.ItemSelectedListener {
 
@@ -1366,7 +1367,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     public boolean displayPluginsButton() {
-        return getPluginsEnabled();
+        return getPluginsEnabled() && getCallMediaHandlers().size() > 0;
     }
 
     @Override
@@ -1421,7 +1422,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         // Create callMediaHandlers and videoPluginsItems in a lazy manner
         if (pluginsModeFirst) {
             // Init
-            callMediaHandlers = Ringservice.listCallMediaHandlers();
+            callMediaHandlers = Ringservice.getCallMediaHandlers();
             List<Drawable> videoPluginsItems = new ArrayList<>(callMediaHandlers.size() + 1);
 
             videoPluginsItems.add(context.getDrawable(R.drawable.baseline_cancel_24));

@@ -29,4 +29,11 @@
         android:title="@string/send_file"
         app:showAsAction="always"
         tools:ignore="AlwaysShowAction" />
+
+    <item
+        android:id="@+id/chat_plugins"
+        android:icon="@drawable/ic_plugin"
+        android:title="@string/chat_plugins"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
 </menu>
