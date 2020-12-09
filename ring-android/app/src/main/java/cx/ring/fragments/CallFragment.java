@@ -125,6 +125,7 @@ import cx.ring.views.AvatarDrawable;
 import io.reactivex.disposables.CompositeDisposable;
 
 import static cx.ring.daemon.Ringservice.getPluginsEnabled;
+import static cx.ring.daemon.Ringservice.listCallMediaHandlers;
 
 public class CallFragment extends BaseSupportFragment<CallPresenter> implements CallView, MediaButtonsHelper.MediaButtonsHelperCallback, RecyclerPickerLayoutManager.ItemSelectedListener {
 
@@ -1362,7 +1363,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     public boolean displayPluginsButton() {
-        return getPluginsEnabled();
+        return getPluginsEnabled() && listCallMediaHandlers().size() > 0;
     }
 
     @Override
