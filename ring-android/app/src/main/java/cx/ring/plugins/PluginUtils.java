@@ -11,10 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cx.ring.daemon.Ringservice;
+import cx.ring.daemon.StringMap;
 import cx.ring.settings.pluginssettings.PluginDetails;
 import cx.ring.utils.Log;
 
 import static android.content.Context.MODE_PRIVATE;
+import static cx.ring.daemon.Ringservice.getChatHandlerDetails;
+import static cx.ring.daemon.Ringservice.toggleChatHandler;
 
 public class PluginUtils {
 
@@ -23,14 +26,15 @@ public class PluginUtils {
     /**
      * Fetches the plugins folder in the internal storage for plugins subfolder
      * Gathers the details of each plugin in a PluginDetails instance
+     * @param mContext The current context
      * @return List of PluginDetails
      */
-    public static List<PluginDetails> listAvailablePlugins(Context mContext){
+    public static List<PluginDetails> getInstalledPlugins(Context mContext){
         tree(mContext.getFilesDir() + File.separator+ "plugins",0);
         tree(mContext.getCacheDir().getAbsolutePath(),0);
 
-        List<String> pluginsPaths = Ringservice.listAvailablePlugins();
-        List<String> loadedPluginsPaths = Ringservice.listLoadedPlugins();
+        List<String> pluginsPaths = Ringservice.getInstalledPlugins();
+        List<String> loadedPluginsPaths = Ringservice.getLoadedPlugins();
 
         List<PluginDetails> pluginsList = new ArrayList<>(pluginsPaths.size());
         for (String pluginPath : pluginsPaths) {
@@ -48,6 +52,36 @@ public class PluginUtils {
             }
         }
         return pluginsList;
+    }
+
+    /**
+     * Fetches the plugins folder in the internal storage for plugins subfolder
+     * Gathers the details of each plugin in a PluginDetails instance
+     * @param mContext The current context
+     * @param accountId The current account id
+     * @param peerId The current conversation peer id
+     * @return List of PluginDetails
+     */
+    public static List<PluginDetails> getChatHandlersDetails(Context mContext, String accountId, String peerId){
+        tree(mContext.getFilesDir() + File.separator+ "plugins",0);
+        tree(mContext.getCacheDir().getAbsolutePath(),0);
+
+        List<String> chatHandlersId = Ringservice.getChatHandlers();
+        List<String> chatHandlerStatus = Ringservice.getChatHandlerStatus(accountId, peerId);
+
+        List<PluginDetails> handlersList = new ArrayList<>(chatHandlersId.size());
+        for (String handlerId : chatHandlersId) {
+            StringMap handlerDetails = getChatHandlerDetails(handlerId);
+            boolean enabled = false;
+
+            if (chatHandlerStatus.contains(handlerId)) {
+                enabled = true;
+            }
+            handlersList.add(new PluginDetails(
+                    handlerDetails.get("name"),
+                    handlerId, enabled));
+        }
+        return handlersList;
     }
 
     /**
@@ -70,20 +104,11 @@ public class PluginUtils {
     }
 
     /**
-     * Creates/Destroys plugin objects
-     * @param path root path of the plugin
-     * @param toggle boolean on/off
-     */
-    public static void togglePlugin(String path, boolean toggle) {
-        Ringservice.togglePlugin(path, toggle);
-    }
-
-    /**
      * Lists the root paths of the loaded plugins
      * @return list of path
      */
-    public static List<String> listLoadedPlugins() {
-        return Ringservice.listLoadedPlugins();
+    public static List<String> getLoadedPlugins() {
+        return Ringservice.getLoadedPlugins();
     }
 
     /**
@@ -144,7 +169,7 @@ public class PluginUtils {
     /**
      * Converts a string that contains a list to a java List<String>
      * E.g: String entries = "[AAA,BBB,CCC]" to List<String> l, where l.get(0) = "AAA"
-     *
+     * @return List of strings
      * @param stringList a string in the form "[AAA,BBB,CCC]"
      */
     public static List<String> stringListToListString(String stringList) {
