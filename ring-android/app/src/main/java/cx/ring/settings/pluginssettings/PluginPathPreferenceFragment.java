@@ -55,7 +55,7 @@ public class PluginPathPreferenceFragment extends Fragment implements PathListAd
     private String mCurrentValue;
     private Context mContext;
     private String subtitle;
-    private String supportedMimeTypes = "*/*";
+    private String[] supportedMimeTypes = {"*/*"};
 
     private FragPluginsPathPreferenceBinding binding;
 
@@ -90,7 +90,7 @@ public class PluginPathPreferenceFragment extends Fragment implements PathListAd
                     if (preferenceAttributes.get("key").equals(mCurrentKey)) {
                         String mimeType = preferenceAttributes.get("mimeType");
                         if (!TextUtils.isEmpty(mimeType))
-                            supportedMimeTypes = mimeType;
+                            supportedMimeTypes = mimeType.split(",");
                         subtitle = mPluginDetails.getName() + " - " + preferenceAttributes.get("title");
 
                         String defaultPath = preferenceAttributes.get("defaultValue");
@@ -129,7 +129,8 @@ public class PluginPathPreferenceFragment extends Fragment implements PathListAd
         binding.pluginsPathPreferenceFab.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
             intent.addCategory(Intent.CATEGORY_OPENABLE);
-            intent.setType(supportedMimeTypes);
+            intent.setType(supportedMimeTypes[0]);
+            intent.putExtra(Intent.EXTRA_MIME_TYPES, supportedMimeTypes);
             startActivityForResult(intent, PATH_REQUEST_CODE);
         });
 

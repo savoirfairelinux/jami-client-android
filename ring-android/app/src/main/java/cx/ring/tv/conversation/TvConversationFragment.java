@@ -685,6 +685,10 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
 
     }
 
+    public void showPluginListHandlers(String accountId, String contactId) {
+
+    }
+
     @Override
     public void hideErrorPanel() {
 

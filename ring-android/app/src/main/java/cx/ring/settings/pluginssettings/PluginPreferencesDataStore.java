@@ -153,7 +153,7 @@ public class PluginPreferencesDataStore extends PreferenceDataStore {
         boolean returnValue = defValue;
         String value = getPreferencesValues().get(key);
         if (value != null) {
-            returnValue = Boolean.parseBoolean(value);
+            returnValue = value.equals("1");
         }
         return returnValue;
     }

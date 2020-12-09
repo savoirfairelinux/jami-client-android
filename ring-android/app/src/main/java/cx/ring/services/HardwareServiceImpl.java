@@ -556,7 +556,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                         if (currentCall == null)
                             return;
                         if (mPluginCallId != null && !mPluginCallId.equals(currentCall)) {
-                            toggleCallMediaHandler("", currentCall, false);
+                            toggleCallMediaHandler(mMediaHandlerId, currentCall, false);
                             mIsChoosePlugin = false;
                             mMediaHandlerId = null;
                             mPluginCallId = null;
