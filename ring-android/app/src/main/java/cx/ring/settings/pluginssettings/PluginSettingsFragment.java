@@ -378,6 +378,6 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
      */
     private void setTwoStatePreferenceAttributes(TwoStatePreference preference,
                                                  Map<String, String> preferenceModel) {
-        preference.setDefaultValue(Boolean.valueOf(preferenceModel.get("defaultValue")));
+        preference.setChecked(ppds.getString("always", "1").equals("1"));
     }
 }

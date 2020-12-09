@@ -32,7 +32,7 @@ import cx.ring.utils.AndroidFileUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
-import static cx.ring.plugins.PluginUtils.listAvailablePlugins;
+import static cx.ring.plugins.PluginUtils.getInstalledPlugins;
 
 public class PluginsListSettingsFragment extends Fragment implements PluginsListAdapter.PluginListItemListener {
 
@@ -66,7 +66,7 @@ public class PluginsListSettingsFragment extends Fragment implements PluginsList
         binding.pluginsList.setHasFixedSize(true);
 
         // specify an adapter (see also next example)
-        mAdapter = new PluginsListAdapter(listAvailablePlugins(binding.pluginsList.getContext()), this);
+        mAdapter = new PluginsListAdapter(getInstalledPlugins(binding.pluginsList.getContext()), this);
         binding.pluginsList.setAdapter(mAdapter);
 
         //Fab
@@ -161,14 +161,14 @@ public class PluginsListSettingsFragment extends Fragment implements PluginsList
                 .map(file -> installPluginFile(file, force))
                 .subscribe(filename -> {
                         String[] plugin = filename.split(".jpl");
-                        List<PluginDetails> availablePlugins = listAvailablePlugins(requireContext());
+                        List<PluginDetails> availablePlugins = getInstalledPlugins(requireContext());
                         for (PluginDetails availablePlugin : availablePlugins) {
                             if (availablePlugin.getName().equals(plugin[0])) {
                                 availablePlugin.setEnabled(true);
                                 onPluginEnabled(availablePlugin);
                             }
                         }
-                        mAdapter.updatePluginsList(listAvailablePlugins(requireContext()));
+                        mAdapter.updatePluginsList(getInstalledPlugins(requireContext()));
                         Toast.makeText(requireContext(), "Plugin: " + filename + " successfully installed", Toast.LENGTH_LONG).show();
                         mCompositeDisposable.dispose();
                     }, e -> {
