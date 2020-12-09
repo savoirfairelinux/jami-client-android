@@ -129,8 +129,6 @@ import cx.ring.utils.StringUtils;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.disposables.CompositeDisposable;
 
-import static cx.ring.daemon.Ringservice.getPluginsEnabled;
-
 public class CallFragment extends BaseSupportFragment<CallPresenter> implements CallView, MediaButtonsHelper.MediaButtonsHelperCallback, RecyclerPickerLayoutManager.ItemSelectedListener {
 
     public static final String TAG = CallFragment.class.getSimpleName();
@@ -1392,7 +1390,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     public boolean displayPluginsButton() {
-        return getPluginsEnabled();
+        return Ringservice.getPluginsEnabled() && Ringservice.getCallMediaHandlers().size() > 0;
     }
 
     @Override
@@ -1456,7 +1454,9 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             for (String callMediaHandler : callMediaHandlers) {
                 Map<String, String> details = getCallMediaHandlerDetails(callMediaHandler);
                 String drawablePath = details.get("iconPath");
-                Drawable handlerIcon = StringUtils.isEmpty(drawablePath) ? null : Drawable.createFromPath(details.get("iconPath"));
+                if (drawablePath.endsWith("svg"))
+                    drawablePath = drawablePath.replace(".svg", ".png");
+                Drawable handlerIcon = Drawable.createFromPath(drawablePath);
                 if (handlerIcon == null) {
                     handlerIcon = context.getDrawable(R.drawable.ic_jami);
                 }

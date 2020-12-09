@@ -33,12 +33,22 @@ public class PluginDetails {
     public static final String TAG = PluginDetails.class.getSimpleName();
     private String name;
     private String rootPath;
-    private final Map<String, String>  details;
+    private Map<String, String>  details;
     private Drawable icon;
     private boolean enabled;
+    private String mHandlerId;
 
     public PluginDetails(String name, String rootPath, boolean enabled) {
         this.name = name;
+        this.rootPath = rootPath;
+        this.enabled = enabled;
+        details = getPluginDetails();
+        setIcon();
+    }
+
+    public PluginDetails(String name, String rootPath, boolean enabled, String handlerId) {
+        this.name = name;
+        this.mHandlerId = handlerId;
         this.rootPath = rootPath;
         this.enabled = enabled;
         details = getPluginDetails();
@@ -53,9 +63,9 @@ public class PluginDetails {
         this.name = name;
     }
 
-    public String getRootPath() {
-        return rootPath;
-    }
+    public String getRootPath() { return rootPath; }
+
+    public String getmHandlerId() { return mHandlerId; }
 
     /**
      * Returns the plugin activation status by the user
@@ -70,7 +80,10 @@ public class PluginDetails {
     }
 
     public void setIcon() {
-        String iconPath = details.get("iconPath");
+        String  iconPath = details.get("iconPath");
+
+        if (iconPath.endsWith("svg"))
+            iconPath = iconPath.replace(".svg", ".png");
         if (iconPath != null) {
             File file = new File(iconPath);
             if(file.exists()) {

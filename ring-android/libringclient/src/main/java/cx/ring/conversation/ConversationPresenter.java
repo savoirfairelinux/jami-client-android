@@ -425,6 +425,10 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         getView().startShareLocation(mAccountId, mContactUri.getUri());
     }
 
+    public void showPluginListHandlers() {
+        getView().showPluginListHandlers(mAccountId, mContactUri.getUri());
+    }
+
     public Tuple<String, String> getPath() {
         return new Tuple<>(mAccountId, mContactUri.getUri());
     }

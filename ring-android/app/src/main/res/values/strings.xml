@@ -377,5 +377,6 @@ along with this program; if not, write to the Free Software
     <string name="wizard_profile_button">Save Profile</string>
     <string name="wizard_profile_skip">Skip and do this later</string>
     <string name="fab_path_choose">Choose another file</string>
+    <string name="chat_plugins">Chat Plugins</string>
 
 </resources>
