@@ -60,9 +60,6 @@ import cx.ring.utils.Tuple;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 
-import static cx.ring.daemon.Ringservice.getCallMediaHandlerStatus;
-import static cx.ring.daemon.RingserviceJNI.toggleCallMediaHandler;
-
 public class HardwareServiceImpl extends HardwareService implements AudioManager.OnAudioFocusChangeListener, BluetoothWrapper.BluetoothChangeListener {
 
     private static final Point VIDEO_SIZE_LOW = new Point(320, 240);
@@ -496,7 +493,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
 
     private void toggleMediaHandler(String callId) {
         if (mMediaHandlerId != null)
-            toggleCallMediaHandler(mMediaHandlerId, callId, true);
+            Ringservice.toggleCallMediaHandler(mMediaHandlerId, callId, true);
     }
 
     public void stopMediaHandler() {
@@ -556,7 +553,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                         if (currentCall == null)
                             return;
                         if (mPluginCallId != null && !mPluginCallId.equals(currentCall)) {
-                            toggleCallMediaHandler("", currentCall, false);
+                            Ringservice.toggleCallMediaHandler(mMediaHandlerId, currentCall, false);
                             mIsChoosePlugin = false;
                             mMediaHandlerId = null;
                             mPluginCallId = null;

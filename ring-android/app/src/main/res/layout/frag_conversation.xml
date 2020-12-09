@@ -121,6 +121,13 @@
                     android:clickable="false"
                     tools:background="@color/light_green_400" />
 
+                <RelativeLayout
+                    android:id="@+id/pluginListHandlers"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="false"
+                    tools:background="@color/light_green_400" />
+
             </androidx.cardview.widget.CardView>
 
         </RelativeLayout>
