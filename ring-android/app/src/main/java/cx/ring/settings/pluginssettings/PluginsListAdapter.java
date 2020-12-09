@@ -20,7 +20,7 @@ public class PluginsListAdapter extends RecyclerView.Adapter<PluginsListAdapter.
     private final PluginListItemListener listener;
     public static final String TAG = PluginsListAdapter.class.getSimpleName();
 
-    PluginsListAdapter(List<PluginDetails> pluginsList, PluginListItemListener listener) {
+    public PluginsListAdapter(List<PluginDetails> pluginsList, PluginListItemListener listener) {
         this.mList = pluginsList;
         this.listener = listener;
     }
@@ -92,7 +92,7 @@ public class PluginsListAdapter extends RecyclerView.Adapter<PluginsListAdapter.
         }
     }
 
-    public interface PluginListItemListener{
+    public interface PluginListItemListener {
         void onPluginItemClicked(PluginDetails pluginDetails);
         void onPluginEnabled(PluginDetails pluginDetails);
     }

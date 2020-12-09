@@ -89,6 +89,7 @@ import cx.ring.client.HomeActivity;
 import cx.ring.contacts.AvatarFactory;
 import cx.ring.conversation.ConversationPresenter;
 import cx.ring.conversation.ConversationView;
+import cx.ring.daemon.Ringservice;
 import cx.ring.databinding.FragConversationBinding;
 import cx.ring.interfaces.Colorable;
 import cx.ring.model.Account;
@@ -404,12 +405,55 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
                 case R.id.conv_share_location:
                     shareLocation();
                     break;
+                case R.id.chat_plugins:
+                    presenter.showPluginListHandlers();
+                    break;
             }
             return false;
         });
+        popup.getMenu().findItem(R.id.chat_plugins).setVisible(Ringservice.getPluginsEnabled() && Ringservice.getChatHandlers().size() > 0);
         MenuPopupHelper menuHelper = new MenuPopupHelper(context, (MenuBuilder) popup.getMenu(), v);
         menuHelper.setForceShowIcon(true);
         menuHelper.show();
+    }
+
+    public void showPluginListHandlers(String accountId, String contactId) {
+        Log.w(TAG, "show Plugin Chat Handlers List");
+
+        FragmentManager fragmentManager = getChildFragmentManager();
+        PluginHandlersListFragment fragment = PluginHandlersListFragment.newInstance(accountId, contactId);
+        fragmentManager.beginTransaction()
+                .add(R.id.pluginListHandlers, fragment, fragment.TAG)
+                .commit();
+
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.mapCard.getLayoutParams();
+        if (params.width != ViewGroup.LayoutParams.MATCH_PARENT) {
+            params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+            params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+            binding.mapCard.setLayoutParams(params);
+        }
+        binding.mapCard.setVisibility(View.VISIBLE);
+    }
+
+    public void hidePluginListHandlers() {
+        if (binding.mapCard.getVisibility() != View.GONE) {
+            binding.mapCard.setVisibility(View.GONE);
+
+            FragmentManager fragmentManager = getChildFragmentManager();
+            Fragment fragment = fragmentManager.findFragmentById(R.id.pluginListHandlers);
+
+            if (fragment != null) {
+                fragmentManager.beginTransaction()
+                        .remove(fragment)
+                        .commit();
+            }
+        }
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.mapCard.getLayoutParams();
+        if (params.width != mapWidth) {
+            params.width = mapWidth;
+            params.height = mapHeight;
+            binding.mapCard.setLayoutParams(params);
+        }
     }
 
     public void shareLocation() {

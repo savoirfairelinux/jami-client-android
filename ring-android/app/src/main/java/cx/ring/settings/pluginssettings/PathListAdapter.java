@@ -33,10 +33,7 @@ import java.io.File;
 import java.util.List;
 
 import cx.ring.R;
-
-import static cx.ring.utils.AndroidFileUtils.getFileName;
-import static cx.ring.utils.AndroidFileUtils.isImage;
-
+import cx.ring.utils.AndroidFileUtils;
 
 public class PathListAdapter extends RecyclerView.Adapter<PathListAdapter.PathViewHolder> {
     private List<String> mList;
@@ -94,7 +91,7 @@ public class PathListAdapter extends RecyclerView.Adapter<PathListAdapter.PathVi
             // Set the plugin icon
             File file = new File(s);
             if (file.exists()) {
-                if (isImage(s)) {
+                if (AndroidFileUtils.isImage(s)) {
                     pathTextView.setVisibility(View.GONE);
                     icon = Drawable.createFromPath(s);
                     if (icon != null) {
@@ -102,7 +99,7 @@ public class PathListAdapter extends RecyclerView.Adapter<PathListAdapter.PathVi
                     }
                 } else {
                     pathTextView.setVisibility(View.VISIBLE);
-                    pathTextView.setText(getFileName(s));
+                    pathTextView.setText(AndroidFileUtils.getFileName(s));
                 }
             }
         }
