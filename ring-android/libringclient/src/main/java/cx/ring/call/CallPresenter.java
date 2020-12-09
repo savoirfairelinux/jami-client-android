@@ -50,7 +50,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.Subject;
 
-import static cx.ring.daemon.Ringservice.listCallMediaHandlers;
+import static cx.ring.daemon.Ringservice.getCallMediaHandlers;
 
 public class CallPresenter extends RootPresenter<CallView> {
 
@@ -301,7 +301,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void hangupCall() {
-        List<String> callMediaHandlers = listCallMediaHandlers();
+        List<String> callMediaHandlers = getCallMediaHandlers();
 
         for (String callMediaHandler : callMediaHandlers)
         {
