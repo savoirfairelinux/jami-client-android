@@ -20,6 +20,8 @@ package cx.ring.settings.pluginssettings;
 
 import android.graphics.drawable.Drawable;
 
+import androidx.annotation.Nullable;
+
 import java.io.File;
 import java.util.List;
 import java.util.Map;
@@ -33,12 +35,19 @@ public class PluginDetails {
     public static final String TAG = PluginDetails.class.getSimpleName();
     private String name;
     private String rootPath;
-    private final Map<String, String>  details;
+    private Map<String, String>  details;
     private Drawable icon;
     private boolean enabled;
+    private String mHandlerId;
 
     public PluginDetails(String name, String rootPath, boolean enabled) {
+        new PluginDetails(name, rootPath, enabled, null);
+    }
+
+    public PluginDetails(String name, String rootPath, boolean enabled, @Nullable String handlerId) {
         this.name = name;
+        if (handlerId != null)
+            this.mHandlerId = handlerId;
         this.rootPath = rootPath;
         this.enabled = enabled;
         details = getPluginDetails();
@@ -53,9 +62,9 @@ public class PluginDetails {
         this.name = name;
     }
 
-    public String getRootPath() {
-        return rootPath;
-    }
+    public String getRootPath() { return rootPath; }
+
+    public String getmHandlerId() { return mHandlerId; }
 
     /**
      * Returns the plugin activation status by the user
