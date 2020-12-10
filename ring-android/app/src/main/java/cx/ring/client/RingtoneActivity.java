@@ -71,7 +71,7 @@ public class RingtoneActivity extends AppCompatActivity {
     private Account mAccount;
     private TextView customRingtone;
     private ImageView customPlaying, customSelected;
-    private MediaPlayer mediaPlayer = new MediaPlayer();
+    private final MediaPlayer mediaPlayer = new MediaPlayer();
     private Disposable disposable;
 
     @Inject
@@ -87,6 +87,10 @@ public class RingtoneActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ringtone);
         super.onCreate(savedInstanceState);
         mAccount = mAccountService.getAccount(getIntent().getExtras().getString(AccountEditionFragment.ACCOUNT_ID_KEY));
+        if (mAccount == null) {
+            finish();
+            return;
+        }
 
         /*Toolbar toolbar = findViewById(R.id.ringtoneToolbar);
         toolbar.setNavigationOnClickListener(view -> finish());*/
