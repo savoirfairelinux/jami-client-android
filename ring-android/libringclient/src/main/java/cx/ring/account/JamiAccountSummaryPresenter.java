@@ -195,10 +195,13 @@ public class JamiAccountSummaryPresenter extends RootPresenter<JamiAccountSummar
     public void cameraClicked() {
         boolean hasPermission = mDeviceRuntimeService.hasVideoPermission() &&
                 mDeviceRuntimeService.hasWriteExternalStoragePermission();
-        if (hasPermission) {
-            getView().gotToImageCapture();
-        } else {
-            getView().askCameraPermission();
+        JamiAccountSummaryView view = getView();
+        if (view != null) {
+            if (hasPermission) {
+                view.gotToImageCapture();
+            } else {
+                view.askCameraPermission();
+            }
         }
     }
 
@@ -272,4 +275,7 @@ public class JamiAccountSummaryPresenter extends RootPresenter<JamiAccountSummar
         mAccountService.renameDevice(mAccountID, newName);
     }
 
+    public Account getAccount() {
+        return mAccountService.getAccount(mAccountID);
+    }
 }
