@@ -520,12 +520,9 @@ public class AccountService {
      */
     public Account getAccount(String accountId) {
         if (!StringUtils.isEmpty(accountId)) {
-            for (Account account : mAccountList) {
-                String accountID = account.getAccountID();
-                if (accountID.equals(accountId)) {
+            for (Account account : mAccountList)
+                if (accountId.equals(account.getAccountID()))
                     return account;
-                }
-            }
         }
         return null;
     }
