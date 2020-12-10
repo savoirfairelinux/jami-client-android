@@ -305,6 +305,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     @Override
     public void onStop() {
         super.onStop();
+        previewSnapAnimation.cancel();
         if (binding.videoSurface.getVisibility() == View.VISIBLE) {
             restartVideo = true;
         }
@@ -697,7 +698,10 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     private void configurePreview(int width, float animatedFraction) {
-        float margin = getResources().getDimension(R.dimen.call_preview_margin);
+        Context context = getContext();
+        if (context == null || binding == null)
+            return;
+        float margin = context.getResources().getDimension(R.dimen.call_preview_margin);
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.previewContainer.getLayoutParams();
         float r = 1.f - animatedFraction;
         float hideMargin = 0.f;
