@@ -46,7 +46,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -55,8 +54,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import javax.inject.Inject;
 
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
@@ -75,8 +72,6 @@ import cx.ring.fragments.MediaPreferenceFragment;
 import cx.ring.fragments.QRCodeFragment;
 import cx.ring.model.Account;
 import cx.ring.mvp.BaseSupportFragment;
-import cx.ring.services.AccountService;
-import cx.ring.services.VCardServiceImpl;
 import cx.ring.settings.AccountFragment;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.utils.AndroidFileUtils;
@@ -125,7 +120,6 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         }
     };
 
-    private boolean mIsVisible = true;
     private ProgressDialog mWaitDialog;
     private boolean mAccountHasPassword = true;
     private String mBestName = "";
@@ -138,10 +132,6 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
 
     private final CompositeDisposable mDisposableBag = new CompositeDisposable();
     private final CompositeDisposable mProfileDisposable = new CompositeDisposable();
-
-    @Inject
-    AccountService mAccountService;
-
     private FragAccSummaryBinding mBinding;
 
     @Nullable
@@ -183,12 +173,10 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
             }
         }
 
-        updateUserView(mAccountService.getCurrentAccount());
         mBinding.scrollview.getViewTreeObserver().addOnScrollChangedListener(this);
         mBinding.linkNewDevice.setOnClickListener(v -> showWizard(mAccountId));
         mBinding.linkedDevices.setRightDrawableOnClickListener(v -> onDeviceRename());
         mBinding.username.setRightDrawableOnClickListener(v -> mBinding.username.getEditText().requestFocus());
-        mBinding.userPhoto.setOnClickListener(v -> profileContainerClicked());
         mBinding.registerName.setOnClickListener(v -> showUsernameRegistrationPopup());
 
         ((HomeActivity) requireActivity()).getSwitchButton().setOnCheckedChangeListener((buttonView, isChecked) -> presenter.enableAccount(isChecked));
@@ -205,25 +193,22 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         items.add(systemItem);
         items.add(advancedItem);
 
-        SettingsAdapter adapter = new SettingsAdapter(getContext(), R.layout.item_setting, items);
+        SettingsAdapter adapter = new SettingsAdapter(view.getContext(), R.layout.item_setting, items);
         mBinding.settingsList.setAdapter(adapter);
-        mBinding.settingsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                switch (i) {
-                    case SETTINGS_ACCOUNT:
-                        presenter.goToAccount();
-                        break;
-                    case SETTINGS_MEDIA:
-                        presenter.goToMedia();
-                        break;
-                    case SETTINGS_SYSTEM:
-                        presenter.goToSystem();
-                        break;
-                    case SETTINGS_ADVANCED:
-                        presenter.goToAdvanced();
-                        break;
-                }
+        mBinding.settingsList.setOnItemClickListener((adapterView, v, i, l) -> {
+            switch (i) {
+                case SETTINGS_ACCOUNT:
+                    presenter.goToAccount();
+                    break;
+                case SETTINGS_MEDIA:
+                    presenter.goToMedia();
+                    break;
+                case SETTINGS_SYSTEM:
+                    presenter.goToSystem();
+                    break;
+                case SETTINGS_ADVANCED:
+                    presenter.goToAdvanced();
+                    break;
             }
         });
 
@@ -239,15 +224,11 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         mBinding.settingsList.setLayoutParams(par);
         mBinding.settingsList.requestLayout();
 
-        mBinding.chipMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mBinding.devicesList.getVisibility() == View.GONE) {
-                    expand(mBinding.devicesList);
-                } else {
-                    collapse(mBinding.devicesList);
-                }
-
+        mBinding.chipMore.setOnClickListener(v -> {
+            if (mBinding.devicesList.getVisibility() == View.GONE) {
+                expand(mBinding.devicesList);
+            } else {
+                collapse(mBinding.devicesList);
             }
         });
     }
@@ -279,8 +260,10 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         mProfileDisposable.add(AvatarDrawable.load(context, account)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(avatar -> {
-                    mBinding.userPhoto.setImageDrawable(avatar);
-                    mBinding.username.setText(account.getLoadedProfile().blockingGet().first);
+                    if (mBinding != null) {
+                        mBinding.userPhoto.setImageDrawable(avatar);
+                        mBinding.username.setText(account.getLoadedProfile().blockingGet().first);
+                    }
                 }, e -> Log.e(TAG, "Error loading avatar", e)));
     }
 
@@ -294,8 +277,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
                             if (mCacheArchive != null) {
                                 AndroidFileUtils.moveToUri(requireContext().getContentResolver(), mCacheArchive, uri)
                                         .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(() -> {
-                                        }, e -> {
+                                        .subscribe(() -> {}, e -> {
                                             View v = getView();
                                             if (v != null)
                                                 Snackbar.make(v, "Can't export archive: " + e.getMessage(), Snackbar.LENGTH_LONG).show();
@@ -309,7 +291,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
                 if (resultCode == Activity.RESULT_OK) {
                     if (tmpProfilePhotoUri == null) {
                         if (resultData != null)
-                            updatePhoto((Bitmap) resultData.getExtras().get("data"));
+                            updatePhoto(Single.just((Bitmap) resultData.getExtras().get("data")));
                     } else {
                         updatePhoto(tmpProfilePhotoUri);
                     }
@@ -327,6 +309,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
     @Override
     public void accountChanged(@NonNull final Account account) {
         updateUserView(account);
+        mBinding.userPhoto.setOnClickListener(v -> profileContainerClicked(account));
         mBinding.linkedDevices.setText(account.getDeviceName());
         setLinkedDevicesAdapter(account);
         mAccountHasPassword = account.hasPassword();
@@ -399,12 +382,12 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
 
     }
 
-    private void profileContainerClicked() {
+    private void profileContainerClicked(Account account) {
         LayoutInflater inflater = LayoutInflater.from(getActivity());
-        ViewGroup view = (ViewGroup) inflater.inflate(R.layout.dialog_profile, null);
 
+        ViewGroup view = (ViewGroup) inflater.inflate(R.layout.dialog_profile, null);
         mProfilePhoto = view.findViewById(R.id.profile_photo);
-        mDisposableBag.add(AvatarDrawable.load(inflater.getContext(), mAccountService.getCurrentAccount())
+        mDisposableBag.add(AvatarDrawable.load(inflater.getContext(), account)
                 .subscribe(a -> mProfilePhoto.setImageDrawable(a)));
 
         ImageButton cameraView = view.findViewById(R.id.camera);
@@ -436,12 +419,12 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
 
     private void showUsernameRegistrationPopup() {
         Bundle args = new Bundle();
-        args.putString(AccountEditionFragment.ACCOUNT_ID_KEY, getArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY));
+        args.putString(AccountEditionFragment.ACCOUNT_ID_KEY, mAccountId);
         args.putBoolean(AccountEditionFragment.ACCOUNT_HAS_PASSWORD_KEY, mAccountHasPassword);
         RegisterNameDialog registrationDialog = new RegisterNameDialog();
         registrationDialog.setArguments(args);
         registrationDialog.setListener(this);
-        registrationDialog.show(requireFragmentManager(), TAG);
+        registrationDialog.show(getParentFragmentManager(), TAG);
     }
 
     @Override
@@ -501,20 +484,20 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
     private void onBackupAccount() {
         BackupAccountDialog dialog = new BackupAccountDialog();
         Bundle args = new Bundle();
-        args.putString(AccountEditionFragment.ACCOUNT_ID_KEY, getArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY));
+        args.putString(AccountEditionFragment.ACCOUNT_ID_KEY, mAccountId);
         dialog.setArguments(args);
         dialog.setListener(this);
-        dialog.show(requireFragmentManager(), FRAGMENT_DIALOG_BACKUP);
+        dialog.show(getParentFragmentManager(), FRAGMENT_DIALOG_BACKUP);
     }
 
     public void onPasswordChangeAsked() {
         ChangePasswordDialog dialog = new ChangePasswordDialog();
         Bundle args = new Bundle();
-        args.putString(AccountEditionFragment.ACCOUNT_ID_KEY, getArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY));
+        args.putString(AccountEditionFragment.ACCOUNT_ID_KEY, mAccountId);
         args.putBoolean(AccountEditionFragment.ACCOUNT_HAS_PASSWORD_KEY, mAccountHasPassword);
         dialog.setArguments(args);
         dialog.setListener(this);
-        dialog.show(requireFragmentManager(), FRAGMENT_DIALOG_PASSWORD);
+        dialog.show(getParentFragmentManager(), FRAGMENT_DIALOG_PASSWORD);
     }
 
     @Override
@@ -576,22 +559,23 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
     }
 
     private void updatePhoto(Uri uriImage) {
-        mDisposableBag.add(AndroidFileUtils.loadBitmap(getActivity(), uriImage)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::updatePhoto, e -> Log.e(TAG, "Error loading image " + uriImage, e)));
+        updatePhoto(AndroidFileUtils.loadBitmap(requireContext(), uriImage));
     }
 
-    private void updatePhoto(Bitmap image) {
-        mSourcePhoto = image;
-        AvatarDrawable avatarDrawable = new AvatarDrawable.Builder()
-                        .withPhoto(image)
-                        .withNameData(null, mAccountService.getCurrentAccount().getRegisteredName())
-                        .withId(mAccountService.getCurrentAccount().getUri())
-                        .withCircleCrop(true)
-                        .build(getContext());
-        mDisposableBag.add(VCardServiceImpl.loadProfile(mAccountService.getCurrentAccount())
-                .map(profile -> avatarDrawable)
-                .subscribeOn(Schedulers.io())
+    private void updatePhoto(Single<Bitmap> image) {
+        Account account = presenter.getAccount();
+        if (account == null)
+            return;
+        mDisposableBag.add(image.subscribeOn(Schedulers.io())
+                .map(img -> {
+                    mSourcePhoto = img;
+                    return new AvatarDrawable.Builder()
+                            .withPhoto(img)
+                            .withNameData(null, account.getRegisteredName())
+                            .withId(account.getUri())
+                            .withCircleCrop(true)
+                            .build(getContext());
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(avatar -> mProfilePhoto.setImageDrawable(avatar), e-> Log.e(TAG, "Error loading image", e)));
     }
@@ -615,7 +599,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
 
     @Override
     public void onScrollChanged() {
-        if (mIsVisible && mBinding != null) {
+        if (mBinding != null) {
             Activity activity = getActivity();
             if (activity instanceof HomeActivity)
                 ((HomeActivity) activity).setToolbarElevation(mBinding.scrollview.canScrollVertically(SCROLL_DIRECTION_UP));
@@ -712,10 +696,6 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         collapse(mBinding.devicesList);
     }
 
-    public void setFragmentVisibility(boolean isVisible) {
-        mIsVisible = isVisible;
-    }
-
     private void shareAccount(String username) {
         if (!StringUtils.isEmpty(username)) {
             Intent sharingIntent = new Intent(Intent.ACTION_SEND);
@@ -787,7 +767,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         args.putBoolean(ConfirmRevocationDialog.HAS_PASSWORD_KEY, mAccountHasPassword);
         dialog.setArguments(args);
         dialog.setListener(this);
-        dialog.show(requireFragmentManager(), FRAGMENT_DIALOG_REVOCATION);
+        dialog.show(getParentFragmentManager(), FRAGMENT_DIALOG_REVOCATION);
     }
 
     @Override
@@ -798,7 +778,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         args.putString(RenameDeviceDialog.DEVICENAME_KEY, dev_name);
         dialog.setArguments(args);
         dialog.setListener(this);
-        dialog.show(requireFragmentManager(), FRAGMENT_DIALOG_RENAME);
+        dialog.show(getParentFragmentManager(), FRAGMENT_DIALOG_RENAME);
     }
 
     @Override
@@ -815,8 +795,8 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
                 View.MeasureSpec.makeMeasureSpec(1200, View.MeasureSpec.AT_MOST));
         final int targetHeight = summary.getMeasuredHeight();
 
-        ValueAnimator mAnimator = slideAnimator(0, targetHeight, summary);
-        mAnimator.start();
+        ValueAnimator animator = slideAnimator(0, targetHeight, summary);
+        animator.start();
 
         mBinding.chipMore.setText(R.string.account_link_hide_button);
     }
@@ -848,19 +828,15 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         mBinding.chipMore.setText(getString(R.string.account_link_show_button, mDeviceAdapter.getCount()));
     }
 
-    private ValueAnimator slideAnimator(int start, int end, final View summary) {
+    private static ValueAnimator slideAnimator(int start, int end, final View summary) {
         ValueAnimator animator = ValueAnimator.ofInt(start, end);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                // Update Height
-                int value = (Integer) valueAnimator.getAnimatedValue();
-                ViewGroup.LayoutParams layoutParams = summary.getLayoutParams();
-                layoutParams.height = value;
-                summary.setLayoutParams(layoutParams);
-            }
+        animator.addUpdateListener(valueAnimator -> {
+            // Update Height
+            int value = (Integer) valueAnimator.getAnimatedValue();
+            ViewGroup.LayoutParams layoutParams = summary.getLayoutParams();
+            layoutParams.height = value;
+            summary.setLayoutParams(layoutParams);
         });
-
         return animator;
     }
 
