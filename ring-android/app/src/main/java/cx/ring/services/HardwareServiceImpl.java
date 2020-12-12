@@ -92,8 +92,8 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     private boolean mShouldSpeakerphone = false;
     private final boolean mHasSpeakerPhone;
     private boolean mIsChoosePlugin = false;
-    private String mMediaHandlerId = "";
-    private String mPluginCallId = "";
+    private String mMediaHandlerId = null;
+    private String mPluginCallId = null;
 
     public HardwareServiceImpl(Context context) {
         mContext = context;
@@ -495,12 +495,13 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     }
 
     private void toggleMediaHandler(String callId) {
-        toggleCallMediaHandler(mMediaHandlerId, callId, true);
+        if (mMediaHandlerId != null)
+            toggleCallMediaHandler(mMediaHandlerId, callId, true);
     }
 
     public void stopMediaHandler() {
         mIsChoosePlugin = false;
-        mMediaHandlerId = "";
+        mMediaHandlerId = null;
     }
 
     @Override
@@ -551,16 +552,19 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                 new CameraService.CameraListener() {
                     @Override
                     public void onOpened() {
-                        String currentCall = conf != null ? conf.getConfId() : null;
-                        if (!TextUtils.isEmpty(mPluginCallId) && !mPluginCallId.equals(currentCall)) {
-                            toggleCallMediaHandler("", conf.getId(), false);
+                        String currentCall = conf != null ? conf.getId() : null;
+                        if (currentCall == null)
+                            return;
+                        if (mPluginCallId != null && !mPluginCallId.equals(currentCall)) {
+                            toggleCallMediaHandler("", currentCall, false);
                             mIsChoosePlugin = false;
-                            mMediaHandlerId = "";
-                            mPluginCallId = "";
+                            mMediaHandlerId = null;
+                            mPluginCallId = null;
                         }
-                        else if (mIsChoosePlugin && !mMediaHandlerId.isEmpty())
-                            mPluginCallId = conf != null ? conf.getConfId() : null;
-                            toggleMediaHandler(conf.getId());
+                        else if (mIsChoosePlugin && mMediaHandlerId != null) {
+                            mPluginCallId = currentCall;
+                            toggleMediaHandler(currentCall);
+                        }
                     }
 
                     @Override
