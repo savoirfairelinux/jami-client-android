@@ -29,6 +29,7 @@ import androidx.preference.TwoStatePreference;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -95,6 +96,7 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
         for (Preference preference : createPreferences(mPreferencesAttributes)) {
             screen.addPreference(preference);
         }
+        screen.addPreference(createAlwaysPreference());
         setPreferenceScreen(screen);
         return root;
     }
@@ -181,6 +183,17 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
                 })
                 .setNegativeButton(android.R.string.cancel, null)
                 .show());
+        return preference;
+    }
+
+    private Preference createAlwaysPreference() {
+        Map<String, String> preferenceAttributes = new HashMap<String, String>();
+        preferenceAttributes.put("key", "always");
+        preferenceAttributes.put("title", "Automatically turn plugin on for call and chats");
+        preferenceAttributes.put("summary", "Plugin will take effect immediately");
+        preferenceAttributes.put("defaultValue", "0");
+
+        Preference preference = createSwitchPreference(preferenceAttributes);
         return preference;
     }
 
