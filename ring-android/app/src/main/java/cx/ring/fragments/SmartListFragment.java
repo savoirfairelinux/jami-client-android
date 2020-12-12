@@ -486,16 +486,22 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     }
 
     private void changeSeparatorHeight(boolean open) {
-        if (DeviceUtils.isTablet(getActivity())) {
+        if (binding == null || binding.separator == null)
+            return;
+
+        if (DeviceUtils.isTablet(getContext())) {
             int margin = 0;
 
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.separator.getLayoutParams();
             if (open) {
-                Toolbar toolbar = getActivity().findViewById(R.id.main_toolbar);
-                if (toolbar != null)
-                    margin = toolbar.getHeight();
+                Activity activity = getActivity();
+                if (activity != null) {
+                    Toolbar toolbar = activity.findViewById(R.id.main_toolbar);
+                    if (toolbar != null)
+                        margin = toolbar.getHeight();
+                }
             }
 
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.separator.getLayoutParams();
             params.topMargin = margin;
             binding.separator.setLayoutParams(params);
         }
