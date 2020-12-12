@@ -63,10 +63,8 @@ import cx.ring.R;
 import cx.ring.adapters.SmartListAdapter;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.CallActivity;
-import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.databinding.FragSmartlistBinding;
-import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.services.AccountService;
@@ -75,7 +73,6 @@ import cx.ring.smartlist.SmartListView;
 import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ClipboardHelper;
-import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
 import cx.ring.viewholders.SmartListViewHolder;
 
@@ -486,16 +483,22 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     }
 
     private void changeSeparatorHeight(boolean open) {
-        if (DeviceUtils.isTablet(getActivity())) {
+        if (binding == null || binding.separator == null)
+            return;
+
+        if (DeviceUtils.isTablet(getContext())) {
             int margin = 0;
 
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.separator.getLayoutParams();
             if (open) {
-                Toolbar toolbar = getActivity().findViewById(R.id.main_toolbar);
-                if (toolbar != null)
-                    margin = toolbar.getHeight();
+                Activity activity = getActivity();
+                if (activity != null) {
+                    Toolbar toolbar = activity.findViewById(R.id.main_toolbar);
+                    if (toolbar != null)
+                        margin = toolbar.getHeight();
+                }
             }
 
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.separator.getLayoutParams();
             params.topMargin = margin;
             binding.separator.setLayoutParams(params);
         }
