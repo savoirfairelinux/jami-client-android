@@ -91,10 +91,13 @@ public class CallContact {
         return contact;
     }
 
-    public static CallContact build(String to) {
+    public static CallContact build(String to, boolean isUser) {
         ArrayList<Phone> phones = new ArrayList<>();
         phones.add(new Phone(to, 0));
-        return new CallContact(UNKNOWN_ID, null, null, 0, phones, false);
+        return new CallContact(UNKNOWN_ID, null, null, 0, phones, isUser);
+    }
+    public static CallContact build(String to) {
+        return build(to, false);
     }
 
     public Observable<CallContact> getUpdatesSubject() {

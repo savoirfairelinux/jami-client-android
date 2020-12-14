@@ -28,11 +28,10 @@ along with this program; if not, write to the Free Software
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/qr_code"
-        android:layout_width="@dimen/wizard_button_width"
+        android:layout_width="@dimen/wizard_button_width_half"
         android:layout_height="wrap_content"
         style="@style/ButtonOutLined"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp"
+        android:layout_margin="8dp"
         app:cardCornerRadius="@dimen/button_corner_radius"
         android:visibility="gone"
         tools:visibility="visible" >
@@ -46,6 +45,30 @@ along with this program; if not, write to the Free Software
             android:layout_gravity="center"
             android:drawableLeft="@drawable/baseline_qr_code_2_black_24dp"
             android:drawableTint="@color/colorPrimary"/>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/new_group"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="@dimen/wizard_button_width_half"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/qr_code"
+        app:cardCornerRadius="@dimen/button_corner_radius"
+        android:layout_margin="8dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawableLeft="@drawable/baseline_group_add_24"
+            android:drawablePadding="8dp"
+            android:drawableTint="@color/colorPrimary"
+            android:text="Add group"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp" />
 
     </com.google.android.material.card.MaterialCardView>
 
@@ -85,12 +108,14 @@ along with this program; if not, write to the Free Software
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:indeterminate="true" />
+            android:indeterminate="true"
+            tools:visibility="gone"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/confs_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:layout_constraintTop_toBottomOf="@id/qr_code"
             android:layout_marginStart="0dp"
             android:clipToPadding="false"
             android:divider="@null"
@@ -98,7 +123,7 @@ along with this program; if not, write to the Free Software
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
             tools:listitem="@layout/item_smartlist"
-            tools:visibility="gone"/>
+            tools:visibility="visible"/>
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             style="@style/Widget.AppTheme.MainActionButton"

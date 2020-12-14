@@ -79,7 +79,6 @@ import java.util.Map;
 import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.adapters.ConversationAdapter;
-import cx.ring.adapters.NumberAdapter;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.CallActivity;
 import cx.ring.client.ContactDetailsActivity;
@@ -856,36 +855,36 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     @Override
-    public void displayContact(final CallContact contact) {
+    public void displayContact(Conversation conversation) {
         mCompositeDisposable.clear();
-        mCompositeDisposable.add(AvatarFactory.getAvatar(requireContext(), contact)
+        mCompositeDisposable.add(AvatarFactory.getAvatar(requireContext(), conversation, true)
                 .doOnSuccess(d -> {
                     mConversationAvatar = (AvatarDrawable) d;
-                    mParticipantAvatars.put(contact.getPrimaryNumber(),
+                    mParticipantAvatars.put(conversation.getUri().getRawRingId(),
                             new AvatarDrawable((AvatarDrawable) d));
                 })
-                .flatMapObservable(d -> contact.getUpdatesSubject())
+                .flatMapObservable(d -> conversation.getContact().getUpdatesSubject())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(c -> {
-                    mConversationAvatar.update(c);
-                    String uri = contact.getPrimaryNumber();
+                    //mConversationAvatar.update(c);
+                    String uri = c.getPrimaryNumber();
                     AvatarDrawable ad = mParticipantAvatars.get(uri);
                     if (ad != null)
                         ad.update(c);
-                    setupActionbar(contact);
+                    setupActionbar(conversation);
                     mAdapter.setPhoto();
                 }));
-        mCompositeDisposable.add(AvatarFactory.getAvatar(requireContext(), contact, false)
-                .doOnSuccess(d -> mSmallParticipantAvatars.put(contact.getPrimaryNumber(), new AvatarDrawable((AvatarDrawable) d)))
-                .flatMapObservable(d -> contact.getUpdatesSubject())
+        /*mCompositeDisposable.add(AvatarFactory.getAvatar(requireContext(), conversation.getContact(), false)
+                .doOnSuccess(d -> mSmallParticipantAvatars.put(conversation.getUri().getRawRingId(), new AvatarDrawable((AvatarDrawable) d)))
+                .flatMapObservable(d -> contacts.get(0).getUpdatesSubject())
                 .subscribe(c -> {
                     synchronized (mSmallParticipantAvatars) {
-                        String uri = contact.getPrimaryNumber();
+                        String uri = c.getPrimaryNumber();
                         AvatarDrawable ad = mSmallParticipantAvatars.get(uri);
                         if (ad != null)
                             ad.update(c);
                     }
-                }));
+                }));*/
     }
 
     @Override
@@ -896,8 +895,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     @Override
     public void displayNumberSpinner(final Conversation conversation, final Uri number) {
         binding.numberSelector.setVisibility(View.VISIBLE);
-        binding.numberSelector.setAdapter(new NumberAdapter(getActivity(),
-                conversation.getContact(), false));
+        //binding.numberSelector.setAdapter(new NumberAdapter(getActivity(), conversation.getContact(), false));
         binding.numberSelector.setSelection(getIndex(binding.numberSelector, number));
     }
 
@@ -931,22 +929,22 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     @Override
-    public void goToContactActivity(String accountId, String contactId) {
-        startActivity(new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, contactId),
-                requireActivity().getApplicationContext(), ContactDetailsActivity.class));
+    public void goToContactActivity(String accountId, Uri uri) {
+        startActivity(new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, uri))
+                .setClass(requireActivity().getApplicationContext(), ContactDetailsActivity.class));
     }
 
     @Override
-    public void goToCallActivityWithResult(String accountId, String contactRingId, boolean audioOnly) {
+    public void goToCallActivityWithResult(String accountId, Uri uri, boolean audioOnly) {
         Intent intent = new Intent(CallActivity.ACTION_CALL)
                 .setClass(requireActivity().getApplicationContext(), CallActivity.class)
                 .putExtra(KEY_ACCOUNT_ID, accountId)
                 .putExtra(CallFragment.KEY_AUDIO_ONLY, audioOnly)
-                .putExtra(KEY_CONTACT_RING_ID, contactRingId);
+                .putExtra(KEY_CONTACT_RING_ID, uri.getUri());
         startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
     }
 
-    private void setupActionbar(CallContact contact) {
+    private void setupActionbar(Conversation conversation) {
         if (!isVisible()) {
             return;
         }
@@ -957,8 +955,9 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         }
 
         Context context = actionBar.getThemedContext();
-        String displayName = contact.getDisplayName();
-        String identity = contact.getRingUsername();
+
+        String displayName = conversation.getTitle();
+        String identity = conversation.getUriTitle();
 
         Activity activity = getActivity();
         if (activity instanceof HomeActivity) {

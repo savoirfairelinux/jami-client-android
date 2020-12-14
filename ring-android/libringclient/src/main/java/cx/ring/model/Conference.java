@@ -46,7 +46,7 @@ public class Conference {
     }
     private final Subject<List<ParticipantInfo>> mParticipantInfo = BehaviorSubject.createDefault(Collections.emptyList());
 
-    private String mId;
+    private final String mId;
     private SipCall.CallStatus mConfState;
     private final ArrayList<SipCall> mParticipants;
     private boolean mRecording;

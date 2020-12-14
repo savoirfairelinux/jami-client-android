@@ -65,6 +65,7 @@ public class Account {
     private final Map<String, CallContact> mContacts = new HashMap<>();
     private final Map<String, TrustRequest> mRequests = new HashMap<>();
     private final Map<String, CallContact> mContactCache = new HashMap<>();
+    private final Map<String, Conversation> swarmConversations = new HashMap<>();
 
     private final Map<String, Conversation> conversations = new HashMap<>();
     private final Map<String, Conversation> pending = new HashMap<>();
@@ -91,6 +92,24 @@ public class Account {
 
     public boolean canSearch() {
         return !StringUtils.isEmpty(getDetail(ConfigKey.MANAGER_URI));
+    }
+
+    public boolean isContact(Conversation conversation) {
+        return conversation.getContacts().size() == 1 && getContact(conversation.getContact().getPrimaryUri().getRawRingId()) != null;
+    }
+
+    public void conversationStarted(Conversation conversation) {
+        conversations.put(conversation.getUri().getUri(), conversation);
+        conversationChanged();
+    }
+
+    public Conversation getSwarm(String conversationId) {
+        Conversation c = swarmConversations.get(conversationId);
+        if (c == null) {
+            c = new Conversation(accountID, new Uri(Uri.SWARM_URI_SCHEME + conversationId));
+            swarmConversations.put(conversationId, c);
+        }
+        return c;
     }
 
     public static class ContactLocation {
@@ -161,9 +180,9 @@ public class Account {
         return conversationSubject;
     }
 
-    public Observable<SmartListViewModel> getConversationViewModel() {
+    /*public Observable<SmartListViewModel> getConversationViewModel() {
         return conversationSubject.map(c -> new SmartListViewModel(accountID, c.getContact(), c.getLastEvent()));
-    }
+    }*/
 
     public Observable<List<Conversation>> getPendingSubject() {
         return pendingSubject;
@@ -217,7 +236,7 @@ public class Account {
         }
     }
 
-    private void conversationChanged() {
+    public void conversationChanged() {
         conversationsChanged = true;
         if (historyLoaded) {
             conversationsSubject.onNext(new ArrayList<>(getSortedConversations()));
@@ -282,7 +301,7 @@ public class Account {
     }
 
     public void updated(Conversation conversation) {
-        String key = conversation.getContact().getPrimaryUri().getUri();
+        String key = conversation.getUri().getUri();//.getContact().getPrimaryUri().getUri();
         if (conversation == conversations.get(key))
             conversationUpdated(conversation);
         else if (conversation == pending.get(key))
@@ -344,11 +363,16 @@ public class Account {
                 if (isSip())
                     contact = CallContact.buildSIP(new Uri(key));
                 else
-                    contact = CallContact.build(key);
+                    contact = CallContact.build(key, isMe(key));
                 mContactCache.put(key, contact);
             }
             return contact;
         }
+    }
+
+    boolean isMe(String uri) {
+        Log.w(TAG, "isMe " + uri + " " + getUsername());
+        return getUsername().equals(uri);
     }
 
     public CallContact getContactFromCache(Uri uri) {
@@ -700,17 +724,24 @@ public class Account {
     }
 
     public void addRequest(TrustRequest request) {
+        Log.w(TAG, "addRequest start");
         synchronized (pending) {
-            mRequests.put(request.getContactId(), request);
-            //trustRequestSubject.onNext(new RequestEvent(request, true));
-            trustRequestsSubject.onNext(mRequests.values());
+            boolean isSwarm = request.getConversationId() != null;
+            String key = new Uri(isSwarm ? request.getConversationId() : request.getContactId()).getUri();
+            Log.w(TAG, "addRequest isSwarm " + isSwarm + " "  + key);
+            if (!isSwarm) {
+                mRequests.put(key, request);
+                //trustRequestSubject.onNext(new RequestEvent(request, true));
+                trustRequestsSubject.onNext(mRequests.values());
+            }
 
-            String key = new Uri(request.getContactId()).getUri();
             Conversation conversation = pending.get(key);
             if (conversation == null) {
-                conversation = getByKey(key);
+                conversation = isSwarm ? getSwarm(key) : getByKey(key);
                 pending.put(key, conversation);
-                conversation.addRequestEvent(request);
+                if (!isSwarm) {
+                    conversation.addRequestEvent(request);
+                }
                 pendingChanged();
             }
         }
@@ -769,10 +800,12 @@ public class Account {
     }
 
     public Conversation getByUri(Uri uri) {
-        if (uri != null && !uri.isEmpty()) {
-            return getByKey(uri.getUri());
-        }
-        return null;
+        Log.w(TAG, "getByUri " + uri);
+        if (uri == null || uri.isEmpty())
+            return null;
+        return uri.isSwarm()
+                ? getSwarm(uri.getRawRingId())
+                : getByKey(uri.getUri());
     }
 
     public Conversation getByUri(String uri) {
@@ -851,7 +884,7 @@ public class Account {
                     conversations.put(key, pendingConversation);
                     pendingChanged();
                 }
-                pendingConversation.addContactEvent();
+                pendingConversation.addContactEvent(contact);
             }
             conversationChanged();
         }

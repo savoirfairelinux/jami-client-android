@@ -126,7 +126,9 @@ public abstract class ContactService {
     }
 
     public Observable<List<CallContact>> observeContact(String accountId, List<CallContact> contacts, boolean withPresence) {
-        if (contacts.size() == 1) {
+        if (contacts.isEmpty()) {
+            return Observable.just(Collections.emptyList());
+        } else if (contacts.size() == 1) {
             return observeContact(accountId, contacts.get(0), withPresence).map(Collections::singletonList);
         } else {
             List<Observable<CallContact>> observables = new ArrayList<>(contacts.size());

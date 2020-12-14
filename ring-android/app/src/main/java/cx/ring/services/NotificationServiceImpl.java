@@ -451,17 +451,17 @@ public class NotificationServiceImpl implements NotificationService {
      * Handles the creation and destruction of services associated with transfers as well as displaying notifications.
      *
      * @param transfer the data transfer object
-     * @param contact  the contact to whom the data transfer is being sent
+     * @param conversation  the contact to whom the data transfer is being sent
      * @param remove   true if it should be removed from current calls
      */
     @Override
-    public void handleDataTransferNotification(DataTransfer transfer, CallContact contact, boolean remove) {
+    public void handleDataTransferNotification(DataTransfer transfer, Conversation conversation, boolean remove) {
         Log.d(TAG, "handleDataTransferNotification, a data transfer event is in progress");
         if (DeviceUtils.isTv(mContext)) {
             return;
         }
         if (!remove) {
-            showFileTransferNotification(transfer, contact);
+            showFileTransferNotification(transfer, conversation.getContact());
         } else {
             removeTransferNotification(transfer.getDaemonId());
         }
@@ -497,6 +497,7 @@ public class NotificationServiceImpl implements NotificationService {
     public void showTextNotification(String accountId, Conversation conversation) {
         TreeMap<Long, TextMessage> texts = conversation.getUnreadTextMessages();
 
+        //TODO handle groups
         CallContact contact = conversation.getContact();
         if (texts.isEmpty() || conversation.isVisible()) {
             cancelTextNotification(contact.getPrimaryUri());
@@ -693,10 +694,12 @@ public class NotificationServiceImpl implements NotificationService {
             boolean newRequest = false;
             for (Conversation request : requests) {
                 CallContact contact = request.getContact();
-                String contactKey = contact.getPrimaryUri().getRawRingId();
-                if (!notifiedRequests.contains(contactKey)) {
-                    newRequest = true;
-                    mPreferencesService.saveRequestPreferences(account.getAccountID(), contactKey);
+                if (contact != null) {
+                    String contactKey = contact.getPrimaryUri().getRawRingId();
+                    if (!notifiedRequests.contains(contactKey)) {
+                        newRequest = true;
+                        mPreferencesService.saveRequestPreferences(account.getAccountID(), contactKey);
+                    }
                 }
             }
             if (!newRequest)
@@ -885,8 +888,8 @@ public class NotificationServiceImpl implements NotificationService {
         mNotificationBuilders.remove(notificationId);
     }
 
-    public void cancelTextNotification(String ringId) {
-        int notificationId = (NOTIF_MSG + ringId).hashCode();
+    public void cancelTextNotification(String accountId, Uri contact) {
+        int notificationId = getTextNotificationId(contact);
         notificationManager.cancel(notificationId);
         mNotificationBuilders.remove(notificationId);
     }

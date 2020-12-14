@@ -605,15 +605,16 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     }
 
     @Override
-    public void displayContact(CallContact contact) {
+    public void displayContact(Conversation conversation) {
+        List<CallContact> contacts = conversation.getContacts();
         mCompositeDisposable.clear();
-        mCompositeDisposable.add(AvatarFactory.getAvatar(requireContext(), contact)
+        mCompositeDisposable.add(AvatarFactory.getAvatar(requireContext(), conversation, true)
                 .doOnSuccess(d -> {
                     mConversationAvatar = (AvatarDrawable) d;
-                    mParticipantAvatars.put(contact.getPrimaryNumber(),
+                    mParticipantAvatars.put(contacts.get(0).getPrimaryNumber(),
                             new AvatarDrawable((AvatarDrawable) d));
                 })
-                .flatMapObservable(d -> contact.getUpdatesSubject())
+                .flatMapObservable(d -> contacts.get(0).getUpdatesSubject())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(c -> {
                     String id = c.getRingUsername();
@@ -624,7 +625,7 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
                     else
                         binding.subtitle.setVisibility(View.GONE);
                     mConversationAvatar.update(c);
-                    String uri = contact.getPrimaryNumber();
+                    String uri = contacts.get(0).getPrimaryNumber();
                     AvatarDrawable a = mParticipantAvatars.get(uri);
                     if (a != null)
                         a.update(c);
@@ -736,12 +737,12 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     }
 
     @Override
-    public void goToCallActivityWithResult(String accountId, String contactRingId, boolean audioOnly) {
+    public void goToCallActivityWithResult(String accountId, cx.ring.model.Uri contactRingId, boolean audioOnly) {
 
     }
 
     @Override
-    public void goToContactActivity(String accountId, String contactRingId) {
+    public void goToContactActivity(String accountId, cx.ring.model.Uri contactRingId) {
 
     }
 
