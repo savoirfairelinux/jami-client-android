@@ -64,12 +64,18 @@ Vous pouvez modifier votre compte ultérieurement</string>
   <string name="account_preferences_media_tab">Media</string>
   <string name="account_ringtone_label">Sonneries</string>
   <string name="account_ringtone_enabled_label">Activer les sonneries</string>
+  <string name="account_ringtone_custom_label">Utiliser une sonnerie personnalisée</string>
+  <string name="account_ringtone_title">Choisissez une sonnerie</string>
+  <string name="account_ringtone_summary">Sélectionnez une sonnerie ou choisissez votre propre sonnerie</string>
   <!--Video Details-->
   <string name="account_video_label">Vidéo</string>
+  <string name="account_video_enable">Activer la vidéo</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Options avancées</string>
   <string name="account_call_settings_title">Paramètres appels</string>
   <string name="account_dht_public_in_calls_label">Autoriser les appels entrants de contacts inconnus</string>
+  <string name="account_registration_exp_label">Expiration de l\'enregistrement</string>
+  <string name="account_local_interface_label">Interface locale</string>
   <string name="account_turn_enable_label">Utiliser le TURN</string>
   <string name="account_turn_username_label">Nom d\'utilisateur TURN</string>
   <string name="account_turn_password_label">Mot de passe TURN</string>

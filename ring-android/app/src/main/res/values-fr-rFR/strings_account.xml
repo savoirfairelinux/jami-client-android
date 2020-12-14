@@ -23,42 +23,94 @@
   <string name="dialog_wait_update_details">Veuillez patienter pendant que votre nouveau compte est mis à jour...</string>
   <string name="dialog_warn_ip2ip_account_title">Créer un compte SIP vide ?</string>
   <string name="dialog_warn_ip2ip_account_message">Vous êtes sur le point de créer un compte SIP sans nom d\'hôte valide.
-</string>
+Vous ne pourrez uniquement émettre et recevoir des appels IP directs.
+Vous pourrez éditer votre compte plus tard.</string>
   <string name="account_type_ip2ip">Compte IP</string>
+  <string name="help_ring">Un compte Jami vous permet de joindre des personnes en pair-à-pair de façon sécurisée au travers d\'un réseau entièrement distribué.</string>
   <string name="help_sip_title">Ajouter votre compte SIP</string>
+  <string name="help_sip">Configurer un compte SIP existant</string>
   <string name="create_sip_account">Ajouter un compte SIP</string>
   <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_title">Supprimer le compte ?</string>
   <string name="account_delete_dialog_message">Cette action ne peut pas être annulée</string>
   <!--AccountManagementFragment-->
+  <string name="empty_account_list">Aucun compte enregistré</string>
   <string name="normal_accounts_titles">Comptes</string>
+  <string name="normal_devices_titles">Appareils liés</string>
+  <string name="account_device_revoke">Révoquer l\'appareil ?</string>
+  <string name="account_device_revocation_success_title">Succès</string>
+  <string name="account_device_revocation_success">L\'appareil est maintenant révoqué</string>
+  <string name="account_device_revocation_error_title">Impossible de révoquer l\'appareil</string>
+  <string name="account_device_revocation_wrong_password">Mauvais mot de passe.</string>
+  <string name="account_device_revocation_unknown_device">Appareil inconnu.</string>
+  <string name="account_device_revocation_error_unknown">Erreur inconnue.</string>
+  <string name="account_password_change">Changer de mot de passe</string>
+  <string name="account_password_set">Définir le mot de passe</string>
+  <string name="account_password_summary">Gérer le mot de passe du compte</string>
+  <string name="account_password_change_wait_message">Changer le mot de passe du compte</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Général</string>
+  <string name="account_basic_category">Paramètres de base</string>
+  <string name="account_alias_label">Nom du compte</string>
   <string name="account_hostname_label">nom d\'hôte</string>
   <string name="account_bootstrap_label">Amorcer</string>
   <string name="account_username_label">nom d\'utilisateur</string>
   <string name="account_password_label">mot de passe</string>
+  <string name="account_optionnal_category">Paramètres optionnels</string>
+  <string name="account_useragent_label">Agent utilisateur</string>
+  <string name="account_autoanswer_label">Réponse automatique</string>
+  <string name="account_rendezvous_label">Mode Rendezvous</string>
+  <string name="account_rendezvous_summary">Dans le mode Rendezvous, les appels entrants vont être ajoutés à une salle de conférence.</string>
+  <string name="account_upnp_label">Activer UPnP</string>
+  <string name="account_proxy_field">Proxy</string>
   <!--Audio Details-->
   <string name="account_audio_label">Audio</string>
+  <string name="account_preferences_media_tab">Média</string>
   <string name="account_ringtone_label">Sonneries</string>
+  <string name="account_ringtone_enabled_label">Activer les sonneries</string>
+  <string name="account_ringtone_path_label">Répertoire des sonneries</string>
+  <string name="account_ringtone_custom_label">Utiliser une sonnerie personnalisée</string>
+  <string name="account_ringtone_title">Choisir une sonnerie</string>
+  <string name="account_ringtone_summary">Sélectionner une sonnerie ou choisissez votre propre sonnerie</string>
   <!--Video Details-->
   <string name="account_video_label">Vidéo</string>
+  <string name="account_video_enable">Activer la vidéo</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Options avancées</string>
   <string name="account_call_settings_title">Paramètres appels</string>
   <string name="account_dht_public_in_calls_label">Autoriser les appels entrants de contacts inconnus</string>
+  <string name="account_registration_exp_label">Expiration de l\'inscription</string>
+  <string name="account_local_interface_label">Interface locale</string>
+  <string name="account_local_port_label">Port local</string>
+  <string name="account_stun_enable_label">Utiliser STUN</string>
+  <string name="account_stun_server_label">Serveur STUN</string>
+  <string name="account_accept_files">Accepter les fichiers entrants automatiquement</string>
+  <string name="account_conversation_settings_title">Paramètres de conversation</string>
+  <string name="account_accept_files_max_size">Taille maximale de fichier à accepter automatiquement</string>
+  <string name="account_accept_files_never">Ne jamais accepter automatiquement</string>
+  <string name="account_accept_files_always">Toujours accepter automatiquement</string>
   <string name="account_turn_enable_label">Utiliser le TURN</string>
+  <string name="account_turn_server_label">Serveur TURN</string>
   <string name="account_turn_username_label">Nom d\'utilisateur TURN</string>
   <string name="account_turn_password_label">Mot de passe TURN</string>
+  <string name="account_proxy_label">Proxy DHT</string>
+  <string name="account_proxy_enable_label">Utiliser le proxy DHT</string>
+  <string name="account_proxy_server_label">Adresse du proxy DHT</string>
+  <string name="account_sip_proxy_label">Proxy</string>
   <!--Security Details-->
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">securité</string>
   <!--SIP-->
   <!--TLS Details-->
+  <string name="account_rtp_max_port">Maximum</string>
+  <string name="account_rtp_min_port">Minimum</string>
   <!--restore/backup-->
   <string name="error_password_char_count">6 caractères minimum</string>
   <string name="account_export_end_error_title">Erreur</string>
   <string name="account_enter_password">Entrez votre mot de passe</string>
   <string name="ring_account_identity">Identité</string>
+  <string name="account_cannot_be_found_title">Impossible de trouver le compte</string>
+  <string name="account_no_network_title">Impossible de se connecter au réseau</string>
   <string name="account_link_prompt_pin">Saisissez le code PIN</string>
   <string name="account_new_button">Créer un compte Jami</string>
   <string name="account_link_export_button">Associer un nouvel appareil</string>
@@ -76,4 +128,5 @@
   <!--Edit profile-->
   <!--Devices-->
   <string name="enter_password">Entrez votre mot de passe</string>
+  <string name="revoke_device_title">Révoquer l\'appareil ?</string>
 </resources>

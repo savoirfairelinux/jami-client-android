@@ -20,7 +20,7 @@
   <!--About dialog-->
   <string name="developed_by">Desenvolto por</string>
   <string name="designed_by">Deseñado por</string>
-  <string name="ringtones_by">Tonos de aviso por</string>
+  <string name="ringtones_by">Tons de aviso por</string>
   <!--RingActivity-->
   <string name="error_no_network">Sen conexión a rede</string>
   <string name="error_mobile_network_available_but_disabled">Por favor, dalle permiso de acceso a rede móbil na pantalla de axustes:</string>
@@ -134,7 +134,7 @@
   <string name="ringtone_error_size_too_big">Este ficheiro é moi grande. O tamaño máximo é de %1$d kB.</string>
   <string name="ringtone_custom_prompt">Establecer ton personalizado</string>
   <string name="ringtone_custom_label">Personalizar</string>
-  <string name="ringtone_jami_tones">Tonos Jami</string>
+  <string name="ringtone_jami_tones">Tons Jami</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Jami precisa permiso para \"Ler os Contactos\" para esta característica. Por favor, concédello.</string>
   <!--Write call log permission-->

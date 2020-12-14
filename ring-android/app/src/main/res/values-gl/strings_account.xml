@@ -66,12 +66,12 @@
   <!--Audio Details-->
   <string name="account_audio_label">Audio</string>
   <string name="account_preferences_media_tab">Multimedia</string>
-  <string name="account_ringtone_label">Tonos</string>
-  <string name="account_ringtone_enabled_label">Activar tonos de chamada</string>
-  <string name="account_ringtone_path_label">Ruta ao tono de chamada</string>
-  <string name="account_ringtone_custom_label">Utilizar tono personalizado</string>
-  <string name="account_ringtone_title">Escolle un tono de chamada</string>
-  <string name="account_ringtone_summary">Escolle un tono ou establece o teu propio</string>
+  <string name="account_ringtone_label">Tons</string>
+  <string name="account_ringtone_enabled_label">Activar tons de chamada</string>
+  <string name="account_ringtone_path_label">Ruta ao ton de chamada</string>
+  <string name="account_ringtone_custom_label">Utilizar ton personalizado</string>
+  <string name="account_ringtone_title">Escolle un ton de chamada</string>
+  <string name="account_ringtone_summary">Escolle un ton ou establece o teu propio</string>
   <!--Video Details-->
   <string name="account_video_label">Vídeo</string>
   <string name="account_video_enable">Activar vídeo</string>
@@ -131,10 +131,10 @@
   <string name="account_tls_negotiation_timeout_sec">Caducidade da negociación (seg)</string>
   <string name="account_rtp_max_port">Máximo</string>
   <string name="account_rtp_min_port">Mínimo</string>
-  <string name="account_rtp_port_range">Rango de portos Audio RTP</string>
+  <string name="account_rtp_port_range">Intervalo de portos Son RTP</string>
   <!--restore/backup-->
   <string name="account_new_device_password">Escribe o contrasinal para desbloquear a conta</string>
-  <string name="error_password_char_count">mínimo 6 caracteres</string>
+  <string name="error_password_char_count">Mínimo 6 caracteres</string>
   <string name="error_passwords_not_equals">Non concordan os contrasinais</string>
   <string name="export_account_wait_title">Agarda por favor...</string>
   <string name="export_account_wait_message">Exportando información da conta</string>
@@ -146,9 +146,9 @@
   <string name="account_export_end_error_title">Erro</string>
   <string name="account_export_end_error_message">Non se puido exportar a conta. Aconteceu un fallo descoñecido.</string>
   <string name="account_enter_password">Escribir contrasinal</string>
-  <string name="account_share_body">Contacta conmigo utilizando \'%1$s\' na plataforma de comunicación distribuída Jami: %2$s</string>
-  <string name="account_share_body_with_username">Contacta conmigo utilizando \'%1$s\' ou o meu nome de usuaria público \'%2$s\' na plataforma de comunicación distribuída Jami: %3$s</string>
-  <string name="account_contact_me">Contacta conmigo en Jami!</string>
+  <string name="account_share_body">Contacta comigo utilizando «%1$s» na plataforma de comunicación distribuída Jami: %2$s</string>
+  <string name="account_share_body_with_username">Contacta comigo utilizando «%1$sz ou o meu nome de usuaria público «%2$s» na plataforma de comunicación distribuída Jami: %3$s</string>
+  <string name="account_contact_me">Contacta comigo en Jami!</string>
   <string name="update_account">Actualizar conta</string>
   <string name="account_migration">Podes actualizar a túa conta Jami.\nEscribe o contrasinal.</string>
   <string name="ring_account">Conta Jami</string>

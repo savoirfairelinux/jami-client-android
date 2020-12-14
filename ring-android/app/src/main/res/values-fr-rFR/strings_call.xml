@@ -20,6 +20,10 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
+    <!-- Call error -->
+    <string name="call_error_no_microphone">Appel annulé. Aucun microphone détecté.</string>
+    <string name="call_error_no_camera_no_microphone">Appel annulé. Aucune caméra ou microphone détecté.</string>
+
     <!-- SipCalls -->
     <string name="call_human_state_searching">Recherche en cours</string>
     <string name="call_human_state_incoming">Appel entrant</string>
@@ -27,8 +31,10 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_ringing">Sonnerie en cours</string>
     <string name="call_human_state_current">Appel en cours</string>
     <string name="call_human_state_hungup">Terminé</string>
+    <string name="call_human_state_busy">Occupé</string>
     <string name="call_human_state_failure">Échec</string>
     <string name="call_human_state_hold">Patientez</string>
+    <string name="call_human_state_unhold">Retenir</string>
     <string name="call_human_state_over">Terminé</string>
     <!-- Conferences -->
 </resources>

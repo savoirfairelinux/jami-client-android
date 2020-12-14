@@ -105,21 +105,29 @@ Sie können Ihr Konto später ändern.</string>
   <string name="account_rtp_max_port">Maximum</string>
   <string name="account_rtp_min_port">Minimum</string>
   <!--restore/backup-->
+  <string name="account_new_device_password">Hauptpasswort zum Entsperren eingeben</string>
   <string name="error_password_char_count">Mindestens 6 Zeichen</string>
   <string name="error_passwords_not_equals">Kennwörter stimmen nicht überein</string>
   <string name="export_account_wait_title">Bitte warten...</string>
+  <string name="export_account_wait_message">Benutzerkonto-Informationen exportieren</string>
   <string name="account_export_end_decryption_message">Ihr Konto konnte mit dem angegebenen Passwort nicht entsperrt werden.</string>
   <string name="account_export_end_network_title">Netzwerkfehler</string>
   <string name="account_export_end_error_title">Fehler</string>
   <string name="account_export_end_error_message">Das Konto konnte nicht exportiert werden. Ein unbekannter Fehler ist aufgetreten.</string>
   <string name="account_enter_password">Passwort eingeben</string>
+  <string name="account_share_body">Kontaktieren Sie mich unter dem Namen \'1%1$s\' auf der verteilten Kommunikationsplattform \'2%2$s\' von Jami</string>
   <string name="account_contact_me">Kontaktiere mich bei Jami!</string>
   <string name="update_account">Konto aktualisieren</string>
   <string name="ring_account">Jami-Konto</string>
   <string name="ring_account_identity">Identität</string>
+  <string name="account_migration_message_dialog">Ihre Benutzerkonten müssen aktualisiert werden. Möchten Sie zum Kontomanager wechseln, um dies nun zu erledigen?</string>
   <string name="account_update_needed">Update benötigt</string>
   <string name="account_cannot_be_found_title">Konto nicht gefunden</string>
+  <string name="account_cannot_be_found_message">Dieses Benutzerkonto konnte nicht im Jami-Netzwerk gefunden werden.\nStellen Sie sicher, dass es von einem vorhandenen Gerät in Jami exportiert wurde und dass die angegebenen Daten richtig sind.</string>
   <string name="account_no_network_title">Kann keine Verbindung zum Netzwerk herstellen</string>
+  <string name="account_no_network_message">Das Benutzerkonto konnte nicht hinzugefügt werden, das keine Verbindung zum verteilten Netzwerk von Jami besteht. Prüfen Sie die Verbindung Ihres Geräts.</string>
+  <string name="account_device_added_title">Gerätekonto hinzugefügt</string>
+  <string name="account_device_added_message">Sie haben Ihr Jami-Konto auf diesem Gerät erfolgreich eingerichtet.</string>
   <string name="account_sip_success_title">SIP-Konto registriert</string>
   <string name="account_link_prompt_pin">PIN eingeben</string>
   <string name="account_new_button">Jami-Konto erstellen</string>
@@ -132,6 +140,8 @@ Sie können Ihr Konto später ändern.</string>
   <string name="account_connect_prompt_username">Benutzername</string>
   <!--Name registration-->
   <string name="error_username_empty">Einen Benutzernamen eingeben</string>
+  <string name="registered_username">Registrierter Benutzername</string>
+  <string name="register_username">Öffentlichen Benutzernamen registrieren</string>
   <string name="register_recommended">Empfohlen</string>
   <string name="username_already_taken">Benutzername bereits vergeben</string>
   <string name="invalid_username">Ungültiger Benutzername</string>

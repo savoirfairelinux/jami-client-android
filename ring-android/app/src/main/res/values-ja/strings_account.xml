@@ -178,7 +178,9 @@
   <string name="account_connect_prompt_username">ユーザー名</string>
   <!--Name registration-->
   <string name="error_username_empty">ユーザー名を入力してください</string>
+  <string name="no_registered_name_for_account">登録名ではありません</string>
   <string name="username_available">使用可能なユーザー名です</string>
+  <string name="register_name">登録名</string>
   <string name="trying_to_register_name">名前を登録しようとしています</string>
   <string name="registered_username">登録ユーザー名</string>
   <string name="register_username">公開ユーザー名を登録</string>

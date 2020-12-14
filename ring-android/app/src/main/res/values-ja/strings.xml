@@ -177,6 +177,7 @@
   <string name="prompt_new_username">新しいユーザー名を入力してください</string>
   <string name="prompt_hint_username">ユーザー名</string>
   <string name="help_password_choose">あなたのJamiアカウントを守るために強固なパスワードを設定してください。また、このパスワードを忘れないでください。</string>
+  <string name="help_password_enter">現在のJamiアカウントのパスワードを入力してください。</string>
   <string name="help_pin_enter">設定済みの別のJamiアカウントからPINを入力してください。 PINを取得するには、\"Jamiのアカウントをエクスポート\" 機能を使用します。</string>
   <string name="wizard_next">次へ</string>
   <string name="wizard_back">戻る</string>
