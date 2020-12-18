@@ -85,7 +85,8 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                                  HardwareService hardwareService,
                                  ConversationFacade conversationFacade,
                                  VCardService vCardService,
-                                 DeviceRuntimeService deviceRuntimeService, PreferencesService preferencesService) {
+                                 DeviceRuntimeService deviceRuntimeService,
+                                 PreferencesService preferencesService) {
         mContactService = contactService;
         mAccountService = accountService;
         mHardwareService = hardwareService;
@@ -133,7 +134,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                     }
                 }));
 
-        getView().setReadIndicatorStatus(setReadIndicatorStatus());
+        getView().setReadIndicatorStatus(showReadIndicator());
     }
 
     private void setConversation(final Conversation conversation) {
@@ -435,8 +436,12 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         return mPreferencesService.getSettings().isAllowTypingIndicator();
     }
 
-    private boolean setReadIndicatorStatus() {
+    private boolean showReadIndicator() {
         return mPreferencesService.getSettings().isAllowReadIndicator();
+    }
+
+    public boolean isRecordingBlocked(){
+        return mPreferencesService.getSettings().isRecordingBlocked();
     }
 
 }

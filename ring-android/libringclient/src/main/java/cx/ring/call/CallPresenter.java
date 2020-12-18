@@ -39,6 +39,7 @@ import cx.ring.services.CallService;
 import cx.ring.services.ContactService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
+import cx.ring.services.PreferencesService;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
 import io.reactivex.Maybe;
@@ -65,6 +66,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     private Conference mConference;
     private final List<SipCall> mPendingCalls = new ArrayList<>();
     private final Subject<List<SipCall>> mPendingSubject = BehaviorSubject.createDefault(mPendingCalls);
+    private final PreferencesService mPreferencesService;
 
     private boolean mOnGoingCall = false;
     private boolean mAudioOnly = true;
@@ -92,13 +94,15 @@ public class CallPresenter extends RootPresenter<CallView> {
                          HardwareService hardwareService,
                          CallService callService,
                          DeviceRuntimeService deviceRuntimeService,
-                         ConversationFacade conversationFacade) {
+                         ConversationFacade conversationFacade,
+                         PreferencesService preferencesService) {
         mAccountService = accountService;
         mContactService = contactService;
         mHardwareService = hardwareService;
         mCallService = callService;
         mDeviceRuntimeService = deviceRuntimeService;
         mConversationFacade = conversationFacade;
+        mPreferencesService = preferencesService;
     }
 
     public void cameraPermissionChanged(boolean isGranted) {
@@ -742,4 +746,9 @@ public class CallPresenter extends RootPresenter<CallView> {
             return;
         mHardwareService.switchInput(mConference.getId(), mHardwareService.isPreviewFromFrontCamera());
     }
+
+    public boolean setBlockRecordStatus(){
+        return mPreferencesService.getSettings().isRecordingBlocked();
+    }
+
 }

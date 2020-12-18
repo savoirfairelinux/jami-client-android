@@ -54,6 +54,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
     private static final String PREF_PERSISTENT_NOTIFICATION = "persistent_notif";
     private static final String PREF_SHOW_TYPING = "persistent_typing";
     private static final String PREF_SHOW_READ = "persistent_read";
+    private static final String PREF_BLOCK_RECORD = "persistent_block_record";
     private static final String PREF_HW_ENCODING = "video_hwenc";
     public static final String PREF_BITRATE = "video_bitrate";
     public static final String PREF_RESOLUTION = "video_resolution";
@@ -80,6 +81,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         edit.putBoolean(PREF_PERSISTENT_NOTIFICATION, settings.isAllowPersistentNotification());
         edit.putBoolean(PREF_SHOW_TYPING, settings.isAllowTypingIndicator());
         edit.putBoolean(PREF_SHOW_READ, settings.isAllowReadIndicator());
+        edit.putBoolean(PREF_BLOCK_RECORD, settings.isRecordingBlocked());
         edit.apply();
     }
 
@@ -97,6 +99,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         settings.setAllowPersistentNotification(appPrefs.getBoolean(PREF_PERSISTENT_NOTIFICATION, false));
         settings.setAllowTypingIndicator(appPrefs.getBoolean(PREF_SHOW_TYPING, true));
         settings.setAllowReadIndicator(appPrefs.getBoolean(PREF_SHOW_READ, true));
+        settings.setBlockRecordIndicator(appPrefs.getBoolean(PREF_BLOCK_RECORD, false));
         return settings;
     }
 
