@@ -85,7 +85,8 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                                  HardwareService hardwareService,
                                  ConversationFacade conversationFacade,
                                  VCardService vCardService,
-                                 DeviceRuntimeService deviceRuntimeService, PreferencesService preferencesService) {
+                                 DeviceRuntimeService deviceRuntimeService,
+                                 PreferencesService preferencesService) {
         mContactService = contactService;
         mAccountService = accountService;
         mHardwareService = hardwareService;
@@ -437,6 +438,10 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
 
     private boolean setReadIndicatorStatus() {
         return mPreferencesService.getSettings().isAllowReadIndicator();
+    }
+
+    public boolean setBlockRecordStatus(){
+        return mPreferencesService.getSettings().isBlockRecordIndicator();
     }
 
 }

@@ -27,6 +27,7 @@ public class Settings {
     private boolean mAllowOnStartup;
     private boolean mAllowTypingIndicator;
     private boolean mAllowReadIndicator;
+    private boolean mBlockRecordIndicator;
     private boolean mHwEncoding;
 
     public Settings() {
@@ -41,6 +42,7 @@ public class Settings {
             mAllowOnStartup = s.mAllowOnStartup;
             mAllowTypingIndicator = s.mAllowTypingIndicator;
             mAllowReadIndicator = s.mAllowReadIndicator;
+            mBlockRecordIndicator = s.mBlockRecordIndicator;
             mHwEncoding = s.mHwEncoding;
         }
     }
@@ -99,6 +101,14 @@ public class Settings {
 
     public boolean isAllowReadIndicator() {
         return mAllowReadIndicator;
+    }
+
+    public void setBlockRecordIndicator(boolean checked) {
+        this.mBlockRecordIndicator = checked;
+    }
+
+    public boolean isBlockRecordIndicator() {
+        return mBlockRecordIndicator;
     }
 
 }
