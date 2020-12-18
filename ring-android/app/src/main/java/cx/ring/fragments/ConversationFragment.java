@@ -48,6 +48,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -331,6 +332,10 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         if (animator != null)
             animator.setSupportsChangeAnimations(false);
         binding.histList.setAdapter(mAdapter);
+
+        if (presenter.setBlockRecordStatus()) {
+            getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        }
     }
 
     @Override
@@ -754,12 +759,6 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     public void onPause() {
         super.onPause();
         presenter.pause();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        presenter.resume(mIsBubble);
     }
 
     @Override
