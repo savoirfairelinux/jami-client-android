@@ -132,7 +132,7 @@
   <string name="ringtone_error_title">Fehler</string>
   <string name="ringtone_error_format_not_supported">Dieses Format wird nicht unterstützt.</string>
   <string name="ringtone_error_size_too_big">Diese Datei ist zu groß. Maximal %1$dkB sind erlaubt.</string>
-  <string name="ringtone_custom_prompt">Einen anderen Bimmelton einstellen</string>
+  <string name="ringtone_custom_prompt">Einen eigenen Klingelton einstellen</string>
   <string name="ringtone_custom_label">Individuell</string>
   <string name="ringtone_jami_tones">Jami Töne</string>
   <!--Read contacts permission-->
