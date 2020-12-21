@@ -1034,6 +1034,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                     params.getPercentLayoutInfo().leftMarginPercent = i.x / (float) mVideoWidth;
                     params.getPercentLayoutInfo().topMarginPercent = i.y / (float) mVideoHeight;
                     label.participantName.setText(displayName);
+                    label.moderator.setVisibility(i.isModerator ? View.VISIBLE : View.GONE);
                     binding.participantLabelContainer.addView(label.getRoot(), params);
                 }
             }
