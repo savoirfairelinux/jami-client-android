@@ -35,6 +35,7 @@ public class Conference {
     public static class ParticipantInfo {
         public CallContact contact;
         public int x, y, w, h;
+        public boolean videoMuted, audioMuted, isModerator;
 
         public ParticipantInfo(CallContact c, Map<String, String> i) {
             contact = c;
@@ -42,6 +43,9 @@ public class Conference {
             y = Integer.parseInt(i.get("y"));
             w = Integer.parseInt(i.get("w"));
             h = Integer.parseInt(i.get("h"));
+            videoMuted = Boolean.getBoolean(i.get("videoMuted"));
+            audioMuted = Boolean.getBoolean(i.get("audioMuted"));
+            isModerator = Boolean.parseBoolean(i.get("isModerator"));
         }
     }
     private final Subject<List<ParticipantInfo>> mParticipantInfo = BehaviorSubject.createDefault(Collections.emptyList());
