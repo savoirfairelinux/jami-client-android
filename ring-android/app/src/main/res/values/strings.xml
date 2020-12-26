@@ -141,6 +141,8 @@ along with this program; if not, write to the Free Software
     <string name="action_call_hangup">Hang up</string>
     <string name="action_call_maximize">Maximize</string>
     <string name="action_call_minimize">Reduce</string>
+    <string name="action_call_mute">Mute</string>
+    <string name="action_call_unmute">Unmute</string>
     <string name="ongoing_call">Ongoing call</string>
     <string name="hist_in_call">Incoming call of %1$s</string>
     <string name="hist_out_call">Outgoing call of %1$s</string>

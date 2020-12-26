@@ -274,6 +274,13 @@ public class CallService {
         });
     }
 
+    public void muteParticipant(String confId, String peerId, boolean mute) {
+        mExecutor.execute(() -> {
+            Log.i(TAG, "mute() participant... " + peerId);
+            Ringservice.muteParticipant(confId, peerId, mute);
+        });
+    }
+
     public void hold(final String callId) {
         mExecutor.execute(() -> {
             Log.i(TAG, "hold() running... " + callId);
