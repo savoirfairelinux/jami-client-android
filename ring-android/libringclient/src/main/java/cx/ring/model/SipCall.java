@@ -175,6 +175,10 @@ public class SipCall extends Interaction {
         isVideoMuted = mute;
     }
 
+    public boolean isVideoMuted() {
+        return isVideoMuted;
+    }
+
     public String getVideoCodec() {
         return mVideoCodec;
     }
