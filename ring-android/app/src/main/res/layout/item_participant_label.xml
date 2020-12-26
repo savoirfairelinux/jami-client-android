@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/background_conference_label"
     android:gravity="center_vertical"
-    android:padding="8dp">
+    android:padding="12dp">
 
     <TextView
         android:id="@+id/participant_name"
@@ -24,7 +24,6 @@
         android:src="@drawable/baseline_moderateur"
         android:tint="@color/white"
         android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
         android:visibility="gone"
         tools:visibility="visible"
         />
@@ -33,6 +32,7 @@
         android:id="@+id/mute"
         android:layout_width="16dp"
         android:layout_height="16dp"
+        android:layout_marginLeft="4dp"
         android:src="@drawable/baseline_mic_off_24"
         android:visibility="gone"
         tools:visibility="visible"
