@@ -709,6 +709,14 @@ public class CallPresenter extends RootPresenter<CallView> {
         mCallService.hangUp(call.getDaemonIdString());
     }
 
+    public void muteParticipant(SipCall call) {
+        mCallService.muteParticipant(call.getConfId(), call.getContact().getPrimaryNumber());
+    }
+
+    public void unMuteParticipant(SipCall call) {
+        mCallService.unMuteParticipant(call.getConfId(), call.getContact().getPrimaryNumber());
+    }
+
     public void openParticipantContact(SipCall call) {
         getView().goToContact(call.getAccount(), call.getContact());
     }
