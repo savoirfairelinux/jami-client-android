@@ -116,6 +116,7 @@ import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.plugins.RecyclerPicker.RecyclerPicker;
 import cx.ring.plugins.RecyclerPicker.RecyclerPickerLayoutManager;
 import cx.ring.service.DRingService;
+import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.NotificationService;
@@ -988,12 +989,20 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                     popup.inflate(R.menu.conference_participant_actions);
                     MenuBuilder menu = (MenuBuilder) popup.getMenu();
                     MenuItem maxItem = menu.findItem(R.id.conv_contact_maximize);
+                    MenuItem muteItem = menu.findItem(R.id.conv_mute);
                     if (maximized) {
                         maxItem.setTitle(R.string.action_call_minimize);
                         maxItem.setIcon(R.drawable.baseline_close_fullscreen_24);
                     } else {
                         maxItem.setTitle(R.string.action_call_maximize);
                         maxItem.setIcon(R.drawable.baseline_open_in_full_24);
+                    }
+                    if (!call.isAudioMuted()) {
+                        muteItem.setTitle(R.string.action_call_mute);
+                        muteItem.setIcon(R.drawable.baseline_mic_off_24);
+                    } else {
+                        muteItem.setTitle(R.string.action_call_unmute);
+                        muteItem.setIcon(R.drawable.baseline_mic_24);
                     }
                     popup.setOnMenuItemClickListener(item -> {
                         if (presenter == null)
@@ -1004,6 +1013,15 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                                 break;
                             case R.id.conv_contact_hangup:
                                 presenter.hangupParticipant(call);
+                                break;
+                            case R.id.conv_mute:
+                                if (!call.isAudioMuted()) {
+                                    call.muteAudio(true);
+                                    presenter.muteParticipant(call, true);
+                                } else {
+                                    call.muteAudio(false);
+                                    presenter.muteParticipant(call, false);
+                                }
                                 break;
                             case R.id.conv_contact_maximize:
                                 presenter.maximizeParticipant(call);
@@ -1038,6 +1056,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                     params.getPercentLayoutInfo().topMarginPercent = i.y / (float) mVideoHeight;
                     label.participantName.setText(displayName);
                     label.moderator.setVisibility(i.isModerator ? View.VISIBLE : View.GONE);
+                    label.mute.setVisibility(i.audioMuted ? View.VISIBLE : View.GONE);
                     binding.participantLabelContainer.addView(label.getRoot(), params);
                 }
             }
