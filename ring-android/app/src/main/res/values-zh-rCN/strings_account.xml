@@ -46,6 +46,7 @@
   <string name="account_device_revocation_error_unknown">未知错误。</string>
   <string name="account_password_change">更改用户名</string>
   <string name="account_password_set">设置密码</string>
+  <string name="account_password_summary">管理您的账户密码</string>
   <string name="account_password_change_wait_message">更改用户密码</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">通用</string>
@@ -138,6 +139,7 @@
   <string name="export_account_wait_title">请稍等…</string>
   <string name="export_account_wait_message">导出用户信息</string>
   <string name="account_export_file">备份账户</string>
+  <string name="account_export_file_summary">备份您设备上的账户以便恢复</string>
   <string name="account_export_end_decryption_message">使用该密码无法解锁您的账户。</string>
   <string name="account_export_end_network_title">网络错误</string>
   <string name="account_export_end_network_message">无法进行账户在线导出。请检查您的网络连接。</string>
@@ -173,6 +175,7 @@
   <string name="account_link_prompt_pin">输入 PIN 码</string>
   <string name="account_new_button">创建一个 Jami 账户</string>
   <string name="account_link_export_button">关联新设备</string>
+  <string name="account_link_hide_button">隐藏已链接的设备</string>
   <string name="account_link_export_info">要在其他设备上使用此账户，您必须先在 Jami 上公开它。这将生成一个 PIN 码，您必须在新设备上输入该 PIN 码才能设置此账户。PIN 码有效期为 10 分钟。</string>
   <string name="account_start_export_button">生成 PIN 码</string>
   <string name="account_end_export_button">关闭</string>
@@ -187,6 +190,7 @@
   <string name="account_connect_prompt_username">用户名</string>
   <!--Name registration-->
   <string name="error_username_empty">输入用户名</string>
+  <string name="no_registered_name_for_account">无已注册的名称</string>
   <string name="username_available">用户名可用！</string>
   <string name="register_name">注册名称</string>
   <string name="trying_to_register_name">正在尝试注册用户名</string>
