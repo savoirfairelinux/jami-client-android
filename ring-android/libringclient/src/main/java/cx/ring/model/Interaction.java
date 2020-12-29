@@ -24,6 +24,8 @@ import com.google.gson.JsonParser;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.List;
+
 @DatabaseTable(tableName = Interaction.TABLE_NAME)
 public class Interaction {
 
@@ -62,6 +64,10 @@ public class Interaction {
     int mIsRead = 0;
     @DatabaseField(columnName = COLUMN_EXTRA_FLAG)
     String mExtraFlag = new JsonObject().toString();
+
+    // Swarm
+    String mMessageId;
+    List<String> mParentIds;
 
     /* Needed by ORMLite */
     public Interaction() {
@@ -168,6 +174,10 @@ public class Interaction {
         return mDaemonId == null ? null : Long.toString(mDaemonId);
     }
 
+    public String getMessageId() {
+        return mMessageId;
+    }
+
     public boolean isIncoming() {
         return mIsIncoming;
     }
@@ -182,6 +192,11 @@ public class Interaction {
 
     public void setContact(CallContact contact) {
         mContact = contact;
+    }
+
+    public void setSwarmInfo(String id, List<String> parents) {
+        mMessageId = id;
+        mParentIds = parents;
     }
 
     public enum InteractionStatus {

@@ -41,6 +41,7 @@ import cx.ring.application.JamiApplication;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.databinding.FragPendingContactRequestsBinding;
+import cx.ring.model.Uri;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.ConversationPath;
@@ -145,21 +146,13 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
     }
 
     @Override
-    public void goToConversation(String accountId, String contactId) {
-        Context context = requireContext();
-        if (DeviceUtils.isTablet(context)) {
-            Activity activity = getActivity();
-            if (activity instanceof HomeActivity) {
-                ((HomeActivity) activity).startConversationTablet(ConversationPath.toBundle(accountId, contactId));
-            }
-        } else {
-            startActivity(new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, contactId), context, ConversationActivity.class));
-        }
+    public void goToConversation(String accountId, Uri contactId) {
+        ((HomeActivity) requireActivity()).startConversation(accountId, contactId);
     }
 
     @Override
     public void onItemClick(SmartListViewModel viewModel) {
-        presenter.contactRequestClicked(viewModel.getAccountId(), viewModel.getContact());
+        presenter.contactRequestClicked(viewModel.getAccountId(), viewModel.getUri());
     }
 
     @Override
