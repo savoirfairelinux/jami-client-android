@@ -31,6 +31,7 @@ public class DataTransfer extends Interaction {
     private long mBytesProgress;
     private String mPeerId;
     private String mExtension;
+    private String mTransferId;
 
     private static final Set<String> IMAGE_EXTENSIONS = HashUtils.asSet("jpg", "jpeg", "png", "gif");
     private static final Set<String> AUDIO_EXTENSIONS = HashUtils.asSet("ogg", "mp3", "aac", "flac", "m4a");
@@ -54,7 +55,6 @@ public class DataTransfer extends Interaction {
         mIsIncoming = mAuthor != null;
     }
 
-
     public DataTransfer(Interaction interaction) {
         mId = interaction.getId();
         mDaemonId = interaction.getDaemonId();
@@ -69,6 +69,15 @@ public class DataTransfer extends Interaction {
         mContact = interaction.getContact();
         mIsRead = 1;
         mIsIncoming = mAuthor != null;
+    }
+
+    public DataTransfer(String transferId, String accountId, String peerUri, boolean isOutgoing, long totalSize, long bytesProgress) {
+        mAccount = accountId;
+        mTransferId = transferId;
+        mPeerId = peerUri;
+        mIsIncoming = !isOutgoing;
+        mTotalSize = totalSize;
+        mBytesProgress = bytesProgress;
     }
 
     public String getExtension() {

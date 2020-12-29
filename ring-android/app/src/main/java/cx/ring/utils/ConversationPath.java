@@ -7,8 +7,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import org.jetbrains.annotations.Contract;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -88,7 +86,6 @@ public class ConversationPath {
         return null;
     }
 
-    @Contract("null -> null")
     public static ConversationPath fromBundle(@Nullable Bundle bundle) {
         if (bundle != null) {
             String accountId = bundle.getString(ConversationFragment.KEY_ACCOUNT_ID);
@@ -100,7 +97,6 @@ public class ConversationPath {
         return null;
     }
 
-    @Contract("null -> null")
     public static ConversationPath fromIntent(@Nullable Intent intent) {
         if (intent != null) {
             Uri uri = intent.getData();
