@@ -95,7 +95,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignWithParentIfMissing="false"
-            android:layout_gravity="bottom|end"
+            android:layout_gravity="bottom|center_horizontal"
             android:layout_marginStart="@dimen/fab_margin_mini"
             android:layout_marginEnd="@dimen/fab_margin_mini"
             android:layout_marginTop="@dimen/fab_margin_mini"
@@ -105,7 +105,7 @@
             app:elevation="6dp"
             app:icon="@drawable/baseline_group_add_24"
             app:pressedTranslationZ="12dp"
-            app:layout_anchorGravity="bottom|right|end" />
+            app:layout_anchorGravity="bottom|center_horizontal" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
