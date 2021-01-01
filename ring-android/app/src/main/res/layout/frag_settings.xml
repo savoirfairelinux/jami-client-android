@@ -399,6 +399,45 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/settings_notification"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:padding="@dimen/padding_large">
+
+                <ImageView
+                    android:id="@+id/system_notification_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:contentDescription="@string/pref_notification_summary"
+                    android:src="@drawable/baseline_notifications_24dp"
+                    app:tint="@color/colorPrimary"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="32dp" />
+
+                <TextView
+                    style="@style/ListPrimary"
+                    android:id="@+id/system_notification_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="@string/pref_notification_title"
+                    android:layout_toEndOf="@+id/system_notification_image"/>
+
+                <TextView
+                    style="@style/ListSecondary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pref_notification_summary"
+                    android:layout_toEndOf="@+id/system_notification_image"
+                    android:layout_below="@id/system_notification_title"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/settings_clear_history"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
