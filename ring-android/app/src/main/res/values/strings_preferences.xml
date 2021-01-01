@@ -41,6 +41,9 @@
     <string name="pref_clearHistory_title">Clear history</string>
     <string name="pref_clearHistory_summary">Clear all the conversations history. This action can\'t be undone.</string>
 
+    <string name="pref_notification_title">Notification visibility</string>
+    <string name="pref_notification_summary">Set application notifications visibility on lock screen.</string>
+
     <string name="pref_blackList_title">Block list</string>
     <string name="pref_blackList_summary">Check your block list.</string>
 
@@ -55,6 +58,11 @@
 
     <string name="pref_read_title">Enable read receipts</string>
     <string name="pref_read_summary">Send and receive receipts indicating that a message have been displayed.</string>
+
+    <!-- Notifications Visibility -->
+    <string name="notification_public">Public \n(show notifications and their content on lock screen)\n</string>
+    <string name="notification_private">Private \n(show notifications but hide their content on lock screen)\n</string>
+    <string name="notification_secret">Secret \n(do not show notifications on lock screen)</string>
 
     <!-- Plugin -->
     <string name="pref_plugins_title">Plugins</string>
