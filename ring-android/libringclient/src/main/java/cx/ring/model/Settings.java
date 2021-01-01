@@ -29,6 +29,7 @@ public class Settings {
     private boolean mAllowReadIndicator;
     private boolean mBlockRecordIndicator;
     private boolean mHwEncoding;
+    private int mNotificationVisibility;
 
     public Settings() {
     }
@@ -44,6 +45,7 @@ public class Settings {
             mAllowReadIndicator = s.mAllowReadIndicator;
             mBlockRecordIndicator = s.mBlockRecordIndicator;
             mHwEncoding = s.mHwEncoding;
+            mNotificationVisibility = s.mNotificationVisibility;
         }
     }
 
@@ -109,6 +111,14 @@ public class Settings {
 
     public boolean isRecordingBlocked() {
         return mBlockRecordIndicator;
+    }
+
+    public void setNotificationVisibility(int visibility) {
+        this.mNotificationVisibility = visibility;
+    }
+
+    public int getNotificationVisibility() {
+        return mNotificationVisibility;
     }
 
 }
