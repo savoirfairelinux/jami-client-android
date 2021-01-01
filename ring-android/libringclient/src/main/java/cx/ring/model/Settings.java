@@ -28,6 +28,7 @@ public class Settings {
     private boolean mAllowTypingIndicator;
     private boolean mAllowReadIndicator;
     private boolean mHwEncoding;
+    private int mNotificationVisibility;
 
     public Settings() {
     }
@@ -42,6 +43,7 @@ public class Settings {
             mAllowTypingIndicator = s.mAllowTypingIndicator;
             mAllowReadIndicator = s.mAllowReadIndicator;
             mHwEncoding = s.mHwEncoding;
+            mNotificationVisibility = s.mNotificationVisibility;
         }
     }
 
@@ -99,6 +101,14 @@ public class Settings {
 
     public boolean isAllowReadIndicator() {
         return mAllowReadIndicator;
+    }
+
+    public void setNotificationVisibility(int visibility) {
+        this.mNotificationVisibility = visibility;
+    }
+
+    public int getNotificationVisibility() {
+        return mNotificationVisibility;
     }
 
 }
