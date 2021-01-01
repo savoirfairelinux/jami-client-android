@@ -20,7 +20,10 @@
 package cx.ring.settings;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.os.Bundle;
+
+import androidx.annotation.ArrayRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -53,10 +56,15 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
 
     private static final int SCROLL_DIRECTION_UP = -1;
 
+    public static final int NOTIFICATION_PRIVATE = 0;
+    public static final int NOTIFICATION_PUBLIC = 1;
+    public static final int NOTIFICATION_SECRET = 2;
+
     private FragSettingsBinding binding;
     private Settings currentSettings = null;
 
     private boolean mIsRefreshingViewFromPresenter = true;
+    private int mNotificationVisibility = NOTIFICATION_PRIVATE;
 
     @Nullable
     @Override
@@ -126,6 +134,24 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
                 activity.goToPluginsListSettings();
             }
         });
+
+        String[] singleItems = {getString(R.string.notification_private), getString(R.string.notification_public), getString(R.string.notification_secret)};
+        final int[] checkedItem = {mNotificationVisibility};
+
+        binding.settingsNotification.setOnClickListener(v -> new MaterialAlertDialogBuilder(view.getContext())
+                .setTitle(getString(R.string.pref_notification_title))
+                .setSingleChoiceItems(singleItems, mNotificationVisibility, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        checkedItem[0] = i;
+                    }
+                })
+                .setPositiveButton(android.R.string.ok, (dialog, id) -> {
+                    mNotificationVisibility = checkedItem[0];
+                    saveSettings();
+                })
+                .setNegativeButton(android.R.string.cancel, (dialog, id) -> {})
+                .show());
     }
 
     @Override
@@ -153,6 +179,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         newSettings.setAllowTypingIndicator(binding.settingsTyping.isChecked());
         newSettings.setAllowReadIndicator(binding.settingsRead.isChecked());
         newSettings.setBlockRecordIndicator(binding.settingsBlockRecord.isChecked());
+		newSettings.setNotificationVisibility(mNotificationVisibility);
 
         // save settings according to UI inputs
         presenter.saveSettings(newSettings);
@@ -193,6 +220,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         binding.settingsRead.setChecked(viewModel.isAllowReadIndicator());
         binding.settingsBlockRecord.setChecked(viewModel.isRecordingBlocked());
         mIsRefreshingViewFromPresenter = false;
+        mNotificationVisibility = viewModel.getNotificationVisibility();
     }
 
     @Override
