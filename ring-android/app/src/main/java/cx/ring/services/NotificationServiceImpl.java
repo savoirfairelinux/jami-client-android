@@ -81,6 +81,7 @@ import cx.ring.model.TextMessage;
 import cx.ring.model.Uri;
 import cx.ring.service.CallNotificationService;
 import cx.ring.service.DRingService;
+import cx.ring.settings.SettingsFragment;
 import cx.ring.tv.call.TVCallActivity;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
@@ -516,6 +517,18 @@ public class NotificationServiceImpl implements NotificationService {
         Uri contactUri = contact.getPrimaryUri();
         String contactId = contactUri.getUri();
         android.net.Uri path = ConversationPath.toUri(accountId, contactId);
+        int notificationVisibility = mPreferencesService.getSettings().getNotificationVisibility();
+        switch (notificationVisibility){
+            case SettingsFragment.NOTIFICATION_PUBLIC:
+                notificationVisibility = Notification.VISIBILITY_PUBLIC;
+                break;
+            case SettingsFragment.NOTIFICATION_SECRET:
+                notificationVisibility = Notification.VISIBILITY_SECRET;
+                break;
+            case SettingsFragment.NOTIFICATION_PRIVATE:
+            default:
+                notificationVisibility = Notification.VISIBILITY_PRIVATE;
+        }
 
         String contactName = contact.getDisplayName();
         if (TextUtils.isEmpty(contactName) || texts.isEmpty())
@@ -530,7 +543,7 @@ public class NotificationServiceImpl implements NotificationService {
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setPriority(Notification.PRIORITY_HIGH)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
-                .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
+                .setVisibility(notificationVisibility)
                 .setSmallIcon(R.drawable.ic_ring_logo_white)
                 .setContentTitle(contactName)
                 .setContentText(last.getBody())
