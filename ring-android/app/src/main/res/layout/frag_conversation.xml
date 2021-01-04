@@ -233,6 +233,7 @@
                     android:visibility="gone"
                     app:cardCornerRadius="@dimen/conversation_message_input_radius"
                     app:cardElevation="4dp"
+                    app:cardBackgroundColor="@color/colorPrimary"
                     tools:visibility="visible">
 
                     <LinearLayout
@@ -252,7 +253,7 @@
                             android:contentDescription="@string/share_label"
                             android:onClick="@{v -> presenter.expandMenu(v)}"
                             android:padding="8dp"
-                            android:tint="@color/colorPrimary"
+                            android:tint="@color/colorOnPrimary"
                             app:srcCompat="@drawable/baseline_more_vert_24" />
 
                         <ImageButton
@@ -263,7 +264,7 @@
                             android:contentDescription="@string/take_a_photo"
                             android:onClick="@{() -> presenter.takePicture()}"
                             android:padding="8dp"
-                            android:tint="@color/colorPrimary"
+                            android:tint="@color/colorOnPrimary"
                             app:srcCompat="@drawable/baseline_photo_camera_24" />
 
                         <ProgressBar
@@ -291,7 +292,10 @@
                             android:importantForAutofill="no"
                             android:inputType="textShortMessage|textImeMultiLine|text|textMultiLine|textCapSentences"
                             android:maxLines="5"
-                            android:padding="8dp" />
+                            android:padding="8dp"
+                            android:textColor="@color/colorOnPrimary"
+                            android:textColorHint="@color/colorOnPrimaryTranslucent"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/emoji_send"
@@ -312,7 +316,7 @@
                             android:contentDescription="@string/send_message"
                             android:onClick="@{() -> presenter.sendMessageText()}"
                             android:padding="8dp"
-                            android:tint="@color/colorPrimary"
+                            android:tint="@color/colorOnPrimary"
                             android:visibility="gone"
                             app:srcCompat="@drawable/baseline_send_24" />
 
