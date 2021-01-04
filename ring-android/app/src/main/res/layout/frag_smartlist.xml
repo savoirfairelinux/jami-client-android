@@ -111,7 +111,7 @@ along with this program; if not, write to the Free Software
             android:elevation="6dp"
             android:text="@string/start_conversation"
             app:elevation="6dp"
-            app:icon="@drawable/baseline_add_24"
+            app:icon="@drawable/baseline_group_add_24"
             app:pressedTranslationZ="12dp"
             app:layout_anchorGravity="bottom|end" />
 

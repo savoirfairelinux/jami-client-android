@@ -27,6 +27,7 @@
 
         <item name="materialAlertDialogTheme">@style/RoundedMaterialAlertDialog</item>
         <item name="bottomSheetDialogTheme">@style/BottomSheetDialogTheme</item>
+        <item name="extendedFloatingActionButtonStyle">@style/Widget.AppTheme.MainActionButton</item>
     </style>
 
     <!-- Main dark base theme -->
