@@ -38,9 +38,6 @@ public abstract class VCardService {
     public abstract Single<Tuple<String, Object>> loadVCardProfile(VCard vcard);
     public abstract Single<Tuple<String, Object>> peerProfileReceived(String accountId, String peerId, File vcard);
 
-    public abstract void migrateContact(Map<String, CallContact> contacts, String accountId);
-    public abstract void migrateProfiles(List<String> accountIds);
-    public abstract void deleteLegacyProfiles();
     public abstract Object base64ToBitmap(String base64);
 
 }

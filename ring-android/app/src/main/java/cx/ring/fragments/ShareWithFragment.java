@@ -146,7 +146,7 @@ public class ShareWithFragment extends Fragment {
                         intent.putExtra(Intent.EXTRA_TEXT, previewText.getText().toString());
                     }
                     intent.putExtra(ConversationFragment.KEY_ACCOUNT_ID, smartListViewModel.getAccountId());
-                    intent.putExtra(ConversationFragment.KEY_CONTACT_RING_ID, smartListViewModel.getContact().getPrimaryNumber());
+                    intent.putExtra(ConversationFragment.KEY_CONTACT_RING_ID, smartListViewModel.getUri().getUri());
                     intent.setClass(requireActivity(), ConversationActivity.class);
                     startActivity(intent);
                 }
