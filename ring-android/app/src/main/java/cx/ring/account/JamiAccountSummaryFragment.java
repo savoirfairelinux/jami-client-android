@@ -40,6 +40,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import android.provider.MediaStore;
+import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -176,7 +177,6 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         mBinding.scrollview.getViewTreeObserver().addOnScrollChangedListener(this);
         mBinding.linkNewDevice.setOnClickListener(v -> showWizard(mAccountId));
         mBinding.linkedDevices.setRightDrawableOnClickListener(v -> onDeviceRename());
-        mBinding.username.setRightDrawableOnClickListener(v -> mBinding.username.getEditText().requestFocus());
         mBinding.registerName.setOnClickListener(v -> showUsernameRegistrationPopup());
 
         ((HomeActivity) requireActivity()).getSwitchButton().setOnCheckedChangeListener((buttonView, isChecked) -> presenter.enableAccount(isChecked));
@@ -334,10 +334,10 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         mBinding.registerName.setVisibility(hasRegisteredName? View.GONE : View.VISIBLE);
         mBinding.registeredName.setText(hasRegisteredName? username : getResources().getString(R.string.no_registered_name_for_account));
         mBinding.btnQr.setOnClickListener(v -> QRCodeFragment.newInstance(QRCodeFragment.INDEX_CODE).show(getParentFragmentManager(), QRCodeFragment.TAG));
-        mBinding.username.getEditText().setOnFocusChangeListener((v, hasFocus) -> {
-            String name = mBinding.username.getText();
+        mBinding.username.setOnFocusChangeListener((v, hasFocus) -> {
+            Editable name = mBinding.username.getText();
             if (!hasFocus && !TextUtils.isEmpty(name)) {
-                presenter.saveVCardFormattedName(name.trim());
+                presenter.saveVCardFormattedName(name.toString());
             }
         });
 
@@ -402,7 +402,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
                 .setNegativeButton(android.R.string.cancel, (dialog, which) -> dialog.cancel())
                 .setPositiveButton(android.R.string.ok, (dialog, which) -> {
                     if (mSourcePhoto != null) {
-                        presenter.saveVCard(mBinding.username.getText().trim(), Single.just(mSourcePhoto).map(BitmapUtils::bitmapToPhoto));
+                        presenter.saveVCard(mBinding.username.getText().toString(), Single.just(mSourcePhoto).map(BitmapUtils::bitmapToPhoto));
                         mSourcePhoto = null;
                     }
                 })
