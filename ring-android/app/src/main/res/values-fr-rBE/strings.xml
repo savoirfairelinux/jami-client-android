@@ -13,14 +13,18 @@
   <string name="email_chooser_title">Envoyer du courrier en utilisant...</string>
   <string name="description">Jami est un logiciel libre de communication universel qui respecte la vie privée et l\'intimité de ses utilisateurs.</string>
   <string name="credits">Crédits</string>
+  <string name="call_service_description">Ce service est nécessaire pour garder vos appels en cours au premier plan. Il ne fonctionne que pendant les appels.</string>
   <!--About dialog-->
   <string name="developed_by">Développé par</string>
+  <string name="designed_by">Conçu par</string>
   <!--RingActivity-->
   <!--AB menus-->
   <!--Sections-->
+  <string name="menu_item_contact_request">Demandes de contact</string>
   <string name="menu_item_accounts">Gérer vos comptes</string>
   <string name="menu_item_account">Gérer votre compte</string>
   <string name="menu_item_settings">Paramètres</string>
+  <string name="menu_item_plugin_list">Paramètres des plugins</string>
   <string name="menu_item_share">Partager mes contacts</string>
   <string name="menu_item_about">À propos de Jami</string>
   <!--Dialing Fragment-->
@@ -29,19 +33,35 @@
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Rechercher un nom ou un numéro de téléphone...</string>
+  <string name="choose_number">Choisissez un numéro</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">Appel entrant manqué</string>
+  <string name="notif_missed_outgoing_call">Appel sortant manqué</string>
   <string name="notif_incoming_call">Appel entrant</string>
   <string name="notif_outgoing_call">Appel sortant</string>
+  <string name="notif_current_call">Appel en cours</string>
   <string name="notif_channel_calls">Appels</string>
+  <string name="notif_channel_incoming_calls">Appels entrants</string>
+  <string name="notif_channel_messages">Messages</string>
+  <string name="notif_channel_requests">Requêtes</string>
   <string name="notif_channel_file_transfer">Transfert de fichier</string>
   <string name="notif_group_calls">Appels</string>
+  <string name="notif_background_service">Jami est actuellement en cours d\'exécution en arrière-plan.</string>
+  <string name="notif_outgoing_file_transfer_title">Envoi du fichier à %1$s</string>
+  <string name="notif_incoming_picture">Photo de %1$s</string>
+  <string name="notif_location_title">Partager la localisation avec %1$s</string>
+  <string name="location_share_contact">%1$s partage sa localisation avec vous</string>
   <string name="location_share_action_start">Commencer le partage</string>
+  <string name="location_share_action_stop">Arrêter le partage</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Vous:</string>
   <string name="action_call_minimize">Réduire</string>
+  <string name="ongoing_call">Appel en cours</string>
   <string name="action_call_decline">Décliner</string>
+  <string name="action_call_mic_mute">Couper le microphone</string>
   <string name="ab_action_contact_add">Ajouter aux contacts</string>
   <string name="ab_action_contact_add_question">Ajouter au contacts ?</string>
   <string name="hist_contact_added">Contact ajouté</string>
@@ -94,6 +114,7 @@
   <string name="pref_darkTheme_title">Thème sombre</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Conversations</string>
+  <string name="navigation_item_contact_request">Demandes de contact</string>
   <string name="navigation_item_account">Compte</string>
   <!--TV-->
   <string name="tv_audio_play">Jouer</string>
@@ -101,6 +122,7 @@
   <string name="tv_dialog_send">Envoyer</string>
   <!--Wizard-->
   <string name="wizard_status_optional">Optionnel</string>
+  <string name="wizard_password_button">Choisissez un mot de passe</string>
   <string name="wizard_password_skip">Créer un compte</string>
   <string name="wizard_profile_button">Sauvegarder votre profil</string>
   <string name="fab_path_choose">Choisir un autre fichier</string>

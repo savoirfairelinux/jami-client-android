@@ -45,6 +45,7 @@ Możesz edytować swoje konto później</string>
   <string name="account_device_revocation_unknown_device">Nieznane urządzenie.</string>
   <string name="account_device_revocation_error_unknown">Nieznany błąd.</string>
   <string name="account_password_change">Zmień Hasło</string>
+  <string name="account_password_set">Ustaw hasło</string>
   <string name="account_password_change_wait_message">Zmienianie hasła do konta</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Generalne</string>
@@ -72,6 +73,7 @@ Możesz edytować swoje konto później</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Zaawansowane</string>
   <string name="account_call_settings_title">Ustawienia rozmowy</string>
+  <string name="account_dht_public_in_calls_label">Zezwól na połączenia od nieznanych użytkowników</string>
   <string name="account_registration_exp_label">Rejestracja Wygasła</string>
   <string name="account_local_interface_label">Lokalny Interfejs</string>
   <string name="account_local_port_label">Port Lokalny</string>
@@ -88,6 +90,7 @@ Możesz edytować swoje konto później</string>
   <string name="account_proxy_enable_label">Używaj proxy DHT</string>
   <string name="account_proxy_server_label">Adres proxy DHT</string>
   <string name="account_sip_proxy_label">Pełnomocnik</string>
+  <string name="account_peer_discovery_enable_label">Aktywuj wyszukiwanie lokalnych partnerów</string>
   <!--Security Details-->
   <string name="account_credentials_label">Detale</string>
   <string name="account_credentials_edit">Edytuj detale</string>
@@ -158,13 +161,17 @@ Możesz edytować swoje konto później</string>
   <string name="account_end_export_infos"> Twój PIN to:\n\n%%\n\nAby dokończyć proces, musisz otworzyć Jami na nowym urządzeniu. Stwórz nowe konto przez \"Połącz to urządzenie z kontem\". Twój PIN jest ważny przez 10 minut. </string>
   <string name="account_link_export_info_light">Aby korzystać z tego konta na innych urządzeniach, musisz najpierw udostępnić je w Jami. To wygeneruje kod PIN, który musisz wprowadzić na nowym urządzeniu aby dodać konto. PIN jest ważny przez 10 minut. </string>
   <string name="account_export_title">Dodaj urządzenia</string>
+  <string name="account_connect_button">Połącz</string>
   <string name="account_connect_prompt_username">Nazwa użytkownika</string>
   <!--Name registration-->
   <string name="error_username_empty">Wprowadź nazwę użytkownika</string>
+  <string name="no_registered_name_for_account">Brak zarejestrowanej nazwy</string>
   <string name="username_available">Nazwa dostępna!</string>
+  <string name="register_name">Zarejestrowana nazwa</string>
   <string name="trying_to_register_name">Trwa próba rejestracji nazwy</string>
   <string name="registered_username">Zarejestruj nazwę użytkownika</string>
   <string name="register_username">Zarejestruj publiczną nazwę użytkownika</string>
+  <string name="register_recommended">Zalecane</string>
   <string name="username_already_taken">Nazwa użytkownika zajęta</string>
   <string name="invalid_username">Nieprawidłowa nazwa użytkownika</string>
   <string name="unknown_error">Nieznany błąd. Proszę sprawdź swoje połączenie sieciowe!</string>

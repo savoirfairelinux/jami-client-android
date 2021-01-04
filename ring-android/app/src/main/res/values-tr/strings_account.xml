@@ -182,6 +182,7 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="trying_to_register_name">Ad kaydedilmeye çalışılıyor</string>
   <string name="registered_username">Kaydedilen kullanıcı adı</string>
   <string name="register_username">Halka açık kullanıcı adı kaydet</string>
+  <string name="register_recommended">Önerilen</string>
   <string name="username_already_taken">Kullanıcı adı önceden alınmış</string>
   <string name="invalid_username">Geçersiz kullanıcı adı</string>
   <string name="unknown_error">Bilinmeyen hata. Lütfen ağ bağlantınızı kontrol edin!</string>

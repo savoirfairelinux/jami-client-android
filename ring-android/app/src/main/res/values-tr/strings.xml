@@ -172,6 +172,7 @@
   <string name="prompt_new_username">Yeni kullanıcı adı gir</string>
   <string name="prompt_hint_username">Kullanıcı adı</string>
   <string name="help_password_choose">Jami hesabınızı korumak için anımsayacağınız güçlü bir şifre seçin.</string>
+  <string name="help_password_enter">Jami ana hesabınızın şifresini girin.</string>
   <string name="help_pin_enter">Başka yapılandırılmış Jami hesabından PIN\'i girin. PIN edinmek için \"Jami\'de hesabı dışa aktarma\" özelliğini kullanın.</string>
   <string name="wizard_next">İleri</string>
   <string name="wizard_back">Geri</string>
@@ -181,6 +182,7 @@
   <string name="profile_message_warning">Profiliniz sadece kayıtlı kişilerinizle paylaşılıyor</string>
   <string name="open_the_gallery">Galeriyi aç</string>
   <string name="take_a_photo">Fotoğraf çek</string>
+  <string name="profile_name_hint">İsminizi girin</string>
   <string name="registered_name">Kayıtlı Ad</string>
   <string name="identity">Kimlik</string>
   <string name="account">Hesap</string>
@@ -268,5 +270,14 @@
   <string name="tv_send_video">Medya gönder</string>
   <string name="conversation_input_speech_hint">Bir şey söyle…</string>
   <!--Wizard-->
+  <string name="wizard_status_recommended">Önerilen</string>
+  <string name="wizard_status_optional">İsteğe bağlı</string>
+  <string name="wizard_status_required">Gerekli</string>
+  <string name="wizard_username_button">Kullanıcı adı seç</string>
+  <string name="wizard_password_info">Hesap parolası</string>
+  <string name="wizard_password_button">Parola seçin</string>
   <string name="wizard_password_skip">Hesap oluştur</string>
+  <string name="wizard_profile_button">Profili kaydet</string>
+  <string name="wizard_profile_skip">Atla ve daha sonra yap</string>
+  <string name="fab_path_choose">Başka bir dosya seç</string>
 </resources>
