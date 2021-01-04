@@ -37,7 +37,9 @@ public interface ConversationView extends BaseView {
 
     void scrollToEnd();
 
-    void displayContact(CallContact contact);
+    void updateContact(CallContact contact);
+
+    void displayContact(Conversation conversation);
 
     void displayOnGoingCallPane(boolean display);
 
@@ -55,9 +57,9 @@ public interface ConversationView extends BaseView {
 
     void goToCallActivity(String conferenceId);
 
-    void goToCallActivityWithResult(String accountId, String contactRingId, boolean audioOnly);
+    void goToCallActivityWithResult(String accountId, Uri uri, boolean audioOnly);
 
-    void goToContactActivity(String accountId, String contactRingId);
+    void goToContactActivity(String accountId, Uri uri);
 
     void switchToUnknownView(String name);
 
