@@ -131,42 +131,27 @@
             android:clipToPadding="false"
             android:fitsSystemWindows="true">
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                style="@style/Widget.AppTheme.MainActionButton"
                 android:id="@+id/unknownContactPrompt"
-                style="?android:attr/buttonBarStyle"
                 android:layout_width="match_parent"
-                android:layout_height="42dp"
+                android:layout_height="48dp"
+                android:onClick="@{() -> presenter.addContact()}"
+                android:text="@string/ab_action_contact_add"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="8dp"
                 android:layout_alignParentBottom="true"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="8dp"
-                android:padding="0dp"
+                android:textAlignment="center"
                 android:visibility="gone"
-                app:cardBackgroundColor="#4CAF50"
-                app:cardCornerRadius="@dimen/conversation_message_input_radius">
-
-                <Button
-                    android:id="@+id/btnAddContact"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="0dp"
-                    android:background="?attr/selectableItemBackground"
-                    android:gravity="center"
-                    android:onClick="@{() -> presenter.addContact()}"
-                    android:padding="0dp"
-                    android:text="@string/ab_action_contact_add"
-                    android:textColor="@color/white" />
-            </androidx.cardview.widget.CardView>
+                app:backgroundTint="#4CAF50"/>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/trustRequestPrompt"
                 style="?android:attr/buttonBarStyle"
                 android:layout_width="match_parent"
-                android:layout_height="42dp"
+                android:layout_height="48dp"
                 android:layout_alignParentBottom="true"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginHorizontal="16dp"
                 android:layout_marginBottom="8dp"
                 android:padding="0dp"
                 android:visibility="gone"
@@ -226,15 +211,17 @@
                 android:background="@drawable/textmsg_bg_input"
                 android:orientation="vertical"
                 android:visibility="visible"
-                tools:visibility="visible">
+                tools:visibility="visible"
+                android:animateLayoutChanges="true">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cvMessageInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
+                    android:minHeight="48dp"
+                    android:layout_marginLeft="16dp"
                     android:layout_marginTop="2dp"
-                    android:layout_marginRight="12dp"
+                    android:layout_marginRight="16dp"
                     android:layout_marginBottom="8dp"
                     android:visibility="gone"
                     app:cardCornerRadius="@dimen/conversation_message_input_radius"
@@ -245,6 +232,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
+                        android:layout_gravity="center"
                         android:orientation="horizontal"
                         android:paddingStart="8dp">
 
@@ -316,7 +304,7 @@
                             android:contentDescription="@string/send_message"
                             android:onClick="@{() -> presenter.sendMessageText()}"
                             android:padding="8dp"
-                            android:tint="@android:color/darker_gray"
+                            android:tint="@color/colorPrimary"
                             android:visibility="gone"
                             app:srcCompat="@drawable/baseline_send_24" />
 
