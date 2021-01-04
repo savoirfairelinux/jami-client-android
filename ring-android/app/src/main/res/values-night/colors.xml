@@ -8,6 +8,7 @@
     <color name="colorPrimary">@color/white</color>
     <color name="colorPrimaryTranslucent">#C0FFFFFF</color>
     <color name="colorOnPrimary">@color/color_primary_dark</color>
+    <color name="colorOnPrimaryTranslucent">@color/color_primary_dark_translucent</color>
 
     <color name="colorSecondary">@color/color_primary_light</color>
     <color name="colorOnSecondary">@color/white</color>
