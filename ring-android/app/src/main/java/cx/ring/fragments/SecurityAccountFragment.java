@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.preference.EditTextPreference;
@@ -31,10 +32,17 @@ import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
 import androidx.preference.TwoStatePreference;
+
+import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.util.Pair;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.security.cert.CertificateFactory;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import cx.ring.R;
 import cx.ring.account.AccountEditionFragment;
@@ -43,6 +51,7 @@ import cx.ring.model.AccountConfig;
 import cx.ring.model.AccountCredentials;
 import cx.ring.model.ConfigKey;
 import cx.ring.mvp.BasePreferenceFragment;
+import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.Tuple;
 import cx.ring.views.CredentialPreferenceDialog;
 import cx.ring.views.CredentialsPreference;
@@ -85,8 +94,7 @@ public class SecurityAccountFragment extends BasePreferenceFragment<SecurityAcco
 
         if (preference.getKey().contentEquals(ConfigKey.TLS_ENABLE.key())) {
             if ((Boolean) newValue) {
-                key = ConfigKey.STUN_ENABLE;
-                newValue = false;
+                presenter.tlsChanged(ConfigKey.STUN_ENABLE, false);
             }
         }
 
@@ -175,16 +183,18 @@ public class SecurityAccountFragment extends BasePreferenceFragment<SecurityAcco
                 if (key == ConfigKey.TLS_CA_LIST_FILE) {
                     File crt = new File(config.get(ConfigKey.TLS_CA_LIST_FILE));
                     current.setSummary(crt.getName());
-                    setFeedbackIcon(current);
+                    setFeedbackIcon(current, crt);
                     current.setOnPreferenceClickListener(filePickerListener);
                 } else if (key == ConfigKey.TLS_PRIVATE_KEY_FILE) {
-                    current.setSummary(new File(config.get(ConfigKey.TLS_PRIVATE_KEY_FILE)).getName());
+                    File pem = new File(config.get(ConfigKey.TLS_PRIVATE_KEY_FILE));
+                    current.setSummary(pem.getName());
+                    setFeedbackIcon(current, pem);
                     current.setOnPreferenceClickListener(filePickerListener);
                 } else if (key == ConfigKey.TLS_CERTIFICATE_FILE) {
                     File pem = new File(config.get(ConfigKey.TLS_CERTIFICATE_FILE));
                     current.setSummary(pem.getName());
-                    setFeedbackIcon(current);
-                    checkForRSAKey();
+                    setFeedbackIcon(current, pem);
+                    checkForRSAKey(pem);
                     current.setOnPreferenceClickListener(filePickerListener);
                 } else if (key == ConfigKey.TLS_METHOD) {
                     ListPreference listPref = (ListPreference) current;
@@ -206,33 +216,46 @@ public class SecurityAccountFragment extends BasePreferenceFragment<SecurityAcco
         }
     }
 
-    public boolean checkCertificate() {
-        // Not implemented
+    public boolean checkCertificate(File f) {
+        try {
+            FileInputStream fis = new FileInputStream(f.getAbsolutePath());
+            CertificateFactory cf = CertificateFactory.getInstance("X509");
+            cf.generateCertificate(fis);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean findRSAKey(File f) {
+        // NOTE: This check is not complete but better than nothing.
+        try {
+            Scanner scanner = new Scanner(f);
+            while (scanner.hasNextLine()) {
+                if (scanner.nextLine().contains("-----BEGIN RSA PRIVATE KEY-----")) return true;
+            }
+        } catch(FileNotFoundException e) {}
         return false;
     }
 
-    public boolean findRSAKey() {
-        // Not implemented
-        return false;
-    }
-
-    private void checkForRSAKey() {
-        if (findRSAKey()) {
+    private void checkForRSAKey(File f) {
+        if (findRSAKey(f)) {
             tlsCategory.findPreference(ConfigKey.TLS_PRIVATE_KEY_FILE.key()).setEnabled(false);
         } else {
             tlsCategory.findPreference(ConfigKey.TLS_PRIVATE_KEY_FILE.key()).setEnabled(true);
         }
     }
 
-    private void setFeedbackIcon(Preference current) {
+    private void setFeedbackIcon(Preference current, File certFile) {
         Context c = current.getContext();
-        if (!checkCertificate()) {
-            Drawable icon = c.getDrawable(R.drawable.baseline_error_24);
-            icon.setTint(c.getResources().getColor(R.color.colorError));
-            current.setIcon(icon);
-        } else {
+        boolean isKey = current.getKey().contentEquals(ConfigKey.TLS_PRIVATE_KEY_FILE.key());
+        if (isKey && findRSAKey(certFile) || !isKey && checkCertificate(certFile)) {
             Drawable icon = c.getDrawable(R.drawable.baseline_check_circle_24);
             icon.setTint(c.getResources().getColor(R.color.green_500));
+            current.setIcon(icon);
+        } else {
+            Drawable icon = c.getDrawable(R.drawable.baseline_error_24);
+            icon.setTint(c.getResources().getColor(R.color.colorError));
             current.setIcon(icon);
         }
     }
@@ -256,8 +279,6 @@ public class SecurityAccountFragment extends BasePreferenceFragment<SecurityAcco
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // TODO Extract returned filed for intent and populate correct preference
-
         if (resultCode == Activity.RESULT_CANCELED) {
             return;
         }
@@ -266,7 +287,8 @@ public class SecurityAccountFragment extends BasePreferenceFragment<SecurityAcco
         if (uri == null) {
             return;
         }
-        File myFile = new File(uri.getEncodedPath());
+        File myFile = new File(AndroidFileUtils.getRealPathFromURI(getContext(), uri));
+
         ConfigKey key = null;
         Preference preference;
         switch (requestCode) {
@@ -274,18 +296,20 @@ public class SecurityAccountFragment extends BasePreferenceFragment<SecurityAcco
                 preference = tlsCategory.findPreference(ConfigKey.TLS_CA_LIST_FILE.key());
                 preference.setSummary(myFile.getName());
                 key = ConfigKey.TLS_CA_LIST_FILE;
-                setFeedbackIcon(preference);
+                setFeedbackIcon(preference, myFile);
                 break;
             case SELECT_PRIVATE_KEY_RC:
-                tlsCategory.findPreference(ConfigKey.TLS_PRIVATE_KEY_FILE.key()).setSummary(myFile.getName());
+                preference = tlsCategory.findPreference(ConfigKey.TLS_PRIVATE_KEY_FILE.key());
+                preference.setSummary(myFile.getName());
                 key = ConfigKey.TLS_PRIVATE_KEY_FILE;
+                setFeedbackIcon(preference, myFile);
                 break;
             case SELECT_CERTIFICATE_RC:
                 preference = tlsCategory.findPreference(ConfigKey.TLS_CERTIFICATE_FILE.key());
                 preference.setSummary(myFile.getName());
                 key = ConfigKey.TLS_CERTIFICATE_FILE;
-                setFeedbackIcon(preference);
-                checkForRSAKey();
+                setFeedbackIcon(preference, myFile);
+                checkForRSAKey(myFile);
                 break;
             default:
                 break;
