@@ -28,6 +28,7 @@ import javax.inject.Named;
 import cx.ring.daemon.Blob;
 import cx.ring.daemon.Callback;
 import cx.ring.daemon.ConfigurationCallback;
+import cx.ring.daemon.ConversationCallback;
 import cx.ring.daemon.DataTransferCallback;
 import cx.ring.daemon.IntVect;
 import cx.ring.daemon.IntegerMap;
@@ -68,6 +69,7 @@ public class DaemonService {
     private DaemonCallAndConferenceCallback mCallAndConferenceCallback;
     private DaemonConfigurationCallback mConfigurationCallback;
     private DaemonDataTransferCallback mDataCallback;
+    private ConversationCallback mConversationCallback;
 
     private boolean mDaemonStarted = false;
 
@@ -96,7 +98,8 @@ public class DaemonService {
             mCallAndConferenceCallback = new DaemonCallAndConferenceCallback();
             mConfigurationCallback = new DaemonConfigurationCallback();
             mDataCallback = new DaemonDataTransferCallback();
-            Ringservice.init(mConfigurationCallback, mCallAndConferenceCallback, mPresenceCallback, mDataCallback, mHardwareCallback);
+            mConversationCallback = new ConversationCallbackImpl();
+            Ringservice.init(mConfigurationCallback, mCallAndConferenceCallback, mPresenceCallback, mDataCallback, mHardwareCallback, mConversationCallback);
             Log.i(TAG, "DaemonService started");
         }
     }
@@ -152,7 +155,7 @@ public class DaemonService {
 
         @Override
         public void accountProfileReceived(String account_id, String name, String photo) {
-            mExecutor.submit(() -> mAccountService.accountProfileReceived(account_id, name, photo));
+            mAccountService.accountProfileReceived(account_id, name, photo);
         }
 
         @Override
@@ -164,13 +167,13 @@ public class DaemonService {
         }
 
         @Override
-        public void accountMessageStatusChanged(String accountId, long messageId, String to, int status) {
-            mExecutor.submit(() -> mAccountService.accountMessageStatusChanged(accountId, messageId, to, status));
+        public void accountMessageStatusChanged(String accountId, String conversationId, String messageId, String peer, int status) {
+            mExecutor.submit(() -> mAccountService.accountMessageStatusChanged(accountId, conversationId, messageId, peer, status));
         }
 
         @Override
-        public void composingStatusChanged(String accountId, String contactUri, int status) {
-            mExecutor.submit(() -> mAccountService.composingStatusChanged(accountId, contactUri, status));
+        public void composingStatusChanged(String accountId, String conversationId, String contactUri, int status) {
+            mExecutor.submit(() -> mAccountService.composingStatusChanged(accountId, conversationId, contactUri, status));
         }
 
         @Override
@@ -374,6 +377,38 @@ public class DaemonService {
         public void dataTransferEvent(long transferId, int eventCode) {
             Log.d(TAG, "dataTransferEvent: transferId=" + transferId + ", eventCode=" + eventCode);
             mAccountService.dataTransferEvent(transferId, eventCode);
+        }
+    }
+
+    class ConversationCallbackImpl extends ConversationCallback {
+        @Override
+        public void conversationLoaded(long id, String accountId, String conversationId, VectMap messages) {
+            mAccountService.conversationLoaded(accountId, conversationId, messages.toNative());
+        }
+
+        @Override
+        public void conversationReady(String accountId, String conversationId) {
+            mAccountService.conversationReady(accountId, conversationId);
+        }
+
+        @Override
+        public void conversationRemoved(String accountId, String conversationId) {
+            mAccountService.conversationRemoved(accountId, conversationId);
+        }
+
+        @Override
+        public void conversationRequestReceived(String accountId, String conversationId, StringMap metadata) {
+            mAccountService.conversationRequestReceived(accountId, conversationId, metadata.toNative());
+        }
+
+        @Override
+        public void conversationMemberEvent(String accountId, String conversationId, String uri, long event) {
+            mAccountService.conversationMemberEvent(accountId, conversationId, uri, event);
+        }
+
+        @Override
+        public void messageReceived(String accountId, String conversationId, StringMap message) {
+            mAccountService.messageReceived(accountId, conversationId, message.toNative());
         }
     }
 }
