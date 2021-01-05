@@ -48,7 +48,7 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import androidx.core.widget.ImageViewCompat;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import cx.ring.R;
@@ -96,6 +96,7 @@ public class ContactDetailsActivity extends AppCompatActivity {
         final IContactAction callback;
 
         int iconTint;
+        CharSequence iconSymbol;
 
         ContactAction(@DrawableRes int i, int tint, CharSequence t, IContactAction cb) {
             icon = i;
@@ -113,6 +114,10 @@ public class ContactDetailsActivity extends AppCompatActivity {
 
         void setIconTint(int tint) {
             iconTint = tint;
+        }
+
+        void setSymbol(CharSequence t) {
+            iconSymbol = t;
         }
     }
 
@@ -148,9 +153,10 @@ public class ContactDetailsActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull ContactActionView holder, int position) {
             ContactAction action = actions.get(position);
-            holder.binding.actionIcon.setImageResource(action.icon);
+            holder.binding.actionIcon.setBackgroundResource(action.icon);
+            holder.binding.actionIcon.setText(action.iconSymbol);
             if (action.iconTint != Color.BLACK)
-                ImageViewCompat.setImageTintList(holder.binding.actionIcon, ColorStateList.valueOf(action.iconTint));
+                ViewCompat.setBackgroundTintList(holder.binding.actionIcon, ColorStateList.valueOf(action.iconTint));
             holder.binding.actionTitle.setText(action.title);
             holder.callback = action.callback;
         }
@@ -165,8 +171,10 @@ public class ContactDetailsActivity extends AppCompatActivity {
     private final CompositeDisposable mDisposableBag = new CompositeDisposable();
 
     private ContactAction colorAction;
+    private ContactAction symbolAction;
     private ContactAction contactAction;
     private int colorActionPosition;
+    private int symbolActionPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -190,6 +198,7 @@ public class ContactDetailsActivity extends AppCompatActivity {
         fab.setOnClickListener(view -> goToConversationActivity(mConversation.getAccountId(), mConversation.getUri()));
 
         colorActionPosition = 0;
+        symbolActionPosition = 1;
         colorAction = new ContactAction(R.drawable.item_color_background, 0, "Choose color", () -> {
             ColorChooserBottomSheet frag = new ColorChooserBottomSheet();
             frag.setCallback(color -> {
@@ -204,6 +213,17 @@ public class ContactDetailsActivity extends AppCompatActivity {
         });
         adapter.actions.add(colorAction);
 
+        symbolAction = new ContactAction(0, "Conversation Emoji", () -> {
+            EmojiChooserBottomSheet frag = new EmojiChooserBottomSheet();
+            frag.setCallback(symbol -> {
+                symbolAction.setSymbol(symbol);
+                adapter.notifyItemChanged(symbolActionPosition);
+                mPreferences.edit().putString(ConversationFragment.KEY_PREFERENCE_CONVERSATION_SYMBOL, symbol).apply();
+            });
+            frag.show(getSupportFragmentManager(), "colorChooser");
+        });
+        adapter.actions.add(symbolAction);
+
         mDisposableBag.add(mConversationFacade
                 .startConversation(path.getAccountId(), path.getConversationUri())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -212,6 +232,11 @@ public class ContactDetailsActivity extends AppCompatActivity {
                     int color = mPreferences.getInt(ConversationFragment.KEY_PREFERENCE_CONVERSATION_COLOR, getResources().getColor(R.color.color_primary_light));
                     colorAction.setIconTint(color);
                     adapter.notifyItemChanged(colorActionPosition);
+
+                    String symbol = mPreferences.getString(ConversationFragment.KEY_PREFERENCE_CONVERSATION_SYMBOL, getResources().getString(R.string.conversation_default_emoji));
+                    symbolAction.setSymbol(symbol);
+                    adapter.notifyItemChanged(symbolActionPosition);
+
                     collapsingToolbarLayout.setBackgroundColor(color);
                     collapsingToolbarLayout.setTitle(conversation.getTitle());
                     collapsingToolbarLayout.setContentScrimColor(color);

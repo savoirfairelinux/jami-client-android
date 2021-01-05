@@ -129,6 +129,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     public static final String KEY_ACCOUNT_ID = BuildConfig.APPLICATION_ID + ".ACCOUNT_ID";
     public static final String KEY_PREFERENCE_PENDING_MESSAGE = "pendingMessage";
     public static final String KEY_PREFERENCE_CONVERSATION_COLOR = "color";
+    public static final String KEY_PREFERENCE_CONVERSATION_SYMBOL = "symbol";
     public static final String EXTRA_SHOW_MAP = "showMap";
 
     private static final int REQUEST_CODE_FILE_PICKER = 1000;
@@ -341,6 +342,11 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         if (activity != null)
             activity.setColor(color);
         mAdapter.setPrimaryColor(color);
+    }
+
+    @Override
+    public void setConversationSymbol(CharSequence symbol) {
+        binding.emojiSend.setText(symbol);
     }
 
     @Override
@@ -814,6 +820,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             mPreferences = requireActivity().getSharedPreferences(path.getAccountId() + "_" + uri.getUri(), Context.MODE_PRIVATE);
             mPreferences.registerOnSharedPreferenceChangeListener(this);
             presenter.setConversationColor(mPreferences.getInt(KEY_PREFERENCE_CONVERSATION_COLOR, getResources().getColor(R.color.color_primary_light)));
+            presenter.setConversationSymbol(mPreferences.getString(KEY_PREFERENCE_CONVERSATION_SYMBOL, getResources().getText(R.string.conversation_default_emoji).toString()));
         } catch (Exception e) {
             Log.e(TAG, "Can't load conversation preferences");
         }
@@ -853,6 +860,9 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         switch (key) {
             case KEY_PREFERENCE_CONVERSATION_COLOR:
                 presenter.setConversationColor(prefs.getInt(KEY_PREFERENCE_CONVERSATION_COLOR, getResources().getColor(R.color.color_primary_light)));
+                break;
+            case KEY_PREFERENCE_CONVERSATION_SYMBOL:
+                presenter.setConversationSymbol(prefs.getString(KEY_PREFERENCE_CONVERSATION_SYMBOL, getResources().getText(R.string.conversation_default_emoji).toString()));
                 break;
         }
     }
