@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdae0249_8c396708",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/SecurityAccountFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-01-05T17:34:07Z",
+      "side": 1,
+      "message": "use AndroidFileUtils.getRealPathFromURI, or copy to internal app storage using some variation of AndroidFileUtils.getCacheFile",
+      "range": {
+        "startLine": 280,
+        "startChar": 4,
+        "endLine": 300,
+        "endChar": 5
+      },
+      "revId": "2063fd855ae803819d0466ff8e6cc8b46c5aa70b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
