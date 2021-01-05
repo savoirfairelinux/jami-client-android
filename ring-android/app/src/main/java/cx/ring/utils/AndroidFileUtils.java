@@ -304,37 +304,26 @@ public class AndroidFileUtils {
         File cacheDir = context.getCacheDir();
         return Single.fromCallable(() -> {
             File file = new File(cacheDir, getFilename(contentResolver, uri));
-            FileOutputStream output = new FileOutputStream(file);
-            InputStream inputStream = contentResolver.openInputStream(uri);
-            if (inputStream == null)
-                throw new FileNotFoundException();
-            FileUtils.copyFile(inputStream, output);
-            inputStream.close();
-            output.flush();
-            output.close();
+            try  (InputStream inputStream = contentResolver.openInputStream(uri);
+                  FileOutputStream output = new FileOutputStream(file)) {
+                if (inputStream == null)
+                    throw new FileNotFoundException();
+                FileUtils.copyFile(inputStream, output);
+                output.flush();
+            }
             return file;
         }).subscribeOn(Schedulers.io());
     }
 
     public static Completable moveToUri(@NonNull ContentResolver cr, @NonNull File input, @NonNull Uri outUri) {
         return Completable.fromAction(() -> {
-            InputStream inputStream = null;
-            OutputStream output = null;
-            try {
-                inputStream = new FileInputStream(input);
-                output = cr.openOutputStream(outUri);
+            try (InputStream inputStream = new FileInputStream(input);
+                 OutputStream output = cr.openOutputStream(outUri)) {
+                if (output == null)
+                    throw new FileNotFoundException();
                 FileUtils.copyFile(inputStream, output);
-                input.delete();
-            } finally {
-                try {
-                    if (inputStream != null)
-                        inputStream.close();
-                    if (output != null)
-                        output.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
             }
+            input.delete();
         }).subscribeOn(Schedulers.io());
     }
 
@@ -410,9 +399,10 @@ public class AndroidFileUtils {
         }
 
         Log.d(TAG, "writeCacheFileToExtStorage: finalFile=" + finalFile + ",exists=" + finalFile.exists());
-        InputStream inputStream = context.getContentResolver().openInputStream(cacheFile);
-        FileOutputStream output = new FileOutputStream(finalFile);
-        FileUtils.copyFile(inputStream, output);
+        try (InputStream inputStream = context.getContentResolver().openInputStream(cacheFile);
+             FileOutputStream output = new FileOutputStream(finalFile)) {
+            FileUtils.copyFile(inputStream, output);
+        }
         return finalFile.toString();
     }
 
