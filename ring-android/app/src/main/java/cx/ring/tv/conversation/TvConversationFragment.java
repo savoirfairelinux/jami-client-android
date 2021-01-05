@@ -682,6 +682,11 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     }
 
     @Override
+    public void setConversationSymbol(CharSequence symbol) {
+
+    }
+
+    @Override
     public void startShareLocation(String accountId, String contactId) {
 
     }
