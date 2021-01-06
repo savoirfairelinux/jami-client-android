@@ -57,19 +57,13 @@ public class HistoryServiceImpl extends HistoryService {
     private static final String TAG = HistoryServiceImpl.class.getSimpleName();
     private final static String DATABASE_NAME = "history.db";
     private final static String LEGACY_DATABASE_KEY = "legacy";
-    private static boolean migrationInitialized = false;
 
     private final ConcurrentHashMap<String, DatabaseHelper> databaseHelpers = new ConcurrentHashMap<>();
-    private final Subject<MigrationStatus> migrationStatusSubject = BehaviorSubject.create();
 
     @Inject
     protected Context mContext;
 
     public HistoryServiceImpl() {
-    }
-
-    public Observable<MigrationStatus> getMigrationStatus() {
-        return migrationStatusSubject;
     }
 
     @Override
@@ -121,59 +115,8 @@ public class HistoryServiceImpl extends HistoryService {
     @SuppressWarnings("JavadocReference")
     @Override
     protected DatabaseHelper getHelper(String accountId) {
-        if (checkForLegacyDb()) {
-            return initLegacyDb();
-        }
-
-        if (databaseHelpers.containsKey(accountId))
-            return databaseHelpers.get(accountId);
-        else
-            return initHelper(accountId);
-    }
-
-    // DATABASE MIGRATION
-
-    /**
-     * Checks if the legacy database exists in the file path for migration purposes.
-     *
-     * @return true if history.db exists in the database folder
-     */
-    private Boolean checkForLegacyDb() {
-        try {
-            return mContext.getDatabasePath(DATABASE_NAME).exists();
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    /**
-     * Initializes the database prior to version 10
-     *
-     * @return the database helper
-     */
-    private DatabaseHelper initLegacyDb() {
-        if (databaseHelpers.containsKey(LEGACY_DATABASE_KEY)) {
-            return databaseHelpers.get(LEGACY_DATABASE_KEY);
-        }
-
-        DatabaseHelper helper = new DatabaseHelper(mContext, DATABASE_NAME);
-        databaseHelpers.put(LEGACY_DATABASE_KEY, helper);
-        return helper;
-    }
-
-    /**
-     * Deletes a database and removes its helper from the hashmap
-     *
-     * @param dbName the name of the database you want to delete
-     */
-    private void deleteLegacyDatabase(String dbName) {
-        try {
-            getConnectionSource(dbName).close();
-            mContext.deleteDatabase(dbName);
-            databaseHelpers.remove(LEGACY_DATABASE_KEY);
-        } catch (IOException e) {
-            Log.e(TAG, "Error deleting database", e);
-        }
+        DatabaseHelper helper = databaseHelpers.get(accountId);
+        return helper == null ? initHelper(accountId) : helper;
     }
 
     /**
@@ -215,90 +158,6 @@ public class HistoryServiceImpl extends HistoryService {
             }
         }
         file.delete();
-    }
-
-    /**
-     * Migrates to the new per account database system. Should only be used once.
-     *
-     * @param accounts The list of accounts to migrate
-     */
-    @Override
-    protected void migrateDatabase(List<String> accounts) {
-        if (!checkForLegacyDb()) {
-            migrationStatusSubject.onNext(MigrationStatus.LEGACY_DELETED);
-            return;
-        }
-
-        if (migrationInitialized)
-            return;
-
-        migrationInitialized = true;
-
-        Log.i(TAG, "Initializing database migration...");
-
-        try (SQLiteDatabase db = mContext.openOrCreateDatabase(mContext.getDatabasePath(DATABASE_NAME).getAbsolutePath(), Context.MODE_PRIVATE, null)) {
-
-            if (accounts == null || accounts.isEmpty()) {
-                Log.i(TAG, "No existing accounts found in directory, aborting migration...");
-                migrationStatusSubject.onNext(MigrationStatus.FAILED);
-                return;
-            }
-
-            // create new database for each account
-            for (String newDb : accounts) {
-
-                File dbPath = new File(mContext.getFilesDir(), newDb);
-                dbPath.mkdirs();
-                File dbLocation = new File(dbPath, DATABASE_NAME);
-
-                SQLiteDatabase newDatabase = mContext.openOrCreateDatabase(dbLocation.getAbsolutePath(), Context.MODE_PRIVATE, null);
-                newDatabase.setVersion(9);
-
-                String legacyDbPath = mContext.getDatabasePath(DATABASE_NAME).getAbsolutePath();
-
-                String[] dbName = {newDb};
-
-                // attach new database to begin migration
-                newDatabase.execSQL("ATTACH DATABASE '" + legacyDbPath + "' AS tempDb");
-
-                newDatabase.beginTransaction();
-
-                // we manually create the tables to avoid creating an instance of the helper. the helper will be initialized when it is time to update the database.
-                newDatabase.execSQL("CREATE TABLE IF NOT EXISTS `historycall` (`accountID` VARCHAR , `callID` VARCHAR , `call_end` BIGINT , `TIMESTAMP_START` BIGINT , `contactID` BIGINT , `contactKey` VARCHAR , `direction` INTEGER , `missed` SMALLINT , `number` VARCHAR , `recordPath` VARCHAR )");
-                newDatabase.execSQL("CREATE TABLE IF NOT EXISTS `historydata` (`accountId` VARCHAR , `displayName` VARCHAR , `dataTransferEventCode` VARCHAR , `id` INTEGER PRIMARY KEY AUTOINCREMENT , `isOutgoing` SMALLINT , `peerId` VARCHAR , `TIMESTAMP` BIGINT , `totalSize` BIGINT )");
-                newDatabase.execSQL("CREATE TABLE IF NOT EXISTS `historytext` (`accountID` VARCHAR , `callID` VARCHAR , `contactID` BIGINT , `contactKey` VARCHAR , `direction` INTEGER , `id` BIGINT , `message` VARCHAR , `number` VARCHAR , `read` SMALLINT , `state` VARCHAR , `TIMESTAMP` BIGINT , PRIMARY KEY (`id`) )");
-                newDatabase.execSQL("CREATE TABLE IF NOT EXISTS `conversations` (`extra_data` VARCHAR , `id` INTEGER PRIMARY KEY AUTOINCREMENT , `participant` VARCHAR )");
-                newDatabase.execSQL("CREATE TABLE IF NOT EXISTS `interactions` (`is_read` INTEGER , `author` VARCHAR , `body` VARCHAR , `conversation` INTEGER , `daemon_id` BIGINT , `extra_data` VARCHAR , `id` INTEGER PRIMARY KEY AUTOINCREMENT , `status` VARCHAR , `timestamp` BIGINT , `type` VARCHAR )");
-
-                // migrate any data where account id matches
-                newDatabase.execSQL("INSERT INTO historycall SELECT * FROM tempDb.historycall WHERE accountId=?", dbName);
-                newDatabase.execSQL("INSERT INTO historydata SELECT * FROM tempDb.historydata WHERE accountID=?", dbName);
-                newDatabase.execSQL("INSERT INTO historytext SELECT * FROM tempDb.historytext WHERE accountID=?", dbName);
-
-                newDatabase.setTransactionSuccessful();
-                newDatabase.endTransaction();
-
-                newDatabase.execSQL("DETACH tempDb");
-
-                newDatabase.close();
-
-                Log.d(TAG, "Migration: Created single database for " + newDb);
-            }
-
-            db.close();
-            deleteLegacyDatabase(DATABASE_NAME);
-            migrationStatusSubject.onNext(MigrationStatus.SUCCESSFUL);
-            Log.i(TAG, "Migration complete. Each account now has its own database");
-
-        } catch (SQLiteException e) {
-            migrationStatusSubject.onNext(MigrationStatus.FAILED);
-            migrationInitialized = false;
-            Log.e(TAG, "Error migrating database.", e);
-        } catch (NullPointerException e) {
-            migrationStatusSubject.onNext(MigrationStatus.FAILED);
-            migrationInitialized = false;
-            Log.e(TAG, "An unexpected error occurred. The migration will run again when the helper is called again", e);
-        }
     }
 
 }
