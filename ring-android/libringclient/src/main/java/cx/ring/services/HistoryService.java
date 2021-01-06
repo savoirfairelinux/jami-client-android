@@ -204,19 +204,16 @@ public abstract class HistoryService {
 
     Single<TextMessage> incomingMessage(final String accountId, final String daemonId, final String from, final String message) {
         return Single.fromCallable(() -> {
-            String f = new Uri(from).getUri();
+            String fromUri = new Uri(from).getUri();
             Dao<ConversationHistory, Integer> conversationDataDao = getConversationDataDao(accountId);
-
-            ConversationHistory conversation = conversationDataDao.queryBuilder().where().eq(ConversationHistory.COLUMN_PARTICIPANT, f).queryForFirst();
-
+            ConversationHistory conversation = conversationDataDao.queryBuilder().where().eq(ConversationHistory.COLUMN_PARTICIPANT, fromUri).queryForFirst();
             if (conversation == null) {
-                conversation = new ConversationHistory(f);
+                conversation = new ConversationHistory(fromUri);
                 conversation.setId(conversationDataDao.extractId(conversationDataDao.createIfNotExists(conversation)));
             }
 
-            TextMessage txt = new TextMessage(f, accountId, daemonId, conversation, message);
+            TextMessage txt = new TextMessage(fromUri, accountId, daemonId, conversation, message);
             txt.setStatus(Interaction.InteractionStatus.SUCCESS);
-
 
             Log.w(TAG, "New text messsage " + txt.getAuthor() + " " + txt.getDaemonId() + " " + txt.getBody());
             getInteractionDataDao(accountId).create(txt);
@@ -225,14 +222,14 @@ public abstract class HistoryService {
     }
 
 
-    Single<TextMessage> accountMessageStatusChanged(String accountId, long daemonId, String to, int status) {
+    Single<TextMessage> accountMessageStatusChanged(String accountId, String daemonId, String peer, int status) {
         return Single.fromCallable(() -> {
-            List<Interaction> textList = getInteractionDataDao(accountId).queryForEq(Interaction.COLUMN_DAEMON_ID, Long.toString(daemonId));
+            List<Interaction> textList = getInteractionDataDao(accountId).queryForEq(Interaction.COLUMN_DAEMON_ID, daemonId);
             if (textList == null || textList.isEmpty()) {
                 throw new RuntimeException("accountMessageStatusChanged: not able to find message with id " + daemonId + " in database");
             }
             Interaction text = textList.get(0);
-            String participant = (new Uri(to)).getUri();
+            String participant = new Uri(peer).getUri();
             if (!text.getConversation().getParticipant().equals(participant)) {
                 throw new RuntimeException("accountMessageStatusChanged: received an invalid text message");
             }

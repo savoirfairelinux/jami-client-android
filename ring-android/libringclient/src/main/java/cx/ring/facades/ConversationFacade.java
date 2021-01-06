@@ -22,6 +22,7 @@ package cx.ring.facades;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.NavigableMap;
@@ -117,7 +118,7 @@ public class ConversationFacade {
 
         mDisposableBag.add(mAccountService.getIncomingRequests()
                 .concatMapSingle(r -> getAccountSubject(r.getAccountId()))
-                .subscribe(a -> mNotificationService.showIncomingTrustRequestNotification(a),
+                .subscribe(mNotificationService::showIncomingTrustRequestNotification,
                         e -> Log.e(TAG, "Error showing contact request")));
 
         mDisposableBag.add(mAccountService
@@ -127,6 +128,10 @@ public class ConversationFacade {
                             a.addTextMessage(msg);
                             return msg;
                         }))
+                .subscribe(this::parseNewMessage,
+                        e -> Log.e(TAG, "Error adding text message", e)));
+        mDisposableBag.add(mAccountService
+                .getIncomingSwarmMessages()
                 .subscribe(this::parseNewMessage,
                         e -> Log.e(TAG, "Error adding text message", e)));
 
@@ -158,7 +163,7 @@ public class ConversationFacade {
         mDisposableBag.add(mAccountService
                 .getMessageStateChanges()
                 .concatMapSingle(txt -> getAccountSubject(txt.getAccount())
-                        .map(a -> a.getByUri(txt.getConversation().getParticipant()))
+                        .map(a -> txt.getConversation() == null ? a.getSwarm(txt.getConversationId()) : a.getByUri(txt.getConversation().getParticipant()))
                         .doOnSuccess(conv -> conv.updateTextMessage(txt)))
                 .subscribe(c -> {
                 }, e -> Log.e(TAG, "Error updating text message", e)));
@@ -200,15 +205,15 @@ public class ConversationFacade {
     }
 
     public void readMessages(Account account, Conversation conversation, boolean cancelNotification) {
-        if (conversation != null) {
+        if (conversation != null && !conversation.isSwarm()) {
             String lastMessage = readMessages(conversation);
             if (lastMessage != null) {
                 account.refreshed(conversation);
                 if (mPreferencesService.getSettings().isAllowReadIndicator()) {
-                    mAccountService.setMessageDisplayed(account.getAccountID(), conversation.getContact().getPrimaryNumber(), lastMessage);
+                    mAccountService.setMessageDisplayed(account.getAccountID(), conversation.getUri().getUriString(), lastMessage);
                 }
                 if (cancelNotification) {
-                    mNotificationService.cancelTextNotification(conversation.getContact().getPrimaryUri());
+                    mNotificationService.cancelTextNotification(account.getAccountID(), conversation.getUri());
                 }
             }
         }
@@ -233,6 +238,11 @@ public class ConversationFacade {
     }
 
     public Single<TextMessage> sendTextMessage(String account, Conversation c, Uri to, String txt) {
+        if (c.isSwarm()) {
+            Log.w(TAG, "sendConversationMessages " + c.getUri().getRawRingId() + " to: " + to.getRawRingId());
+            mAccountService.sendConversationMessage(account, c.getUri().getRawRingId(), txt);
+            return Single.just(new TextMessage(null, account, null, c, txt));
+        }
         return mCallService.sendAccountTextMessage(account, to.getRawUriString(), txt)
                 .map(id -> {
                     TextMessage message = new TextMessage(null, account, Long.toHexString(id), c, txt);
@@ -257,7 +267,7 @@ public class ConversationFacade {
         mCallService.setIsComposing(accountId, contactUri.getRawUriString(), isComposing);
     }
 
-    public Completable sendFile(String account, Uri to, File file) {
+    public Completable sendFile(Conversation conversation, Uri to, File file) {
         return Completable.fromAction(() -> {
             if (file == null) {
                 return;
@@ -273,10 +283,17 @@ public class ConversationFacade {
                 Log.w(TAG, "sendFile: file not readable");
                 return;
             }
+            if (conversation.getParticipant() == null) {
+                Log.w(TAG, "sendFile: no participant");
+                return;
+            }
             String peerId = to.getUri();
-            Conversation conversation = mAccountService.getAccount(account).getByUri(to);
-            DataTransfer transfer = new DataTransfer(conversation, account, file.getName(), true, file.length(), 0, 0L);
-            mHistoryService.insertInteraction(account, conversation, transfer).blockingAwait();
+
+            DataTransfer transfer = new DataTransfer(conversation, to.getRawRingId(), conversation.getAccountId(), file.getName(), true, file.length(), 0, 0L);
+            if (!conversation.isSwarm()) {
+                mHistoryService.insertInteraction(conversation.getAccountId(), conversation, transfer).blockingAwait();
+            }
+
             File dest = mDeviceRuntimeService.getConversationPath(peerId, transfer.getStoragePath());
             if (!FileUtils.moveFile(file, dest)) {
                 Log.e(TAG, "sendFile: can't move file to " + dest);
@@ -340,14 +357,26 @@ public class ConversationFacade {
      * Loads history for a specific conversation from cache or database
      *
      * @param account    the user account
-     * @param contactUri the conversation participant
+     * @param conversationUri the conversation
      * @return a conversation single
      */
-    public Single<Conversation> loadConversationHistory(final Account account, final Uri contactUri) {
-        Conversation conversation = account.getByUri(contactUri);
+    public Single<Conversation> loadConversationHistory(final Account account, final Uri conversationUri) {
+        Conversation conversation = account.getByUri(conversationUri);
         if (conversation == null)
             return Single.error(new RuntimeException("Can't get conversation"));
         synchronized (conversation) {
+            if (conversation.isSwarm()) {
+                Collection<String> roots = conversation.getSwarmRoot();
+                if (roots.isEmpty())
+                    mAccountService.loadConversationHistory(account.getAccountID(), conversationUri, "", 16);
+                else {
+                    for (String root : roots)
+                        mAccountService.loadConversationHistory(account.getAccountID(), conversationUri, root, 16);
+                }
+                Single<Conversation> ret = Single.just(conversation);
+                conversation.setLoaded(ret);
+                return ret;
+            }
             if (conversation.getId() == null) {
                 return Single.just(conversation);
             }
@@ -361,11 +390,12 @@ public class ConversationFacade {
     }
 
     private Observable<SmartListViewModel> observeConversation(Account account, Conversation conversation, boolean hasPresence) {
+        Log.w(TAG, "observeConversation " + conversation.getUri() + " " + hasPresence);
         return account.getConversationSubject()
                 .filter(c -> c == conversation)
                 .startWith(conversation)
                 .switchMap(c -> mContactService
-                        .observeContact(c.getAccountId(), c.getContact(), hasPresence)
+                        .observeContact(c.getAccountId(), c.getContacts(), hasPresence)
                         .map(contact -> new SmartListViewModel(c, hasPresence)));
     }
     public Observable<List<Observable<SmartListViewModel>>> getSmartList(Observable<Account> currentAccount, boolean hasPresence) {
@@ -373,6 +403,18 @@ public class ConversationFacade {
                 .switchMapSingle(conversations -> Observable.fromIterable(conversations)
                         .map(conv -> observeConversation(account, conv, hasPresence))
                         .toList()));
+    }
+    public Observable<List<SmartListViewModel>> getContactList(Observable<Account> currentAccount) {
+        return currentAccount.switchMap(account -> account.getConversationsSubject()
+                .switchMapSingle(conversations -> Observable.fromIterable(conversations)
+                        .filter(conversation -> !conversation.isSwarm())
+                        .map(conversation -> new SmartListViewModel(conversation,false))
+                        .toList()));
+/*
+        return currentAccount.switchMapSingle(account ->
+                Observable.fromIterable(account.getContacts().entrySet())
+                        .map(contactEntry -> new SmartListViewModel(account.getByUri(contactEntry.getValue().getPrimaryUri()), false))
+                        .toList(account.getContacts().size()));*/
     }
     public Observable<List<Observable<SmartListViewModel>>> getPendingList(Observable<Account> currentAccount) {
         return currentAccount.switchMap(account -> account.getPendingSubject()
@@ -387,16 +429,19 @@ public class ConversationFacade {
     public Observable<List<Observable<SmartListViewModel>>> getPendingList() {
         return getPendingList(mAccountService.getCurrentAccountSubject());
     }
+    public Observable<List<SmartListViewModel>> getContactList() {
+        return getContactList(mAccountService.getCurrentAccountSubject());
+    }
 
     private Single<List<Observable<SmartListViewModel>>> getSearchResults(Account account, String query) {
         Uri uri = new Uri(query);
         if (account.isSip()) {
             CallContact contact = account.getContactFromCache(uri);
             return mContactService.loadContactData(contact, account.getAccountID())
-                    .andThen(Single.just(Collections.singletonList(Observable.just(new SmartListViewModel(account.getAccountID(), contact, null)))));
+                    .andThen(Single.just(Collections.singletonList(Observable.just(new SmartListViewModel(account.getAccountID(), contact, contact.getPrimaryNumber(), null)))));
         } else if (uri.isRingId()) {
             return mContactService.getLoadedContact(account.getAccountID(), account.getContactFromCache(uri))
-                    .map(contact -> Collections.singletonList(Observable.just(new SmartListViewModel(account.getAccountID(), contact, null))));
+                    .map(contact -> Collections.singletonList(Observable.just(new SmartListViewModel(account.getAccountID(), contact, contact.getPrimaryNumber(), null))));
         } else if (account.canSearch() && !query.contains("@")) {
             return mAccountService.searchUser(account.getAccountID(), query)
                     .map(AccountService.UserSearchResult::getResultsViewModels);
@@ -431,7 +476,7 @@ public class ConversationFacade {
                             newList.add(SmartListViewModel.TITLE_CONVERSATIONS);
                             int nRes = 0;
                             for (Conversation conversation : conversations) {
-                                if (conversation.getContact().matches(lq)) {
+                                if (conversation.matches(lq)) {
                                     newList.add(observeConversation(account, conversation, hasPresence));
                                     nRes++;
                                 }
@@ -522,9 +567,15 @@ public class ConversationFacade {
 
     private void parseNewMessage(final TextMessage txt) {
         if (txt.isRead()) {
-            mHistoryService.updateInteraction(txt, txt.getAccount()).subscribe();
+            if (txt.getMessageId() == null) {
+                mHistoryService.updateInteraction(txt, txt.getAccount()).subscribe();
+            }
             if (mPreferencesService.getSettings().isAllowReadIndicator()) {
-                mAccountService.setMessageDisplayed(txt.getAccount(), txt.getAuthor(), Long.toString(txt.getDaemonId(), 16));
+                if (txt.getMessageId() != null) {
+                    // mAccountService.setMessageDisplayed(txt.getAccount(), txt.getAuthor(), txt.getMessageId());
+                } else {
+                    mAccountService.setMessageDisplayed(txt.getAccount(), txt.getAuthor(), Long.toString(txt.getDaemonId(), 16));
+                }
             }
         }
         getAccountSubject(txt.getAccount())
@@ -554,7 +605,7 @@ public class ConversationFacade {
                 mAccountService.acceptFileTransfer(transfer);
             }
         }
-        mNotificationService.handleDataTransferNotification(transfer, conversation.getContact(), conversation.isVisible());
+        mNotificationService.handleDataTransferNotification(transfer, conversation, conversation.isVisible());
     }
 
     private void onConfStateChange(Conference conference) {
@@ -607,7 +658,7 @@ public class ConversationFacade {
             if (newState == SipCall.CallStatus.HUNGUP || call.getTimestampEnd() == 0) {
                 call.setTimestampEnd(now);
             }
-            if (conversation != null && conference.removeParticipant(call)) {
+            if (conference != null && conference.removeParticipant(call) && !conversation.isSwarm()) {
                 mHistoryService.insertInteraction(account.getAccountID(), conversation, call).subscribe();
                 conversation.addCall(call);
                 if (call.isIncoming() && call.isMissed()) {
@@ -648,5 +699,12 @@ public class ConversationFacade {
                     account.clearHistory(contact, true);
                     mAccountService.removeContact(accountId, contact.getRawRingId(), false);
                 });
+    }
+
+    public Single<Conversation> createConversation(String accountId, Collection<CallContact> currentSelection) {
+        List<String> contactIds = new ArrayList<>(currentSelection.size());
+        for (CallContact contact : currentSelection)
+            contactIds.add(contact.getPrimaryNumber());
+        return mAccountService.startConversation(accountId, contactIds);
     }
 }
