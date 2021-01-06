@@ -100,11 +100,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             // if we are under version 10, it must first wait for account splitting to be complete which occurs in history service
             if (oldVersion >= 10)
                 updateDatabase(oldVersion, db, connectionSource);
-            else
-                mHistoryService.getMigrationStatus().firstOrError().subscribe(migrationStatus -> {
-                    if (migrationStatus == HistoryService.MigrationStatus.LEGACY_DELETED || migrationStatus == HistoryService.MigrationStatus.SUCCESSFUL)
-                        updateDatabase(oldVersion, db, connectionSource);
-                });
         } catch (SQLException exc) {
             exc.printStackTrace();
             clearDatabase(db);
