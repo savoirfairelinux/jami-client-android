@@ -25,6 +25,7 @@ import cx.ring.account.AccountEditionFragment;
 import cx.ring.account.JamiAccountPasswordFragment;
 import cx.ring.account.JamiAccountUsernameFragment;
 import cx.ring.account.JamiLinkAccountPasswordFragment;
+import cx.ring.client.CallActivity;
 import cx.ring.contactrequests.BlockListFragment;
 import cx.ring.fragments.GeneralAccountFragment;
 import cx.ring.fragments.LinkDeviceFragment;
@@ -98,6 +99,8 @@ public interface JamiInjectionComponent {
     void inject(JamiApplication app);
 
     void inject(HomeActivity activity);
+
+    void inject(CallActivity activity);
 
     void inject(DatabaseHelper helper);
 
