@@ -53,18 +53,10 @@ public abstract class HistoryService {
 
     protected abstract Object getHelper(String dbName);
 
-    protected abstract void migrateDatabase(List<String> accounts);
-
     public abstract void setMessageRead(String accountId, Uri conversationUri, String lastId);
     public abstract String getLastMessageRead(String accountId, Uri conversationUri);
 
     protected abstract void deleteAccountHistory(String accountId);
-
-    public abstract Observable<MigrationStatus> getMigrationStatus();
-
-    public enum MigrationStatus {
-        FAILED, SUCCESSFUL, LEGACY_DELETED
-    }
 
     public Scheduler getScheduler() {
         return scheduler;
