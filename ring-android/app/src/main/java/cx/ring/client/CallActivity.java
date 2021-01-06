@@ -21,29 +21,33 @@
  */
 package cx.ring.client;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
-import cx.ring.call.CallView;
 import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.ConversationFragment;
+import cx.ring.model.Account;
+import cx.ring.services.AccountService;
 import cx.ring.services.NotificationService;
 import cx.ring.utils.KeyboardVisibilityManager;
 import cx.ring.utils.MediaButtonsHelper;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class CallActivity extends AppCompatActivity {
     public static final String ACTION_CALL = BuildConfig.APPLICATION_ID + ".action.call";
@@ -57,10 +61,15 @@ public class CallActivity extends AppCompatActivity {
     private int currentOrientation = Configuration.ORIENTATION_PORTRAIT;
     private boolean dimmed = false;
 
+    @Inject
+    @Singleton
+    AccountService mAccountService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         JamiApplication.getInstance().startDaemon();
+        JamiApplication.getInstance().getInjectionComponent().inject(this);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             setTurnScreenOn(true);
@@ -97,21 +106,43 @@ public class CallActivity extends AppCompatActivity {
         handleNewIntent(intent);
     }
 
+    private void loadPlaceCallFragment(String accountId, String contactRingId, boolean audioOnly) {
+        // Reload a new view
+        CallFragment callFragment = CallFragment.newInstance(CallFragment.ACTION_PLACE_CALL,
+                accountId,
+                contactRingId,
+                audioOnly);
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit();
+    }
+
     private void handleNewIntent(Intent intent) {
         String action = intent.getAction();
 
         if (Intent.ACTION_CALL.equals(action) || ACTION_CALL.equals(action)) {
-
             boolean audioOnly = intent.getBooleanExtra(CallFragment.KEY_AUDIO_ONLY, true);
             String accountId = intent.getStringExtra(ConversationFragment.KEY_ACCOUNT_ID);
             String contactRingId = intent.getStringExtra(ConversationFragment.KEY_CONTACT_RING_ID);
-            // Reload a new view
-            CallFragment callFragment = CallFragment.newInstance(CallFragment.ACTION_PLACE_CALL,
-                    accountId,
-                    contactRingId,
-                    audioOnly);
-            getSupportFragmentManager().beginTransaction().replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit();
-
+            if (contactRingId == null || accountId == null) {
+                Uri uri = intent.getData();
+                String scheme = uri.getScheme();
+                switch (scheme) {
+                    case "tel":
+                    case "sip":
+                        // TODO: this uses the first SIP account; maybe we need something more advanced here
+                        mAccountService.getObservableAccountList()
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(accounts -> {
+                                    for (Account account : accounts) {
+                                        if (!account.isSip()) continue;
+                                        loadPlaceCallFragment(account.getAccountID(), uri.getSchemeSpecificPart(), audioOnly);
+                                        break;
+                                    }
+                                });
+                        break;
+                }
+            } else {
+                loadPlaceCallFragment(accountId, contactRingId, audioOnly);
+            }
         } else if (Intent.ACTION_VIEW.equals(action) || ACTION_CALL_ACCEPT.equals(action)) {
             String confId = intent.getStringExtra(NotificationService.KEY_CALL_ID);
             // Reload a new view
