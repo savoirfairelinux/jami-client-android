@@ -22,7 +22,9 @@ package cx.ring.call;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -317,6 +319,13 @@ public class CallPresenter extends RootPresenter<CallView> {
         finish();
     }
 
+    public void holdCall(String confId) {
+        if (mConference == null) {
+            return;
+        }
+        mCallService.hold(confId);
+    }
+
     public void refuseCall() {
         final Conference call = mConference;
         if (call != null) {
@@ -469,7 +478,16 @@ public class CallPresenter extends RootPresenter<CallView> {
 
         mConference = call;
         SipCall.CallStatus status = mConference.getState();
-        if (status == SipCall.CallStatus.HOLD && mCallService.getConferenceList().size() == 1) {
+        Object[] calls = mCallService.getConferenceList().keySet().toArray();
+        for (int i = 0; i < calls.length; i++) {
+            if (!mConference.getId().equals(calls[i]))
+                holdCall((String) calls[i]);
+        }
+        if (mConference.getMediaHandlerId() != null)
+            mHardwareService.startMediaHandler();
+        else
+            mHardwareService.stopMediaHandler();
+        if (status == SipCall.CallStatus.HOLD && !mOnGoingCall) {
             mCallService.unhold(mConference.getId());
         }
         mAudioOnly = !call.hasVideo();
@@ -625,6 +643,9 @@ public class CallPresenter extends RootPresenter<CallView> {
         if (mConference != null && mConference.isOnGoing() && mConference.hasVideo()) {
             getView().toggleCallMediaHandler(id, mConference.getId(), toggle);
         }
+        mConference.setMediaHandlerId(null);
+        if (toggle)
+            mConference.setMediaHandlerId(id);
     }
 
     public boolean isSpeakerphoneOn() {
@@ -730,18 +751,42 @@ public class CallPresenter extends RootPresenter<CallView> {
         return mConference.getMaximizedCall() == call;
     }
 
+    public boolean checkStartedPlugin() {
+        if (mConference == null)
+            return false;
+        return mConference.getMediaHandlerId() != null;
+    }
+
+    public int getCallsSize() {
+        return mCallService.getConferenceList().size();
+    }
+
+    public String mediaHandlerId() {
+        if (mConference == null)
+            return null;
+        return mConference.getMediaHandlerId();
+    }
+
     public void startPlugin(String mediaHandlerId) {
-        mHardwareService.startMediaHandler(mediaHandlerId);
         if(mConference == null)
             return;
+        mHardwareService.startMediaHandler();
         mHardwareService.switchInput(mConference.getId(), mHardwareService.isPreviewFromFrontCamera());
+        mConference.setMediaHandlerId(mediaHandlerId);
     }
 
     public void stopPlugin() {
-        mHardwareService.stopMediaHandler();
         if(mConference == null)
             return;
+        mHardwareService.stopMediaHandler();
         mHardwareService.switchInput(mConference.getId(), mHardwareService.isPreviewFromFrontCamera());
+        mConference.setMediaHandlerId(null);
+    }
+
+    public void pausePlugin() {
+        if(mConference == null || mConference.getMediaHandlerId() == null)
+            return;
+        getView().toggleCallMediaHandler(mConference.getMediaHandlerId(), mConference.getId(), false);
     }
 
 }
