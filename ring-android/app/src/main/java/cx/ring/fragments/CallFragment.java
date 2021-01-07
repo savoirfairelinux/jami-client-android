@@ -310,14 +310,14 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         if (binding.videoSurface.getVisibility() == View.VISIBLE) {
             restartVideo = true;
         }
-        if (!choosePluginMode) {
+        if (!presenter.checkStartedPlugin()) {
             if (binding.previewContainer.getVisibility() == View.VISIBLE) {
                 restartPreview = true;
             }
         }else {
             if (binding.pluginPreviewContainer.getVisibility() == View.VISIBLE) {
                 restartPreview = true;
-                presenter.stopPlugin();
+                presenter.pausePlugin();
             }
         }
     }
@@ -341,6 +341,9 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             mPreviewSurfaceWidth = width;
             mPreviewSurfaceHeight = height;
             presenter.previewVideoSurfaceCreated(binding.previewSurface);
+            if (presenter.checkStartedPlugin()) {
+                displayVideoPluginsCarousel();
+            }
         }
 
         @Override
@@ -894,7 +897,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     @Override
     public void displayHangupButton(boolean display) {
         Log.w(TAG, "displayHangupButton " + display);
-        display &= !choosePluginMode;
+        display &= !presenter.checkStartedPlugin();
         binding.callControlGroup.setVisibility(display ? View.VISIBLE : View.GONE);
         binding.callHangupBtn.setVisibility(display ? View.VISIBLE : View.GONE);
         binding.confControlGroup.setVisibility((mConferenceMode && display) ? View.VISIBLE : View.GONE);
@@ -1175,9 +1178,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             matrix.postRotate(180, centerX, centerY);
         }
         if(!choosePluginMode) {
-//            binding.pluginPreviewSurface.setTransform(matrix);
-//        }
-//        else {
             binding.previewSurface.setTransform(matrix);
         }
     }
@@ -1286,7 +1286,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     private void startScreenShare(MediaProjection mediaProjection) {
         if (presenter.startScreenShare(mediaProjection)) {
-            if(choosePluginMode) {
+            if(presenter.checkStartedPlugin()) {
                 binding.pluginPreviewSurface.setVisibility(View.GONE);
             } else {
                 binding.previewSurface.setVisibility(View.GONE);
@@ -1376,7 +1376,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         // Reset the padding of the RecyclerPicker on each
         rp.setFirstLastElementsWidths(112, 112);
         binding.recyclerPicker.setVisibility(View.GONE);
-        if (choosePluginMode) {
+        if (presenter.checkStartedPlugin() || choosePluginMode) {
             displayHangupButton(false);
             binding.recyclerPicker.setVisibility(View.VISIBLE);
             movePreview(true);
@@ -1390,7 +1390,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     public void toggleVideoPluginsCarousel(boolean toggle) {
-        if (choosePluginMode) {
+        if (presenter.checkStartedPlugin()) {
             if (toggle) {
                 binding.recyclerPicker.setVisibility(View.VISIBLE);
                 movePreview(true);
@@ -1415,8 +1415,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
      * Function that is called to show/hide the plugins recycler viewer and update UI
      */
     public void displayVideoPluginsCarousel() {
-        choosePluginMode = !choosePluginMode;
-
         Context context = requireActivity();
 
         // Create callMediaHandlers and videoPluginsItems in a lazy manner
@@ -1443,6 +1441,13 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             pluginsModeFirst = false;
         }
 
+        boolean callStart = true;
+        if (presenter.checkStartedPlugin() && !choosePluginMode) {
+            callStart = false;
+            getPluginPosition();
+        }
+        choosePluginMode = !choosePluginMode;
+
         if (choosePluginMode) {
             // hide hang up button and other call buttons
             displayHangupButton(false);
@@ -1463,7 +1468,8 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                 }
                 if (position > 0) {
                     String callMediaId = callMediaHandlers.get(position-1);
-                    presenter.startPlugin(callMediaId);
+                    if (callStart)
+                        presenter.startPlugin(callMediaId);
                 }
             }
 
@@ -1483,6 +1489,14 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
         //change preview image
         displayVideoSurface(true,true);
+    }
+
+    private void getPluginPosition() {
+        String mediaHandlerId =  presenter.mediaHandlerId();
+        if (mediaHandlerId == null)
+            return;
+        previousPluginPosition = callMediaHandlers.indexOf(mediaHandlerId) + 1;
+        rp.scrollToPosition(previousPluginPosition);
     }
 
     /**

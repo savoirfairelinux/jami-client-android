@@ -26,11 +26,18 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import cx.ring.daemon.StringVect;
 import io.reactivex.Observable;
+import io.reactivex.annotations.Nullable;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.Subject;
 
+import static cx.ring.daemon.Ringservice.getCallMediaHandlerStatus;
+import static cx.ring.daemon.Ringservice.toggleCallMediaHandler;
+
 public class Conference {
+
+    private String mediaHandlerId = null;
 
     public static class ParticipantInfo {
         public CallContact contact;
@@ -103,6 +110,18 @@ public class Conference {
 
     public String getPluginId() {
         return "local";
+    }
+
+    public String getMediaHandlerId() {
+        StringVect mediaHandler = getCallMediaHandlerStatus(mId);
+        if (mediaHandlerId == null && !mediaHandler.isEmpty()) {
+            mediaHandlerId = mediaHandler.get(0);
+        }
+        return mediaHandlerId;
+    }
+
+    public void setMediaHandlerId(@Nullable String id) {
+        mediaHandlerId = id;
     }
 
     public String getConfId() {
