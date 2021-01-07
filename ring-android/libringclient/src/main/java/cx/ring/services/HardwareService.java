@@ -165,7 +165,7 @@ public abstract class HardwareService {
 
     public abstract void unregisterCameraDetectionCallback();
 
-    public abstract void startMediaHandler(String mediaHandlerId);
+    public abstract void startMediaHandler();
 
     public abstract void stopMediaHandler();
 
