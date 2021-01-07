@@ -41,6 +41,7 @@ import cx.ring.application.JamiApplication;
 import cx.ring.call.CallView;
 import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.ConversationFragment;
+import cx.ring.model.SipCall;
 import cx.ring.services.NotificationService;
 import cx.ring.utils.KeyboardVisibilityManager;
 import cx.ring.utils.MediaButtonsHelper;
