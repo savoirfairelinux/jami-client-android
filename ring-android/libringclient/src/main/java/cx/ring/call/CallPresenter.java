@@ -483,13 +483,11 @@ public class CallPresenter extends RootPresenter<CallView> {
         SipCall.CallStatus status = mConference.getState();
         Object[] calls = mCallService.getConferenceList().keySet().toArray();
         for (int i = 0; i < calls.length; i++) {
-            if (!mConference.getId().equals(calls[i]))
+            if (!mConference.getId().equals(calls[i])) {
                 holdCall((String) calls[i]);
+                mHardwareService.stopMediaHandler();
+            }
         }
-        if (mConference.getMediaHandlerId() != null)
-            mHardwareService.startMediaHandler();
-        else
-            mHardwareService.stopMediaHandler();
         if (status == SipCall.CallStatus.HOLD && !mOnGoingCall) {
             mCallService.unhold(mConference.getId());
         }
@@ -516,6 +514,8 @@ public class CallPresenter extends RootPresenter<CallView> {
             if (timeUpdateTask != null)
                 timeUpdateTask.dispose();
             timeUpdateTask = mUiScheduler.schedulePeriodicallyDirect(this::updateTime, 0, 1, TimeUnit.SECONDS);
+            if (mConference.getMediaHandlerId() != null && !mHardwareService.getMediaHandlerStarted())
+                mHardwareService.startMediaHandler();
         } else if (call.isRinging()) {
             SipCall scall = call.getCall();
 

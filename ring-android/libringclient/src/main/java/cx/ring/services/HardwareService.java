@@ -165,6 +165,8 @@ public abstract class HardwareService {
 
     public abstract void unregisterCameraDetectionCallback();
 
+    public abstract boolean getMediaHandlerStarted();
+
     public abstract void startMediaHandler();
 
     public abstract void stopMediaHandler();
