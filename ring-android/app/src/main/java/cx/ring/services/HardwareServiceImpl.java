@@ -487,6 +487,10 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         }
     }
 
+    public boolean getMediaHandlerStarted() {
+        return mIsChoosePlugin;
+    }
+
     public void startMediaHandler() {
         mIsChoosePlugin = true;
 
@@ -524,7 +528,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
             return;
         }
         final Conference conf = mCameraPreviewCall.get();
-        boolean useHardwareCodec = mPreferenceService.isHardwareAccelerationEnabled() && (conf == null || !conf.isConference()) && !mIsChoosePlugin;
+        boolean useHardwareCodec = mPreferenceService.isHardwareAccelerationEnabled() && (conf == null || !conf.isConference()) && !mIsChoosePlugin && conf.getMediaHandlerId() == null;
         if (conf != null && useHardwareCodec) {
             SipCall call = conf.getCall();
             if (call != null) {
@@ -551,7 +555,8 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                         }
                         if ((mMediaHandlerId = conf.getMediaHandlerId()) == null)
                             return;
-                        toggleCallMediaHandler(mMediaHandlerId, currentCall, true);
+                        if (!useHardwareCodec)
+                            toggleCallMediaHandler(mMediaHandlerId, currentCall, true);
                     }
 
                     @Override
