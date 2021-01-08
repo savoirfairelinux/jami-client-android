@@ -341,9 +341,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             mPreviewSurfaceWidth = width;
             mPreviewSurfaceHeight = height;
             presenter.previewVideoSurfaceCreated(binding.previewSurface);
-            if (presenter.checkStartedPlugin()) {
-                displayVideoPluginsCarousel();
-            }
         }
 
         @Override
@@ -361,6 +358,9 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
         @Override
         public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+            if (presenter.checkStartedPlugin() && !choosePluginMode) {
+                onOptionsItemSelected(pluginsMenuBtn);
+            }
         }
     };
 
@@ -1441,11 +1441,8 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             pluginsModeFirst = false;
         }
 
-        boolean callStart = true;
-        if (presenter.checkStartedPlugin() && !choosePluginMode) {
-            callStart = false;
-            getPluginPosition();
-        }
+        getPluginPosition();
+
         choosePluginMode = !choosePluginMode;
 
         if (choosePluginMode) {
@@ -1468,8 +1465,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                 }
                 if (position > 0) {
                     String callMediaId = callMediaHandlers.get(position-1);
-                    if (callStart)
-                        presenter.startPlugin(callMediaId);
+                    presenter.startPlugin(callMediaId);
                 }
             }
 
