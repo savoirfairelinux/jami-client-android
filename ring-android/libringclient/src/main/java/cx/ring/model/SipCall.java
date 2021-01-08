@@ -20,11 +20,13 @@
 package cx.ring.model;
 
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import cx.ring.utils.ProfileChunk;
 import cx.ring.utils.StringUtils;
@@ -56,6 +58,7 @@ public class SipCall extends Interaction {
     private CallStatus mCallStatus = CallStatus.NONE;
 
     private long timestampEnd = 0;
+    private Long duration = null;
     private boolean missed = true;
     private String mAudioCodec;
     private String mVideoCodec;
@@ -130,17 +133,26 @@ public class SipCall extends Interaction {
     }
 
     public Long getDuration() {
-        return toJson(mExtraFlag).get(KEY_DURATION) == null ? 0 : toJson(mExtraFlag).get(KEY_DURATION).getAsLong();
+        if (duration == null) {
+            JsonElement element = toJson(mExtraFlag).get(KEY_DURATION);
+            if (element != null) {
+                duration = element.getAsLong();
+            }
+        }
+        return duration == null ? 0 : duration;
     }
 
     public void setDuration(Long value) {
+        if (Objects.equals(value, duration))
+            return;
+        duration = value;
         JsonObject jsonObject = getExtraFlag();
         jsonObject.addProperty(KEY_DURATION, value);
         mExtraFlag = fromJson(jsonObject);
     }
 
     public String getDurationString() {
-        Long mDuration = getDuration() / 1000;
+        long mDuration = getDuration() / 1000;
         if (mDuration < 60) {
             return String.format(Locale.getDefault(), "%02d secs", mDuration);
         }
