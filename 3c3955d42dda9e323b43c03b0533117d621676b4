@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "277d10ce_cde7219a",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/conversation/ConversationPresenter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-01-08T20:34:43Z",
+      "side": 1,
+      "message": "showReadIndicator",
+      "range": {
+        "startLine": 439,
+        "startChar": 20,
+        "endLine": 439,
+        "endChar": 42
+      },
+      "revId": "3c3955d42dda9e323b43c03b0533117d621676b4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d8fb135_61c621f1",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/conversation/ConversationPresenter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-01-08T20:34:43Z",
+      "side": 1,
+      "message": "isRecordingBlocked()",
+      "range": {
+        "startLine": 443,
+        "startChar": 19,
+        "endLine": 443,
+        "endChar": 39
+      },
+      "revId": "3c3955d42dda9e323b43c03b0533117d621676b4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dc2ee92_b12e6c69",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/conversation/ConversationPresenter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-01-08T20:34:43Z",
+      "side": 1,
+      "message": "isRecordingBlocked()",
+      "range": {
+        "startLine": 444,
+        "startChar": 49,
+        "endLine": 444,
+        "endChar": 71
+      },
+      "revId": "3c3955d42dda9e323b43c03b0533117d621676b4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
