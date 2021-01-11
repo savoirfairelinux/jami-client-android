@@ -36,7 +36,7 @@
   <!--AccountManagementFragment-->
   <string name="empty_account_list">没有已注册账户</string>
   <string name="normal_accounts_titles">账户</string>
-  <string name="normal_devices_titles">连结的设备</string>
+  <string name="normal_devices_titles">关联设备</string>
   <string name="account_device_revoke">吊销设备</string>
   <string name="account_device_revocation_success_title">成功</string>
   <string name="account_device_revocation_success">设备已吊销！</string>
@@ -71,7 +71,7 @@
   <string name="account_ringtone_path_label">铃声目录</string>
   <string name="account_ringtone_custom_label">使用自定义铃声</string>
   <string name="account_ringtone_title">选择铃声</string>
-  <string name="account_ringtone_summary">选择一个铃声或挑选你自己的铃声</string>
+  <string name="account_ringtone_summary">选择一个铃声或挑选您自己的铃声</string>
   <!--Video Details-->
   <string name="account_video_label">视频</string>
   <string name="account_video_enable">启用视频</string>
@@ -162,9 +162,9 @@
   <string name="account_no_network_title">无法连接至网络</string>
   <string name="account_no_network_message">无法添加账户，因为 Jami 无法连接到分布式网络。检查您设备的连接。</string>
   <string name="account_device_added_title">账户设备已添加</string>
-  <string name="account_device_added_message">你已在此设备上成功设置了 Jami 账户。</string>
+  <string name="account_device_added_message">您已在此设备上成功设置了 Jami 账户。</string>
   <string name="account_device_updated_title">账户设备已更新</string>
-  <string name="account_device_updated_message">你的 Jami 账户已成功更新。</string>
+  <string name="account_device_updated_message">您的 Jami 账户已成功更新。</string>
   <string name="account_cannot_be_updated_message">无法更新账户设备。请检查您的密码。</string>
   <string name="account_sip_success_title">SIP 账户已注册</string>
   <string name="account_sip_success_message">您已成功注册了您的 SIP 账户。</string>
@@ -175,11 +175,12 @@
   <string name="account_link_prompt_pin">输入 PIN 码</string>
   <string name="account_new_button">创建一个 Jami 账户</string>
   <string name="account_link_export_button">关联新设备</string>
-  <string name="account_link_hide_button">隐藏已链接的设备</string>
+  <string name="account_link_show_button">再显示 %d 个关联设备</string>
+  <string name="account_link_hide_button">隐藏关联设备</string>
   <string name="account_link_export_info">要在其他设备上使用此账户，您必须先在 Jami 上公开它。这将生成一个 PIN 码，您必须在新设备上输入该 PIN 码才能设置此账户。PIN 码有效期为 10 分钟。</string>
   <string name="account_start_export_button">生成 PIN 码</string>
   <string name="account_end_export_button">关闭</string>
-  <string name="account_end_export_infos">您的 PIN 码是：\n\n%%\n\n要完成此过程，您需要在新设备上打开 Jami。 使用“将此设备链接到账户”创建一个新账户。你的 PIN 码有效期为 10 分钟。</string>
+  <string name="account_end_export_infos">您的 PIN 码是：\n\n%%\n\n要完成此过程，您需要在新设备上打开 Jami。 使用“将此设备关联到账户”创建一个新账户。您的 PIN 码有效期为 10 分钟。</string>
   <string name="account_link_export_info_light">要在其他设备上使用此账户，您必须先在 Jami 上公开它。这将生成一个 PIN 码，您必须在新设备上输入该 PIN 码才能设置账户。PIN 有效期为 10 分钟。</string>
   <string name="account_export_title">添加设备</string>
   <string name="account_connect_server_button">连接到管理服务器</string>
@@ -199,7 +200,7 @@
   <string name="register_recommended">推荐</string>
   <string name="username_already_taken">用户名已被占用</string>
   <string name="invalid_username">非法用户名</string>
-  <string name="unknown_error">未知错误。请检查你的网络连接。</string>
+  <string name="unknown_error">未知错误。请检查您的网络连接。</string>
   <string name="looking_for_username_availability">正在检测用户名是否可用…</string>
   <string name="account_status_connecting">正在连接</string>
   <string name="account_status_connection_error">连接错误</string>
@@ -210,8 +211,8 @@
   <!--Create account-->
   <string name="account_creation_home">欢迎来到 Jami</string>
   <string name="account_creation_profile">创建您的账户资料</string>
-  <string name="account_creation_ring">创建你的 Jami 帐号</string>
-  <string name="account_link_title">连接此设备</string>
+  <string name="account_creation_ring">创建您的 Jami 账户</string>
+  <string name="account_link_title">关联此设备</string>
   <string name="account_sip_cannot_be_registered">无法注册账户</string>
   <!--Edit profile-->
   <string name="account_edit_profile">修改您的账户资料</string>

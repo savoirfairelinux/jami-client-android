@@ -76,7 +76,7 @@
   <string name="notif_incoming_picture">来自%1$s的图片</string>
   <string name="notif_sync_title">正在同步数据...</string>
   <string name="notif_location_title">正与%1$s分享位置</string>
-  <string name="location_share_contact">%1$s正与你分享位置</string>
+  <string name="location_share_contact">%1$s正在与您分享位置</string>
   <string name="notif_location_multi_title">正与%1$d联系人分享位置</string>
   <string name="notif_location_remaining">剩余%1$d分钟</string>
   <string name="notif_location_action_stop">停止分享位置</string>
@@ -167,7 +167,7 @@
   <string name="conversation_open_file_error">没有适合打开这种文件类型的应用程序。</string>
   <string name="clip_contact_uri">联系人地址</string>
   <string name="block_contact_dialog_title">屏蔽%1$s？</string>
-  <string name="block_contact_dialog_message">你将不能联系%1$s直到你解除屏蔽。</string>
+  <string name="block_contact_dialog_message">您将不能联系%1$s直到您解除屏蔽。</string>
   <string name="block_contact_completed">%1$s已被屏蔽。</string>
   <string name="conversation_contact_is_typing">联系人正在输入...</string>
   <!--Contacts-->
@@ -193,10 +193,12 @@
   <string name="take_a_photo">拍照</string>
   <string name="profile_name_hint">输入您的名字</string>
   <string name="registered_name">已注册名称</string>
+  <string name="no_registered_name">未注册用户名</string>
   <string name="identity">身份</string>
   <string name="account">账户</string>
   <string name="link_new_device">关联新设备</string>
-  <string name="devices">链接设备</string>
+  <string name="devices">关联设备</string>
+  <string name="total_devices">全部设备：</string>
   <!--Share fragment-->
   <string name="share_message">用 Jami 扫描此码</string>
   <string name="share_message_no_account">请选择要共享的账户。</string>
@@ -213,7 +215,7 @@
   <string name="contact_request_msg">您有%1$s个联系人请求</string>
   <string name="contact_request_account">为了 %1$s</string>
   <string name="no_requests">您没有联系人请求</string>
-  <string name="message_contact_not_trusted_yet">%s还不是你的联系人。\n你接受还是拒绝此联系人请求？</string>
+  <string name="message_contact_not_trusted_yet">%s还不是您的联系人。\n您接受还是拒绝此联系人请求？</string>
   <string name="message_contact_not_trusted">%s不在您的联系人中。\n添加联系人？</string>
   <!--Send contact requests-->
   <string name="send_request_button">发送</string>

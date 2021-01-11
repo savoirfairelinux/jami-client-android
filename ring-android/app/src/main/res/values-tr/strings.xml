@@ -4,11 +4,11 @@
   <string name="feedback_section">Geri bildirim</string>
   <string name="report"><u>Bize e-posta gönder</u></string>
   <string name="section_license">Lisans</string>
-  <string name="sponsor_section">Jami bir özgür yazılımdır ve şunun tarafından geliştirilir ve desteklenir</string>
+  <string name="sponsor_section">Jami, özgür yazılımdır ve şunlarca geliştirilir ve desteklenir:</string>
   <string name="copyright_section">Telif Hakkı</string>
   <string name="contribute_section">Katkı Yap</string>
   <string name="version_section">Sürüm</string>
-  <string name="no_email_app_installed">E-posta uygulaması bulunamadı, bize rapor gönderebilmek için bir tane yükleyin</string>
+  <string name="no_email_app_installed">E-posta uygulaması bulunamadı, bize rapor gönderebilmek için kurun</string>
   <string name="no_browser_app_installed">Web tarayıcı uygulaması bulunmadı, bu sayfayı görmek için bir tane yükleyin</string>
   <string name="email_chooser_title">Şunu kullanarak posta gönder...</string>
   <string name="website_chooser_title">Şunu kullanarak web sitesini gör...</string>
@@ -43,7 +43,7 @@
     <item quantity="other">%d Konuşma</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">İsim veya telefon numarası arayın...</string>
+  <string name="searchbar_hint">Ad veya telefon numarası ara…</string>
   <string name="choose_number">Numara seçin</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -171,8 +171,8 @@
   <string name="account_create_title">Bir Jami hesabı oluştur</string>
   <string name="prompt_new_username">Yeni kullanıcı adı gir</string>
   <string name="prompt_hint_username">Kullanıcı adı</string>
-  <string name="help_password_choose">Jami hesabınızı korumak için anımsayacağınız güçlü bir şifre seçin.</string>
-  <string name="help_password_enter">Jami ana hesabınızın şifresini girin.</string>
+  <string name="help_password_choose">Jami hesabınızı korumak için anımsayacağınız güçlü parola seçin.</string>
+  <string name="help_password_enter">Jami ana hesabınızın parolasını girin.</string>
   <string name="help_pin_enter">Başka yapılandırılmış Jami hesabından PIN\'i girin. PIN edinmek için \"Jami\'de hesabı dışa aktarma\" özelliğini kullanın.</string>
   <string name="wizard_next">İleri</string>
   <string name="wizard_back">Geri</string>
@@ -182,7 +182,7 @@
   <string name="profile_message_warning">Profiliniz sadece kayıtlı kişilerinizle paylaşılıyor</string>
   <string name="open_the_gallery">Galeriyi aç</string>
   <string name="take_a_photo">Fotoğraf çek</string>
-  <string name="profile_name_hint">İsminizi girin</string>
+  <string name="profile_name_hint">Adınızı girin</string>
   <string name="registered_name">Kayıtlı Ad</string>
   <string name="identity">Kimlik</string>
   <string name="account">Hesap</string>

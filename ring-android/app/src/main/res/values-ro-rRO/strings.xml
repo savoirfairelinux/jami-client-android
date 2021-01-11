@@ -270,7 +270,7 @@
   <string name="navigation_item_conversation">Conversații</string>
   <string name="navigation_item_contact_request">Cereri de contact</string>
   <string name="navigation_item_account">Cont</string>
-  <string name="search_results_public_directory">Listă publică</string>
+  <string name="search_results_public_directory">Lista publică</string>
   <!--TV-->
   <string name="tv_send_audio_dialog_message">Trimiți mesajul audio?</string>
   <string name="tv_send_image_dialog_message">Trimiți poza?</string>
