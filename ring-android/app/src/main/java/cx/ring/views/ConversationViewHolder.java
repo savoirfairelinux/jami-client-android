@@ -46,10 +46,12 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
     public TextView mMsgDetailTxtPerm;
     public ImageView mAvatar;
     public ImageView mImage;
+    public ImageView mDoneImage;
     public ImageView mStatusIcon;
     public ImageView mIcon;
     public TextView mHistTxt;
     public TextView mHistDetailTxt;
+    public TextView mImageSizeTxt;
     public View mLayout;
     public ViewGroup mAnswerLayout;
     public View btnAccept;
@@ -102,9 +104,11 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
                 case INCOMING_IMAGE:
                 case OUTGOING_IMAGE:
                     mImage = v.findViewById(R.id.image);
+                    mDoneImage = v.findViewById(R.id.image_done);
                     mAnswerLayout = v.findViewById(R.id.imageLayout);
                     mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm);
                     mMsgDetailTxt = v.findViewById(R.id.msg_details_txt);
+                    mImageSizeTxt = v.findViewById(R.id.size_txt);
                     break;
                 case INCOMING_AUDIO:
                 case OUTGOING_AUDIO:
