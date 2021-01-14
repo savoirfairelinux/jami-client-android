@@ -44,8 +44,10 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -583,6 +585,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
     private void configureForFileInfo(@NonNull final ConversationViewHolder viewHolder,
                                       @NonNull final Interaction interaction, int position) {
+        TransferMsgType type = viewHolder.type.getTransferType();
         DataTransfer file = (DataTransfer) interaction;
         File path = presenter.getDeviceRuntimeService().getConversationPath(file.getPeerId(), file.getStoragePath());
         if (file.isComplete())
@@ -591,20 +594,28 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         String timeString = timestampToDetailString(viewHolder.itemView.getContext(), file.getTimestamp());
         viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe(t -> {
             if (file.getStatus() == InteractionStatus.TRANSFER_FINISHED) {
-                viewHolder.mMsgDetailTxt.setText(String.format("%s - %s",
+                if (type == TransferMsgType.IMAGE)
+                    stopImageAnimation(viewHolder);
+                else
+                    viewHolder.mMsgDetailTxt.setText(String.format("%s - %s",
                         timeString, Formatter.formatFileSize(viewHolder.itemView.getContext(), file.getTotalSize())));
+
             } else if (file.getStatus() == InteractionStatus.TRANSFER_ONGOING) {
-                viewHolder.mMsgDetailTxt.setText(String.format("%s / %s - %s",
-                        Formatter.formatFileSize(viewHolder.itemView.getContext(), file.getBytesProgress()), Formatter.formatFileSize(viewHolder.itemView.getContext(), file.getTotalSize()),
-                        ResourceMapper.getReadableFileTransferStatus(conversationFragment.getActivity(), file.getStatus())));
+                if (type == TransferMsgType.IMAGE)
+                    startImageAnimation(viewHolder);
+                else
+                    viewHolder.mMsgDetailTxt.setText(String.format("%s / %s - %s",
+                            Formatter.formatFileSize(viewHolder.itemView.getContext(), file.getBytesProgress()), Formatter.formatFileSize(viewHolder.itemView.getContext(), file.getTotalSize()),
+                            ResourceMapper.getReadableFileTransferStatus(conversationFragment.getActivity(), file.getStatus())));
             } else {
                 viewHolder.mMsgDetailTxt.setText(String.format("%s - %s - %s",
                         timeString, Formatter.formatFileSize(viewHolder.itemView.getContext(), file.getTotalSize()),
                         ResourceMapper.getReadableFileTransferStatus(conversationFragment.getActivity(), file.getStatus())));
-            }
+                viewHolder.mDoneImage.clearAnimation();
+                viewHolder.mDoneImage.setVisibility(View.INVISIBLE);
+                }
         }));
 
-        TransferMsgType type = viewHolder.type.getTransferType();
         viewHolder.compositeDisposable.clear();
         if (hasPermanentTimeString(file, position)) {
             viewHolder.compositeDisposable.add(timestampUpdateTimer.subscribe(t -> {
@@ -1173,6 +1184,38 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         return i;
     }
 
+    private Animation getBlinkingAnimation() {
+        Animation animation = new AlphaAnimation(1, 0);
+        animation.setDuration(400);
+        animation.setInterpolator(new LinearInterpolator());
+        animation.setRepeatCount(Animation.INFINITE);
+        animation.setRepeatMode(Animation.REVERSE);
+        return animation;
+    }
+
+    private void startImageAnimation(ConversationViewHolder viewHolder) {
+        viewHolder.mDoneImage.setVisibility(View.VISIBLE);
+        viewHolder.mDoneImage.startAnimation(getBlinkingAnimation());
+        if (viewHolder.imageAnimation == null)
+            viewHolder.imageAnimation = AnimatedVectorDrawableCompat.create(viewHolder.mDoneImage.getContext(), R.drawable.transfer_image_animation);
+    }
+
+    private void stopImageAnimation(ConversationViewHolder viewHolder) {
+        if (viewHolder.imageAnimation == null)
+            return;
+
+        viewHolder.mDoneImage.clearAnimation();
+        viewHolder.mDoneImage.setImageDrawable(viewHolder.imageAnimation);
+        viewHolder.imageAnimation.registerAnimationCallback(new Animatable2Compat.AnimationCallback() {
+            @Override
+            public void onAnimationEnd(Drawable drawable) {
+                super.onAnimationEnd(drawable);
+                viewHolder.mDoneImage.setVisibility(View.INVISIBLE);
+            }
+        });
+        viewHolder.imageAnimation.start();
+    }
+
     private enum SequenceType {
         FIRST,
         MIDDLE,
@@ -1226,6 +1269,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                     : (isAudio() ? TransferMsgType.AUDIO
                     : (isVideo() ? TransferMsgType.VIDEO : TransferMsgType.FILE)));
         }
+
     }
 
 }

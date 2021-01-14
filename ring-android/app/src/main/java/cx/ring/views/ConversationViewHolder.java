@@ -22,6 +22,7 @@ package cx.ring.views;
 
 import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import android.animation.ValueAnimator;
 import android.media.MediaPlayer;
@@ -46,6 +47,7 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
     public TextView mMsgDetailTxtPerm;
     public ImageView mAvatar;
     public ImageView mImage;
+    public ImageView mDoneImage;
     public ImageView mStatusIcon;
     public ImageView mIcon;
     public TextView mHistTxt;
@@ -62,6 +64,7 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
     public UiUpdater updater;
     public LinearLayout mCallInfoLayout, mFileInfoLayout, mAudioInfoLayout;
     public ValueAnimator animator;
+    public AnimatedVectorDrawableCompat imageAnimation;
 
     public final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -102,6 +105,7 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
                 case INCOMING_IMAGE:
                 case OUTGOING_IMAGE:
                     mImage = v.findViewById(R.id.image);
+                    mDoneImage = v.findViewById(R.id.image_done);
                     mAnswerLayout = v.findViewById(R.id.imageLayout);
                     mMsgDetailTxtPerm = v.findViewById(R.id.msg_details_txt_perm);
                     mMsgDetailTxt = v.findViewById(R.id.msg_details_txt);
