@@ -29,8 +29,9 @@ public class DataTransfer extends Interaction {
 
     private long mTotalSize;
     private long mBytesProgress;
-    private String mPeerId;
+    private final String mPeerId;
     private String mExtension;
+    private String mTransferId;
 
     private static final Set<String> IMAGE_EXTENSIONS = HashUtils.asSet("jpg", "jpeg", "png", "gif");
     private static final Set<String> AUDIO_EXTENSIONS = HashUtils.asSet("ogg", "mp3", "aac", "flac", "m4a");
@@ -38,11 +39,11 @@ public class DataTransfer extends Interaction {
     private static final int MAX_SIZE = 32 * 1024 * 1024;
     private static final int UNLIMITED_SIZE = 256 * 1024 * 1024;
 
-    public DataTransfer(ConversationHistory conversation, String account, String displayName, boolean isOutgoing, long totalSize, long bytesProgress, long daemonId) {
-        mAuthor = isOutgoing ? null : conversation.getParticipant();
+    public DataTransfer(ConversationHistory conversation, String peer, String account, String displayName, boolean isOutgoing, long totalSize, long bytesProgress, long daemonId) {
+        mAuthor = isOutgoing ? null : peer;
         mAccount = account;
         mConversation = conversation;
-        mPeerId = conversation.getParticipant();
+        mPeerId = peer;
         mTotalSize = totalSize;
         mBytesProgress = bytesProgress;
         mBody = displayName;
@@ -53,7 +54,6 @@ public class DataTransfer extends Interaction {
         mDaemonId = daemonId;
         mIsIncoming = mAuthor != null;
     }
-
 
     public DataTransfer(Interaction interaction) {
         mId = interaction.getId();
@@ -69,6 +69,16 @@ public class DataTransfer extends Interaction {
         mContact = interaction.getContact();
         mIsRead = 1;
         mIsIncoming = mAuthor != null;
+    }
+
+    public DataTransfer(String transferId, String accountId, String peerUri, boolean isOutgoing, long timestamp, long totalSize, long bytesProgress) {
+        mAccount = accountId;
+        mTransferId = transferId;
+        mPeerId = peerUri;
+        mIsIncoming = !isOutgoing;
+        mTotalSize = totalSize;
+        mBytesProgress = bytesProgress;
+        mTimestamp = timestamp;
     }
 
     public String getExtension() {

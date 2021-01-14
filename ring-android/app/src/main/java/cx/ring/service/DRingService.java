@@ -771,8 +771,8 @@ public class DRingService extends Service {
                         Uri uri = new Uri(path.getConversationId());
                         String message = reply.toString();
                         mConversationFacade.startConversation(path.getAccountId(), uri)
-                                .flatMap(c -> mConversationFacade.sendTextMessage(path.getAccountId(), c, uri, message)
-                                        .doOnSuccess(msg -> mNotificationService.showTextNotification(path.getAccountId(), c)))
+                                .flatMapCompletable(c -> mConversationFacade.sendTextMessage(path.getAccountId(), c, uri, message)
+                                        .doOnComplete(() -> mNotificationService.showTextNotification(path.getAccountId(), c)))
                                 .subscribe();
                     }
                 }
