@@ -158,7 +158,7 @@ public class Uri implements Serializable {
     }
 
     public boolean isEmpty() {
-        return (getUsername() == null || getUsername().isEmpty()) && (getHost() == null || getHost().isEmpty());
+        return StringUtils.isEmpty(getUsername()) && StringUtils.isEmpty(getHost());
     }
 
     /**

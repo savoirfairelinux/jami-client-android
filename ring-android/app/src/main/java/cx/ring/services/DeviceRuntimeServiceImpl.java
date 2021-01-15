@@ -27,6 +27,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.provider.ContactsContract;
+import android.widget.Toast;
+
 import androidx.core.content.ContextCompat;
 
 import java.io.File;
@@ -43,6 +45,7 @@ import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.NetworkUtils;
 import cx.ring.utils.StringUtils;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
 
@@ -70,6 +73,8 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
                 System.loadLibrary("ring");
             } catch (Exception e) {
                 Log.e(TAG, "Could not load Jami library", e);
+                android.os.Process.killProcess(android.os.Process.myPid());
+                System.exit(0);
             }
         });
     }

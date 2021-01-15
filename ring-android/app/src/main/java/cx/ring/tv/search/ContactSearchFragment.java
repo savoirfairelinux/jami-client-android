@@ -139,8 +139,8 @@ public class ContactSearchFragment extends BaseSearchFragment<ContactSearchPrese
     public void startCall(String accountID, String number) {
         Intent intent = new Intent(CallActivity.ACTION_CALL, ConversationPath.toUri(accountID, number), getActivity(), TVCallActivity.class);
         intent.putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountID);
-        intent.putExtra(ConversationFragment.KEY_CONTACT_RING_ID, number);
-        getActivity().startActivity(intent, null);
+        intent.putExtra(Intent.EXTRA_PHONE_NUMBER, number);
+        startActivity(intent);
         getActivity().finish();
     }
 
@@ -149,7 +149,7 @@ public class ContactSearchFragment extends BaseSearchFragment<ContactSearchPrese
         Intent intent = new Intent(getActivity(), TVContactActivity.class);
         //intent.putExtra(TVContactActivity.CONTACT_REQUEST_URI, model.getContact().getPrimaryUri());
         intent.setDataAndType(ConversationPath.toUri(model.getAccountId(), model.getUri()), TVContactActivity.TYPE_CONTACT_REQUEST_OUTGOING);
-        getActivity().startActivity(intent);
+        startActivity(intent);
         getActivity().finish();
     }
 }

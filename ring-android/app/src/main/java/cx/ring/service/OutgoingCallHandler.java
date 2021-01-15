@@ -52,13 +52,11 @@ public class OutgoingCallHandler extends BroadcastReceiver {
             Uri uri = new Uri(phoneNumber);
             boolean isRingId = uri.isRingId();
             if ((!isRingId && systemDialerSip) || (isRingId && systemDialerRing) || uri.isSingleIp()) {
-                Intent i = new Intent(CallActivity.ACTION_CALL)
+                Intent i = new Intent(Intent.ACTION_CALL)
                         .setClass(context, CallActivity.class)
                         .setData(android.net.Uri.parse(phoneNumber))
                         .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
                 context.startActivity(i);
-
                 setResultData(null);
             }
         }
