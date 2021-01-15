@@ -36,7 +36,6 @@ import cx.ring.daemon.Blob;
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.StringVect;
-import cx.ring.daemon.VectMap;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
@@ -47,10 +46,8 @@ import cx.ring.utils.Log;
 import ezvcard.VCard;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
-import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.PublishSubject;
 
 public class CallService {
@@ -208,12 +205,12 @@ public class CallService {
         return call == null ? Observable.error(new IllegalArgumentException()) : getCallUpdates(call);
     }*/
 
-    public Observable<SipCall> placeCallObservable(final String accountId, final String number, final boolean audioOnly) {
-        return placeCall(accountId, number, audioOnly)
+    public Observable<SipCall> placeCallObservable(final String accountId, final String conversationId, final String number, final boolean audioOnly) {
+        return placeCall(accountId, conversationId, number, audioOnly)
                 .flatMapObservable(this::getCallUpdates);
     }
 
-    public Single<SipCall> placeCall(final String account, final String number, final boolean audioOnly) {
+    public Single<SipCall> placeCall(final String account, final String conversationId, final String number, final boolean audioOnly) {
         return Single.fromCallable(() -> {
             Log.i(TAG, "placeCall() thread running... " + number + " audioOnly: " + audioOnly);
 
@@ -227,6 +224,7 @@ public class CallService {
                 Ringservice.muteLocalMedia(callId, "MEDIA_TYPE_VIDEO", true);
             }
             SipCall call = addCall(account, callId, number, SipCall.Direction.OUTGOING);
+            call.setSwarmInfo(conversationId);
             call.muteVideo(audioOnly);
             updateConnectionCount();
             return call;
@@ -450,8 +448,6 @@ public class CallService {
             conference = new Conference(call);
             currentConferences.put(confId, conference);
             conferenceSubject.onNext(conference);
-        } else {
-            Log.w(TAG, "Conference already existed ! " + confId);
         }
         return conference;
     }

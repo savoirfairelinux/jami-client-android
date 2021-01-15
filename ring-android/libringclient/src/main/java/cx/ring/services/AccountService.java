@@ -26,10 +26,15 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.SocketException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +63,7 @@ import cx.ring.model.DataTransfer;
 import cx.ring.model.DataTransferError;
 import cx.ring.model.Interaction;
 import cx.ring.model.Interaction.InteractionStatus;
+import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 import cx.ring.model.TrustRequest;
 import cx.ring.model.Uri;
@@ -78,7 +84,7 @@ import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
 /**
- * This service handles the accounts (Ring and SIP)
+ * This service handles the accounts
  * - Load and manage the accounts stored in the daemon
  * - Keep a local cache of the accounts
  * - handle the callbacks that are send by the daemon
@@ -112,7 +118,6 @@ public class AccountService {
     private boolean mHasSipAccount;
     private boolean mHasRingAccount;
 
-    private final HashMap<Long, DataTransfer> mDataTransfers = new HashMap<>();
     private DataTransfer mStartingTransfer = null;
 
     private final BehaviorSubject<List<Account>> accountsSubject = BehaviorSubject.create();
@@ -168,6 +173,7 @@ public class AccountService {
     }
 
     private final Subject<Message> incomingMessageSubject = PublishSubject.create();
+    private final Subject<Interaction> incomingSwarmMessageSubject = PublishSubject.create();
 
     private final Observable<TextMessage> incomingTextMessageSubject = incomingMessageSubject
             .flatMapMaybe(msg -> {
@@ -291,6 +297,12 @@ public class AccountService {
         return incomingTextMessageSubject;
     }
 
+    public Observable<TextMessage> getIncomingSwarmMessages() {
+        return incomingSwarmMessageSubject
+                .filter(i -> i instanceof TextMessage)
+                .map(i -> (TextMessage) i);
+    }
+
     public Observable<Location> getLocationUpdates() {
         return incomingLocationSubject;
     }
@@ -364,7 +376,6 @@ public class AccountService {
                 account.setVolatileDetails(volatileAccountDetails);
             }
 
-
             if (account.isSip()) {
                 hasSip = true;
             } else if (account.isJami()) {
@@ -387,6 +398,36 @@ public class AccountService {
                     if (enabled)
                         Ringservice.lookupAddress(accountId, "", request.getContactId());
                 }
+                Log.w(TAG, accountId + " loading conversations");
+                List<String> conversations = Ringservice.getConversations(account.getAccountID());
+                for (String conversationId : conversations) {
+                    Conversation conversation = account.getSwarm(conversationId);
+                    conversation.setLastMessageRead(mHistoryService.getLastMessageRead(accountId, conversation.getUri()));
+                    for (Map<String, String> member : Ringservice.getConversationMembers(accountId, conversationId)) {
+                        for (Map.Entry<String, String> minfo : member.entrySet()) {
+                            Log.w(TAG, accountId + " " + conversationId + " member " + minfo.getKey() + " -> " + minfo.getValue());
+                        }
+                        //conversation.addContact(account.getContactFromCache(member.get("uri")));
+                        Uri uri = new Uri(member.get("uri"));
+                        CallContact contact = conversation.findContact(uri);
+                        if (contact == null) {
+                            contact = account.getContactFromCache(uri);
+                            conversation.addContact(contact);
+                        }
+                    }
+                    Log.w(TAG, accountId + " " + conversation.getUri().getRawUriString() + " " + conversation.getContacts().size());
+                    account.conversationStarted(conversation);
+                    //account.addSwarmConversation(conversationId, members);
+                }
+                for (Map<String, String> requestData : Ringservice.getConversationRequests(account.getAccountID()).toNative()) {
+                    TrustRequest request = new TrustRequest(account.getAccountID(), requestData.get("id"));
+                    account.addRequest(request);
+                }
+                mExecutor.execute(() -> {
+                    for (String conversationId : conversations)
+                        Ringservice.loadConversationMessages(accountId, conversationId, "", 2);
+                });
+
                 if (enabled) {
                     for (CallContact contact : account.getContacts().values()) {
                         if (!contact.isUsernameLoaded())
@@ -405,22 +446,6 @@ public class AccountService {
                 mCurrentAccount = newAccount;
             }
         }
-
-        // migration to multi accounts
-        mHistoryService.migrateDatabase(accountIds);
-        mHistoryService.getMigrationStatus().firstOrError().subscribe(migrationStatus -> {
-            if (migrationStatus == HistoryService.MigrationStatus.SUCCESSFUL) {
-                mVCardService.migrateProfiles(accountIds);
-                for (String accountId : accountIds) {
-                    Account account = getAccount(accountId);
-                    if (account.isJami()) {
-                        mVCardService.migrateContact(account.getContacts(), accountId);
-                        migrateContactEvents(account, account.getContacts(), account.getRequestsMigration());
-                    }
-                }
-                mVCardService.deleteLegacyProfiles();
-            }
-        }, e -> Log.e(TAG, "Error completing profile migration", e));
 
         accountsSubject.onNext(newAccounts);
     }
@@ -618,7 +643,7 @@ public class AccountService {
                     Random r = new Random(System.currentTimeMillis());
                     int key = Math.abs(r.nextInt());
 
-                    Log.d(TAG, "sendProfile, vcard " + stringVCard);
+                    Log.d(TAG, "sendProfile, vcard " + callId);
 
                     while (i <= nbTotal) {
                         HashMap<String, String> chunk = new HashMap<>();
@@ -637,6 +662,32 @@ public class AccountService {
 
     public void setMessageDisplayed(String accountId, String contactId, String messageId) {
         mExecutor.execute(() -> Ringservice.setMessageDisplayed(accountId, contactId, messageId, 3));
+    }
+
+    public Single<Conversation> startConversation(String accountId, Collection<String> initialMembers) {
+        Account account = getAccount(accountId);
+        return Single.fromCallable(() -> {
+            Log.w(TAG, "startConversation");
+            String id = Ringservice.startConversation(accountId);
+            Conversation conversation = account.getSwarm(id);//new Conversation(accountId, new Uri(id));
+            for (String member : initialMembers) {
+                Log.w(TAG, "addConversationMember " + member);
+                Ringservice.addConversationMember(accountId, id, member);
+                conversation.addContact(account.getContactFromCache(member));
+            }
+            account.conversationStarted(conversation);
+            Log.w(TAG, "loadConversationMessages");
+            Ringservice.loadConversationMessages(accountId, id, id, 2);
+            return conversation;
+        }).subscribeOn(Schedulers.from(mExecutor));
+    }
+
+    public void loadConversationHistory(String accountId, Uri conversationUri, String root, long n) {
+        Ringservice.loadConversationMessages(accountId, conversationUri.getRawRingId(), root, n);
+    }
+
+    public void sendConversationMessage(String accountId, String conversationId, String txt) {
+        mExecutor.execute(() -> Ringservice.sendMessage(accountId, conversationId, txt, ""));
     }
 
     /**
@@ -1087,28 +1138,6 @@ public class AccountService {
     }
 
     /**
-     * Migrates contact events including trust requests to the database. This is necessary because the old database did not store contact events.
-     * Should only be called in the migration process.
-     *
-     * @param account  the user's account object
-     * @param contacts the user's contacts (if they exist)
-     * @param requests the user's trust requests (if they exist)
-     */
-    private void migrateContactEvents(Account account, Map<String, CallContact> contacts, Map<String, TrustRequest> requests) {
-        String accountId = account.getAccountID();
-        for (TrustRequest request : requests.values()) {
-            CallContact contact = account.getContactFromCache(request.getContactId());
-            ContactEvent event = new ContactEvent(contact, request);
-            insertContactEvent(accountId, contact.getPrimaryUri().getUri(), event);
-        }
-        for (CallContact contact : contacts.values()) {
-            ContactEvent event = new ContactEvent(contact);
-            insertContactEvent(accountId, contact.getPrimaryUri().getUri(), event);
-
-        }
-    }
-
-    /**
      * Inserts a contact event, and if needed, a conversation, into the database
      *
      * @param accountId      the user's account ID
@@ -1316,17 +1345,24 @@ public class AccountService {
         incomingMessageSubject.onNext(message);
     }
 
-    void accountMessageStatusChanged(String accountId, long messageId, String to, int status) {
-        Log.d(TAG, "accountMessageStatusChanged: " + accountId + ", " + messageId + ", " + to + ", " + status);
-        mHistoryService
-                .accountMessageStatusChanged(accountId, messageId, to, status)
-                .subscribe(textMessageSubject::onNext, e -> Log.e(TAG, "Error updating message: " + e.getLocalizedMessage()));
+    void accountMessageStatusChanged(String accountId, String conversationId, String messageId, String peer, int status) {
+        Log.d(TAG, "accountMessageStatusChanged: " + accountId + ", " + messageId + ", " + peer + ", " + status);
+        if (StringUtils.isEmpty(conversationId)) {
+            mHistoryService
+                    .accountMessageStatusChanged(accountId, messageId, peer, status)
+                    .subscribe(textMessageSubject::onNext, e -> Log.e(TAG, "Error updating message: " + e.getLocalizedMessage()));
+        } else {
+            TextMessage msg = new TextMessage(peer, accountId, messageId, null, null);
+            msg.setStatus(status);
+            msg.setSwarmInfo(conversationId, messageId, null);
+            textMessageSubject.onNext(msg);
+        }
     }
 
-    public void composingStatusChanged(String accountId, String contactUri, int status) {
+    public void composingStatusChanged(String accountId, String conversationId, String contactUri, int status) {
         Log.d(TAG, "composingStatusChanged: " + accountId + ", " + contactUri + " " + status);
         getAccountSingle(accountId)
-                .subscribe(account -> account.composingStatusChanged(new Uri(contactUri), Account.ComposingStatus.fromInt(status)));
+                .subscribe(account -> account.composingStatusChanged(conversationId, new Uri(contactUri), Account.ComposingStatus.fromInt(status)));
     }
 
     void errorAlert(int alert) {
@@ -1475,21 +1511,175 @@ public class AccountService {
         searchResultSubject.onNext(r);
     }
 
-    public DataTransferError sendFile(final DataTransfer dataTransfer, File file) {
-        mStartingTransfer = dataTransfer;
+    private Interaction addMessage(Account account, Conversation conversation, Map<String, String> message)  {
+        String id = message.get("id");
+        List<String> parents = Arrays.asList(message.get("parents").split(","));
+        if (parents.size() == 1 && parents.get(0).isEmpty())
+            parents = Collections.emptyList();
+        String type = message.get("type");
+        String author = message.get("author");
+        Uri authorUri = new Uri(author);
 
-        DataTransferInfo dataTransferInfo = new DataTransferInfo();
-        dataTransferInfo.setAccountId(dataTransfer.getAccount());
-        dataTransferInfo.setPeer(dataTransfer.getPeerId());
-        dataTransferInfo.setPath(file.getPath());
-        dataTransferInfo.setDisplayName(dataTransfer.getDisplayName());
+        Log.w(TAG, "addMessage2 " + type + " " + author + " id:" + id + " parents:" + parents);
 
-        Log.i(TAG, "sendFile() id=" + dataTransfer.getId() + " accountId=" + dataTransferInfo.getAccountId() + ", peer=" + dataTransferInfo.getPeer() + ", filePath=" + dataTransferInfo.getPath());
-        try {
-            return getDataTransferError(mExecutor.submit(() -> Ringservice.sendFile(dataTransferInfo, 0)).get());
-        } catch (Exception ignored) {
+        long timestamp = Long.parseLong(message.get("timestamp")) * 1000;
+        CallContact contact = conversation.findContact(authorUri);
+        if (contact == null) {
+            contact = account.getContactFromCache(authorUri);
         }
-        return DataTransferError.UNKNOWN;
+        Interaction interaction;
+        switch (type) {
+            case "member":
+                contact.setAddedDate(new Date(timestamp));
+                interaction = new ContactEvent(contact);
+                break;
+            case "merge":
+                interaction = new Interaction();
+                interaction.setAccount(account.getAccountID());
+                interaction.setConversation(conversation);
+                interaction.setType(Interaction.InteractionType.INVALID);
+                break;
+            case "text/plain":
+                interaction = new TextMessage(author, account.getAccountID(), timestamp, conversation, message.get("body"), !contact.isUser());
+                break;
+            case "application/data-transfer+json":
+                interaction = new DataTransfer(message.get("tid"), account.getAccountID(), author, contact.isUser(), timestamp, 0, 0);
+                break;
+            case "application/call-history+json":
+                interaction = new SipCall(null, account.getAccountID(), authorUri.getRawUriString(), contact.isUser() ? SipCall.Direction.OUTGOING : SipCall.Direction.INCOMING, timestamp);
+                ((SipCall) interaction).setDuration(Long.parseLong(message.get("duration")));
+                break;
+            default:
+                return null;
+        }
+        interaction.setContact(contact);
+        interaction.setSwarmInfo(conversation.getUri().getRawRingId(), id, parents);
+        if (conversation.addSwarmElement(interaction)) {
+            if (conversation.isVisible())
+                mHistoryService.setMessageRead(account.getAccountID(), conversation.getUri(), interaction.getMessageId());
+        }
+        return interaction;
+    }
+
+    public void conversationLoaded(String accountId, String conversationId, List<Map<String, String>> messages) {
+        try {
+            Log.w(TAG, "ConversationCallback: conversationLoaded " + accountId + "/" + conversationId + " " + messages.size());
+            Account account = getAccount(accountId);
+            if (account == null) {
+                Log.w(TAG, "conversationLoaded: can't find account");
+                return;
+            }
+            Conversation conversation = account.getSwarm(conversationId);
+            for (Map<String, String> message : messages) {
+                addMessage(account, conversation, message);
+            }
+            account.conversationChanged();
+        } catch (Exception e) {
+            Log.e(TAG, "Exception loading message", e);
+        }
+    }
+
+    private enum ConversationMemberEvent {
+        Add, Join, Remove, Ban
+    }
+
+    public void conversationMemberEvent(String accountId, String conversationId, String peerUri, int event) {
+        Log.w(TAG, "ConversationCallback: conversationMemberEvent " + accountId + "/" + conversationId);
+        Account account = getAccount(accountId);
+        if (account == null) {
+            Log.w(TAG, "conversationMemberEvent: can't find account");
+            return;
+        }
+        Conversation conversation = account.getSwarm(conversationId);
+        Uri uri = new Uri(peerUri);
+        switch (ConversationMemberEvent.values()[event])  {
+            case Add:
+            case Join: {
+                CallContact contact = account.getContactFromCache(uri);
+                conversation.addContact(contact);
+                break;
+            }
+            case Remove:
+            case Ban: {
+                CallContact contact = conversation.findContact(uri);
+                if (contact != null) {
+                    conversation.removeContact(contact);
+                }
+                break;
+            }
+        }
+    }
+
+    public void conversationReady(String accountId, String conversationId) {
+        Log.w(TAG, "ConversationCallback: conversationReady " + accountId + "/" + conversationId);
+        Account account = getAccount(accountId);
+        if (account == null) {
+            Log.w(TAG, "conversationReady: can't find account");
+            return;
+        }
+        Conversation conversation = account.getSwarm(conversationId);
+        for (Map<String, String> member : Ringservice.getConversationMembers(accountId, conversationId)) {
+            Uri uri = new Uri(member.get("uri"));
+            CallContact contact = conversation.findContact(uri);
+            if (contact == null) {
+                contact = account.getContactFromCache(uri);
+                conversation.addContact(contact);
+            }
+        }
+        account.conversationStarted(conversation);
+    }
+
+    public void conversationRemoved(String accountId, String conversationId) {
+        Account account = getAccount(accountId);
+        if (account == null) {
+            Log.w(TAG, "conversationRemoved: can't find account");
+            return;
+        }
+        account.removeSwarm(conversationId);
+    }
+
+    public void conversationRequestReceived(String accountId, String conversationId, Map<String, String> metadata) {
+        Log.w(TAG, "ConversationCallback: conversationRequestReceived " + accountId + "/" + conversationId + " " + metadata.size());
+        Account account = getAccount(accountId);
+        if (account == null) {
+            Log.w(TAG, "conversationRequestReceived: can't find account");
+            return;
+        }
+        TrustRequest request = new TrustRequest(account.getAccountID(), metadata.get("id"));
+        account.addRequest(request);
+    }
+
+    public void messageReceived(String accountId, String conversationId, Map<String, String> message) {
+        Log.w(TAG, "ConversationCallback: messageReceived " + accountId + "/" + conversationId + " " + message.size());
+        Account account = getAccount(accountId);
+        Conversation conversation = account.getSwarm(conversationId);
+        Interaction interaction = addMessage(account, conversation, message);
+        if (interaction != null) {
+            account.conversationUpdated(conversation);
+            boolean isIncoming = !interaction.getContact().isUser();
+            if (isIncoming) {
+                incomingSwarmMessageSubject.onNext(interaction);
+            }
+        }
+    }
+
+    public Completable sendFile(final DataTransfer dataTransfer) {
+        return Completable.fromAction(() -> {
+            mStartingTransfer = dataTransfer;
+
+            DataTransferInfo dataTransferInfo = new DataTransferInfo();
+            dataTransferInfo.setAccountId(dataTransfer.getAccount());
+            dataTransferInfo.setConversationId(dataTransfer.getConversationId());
+            dataTransferInfo.setPeer(dataTransfer.getConversationId());
+            dataTransferInfo.setPath(dataTransfer.destination.getAbsolutePath());
+            dataTransferInfo.setDisplayName(dataTransfer.getDisplayName());
+
+            Log.i(TAG, "sendFile() id=" + dataTransfer.getId() + " accountId=" + dataTransferInfo.getAccountId() + ", peer=" + dataTransferInfo.getPeer() + ", filePath=" + dataTransferInfo.getPath());
+            DataTransferError err = getDataTransferError(Ringservice.sendFile(dataTransferInfo, 0));
+            if (err != DataTransferError.SUCCESS) {
+                throw new IOException(err.name());
+            }
+        }).subscribeOn(Schedulers.from(mExecutor));
     }
 
     public List<cx.ring.daemon.Message> getLastMessages(String accountId, long baseTime) {
@@ -1501,32 +1691,41 @@ public class AccountService {
         return new ArrayList<>();
     }
 
-    public void acceptFileTransfer(long id) {
-        acceptFileTransfer(getDataTransfer(id));
+    public void acceptFileTransfer(final String accountId, final Uri conversationUri, long id) {
+        Account account = getAccount(accountId);
+        if (account != null) {
+            Conversation conversation = account.getByUri(conversationUri);
+            acceptFileTransfer(conversation, account.getDataTransfer(id));
+        }
     }
 
-    public void acceptFileTransfer(DataTransfer transfer) {
+    public void acceptFileTransfer(Conversation conversation, DataTransfer transfer) {
         if (transfer == null)
             return;
-        File path = mDeviceRuntimeService.getTemporaryPath(transfer.getPeerId(), transfer.getStoragePath());
-        acceptFileTransfer(transfer.getDaemonId(), path.getAbsolutePath(), 0);
+        File path = mDeviceRuntimeService.getTemporaryPath(conversation.getUri().getRawRingId(), transfer.getStoragePath());
+        String conversationId = conversation.isSwarm() ? conversation.getUri().getRawRingId() : "";
+        acceptFileTransfer(conversation.getAccountId(), conversationId, transfer.getDaemonId(), path.getAbsolutePath(), 0);
     }
 
-    private void acceptFileTransfer(final Long dataTransferId, final String filePath, final long offset) {
+    private void acceptFileTransfer(final String accountId, final String conversationId, final Long dataTransferId, final String filePath, long offset) {
         Log.i(TAG, "acceptFileTransfer() id=" + dataTransferId + ", path=" + filePath + ", offset=" + offset);
-        mExecutor.execute(() -> Ringservice.acceptFileTransfer(dataTransferId, filePath, offset));
+        mExecutor.execute(() -> Ringservice.acceptFileTransfer(accountId, conversationId, dataTransferId, filePath, offset));
     }
 
-    public void cancelDataTransfer(final Long dataTransferId) {
+    public void cancelDataTransfer(final String accountId, final String conversationId, long dataTransferId) {
         Log.i(TAG, "cancelDataTransfer() id=" + dataTransferId);
-        mExecutor.execute(() -> Ringservice.cancelDataTransfer(dataTransferId));
+        mExecutor.execute(() -> Ringservice.cancelDataTransfer(accountId, conversationId, dataTransferId));
     }
 
     private class DataTransferRefreshTask implements Runnable {
+        private final Account mAccount;
+        private final Conversation mConversation;
         private final DataTransfer mToUpdate;
         public ScheduledFuture<?> scheduledTask;
 
-        DataTransferRefreshTask(DataTransfer t) {
+        DataTransferRefreshTask(Account account, Conversation conversation, DataTransfer t) {
+            mAccount = account;
+            mConversation = conversation;
             mToUpdate = t;
         }
 
@@ -1534,7 +1733,7 @@ public class AccountService {
         public void run() {
             synchronized (mToUpdate) {
                 if (mToUpdate.getStatus() == Interaction.InteractionStatus.TRANSFER_ONGOING) {
-                    dataTransferEvent(mToUpdate.getDaemonId(), 5);
+                    dataTransferEvent(mAccount, mConversation, mToUpdate.getDaemonId(), 5);
                 } else {
                     scheduledTask.cancel(false);
                     scheduledTask = null;
@@ -1543,55 +1742,65 @@ public class AccountService {
         }
     }
 
-    void dataTransferEvent(final long transferId, int eventCode) {
+    void dataTransferEvent(String accountId, String conversationId, final long transferId, int eventCode) {
+        Account account = getAccount(accountId);
+        Conversation conversation = StringUtils.isEmpty(conversationId) ? null : account.getSwarm(conversationId);
+        dataTransferEvent(account, conversation, transferId, eventCode);
+    }
+    void dataTransferEvent(Account account, Conversation conversation, final long transferId, int eventCode) {
         Interaction.InteractionStatus transferStatus = getDataTransferEventCode(eventCode);
         Log.d(TAG, "Data Transfer " + transferStatus);
         DataTransferInfo info = new DataTransferInfo();
-        if (getDataTransferError(Ringservice.dataTransferInfo(transferId, info)) != DataTransferError.SUCCESS)
+        if (getDataTransferError(Ringservice.dataTransferInfo(account.getAccountID(), conversation.getUri().getRawRingId(), transferId, info)) != DataTransferError.SUCCESS)
             return;
 
-        Account account = getAccount(info.getAccountId());
-        Conversation c = account.getByUri(new Uri(info.getPeer()).getUri());
+        if (conversation == null) {
+            conversation = account.getByUri(new Uri(info.getPeer()));
+        }
 
         boolean outgoing = info.getFlags() == 0;
-        DataTransfer transfer = mDataTransfers.get(transferId);
+        DataTransfer transfer = account.getDataTransfer(transferId);
         if (transfer == null) {
-
             if (outgoing && mStartingTransfer != null) {
                 transfer = mStartingTransfer;
                 mStartingTransfer = null;
             } else {
-                transfer = new DataTransfer(c, account.getAccountID(), info.getDisplayName(),
+                transfer = new DataTransfer(conversation, info.getPeer(), account.getAccountID(), info.getDisplayName(),
                         outgoing, info.getTotalSize(),
                         info.getBytesProgress(), transferId);
-
-                mHistoryService.insertInteraction(account.getAccountID(), c, transfer).blockingAwait();
+                if (conversation.isSwarm()) {
+                    transfer.setSwarmInfo(conversation.getUri().getRawRingId(), null, null);
+                } else {
+                    mHistoryService.insertInteraction(account.getAccountID(), conversation, transfer).blockingAwait();
+                }
             }
-            mDataTransfers.put(transferId, transfer);
+            account.putDataTransfer(transferId, transfer);
         } else synchronized (transfer) {
             InteractionStatus oldState = transfer.getStatus();
             if (oldState != transferStatus) {
                 if (transferStatus == Interaction.InteractionStatus.TRANSFER_ONGOING) {
-                    DataTransferRefreshTask task = new DataTransferRefreshTask(transfer);
+                    DataTransferRefreshTask task = new DataTransferRefreshTask(account, conversation, transfer);
                     task.scheduledTask = mExecutor.scheduleAtFixedRate(task,
                             DATA_TRANSFER_REFRESH_PERIOD,
                             DATA_TRANSFER_REFRESH_PERIOD, TimeUnit.MILLISECONDS);
                 } else if (transferStatus.isError()) {
                     if (!transfer.isOutgoing()) {
-                        File tmpPath = mDeviceRuntimeService.getTemporaryPath(transfer.getPeerId(), transfer.getStoragePath());
+                        File tmpPath = mDeviceRuntimeService.getTemporaryPath(conversation.getUri().getRawRingId(), transfer.getStoragePath());
                         tmpPath.delete();
                     }
                 } else if (transferStatus == (Interaction.InteractionStatus.TRANSFER_FINISHED)) {
                     if (!transfer.isOutgoing()) {
-                        File tmpPath = mDeviceRuntimeService.getTemporaryPath(transfer.getPeerId(), transfer.getStoragePath());
-                        File path = mDeviceRuntimeService.getConversationPath(transfer.getPeerId(), transfer.getStoragePath());
+                        File tmpPath = mDeviceRuntimeService.getTemporaryPath(conversation.getUri().getRawRingId(), transfer.getStoragePath());
+                        File path = mDeviceRuntimeService.getConversationPath(conversation.getUri().getRawRingId(), transfer.getStoragePath());
                         FileUtils.moveFile(tmpPath, path);
                     }
                 }
             }
             transfer.setStatus(transferStatus);
             transfer.setBytesProgress(info.getBytesProgress());
-            mHistoryService.updateInteraction(transfer, account.getAccountID()).subscribe();
+            if (!conversation.isSwarm()) {
+                mHistoryService.updateInteraction(transfer, account.getAccountID()).subscribe();
+            }
         }
 
         dataTransferSubject.onNext(transfer);
@@ -1608,21 +1817,16 @@ public class AccountService {
     }
 
     private static DataTransferError getDataTransferError(Long errorCode) {
-        DataTransferError dataTransferError = DataTransferError.UNKNOWN;
         if (errorCode == null) {
             Log.e(TAG, "getDataTransferError: invalid error code");
         } else {
             try {
-                dataTransferError = DataTransferError.values()[errorCode.intValue()];
+                return DataTransferError.values()[errorCode.intValue()];
             } catch (ArrayIndexOutOfBoundsException ignored) {
                 Log.e(TAG, "getDataTransferError: invalid data transfer error from daemon");
             }
         }
-        return dataTransferError;
-    }
-
-    public DataTransfer getDataTransfer(long id) {
-        return mDataTransfers.get(id);
+        return DataTransferError.UNKNOWN;
     }
 
     public Subject<DataTransfer> getDataTransfers() {

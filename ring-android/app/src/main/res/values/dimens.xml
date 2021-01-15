@@ -84,6 +84,8 @@ along with this program; if not, write to the Free Software
 
     <!--  Wizard  -->
     <dimen name="wizard_button_width">340dp</dimen>
+    <dimen name="wizard_button_width_half">200dp</dimen>
+
     <dimen name="wizard_button_corner_radius">@dimen/button_corner_radius</dimen>
     <dimen name="wizard_button_text_size">12sp</dimen>
     <dimen name="wizard_button_padding">@dimen/button_padding</dimen>

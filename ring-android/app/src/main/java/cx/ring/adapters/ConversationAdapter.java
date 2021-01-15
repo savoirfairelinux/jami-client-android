@@ -32,6 +32,7 @@ import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.text.format.Formatter;
 import android.util.Log;
@@ -164,12 +165,31 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         notifyDataSetChanged();
     }
 
-    public void add(Interaction e) {
-        boolean update = !mInteractions.isEmpty();
-        mInteractions.add(e);
-        notifyItemInserted(mInteractions.size() - 1);
-        if (update)
-            notifyItemChanged(mInteractions.size() - 2);
+    public boolean add(Interaction e) {
+        if (!TextUtils.isEmpty(e.getMessageId())) {
+            if (mInteractions.isEmpty() || e.getParentIds().contains(mInteractions.get(mInteractions.size()-1).getMessageId())) {
+                boolean update = !mInteractions.isEmpty();
+                mInteractions.add(e);
+                notifyItemInserted(mInteractions.size()-1);
+                if (update)
+                    notifyItemChanged(mInteractions.size()-2);
+                return true;
+            }
+            for (int i = 0, n = mInteractions.size(); i<n; i++) {
+                if (mInteractions.get(i).getParentIds().contains(e.getMessageId())) {
+                    mInteractions.add(i, e);
+                    notifyItemInserted(i);
+                    return i == n-1;
+                }
+            }
+        } else {
+            boolean update = !mInteractions.isEmpty();
+            mInteractions.add(e);
+            notifyItemInserted(mInteractions.size() - 1);
+            if (update)
+                notifyItemChanged(mInteractions.size() - 2);
+        }
+        return true;
     }
 
     public void update(Interaction e) {
@@ -584,7 +604,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     private void configureForFileInfo(@NonNull final ConversationViewHolder viewHolder,
                                       @NonNull final Interaction interaction, int position) {
         DataTransfer file = (DataTransfer) interaction;
-        File path = presenter.getDeviceRuntimeService().getConversationPath(file.getPeerId(), file.getStoragePath());
+        File path = presenter.getDeviceRuntimeService().getConversationPath(interaction.getConversationId(), file.getStoragePath());
         if (file.isComplete())
             file.setSize(path.length());
 
@@ -769,9 +789,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         }
         // Log.w(TAG, "configureForTextMessage " + position + " " + interaction.getDaemonId() + " " + interaction.getStatus());
 
-        convViewHolder.mCid = textMessage.getConversation().getParticipant();
         String message = textMessage.getBody().trim();
-
         View longPressView = convViewHolder.mMsgTxt;
         longPressView.getBackground().setTintList(null);
 
@@ -850,8 +868,10 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                     });
                     convViewHolder.mAvatar.startAnimation(animation);
                 } else {
-                    convViewHolder.mAvatar.setImageBitmap(null);
-                    convViewHolder.mAvatar.setVisibility(View.INVISIBLE);
+                    if (convViewHolder.mAvatar != null) {
+                        convViewHolder.mAvatar.setImageBitmap(null);
+                        convViewHolder.mAvatar.setVisibility(View.INVISIBLE);
+                    }
                 }
             }
         } else {
@@ -938,16 +958,11 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
      */
     private void configureForCallInfo(@NonNull final ConversationViewHolder convViewHolder,
                                       @NonNull final Interaction interaction) {
-        int pictureResID;
-        String historyTxt;
         convViewHolder.mIcon.setScaleY(1);
         Context context = convViewHolder.itemView.getContext();
 
-
         View longPressView = convViewHolder.mCallInfoLayout;
         longPressView.getBackground().setTintList(null);
-
-
         longPressView.setOnCreateContextMenuListener((menu, v, menuInfo) -> {
             conversationFragment.onCreateContextMenu(menu, v, menuInfo);
             MenuInflater inflater = conversationFragment.getActivity().getMenuInflater();
@@ -958,7 +973,6 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             menu.removeItem(R.id.conv_action_copy_text);
         });
 
-
         longPressView.setOnLongClickListener((View v) -> {
             longPressView.getBackground().setTint(conversationFragment.getResources().getColor(R.color.grey_500));
             conversationFragment.updatePosition(convViewHolder.getAdapterPosition());
@@ -966,9 +980,9 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             return false;
         });
 
-
+        int pictureResID;
+        String historyTxt;
         SipCall call = (SipCall) interaction;
-
         if (call.isMissed()) {
             if (call.isIncoming()) {
                 pictureResID = R.drawable.baseline_call_missed_24;
@@ -989,7 +1003,6 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                     context.getString(R.string.notif_outgoing_call);
         }
 
-        convViewHolder.mCid = call.getConversation().getParticipant();
         convViewHolder.mIcon.setImageResource(pictureResID);
         convViewHolder.mHistTxt.setText(historyTxt);
         convViewHolder.mHistDetailTxt.setText(DateFormat.getDateTimeInstance()

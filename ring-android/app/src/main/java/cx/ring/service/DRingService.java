@@ -663,11 +663,12 @@ public class DRingService extends Service {
     }
 
     private void handleFileAction(String action, Bundle extras) {
-        Long id = extras.getLong(KEY_TRANSFER_ID);
+        long id = extras.getLong(KEY_TRANSFER_ID);
+        ConversationPath path = ConversationPath.fromBundle(extras);
         if (action.equals(ACTION_FILE_ACCEPT)) {
-            mAccountService.acceptFileTransfer(id);
+            mAccountService.acceptFileTransfer(path.getAccountId(), path.getConversationUri(), id);
         } else if (action.equals(ACTION_FILE_CANCEL)) {
-            mConversationFacade.cancelFileTransfer(id);
+            mConversationFacade.cancelFileTransfer(path.getAccountId(), path.getConversationUri(), id);
         }
     }
 
@@ -771,8 +772,8 @@ public class DRingService extends Service {
                         Uri uri = new Uri(path.getConversationId());
                         String message = reply.toString();
                         mConversationFacade.startConversation(path.getAccountId(), uri)
-                                .flatMap(c -> mConversationFacade.sendTextMessage(path.getAccountId(), c, uri, message)
-                                        .doOnSuccess(msg -> mNotificationService.showTextNotification(path.getAccountId(), c)))
+                                .flatMapCompletable(c -> mConversationFacade.sendTextMessage(path.getAccountId(), c, uri, message)
+                                        .doOnComplete(() -> mNotificationService.showTextNotification(path.getAccountId(), c)))
                                 .subscribe();
                     }
                 }
