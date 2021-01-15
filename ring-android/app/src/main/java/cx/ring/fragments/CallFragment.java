@@ -412,11 +412,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             }
         }
 
-        if (presenter.setBlockRecordStatus()) {
-            binding.videoSurface.setSecure(true);
-            getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
-        }
-
         binding.videoSurface.getHolder().setFormat(PixelFormat.RGBA_8888);
         binding.videoSurface.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override

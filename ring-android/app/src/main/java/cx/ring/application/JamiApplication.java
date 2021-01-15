@@ -19,6 +19,7 @@
  */
 package cx.ring.application;
 
+import android.app.Activity;
 import android.app.Application;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
@@ -30,10 +31,14 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.media.AudioManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.system.Os;
 import android.util.Log;
+import android.view.WindowManager;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 import com.bumptech.glide.Glide;
@@ -266,6 +271,8 @@ public abstract class JamiApplication extends Application {
         })
         .subscribeOn(Schedulers.io())
         .subscribe();
+
+        setupActivityListener();
     }
 
     public void startDaemon() {
@@ -335,4 +342,35 @@ public abstract class JamiApplication extends Application {
     public HardwareService getHardwareService() {
         return mHardwareService;
     }
+
+    private void setupActivityListener() {
+        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+
+            @Override
+            public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle bundle) {
+                if (mPreferencesService.getSettings().isRecordingBlocked()) {
+                    activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+                }
+            }
+
+            @Override
+            public void onActivityStarted(@NonNull Activity activity) {}
+
+            @Override
+            public void onActivityResumed(@NonNull Activity activity) {}
+
+            @Override
+            public void onActivityPaused(@NonNull Activity activity) {}
+
+            @Override
+            public void onActivityStopped(@NonNull Activity activity) {}
+
+            @Override
+            public void onActivitySaveInstanceState(@NonNull Activity activity, @NonNull Bundle bundle) {}
+
+            @Override
+            public void onActivityDestroyed(@NonNull Activity activity) {}
+        });
+    }
+
 }

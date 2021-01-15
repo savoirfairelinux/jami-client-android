@@ -332,10 +332,6 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         if (animator != null)
             animator.setSupportsChangeAnimations(false);
         binding.histList.setAdapter(mAdapter);
-
-        if (presenter.isRecordingBlocked()) {
-            getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
-        }
     }
 
     @Override
