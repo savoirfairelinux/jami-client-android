@@ -440,8 +440,4 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         return mPreferencesService.getSettings().isAllowReadIndicator();
     }
 
-    public boolean isRecordingBlocked(){
-        return mPreferencesService.getSettings().isRecordingBlocked();
-    }
-
 }
