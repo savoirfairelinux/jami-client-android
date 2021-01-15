@@ -66,7 +66,6 @@ public class CallPresenter extends RootPresenter<CallView> {
     private Conference mConference;
     private final List<SipCall> mPendingCalls = new ArrayList<>();
     private final Subject<List<SipCall>> mPendingSubject = BehaviorSubject.createDefault(mPendingCalls);
-    private final PreferencesService mPreferencesService;
 
     private boolean mOnGoingCall = false;
     private boolean mAudioOnly = true;
@@ -94,15 +93,13 @@ public class CallPresenter extends RootPresenter<CallView> {
                          HardwareService hardwareService,
                          CallService callService,
                          DeviceRuntimeService deviceRuntimeService,
-                         ConversationFacade conversationFacade,
-                         PreferencesService preferencesService) {
+                         ConversationFacade conversationFacade) {
         mAccountService = accountService;
         mContactService = contactService;
         mHardwareService = hardwareService;
         mCallService = callService;
         mDeviceRuntimeService = deviceRuntimeService;
         mConversationFacade = conversationFacade;
-        mPreferencesService = preferencesService;
     }
 
     public void cameraPermissionChanged(boolean isGranted) {
@@ -745,10 +742,6 @@ public class CallPresenter extends RootPresenter<CallView> {
         if(mConference == null)
             return;
         mHardwareService.switchInput(mConference.getId(), mHardwareService.isPreviewFromFrontCamera());
-    }
-
-    public boolean setBlockRecordStatus(){
-        return mPreferencesService.getSettings().isRecordingBlocked();
     }
 
 }
