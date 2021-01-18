@@ -23,10 +23,13 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.provider.ContactsContract;
+import android.util.Log;
+
 import androidx.core.content.ContextCompat;
 
 import java.io.File;
@@ -38,9 +41,7 @@ import javax.inject.Named;
 import cx.ring.application.JamiApplication;
 import cx.ring.daemon.IntVect;
 import cx.ring.daemon.StringVect;
-import cx.ring.service.OpenSlParams;
 import cx.ring.utils.AndroidFileUtils;
-import cx.ring.utils.Log;
 import cx.ring.utils.NetworkUtils;
 import cx.ring.utils.StringUtils;
 
@@ -179,10 +180,18 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
 
     @Override
     public void getHardwareAudioFormat(IntVect ret) {
-        OpenSlParams audioParams = OpenSlParams.createInstance(mContext);
-        ret.add(audioParams.getSampleRate());
-        ret.add(audioParams.getBufferSize());
-        Log.d(TAG, "getHardwareAudioFormat: " + audioParams.getSampleRate() + " " + audioParams.getBufferSize());
+        int sampleRate = 44100;
+        int bufferSize = 64;
+        try {
+            AudioManager am = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+            sampleRate = Integer.parseInt(am.getProperty(AudioManager.PROPERTY_OUTPUT_SAMPLE_RATE));
+            bufferSize = Integer.parseInt(am.getProperty(AudioManager.PROPERTY_OUTPUT_FRAMES_PER_BUFFER));
+        } catch (Exception e) {
+            Log.w(getClass().getName(), "Failed to read native OpenSL config", e);
+        }
+        ret.add(sampleRate);
+        ret.add(bufferSize);
+        Log.d(TAG, "getHardwareAudioFormat: " + sampleRate + " " + bufferSize);
     }
 
     @Override
