@@ -3,6 +3,7 @@ package cx.ring.settings.pluginssettings;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,7 +34,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
+import java.util.Vector;
 
 import cx.ring.R;
 import cx.ring.client.HomeActivity;
@@ -96,7 +99,6 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
         for (Preference preference : createPreferences(mPreferencesAttributes)) {
             screen.addPreference(preference);
         }
-        screen.addPreference(createAlwaysPreference());
         setPreferenceScreen(screen);
         return root;
     }
@@ -155,6 +157,9 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
                 }
             }
         }
+        for (Preference pref : createAlwaysPreference()) {
+            preferencesViews.add(pref);
+        }
 
         return preferencesViews;
     }
@@ -186,15 +191,25 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
         return preference;
     }
 
-    private Preference createAlwaysPreference() {
-        Map<String, String> preferenceAttributes = new HashMap<String, String>();
-        preferenceAttributes.put("key", "always");
-        preferenceAttributes.put("title", "Automatically turn plugin on for call and chats");
-        preferenceAttributes.put("summary", "Plugin will take effect immediately");
-        preferenceAttributes.put("defaultValue", "0");
+    private ArrayList<Preference> createAlwaysPreference() {
+        ArrayList<Preference> preferencesAlways = new ArrayList<>();
+        Map<String, String> preferencesValues = Ringservice.getPluginPreferencesValues(pluginDetails.getRootPath());
+        Object[] keys = preferencesValues.keySet().toArray();
+        for (int i = 0; i < keys.length; i++) {
+            if (keys[i].toString().contains("Always")) {
+                Map<String, String> preferenceAttributes = new HashMap<String, String>();
 
-        Preference preference = createSwitchPreference(preferenceAttributes);
-        return preference;
+                preferenceAttributes.put("key", keys[i].toString());
+                String handlerName = preferenceAttributes.get("key").replace("Always", "");
+                preferenceAttributes.put("title", "Automatically turn " + handlerName + " on (experimental)");
+                preferenceAttributes.put("summary", handlerName + " will take effect immediately");
+                preferenceAttributes.put("defaultValue", preferencesValues.get(preferenceAttributes.get("key")));
+
+                preferencesAlways.add(createSwitchPreference(preferenceAttributes));
+            }
+        }
+
+        return preferencesAlways;
     }
 
     private CheckBoxPreference createCheckBoxPreference(Map<String, String> preferenceModel) {
