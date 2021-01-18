@@ -40,7 +40,8 @@ public class PluginPreferencesDataStore extends PreferenceDataStore {
     @Override
     public void putBoolean(String key, boolean value) {
         Boolean boxedValue = value;
-        boolean success = mPluginDetails.setPluginPreference(key, boxedValue.toString());
+
+        boolean success = mPluginDetails.setPluginPreference(key, boxedValue ? "1" : "0");
         if(success) {
             notifyPreferencesValuesChange();
         }
