@@ -96,6 +96,12 @@ public class PluginDetails {
     }
 
     public boolean setPluginPreference(String key, String value) {
+        if (enabled) {
+            Ringservice.unloadPlugin(getRootPath());
+            boolean status = Ringservice.setPluginPreference(getRootPath(), key, value);
+            Ringservice.loadPlugin(getRootPath());
+            return status;
+        }
         return Ringservice.setPluginPreference(getRootPath(), key, value);
     }
 
