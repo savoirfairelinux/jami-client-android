@@ -3,7 +3,7 @@
   <string name="pref_category_network">Ağ</string>
   <string name="pref_category_contacts">Kişiler</string>
   <string name="pref_category_video">Görüntü</string>
-  <string name="pref_category_system">Düzen</string>
+  <string name="pref_category_system">Sistem</string>
   <string name="pref_category_privacy">Gizlilik</string>
   <string name="pref_mobileData_title">Hücresel veri</string>
   <string name="pref_mobileData_summary">Wi-Fi\'ye ek olarak 3G/LTE ağlarında Jami\'ye izin ver</string>
@@ -14,12 +14,12 @@
   <string name="pref_hd_summary">Yüksek çözünürlüklü görüntü göndermeyi etkinleştir</string>
   <string name="pref_hwEncode_title">Hızlandırılmış kodlamayı etkinleştir</string>
   <string name="pref_hwEncode_summary">Deneysel özellik</string>
-  <string name="pref_systemContacts_title">Sistem bağlantılarını kullan</string>
-  <string name="pref_systemContacts_summary">Arayan detaylarını göstermek için sistem bağlantılarını kullan</string>
-  <string name="pref_systemDialer_title">Jami kullanarak sistem çağrıları yapın</string>
-  <string name="pref_systemDialer_summary">Sistem aramaları yerine olabildiğince Jami kullanın</string>
+  <string name="pref_systemContacts_title">Sistem kişilerini kullan</string>
+  <string name="pref_systemContacts_summary">Arayan ayrıntılarını göstermede sistem kişilerini kullan.</string>
+  <string name="pref_systemDialer_title">Jami kullanarak sistem çağrıları yap</string>
+  <string name="pref_systemDialer_summary">Sistem aramaları yerine olabildiğince Jami kullan</string>
   <string name="pref_startOnBoot_title">Jami\'yi başlangıçta başlat</string>
-  <string name="pref_startOnBoot_summary">Sistem başladığında Jami\'yi arkaplanda çalıştır.</string>
+  <string name="pref_startOnBoot_summary">Sistem başladığında Jami\'yi arka planda çalıştır.</string>
   <string name="pref_clearHistory_title">Geçmişi temizle</string>
   <string name="pref_clearHistory_summary">Tüm konuşma geçmişini temizle. Bu işlem geri alınamaz.</string>
   <string name="pref_delete_account_title">Hesabı sil</string>

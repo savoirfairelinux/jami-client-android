@@ -34,7 +34,7 @@
   <string name="menu_item_share">Bilgimi paylaş</string>
   <string name="menu_item_about">Jami Hakkında</string>
   <!--Dialing Fragment-->
-  <string name="dial_number">Bir numara çevir</string>
+  <string name="dial_number">Numara çevir</string>
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
@@ -44,7 +44,7 @@
   </plurals>
   <!--ContactList Fragment-->
   <string name="searchbar_hint">Ad veya telefon numarası ara…</string>
-  <string name="choose_number">Numara seçin</string>
+  <string name="choose_number">Numara seç</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
@@ -83,7 +83,7 @@
   <string name="location_share_action_start">Paylaşmayı başlat</string>
   <string name="location_share_action_stop">Paylaşmayı durdur</string>
   <!--Call Fragment-->
-  <string name="you_txt_prefix">Sen:</string>
+  <string name="you_txt_prefix">Siz:</string>
   <string name="action_call_hangup">Kapat</string>
   <string name="ongoing_call">Giden arama</string>
   <string name="hist_in_call">%1$s gelen arama</string>
@@ -101,11 +101,11 @@
   <string name="ab_action_audio_call">Sesli arama</string>
   <string name="ab_action_video_call">Görüntülü arama</string>
   <string name="ab_action_change_screen_orientation">Ekran Yönünü değiştir</string>
-  <string name="share_via">Paylaş</string>
-  <string name="write_a_message">Bir ileti yaz</string>
+  <string name="share_via">Şununla paylaş</string>
+  <string name="write_a_message">İleti yaz</string>
   <string name="scan_qr">Kare Kod Tara</string>
   <string name="qr_code">QR kod</string>
-  <string name="ab_action_flipcamera">Kamerayı ters çevir</string>
+  <string name="ab_action_flipcamera">Kamerayı döndür</string>
   <!--Text messages-->
   <string name="send_message">İleti gönder</string>
   <string name="message_sending">İleti gönderiliyor...</string>
@@ -154,7 +154,7 @@
   <string name="conversation_action_remove_this_message">Bu, kişiyi silecek ve konuşma geçmişini tamamen temizleyecektir.</string>
   <string name="conversation_action_copy_peer_number">Numarayı kopyala</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s panoya kopyalandı</string>
-  <string name="conversation_action_select_peer_number">Bir numara seçin</string>
+  <string name="conversation_action_select_peer_number">Numara seç</string>
   <string name="conversation_action_block_this">Kişiyi engelle</string>
   <string name="conversation_action_go_to_call">Giden aramalara geri dön</string>
   <string name="conversation_open_file_error">Bu dosya türünü açabilecek yüklü bir uygulama yok.</string>
@@ -179,7 +179,7 @@
   <string name="wizard_skip">Atla</string>
   <!--Account Summary-->
   <string name="profile">Profil</string>
-  <string name="profile_message_warning">Profiliniz sadece kayıtlı kişilerinizle paylaşılıyor</string>
+  <string name="profile_message_warning">Profiliniz yalnızca kayıtlı kişilerinizle paylaşılıyor</string>
   <string name="open_the_gallery">Galeriyi aç</string>
   <string name="take_a_photo">Fotoğraf çek</string>
   <string name="profile_name_hint">Adınızı girin</string>

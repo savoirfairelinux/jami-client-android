@@ -44,6 +44,10 @@ Du kan rette din konto senere</string>
   <string name="account_device_revocation_wrong_password">Forkert adgangskode.</string>
   <string name="account_device_revocation_unknown_device">Ukendt enhed.</string>
   <string name="account_device_revocation_error_unknown">Ukendt fejl.</string>
+  <string name="account_password_change">Skift Kodeord</string>
+  <string name="account_password_set">Vælg Kodeord</string>
+  <string name="account_password_summary">Håndtér dit kodeord.</string>
+  <string name="account_password_change_wait_message">Skifter kodeord</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Generelt</string>
   <string name="account_basic_category">Almindelige Indstillinger</string>
@@ -64,6 +68,8 @@ Du kan rette din konto senere</string>
   <string name="account_ringtone_enabled_label">Aktiver ringetoner</string>
   <string name="account_ringtone_path_label">Ringetone sti</string>
   <string name="account_ringtone_custom_label">Anvend brugervalgt ringetone</string>
+  <string name="account_ringtone_title">Vælg en ringetone</string>
+  <string name="account_ringtone_summary">Vælg en ringetone eller vælg din egen</string>
   <!--Video Details-->
   <string name="account_video_label">Video</string>
   <string name="account_video_enable">Aktiver video</string>
@@ -76,6 +82,11 @@ Du kan rette din konto senere</string>
   <string name="account_local_port_label">Lokal port</string>
   <string name="account_stun_enable_label">Brug STUN</string>
   <string name="account_stun_server_label">STUN-server</string>
+  <string name="account_accept_files">Acceptér filer automatisk</string>
+  <string name="account_conversation_settings_title">Samtaleindstillinger</string>
+  <string name="account_accept_files_never">Acceptér aldrig automatisk</string>
+  <string name="account_accept_files_always">Acceptér altid automatisk</string>
+  <string name="size_mb">%1$d MB</string>
   <string name="account_turn_enable_label">Brug TURN</string>
   <string name="account_turn_server_label">TURN-server</string>
   <string name="account_turn_username_label">TURN-brugernavn</string>
