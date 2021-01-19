@@ -35,8 +35,9 @@ public class SwitchButton extends CompoundButton {
     public static final int DEFAULT_THUMB_SIZE_DP = 20;
     public static final int DEFAULT_THUMB_MARGIN_DP = 2;
     public static final int DEFAULT_ANIMATION_DURATION = 250;
-    public static final int DEFAULT_TEXT_SIZE = 12;
+    public static final int DEFAULT_TEXT_SIZE = 11;
     public static final int DEFAULT_EXTRA_MARGIN = 10;
+    public static final int DEFAULT_SWITCH_WIDTH = 150;
 
     private long mAnimationDuration = DEFAULT_ANIMATION_DURATION;
     private int mBackColor;
@@ -56,6 +57,7 @@ public class SwitchButton extends CompoundButton {
     private boolean mReady = false;
     private boolean mCatch = false;
     private boolean mShowImage = false;
+    private boolean mIsChecked = false;
     private RectF mThumbRectF, mBackRectF, mSafeRectF, mTextOnRectF, mTextOffRectF;
     private RectF mThumbMargin;
     private RectF mPresentThumbRectF;
@@ -68,7 +70,7 @@ public class SwitchButton extends CompoundButton {
     private Layout mOffLayout;
     private RotateDrawable mImageDrawable;
 
-    private CompoundButton.OnCheckedChangeListener mChildOnCheckedChangeListener;
+    private CompoundButton.OnCheckedChangeListener mOnCheckedChangeListener;
 
     public SwitchButton(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -160,8 +162,10 @@ public class SwitchButton extends CompoundButton {
             mOffLayout = makeLayout(mStatus);
         }
 
-        float onWidth = mOnLayout != null ? mOnLayout.getWidth() : 0;
-        float offWidth = mOffLayout != null ? mOffLayout.getWidth() : 0;
+        float onWidth = DEFAULT_SWITCH_WIDTH;
+//                mOnLayout != null ? mOnLayout.getWidth() : 0;
+        float offWidth = DEFAULT_SWITCH_WIDTH;
+//                mOffLayout != null ? mOffLayout.getWidth() : 0;
         if (onWidth != 0 || offWidth != 0) {
             mTextWidth = Math.max(onWidth, offWidth);
         } else {
@@ -386,7 +390,7 @@ public class SwitchButton extends CompoundButton {
 
         int dWidth = mImageDrawable.getIntrinsicWidth();
         int dHeight = mImageDrawable.getIntrinsicHeight();
-        mImageDrawable.setBounds(Math.round(mTextOffRectF.right / 3 - dWidth / 2), 0, Math.round((mTextOffRectF.right / 3 + dWidth / 2)), dHeight);
+        mImageDrawable.setBounds((int) ((mBackWidth - mThumbWidth) / 2 - dWidth / 2), 0, (int) ((mBackWidth - mThumbWidth) / 2 + dWidth / 2), dHeight);
 
         mReady = true;
     }
@@ -517,6 +521,14 @@ public class SwitchButton extends CompoundButton {
         invalidate();
     }
 
+    public void setProgress(final boolean checked) {
+        if (isChecked() == checked) {
+            return;
+        }
+        mIsChecked = checked;
+        setProgress(checked? 1 : 0);
+    }
+
     public void animateToState(boolean checked) {
         if (mProgressAnimator == null) {
             return;
@@ -543,17 +555,29 @@ public class SwitchButton extends CompoundButton {
 
     @Override
     public void setChecked(final boolean checked) {
-        if (isChecked() != checked) {
-            animateToState(checked);
+        if (isChecked() == checked) {
+            return;
         }
-
-        super.setChecked(checked);
+        mIsChecked = checked;
+        animateToState(mIsChecked);
+        if (mOnCheckedChangeListener != null) {
+            mOnCheckedChangeListener.onCheckedChanged(this, mIsChecked);
+        }
     }
 
     @Override
-    public void setOnCheckedChangeListener(OnCheckedChangeListener onCheckedChangeListener) {
-        super.setOnCheckedChangeListener(onCheckedChangeListener);
-        mChildOnCheckedChangeListener = onCheckedChangeListener;
+    public boolean isChecked() {
+        return mIsChecked;
+    }
+
+    @Override
+    public void toggle() {
+        setChecked(!mIsChecked);
+    }
+
+    @Override
+    public void setOnCheckedChangeListener(OnCheckedChangeListener listener) {
+        mOnCheckedChangeListener = listener;
     }
 
     public int getBackColor() {
