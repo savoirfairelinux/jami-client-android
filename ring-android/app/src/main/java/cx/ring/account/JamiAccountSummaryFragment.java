@@ -314,7 +314,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         setLinkedDevicesAdapter(account);
         mAccountHasPassword = account.hasPassword();
 
-        ((HomeActivity) requireActivity()).getSwitchButton().setChecked(account.isEnabled());
+        ((HomeActivity) requireActivity()).getSwitchButton().setProgress(account.isEnabled());
         mBinding.accountAliasTxt.setText(getString(R.string.profile));
         mBinding.identity.setText(account.getUsername());
         mAccountId = account.getAccountID();
