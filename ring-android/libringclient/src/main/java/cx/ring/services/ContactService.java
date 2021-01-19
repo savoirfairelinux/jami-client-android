@@ -88,7 +88,7 @@ public abstract class ContactService {
     }
 
     public Observable<CallContact> observeContact(String accountId, CallContact contact, boolean withPresence) {
-        Uri uri = contact.getPrimaryUri();
+        Uri uri = contact.getUri();
         String uriString = uri.getRawUriString();
         synchronized (contact) {
             if (contact.getPresenceUpdates() == null) {
@@ -126,8 +126,10 @@ public abstract class ContactService {
     }
 
     public Observable<List<CallContact>> observeContact(String accountId, List<CallContact> contacts, boolean withPresence) {
-        if (contacts.size() == 1) {
-            return observeContact(accountId, contacts.get(0), withPresence).map(Collections::singletonList);
+        if (contacts.isEmpty()) {
+            return Observable.just(Collections.emptyList());
+        } else if (contacts.size() == 1 || contacts.size() == 2) {
+            return observeContact(accountId, contacts.get(contacts.size() - 1), withPresence).map(Collections::singletonList);
         } else {
             List<Observable<CallContact>> observables = new ArrayList<>(contacts.size());
             for (CallContact contact : contacts)
@@ -141,22 +143,31 @@ public abstract class ContactService {
         }
     }
 
-    public Single<CallContact> getLoadedContact(String accountId, CallContact contact) {
-        return observeContact(accountId, contact, false)
+    public Single<CallContact> getLoadedContact(String accountId, CallContact contact, boolean withPresence) {
+        return observeContact(accountId, contact, withPresence)
                 .filter(c -> c.isUsernameLoaded() && c.detailsLoaded)
                 .firstOrError();
     }
+    public Single<CallContact> getLoadedContact(String accountId, CallContact contact) {
+        return getLoadedContact(accountId, contact, false);
+    }
 
-    public Single<List<CallContact>> getLoadedContact(String accountId, List<CallContact> contacts) {
-        return observeContact(accountId, contacts, false)
-                .filter(cts -> {
-                    for (CallContact c : cts) {
-                        if (!c.isUsernameLoaded() || !c.detailsLoaded)
-                            return false;
-                    }
-                    return true;
-                })
-                .firstOrError();
+    public Single<List<CallContact>> getLoadedContact(String accountId, List<CallContact> contacts, boolean withPresence) {
+        if (contacts.isEmpty())
+            return Single.just(Collections.emptyList());
+        return Observable.fromIterable(contacts)
+                .flatMapSingle(contact -> getLoadedContact(accountId, contact, withPresence))
+                .toList(contacts.size());
+    }
+
+    public List<Observable<CallContact>> observeLoadedContact(String accountId, List<CallContact> contacts, boolean withPresence) {
+        if (contacts.isEmpty())
+            return Collections.emptyList();
+        List<Observable<CallContact>> ret = new ArrayList<>(contacts.size());
+        for (CallContact contact : contacts)
+            ret.add(observeContact(accountId, contact, withPresence)
+                    .filter(c -> c.isUsernameLoaded() && c.detailsLoaded));
+        return ret;
     }
 
     /**
@@ -169,7 +180,7 @@ public abstract class ContactService {
         if (StringUtils.isEmpty(number) || account == null) {
             return null;
         }
-        return findContact(account, new Uri(number));
+        return findContact(account, Uri.fromString(number));
     }
 
     public CallContact findContact(Account account, Uri uri) {

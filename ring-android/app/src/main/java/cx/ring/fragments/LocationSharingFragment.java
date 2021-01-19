@@ -40,7 +40,6 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.preference.PreferenceManager;
 
 import android.os.IBinder;
 import android.text.format.DateUtils;
@@ -326,7 +325,7 @@ public class LocationSharingFragment extends Fragment {
                     }
                 }));
 
-        final Uri contactUri = new Uri(mPath.getContactId());
+        final Uri contactUri = mPath.getConversationUri();
 
         mDisposableBag.add(mConversationFacade
                 .getAccountSubject(mPath.getAccountId())

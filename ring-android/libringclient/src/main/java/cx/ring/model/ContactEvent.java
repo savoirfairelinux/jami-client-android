@@ -49,7 +49,7 @@ public class ContactEvent extends Interaction {
 
     public ContactEvent(CallContact contact) {
         mContact = contact;
-        mAuthor = contact.getPrimaryUri().getUri();
+        mAuthor = contact.getUri().getUri();
         mType = InteractionType.CONTACT.toString();
         event = Event.ADDED;
         mStatus = InteractionStatus.SUCCESS.toString();
@@ -60,7 +60,7 @@ public class ContactEvent extends Interaction {
     public ContactEvent(CallContact contact, TrustRequest request) {
         this.request = request;
         mContact = contact;
-        mAuthor = contact.getPrimaryUri().getUri();
+        mAuthor = contact.getUri().getUri();
         mTimestamp = request.getTimestamp();
         mType = InteractionType.CONTACT.toString();
         event = Event.INCOMING_REQUEST;
