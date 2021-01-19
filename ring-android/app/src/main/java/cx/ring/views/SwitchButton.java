@@ -35,8 +35,9 @@ public class SwitchButton extends CompoundButton {
     public static final int DEFAULT_THUMB_SIZE_DP = 20;
     public static final int DEFAULT_THUMB_MARGIN_DP = 2;
     public static final int DEFAULT_ANIMATION_DURATION = 250;
-    public static final int DEFAULT_TEXT_SIZE = 12;
+    public static final int DEFAULT_TEXT_SIZE = 11;
     public static final int DEFAULT_EXTRA_MARGIN = 10;
+    public static final int DEFAULT_SWITCH_WIDTH = 150;
 
     private long mAnimationDuration = DEFAULT_ANIMATION_DURATION;
     private int mBackColor;
@@ -141,6 +142,8 @@ public class SwitchButton extends CompoundButton {
 
         mProgressAnimator.setDuration(mAnimationDuration);
 
+        super.setChecked(true);
+
         // sync checked status
         if (isChecked()) {
             setProgress(1);
@@ -160,8 +163,10 @@ public class SwitchButton extends CompoundButton {
             mOffLayout = makeLayout(mStatus);
         }
 
-        float onWidth = mOnLayout != null ? mOnLayout.getWidth() : 0;
-        float offWidth = mOffLayout != null ? mOffLayout.getWidth() : 0;
+        float onWidth = DEFAULT_SWITCH_WIDTH;
+//                mOnLayout != null ? mOnLayout.getWidth() : 0;
+        float offWidth = DEFAULT_SWITCH_WIDTH;
+//                mOffLayout != null ? mOffLayout.getWidth() : 0;
         if (onWidth != 0 || offWidth != 0) {
             mTextWidth = Math.max(onWidth, offWidth);
         } else {
@@ -386,7 +391,7 @@ public class SwitchButton extends CompoundButton {
 
         int dWidth = mImageDrawable.getIntrinsicWidth();
         int dHeight = mImageDrawable.getIntrinsicHeight();
-        mImageDrawable.setBounds(Math.round(mTextOffRectF.right / 3 - dWidth / 2), 0, Math.round((mTextOffRectF.right / 3 + dWidth / 2)), dHeight);
+        mImageDrawable.setBounds((int) ((mBackWidth - mThumbWidth) / 2 - dWidth / 2), 0, (int) ((mBackWidth - mThumbWidth) / 2 + dWidth / 2), dHeight);
 
         mReady = true;
     }
