@@ -22,6 +22,30 @@
       "revId": "4f1ce586cb1275ae7dd52d25e5c045d804363c18",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e0a5d9c_fda325af",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/SwitchButton.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2021-01-19T15:59:11Z",
+      "side": 1,
+      "message": "This line is to load the switch with default online view and then if it is not connected it toggles to offline. It will get updated as soon as showing the switch.",
+      "parentUuid": "aa516850_b3086e60",
+      "range": {
+        "startLine": 145,
+        "startChar": 8,
+        "endLine": 145,
+        "endChar": 31
+      },
+      "revId": "4f1ce586cb1275ae7dd52d25e5c045d804363c18",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
     }
   ]
 }
