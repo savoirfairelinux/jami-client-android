@@ -37,9 +37,6 @@ public class ConversationHistory {
     @DatabaseField(columnName = COLUMN_EXTRA_DATA)
     String mExtraData;
 
-    String account;
-
-
     /* Needed by ORMLite */
     public ConversationHistory() {
     }
@@ -68,14 +65,6 @@ public class ConversationHistory {
 
     public String getParticipant() {
         return mParticipant;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
-    }
-
-    public String getAccount() {
-        return account;
     }
 
 }

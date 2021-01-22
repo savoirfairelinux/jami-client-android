@@ -67,8 +67,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     private final PreferencesService mPreferencesService;
 
     private Conversation mConversation;
-    private Uri mContactUri;
-    private String mAccountId;
+    private Uri mConversationUri;
 
     private CompositeDisposable mConversationDisposable;
     private final CompositeDisposable mVisibilityDisposable = new CompositeDisposable();
@@ -104,16 +103,18 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
             initView(mConversation, view);
     }
 
-    public void init(Uri contactRingId, String accountId) {
-        Log.w(TAG, "init " + contactRingId + " " + accountId);
-        mContactUri = contactRingId;
-        mAccountId = accountId;
+    public void init(Uri conversationUri, String accountId) {
+        Log.w(TAG, "init " + conversationUri + " " + accountId);
+        mConversationUri = conversationUri;
         Account account = mAccountService.getAccount(accountId);
         if (account != null) {
-            initContact(account, contactRingId, getView());
-            mCompositeDisposable.add(mConversationFacade.loadConversationHistory(account, contactRingId)
+            initContact(account, account.getByUri(mConversationUri), getView());
+            mCompositeDisposable.add(mConversationFacade.loadConversationHistory(account, conversationUri)
                     .observeOn(mUiScheduler)
-                    .subscribe(this::setConversation, e -> getView().goToHome()));
+                    .subscribe(this::setConversation, e -> {
+                        Log.e(TAG, "Error loading conversation", e);
+                        getView().goToHome();
+                    }));
         } else {
             getView().goToHome();
             return;
@@ -138,7 +139,8 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     }
 
     private void setConversation(final Conversation conversation) {
-        if (conversation == null || mConversation == conversation)
+        Log.w(TAG, "setConversation " + conversation.getAggregateHistory().size());
+        if (mConversation == conversation)
             return;
         mConversation = conversation;
         mConversationSubject.onNext(conversation);
@@ -155,48 +157,37 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     }
 
     public void resume(boolean isBubble) {
-        Log.w(TAG, "resume " + mConversation + " " + mAccountId + " " + mContactUri);
+        Log.w(TAG, "resume " + mConversationUri);
         mVisibilityDisposable.clear();
         mVisibilityDisposable.add(mConversationSubject
                 .firstOrError()
                 .subscribe(conversation -> {
                     conversation.setVisible(true);
                     updateOngoingCallView(conversation);
-                    mConversationFacade.readMessages(mAccountService.getAccount(mAccountId), conversation, !isBubble);
+                    mConversationFacade.readMessages(mAccountService.getAccount(conversation.getAccountId()), conversation, !isBubble);
                 }, e -> Log.e(TAG, "Error loading conversation", e)));
     }
 
-    private CallContact initContact(final Account account, final Uri uri,
-                                    final ConversationView view) {
-        CallContact contact;
+    private void initContact(final Account account, final Conversation conversation, final ConversationView view) {
         if (account.isJami()) {
-            String rawId = uri.getRawRingId();
-            contact = account.getContact(rawId);
-            if (contact == null) {
-                contact = account.getContactFromCache(uri);
-                TrustRequest req = account.getRequest(uri);
+            if (conversation.isSwarm() || account.isContact(conversation)) {
+                view.switchToConversationView();
+            } else {
+                TrustRequest req = account.getRequest(conversation.getUri());
                 if (req == null) {
-                    view.switchToUnknownView(contact.getRingUsername());
+                    view.switchToUnknownView(conversation.getUri().getRawUriString());
                 } else {
                     view.switchToIncomingTrustRequestView(req.getDisplayname());
                 }
-            } else {
-                view.switchToConversationView();
-            }
-            Log.w(TAG, "initContact " + contact.getUsername());
-            if (contact.getUsername() == null) {
-                mAccountService.lookupAddress(mAccountId, "", rawId);
             }
         } else {
-            contact = mContactService.findContact(account, uri);
             view.switchToConversationView();
         }
-        view.displayContact(contact);
-        return contact;
+        view.displayContact(conversation);
     }
 
     private void initView(final Conversation c, final ConversationView view) {
-        Log.w(TAG, "initView");
+        Log.w(TAG, "initView " + c.getUri());
         if (mConversationDisposable == null) {
             mConversationDisposable = new CompositeDisposable();
             mCompositeDisposable.add(mConversationDisposable);
@@ -204,17 +195,33 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         mConversationDisposable.clear();
         view.hideNumberSpinner();
 
-        Account account = mAccountService.getAccount(mAccountId);
+        Account account = mAccountService.getAccount(c.getAccountId());
 
+        if (account.isJami() && !c.isSwarm()) {
+            String accountId = account.getAccountID();
+            mConversationDisposable.add(c.getContact().getConversationUri().subscribe(uri -> init(uri, accountId)));
+        }
 
         mConversationDisposable.add(c.getSortedHistory()
+                .observeOn(mUiScheduler)
                 .subscribe(view::refreshView, e -> Log.e(TAG, "Can't update element", e)));
         mConversationDisposable.add(c.getCleared()
                 .observeOn(mUiScheduler)
                 .subscribe(view::refreshView, e -> Log.e(TAG, "Can't update elements", e)));
-        mConversationDisposable.add(mContactService.getLoadedContact(c.getAccountId(), c.getContact())
+
+        mConversationDisposable.add(c.getContactUpdates()
+                .switchMap(contacts -> Observable.merge(mContactService.observeLoadedContact(c.getAccountId(), contacts, true)))
                 .observeOn(mUiScheduler)
-                .subscribe(contact -> initContact(account, mContactUri, view), e -> Log.e(TAG, "Can't get contact", e)));
+                .subscribe(contact -> {
+                    ConversationView v = getView();
+                    if (v != null)
+                        v.updateContact(contact);
+                }));
+
+        mConversationDisposable.add(mContactService.getLoadedContact(c.getAccountId(), c.getContacts(), true)
+                .observeOn(mUiScheduler)
+                .subscribe(contact -> initContact(account, c, view), e -> Log.e(TAG, "Can't get contact", e)));
+
         mConversationDisposable.add(c.getUpdatedElements()
                 .observeOn(mUiScheduler)
                 .subscribe(elementTuple -> {
@@ -230,6 +237,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                             break;
                     }
                 }, e -> Log.e(TAG, "Can't update element", e)));
+
         if (showTypingIndicator()) {
             mConversationDisposable.add(c.getComposingStatus()
                     .observeOn(mUiScheduler)
@@ -247,17 +255,21 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
 
         Log.e(TAG, "getLocationUpdates subscribe");
         mConversationDisposable.add(account
-                .getLocationUpdates(c.getContact().getPrimaryUri())
+                .getLocationUpdates(c.getUri())
                 .observeOn(mUiScheduler)
                 .subscribe(u -> {
                     Log.e(TAG, "getLocationUpdates: update");
-                    getView().showMap(c.getAccountId(), c.getContact().getPrimaryUri().getUri(), false);
+                    getView().showMap(c.getAccountId(), c.getUri().getUri(), false);
                 }));
+    }
+
+    public void loadMore() {
+        mConversationFacade.loadMore(mConversation);
     }
 
     public void openContact() {
         if (mConversation != null)
-            getView().goToContactActivity(mAccountId, mConversation.getContact().getPrimaryNumber());
+            getView().goToContactActivity(mConversation.getAccountId(), mConversation.getUri());
     }
 
     public void sendTextMessage(String message) {
@@ -265,8 +277,8 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
             return;
         }
         Conference conference = mConversation.getCurrentCall();
-        if (conference == null || !conference.isOnGoing()) {
-            mConversationFacade.sendTextMessage(mAccountId, mConversation, mContactUri, message).subscribe();
+        if (mConversation.isSwarm() || conference == null || !conference.isOnGoing()) {
+            mConversationFacade.sendTextMessage(mConversation, mConversationUri, message).subscribe();
         } else {
             mConversationFacade.sendTextMessage(mConversation, conference, message);
         }
@@ -277,7 +289,9 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     }
 
     public void sendFile(File file) {
-        mConversationFacade.sendFile(mAccountId, mContactUri, file).subscribe();
+        if (mConversation ==  null)
+            return;
+        mConversationFacade.sendFile(mConversation, mConversationUri, file).subscribe();
     }
 
     /**
@@ -289,25 +303,25 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     public void saveFile(Interaction interaction) {
         DataTransfer transfer = (DataTransfer) interaction;
         String fileAbsolutePath = getDeviceRuntimeService().
-                getConversationPath(transfer.getPeerId(), transfer.getStoragePath())
+                getConversationPath(mConversation.getUri().getRawRingId(), transfer.getStoragePath())
                 .getAbsolutePath();
         getView().startSaveFile(transfer, fileAbsolutePath);
     }
 
     public void shareFile(Interaction interaction) {
         DataTransfer file = (DataTransfer) interaction;
-        File path = getDeviceRuntimeService().getConversationPath(file.getPeerId(), file.getStoragePath());
+        File path = getDeviceRuntimeService().getConversationPath(mConversation.getUri().getRawRingId(), file.getStoragePath());
         getView().shareFile(path);
     }
 
     public void openFile(Interaction interaction) {
         DataTransfer file = (DataTransfer) interaction;
-        File path = getDeviceRuntimeService().getConversationPath(file.getPeerId(), file.getStoragePath());
+        File path = getDeviceRuntimeService().getConversationPath(mConversation.getUri().getRawRingId(), file.getStoragePath());
         getView().openFile(path);
     }
 
     public void deleteConversationItem(Interaction element) {
-        mConversationFacade.deleteConversationItem(element);
+        mConversationFacade.deleteConversationItem(mConversation, element);
     }
 
     public void cancelMessage(Interaction message) {
@@ -315,16 +329,15 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     }
 
     private void sendTrustRequest() {
-        final String accountId = mAccountId;
-        final Uri contactId = mContactUri;
-        CallContact contact = mContactService.findContact(mAccountService.getAccount(accountId), contactId);
+        //final Uri contactId = mConversationUri;
+        CallContact contact = mConversation.getContact();//mAccountService.getAccount(accountId).getContactFromCache(contactId);
         if (contact != null) {
             contact.setStatus(CallContact.Status.REQUEST_SENT);
         }
-        mVCardService.loadSmallVCard(accountId, VCardService.MAX_SIZE_REQUEST)
+        mVCardService.loadSmallVCard(mConversation.getAccountId(), VCardService.MAX_SIZE_REQUEST)
                 .subscribeOn(Schedulers.computation())
-                .subscribe(vCard -> mAccountService.sendTrustRequest(accountId, contactId.getRawRingId(), Blob.fromString(VCardUtils.vcardToString(vCard))),
-                        e -> mAccountService.sendTrustRequest(accountId, contactId.getRawRingId(), null));
+                .subscribe(vCard -> mAccountService.sendTrustRequest(mConversation.getAccountId(), contact.getUri(), Blob.fromString(VCardUtils.vcardToString(vCard))),
+                        e -> mAccountService.sendTrustRequest(mConversation.getAccountId(), contact.getUri(), null));
     }
 
     public void clickOnGoingPane() {
@@ -354,7 +367,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                                 && conf.getParticipants().get(0).getCallStatus() != SipCall.CallStatus.FAILURE) {
                             view.goToCallActivity(conf.getId());
                         } else {
-                            view.goToCallActivityWithResult(mAccountId, mContactUri.getRawUriString(), audioOnly);
+                            view.goToCallActivityWithResult(mConversation.getAccountId(), mConversation.getUri(), mConversation.getContact().getUri(), audioOnly);
                         }
                     }
                 }));
@@ -370,22 +383,19 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     }
 
     public void onBlockIncomingContactRequest() {
-        String accountId = mAccountId == null ? mAccountService.getCurrentAccount().getAccountID() : mAccountId;
-        mConversationFacade.discardRequest(accountId, mContactUri);
-        mAccountService.removeContact(accountId, mContactUri.getHost(), true);
+        mConversationFacade.discardRequest(mConversation.getAccountId(), mConversationUri);
+        mAccountService.removeContact(mConversation.getAccountId(), mConversationUri.getHost(), true);
 
         getView().goToHome();
     }
 
     public void onRefuseIncomingContactRequest() {
-        String accountId = mAccountId == null ? mAccountService.getCurrentAccount().getAccountID() : mAccountId;
-
-        mConversationFacade.discardRequest(accountId, mContactUri);
+        mConversationFacade.discardRequest(mConversation.getAccountId(), mConversationUri);
         getView().goToHome();
     }
 
     public void onAcceptIncomingContactRequest() {
-        mConversationFacade.acceptRequest(mAccountId, mContactUri);
+        mConversationFacade.acceptRequest(mConversation.getAccountId(), mConversationUri);
         getView().switchToConversationView();
     }
 
@@ -418,18 +428,18 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     }
 
     public void shareLocation() {
-        getView().startShareLocation(mAccountId, mContactUri.getUri());
+        getView().startShareLocation(mConversation.getAccountId(), mConversationUri.getUri());
     }
 
     public Tuple<String, String> getPath() {
-        return new Tuple<>(mAccountId, mContactUri.getUri());
+        return new Tuple<>(mConversation.getAccountId(), mConversationUri.getUri());
     }
 
     public void onComposingChanged(boolean hasMessage) {
         if (mConversation == null || !showTypingIndicator()) {
             return;
         }
-        mConversationFacade.setIsComposing(mAccountId, mContactUri, hasMessage);
+        mConversationFacade.setIsComposing(mConversation.getAccountId(), mConversationUri, hasMessage);
     }
 
     public boolean showTypingIndicator() {

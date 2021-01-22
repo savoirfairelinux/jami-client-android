@@ -43,7 +43,7 @@ public class Phone {
     public Phone(String number, int category, String label) {
         mNumberType = NumberType.UNKNOWN;
         mCategory = category;
-        mNumber = new Uri(number);
+        mNumber = Uri.fromString(number);
         mLabel = label;
     }
     public Phone(Uri number, int category, String label) {
@@ -55,7 +55,7 @@ public class Phone {
 
     public Phone(String number, int category, String label, NumberType numberType) {
         mNumberType = numberType;
-        mNumber = new Uri(number);
+        mNumber = Uri.fromString(number);
         mLabel = label;
         mCategory = category;
     }
@@ -79,7 +79,7 @@ public class Phone {
     }
 
     public void setNumber(String number) {
-        setNumber(new Uri(number));
+        setNumber(Uri.fromString(number));
     }
 
     public NumberType getNumbertype() {

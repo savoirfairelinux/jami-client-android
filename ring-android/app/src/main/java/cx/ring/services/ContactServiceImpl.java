@@ -39,7 +39,6 @@ import cx.ring.contacts.AvatarFactory;
 import cx.ring.model.CallContact;
 import cx.ring.model.Uri;
 import cx.ring.utils.AndroidFileUtils;
-import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.Tuple;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
@@ -136,21 +135,22 @@ public class ContactServiceImpl extends ContactService {
 
             while (contactCursor.moveToNext()) {
                 long contactId = contactCursor.getLong(indexId);
-                CallContact contact = cache.get(contactId);
-
-                boolean isNewContact = false;
-                if (contact == null) {
-                    contact = new CallContact(contactId);
-                    isNewContact = true;
-                    contact.setFromSystem(true);
-                }
 
                 String contactNumber = contactCursor.getString(indexNumber);
                 int contactType = contactCursor.getInt(indexType);
                 String contactLabel = contactCursor.getString(indexLabel);
-                Uri uri = new Uri(contactNumber);
+                Uri uri = Uri.fromString(contactNumber);
 
-                if (uri.isSingleIp() || (uri.isRingId() && loadRingContacts) || loadSipContacts) {
+                CallContact contact = cache.get(contactId);
+                boolean isNewContact = false;
+                if (contact == null) {
+                    contact = new CallContact(uri);
+                    contact.setSystemId(contactId);
+                    isNewContact = true;
+                    contact.setFromSystem(true);
+                }
+
+                if (uri.isSingleIp() || (uri.isHexId() && loadRingContacts) || loadSipContacts) {
                     switch (contactCursor.getString(indexMime)) {
                         case ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE:
                             contact.addPhoneNumber(uri, contactType, contactLabel);
@@ -159,7 +159,7 @@ public class ContactServiceImpl extends ContactService {
                             contact.addNumber(uri, contactType, contactLabel, cx.ring.model.Phone.NumberType.SIP);
                             break;
                         case ContactsContract.CommonDataKinds.Im.CONTENT_ITEM_TYPE:
-                            if (uri.isRingId()) {
+                            if (uri.isHexId()) {
                                 contact.addNumber(uri, contactType, contactLabel, cx.ring.model.Phone.NumberType.UNKNOWN);
                             }
                             break;
@@ -195,7 +195,7 @@ public class ContactServiceImpl extends ContactService {
                 if (contact == null)
                     Log.w(TAG, "Can't find contact with ID " + contactId);
                 else {
-                    contact.setContactInfos(contactCursor.getString(indexKey), contactCursor.getString(indexName), contactCursor.getLong(indexPhoto));
+                    contact.setSystemContactInfo(contactId, contactCursor.getString(indexKey), contactCursor.getString(indexName), contactCursor.getLong(indexPhoto));
                     systemContacts.put(contactId, contact);
                 }
             }
@@ -240,7 +240,8 @@ public class ContactServiceImpl extends ContactService {
 
                 Log.d(TAG, "Contact name: " + result.getString(indexName) + " id:" + contactId + " key:" + result.getString(indexKey));
 
-                contact = new CallContact(contactId, result.getString(indexKey), result.getString(indexName), result.getLong(indexPhoto));
+                contact = new CallContact(Uri.fromString(contentUri.toString()));
+                contact.setSystemContactInfo(contactId, result.getString(indexKey), result.getString(indexName), result.getLong(indexPhoto));
 
                 if (result.getInt(indexStared) != 0) {
                     contact.setStared();
@@ -262,7 +263,6 @@ public class ContactServiceImpl extends ContactService {
     }
 
     private void fillContactDetails(@NonNull CallContact callContact) {
-
         ContentResolver contentResolver = mContext.getContentResolver();
 
         try {
@@ -303,7 +303,7 @@ public class ContactServiceImpl extends ContactService {
                     String contactMime = cursorSip.getString(indexMime);
                     String contactNumber = cursorSip.getString(indexSip);
 
-                    if (!contactMime.contentEquals(ContactsContract.CommonDataKinds.Im.CONTENT_ITEM_TYPE) || new Uri(contactNumber).isRingId() || "ring".equalsIgnoreCase(cursorSip.getString(indexLabel))) {
+                    if (!contactMime.contentEquals(ContactsContract.CommonDataKinds.Im.CONTENT_ITEM_TYPE) || Uri.fromString(contactNumber).isHexId() || "ring".equalsIgnoreCase(cursorSip.getString(indexLabel))) {
                         callContact.addNumber(contactNumber, cursorSip.getInt(indexType), cursorSip.getString(indexLabel), cx.ring.model.Phone.NumberType.SIP);
                     }
                     Log.d(TAG, "SIP phone:" + contactNumber + " " + contactMime + " ");
@@ -327,7 +327,7 @@ public class ContactServiceImpl extends ContactService {
 
             if (result == null) {
                 Log.d(TAG, "findContactBySipNumberFromSystem: " + number + " can't find contact.");
-                return CallContact.buildSIP(new Uri(number));
+                return CallContact.buildSIP(Uri.fromString(number));
             }
 
             int indexId = result.getColumnIndex(ContactsContract.RawContacts.CONTACT_ID);
@@ -338,7 +338,8 @@ public class ContactServiceImpl extends ContactService {
 
             if (result.moveToFirst()) {
                 long contactId = result.getLong(indexId);
-                contact = new CallContact(contactId, result.getString(indexKey), result.getString(indexName), result.getLong(indexPhoto));
+                contact = new CallContact(Uri.fromString(number));
+                contact.setSystemContactInfo(contactId, result.getString(indexKey), result.getString(indexName), result.getLong(indexPhoto));
 
                 if (result.getInt(indexStared) != 0) {
                     contact.setStared();
@@ -374,7 +375,8 @@ public class ContactServiceImpl extends ContactService {
                 int indexKey = result.getColumnIndex(ContactsContract.Data.LOOKUP_KEY);
                 int indexName = result.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
                 int indexPhoto = result.getColumnIndex(ContactsContract.Contacts.PHOTO_ID);
-                callContact = new CallContact(result.getLong(indexId), result.getString(indexKey), result.getString(indexName), result.getLong(indexPhoto));
+                callContact = new CallContact(Uri.fromString(number));
+                callContact.setSystemContactInfo(result.getLong(indexId), result.getString(indexKey), result.getString(indexName), result.getLong(indexPhoto));
                 fillContactDetails(callContact);
                 Log.d(TAG, "findContactByNumberFromSystem: " + number + " found " + callContact.getDisplayName());
             }
