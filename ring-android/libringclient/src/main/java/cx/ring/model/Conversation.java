@@ -60,6 +60,7 @@ public class Conversation extends ConversationHistory {
     private final Subject<List<Conference>> callsSubject = BehaviorSubject.create();
     private final Subject<Account.ComposingStatus> composingStatusSubject = BehaviorSubject.createDefault(Account.ComposingStatus.Idle);
     private final Subject<Integer> color = BehaviorSubject.create();
+    private final Subject<CharSequence> symbol = BehaviorSubject.create();
     private final Subject<List<CallContact>> mContactSubject = BehaviorSubject.create();
 
     private Single<Conversation> isLoaded = null;
@@ -648,9 +649,17 @@ public class Conversation extends ConversationHistory {
         color.onNext(c);
     }
 
+    public void setSymbol(CharSequence s) {
+        symbol.onNext(s);
+    }
+
     public Observable<Integer> getColor() {
         return color;
     }
+    public Observable<CharSequence> getSymbol() {
+        return symbol;
+    }
+
 
     public String getAccountId() {
         return mAccountId;
