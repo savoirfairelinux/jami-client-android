@@ -83,6 +83,7 @@ public interface ConversationView extends BaseView {
     void setLastDisplayed(Interaction interaction);
 
     void setConversationColor(int integer);
+    void setConversationSymbol(CharSequence symbol);
 
     void startSaveFile(DataTransfer currentFile, String fileAbsolutePath);
 
