@@ -50,7 +50,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import androidx.core.widget.ImageViewCompat;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import cx.ring.R;
@@ -100,6 +100,7 @@ public class ContactDetailsActivity extends AppCompatActivity {
         final IContactAction callback;
 
         int iconTint;
+        CharSequence iconSymbol;
 
         ContactAction(@DrawableRes int i, int tint, CharSequence t, IContactAction cb) {
             icon = i;
@@ -117,6 +118,10 @@ public class ContactDetailsActivity extends AppCompatActivity {
 
         void setIconTint(int tint) {
             iconTint = tint;
+        }
+
+        void setSymbol(CharSequence t) {
+            iconSymbol = t;
         }
     }
 
@@ -152,9 +157,10 @@ public class ContactDetailsActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull ContactActionView holder, int position) {
             ContactAction action = actions.get(position);
-            holder.binding.actionIcon.setImageResource(action.icon);
+            holder.binding.actionIcon.setBackgroundResource(action.icon);
+            holder.binding.actionIcon.setText(action.iconSymbol);
             if (action.iconTint != Color.BLACK)
-                ImageViewCompat.setImageTintList(holder.binding.actionIcon, ColorStateList.valueOf(action.iconTint));
+                ViewCompat.setBackgroundTintList(holder.binding.actionIcon, ColorStateList.valueOf(action.iconTint));
             holder.binding.actionTitle.setText(action.title);
             holder.callback = action.callback;
         }
@@ -169,8 +175,10 @@ public class ContactDetailsActivity extends AppCompatActivity {
     private final CompositeDisposable mDisposableBag = new CompositeDisposable();
 
     private ContactAction colorAction;
+    private ContactAction symbolAction;
     private ContactAction contactAction;
     private int colorActionPosition;
+    private int symbolActionPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -193,6 +201,7 @@ public class ContactDetailsActivity extends AppCompatActivity {
         fab.setOnClickListener(view -> goToConversationActivity(mConversation.getAccountId(), mConversation.getUri()));
 
         colorActionPosition = 1;
+        symbolActionPosition = 2;
 
         mDisposableBag.add(mConversationFacade
                 .startConversation(path.getAccountId(), path.getConversationUri())
@@ -239,6 +248,18 @@ public class ContactDetailsActivity extends AppCompatActivity {
                     collapsingToolbarLayout.setContentScrimColor(color);
                     collapsingToolbarLayout.setStatusBarScrimColor(color);
                     adapter.actions.add(colorAction);
+
+                    symbolAction = new ContactAction(0, getText(R.string.conversation_preference_emoji), () -> {
+                        EmojiChooserBottomSheet frag = new EmojiChooserBottomSheet();
+                        frag.setCallback(s -> {
+                            symbolAction.setSymbol(s);
+                            adapter.notifyItemChanged(symbolActionPosition);
+                            mPreferences.edit().putString(ConversationFragment.KEY_PREFERENCE_CONVERSATION_SYMBOL, s).apply();
+                        });
+                        frag.show(getSupportFragmentManager(), "colorChooser");
+                    });
+                    symbolAction.setSymbol(mPreferences.getString(ConversationFragment.KEY_PREFERENCE_CONVERSATION_SYMBOL, getResources().getString(R.string.conversation_default_emoji)));
+                    adapter.actions.add(symbolAction);
 
                     if (mConversation.getContacts().size() <= 2) {
                         CallContact contact = mConversation.getContact();
