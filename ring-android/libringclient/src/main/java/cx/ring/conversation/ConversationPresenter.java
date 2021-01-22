@@ -262,6 +262,9 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         mConversationDisposable.add(c.getColor()
                 .observeOn(mUiScheduler)
                 .subscribe(view::setConversationColor, e -> Log.e(TAG, "Can't update conversation color", e)));
+        mConversationDisposable.add(c.getSymbol()
+                .observeOn(mUiScheduler)
+                .subscribe(view::setConversationSymbol, e -> Log.e(TAG, "Can't update conversation color", e)));
 
         Log.e(TAG, "getLocationUpdates subscribe");
         mConversationDisposable.add(account
@@ -439,6 +442,11 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         mCompositeDisposable.add(mConversationSubject
                 .firstElement()
                 .subscribe(conversation -> conversation.setColor(color)));
+    }
+    public void setConversationSymbol(CharSequence symbol) {
+        mCompositeDisposable.add(mConversationSubject
+                .firstElement()
+                .subscribe(conversation -> conversation.setSymbol(symbol)));
     }
 
     public void cameraPermissionChanged(boolean isGranted) {
