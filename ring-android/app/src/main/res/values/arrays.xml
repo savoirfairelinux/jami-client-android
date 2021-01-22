@@ -56,6 +56,19 @@ along with this program; if not, write to the Free Software
         <item>1080</item>
         <item>2160</item>
     </string-array>
+
+    <string-array name="conversation_emojis">
+        <item>👍</item>
+        <item>❤️</item>
+        <item>😂</item>
+        <item>💩</item>
+        <item>👻</item>
+        <item>😃</item>
+        <item>✨</item>
+        <item>😍</item>
+        <item>🙏</item>
+    </string-array>
+
     <string translatable="false" name="video_resolution_default">480</string>
     <string translatable="false" name="video_resolution_default_tv">720</string>
 </resources>
