@@ -36,7 +36,6 @@ import cx.ring.daemon.Blob;
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.StringVect;
-import cx.ring.daemon.VectMap;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
@@ -47,10 +46,8 @@ import cx.ring.utils.Log;
 import ezvcard.VCard;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
-import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.PublishSubject;
 
 public class CallService {
@@ -129,7 +126,7 @@ public class CallService {
             List<Conference.ParticipantInfo> newInfo = new ArrayList<>(info.size());
             if (conference.isConference()) {
                 for (Map<String, String> i : info) {
-                    SipCall call = conference.findCallByContact(new Uri(i.get("uri")));
+                    SipCall call = conference.findCallByContact(Uri.fromString(i.get("uri")));
                     if (call != null) {
                         newInfo.add(new Conference.ParticipantInfo(call.getContact(), i));
                     } else {
@@ -139,7 +136,7 @@ public class CallService {
             } else {
                 Account account = mAccountService.getAccount(conference.getCall().getAccount());
                 for (Map<String, String> i : info)
-                    newInfo.add(new Conference.ParticipantInfo(account.getContactFromCache(new Uri(i.get("uri"))), i));
+                    newInfo.add(new Conference.ParticipantInfo(account.getContactFromCache(Uri.fromString(i.get("uri"))), i));
             }
             conference.setInfo(newInfo);
         }
@@ -208,12 +205,12 @@ public class CallService {
         return call == null ? Observable.error(new IllegalArgumentException()) : getCallUpdates(call);
     }*/
 
-    public Observable<SipCall> placeCallObservable(final String accountId, final String number, final boolean audioOnly) {
-        return placeCall(accountId, number, audioOnly)
+    public Observable<SipCall> placeCallObservable(final String accountId, final String conversationId, final String number, final boolean audioOnly) {
+        return placeCall(accountId, conversationId, number, audioOnly)
                 .flatMapObservable(this::getCallUpdates);
     }
 
-    public Single<SipCall> placeCall(final String account, final String number, final boolean audioOnly) {
+    public Single<SipCall> placeCall(final String account, final String conversationId, final String number, final boolean audioOnly) {
         return Single.fromCallable(() -> {
             Log.i(TAG, "placeCall() thread running... " + number + " audioOnly: " + audioOnly);
 
@@ -227,6 +224,7 @@ public class CallService {
                 Ringservice.muteLocalMedia(callId, "MEDIA_TYPE_VIDEO", true);
             }
             SipCall call = addCall(account, callId, number, SipCall.Direction.OUTGOING);
+            call.setSwarmInfo(conversationId);
             call.muteVideo(audioOnly);
             updateConnectionCount();
             return call;
@@ -413,7 +411,7 @@ public class CallService {
 
     public SipCall getCurrentCallForContactId(String contactId) {
         for (SipCall call : currentCalls.values()) {
-            if (contactId.contains(call.getContact().getPhones().get(0).getNumber().toString())) {
+            if (contactId.contains(call.getContact().getPrimaryNumber())) {
                 return call;
             }
         }
@@ -429,10 +427,11 @@ public class CallService {
         SipCall call = currentCalls.get(callId);
         if (call == null) {
             Account account = mAccountService.getAccount(accountId);
-            Uri fromUri = new Uri(from);
-            Conversation conversation = account.getByUri(fromUri);
+            Uri fromUri = Uri.fromString(from);
             CallContact contact = mContactService.findContact(account, fromUri);
-            call = new SipCall(callId, new Uri(from).getUri(), accountId, conversation, contact, direction);
+            Uri conversationUri = contact.getConversationUri().blockingFirst();
+            Conversation conversation = conversationUri.equals(fromUri) ? account.getByUri(fromUri) : account.getSwarm(conversationUri.getRawRingId());
+            call = new SipCall(callId, fromUri.getUri(), accountId, conversation, contact, direction);
             currentCalls.put(callId, call);
         } else {
             Log.w(TAG, "Call already existed ! " + callId + " " + from);
@@ -450,8 +449,6 @@ public class CallService {
             conference = new Conference(call);
             currentConferences.put(confId, conference);
             conferenceSubject.onNext(conference);
-        } else {
-            Log.w(TAG, "Conference already existed ! " + confId);
         }
         return conference;
     }
@@ -471,7 +468,7 @@ public class CallService {
             }
             sipCall.setCallState(callState);
 
-            CallContact contact = mContactService.findContact(mAccountService.getAccount(sipCall.getAccount()), new Uri(sipCall.getContactNumber()));
+            CallContact contact = mContactService.findContact(mAccountService.getAccount(sipCall.getAccount()), Uri.fromString(sipCall.getContactNumber()));
             String registeredName = callDetails.get("REGISTERED_NAME");
             if (registeredName != null && !registeredName.isEmpty()) {
                 contact.setUsername(registeredName);
@@ -479,7 +476,7 @@ public class CallService {
             sipCall.setContact(contact);
 
             Account account = mAccountService.getAccount(sipCall.getAccount());
-            sipCall.setConversation(account.getByUri(contact.getPrimaryUri()));
+            sipCall.setConversation(account.getByUri(contact.getUri()));
 
             currentCalls.put(callId, sipCall);
             updateConnectionCount();

@@ -85,7 +85,7 @@ public class NumberAdapter extends BaseAdapter {
 
         Phone number = mNumbers.get(position);
         ImageView numberIcon = convertView.findViewById(R.id.number_icon);
-        numberIcon.setImageResource(number.getNumber().isRingId() ?
+        numberIcon.setImageResource(number.getNumber().isHexId() ?
                 R.drawable.ic_jami_24 : R.drawable.baseline_dialer_sip_24);
 
         if (longView) {
