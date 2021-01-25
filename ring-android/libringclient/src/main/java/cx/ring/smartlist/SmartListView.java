@@ -33,11 +33,11 @@ public interface SmartListView extends BaseView {
 
     void displayConversationDialog(SmartListViewModel smartListViewModel);
 
-    void displayClearDialog(CallContact callContact);
+    void displayClearDialog(Uri callContact);
 
-    void displayDeleteDialog(CallContact callContact);
+    void displayDeleteDialog(Uri callContact);
 
-    void copyNumber(CallContact callContact);
+    void copyNumber(Uri uri);
 
     void setLoading(boolean display);
 
@@ -53,7 +53,7 @@ public interface SmartListView extends BaseView {
 
     void goToConversation(String accountId, Uri contactId);
 
-    void goToCallActivity(String accountId, String contactId);
+    void goToCallActivity(String accountId, Uri conversationUri, String contactId);
 
     void goToQRFragment();
 
