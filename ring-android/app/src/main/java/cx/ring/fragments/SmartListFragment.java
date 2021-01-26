@@ -114,7 +114,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
                 setOverflowMenuVisible(menu, true);
                 changeSeparatorHeight(false);
                 binding.qrCode.setVisibility(View.GONE);
-                binding.newGroup.setVisibility(View.GONE);
+                //binding.newGroup.setVisibility(View.GONE);
                 setTabletQRLayout(false);
                 return true;
             }
@@ -126,7 +126,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
                 setOverflowMenuVisible(menu, false);
                 changeSeparatorHeight(true);
                 binding.qrCode.setVisibility(View.VISIBLE);
-                binding.newGroup.setVisibility(View.VISIBLE);
+                //binding.newGroup.setVisibility(View.VISIBLE);
                 setTabletQRLayout(true);
                 return true;
             }
@@ -245,7 +245,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
 
         binding.qrCode.setOnClickListener(v -> presenter.clickQRSearch());
 
-        binding.newGroup.setOnClickListener(v -> startNewGroup());
+        //binding.newGroup.setOnClickListener(v -> startNewGroup());
 
         binding.confsList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -282,7 +282,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
         ContactPickerFragment fragment = ContactPickerFragment.newInstance();
         fragment.show(getParentFragmentManager(), ContactPickerFragment.TAG);
         binding.qrCode.setVisibility(View.GONE);
-        binding.newGroup.setVisibility(View.GONE);
+        //binding.newGroup.setVisibility(View.GONE);
         setTabletQRLayout(false);
     }
 
@@ -472,7 +472,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
         QRCodeFragment qrCodeFragment = QRCodeFragment.newInstance(QRCodeFragment.INDEX_SCAN);
         qrCodeFragment.show(getParentFragmentManager(), QRCodeFragment.TAG);
         binding.qrCode.setVisibility(View.GONE);
-        binding.newGroup.setVisibility(View.GONE);
+        //binding.newGroup.setVisibility(View.GONE);
         setTabletQRLayout(false);
     }
 
