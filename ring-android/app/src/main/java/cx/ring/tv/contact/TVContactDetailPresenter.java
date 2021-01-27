@@ -28,7 +28,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.leanback.widget.Presenter;
 
 import cx.ring.R;
-import cx.ring.smartlist.SmartListViewModel;
+import net.jami.smartlist.SmartListViewModel;
 import cx.ring.tv.conversation.TvConversationFragment;
 import cx.ring.utils.ConversationPath;
 

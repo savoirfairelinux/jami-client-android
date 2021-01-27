@@ -32,12 +32,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.RequestManager;
 
-import java.util.List;
-
-import cx.ring.model.Account;
-import cx.ring.model.CallContact;
-import cx.ring.model.Conversation;
-import cx.ring.smartlist.SmartListViewModel;
+import net.jami.model.Account;
+import net.jami.model.CallContact;
+import net.jami.model.Conversation;
+import net.jami.smartlist.SmartListViewModel;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.Single;

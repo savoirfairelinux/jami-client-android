@@ -36,10 +36,10 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 
 import cx.ring.application.JamiApplication;
-import cx.ring.model.ConversationHistory;
-import cx.ring.model.DataTransfer;
-import cx.ring.model.Interaction;
-import cx.ring.services.HistoryService;
+import net.jami.model.ConversationHistory;
+import net.jami.model.DataTransfer;
+import net.jami.model.Interaction;
+import net.jami.services.HistoryService;
 
 /*
  * Database History Version

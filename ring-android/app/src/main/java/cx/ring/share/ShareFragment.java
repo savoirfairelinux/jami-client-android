@@ -34,10 +34,12 @@ import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.databinding.FragShareBinding;
 import cx.ring.mvp.BaseSupportFragment;
-import cx.ring.mvp.GenericView;
-import cx.ring.utils.QRCodeUtils;
+import net.jami.mvp.GenericView;
+import net.jami.share.SharePresenter;
+import net.jami.share.ShareViewModel;
+import net.jami.utils.QRCodeUtils;
 
-public class ShareFragment extends BaseSupportFragment<SharePresenter> implements GenericView<ShareViewModel> {
+public class ShareFragment extends BaseSupportFragment<SharePresenter> implements GenericView<net.jami.share.ShareViewModel> {
 
     private String mUriToShow;
     private boolean isShareLocked = false;

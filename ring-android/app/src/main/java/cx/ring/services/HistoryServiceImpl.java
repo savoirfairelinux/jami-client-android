@@ -23,37 +23,30 @@ package cx.ring.services;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 
 import java.io.File;
-import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.inject.Inject;
 
-import cx.ring.R;
 import cx.ring.history.DatabaseHelper;
-import cx.ring.model.Conversation;
-import cx.ring.model.ConversationHistory;
-import cx.ring.model.Interaction;
-import cx.ring.model.Uri;
-import io.reactivex.Observable;
-import io.reactivex.subjects.BehaviorSubject;
-import io.reactivex.subjects.Subject;
+
+import net.jami.model.ConversationHistory;
+import net.jami.model.Interaction;
+import net.jami.model.Uri;
+import net.jami.services.HistoryService;
 
 import static cx.ring.fragments.ConversationFragment.KEY_PREFERENCE_CONVERSATION_LAST_READ;
 
 /**
  * Implements the necessary Android related methods for the {@link HistoryService}
  */
-public class HistoryServiceImpl extends HistoryService {
+public class HistoryServiceImpl extends net.jami.services.HistoryService {
     private static final String TAG = HistoryServiceImpl.class.getSimpleName();
     private final static String DATABASE_NAME = "history.db";
     private final static String LEGACY_DATABASE_KEY = "legacy";

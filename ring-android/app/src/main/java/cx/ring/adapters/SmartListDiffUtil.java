@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.DiffUtil;
 
 import java.util.List;
 
-import cx.ring.smartlist.SmartListViewModel;
+import net.jami.smartlist.SmartListViewModel;
 
 public class SmartListDiffUtil extends DiffUtil.Callback {
 

@@ -24,7 +24,7 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 
-import cx.ring.daemon.Ringservice;
+import net.jami.daemon.Ringservice;
 
 /**
  * Class that contains PluginDetails like name, rootPath

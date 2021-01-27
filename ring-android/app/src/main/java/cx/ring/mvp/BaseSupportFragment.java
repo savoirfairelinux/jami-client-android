@@ -29,7 +29,9 @@ import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import cx.ring.R;
-import cx.ring.model.Error;
+import net.jami.model.Error;
+import net.jami.mvp.BaseView;
+import net.jami.mvp.RootPresenter;
 
 public abstract class BaseSupportFragment<T extends RootPresenter> extends Fragment implements BaseView {
 

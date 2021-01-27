@@ -21,6 +21,8 @@
 
 package cx.ring.utils;
 
+import net.jami.utils.VCardUtils;
+
 import org.junit.Test;
 
 import ezvcard.VCard;

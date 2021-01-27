@@ -21,7 +21,7 @@ package cx.ring.fragments;
 
 import java.util.ArrayList;
 
-import cx.ring.model.AccountConfig;
+import net.jami.model.AccountConfig;
 
 public interface AdvancedAccountView {
 

@@ -14,8 +14,8 @@
     public static final ** CREATOR;
 }
 
--keep,includedescriptorclasses class cx.ring.** { *; }
--keepclassmembers class cx.ring.** { *; }
+-keep,includedescriptorclasses class net.jami.daemon.** { *; }
+-keepclassmembers class net.jami.daemon.** { *; }
 
 # ORMLite
 -keep class com.j256.**

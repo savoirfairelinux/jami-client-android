@@ -41,10 +41,10 @@ import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.fragments.GeneralAccountPresenter;
 import cx.ring.fragments.GeneralAccountView;
-import cx.ring.model.Account;
-import cx.ring.model.ConfigKey;
+import net.jami.model.Account;
+import net.jami.model.ConfigKey;
 import cx.ring.services.SharedPreferencesServiceImpl;
-import cx.ring.utils.Tuple;
+import net.jami.utils.Tuple;
 
 public class TVSettingsFragment extends LeanbackSettingsFragmentCompat {
 

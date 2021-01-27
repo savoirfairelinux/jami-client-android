@@ -22,6 +22,8 @@ package cx.ring.mvp;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
+import net.jami.mvp.RootPresenter;
+
 import javax.inject.Inject;
 
 public abstract class BaseActivity<T extends RootPresenter> extends AppCompatActivity {

@@ -22,11 +22,11 @@ package cx.ring.viewholders;
 import cx.ring.R;
 import cx.ring.databinding.ItemSmartlistBinding;
 import cx.ring.databinding.ItemSmartlistHeaderBinding;
-import cx.ring.model.ContactEvent;
-import cx.ring.model.Interaction;
-import cx.ring.model.SipCall;
-import cx.ring.smartlist.SmartListViewModel;
-import cx.ring.utils.Log;
+import net.jami.model.ContactEvent;
+import net.jami.model.Interaction;
+import net.jami.model.SipCall;
+import net.jami.smartlist.SmartListViewModel;
+
 import cx.ring.utils.ResourceMapper;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.Observable;

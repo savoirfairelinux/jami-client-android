@@ -29,7 +29,6 @@ import android.media.AudioManager;
 import android.media.MediaRecorder;
 import android.media.projection.MediaProjection;
 import android.os.Build;
-import android.text.TextUtils;
 import android.view.SurfaceHolder;
 import android.view.TextureView;
 import android.view.WindowManager;
@@ -46,21 +45,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cx.ring.daemon.IntVect;
-import cx.ring.daemon.Ringservice;
-import cx.ring.daemon.StringMap;
-import cx.ring.daemon.UintVect;
-import cx.ring.model.Conference;
-import cx.ring.model.SipCall;
-import cx.ring.model.SipCall.CallStatus;
+import net.jami.daemon.IntVect;
+import net.jami.daemon.Ringservice;
+import net.jami.daemon.UintVect;
+import net.jami.model.Conference;
+import net.jami.model.SipCall;
+import net.jami.model.SipCall.CallStatus;
 import cx.ring.utils.BluetoothWrapper;
-import cx.ring.utils.Log;
+
+import net.jami.services.HardwareService;
+import net.jami.utils.Log;
 import cx.ring.utils.Ringer;
-import cx.ring.utils.Tuple;
+import net.jami.utils.Tuple;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 
-import static cx.ring.daemon.RingserviceJNI.toggleCallMediaHandler;
+import static net.jami.daemon.RingserviceJNI.toggleCallMediaHandler;
 
 public class HardwareServiceImpl extends HardwareService implements AudioManager.OnAudioFocusChangeListener, BluetoothWrapper.BluetoothChangeListener {
 

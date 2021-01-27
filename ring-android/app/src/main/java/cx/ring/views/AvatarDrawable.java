@@ -37,18 +37,17 @@ import android.graphics.drawable.Drawable;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import cx.ring.R;
-import cx.ring.model.Account;
-import cx.ring.model.CallContact;
-import cx.ring.model.Conversation;
+import net.jami.model.Account;
+import net.jami.model.CallContact;
+import net.jami.model.Conversation;
 import cx.ring.services.VCardServiceImpl;
-import cx.ring.smartlist.SmartListViewModel;
+import net.jami.smartlist.SmartListViewModel;
 import cx.ring.utils.DeviceUtils;
-import cx.ring.utils.HashUtils;
+import net.jami.utils.HashUtils;
 import io.reactivex.Single;
 
 import android.graphics.drawable.VectorDrawable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.TypedValue;
 
 import java.util.ArrayList;

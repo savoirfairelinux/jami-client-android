@@ -25,14 +25,14 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import cx.ring.model.Account;
-import cx.ring.model.CallContact;
-import cx.ring.model.Uri;
-import cx.ring.mvp.RootPresenter;
-import cx.ring.services.AccountService;
-import cx.ring.services.HardwareService;
-import cx.ring.services.VCardService;
-import cx.ring.smartlist.SmartListViewModel;
+import net.jami.model.Account;
+import net.jami.model.CallContact;
+import net.jami.model.Uri;
+import net.jami.mvp.RootPresenter;
+import net.jami.services.AccountService;
+import net.jami.services.HardwareService;
+import net.jami.services.VCardService;
+import net.jami.smartlist.SmartListViewModel;
 import io.reactivex.Scheduler;
 import io.reactivex.subjects.PublishSubject;
 

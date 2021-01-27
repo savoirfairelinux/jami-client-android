@@ -20,6 +20,12 @@
 
 package cx.ring.model;
 
+import net.jami.model.CallContact;
+import net.jami.model.Conversation;
+import net.jami.model.DataTransfer;
+import net.jami.model.TextMessage;
+import net.jami.model.Uri;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,18 +38,18 @@ import static org.junit.Assert.assertEquals;
  */
 public class ConversationTest {
 
-    private Conversation conversation;
+    private net.jami.model.Conversation conversation;
 
     @Before
     public void setUp() throws Exception {
-        CallContact contact = new CallContact(1L);
-        conversation = new Conversation(contact);
+        net.jami.model.CallContact contact = new net.jami.model.CallContact(1L);
+        conversation = new net.jami.model.Conversation(contact);
     }
 
     @Test
     public void init_test() throws Exception {
-        CallContact contact = new CallContact(1L);
-        Conversation conversation = new Conversation(contact);
+        CallContact contact = new net.jami.model.CallContact(1L);
+        Conversation conversation = new net.jami.model.Conversation(contact);
 
         assertEquals(conversation.getContact(), contact);
     }
@@ -90,7 +96,7 @@ public class ConversationTest {
     @Test
     public void addTextMessage() throws Exception {
         int oldSize = conversation.getAggregateHistory().size();
-        conversation.addTextMessage(new TextMessage(true, "Coucou", new Uri("ring:test"), "1", "Toi"));
+        conversation.addTextMessage(new net.jami.model.TextMessage(true, "Coucou", new net.jami.model.Uri("ring:test"), "1", "Toi"));
         int newSize = conversation.getAggregateHistory().size();
 
         assertEquals(0, oldSize);

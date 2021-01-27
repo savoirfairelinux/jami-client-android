@@ -35,7 +35,10 @@ import cx.ring.account.AccountEditionFragment;
 import cx.ring.account.JamiAccountSummaryFragment;
 import cx.ring.application.JamiApplication;
 import cx.ring.databinding.FragBlocklistBinding;
-import cx.ring.model.CallContact;
+
+import net.jami.contactrequests.BlackListPresenter;
+import net.jami.contactrequests.BlackListView;
+import net.jami.model.CallContact;
 import cx.ring.mvp.BaseSupportFragment;
 
 public class BlockListFragment extends BaseSupportFragment<BlackListPresenter> implements BlackListView,

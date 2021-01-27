@@ -31,7 +31,7 @@ import javax.inject.Inject;
 
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
-import cx.ring.services.AccountService;
+import net.jami.services.AccountService;
 import cx.ring.tv.account.TVAccountWizard;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
