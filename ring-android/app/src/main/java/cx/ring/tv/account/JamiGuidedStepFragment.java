@@ -29,7 +29,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import cx.ring.mvp.RootPresenter;
+import net.jami.mvp.RootPresenter;
 
 public abstract class JamiGuidedStepFragment<T extends RootPresenter> extends GuidedStepSupportFragment {
 

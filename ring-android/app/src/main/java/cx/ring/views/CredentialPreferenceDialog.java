@@ -28,7 +28,7 @@ import android.widget.EditText;
 
 import androidx.preference.PreferenceDialogFragmentCompat;
 import cx.ring.R;
-import cx.ring.model.AccountCredentials;
+import net.jami.model.AccountCredentials;
 
 public class CredentialPreferenceDialog extends PreferenceDialogFragmentCompat {
     private static final String SAVE_STATE_TEXT = "CredentialPreferenceDialog.creds";

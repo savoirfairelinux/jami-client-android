@@ -28,9 +28,9 @@ import androidx.leanback.app.SearchSupportFragment;
 import javax.inject.Inject;
 
 import cx.ring.R;
-import cx.ring.model.Error;
-import cx.ring.mvp.BaseView;
-import cx.ring.mvp.RootPresenter;
+import net.jami.model.Error;
+import net.jami.mvp.BaseView;
+import net.jami.mvp.RootPresenter;
 
 public class BaseSearchFragment<T extends RootPresenter> extends SearchSupportFragment
         implements BaseView {

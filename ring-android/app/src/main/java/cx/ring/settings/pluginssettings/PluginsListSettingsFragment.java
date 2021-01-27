@@ -25,7 +25,7 @@ import java.util.List;
 import cx.ring.R;
 import cx.ring.account.JamiAccountSummaryFragment;
 import cx.ring.client.HomeActivity;
-import cx.ring.daemon.Ringservice;
+import net.jami.daemon.Ringservice;
 import cx.ring.databinding.FragPluginsListSettingsBinding;
 import cx.ring.plugins.PluginUtils;
 import cx.ring.utils.AndroidFileUtils;

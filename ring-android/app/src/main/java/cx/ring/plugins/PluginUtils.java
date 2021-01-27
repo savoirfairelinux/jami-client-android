@@ -1,8 +1,6 @@
 package cx.ring.plugins;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 
 import androidx.annotation.NonNull;
 
@@ -10,11 +8,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import cx.ring.daemon.Ringservice;
+import net.jami.daemon.Ringservice;
 import cx.ring.settings.pluginssettings.PluginDetails;
-import cx.ring.utils.Log;
-
-import static android.content.Context.MODE_PRIVATE;
+import net.jami.utils.Log;
 
 public class PluginUtils {
 

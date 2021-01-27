@@ -40,12 +40,13 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import cx.ring.application.JamiApplication;
-import cx.ring.daemon.IntVect;
-import cx.ring.daemon.StringVect;
+import net.jami.daemon.IntVect;
+import net.jami.daemon.StringVect;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.NetworkUtils;
-import cx.ring.utils.StringUtils;
-import io.reactivex.android.schedulers.AndroidSchedulers;
+
+import net.jami.services.DeviceRuntimeService;
+import net.jami.utils.StringUtils;
 
 public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
 

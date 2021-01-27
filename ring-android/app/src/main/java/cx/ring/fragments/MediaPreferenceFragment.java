@@ -37,10 +37,10 @@ import cx.ring.R;
 import cx.ring.account.AccountEditionFragment;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.RingtoneActivity;
-import cx.ring.model.Account;
-import cx.ring.model.AccountConfig;
-import cx.ring.model.Codec;
-import cx.ring.model.ConfigKey;
+import net.jami.model.Account;
+import net.jami.model.AccountConfig;
+import net.jami.model.Codec;
+import net.jami.model.ConfigKey;
 import cx.ring.mvp.BasePreferenceFragment;
 
 public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPreferencePresenter> implements MediaPreferenceView {

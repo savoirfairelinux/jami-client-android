@@ -32,13 +32,15 @@ import androidx.core.app.NotificationManagerCompat;
 import javax.inject.Inject;
 
 import cx.ring.application.JamiApplication;
-import cx.ring.utils.Log;
+
+import net.jami.services.NotificationService;
+import net.jami.utils.Log;
 
 public class DataTransferService extends Service {
     private final String TAG = DataTransferService.class.getSimpleName();
 
     @Inject
-    NotificationService mNotificationService;
+    net.jami.services.NotificationService mNotificationService;
     private NotificationManagerCompat notificationManager;
 
     private boolean isFirst = true;

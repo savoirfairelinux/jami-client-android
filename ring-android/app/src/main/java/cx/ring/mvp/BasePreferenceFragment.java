@@ -23,6 +23,8 @@ import android.os.Bundle;
 
 import androidx.preference.PreferenceFragmentCompat;
 
+import net.jami.mvp.RootPresenter;
+
 import javax.inject.Inject;
 
 public abstract class BasePreferenceFragment<T extends RootPresenter> extends PreferenceFragmentCompat {

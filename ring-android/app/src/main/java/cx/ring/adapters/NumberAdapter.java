@@ -32,8 +32,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import cx.ring.R;
-import cx.ring.model.CallContact;
-import cx.ring.model.Phone;
+import net.jami.model.CallContact;
+import net.jami.model.Phone;
 
 public class NumberAdapter extends BaseAdapter {
     final private Context mContext;

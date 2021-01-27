@@ -54,12 +54,12 @@ import cx.ring.R;
 import cx.ring.account.AccountEditionFragment;
 import cx.ring.adapters.RingtoneAdapter;
 import cx.ring.application.JamiApplication;
-import cx.ring.model.Account;
-import cx.ring.model.ConfigKey;
-import cx.ring.model.Ringtone;
-import cx.ring.services.AccountService;
+import net.jami.model.Account;
+import net.jami.model.ConfigKey;
+import net.jami.model.Ringtone;
+import net.jami.services.AccountService;
 import cx.ring.utils.AndroidFileUtils;
-import cx.ring.utils.Log;
+import net.jami.utils.Log;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 

@@ -21,18 +21,17 @@
 package cx.ring.launch;
 
 import android.Manifest;
-import android.util.Log;
 
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import cx.ring.model.Settings;
-import cx.ring.mvp.RootPresenter;
-import cx.ring.services.AccountService;
-import cx.ring.services.DeviceRuntimeService;
-import cx.ring.services.HardwareService;
-import cx.ring.services.PreferencesService;
+import net.jami.model.Settings;
+import net.jami.mvp.RootPresenter;
+import net.jami.services.AccountService;
+import net.jami.services.DeviceRuntimeService;
+import net.jami.services.HardwareService;
+import net.jami.services.PreferencesService;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class LaunchPresenter extends RootPresenter<LaunchView> {
