@@ -45,7 +45,6 @@ public class DataTransfer extends Interaction {
         mAuthor = isOutgoing ? null : peer;
         mAccount = account;
         mConversation = conversation;
-        mAuthor = peer;
         mTotalSize = totalSize;
         mBytesProgress = bytesProgress;
         mBody = displayName;
