@@ -33,10 +33,10 @@ import io.reactivex.subjects.Subject;
 public class Conference {
 
     public static class ParticipantInfo {
-        public net.jami.model.CallContact contact;
+        public Contact contact;
         public int x, y, w, h;
 
-        public ParticipantInfo(CallContact c, Map<String, String> i) {
+        public ParticipantInfo(Contact c, Map<String, String> i) {
             contact = c;
             x = Integer.parseInt(i.get("x"));
             y = Integer.parseInt(i.get("y"));
@@ -47,12 +47,12 @@ public class Conference {
     private final Subject<List<ParticipantInfo>> mParticipantInfo = BehaviorSubject.createDefault(Collections.emptyList());
 
     private final String mId;
-    private net.jami.model.SipCall.CallStatus mConfState;
-    private final ArrayList<net.jami.model.SipCall> mParticipants;
+    private Call.CallStatus mConfState;
+    private final ArrayList<Call> mParticipants;
     private boolean mRecording;
-    private net.jami.model.SipCall mMaximizedCall;
+    private Call mMaximizedCall;
 
-    public Conference(net.jami.model.SipCall call) {
+    public Conference(Call call) {
         this(call.getDaemonIdString());
         mParticipants.add(call);
     }
@@ -78,7 +78,7 @@ public class Conference {
         return mParticipants.size() > 1;
     }
 
-    public net.jami.model.SipCall getCall() {
+    public Call getCall() {
         if (!isConference() && !mParticipants.isEmpty()) {
             return mParticipants.get(0);
         }
@@ -93,11 +93,11 @@ public class Conference {
         }
     }
 
-    public void setMaximizedCall(net.jami.model.SipCall call) {
+    public void setMaximizedCall(Call call) {
         mMaximizedCall = call;
     }
 
-    public net.jami.model.SipCall getMaximizedCall() {
+    public Call getMaximizedCall() {
         return mMaximizedCall;
     }
 
@@ -109,7 +109,7 @@ public class Conference {
         return mId;
     }
 
-    public net.jami.model.SipCall.CallStatus getState() {
+    public Call.CallStatus getState() {
         if (mParticipants.size() == 1) {
             return mParticipants.get(0).getCallStatus();
         }
@@ -117,39 +117,39 @@ public class Conference {
     }
 
     public void setState(String state) {
-        mConfState = net.jami.model.SipCall.CallStatus.fromConferenceString(state);
+        mConfState = Call.CallStatus.fromConferenceString(state);
     }
 
-    public List<net.jami.model.SipCall> getParticipants() {
+    public List<Call> getParticipants() {
         return mParticipants;
     }
 
-    public void addParticipant(net.jami.model.SipCall part) {
+    public void addParticipant(Call part) {
         mParticipants.add(part);
     }
 
-    public boolean removeParticipant(net.jami.model.SipCall toRemove) {
+    public boolean removeParticipant(Call toRemove) {
         return mParticipants.remove(toRemove);
     }
 
     public boolean contains(String callID) {
-        for (net.jami.model.SipCall participant : mParticipants) {
+        for (Call participant : mParticipants) {
             if (participant.getDaemonIdString().contentEquals(callID))
                 return true;
         }
         return false;
     }
 
-    public net.jami.model.SipCall getCallById(String callID) {
-        for (net.jami.model.SipCall participant : mParticipants) {
+    public Call getCallById(String callID) {
+        for (Call participant : mParticipants) {
             if (participant.getDaemonIdString().contentEquals(callID))
                 return participant;
         }
         return null;
     }
 
-    public net.jami.model.SipCall findCallByContact(Uri uri) {
-        for (net.jami.model.SipCall call : mParticipants) {
+    public Call findCallByContact(Uri uri) {
+        for (Call call : mParticipants) {
             if (call.getContact().getUri().toString().equals(uri.toString()))
                 return call;
         }
@@ -165,7 +165,7 @@ public class Conference {
     }
 
     public boolean hasVideo() {
-        for (net.jami.model.SipCall call : mParticipants)
+        for (Call call : mParticipants)
             if (!call.isAudioOnly())
                 return true;
         return false;
@@ -173,7 +173,7 @@ public class Conference {
 
     public long getTimestampStart() {
         long t = Long.MAX_VALUE;
-        for (SipCall call : mParticipants)
+        for (Call call : mParticipants)
             t = Math.min(call.getTimestamp(), t);
         return t;
     }

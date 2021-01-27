@@ -19,18 +19,18 @@
  */
 package cx.ring.tv.cards.contacts;
 
-import net.jami.model.CallContact;
+import net.jami.model.Contact;
 import net.jami.smartlist.SmartListViewModel;
 import cx.ring.tv.cards.Card;
 
 public class ContactCard extends Card {
     private SmartListViewModel mModel;
 
-    public ContactCard(String accountId, CallContact pCallContact, Type type) {
-        mModel =  new SmartListViewModel(accountId, pCallContact, null);
-        setId(pCallContact.getId());
-        setTitle(pCallContact.getDisplayName());
-        setDescription(pCallContact.getRingUsername());
+    public ContactCard(String accountId, Contact pContact, Type type) {
+        mModel =  new SmartListViewModel(accountId, pContact, null);
+        setId(pContact.getId());
+        setTitle(pContact.getDisplayName());
+        setDescription(pContact.getRingUsername());
         setType(type);
     }
 

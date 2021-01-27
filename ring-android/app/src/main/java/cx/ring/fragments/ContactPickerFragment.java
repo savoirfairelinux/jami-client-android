@@ -27,7 +27,7 @@ import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.databinding.FragContactPickerBinding;
 import net.jami.facades.ConversationFacade;
-import net.jami.model.CallContact;
+import net.jami.model.Contact;
 import net.jami.smartlist.SmartListViewModel;
 import cx.ring.viewholders.SmartListViewHolder;
 import cx.ring.views.AvatarDrawable;
@@ -43,7 +43,7 @@ public class ContactPickerFragment extends BottomSheetDialogFragment {
     private final CompositeDisposable mDisposableBag = new CompositeDisposable();
 
     private String mAccountId =  null;
-    private final Set<CallContact> mCurrentSelection = new HashSet<>();
+    private final Set<Contact> mCurrentSelection = new HashSet<>();
 
     @Inject
     ConversationFacade mConversationFacade;
