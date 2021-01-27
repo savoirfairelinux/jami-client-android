@@ -78,13 +78,13 @@ import cx.ring.client.MediaViewerActivity;
 import net.jami.conversation.ConversationPresenter;
 import cx.ring.fragments.ConversationFragment;
 import net.jami.model.Account;
-import net.jami.model.CallContact;
+import net.jami.model.Contact;
 import net.jami.model.ContactEvent;
 import net.jami.model.DataTransfer;
 import net.jami.model.Interaction;
 import net.jami.model.Interaction.InteractionStatus;
 import net.jami.model.Interaction.InteractionType;
-import net.jami.model.SipCall;
+import net.jami.model.Call;
 import net.jami.model.TextMessage;
 import cx.ring.service.DRingService;
 import cx.ring.utils.AndroidFileUtils;
@@ -645,7 +645,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             viewHolder.mMsgDetailTxtPerm.setVisibility(View.GONE);
         }
 
-        CallContact contact = interaction.getContact();
+        Contact contact = interaction.getContact();
         if (interaction.isIncoming()) {
             viewHolder.mAvatar.setImageBitmap(null);
             viewHolder.mAvatar.setVisibility(View.VISIBLE);
@@ -771,7 +771,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                                          int position) {
         final Context context = convViewHolder.itemView.getContext();
         TextMessage textMessage = (TextMessage)interaction;
-        CallContact contact = textMessage.getContact();
+        Contact contact = textMessage.getContact();
         if (contact == null) {
             Log.e(TAG, "Invalid contact, not able to display message correctly");
             return;
@@ -971,7 +971,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
         int pictureResID;
         String historyTxt;
-        SipCall call = (SipCall) interaction;
+        Call call = (Call) interaction;
         if (call.isMissed()) {
             if (call.isIncoming()) {
                 pictureResID = R.drawable.baseline_call_missed_24;
