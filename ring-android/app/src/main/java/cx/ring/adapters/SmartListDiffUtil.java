@@ -27,8 +27,8 @@ import cx.ring.smartlist.SmartListViewModel;
 
 public class SmartListDiffUtil extends DiffUtil.Callback {
 
-    private List<SmartListViewModel> mOldList;
-    private List<SmartListViewModel> mNewList;
+    private final List<SmartListViewModel> mOldList;
+    private final List<SmartListViewModel> mNewList;
 
     public SmartListDiffUtil(List<SmartListViewModel> oldList, List<SmartListViewModel> newList) {
         mOldList = oldList;
@@ -49,7 +49,17 @@ public class SmartListDiffUtil extends DiffUtil.Callback {
     public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
         SmartListViewModel oldItem = mOldList.get(oldItemPosition);
         SmartListViewModel newItem = mNewList.get(newItemPosition);
-        return newItem.getHeaderTitle() == oldItem.getHeaderTitle() && newItem.getContact() == oldItem.getContact();
+        if (newItem.getHeaderTitle() != oldItem.getHeaderTitle())
+            return false;
+        if (newItem.getContact() != oldItem.getContact()) {
+            if (newItem.getContact().size() != oldItem.getContact().size())
+                return false;
+            for (int i = 0; i < newItem.getContact().size(); i++) {
+                if (newItem.getContact().get(i) != oldItem.getContact().get(i))
+                    return false;
+            }
+        }
+        return true;
     }
 
     @Override

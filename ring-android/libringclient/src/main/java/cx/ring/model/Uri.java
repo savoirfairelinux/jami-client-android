@@ -20,81 +20,67 @@
 package cx.ring.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import cx.ring.utils.StringUtils;
+import cx.ring.utils.Tuple;
 
 public class Uri implements Serializable {
 
-    private String mDisplayName = null;
-    private String mScheme = null;
-    private String mUsername = null;
-    private String mHost = null;
-    private String mPort = null;
+    private final String mScheme;
+    private final String mUsername;
+    private final String mHost;
+    private final String mPort;
 
     private static final Pattern ANGLE_BRACKETS_PATTERN = Pattern.compile("^\\s*([^<>]+)?\\s*<([^<>]+)>\\s*$");
-    private static final Pattern RING_ID_PATTERN = Pattern.compile("^\\p{XDigit}{40}$", Pattern.CASE_INSENSITIVE);
+    private static final Pattern HEX_ID_PATTERN = Pattern.compile("^\\p{XDigit}{40}$", Pattern.CASE_INSENSITIVE);
     private static final Pattern RING_URI_PATTERN = Pattern.compile("^\\s*(?:ring(?:[\\s\\:]+))?(\\p{XDigit}{40})(?:@ring\\.dht)?\\s*$", Pattern.CASE_INSENSITIVE);
     private static final Pattern URI_PATTERN = Pattern.compile("^\\s*(\\w+:)?(?:([\\w.]+)@)?(?:([\\d\\w\\.\\-]+)(?::(\\d+))?)\\s*$", Pattern.CASE_INSENSITIVE);
     public static final String RING_URI_SCHEME = "ring:";
     public static final String JAMI_URI_SCHEME = "jami:";
-    public static final String SWARM_URI_SCHEME = "swarm:";
+    public static final String SWARM_SCHEME = "swarm:";
 
     private static final String ipv4Pattern = "(([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.){3}([01]?\\d\\d?|2[0-4]\\d|25[0-5])";
     private static final String ipv6Pattern = "([0-9a-f]{1,4}:){7}([0-9a-f]){1,4}";
     private static final Pattern VALID_IPV4_PATTERN = Pattern.compile(ipv4Pattern, Pattern.CASE_INSENSITIVE);
     private static final Pattern VALID_IPV6_PATTERN = Pattern.compile(ipv6Pattern, Pattern.CASE_INSENSITIVE);
 
+    public Uri(String scheme, String user, String host, String port) {
+        mScheme = scheme;
+        mUsername = user;
+        mHost = host;
+        mPort = port;
+    }
 
-    public Uri(String uri) {
-        if (uri != null) {
-            parseUri(uri);
+    public Uri(String scheme, String host) {
+        mScheme = scheme;
+        mUsername = null;
+        mHost = host;
+        mPort = null;
+    }
+
+    static public Uri fromString(String uri) {
+        Matcher m = URI_PATTERN.matcher(uri);
+        if (m.find()) {
+            return new Uri(m.group(1), m.group(2), m.group(3), m.group(4));
+        } else {
+            return new Uri(null, null, uri, null);
         }
     }
 
-    public String getRawUriString() {
-        if (isRingId()) {
-            if (isSwarm())
-                return getScheme() + getRawRingId();
-            return RING_URI_SCHEME + getRawRingId();
+    static public Tuple<Uri, String> fromStringWithName(String uriString) {
+        Matcher m = ANGLE_BRACKETS_PATTERN.matcher(uriString);
+        if (m.find()) {
+            return new Tuple<>(fromString(m.group(2)), m.group(1));
+        } else {
+            return new Tuple<>(fromString(uriString), null);
         }
-
-        StringBuilder builder = new StringBuilder(64);
-        if (getUsername() != null && !getUsername().isEmpty()) {
-            builder.append(getUsername()).append("@");
-        }
-        if (getHost() != null) {
-            builder.append(getHost());
-        }
-        if (getPort() != null && !getPort().isEmpty()) {
-            builder.append(":").append(getPort());
-        }
-        return builder.toString();
     }
 
-    public String getUriString() {
-        if (getDisplayName() == null || getDisplayName().isEmpty()) {
-            return getRawUriString();
-        }
-        return getDisplayName() + " <" + getRawUriString() + ">";
-    }
-
-    @Override
-    public String toString() {
-        return getUriString();
-    }
-
-    public boolean isSingleIp() {
-        return (getUsername() == null || getUsername().isEmpty()) && isIpAddress(getHost());
-    }
-
-    public boolean isRingId() {
-        return (getHost() != null && RING_ID_PATTERN.matcher(getHost()).find())
-                || (getUsername() != null && RING_ID_PATTERN.matcher(getUsername()).find());
-    }
-    public boolean isSwarm() {
-        return SWARM_URI_SCHEME.equals(getScheme());
+    public static Uri fromId(String conversationId) {
+        return new Uri(null, null, conversationId, null);
     }
 
     public String getRawRingId() {
@@ -105,43 +91,51 @@ public class Uri implements Serializable {
         }
     }
 
-    private void parseUri(String uri) {
-        Matcher m = ANGLE_BRACKETS_PATTERN.matcher(uri);
-        if (m.find()) {
-            setDisplayName(m.group(1));
-            parseUriRaw(m.group(2));
-        } else {
-            parseUriRaw(uri);
-        }
-    }
-
-    private void parseUriRaw(String uri) {
-        Matcher m = URI_PATTERN.matcher(uri);
-        if (m.find()) {
-            setScheme(m.group(1));
-            setUsername(m.group(2));
-            setHost(m.group(3));
-            setPort(m.group(4));
-        } else {
-            setHost(uri);
-        }
-    }
-
     public String getUri() {
         if (isSwarm())
             return getScheme() + getRawRingId();
-        if (isRingId())
+        if (isHexId())
             return getRawRingId();
-        else {
-            StringBuilder builder = new StringBuilder(64);
-            if (!StringUtils.isEmpty(getUsername())) {
-                builder.append(getUsername()).append("@");
-            }
-            if (getHost() != null) {
-                builder.append(getHost());
-            }
-            return builder.toString();
+        return toString();
+    }
+
+    public String getRawUriString() {
+        if (isSwarm())
+            return getScheme() + getRawRingId();
+        if (isHexId()) {
+            return RING_URI_SCHEME + getRawRingId();
         }
+        return toString();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder(64);
+        if (!StringUtils.isEmpty(mScheme)) {
+            builder.append(mScheme);
+        }
+        if (!StringUtils.isEmpty(mUsername)) {
+            builder.append(mUsername).append('@');
+        }
+        if (!StringUtils.isEmpty(mHost)) {
+            builder.append(mHost);
+        }
+        if (!StringUtils.isEmpty(mPort)) {
+            builder.append(':').append(mPort);
+        }
+        return builder.toString();
+    }
+
+    public boolean isSingleIp() {
+        return (getUsername() == null || getUsername().isEmpty()) && isIpAddress(getHost());
+    }
+
+    public boolean isHexId() {
+        return (getHost() != null && HEX_ID_PATTERN.matcher(getHost()).find())
+                || (getUsername() != null && HEX_ID_PATTERN.matcher(getUsername()).find());
+    }
+    public boolean isSwarm() {
+        return SWARM_SCHEME.equals(getScheme());
     }
 
     @Override
@@ -153,12 +147,12 @@ public class Uri implements Serializable {
             return false;
         }
         Uri uo = (Uri) o;
-        return (getUsername() == null ? uo.getUsername() == null : getUsername().equals(uo.getUsername()))
-                && (getHost() == null ? uo.getHost() == null : getHost().equals(uo.getHost()));
+        return Objects.equals(getUsername(), uo.getUsername())
+                && Objects.equals(getHost(), uo.getHost());
     }
 
     public boolean isEmpty() {
-        return (getUsername() == null || getUsername().isEmpty()) && (getHost() == null || getHost().isEmpty());
+        return StringUtils.isEmpty(getUsername()) && StringUtils.isEmpty(getHost());
     }
 
     /**
@@ -171,7 +165,6 @@ public class Uri implements Serializable {
      * <code>false</code> otherwise.
      */
     public static boolean isIpAddress(String ipAddress) {
-
         Matcher m1 = VALID_IPV4_PATTERN.matcher(ipAddress);
         if (m1.matches()) {
             return true;
@@ -180,43 +173,20 @@ public class Uri implements Serializable {
         return m2.matches();
     }
 
-    public String getDisplayName() {
-        return mDisplayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.mDisplayName = displayName;
-    }
-
     public String getScheme() {
         return mScheme;
-    }
-
-    public void setScheme(String scheme) {
-        this.mScheme = scheme;
     }
 
     public String getUsername() {
         return mUsername;
     }
 
-    public void setUsername(String username) {
-        this.mUsername = username;
-    }
-
     public String getHost() {
         return mHost;
-    }
-
-    public void setHost(String host) {
-        this.mHost = host;
     }
 
     public String getPort() {
         return mPort;
     }
 
-    public void setPort(String port) {
-        this.mPort = port;
-    }
 }

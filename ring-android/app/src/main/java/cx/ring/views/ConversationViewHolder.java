@@ -58,7 +58,6 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
     public MediaPlayer player;
     public TextureView video;
     public Surface surface = null;
-    public String mCid;
     public UiUpdater updater;
     public LinearLayout mCallInfoLayout, mFileInfoLayout, mAudioInfoLayout;
     public ValueAnimator animator;
@@ -76,7 +75,7 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
             mHistDetailTxt = v.findViewById(R.id.call_details_txt);
             mIcon = v.findViewById(R.id.call_icon);
             mCallInfoLayout = v.findViewById(R.id.callInfoLayout);
-        } else {
+        } else if (type != ConversationAdapter.MessageType.INVALID) {
             switch (type) {
                 // common layout elements
                 case INCOMING_TEXT_MESSAGE:
