@@ -1688,8 +1688,13 @@ public class AccountService {
 
             DataTransferInfo dataTransferInfo = new DataTransferInfo();
             dataTransferInfo.setAccountId(dataTransfer.getAccount());
-            dataTransferInfo.setConversationId(dataTransfer.getConversationId());
-            dataTransferInfo.setPeer(dataTransfer.getConversationId());
+
+            String conversationId = dataTransfer.getConversationId();
+            if (!StringUtils.isEmpty(conversationId))
+                dataTransferInfo.setConversationId(conversationId);
+            else
+                dataTransferInfo.setPeer(dataTransfer.getConversation().getParticipant());
+
             dataTransferInfo.setPath(dataTransfer.destination.getAbsolutePath());
             dataTransferInfo.setDisplayName(dataTransfer.getDisplayName());
 
