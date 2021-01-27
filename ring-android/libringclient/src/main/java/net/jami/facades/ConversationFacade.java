@@ -147,7 +147,7 @@ public class ConversationFacade {
                 })
                 .distinctUntilChanged()
                 .subscribe(t -> {
-                    net.jami.utils.Log.e(TAG, "Location reception started for " + t.second.contact);
+                    Log.e(TAG, "Location reception started for " + t.second.contact);
                     mNotificationService.showLocationNotification(t.first, t.second.contact);
                     mDisposableBag.add(t.second.location.doOnComplete(() ->
                             mNotificationService.cancelLocationNotification(t.first, t.second.contact)).subscribe());
@@ -159,7 +159,7 @@ public class ConversationFacade {
                         .map(a -> txt.getConversation() == null ? a.getSwarm(txt.getConversationId()) : a.getByUri(txt.getConversation().getParticipant()))
                         .doOnSuccess(conversation -> conversation.updateTextMessage(txt)))
                 .subscribe(c -> {
-                }, e -> net.jami.utils.Log.e(TAG, "Error updating text message", e)));
+                }, e -> Log.e(TAG, "Error updating text message", e)));
 
         mDisposableBag.add(mAccountService
                 .getDataTransfers()
@@ -270,7 +270,7 @@ public class ConversationFacade {
     public Completable sendFile(Conversation conversation, Uri to, File file) {
         return Single.fromCallable(() -> {
             if (file == null || !file.exists() || !file.canRead()) {
-                net.jami.utils.Log.w(TAG, "sendFile: file not found or not readable: " + file);
+                Log.w(TAG, "sendFile: file not found or not readable: " + file);
                 return null;
             }
 
@@ -283,7 +283,7 @@ public class ConversationFacade {
 
             File dest = mDeviceRuntimeService.getConversationPath(conversation.getUri().getRawRingId(), transfer.getStoragePath());
             if (!FileUtils.moveFile(file, dest)) {
-                net.jami.utils.Log.e(TAG, "sendFile: can't move file to " + dest);
+                Log.e(TAG, "sendFile: can't move file to " + dest);
                 return null;
             }
 
@@ -307,14 +307,14 @@ public class ConversationFacade {
                         Completable.fromAction(file::delete)
                                 .subscribeOn(Schedulers.io()))
                         .subscribe(() -> conversation.removeInteraction(transfer),
-                                e -> net.jami.utils.Log.e(TAG, "Can't delete file transfer", e)));
+                                e -> Log.e(TAG, "Can't delete file transfer", e)));
             }
         } else {
             // handling is the same for calls and texts
             mDisposableBag.add(Completable.mergeArrayDelayError(mHistoryService.deleteInteraction(element.getId(), element.getAccount()).subscribeOn(Schedulers.io()))
                     .andThen(startConversation(element.getAccount(), Uri.fromString(element.getConversation().getParticipant())))
                     .subscribe(c -> c.removeInteraction(element),
-                            e -> net.jami.utils.Log.e(TAG, "Can't delete message", e)));
+                            e -> Log.e(TAG, "Can't delete message", e)));
         }
     }
 
@@ -323,7 +323,7 @@ public class ConversationFacade {
                 mCallService.cancelMessage(message.getAccount(), message.getId()).subscribeOn(Schedulers.io()))
                 .andThen(startConversation(message.getAccount(), Uri.fromString(message.getConversation().getParticipant())))
                 .subscribe(c -> c.removeInteraction(message),
-                        e -> net.jami.utils.Log.e(TAG, "Can't cancel message sending", e)));
+                        e -> Log.e(TAG, "Can't cancel message sending", e)));
     }
 
     /**
@@ -335,7 +335,7 @@ public class ConversationFacade {
     private Single<Account> loadSmartlist(final Account account) {
         synchronized (account) {
             if (account.historyLoader == null) {
-                net.jami.utils.Log.d(TAG, "loadSmartlist(): start loading");
+                Log.d(TAG, "loadSmartlist(): start loading");
                 account.historyLoader = getSmartlist(account);
             }
             return account.historyLoader;
@@ -372,13 +372,13 @@ public class ConversationFacade {
         }
     }
 
-    private Observable<net.jami.smartlist.SmartListViewModel> observeConversation(Account account, Conversation conversation, boolean hasPresence) {
+    private Observable<SmartListViewModel> observeConversation(Account account, Conversation conversation, boolean hasPresence) {
         return Observable.merge(account.getConversationSubject()
                         .filter(c -> c == conversation)
                         .startWith(conversation),
                 mContactService
                         .observeContact(conversation.getAccountId(), conversation.getContacts(), hasPresence))
-                .map(e -> new net.jami.smartlist.SmartListViewModel(conversation, hasPresence));
+                .map(e -> new SmartListViewModel(conversation, hasPresence));
         /*return account.getConversationSubject()
                 .filter(c -> c == conversation)
                 .startWith(conversation)
@@ -387,49 +387,49 @@ public class ConversationFacade {
                         .map(contact -> new SmartListViewModel(c, hasPresence)));*/
     }
 
-    public Observable<List<Observable<net.jami.smartlist.SmartListViewModel>>> getSmartList(Observable<Account> currentAccount, boolean hasPresence) {
+    public Observable<List<Observable<SmartListViewModel>>> getSmartList(Observable<Account> currentAccount, boolean hasPresence) {
         return currentAccount.switchMap(account -> account.getConversationsSubject()
                 .switchMapSingle(conversations -> Observable.fromIterable(conversations)
                         .map(conversation -> observeConversation(account, conversation, hasPresence))
                         .toList()));
     }
 
-    public Observable<List<net.jami.smartlist.SmartListViewModel>> getContactList(Observable<Account> currentAccount) {
+    public Observable<List<SmartListViewModel>> getContactList(Observable<Account> currentAccount) {
         return currentAccount.switchMap(account -> account.getConversationsSubject()
                 .switchMapSingle(conversations -> Observable.fromIterable(conversations)
                         .filter(conversation -> !conversation.isSwarm())
-                        .map(conversation -> new net.jami.smartlist.SmartListViewModel(conversation, false))
+                        .map(conversation -> new SmartListViewModel(conversation, false))
                         .toList()));
     }
 
-    public Observable<List<Observable<net.jami.smartlist.SmartListViewModel>>> getPendingList(Observable<Account> currentAccount) {
+    public Observable<List<Observable<SmartListViewModel>>> getPendingList(Observable<Account> currentAccount) {
         return currentAccount.switchMap(account -> account.getPendingSubject()
                 .switchMapSingle(conversations -> Observable.fromIterable(conversations)
                         .map(conversation -> observeConversation(account, conversation, false))
                         .toList()));
     }
 
-    public Observable<List<Observable<net.jami.smartlist.SmartListViewModel>>> getSmartList(boolean hasPresence) {
+    public Observable<List<Observable<SmartListViewModel>>> getSmartList(boolean hasPresence) {
         return getSmartList(mAccountService.getCurrentAccountSubject(), hasPresence);
     }
 
-    public Observable<List<Observable<net.jami.smartlist.SmartListViewModel>>> getPendingList() {
+    public Observable<List<Observable<SmartListViewModel>>> getPendingList() {
         return getPendingList(mAccountService.getCurrentAccountSubject());
     }
 
-    public Observable<List<net.jami.smartlist.SmartListViewModel>> getContactList() {
+    public Observable<List<SmartListViewModel>> getContactList() {
         return getContactList(mAccountService.getCurrentAccountSubject());
     }
 
-    private Single<List<Observable<net.jami.smartlist.SmartListViewModel>>> getSearchResults(Account account, String query) {
+    private Single<List<Observable<SmartListViewModel>>> getSearchResults(Account account, String query) {
         Uri uri = Uri.fromString(query);
         if (account.isSip()) {
             Contact contact = account.getContactFromCache(uri);
             return mContactService.loadContactData(contact, account.getAccountID())
-                    .andThen(Single.just(Collections.singletonList(Observable.just(new net.jami.smartlist.SmartListViewModel(account.getAccountID(), contact, contact.getPrimaryNumber(), null)))));
+                    .andThen(Single.just(Collections.singletonList(Observable.just(new SmartListViewModel(account.getAccountID(), contact, contact.getPrimaryNumber(), null)))));
         } else if (uri.isHexId()) {
             return mContactService.getLoadedContact(account.getAccountID(), account.getContactFromCache(uri))
-                    .map(contact -> Collections.singletonList(Observable.just(new net.jami.smartlist.SmartListViewModel(account.getAccountID(), contact, contact.getPrimaryNumber(), null))));
+                    .map(contact -> Collections.singletonList(Observable.just(new SmartListViewModel(account.getAccountID(), contact, contact.getPrimaryNumber(), null))));
         } else if (account.canSearch() && !query.contains("@")) {
             return mAccountService.searchUser(account.getAccountID(), query)
                     .map(AccountService.UserSearchResult::getResultsViewModels);
@@ -439,22 +439,22 @@ public class ConversationFacade {
         }
     }
 
-    private Observable<List<Observable<net.jami.smartlist.SmartListViewModel>>> getSearchResults(Account account, Observable<String> query) {
+    private Observable<List<Observable<SmartListViewModel>>> getSearchResults(Account account, Observable<String> query) {
         return query.switchMapSingle(q -> q.isEmpty()
-                ? net.jami.smartlist.SmartListViewModel.EMPTY_LIST
+                ? SmartListViewModel.EMPTY_LIST
                 : getSearchResults(account, q))
                 .distinctUntilChanged();
     }
 
-    public Observable<List<Observable<net.jami.smartlist.SmartListViewModel>>> getFullList(Observable<Account> currentAccount, Observable<String> query, boolean hasPresence) {
+    public Observable<List<Observable<SmartListViewModel>>> getFullList(Observable<Account> currentAccount, Observable<String> query, boolean hasPresence) {
         return currentAccount.switchMap(account -> Observable.combineLatest(
                 account.getConversationsSubject(),
                 getSearchResults(account, query),
                 query,
                 (conversations, searchResults, q) -> {
-                    List<Observable<net.jami.smartlist.SmartListViewModel>> newList = new ArrayList<>(conversations.size() + searchResults.size() + 2);
+                    List<Observable<SmartListViewModel>> newList = new ArrayList<>(conversations.size() + searchResults.size() + 2);
                     if (!searchResults.isEmpty()) {
-                        newList.add(net.jami.smartlist.SmartListViewModel.TITLE_PUBLIC_DIR);
+                        newList.add(SmartListViewModel.TITLE_PUBLIC_DIR);
                         newList.addAll(searchResults);
                     }
                     if (!conversations.isEmpty()) {
@@ -547,7 +547,7 @@ public class ConversationFacade {
     }
 
     public void updateTextNotifications(String accountId, List<Conversation> conversations) {
-        net.jami.utils.Log.d(TAG, "updateTextNotifications() " + accountId + " " + conversations.size());
+        Log.d(TAG, "updateTextNotifications() " + accountId + " " + conversations.size());
 
         for (Conversation conversation : conversations) {
             mNotificationService.showTextNotification(accountId, conversation);
