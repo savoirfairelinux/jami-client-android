@@ -42,7 +42,7 @@ public class Interaction {
     public static final String COLUMN_EXTRA_FLAG = "extra_data";
     protected String mAccount;
     boolean mIsIncoming;
-    net.jami.model.CallContact mContact = null;
+    Contact mContact = null;
 
     @DatabaseField(generatedId = true, columnName = COLUMN_ID, index = true)
     int mId;
@@ -195,11 +195,11 @@ public class Interaction {
         return mIsRead == 1;
     }
 
-    public net.jami.model.CallContact getContact() {
+    public Contact getContact() {
         return mContact;
     }
 
-    public void setContact(CallContact contact) {
+    public void setContact(Contact contact) {
         mContact = contact;
     }
 

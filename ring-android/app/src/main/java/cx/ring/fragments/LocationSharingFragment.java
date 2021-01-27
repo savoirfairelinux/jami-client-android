@@ -32,15 +32,6 @@ import android.icu.util.MeasureUnit;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import android.os.IBinder;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -50,7 +41,20 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
+import net.jami.facades.ConversationFacade;
+import net.jami.model.Account;
+import net.jami.model.Contact;
+import net.jami.model.Uri;
 
 import org.osmdroid.config.Configuration;
 import org.osmdroid.config.IConfigurationProvider;
@@ -75,10 +79,6 @@ import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.contacts.AvatarFactory;
 import cx.ring.databinding.FragLocationSharingBinding;
-import net.jami.facades.ConversationFacade;
-import net.jami.model.Account;
-import net.jami.model.CallContact;
-import net.jami.model.Uri;
 import cx.ring.services.LocationSharingService;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.TouchClickListener;
@@ -104,7 +104,7 @@ public class LocationSharingFragment extends Fragment {
     ConversationFacade mConversationFacade;
 
     private ConversationPath mPath;
-    private CallContact mContact;
+    private Contact mContact;
 
     private final Subject<Boolean> mShowControlsSubject = BehaviorSubject.create();
     private final Subject<Boolean> mIsSharingSubject = BehaviorSubject.create();
@@ -333,7 +333,7 @@ public class LocationSharingFragment extends Fragment {
                         .map(locations -> {
                             List<Observable<LocationViewModel>> r = new ArrayList<>(locations.size());
                             boolean isContactSharing = false;
-                            for (Map.Entry<CallContact, Observable<Account.ContactLocation>> l : locations.entrySet()) {
+                            for (Map.Entry<Contact, Observable<Account.ContactLocation>> l : locations.entrySet()) {
                                 if (l.getKey() == account.getContactFromCache(contactUri)) {
                                     isContactSharing = true;
                                     mContact = l.getKey();
@@ -497,9 +497,9 @@ public class LocationSharingFragment extends Fragment {
     }
 
     static class LocationViewModel {
-        CallContact contact;
+        Contact contact;
         Account.ContactLocation location;
-        LocationViewModel(CallContact c, Account.ContactLocation cl) {
+        LocationViewModel(Contact c, Account.ContactLocation cl) {
             contact = c;
             location = cl;
         }

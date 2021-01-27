@@ -68,13 +68,13 @@ import java.util.concurrent.TimeUnit;
 import cx.ring.R;
 import cx.ring.client.MediaViewerActivity;
 import net.jami.conversation.ConversationPresenter;
-import net.jami.model.CallContact;
+import net.jami.model.Contact;
 import net.jami.model.ContactEvent;
 import net.jami.model.DataTransfer;
 import net.jami.model.Interaction;
 import net.jami.model.Interaction.InteractionStatus;
 import net.jami.model.Interaction.InteractionType;
-import net.jami.model.SipCall;
+import net.jami.model.Call;
 import net.jami.model.TextMessage;
 import cx.ring.service.DRingService;
 import cx.ring.utils.AndroidFileUtils;
@@ -408,7 +408,7 @@ public class TvConversationAdapter extends RecyclerView.Adapter<TvConversationVi
         if (interaction.isIncoming()) {
             viewHolder.mAvatar.setImageBitmap(null);
             viewHolder.mAvatar.setVisibility(View.VISIBLE);
-            CallContact contact = interaction.getContact();
+            Contact contact = interaction.getContact();
             if (contact != null) {
                 viewHolder.mAvatar.setImageDrawable(
                         mTvConversationFragment.getConversationAvatar(contact.getPrimaryNumber())
@@ -661,7 +661,7 @@ public class TvConversationAdapter extends RecyclerView.Adapter<TvConversationVi
                                          int position) {
         final Context context = convViewHolder.itemView.getContext();
         TextMessage textMessage = (TextMessage)interaction;
-        CallContact contact = textMessage.getContact();
+        Contact contact = textMessage.getContact();
         if (contact == null) {
             Log.e(TAG, "Invalid contact, not able to display message correctly");
             return;
@@ -819,7 +819,7 @@ public class TvConversationAdapter extends RecyclerView.Adapter<TvConversationVi
         View longPressView = convViewHolder.mCallInfoLayout;
         longPressView.getBackground().setTintList(null);
 
-        SipCall call = (SipCall) interaction;
+        Call call = (Call) interaction;
 
         if (call.isMissed()) {
             if (call.isIncoming()) {

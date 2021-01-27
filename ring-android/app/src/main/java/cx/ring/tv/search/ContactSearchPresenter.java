@@ -26,7 +26,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import net.jami.model.Account;
-import net.jami.model.CallContact;
+import net.jami.model.Contact;
 import net.jami.model.Uri;
 import net.jami.mvp.RootPresenter;
 import net.jami.services.AccountService;
@@ -42,7 +42,7 @@ public class ContactSearchPresenter extends RootPresenter<ContactSearchView> {
     private final HardwareService mHardwareService;
     private final VCardService mVCardService;
 
-    private CallContact mCallContact;
+    private Contact mContact;
     @Inject
     @Named("UiScheduler")
     protected Scheduler mUiScheduler;
@@ -84,8 +84,8 @@ public class ContactSearchPresenter extends RootPresenter<ContactSearchView> {
 
             Uri uri = Uri.fromString(query);
             if (uri.isHexId()) {
-                mCallContact = currentAccount.getContactFromCache(uri);
-                getView().displayContact(currentAccount.getAccountID(), mCallContact);
+                mContact = currentAccount.getContactFromCache(uri);
+                getView().displayContact(currentAccount.getAccountID(), mContact);
             } else {
                 getView().clearSearch();
                 contactQuery.onNext(query);
@@ -97,16 +97,16 @@ public class ContactSearchPresenter extends RootPresenter<ContactSearchView> {
         switch (state) {
             case 0:
                 // on found
-                mCallContact = account.getContactFromCache(address);
-                mCallContact.setUsername(name);
-                getView().displayContact(account.getAccountID(), mCallContact);
+                mContact = account.getContactFromCache(address);
+                mContact.setUsername(name);
+                getView().displayContact(account.getAccountID(), mContact);
                 break;
             case 1:
                 // invalid name
                 Uri uriName = Uri.fromString(name);
                 if (uriName.isHexId()) {
-                    mCallContact = account.getContactFromCache(uriName);
-                    getView().displayContact(account.getAccountID(), mCallContact);
+                    mContact = account.getContactFromCache(uriName);
+                    getView().displayContact(account.getAccountID(), mContact);
                 } else {
                     getView().clearSearch();
                 }
@@ -115,8 +115,8 @@ public class ContactSearchPresenter extends RootPresenter<ContactSearchView> {
                 // on error
                 Uri uriAddress = Uri.fromString(address);
                 if (uriAddress.isHexId()) {
-                    mCallContact = account.getContactFromCache(uriAddress);
-                    getView().displayContact(account.getAccountID(), mCallContact);
+                    mContact = account.getContactFromCache(uriAddress);
+                    getView().displayContact(account.getAccountID(), mContact);
                 } else {
                     getView().clearSearch();
                 }
