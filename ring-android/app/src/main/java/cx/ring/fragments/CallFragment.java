@@ -104,9 +104,9 @@ import cx.ring.client.HomeActivity;
 import net.jami.daemon.Ringservice;
 import cx.ring.databinding.FragCallBinding;
 import cx.ring.databinding.ItemParticipantLabelBinding;
-import net.jami.model.CallContact;
+import net.jami.model.Contact;
 import net.jami.model.Conference;
-import net.jami.model.SipCall;
+import net.jami.model.Call;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.plugins.RecyclerPicker.RecyclerPicker;
 import cx.ring.plugins.RecyclerPicker.RecyclerPickerLayoutManager;
@@ -207,7 +207,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         return countDownFragment;
     }
 
-    public static int callStateToHumanState(final SipCall.CallStatus state) {
+    public static int callStateToHumanState(final Call.CallStatus state) {
         switch (state) {
             case SEARCHING:
                 return R.string.call_human_state_searching;
@@ -931,7 +931,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     @Override
     @SuppressLint("RestrictedApi")
-    public void updateContactBubble(@NonNull final List<SipCall> contacts) {
+    public void updateContactBubble(@NonNull final List<Call> contacts) {
         Log.w(TAG, "updateContactBubble " + contacts.size());
 
         mConferenceMode = contacts.size() > 1;
@@ -1042,7 +1042,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     @Override
-    public void updateCallStatus(final SipCall.CallStatus callStatus) {
+    public void updateCallStatus(final Call.CallStatus callStatus) {
         binding.callStatusTxt.setText(callStateToHumanState(callStatus));
     }
 
@@ -1193,13 +1193,13 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     @Override
-    public void goToAddContact(CallContact callContact) {
-        startActivityForResult(ActionHelper.getAddNumberIntentForContact(callContact),
+    public void goToAddContact(Contact contact) {
+        startActivityForResult(ActionHelper.getAddNumberIntentForContact(contact),
                 ConversationFragment.REQ_ADD_CONTACT);
     }
 
     @Override
-    public void goToContact(String accountId, CallContact contact) {
+    public void goToContact(String accountId, Contact contact) {
         startActivity(new Intent(Intent.ACTION_VIEW, android.net.Uri.withAppendedPath(android.net.Uri.withAppendedPath(ContentUriHandler.CONTACT_CONTENT_URI, accountId), contact.getPrimaryNumber()))
                 .setClass(requireContext(), ContactDetailsActivity.class));
     }

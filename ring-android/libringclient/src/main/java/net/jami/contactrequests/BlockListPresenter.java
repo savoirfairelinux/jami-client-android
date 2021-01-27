@@ -26,16 +26,16 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import net.jami.model.Account;
-import net.jami.model.CallContact;
+import net.jami.model.Contact;
 import net.jami.mvp.RootPresenter;
 import net.jami.services.AccountService;
 import net.jami.utils.Log;
 import io.reactivex.Scheduler;
 
-public class BlackListPresenter extends RootPresenter<BlackListView> {
-    static private final String TAG = BlackListPresenter.class.getSimpleName();
+public class BlockListPresenter extends RootPresenter<BlockListView> {
+    static private final String TAG = BlockListPresenter.class.getSimpleName();
 
-    private AccountService mAccountService;
+    private final AccountService mAccountService;
     private String mAccountID;
 
     @Inject
@@ -43,12 +43,12 @@ public class BlackListPresenter extends RootPresenter<BlackListView> {
     protected Scheduler mUiScheduler;
 
     @Inject
-    public BlackListPresenter(AccountService accountService) {
+    public BlockListPresenter(AccountService accountService) {
         mAccountService = accountService;
     }
 
     @Override
-    public void bindView(BlackListView view) {
+    public void bindView(BlockListView view) {
         super.bindView(view);
         if (mAccountID != null) {
             setAccountId(mAccountID);
@@ -60,7 +60,7 @@ public class BlackListPresenter extends RootPresenter<BlackListView> {
         super.unbindView();
     }
 
-    private void updateList(Collection<CallContact> list) {
+    private void updateList(Collection<Contact> list) {
         if (getView() == null) {
             return;
         }
@@ -86,7 +86,7 @@ public class BlackListPresenter extends RootPresenter<BlackListView> {
         mAccountID = accountID;
     }
 
-    public void unblockClicked(CallContact contact) {
+    public void unblockClicked(Contact contact) {
         String contactId = contact.getUri().getRawRingId();
         mAccountService.addContact(mAccountID, contactId);
     }

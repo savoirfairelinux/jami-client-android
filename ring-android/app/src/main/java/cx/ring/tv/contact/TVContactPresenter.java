@@ -27,7 +27,7 @@ import net.jami.facades.ConversationFacade;
 import net.jami.model.Account;
 import net.jami.model.Conference;
 import net.jami.model.Conversation;
-import net.jami.model.SipCall;
+import net.jami.model.Call;
 import net.jami.model.Uri;
 import net.jami.mvp.RootPresenter;
 import net.jami.services.AccountService;
@@ -80,8 +80,8 @@ public class TVContactPresenter extends RootPresenter<TVContactView> {
             Conference conf = account.getByUri(mUri).getCurrentCall();
             if (conf != null
                     && !conf.getParticipants().isEmpty()
-                    && conf.getParticipants().get(0).getCallStatus() != SipCall.CallStatus.INACTIVE
-                    && conf.getParticipants().get(0).getCallStatus() != SipCall.CallStatus.FAILURE) {
+                    && conf.getParticipants().get(0).getCallStatus() != Call.CallStatus.INACTIVE
+                    && conf.getParticipants().get(0).getCallStatus() != Call.CallStatus.FAILURE) {
                 getView().goToCallActivity(conf.getId());
             } else {
                 getView().callContact(mAccountId, mUri);

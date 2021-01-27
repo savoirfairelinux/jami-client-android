@@ -37,7 +37,7 @@ import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.CallActivity;
 import cx.ring.fragments.ConversationFragment;
-import net.jami.model.CallContact;
+import net.jami.model.Contact;
 import net.jami.smartlist.SmartListViewModel;
 import cx.ring.tv.call.TVCallActivity;
 import cx.ring.tv.cards.Card;
@@ -122,7 +122,7 @@ public class ContactSearchFragment extends BaseSearchFragment<ContactSearchPrese
     }
 
     @Override
-    public void displayContact(String accountId, final CallContact contact) {
+    public void displayContact(String accountId, final Contact contact) {
         mRowsAdapter.clear();
         ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(new CardPresenterSelector(getActivity()));
         listRowAdapter.add(new ContactCard(accountId, contact, Card.Type.SEARCH_RESULT));
