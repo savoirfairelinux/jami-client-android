@@ -19,14 +19,6 @@
  */
 package net.jami.services;
 
-import net.jami.daemon.VectMap;
-
-import java.util.Map;
-import java.util.concurrent.ScheduledExecutorService;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import net.jami.daemon.Blob;
 import net.jami.daemon.Callback;
 import net.jami.daemon.ConfigurationCallback;
@@ -39,8 +31,15 @@ import net.jami.daemon.Ringservice;
 import net.jami.daemon.StringMap;
 import net.jami.daemon.StringVect;
 import net.jami.daemon.UintVect;
+import net.jami.daemon.VectMap;
 import net.jami.daemon.VideoCallback;
 import net.jami.utils.Log;
+
+import java.util.Map;
+import java.util.concurrent.ScheduledExecutorService;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 public class DaemonService {
 
@@ -219,7 +218,7 @@ public class DaemonService {
         }
 
         @Override
-        public void userSearchEnded(String accountId, int state, String query, net.jami.daemon.VectMap results) {
+        public void userSearchEnded(String accountId, int state, String query, VectMap results) {
             mAccountService.userSearchEnded(accountId, state, query, results.toNative());
         }
 
@@ -268,7 +267,7 @@ public class DaemonService {
         }
 
         @Override
-        public void onConferenceInfosUpdated(String confId, net.jami.daemon.VectMap infos) {
+        public void onConferenceInfosUpdated(String confId, VectMap infos) {
             mCallService.onConferenceInfoUpdated(confId, infos.toNative());
         }
 
