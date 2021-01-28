@@ -29,8 +29,8 @@ import java.util.List;
 
 import cx.ring.R;
 import cx.ring.account.AccountCreationModelImpl;
-import cx.ring.account.HomeAccountCreationPresenter;
-import cx.ring.account.HomeAccountCreationView;
+import net.jami.account.HomeAccountCreationPresenter;
+import net.jami.account.HomeAccountCreationView;
 import cx.ring.application.JamiApplication;
 
 public class TVHomeAccountCreationFragment

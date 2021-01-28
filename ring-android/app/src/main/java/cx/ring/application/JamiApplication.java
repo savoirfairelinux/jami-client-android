@@ -52,29 +52,26 @@ import java.util.concurrent.ScheduledExecutorService;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import androidx.annotation.RequiresApi;
-
 import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.contacts.AvatarFactory;
-import cx.ring.daemon.Ringservice;
+import net.jami.daemon.Ringservice;
 import cx.ring.dependencyinjection.DaggerJamiInjectionComponent;
 import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.dependencyinjection.JamiInjectionModule;
 import cx.ring.dependencyinjection.ServiceInjectionModule;
-import cx.ring.facades.ConversationFacade;
+import net.jami.facades.ConversationFacade;
 import cx.ring.service.DRingService;
 import cx.ring.service.JamiJobService;
-import cx.ring.services.AccountService;
-import cx.ring.services.CallService;
-import cx.ring.services.ContactService;
-import cx.ring.services.DaemonService;
-import cx.ring.services.DeviceRuntimeService;
-import cx.ring.services.HardwareService;
-import cx.ring.services.PreferencesService;
+import net.jami.services.AccountService;
+import net.jami.services.CallService;
+import net.jami.services.ContactService;
+import net.jami.services.DaemonService;
+import net.jami.services.DeviceRuntimeService;
+import net.jami.services.HardwareService;
+import net.jami.services.PreferencesService;
 import cx.ring.utils.AndroidFileUtils;
 import io.reactivex.Completable;
-import io.reactivex.plugins.RxJavaPlugins;
 import io.reactivex.schedulers.Schedulers;
 
 public abstract class JamiApplication extends Application {

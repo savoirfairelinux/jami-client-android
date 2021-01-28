@@ -40,10 +40,8 @@ import javax.inject.Singleton;
 
 import cx.ring.application.JamiApplication;
 import cx.ring.contacts.AvatarFactory;
-import cx.ring.facades.ConversationFacade;
-import cx.ring.fragments.ConversationFragment;
-import cx.ring.model.CallContact;
-import cx.ring.model.Conversation;
+import net.jami.facades.ConversationFacade;
+import net.jami.model.Conversation;
 import cx.ring.utils.ConversationPath;
 import io.reactivex.schedulers.Schedulers;
 

@@ -29,11 +29,11 @@ import java.util.List;
 
 import cx.ring.R;
 import cx.ring.account.AccountCreationModelImpl;
-import cx.ring.account.JamiLinkAccountPresenter;
-import cx.ring.account.JamiLinkAccountView;
+import net.jami.account.JamiLinkAccountPresenter;
+import net.jami.account.JamiLinkAccountView;
 import cx.ring.application.JamiApplication;
-import cx.ring.mvp.AccountCreationModel;
-import cx.ring.utils.StringUtils;
+import net.jami.mvp.AccountCreationModel;
+import net.jami.utils.StringUtils;
 
 public class TVJamiLinkAccountFragment extends JamiGuidedStepFragment<JamiLinkAccountPresenter>
         implements JamiLinkAccountView {

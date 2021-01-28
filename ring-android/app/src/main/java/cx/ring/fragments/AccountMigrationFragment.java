@@ -45,10 +45,10 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.databinding.FragAccountMigrationBinding;
-import cx.ring.model.Account;
-import cx.ring.model.AccountConfig;
-import cx.ring.model.ConfigKey;
-import cx.ring.services.AccountService;
+import net.jami.model.Account;
+import net.jami.model.AccountConfig;
+import net.jami.model.ConfigKey;
+import net.jami.services.AccountService;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 

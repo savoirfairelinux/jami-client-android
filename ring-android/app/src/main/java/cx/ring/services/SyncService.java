@@ -32,6 +32,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
+import net.jami.services.NotificationService;
+
 import java.util.Random;
 
 import javax.inject.Inject;

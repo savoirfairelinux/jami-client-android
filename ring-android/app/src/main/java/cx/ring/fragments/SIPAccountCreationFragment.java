@@ -40,8 +40,8 @@ import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.databinding.FragAccSipCreateBinding;
 import cx.ring.mvp.BaseSupportFragment;
-import cx.ring.mvp.SIPCreationView;
-import cx.ring.wizard.SIPCreationPresenter;
+import net.jami.mvp.SIPCreationView;
+import net.jami.wizard.SIPCreationPresenter;
 
 public class SIPAccountCreationFragment extends BaseSupportFragment<SIPCreationPresenter> implements SIPCreationView {
     public static final String TAG = SIPAccountCreationFragment.class.getSimpleName();

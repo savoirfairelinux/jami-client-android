@@ -28,6 +28,9 @@ import android.os.Build;
 import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
 
+import net.jami.utils.FileUtils;
+import net.jami.utils.Log;
+
 import java.io.File;
 
 import cx.ring.BuildConfig;
@@ -77,10 +80,10 @@ public class ContentUriHandler {
                 return FileProvider.getUriForFile(context, authority, file);
             } catch (IllegalArgumentException e) {
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-                    Log.w(TAG, "Returning Uri.fromFile to avoid Huawei 'external-files-path' bug for pre-N devices", e);
+                    net.jami.utils.Log.w(TAG, "Returning Uri.fromFile to avoid Huawei 'external-files-path' bug for pre-N devices", e);
                     return Uri.fromFile(file);
                 } else {
-                    Log.w(TAG, "ANR Risk -- Copying the file the location cache to avoid Huawei 'external-files-path' bug for N+ devices", e);
+                    net.jami.utils.Log.w(TAG, "ANR Risk -- Copying the file the location cache to avoid Huawei 'external-files-path' bug for N+ devices", e);
                     // Note: Periodically clear this cache
                     final File cacheFolder = new File(context.getCacheDir(), HUAWEI_MANUFACTURER);
                     final File cacheLocation = new File(cacheFolder, file.getName());
@@ -88,7 +91,7 @@ public class ContentUriHandler {
                         Log.i(TAG, "Completed Android N+ Huawei file copy. Attempting to return the cached file");
                         return FileProvider.getUriForFile(context, authority, cacheLocation);
                     }
-                    Log.e(TAG, "Failed to copy the Huawei file. Re-throwing exception");
+                    net.jami.utils.Log.e(TAG, "Failed to copy the Huawei file. Re-throwing exception");
                     throw new IllegalArgumentException("Huawei devices are unsupported for Android N");
                 }
             }

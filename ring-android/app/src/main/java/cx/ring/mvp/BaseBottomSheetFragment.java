@@ -32,7 +32,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import javax.inject.Inject;
 
 import cx.ring.R;
-import cx.ring.model.Error;
+import net.jami.model.Error;
+import net.jami.mvp.BaseView;
+import net.jami.mvp.RootPresenter;
 
 public abstract class BaseBottomSheetFragment<T extends RootPresenter> extends BottomSheetDialogFragment implements BaseView {
 

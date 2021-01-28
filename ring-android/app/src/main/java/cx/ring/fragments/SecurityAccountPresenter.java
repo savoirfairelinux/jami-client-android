@@ -23,12 +23,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import cx.ring.model.Account;
-import cx.ring.model.AccountCredentials;
-import cx.ring.model.ConfigKey;
-import cx.ring.mvp.RootPresenter;
-import cx.ring.services.AccountService;
-import cx.ring.utils.Tuple;
+import net.jami.model.Account;
+import net.jami.model.AccountCredentials;
+import net.jami.model.ConfigKey;
+import net.jami.mvp.RootPresenter;
+import net.jami.services.AccountService;
+import net.jami.utils.Tuple;
 
 public class SecurityAccountPresenter extends RootPresenter<SecurityAccountView> {
 
