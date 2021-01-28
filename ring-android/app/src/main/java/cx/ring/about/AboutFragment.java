@@ -20,7 +20,6 @@
 package cx.ring.about;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -33,6 +32,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 
 import cx.ring.BuildConfig;
 import cx.ring.R;
@@ -62,10 +62,10 @@ public class AboutFragment extends BaseSupportFragment<RootPresenter> {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         binding.release.setText(getString(R.string.app_release, BuildConfig.VERSION_NAME));
-        binding.logo.setOnClickListener(v ->  startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.app_website)))));
-        binding.sflLogo.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.savoirfairelinux_website)))));
-        binding.contributeContainer.setOnClickListener(this::webSiteToView);
-        binding.licenseContainer.setOnClickListener(this::webSiteToView);
+        binding.logo.setOnClickListener(v ->  openWebsite(getString(R.string.app_website)));
+        binding.sflLogo.setOnClickListener(v -> openWebsite(getString(R.string.savoirfairelinux_website)));
+        binding.contributeContainer.setOnClickListener(v -> openWebsite(getString(R.string.ring_contribute_website)));
+        binding.licenseContainer.setOnClickListener(v -> openWebsite(getString(R.string.gnu_license_website)));
         binding.emailReportContainer.setOnClickListener(v -> sendFeedbackEmail());
         binding.credits.setOnClickListener(v -> creditsClicked());
     }
@@ -86,28 +86,10 @@ public class AboutFragment extends BaseSupportFragment<RootPresenter> {
         menu.clear();
     }
 
-    private void webSiteToView(View view) {
-        Uri uriToView;
-        switch (view.getId()) {
-            case R.id.contribute_container:
-                uriToView = Uri.parse(getString(R.string.ring_contribute_website));
-                break;
-            case R.id.license_container:
-                uriToView = Uri.parse(getString(R.string.gnu_license_website));
-                break;
-            default:
-                return;
-        }
-
-        Intent webIntent = new Intent(Intent.ACTION_VIEW);
-        webIntent.setData(uriToView);
-        launchSystemIntent(webIntent, getString(R.string.website_chooser_title), getString(R.string.no_browser_app_installed));
-    }
-
     private void sendFeedbackEmail() {
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + "jami@gnu.org"));
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "[" + getText(R.string.app_name) + " Android - " + BuildConfig.VERSION_NAME + "]");
-        launchSystemIntent(emailIntent, getString(R.string.email_chooser_title), getString(R.string.no_email_app_installed));
+        launchSystemIntent(emailIntent, R.string.no_email_app_installed);
     }
 
     private void creditsClicked() {
@@ -115,19 +97,17 @@ public class AboutFragment extends BaseSupportFragment<RootPresenter> {
         dialog.show(getChildFragmentManager(), dialog.getTag());
     }
 
-    private void launchSystemIntent(Intent intentToLaunch,
-                                    String intentChooserTitle,
-                                    String intentMissingTitle) {
-        // Check if an app can handle this intent
-        boolean isResolvable = requireContext().getPackageManager().queryIntentActivities(intentToLaunch,
-                PackageManager.MATCH_DEFAULT_ONLY).size() > 0;
+    private void openWebsite(String url) {
+        launchSystemIntent(new Intent(Intent.ACTION_VIEW, Uri.parse(url)), R.string.no_browser_app_installed);
+    }
 
-        if (isResolvable) {
-            startActivity(Intent.createChooser(intentToLaunch, intentChooserTitle));
-        } else {
+    private void launchSystemIntent(Intent intentToLaunch, @StringRes int missingRes) {
+        try  {
+            startActivity(intentToLaunch);
+        } catch (Exception e) {
             View rootView = getView();
             if (rootView != null) {
-                Snackbar.make(rootView, intentMissingTitle, Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(rootView, getText(missingRes), Snackbar.LENGTH_SHORT).show();
             }
         }
     }
