@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "40f521df_0907465a",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 859
+      },
+      "writtenOn": "2021-01-28T17:08:52Z",
+      "side": 1,
+      "message": "yes. It\u0027s the same process as for the location share",
+      "parentUuid": "bcdcf885_c1188773",
+      "revId": "c558d196eca1d4ac9e44cc8eeb9d270e452de2f7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a07ce6e_dee419a2",
         "filename": "ring-android/app/src/main/java/cx/ring/fragments/PluginHandlersListFragment.java",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "c558d196eca1d4ac9e44cc8eeb9d270e452de2f7",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fedeee5_9dd38009",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/PluginHandlersListFragment.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 859
+      },
+      "writtenOn": "2021-01-28T17:08:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a07ce6e_dee419a2",
+      "revId": "c558d196eca1d4ac9e44cc8eeb9d270e452de2f7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fa06c107_b2c5ac4a",
+        "filename": "ring-android/app/src/main/java/cx/ring/plugins/PluginUtils.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 859
+      },
+      "writtenOn": "2021-01-28T17:08:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34c124ac_cb75e35b",
+      "revId": "c558d196eca1d4ac9e44cc8eeb9d270e452de2f7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86a53f9f_c02582d7",
         "filename": "ring-android/app/src/main/java/cx/ring/plugins/PluginUtils.java",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "c558d196eca1d4ac9e44cc8eeb9d270e452de2f7",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de0e82e9_8e728ab3",
+        "filename": "ring-android/app/src/main/java/cx/ring/plugins/PluginUtils.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 859
+      },
+      "writtenOn": "2021-01-28T17:08:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86a53f9f_c02582d7",
+      "revId": "c558d196eca1d4ac9e44cc8eeb9d270e452de2f7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
