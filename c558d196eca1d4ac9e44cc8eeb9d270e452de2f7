@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcdcf885_c1188773",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 856
+      },
+      "writtenOn": "2021-01-28T15:43:16Z",
+      "side": 1,
+      "message": "only the width is checked ?",
+      "revId": "c558d196eca1d4ac9e44cc8eeb9d270e452de2f7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a07ce6e_dee419a2",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/PluginHandlersListFragment.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 856
+      },
+      "writtenOn": "2021-01-28T15:43:16Z",
+      "side": 1,
+      "message": "extra line can be removed",
+      "revId": "c558d196eca1d4ac9e44cc8eeb9d270e452de2f7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34c124ac_cb75e35b",
+        "filename": "ring-android/app/src/main/java/cx/ring/plugins/PluginUtils.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 856
+      },
+      "writtenOn": "2021-01-28T15:43:16Z",
+      "side": 1,
+      "message": "document mContext param:\n@param ...",
+      "revId": "c558d196eca1d4ac9e44cc8eeb9d270e452de2f7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86a53f9f_c02582d7",
+        "filename": "ring-android/app/src/main/java/cx/ring/plugins/PluginUtils.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 856
+      },
+      "writtenOn": "2021-01-28T15:43:16Z",
+      "side": 1,
+      "message": "document mContext",
+      "revId": "c558d196eca1d4ac9e44cc8eeb9d270e452de2f7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
