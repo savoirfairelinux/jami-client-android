@@ -25,12 +25,12 @@ import android.util.Log;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import cx.ring.model.Account;
-import cx.ring.model.ConfigKey;
-import cx.ring.mvp.RootPresenter;
-import cx.ring.services.AccountService;
-import cx.ring.services.HardwareService;
-import cx.ring.services.PreferencesService;
+import net.jami.model.Account;
+import net.jami.model.ConfigKey;
+import net.jami.mvp.RootPresenter;
+import net.jami.services.AccountService;
+import net.jami.services.HardwareService;
+import net.jami.services.PreferencesService;
 import io.reactivex.Scheduler;
 
 public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> {

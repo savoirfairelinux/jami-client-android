@@ -28,7 +28,7 @@ import android.view.View;
 
 import javax.inject.Inject;
 
-import cx.ring.mvp.RootPresenter;
+import net.jami.mvp.RootPresenter;
 
 public abstract class JamiPreferenceFragment<T extends RootPresenter> extends LeanbackPreferenceFragmentCompat {
 

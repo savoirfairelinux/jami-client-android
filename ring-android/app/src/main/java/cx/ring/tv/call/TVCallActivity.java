@@ -34,10 +34,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
-import cx.ring.call.CallView;
+import net.jami.call.CallView;
 import cx.ring.fragments.ConversationFragment;
-import cx.ring.services.NotificationService;
-import cx.ring.utils.Log;
+import net.jami.services.NotificationService;
+import net.jami.utils.Log;
 
 public class TVCallActivity extends FragmentActivity {
 

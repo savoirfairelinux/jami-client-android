@@ -43,10 +43,10 @@ import java.util.List;
 import java.util.Map;
 
 import cx.ring.R;
-import cx.ring.account.JamiAccountSummaryPresenter;
-import cx.ring.account.JamiAccountSummaryView;
+import net.jami.account.JamiAccountSummaryPresenter;
+import net.jami.account.JamiAccountSummaryView;
 import cx.ring.application.JamiApplication;
-import cx.ring.model.Account;
+import net.jami.model.Account;
 import cx.ring.utils.AndroidFileUtils;
 
 public class TVAccountExport extends JamiGuidedStepFragment<JamiAccountSummaryPresenter>

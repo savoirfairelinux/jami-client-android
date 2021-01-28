@@ -24,7 +24,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.preference.EditTextPreference;
@@ -33,8 +32,6 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
 import androidx.preference.TwoStatePreference;
 
-import android.os.Environment;
-import android.provider.DocumentsContract;
 import android.util.Pair;
 
 import java.io.File;
@@ -47,12 +44,12 @@ import java.util.Scanner;
 import cx.ring.R;
 import cx.ring.account.AccountEditionFragment;
 import cx.ring.application.JamiApplication;
-import cx.ring.model.AccountConfig;
-import cx.ring.model.AccountCredentials;
-import cx.ring.model.ConfigKey;
+import net.jami.model.AccountConfig;
+import net.jami.model.AccountCredentials;
+import net.jami.model.ConfigKey;
 import cx.ring.mvp.BasePreferenceFragment;
 import cx.ring.utils.AndroidFileUtils;
-import cx.ring.utils.Tuple;
+import net.jami.utils.Tuple;
 import cx.ring.views.CredentialPreferenceDialog;
 import cx.ring.views.CredentialsPreference;
 

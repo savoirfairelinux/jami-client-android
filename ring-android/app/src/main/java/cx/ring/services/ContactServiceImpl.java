@@ -30,17 +30,21 @@ import android.util.LongSparseArray;
 
 import androidx.annotation.NonNull;
 
+import net.jami.model.Phone;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
 
 import cx.ring.contacts.AvatarFactory;
-import cx.ring.model.CallContact;
-import cx.ring.model.Uri;
+import net.jami.model.CallContact;
+import net.jami.model.Uri;
 import cx.ring.utils.AndroidFileUtils;
-import cx.ring.utils.Tuple;
-import cx.ring.utils.VCardUtils;
+
+import net.jami.services.ContactService;
+import net.jami.utils.Tuple;
+import net.jami.utils.VCardUtils;
 import ezvcard.VCard;
 import io.reactivex.Completable;
 import io.reactivex.Single;
@@ -156,11 +160,11 @@ public class ContactServiceImpl extends ContactService {
                             contact.addPhoneNumber(uri, contactType, contactLabel);
                             break;
                         case ContactsContract.CommonDataKinds.SipAddress.CONTENT_ITEM_TYPE:
-                            contact.addNumber(uri, contactType, contactLabel, cx.ring.model.Phone.NumberType.SIP);
+                            contact.addNumber(uri, contactType, contactLabel, Phone.NumberType.SIP);
                             break;
                         case ContactsContract.CommonDataKinds.Im.CONTENT_ITEM_TYPE:
                             if (uri.isHexId()) {
-                                contact.addNumber(uri, contactType, contactLabel, cx.ring.model.Phone.NumberType.UNKNOWN);
+                                contact.addNumber(uri, contactType, contactLabel, Phone.NumberType.UNKNOWN);
                             }
                             break;
                     }
@@ -277,7 +281,7 @@ public class ContactServiceImpl extends ContactService {
                 final int indexLabel = cursorPhones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.LABEL);
 
                 while (cursorPhones.moveToNext()) {
-                    callContact.addNumber(cursorPhones.getString(indexNumber), cursorPhones.getInt(indexType), cursorPhones.getString(indexLabel), cx.ring.model.Phone.NumberType.TEL);
+                    callContact.addNumber(cursorPhones.getString(indexNumber), cursorPhones.getInt(indexType), cursorPhones.getString(indexLabel), Phone.NumberType.TEL);
                     Log.d(TAG, "Phone:" + cursorPhones.getString(cursorPhones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
                 }
 
@@ -304,7 +308,7 @@ public class ContactServiceImpl extends ContactService {
                     String contactNumber = cursorSip.getString(indexSip);
 
                     if (!contactMime.contentEquals(ContactsContract.CommonDataKinds.Im.CONTENT_ITEM_TYPE) || Uri.fromString(contactNumber).isHexId() || "ring".equalsIgnoreCase(cursorSip.getString(indexLabel))) {
-                        callContact.addNumber(contactNumber, cursorSip.getInt(indexType), cursorSip.getString(indexLabel), cx.ring.model.Phone.NumberType.SIP);
+                        callContact.addNumber(contactNumber, cursorSip.getInt(indexType), cursorSip.getString(indexLabel), Phone.NumberType.SIP);
                     }
                     Log.d(TAG, "SIP phone:" + contactNumber + " " + contactMime + " ");
                 }

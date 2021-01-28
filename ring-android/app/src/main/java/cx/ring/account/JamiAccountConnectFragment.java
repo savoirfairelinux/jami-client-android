@@ -33,7 +33,10 @@ import androidx.annotation.Nullable;
 
 import cx.ring.application.JamiApplication;
 import cx.ring.databinding.FragAccJamiConnectBinding;
-import cx.ring.mvp.AccountCreationModel;
+
+import net.jami.account.JamiAccountConnectPresenter;
+import net.jami.account.JamiConnectAccountView;
+import net.jami.mvp.AccountCreationModel;
 import cx.ring.mvp.BaseSupportFragment;
 
 public class JamiAccountConnectFragment extends BaseSupportFragment<JamiAccountConnectPresenter> implements JamiConnectAccountView {
@@ -63,7 +66,7 @@ public class JamiAccountConnectFragment extends BaseSupportFragment<JamiAccountC
     }
 
     @Override
-    protected void initPresenter(JamiAccountConnectPresenter presenter) {
+    protected void initPresenter(net.jami.account.JamiAccountConnectPresenter presenter) {
         presenter.init(model);
     }
 

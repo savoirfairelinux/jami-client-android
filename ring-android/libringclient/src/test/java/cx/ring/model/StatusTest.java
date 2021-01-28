@@ -20,6 +20,8 @@
 
 package cx.ring.model;
 
+import net.jami.model.TextMessage;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -28,32 +30,32 @@ public class StatusTest {
 
     @Test
     public void fromString_test() throws Exception {
-        TextMessage.Status[] values = TextMessage.Status.values();
-        for (TextMessage.Status s : values) {
+        net.jami.model.TextMessage.Status[] values = net.jami.model.TextMessage.Status.values();
+        for (net.jami.model.TextMessage.Status s : values) {
 
-            assertEquals(TextMessage.Status.fromString(s.name()), s);
+            assertEquals(net.jami.model.TextMessage.Status.fromString(s.name()), s);
         }
     }
 
     @Test
     public void fromString_invalid_test() throws Exception {
-        TextMessage.Status status = TextMessage.Status.fromString("abc");
+        net.jami.model.TextMessage.Status status = net.jami.model.TextMessage.Status.fromString("abc");
 
-        assertEquals(TextMessage.Status.UNKNOWN, status);
+        assertEquals(net.jami.model.TextMessage.Status.UNKNOWN, status);
     }
 
     @Test
     public void fromString_null_test() throws Exception {
-        TextMessage.Status status = TextMessage.Status.fromString(null);
+        net.jami.model.TextMessage.Status status = net.jami.model.TextMessage.Status.fromString(null);
 
-        assertEquals(TextMessage.Status.UNKNOWN, status);
+        assertEquals(net.jami.model.TextMessage.Status.UNKNOWN, status);
     }
 
     @Test
     public void fromInt_test() throws Exception {
         for (int i = 0; i < 5; i++) {
-            TextMessage.Status status = TextMessage.Status.fromInt(i);
-            TextMessage.Status[] values = TextMessage.Status.values();
+            net.jami.model.TextMessage.Status status = net.jami.model.TextMessage.Status.fromInt(i);
+            net.jami.model.TextMessage.Status[] values = net.jami.model.TextMessage.Status.values();
 
             assertEquals(status, values[i]);
         }
@@ -61,15 +63,15 @@ public class StatusTest {
 
     @Test
     public void fromInt_invalid_test() throws Exception {
-        TextMessage.Status status = TextMessage.Status.fromInt(-1);
+        net.jami.model.TextMessage.Status status = net.jami.model.TextMessage.Status.fromInt(-1);
 
-        assertEquals(TextMessage.Status.UNKNOWN, status);
+        assertEquals(net.jami.model.TextMessage.Status.UNKNOWN, status);
     }
 
     @Test
     public void toString_test() throws Exception {
-        TextMessage.Status[] values = TextMessage.Status.values();
-        for (TextMessage.Status s : values) {
+        TextMessage.Status[] values = net.jami.model.TextMessage.Status.values();
+        for (net.jami.model.TextMessage.Status s : values) {
             assertEquals(s.toString(), s.name());
         }
     }

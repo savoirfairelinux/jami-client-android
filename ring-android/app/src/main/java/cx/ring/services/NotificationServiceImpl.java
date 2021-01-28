@@ -70,23 +70,30 @@ import cx.ring.client.HomeActivity;
 import cx.ring.contactrequests.ContactRequestsFragment;
 import cx.ring.contacts.AvatarFactory;
 import cx.ring.fragments.ConversationFragment;
-import cx.ring.model.Account;
-import cx.ring.model.CallContact;
-import cx.ring.model.Conference;
-import cx.ring.model.Conversation;
-import cx.ring.model.Interaction;
-import cx.ring.model.Interaction.InteractionStatus;
-import cx.ring.model.DataTransfer;
-import cx.ring.model.SipCall;
-import cx.ring.model.TextMessage;
-import cx.ring.model.Uri;
+import net.jami.model.Account;
+import net.jami.model.CallContact;
+import net.jami.model.Conference;
+import net.jami.model.Conversation;
+import net.jami.model.Interaction;
+import net.jami.model.Interaction.InteractionStatus;
+import net.jami.model.DataTransfer;
+import net.jami.model.SipCall;
+import net.jami.model.TextMessage;
+import net.jami.model.Uri;
 import cx.ring.service.CallNotificationService;
 import cx.ring.service.DRingService;
 import cx.ring.tv.call.TVCallActivity;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.ResourceMapper;
-import cx.ring.utils.Tuple;
+
+import net.jami.services.AccountService;
+import net.jami.services.ContactService;
+import net.jami.services.DeviceRuntimeService;
+import net.jami.services.HistoryService;
+import net.jami.services.NotificationService;
+import net.jami.services.PreferencesService;
+import net.jami.utils.Tuple;
 
 public class NotificationServiceImpl implements NotificationService {
 

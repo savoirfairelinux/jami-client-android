@@ -30,9 +30,10 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import java.util.ArrayList;
 
 import cx.ring.R;
-import cx.ring.model.CallContact;
-import cx.ring.model.Conversation;
-import cx.ring.model.Uri;
+import net.jami.model.CallContact;
+import net.jami.model.Conversation;
+import net.jami.model.Uri;
+import net.jami.utils.Log;
 
 public class ActionHelper {
 
@@ -49,12 +50,12 @@ public class ActionHelper {
                                                  final Uri uri,
                                                  final Conversation.ConversationActionCallback callback) {
         if (context == null) {
-            Log.d(TAG, "launchClearAction: activity is null");
+            net.jami.utils.Log.d(TAG, "launchClearAction: activity is null");
             return;
         }
 
         if (uri == null) {
-            Log.d(TAG, "launchClearAction: conversation is null");
+            net.jami.utils.Log.d(TAG, "launchClearAction: conversation is null");
             return;
         }
 
@@ -81,7 +82,7 @@ public class ActionHelper {
         }
 
         if (uri == null) {
-            Log.d(TAG, "launchDeleteAction: conversation is null");
+            net.jami.utils.Log.d(TAG, "launchDeleteAction: conversation is null");
             return;
         }
 
@@ -163,12 +164,12 @@ public class ActionHelper {
 
     public static void displayContact(Context context, CallContact contact) {
         if (context == null) {
-            Log.d(TAG, "displayContact: context is null");
+            net.jami.utils.Log.d(TAG, "displayContact: context is null");
             return;
         }
 
         if (contact.getId() != CallContact.UNKNOWN_ID) {
-            Log.d(TAG, "displayContact: contact is known, displaying...");
+            net.jami.utils.Log.d(TAG, "displayContact: contact is known, displaying...");
             try {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 android.net.Uri uri = android.net.Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI,
@@ -176,7 +177,7 @@ public class ActionHelper {
                 intent.setData(uri);
                 context.startActivity(intent);
             } catch (ActivityNotFoundException exc) {
-                Log.e(TAG, "Error displaying contact", exc);
+                net.jami.utils.Log.e(TAG, "Error displaying contact", exc);
             }
         }
     }

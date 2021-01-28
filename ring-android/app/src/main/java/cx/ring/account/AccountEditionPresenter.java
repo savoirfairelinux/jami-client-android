@@ -22,9 +22,9 @@ package cx.ring.account;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import cx.ring.model.Account;
-import cx.ring.mvp.RootPresenter;
-import cx.ring.services.AccountService;
+import net.jami.model.Account;
+import net.jami.mvp.RootPresenter;
+import net.jami.services.AccountService;
 import io.reactivex.Scheduler;
 
 public class AccountEditionPresenter extends RootPresenter<AccountEditionView> {

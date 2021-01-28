@@ -47,8 +47,11 @@ import java.io.IOException;
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.databinding.FragAccProfileCreateBinding;
-import cx.ring.model.Account;
-import cx.ring.mvp.AccountCreationModel;
+
+import net.jami.account.ProfileCreationPresenter;
+import net.jami.account.ProfileCreationView;
+import net.jami.model.Account;
+import net.jami.mvp.AccountCreationModel;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;

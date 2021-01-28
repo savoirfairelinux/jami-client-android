@@ -21,10 +21,10 @@ package cx.ring.tv.main;
 
 import java.util.List;
 
-import cx.ring.model.Account;
-import cx.ring.navigation.HomeNavigationViewModel;
-import cx.ring.smartlist.SmartListViewModel;
-import cx.ring.model.Error;
+import net.jami.model.Account;
+import net.jami.navigation.HomeNavigationViewModel;
+import net.jami.smartlist.SmartListViewModel;
+import net.jami.model.Error;
 
 public interface MainView {
 
