@@ -327,6 +327,13 @@ public class CallService {
         });
     }
 
+    public void setLocalMediaMuted(final String callId, String mediaType, final boolean mute) {
+        mExecutor.execute(() -> {
+            Log.i(TAG, "muteCapture() running...");
+            Ringservice.muteLocalMedia(callId, mediaType, mute);
+        });
+    }
+
     public boolean isCaptureMuted() {
         return Ringservice.isCaptureMuted();
     }

@@ -267,7 +267,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void muteMicrophoneToggled(boolean checked) {
-        mCallService.setMuted(checked);
+        mCallService.setLocalMediaMuted(mConference.getId(), "MEDIA_TYPE_AUDIO", checked);
     }
 
 
