@@ -58,6 +58,8 @@ public class CallService {
     private final static String TAG = CallService.class.getSimpleName();
     public final static String MIME_TEXT_PLAIN = "text/plain";
     public static final String MIME_GEOLOCATION = "application/geo";
+    public static final String MEDIA_TYPE_AUDIO = "MEDIA_TYPE_AUDIO";
+    public static final String MEDIA_TYPE_VIDEO = "MEDIA_TYPE_VIDEO";
 
     @Inject
     @Named("DaemonExecutor")
@@ -324,6 +326,13 @@ public class CallService {
         mExecutor.execute(() -> {
             Log.i(TAG, "muteCapture() running...");
             Ringservice.muteCapture(mute);
+        });
+    }
+
+    public void setLocalMediaMuted(final String callId, String mediaType, final boolean mute) {
+        mExecutor.execute(() -> {
+            Log.i(TAG, "muteCapture() running...");
+            Ringservice.muteLocalMedia(callId, mediaType, mute);
         });
     }
 
