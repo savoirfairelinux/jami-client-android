@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bb50e2f_3f720272",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/call/CallPresenter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-01-29T00:50:10Z",
+      "side": 1,
+      "message": "constant in Call",
+      "range": {
+        "startLine": 270,
+        "startChar": 61,
+        "endLine": 270,
+        "endChar": 79
+      },
+      "revId": "ccc8bf2861cf9495aea904aca656bbd12f4ab9e1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
