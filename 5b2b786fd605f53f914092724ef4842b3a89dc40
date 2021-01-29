@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aca748bc_7c9c9c95",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/CallService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-01-29T15:49:09Z",
+      "side": 1,
+      "message": "use single function with boolean argument",
+      "range": {
+        "startLine": 259,
+        "startChar": 1,
+        "endLine": 272,
+        "endChar": 0
+      },
+      "revId": "5b2b786fd605f53f914092724ef4842b3a89dc40",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
