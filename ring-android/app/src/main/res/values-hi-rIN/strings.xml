@@ -10,11 +10,13 @@
   <string name="no_browser_app_installed">कृपया पृष्ठ को देखने हेतु, वेब ब्राउज़र/विचरक ऐप्प इंस्टाॅल करें</string>
   <string name="email_chooser_title">ई-मेल निम्नलिखित में से एक के द्वारा भेजें</string>
   <string name="website_chooser_title">इस पृष्ठ को निम्नलिखित में से एक के द्वारा देखें</string>
+  <string name="credits">आभार</string>
   <!--About dialog-->
   <!--RingActivity-->
   <string name="error_no_network">नेटवर्क संपर्क नही है</string>
   <!--AB menus-->
   <!--Sections-->
+  <string name="menu_item_settings">सेटिंग्स</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
@@ -24,7 +26,9 @@
   <!--TransferDFragment-->
   <!--Notifications-->
   <!--Call Fragment-->
+  <string name="ab_action_contact_add">संपर्क के खाते में जोड़ें</string>
   <!--Text messages-->
+  <string name="send_message">संदेश भेजें</string>
   <!--MediaPreferenceFragment-->
   <!--Ringtone activity-->
   <!--Read contacts permission-->
@@ -36,14 +40,17 @@
   <!--Account Summary-->
   <string name="account">खाता</string>
   <!--Share fragment-->
+  <string name="share_label">बाटें </string>
   <!--Pending contact requests-->
   <!--Send contact requests-->
   <!--Blacklist-->
   <!--Smartlist-->
+  <string name="tv_contact_row_header">संपर्क</string>
   <!--File Transfer-->
   <!--Bottom Navigation-->
   <string name="navigation_item_account">खाता</string>
   <!--TV-->
   <string name="tv_audio_play">शुरू करें</string>
   <!--Wizard-->
+  <string name="wizard_password_skip">खाता बनाएं</string>
 </resources>

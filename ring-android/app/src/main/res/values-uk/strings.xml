@@ -28,6 +28,7 @@
   <string name="menu_item_accounts">Керувати аккаунтами</string>
   <string name="menu_item_account">Керувати акаунтом</string>
   <string name="menu_item_settings">Налаштування</string>
+  <string name="menu_item_plugin_list">Налаштування додатку</string>
   <string name="menu_item_share">Поділитись своїми контактними даними</string>
   <string name="menu_item_about">Про Джамі</string>
   <!--Dialing Fragment-->
@@ -42,6 +43,7 @@
     <item quantity="other">%d групові чати</item>
   </plurals>
   <!--ContactList Fragment-->
+  <string name="searchbar_hint">Пошук по імені або номеру...</string>
   <string name="choose_number">Оберіть номер</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -55,9 +57,11 @@
   <string name="notif_current_call">Вихідний виклик</string>
   <string name="notif_channel_calls">Дзвінки</string>
   <string name="notif_channel_missed_calls">Пропущені виклики</string>
+  <string name="notif_channel_incoming_calls">Вхідні звінки</string>
   <string name="notif_channel_messages">Повідомлення</string>
   <string name="notif_channel_requests">Запити</string>
   <string name="notif_channel_file_transfer">Передача файлів</string>
+  <string name="notif_channel_sync">Синхронізація даних</string>
   <string name="notif_channel_background_service">Фоновий сервіс</string>
   <string name="notif_channel_background_service_descr">Дозволяє будь-коли отримувати дзвінки і повідомлення.</string>
   <string name="notif_group_calls">Дзвінки</string>
@@ -68,17 +72,24 @@
   <string name="notif_incoming_file_transfer_title">Вхідний файл від %1$s</string>
   <string name="notif_outgoing_file_transfer_title">Надсилаємо файл до %1$s </string>
   <string name="notif_incoming_picture">Картинка від %1$s</string>
+  <string name="notif_sync_title">Синхронізація даних в процесі...</string>
+  <string name="notif_location_remaining">Залишилось %1$d хвилин</string>
+  <string name="notif_location_action_stop">Зупинити обмін геоданними</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ви:</string>
   <string name="action_call_hangup">Зупинити</string>
+  <string name="action_call_maximize">Збільшити</string>
+  <string name="action_call_minimize">Зменшити</string>
   <string name="ongoing_call">Вихідний виклик</string>
   <string name="hist_in_call">Вхідний виклик тривалістю %1$s</string>
   <string name="hist_out_call">Вихідний виклик тривалістю %1$s</string>
   <string name="start_error_title">Неможливо запустити Джамі!</string>
   <string name="start_error_mic_required">Для роботи Джамі потрібен доступ до мікрофону.</string>
   <string name="action_call_accept">Прийняти виклик</string>
+  <string name="action_call_end_accept">Завершити дзвінок та відповісти</string>
   <string name="action_call_decline">Відхилити</string>
   <string name="action_call_mic_mute">Відключити мікрофон</string>
+  <string name="action_load_plugin">Завантажити плагін</string>
   <string name="ab_action_speakerphone">Увімкнути гучномовець</string>
   <string name="ab_action_contact_add">Додати до контактів</string>
   <string name="ab_action_contact_add_question">Додати до контактів?</string>
@@ -90,6 +101,7 @@
   <string name="share_via">Поділитися за допомогою</string>
   <string name="write_a_message">Написати повідомлення</string>
   <string name="scan_qr">Сканування QR коду</string>
+  <string name="qr_code">QR код</string>
   <string name="ab_action_flipcamera">Змінити камеру</string>
   <!--Text messages-->
   <string name="send_message">Відправити повідомлення</string>
@@ -99,6 +111,9 @@
   <string name="send_file">Відправити файл</string>
   <string name="hist_file_sent">Файл відправлено</string>
   <string name="hist_file_received">Файл отримано</string>
+  <string name="conversation_send_audio">Записати аудіо</string>
+  <string name="conversation_send_video">Записати відео</string>
+  <string name="conversation_share_location">Поділитися геоданними</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Дозволи для камери</string>
   <string name="permission_dialog_camera_message">Для здійснення відерозмови необхідно надати доступ до камери. Будь ласка, розгляньте дану можливість.</string>
@@ -106,6 +121,7 @@
   <string name="ringtone_error_title">Помилка</string>
   <string name="ringtone_error_format_not_supported">Цей формат не підтримується</string>
   <string name="ringtone_error_size_too_big">Цей файл надто великий. Максимальний розмір — %1$dкБ. </string>
+  <string name="ringtone_custom_prompt">Встановити власний рингтон</string>
   <string name="ringtone_custom_label">Кастомізація</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Для цього Джамі потрібні права «Читати контакти». Будь ласка, надайте їх.</string>
@@ -156,13 +172,18 @@
   <string name="wizard_skip">Пропустити</string>
   <!--Account Summary-->
   <string name="profile">Профіль</string>
+  <string name="profile_name">Назва профіля</string>
   <string name="profile_message_warning">Ваш профіль бачитимуть лише ваші контакти</string>
   <string name="open_the_gallery">Відкрити галерею</string>
   <string name="take_a_photo">Зробити фото</string>
+  <string name="profile_name_hint">Введіть своє ім\'я</string>
   <string name="registered_name">Зареєстроване ім\'я</string>
+  <string name="no_registered_name">Немає зареєстрованого ім\'я</string>
   <string name="identity">Особа</string>
   <string name="account">Аккаунт</string>
+  <string name="link_new_device">Прив\'язати новий пристрій</string>
   <string name="devices">Прив\'язані пристрої</string>
+  <string name="total_devices">Загальна кількість пристроїв:</string>
   <!--Share fragment-->
   <string name="share_message">Зіскануйте цей код у Джамі</string>
   <string name="share_message_no_account">Будь ласка, оберіть обліковий запис, щоб поділитися.</string>
@@ -170,6 +191,7 @@
   <string name="share_label">Поділитися</string>
   <string name="generic_error_migration">Помилка</string>
   <string name="generic_error_migration_message">Збій переведення</string>
+  <string name="title_share_with">Поділитися з...</string>
   <!--Pending contact requests-->
   <string name="accept">Прийняти</string>
   <string name="refuse">Скидання</string>
@@ -184,25 +206,66 @@
   <string name="send_request_title">Відправити запит контакту</string>
   <string name="send_request_msg">Ви повинні відправити запит контакту, щоб спілкуватися з іншим користувачем. Поки контакт не прийме запит, ви можете надсилати повідомлення, але він не зможе відповісти.</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">Заблоковані користувачі відсутні</string>
   <!--Smartlist-->
   <string name="no_contact_request">Не було відправлено жодних запитів контакту</string>
+  <string name="conversation_placeholder">Поки що діалоги відсутні</string>
   <string name="contact_request_sent">Запит контакту надіслано</string>
+  <string name="start_conversation">Почати розмову</string>
   <string name="search_results">Результати пошуку</string>
   <string name="tv_contact_row_header">Контакти</string>
   <string name="gallery_error_title">Не знайдено програми для перегляду світлин</string>
   <string name="gallery_error_message">На пристрої не знайдено програми, щоб відкрити галерею</string>
+  <string name="generic_error">Виникла невідома помилка</string>
   <!--File Transfer-->
+  <string name="invalid_file">Недопустимий файл</string>
+  <string name="not_able_to_write_file">Помилка при записі файлу</string>
+  <string name="file_transfer_status_created">Розпочинаю трансфер</string>
+  <string name="file_transfer_status_unsupported">не підтримується</string>
+  <string name="file_transfer_status_finished">завершено</string>
+  <string name="file_transfer_status_cancelled">відмінено</string>
+  <string name="no_space_left_on_device">На пристрої не залишилося вільного місця </string>
+  <string name="menu_file_open">Відкрити файл</string>
+  <string name="menu_file_download">Завантажити файл</string>
+  <string name="menu_file_save">Зберегти файл</string>
+  <string name="menu_file_delete">Видалити файл</string>
   <string name="menu_file_share">Відправити файл</string>
   <string name="menu_message_copy">Копіювати</string>
+  <string name="menu_message_delete">Видалити повідомлення</string>
+  <string name="menu_message_cancel">Скасувати повідомлення</string>
   <string name="menu_delete">Видалити</string>
+  <string name="pref_darkTheme_title">Темна тема</string>
+  <string name="pref_darkTheme_summary">Завжди використовувати темну тему замість теми за замовчуванням</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Групові чати</string>
   <string name="navigation_item_contact_request">Запити контактів</string>
   <string name="navigation_item_account">Аккаунт</string>
   <!--TV-->
+  <string name="tv_send_audio_dialog_message">Відправити аудіо повідомлення?</string>
+  <string name="tv_send_image_dialog_message">Відправити картинку?</string>
+  <string name="tv_send_video_dialog_message">Відправити відео?</string>
+  <string name="tv_media_preview">Попередній перегляд</string>
   <string name="tv_audio_play">Програти</string>
   <string name="tv_audio_pause">Пауза</string>
   <string name="tv_dialog_send">Відправити</string>
+  <string name="tv_audio_recording">Запис...</string>
+  <string name="tv_send_text">Відправити текст</string>
+  <string name="tv_send_audio">Відправити аудіо</string>
+  <string name="tv_send_video">Відправити медіа</string>
+  <string name="conversation_input_speech_hint">Скажіть щось...</string>
   <!--Wizard-->
+  <string name="wizard_status_recommended">Рекомендовано</string>
+  <string name="wizard_status_optional">За бажанням</string>
+  <string name="wizard_status_required">Обов\'язково</string>
+  <string name="wizard_username_button">Введіть ім\'я користувача</string>
+  <string name="wizard_username_skip">Обрати ім\'я користувача пізніше</string>
+  <string name="wizard_password_info">Пароль від облікового запису</string>
+  <string name="wizard_password_button">Введіть пароль</string>
   <string name="wizard_password_skip">Створити обліковий запис</string>
+  <string name="wizard_password_switch">Зашифрувати мій профіль за допомогою пароля</string>
+  <string name="wizard_password_warning">Майте на увазі, що пароль неможливо відновити</string>
+  <string name="wizard_profile_info">Ваш профіль бачитимуть лише ваші контакти</string>
+  <string name="wizard_profile_button">Зберегти зміни у профілі</string>
+  <string name="wizard_profile_skip">Пропустити та нагадати пізніше</string>
+  <string name="fab_path_choose">Виберіть інший файл</string>
 </resources>

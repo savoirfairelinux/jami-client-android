@@ -13,8 +13,9 @@
   <string name="email_chooser_title">Senden von E-Mails mit ...</string>
   <string name="website_chooser_title">Darstellung der Homepage mit...</string>
   <string name="license">Diese Software wird \"wie sie ist\" ohne Gewährleistung irgendwelcher Art zur Verfügung gestellt. Details finden Sie unter <u>GNU General Public License Version 3 oder später</u></string>
-  <string name="description">Jami ist Freie Software für universelle Kommunikation, die die Freiheiten und die Privatsphäre ihrer Nutzer respektiert.</string>
-  <string name="credits">Abspann</string>
+  <string name="description">Jami ist Freie Software für universelle Kommunikation.
+Sie respektiert die Freiheiten und die Privatsphäre ihrer Nutzer.</string>
+  <string name="credits">Mitwirkende</string>
   <string name="call_service_description">Dieser Dienst ist erforderlich, damit Ihre Anrufe im Vordergrund bleiben. Er wird nur während eines Anrufs ausgeführt.</string>
   <string name="data_transfer_service_description">Dieser Dienst ist erforderlich, um dauerhafte Benachrichtigungen während der Dateiübertragung anzuzeigen. Er wird nur während der Dateiübertragung ausgeführt.</string>
   <!--About dialog-->
@@ -44,7 +45,7 @@
     <item quantity="other">%d Gespräche</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Suche nach Namen oder Telefonnummer</string>
+  <string name="searchbar_hint">Suche Namen oder Telefonnummer...</string>
   <string name="choose_number">Nummer auswählen</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -111,7 +112,7 @@
   <string name="share_via">Teilen über</string>
   <string name="write_a_message">Eine Nachricht schreiben</string>
   <string name="scan_qr">QR-Code scannen</string>
-  <string name="qr_code">QR Code -- so ein schwarzweiß-Dingsbums-Quadrat</string>
+  <string name="qr_code">QR Code</string>
   <string name="ab_action_flipcamera">Kamera wechseln</string>
   <string name="ab_action_hidepreview">Vorschau ausblenden</string>
   <!--Text messages-->
@@ -263,7 +264,7 @@
   <string name="menu_message_delete">Diese Nachricht löschen</string>
   <string name="menu_message_cancel">Abbruch mit folgendem Hinweis:</string>
   <string name="menu_delete">Löschen</string>
-  <string name="pref_darkTheme_title">Dunkles Aussehen der Anwendung (theme)</string>
+  <string name="pref_darkTheme_title">Dunkles Thema</string>
   <string name="pref_darkTheme_summary">Immer das \"Dunkle Aussehen\" (dark theme) einschalten statt den Systemstandard zu verwenden</string>
   <!--Bottom Navigation-->
   <string name="navigation_item_conversation">Gespräche</string>
@@ -296,8 +297,8 @@
   <string name="wizard_password_skip">Konto erstellen</string>
   <string name="wizard_password_switch">Sichern Sie Ihre Anmeldedaten mit einem Passwort ab!</string>
   <string name="wizard_password_warning">ACHTUNG! Notieren Sie dieses Passwort an einem sicheren Ort. Es kann nicht wieder hergestellt werden!</string>
-  <string name="wizard_profile_info">Ihe Benutzerkennnung soll nur mit Kontakten geteilt werden können</string>
-  <string name="wizard_profile_button">Sichen der Benutzerkennung und deren Einstellungen</string>
+  <string name="wizard_profile_info">Ihr Profil wird nur mit Ihren Kontakten geteilt</string>
+  <string name="wizard_profile_button">Profil speichern</string>
   <string name="wizard_profile_skip">Abbrechen, das mache ich später ...</string>
   <string name="fab_path_choose">Eine andere Datei wählen</string>
 </resources>

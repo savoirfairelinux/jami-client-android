@@ -32,6 +32,12 @@
   <string name="pref_delete_account_summary">Удалить ваш аккаунт с этого устройства</string>
   <string name="pref_persistNotification_title">Работа в фоновом режиме</string>
   <string name="pref_persistNotification_summary">Разрешить работу в фоновом режиме для принятия звонков и сообщений.</string>
+  <string name="pref_typing_title">Включить оповещения о наборе текста</string>
+  <string name="pref_typing_summary">Оповещения о наборе текста показывают что пользователь набирает сообщение</string>
+  <string name="pref_read_title">Включить подтверждения прочтения</string>
+  <string name="pref_read_summary">Подтверждения прочтения показывают что сообщение было прочтено</string>
+  <string name="pref_block_record_title">Отключить снимки и запись экрана</string>
+  <string name="pref_block_record_summary">Отключить снимки и запись экрана</string>
   <!--Plugin-->
   <string name="pref_plugins_title">Плагины</string>
   <string name="pref_plugins_summary">Включить плагины и установить их параметры</string>
