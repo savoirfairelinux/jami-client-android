@@ -35,6 +35,7 @@ public class Conference {
     public static class ParticipantInfo {
         public CallContact contact;
         public int x, y, w, h;
+        public boolean isRecording = false;
 
         public ParticipantInfo(CallContact c, Map<String, String> i) {
             contact = c;
@@ -189,4 +190,16 @@ public class Conference {
     public Observable<List<ParticipantInfo>> getParticipantInfo() {
         return mParticipantInfo;
     }
+
+    public void setParticipantRecording(String peerNumber, boolean state) {
+        List<ParticipantInfo> participants = mParticipantInfo.blockingFirst();
+        for (ParticipantInfo info : participants) {
+            if (info.contact.hasNumber(peerNumber)) {
+                info.isRecording = state;
+                mParticipantInfo.onNext(participants);
+                break;
+            }
+        }
+    }
+
 }

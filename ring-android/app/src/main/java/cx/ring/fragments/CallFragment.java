@@ -63,7 +63,10 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -1024,6 +1027,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     @Override
     public void updateConfInfo(List<Conference.ParticipantInfo> info) {
         binding.participantLabelContainer.removeAllViews();
+        boolean isRecording = false;
         if (!info.isEmpty()) {
             LayoutInflater inflater = LayoutInflater.from(binding.participantLabelContainer.getContext());
             for (Conference.ParticipantInfo i : info) {
@@ -1035,10 +1039,20 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                     params.getPercentLayoutInfo().topMarginPercent = i.y / (float) mVideoHeight;
                     label.participantName.setText(displayName);
                     binding.participantLabelContainer.addView(label.getRoot(), params);
+                    if (i.isRecording && !isRecording) {
+                        isRecording = true;
+                        binding.recordName.setText("111111111111111111111111");
+                    }
                 }
             }
         }
         binding.participantLabelContainer.setVisibility(info.isEmpty() ? View.GONE : View.VISIBLE);
+        binding.recordLayout.setVisibility(isRecording? View.VISIBLE : View.INVISIBLE);
+        if (isRecording) {
+            binding.recordIndicator.setAnimation(getBlinkingAnimation());
+        } else {
+            binding.recordIndicator.clearAnimation();
+        }
     }
 
     @Override
@@ -1531,4 +1545,14 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             displayVideoPluginsCarousel();
         }
     }
+
+    private Animation getBlinkingAnimation() {
+        Animation animation = new AlphaAnimation(1, 0);
+        animation.setDuration(400);
+        animation.setInterpolator(new LinearInterpolator());
+        animation.setRepeatCount(Animation.INFINITE);
+        animation.setRepeatMode(Animation.REVERSE);
+        return animation;
+    }
+
 }
