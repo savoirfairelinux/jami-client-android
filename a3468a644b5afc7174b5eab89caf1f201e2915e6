@@ -22,6 +22,30 @@
       "revId": "a3468a644b5afc7174b5eab89caf1f201e2915e6",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3446acee_1eb8d92c",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/PluginHandlersListFragment.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 859
+      },
+      "writtenOn": "2021-02-01T16:53:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df56ac2f_1e4eae5e",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 41
+      },
+      "revId": "a3468a644b5afc7174b5eab89caf1f201e2915e6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
