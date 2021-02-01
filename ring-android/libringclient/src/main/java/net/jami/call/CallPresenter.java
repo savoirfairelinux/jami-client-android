@@ -20,11 +20,10 @@
  */
 package net.jami.call;
 
-import net.jami.daemon.Ringservice;
 import net.jami.facades.ConversationFacade;
+import net.jami.model.Call;
 import net.jami.model.Conference;
 import net.jami.model.Conversation;
-import net.jami.model.Call;
 import net.jami.model.Uri;
 import net.jami.services.AccountService;
 import net.jami.services.CallService;
@@ -57,14 +56,14 @@ public class CallPresenter extends RootPresenter<net.jami.call.CallView> {
 
     public final static String TAG = CallPresenter.class.getSimpleName();
 
-    private net.jami.services.AccountService mAccountService;
-    private net.jami.services.ContactService mContactService;
-    private net.jami.services.HardwareService mHardwareService;
-    private net.jami.services.CallService mCallService;
-    private net.jami.services.DeviceRuntimeService mDeviceRuntimeService;
-    private net.jami.facades.ConversationFacade mConversationFacade;
+    private final AccountService mAccountService;
+    private final ContactService mContactService;
+    private final HardwareService mHardwareService;
+    private final CallService mCallService;
+    private final DeviceRuntimeService mDeviceRuntimeService;
+    private final ConversationFacade mConversationFacade;
 
-    private net.jami.model.Conference mConference;
+    private Conference mConference;
     private final List<Call> mPendingCalls = new ArrayList<>();
     private final Subject<List<Call>> mPendingSubject = BehaviorSubject.createDefault(mPendingCalls);
 
@@ -91,7 +90,7 @@ public class CallPresenter extends RootPresenter<net.jami.call.CallView> {
     @Inject
     public CallPresenter(AccountService accountService,
                          ContactService contactService,
-                         net.jami.services.HardwareService hardwareService,
+                         HardwareService hardwareService,
                          CallService callService,
                          DeviceRuntimeService deviceRuntimeService,
                          ConversationFacade conversationFacade) {
@@ -153,7 +152,7 @@ public class CallPresenter extends RootPresenter<net.jami.call.CallView> {
                 }));*/
     }
 
-    public void initOutGoing(String accountId, net.jami.model.Uri conversationUri, String contactId, boolean audioOnly) {
+    public void initOutGoing(String accountId, Uri conversationUri, String contactId, boolean audioOnly) {
         if (accountId == null || contactId == null) {
             net.jami.utils.Log.e(TAG, "initOutGoing: null account or contact");
             hangupCall();
@@ -164,8 +163,8 @@ public class CallPresenter extends RootPresenter<net.jami.call.CallView> {
         }
         //getView().blockScreenRotation();
 
-        Observable<net.jami.model.Conference> callObservable = mCallService
-                .placeCall(accountId, conversationUri, net.jami.model.Uri.fromString(StringUtils.toNumber(contactId)), audioOnly)
+        Observable<Conference> callObservable = mCallService
+                .placeCall(accountId, conversationUri, Uri.fromString(StringUtils.toNumber(contactId)), audioOnly)
                 //.map(mCallService::getConference)
                 .flatMapObservable(call -> mCallService.getConfUpdates(call))
                 .share();
@@ -195,7 +194,7 @@ public class CallPresenter extends RootPresenter<net.jami.call.CallView> {
         // if the call is incoming through a full intent, this allows the incoming call to display
         incomingIsFullIntent = actionViewOnly;
 
-        Observable<net.jami.model.Conference> callObservable = mCallService.getConfUpdates(confId)
+        Observable<Conference> callObservable = mCallService.getConfUpdates(confId)
                 .observeOn(mUiScheduler)
                 .share();
 
@@ -229,10 +228,10 @@ public class CallPresenter extends RootPresenter<net.jami.call.CallView> {
         showConference(callObservable);
     }
 
-    private void showConference(Observable<net.jami.model.Conference> conference) {
+    private void showConference(Observable<Conference> conference) {
         mCompositeDisposable.add(conference
                 .distinctUntilChanged()
-                .switchMap(net.jami.model.Conference::getParticipantInfo)
+                .switchMap(Conference::getParticipantInfo)
                 .observeOn(mUiScheduler)
                 .subscribe(info -> getView().updateConfInfo(info),
                         e -> net.jami.utils.Log.e(TAG, "Error with initIncoming, action view flow: ", e)));
@@ -299,13 +298,6 @@ public class CallPresenter extends RootPresenter<net.jami.call.CallView> {
     }
 
     public void hangupCall() {
-        List<String> callMediaHandlers = Ringservice.listCallMediaHandlers();
-
-        for (String callMediaHandler : callMediaHandlers)
-        {
-            toggleCallMediaHandler(callMediaHandler, false);
-        }
-
         if (mConference != null) {
             if (mConference.isConference())
                 mCallService.hangUpConference(mConference.getId());
@@ -319,7 +311,7 @@ public class CallPresenter extends RootPresenter<net.jami.call.CallView> {
     }
 
     public void refuseCall() {
-        final net.jami.model.Conference call = mConference;
+        final Conference call = mConference;
         if (call != null) {
             mCallService.refuse(call.getId());
         }
@@ -416,7 +408,7 @@ public class CallPresenter extends RootPresenter<net.jami.call.CallView> {
 
     private Disposable contactDisposable = null;
 
-    private void contactUpdate(final net.jami.model.Conference conference) {
+    private void contactUpdate(final Conference conference) {
         if (mConference != conference) {
             mConference = conference;
             if (contactDisposable != null && !contactDisposable.isDisposed()) {
@@ -465,7 +457,7 @@ public class CallPresenter extends RootPresenter<net.jami.call.CallView> {
         mPendingSubject.onNext(mPendingCalls);
     }
 
-    private void confUpdate(net.jami.model.Conference call) {
+    private void confUpdate(Conference call) {
         net.jami.utils.Log.w(TAG, "confUpdate " + call.getId());
 
         mConference = call;

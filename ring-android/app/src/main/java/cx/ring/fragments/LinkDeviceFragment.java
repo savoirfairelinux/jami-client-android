@@ -214,7 +214,7 @@ public class LinkDeviceFragment extends BaseBottomSheetFragment<LinkDevicePresen
         mBinding.accountLinkInfo.setText(styledResultText);
         mBinding.accountLinkInfo.requestFocus();
 
-        KeyboardVisibilityManager.hideKeyboard(getActivity(), 0);
+        KeyboardVisibilityManager.hideKeyboard(getActivity());
     }
 
     private void onClickStart() {
