@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07851f6c_ae16f2af",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1494,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-02-01T22:14:28Z",
+      "side": 1,
+      "message": "why \"get\" ? the function doesn\u0027t return anything",
+      "range": {
+        "startLine": 1494,
+        "startChar": 17,
+        "endLine": 1494,
+        "endChar": 34
+      },
+      "revId": "3ef1cccf2394771ef4b43891a86f2a568085aeed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e33f747_3fa57e7a",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1498,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-02-01T22:14:28Z",
+      "side": 1,
+      "message": "why \"previous\" ?  the plugin doesn\u0027t change in this function",
+      "range": {
+        "startLine": 1498,
+        "startChar": 8,
+        "endLine": 1498,
+        "endChar": 30
+      },
+      "revId": "3ef1cccf2394771ef4b43891a86f2a568085aeed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c78a11db_8e97bbc1",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/call/CallPresenter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-02-01T22:14:28Z",
+      "side": 1,
+      "message": "???",
+      "range": {
+        "startLine": 474,
+        "startChar": 0,
+        "endLine": 478,
+        "endChar": 9
+      },
+      "revId": "3ef1cccf2394771ef4b43891a86f2a568085aeed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51bce62b_0c78ff82",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/call/CallPresenter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-02-01T22:14:28Z",
+      "side": 1,
+      "message": "isPluginStarted",
+      "range": {
+        "startLine": 747,
+        "startChar": 19,
+        "endLine": 747,
+        "endChar": 37
+      },
+      "revId": "3ef1cccf2394771ef4b43891a86f2a568085aeed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "611b0b29_20a88502",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/call/CallPresenter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-02-01T22:14:28Z",
+      "side": 1,
+      "message": "not used",
+      "range": {
+        "startLine": 752,
+        "startChar": 0,
+        "endLine": 755,
+        "endChar": 5
+      },
+      "revId": "3ef1cccf2394771ef4b43891a86f2a568085aeed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43a3a063_95429a49",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/Conference.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-02-01T22:14:28Z",
+      "side": 1,
+      "message": "avoid static import, use Ringservice.toggleCallMediaHandler etc.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 64
+      },
+      "revId": "3ef1cccf2394771ef4b43891a86f2a568085aeed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3041928_2f72fdf3",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/Conference.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-02-01T22:14:28Z",
+      "side": 1,
+      "message": "If possible, avoid calls to the daemon from \"passive\" objects like Conference (also not clear what actually provides the handler Id. Is it the daemon through this call or the client through setMediaHandlerId() ??). Keep the logic clean.",
+      "range": {
+        "startLine": 116,
+        "startChar": 9,
+        "endLine": 116,
+        "endChar": 65
+      },
+      "revId": "3ef1cccf2394771ef4b43891a86f2a568085aeed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
