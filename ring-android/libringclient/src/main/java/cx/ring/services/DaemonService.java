@@ -264,6 +264,11 @@ public class DaemonService {
         }
 
         @Override
+        public void remoteRecordingChanged(String call_id, String peer_number, boolean state) {
+            mCallService.remoteRecordingChanged(call_id, peer_number, state);
+        }
+
+        @Override
         public void onConferenceInfosUpdated(String confId, VectMap infos) {
             mCallService.onConferenceInfoUpdated(confId, infos.toNative());
         }

@@ -36,7 +36,6 @@ import cx.ring.daemon.Blob;
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.StringVect;
-import cx.ring.daemon.VectMap;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
@@ -47,10 +46,8 @@ import cx.ring.utils.Log;
 import ezvcard.VCard;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
-import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.PublishSubject;
 
 public class CallService {
@@ -154,6 +151,18 @@ public class CallService {
 
     public void setConfGridLayout(String confId) {
         mExecutor.execute(() -> Ringservice.setConferenceLayout(confId, 0));
+    }
+
+    public void remoteRecordingChanged(String callId, String peerNumber, boolean state) {
+        Conference conference = getConference(callId);
+        if (conference == null) {
+            SipCall call = getCurrentCallForId(callId);
+            if (call != null)
+                conference = getConference(call);
+        }
+        if (conference != null) {
+            conference.setParticipantRecording(peerNumber, state);
+        }
     }
 
     private static class ConferenceEntity {
