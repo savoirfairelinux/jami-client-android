@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d6295b76_d041b765",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/Conference.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-02-02T20:29:58Z",
+      "side": 1,
+      "message": "wrong method used",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 65
+      },
+      "revId": "38cae28fc088110e065f59787a7437c8e58a182f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "136bec94_c2a68b0a",
         "filename": "ring-android/libringclient/src/main/java/cx/ring/model/Conference.java",
         "patchSetId": 4
@@ -22,6 +45,30 @@
       "revId": "38cae28fc088110e065f59787a7437c8e58a182f",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f2c72b9_9ccf0d9c",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/Conference.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-02-02T20:29:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "136bec94_c2a68b0a",
+      "range": {
+        "startLine": 48,
+        "startChar": 34,
+        "endLine": 48,
+        "endChar": 46
+      },
+      "revId": "38cae28fc088110e065f59787a7437c8e58a182f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
