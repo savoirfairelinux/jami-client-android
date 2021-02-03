@@ -29,8 +29,8 @@ public class PluginUtils {
         tree(mContext.getFilesDir() + File.separator+ "plugins",0);
         tree(mContext.getCacheDir().getAbsolutePath(),0);
 
-        List<String> pluginsPaths = Ringservice.listAvailablePlugins();
-        List<String> loadedPluginsPaths = Ringservice.listLoadedPlugins();
+        List<String> pluginsPaths = Ringservice.getInstalledPlugins();
+        List<String> loadedPluginsPaths = Ringservice.getLoadedPlugins();
 
         List<PluginDetails> pluginsList = new ArrayList<>(pluginsPaths.size());
         for (String pluginPath : pluginsPaths) {
@@ -70,20 +70,11 @@ public class PluginUtils {
     }
 
     /**
-     * Creates/Destroys plugin objects
-     * @param path root path of the plugin
-     * @param toggle boolean on/off
-     */
-    public static void togglePlugin(String path, boolean toggle) {
-        Ringservice.togglePlugin(path, toggle);
-    }
-
-    /**
      * Lists the root paths of the loaded plugins
      * @return list of path
      */
     public static List<String> listLoadedPlugins() {
-        return Ringservice.listLoadedPlugins();
+        return Ringservice.getLoadedPlugins();
     }
 
     /**
