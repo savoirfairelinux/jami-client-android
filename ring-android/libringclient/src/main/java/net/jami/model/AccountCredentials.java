@@ -33,9 +33,9 @@ public class AccountCredentials implements Serializable {
     private String mRealm;
 
     public AccountCredentials(Map<String, String> pref) {
-        mUsername = pref.get(net.jami.model.ConfigKey.ACCOUNT_USERNAME.key());
-        mPassword = pref.get(net.jami.model.ConfigKey.ACCOUNT_PASSWORD.key());
-        mRealm = pref.get(net.jami.model.ConfigKey.ACCOUNT_REALM.key());
+        mUsername = pref.get(ConfigKey.ACCOUNT_USERNAME.key());
+        mPassword = pref.get(ConfigKey.ACCOUNT_PASSWORD.key());
+        mRealm = pref.get(ConfigKey.ACCOUNT_REALM.key());
     }
 
     public AccountCredentials(String username, String password, String realm) {
@@ -70,9 +70,9 @@ public class AccountCredentials implements Serializable {
 
     public HashMap<String, String> getDetails() {
         HashMap<String, String> details = new HashMap<>();
-        details.put(net.jami.model.ConfigKey.ACCOUNT_USERNAME.key(), mUsername);
-        details.put(net.jami.model.ConfigKey.ACCOUNT_PASSWORD.key(), mPassword);
-        details.put(net.jami.model.ConfigKey.ACCOUNT_REALM.key(), mRealm);
+        details.put(ConfigKey.ACCOUNT_USERNAME.key(), mUsername);
+        details.put(ConfigKey.ACCOUNT_PASSWORD.key(), mPassword);
+        details.put(ConfigKey.ACCOUNT_REALM.key(), mRealm);
         return details;
     }
 
