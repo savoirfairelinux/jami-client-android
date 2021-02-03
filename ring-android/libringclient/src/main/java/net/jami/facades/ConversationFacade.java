@@ -686,7 +686,7 @@ public class ConversationFacade {
 
     public void cancelFileTransfer(String accountId, Uri conversationId, long id) {
         mAccountService.cancelDataTransfer(accountId, conversationId.isSwarm() ? conversationId.getRawRingId() : "", id);
-        mNotificationService.removeTransferNotification(id);
+        mNotificationService.removeTransferNotification(accountId, conversationId, id);
         DataTransfer transfer = mAccountService.getAccount(accountId).getDataTransfer(id);
         if (transfer != null)
             deleteConversationItem((Conversation) transfer.getConversation(), transfer);
