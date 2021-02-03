@@ -84,22 +84,6 @@ public class ConversationActivity extends AppCompatActivity implements Colorable
         if (ab != null)
             ab.setDisplayHomeAsUpEnabled(true);
 
-        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        View decorView = getWindow().getDecorView();
-        decorView.setSystemUiVisibility(
-                decorView.getSystemUiVisibility()
-                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-
-        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbarLayout, (v, insets) -> {
-            CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) binding.toolbarLayout.getLayoutParams();
-            params.topMargin = insets.getSystemWindowInsetTop();
-            binding.toolbarLayout.setLayoutParams(params);
-            insets.consumeSystemWindowInsets();
-            return insets;
-        });
-
         if (mConversationFragment == null) {
             Bundle bundle = conversationPath.toBundle();
             bundle.putBoolean(NotificationServiceImpl.EXTRA_BUBBLE, mIsBubble);

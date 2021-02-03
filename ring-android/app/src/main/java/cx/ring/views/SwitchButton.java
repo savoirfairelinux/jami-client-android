@@ -68,7 +68,7 @@ public class SwitchButton extends CompoundButton {
     private Layout mOffLayout;
     private RotateDrawable mImageDrawable;
 
-    private CompoundButton.OnCheckedChangeListener mChildOnCheckedChangeListener;
+    //private CompoundButton.OnCheckedChangeListener mChildOnCheckedChangeListener;
 
     public SwitchButton(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -131,7 +131,6 @@ public class SwitchButton extends CompoundButton {
         setClickable(true);
 
         mStatus = status;
-
         mBackColor = backColor;
 
         mThumbMargin.set(margin, margin, margin, margin);
@@ -546,15 +545,14 @@ public class SwitchButton extends CompoundButton {
         if (isChecked() != checked) {
             animateToState(checked);
         }
-
         super.setChecked(checked);
     }
 
-    @Override
+    /*@Override
     public void setOnCheckedChangeListener(OnCheckedChangeListener onCheckedChangeListener) {
         super.setOnCheckedChangeListener(onCheckedChangeListener);
         mChildOnCheckedChangeListener = onCheckedChangeListener;
-    }
+    }*/
 
     public int getBackColor() {
         return mBackColor;

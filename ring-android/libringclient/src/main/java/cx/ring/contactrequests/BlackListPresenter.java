@@ -87,7 +87,7 @@ public class BlackListPresenter extends RootPresenter<BlackListView> {
     }
 
     public void unblockClicked(CallContact contact) {
-        String contactId = contact.getPhones().get(0).getNumber().getRawRingId();
+        String contactId = contact.getUri().getRawRingId();
         mAccountService.addContact(mAccountID, contactId);
     }
 }
