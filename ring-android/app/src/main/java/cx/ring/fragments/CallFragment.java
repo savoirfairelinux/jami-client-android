@@ -129,8 +129,6 @@ import cx.ring.utils.StringUtils;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.disposables.CompositeDisposable;
 
-import static cx.ring.daemon.Ringservice.getPluginsEnabled;
-import static cx.ring.daemon.Ringservice.getCallMediaHandlers;
 
 public class CallFragment extends BaseSupportFragment<CallPresenter> implements CallView, MediaButtonsHelper.MediaButtonsHelperCallback, RecyclerPickerLayoutManager.ItemSelectedListener {
 
@@ -176,7 +174,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
     private boolean pluginsModeFirst = true;
     private List<String> callMediaHandlers;
-    private int previousPluginPosition = -1;
+    private int handlerCarousselPos = -1;
     private RecyclerPicker rp;
     private final ValueAnimator animation = new ValueAnimator();
 
@@ -315,14 +313,14 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         if (binding.videoSurface.getVisibility() == View.VISIBLE) {
             restartVideo = true;
         }
-        if (!choosePluginMode) {
+        if (!presenter.isPluginStarted()) {
             if (binding.previewContainer.getVisibility() == View.VISIBLE) {
                 restartPreview = true;
             }
         }else {
             if (binding.pluginPreviewContainer.getVisibility() == View.VISIBLE) {
                 restartPreview = true;
-                presenter.stopPlugin();
+                presenter.pausePlugin();
             }
         }
     }
@@ -346,6 +344,9 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             mPreviewSurfaceWidth = width;
             mPreviewSurfaceHeight = height;
             presenter.previewVideoSurfaceCreated(binding.previewSurface);
+            if (presenter.isPluginStarted()) {
+                displayVideoPluginsCarousel();
+            }
         }
 
         @Override
@@ -899,7 +900,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     @Override
     public void displayHangupButton(boolean display) {
         Log.w(TAG, "displayHangupButton " + display);
-        display &= !choosePluginMode;
+        display &= !presenter.isPluginStarted();
         binding.callControlGroup.setVisibility(display ? View.VISIBLE : View.GONE);
         binding.callHangupBtn.setVisibility(display ? View.VISIBLE : View.GONE);
         binding.confControlGroup.setVisibility((mConferenceMode && display) ? View.VISIBLE : View.GONE);
@@ -1201,9 +1202,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             matrix.postRotate(180, centerX, centerY);
         }
         if(!choosePluginMode) {
-//            binding.pluginPreviewSurface.setTransform(matrix);
-//        }
-//        else {
             binding.previewSurface.setTransform(matrix);
         }
     }
@@ -1312,7 +1310,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     private void startScreenShare(MediaProjection mediaProjection) {
         if (presenter.startScreenShare(mediaProjection)) {
-            if(choosePluginMode) {
+            if(presenter.isPluginStarted()) {
                 binding.pluginPreviewSurface.setVisibility(View.GONE);
             } else {
                 binding.previewSurface.setVisibility(View.GONE);
@@ -1393,7 +1391,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     public boolean displayPluginsButton() {
-        return getPluginsEnabled() && getCallMediaHandlers().size() > 0;
+        return Ringservice.getPluginsEnabled() && Ringservice.getCallMediaHandlers().size() > 0;
     }
 
     @Override
@@ -1402,12 +1400,12 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         // Reset the padding of the RecyclerPicker on each
         rp.setFirstLastElementsWidths(112, 112);
         binding.recyclerPicker.setVisibility(View.GONE);
-        if (choosePluginMode) {
+        if (presenter.isPluginStarted() || choosePluginMode) {
             displayHangupButton(false);
             binding.recyclerPicker.setVisibility(View.VISIBLE);
             movePreview(true);
-            if (previousPluginPosition != -1) {
-                rp.scrollToPosition(previousPluginPosition);
+            if (handlerCarousselPos != -1) {
+                rp.scrollToPosition(handlerCarousselPos);
             }
         } else {
             movePreview(false);
@@ -1416,7 +1414,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     public void toggleVideoPluginsCarousel(boolean toggle) {
-        if (choosePluginMode) {
+        if (presenter.isPluginStarted()) {
             if (toggle) {
                 binding.recyclerPicker.setVisibility(View.VISIBLE);
                 movePreview(true);
@@ -1441,8 +1439,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
      * Function that is called to show/hide the plugins recycler viewer and update UI
      */
     public void displayVideoPluginsCarousel() {
-        choosePluginMode = !choosePluginMode;
-
         Context context = requireActivity();
 
         // Create callMediaHandlers and videoPluginsItems in a lazy manner
@@ -1469,6 +1465,14 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             pluginsModeFirst = false;
         }
 
+        boolean callStart = true;
+        if (presenter.isPluginStarted() && !choosePluginMode) {
+            displayHangupButton(false);
+            callStart = false;
+            setHandlerCarousselPos();
+        }
+        choosePluginMode = !choosePluginMode;
+
         if (choosePluginMode) {
             // hide hang up button and other call buttons
             displayHangupButton(false);
@@ -1479,27 +1483,22 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             // Start loading the first or previous plugin if one was active
             if(callMediaHandlers.size() > 0) {
                 // If no previous plugin was active, take the first, else previous
-                int position;
-                if(previousPluginPosition < 1) {
+                if(handlerCarousselPos < 1) {
+                    handlerCarousselPos = 1;
                     rp.scrollToPosition(1);
-                    position = 1;
-                    previousPluginPosition = 1;
-                } else {
-                    position = previousPluginPosition;
                 }
-                if (position > 0) {
-                    String callMediaId = callMediaHandlers.get(position-1);
+                String callMediaId = callMediaHandlers.get(handlerCarousselPos-1);
+                if (callStart)
                     presenter.startPlugin(callMediaId);
-                }
             }
 
         } else {
-            if (previousPluginPosition > 0) {
+            if (handlerCarousselPos > 0) {
                 String callMediaId = callMediaHandlers.
-                        get(previousPluginPosition-1);
+                        get(handlerCarousselPos-1);
 
                 presenter.toggleCallMediaHandler(callMediaId, false);
-                rp.scrollToPosition(previousPluginPosition);
+                rp.scrollToPosition(handlerCarousselPos);
             }
             presenter.stopPlugin();
             binding.recyclerPicker.setVisibility(View.GONE);
@@ -1511,24 +1510,32 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         displayVideoSurface(true,true);
     }
 
+    private void setHandlerCarousselPos() {
+        String mediaHandlerId =  presenter.mediaHandlerId();
+        if (mediaHandlerId == null)
+            return;
+        handlerCarousselPos = callMediaHandlers.indexOf(mediaHandlerId) + 1;
+        rp.scrollToPosition(handlerCarousselPos);
+    }
+
     /**
      * Called whenever a plugin drawable in the recycler picker is clicked or scrolled to
-     * @param position
+     * @param newPosition
      */
     @Override
-    public void onItemSelected(int position) {
-        Log.i(TAG, "selected position: " + position);
+    public void onItemSelected(int newPosition) {
+        Log.i(TAG, "selected position: " + newPosition);
         /** If there was a different plugin before, unload it
-         * If previousPluginPosition = -1 or 0, there was no plugin
+         * If handlerCarousselPos = -1 or 0, there was no plugin
          */
-        if (previousPluginPosition > 0) {
-            String callMediaId = callMediaHandlers.get(previousPluginPosition-1);
+        if (handlerCarousselPos > 0) {
+            String callMediaId = callMediaHandlers.get(handlerCarousselPos-1);
             presenter.toggleCallMediaHandler(callMediaId, false);
         }
 
-        if (position > 0) {
-            previousPluginPosition = position;
-            String callMediaId = callMediaHandlers.get(position-1);
+        if (newPosition > 0) {
+            handlerCarousselPos = newPosition;
+            String callMediaId = callMediaHandlers.get(handlerCarousselPos-1);
             presenter.toggleCallMediaHandler(callMediaId, true);
         }
     }
@@ -1536,19 +1543,19 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     /**
      * Called whenever a plugin drawable in the recycler picker is clicked
-     * @param position
+     * @param newPosition
      */
     @Override
-    public void onItemClicked(int position) {
-        Log.i(TAG, "selected position: " + position);
-        if (position == 0) {
+    public void onItemClicked(int newPosition) {
+        Log.i(TAG, "selected position: " + newPosition);
+        if (newPosition == 0) {
             /** If there was a different plugin before, unload it
-             * If previousPluginPosition = -1 or 0, there was no plugin
+             * If handlerCarousselPos = -1 or 0, there was no plugin
              */
-            if (previousPluginPosition > 0) {
-                String callMediaId = callMediaHandlers.get(previousPluginPosition-1);
+            if (handlerCarousselPos > 0) {
+                String callMediaId = callMediaHandlers.get(handlerCarousselPos-1);
                 presenter.toggleCallMediaHandler(callMediaId, false);
-                rp.scrollToPosition(previousPluginPosition);
+                rp.scrollToPosition(handlerCarousselPos);
             }
 
             CallActivity callActivity = (CallActivity) getActivity();

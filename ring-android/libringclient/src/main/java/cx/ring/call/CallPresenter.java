@@ -21,8 +21,11 @@
 package cx.ring.call;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -48,6 +51,7 @@ import io.reactivex.Scheduler;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.Subject;
+
 
 public class CallPresenter extends RootPresenter<CallView> {
 
@@ -314,6 +318,13 @@ public class CallPresenter extends RootPresenter<CallView> {
         finish();
     }
 
+    public void holdCall(String confId) {
+        if (mConference == null) {
+            return;
+        }
+        mCallService.hold(confId);
+    }
+
     public void refuseCall() {
         final Conference call = mConference;
         if (call != null) {
@@ -465,10 +476,26 @@ public class CallPresenter extends RootPresenter<CallView> {
         Log.w(TAG, "confUpdate " + call.getId());
 
         mConference = call;
-        SipCall.CallStatus status = mConference.getState();
-        if (status == SipCall.CallStatus.HOLD && mCallService.getConferenceList().size() == 1) {
-            mCallService.unhold(mConference.getId());
+        Map<String, ArrayList<String>> confList = mCallService.getConferenceList();
+        Object[] confs = confList.keySet().toArray();
+        for (Object confId : confs) {
+            Set<String> participants = new HashSet<>(Ringservice.getParticipantList(mConference.getId()));
+            if (!mConference.getId().equals(confId)) {
+                for (String participant : participants) {
+                    holdCall(participant);
+                }
+                holdCall((String)confId);
+            } else {
+                SipCall.CallStatus status = mConference.getState();
+                if ((status == null || status == SipCall.CallStatus.HOLD) && !mOnGoingCall) {
+                    for (String participant : participants) {
+                        mCallService.unhold(participant);
+                    }
+                    mCallService.unhold(mConference.getId());
+                }
+            }
         }
+
         mAudioOnly = !call.hasVideo();
         CallView view = getView();
         if (view == null)
@@ -727,18 +754,47 @@ public class CallPresenter extends RootPresenter<CallView> {
         return mConference.getMaximizedCall() == call;
     }
 
+    public boolean isPluginStarted() {
+        if (mConference == null)
+            return false;
+        StringVect handlersIds = Ringservice.getCallMediaHandlerStatus(mConference.getId());
+        if (handlersIds == null)
+            return false;
+        return !handlersIds.isEmpty();
+    }
+
+    public String mediaHandlerId() {
+        if (mConference == null)
+            return null;
+
+        StringVect handlersIds = Ringservice.getCallMediaHandlerStatus(mConference.getId());
+        if (handlersIds == null || handlersIds.isEmpty())
+            return null;
+        return handlersIds.get(0);
+    }
+
     public void startPlugin(String mediaHandlerId) {
-        mHardwareService.startMediaHandler(mediaHandlerId);
         if(mConference == null)
             return;
+        mHardwareService.startMediaHandler(mediaHandlerId);
         mHardwareService.switchInput(mConference.getId(), mHardwareService.isPreviewFromFrontCamera());
     }
 
     public void stopPlugin() {
-        mHardwareService.stopMediaHandler();
         if(mConference == null)
             return;
+        mHardwareService.stopMediaHandler();
         mHardwareService.switchInput(mConference.getId(), mHardwareService.isPreviewFromFrontCamera());
+    }
+
+    public void pausePlugin() {
+        if(mConference == null)
+            return;
+        StringVect handlersIds = Ringservice.getCallMediaHandlerStatus(mConference.getId());
+        if (handlersIds != null || handlersIds.isEmpty())
+            return;
+        for (String id : handlersIds)
+            getView().toggleCallMediaHandler(id, mConference.getId(), false);
     }
 
 }

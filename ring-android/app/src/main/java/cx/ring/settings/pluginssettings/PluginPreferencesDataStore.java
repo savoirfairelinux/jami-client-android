@@ -12,8 +12,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import static cx.ring.plugins.PluginUtils.listStringToStringList;
-import static cx.ring.plugins.PluginUtils.stringListToListString;
+import cx.ring.plugins.PluginUtils;
 
 public class PluginPreferencesDataStore extends PreferenceDataStore {
 
@@ -59,7 +58,7 @@ public class PluginPreferencesDataStore extends PreferenceDataStore {
     public void putStringSet(String key, @Nullable Set<String> values) {
         if(values != null) {
             boolean success = mPluginDetails.setPluginPreference(key,
-                    listStringToStringList(new ArrayList<>(values)));
+                    PluginUtils.listStringToStringList(new ArrayList<>(values)));
             if(success) {
                 notifyPreferencesValuesChange();
             }
@@ -112,7 +111,7 @@ public class PluginPreferencesDataStore extends PreferenceDataStore {
         String value = getPreferencesValues().get(key);
 
         if(value != null) {
-            returnValue = new HashSet<>(stringListToListString(value));
+            returnValue = new HashSet<>(PluginUtils.stringListToListString(value));
         }
 
         return returnValue;

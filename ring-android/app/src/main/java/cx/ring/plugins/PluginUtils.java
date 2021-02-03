@@ -1,8 +1,6 @@
 package cx.ring.plugins;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 
 import androidx.annotation.NonNull;
 
@@ -14,10 +12,6 @@ import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
 import cx.ring.settings.pluginssettings.PluginDetails;
 import cx.ring.utils.Log;
-
-import static android.content.Context.MODE_PRIVATE;
-import static cx.ring.daemon.Ringservice.getChatHandlerDetails;
-import static cx.ring.daemon.Ringservice.toggleChatHandler;
 
 public class PluginUtils {
 
@@ -71,7 +65,7 @@ public class PluginUtils {
 
         List<PluginDetails> handlersList = new ArrayList<>(chatHandlersId.size());
         for (String handlerId : chatHandlersId) {
-            StringMap handlerDetails = getChatHandlerDetails(handlerId);
+            StringMap handlerDetails = Ringservice.getChatHandlerDetails(handlerId);
             String pluginPath = handlerDetails.get("pluginId");
             pluginPath = pluginPath.substring(0, pluginPath.lastIndexOf("/data"));
             boolean enabled = false;
