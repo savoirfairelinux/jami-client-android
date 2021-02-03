@@ -86,6 +86,17 @@ import androidx.percentlayout.widget.PercentFrameLayout;
 
 import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 
+import net.jami.call.CallPresenter;
+import net.jami.call.CallView;
+import net.jami.daemon.JamiService;
+import net.jami.model.Call;
+import net.jami.model.Conference;
+import net.jami.model.Contact;
+import net.jami.services.DeviceRuntimeService;
+import net.jami.services.HardwareService;
+import net.jami.services.NotificationService;
+import net.jami.utils.StringUtils;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -99,36 +110,24 @@ import javax.inject.Inject;
 import cx.ring.R;
 import cx.ring.adapters.ConfParticipantAdapter;
 import cx.ring.application.JamiApplication;
-import net.jami.call.CallPresenter;
-import net.jami.call.CallView;
 import cx.ring.client.CallActivity;
 import cx.ring.client.ContactDetailsActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.ConversationSelectionActivity;
 import cx.ring.client.HomeActivity;
-import net.jami.daemon.Ringservice;
 import cx.ring.databinding.FragCallBinding;
 import cx.ring.databinding.ItemParticipantLabelBinding;
-import net.jami.model.Contact;
-import net.jami.model.Conference;
-import net.jami.model.Call;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.plugins.RecyclerPicker.RecyclerPicker;
 import cx.ring.plugins.RecyclerPicker.RecyclerPickerLayoutManager;
 import cx.ring.service.DRingService;
-import net.jami.services.DeviceRuntimeService;
-import net.jami.services.HardwareService;
-import net.jami.services.NotificationService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.MediaButtonsHelper;
-import net.jami.utils.StringUtils;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.disposables.CompositeDisposable;
-
-import static net.jami.daemon.Ringservice.getPluginsEnabled;
 
 public class CallFragment extends BaseSupportFragment<CallPresenter> implements CallView, MediaButtonsHelper.MediaButtonsHelperCallback, RecyclerPickerLayoutManager.ItemSelectedListener {
 
@@ -284,7 +283,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                     getString(R.string.action_call_hangup),
                     PendingIntent.getService(context, new Random().nextInt(),
                             new Intent(DRingService.ACTION_CALL_END)
-                                    .setClass(context, DRingService.class)
+                                    .setClass(context, JamiService.class)
                                     .putExtra(NotificationService.KEY_CALL_ID, callId), PendingIntent.FLAG_ONE_SHOT)));
             paramBuilder.setActions(actions);
             requireActivity().enterPictureInPictureMode(paramBuilder.build());
@@ -905,7 +904,9 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     @Override
     public void displayDialPadKeyboard() {
-        KeyboardVisibilityManager.showKeyboard(getActivity(), binding.dialpadEditText, InputMethodManager.SHOW_FORCED);
+        binding.dialpadEditText.requestFocus();
+        InputMethodManager imm = (InputMethodManager) binding.dialpadEditText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
     }
 
     @Override
@@ -1370,11 +1371,11 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
     @Override
     public void toggleCallMediaHandler(String id, String callId, boolean toggle) {
-        Ringservice.toggleCallMediaHandler(id, callId, toggle);
+        JamiService.toggleCallMediaHandler(id, callId, toggle);
     }
 
     public Map<String, String> getCallMediaHandlerDetails(String id) {
-        return Ringservice.getCallMediaHandlerDetails(id).toNative();
+        return JamiService.getCallMediaHandlerDetails(id).toNative();
     }
 
     @Override
@@ -1393,7 +1394,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     public boolean displayPluginsButton() {
-        return getPluginsEnabled();
+        return JamiService.getPluginsEnabled();
     }
 
     @Override
@@ -1448,7 +1449,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         // Create callMediaHandlers and videoPluginsItems in a lazy manner
         if (pluginsModeFirst) {
             // Init
-            callMediaHandlers = Ringservice.getCallMediaHandlers();
+            callMediaHandlers = JamiService.getCallMediaHandlers();
             List<Drawable> videoPluginsItems = new ArrayList<>(callMediaHandlers.size() + 1);
 
             videoPluginsItems.add(context.getDrawable(R.drawable.baseline_cancel_24));

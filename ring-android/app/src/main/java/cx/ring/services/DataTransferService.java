@@ -40,7 +40,7 @@ public class DataTransferService extends Service {
     private final String TAG = DataTransferService.class.getSimpleName();
 
     @Inject
-    net.jami.services.NotificationService mNotificationService;
+    NotificationService mNotificationService;
     private NotificationManagerCompat notificationManager;
 
     private boolean isFirst = true;
@@ -59,22 +59,22 @@ public class DataTransferService extends Service {
             return START_NOT_STICKY;
         }
 
-        if (isFirst) {
-            isFirst = false;
+        //if (isFirst) {
+        //    isFirst = false;
             mNotificationService.cancelFileNotification(notificationId, true);
             serviceNotificationId = notificationId;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
                 startForeground(NOTIF_FILE_SERVICE_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
             else
                 startForeground(NOTIF_FILE_SERVICE_ID, notification);
-        }
+        //}
 
         if (mNotificationService.getDataTransferNotification(serviceNotificationId) == null) {
             mNotificationService.cancelFileNotification(notificationId, true);
             serviceNotificationId = notificationId;
         }
 
-        if(notificationId == serviceNotificationId)
+        if (notificationId == serviceNotificationId)
             notificationManager.notify(NOTIF_FILE_SERVICE_ID, notification);
         else
             notificationManager.notify(notificationId, notification);
