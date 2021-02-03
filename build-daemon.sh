@@ -211,7 +211,7 @@ ${CXX} --shared \
        -Wno-unused-variable \
        -Wno-unused-function \
        -Wno-unused-parameter \
-       ${JNIDIR}/ring_wrapper.cpp \
+       ${JNIDIR}/jami_wrapper.cpp \
        ${DAEMON_BUILD_DIR}/src/.libs/libring.a \
        -isystem ${DAEMON_DIR}/contrib/${TARGET}/include \
        -I${DAEMON_DIR}/src \
