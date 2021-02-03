@@ -20,11 +20,11 @@ package cx.ring.settings.pluginssettings;
 
 import android.graphics.drawable.Drawable;
 
+import net.jami.daemon.JamiService;
+
 import java.io.File;
 import java.util.List;
 import java.util.Map;
-
-import net.jami.daemon.Ringservice;
 
 /**
  * Class that contains PluginDetails like name, rootPath
@@ -84,19 +84,19 @@ public class PluginDetails {
     }
 
     public Map<String, String> getPluginDetails() {
-        return Ringservice.getPluginDetails(getRootPath()).toNative();
+        return JamiService.getPluginDetails(getRootPath()).toNative();
     }
 
     public List<Map<String,String>> getPluginPreferences() {
-        return Ringservice.getPluginPreferences(getRootPath()).toNative();
+        return JamiService.getPluginPreferences(getRootPath()).toNative();
     }
 
     public Map<String, String> getPluginPreferencesValues() {
-        return Ringservice.getPluginPreferencesValues(getRootPath());
+        return JamiService.getPluginPreferencesValues(getRootPath());
     }
 
     public boolean setPluginPreference(String key, String value) {
-        return Ringservice.setPluginPreference(getRootPath(), key, value);
+        return JamiService.setPluginPreference(getRootPath(), key, value);
     }
 
 }
