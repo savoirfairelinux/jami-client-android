@@ -465,10 +465,6 @@ public class CallPresenter extends RootPresenter<CallView> {
         Log.w(TAG, "confUpdate " + call.getId());
 
         mConference = call;
-        SipCall.CallStatus status = mConference.getState();
-        if (status == SipCall.CallStatus.HOLD && mCallService.getConferenceList().size() == 1) {
-            mCallService.unhold(mConference.getId());
-        }
         mAudioOnly = !call.hasVideo();
         CallView view = getView();
         if (view == null)

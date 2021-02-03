@@ -550,7 +550,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                     @Override
                     public void onOpened() {
                         String currentCall = conf != null ? conf.getId() : null;
-                        if (currentCall == null)
+                        if (currentCall == null || mMediaHandlerId == null)
                             return;
                         if (mPluginCallId != null && !mPluginCallId.equals(currentCall)) {
                             Ringservice.toggleCallMediaHandler(mMediaHandlerId, currentCall, false);
