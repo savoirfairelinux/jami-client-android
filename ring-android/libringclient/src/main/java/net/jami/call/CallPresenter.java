@@ -20,11 +20,10 @@
  */
 package net.jami.call;
 
-import net.jami.daemon.Ringservice;
 import net.jami.facades.ConversationFacade;
+import net.jami.model.Call;
 import net.jami.model.Conference;
 import net.jami.model.Conversation;
-import net.jami.model.Call;
 import net.jami.model.Uri;
 import net.jami.mvp.RootPresenter;
 import net.jami.services.AccountService;
@@ -56,12 +55,12 @@ public class CallPresenter extends RootPresenter<CallView> {
 
     public final static String TAG = CallPresenter.class.getSimpleName();
 
-    private AccountService mAccountService;
-    private ContactService mContactService;
-    private HardwareService mHardwareService;
-    private CallService mCallService;
-    private DeviceRuntimeService mDeviceRuntimeService;
-    private ConversationFacade mConversationFacade;
+    private final AccountService mAccountService;
+    private final ContactService mContactService;
+    private final HardwareService mHardwareService;
+    private final CallService mCallService;
+    private final DeviceRuntimeService mDeviceRuntimeService;
+    private final ConversationFacade mConversationFacade;
 
     private Conference mConference;
     private final List<Call> mPendingCalls = new ArrayList<>();
@@ -90,7 +89,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     @Inject
     public CallPresenter(AccountService accountService,
                          ContactService contactService,
-                         net.jami.services.HardwareService hardwareService,
+                         HardwareService hardwareService,
                          CallService callService,
                          DeviceRuntimeService deviceRuntimeService,
                          ConversationFacade conversationFacade) {
@@ -152,7 +151,7 @@ public class CallPresenter extends RootPresenter<CallView> {
                 }));*/
     }
 
-    public void initOutGoing(String accountId, net.jami.model.Uri conversationUri, String contactId, boolean audioOnly) {
+    public void initOutGoing(String accountId, Uri conversationUri, String contactId, boolean audioOnly) {
         if (accountId == null || contactId == null) {
             net.jami.utils.Log.e(TAG, "initOutGoing: null account or contact");
             hangupCall();
@@ -163,8 +162,8 @@ public class CallPresenter extends RootPresenter<CallView> {
         }
         //getView().blockScreenRotation();
 
-        Observable<net.jami.model.Conference> callObservable = mCallService
-                .placeCall(accountId, conversationUri, net.jami.model.Uri.fromString(StringUtils.toNumber(contactId)), audioOnly)
+        Observable<Conference> callObservable = mCallService
+                .placeCall(accountId, conversationUri, Uri.fromString(StringUtils.toNumber(contactId)), audioOnly)
                 //.map(mCallService::getConference)
                 .flatMapObservable(call -> mCallService.getConfUpdates(call))
                 .share();
@@ -194,7 +193,7 @@ public class CallPresenter extends RootPresenter<CallView> {
         // if the call is incoming through a full intent, this allows the incoming call to display
         incomingIsFullIntent = actionViewOnly;
 
-        Observable<net.jami.model.Conference> callObservable = mCallService.getConfUpdates(confId)
+        Observable<Conference> callObservable = mCallService.getConfUpdates(confId)
                 .observeOn(mUiScheduler)
                 .share();
 
@@ -415,7 +414,7 @@ public class CallPresenter extends RootPresenter<CallView> {
 
     private Disposable contactDisposable = null;
 
-    private void contactUpdate(final net.jami.model.Conference conference) {
+    private void contactUpdate(final Conference conference) {
         if (mConference != conference) {
             mConference = conference;
             if (contactDisposable != null && !contactDisposable.isDisposed()) {
@@ -464,7 +463,7 @@ public class CallPresenter extends RootPresenter<CallView> {
         mPendingSubject.onNext(mPendingCalls);
     }
 
-    private void confUpdate(net.jami.model.Conference call) {
+    private void confUpdate(Conference call) {
         net.jami.utils.Log.w(TAG, "confUpdate " + call.getId());
 
         mConference = call;
