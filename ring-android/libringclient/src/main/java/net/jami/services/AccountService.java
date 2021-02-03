@@ -56,7 +56,7 @@ import net.jami.daemon.StringVect;
 import net.jami.daemon.UintVect;
 import net.jami.model.Account;
 import net.jami.model.AccountConfig;
-import net.jami.model.CallContact;
+import net.jami.model.Contact;
 import net.jami.model.Codec;
 import net.jami.model.ConfigKey;
 import net.jami.model.ContactEvent;
@@ -65,7 +65,7 @@ import net.jami.model.DataTransfer;
 import net.jami.model.DataTransferError;
 import net.jami.model.Interaction;
 import net.jami.model.Interaction.InteractionStatus;
-import net.jami.model.SipCall;
+import net.jami.model.Call;
 import net.jami.model.TextMessage;
 import net.jami.model.TrustRequest;
 import net.jami.model.Uri;
@@ -240,7 +240,7 @@ public class AccountService {
         private final String query;
 
         public int state;
-        public List<CallContact> results;
+        public List<Contact> results;
 
         public UserSearchResult(String account, String query) {
             accountId = account;
@@ -257,7 +257,7 @@ public class AccountService {
 
         public List<Observable<net.jami.smartlist.SmartListViewModel>> getResultsViewModels() {
             List<Observable<net.jami.smartlist.SmartListViewModel>> vms = new ArrayList<>(results.size());
-            for (CallContact user : results) {
+            for (Contact user : results) {
                 vms.add(Observable.just(new SmartListViewModel(accountId, user, null)));
             }
             return vms;
@@ -408,7 +408,7 @@ public class AccountService {
                         }
                         //conversation.addContact(account.getContactFromCache(member.get("uri")));*/
                         Uri uri = Uri.fromId(member.get("uri"));
-                        CallContact contact = conversation.findContact(uri);
+                        Contact contact = conversation.findContact(uri);
                         if (contact == null) {
                             contact = account.getContactFromCache(uri);
                             conversation.addContact(contact);
@@ -437,7 +437,7 @@ public class AccountService {
                 });
 
                 if (enabled) {
-                    for (CallContact contact : account.getContacts().values()) {
+                    for (Contact contact : account.getContacts().values()) {
                         if (!contact.isUsernameLoaded())
                             Ringservice.lookupAddress(accountId, "", contact.getUri().getRawRingId());
                     }
@@ -1327,7 +1327,7 @@ public class AccountService {
         if (account == null)
             return;
         Log.w(TAG, "profileReceived: " + accountId + ", " + peerId + ", " + vcardPath);
-        CallContact contact = account.getContactFromCache(peerId);
+        Contact contact = account.getContactFromCache(peerId);
         mVCardService.peerProfileReceived(accountId, peerId, new File(vcardPath))
                 .subscribe(profile -> contact.setProfile(profile.first, profile.second), e -> Log.e(TAG, "Error saving contact profile", e));
     }
@@ -1442,7 +1442,7 @@ public class AccountService {
 
             VCard vcard = request.getVCard();
             if (vcard != null) {
-                CallContact contact = account.getContactFromCache(fromUri);
+                Contact contact = account.getContactFromCache(fromUri);
                 if (!contact.detailsLoaded) {
                     // VCardUtils.savePeerProfileToDisk(vcard, accountId, from + ".vcf", mDeviceRuntimeService.provideFilesDir());
                     mVCardService.loadVCardProfile(vcard)
@@ -1508,7 +1508,7 @@ public class AccountService {
             String firstName = m.get("firstName");
             String lastName = m.get("lastName");
             String picture_b64 = m.get("profilePicture");
-            CallContact contact = account.getContactFromCache(uri);
+            Contact contact = account.getContactFromCache(uri);
             if (contact != null) {
                 contact.setUsername(username);
                 contact.setProfile(firstName + " " + lastName, mVCardService.base64ToBitmap(picture_b64));
@@ -1530,7 +1530,7 @@ public class AccountService {
         //Log.w(TAG, "addMessage2 " + type + " " + author + " id:" + id + " parents:" + parents);
 
         long timestamp = Long.parseLong(message.get("timestamp")) * 1000;
-        CallContact contact = conversation.findContact(authorUri);
+        Contact contact = conversation.findContact(authorUri);
         if (contact == null) {
             contact = account.getContactFromCache(authorUri);
         }
@@ -1553,8 +1553,8 @@ public class AccountService {
                 break;
             }
             case "application/call-history+json":
-                interaction = new SipCall(null, account.getAccountID(), authorUri.getRawUriString(), contact.isUser() ? SipCall.Direction.OUTGOING : SipCall.Direction.INCOMING, timestamp);
-                ((SipCall) interaction).setDuration(Long.parseLong(message.get("duration")));
+                interaction = new Call(null, account.getAccountID(), authorUri.getRawUriString(), contact.isUser() ? Call.Direction.OUTGOING : Call.Direction.INCOMING, timestamp);
+                ((Call) interaction).setDuration(Long.parseLong(message.get("duration")));
                 break;
             case "merge":
             default:
@@ -1607,13 +1607,13 @@ public class AccountService {
         switch (ConversationMemberEvent.values()[event])  {
             case Add:
             case Join: {
-                CallContact contact = account.getContactFromCache(uri);
+                Contact contact = account.getContactFromCache(uri);
                 conversation.addContact(contact);
                 break;
             }
             case Remove:
             case Ban: {
-                CallContact contact = conversation.findContact(uri);
+                Contact contact = conversation.findContact(uri);
                 if (contact != null) {
                     conversation.removeContact(contact);
                 }
@@ -1639,7 +1639,7 @@ public class AccountService {
 
         for (Map<String, String> member : Ringservice.getConversationMembers(accountId, conversationId)) {
             Uri uri = Uri.fromId(member.get("uri"));
-            CallContact contact = conversation.findContact(uri);
+            Contact contact = conversation.findContact(uri);
             if (contact == null) {
                 contact = account.getContactFromCache(uri);
                 conversation.addContact(contact);

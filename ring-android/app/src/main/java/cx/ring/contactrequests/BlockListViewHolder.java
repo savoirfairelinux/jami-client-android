@@ -23,23 +23,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import cx.ring.contacts.AvatarFactory;
 import cx.ring.databinding.ItemContactBlacklistBinding;
-import net.jami.model.CallContact;
+import net.jami.model.Contact;
 
-public class BlackListViewHolder extends RecyclerView.ViewHolder {
+public class BlockListViewHolder extends RecyclerView.ViewHolder {
     private final ItemContactBlacklistBinding binding;
 
-    BlackListViewHolder(View view) {
+    BlockListViewHolder(View view) {
         super(view);
         binding = ItemContactBlacklistBinding.bind(view);
     }
 
-    void bind(final BlackListListeners clickListener, final CallContact contact) {
+    void bind(final BlockListListeners clickListener, final Contact contact) {
         AvatarFactory.loadGlideAvatar(binding.photo, contact);
         binding.displayName.setText(contact.getRingUsername());
         binding.unblock.setOnClickListener(view -> clickListener.onUnblockClicked(contact));
     }
 
-    public interface BlackListListeners {
-        void onUnblockClicked(CallContact contact);
+    public interface BlockListListeners {
+        void onUnblockClicked(Contact contact);
     }
 }
