@@ -21,11 +21,11 @@
 package net.jami.services;
 
 import net.jami.model.Account;
-import net.jami.model.CallContact;
+import net.jami.model.Contact;
 import net.jami.model.Conference;
 import net.jami.model.Conversation;
 import net.jami.model.DataTransfer;
-import net.jami.model.SipCall;
+import net.jami.model.Call;
 import net.jami.model.Uri;
 
 public interface NotificationService {
@@ -54,7 +54,7 @@ public interface NotificationService {
 
     void showFileTransferNotification(Conversation conversation, DataTransfer info);
 
-    void showMissedCallNotification(SipCall call);
+    void showMissedCallNotification(Call call);
 
     void cancelFileNotification(int id, boolean isMigratingToService);
 
@@ -72,7 +72,7 @@ public interface NotificationService {
 
     void onConnectionUpdate(Boolean b);
 
-    void showLocationNotification(Account first, CallContact contact);
-    void cancelLocationNotification(Account first, CallContact contact);
+    void showLocationNotification(Account first, Contact contact);
+    void cancelLocationNotification(Account first, Contact contact);
 
 }
