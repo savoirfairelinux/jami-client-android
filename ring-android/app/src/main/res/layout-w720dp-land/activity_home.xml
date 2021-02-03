@@ -1,5 +1,6 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -16,21 +17,20 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_alignParentTop="true"
-            app:contentInsetStart="20dp"
             android:clipChildren="false"
-            android:clipToPadding="false">
+            android:clipToPadding="false"
+            app:contentInsetStart="20dp">
 
             <cx.ring.views.SwitchButton
                 android:id="@+id/account_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="12dp"
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="end"
-                app:showText="true"
-                app:status="@string/account_status_offline"
+                android:layout_marginEnd="12dp"
                 android:visibility="gone"
-                />
+                app:showText="true"
+                app:status="@string/account_status_offline" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -57,7 +57,8 @@
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true" />
+                        android:layout_centerVertical="true"
+                        tools:src="@drawable/baseline_person_24" />
 
                     <TextView
                         android:id="@+id/contact_title"
@@ -66,8 +67,11 @@
                         android:layout_alignTop="@+id/contact_image"
                         android:layout_marginStart="16dp"
                         android:layout_toEndOf="@+id/contact_image"
+                        android:ellipsize="middle"
+                        android:singleLine="true"
                         android:textColor="@color/textColorPrimary"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        tools:text="@tools:sample/first_names" />
 
                     <TextView
                         android:id="@+id/contact_subtitle"
@@ -76,9 +80,10 @@
                         android:layout_below="@+id/contact_title"
                         android:layout_alignStart="@id/contact_title"
                         android:layout_toEndOf="@+id/contact_image"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:textSize="14sp" />
+                        android:ellipsize="middle"
+                        android:singleLine="true"
+                        android:textSize="14sp"
+                        tools:text="@tools:sample/full_names" />
 
                 </RelativeLayout>
 
@@ -92,16 +97,14 @@
         android:id="@+id/main_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/main_toolbar"
-        />
+        android:layout_below="@id/main_toolbar" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation_view"
         android:layout_width="320dp"
         android:layout_height="@dimen/navigation_bottom_height"
-        app:menu="@menu/navigation_bar"
-        app:labelVisibilityMode="labeled"
         android:layout_gravity="bottom"
-        />
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/navigation_bar" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

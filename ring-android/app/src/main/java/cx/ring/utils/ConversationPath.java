@@ -7,12 +7,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import org.jetbrains.annotations.Contract;
-
 import java.util.List;
 import java.util.Objects;
 
 import cx.ring.fragments.ConversationFragment;
+import cx.ring.model.Conversation;
 import cx.ring.model.Interaction;
 
 public class ConversationPath {
@@ -55,8 +54,11 @@ public class ConversationPath {
                 .appendEncodedPath(conversationUri.getUri())
                 .build();
     }
+    public static Uri toUri(@NonNull Conversation conversation) {
+        return toUri(conversation.getAccountId(), conversation.getUri());
+    }
     public static Uri toUri(@NonNull Interaction interaction) {
-        return toUri(interaction.getAccount(), new cx.ring.model.Uri(interaction.getConversation().getParticipant()));
+        return toUri(interaction.getAccount(), cx.ring.model.Uri.fromString(interaction.getConversation().getParticipant()));
     }
 
     public Bundle toBundle() {
@@ -88,7 +90,6 @@ public class ConversationPath {
         return null;
     }
 
-    @Contract("null -> null")
     public static ConversationPath fromBundle(@Nullable Bundle bundle) {
         if (bundle != null) {
             String accountId = bundle.getString(ConversationFragment.KEY_ACCOUNT_ID);
@@ -100,7 +101,6 @@ public class ConversationPath {
         return null;
     }
 
-    @Contract("null -> null")
     public static ConversationPath fromIntent(@Nullable Intent intent) {
         if (intent != null) {
             Uri uri = intent.getData();
@@ -129,6 +129,6 @@ public class ConversationPath {
     }
 
     public cx.ring.model.Uri getConversationUri() {
-        return new cx.ring.model.Uri(conversationId);
+        return cx.ring.model.Uri.fromString(conversationId);
     }
 }

@@ -20,6 +20,7 @@
  */
 package cx.ring.model;
 
+import java.io.File;
 import java.util.Set;
 
 import cx.ring.utils.HashUtils;
@@ -29,8 +30,10 @@ public class DataTransfer extends Interaction {
 
     private long mTotalSize;
     private long mBytesProgress;
-    private String mPeerId;
+    //private final String mPeerId;
     private String mExtension;
+    //private String mTransferId;
+    public File destination;
 
     private static final Set<String> IMAGE_EXTENSIONS = HashUtils.asSet("jpg", "jpeg", "png", "gif");
     private static final Set<String> AUDIO_EXTENSIONS = HashUtils.asSet("ogg", "mp3", "aac", "flac", "m4a");
@@ -38,11 +41,11 @@ public class DataTransfer extends Interaction {
     private static final int MAX_SIZE = 32 * 1024 * 1024;
     private static final int UNLIMITED_SIZE = 256 * 1024 * 1024;
 
-    public DataTransfer(ConversationHistory conversation, String account, String displayName, boolean isOutgoing, long totalSize, long bytesProgress, long daemonId) {
-        mAuthor = isOutgoing ? null : conversation.getParticipant();
+    public DataTransfer(ConversationHistory conversation, String peer, String account, String displayName, boolean isOutgoing, long totalSize, long bytesProgress, long daemonId) {
+        mAuthor = isOutgoing ? null : peer;
         mAccount = account;
         mConversation = conversation;
-        mPeerId = conversation.getParticipant();
+        mAuthor = peer;
         mTotalSize = totalSize;
         mBytesProgress = bytesProgress;
         mBody = displayName;
@@ -51,16 +54,15 @@ public class DataTransfer extends Interaction {
         mTimestamp = System.currentTimeMillis();
         mIsRead = 1;
         mDaemonId = daemonId;
-        mIsIncoming = mAuthor != null;
+        mIsIncoming = !isOutgoing;
     }
-
 
     public DataTransfer(Interaction interaction) {
         mId = interaction.getId();
         mDaemonId = interaction.getDaemonId();
         mAuthor = interaction.getAuthor();
         mConversation = interaction.getConversation();
-        mPeerId = interaction.getConversation().getParticipant();
+        // mPeerId = interaction.getConversation().getParticipant();
         mBody = interaction.getBody();
         mStatus = interaction.getStatus().toString();
         mType = interaction.getType().toString();
@@ -68,12 +70,29 @@ public class DataTransfer extends Interaction {
         mAccount = interaction.getAccount();
         mContact = interaction.getContact();
         mIsRead = 1;
-        mIsIncoming = mAuthor != null;
+        mIsIncoming = interaction.mIsIncoming;//mAuthor != null;
+    }
+
+    public DataTransfer(long transferId, String accountId, String peerUri, String displayName, boolean isOutgoing, long timestamp, long totalSize, long bytesProgress) {
+        mDaemonId = transferId;
+        mAccount = accountId;
+        //mTransferId = transferId;
+        //mPeerId = peerUri;
+        mBody = displayName;
+        mAuthor = peerUri;
+        mIsIncoming = !isOutgoing;
+        mTotalSize = totalSize;
+        mBytesProgress = bytesProgress;
+        mTimestamp = timestamp;
+        //mDaemonId = Long.parseUnsignedLong(transferId);
+        mType = InteractionType.DATA_TRANSFER.toString();
     }
 
     public String getExtension() {
+        if (mBody == null)
+            return null;
         if (mExtension == null)
-            mExtension = StringUtils.getFileExtension(getDisplayName()).toLowerCase();
+            mExtension = StringUtils.getFileExtension(mBody).toLowerCase();
         return mExtension;
     }
 
@@ -96,6 +115,9 @@ public class DataTransfer extends Interaction {
     }
 
     public String getStoragePath() {
+        if (StringUtils.isEmpty(mBody)) {
+            return getMessageId();
+        }
         String ext = StringUtils.getFileExtension(mBody);
         if (ext.length() > 8)
             ext = ext.substring(0, 8);
@@ -124,11 +146,6 @@ public class DataTransfer extends Interaction {
 
     public void setBytesProgress(long bytesProgress) { mBytesProgress = bytesProgress;
     }
-
-    public String getPeerId() {
-        return mPeerId;
-    }
-
 
     public boolean isError() {
         return getStatus().isError();
