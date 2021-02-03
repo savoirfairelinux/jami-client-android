@@ -24,12 +24,11 @@ public class Phone {
     // TODO: make sure this is usefull since a Uri should already know this
     private NumberType mNumberType;
 
-    private net.jami.model.Uri mNumber;
+    private Uri mNumber;
     private int mCategory; // Home, work, custom etc.
     private String mLabel;
 
-
-    public Phone(net.jami.model.Uri number, int category) {
+    public Phone(Uri number, int category) {
         mNumberType = NumberType.UNKNOWN;
         mNumber = number;
         mLabel = null;
@@ -43,10 +42,10 @@ public class Phone {
     public Phone(String number, int category, String label) {
         mNumberType = NumberType.UNKNOWN;
         mCategory = category;
-        mNumber = net.jami.model.Uri.fromString(number);
+        mNumber = Uri.fromString(number);
         mLabel = label;
     }
-    public Phone(net.jami.model.Uri number, int category, String label) {
+    public Phone(Uri number, int category, String label) {
         mNumberType = NumberType.UNKNOWN;
         mCategory = category;
         mNumber = number;
@@ -55,11 +54,11 @@ public class Phone {
 
     public Phone(String number, int category, String label, NumberType numberType) {
         mNumberType = numberType;
-        mNumber = net.jami.model.Uri.fromString(number);
+        mNumber = Uri.fromString(number);
         mLabel = label;
         mCategory = category;
     }
-    public Phone(net.jami.model.Uri number, int category, String label, NumberType numberType) {
+    public Phone(Uri number, int category, String label, NumberType numberType) {
         mNumberType = numberType;
         mNumber = number;
         mLabel = label;
@@ -74,12 +73,12 @@ public class Phone {
         setNumberType(NumberType.fromInteger(type));
     }
 
-    public net.jami.model.Uri getNumber() {
+    public Uri getNumber() {
         return mNumber;
     }
 
     public void setNumber(String number) {
-        setNumber(net.jami.model.Uri.fromString(number));
+        setNumber(Uri.fromString(number));
     }
 
     public NumberType getNumbertype() {

@@ -20,9 +20,9 @@
  */
 package net.jami.model;
 
-public class ContactEvent extends net.jami.model.Interaction {
+public class ContactEvent extends Interaction {
 
-    public net.jami.model.TrustRequest request;
+    public TrustRequest request;
     public Event event;
 
 
@@ -57,7 +57,7 @@ public class ContactEvent extends net.jami.model.Interaction {
         mIsRead = 1;
     }
 
-    public ContactEvent(Contact contact, net.jami.model.TrustRequest request) {
+    public ContactEvent(Contact contact, TrustRequest request) {
         this.request = request;
         mContact = contact;
         mAuthor = contact.getUri().getUri();
