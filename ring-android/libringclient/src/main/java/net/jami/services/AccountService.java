@@ -1547,10 +1547,15 @@ public class AccountService {
                 String transferId = message.get("tid");
                 String fileName = message.get("displayName");
                 long fileSize = Long.parseLong(message.get("totalSize"));
-                long tid = Long.parseUnsignedLong(transferId);
+                long tid = Long.parseLong(transferId);
                 interaction = account.getDataTransfer(tid);
                 if (interaction == null) {
                     interaction = new DataTransfer(tid, account.getAccountID(), author, fileName, contact.isUser(), timestamp, fileSize, 0);
+                    File path = mDeviceRuntimeService.getConversationPath(conversation.getUri().getRawRingId(), ((DataTransfer)interaction).getStoragePath());
+                    boolean exists = path.exists();
+                    if (exists)
+                        ((DataTransfer)interaction).setBytesProgress(path.length());
+                    interaction.setStatus(exists ? InteractionStatus.TRANSFER_FINISHED : InteractionStatus.TRANSFER_TIMEOUT_EXPIRED);
                 }
                 break;
             }
@@ -1609,8 +1614,10 @@ public class AccountService {
         switch (ConversationMemberEvent.values()[event])  {
             case Add:
             case Join: {
-                Contact contact = account.getContactFromCache(uri);
-                conversation.addContact(contact);
+                Contact contact = conversation.findContact(uri);
+                if (contact == null) {
+                    conversation.addContact(account.getContactFromCache(uri));
+                }
                 break;
             }
             case Remove:
