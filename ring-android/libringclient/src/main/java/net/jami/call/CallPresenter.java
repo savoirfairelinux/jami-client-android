@@ -25,6 +25,7 @@ import net.jami.model.Call;
 import net.jami.model.Conference;
 import net.jami.model.Conversation;
 import net.jami.model.Uri;
+import net.jami.mvp.RootPresenter;
 import net.jami.services.AccountService;
 import net.jami.services.CallService;
 import net.jami.services.ContactService;
@@ -40,8 +41,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import net.jami.mvp.RootPresenter;
 
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
