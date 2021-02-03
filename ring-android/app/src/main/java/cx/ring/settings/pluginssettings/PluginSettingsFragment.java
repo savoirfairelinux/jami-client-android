@@ -38,9 +38,7 @@ import cx.ring.R;
 import cx.ring.client.HomeActivity;
 import cx.ring.daemon.Ringservice;
 import cx.ring.plugins.PluginPreferences;
-
-import static cx.ring.plugins.PluginUtils.getOrElse;
-import static cx.ring.plugins.PluginUtils.stringListToListString;
+import cx.ring.plugins.PluginUtils;
 
 public class PluginSettingsFragment extends PreferenceFragmentCompat {
     public static final String TAG = PluginSettingsFragment.class.getSimpleName();
@@ -260,17 +258,17 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
                                          Map<String, String> preferenceModel) {
         String key = preferenceModel.get("key");
         preference.setKey(key);
-        preference.setTitle(getOrElse(preferenceModel.get("title"), ""));
-        preference.setSummary(getOrElse(preferenceModel.get("summary"), ""));
+        preference.setTitle(PluginUtils.getOrElse(preferenceModel.get("title"), ""));
+        preference.setSummary(PluginUtils.getOrElse(preferenceModel.get("summary"), ""));
     }
 
     //TODO : add drawable icon
     private void setDialogPreferenceAttributes(DialogPreference preference,
                                                Map<String, String> preferenceModel) {
-        String dialogTitle = getOrElse(preferenceModel.get("dialogTitle"), "");
-        String dialogMessage = getOrElse(preferenceModel.get("dialogMessage"), "");
-        String positiveButtonText = getOrElse(preferenceModel.get("positiveButtonText"), "");
-        String negativeButtonText = getOrElse(preferenceModel.get("negativeButtonText"), "");
+        String dialogTitle = PluginUtils.getOrElse(preferenceModel.get("dialogTitle"), "");
+        String dialogMessage = PluginUtils.getOrElse(preferenceModel.get("dialogMessage"), "");
+        String positiveButtonText = PluginUtils.getOrElse(preferenceModel.get("positiveButtonText"), "");
+        String negativeButtonText = PluginUtils.getOrElse(preferenceModel.get("negativeButtonText"), "");
 
         if (!dialogTitle.isEmpty()) {
             preference.setDialogTitle(dialogTitle);
@@ -311,11 +309,11 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
     private void setListPreferenceAttributes(ListPreference preference,
                                              Map<String, String> preferenceModel) {
         setDialogPreferenceAttributes(preference, preferenceModel);
-        String entries = getOrElse(preferenceModel.get("entries"), "");
-        preference.setEntries(stringListToListString(entries).
+        String entries = PluginUtils.getOrElse(preferenceModel.get("entries"), "");
+        preference.setEntries(PluginUtils.stringListToListString(entries).
                 toArray(new CharSequence[ 0 ]));
-        String entryValues = getOrElse(preferenceModel.get("entryValues"), "");
-        preference.setEntryValues(stringListToListString(entryValues).
+        String entryValues = PluginUtils.getOrElse(preferenceModel.get("entryValues"), "");
+        preference.setEntryValues(PluginUtils.stringListToListString(entryValues).
                 toArray(new CharSequence[ 0 ]));
         preference.setDefaultValue(preferenceModel.get("defaultValue"));
     }
@@ -330,16 +328,16 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
     private void setMultiSelectListPreferenceAttributes(MultiSelectListPreference preference,
                                                         Map<String, String> preferenceModel) {
         setDialogPreferenceAttributes(preference, preferenceModel);
-        String entries = getOrElse(preferenceModel.get("entries"), "[]");
-        preference.setEntries(stringListToListString(entries).
+        String entries = PluginUtils.getOrElse(preferenceModel.get("entries"), "[]");
+        preference.setEntries(PluginUtils.stringListToListString(entries).
                 toArray(new CharSequence[ 0 ]));
-        String entryValues = getOrElse(preferenceModel.get("entryValues"), "[]");
-        preference.setEntryValues(stringListToListString(entryValues).
+        String entryValues = PluginUtils.getOrElse(preferenceModel.get("entryValues"), "[]");
+        preference.setEntryValues(PluginUtils.stringListToListString(entryValues).
                 toArray(new CharSequence[ 0 ]));
-        String defaultValues = getOrElse(preferenceModel.get("defaultValue"), "[]");
-        preference.setEntryValues(stringListToListString(entryValues).
+        String defaultValues = PluginUtils.getOrElse(preferenceModel.get("defaultValue"), "[]");
+        preference.setEntryValues(PluginUtils.stringListToListString(entryValues).
                 toArray(new CharSequence[ 0 ]));
-        Set<CharSequence> set = new HashSet<>(stringListToListString(defaultValues));
+        Set<CharSequence> set = new HashSet<>(PluginUtils.stringListToListString(defaultValues));
         preference.setDefaultValue(set);
     }
 
@@ -354,17 +352,17 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
         int min = 0, max = 1, increment = 1;
         int defaultValue = 0;
         try {
-            min = Integer.parseInt(getOrElse(preferenceModel.get("min"), "0"));
-            max = Integer.parseInt(getOrElse(preferenceModel.get("max"), "1"));
-            increment = Integer.parseInt(getOrElse(preferenceModel.get("increment"), "1"));
-            defaultValue = Integer.parseInt(getOrElse(preferenceModel.get("defaultValue"), "[0"));
+            min = Integer.parseInt(PluginUtils.getOrElse(preferenceModel.get("min"), "0"));
+            max = Integer.parseInt(PluginUtils.getOrElse(preferenceModel.get("max"), "1"));
+            increment = Integer.parseInt(PluginUtils.getOrElse(preferenceModel.get("increment"), "1"));
+            defaultValue = Integer.parseInt(PluginUtils.getOrElse(preferenceModel.get("defaultValue"), "[0"));
         } catch (NumberFormatException e) {
             Log.e(TAG, e.toString());
         }
         preference.setMin(min);
         preference.setMax(max);
         preference.setSeekBarIncrement(increment);
-        preference.setAdjustable(Boolean.parseBoolean(getOrElse(preferenceModel.get("adjustable"), "true")));
+        preference.setAdjustable(Boolean.parseBoolean(PluginUtils.getOrElse(preferenceModel.get("adjustable"), "true")));
         preference.setDefaultValue(defaultValue);
         preference.setShowSeekBarValue(true);
         preference.setUpdatesContinuously(true);

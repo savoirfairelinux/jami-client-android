@@ -9,13 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import cx.ring.daemon.Ringservice;
 import cx.ring.databinding.FragPluginHandlersListBinding;
+import cx.ring.plugins.PluginUtils;
 import cx.ring.settings.pluginssettings.PluginDetails;
 import cx.ring.settings.pluginssettings.PluginsListAdapter;
 import cx.ring.utils.ConversationPath;
-
-import static cx.ring.daemon.Ringservice.toggleChatHandler;
-import static cx.ring.plugins.PluginUtils.getChatHandlersDetails;
 
 public class PluginHandlersListFragment extends Fragment implements PluginsListAdapter.PluginListItemListener {
     public static final String TAG = "PluginListHandlers";
@@ -29,7 +28,7 @@ public class PluginHandlersListFragment extends Fragment implements PluginsListA
         binding = FragPluginHandlersListBinding.inflate(inflater, container, false);
 
         binding.handlerList.setHasFixedSize(true);
-        mAdapter = new PluginsListAdapter(getChatHandlersDetails(binding.handlerList.getContext(), mPath.getAccountId(), mPath.getConversationId()), this);
+        mAdapter = new PluginsListAdapter(PluginUtils.getChatHandlersDetails(binding.handlerList.getContext(), mPath.getAccountId(), mPath.getConversationId()), this);
         binding.handlerList.setAdapter(mAdapter);
         return binding.getRoot();
     }
@@ -74,11 +73,11 @@ public class PluginHandlersListFragment extends Fragment implements PluginsListA
 
     @Override
     public void onPluginItemClicked(PluginDetails pluginDetails) {
-        toggleChatHandler(pluginDetails.getmHandlerId(), mPath.getAccountId(), mPath.getConversationId(), pluginDetails.isEnabled());
+        Ringservice.toggleChatHandler(pluginDetails.getmHandlerId(), mPath.getAccountId(), mPath.getConversationId(), pluginDetails.isEnabled());
     }
 
     @Override
     public void onPluginEnabled(PluginDetails pluginDetails) {
-        toggleChatHandler(pluginDetails.getmHandlerId(), mPath.getAccountId(), mPath.getConversationId(), pluginDetails.isEnabled());
+        Ringservice.toggleChatHandler(pluginDetails.getmHandlerId(), mPath.getAccountId(), mPath.getConversationId(), pluginDetails.isEnabled());
     }
 }

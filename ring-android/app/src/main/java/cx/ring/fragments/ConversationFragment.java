@@ -48,7 +48,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -89,6 +88,7 @@ import cx.ring.client.HomeActivity;
 import cx.ring.contacts.AvatarFactory;
 import cx.ring.conversation.ConversationPresenter;
 import cx.ring.conversation.ConversationView;
+import cx.ring.daemon.Ringservice;
 import cx.ring.databinding.FragConversationBinding;
 import cx.ring.interfaces.Colorable;
 import cx.ring.model.Account;
@@ -116,8 +116,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
 import static android.app.Activity.RESULT_OK;
-import static cx.ring.daemon.Ringservice.getPluginsEnabled;
-import static cx.ring.daemon.Ringservice.getChatHandlers;
 
 public class ConversationFragment extends BaseSupportFragment<ConversationPresenter> implements
         MediaButtonsHelper.MediaButtonsHelperCallback,
@@ -412,7 +410,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
             }
             return false;
         });
-        popup.getMenu().findItem(R.id.chat_plugins).setVisible(getPluginsEnabled() && getChatHandlers().size() > 0);
+        popup.getMenu().findItem(R.id.chat_plugins).setVisible(Ringservice.getPluginsEnabled() && Ringservice.getChatHandlers().size() > 0);
         MenuPopupHelper menuHelper = new MenuPopupHelper(context, (MenuBuilder) popup.getMenu(), v);
         menuHelper.setForceShowIcon(true);
         menuHelper.show();

@@ -20,15 +20,10 @@ package cx.ring.settings;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.CompoundButton;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,7 +31,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.snackbar.Snackbar;
 
 import javax.inject.Inject;
 
@@ -45,16 +39,10 @@ import cx.ring.account.AccountEditionFragment;
 import cx.ring.account.JamiAccountSummaryFragment;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
-import cx.ring.daemon.Ringservice;
 import cx.ring.databinding.FragAccountBinding;
 import cx.ring.model.Account;
-import cx.ring.model.Settings;
-import cx.ring.mvp.BaseSupportFragment;
-import cx.ring.mvp.GenericView;
 import cx.ring.services.AccountService;
 
-import static cx.ring.daemon.Ringservice.getPluginsEnabled;
-import static cx.ring.daemon.Ringservice.setPluginsEnabled;
 
 /**
  * TODO: improvements : handle multiples permissions for feature.
