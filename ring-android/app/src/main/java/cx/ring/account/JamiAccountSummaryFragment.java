@@ -106,8 +106,6 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
     private static final String FRAGMENT_DIALOG_BACKUP = TAG + ".dialog.backup";
     private static final int WRITE_REQUEST_CODE = 43;
     private static final int SCROLL_DIRECTION_UP = -1;
-    public static final String ACCOUNT_ID_KEY = AccountEditionFragment.class.getCanonicalName() + "accountid";
-
     private static final int SETTINGS_ACCOUNT = 0;
     private static final int SETTINGS_MEDIA = 1;
     private static final int SETTINGS_SYSTEM = 2;
@@ -710,7 +708,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
 
     private Fragment fragmentWithBundle(Fragment result, String accountId) {
         Bundle args = new Bundle();
-        args.putString(ACCOUNT_ID_KEY, accountId);
+        args.putString(AccountEditionFragment.ACCOUNT_ID_KEY, accountId);
         result.setArguments(args);
         return result;
     }
@@ -744,7 +742,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
     public void goToBlackList(String accountId) {
         BlockListFragment blockListFragment = new BlockListFragment();
         Bundle args = new Bundle();
-        args.putString(ACCOUNT_ID_KEY, accountId);
+        args.putString(AccountEditionFragment.ACCOUNT_ID_KEY, accountId);
         blockListFragment.setArguments(args);
         changeFragment(blockListFragment, BlockListFragment.TAG);
     }
