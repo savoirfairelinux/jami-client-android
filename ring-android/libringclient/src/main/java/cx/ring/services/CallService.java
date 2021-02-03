@@ -192,6 +192,7 @@ public class CallService {
                 .startWith(conference)
                 .filter(conf -> {
                     Log.w(TAG, "getConfUpdates filter " + conf.getConfId() + " " + conf.getParticipants().size() + " (tracked " + conferenceEntity.conference.getConfId() + " " + conferenceEntity.conference.getParticipants().size() + ")");
+                    holdCalls(conf.getConfId());
                     if (conf == conferenceEntity.conference) {
                         return true;
                     }
@@ -211,6 +212,26 @@ public class CallService {
                     return false;
                 })
                 .switchMap(this::getConfCallUpdates);
+    }
+
+    public void holdCalls(String confId) {
+        Object[] confs = currentConferences.keySet().toArray();
+        for (Object id : confs) {
+            List<SipCall> participants = currentConferences.get(id).getParticipants();
+            if (!confId.equals(id)) {
+                for (SipCall participant : participants) {
+                    if (participant.getCallStatus() == SipCall.CallStatus.CURRENT) {
+                        hold(participant.getDaemonIdString());
+                    }
+                }
+            } else {
+                for (SipCall participant : participants) {
+                    if (participant.getCallStatus() == SipCall.CallStatus.HOLD) {
+                        unhold(participant.getDaemonIdString());
+                    }
+                }
+            }
+        }
     }
 
     public Observable<SipCall> getCallsUpdates() {
