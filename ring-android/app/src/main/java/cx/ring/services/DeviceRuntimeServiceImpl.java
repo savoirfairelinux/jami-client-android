@@ -50,7 +50,7 @@ import net.jami.utils.StringUtils;
 
 public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
 
-    private static final String TAG = DeviceRuntimeServiceImpl.class.getName();
+    private static final String TAG = DeviceRuntimeServiceImpl.class.getSimpleName();
     private static final String[] PROFILE_PROJECTION = new String[]{ContactsContract.Profile._ID,
             ContactsContract.Profile.DISPLAY_NAME_PRIMARY,
             ContactsContract.Profile.PHOTO_ID};

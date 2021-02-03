@@ -48,8 +48,8 @@ public class Interaction {
     int mId;
     @DatabaseField(columnName = COLUMN_AUTHOR, index = true)
     String mAuthor;
-    @DatabaseField(columnName = COLUMN_CONVERSATION, foreignColumnName = net.jami.model.ConversationHistory.COLUMN_CONVERSATION_ID, foreign = true)
-    net.jami.model.ConversationHistory mConversation;
+    @DatabaseField(columnName = COLUMN_CONVERSATION, foreignColumnName = ConversationHistory.COLUMN_CONVERSATION_ID, foreign = true)
+    ConversationHistory mConversation;
     @DatabaseField(columnName = COLUMN_TIMESTAMP, index = true)
     long mTimestamp;
     @DatabaseField(columnName = COLUMN_BODY)
@@ -74,7 +74,7 @@ public class Interaction {
     public Interaction() {
     }
 
-    public Interaction(String id, String author, net.jami.model.ConversationHistory conversation, String timestamp, String body, String type, String status, String daemonId, String isRead, String extraFlag) {
+    public Interaction(String id, String author, ConversationHistory conversation, String timestamp, String body, String type, String status, String daemonId, String isRead, String extraFlag) {
         mId = Integer.parseInt(id);
         mAuthor = author;
         mConversation = conversation;
@@ -123,7 +123,7 @@ public class Interaction {
         mAuthor = author;
     }
 
-    public net.jami.model.ConversationHistory getConversation() {
+    public ConversationHistory getConversation() {
         return mConversation;
     }
 
