@@ -28,6 +28,8 @@ import androidx.preference.TwoStatePreference;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import net.jami.daemon.JamiService;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -36,7 +38,6 @@ import java.util.Set;
 
 import cx.ring.R;
 import cx.ring.client.HomeActivity;
-import net.jami.daemon.Ringservice;
 import cx.ring.plugins.PluginPreferences;
 
 import static cx.ring.plugins.PluginUtils.getOrElse;
@@ -164,7 +165,7 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
                 .setTitle(preference.getTitle())
                 .setMessage(R.string.plugin_reset_preferences_ask)
                 .setPositiveButton(android.R.string.ok, (dialog, id) -> {
-                    Ringservice.resetPluginPreferencesValues(pluginDetails.getRootPath());
+                    JamiService.resetPluginPreferencesValues(pluginDetails.getRootPath());
                     ((HomeActivity) requireActivity()).popFragmentImmediate();
                 })
                 .setNegativeButton(android.R.string.cancel, (dialog, whichButton) -> {
@@ -176,7 +177,7 @@ public class PluginSettingsFragment extends PreferenceFragmentCompat {
                 .setTitle(R.string.plugin_uninstall_title)
                 .setPositiveButton(android.R.string.ok, (dialog, whichButton) -> {
                     pluginDetails.setEnabled(false);
-                    Ringservice.uninstallPlugin(pluginDetails.getRootPath());
+                    JamiService.uninstallPlugin(pluginDetails.getRootPath());
                     ((HomeActivity) requireActivity()).popFragmentImmediate();
                 })
                 .setNegativeButton(android.R.string.cancel, null)

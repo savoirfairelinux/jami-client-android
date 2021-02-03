@@ -91,7 +91,7 @@ public class Account {
     private final BehaviorSubject<Collection<Contact>> contactListSubject = BehaviorSubject.create();
 
     public boolean canSearch() {
-        return !net.jami.utils.StringUtils.isEmpty(getDetail(ConfigKey.MANAGER_URI));
+        return !StringUtils.isEmpty(getDetail(ConfigKey.MANAGER_URI));
     }
 
     public boolean isContact(Conversation conversation) {
@@ -100,7 +100,7 @@ public class Account {
     }
 
     public void conversationStarted(Conversation conversation) {
-        net.jami.utils.Log.w(TAG, "conversationStarted " + conversation.getAccountId() + " " + conversation.getUri() + " " + conversation.isSwarm() + " " + conversation.getContacts().size());
+        Log.w(TAG, "conversationStarted " + conversation.getAccountId() + " " + conversation.getUri() + " " + conversation.isSwarm() + " " + conversation.getContacts().size());
         synchronized (conversations) {
             if (conversation.isSwarm() && conversation.getMode() == Conversation.Mode.OneToOne) {
                 Contact contact = conversation.getContact();
@@ -167,7 +167,7 @@ public class Account {
 
     public Single<Account> historyLoader;
     private VCard mProfile;
-    private Single<net.jami.utils.Tuple<String, Object>> mLoadedProfile = null;
+    private Single<Tuple<String, Object>> mLoadedProfile = null;
 
     public Account(String bAccountID) {
         accountID = bAccountID;
@@ -196,10 +196,10 @@ public class Account {
         return conversationsSubject;
     }
 
-    public Observable<List<net.jami.smartlist.SmartListViewModel>> getConversationsViewModels(boolean withPresence) {
+    public Observable<List<SmartListViewModel>> getConversationsViewModels(boolean withPresence) {
         return conversationsSubject
                 .map(conversations -> {
-                    ArrayList<net.jami.smartlist.SmartListViewModel> viewModel = new ArrayList<>(conversations.size());
+                    ArrayList<SmartListViewModel> viewModel = new ArrayList<>(conversations.size());
                     for (Conversation c : conversations)
                         viewModel.add(new SmartListViewModel(c, withPresence));
                     return viewModel;
@@ -339,7 +339,7 @@ public class Account {
                 return;
             }
             if (mContacts.containsKey(key) || !isJami()) {
-                net.jami.utils.Log.w(TAG, "updated " + conversation.getAccountId() + " contact " + key);
+                Log.w(TAG, "updated " + conversation.getAccountId() + " contact " + key);
                 conversations.put(key, conversation);
                 conversationChanged();
             } else {
@@ -359,7 +359,7 @@ public class Account {
     public void addTextMessage(TextMessage txt) {
         Conversation conversation = null;
         String daemonId = txt.getDaemonIdString();
-        if (daemonId != null && !net.jami.utils.StringUtils.isEmpty(daemonId)) {
+        if (daemonId != null && !StringUtils.isEmpty(daemonId)) {
             conversation = getConversationByCallId(daemonId);
         }
         if (conversation == null) {
@@ -387,7 +387,7 @@ public class Account {
     }
 
     public Contact getContactFromCache(String key) {
-        if (net.jami.utils.StringUtils.isEmpty(key))
+        if (StringUtils.isEmpty(key))
             return null;
         synchronized (mContactCache) {
             Contact contact = mContactCache.get(key);
@@ -715,7 +715,7 @@ public class Account {
             callContact = getContactFromCache(Uri.fromId(contactId));
         }
         String addedStr = contact.get(CONTACT_ADDED);
-        if (!net.jami.utils.StringUtils.isEmpty(addedStr)) {
+        if (!StringUtils.isEmpty(addedStr)) {
             long added = Long.parseLong(contact.get(CONTACT_ADDED));
             callContact.setAddedDate(new Date(added * 1000));
         }
@@ -783,7 +783,7 @@ public class Account {
     }
 
     public void setRequests(List<TrustRequest> requests) {
-        net.jami.utils.Log.w(TAG, "setRequests " + requests.size());
+        Log.w(TAG, "setRequests " + requests.size());
         synchronized (pending) {
             for (TrustRequest request : requests) {
                 String key = request.getUri().getUri();
@@ -960,7 +960,7 @@ public class Account {
     }
 
     public void presenceUpdate(String contactUri, boolean isOnline) {
-        net.jami.utils.Log.w(TAG, "presenceUpdate " + contactUri + " " + isOnline);
+        //Log.w(TAG, "presenceUpdate " + contactUri + " " + isOnline);
         Contact contact = getContactFromCache(contactUri);
         if (contact.isOnline() == isOnline)
             return;
@@ -978,7 +978,7 @@ public class Account {
     }
 
     public void composingStatusChanged(String conversationId, Uri contactUri, ComposingStatus status) {
-        boolean isSwarm = !net.jami.utils.StringUtils.isEmpty(conversationId);
+        boolean isSwarm = !StringUtils.isEmpty(conversationId);
         Conversation conversation = isSwarm ? getSwarm(conversationId) : getByUri(contactUri);
         if (conversation != null) {
             Contact contact = isSwarm ? conversation.findContact(contactUri) : getContactFromCache(contactUri);
@@ -989,7 +989,7 @@ public class Account {
     }
 
     synchronized public long onLocationUpdate(AccountService.Location location) {
-        net.jami.utils.Log.w(TAG, "onLocationUpdate " + location.getPeer() + " " + location.getLatitude() + ",  " + location.getLongitude());
+        Log.w(TAG, "onLocationUpdate " + location.getPeer() + " " + location.getLatitude() + ",  " + location.getLongitude());
         Contact contact = getContactFromCache(location.getPeer());
 
         switch (location.getType()) {
@@ -1024,17 +1024,17 @@ public class Account {
     }
 
     synchronized private void forceExpireContact(Contact contact) {
-        net.jami.utils.Log.w(TAG, "forceExpireContact " + contactLocations.size());
+        Log.w(TAG, "forceExpireContact " + contactLocations.size());
         Observable<ContactLocation> cl = contactLocations.remove(contact);
         if (cl != null) {
-            net.jami.utils.Log.w(TAG, "Contact stopped sharing location: " + contact.getDisplayName());
+            Log.w(TAG, "Contact stopped sharing location: " + contact.getDisplayName());
             ((Subject<ContactLocation>) cl).onComplete();
             mLocationSubject.onNext(contactLocations);
         }
     }
 
     synchronized public void maintainLocation() {
-        net.jami.utils.Log.w(TAG, "maintainLocation " + contactLocations.size());
+        Log.w(TAG, "maintainLocation " + contactLocations.size());
         if (contactLocations.isEmpty())
             return;
         boolean changed = false;
@@ -1044,7 +1044,7 @@ public class Account {
         while (it.hasNext())  {
             Map.Entry<Contact, Observable<ContactLocation>> e = it.next();
             if (e.getValue().blockingFirst().receivedDate.before(expiration)) {
-                net.jami.utils.Log.w(TAG, "maintainLocation clearing " + e.getKey().getDisplayName());
+                Log.w(TAG, "maintainLocation clearing " + e.getKey().getDisplayName());
                 ((Subject<ContactLocation>) e.getValue()).onComplete();
                 changed = true;
                 it.remove();
@@ -1065,7 +1065,7 @@ public class Account {
 
     public Observable<Observable<ContactLocation>> getLocationUpdates(Uri contactId) {
         Contact contact = getContactFromCache(contactId);
-        net.jami.utils.Log.w(TAG, "getLocationUpdates " + contactId + " " + contact);
+        Log.w(TAG, "getLocationUpdates " + contactId + " " + contact);
         if (contact == null || contact.isUser())
             return Observable.empty();
         return mLocationSubject
@@ -1081,11 +1081,11 @@ public class Account {
         if (isJami()) {
             if (mLoadedProfile == null)
                 return Single.just(getJamiAlias());
-            return mLoadedProfile.map(p -> net.jami.utils.StringUtils.isEmpty(p.first) ? getJamiAlias() : p.first);
+            return mLoadedProfile.map(p -> StringUtils.isEmpty(p.first) ? getJamiAlias() : p.first);
         } else {
             if (mLoadedProfile == null)
                 return Single.just(getAlias());
-            return mLoadedProfile.map(p -> net.jami.utils.StringUtils.isEmpty(p.first) ? getAlias() : p.first);
+            return mLoadedProfile.map(p -> StringUtils.isEmpty(p.first) ? getAlias() : p.first);
         }
     }
 
@@ -1109,7 +1109,7 @@ public class Account {
         return mProfile;
     }
 
-    public Single<net.jami.utils.Tuple<String, Object>> getLoadedProfile() {
+    public Single<Tuple<String, Object>> getLoadedProfile() {
         return mLoadedProfile;
     }
 
