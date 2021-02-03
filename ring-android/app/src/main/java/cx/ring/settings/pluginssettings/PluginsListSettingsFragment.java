@@ -18,6 +18,8 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import net.jami.daemon.JamiService;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -25,7 +27,6 @@ import java.util.List;
 import cx.ring.R;
 import cx.ring.account.JamiAccountSummaryFragment;
 import cx.ring.client.HomeActivity;
-import net.jami.daemon.Ringservice;
 import cx.ring.databinding.FragPluginsListSettingsBinding;
 import cx.ring.plugins.PluginUtils;
 import cx.ring.utils.AndroidFileUtils;
@@ -133,7 +134,7 @@ public class PluginsListSettingsFragment extends Fragment implements PluginsList
     }
 
     private String installPluginFile(File pluginFile, boolean force) throws IOException{
-        int i = Ringservice.installPlugin(pluginFile.getAbsolutePath(), force);
+        int i = JamiService.installPlugin(pluginFile.getAbsolutePath(), force);
         if (!pluginFile.delete()) {
             Log.e(TAG,"Plugin Jpl file in the cache not freed");
         }

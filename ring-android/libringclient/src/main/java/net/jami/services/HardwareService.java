@@ -28,8 +28,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import net.jami.daemon.IntVect;
-import net.jami.daemon.Ringservice;
-import net.jami.daemon.RingserviceJNI;
+import net.jami.daemon.JamiService;
 import net.jami.daemon.StringMap;
 import net.jami.daemon.UintVect;
 import net.jami.model.Conference;
@@ -172,30 +171,30 @@ public abstract class HardwareService {
     public void connectivityChanged(boolean isConnected) {
         Log.i(TAG, "connectivityChange() " + isConnected);
         connectivityEvents.onNext(isConnected);
-        mExecutor.execute(Ringservice::connectivityChanged);
+        mExecutor.execute(JamiService::connectivityChanged);
     }
 
     protected void switchInput(final String id, final String uri) {
         Log.i(TAG, "switchInput() " + uri);
-        mExecutor.execute(() -> Ringservice.switchInput(id, uri));
+        mExecutor.execute(() -> JamiService.switchInput(id, uri));
     }
 
     public void setPreviewSettings(final Map<String, StringMap> cameraMaps) {
         mExecutor.execute(() -> {
             Log.i(TAG, "applySettings() thread running...");
             for (Map.Entry<String, StringMap> entry : cameraMaps.entrySet()) {
-                Ringservice.applySettings(entry.getKey(), entry.getValue());
+                JamiService.applySettings(entry.getKey(), entry.getValue());
             }
         });
     }
 
     public long startVideo(final String inputId, final Object surface, final int width, final int height) {
-        long inputWindow = RingserviceJNI.acquireNativeWindow(surface);
+        long inputWindow = JamiService.acquireNativeWindow(surface);
         if (inputWindow == 0) {
             return inputWindow;
         }
-        RingserviceJNI.setNativeWindowGeometry(inputWindow, width, height);
-        RingserviceJNI.registerVideoCallback(inputId, inputWindow);
+        JamiService.setNativeWindowGeometry(inputWindow, width, height);
+        JamiService.registerVideoCallback(inputId, inputWindow);
         return inputWindow;
     }
 
@@ -203,8 +202,8 @@ public abstract class HardwareService {
         if (inputWindow == 0) {
             return;
         }
-        RingserviceJNI.unregisterVideoCallback(inputId, inputWindow);
-        RingserviceJNI.releaseNativeWindow(inputWindow);
+        JamiService.unregisterVideoCallback(inputId, inputWindow);
+        JamiService.releaseNativeWindow(inputWindow);
     }
 
     public abstract void setDeviceOrientation(int rotation);

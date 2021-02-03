@@ -8,8 +8,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.jami.daemon.Ringservice;
 import cx.ring.settings.pluginssettings.PluginDetails;
+
+import net.jami.daemon.JamiService;
 import net.jami.utils.Log;
 
 public class PluginUtils {
@@ -25,8 +26,8 @@ public class PluginUtils {
         tree(mContext.getFilesDir() + File.separator+ "plugins",0);
         tree(mContext.getCacheDir().getAbsolutePath(),0);
 
-        List<String> pluginsPaths = Ringservice.getInstalledPlugins();
-        List<String> loadedPluginsPaths = Ringservice.getLoadedPlugins();
+        List<String> pluginsPaths = JamiService.getInstalledPlugins();
+        List<String> loadedPluginsPaths = JamiService.getLoadedPlugins();
 
         List<PluginDetails> pluginsList = new ArrayList<>(pluginsPaths.size());
         for (String pluginPath : pluginsPaths) {
@@ -52,7 +53,7 @@ public class PluginUtils {
      * @return true if loaded
      */
     public static boolean loadPlugin(String path) {
-        return Ringservice.loadPlugin(path);
+        return JamiService.loadPlugin(path);
     }
 
     /**
@@ -62,7 +63,7 @@ public class PluginUtils {
      * @return true if unloaded
      */
     public static boolean unloadPlugin(String path) {
-        return Ringservice.unloadPlugin(path);
+        return JamiService.unloadPlugin(path);
     }
 
     /**
@@ -70,7 +71,7 @@ public class PluginUtils {
      * @return list of path
      */
     public static List<String> listLoadedPlugins() {
-        return Ringservice.getLoadedPlugins();
+        return JamiService.getLoadedPlugins();
     }
 
     /**
