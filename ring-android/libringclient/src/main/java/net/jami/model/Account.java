@@ -62,9 +62,9 @@ public class Account {
 
     private final ArrayList<AccountCredentials> credentialsDetails = new ArrayList<>();
     private Map<String, String> devices = new HashMap<>();
-    private final Map<String, CallContact> mContacts = new HashMap<>();
+    private final Map<String, Contact> mContacts = new HashMap<>();
     private final Map<String, TrustRequest> mRequests = new HashMap<>();
-    private final Map<String, CallContact> mContactCache = new HashMap<>();
+    private final Map<String, Contact> mContactCache = new HashMap<>();
     private final Map<String, Conversation> swarmConversations = new HashMap<>();
     private final HashMap<Long, DataTransfer> mDataTransfers = new HashMap<>();
 
@@ -88,14 +88,14 @@ public class Account {
     private final Observable<Integer> unreadConversationsCount = unreadConversationsSubject.distinctUntilChanged();
     private final Observable<Integer> unreadPendingCount = unreadPendingSubject.distinctUntilChanged();
 
-    private final BehaviorSubject<Collection<CallContact>> contactListSubject = BehaviorSubject.create();
+    private final BehaviorSubject<Collection<Contact>> contactListSubject = BehaviorSubject.create();
 
     public boolean canSearch() {
         return !net.jami.utils.StringUtils.isEmpty(getDetail(ConfigKey.MANAGER_URI));
     }
 
     public boolean isContact(Conversation conversation) {
-        CallContact contact = conversation.getContact();
+        Contact contact = conversation.getContact();
         return contact != null && getContact(contact.getUri().getRawRingId()) != null;
     }
 
@@ -103,7 +103,7 @@ public class Account {
         net.jami.utils.Log.w(TAG, "conversationStarted " + conversation.getAccountId() + " " + conversation.getUri() + " " + conversation.isSwarm() + " " + conversation.getContacts().size());
         synchronized (conversations) {
             if (conversation.isSwarm() && conversation.getMode() == Conversation.Mode.OneToOne) {
-                CallContact contact = conversation.getContact();
+                Contact contact = conversation.getContact();
                 String key = contact.getUri().getUri();
                 Conversation removed = cache.remove(key);
                 conversations.remove(key);
@@ -149,7 +149,7 @@ public class Account {
         public Date receivedDate;
     }
     public static class ContactLocationEntry {
-        public CallContact contact;
+        public Contact contact;
         public Observable<ContactLocation> location;
     }
     public enum ComposingStatus {
@@ -161,8 +161,8 @@ public class Account {
         }
     }
 
-    private final Map<CallContact, Observable<ContactLocation>> contactLocations = new HashMap<>();
-    private final Subject<Map<CallContact, Observable<ContactLocation>>> mLocationSubject = BehaviorSubject.createDefault(contactLocations);
+    private final Map<Contact, Observable<ContactLocation>> contactLocations = new HashMap<>();
+    private final Subject<Map<Contact, Observable<ContactLocation>>> mLocationSubject = BehaviorSubject.createDefault(contactLocations);
     private final Subject<ContactLocationEntry> mLocationStartedSubject = PublishSubject.create();
 
     public Single<Account> historyLoader;
@@ -382,20 +382,20 @@ public class Account {
         return conversation;
     }
 
-    public Observable<Collection<CallContact>> getBannedContactsUpdates() {
-        return contactListSubject.concatMapSingle(list -> Observable.fromIterable(list).filter(CallContact::isBanned).toList());
+    public Observable<Collection<Contact>> getBannedContactsUpdates() {
+        return contactListSubject.concatMapSingle(list -> Observable.fromIterable(list).filter(Contact::isBanned).toList());
     }
 
-    public CallContact getContactFromCache(String key) {
+    public Contact getContactFromCache(String key) {
         if (net.jami.utils.StringUtils.isEmpty(key))
             return null;
         synchronized (mContactCache) {
-            CallContact contact = mContactCache.get(key);
+            Contact contact = mContactCache.get(key);
             if (contact == null) {
                 if (isSip())
-                    contact = CallContact.buildSIP(Uri.fromString(key));
+                    contact = Contact.buildSIP(Uri.fromString(key));
                 else
-                    contact = CallContact.build(key, isMe(key));
+                    contact = Contact.build(key, isMe(key));
                 mContactCache.put(key, contact);
             }
             return contact;
@@ -407,7 +407,7 @@ public class Account {
         return getUsername().equals(uri);
     }
 
-    public CallContact getContactFromCache(Uri uri) {
+    public Contact getContactFromCache(Uri uri) {
         return getContactFromCache(uri.getUri());
     }
 
@@ -645,13 +645,13 @@ public class Account {
         return getDetail(ConfigKey.ACCOUNT_DEVICE_NAME);
     }
 
-    public Map<String, CallContact> getContacts() {
+    public Map<String, Contact> getContacts() {
         return mContacts;
     }
 
-    public List<CallContact> getBannedContacts() {
-        ArrayList<CallContact> banned = new ArrayList<>();
-        for (CallContact contact : mContacts.values()) {
+    public List<Contact> getBannedContacts() {
+        ArrayList<Contact> banned = new ArrayList<>();
+        for (Contact contact : mContacts.values()) {
             if (contact.isBanned()) {
                 banned.add(contact);
             }
@@ -659,40 +659,40 @@ public class Account {
         return banned;
     }
 
-    public CallContact getContact(String ringId) {
+    public Contact getContact(String ringId) {
         return mContacts.get(ringId);
     }
 
     public void addContact(String id, boolean confirmed) {
-        CallContact callContact = mContacts.get(id);
-        if (callContact == null) {
-            callContact = getContactFromCache(Uri.fromId(id));
-            mContacts.put(id, callContact);
+        Contact contact = mContacts.get(id);
+        if (contact == null) {
+            contact = getContactFromCache(Uri.fromId(id));
+            mContacts.put(id, contact);
         }
-        callContact.setAddedDate(new Date());
+        contact.setAddedDate(new Date());
         if (confirmed) {
-            callContact.setStatus(CallContact.Status.CONFIRMED);
+            contact.setStatus(Contact.Status.CONFIRMED);
         } else {
-            callContact.setStatus(CallContact.Status.REQUEST_SENT);
+            contact.setStatus(Contact.Status.REQUEST_SENT);
         }
         TrustRequest req = mRequests.get(id);
         if (req != null) {
             mRequests.remove(id);
             //trustRequestsSubject.onNext(mRequests.values());
         }
-        contactAdded(callContact);
+        contactAdded(contact);
         //contactSubject.onNext(new ContactEvent(callContact, true));
         contactListSubject.onNext(mContacts.values());
     }
 
     public void removeContact(String id, boolean banned) {
-        CallContact callContact = mContacts.get(id);
+        Contact contact = mContacts.get(id);
         if (banned) {
-            if (callContact == null) {
-                callContact = getContactFromCache(Uri.fromId(id));
-                mContacts.put(id, callContact);
+            if (contact == null) {
+                contact = getContactFromCache(Uri.fromId(id));
+                mContacts.put(id, contact);
             }
-            callContact.setStatus(CallContact.Status.BANNED);
+            contact.setStatus(Contact.Status.BANNED);
         } else {
             mContacts.remove(id);
         }
@@ -701,8 +701,8 @@ public class Account {
             mRequests.remove(id);
             //trustRequestsSubject.onNext(mRequests.values());
         }
-        if (callContact != null) {
-            contactRemoved(callContact.getUri());
+        if (contact != null) {
+            contactRemoved(contact.getUri());
             //contactSubject.onNext(new ContactEvent(callContact, false));
         }
         contactListSubject.onNext(mContacts.values());
@@ -710,7 +710,7 @@ public class Account {
 
     private void addContact(Map<String, String> contact) {
         String contactId = contact.get(CONTACT_ID);
-        CallContact callContact = mContacts.get(contactId);
+        Contact callContact = mContacts.get(contactId);
         if (callContact == null) {
             callContact = getContactFromCache(Uri.fromId(contactId));
         }
@@ -720,11 +720,11 @@ public class Account {
             callContact.setAddedDate(new Date(added * 1000));
         }
         if (contact.containsKey(CONTACT_BANNED) && contact.get(CONTACT_BANNED).equals("true")) {
-            callContact.setStatus(CallContact.Status.BANNED);
+            callContact.setStatus(Contact.Status.BANNED);
         } else if (contact.containsKey(CONTACT_CONFIRMED)) {
             callContact.setStatus(Boolean.parseBoolean(contact.get(CONTACT_CONFIRMED)) ?
-                    CallContact.Status.CONFIRMED :
-                    CallContact.Status.REQUEST_SENT);
+                    Contact.Status.CONFIRMED :
+                    Contact.Status.REQUEST_SENT);
         }
         mContacts.put(contactId, callContact);
         contactAdded(callContact);
@@ -774,7 +774,7 @@ public class Account {
                 conversation = /*isSwarm ? newSwarm(key, Conversation.Mode.Public) : */getByKey(key);
                 pending.put(key, conversation);
                 if (!conversation.isSwarm()) {
-                    CallContact contact = getContactFromCache(request.getUri());
+                    Contact contact = getContactFromCache(request.getUri());
                     conversation.addRequestEvent(request, contact);
                 }
                 pendingChanged();
@@ -792,7 +792,7 @@ public class Account {
                 if (conversation == null) {
                     conversation = getByKey(key);
                     pending.put(key, conversation);
-                    CallContact contact = getContactFromCache(request.getUri());
+                    Contact contact = getContactFromCache(request.getUri());
                     conversation.addRequestEvent(request, contact);
                 }
                 //trustRequestSubject.onNext(new RequestEvent(request, true));
@@ -821,7 +821,7 @@ public class Account {
     public boolean registeredNameFound(int state, String address, String name) {
         Uri uri = Uri.fromString(address);
         String key = uri.getUri();
-        CallContact contact = getContactFromCache(key);
+        Contact contact = getContactFromCache(key);
         if (contact.setUsername(state == 0 ? name : null)) {
             synchronized (conversations) {
                 Conversation conversation = conversations.get(key);
@@ -855,7 +855,7 @@ public class Account {
         if (conversation != null) {
             return conversation;
         }
-        CallContact contact = getContactFromCache(key);
+        Contact contact = getContactFromCache(key);
         conversation = new Conversation(getAccountID(), contact);
         //Log.w(TAG, "getByKey " + getAccountID() + " contact " + key);
         cache.put(key, conversation);
@@ -867,7 +867,7 @@ public class Account {
             return;
         //Log.w(TAG, "setHistoryLoaded " + getAccountID() + " " + conversations.size());
         for (Conversation c : conversations) {
-            CallContact contact = c.getContact();
+            Contact contact = c.getContact();
             if (!c.isSwarm() && contact != null && contact.getConversationUri().blockingFirst().equals(c.getUri()))
                 updated(c);
         }
@@ -910,7 +910,7 @@ public class Account {
     }
 
 
-    private void contactAdded(CallContact contact) {
+    private void contactAdded(Contact contact) {
         Uri uri = contact.getUri();
         String key = uri.getUri();
         //Log.w(TAG, "contactAdded " + getAccountID() + " " + key + " " + contact.getConversationUri());
@@ -961,7 +961,7 @@ public class Account {
 
     public void presenceUpdate(String contactUri, boolean isOnline) {
         net.jami.utils.Log.w(TAG, "presenceUpdate " + contactUri + " " + isOnline);
-        CallContact contact = getContactFromCache(contactUri);
+        Contact contact = getContactFromCache(contactUri);
         if (contact.isOnline() == isOnline)
             return;
         contact.setOnline(isOnline);
@@ -981,7 +981,7 @@ public class Account {
         boolean isSwarm = !net.jami.utils.StringUtils.isEmpty(conversationId);
         Conversation conversation = isSwarm ? getSwarm(conversationId) : getByUri(contactUri);
         if (conversation != null) {
-            CallContact contact = isSwarm ? conversation.findContact(contactUri) : getContactFromCache(contactUri);
+            Contact contact = isSwarm ? conversation.findContact(contactUri) : getContactFromCache(contactUri);
             if (contact != null) {
                 conversation.composingStatusChanged(contact, status);
             }
@@ -990,7 +990,7 @@ public class Account {
 
     synchronized public long onLocationUpdate(AccountService.Location location) {
         net.jami.utils.Log.w(TAG, "onLocationUpdate " + location.getPeer() + " " + location.getLatitude() + ",  " + location.getLongitude());
-        CallContact contact = getContactFromCache(location.getPeer());
+        Contact contact = getContactFromCache(location.getPeer());
 
         switch (location.getType()) {
             case position:
@@ -1023,7 +1023,7 @@ public class Account {
         return LOCATION_SHARING_EXPIRATION_MS;
     }
 
-    synchronized private void forceExpireContact(CallContact contact) {
+    synchronized private void forceExpireContact(Contact contact) {
         net.jami.utils.Log.w(TAG, "forceExpireContact " + contactLocations.size());
         Observable<ContactLocation> cl = contactLocations.remove(contact);
         if (cl != null) {
@@ -1040,9 +1040,9 @@ public class Account {
         boolean changed = false;
 
         final Date expiration = new Date(System.currentTimeMillis() - LOCATION_SHARING_EXPIRATION_MS);
-        Iterator<Map.Entry<CallContact, Observable<ContactLocation>>> it = contactLocations.entrySet().iterator();
+        Iterator<Map.Entry<Contact, Observable<ContactLocation>>> it = contactLocations.entrySet().iterator();
         while (it.hasNext())  {
-            Map.Entry<CallContact, Observable<ContactLocation>> e = it.next();
+            Map.Entry<Contact, Observable<ContactLocation>> e = it.next();
             if (e.getValue().blockingFirst().receivedDate.before(expiration)) {
                 net.jami.utils.Log.w(TAG, "maintainLocation clearing " + e.getKey().getDisplayName());
                 ((Subject<ContactLocation>) e.getValue()).onComplete();
@@ -1059,12 +1059,12 @@ public class Account {
         return mLocationStartedSubject;
     }
 
-    public Observable<Map<CallContact, Observable<ContactLocation>>> getLocationsUpdates() {
+    public Observable<Map<Contact, Observable<ContactLocation>>> getLocationsUpdates() {
         return mLocationSubject;
     }
 
     public Observable<Observable<ContactLocation>> getLocationUpdates(Uri contactId) {
-        CallContact contact = getContactFromCache(contactId);
+        Contact contact = getContactFromCache(contactId);
         net.jami.utils.Log.w(TAG, "getLocationUpdates " + contactId + " " + contact);
         if (contact == null || contact.isUser())
             return Observable.empty();
