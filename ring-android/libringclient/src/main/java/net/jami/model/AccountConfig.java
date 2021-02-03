@@ -50,7 +50,7 @@ public class AccountConfig {
     public static final String STATE_SUCCESS = "SUCCESS";
     public static final String STATE_INVALID = "INVALID";
 
-    private final Map<net.jami.model.ConfigKey, String> mValues;
+    private final Map<ConfigKey, String> mValues;
 
     public AccountConfig() {
         mValues = new HashMap<>();
@@ -60,7 +60,7 @@ public class AccountConfig {
         if (details != null) {
             mValues = new HashMap<>(details.size());
             for (Map.Entry<String, String> entry : details.entrySet()) {
-                net.jami.model.ConfigKey confKey = net.jami.model.ConfigKey.fromString(entry.getKey());
+                ConfigKey confKey = ConfigKey.fromString(entry.getKey());
                 if (confKey != null) {
                     mValues.put(confKey, entry.getValue());
                 }
@@ -70,31 +70,31 @@ public class AccountConfig {
         }
     }
 
-    public String get(net.jami.model.ConfigKey key) {
+    public String get(ConfigKey key) {
         return mValues.get(key) != null ? mValues.get(key) : "";
     }
 
-    public boolean getBool(net.jami.model.ConfigKey key) {
+    public boolean getBool(ConfigKey key) {
         return TRUE_STR.equals(get(key));
     }
 
     public HashMap<String, String> getAll() {
         HashMap<String, String> details = new HashMap<>(mValues.size());
-        for (Map.Entry<net.jami.model.ConfigKey, String> entry : mValues.entrySet()) {
+        for (Map.Entry<ConfigKey, String> entry : mValues.entrySet()) {
             details.put(entry.getKey().key(), entry.getValue());
         }
         return details;
     }
 
-    void put(net.jami.model.ConfigKey key, String value) {
+    void put(ConfigKey key, String value) {
         mValues.put(key, value);
     }
 
-    void put(net.jami.model.ConfigKey key, boolean value) {
+    void put(ConfigKey key, boolean value) {
         mValues.put(key, value ? TRUE_STR : FALSE_STR);
     }
 
-    public Set<net.jami.model.ConfigKey> getKeys() {
+    public Set<ConfigKey> getKeys() {
         return mValues.keySet();
     }
 
