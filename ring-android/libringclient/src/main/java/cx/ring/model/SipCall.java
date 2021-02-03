@@ -20,11 +20,13 @@
 package cx.ring.model;
 
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import cx.ring.utils.ProfileChunk;
 import cx.ring.utils.StringUtils;
@@ -44,6 +46,7 @@ public class SipCall extends Interaction {
     public final static String KEY_VIDEO_MUTED = "VIDEO_MUTED";
     public final static String KEY_AUDIO_CODEC = "AUDIO_CODEC";
     public final static String KEY_VIDEO_CODEC = "VIDEO_CODEC";
+    public final static String KEY_REGISTERED_NAME = "REGISTERED_NAME";
     public final static String KEY_DURATION = "duration";
     public final static String KEY_CONF_ID = "CONF_ID";
 
@@ -56,6 +59,7 @@ public class SipCall extends Interaction {
     private CallStatus mCallStatus = CallStatus.NONE;
 
     private long timestampEnd = 0;
+    private Long duration = null;
     private boolean missed = true;
     private String mAudioCodec;
     private String mVideoCodec;
@@ -93,7 +97,7 @@ public class SipCall extends Interaction {
         mContact = interaction.getContact();
     }
 
-    public SipCall(String daemonId, String account, String contactNumber, Direction direction) {
+    public SipCall(String daemonId, String account, String contactNumber, Direction direction, long timestamp) {
         mDaemonId = daemonId == null ? null : Long.parseLong(daemonId);
         mIsIncoming = direction == Direction.INCOMING;
         mAccount = account;
@@ -105,7 +109,7 @@ public class SipCall extends Interaction {
     }
 
     public SipCall(String daemonId, Map<String, String> call_details) {
-        this(daemonId, call_details.get(KEY_ACCOUNT_ID), call_details.get(KEY_PEER_NUMBER), Direction.fromInt(Integer.parseInt(call_details.get(KEY_CALL_TYPE))));
+        this(daemonId, call_details.get(KEY_ACCOUNT_ID), call_details.get(KEY_PEER_NUMBER), Direction.fromInt(Integer.parseInt(call_details.get(KEY_CALL_TYPE))), System.currentTimeMillis());
         setCallState(CallStatus.fromString(call_details.get(KEY_CALL_STATE)));
         setDetails(call_details);
     }
@@ -130,17 +134,29 @@ public class SipCall extends Interaction {
     }
 
     public Long getDuration() {
-        return toJson(mExtraFlag).get(KEY_DURATION) == null ? 0 : toJson(mExtraFlag).get(KEY_DURATION).getAsLong();
+        if (duration == null) {
+            JsonElement element = toJson(mExtraFlag).get(KEY_DURATION);
+            if (element != null) {
+                duration = element.getAsLong();
+            }
+        }
+        return duration == null ? 0 : duration;
     }
 
     public void setDuration(Long value) {
-        JsonObject jsonObject = getExtraFlag();
-        jsonObject.addProperty(KEY_DURATION, value);
-        mExtraFlag = fromJson(jsonObject);
+        if (Objects.equals(value, duration))
+            return;
+        duration = value;
+        if (duration != null && duration != 0) {
+            JsonObject jsonObject = getExtraFlag();
+            jsonObject.addProperty(KEY_DURATION, value);
+            mExtraFlag = fromJson(jsonObject);
+            missed = false;
+        }
     }
 
     public String getDurationString() {
-        Long mDuration = getDuration() / 1000;
+        long mDuration = getDuration() / 1000;
         if (mDuration < 60) {
             return String.format(Locale.getDefault(), "%02d secs", mDuration);
         }

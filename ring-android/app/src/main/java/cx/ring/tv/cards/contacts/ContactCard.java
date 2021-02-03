@@ -40,10 +40,10 @@ public class ContactCard extends Card {
 
     public void setModel(SmartListViewModel model) {
         mModel = model;
-        setTitle(mModel.getContact().getDisplayName());
-        String username = mModel.getContact().getRingUsername();
+        setTitle(mModel.getContactName());
+        String username = mModel.getContact().get(0).getRingUsername();
         setDescription(username);
-        boolean isOnline = mModel.getContact().isOnline();
+        boolean isOnline = mModel.getContact().get(0).isOnline();
         if (mModel.getContactName().equals(username)) {
             if (isOnline) {
                 setType(Type.CONTACT_ONLINE);

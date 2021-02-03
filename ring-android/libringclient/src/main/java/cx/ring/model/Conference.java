@@ -46,7 +46,7 @@ public class Conference {
     }
     private final Subject<List<ParticipantInfo>> mParticipantInfo = BehaviorSubject.createDefault(Collections.emptyList());
 
-    private String mId;
+    private final String mId;
     private SipCall.CallStatus mConfState;
     private final ArrayList<SipCall> mParticipants;
     private boolean mRecording;
@@ -150,7 +150,7 @@ public class Conference {
 
     public SipCall findCallByContact(Uri uri) {
         for (SipCall call : mParticipants) {
-            if (call.getContact().getPrimaryUri().toString().equals(uri.toString()))
+            if (call.getContact().getUri().toString().equals(uri.toString()))
                 return call;
         }
         return null;

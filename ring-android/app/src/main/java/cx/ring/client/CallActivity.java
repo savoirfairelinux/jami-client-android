@@ -21,7 +21,6 @@
  */
 package cx.ring.client;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.media.AudioManager;
@@ -38,10 +37,9 @@ import androidx.fragment.app.Fragment;
 import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
-import cx.ring.call.CallView;
 import cx.ring.fragments.CallFragment;
-import cx.ring.fragments.ConversationFragment;
 import cx.ring.services.NotificationService;
+import cx.ring.utils.ConversationPath;
 import cx.ring.utils.KeyboardVisibilityManager;
 import cx.ring.utils.MediaButtonsHelper;
 
@@ -99,22 +97,16 @@ public class CallActivity extends AppCompatActivity {
 
     private void handleNewIntent(Intent intent) {
         String action = intent.getAction();
-
         if (Intent.ACTION_CALL.equals(action) || ACTION_CALL.equals(action)) {
-
             boolean audioOnly = intent.getBooleanExtra(CallFragment.KEY_AUDIO_ONLY, true);
-            String accountId = intent.getStringExtra(ConversationFragment.KEY_ACCOUNT_ID);
-            String contactRingId = intent.getStringExtra(ConversationFragment.KEY_CONTACT_RING_ID);
-            // Reload a new view
+            String contactId = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);
             CallFragment callFragment = CallFragment.newInstance(CallFragment.ACTION_PLACE_CALL,
-                    accountId,
-                    contactRingId,
+                    ConversationPath.fromIntent(intent),
+                    contactId,
                     audioOnly);
             getSupportFragmentManager().beginTransaction().replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit();
-
         } else if (Intent.ACTION_VIEW.equals(action) || ACTION_CALL_ACCEPT.equals(action)) {
             String confId = intent.getStringExtra(NotificationService.KEY_CALL_ID);
-            // Reload a new view
             CallFragment callFragment = CallFragment.newInstance(Intent.ACTION_VIEW.equals(action) ? CallFragment.ACTION_GET_CALL : ACTION_CALL_ACCEPT, confId);
             getSupportFragmentManager().beginTransaction().replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit();
         }
@@ -130,7 +122,6 @@ public class CallActivity extends AppCompatActivity {
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-
         currentOrientation = newConfig.orientation;
 
         // Checks the orientation of the screen
