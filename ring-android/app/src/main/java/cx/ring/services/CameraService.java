@@ -68,8 +68,7 @@ import java.util.Map;
 import java.util.Set;
 
 import net.jami.daemon.IntVect;
-import net.jami.daemon.Ringservice;
-import net.jami.daemon.RingserviceJNI;
+import net.jami.daemon.JamiService;
 import net.jami.daemon.StringMap;
 import net.jami.daemon.UintVect;
 import net.jami.utils.Tuple;
@@ -114,7 +113,7 @@ public class CameraService {
                     if (addedDevices.add(camera.first)) {
                         if (!devices.cameras.contains(camera.first))
                             devices.cameras.add(camera.first);
-                        RingserviceJNI.addVideoDevice(camera.first);
+                        JamiService.addVideoDevice(camera.first);
                     }
                 }
             });
@@ -127,7 +126,7 @@ public class CameraService {
                     if (addedDevices.remove(cameraId)) {
                         Log.w(TAG, "onCameraUnavailable " + cameraId + " current:" + previewCamera);
                         devices.cameras.remove(cameraId);
-                        RingserviceJNI.removeVideoDevice(cameraId);
+                        JamiService.removeVideoDevice(cameraId);
                     }
                 }
             }
@@ -222,7 +221,7 @@ public class CameraService {
         }
         params.rotation = getCameraDisplayRotation(deviceParams, rotation);
         int r = params.rotation;
-        getVideoHandler().post(() -> Ringservice.setDeviceOrientation(camId, r));
+        getVideoHandler().post(() -> JamiService.setDeviceOrientation(camId, r));
     }
 
     public void setOrientation(int rotation) {
@@ -242,7 +241,7 @@ public class CameraService {
         if (params != null) {
             params.rotation = rotation;
         }
-        Ringservice.setDeviceOrientation(camId, rotation);
+        JamiService.setDeviceOrientation(camId, rotation);
     }
 
     private static int getCameraDisplayRotation(DeviceParams device, int screenRotation) {
@@ -414,19 +413,19 @@ public class CameraService {
                             for (String oldId : old.cameras) {
                                 if (!devs.cameras.contains(oldId) || resetCamera) {
                                     if (addedDevices.remove(oldId))
-                                        RingserviceJNI.removeVideoDevice(oldId);
+                                        JamiService.removeVideoDevice(oldId);
                                 }
                             }
                         }
                         // Added devices
                         for (String camera : devs.cameras) {
-                            Log.w(TAG, "RingserviceJNI.addVideoDevice init " + camera);
+                            Log.w(TAG, "JamiServiceJNI.addVideoDevice init " + camera);
                             if (addedDevices.add(camera))
-                                RingserviceJNI.addVideoDevice(camera);
+                                JamiService.addVideoDevice(camera);
                         }
                         // New default
                         if (devs.currentId != null) {
-                            RingserviceJNI.setDefaultDevice(devs.currentId);
+                            JamiService.setDefaultDevice(devs.currentId);
                         }
                     }
                     return devs;
@@ -581,12 +580,12 @@ public class CameraService {
                                     // If it's a key-frame, send the cached SPS/PPS NALs prior to
                                     // sending key-frame.
                                     if (isKeyFrame && codecData != null) {
-                                        RingserviceJNI.captureVideoPacket(codecData, codecData.capacity(), 0, false, info.presentationTimeUs, videoParams.rotation);
+                                        JamiService.captureVideoPacket(codecData, codecData.capacity(), 0, false, info.presentationTimeUs, videoParams.rotation);
                                     }
 
                                     // Send the encoded frame
                                     ByteBuffer buffer = codec.getOutputBuffer(index);
-                                    RingserviceJNI.captureVideoPacket(buffer, info.size, info.offset, isKeyFrame, info.presentationTimeUs, videoParams.rotation);
+                                    JamiService.captureVideoPacket(buffer, info.size, info.offset, isKeyFrame, info.presentationTimeUs, videoParams.rotation);
                                     codec.releaseOutputBuffer(index, false);
                                 }
                             }
@@ -840,7 +839,7 @@ public class CameraService {
                 tmpReader.setOnImageAvailableListener(r -> {
                     Image image = r.acquireLatestImage();
                     if (image != null) {
-                        RingserviceJNI.captureVideoFrame(image, videoParams.rotation);
+                        JamiService.captureVideoFrame(image, videoParams.rotation);
                         image.close();
                     }
                 }, handler);

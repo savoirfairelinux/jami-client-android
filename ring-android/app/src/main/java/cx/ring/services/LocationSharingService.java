@@ -62,7 +62,7 @@ import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.ConversationActivity;
 import net.jami.daemon.Blob;
-import net.jami.daemon.Ringservice;
+import net.jami.daemon.JamiService;
 import net.jami.daemon.StringMap;
 import net.jami.facades.ConversationFacade;
 import cx.ring.fragments.ConversationFragment;
@@ -215,7 +215,7 @@ public class LocationSharingService extends Service implements LocationListener 
                             StringMap msgs = new StringMap();
                             msgs.setRaw(net.jami.services.CallService.MIME_GEOLOCATION, Blob.fromString(location.toString()));
                             for (ConversationPath p : contactLocationShare.keySet())  {
-                                Ringservice.sendAccountTextMessage(p.getAccountId(), p.getConversationId(), msgs);
+                                JamiService.sendAccountTextMessage(p.getAccountId(), p.getConversationId(), msgs);
                             }
                         }));
             } else {
@@ -240,7 +240,7 @@ public class LocationSharingService extends Service implements LocationListener 
                 Log.w(TAG, "location send " + jsonObject + " to " + contactLocationShare.size());
                 StringMap msgs = new StringMap();
                 msgs.setRaw(CallService.MIME_GEOLOCATION, Blob.fromString(jsonObject.toString()));
-                Ringservice.sendAccountTextMessage(path.getAccountId(), path.getConversationId(), msgs);
+                JamiService.sendAccountTextMessage(path.getAccountId(), path.getConversationId(), msgs);
             }
 
             mContactSharingSubject.onNext(contactLocationShare.keySet());
