@@ -30,8 +30,8 @@ import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.Subject;
 
-public class CallContact {
-    protected static final String TAG = CallContact.class.getSimpleName();
+public class Contact {
+    protected static final String TAG = Contact.class.getSimpleName();
 
     public static final int UNKNOWN_ID = -1;
     public static final int DEFAULT_ID = 0;
@@ -63,21 +63,21 @@ public class CallContact {
     private String mDisplayName;
     private Object mContactPhoto = null;
 
-    private final Subject<CallContact> mContactUpdates = BehaviorSubject.create();
-    private Observable<CallContact> mContactObservable;
+    private final Subject<Contact> mContactUpdates = BehaviorSubject.create();
+    private Observable<Contact> mContactObservable;
 
     private Observable<Boolean> mContactPresenceObservable;
     private Emitter<Boolean> mContactPresenceEmitter;
 
-    public CallContact(Uri uri) {
+    public Contact(Uri uri) {
         this(uri, false);
     }
 
-    public CallContact(Uri uri, boolean user) {
+    public Contact(Uri uri, boolean user) {
         this(uri, null, user);
     }
 
-    private CallContact(Uri uri, String displayName, boolean user) {
+    private Contact(Uri uri, String displayName, boolean user) {
         mUri = uri;
         mDisplayName = displayName;
         isUser = user;
@@ -96,26 +96,26 @@ public class CallContact {
         return mConversationUri;
     }
 
-    public static CallContact buildSIP(Uri to) {
-        CallContact contact = new CallContact(to);
+    public static Contact buildSIP(Uri to) {
+        Contact contact = new Contact(to);
         contact.usernameLoaded = true;
         return contact;
     }
 
-    public static CallContact build(String uri, boolean isUser) {
-        return new CallContact(Uri.fromString(uri), isUser);
+    public static Contact build(String uri, boolean isUser) {
+        return new Contact(Uri.fromString(uri), isUser);
     }
-    public static CallContact build(String uri) {
+    public static Contact build(String uri) {
         return build(uri, false);
     }
 
-    public Observable<CallContact> getUpdatesSubject() {
+    public Observable<Contact> getUpdatesSubject() {
         return mContactUpdates;
     }
-    public Observable<CallContact> getUpdates() {
+    public Observable<Contact> getUpdates() {
         return mContactObservable;
     }
-    public void setUpdates(Observable<CallContact> observable) {
+    public void setUpdates(Observable<Contact> observable) {
         mContactObservable = observable;
     }
 
