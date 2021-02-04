@@ -62,6 +62,7 @@ import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -658,6 +659,11 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
             }
         }
         binding.participantLabelContainer.setVisibility(info.isEmpty() ? View.GONE : View.VISIBLE);
+    }
+
+    @Override
+    public void updateParticipantRecording(Set<CallContact> contacts) {
+
     }
 
     @Override
