@@ -229,11 +229,18 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     private void showConference(Observable<Conference> conference) {
+        conference = conference
+                .distinctUntilChanged();
         mCompositeDisposable.add(conference
-                .distinctUntilChanged()
                 .switchMap(Conference::getParticipantInfo)
                 .observeOn(mUiScheduler)
                 .subscribe(info -> getView().updateConfInfo(info),
+                        e -> Log.e(TAG, "Error with initIncoming, action view flow: ", e)));
+
+        mCompositeDisposable.add(conference
+                .switchMap(Conference::getParticipantRecording)
+                .observeOn(mUiScheduler)
+                .subscribe(contacts -> getView().updateParticipantRecording(contacts),
                         e -> Log.e(TAG, "Error with initIncoming, action view flow: ", e)));
     }
 
