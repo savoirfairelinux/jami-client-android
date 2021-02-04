@@ -38,6 +38,7 @@ import cx.ring.daemon.StringVect;
 import cx.ring.daemon.UintVect;
 import cx.ring.daemon.VectMap;
 import cx.ring.daemon.VideoCallback;
+import cx.ring.model.Uri;
 import cx.ring.utils.Log;
 
 public class DaemonService {
@@ -261,6 +262,11 @@ public class DaemonService {
         @Override
         public void connectionUpdate(String id, int state) {
             mCallService.connectionUpdate(id, state);
+        }
+
+        @Override
+        public void remoteRecordingChanged(String call_id, String peer_number, boolean state) {
+            mCallService.remoteRecordingChanged(call_id, new Uri(peer_number), state);
         }
 
         @Override

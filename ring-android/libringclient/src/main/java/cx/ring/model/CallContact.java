@@ -199,7 +199,7 @@ public class CallContact {
         if (number == null || number.isEmpty())
             return false;
         for (Phone p : mPhones)
-            if (p.getNumber().equals(number))
+            if (p.getNumber().toString().equals(number.toString()))
                 return true;
         return false;
     }
