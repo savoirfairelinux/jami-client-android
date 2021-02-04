@@ -1421,7 +1421,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
         // Create callMediaHandlers and videoPluginsItems in a lazy manner
         if (pluginsModeFirst) {
             // Init
-            callMediaHandlers = Ringservice.listCallMediaHandlers();
+            callMediaHandlers = Ringservice.getCallMediaHandlers();
             List<Drawable> videoPluginsItems = new ArrayList<>(callMediaHandlers.size() + 1);
 
             videoPluginsItems.add(context.getDrawable(R.drawable.baseline_cancel_24));

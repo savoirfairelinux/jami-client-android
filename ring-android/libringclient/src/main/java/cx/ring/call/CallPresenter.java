@@ -28,6 +28,7 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import cx.ring.daemon.Ringservice;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
@@ -49,8 +50,6 @@ import io.reactivex.Scheduler;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.Subject;
-
-import static cx.ring.daemon.Ringservice.listCallMediaHandlers;
 
 public class CallPresenter extends RootPresenter<CallView> {
 
@@ -298,13 +297,6 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void hangupCall() {
-        List<String> callMediaHandlers = listCallMediaHandlers();
-
-        for (String callMediaHandler : callMediaHandlers)
-        {
-            toggleCallMediaHandler(callMediaHandler, false);
-        }
-
         if (mConference != null) {
             if (mConference.isConference())
                 mCallService.hangUpConference(mConference.getId());
