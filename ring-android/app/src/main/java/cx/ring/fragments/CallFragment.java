@@ -339,9 +339,6 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             mPreviewSurfaceWidth = width;
             mPreviewSurfaceHeight = height;
             presenter.previewVideoSurfaceCreated(binding.previewSurface);
-            if (presenter.isPluginStarted()) {
-                displayVideoPluginsCarousel();
-            }
         }
 
         @Override
@@ -359,6 +356,9 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
 
         @Override
         public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+            if (presenter.isPluginStarted() && !choosePluginMode) {
+                onOptionsItemSelected(pluginsMenuBtn);
+            }
         }
     };
 
@@ -1439,12 +1439,8 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             pluginsModeFirst = false;
         }
 
-        boolean callStart = true;
-        if (presenter.isPluginStarted() && !choosePluginMode) {
-            displayHangupButton(false);
-            callStart = false;
-            setHandlerCarousselPos();
-        }
+        setHandlerCarousselPos();
+
         choosePluginMode = !choosePluginMode;
 
         if (choosePluginMode) {
@@ -1462,8 +1458,7 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
                     rp.scrollToPosition(1);
                 }
                 String callMediaId = callMediaHandlers.get(handlerCarousselPos-1);
-                if (callStart)
-                    presenter.startPlugin(callMediaId);
+                presenter.startPlugin(callMediaId);
             }
 
         } else {

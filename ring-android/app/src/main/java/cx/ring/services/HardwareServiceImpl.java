@@ -546,7 +546,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                         if (currentCall == null) {
                             return;
                         }
-                        if (mHandlerId == null)
+                        if (mHandlerId == null || useHardwareCodec)
                             return;
                         Ringservice.toggleCallMediaHandler(mHandlerId, currentCall, true);
                     }
