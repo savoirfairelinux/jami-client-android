@@ -29,7 +29,6 @@ import android.media.AudioManager;
 import android.media.MediaRecorder;
 import android.media.projection.MediaProjection;
 import android.os.Build;
-import android.text.TextUtils;
 import android.view.SurfaceHolder;
 import android.view.TextureView;
 import android.view.WindowManager;
@@ -48,7 +47,6 @@ import java.util.Map;
 
 import cx.ring.daemon.IntVect;
 import cx.ring.daemon.Ringservice;
-import cx.ring.daemon.StringMap;
 import cx.ring.daemon.UintVect;
 import cx.ring.model.Conference;
 import cx.ring.model.SipCall;
@@ -89,8 +87,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     private boolean mShouldSpeakerphone = false;
     private final boolean mHasSpeakerPhone;
     private boolean mIsChoosePlugin = false;
-    private String mMediaHandlerId = null;
-    private String mPluginCallId = null;
+    private String mHandlerId = null;
 
     public HardwareServiceImpl(Context context) {
         mContext = context;
@@ -487,18 +484,13 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     }
 
     public void startMediaHandler(String mediaHandlerId) {
+        mHandlerId = mediaHandlerId;
         mIsChoosePlugin = true;
-        mMediaHandlerId = mediaHandlerId;
-    }
-
-    private void toggleMediaHandler(String callId) {
-        if (mMediaHandlerId != null)
-            Ringservice.toggleCallMediaHandler(mMediaHandlerId, callId, true);
     }
 
     public void stopMediaHandler() {
+        mHandlerId = null;
         mIsChoosePlugin = false;
-        mMediaHandlerId = null;
     }
 
     @Override
@@ -550,18 +542,9 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                     @Override
                     public void onOpened() {
                         String currentCall = conf != null ? conf.getId() : null;
-                        if (currentCall == null || mMediaHandlerId == null)
+                        if (currentCall == null || mHandlerId == null || useHardwareCodec)
                             return;
-                        if (mPluginCallId != null && !mPluginCallId.equals(currentCall)) {
-                            Ringservice.toggleCallMediaHandler(mMediaHandlerId, currentCall, false);
-                            mIsChoosePlugin = false;
-                            mMediaHandlerId = null;
-                            mPluginCallId = null;
-                        }
-                        else if (mIsChoosePlugin && mMediaHandlerId != null) {
-                            mPluginCallId = currentCall;
-                            toggleMediaHandler(currentCall);
-                        }
+                        Ringservice.toggleCallMediaHandler(mHandlerId, currentCall, true);
                     }
 
                     @Override
