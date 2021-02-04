@@ -21,14 +21,18 @@
 package cx.ring.call;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import cx.ring.daemon.Ringservice;
+import cx.ring.daemon.StringVect;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
@@ -473,6 +477,7 @@ public class CallPresenter extends RootPresenter<CallView> {
                 Ringservice.addMainParticipant(call.getConfId());
         }
         mAudioOnly = !call.hasVideo();
+        mHardwareService.stopMediaHandler();
         CallView view = getView();
         if (view == null)
             return;
@@ -495,6 +500,9 @@ public class CallPresenter extends RootPresenter<CallView> {
             if (timeUpdateTask != null)
                 timeUpdateTask.dispose();
             timeUpdateTask = mUiScheduler.schedulePeriodicallyDirect(this::updateTime, 0, 1, TimeUnit.SECONDS);
+            String handlerId = mediaHandlerId();
+            if (handlerId != null)
+                startPlugin(handlerId);
         } else if (call.isRinging()) {
             SipCall scall = call.getCall();
 
@@ -734,18 +742,31 @@ public class CallPresenter extends RootPresenter<CallView> {
         return mConference.getMaximizedCall() == call;
     }
 
+    public boolean isPluginStarted() {
+        return mediaHandlerId() != null;
+    }
+
+    public String mediaHandlerId() {
+        if (mConference == null)
+            return null;
+
+        StringVect handlersIds = Ringservice.getCallMediaHandlerStatus(mConference.getId());
+        if (handlersIds == null || handlersIds.isEmpty())
+            return null;
+        return handlersIds.get(0);
+    }
+
     public void startPlugin(String mediaHandlerId) {
-        mHardwareService.startMediaHandler(mediaHandlerId);
         if(mConference == null)
             return;
+        mHardwareService.startMediaHandler(mediaHandlerId);
         mHardwareService.switchInput(mConference.getId(), mHardwareService.isPreviewFromFrontCamera());
     }
 
     public void stopPlugin() {
-        mHardwareService.stopMediaHandler();
         if(mConference == null)
             return;
+        mHardwareService.stopMediaHandler();
         mHardwareService.switchInput(mConference.getId(), mHardwareService.isPreviewFromFrontCamera());
     }
-
 }
