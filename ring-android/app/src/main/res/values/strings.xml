@@ -166,6 +166,7 @@ along with this program; if not, write to the Free Software
     <string name="qr_code">QR Code</string>
     <string name="ab_action_flipcamera">Flip camera</string>
     <string name="ab_action_hidepreview">Hide preview</string>
+    <string name="remote_recording">%s recording…</string>
 
     <!-- Text messages -->
     <string name="send_message">Send message</string>
