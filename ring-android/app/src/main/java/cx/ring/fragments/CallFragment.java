@@ -63,7 +63,10 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -84,10 +87,12 @@ import androidx.percentlayout.widget.PercentFrameLayout;
 import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -1043,6 +1048,26 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
     }
 
     @Override
+    public void updateParticipantRecording(Set<CallContact> contacts) {
+        if (contacts.size() == 0) {
+            binding.recordLayout.setVisibility(View.INVISIBLE);
+            binding.recordIndicator.clearAnimation();
+            return;
+        }
+        StringBuilder names = new StringBuilder();
+        Iterator<CallContact> contact =  contacts.iterator();
+        for (int i = 0; i < contacts.size(); i++) {
+            names.append(" ").append(contact.next().getDisplayName());
+            if (i != contacts.size() - 1) {
+                names.append(",");
+            }
+        }
+        binding.recordLayout.setVisibility(View.VISIBLE);
+        binding.recordIndicator.setAnimation(getBlinkingAnimation());
+        binding.recordName.setText(getString(R.string.remote_recording, names));
+    }
+
+    @Override
     public void updateCallStatus(final SipCall.CallStatus callStatus) {
         binding.callStatusTxt.setText(callStateToHumanState(callStatus));
     }
@@ -1532,4 +1557,14 @@ public class CallFragment extends BaseSupportFragment<CallPresenter> implements 
             displayVideoPluginsCarousel();
         }
     }
+
+    private Animation getBlinkingAnimation() {
+        Animation animation = new AlphaAnimation(1, 0);
+        animation.setDuration(400);
+        animation.setInterpolator(new LinearInterpolator());
+        animation.setRepeatCount(Animation.INFINITE);
+        animation.setRepeatMode(Animation.REVERSE);
+        return animation;
+    }
+
 }

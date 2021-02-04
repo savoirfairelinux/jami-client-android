@@ -20,6 +20,7 @@
 package cx.ring.call;
 
 import java.util.List;
+import java.util.Set;
 
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
@@ -84,6 +85,8 @@ public interface CallView {
     boolean displayPluginsButton();
 
     void updateConfInfo(List<Conference.ParticipantInfo> info);
+
+    void updateParticipantRecording(Set<CallContact> contacts);
 
     void toggleCallMediaHandler(String id, String callId, boolean toggle);
 }

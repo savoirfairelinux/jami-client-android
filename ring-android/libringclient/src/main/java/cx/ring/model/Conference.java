@@ -23,8 +23,10 @@ package cx.ring.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
@@ -49,6 +51,9 @@ public class Conference {
         }
     }
     private final Subject<List<ParticipantInfo>> mParticipantInfo = BehaviorSubject.createDefault(Collections.emptyList());
+
+    private final Set<CallContact> mParticipantRecordingSet = new HashSet<>();
+    private final Subject<Set<CallContact>> mParticipantRecording = BehaviorSubject.createDefault(Collections.emptySet());
 
     private String mId;
     private SipCall.CallStatus mConfState;
@@ -83,7 +88,13 @@ public class Conference {
     }
 
     public SipCall getCall() {
-        if (!isConference() && !mParticipants.isEmpty()) {
+        if (!isConference()) {
+            return getFirstCall();
+        }
+        return null;
+    }
+    public SipCall getFirstCall() {
+        if (!mParticipants.isEmpty()) {
             return mParticipants.get(0);
         }
         return null;
@@ -193,4 +204,17 @@ public class Conference {
     public Observable<List<ParticipantInfo>> getParticipantInfo() {
         return mParticipantInfo;
     }
+    public Observable<Set<CallContact>> getParticipantRecording() {
+        return mParticipantRecording;
+    }
+
+    public void setParticipantRecording(CallContact contact, boolean state) {
+        if (state) {
+            mParticipantRecordingSet.add(contact);
+        } else {
+            mParticipantRecordingSet.remove(contact);
+        }
+        mParticipantRecording.onNext(mParticipantRecordingSet);
+    }
+
 }
