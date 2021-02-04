@@ -519,6 +519,9 @@ public class CallPresenter extends RootPresenter<CallView> {
             if (timeUpdateTask != null)
                 timeUpdateTask.dispose();
             timeUpdateTask = mUiScheduler.schedulePeriodicallyDirect(this::updateTime, 0, 1, TimeUnit.SECONDS);
+            String handlerId = mediaHandlerId();
+            if (handlerId != null)
+                startPlugin(handlerId);
         } else if (call.isRinging()) {
             SipCall scall = call.getCall();
 
