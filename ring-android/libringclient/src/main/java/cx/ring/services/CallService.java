@@ -36,7 +36,6 @@ import cx.ring.daemon.Blob;
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.StringVect;
-import cx.ring.daemon.VectMap;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
@@ -47,10 +46,8 @@ import cx.ring.utils.Log;
 import ezvcard.VCard;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
-import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.PublishSubject;
 
 public class CallService {
@@ -156,6 +153,25 @@ public class CallService {
 
     public void setConfGridLayout(String confId) {
         mExecutor.execute(() -> Ringservice.setConferenceLayout(confId, 0));
+    }
+
+    public void remoteRecordingChanged(String callId, Uri peerNumber, boolean state) {
+        Log.w(TAG, "remoteRecordingChanged " + callId + " " + peerNumber + " " + state);
+        Conference conference = getConference(callId);
+        SipCall call;
+        if (conference == null) {
+            call = getCurrentCallForId(callId);
+            if (call != null) {
+                conference = getConference(call);
+            }
+        } else {
+            call = conference.getFirstCall();
+        }
+        Account account = call == null ? null : mAccountService.getAccount(call.getAccount());
+        CallContact contact = account == null ? null : account.getContactFromCache(peerNumber);
+        if (conference != null && contact != null) {
+            conference.setParticipantRecording(contact, state);
+        }
     }
 
     private static class ConferenceEntity {

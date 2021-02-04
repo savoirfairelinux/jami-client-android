@@ -28,6 +28,7 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import cx.ring.daemon.Ringservice;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
@@ -39,7 +40,6 @@ import cx.ring.services.CallService;
 import cx.ring.services.ContactService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
-import cx.ring.services.PreferencesService;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
 import io.reactivex.Maybe;
@@ -49,8 +49,6 @@ import io.reactivex.Scheduler;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.Subject;
-
-import static cx.ring.daemon.Ringservice.listCallMediaHandlers;
 
 public class CallPresenter extends RootPresenter<CallView> {
 
@@ -229,11 +227,18 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     private void showConference(Observable<Conference> conference) {
+        conference = conference
+                .distinctUntilChanged();
         mCompositeDisposable.add(conference
-                .distinctUntilChanged()
                 .switchMap(Conference::getParticipantInfo)
                 .observeOn(mUiScheduler)
                 .subscribe(info -> getView().updateConfInfo(info),
+                        e -> Log.e(TAG, "Error with initIncoming, action view flow: ", e)));
+
+        mCompositeDisposable.add(conference
+                .switchMap(Conference::getParticipantRecording)
+                .observeOn(mUiScheduler)
+                .subscribe(contacts -> getView().updateParticipantRecording(contacts),
                         e -> Log.e(TAG, "Error with initIncoming, action view flow: ", e)));
     }
 
@@ -298,7 +303,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void hangupCall() {
-        List<String> callMediaHandlers = listCallMediaHandlers();
+        List<String> callMediaHandlers = Ringservice.listCallMediaHandlers();
 
         for (String callMediaHandler : callMediaHandlers)
         {
