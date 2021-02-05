@@ -30,7 +30,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import java.util.ArrayList;
 
 import cx.ring.R;
-import net.jami.model.CallContact;
+import net.jami.model.Contact;
 import net.jami.model.Conversation;
 import net.jami.model.Uri;
 import net.jami.utils.Log;
@@ -140,7 +140,7 @@ public class ActionHelper {
         }*/
     }
 
-    public static Intent getAddNumberIntentForContact(CallContact contact) {
+    public static Intent getAddNumberIntentForContact(Contact contact) {
         final Intent intent = new Intent(Intent.ACTION_INSERT_OR_EDIT);
         intent.setType(ContactsContract.Contacts.CONTENT_ITEM_TYPE);
 
@@ -162,13 +162,13 @@ public class ActionHelper {
         return intent;
     }
 
-    public static void displayContact(Context context, CallContact contact) {
+    public static void displayContact(Context context, Contact contact) {
         if (context == null) {
             net.jami.utils.Log.d(TAG, "displayContact: context is null");
             return;
         }
 
-        if (contact.getId() != CallContact.UNKNOWN_ID) {
+        if (contact.getId() != Contact.UNKNOWN_ID) {
             net.jami.utils.Log.d(TAG, "displayContact: contact is known, displaying...");
             try {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
