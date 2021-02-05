@@ -92,7 +92,7 @@ import net.jami.conversation.ConversationView;
 import cx.ring.databinding.FragConversationBinding;
 import cx.ring.interfaces.Colorable;
 import net.jami.model.Account;
-import net.jami.model.CallContact;
+import net.jami.model.Contact;
 import net.jami.model.Conversation;
 import net.jami.model.Interaction;
 import net.jami.model.DataTransfer;
@@ -915,7 +915,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     @Override
-    public void updateContact(CallContact contact) {
+    public void updateContact(Contact contact) {
         String contactKey = contact.getPrimaryNumber();
         AvatarDrawable a = mSmallParticipantAvatars.get(contactKey);
         if (a != null) {
@@ -975,8 +975,8 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
     }
 
     @Override
-    public void goToAddContact(CallContact callContact) {
-        startActivityForResult(ActionHelper.getAddNumberIntentForContact(callContact), REQ_ADD_CONTACT);
+    public void goToAddContact(Contact contact) {
+        startActivityForResult(ActionHelper.getAddNumberIntentForContact(contact), REQ_ADD_CONTACT);
     }
 
     @Override

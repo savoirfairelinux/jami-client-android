@@ -19,13 +19,13 @@
  */
 package cx.ring.tv.search;
 
-import net.jami.model.CallContact;
+import net.jami.model.Contact;
 import net.jami.model.Error;
 import net.jami.smartlist.SmartListViewModel;
 
 public interface ContactSearchView {
 
-    void displayContact(String accountId, CallContact contact);
+    void displayContact(String accountId, Contact contact);
 
     void clearSearch();
 
