@@ -71,13 +71,13 @@ import cx.ring.contactrequests.ContactRequestsFragment;
 import cx.ring.contacts.AvatarFactory;
 import cx.ring.fragments.ConversationFragment;
 import net.jami.model.Account;
-import net.jami.model.CallContact;
+import net.jami.model.Contact;
 import net.jami.model.Conference;
 import net.jami.model.Conversation;
 import net.jami.model.Interaction;
 import net.jami.model.Interaction.InteractionStatus;
 import net.jami.model.DataTransfer;
-import net.jami.model.SipCall;
+import net.jami.model.Call;
 import net.jami.model.TextMessage;
 import net.jami.model.Uri;
 import cx.ring.service.CallNotificationService;
@@ -244,11 +244,11 @@ public class NotificationServiceImpl implements NotificationService {
     private Notification buildCallNotification(@NonNull Conference conference) {
         String ongoingCallId = null;
         for (Conference conf : currentCalls.values()) {
-            if (conf != conference && conf.getState() == SipCall.CallStatus.CURRENT)
+            if (conf != conference && conf.getState() == Call.CallStatus.CURRENT)
                 ongoingCallId = conf.getParticipants().get(0).getDaemonIdString();
         }
 
-        SipCall call = conference.getParticipants().get(0);
+        Call call = conference.getParticipants().get(0);
 
         notificationManager.cancel(NOTIF_CALL_ID);
 
@@ -258,7 +258,7 @@ public class NotificationServiceImpl implements NotificationService {
                         .setClass(mContext, DRingService.class)
                         .putExtra(KEY_CALL_ID, call.getDaemonIdString()), 0);
 
-        CallContact contact = call.getContact();
+        Contact contact = call.getContact();
         NotificationCompat.Builder messageNotificationBuilder;
         if (conference.isOnGoing()) {
             messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_CALL_IN_PROGRESS);
@@ -345,7 +345,7 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public void showLocationNotification(Account first, CallContact contact) {
+    public void showLocationNotification(Account first, Contact contact) {
         android.net.Uri path = ConversationPath.toUri(first.getAccountID(), contact.getUri());
 
         Intent intentConversation = new Intent(Intent.ACTION_VIEW, path, mContext, ConversationActivity.class)
@@ -366,7 +366,7 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public void cancelLocationNotification(Account first, CallContact contact) {
+    public void cancelLocationNotification(Account first, Contact contact) {
         notificationManager.cancel(Objects.hash( "Location", ConversationPath.toUri(first.getAccountID(), contact.getUri())));
     }
 
@@ -575,7 +575,7 @@ public class NotificationServiceImpl implements NotificationService {
 
             NotificationCompat.MessagingStyle history = new NotificationCompat.MessagingStyle(userPerson);
             for (TextMessage textMessage : texts.values()) {
-                CallContact contact = textMessage.getContact();
+                Contact contact = textMessage.getContact();
                 Bitmap contactPicture = getContactPicture(contact);
                 Person contactPerson = new Person.Builder()
                         .setKey(textMessage.getAuthor())
@@ -696,7 +696,7 @@ public class NotificationServiceImpl implements NotificationService {
             NotificationCompat.Builder builder = getRequestNotificationBuilder(account.getAccountID());
             boolean newRequest = false;
             for (Conversation request : requests) {
-                CallContact contact = request.getContact();
+                Contact contact = request.getContact();
                 if (contact != null) {
                     String contactKey = contact.getUri().getRawRingId();
                     if (!notifiedRequests.contains(contactKey)) {
@@ -837,7 +837,7 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public void showMissedCallNotification(SipCall call) {
+    public void showMissedCallNotification(Call call) {
         final int notificationId = call.getDaemonIdString().hashCode();
         NotificationCompat.Builder messageNotificationBuilder = mNotificationBuilders.get(notificationId);
         if (messageNotificationBuilder == null) {
@@ -943,7 +943,7 @@ public class NotificationServiceImpl implements NotificationService {
         return (NOTIF_FILE_TRANSFER + dataTransferId).hashCode();
     }
 
-    private Bitmap getContactPicture(CallContact contact) {
+    private Bitmap getContactPicture(Contact contact) {
         try {
             return AvatarFactory.getBitmapAvatar(mContext, contact, avatarSize, false).blockingGet();
         } catch (Exception e) {
@@ -966,7 +966,7 @@ public class NotificationServiceImpl implements NotificationService {
         return Pair.create(getContactPicture(conversation), conversation.getTitle());
     }
 
-    private void setContactPicture(CallContact contact, NotificationCompat.Builder messageNotificationBuilder) {
+    private void setContactPicture(Contact contact, NotificationCompat.Builder messageNotificationBuilder) {
         Bitmap pic = getContactPicture(contact);
         if (pic != null)
             messageNotificationBuilder.setLargeIcon(pic);

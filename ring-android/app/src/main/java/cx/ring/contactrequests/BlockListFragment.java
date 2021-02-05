@@ -36,13 +36,13 @@ import cx.ring.account.JamiAccountSummaryFragment;
 import cx.ring.application.JamiApplication;
 import cx.ring.databinding.FragBlocklistBinding;
 
-import net.jami.contactrequests.BlackListPresenter;
-import net.jami.contactrequests.BlackListView;
-import net.jami.model.CallContact;
+import net.jami.contactrequests.BlockListPresenter;
+import net.jami.contactrequests.BlockListView;
+import net.jami.model.Contact;
 import cx.ring.mvp.BaseSupportFragment;
 
-public class BlockListFragment extends BaseSupportFragment<BlackListPresenter> implements BlackListView,
-        BlackListViewHolder.BlackListListeners {
+public class BlockListFragment extends BaseSupportFragment<BlockListPresenter> implements BlockListView,
+        BlockListViewHolder.BlockListListeners {
 
     public static final String TAG = BlockListFragment.class.getSimpleName();
 
@@ -57,7 +57,7 @@ public class BlockListFragment extends BaseSupportFragment<BlackListPresenter> i
         }
     };
 
-    private BlackListAdapter mAdapter;
+    private BlockListAdapter mAdapter;
     private FragBlocklistBinding binding;
 
     @Nullable
@@ -93,17 +93,17 @@ public class BlockListFragment extends BaseSupportFragment<BlackListPresenter> i
     }
 
     @Override
-    public void onUnblockClicked(CallContact viewModel) {
+    public void onUnblockClicked(Contact viewModel) {
         presenter.unblockClicked(viewModel);
     }
 
     @Override
-    public void updateView(final Collection<CallContact> list) {
+    public void updateView(final Collection<Contact> list) {
         binding.blocklist.setVisibility(View.VISIBLE);
         if (binding.blocklist.getAdapter() != null) {
             mAdapter.replaceAll(list);
         } else {
-            mAdapter = new BlackListAdapter(list, BlockListFragment.this);
+            mAdapter = new BlockListAdapter(list, BlockListFragment.this);
             LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
             binding.blocklist.setLayoutManager(layoutManager);
             binding.blocklist.setAdapter(mAdapter);
