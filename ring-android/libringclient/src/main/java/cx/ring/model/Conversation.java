@@ -23,14 +23,18 @@ package cx.ring.model;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NavigableMap;
+import java.util.Set;
 import java.util.TreeMap;
 
 import cx.ring.model.Interaction.InteractionType;
 import cx.ring.utils.Log;
+import cx.ring.utils.StringUtils;
 import cx.ring.utils.Tuple;
 import io.reactivex.Observable;
 import io.reactivex.Single;
@@ -39,8 +43,6 @@ import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
 public class Conversation extends ConversationHistory {
-
-
     private static final String TAG = Conversation.class.getSimpleName();
 
     private final String mAccountId;
@@ -58,8 +60,15 @@ public class Conversation extends ConversationHistory {
     private final Subject<List<Conference>> callsSubject = BehaviorSubject.create();
     private final Subject<Account.ComposingStatus> composingStatusSubject = BehaviorSubject.createDefault(Account.ComposingStatus.Idle);
     private final Subject<Integer> color = BehaviorSubject.create();
+    private final Subject<List<CallContact>> mContactSubject = BehaviorSubject.create();
 
     private Single<Conversation> isLoaded = null;
+
+    private final Set<String> mRoots = new HashSet<>(2);
+    private final Set<String> mBranches = new HashSet<>(2);
+    private final Map<String, Interaction> mMessages = new HashMap<>(16);
+    private String lastRead = null;
+    private final Mode mMode;
 
     // runtime flag set to true if the user is currently viewing this conversation
     private boolean mVisible = false;
@@ -70,8 +79,18 @@ public class Conversation extends ConversationHistory {
     public Conversation(String accountId, CallContact contact) {
         mAccountId = accountId;
         mContacts = Collections.singletonList(contact);
-        mKey = contact.getPrimaryUri();
-        mParticipant = contact.getPrimaryUri().getUri();
+        mKey = contact.getUri();
+        mParticipant = contact.getUri().getUri();
+        mContactSubject.onNext(mContacts);
+        mMode = null;
+    }
+
+    public Conversation(String accountId, Uri uri, Mode mode) {
+        mAccountId = accountId;
+        mKey = uri;
+        mContacts = new ArrayList<>(3);
+        mContactSubject.onNext(mContacts);
+        mMode = mode;
     }
 
     public Conference getConference(String id) {
@@ -90,12 +109,32 @@ public class Conversation extends ConversationHistory {
         return mKey;
     }
 
-    public CharSequence getDisplayName() {
+    public Mode getMode() { return mMode; }
+
+    public boolean isSwarm() {
+        return Uri.SWARM_SCHEME.equals(getUri().getScheme());
+    }
+
+    public boolean matches(String query) {
+        for (CallContact contact : getContacts()) {
+            if (contact.matches(query))
+                return true;
+        }
+        return false;
+    }
+
+    public String getDisplayName() {
         return mContacts.get(0).getDisplayName();
     }
 
     public void addContact(CallContact contact) {
         mContacts.add(contact);
+        mContactSubject.onNext(mContacts);
+    }
+
+    public void removeContact(CallContact contact)  {
+        mContacts.remove(contact);
+        mContactSubject.onNext(mContacts);
     }
 
     public String getTitle() {
@@ -105,31 +144,74 @@ public class Conversation extends ConversationHistory {
             return mContacts.get(0).getDisplayName();
         }
         StringBuilder ret = new StringBuilder();
-        Iterator<CallContact> it = mContacts.iterator();
-        while (it.hasNext()) {
-            CallContact c = it.next();
-            ret.append(c.getDisplayName());
-            if (it.hasNext())
-                ret.append(", ");
+        ArrayList<String> names = new ArrayList<>(mContacts.size());
+        int target = mContacts.size();
+        for (CallContact c : mContacts) {
+            if (c.isUser()) {
+                target--;
+                continue;
+            }
+            String displayName = c.getDisplayName();
+            if (!StringUtils.isEmpty(displayName)) {
+                names.add(displayName);
+                if (names.size() == 3)
+                    break;
+            }
         }
-        return ret.toString();
+        ret.append(StringUtils.join(", ", names));
+        if (!names.isEmpty() && names.size() < target) {
+            ret.append(" + ").append(mContacts.size() - names.size());
+        }
+        String result = ret.toString();
+        return result.isEmpty() ? mKey.getRawUriString() : result;
     }
 
     public String getUriTitle() {
         if (mContacts.isEmpty()) {
             return null;
         } else if (mContacts.size() == 1) {
-            return mContacts.get(0).getDisplayName();
+            return mContacts.get(0).getRingUsername();
         }
         StringBuilder ret = new StringBuilder();
         Iterator<CallContact> it = mContacts.iterator();
         while (it.hasNext()) {
             CallContact c = it.next();
-            ret.append(c.getDisplayName());
+            if (c.isUser())
+                continue;
+            ret.append(c.getRingUsername());
             if (it.hasNext())
                 ret.append(", ");
         }
         return ret.toString();
+    }
+
+    public Observable<List<CallContact>> getContactUpdates() {
+        return mContactSubject;
+    }
+
+    public String readMessages() {
+        Interaction interaction = null;
+        for (String branch : mBranches) {
+            Interaction i = mMessages.get(branch);
+            if (i != null && !i.isRead()) {
+                i.read();
+                interaction = i;
+                lastRead = i.getMessageId();
+            }
+        }
+        return interaction == null ? null : interaction.getMessageId();
+    }
+
+    public Interaction getMessage(String messageId) {
+        return mMessages.get(messageId);
+    }
+
+    public void setLastMessageRead(String lastMessageRead) {
+        lastRead = lastMessageRead;
+    }
+
+    public String getLastRead() {
+        return lastRead;
     }
 
     public enum ElementStatus {
@@ -199,18 +281,46 @@ public class Conversation extends ConversationHistory {
         return mContacts;
     }
 
-    @Deprecated
     public CallContact getContact() {
-        return mContacts.get(0);
+        if (mContacts.size() == 1)
+            return mContacts.get(0);
+        if (isSwarm()) {
+            if (mContacts.size() > 2)
+                throw new IllegalStateException("getContact() called for group conversation of size " + mContacts.size());
+        }
+        for (CallContact contact : mContacts) {
+            if (!contact.isUser())
+                return contact;
+        }
+        return null;
     }
 
     public void addCall(SipCall call) {
-        if (getCallHistory().contains(call)) {
+        if (!isSwarm() && getCallHistory().contains(call)) {
             return;
         }
         mDirty = true;
         mAggregateHistory.add(call);
         updatedElementSubject.onNext(new Tuple<>(call, ElementStatus.ADD));
+    }
+
+    private void setInteractionProperties(Interaction interaction) {
+        interaction.setAccount(getAccountId());
+        if (interaction.getContact() == null) {
+            if (mContacts.size() == 1)
+                interaction.setContact(mContacts.get(0));
+            else
+                interaction.setContact(findContact(Uri.fromString(interaction.getAuthor())));
+        }
+    }
+
+    public CallContact findContact(Uri uri) {
+        for (CallContact contact : mContacts)  {
+            if (contact.getUri().equals(uri)) {
+                return contact;
+            }
+        }
+        return null;
     }
 
     public void addTextMessage(TextMessage txt) {
@@ -220,24 +330,24 @@ public class Conversation extends ConversationHistory {
         if (txt.getConversation() == null) {
             Log.e(TAG, "Error in conversation class... No conversation is attached to this interaction");
         }
-        if (txt.getContact() == null) {
-            txt.setContact(getContact());
-        }
+        setInteractionProperties(txt);
         mHistory.put(txt.getTimestamp(), txt);
         mDirty = true;
         mAggregateHistory.add(txt);
         updatedElementSubject.onNext(new Tuple<>(txt, ElementStatus.ADD));
     }
 
-    public void addRequestEvent(TrustRequest request) {
-        ContactEvent event = new ContactEvent(getContact(), request);
+    public void addRequestEvent(TrustRequest request, CallContact contact) {
+        if (isSwarm())
+            return;
+        ContactEvent event = new ContactEvent(contact, request);
         mDirty = true;
         mAggregateHistory.add(event);
         updatedElementSubject.onNext(new Tuple<>(event, ElementStatus.ADD));
     }
 
-    public void addContactEvent() {
-        ContactEvent event = new ContactEvent(getContact());
+    public void addContactEvent(CallContact contact) {
+        ContactEvent event = new ContactEvent(contact);
         mDirty = true;
         mAggregateHistory.add(event);
         updatedElementSubject.onNext(new Tuple<>(event, ElementStatus.ADD));
@@ -259,11 +369,9 @@ public class Conversation extends ConversationHistory {
     }
 
     public void updateTextMessage(TextMessage text) {
-        text.setContact(getContact());
-        long time = text.getTimestamp();
-        NavigableMap<Long, Interaction> msgs = mHistory.subMap(time, true, time, true);
-        for (Interaction txt : msgs.values()) {
-            if (txt.getId() == text.getId()) {
+        if (isSwarm()) {
+            TextMessage txt = (TextMessage) mMessages.get(text.getMessageId());
+            if (txt != null) {
                 txt.setStatus(text.getStatus());
                 updatedElementSubject.onNext(new Tuple<>(txt, ElementStatus.UPDATE));
                 if (text.getStatus() == Interaction.InteractionStatus.DISPLAYED) {
@@ -272,10 +380,28 @@ public class Conversation extends ConversationHistory {
                         lastDisplayedSubject.onNext(text);
                     }
                 }
-                return;
+            } else {
+                Log.e(TAG, "Can't find swarm message to update: " + text.getMessageId());
             }
+        } else {
+            setInteractionProperties(text);
+            long time = text.getTimestamp();
+            NavigableMap<Long, Interaction> msgs = mHistory.subMap(time, true, time, true);
+            for (Interaction txt : msgs.values()) {
+                if (txt.getId() == text.getId()) {
+                    txt.setStatus(text.getStatus());
+                    updatedElementSubject.onNext(new Tuple<>(txt, ElementStatus.UPDATE));
+                    if (text.getStatus() == Interaction.InteractionStatus.DISPLAYED) {
+                        if (lastDisplayed == null || lastDisplayed.getTimestamp() < text.getTimestamp()) {
+                            lastDisplayed = text;
+                            lastDisplayedSubject.onNext(text);
+                        }
+                    }
+                    return;
+                }
+            }
+            Log.e(TAG, "Can't find message to update: " + text.getId());
         }
-        Log.e(TAG, "Can't find message to update: " + text.getId());
     }
 
     public ArrayList<Interaction> getAggregateHistory() {
@@ -289,6 +415,7 @@ public class Conversation extends ConversationHistory {
 
     public void sortHistory() {
         if (mDirty) {
+            Log.w(TAG, "sortHistory()");
             synchronized (mAggregateHistory) {
                 Collections.sort(mAggregateHistory, (c1, c2) -> Long.compare(c1.getTimestamp(), c2.getTimestamp()));
             }
@@ -330,13 +457,23 @@ public class Conversation extends ConversationHistory {
 
     public TreeMap<Long, TextMessage> getUnreadTextMessages() {
         TreeMap<Long, TextMessage> texts = new TreeMap<>();
-        for (Map.Entry<Long, Interaction> entry : mHistory.descendingMap().entrySet()) {
-            Interaction value = entry.getValue();
-            if (value.getType() == InteractionType.TEXT) {
-                TextMessage message = (TextMessage) value;
-                if (message.isRead())
+        if (isSwarm()) {
+            for(int j = mAggregateHistory.size() - 1; j >= 0; j--) {
+                Interaction i = mAggregateHistory.get(j);
+                if (i.isRead())
                     break;
-                texts.put(entry.getKey(), message);
+                if (i instanceof TextMessage)
+                    texts.put(i.getTimestamp(), (TextMessage) i);
+            }
+        } else {
+            for (Map.Entry<Long, Interaction> entry : mHistory.descendingMap().entrySet()) {
+                Interaction value = entry.getValue();
+                if (value.getType() == InteractionType.TEXT) {
+                    TextMessage message = (TextMessage) value;
+                    if (message.isRead())
+                        break;
+                    texts.put(entry.getKey(), message);
+                }
             }
         }
         return texts;
@@ -380,8 +517,8 @@ public class Conversation extends ConversationHistory {
         mAggregateHistory.clear();
         mHistory.clear();
         mDirty = false;
-        if(!delete)
-            mAggregateHistory.add(new ContactEvent(getContact()));
+        if (!delete && mContacts.size() == 1)
+            mAggregateHistory.add(new ContactEvent(mContacts.get(0)));
         clearedSubject.onNext(mAggregateHistory);
     }
 
@@ -404,8 +541,7 @@ public class Conversation extends ConversationHistory {
         Interaction last = null;
         for (Interaction i : loadedConversation) {
             Interaction interaction = getTypedInteraction(i);
-            interaction.setAccount(mAccountId);
-            interaction.setContact(getContact());
+            setInteractionProperties(interaction);
             mAggregateHistory.add(interaction);
             mHistory.put(interaction.getTimestamp(), interaction);
             if (!i.isIncoming() && i.getStatus() == Interaction.InteractionStatus.DISPLAYED)
@@ -419,8 +555,7 @@ public class Conversation extends ConversationHistory {
     }
 
     public void addElement(Interaction interaction) {
-        interaction.setAccount(mAccountId);
-        interaction.setContact(getContact());
+        setInteractionProperties(interaction);
         if (interaction.getType() == InteractionType.TEXT) {
             TextMessage msg = new TextMessage(interaction);
             addTextMessage(msg);
@@ -434,6 +569,64 @@ public class Conversation extends ConversationHistory {
             DataTransfer dataTransfer = new DataTransfer(interaction);
             addFileTransfer(dataTransfer);
         }
+    }
+
+    private boolean isNewLeaf(List<String> roots) {
+        if (mBranches.isEmpty())
+            return true;
+        boolean addLeaf = false;
+        for (String root : roots) {
+            if (mBranches.remove(root))
+                addLeaf = true;
+        }
+        return addLeaf;
+    }
+
+    public boolean addSwarmElement(Interaction interaction) {
+        if (mMessages.containsKey(interaction.getMessageId())) {
+            return false;
+        }
+        boolean newMessage = false;
+        mMessages.put(interaction.getMessageId(), interaction);
+        if (mRoots.isEmpty() || mRoots.contains(interaction.getMessageId())) {
+            mRoots.remove(interaction.getMessageId());
+            mRoots.addAll(interaction.getParentIds());
+            // Log.w(TAG, "Found new roots for " + getUri() + " " + mRoots);
+        }
+        if (lastRead != null && lastRead.equals(interaction.getMessageId()))
+            interaction.read();
+        if (isNewLeaf(interaction.getParentIds())) {
+            mBranches.add(interaction.getMessageId());
+            if (isVisible()) {
+                interaction.read();
+                setLastMessageRead(interaction.getMessageId());
+            }
+            newMessage = true;
+        }
+        if (mAggregateHistory.isEmpty() || interaction.getParentIds().contains(mAggregateHistory.get(mAggregateHistory.size()-1).getMessageId())) {
+            // New leaf
+            mAggregateHistory.add(interaction);
+            updatedElementSubject.onNext(new Tuple<>(interaction, ElementStatus.ADD));
+        } else {
+            // New root or normal node
+            for (int i = 0; i < mAggregateHistory.size(); i++) {
+                /*if (interaction.getParentIds().contains(mAggregateHistory.get(i).getMessageId())) {
+                    mAggregateHistory.add(i+1, interaction);
+                    updatedElementSubject.onNext(new Tuple<>(interaction, ElementStatus.ADD));
+                    break;
+                }
+                else*/ if (mAggregateHistory.get(i).getParentIds() != null && mAggregateHistory.get(i).getParentIds().contains(interaction.getMessageId())) {
+                    mAggregateHistory.add(i, interaction);
+                    updatedElementSubject.onNext(new Tuple<>(interaction, ElementStatus.ADD));
+                    break;
+                }
+            }
+        }
+        return newMessage;
+    }
+
+    public Collection<String> getSwarmRoot() {
+        return mRoots;
     }
 
     public void updateFileTransfer(DataTransfer transfer, Interaction.InteractionStatus eventCode) {
@@ -469,11 +662,18 @@ public class Conversation extends ConversationHistory {
         return mAccountId;
     }
 
+    public enum Mode {
+        OneToOne,
+        AdminInvitesOnly,
+        InvitesOnly,
+        Public
+    }
+
     public interface ConversationActionCallback {
 
-        void removeConversation(CallContact callContact);
+        void removeConversation(Uri callContact);
 
-        void clearConversation(CallContact callContact);
+        void clearConversation(Uri callContact);
 
         void copyContactNumberToClipboard(String contactNumber);
 

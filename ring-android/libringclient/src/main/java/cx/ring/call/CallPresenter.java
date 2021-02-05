@@ -45,6 +45,7 @@ import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.Scheduler;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.Subject;
@@ -149,8 +150,8 @@ public class CallPresenter extends RootPresenter<CallView> {
                 }));*/
     }
 
-    public void initOutGoing(String accountId, String contactRingId, boolean audioOnly) {
-        if (accountId == null || contactRingId == null) {
+    public void initOutGoing(String accountId, Uri conversationUri, String contactId, boolean audioOnly) {
+        if (accountId == null || contactId == null) {
             Log.e(TAG, "initOutGoing: null account or contact");
             hangupCall();
             return;
@@ -161,7 +162,7 @@ public class CallPresenter extends RootPresenter<CallView> {
         //getView().blockScreenRotation();
 
         Observable<Conference> callObservable = mCallService
-                .placeCall(accountId, StringUtils.toNumber(contactRingId), audioOnly)
+                .placeCall(accountId, conversationUri, Uri.fromString(StringUtils.toNumber(contactId)), audioOnly)
                 //.map(mCallService::getConference)
                 .flatMapObservable(call -> mCallService.getConfUpdates(call))
                 .share();
@@ -632,18 +633,18 @@ public class CallPresenter extends RootPresenter<CallView> {
         mCallService.playDtmf(s.toString());
     }
 
-    public void addConferenceParticipant(String accountId, String contactId) {
-        mCompositeDisposable.add(mConversationFacade.startConversation(accountId, new Uri(contactId))
+    public void addConferenceParticipant(String accountId, Uri contactUri) {
+        mCompositeDisposable.add(mConversationFacade.startConversation(accountId, contactUri)
                 .map(Conversation::getCurrentCalls)
                 .subscribe(confs -> {
                     if (confs.isEmpty()) {
                         final Observer<SipCall> pendingObserver = new Observer<SipCall>() {
                             private SipCall call = null;
                             @Override
-                            public void onSubscribe(Disposable d) {}
+                            public void onSubscribe(@NonNull Disposable d) {}
 
                             @Override
-                            public void onNext(SipCall sipCall) {
+                            public void onNext(@NonNull SipCall sipCall) {
                                 if (call == null) {
                                     call = sipCall;
                                     mPendingCalls.add(sipCall);
@@ -665,7 +666,7 @@ public class CallPresenter extends RootPresenter<CallView> {
                         };
 
                         // Place new call, join to conference when answered
-                        Maybe<SipCall> newCall = mCallService.placeCallObservable(accountId, contactId, mAudioOnly)
+                        Maybe<SipCall> newCall = mCallService.placeCallObservable(accountId, null, contactUri, mAudioOnly)
                                 .doOnEach(pendingObserver)
                                 .filter(SipCall::isOnGoing)
                                 .firstElement()

@@ -282,10 +282,8 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
 
     private static Single<PreviewProgram> buildProgram(Context context, SmartListViewModel vm, String launcherName, long channelId) {
         return new AvatarDrawable.Builder()
-                .withContact(vm.getContact())
+                .withViewModel(vm)
                 .withPresence(false)
-                //.withPresence(vm.getContact().size() == 1)
-                //.withOnlineState(vm.getContact().size() == 1 && vm.getContact().get(0).isOnline())
                 .buildAsync(context)
                 .map(avatar -> {
                     File file = AndroidFileUtils.createImageFile(context);
@@ -304,7 +302,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
                             .setChannelId(channelId)
                             .setType(TvContractCompat.PreviewPrograms.TYPE_CLIP)
                             .setTitle(vm.getContactName())
-                            .setAuthor(vm.getContact().getRingUsername())
+                            .setAuthor(vm.getContact().get(0).getRingUsername())
                             .setPosterArtAspectRatio(TvContractCompat.PreviewPrograms.ASPECT_RATIO_1_1)
                             .setPosterArtUri(uri)
                             .setIntentUri(new Uri.Builder()

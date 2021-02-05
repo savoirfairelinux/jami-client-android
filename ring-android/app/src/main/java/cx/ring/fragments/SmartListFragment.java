@@ -63,10 +63,8 @@ import cx.ring.R;
 import cx.ring.adapters.SmartListAdapter;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.CallActivity;
-import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.databinding.FragSmartlistBinding;
-import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.services.AccountService;
@@ -116,6 +114,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
                 setOverflowMenuVisible(menu, true);
                 changeSeparatorHeight(false);
                 binding.qrCode.setVisibility(View.GONE);
+                binding.newGroup.setVisibility(View.GONE);
                 setTabletQRLayout(false);
                 return true;
             }
@@ -127,6 +126,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
                 setOverflowMenuVisible(menu, false);
                 changeSeparatorHeight(true);
                 binding.qrCode.setVisibility(View.VISIBLE);
+                binding.newGroup.setVisibility(View.VISIBLE);
                 setTabletQRLayout(true);
                 return true;
             }
@@ -245,6 +245,8 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
 
         binding.qrCode.setOnClickListener(v -> presenter.clickQRSearch());
 
+        binding.newGroup.setOnClickListener(v -> startNewGroup());
+
         binding.confsList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -276,6 +278,14 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
         binding.newconvFab.setOnClickListener(v -> presenter.fabButtonClicked());
     }
 
+    private void startNewGroup() {
+        ContactPickerFragment fragment = ContactPickerFragment.newInstance();
+        fragment.show(getParentFragmentManager(), ContactPickerFragment.TAG);
+        binding.qrCode.setVisibility(View.GONE);
+        binding.newGroup.setVisibility(View.GONE);
+        setTabletQRLayout(false);
+    }
+
     @Override
     public void setLoading(final boolean loading) {
         binding.loadingIndicator.setVisibility(loading ? View.VISIBLE : View.GONE);
@@ -297,12 +307,12 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     }
 
     @Override
-    public void removeConversation(CallContact callContact) {
+    public void removeConversation(cx.ring.model.Uri callContact) {
         presenter.removeConversation(callContact);
     }
 
     @Override
-    public void clearConversation(CallContact callContact) {
+    public void clearConversation(cx.ring.model.Uri callContact) {
         presenter.clearConversation(callContact);
     }
 
@@ -370,18 +380,18 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     }
 
     @Override
-    public void displayClearDialog(CallContact callContact) {
-        ActionHelper.launchClearAction(getActivity(), callContact, SmartListFragment.this);
+    public void displayClearDialog(cx.ring.model.Uri uri) {
+        ActionHelper.launchClearAction(getActivity(), uri, SmartListFragment.this);
     }
 
     @Override
-    public void displayDeleteDialog(CallContact callContact) {
-        ActionHelper.launchDeleteAction(getActivity(), callContact, SmartListFragment.this);
+    public void displayDeleteDialog(cx.ring.model.Uri uri) {
+        ActionHelper.launchDeleteAction(getActivity(), uri, SmartListFragment.this);
     }
 
     @Override
-    public void copyNumber(CallContact callContact) {
-        ActionHelper.launchCopyNumberToClipboardFromContact(getActivity(), callContact, this);
+    public void copyNumber(cx.ring.model.Uri uri) {
+        ActionHelper.launchCopyNumberToClipboardFromContact(getActivity(), uri, this);
     }
 
     @Override
@@ -431,33 +441,29 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == HomeActivity.REQUEST_CODE_QR_CONVERSATION && data != null && resultCode == Activity.RESULT_OK) {
-            String contactID = data.getStringExtra(ConversationFragment.KEY_CONTACT_RING_ID);
-            if (contactID != null) {
-                presenter.startConversation(new cx.ring.model.Uri(contactID));
+            String contactId = data.getStringExtra(ConversationFragment.KEY_CONTACT_RING_ID);
+            if (contactId != null) {
+                presenter.startConversation(cx.ring.model.Uri.fromString(contactId));
             }
         }
     }
 
     @Override
-    public void goToConversation(String accountId, cx.ring.model.Uri contactId) {
+    public void goToConversation(String accountId, cx.ring.model.Uri conversationUri) {
+        Log.w(TAG, "goToConversation " + accountId + " " + conversationUri);
         if (mSearchMenuItem != null) {
             mSearchMenuItem.collapseActionView();
         }
-
-        if (!DeviceUtils.isTablet(getContext())) {
-            startActivity(new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, contactId.toString()), requireContext(), ConversationActivity.class));
-        } else {
-            ((HomeActivity) requireActivity()).startConversationTablet(ConversationPath.toBundle(accountId, contactId.toString()));
-        }
+        ((HomeActivity) requireActivity()).startConversation(accountId, conversationUri);
     }
 
     @Override
-    public void goToCallActivity(String accountId, String contactId) {
+    public void goToCallActivity(String accountId, cx.ring.model.Uri conversationUri, String contactId) {
         Intent intent = new Intent(CallActivity.ACTION_CALL)
-                .setClass(requireActivity(), CallActivity.class)
+                .setClass(requireContext(), CallActivity.class)
+                .putExtras(ConversationPath.toBundle(accountId, conversationUri))
                 .putExtra(CallFragment.KEY_AUDIO_ONLY, false)
-                .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
-                .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
+                .putExtra(Intent.EXTRA_PHONE_NUMBER, contactId);
         startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
     }
 
@@ -466,6 +472,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
         QRCodeFragment qrCodeFragment = QRCodeFragment.newInstance(QRCodeFragment.INDEX_SCAN);
         qrCodeFragment.show(getParentFragmentManager(), QRCodeFragment.TAG);
         binding.qrCode.setVisibility(View.GONE);
+        binding.newGroup.setVisibility(View.GONE);
         setTabletQRLayout(false);
     }
 
