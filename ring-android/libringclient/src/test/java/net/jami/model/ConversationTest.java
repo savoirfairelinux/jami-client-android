@@ -20,7 +20,7 @@
 
 package net.jami.model;
 
-import net.jami.model.CallContact;
+import net.jami.model.Contact;
 import net.jami.model.Conversation;
 import net.jami.model.DataTransfer;
 import net.jami.model.TextMessage;
@@ -42,13 +42,13 @@ public class ConversationTest {
 
     @Before
     public void setUp() throws Exception {
-        net.jami.model.CallContact contact = new net.jami.model.CallContact(1L);
+        Contact contact = new Contact(1L);
         conversation = new net.jami.model.Conversation(contact);
     }
 
     @Test
     public void init_test() throws Exception {
-        CallContact contact = new net.jami.model.CallContact(1L);
+        Contact contact = new Contact(1L);
         Conversation conversation = new net.jami.model.Conversation(contact);
 
         assertEquals(conversation.getContact(), contact);
