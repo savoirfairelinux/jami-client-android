@@ -29,6 +29,6 @@ tests/bin
 /app/build/
 /androidtv/build/
 /libringclient/build/
-/libringclient/src/main/java/cx/ring/daemon/*
+/libringclient/src/main/java/net/jami/daemon/*
 /build/
 **/google-services.json

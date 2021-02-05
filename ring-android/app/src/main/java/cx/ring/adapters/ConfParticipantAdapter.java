@@ -14,8 +14,8 @@ import java.util.List;
 import cx.ring.contacts.AvatarFactory;
 import cx.ring.databinding.ItemConferenceParticipantBinding;
 import cx.ring.fragments.CallFragment;
-import cx.ring.model.CallContact;
-import cx.ring.model.SipCall;
+import net.jami.model.CallContact;
+import net.jami.model.SipCall;
 import cx.ring.views.ParticipantView;
 
 public class ConfParticipantAdapter extends RecyclerView.Adapter<ParticipantView> {

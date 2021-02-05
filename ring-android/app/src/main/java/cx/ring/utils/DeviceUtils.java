@@ -24,6 +24,8 @@ import android.app.UiModeManager;
 import android.content.Context;
 import android.content.res.Configuration;
 
+import net.jami.utils.Log;
+
 import static android.content.Context.UI_MODE_SERVICE;
 
 public class DeviceUtils {
@@ -37,7 +39,7 @@ public class DeviceUtils {
 
     public static boolean isTv(Context context) {
         if (context == null) {
-            Log.e(TAG, "null context");
+            net.jami.utils.Log.e(TAG, "null context");
             return false;
         }
         UiModeManager uiModeManager = (UiModeManager) context.getSystemService(UI_MODE_SERVICE);

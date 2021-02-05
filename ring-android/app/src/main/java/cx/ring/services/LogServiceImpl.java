@@ -21,6 +21,8 @@ package cx.ring.services;
 
 import android.util.Log;
 
+import net.jami.services.LogService;
+
 public class LogServiceImpl implements LogService {
 
     public void e(String tag, String message) {

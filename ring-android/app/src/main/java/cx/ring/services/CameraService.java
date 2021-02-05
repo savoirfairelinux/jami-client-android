@@ -67,12 +67,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import cx.ring.daemon.IntVect;
-import cx.ring.daemon.Ringservice;
-import cx.ring.daemon.RingserviceJNI;
-import cx.ring.daemon.StringMap;
-import cx.ring.daemon.UintVect;
-import cx.ring.utils.Tuple;
+import net.jami.daemon.IntVect;
+import net.jami.daemon.Ringservice;
+import net.jami.daemon.RingserviceJNI;
+import net.jami.daemon.StringMap;
+import net.jami.daemon.UintVect;
+import net.jami.utils.Tuple;
 import cx.ring.views.AutoFitTextureView;
 import io.reactivex.Completable;
 import io.reactivex.Maybe;

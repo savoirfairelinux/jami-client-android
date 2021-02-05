@@ -39,7 +39,7 @@ import androidx.fragment.app.DialogFragment;
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.databinding.FragRegisterNameBinding;
-import cx.ring.services.AccountService;
+import net.jami.services.AccountService;
 import cx.ring.utils.RegisteredNameFilter;
 import cx.ring.utils.RegisteredNameTextWatcher;
 import io.reactivex.Scheduler;

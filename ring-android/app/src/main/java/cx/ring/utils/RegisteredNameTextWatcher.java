@@ -28,7 +28,8 @@ import android.widget.EditText;
 import java.lang.ref.WeakReference;
 
 import cx.ring.R;
-import cx.ring.services.AccountService;
+import net.jami.services.AccountService;
+import net.jami.utils.NameLookupInputHandler;
 
 public class RegisteredNameTextWatcher implements TextWatcher {
 
@@ -41,7 +42,7 @@ public class RegisteredNameTextWatcher implements TextWatcher {
         mInputLayout = new WeakReference<>(inputLayout);
         mInputText = new WeakReference<>(inputText);
         mLookingForAvailability = context.getString(R.string.looking_for_username_availability);
-        mNameLookupInputHandler = new NameLookupInputHandler(accountService, accountId);
+        mNameLookupInputHandler = new net.jami.utils.NameLookupInputHandler(accountService, accountId);
     }
 
     @Override
