@@ -35,7 +35,7 @@ import java.util.Objects;
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
 
-public class SipCall extends Interaction {
+public class Call extends Interaction {
 
     public final static String KEY_ACCOUNT_ID = "ACCOUNTID";
     public final static String KEY_AUDIO_ONLY = "AUDIO_ONLY";
@@ -67,9 +67,9 @@ public class SipCall extends Interaction {
     private String mContactNumber;
     private String mConfId;
 
-    private net.jami.utils.ProfileChunk mProfileChunk = null;
+    private ProfileChunk mProfileChunk = null;
 
-    public SipCall(String daemonId, String author, String account, ConversationHistory conversation, CallContact contact, Direction direction) {
+    public Call(String daemonId, String author, String account, ConversationHistory conversation, Contact contact, Direction direction) {
         mDaemonId = daemonId == null ? null : Long.parseLong(daemonId);
         mAuthor = direction == Direction.INCOMING ? author : null;
         mAccount = account;
@@ -81,7 +81,7 @@ public class SipCall extends Interaction {
         mIsRead = 1;
     }
 
-    public SipCall(Interaction interaction) {
+    public Call(Interaction interaction) {
         mId = interaction.getId();
         mAuthor = interaction.getAuthor();
         mConversation = interaction.getConversation();
@@ -98,7 +98,7 @@ public class SipCall extends Interaction {
         mContact = interaction.getContact();
     }
 
-    public SipCall(String daemonId, String account, String contactNumber, Direction direction, long timestamp) {
+    public Call(String daemonId, String account, String contactNumber, Direction direction, long timestamp) {
         mDaemonId = daemonId == null ? null : Long.parseLong(daemonId);
         mIsIncoming = direction == Direction.INCOMING;
         mAccount = account;
@@ -109,7 +109,7 @@ public class SipCall extends Interaction {
         mIsRead = 1;
     }
 
-    public SipCall(String daemonId, Map<String, String> call_details) {
+    public Call(String daemonId, Map<String, String> call_details) {
         this(daemonId, call_details.get(KEY_ACCOUNT_ID), call_details.get(KEY_PEER_NUMBER), Direction.fromInt(Integer.parseInt(call_details.get(KEY_CALL_TYPE))), System.currentTimeMillis());
         setCallState(CallStatus.fromString(call_details.get(KEY_CALL_STATE)));
         setDetails(call_details);
