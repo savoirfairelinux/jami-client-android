@@ -153,7 +153,7 @@ public class Conversation extends ConversationHistory {
                 continue;
             }
             String displayName = c.getDisplayName();
-            if (!net.jami.utils.StringUtils.isEmpty(displayName)) {
+            if (!StringUtils.isEmpty(displayName)) {
                 names.add(displayName);
                 if (names.size() == 3)
                     break;
@@ -190,7 +190,7 @@ public class Conversation extends ConversationHistory {
         return mContactSubject;
     }
 
-    public String readMessages() {
+    public synchronized String readMessages() {
         Interaction interaction = null;
         for (String branch : mBranches) {
             Interaction i = mMessages.get(branch);
@@ -203,7 +203,7 @@ public class Conversation extends ConversationHistory {
         return interaction == null ? null : interaction.getMessageId();
     }
 
-    public Interaction getMessage(String messageId) {
+    public synchronized Interaction getMessage(String messageId) {
         return mMessages.get(messageId);
     }
 
@@ -219,7 +219,7 @@ public class Conversation extends ConversationHistory {
         UPDATE, REMOVE, ADD
     }
 
-    public Observable<net.jami.utils.Tuple<Interaction, ElementStatus>> getUpdatedElements() {
+    public Observable<Tuple<Interaction, ElementStatus>> getUpdatedElements() {
         return updatedElementSubject;
     }
 
@@ -302,7 +302,7 @@ public class Conversation extends ConversationHistory {
         }
         mDirty = true;
         mAggregateHistory.add(call);
-        updatedElementSubject.onNext(new net.jami.utils.Tuple<>(call, ElementStatus.ADD));
+        updatedElementSubject.onNext(new Tuple<>(call, ElementStatus.ADD));
     }
 
     private void setInteractionProperties(Interaction interaction) {
@@ -329,13 +329,13 @@ public class Conversation extends ConversationHistory {
             txt.read();
         }
         if (txt.getConversation() == null) {
-            net.jami.utils.Log.e(TAG, "Error in conversation class... No conversation is attached to this interaction");
+            Log.e(TAG, "Error in conversation class... No conversation is attached to this interaction");
         }
         setInteractionProperties(txt);
         mHistory.put(txt.getTimestamp(), txt);
         mDirty = true;
         mAggregateHistory.add(txt);
-        updatedElementSubject.onNext(new net.jami.utils.Tuple<>(txt, ElementStatus.ADD));
+        updatedElementSubject.onNext(new Tuple<>(txt, ElementStatus.ADD));
     }
 
     public void addRequestEvent(TrustRequest request, Contact contact) {
@@ -344,20 +344,20 @@ public class Conversation extends ConversationHistory {
         ContactEvent event = new ContactEvent(contact, request);
         mDirty = true;
         mAggregateHistory.add(event);
-        updatedElementSubject.onNext(new net.jami.utils.Tuple<>(event, ElementStatus.ADD));
+        updatedElementSubject.onNext(new Tuple<>(event, ElementStatus.ADD));
     }
 
     public void addContactEvent(Contact contact) {
         ContactEvent event = new ContactEvent(contact);
         mDirty = true;
         mAggregateHistory.add(event);
-        updatedElementSubject.onNext(new net.jami.utils.Tuple<>(event, ElementStatus.ADD));
+        updatedElementSubject.onNext(new Tuple<>(event, ElementStatus.ADD));
     }
 
     public void addContactEvent(ContactEvent contactEvent) {
         mDirty = true;
         mAggregateHistory.add(contactEvent);
-        updatedElementSubject.onNext(new net.jami.utils.Tuple<>(contactEvent, ElementStatus.ADD));
+        updatedElementSubject.onNext(new Tuple<>(contactEvent, ElementStatus.ADD));
     }
 
     public void addFileTransfer(DataTransfer dataTransfer) {
@@ -366,7 +366,7 @@ public class Conversation extends ConversationHistory {
         }
         mDirty = true;
         mAggregateHistory.add(dataTransfer);
-        updatedElementSubject.onNext(new net.jami.utils.Tuple<>(dataTransfer, ElementStatus.ADD));
+        updatedElementSubject.onNext(new Tuple<>(dataTransfer, ElementStatus.ADD));
     }
 
     public void updateTextMessage(TextMessage text) {
@@ -374,7 +374,7 @@ public class Conversation extends ConversationHistory {
             TextMessage txt = (TextMessage) mMessages.get(text.getMessageId());
             if (txt != null) {
                 txt.setStatus(text.getStatus());
-                updatedElementSubject.onNext(new net.jami.utils.Tuple<>(txt, ElementStatus.UPDATE));
+                updatedElementSubject.onNext(new Tuple<>(txt, ElementStatus.UPDATE));
                 if (text.getStatus() == Interaction.InteractionStatus.DISPLAYED) {
                     if (lastDisplayed == null || lastDisplayed.getTimestamp() < text.getTimestamp()) {
                         lastDisplayed = text;
@@ -382,7 +382,7 @@ public class Conversation extends ConversationHistory {
                     }
                 }
             } else {
-                net.jami.utils.Log.e(TAG, "Can't find swarm message to update: " + text.getMessageId());
+                Log.e(TAG, "Can't find swarm message to update: " + text.getMessageId());
             }
         } else {
             setInteractionProperties(text);
@@ -391,7 +391,7 @@ public class Conversation extends ConversationHistory {
             for (Interaction txt : msgs.values()) {
                 if (txt.getId() == text.getId()) {
                     txt.setStatus(text.getStatus());
-                    updatedElementSubject.onNext(new net.jami.utils.Tuple<>(txt, ElementStatus.UPDATE));
+                    updatedElementSubject.onNext(new Tuple<>(txt, ElementStatus.UPDATE));
                     if (text.getStatus() == Interaction.InteractionStatus.DISPLAYED) {
                         if (lastDisplayed == null || lastDisplayed.getTimestamp() < text.getTimestamp()) {
                             lastDisplayed = text;
@@ -401,7 +401,7 @@ public class Conversation extends ConversationHistory {
                     return;
                 }
             }
-            net.jami.utils.Log.e(TAG, "Can't find message to update: " + text.getId());
+            Log.e(TAG, "Can't find message to update: " + text.getId());
         }
     }
 
@@ -597,10 +597,16 @@ public class Conversation extends ConversationHistory {
         }
         boolean newMessage = false;
         mMessages.put(interaction.getMessageId(), interaction);
-        if (mRoots.isEmpty() || mRoots.contains(interaction.getMessageId())) {
+        if (interaction.getParentIds().isEmpty()) {
+            mRoots.add(interaction.getMessageId());
+            Log.w(TAG, "Found new ultimate root for " + getUri() + " " + interaction.getMessageId() + " -> " + mRoots);
+        } else {
             mRoots.remove(interaction.getMessageId());
-            mRoots.addAll(interaction.getParentIds());
-            // Log.w(TAG, "Found new roots for " + getUri() + " " + mRoots);
+            for (String parent : interaction.getParentIds())
+                if (!mMessages.containsKey(parent)) {
+                    mRoots.add(parent);
+                    Log.w(TAG, "Found new root for " + getUri() + " " + parent + " -> " + mRoots);
+                }
         }
         if (lastRead != null && lastRead.equals(interaction.getMessageId()))
             interaction.read();
@@ -615,7 +621,7 @@ public class Conversation extends ConversationHistory {
         if (mAggregateHistory.isEmpty() || interaction.getParentIds().contains(mAggregateHistory.get(mAggregateHistory.size()-1).getMessageId())) {
             // New leaf
             mAggregateHistory.add(interaction);
-            updatedElementSubject.onNext(new net.jami.utils.Tuple<>(interaction, ElementStatus.ADD));
+            updatedElementSubject.onNext(new Tuple<>(interaction, ElementStatus.ADD));
         } else {
             // New root or normal node
             for (int i = 0; i < mAggregateHistory.size(); i++) {
@@ -626,7 +632,7 @@ public class Conversation extends ConversationHistory {
                 }
                 else*/ if (mAggregateHistory.get(i).getParentIds() != null && mAggregateHistory.get(i).getParentIds().contains(interaction.getMessageId())) {
                     mAggregateHistory.add(i, interaction);
-                    updatedElementSubject.onNext(new net.jami.utils.Tuple<>(interaction, ElementStatus.ADD));
+                    updatedElementSubject.onNext(new Tuple<>(interaction, ElementStatus.ADD));
                     break;
                 }
             }
@@ -642,7 +648,7 @@ public class Conversation extends ConversationHistory {
         DataTransfer dataTransfer = (DataTransfer) findConversationElement(transfer.getId());
         if (dataTransfer != null) {
             dataTransfer.setStatus(eventCode);
-            updatedElementSubject.onNext(new net.jami.utils.Tuple<>(dataTransfer, ElementStatus.UPDATE));
+            updatedElementSubject.onNext(new Tuple<>(dataTransfer, ElementStatus.UPDATE));
         }
     }
 
