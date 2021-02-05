@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 import net.jami.model.Account;
-import net.jami.model.CallContact;
+import net.jami.model.Contact;
 import net.jami.model.Settings;
 import net.jami.model.Uri;
 import net.jami.utils.Log;
@@ -58,15 +58,15 @@ public abstract class ContactService {
     @Inject
     AccountService mAccountService;
 
-    public abstract Map<Long, CallContact> loadContactsFromSystem(boolean loadRingContacts, boolean loadSipContacts);
+    public abstract Map<Long, Contact> loadContactsFromSystem(boolean loadRingContacts, boolean loadSipContacts);
 
-    protected abstract CallContact findContactByIdFromSystem(Long contactId, String contactKey);
-    protected abstract CallContact findContactBySipNumberFromSystem(String number);
-    protected abstract CallContact findContactByNumberFromSystem(String number);
+    protected abstract Contact findContactByIdFromSystem(Long contactId, String contactKey);
+    protected abstract Contact findContactBySipNumberFromSystem(String number);
+    protected abstract Contact findContactByNumberFromSystem(String number);
 
-    public abstract Completable loadContactData(CallContact callContact, String accountId);
+    public abstract Completable loadContactData(Contact contact, String accountId);
 
-    public abstract void saveVCardContactData(CallContact contact, String accountId, VCard vcard);
+    public abstract void saveVCardContactData(Contact contact, String accountId, VCard vcard);
     public abstract Single<VCard> saveVCardContact(String accountId, String uri, String displayName, String pictureB64);
 
     public ContactService() {}
@@ -77,7 +77,7 @@ public abstract class ContactService {
      * @param loadRingContacts if true, ring contacts will be taken care of
      * @param loadSipContacts  if true, sip contacts will be taken care of
      */
-    public Single<Map<Long, CallContact>> loadContacts(final boolean loadRingContacts, final boolean loadSipContacts, final Account account) {
+    public Single<Map<Long, Contact>> loadContacts(final boolean loadRingContacts, final boolean loadSipContacts, final Account account) {
         return Single.fromCallable(() -> {
             Settings settings = mPreferencesService.getSettings();
             if (settings.isAllowSystemContacts() && mDeviceRuntimeService.hasContactPermission()) {
@@ -87,7 +87,7 @@ public abstract class ContactService {
         });
     }
 
-    public Observable<CallContact> observeContact(String accountId, CallContact contact, boolean withPresence) {
+    public Observable<Contact> observeContact(String accountId, Contact contact, boolean withPresence) {
         //Log.w(TAG, "observeContact " + accountId + " " + contact.getUri() + " " + contact.isUser());
         if (contact.isUser())
             withPresence = false;
@@ -128,39 +128,39 @@ public abstract class ContactService {
         }
     }
 
-    public Observable<List<CallContact>> observeContact(String accountId, List<CallContact> contacts, boolean withPresence) {
+    public Observable<List<Contact>> observeContact(String accountId, List<Contact> contacts, boolean withPresence) {
         if (contacts.isEmpty()) {
             return Observable.just(Collections.emptyList());
         } /*else if (contacts.size() == 1 || contacts.size() == 2) {
 
             return observeContact(accountId, contacts.get(contacts.size() - 1), withPresence).map(Collections::singletonList);
         } */else {
-            List<Observable<CallContact>> observables = new ArrayList<>(contacts.size());
-            for (CallContact contact : contacts) {
+            List<Observable<Contact>> observables = new ArrayList<>(contacts.size());
+            for (Contact contact : contacts) {
                 if (!contact.isUser())
                     observables.add(observeContact(accountId, contact, withPresence));
             }
             if (observables.isEmpty())
                 return Observable.just(Collections.emptyList());
             return Observable.combineLatest(observables, a -> {
-                List<CallContact> obs = new ArrayList<>(a.length);
+                List<Contact> obs = new ArrayList<>(a.length);
                 for (Object o : a)
-                    obs.add((CallContact) o);
+                    obs.add((Contact) o);
                 return obs;
             });
         }
     }
 
-    public Single<CallContact> getLoadedContact(String accountId, CallContact contact, boolean withPresence) {
+    public Single<Contact> getLoadedContact(String accountId, Contact contact, boolean withPresence) {
         return observeContact(accountId, contact, withPresence)
                 .filter(c -> c.isUsernameLoaded() && c.detailsLoaded)
                 .firstOrError();
     }
-    public Single<CallContact> getLoadedContact(String accountId, CallContact contact) {
+    public Single<Contact> getLoadedContact(String accountId, Contact contact) {
         return getLoadedContact(accountId, contact, false);
     }
 
-    public Single<List<CallContact>> getLoadedContact(String accountId, List<CallContact> contacts, boolean withPresence) {
+    public Single<List<Contact>> getLoadedContact(String accountId, List<Contact> contacts, boolean withPresence) {
         if (contacts.isEmpty())
             return Single.just(Collections.emptyList());
         return Observable.fromIterable(contacts)
@@ -168,11 +168,11 @@ public abstract class ContactService {
                 .toList(contacts.size());
     }
 
-    public List<Observable<CallContact>> observeLoadedContact(String accountId, List<CallContact> contacts, boolean withPresence) {
+    public List<Observable<Contact>> observeLoadedContact(String accountId, List<Contact> contacts, boolean withPresence) {
         if (contacts.isEmpty())
             return Collections.emptyList();
-        List<Observable<CallContact>> ret = new ArrayList<>(contacts.size());
-        for (CallContact contact : contacts)
+        List<Observable<Contact>> ret = new ArrayList<>(contacts.size());
+        for (Contact contact : contacts)
             ret.add(observeContact(accountId, contact, withPresence)
                     .filter(c -> c.isUsernameLoaded() && c.detailsLoaded));
         return ret;
@@ -184,19 +184,19 @@ public abstract class ContactService {
      *
      * @return The found/created contact
      */
-    public CallContact findContactByNumber(Account account, String number) {
+    public Contact findContactByNumber(Account account, String number) {
         if (StringUtils.isEmpty(number) || account == null) {
             return null;
         }
         return findContact(account, Uri.fromString(number));
     }
 
-    public CallContact findContact(Account account, Uri uri) {
+    public Contact findContact(Account account, Uri uri) {
         if (uri == null || account == null) {
             return null;
         }
 
-        CallContact contact = account.getContactFromCache(uri);
+        Contact contact = account.getContactFromCache(uri);
         // TODO load system contact info into SIP contact
         if (account.isSip()) {
             loadContactData(contact, account.getAccountID()).subscribe(() -> {}, e -> Log.e(TAG, "Can't load contact data"));
