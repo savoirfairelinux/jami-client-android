@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "270e60bc_0246404c",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1208,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-02-05T21:41:04Z",
+      "side": 1,
+      "message": "remove this: the point of the animation is to replace this kind of text",
+      "range": {
+        "startLine": 1206,
+        "startChar": 28,
+        "endLine": 1208,
+        "endChar": 123
+      },
+      "revId": "a2d853b580396d2360a6148dfa84d663e068c3e8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a177aa5_946cda86",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1232,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-02-05T21:41:04Z",
+      "side": 1,
+      "message": "Not the proper way to schedule animations on Android. Would cause 100% CPU usage as well as a context leak. \n\nSubscribe on the rx flow of the transfer instead, and make sure to always dispose the subscription.",
+      "range": {
+        "startLine": 1231,
+        "startChar": 0,
+        "endLine": 1232,
+        "endChar": 25
+      },
+      "revId": "a2d853b580396d2360a6148dfa84d663e068c3e8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
