@@ -361,7 +361,7 @@ public class AndroidFileUtils {
         return context.getFileStreamPath(filename);
     }
 
-    public static File getConversationPath(Context context, String conversationId, String name) {
+    public static File getConversationDir(Context context, String conversationId) {
         File conversationsDir = getFilePath(context, "conversation_data");
 
         if (!conversationsDir.exists())
@@ -371,7 +371,11 @@ public class AndroidFileUtils {
         if (!conversationDir.exists())
             conversationDir.mkdir();
 
-        return new File(conversationDir, name);
+        return conversationDir;
+    }
+
+    public static File getConversationPath(Context context, String conversationId, String name) {
+        return new File(getConversationDir(context, conversationId), name);
     }
 
     public static File getTempPath(Context context, String conversationId, String name) {

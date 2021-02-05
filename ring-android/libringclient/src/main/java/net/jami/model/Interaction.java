@@ -74,6 +74,12 @@ public class Interaction {
     public Interaction() {
     }
 
+    public Interaction(Conversation conversation, InteractionType type) {
+        mConversation = conversation;
+        mAccount = conversation.getAccountId();
+        mType = type.toString();
+    }
+
     public Interaction(String id, String author, ConversationHistory conversation, String timestamp, String body, String type, String status, String daemonId, String isRead, String extraFlag) {
         mId = Integer.parseInt(id);
         mAuthor = author;
@@ -173,6 +179,10 @@ public class Interaction {
 
     public String getDaemonIdString() {
         return mDaemonId == null ? null : Long.toString(mDaemonId);
+    }
+
+    public void setDaemonId(long daemonId) {
+        mDaemonId = daemonId;
     }
 
     public String getMessageId() {
