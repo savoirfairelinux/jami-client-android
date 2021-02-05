@@ -65,6 +65,18 @@ import com.bumptech.glide.load.resource.bitmap.CenterInside;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.target.DrawableImageViewTarget;
 
+import net.jami.conversation.ConversationPresenter;
+import net.jami.model.Account;
+import net.jami.model.Call;
+import net.jami.model.Contact;
+import net.jami.model.ContactEvent;
+import net.jami.model.DataTransfer;
+import net.jami.model.Interaction;
+import net.jami.model.Interaction.InteractionStatus;
+import net.jami.model.Interaction.InteractionType;
+import net.jami.model.TextMessage;
+import net.jami.utils.StringUtils;
+
 import java.io.File;
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -75,24 +87,11 @@ import java.util.concurrent.TimeUnit;
 
 import cx.ring.R;
 import cx.ring.client.MediaViewerActivity;
-import net.jami.conversation.ConversationPresenter;
 import cx.ring.fragments.ConversationFragment;
-import net.jami.model.Account;
-import net.jami.model.Contact;
-import net.jami.model.ContactEvent;
-import net.jami.model.DataTransfer;
-import net.jami.model.Interaction;
-import net.jami.model.Interaction.InteractionStatus;
-import net.jami.model.Interaction.InteractionType;
-import net.jami.model.Call;
-import net.jami.model.TextMessage;
-import cx.ring.service.DRingService;
-import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.GlideApp;
 import cx.ring.utils.GlideOptions;
 import cx.ring.utils.ResourceMapper;
-import net.jami.utils.StringUtils;
 import cx.ring.views.ConversationViewHolder;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -178,6 +177,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             }
             for (int i = 0, n = mInteractions.size(); i<n; i++) {
                 if (mInteractions.get(i).getParentIds().contains(e.getMessageId())) {
+                    Log.w(TAG, "Adding message at " + i + " previous count " + n);
                     mInteractions.add(i, e);
                     notifyItemInserted(i);
                     return i == n-1;
@@ -194,6 +194,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     }
 
     public void update(Interaction e) {
+        Log.w(TAG, "update " + e.getMessageId());
         if (!e.isIncoming() && e.getStatus() == InteractionStatus.SUCCESS) {
             notifyItemChanged(lastDeliveredPosition);
         }
@@ -207,18 +208,33 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     }
 
     public void remove(Interaction e) {
-        for (int i = mInteractions.size() - 1; i >= 0; i--) {
-            Interaction element = mInteractions.get(i);
-            if (e.getId() == element.getId()) {
-                mInteractions.remove(i);
-                notifyItemRemoved(i);
-                if (i > 0) {
-                    notifyItemChanged(i - 1);
+        if (e.getMessageId() != null) {
+            for (int i = mInteractions.size() - 1; i >= 0; i--) {
+                if (e.getMessageId().equals(mInteractions.get(i).getMessageId())) {
+                    mInteractions.remove(i);
+                    notifyItemRemoved(i);
+                    if (i > 0) {
+                        notifyItemChanged(i - 1);
+                    }
+                    if (i != mInteractions.size()) {
+                        notifyItemChanged(i);
+                    }
+                    break;
                 }
-                if (i != mInteractions.size()) {
-                    notifyItemChanged(i);
+            }
+        } else {
+            for (int i = mInteractions.size() - 1; i >= 0; i--) {
+                if (e.getId() == mInteractions.get(i).getId()) {
+                    mInteractions.remove(i);
+                    notifyItemRemoved(i);
+                    if (i > 0) {
+                        notifyItemChanged(i - 1);
+                    }
+                    if (i != mInteractions.size()) {
+                        notifyItemChanged(i);
+                    }
+                    break;
                 }
-                break;
             }
         }
     }

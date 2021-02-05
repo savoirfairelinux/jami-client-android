@@ -772,7 +772,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         try {
             fileUri = ContentUriHandler.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path);
         } catch (IllegalArgumentException e) {
-            Log.e("File Selector", "The selected file can't be shared: " + path.getName());
+            Log.e(TAG, "The selected file can't be shared: " + path.getName());
         }
         if (fileUri != null) {
             Intent sendIntent = new Intent();
