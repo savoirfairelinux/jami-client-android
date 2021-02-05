@@ -24,7 +24,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import net.jami.model.CallContact;
+import net.jami.model.Contact;
 import net.jami.model.Conversation;
 import net.jami.model.Interaction;
 import net.jami.model.Uri;
@@ -40,7 +40,7 @@ public class SmartListViewModel
 
     private final String accountId;
     private final Uri uri;
-    private final List<CallContact> contact;
+    private final List<Contact> contact;
     private final String uuid;
     private final String contactName;
     private final boolean hasUnreadTextMessage;
@@ -58,7 +58,7 @@ public class SmartListViewModel
     }
     private final Title title;
 
-    public SmartListViewModel(String accountId, CallContact contact, Interaction lastEvent) {
+    public SmartListViewModel(String accountId, Contact contact, Interaction lastEvent) {
         this.accountId = accountId;
         this.contact = Collections.singletonList(contact);
         this.uri = contact.getUri();
@@ -71,7 +71,7 @@ public class SmartListViewModel
         //isOnline = contact.isOnline();
         title = Title.None;
     }
-    public SmartListViewModel(String accountId, CallContact contact, String id, Interaction lastEvent) {
+    public SmartListViewModel(String accountId, Contact contact, String id, Interaction lastEvent) {
         this.accountId = accountId;
         this.contact = Collections.singletonList(contact);
         uri = contact.getUri();
@@ -84,7 +84,7 @@ public class SmartListViewModel
         isOnline = contact.isOnline();
         title = Title.None;
     }
-    public SmartListViewModel(Conversation conversation, List<CallContact> contacts, boolean presence) {
+    public SmartListViewModel(Conversation conversation, List<Contact> contacts, boolean presence) {
         this.accountId = conversation.getAccountId();
         this.contact = contacts;
         uri = conversation.getUri();
@@ -94,7 +94,7 @@ public class SmartListViewModel
         hasUnreadTextMessage = (lastEvent != null) && !lastEvent.isRead();
         this.hasOngoingCall = false;
         this.lastEvent = lastEvent;
-        for (CallContact contact : contacts) {
+        for (Contact contact : contacts) {
             if (contact.isUser())
                 continue;
             if (contact.isOnline()) {
@@ -126,7 +126,7 @@ public class SmartListViewModel
         return uri;
     }
 
-    public List<CallContact> getContact() {
+    public List<Contact> getContact() {
         return contact;
     }
 

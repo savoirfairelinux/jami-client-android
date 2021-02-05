@@ -68,7 +68,7 @@ import net.jami.conversation.ConversationPresenter;
 import net.jami.conversation.ConversationView;
 import net.jami.model.Account;
 import cx.ring.databinding.FragConversationTvBinding;
-import net.jami.model.CallContact;
+import net.jami.model.Contact;
 import net.jami.model.Conversation;
 import net.jami.model.DataTransfer;
 import net.jami.model.Error;
@@ -607,7 +607,7 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
 
     @Override
     public void displayContact(Conversation conversation) {
-        List<CallContact> contacts = conversation.getContacts();
+        List<Contact> contacts = conversation.getContacts();
         mCompositeDisposable.clear();
         mCompositeDisposable.add(AvatarFactory.getAvatar(requireContext(), conversation, true)
                 .doOnSuccess(d -> {
@@ -658,7 +658,7 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     }
 
     @Override
-    public void updateContact(CallContact contact) {
+    public void updateContact(Contact contact) {
         mCompositeDisposable.add(AvatarFactory.getAvatar(requireContext(), contact, true)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(avatar -> {
@@ -753,7 +753,7 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     }
 
     @Override
-    public void goToAddContact(CallContact callContact) {
+    public void goToAddContact(Contact contact) {
 
     }
 

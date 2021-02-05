@@ -22,7 +22,8 @@ package net.jami.call;
 import java.util.List;
 import java.util.Set;
 
-import net.jami.model.CallContact;
+import net.jami.model.Call;
+import net.jami.model.Contact;
 import net.jami.model.Conference;
 import net.jami.services.HardwareService;
 
@@ -45,9 +46,9 @@ public interface CallView {
 
     void updateTime(long duration);
 
-    void updateContactBubble(List<net.jami.model.SipCall> contact);
+    void updateContactBubble(List<Call> contact);
 
-    void updateCallStatus(net.jami.model.SipCall.CallStatus callState);
+    void updateCallStatus(Call.CallStatus callState);
 
     void initMenu(boolean isSpeakerOn, boolean displayFlip, boolean canDial, boolean showPluginBtn, boolean onGoingCall);
 
@@ -63,7 +64,7 @@ public interface CallView {
 
     void goToConversation(String accountId, String conversationId);
 
-    void goToAddContact(net.jami.model.CallContact callContact);
+    void goToAddContact(Contact contact);
 
     void startAddParticipant(String conferenceId);
 
@@ -77,13 +78,13 @@ public interface CallView {
 
     void handleCallWakelock(boolean isAudioOnly);
 
-    void goToContact(String accountId, CallContact contact);
+    void goToContact(String accountId, Contact contact);
 
     boolean displayPluginsButton();
 
     void updateConfInfo(List<Conference.ParticipantInfo> info);
 
-    void updateParticipantRecording(Set<CallContact> contacts);
+    void updateParticipantRecording(Set<Contact> contacts);
 
     void toggleCallMediaHandler(String id, String callId, boolean toggle);
 }

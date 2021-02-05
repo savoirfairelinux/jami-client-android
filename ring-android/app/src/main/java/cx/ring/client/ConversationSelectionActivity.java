@@ -40,9 +40,9 @@ import cx.ring.application.JamiApplication;
 import net.jami.facades.ConversationFacade;
 import cx.ring.fragments.CallFragment;
 
-import net.jami.model.CallContact;
+import net.jami.model.Contact;
 import net.jami.model.Conference;
-import net.jami.model.SipCall;
+import net.jami.model.Call;
 import net.jami.services.CallService;
 import net.jami.smartlist.SmartListViewModel;
 import cx.ring.utils.ConversationPath;
@@ -117,10 +117,10 @@ public class ConversationSelectionActivity extends AppCompatActivity {
                         return vm;
                     List<SmartListViewModel> filteredVms = new ArrayList<>(vm.size());
                     models: for (SmartListViewModel v : vm) {
-                        List<CallContact> contacts = v.getContact();
+                        List<Contact> contacts = v.getContact();
                         if (contacts.size() != 1)
                             continue;
-                        for (SipCall call : conf.getParticipants()) {
+                        for (Call call : conf.getParticipants()) {
                             if (call.getContact() == v.getContact().get(0)) {
                                 continue models;
                             }
