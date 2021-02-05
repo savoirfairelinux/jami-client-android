@@ -1544,13 +1544,22 @@ public class AccountService {
                 interaction = new TextMessage(author, account.getAccountID(), timestamp, conversation, message.get("body"), !contact.isUser());
                 break;
             case "application/data-transfer+json": {
-                String transferId = message.get("tid");
-                String fileName = message.get("displayName");
-                long fileSize = Long.parseLong(message.get("totalSize"));
-                long tid = Long.parseUnsignedLong(transferId);
-                interaction = account.getDataTransfer(tid);
-                if (interaction == null) {
-                    interaction = new DataTransfer(tid, account.getAccountID(), author, fileName, contact.isUser(), timestamp, fileSize, 0);
+                try {
+                    String transferId = message.get("tid");
+                    long tid = Long.parseLong(transferId);
+                    String fileName = message.get("displayName");
+                    long fileSize = Long.parseLong(message.get("totalSize"));
+                    interaction = account.getDataTransfer(tid);
+                    if (interaction == null) {
+                        interaction = new DataTransfer(tid, account.getAccountID(), author, fileName, contact.isUser(), timestamp, fileSize, 0);
+                        File path = mDeviceRuntimeService.getConversationPath(conversation.getUri().getRawRingId(), ((DataTransfer) interaction).getStoragePath());
+                        boolean exists = path.exists();
+                        if (exists)
+                            ((DataTransfer) interaction).setBytesProgress(path.length());
+                        interaction.setStatus(exists ? InteractionStatus.TRANSFER_FINISHED : InteractionStatus.TRANSFER_TIMEOUT_EXPIRED);
+                    }
+                } catch (Exception e) {
+                    interaction = new Interaction(conversation, Interaction.InteractionType.INVALID);
                 }
                 break;
             }
@@ -1560,10 +1569,7 @@ public class AccountService {
                 break;
             case "merge":
             default:
-                interaction = new Interaction();
-                interaction.setAccount(account.getAccountID());
-                interaction.setConversation(conversation);
-                interaction.setType(Interaction.InteractionType.INVALID);
+                interaction = new Interaction(conversation, Interaction.InteractionType.INVALID);
                 break;
         }
         interaction.setContact(contact);
@@ -1584,8 +1590,10 @@ public class AccountService {
                 return;
             }
             Conversation conversation = account.getSwarm(conversationId);
-            for (Map<String, String> message : messages) {
-                addMessage(account, conversation, message);
+            synchronized (conversation) {
+                for (Map<String, String> message : messages) {
+                    addMessage(account, conversation, message);
+                }
             }
             account.conversationChanged();
         } catch (Exception e) {
@@ -1609,8 +1617,10 @@ public class AccountService {
         switch (ConversationMemberEvent.values()[event])  {
             case Add:
             case Join: {
-                Contact contact = account.getContactFromCache(uri);
-                conversation.addContact(contact);
+                Contact contact = conversation.findContact(uri);
+                if (contact == null) {
+                    conversation.addContact(account.getContactFromCache(uri));
+                }
                 break;
             }
             case Remove:
@@ -1674,8 +1684,8 @@ public class AccountService {
         Log.w(TAG, "ConversationCallback: messageReceived " + accountId + "/" + conversationId + " " + message.size());
         Account account = getAccount(accountId);
         Conversation conversation = account.getSwarm(conversationId);
-        Interaction interaction = addMessage(account, conversation, message);
-        if (interaction != null) {
+        synchronized (conversation) {
+            Interaction interaction = addMessage(account, conversation, message);
             account.conversationUpdated(conversation);
             boolean isIncoming = !interaction.getContact().isUser();
             if (isIncoming) {
@@ -1684,8 +1694,8 @@ public class AccountService {
         }
     }
 
-    public Completable sendFile(final DataTransfer dataTransfer) {
-        return Completable.fromAction(() -> {
+    public Single<DataTransfer> sendFile(final File file, final DataTransfer dataTransfer) {
+        return Single.fromCallable(() -> {
             mStartingTransfer = dataTransfer;
 
             DataTransferInfo dataTransferInfo = new DataTransferInfo();
@@ -1697,14 +1707,19 @@ public class AccountService {
             else
                 dataTransferInfo.setPeer(dataTransfer.getConversation().getParticipant());
 
-            dataTransferInfo.setPath(dataTransfer.destination.getAbsolutePath());
+            dataTransferInfo.setPath(file.getAbsolutePath());
             dataTransferInfo.setDisplayName(dataTransfer.getDisplayName());
 
             Log.i(TAG, "sendFile() id=" + dataTransfer.getId() + " accountId=" + dataTransferInfo.getAccountId() + ", peer=" + dataTransferInfo.getPeer() + ", filePath=" + dataTransferInfo.getPath());
-            DataTransferError err = getDataTransferError(JamiService.sendFile(dataTransferInfo, 0));
+            long[] id = new long[1];
+            DataTransferError err = getDataTransferError(JamiService.sendFile(dataTransferInfo, id));
             if (err != DataTransferError.SUCCESS) {
                 throw new IOException(err.name());
+            } else {
+                Log.e(TAG, "sendFile: got ID " + id[0]);
+                dataTransfer.setDaemonId(id[0]);
             }
+            return dataTransfer;
         }).subscribeOn(Schedulers.from(mExecutor));
     }
 
