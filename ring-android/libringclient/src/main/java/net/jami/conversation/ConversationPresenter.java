@@ -28,13 +28,13 @@ import javax.inject.Named;
 import net.jami.daemon.Blob;
 import net.jami.facades.ConversationFacade;
 import net.jami.model.Account;
-import net.jami.model.CallContact;
+import net.jami.model.Contact;
 import net.jami.model.Conference;
 import net.jami.model.Conversation;
 import net.jami.model.DataTransfer;
 import net.jami.model.Error;
 import net.jami.model.Interaction;
-import net.jami.model.SipCall;
+import net.jami.model.Call;
 import net.jami.model.TrustRequest;
 import net.jami.model.Uri;
 import net.jami.mvp.RootPresenter;
@@ -355,9 +355,9 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
 
     private void sendTrustRequest() {
         //final Uri contactId = mConversationUri;
-        CallContact contact = mConversation.getContact();//mAccountService.getAccount(accountId).getContactFromCache(contactId);
+        Contact contact = mConversation.getContact();//mAccountService.getAccount(accountId).getContactFromCache(contactId);
         if (contact != null) {
-            contact.setStatus(CallContact.Status.REQUEST_SENT);
+            contact.setStatus(Contact.Status.REQUEST_SENT);
         }
         mVCardService.loadSmallVCard(mConversation.getAccountId(), VCardService.MAX_SIZE_REQUEST)
                 .subscribeOn(Schedulers.computation())
@@ -388,8 +388,8 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                         Conference conf = mConversation.getCurrentCall();
                         if (conf != null
                                 && !conf.getParticipants().isEmpty()
-                                && conf.getParticipants().get(0).getCallStatus() != SipCall.CallStatus.INACTIVE
-                                && conf.getParticipants().get(0).getCallStatus() != SipCall.CallStatus.FAILURE) {
+                                && conf.getParticipants().get(0).getCallStatus() != Call.CallStatus.INACTIVE
+                                && conf.getParticipants().get(0).getCallStatus() != Call.CallStatus.FAILURE) {
                             view.goToCallActivity(conf.getId());
                         } else {
                             view.goToCallActivityWithResult(mConversation.getAccountId(), mConversation.getUri(), mConversation.getContact().getUri(), audioOnly);
@@ -400,7 +400,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
 
     private void updateOngoingCallView(Conversation conversation) {
         Conference conf = conversation == null ? null : conversation.getCurrentCall();
-        if (conf != null && (conf.getState() == SipCall.CallStatus.CURRENT || conf.getState() == SipCall.CallStatus.HOLD || conf.getState() == SipCall.CallStatus.RINGING)) {
+        if (conf != null && (conf.getState() == Call.CallStatus.CURRENT || conf.getState() == Call.CallStatus.HOLD || conf.getState() == Call.CallStatus.RINGING)) {
             getView().displayOnGoingCallPane(true);
         } else {
             getView().displayOnGoingCallPane(false);
