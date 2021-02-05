@@ -38,7 +38,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import cx.ring.R;
 import net.jami.model.Account;
-import net.jami.model.CallContact;
+import net.jami.model.Contact;
 import net.jami.model.Conversation;
 import cx.ring.services.VCardServiceImpl;
 import net.jami.smartlist.SmartListViewModel;
@@ -160,7 +160,7 @@ public class AvatarDrawable extends Drawable {
         public Builder withNameData(String profileName, String username) {
             return withName(TextUtils.isEmpty(profileName) ? username : profileName);
         }
-        public Builder withContact(CallContact contact){
+        public Builder withContact(Contact contact){
             if (contact == null)
                 return this;
             return withPhoto((Bitmap)contact.getPhoto())
@@ -169,10 +169,10 @@ public class AvatarDrawable extends Drawable {
                     .withNameData(contact.getProfileName(), contact.getUsername());
         }
 
-        public Builder withContacts(List<CallContact> contacts) {
+        public Builder withContacts(List<Contact> contacts) {
             List<Bitmap> bitmaps = new ArrayList<>(contacts.size());
             int notTheUser = 0;
-            for (CallContact contact : contacts) {
+            for (Contact contact : contacts) {
                 if (contact.isUser())
                     continue;
                 notTheUser++;
@@ -185,13 +185,13 @@ public class AvatarDrawable extends Drawable {
             }
             if (bitmaps.isEmpty()) {
                 if (notTheUser == 1) {
-                    for (CallContact contact : contacts) {
+                    for (Contact contact : contacts) {
                         if (!contact.isUser())
                             return withContact(contact);
                     }
                 } else if (notTheUser == 0) {
                     // Fallback to the user avatar
-                    for (CallContact contact : contacts)
+                    for (Contact contact : contacts)
                         return withContact(contact);
                 }
                 return this;
@@ -246,7 +246,7 @@ public class AvatarDrawable extends Drawable {
         return load(context, account, true);
     }
 
-    public void update(CallContact contact) {
+    public void update(Contact contact) {
         String profileName = contact.getProfileName();
         String username = contact.getUsername();
         avatarText = convertNameToAvatarText(
