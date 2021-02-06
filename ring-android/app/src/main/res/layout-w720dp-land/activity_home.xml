@@ -24,13 +24,15 @@
                 android:id="@+id/account_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="12dp"
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="end"
+                android:layout_marginEnd="12dp"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:visibility="gone"
                 app:showText="true"
                 app:status="@string/account_status_offline"
-                android:visibility="gone"
-                />
+                tools:visibility="visible"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"

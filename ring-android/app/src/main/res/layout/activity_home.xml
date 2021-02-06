@@ -37,30 +37,32 @@ along with this program; if not, write to the Free Software
             android:id="@+id/main_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:contentInsetStart="16dp"
             android:layout_alignParentTop="true"
             android:clipChildren="false"
-            android:clipToPadding="false">
+            android:clipToPadding="false"
+            app:contentInsetStart="16dp">
 
             <cx.ring.views.SwitchButton
                 android:id="@+id/account_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="12dp"
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="end"
+                android:layout_marginEnd="12dp"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:visibility="gone"
                 app:showText="true"
                 app:status="@string/account_status_offline"
-                android:visibility="gone"
-                />
+                tools:visibility="visible" />
 
             <Spinner
                 android:id="@+id/spinner_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:paddingStart="-60dp"
-                android:dropDownWidth="260dp"/>
+                android:dropDownWidth="260dp"
+                android:paddingStart="-60dp" />
 
             <RelativeLayout
                 android:id="@+id/tablet_toolbar"
@@ -82,23 +84,23 @@ along with this program; if not, write to the Free Software
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/contact_image"
-                    android:layout_toEndOf="@+id/contact_image"
                     android:layout_marginStart="16dp"
-                    android:textSize="16sp"
+                    android:layout_toEndOf="@+id/contact_image"
+                    android:singleLine="true"
                     android:textColor="@color/textColorPrimary"
-                    tools:text="Thomas"
-                    android:singleLine="true"/>
+                    android:textSize="16sp"
+                    tools:text="Thomas" />
 
                 <TextView
                     android:id="@+id/contact_subtitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignStart="@id/contact_title"
                     android:layout_below="@+id/contact_title"
-                    android:textSize="14sp"
+                    android:layout_alignStart="@id/contact_title"
                     android:layout_toEndOf="@+id/contact_image"
                     android:textColor="@color/textColorPrimary"
-                    tools:text="tom"/>
+                    android:textSize="14sp"
+                    tools:text="tom" />
 
             </RelativeLayout>
 
@@ -110,18 +112,17 @@ along with this program; if not, write to the Free Software
         android:id="@+id/main_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/app_bar"
         android:layout_above="@id/navigation_view"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        android:layout_below="@id/app_bar"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/navigation_bottom_height"
-        app:menu="@menu/navigation_bar"
-        app:labelVisibilityMode="labeled"
         android:layout_alignParentBottom="true"
         android:background="@color/bottom_navigation"
-        />
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/navigation_bar" />
 
 </RelativeLayout>

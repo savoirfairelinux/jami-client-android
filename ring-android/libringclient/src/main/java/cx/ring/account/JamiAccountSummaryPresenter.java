@@ -115,9 +115,6 @@ public class JamiAccountSummaryPresenter extends RootPresenter<JamiAccountSummar
 
         account.setEnabled(newValue);
         mAccountService.setAccountEnabled(account.getAccountID(), newValue);
-        JamiAccountSummaryView view = getView();
-        if (view != null)
-            view.setSwitchStatus(account);
     }
 
     public void changePassword(String oldPassword, String newPassword) {

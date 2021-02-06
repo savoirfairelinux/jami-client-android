@@ -179,10 +179,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         mBinding.linkedDevices.setRightDrawableOnClickListener(v -> onDeviceRename());
         mBinding.registerName.setOnClickListener(v -> showUsernameRegistrationPopup());
 
-        ((HomeActivity) requireActivity()).getSwitchButton().setOnCheckedChangeListener((buttonView, isChecked) -> presenter.enableAccount(isChecked));
-
         List<SettingItem> items = new ArrayList<>();
-
         SettingItem accountItem = new SettingItem(R.string.account, R.drawable.baseline_account_card_details);
         SettingItem mediaItem = new SettingItem(R.string.account_preferences_media_tab, R.drawable.outline_file_copy_24);
         SettingItem systemItem = new SettingItem(R.string.notif_channel_messages, R.drawable.baseline_chat_24);
@@ -237,12 +234,14 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
     public void onResume() {
         super.onResume();
         ((HomeActivity) requireActivity()).showAccountStatus(true);
+        ((HomeActivity) requireActivity()).getSwitchButton().setOnCheckedChangeListener((buttonView, isChecked) -> presenter.enableAccount(isChecked));
     }
 
     @Override
     public void onPause() {
         super.onPause();
         ((HomeActivity) requireActivity()).showAccountStatus(false);
+        ((HomeActivity) requireActivity()).getSwitchButton().setOnCheckedChangeListener(null);
     }
 
     public void setAccount(String accountId) {
@@ -314,7 +313,7 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         setLinkedDevicesAdapter(account);
         mAccountHasPassword = account.hasPassword();
 
-        ((HomeActivity) requireActivity()).getSwitchButton().setProgress(account.isEnabled());
+        ((HomeActivity) requireActivity()).getSwitchButton().setCheckedSilent(account.isEnabled());
         mBinding.accountAliasTxt.setText(getString(R.string.profile));
         mBinding.identity.setText(account.getUsername());
         mAccountId = account.getAccountID();

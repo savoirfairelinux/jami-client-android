@@ -1,9 +1,25 @@
+/*
+ *  Copyright (C) 2004-2021 Savoir-faire Linux Inc.
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
 package cx.ring.views;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -11,9 +27,9 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.RotateDrawable;
+import android.os.Build;
 import android.text.Layout;
 import android.text.StaticLayout;
-import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -24,7 +40,7 @@ import android.view.ViewParent;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.CompoundButton;
 
-import androidx.core.content.ContextCompat;
+import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 
 import cx.ring.R;
@@ -35,19 +51,16 @@ public class SwitchButton extends CompoundButton {
     public static final int DEFAULT_THUMB_SIZE_DP = 20;
     public static final int DEFAULT_THUMB_MARGIN_DP = 2;
     public static final int DEFAULT_ANIMATION_DURATION = 250;
-    public static final int DEFAULT_TEXT_SIZE = 11;
     public static final int DEFAULT_EXTRA_MARGIN = 10;
     public static final int DEFAULT_SWITCH_WIDTH = 150;
 
-    private long mAnimationDuration = DEFAULT_ANIMATION_DURATION;
     private int mBackColor;
     private int mThumbWidth = 0;
     private int mThumbHeight = 0;
     private int mBackWidth;
     private int mBackHeight;
-    private int mOnTextColor = Color.WHITE, mOffTextColor = Color.WHITE;
-    private int mTouchSlop;
-    private int mClickTimeout;
+    private final int mTouchSlop;
+    private final int mClickTimeout;
     private float mThumbRadius, mBackRadius;
     private float mThumbRangeRatio;
     private float mTextWidth;
@@ -57,77 +70,51 @@ public class SwitchButton extends CompoundButton {
     private boolean mReady = false;
     private boolean mCatch = false;
     private boolean mShowImage = false;
-    private boolean mIsChecked = false;
-    private RectF mThumbRectF, mBackRectF, mSafeRectF, mTextOnRectF, mTextOffRectF;
-    private RectF mThumbMargin;
-    private RectF mPresentThumbRectF;
-    private Paint mPaint;
-    private Paint mRectPaint;
-    private ValueAnimator mProgressAnimator;
+    private final RectF mThumbRectF = new RectF(),
+            mBackRectF = new RectF(),
+            mSafeRectF = new RectF(),
+            mTextOnRectF= new RectF(),
+            mTextOffRectF = new RectF(),
+            mThumbMargin = new RectF(),
+            mPresentThumbRectF = new RectF();
+    private final Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final ValueAnimator mProgressAnimator = ValueAnimator.ofFloat(0, 0);
     private CharSequence mStatus;
-    private TextPaint mTextPaint;
     private Layout mOnLayout;
     private Layout mOffLayout;
-    private RotateDrawable mImageDrawable;
+    private final RotateDrawable mImageDrawable;
 
-    private CompoundButton.OnCheckedChangeListener mOnCheckedChangeListener;
+    private boolean mChangingState = false;
+    private CompoundButton.OnCheckedChangeListener mChildOnCheckedChangeListener = null;
 
-    public SwitchButton(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        init(attrs);
+    public SwitchButton(Context context) {
+        this(context, null);
     }
 
     public SwitchButton(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(attrs);
+        this(context, attrs, 0);
     }
 
-    public SwitchButton(Context context) {
-        super(context);
-        init(null);
-    }
+    public SwitchButton(Context context, @Nullable AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.SwitchButton);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            saveAttributeDataForStyleable(context, R.styleable.SwitchButton, attrs, ta, defStyle, 0);
+        }
 
-    private void init(AttributeSet attrs) {
-        mTouchSlop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
+        int backColor = ta.getColor(R.styleable.SwitchButton_backColor, getResources().getColor(R.color.grey_400));
+        String status = ta.getString(R.styleable.SwitchButton_status);
+        ta.recycle();
+
+        mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
         mClickTimeout = ViewConfiguration.getPressedStateDuration() + ViewConfiguration.getTapTimeout();
 
-        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mRectPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mRectPaint.setStyle(Paint.Style.STROKE);
-        mRectPaint.setStrokeWidth(getResources().getDisplayMetrics().density);
-
-        mTextPaint = getPaint();
-
-        mThumbRectF = new RectF();
-        mBackRectF = new RectF();
-        mSafeRectF = new RectF();
-        mThumbMargin = new RectF();
-        mTextOnRectF = new RectF();
-        mTextOffRectF = new RectF();
-
-        mProgressAnimator = ValueAnimator.ofFloat(0, 0).setDuration(DEFAULT_ANIMATION_DURATION);
         mProgressAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
         mProgressAnimator.addUpdateListener(valueAnimator -> setProgress((float) valueAnimator.getAnimatedValue()));
+        mProgressAnimator.setDuration(DEFAULT_ANIMATION_DURATION);
 
-        mPresentThumbRectF = new RectF();
-
-        LayerDrawable layerDrawable = (LayerDrawable) ResourcesCompat.getDrawable(getResources(), R.drawable.rotate, null);
+        LayerDrawable layerDrawable = (LayerDrawable) ResourcesCompat.getDrawable(getResources(), R.drawable.rotate, context.getTheme());
         mImageDrawable = (RotateDrawable) layerDrawable.findDrawableByLayerId(R.id.progress);
-
-        Resources res = getResources();
-        float density = res.getDisplayMetrics().density;
-
-        float margin = density * DEFAULT_THUMB_MARGIN_DP;
-        int backColor = 0;
-        float thumbRangeRatio = DEFAULT_THUMB_RANGE_RATIO;
-        String status = null;
-
-        TypedArray ta = attrs == null ? null : getContext().obtainStyledAttributes(attrs, R.styleable.SwitchButton);
-        if (ta != null) {
-            backColor = ta.getColor(R.styleable.SwitchButton_backColor, getResources().getColor(R.color.grey_400));
-            status = ta.getString(R.styleable.SwitchButton_status);
-            ta.recycle();
-        }
 
         setFocusable(true);
         setClickable(true);
@@ -136,21 +123,26 @@ public class SwitchButton extends CompoundButton {
 
         mBackColor = backColor;
 
+        float margin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_THUMB_MARGIN_DP, getResources().getDisplayMetrics());
         mThumbMargin.set(margin, margin, margin, margin);
 
         // size & measure params must larger than 1
+        float thumbRangeRatio = DEFAULT_THUMB_RANGE_RATIO;
         mThumbRangeRatio = mThumbMargin.width() >= 0 ? Math.max(thumbRangeRatio, 1) : thumbRangeRatio;
 
-        mProgressAnimator.setDuration(mAnimationDuration);
-
         // sync checked status
-        if (isChecked()) {
-            setProgress(1);
-        }
+        setProgress(isChecked() ? 1.f : 0.f);
+
+        super.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (mChangingState)
+                return;
+            if (mChildOnCheckedChangeListener != null)
+                mChildOnCheckedChangeListener.onCheckedChanged(buttonView, isChecked);
+        });
     }
 
     private Layout makeLayout(CharSequence text) {
-        return new StaticLayout(text, mTextPaint, (int) Math.ceil(Layout.getDesiredWidth(text, mTextPaint)), Layout.Alignment.ALIGN_CENTER, 1.f, 0, false);
+        return new StaticLayout(text, getPaint(), (int) Math.ceil(Layout.getDesiredWidth(text, getPaint())), Layout.Alignment.ALIGN_CENTER, 1.f, 0, false);
     }
 
     @Override
@@ -329,7 +321,7 @@ public class SwitchButton extends CompoundButton {
         }
     }
 
-    private int ceil(double dimen) {
+    static private int ceil(double dimen) {
         return (int) Math.ceil(dimen);
     }
 
@@ -420,17 +412,11 @@ public class SwitchButton extends CompoundButton {
             mImageDrawable.draw(canvas);
         } else {
             // text
-            mOnTextColor = ContextCompat.getColor(getContext(), R.color.white);
-            mOffTextColor = ContextCompat.getColor(getContext(), R.color.white);
             Layout switchText = getProgress() > 0.5 ? mOnLayout : mOffLayout;
             RectF textRectF = getProgress() > 0.5 ? mTextOnRectF : mTextOffRectF;
             if (switchText != null && textRectF != null) {
-                int alpha = (int) (255 * (getProgress() >= 0.75 ? getProgress() * 4 - 3 : (getProgress() < 0.25 ? 1 - getProgress() * 4 : 0)));
-                int textColor = getProgress() > 0.5 ? mOnTextColor : mOffTextColor;
-                int colorAlpha = Color.alpha(textColor);
-                colorAlpha = colorAlpha * alpha / 255;
-                switchText.getPaint().setARGB(colorAlpha, Color.red(textColor), Color.green(textColor), Color.blue(textColor));
-                switchText.getPaint().setTextSize(spToPx(DEFAULT_TEXT_SIZE, getContext()));
+                float alpha = getProgress() >= 0.75 ? getProgress() * 4 - 3 : (getProgress() < 0.25 ? 1 - getProgress() * 4 : 0);
+                switchText.getPaint().setAlpha((int) (Color.alpha(getCurrentTextColor()) * alpha));
                 canvas.save();
                 canvas.translate(textRectF.left, textRectF.top);
                 switchText.draw(canvas);
@@ -441,7 +427,6 @@ public class SwitchButton extends CompoundButton {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-
         if (!isEnabled() || !isClickable() || !isFocusable() || !mReady) {
             return false;
         }
@@ -517,16 +502,13 @@ public class SwitchButton extends CompoundButton {
         } else if (tempProgress < 0) {
             tempProgress = 0;
         }
-        this.mProgress = tempProgress;
+        mProgress = tempProgress;
         invalidate();
     }
 
-    public void setProgress(final boolean checked) {
-        if (isChecked() == checked) {
-            return;
-        }
-        mIsChecked = checked;
-        setProgress(checked? 1 : 0);
+    @Override
+    public void setOnCheckedChangeListener(@Nullable OnCheckedChangeListener listener) {
+        mChildOnCheckedChangeListener = listener;
     }
 
     public void animateToState(boolean checked) {
@@ -536,7 +518,6 @@ public class SwitchButton extends CompoundButton {
         if (mProgressAnimator.isRunning()) {
             mProgressAnimator.cancel();
         }
-        mProgressAnimator.setDuration(mAnimationDuration);
         if (checked) {
             mProgressAnimator.setFloatValues(mProgress, 1f);
         } else {
@@ -554,30 +535,19 @@ public class SwitchButton extends CompoundButton {
     }
 
     @Override
-    public void setChecked(final boolean checked) {
+    public void setChecked(boolean checked) {
         if (isChecked() == checked) {
             return;
         }
-        mIsChecked = checked;
-        animateToState(mIsChecked);
-        if (mOnCheckedChangeListener != null) {
-            mOnCheckedChangeListener.onCheckedChanged(this, mIsChecked);
-        }
+        animateToState(checked);
+        super.setChecked(checked);
     }
 
-    @Override
-    public boolean isChecked() {
-        return mIsChecked;
-    }
-
-    @Override
-    public void toggle() {
-        setChecked(!mIsChecked);
-    }
-
-    @Override
-    public void setOnCheckedChangeListener(OnCheckedChangeListener listener) {
-        mOnCheckedChangeListener = listener;
+    public void setCheckedSilent(boolean checked) {
+        mChangingState = true;
+        super.setChecked(checked);
+        setProgress(checked ? 1 : 0);
+        mChangingState = false;
     }
 
     public int getBackColor() {
@@ -587,10 +557,6 @@ public class SwitchButton extends CompoundButton {
     public void setBackColor(int backColor) {
         mBackColor = backColor;
         invalidate();
-    }
-
-    public void setBackColorRes(int backColorRes) {
-        setBackColor(backColorRes);
     }
 
     public void setStatus(CharSequence status) {
@@ -611,10 +577,6 @@ public class SwitchButton extends CompoundButton {
     public void showImage(boolean show) {
         mShowImage = show;
         invalidate();
-    }
-
-    private int spToPx(float sp, Context context) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
     }
 
     public void startImageAnimation() {
