@@ -1,3 +1,19 @@
+/*
+ *  Copyright (C) 2004-2021 Savoir-faire Linux Inc.
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package cx.ring.account;
 
 import android.app.Activity;
@@ -6,53 +22,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.annotation.Nullable;
 
 import java.util.List;
 
-import cx.ring.R;
+import cx.ring.databinding.ItemSettingBinding;
 
 public class SettingsAdapter extends ArrayAdapter<SettingItem> {
-
-    private Context mContext;
-
     public SettingsAdapter(@NonNull Context context, int resource, @NonNull List<SettingItem> objects) {
         super(context, resource, objects);
-        mContext = context;
     }
 
-    private class ViewHolder {
-        TextView title;
-        ImageView icon;
-        FloatingActionButton fab;
-    }
-
-    public View getView(int position, View view, ViewGroup parent) {
-        ViewHolder holder = null;
-        SettingItem item = getItem(position);
-
-        LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+    public View getView(int position, @Nullable View view, ViewGroup parent) {
+        ItemSettingBinding binding;
         if (view == null) {
-            view = mInflater.inflate(R.layout.item_setting, null);
-            holder = new ViewHolder();
-            holder.title = view.findViewById(R.id.title);
-            holder.icon = view.findViewById(R.id.icon);
-            view.setTag(holder);
+            binding = ItemSettingBinding.inflate((LayoutInflater) getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE));
+            view = binding.getRoot();
+            view.setTag(binding);
         } else
-            holder = (ViewHolder) view.getTag();
+            binding = (ItemSettingBinding) view.getTag();
 
-        holder.title.setText(mContext.getString(item.getTitleRes()));
-        holder.icon.setImageResource(item.getImageId());
-        holder.icon.setColorFilter(ContextCompat.getColor(mContext, R.color.white),
-                android.graphics.PorterDuff.Mode.SRC_IN);
-
+        SettingItem item = getItem(position);
+        binding.title.setText(getContext().getString(item.getTitleRes()));
+        binding.icon.setImageResource(item.getImageId());
         return view;
     }
-
 }
