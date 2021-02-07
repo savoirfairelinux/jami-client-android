@@ -19,13 +19,14 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-package cx.ring.model;
+package net.jami.model;
 
-import net.jami.model.Uri;
+import net.jami.utils.Tuple;
 
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 public class UriTest {
@@ -33,35 +34,35 @@ public class UriTest {
     @Test
     public void testGoodRawString() {
         String uri = "ring:1234567890123456789012345678901234567890";
-        net.jami.model.Uri test = new net.jami.model.Uri(uri);
+        Uri test = Uri.fromString(uri);
         assertTrue(test.getRawUriString().contentEquals(uri));
     }
 
     @Test
     public void testBadIPAddress() {
-        assertFalse(net.jami.model.Uri.isIpAddress("not an ip"));
+        assertFalse(Uri.isIpAddress("not an ip"));
     }
 
     @Test
     public void testGoodIPAddress() {
-        assertTrue(net.jami.model.Uri.isIpAddress("127.0.0.1"));
-        assertTrue(net.jami.model.Uri.isIpAddress("2001:db8:0:85a3:0:0:ac1f:8001"));
+        assertTrue(Uri.isIpAddress("127.0.0.1"));
+        assertTrue(Uri.isIpAddress("2001:db8:0:85a3:0:0:ac1f:8001"));
     }
 
     @Test
     public void testRingModel() {
         String uri = "ring:1234567890123456789012345678901234567890";
-        net.jami.model.Uri test = new net.jami.model.Uri(uri);
+        Tuple<Uri, String> test = Uri.fromStringWithName(uri);
 
-        assertTrue(test.getDisplayName() == null);
-        assertTrue(test.getScheme().contentEquals("ring:"));
-        assertTrue(test.getUriString().contentEquals("ring:1234567890123456789012345678901234567890"));
+        assertNull(test.second);
+        assertTrue(test.first.getScheme().contentEquals("ring:"));
+        assertTrue(test.first.getUri().contentEquals("ring:1234567890123456789012345678901234567890"));
     }
 
     @Test
     public void testSIPModel() {
         String uri = "100@sipuri";
-        net.jami.model.Uri test = new Uri(uri);
+        Uri test = Uri.fromString(uri);
 
         assertTrue(test.getUsername().contentEquals("100"));
         assertTrue(test.getHost().contentEquals("sipuri"));
