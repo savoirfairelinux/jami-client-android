@@ -21,7 +21,6 @@ import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.leanback.widget.GuidanceStylist;
 import androidx.leanback.widget.GuidedAction;
 import android.text.Editable;
@@ -34,12 +33,12 @@ import java.util.List;
 
 import cx.ring.R;
 import cx.ring.account.AccountCreationModelImpl;
-import cx.ring.account.JamiAccountCreationPresenter;
-import cx.ring.account.JamiAccountCreationView;
+import net.jami.account.JamiAccountCreationPresenter;
+import net.jami.account.JamiAccountCreationView;
 import cx.ring.application.JamiApplication;
-import cx.ring.mvp.AccountCreationModel;
-import cx.ring.utils.Log;
-import cx.ring.utils.StringUtils;
+import net.jami.mvp.AccountCreationModel;
+import net.jami.utils.Log;
+import net.jami.utils.StringUtils;
 
 public class TVJamiAccountCreationFragment
         extends JamiGuidedStepFragment<JamiAccountCreationPresenter>
