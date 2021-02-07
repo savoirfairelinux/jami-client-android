@@ -37,8 +37,8 @@ import java.io.IOException;
 import java.util.List;
 
 import cx.ring.R;
-import cx.ring.model.Ringtone;
-import cx.ring.utils.Log;
+import net.jami.model.Ringtone;
+import net.jami.utils.Log;
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;

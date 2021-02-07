@@ -3,6 +3,8 @@ package cx.ring.utils;
 import android.os.Handler;
 import android.os.Looper;
 
+import net.jami.utils.Log;
+
 public class UiUpdater {
         private static final String TAG = UiUpdater.class.getSimpleName();
 

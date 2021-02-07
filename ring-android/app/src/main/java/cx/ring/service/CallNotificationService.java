@@ -32,7 +32,7 @@ import androidx.annotation.Nullable;
 import javax.inject.Inject;
 
 import cx.ring.application.JamiApplication;
-import cx.ring.services.NotificationService;
+import net.jami.services.NotificationService;
 
 public class CallNotificationService extends Service {
     public static final String ACTION_START = "START";
