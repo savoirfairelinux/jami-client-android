@@ -20,12 +20,6 @@
 
 package net.jami.model;
 
-import net.jami.model.Contact;
-import net.jami.model.Conversation;
-import net.jami.model.DataTransfer;
-import net.jami.model.TextMessage;
-import net.jami.model.Uri;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -38,18 +32,18 @@ import static org.junit.Assert.assertEquals;
  */
 public class ConversationTest {
 
-    private net.jami.model.Conversation conversation;
+    private Conversation conversation;
 
     @Before
-    public void setUp() throws Exception {
-        Contact contact = new Contact(1L);
-        conversation = new net.jami.model.Conversation(contact);
+    public void setUp() {
+        Contact contact = new Contact(Uri.fromString("jami://test"));
+        conversation = new Conversation("", contact);
     }
 
     @Test
-    public void init_test() throws Exception {
-        Contact contact = new Contact(1L);
-        Conversation conversation = new net.jami.model.Conversation(contact);
+    public void init_test() {
+        Contact contact = new Contact(Uri.fromString("jami://test"));
+        conversation = new Conversation("", contact);
 
         assertEquals(conversation.getContact(), contact);
     }
@@ -86,7 +80,7 @@ public class ConversationTest {
     @Test
     public void addHistoryCall() throws Exception {
         int oldSize = conversation.getAggregateHistory().size();
-        conversation.addHistoryCall(new HistoryCall());
+        conversation.addCall(new Call("Coucou", "ring:test", "1", conversation, conversation.getContact(), Call.Direction.INCOMING));
         int newSize = conversation.getAggregateHistory().size();
 
         assertEquals(0, oldSize);
@@ -96,7 +90,7 @@ public class ConversationTest {
     @Test
     public void addTextMessage() throws Exception {
         int oldSize = conversation.getAggregateHistory().size();
-        conversation.addTextMessage(new net.jami.model.TextMessage(true, "Coucou", new net.jami.model.Uri("ring:test"), "1", "Toi"));
+        conversation.addTextMessage(new TextMessage( "Coucou", "ring:test", "1", conversation, "Toi"));
         int newSize = conversation.getAggregateHistory().size();
 
         assertEquals(0, oldSize);
@@ -150,7 +144,7 @@ public class ConversationTest {
     @Test
     public void addFileTransfer() throws Exception {
         int oldSize = conversation.getAggregateHistory().size();
-        conversation.addFileTransfer(new DataTransfer(1L, "photo.jpg", true, 10L, 0L, "1", "1"));
+        conversation.addFileTransfer(new DataTransfer(1L, "Coucoou", "ring:sfvfv", "photo.jpg", true, 10L, 0L, 0L));
         int newSize = conversation.getAggregateHistory().size();
 
         assertEquals(0, oldSize);
@@ -174,7 +168,7 @@ public class ConversationTest {
         int random = new Random().nextInt(20);
 
         for (int i = 0; i < random; i++) {
-            conversation.addTextMessage(new TextMessage(true, "Coucou", new Uri("ring:test"), "1", "Toi"));
+            conversation.addTextMessage(new TextMessage( "Coucou", "ring:test", "1", conversation, "Toi"));
         }
         int newSize = conversation.getAggregateHistory().size();
 
