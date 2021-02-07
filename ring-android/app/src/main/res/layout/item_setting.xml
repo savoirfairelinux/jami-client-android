@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:gravity="center_vertical"
     android:padding="12dp">
@@ -13,7 +15,9 @@
         android:background="@drawable/item_settings_icon_background"
         android:layout_marginStart="4dp"
         android:layout_marginEnd="4dp"
-        android:padding="5dp"/>
+        android:padding="5dp"
+        app:tint="@color/white"
+        tools:src="@drawable/round_check_circle_24"/>
 
     <TextView
         android:id="@+id/title"
@@ -22,6 +26,7 @@
         android:textColor="@color/text_color"
         android:textStyle="bold"
         android:textSize="18sp"
-        android:layout_marginStart="4dp"/>
+        android:layout_marginStart="4dp"
+        tools:text="@string/account_preferences_advanced_tab"/>
 
 </LinearLayout>
