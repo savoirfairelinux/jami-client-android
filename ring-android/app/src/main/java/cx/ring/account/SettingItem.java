@@ -1,29 +1,29 @@
 package cx.ring.account;
 
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
+
 public class SettingItem {
+    private final int mTitleRes;
+    private final int mImageId;
+    private final Runnable mOnClick;
 
-    private int mTitleRes;
-    private int mImageId;
-
-    public SettingItem(int titleRes, int imageId) {
+    public SettingItem(@StringRes int titleRes, @DrawableRes int imageId, @NonNull Runnable onClick) {
         mTitleRes = titleRes;
         mImageId = imageId;
+        mOnClick = onClick;
     }
 
-    public int getTitleRes() {
+    public @StringRes int getTitleRes() {
         return mTitleRes;
     }
 
-    public void setTitleRes(int titleRes) {
-        mTitleRes = titleRes;
-    }
-
-    public int getImageId() {
+    public @DrawableRes int getImageId() {
         return mImageId;
     }
 
-    public void setImageId(int imageId) {
-        mImageId = imageId;
+    public void onClick() {
+        mOnClick.run();
     }
-
 }
