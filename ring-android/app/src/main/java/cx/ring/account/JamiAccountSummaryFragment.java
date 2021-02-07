@@ -31,14 +31,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -51,15 +43,26 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
+
+import net.jami.account.JamiAccountSummaryPresenter;
+import net.jami.account.JamiAccountSummaryView;
+import net.jami.model.Account;
+import net.jami.utils.StringUtils;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
@@ -71,17 +74,12 @@ import cx.ring.fragments.GeneralAccountFragment;
 import cx.ring.fragments.LinkDeviceFragment;
 import cx.ring.fragments.MediaPreferenceFragment;
 import cx.ring.fragments.QRCodeFragment;
-
-import net.jami.account.JamiAccountSummaryPresenter;
-import net.jami.account.JamiAccountSummaryView;
-import net.jami.model.Account;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.settings.AccountFragment;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.ContentUriHandler;
-import net.jami.utils.StringUtils;
 import cx.ring.views.AvatarDrawable;
 import cx.ring.views.SwitchButton;
 import io.reactivex.Single;
@@ -106,10 +104,6 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
     private static final String FRAGMENT_DIALOG_BACKUP = TAG + ".dialog.backup";
     private static final int WRITE_REQUEST_CODE = 43;
     private static final int SCROLL_DIRECTION_UP = -1;
-    private static final int SETTINGS_ACCOUNT = 0;
-    private static final int SETTINGS_MEDIA = 1;
-    private static final int SETTINGS_SYSTEM = 2;
-    private static final int SETTINGS_ADVANCED = 3;
 
     private final OnBackPressedCallback mOnBackPressedCallback = new OnBackPressedCallback(false) {
         @Override
@@ -180,35 +174,15 @@ public class JamiAccountSummaryFragment extends BaseSupportFragment<JamiAccountS
         mBinding.linkedDevices.setRightDrawableOnClickListener(v -> onDeviceRename());
         mBinding.registerName.setOnClickListener(v -> showUsernameRegistrationPopup());
 
-        List<SettingItem> items = new ArrayList<>();
-        SettingItem accountItem = new SettingItem(R.string.account, R.drawable.baseline_account_card_details);
-        SettingItem mediaItem = new SettingItem(R.string.account_preferences_media_tab, R.drawable.outline_file_copy_24);
-        SettingItem systemItem = new SettingItem(R.string.notif_channel_messages, R.drawable.baseline_chat_24);
-        SettingItem advancedItem = new SettingItem(R.string.account_preferences_advanced_tab, R.drawable.round_check_circle_24);
-
-        items.add(accountItem);
-        items.add(mediaItem);
-        items.add(systemItem);
-        items.add(advancedItem);
+        List<SettingItem> items = new ArrayList<>(4);
+        items.add(new SettingItem(R.string.account, R.drawable.baseline_account_card_details, () -> presenter.goToAccount()));
+        items.add(new SettingItem(R.string.account_preferences_media_tab, R.drawable.outline_file_copy_24, () -> presenter.goToMedia()));
+        items.add(new SettingItem(R.string.notif_channel_messages, R.drawable.baseline_chat_24, () -> presenter.goToSystem()));
+        items.add(new SettingItem(R.string.account_preferences_advanced_tab, R.drawable.round_check_circle_24, () -> presenter.goToAdvanced()));
 
         SettingsAdapter adapter = new SettingsAdapter(view.getContext(), R.layout.item_setting, items);
+        mBinding.settingsList.setOnItemClickListener((adapterView, v, i, l) -> adapter.getItem(i).onClick());
         mBinding.settingsList.setAdapter(adapter);
-        mBinding.settingsList.setOnItemClickListener((adapterView, v, i, l) -> {
-            switch (i) {
-                case SETTINGS_ACCOUNT:
-                    presenter.goToAccount();
-                    break;
-                case SETTINGS_MEDIA:
-                    presenter.goToMedia();
-                    break;
-                case SETTINGS_SYSTEM:
-                    presenter.goToSystem();
-                    break;
-                case SETTINGS_ADVANCED:
-                    presenter.goToAdvanced();
-                    break;
-            }
-        });
 
         int totalHeight = 0;
         for (int i = 0; i < adapter.getCount(); i++) {
