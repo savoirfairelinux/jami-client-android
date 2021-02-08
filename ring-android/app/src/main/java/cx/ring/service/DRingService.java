@@ -143,7 +143,7 @@ public class DRingService extends Service {
 
         @Override
         public String placeCall(final String account, final String number, final boolean video) {
-            return mConversationFacade.placeCall(account, number, video).blockingGet().getDaemonIdString();
+            return mConversationFacade.placeCall(account, Uri.fromString(number), video).blockingGet().getDaemonIdString();
         }
 
         @Override
@@ -654,7 +654,7 @@ public class DRingService extends Service {
             case ACTION_FILE_ACCEPT:
             case ACTION_FILE_CANCEL:
                 if (extras != null) {
-                    handleFileAction(action, extras);
+                    handleFileAction(intent.getData(), action, extras);
                 }
                 break;
             default:
@@ -662,18 +662,19 @@ public class DRingService extends Service {
         }
     }
 
-    private void handleFileAction(String action, Bundle extras) {
-        Long id = extras.getLong(KEY_TRANSFER_ID);
+    private void handleFileAction(android.net.Uri uri, String action, Bundle extras) {
+        long id = extras.getLong(KEY_TRANSFER_ID);
+        ConversationPath path = ConversationPath.fromUri(uri);
         if (action.equals(ACTION_FILE_ACCEPT)) {
-            mAccountService.acceptFileTransfer(id);
+            mAccountService.acceptFileTransfer(path.getAccountId(), path.getConversationUri(), id);
         } else if (action.equals(ACTION_FILE_CANCEL)) {
-            mConversationFacade.cancelFileTransfer(id);
+            mConversationFacade.cancelFileTransfer(path.getAccountId(), path.getConversationUri(), id);
         }
     }
 
     private void handleTrustRequestAction(String action, Bundle extras) {
         String account = extras.getString(NotificationService.TRUST_REQUEST_NOTIFICATION_ACCOUNT_ID);
-        Uri from = new Uri(extras.getString(NotificationService.TRUST_REQUEST_NOTIFICATION_FROM));
+        Uri from = Uri.fromString(extras.getString(NotificationService.TRUST_REQUEST_NOTIFICATION_FROM));
         if (account != null) {
             mNotificationService.cancelTrustRequestNotification(account);
             switch (action) {
@@ -759,7 +760,7 @@ public class DRingService extends Service {
 
         switch (action) {
             case ACTION_CONV_READ:
-                mConversationFacade.readMessages(path.getAccountId(), new Uri(path.getConversationId()));
+                mConversationFacade.readMessages(path.getAccountId(), path.getConversationUri());
                 break;
             case ACTION_CONV_DISMISS:
                 break;
@@ -768,11 +769,11 @@ public class DRingService extends Service {
                 if (remoteInput != null) {
                     CharSequence reply = remoteInput.getCharSequence(KEY_TEXT_REPLY);
                     if (!TextUtils.isEmpty(reply)) {
-                        Uri uri = new Uri(path.getConversationId());
+                        Uri uri = path.getConversationUri();
                         String message = reply.toString();
                         mConversationFacade.startConversation(path.getAccountId(), uri)
-                                .flatMap(c -> mConversationFacade.sendTextMessage(path.getAccountId(), c, uri, message)
-                                        .doOnSuccess(msg -> mNotificationService.showTextNotification(path.getAccountId(), c)))
+                                .flatMapCompletable(c -> mConversationFacade.sendTextMessage(c, uri, message)
+                                        .doOnComplete(() -> mNotificationService.showTextNotification(path.getAccountId(), c)))
                                 .subscribe();
                     }
                 }
