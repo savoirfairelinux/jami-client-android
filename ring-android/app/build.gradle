@@ -106,7 +106,7 @@ dependencies {
     implementation 'com.google.zxing:core:3.3.3'
 
     // RxBindings
-    implementation 'com.jakewharton.rxbinding3:rxbinding:3.1.0'
+    //implementation 'com.jakewharton.rxbinding3:rxbinding:3.1.0'
 
     implementation 'com.rodolfonavalon:ShapeRippleLibrary:1.0.0'
 

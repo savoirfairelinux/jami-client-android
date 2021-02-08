@@ -26,16 +26,14 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import cx.ring.facades.ConversationFacade;
-import cx.ring.model.CallContact;
-import cx.ring.model.Conversation;
+import cx.ring.model.Account;
+import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
-import cx.ring.services.ContactService;
 import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.Log;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.subjects.BehaviorSubject;
 
 public class ContactRequestsPresenter extends RootPresenter<ContactRequestsView> {
@@ -45,7 +43,7 @@ public class ContactRequestsPresenter extends RootPresenter<ContactRequestsView>
     private final Scheduler mUiScheduler;
     private final AccountService mAccountService;
     private final ConversationFacade mConversationFacade;
-    private final BehaviorSubject<String> mAccount = BehaviorSubject.create();
+    private final BehaviorSubject<Account> mAccount = BehaviorSubject.create();
 
     @Inject
     ContactRequestsPresenter(ConversationFacade conversationFacade, AccountService accountService, @Named("UiScheduler") Scheduler scheduler) {
@@ -57,7 +55,7 @@ public class ContactRequestsPresenter extends RootPresenter<ContactRequestsView>
     @Override
     public void bindView(ContactRequestsView view) {
         super.bindView(view);
-        mCompositeDisposable.add(mConversationFacade.getPendingList(mAccount.map(mAccountService::getAccount))
+        mCompositeDisposable.add(mConversationFacade.getPendingList(mAccount)
                 .switchMap(viewModels -> viewModels.isEmpty() ? SmartListViewModel.EMPTY_RESULTS
                         : Observable.combineLatest(viewModels, obs -> {
                     List<SmartListViewModel> vms = new ArrayList<>(obs.length);
@@ -66,16 +64,25 @@ public class ContactRequestsPresenter extends RootPresenter<ContactRequestsView>
                     return vms;
                 }))
                 .observeOn(mUiScheduler)
-                .subscribe(viewModels -> {
-                    getView().updateView(viewModels);
-                }, e -> Log.d(TAG, "updateList subscribe onError", e)));
+                .subscribe(viewModels -> getView().updateView(viewModels),
+                        e -> Log.d(TAG, "updateList subscribe onError", e)));
+    }
+
+    @Override
+    public void unbindView() {
+        mAccount.onComplete();
+        super.unbindView();
     }
 
     public void updateAccount(String accountId) {
-        mAccount.onNext(accountId);
+        if (accountId == null) {
+            mAccountService.getCurrentAccountSubject().subscribe(mAccount);
+        } else {
+            mAccount.onNext(mAccountService.getAccount(accountId));
+        }
     }
 
-    public void contactRequestClicked(String accountId, CallContact contactId) {
-        getView().goToConversation(accountId, contactId.getPrimaryNumber());
+    public void contactRequestClicked(String accountId, Uri uri) {
+        getView().goToConversation(accountId, uri);
     }
 }
