@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <!--About dialog-->
+  <!--RingActivity-->
+  <!--AB menus-->
+  <!--Sections-->
+  <string name="menu_item_contact_request">Peticiones de contacto</string>
+  <string name="menu_item_settings">Configuración</string>
+  <!--Dialing Fragment-->
+  <!--History Fragment-->
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <!--ContactList Fragment-->
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <!--Call Fragment-->
+  <string name="qr_code">Código QR</string>
+  <!--Text messages-->
+  <!--MediaPreferenceFragment-->
+  <!--Ringtone activity-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
+  <!--Conversation-->
+  <string name="conversation_action_history_clear">Limpiar historial</string>
+  <string name="conversation_action_block_this">Bloquear contacto</string>
+  <!--Contacts-->
+  <string name="account_create_title">Crear una cuenta de Jami</string>
+  <string name="prompt_hint_username">Nombre de usuario</string>
+  <string name="wizard_next">Seguir</string>
+  <string name="wizard_back">Atrás</string>
+  <string name="wizard_skip">Omitir</string>
+  <!--Account Summary-->
+  <string name="profile">Perfil</string>
+  <string name="account">Cuenta</string>
+  <!--Share fragment-->
+  <!--Pending contact requests-->
+  <string name="accept">Aceptar</string>
+  <string name="refuse">Rechazar</string>
+  <string name="block">Bloquear</string>
+  <!--Send contact requests-->
+  <string name="send_request_button">Enviar</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
+  <!--File Transfer-->
+  <string name="menu_delete">Borrar</string>
+  <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">Conversaciones</string>
+  <string name="navigation_item_contact_request">Peticiones de contacto</string>
+  <string name="navigation_item_account">Cuenta</string>
+  <!--TV-->
+  <string name="tv_dialog_send">Enviar</string>
+  <!--Wizard-->
+  <string name="wizard_password_switch">Cifrar cuenta con una contraseña</string>
+</resources>

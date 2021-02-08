@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="pref_category_video">Video</string>
+  <string name="pref_category_system">Sistema</string>
+  <string name="pref_clearHistory_title">Limpiar historial</string>
+  <string name="pref_delete_account_title">Borrar cuenta</string>
+  <!--Plugin-->
+  <string name="pref_plugins_title">Complementos</string>
+</resources>

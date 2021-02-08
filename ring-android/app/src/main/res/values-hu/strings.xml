@@ -23,6 +23,7 @@
   <string name="ringtones_by">Csengőhangok:</string>
   <!--RingActivity-->
   <string name="error_no_network">Nincs hálózati csatlakozás</string>
+  <string name="error_account_offline">A fiók kapcsolat nélküli állapotban van</string>
   <string name="error_mobile_network_available_but_disabled">Engedélyezze a mobilhálózat-elérést a beállítások képernyőn.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Szöveges üzenetek</string>

@@ -23,6 +23,7 @@
   <string name="ringtones_by">Sonerii de</string>
   <!--RingActivity-->
   <string name="error_no_network">Nicio legătură la rețea</string>
+  <string name="error_account_offline">Contul e deconectat</string>
   <string name="error_mobile_network_available_but_disabled">Te rugăm să permiți accesul la rețeaua de telefonie în Reglări.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Mesaje text</string>
@@ -272,7 +273,7 @@
   <string name="navigation_item_account">Cont</string>
   <string name="search_results_public_directory">Lista publică</string>
   <!--TV-->
-  <string name="tv_send_audio_dialog_message">Trimiți mesajul audio?</string>
+  <string name="tv_send_audio_dialog_message">Trimiți mesajul vocal?</string>
   <string name="tv_send_image_dialog_message">Trimiți poza?</string>
   <string name="tv_send_video_dialog_message">Trimiți un video?</string>
   <string name="tv_media_preview">Previzualizare</string>

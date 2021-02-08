@@ -85,6 +85,7 @@
   <!--Call Fragment-->
   <string name="you_txt_prefix">Siz:</string>
   <string name="action_call_hangup">Kapat</string>
+  <string name="action_call_maximize">En büyük</string>
   <string name="ongoing_call">Giden arama</string>
   <string name="hist_in_call">%1$s gelen arama</string>
   <string name="hist_out_call">%1$s giden arama</string>
@@ -273,10 +274,13 @@
   <string name="wizard_status_recommended">Önerilen</string>
   <string name="wizard_status_optional">İsteğe bağlı</string>
   <string name="wizard_status_required">Gerekli</string>
+  <string name="wizard_username_info">Hesabınız için bir kullanıcı adı seçin</string>
   <string name="wizard_username_button">Kullanıcı adı seç</string>
   <string name="wizard_password_info">Hesap parolası</string>
   <string name="wizard_password_button">Parola seçin</string>
   <string name="wizard_password_skip">Hesap oluştur</string>
+  <string name="wizard_password_switch">Hesabı parola ile şifrele</string>
+  <string name="wizard_profile_info">Profil yalnızca kişilerle paylaşılıyor</string>
   <string name="wizard_profile_button">Profili kaydet</string>
   <string name="wizard_profile_skip">Atla ve daha sonra yap</string>
   <string name="fab_path_choose">Başka bir dosya seç</string>

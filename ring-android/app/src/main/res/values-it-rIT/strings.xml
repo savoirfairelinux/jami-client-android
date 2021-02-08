@@ -23,6 +23,7 @@
   <string name="ringtones_by">Suoneria di</string>
   <!--RingActivity-->
   <string name="error_no_network">Assenza di connessione di rete</string>
+  <string name="error_account_offline">L\'account è offline</string>
   <string name="error_mobile_network_available_but_disabled">Per favore consenti l\'accesso alla rete mobile dalla schermata delle impostazioni</string>
   <!--AB menus-->
   <string name="ab_action_chat">Messaggiare</string>

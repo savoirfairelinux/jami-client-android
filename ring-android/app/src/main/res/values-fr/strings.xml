@@ -23,6 +23,7 @@
   <string name="ringtones_by">Sonneries d\'appels réalisées par </string>
   <!--RingActivity-->
   <string name="error_no_network">Pas d\'accès au réseau</string>
+  <string name="error_account_offline">Le compte est déconnecté</string>
   <string name="error_mobile_network_available_but_disabled">Autorisez l\'accès au réseau cellulaire dans les options de configuration s\'il vous plaît</string>
   <!--AB menus-->
   <string name="ab_action_chat">Messagerie texte</string>
