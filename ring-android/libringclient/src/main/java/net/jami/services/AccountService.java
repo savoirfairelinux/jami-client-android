@@ -1350,6 +1350,8 @@ public class AccountService {
                     .accountMessageStatusChanged(accountId, messageId, peer, status)
                     .subscribe(textMessageSubject::onNext, e -> Log.e(TAG, "Error updating message: " + e.getLocalizedMessage()));
         } else {
+            mHistoryService.saveMessageStatus(accountId, conversationId, messageId, peer, status);
+
             TextMessage msg = new TextMessage(peer, accountId, messageId, null, null);
             msg.setStatus(status);
             msg.setSwarmInfo(conversationId, messageId, null);
