@@ -56,6 +56,9 @@ public abstract class HistoryService {
     public abstract void setMessageRead(String accountId, Uri conversationUri, String lastId);
     public abstract String getLastMessageRead(String accountId, Uri conversationUri);
 
+    public abstract void saveMessageStatus(String accountId, String conversationUri, String contactUri, String message, int status);
+    public abstract String getMessageForStatus(String accountId, String conversationUri, String contactUri, int status);
+
     protected abstract void deleteAccountHistory(String accountId);
 
     public Scheduler getScheduler() {
