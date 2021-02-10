@@ -408,6 +408,9 @@ public class AccountService {
                             contact = account.getContactFromCache(uri);
                             conversation.addContact(contact);
                         }
+                        String lastSent = mHistoryService.getMessageForStatus(accountId, conversationId, uri.getRawRingId(), 2);
+                        String lastDisplayed = mHistoryService.getMessageForStatus(accountId, conversationId, uri.getRawRingId(), 3);
+                        conversation.setLastMessageRead(contact, lastSent, lastDisplayed);
                     }
                     conversation.setLastElementLoaded(Completable.defer(() -> loadMore(conversation, 2).ignoreElement()).cache());
                     account.conversationStarted(conversation);
@@ -1375,6 +1378,8 @@ public class AccountService {
                     .accountMessageStatusChanged(accountId, messageId, peer, newStatus)
                     .subscribe(messageSubject::onNext, e -> Log.e(TAG, "Error updating message: " + e.getLocalizedMessage()));
         } else {
+            mHistoryService.saveMessageStatus(accountId, conversationId, messageId, peer, status);
+
             Interaction msg = new Interaction(accountId);
             msg.setStatus(newStatus);
             msg.setSwarmInfo(conversationId, messageId, null);
