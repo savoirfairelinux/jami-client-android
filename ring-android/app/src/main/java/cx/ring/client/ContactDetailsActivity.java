@@ -26,47 +26,50 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
+import android.widget.Toast;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.ViewCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
-import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
-import android.widget.Toast;
+import net.jami.facades.ConversationFacade;
+import net.jami.model.Call;
+import net.jami.model.Conference;
+import net.jami.model.Contact;
+import net.jami.model.Conversation;
+import net.jami.model.Uri;
+import net.jami.services.AccountService;
+import net.jami.services.NotificationService;
 
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import androidx.core.view.ViewCompat;
-import androidx.recyclerview.widget.RecyclerView;
-
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
+import cx.ring.contacts.AvatarFactory;
 import cx.ring.databinding.ActivityContactDetailsBinding;
 import cx.ring.databinding.ItemContactActionBinding;
-import net.jami.facades.ConversationFacade;
 import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.ConversationFragment;
-import net.jami.model.Contact;
-import net.jami.model.Conference;
-import net.jami.model.Conversation;
-import net.jami.model.Call;
-import net.jami.model.Uri;
-import net.jami.services.AccountService;
-import net.jami.services.NotificationService;
+import cx.ring.services.SharedPreferencesServiceImpl;
 import cx.ring.utils.ConversationPath;
 import cx.ring.views.AvatarDrawable;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -92,6 +95,8 @@ public class ContactDetailsActivity extends AppCompatActivity {
     static class ContactAction {
         @DrawableRes
         final int icon;
+        final Single<Drawable> drawable;
+
         final CharSequence title;
         final IContactAction callback;
 
@@ -103,10 +108,19 @@ public class ContactDetailsActivity extends AppCompatActivity {
             iconTint = tint;
             title = t;
             callback = cb;
+            drawable = null;
         }
 
         ContactAction(@DrawableRes int i, CharSequence t, IContactAction cb) {
             icon = i;
+            iconTint = Color.BLACK;
+            title = t;
+            callback = cb;
+            drawable = null;
+        }
+        ContactAction(Single<Drawable> d, CharSequence t, IContactAction cb) {
+            drawable = d;
+            icon = 0;
             iconTint = Color.BLACK;
             title = t;
             callback = cb;
@@ -124,10 +138,12 @@ public class ContactDetailsActivity extends AppCompatActivity {
     static class ContactActionView extends RecyclerView.ViewHolder {
         final ItemContactActionBinding binding;
         IContactAction callback;
+        final CompositeDisposable disposable = new CompositeDisposable();
 
-        ContactActionView(@NonNull ItemContactActionBinding b) {
+        ContactActionView(@NonNull ItemContactActionBinding b, CompositeDisposable parentDisposable) {
             super(b.getRoot());
             binding = b;
+            parentDisposable.add(disposable);
             itemView.setOnClickListener(view -> {
                 try {
                     if (callback != null)
@@ -141,22 +157,32 @@ public class ContactDetailsActivity extends AppCompatActivity {
 
     private static class ContactActionAdapter extends RecyclerView.Adapter<ContactActionView> {
         private final ArrayList<ContactAction> actions = new ArrayList<>();
+        private final CompositeDisposable disposable;
+
+        private ContactActionAdapter(CompositeDisposable disposable) {
+            this.disposable = disposable;
+        }
 
         @NonNull
         @Override
         public ContactActionView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
             ItemContactActionBinding itemBinding = ItemContactActionBinding.inflate(layoutInflater, parent, false);
-            return new ContactActionView(itemBinding);
+            return new ContactActionView(itemBinding, disposable);
         }
 
         @Override
         public void onBindViewHolder(@NonNull ContactActionView holder, int position) {
             ContactAction action = actions.get(position);
-            holder.binding.actionIcon.setBackgroundResource(action.icon);
-            holder.binding.actionIcon.setText(action.iconSymbol);
-            if (action.iconTint != Color.BLACK)
-                ViewCompat.setBackgroundTintList(holder.binding.actionIcon, ColorStateList.valueOf(action.iconTint));
+            holder.disposable.clear();
+            if (action.drawable != null) {
+                holder.disposable.add(action.drawable.subscribe(holder.binding.actionIcon::setBackground));
+            } else {
+                holder.binding.actionIcon.setBackgroundResource(action.icon);
+                holder.binding.actionIcon.setText(action.iconSymbol);
+                if (action.iconTint != Color.BLACK)
+                    ViewCompat.setBackgroundTintList(holder.binding.actionIcon, ColorStateList.valueOf(action.iconTint));
+            }
             holder.binding.actionTitle.setText(action.title);
             holder.callback = action.callback;
         }
@@ -167,8 +193,8 @@ public class ContactDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private final ContactActionAdapter adapter = new ContactActionAdapter();
     private final CompositeDisposable mDisposableBag = new CompositeDisposable();
+    private final ContactActionAdapter adapter = new ContactActionAdapter(mDisposableBag);
 
     private ContactAction colorAction;
     private ContactAction symbolAction;
@@ -204,7 +230,7 @@ public class ContactDetailsActivity extends AppCompatActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(conversation -> {
                     mConversation = conversation;
-                    mPreferences = getSharedPreferences(conversation.getAccountId() + "_" + conversation.getUri().getUri(), Context.MODE_PRIVATE);
+                    mPreferences = SharedPreferencesServiceImpl.getConversationPreferences(this, conversation.getAccountId(), conversation.getUri());
                     binding.contactImage.setImageDrawable(
                             new AvatarDrawable.Builder()
                                     .withConversation(conversation)
@@ -220,10 +246,11 @@ public class ContactDetailsActivity extends AppCompatActivity {
 
                     @StringRes int infoString = conversation.isSwarm()
                             ? (conversation.getMode() == Conversation.Mode.OneToOne
-                                ? R.string.conversation_type_private
-                                : R.string.conversation_type_group)
+                            ? R.string.conversation_type_private
+                            : R.string.conversation_type_group)
                             : R.string.conversation_type_contact;
-                    adapter.actions.add(new ContactAction(R.drawable.baseline_info_24, getText(infoString), () -> {}));
+                    adapter.actions.add(new ContactAction(R.drawable.baseline_info_24, getText(infoString), () -> {
+                    }));
 
                     colorAction = new ContactAction(R.drawable.item_color_background, 0, getText(R.string.conversation_preference_color), () -> {
                         ColorChooserBottomSheet frag = new ColorChooserBottomSheet();
@@ -287,7 +314,7 @@ public class ContactDetailsActivity extends AppCompatActivity {
                                         .create()
                                         .show()));
                     }
-                    contactAction = new ContactAction(R.drawable.baseline_person_24, conversation.getUriTitle(), () -> {
+                    contactAction = new ContactAction(conversation.isSwarm() ? R.drawable.baseline_group_24 : R.drawable.baseline_person_24, conversation.getUriTitle(), () -> {
                         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                         if (clipboard != null) {
                             clipboard.setPrimaryClip(ClipData.newPlainText(getText(R.string.clip_contact_uri), path.getConversationId()));
@@ -295,6 +322,22 @@ public class ContactDetailsActivity extends AppCompatActivity {
                         }
                     });
                     adapter.actions.add(contactAction);
+
+                    if (conversation.isSwarm()) {
+                        for (Contact contact : conversation.getContacts())
+                            if (contact.isUser())
+                                adapter.actions.add(new ContactAction(AvatarDrawable.load(this, mAccountService.getAccount(conversation.getAccountId()))
+                                        .map(a -> a), getString(R.string.conversation_info_contact_you), () -> {}));
+                            else
+                                adapter.actions.add(new ContactAction(AvatarFactory.getAvatar(this, contact, false), contact.getDisplayName(), () -> {
+                                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                                    if (clipboard != null) {
+                                        String toCopy = contact.getUri().getRawUriString();
+                                        clipboard.setPrimaryClip(ClipData.newPlainText(getText(R.string.clip_contact_uri), toCopy));
+                                        Snackbar.make(binding.getRoot(), getString(R.string.conversation_action_copied_peer_number_clipboard, toCopy), Snackbar.LENGTH_LONG).show();
+                                    }
+                                }));
+                    }
                     binding.contactActionList.setAdapter(adapter);
                 }));
     }

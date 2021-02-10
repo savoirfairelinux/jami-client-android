@@ -201,7 +201,8 @@ public class AvatarDrawable extends Drawable {
         }
         public Builder withConversation(Conversation conversation) {
             return conversation.isSwarm()
-                    ? withContacts(conversation.getContacts()).setGroup()
+                    ? withContacts(conversation.getContacts())
+                        .setGroup()
                     : withContact(conversation.getContact());
         }
 
