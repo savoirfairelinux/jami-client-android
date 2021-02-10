@@ -137,6 +137,20 @@ public class HistoryServiceImpl extends net.jami.services.HistoryService {
         return preferences.getString(KEY_PREFERENCE_CONVERSATION_LAST_READ, null);
     }
 
+    @Override
+    public void saveMessageStatus(String accountId, String conversationUri, String contactUri, String messageId, int status) {
+        SharedPreferences preferences = mContext.getSharedPreferences(accountId + "_" + conversationUri, Context.MODE_PRIVATE);
+        String key = contactUri + "_" + status;
+        preferences.edit().putString(key, messageId).apply();
+    }
+
+    @Override
+    public String getMessageForStatus(String accountId, String conversationUri, String contactUri, int status) {
+        SharedPreferences preferences = mContext.getSharedPreferences(accountId + "_" + conversationUri, Context.MODE_PRIVATE);
+        String key = contactUri + "_" + status;
+        return preferences.getString(key, null);
+    }
+
     /**
      * Deletes a file and all its children recursively
      *
