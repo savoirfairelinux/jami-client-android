@@ -22,12 +22,12 @@ package cx.ring.smartlist;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.model.Interaction;
 import cx.ring.model.Uri;
-import cx.ring.services.AccountService;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
@@ -47,7 +47,7 @@ public class SmartListViewModel
     private boolean hasOngoingCall;
 
     private final boolean showPresence;
-    //private boolean isOnline = false;
+    private boolean isOnline = false;
     private boolean isChecked = false;
     private final Interaction lastEvent;
 
@@ -61,7 +61,7 @@ public class SmartListViewModel
     public SmartListViewModel(String accountId, CallContact contact, Interaction lastEvent) {
         this.accountId = accountId;
         this.contact = Collections.singletonList(contact);
-        this.uri = contact.getPrimaryUri();
+        this.uri = contact.getUri();
         uuid = uri.getRawUriString();
         this.contactName = contact.getDisplayName();
         hasUnreadTextMessage = (lastEvent != null) && !lastEvent.isRead();
@@ -74,14 +74,14 @@ public class SmartListViewModel
     public SmartListViewModel(String accountId, CallContact contact, String id, Interaction lastEvent) {
         this.accountId = accountId;
         this.contact = Collections.singletonList(contact);
-        uri = contact.getPrimaryUri();
+        uri = contact.getUri();
         this.uuid = id;
         this.contactName = contact.getDisplayName();
         hasUnreadTextMessage = (lastEvent != null) && !lastEvent.isRead();
         this.hasOngoingCall = false;
         this.lastEvent = lastEvent;
         showPresence = true;
-        //isOnline = contact.isOnline();
+        isOnline = contact.isOnline();
         title = Title.None;
     }
     public SmartListViewModel(Conversation conversation, List<CallContact> contacts, boolean presence) {
@@ -94,12 +94,20 @@ public class SmartListViewModel
         hasUnreadTextMessage = (lastEvent != null) && !lastEvent.isRead();
         this.hasOngoingCall = false;
         this.lastEvent = lastEvent;
+        for (CallContact contact : contacts) {
+            if (contact.isUser())
+                continue;
+            if (contact.isOnline()) {
+                isOnline = true;
+                break;
+            }
+        }
         //isOnline = contact.isOnline();
         showPresence = presence;
         title = Title.None;
     }
     public SmartListViewModel(Conversation conversation, boolean presence) {
-        this(conversation, Collections.singletonList(conversation.getContact()), presence);
+        this(conversation, conversation.getContacts(), presence);
     }
 
     private SmartListViewModel(Title title) {
@@ -118,8 +126,8 @@ public class SmartListViewModel
         return uri;
     }
 
-    public CallContact getContact() {
-        return contact == null ? null : contact.get(0);
+    public List<CallContact> getContact() {
+        return contact;
     }
 
     public String getContactName() {
@@ -177,8 +185,8 @@ public class SmartListViewModel
         return other.getHeaderTitle() == getHeaderTitle()
                 && (getHeaderTitle() != Title.None
                 || (contact == other.contact
-                && contactName.equals(other.contactName)
-                //&& isOnline == other.isOnline
+                && Objects.equals(contactName, other.contactName)
+                && isOnline == other.isOnline
                 && lastEvent == other.lastEvent
                 && hasOngoingCall == other.hasOngoingCall
                 && hasUnreadTextMessage == other.hasUnreadTextMessage));
