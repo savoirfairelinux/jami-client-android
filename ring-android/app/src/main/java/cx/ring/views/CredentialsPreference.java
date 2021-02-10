@@ -27,7 +27,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import cx.ring.R;
-import cx.ring.model.AccountCredentials;
+import net.jami.model.AccountCredentials;
 
 public class CredentialsPreference extends DialogPreference {
     private AccountCredentials creds;
