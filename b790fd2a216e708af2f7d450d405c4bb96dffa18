@@ -22,6 +22,30 @@
       "revId": "b790fd2a216e708af2f7d450d405c4bb96dffa18",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "832b8bc1_f4df0de3",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 859
+      },
+      "writtenOn": "2021-02-10T18:43:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31aa2d43_e3109480",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 57
+      },
+      "revId": "b790fd2a216e708af2f7d450d405c4bb96dffa18",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
