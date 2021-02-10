@@ -37,7 +37,6 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -45,7 +44,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -55,20 +53,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
-import cx.ring.daemon.Ringservice;
-import cx.ring.daemon.RingserviceJNI;
 import cx.ring.databinding.ActivityContactDetailsBinding;
 import cx.ring.databinding.ItemContactActionBinding;
-import cx.ring.facades.ConversationFacade;
+import net.jami.facades.ConversationFacade;
 import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.ConversationFragment;
-import cx.ring.model.CallContact;
-import cx.ring.model.Conference;
-import cx.ring.model.Conversation;
-import cx.ring.model.SipCall;
-import cx.ring.model.Uri;
-import cx.ring.services.AccountService;
-import cx.ring.services.NotificationService;
+import net.jami.model.CallContact;
+import net.jami.model.Conference;
+import net.jami.model.Conversation;
+import net.jami.model.SipCall;
+import net.jami.model.Uri;
+import net.jami.services.AccountService;
+import net.jami.services.NotificationService;
 import cx.ring.utils.ConversationPath;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
