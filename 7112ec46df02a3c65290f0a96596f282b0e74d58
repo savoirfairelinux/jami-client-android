@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5ed3d5cb_9afedfc5",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/call/CallPresenter.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 859
+      },
+      "writtenOn": "2021-02-10T18:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b37f5a3_cc4d4a4d",
+      "range": {
+        "startLine": 322,
+        "startChar": 12,
+        "endLine": 322,
+        "endChar": 23
+      },
+      "revId": "7112ec46df02a3c65290f0a96596f282b0e74d58",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03e692ad_0cfa6294",
         "filename": "ring-android/libringclient/src/main/java/cx/ring/call/CallPresenter.java",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2021-02-08T20:37:52Z",
       "side": 1,
       "message": "No call management logic in presenter. Should be in CallService or ConversationFacade. Also, unrelated to plugins.",
+      "range": {
+        "startLine": 478,
+        "startChar": 27,
+        "endLine": 498,
+        "endChar": 0
+      },
+      "revId": "7112ec46df02a3c65290f0a96596f282b0e74d58",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c03345d_6c508fc6",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/call/CallPresenter.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 859
+      },
+      "writtenOn": "2021-02-10T18:53:36Z",
+      "side": 1,
+      "message": "Logic moved to CallService",
+      "parentUuid": "03e692ad_0cfa6294",
       "range": {
         "startLine": 478,
         "startChar": 27,
