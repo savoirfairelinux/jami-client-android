@@ -60,7 +60,6 @@ import cx.ring.utils.Tuple;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 
-import static cx.ring.daemon.Ringservice.getCallMediaHandlerStatus;
 import static cx.ring.daemon.RingserviceJNI.toggleCallMediaHandler;
 
 public class HardwareServiceImpl extends HardwareService implements AudioManager.OnAudioFocusChangeListener, BluetoothWrapper.BluetoothChangeListener {
