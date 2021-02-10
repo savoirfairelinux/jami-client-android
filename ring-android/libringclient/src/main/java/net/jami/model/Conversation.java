@@ -73,6 +73,9 @@ public class Conversation extends ConversationHistory {
     private String lastRead = null;
     private final Mode mMode;
 
+    private final Map<Contact, String> mLastSent = new HashMap<>(16);
+    private final Map<Contact, String> mLastDisplayed = new HashMap<>(16);
+
     // runtime flag set to true if the user is currently viewing this conversation
     private boolean mVisible = false;
 
@@ -208,6 +211,24 @@ public class Conversation extends ConversationHistory {
 
     public void setLastMessageRead(String lastMessageRead) {
         lastRead = lastMessageRead;
+    }
+    public void setLastMessageRead(Contact contact, String lastMessageSent, String lastMessageDisplayed) {
+        if (!StringUtils.isEmpty(lastMessageSent)) {
+            mLastSent.put(contact, lastMessageSent);
+            Interaction i = mMessages.get(lastMessageSent);
+            if (i != null) {
+                i.setStatus(Interaction.InteractionStatus.SUCCESS);
+                updatedElementSubject.onNext(new Tuple<>(i, ElementStatus.UPDATE));
+            }
+        }
+        if (!StringUtils.isEmpty(lastMessageDisplayed)) {
+            mLastDisplayed.put(contact, lastMessageDisplayed);
+            Interaction i = mMessages.get(lastMessageDisplayed);
+            if (i != null) {
+                i.setStatus(Interaction.InteractionStatus.DISPLAYED);
+                updatedElementSubject.onNext(new Tuple<>(i, ElementStatus.UPDATE));
+            }
+        }
     }
 
     public String getLastRead() {
