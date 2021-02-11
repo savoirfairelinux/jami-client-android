@@ -135,12 +135,19 @@ public class Account {
         Conversation conversation = swarmConversations.remove(conversationId);
         if (conversation != null) {
             synchronized (conversations) {
-                conversations.remove(conversation.getUri().getUri());
+                Conversation c = conversations.remove(conversation.getUri().getUri());
+                try {
+                    Contact contact = c.getContact();
+                    if (contact.getConversationUri().blockingFirst().equals(c.getUri()))  {
+                        contact.setConversationUri(c.getUri());
+                        conversationStarted(getByUri(c.getUri()));
+                    }
+                } catch (Exception ignored) {
+                }
             }
             conversationChanged();
         }
     }
-
 
     public static class ContactLocation {
         public double latitude;
