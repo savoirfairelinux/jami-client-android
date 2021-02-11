@@ -19,6 +19,7 @@
 package cx.ring.settings;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,12 +41,11 @@ import cx.ring.account.JamiAccountSummaryFragment;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.databinding.FragAccountBinding;
-import net.jami.model.Account;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+
 import net.jami.services.AccountService;
 
-/**
- * TODO: improvements : handle multiples permissions for feature.
- */
 public class AccountFragment extends Fragment implements ViewTreeObserver.OnScrollChangedListener {
 
     private static final int SCROLL_DIRECTION_UP = -1;
@@ -59,7 +59,7 @@ public class AccountFragment extends Fragment implements ViewTreeObserver.OnScro
     }
 
     private FragAccountBinding mBinding;
-    private Account mAccount;
+    private final CompositeDisposable mDisposable = new CompositeDisposable();
 
     @Inject
     AccountService mAccountService;
@@ -76,38 +76,39 @@ public class AccountFragment extends Fragment implements ViewTreeObserver.OnScro
     public void onDestroyView() {
         super.onDestroyView();
         mBinding = null;
+        mDisposable.clear();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        super.onViewCreated(view, savedInstanceState);
-
-        String accountId = getArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY);
-        mAccount = mAccountService.getAccount(accountId);
-
-        mBinding.settingsChangePassword.setVisibility(mAccount.hasManager() ? View.GONE : View.VISIBLE);
-        mBinding.settingsExport.setVisibility(mAccount.hasManager() ? View.GONE : View.VISIBLE);
-        mBinding.systemChangePasswordTitle.setText(mAccount.hasPassword()? R.string.account_password_change : R.string.account_password_set);
         mBinding.scrollview.getViewTreeObserver().addOnScrollChangedListener(this);
         mBinding.settingsChangePassword.setOnClickListener(v -> ((JamiAccountSummaryFragment) getParentFragment()).onPasswordChangeAsked());
         mBinding.settingsExport.setOnClickListener(v -> ((JamiAccountSummaryFragment) getParentFragment()).onClickExport());
-        mBinding.settingsDeleteAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog deleteDialog = createDeleteDialog();
-                deleteDialog.show();
-            }
-        });
-        mBinding.settingsBlackList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                JamiAccountSummaryFragment summaryFragment = ((JamiAccountSummaryFragment) AccountFragment.this.getParentFragment());
-                if (summaryFragment != null) {
-                    summaryFragment.goToBlackList(accountId);
-                }
-            }
-        });
+
+        String accountId = getArguments() != null ? getArguments().getString(AccountEditionFragment.ACCOUNT_ID_KEY) : null;
+        mDisposable.add(mAccountService.getAccountSingle(accountId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(account -> {
+                    mBinding.settingsChangePassword.setVisibility(account.hasManager() ? View.GONE : View.VISIBLE);
+                    mBinding.settingsExport.setVisibility(account.hasManager() ? View.GONE : View.VISIBLE);
+                    mBinding.systemChangePasswordTitle.setText(account.hasPassword()? R.string.account_password_change : R.string.account_password_set);
+                    mBinding.settingsDeleteAccount.setOnClickListener(v -> {
+                        AlertDialog deleteDialog = createDeleteDialog(account.getAccountID());
+                        deleteDialog.show();
+                    });
+                    mBinding.settingsBlackList.setOnClickListener(v -> {
+                        JamiAccountSummaryFragment summaryFragment = ((JamiAccountSummaryFragment) AccountFragment.this.getParentFragment());
+                        if (summaryFragment != null) {
+                            summaryFragment.goToBlackList(account.getAccountID());
+                        }
+                    });
+                }, e -> {
+                    JamiAccountSummaryFragment summaryFragment = ((JamiAccountSummaryFragment) AccountFragment.this.getParentFragment());
+                    if (summaryFragment != null) {
+                        summaryFragment.popBackStack();
+                    }
+                }));
     }
 
     @Override
@@ -120,11 +121,11 @@ public class AccountFragment extends Fragment implements ViewTreeObserver.OnScro
     }
 
     @NonNull
-    private AlertDialog createDeleteDialog() {
+    private AlertDialog createDeleteDialog(String accountId) {
         AlertDialog alertDialog = new MaterialAlertDialogBuilder(requireContext())
                 .setMessage(R.string.account_delete_dialog_message)
                 .setTitle(R.string.account_delete_dialog_title)
-                .setPositiveButton(R.string.menu_delete, (dialog, whichButton) -> mAccountService.removeAccount(mAccount.getAccountID()))
+                .setPositiveButton(R.string.menu_delete, (dialog, whichButton) -> mAccountService.removeAccount(accountId))
                 .setNegativeButton(android.R.string.cancel, null)
                 .create();
         Activity activity = getActivity();

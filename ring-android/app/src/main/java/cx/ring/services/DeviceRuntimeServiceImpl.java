@@ -28,8 +28,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.provider.ContactsContract;
+import android.system.ErrnoException;
+import android.system.Os;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
@@ -46,6 +47,7 @@ import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.NetworkUtils;
 
 import net.jami.services.DeviceRuntimeService;
+import net.jami.utils.FileUtils;
 import net.jami.utils.StringUtils;
 
 public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
@@ -98,6 +100,11 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
     @Override
     public File getTemporaryPath(String conversationId, String name) {
         return AndroidFileUtils.getTempPath(mContext, conversationId, name);
+    }
+
+    @Override
+    public File getConversationDir(String conversationId) {
+        return AndroidFileUtils.getConversationDir(mContext, conversationId);
     }
 
     @Override
@@ -177,6 +184,17 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
             mProfileCursor.close();
         }
         return null;
+    }
+
+    @Override
+    public boolean hardLinkOrCopy(File source, File dest) {
+        try {
+            Os.link(source.getAbsolutePath(), dest.getAbsolutePath());
+        } catch (ErrnoException e) {
+            Log.w(TAG, "Can't create hardlink, copying instead", e);
+            return FileUtils.copyFile(source, dest);
+        }
+        return true;
     }
 
     private boolean checkPermission(String permission) {

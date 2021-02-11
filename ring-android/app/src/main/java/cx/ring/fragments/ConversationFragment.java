@@ -772,7 +772,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         try {
             fileUri = ContentUriHandler.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path);
         } catch (IllegalArgumentException e) {
-            Log.e("File Selector", "The selected file can't be shared: " + path.getName());
+            Log.e(TAG, "The selected file can't be shared: " + path.getName());
         }
         if (fileUri != null) {
             Intent sendIntent = new Intent();
@@ -928,7 +928,11 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(avatar -> {
                         mParticipantAvatars.put(contactKey, (AvatarDrawable) avatar);
-                        mSmallParticipantAvatars.put(contactKey, new AvatarDrawable((AvatarDrawable) avatar));
+                        mSmallParticipantAvatars.put(contactKey, new AvatarDrawable.Builder()
+                                .withContact(contact)
+                                .withCircleCrop(true)
+                                .withPresence(false)
+                                .build(requireContext()));
                         mAdapter.setPhoto();
                     }));
         }
