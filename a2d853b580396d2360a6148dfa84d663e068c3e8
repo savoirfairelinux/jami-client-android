@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "238c9e3e_ee9e5d5d",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1208,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2021-02-11T19:10:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "270e60bc_0246404c",
+      "range": {
+        "startLine": 1206,
+        "startChar": 28,
+        "endLine": 1208,
+        "endChar": 123
+      },
+      "revId": "a2d853b580396d2360a6148dfa84d663e068c3e8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a177aa5_946cda86",
         "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "a2d853b580396d2360a6148dfa84d663e068c3e8",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0899a6b_b891a54d",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1232,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2021-02-11T19:10:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a177aa5_946cda86",
+      "range": {
+        "startLine": 1231,
+        "startChar": 0,
+        "endLine": 1232,
+        "endChar": 25
+      },
+      "revId": "a2d853b580396d2360a6148dfa84d663e068c3e8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
