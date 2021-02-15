@@ -23,6 +23,7 @@
   <string name="ringtones_by">Sonerii de</string>
   <!--RingActivity-->
   <string name="error_no_network">Nicio legătură la rețea</string>
+  <string name="error_account_offline">Contul e deconectat</string>
   <string name="error_mobile_network_available_but_disabled">Te rugăm să permiți accesul la rețeaua de telefonie în Reglări.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Mesaje text</string>
@@ -69,7 +70,7 @@
   <string name="notif_channel_background_service">Serviciu ascuns</string>
   <string name="notif_channel_background_service_descr">Permite mereu primirea de apeluri și mesaje.</string>
   <string name="notif_group_calls">Apeluri</string>
-  <string name="notif_background_service">Jami funcționează acum ascuns</string>
+  <string name="notif_background_service">Jami funcționează ascuns acum</string>
   <string name="notif_mark_as_read">Bifează ca citit</string>
   <string name="notif_dismiss">Ignoră</string>
   <string name="notif_reply">Răspunde</string>
@@ -93,7 +94,7 @@
   <string name="ongoing_call">Apel în curs</string>
   <string name="hist_in_call">Apel primit de la %1$s</string>
   <string name="hist_out_call">Apel efectuat de %1$s</string>
-  <string name="start_error_title">Jami nu se deschide !</string>
+  <string name="start_error_title">Jami nu se deschide!</string>
   <string name="start_error_mic_required">Jami trebuie să folosească microfonul ca să funcționeze.</string>
   <string name="action_call_accept">Răspunde</string>
   <string name="action_call_hold_accept">Așteptare și răspunde la apel</string>
@@ -115,6 +116,7 @@
   <string name="qr_code">Cod QR</string>
   <string name="ab_action_flipcamera">Schimbă videocamera</string>
   <string name="ab_action_hidepreview">Ascunde previzualizarea</string>
+  <string name="remote_recording">%s înregistrează…</string>
   <!--Text messages-->
   <string name="send_message">Trimite mesajul</string>
   <string name="message_sending">Se trimite mesajul...</string>
@@ -272,7 +274,7 @@
   <string name="navigation_item_account">Cont</string>
   <string name="search_results_public_directory">Lista publică</string>
   <!--TV-->
-  <string name="tv_send_audio_dialog_message">Trimiți mesajul audio?</string>
+  <string name="tv_send_audio_dialog_message">Trimiți mesajul vocal?</string>
   <string name="tv_send_image_dialog_message">Trimiți poza?</string>
   <string name="tv_send_video_dialog_message">Trimiți un video?</string>
   <string name="tv_media_preview">Previzualizare</string>
@@ -292,7 +294,7 @@
   <string name="wizard_username_button">Alege Numele de Utilizator</string>
   <string name="wizard_username_skip">Saltă alegerea numelui de utilizator</string>
   <string name="wizard_password_info">Parola contului</string>
-  <string name="wizard_password_placeholder">Alege o parolă pentru a cifra contul tău pe acest aparat</string>
+  <string name="wizard_password_placeholder">Alege o parolă pentru a cifra contul tău în acest aparat</string>
   <string name="wizard_password_button">Alege parola</string>
   <string name="wizard_password_skip">Creează contul</string>
   <string name="wizard_password_switch">Cifrează contul cu parolă</string>
