@@ -21,7 +21,6 @@
         <item name="colorOnError">@color/colorOnError</item>
 
         <item name="colorPrimaryDark">@color/background</item>
-        <!--<item name="android:windowContentTransitions">true</item>-->
 
         <item name="textInputStyle">@style/Widget.Jami.TextInputLayout</item>
 

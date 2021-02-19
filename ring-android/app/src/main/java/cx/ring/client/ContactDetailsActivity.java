@@ -29,7 +29,9 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -38,12 +40,12 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import net.jami.facades.ConversationFacade;
@@ -269,7 +271,6 @@ public class ContactDetailsActivity extends AppCompatActivity {
 
     private ContactAction colorAction;
     private ContactAction symbolAction;
-    private ContactAction contactAction;
     private int colorActionPosition;
     private int symbolActionPosition;
 
@@ -285,16 +286,18 @@ public class ContactDetailsActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         JamiApplication.getInstance().getInjectionComponent().inject(this);
 
-        CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.toolbar_layout);
-        collapsingToolbarLayout.setTitle("");
+        //CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.toolbar_layout);
+        //collapsingToolbarLayout.setTitle("");
 
-        setSupportActionBar(findViewById(R.id.toolbar));
+        setSupportActionBar(binding.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        FloatingActionButton fab = findViewById(R.id.sendMessage);
-        fab.setOnClickListener(view -> goToConversationActivity(mConversation.getAccountId(), mConversation.getUri()));
+        //FloatingActionButton fab = binding.sendMessage;
+        //fab.setOnClickListener(view -> goToConversationActivity(mConversation.getAccountId(), mConversation.getUri()));
 
-        colorActionPosition = 1;
-        symbolActionPosition = 2;
+        colorActionPosition = 0;
+        symbolActionPosition = 1;
 
         mDisposableBag.add(mConversationFacade
                 .startConversation(path.getAccountId(), path.getConversationUri())
@@ -306,7 +309,7 @@ public class ContactDetailsActivity extends AppCompatActivity {
                             new AvatarDrawable.Builder()
                                     .withConversation(conversation)
                                     .withPresence(false)
-                                    .withCircleCrop(false)
+                                    .withCircleCrop(true)
                                     .build(this)
                     );
 
@@ -320,15 +323,21 @@ public class ContactDetailsActivity extends AppCompatActivity {
                             ? R.string.conversation_type_private
                             : R.string.conversation_type_group)
                             : R.string.conversation_type_contact;
-                    adapter.actions.add(new ContactAction(R.drawable.baseline_info_24, getText(infoString), () -> {
-                    }));
+                    @DrawableRes int infoIcon = conversation.isSwarm()
+                            ? (conversation.getMode() == Conversation.Mode.OneToOne
+                            ? R.drawable.baseline_person_24
+                            : R.drawable.baseline_group_24)
+                            : R.drawable.baseline_person_24;
+                    //adapter.actions.add(new ContactAction(R.drawable.baseline_info_24, getText(infoString), () -> {}));
+                    binding.conversationType.setText(infoString);
+                    //binding.conversationType.setCompoundDrawables(getDrawable(infoIcon), null, null, null);
 
                     colorAction = new ContactAction(R.drawable.item_color_background, 0, getText(R.string.conversation_preference_color), () -> {
                         ColorChooserBottomSheet frag = new ColorChooserBottomSheet();
                         frag.setCallback(color -> {
-                            collapsingToolbarLayout.setBackgroundColor(color);
+                            /*collapsingToolbarLayout.setBackgroundColor(color);
                             collapsingToolbarLayout.setContentScrimColor(color);
-                            collapsingToolbarLayout.setStatusBarScrimColor(color);
+                            collapsingToolbarLayout.setStatusBarScrimColor(color);*/
                             colorAction.setIconTint(color);
                             adapter.notifyItemChanged(colorActionPosition);
                             mPreferences.edit().putInt(ConversationFragment.KEY_PREFERENCE_CONVERSATION_COLOR, color).apply();
@@ -337,10 +346,10 @@ public class ContactDetailsActivity extends AppCompatActivity {
                     });
                     int color = mPreferences.getInt(ConversationFragment.KEY_PREFERENCE_CONVERSATION_COLOR, getResources().getColor(R.color.color_primary_light));
                     colorAction.setIconTint(color);
-                    collapsingToolbarLayout.setBackgroundColor(color);
+                    /*collapsingToolbarLayout.setBackgroundColor(color);
                     collapsingToolbarLayout.setTitle(conversation.getTitle());
                     collapsingToolbarLayout.setContentScrimColor(color);
-                    collapsingToolbarLayout.setStatusBarScrimColor(color);
+                    collapsingToolbarLayout.setStatusBarScrimColor(color);*/
                     adapter.actions.add(colorAction);
 
                     symbolAction = new ContactAction(0, getText(R.string.conversation_preference_emoji), () -> {
@@ -355,6 +364,7 @@ public class ContactDetailsActivity extends AppCompatActivity {
                     symbolAction.setSymbol(mPreferences.getString(ConversationFragment.KEY_PREFERENCE_CONVERSATION_SYMBOL, getResources().getString(R.string.conversation_default_emoji)));
                     adapter.actions.add(symbolAction);
 
+                    String conversationUri = conversation.isSwarm() ? conversation.getUri().toString() : conversation.getUriTitle();
                     if (mConversation.getContacts().size() <= 2) {
                         Contact contact = mConversation.getContact();
                         adapter.actions.add(new ContactAction(R.drawable.baseline_call_24, getText(R.string.ab_action_audio_call), () ->
@@ -374,40 +384,45 @@ public class ContactDetailsActivity extends AppCompatActivity {
                                         .show()));
                         adapter.actions.add(new ContactAction(R.drawable.baseline_block_24, getText(R.string.conversation_action_block_this), () ->
                                 new MaterialAlertDialogBuilder(ContactDetailsActivity.this)
-                                        .setTitle(getString(R.string.block_contact_dialog_title, contactAction.title))
-                                        .setMessage(getString(R.string.block_contact_dialog_message, contactAction.title))
+                                        .setTitle(getString(R.string.block_contact_dialog_title, conversationUri))
+                                        .setMessage(getString(R.string.block_contact_dialog_message, conversationUri))
                                         .setPositiveButton(R.string.conversation_action_block_this, (b, i) -> {
                                             mAccountService.removeContact(mConversation.getAccountId(), contact.getUri().getRawRingId(), true);
-                                            Toast.makeText(getApplicationContext(), getString(R.string.block_contact_completed, contactAction.title), Toast.LENGTH_LONG).show();
+                                            Toast.makeText(getApplicationContext(), getString(R.string.block_contact_completed, conversationUri), Toast.LENGTH_LONG).show();
                                             finish();
                                         })
                                         .setNegativeButton(android.R.string.cancel, null)
                                         .create()
                                         .show()));
                     }
-                    String conversationUri = conversation.isSwarm() ? conversation.getUri().toString() : conversation.getUriTitle();
-                    contactAction = new ContactAction(conversation.isSwarm() ? R.drawable.baseline_group_24 : R.drawable.baseline_person_24, conversationUri, () -> {
-                        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                        if (clipboard != null) {
-                            clipboard.setPrimaryClip(ClipData.newPlainText(getText(R.string.clip_contact_uri), path.getConversationId()));
-                            Snackbar.make(binding.getRoot(), getString(R.string.conversation_action_copied_peer_number_clipboard, path.getConversationId()), Snackbar.LENGTH_LONG).show();
-                        }
-                    });
-                    adapter.actions.add(contactAction);
+                    getSupportActionBar().setTitle(conversation.getTitle());
+                    //new ContactAction(conversation.isSwarm() ? R.drawable.baseline_group_24 : R.drawable.baseline_person_24, conversationUri, () -> {});
+                    binding.conversationId.setText(conversationUri);
+                    binding.infoCard.setOnClickListener(v -> copyAndShow(path.getConversationId()));
+                    //adapter.actions.add(contactAction);
                     binding.contactActionList.setAdapter(adapter);
 
-                    binding.contactList.setVisibility(conversation.isSwarm() ? View.VISIBLE : View.GONE);
+                    binding.contactListLayout.setVisibility(conversation.isSwarm() ? View.VISIBLE : View.GONE);
                     if (conversation.isSwarm()) {
-                        binding.contactList.setAdapter(new ContactViewAdapter(mDisposableBag, conversation.getContacts(), contact -> {
-                            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                            if (clipboard != null) {
-                                String toCopy = contact.getUri().getRawUriString();
-                                clipboard.setPrimaryClip(ClipData.newPlainText(getText(R.string.clip_contact_uri), toCopy));
-                                Snackbar.make(binding.getRoot(), getString(R.string.conversation_action_copied_peer_number_clipboard, toCopy), Snackbar.LENGTH_LONG).show();
-                            }
-                        }));
+                        binding.contactList.setAdapter(new ContactViewAdapter(mDisposableBag, conversation.getContacts(), contact -> copyAndShow(contact.getUri().getRawUriString())));
                     }
                 }));
+    }
+
+    void copyAndShow(String toCopy) {
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        if (clipboard != null) {
+            clipboard.setPrimaryClip(ClipData.newPlainText(getText(R.string.clip_contact_uri), toCopy));
+            Snackbar.make(binding.getRoot(), getString(R.string.conversation_action_copied_peer_number_clipboard, toCopy), Snackbar.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finishAfterTransition();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -415,7 +430,6 @@ public class ContactDetailsActivity extends AppCompatActivity {
         adapter.actions.clear();
         mDisposableBag.dispose();
         super.onDestroy();
-        contactAction = null;
         colorAction = null;
         mPreferences = null;
         binding = null;
