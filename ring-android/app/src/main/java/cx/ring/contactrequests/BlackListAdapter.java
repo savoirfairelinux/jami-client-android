@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import cx.ring.R;
-import cx.ring.model.CallContact;
+import net.jami.model.CallContact;
 
 public class BlackListAdapter extends RecyclerView.Adapter<BlackListViewHolder> {
 
