@@ -81,6 +81,9 @@ public class ConversationPath {
     public static Bundle toBundle(String accountId, net.jami.model.Uri uri) {
         return toBundle(accountId, uri.getUri());
     }
+    public static Bundle toBundle(@NonNull Conversation conversation) {
+        return toBundle(conversation.getAccountId(), conversation.getUri());
+    }
 
     public static ConversationPath fromUri(Uri uri) {
         if (uri == null)
