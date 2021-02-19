@@ -28,7 +28,7 @@ import androidx.core.content.ContextCompat;
 import javax.inject.Inject;
 
 import cx.ring.application.JamiApplication;
-import cx.ring.services.PreferencesService;
+import net.jami.services.PreferencesService;
 import cx.ring.services.SyncService;
 
 public class BootReceiver extends BroadcastReceiver {
