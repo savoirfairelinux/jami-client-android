@@ -22,11 +22,10 @@ package cx.ring.adapters;
 
 import cx.ring.databinding.ItemSmartlistBinding;
 import cx.ring.databinding.ItemSmartlistHeaderBinding;
-import cx.ring.smartlist.SmartListViewModel;
+import net.jami.smartlist.SmartListViewModel;
 import cx.ring.viewholders.SmartListViewHolder;
 
 import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 

@@ -33,6 +33,9 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import net.jami.account.HomeAccountCreationPresenter;
+import net.jami.account.HomeAccountCreationView;
+
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.databinding.FragAccHomeCreateBinding;
