@@ -118,7 +118,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     private static final String NOTIF_CALL_GROUP = "calls";
 
-    private static final int NOTIF_CALL_ID = 1001;
+    public static final int NOTIF_CALL_ID = 1001;
 
     private final SparseArray<NotificationCompat.Builder> mNotificationBuilders = new SparseArray<>();
     @Inject
@@ -249,9 +249,6 @@ public class NotificationServiceImpl implements NotificationService {
         }
 
         Call call = conference.getParticipants().get(0);
-
-        notificationManager.cancel(NOTIF_CALL_ID);
-
         PendingIntent gotoIntent = PendingIntent.getService(mContext,
                 random.nextInt(),
                 new Intent(DRingService.ACTION_CALL_VIEW)
@@ -471,8 +468,13 @@ public class NotificationServiceImpl implements NotificationService {
         if (!remove) {
             showFileTransferNotification(conversation, transfer);
         } else {
-            removeTransferNotification(transfer.getDaemonId());
+            removeTransferNotification(ConversationPath.toUri(conversation), transfer.getDaemonId());
         }
+    }
+
+    @Override
+    public void removeTransferNotification(String accountId, Uri conversationUri, long transferId) {
+        removeTransferNotification(ConversationPath.toUri(accountId, conversationUri), transferId);
     }
 
     /**
@@ -480,15 +482,16 @@ public class NotificationServiceImpl implements NotificationService {
      *
      * @param transferId the transfer id which is required to generate the notification id
      */
-    @Override
-    public void removeTransferNotification(long transferId) {
-        int id = getFileTransferNotificationId(transferId);
+    public void removeTransferNotification(android.net.Uri path, long transferId) {
+        int id = getFileTransferNotificationId(path, transferId);
         dataTransferNotifications.remove(id);
         cancelFileNotification(id, false);
-        if (dataTransferNotifications.isEmpty())
-            mContext.stopService(new Intent(mContext, DataTransferService.class));
-        else {
-            startForegroundService(dataTransferNotifications.keySet().iterator().next(), DataTransferService.class);
+        if (dataTransferNotifications.isEmpty()) {
+            mContext.startService(new Intent(DataTransferService.ACTION_STOP, path, mContext, DataTransferService.class)
+            .putExtra(KEY_NOTIFICATION_ID, id));
+        } else {
+            ContextCompat.startForegroundService(mContext, new Intent(DataTransferService.ACTION_STOP, path, mContext, DataTransferService.class)
+                    .putExtra(KEY_NOTIFICATION_ID, id));
         }
     }
 
@@ -505,11 +508,11 @@ public class NotificationServiceImpl implements NotificationService {
     public void showTextNotification(String accountId, Conversation conversation) {
         TreeMap<Long, TextMessage> texts = conversation.getUnreadTextMessages();
 
-        Log.w(TAG, "showTextNotification start " + accountId + " " + conversation.getUri() + " " + texts.size());
+        //Log.w(TAG, "showTextNotification start " + accountId + " " + conversation.getUri() + " " + texts.size());
 
         //TODO handle groups
         if (texts.isEmpty() || conversation.isVisible()) {
-            cancelTextNotification(conversation.getUri());
+            cancelTextNotification(conversation.getAccountId(), conversation.getUri());
             return;
         }
         if (texts.lastEntry().getValue().isNotified()) {
@@ -591,7 +594,7 @@ public class NotificationServiceImpl implements NotificationService {
             messageNotificationBuilder.setStyle(history);
         }
 
-        int notificationId = getTextNotificationId(conversation.getUri());
+        int notificationId = getTextNotificationId(conversation.getAccountId(), conversation.getUri());
         int replyId = notificationId + 1;
         int markAsReadId = notificationId + 2;
 
@@ -716,15 +719,14 @@ public class NotificationServiceImpl implements NotificationService {
         if (event == null) {
             return;
         }
+        android.net.Uri path = ConversationPath.toUri(conversation);
         long dataTransferId = info.getDaemonId();
-        int notificationId = getFileTransferNotificationId(dataTransferId);
-
-        android.net.Uri path = ConversationPath.toUri(info.getAccount(), conversation.getUri());
+        int notificationId = getFileTransferNotificationId(path, dataTransferId);
 
         Intent intentConversation = new Intent(DRingService.ACTION_CONV_ACCEPT, path, mContext, DRingService.class);
 
         if (event.isOver()) {
-            removeTransferNotification(dataTransferId);
+            removeTransferNotification(path, dataTransferId);
 
             if (info.isOutgoing()) {
                 return;
@@ -794,7 +796,7 @@ public class NotificationServiceImpl implements NotificationService {
         if (event == Interaction.InteractionStatus.TRANSFER_CREATED) {
             messageNotificationBuilder.setDefaults(NotificationCompat.DEFAULT_VIBRATE);
             mNotificationBuilders.put(notificationId, messageNotificationBuilder);
-            updateNotification(messageNotificationBuilder.build(), notificationId);
+            // updateNotification(messageNotificationBuilder.build(), notificationId);
             return;
         } else {
             messageNotificationBuilder.setDefaults(NotificationCompat.DEFAULT_LIGHTS);
@@ -825,7 +827,7 @@ public class NotificationServiceImpl implements NotificationService {
                                     PendingIntent.FLAG_ONE_SHOT));
         }
         mNotificationBuilders.put(notificationId, messageNotificationBuilder);
-        dataTransferNotifications.remove(notificationId);
+        //dataTransferNotifications.remove(notificationId);
         dataTransferNotifications.put(notificationId, messageNotificationBuilder.build());
         startForegroundService(notificationId, DataTransferService.class);
     }
@@ -877,17 +879,8 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public void cancelTextNotification(Uri contact) {
-        if (contact == null) {
-            return;
-        }
-        int notificationId = getTextNotificationId(contact);
-        notificationManager.cancel(notificationId);
-        mNotificationBuilders.remove(notificationId);
-    }
-
     public void cancelTextNotification(String accountId, Uri contact) {
-        int notificationId = getTextNotificationId(contact);
+        int notificationId = getTextNotificationId(accountId, contact);
         notificationManager.cancel(notificationId);
         mNotificationBuilders.remove(notificationId);
     }
@@ -905,6 +898,7 @@ public class NotificationServiceImpl implements NotificationService {
     public void cancelCallNotification() {
         notificationManager.cancel(NOTIF_CALL_ID);
         mNotificationBuilders.remove(NOTIF_CALL_ID);
+        callNotifications.clear();
     }
 
     /**\
@@ -929,12 +923,12 @@ public class NotificationServiceImpl implements NotificationService {
         return (NOTIF_TRUST_REQUEST + accountId).hashCode();
     }
 
-    private int getTextNotificationId(Uri contact) {
-        return (NOTIF_MSG + contact.toString()).hashCode();
+    private int getTextNotificationId(String accountId, Uri contact) {
+        return (NOTIF_MSG + accountId + contact.toString()).hashCode();
     }
 
-    private int getFileTransferNotificationId(long dataTransferId) {
-        return (NOTIF_FILE_TRANSFER + dataTransferId).hashCode();
+    private int getFileTransferNotificationId(android.net.Uri path, long dataTransferId) {
+        return (NOTIF_FILE_TRANSFER + path.toString() + dataTransferId).hashCode();
     }
 
     private Bitmap getContactPicture(Contact contact) {
