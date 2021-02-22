@@ -195,7 +195,8 @@ public final class VCardUtils {
     }
 
     public static boolean isEmpty(VCard vCard) {
-        return vCard.getFormattedName().getValue().isEmpty() && vCard.getPhotos().isEmpty();
+        FormattedName name = vCard.getFormattedName();
+        return (name == null || name.getValue().isEmpty()) && vCard.getPhotos().isEmpty();
     }
 
     private static File peerProfilePath(File filesDir, String accountId) {
