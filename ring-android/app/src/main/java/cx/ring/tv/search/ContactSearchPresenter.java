@@ -82,8 +82,8 @@ public class ContactSearchPresenter extends RootPresenter<ContactSearchView> {
                 return;
             }
 
-            Uri uri = new Uri(query);
-            if (uri.isRingId()) {
+            Uri uri = Uri.fromString(query);
+            if (uri.isHexId()) {
                 mCallContact = currentAccount.getContactFromCache(uri);
                 getView().displayContact(currentAccount.getAccountID(), mCallContact);
             } else {
@@ -103,8 +103,8 @@ public class ContactSearchPresenter extends RootPresenter<ContactSearchView> {
                 break;
             case 1:
                 // invalid name
-                Uri uriName = new Uri(name);
-                if (uriName.isRingId()) {
+                Uri uriName = Uri.fromString(name);
+                if (uriName.isHexId()) {
                     mCallContact = account.getContactFromCache(uriName);
                     getView().displayContact(account.getAccountID(), mCallContact);
                 } else {
@@ -113,8 +113,8 @@ public class ContactSearchPresenter extends RootPresenter<ContactSearchView> {
                 break;
             default:
                 // on error
-                Uri uriAddress = new Uri(address);
-                if (uriAddress.isRingId()) {
+                Uri uriAddress = Uri.fromString(address);
+                if (uriAddress.isHexId()) {
                     mCallContact = account.getContactFromCache(uriAddress);
                     getView().displayContact(account.getAccountID(), mCallContact);
                 } else {

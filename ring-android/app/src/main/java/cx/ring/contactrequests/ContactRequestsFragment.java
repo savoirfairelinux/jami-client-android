@@ -41,6 +41,7 @@ import cx.ring.application.JamiApplication;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.databinding.FragPendingContactRequestsBinding;
+import cx.ring.model.Uri;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.ConversationPath;
@@ -74,7 +75,7 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
         binding = null;
     }
 
-    public void presentForAccount(@NonNull String accountId) {
+    public void presentForAccount(@Nullable String accountId) {
         Bundle arguments = getArguments();
         if (arguments != null)
             arguments.putString(ACCOUNT_ID, accountId);
@@ -86,9 +87,8 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
     public void onStart() {
         super.onStart();
         Bundle arguments = getArguments();
-        if (arguments != null && arguments.containsKey(ACCOUNT_ID)) {
-            presenter.updateAccount(getArguments().getString(ACCOUNT_ID));
-        }
+        String accountId = arguments != null ? arguments.getString(ACCOUNT_ID) : null;
+        presenter.updateAccount(accountId);
     }
 
     @Override
@@ -145,21 +145,13 @@ public class ContactRequestsFragment extends BaseSupportFragment<ContactRequests
     }
 
     @Override
-    public void goToConversation(String accountId, String contactId) {
-        Context context = requireContext();
-        if (DeviceUtils.isTablet(context)) {
-            Activity activity = getActivity();
-            if (activity instanceof HomeActivity) {
-                ((HomeActivity) activity).startConversationTablet(ConversationPath.toBundle(accountId, contactId));
-            }
-        } else {
-            startActivity(new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, contactId), context, ConversationActivity.class));
-        }
+    public void goToConversation(String accountId, Uri contactId) {
+        ((HomeActivity) requireActivity()).startConversation(accountId, contactId);
     }
 
     @Override
     public void onItemClick(SmartListViewModel viewModel) {
-        presenter.contactRequestClicked(viewModel.getAccountId(), viewModel.getContact());
+        presenter.contactRequestClicked(viewModel.getAccountId(), viewModel.getUri());
     }
 
     @Override
