@@ -141,6 +141,7 @@
   <string name="account_sip_register_anyway">Зареєструвати все одно</string>
   <string name="account_link_prompt_pin">Ввести PIN-код</string>
   <string name="account_new_button">Створити обліковий запис Джамі</string>
+  <string name="account_link_export_button">Прив\'язати новий пристрій</string>
   <string name="account_link_export_info">Для використання цього облікового запису на інших пристроях, вам необхідно надати доступ до нього в Джамі. При цьому буде згенеровано PIN-код, який вам необхідно буде ввести на іншому пристрої, щоб налаштувати обліковий запис. PIN-код дійсний протягом 10 хвилин.</string>
   <string name="account_start_export_button">Отримати новий PIN-код</string>
   <string name="account_end_export_button">закрити</string>
@@ -153,6 +154,7 @@
   <string name="trying_to_register_name">Спроба реєстрації імені</string>
   <string name="registered_username">Зареєстроване ім\'я користувача</string>
   <string name="register_username">Зареєструвати публічне ум\'я користувача</string>
+  <string name="register_recommended">Рекомендовано</string>
   <string name="username_already_taken">Ім\'я користувача вже зайнято</string>
   <string name="invalid_username">Недопустиме ім\'я користувача</string>
   <string name="looking_for_username_availability">Перевіряю доступність імені користувача…</string>

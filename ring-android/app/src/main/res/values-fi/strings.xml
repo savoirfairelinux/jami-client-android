@@ -23,6 +23,7 @@
   <string name="ringtones_by">Soittoääniä</string>
   <!--RingActivity-->
   <string name="error_no_network">Ei verkkoyhteyttä</string>
+  <string name="error_account_offline">Tunnus on tilassa poistunut</string>
   <string name="error_mobile_network_available_but_disabled">Anna lupa muuttaa verkkoasetuksia asetusruudussa</string>
   <!--AB menus-->
   <string name="ab_action_chat">Tekstiviestittely</string>
@@ -114,6 +115,7 @@
   <string name="qr_code">QR-koodi</string>
   <string name="ab_action_flipcamera">Käännä kamera</string>
   <string name="ab_action_hidepreview">Piilota esikatselu</string>
+  <string name="remote_recording">%s tallentaa…</string>
   <!--Text messages-->
   <string name="send_message">Lähetä viesti</string>
   <string name="message_sending">Viestiä lähetetään...</string>
@@ -176,13 +178,13 @@
   <string name="prompt_new_password">Uusi salasana</string>
   <string name="prompt_new_password_optional">Uusi salasana (vaihtoehtoinen)</string>
   <string name="prompt_new_password_repeat">Toista uusi salasana</string>
-  <string name="account_create_title">Luo Jami-tili</string>
+  <string name="account_create_title">Luo Jami tunnus</string>
   <string name="prompt_new_username">Syötä uusi käyttäjänimi</string>
   <string name="prompt_hint_username">Käyttäjänimi</string>
-  <string name="help_password_choose">Valitse muistettava, vahva salasana jota käytät Jami-tilisi suojaamiseen.</string>
-  <string name="help_password_enter">Syötä pääasiallisen Jami-tilisi salasana.</string>
+  <string name="help_password_choose">Valitse muistettava, vahva salasana jota käytät Jami tunnuksen suojaamiseen.</string>
+  <string name="help_password_enter">Syötä Jami tunnuksen salasana.</string>
   <string name="help_server_enter">Kirjoita hallintapalvelimen verkko-osoite.</string>
-  <string name="help_pin_enter">Anna PIN-koodi toiselta määritetyltä Jami-tililtä. Käytä \"vie Jami-tili\" -ominaisuutta saadaksesi PIN-koodi.</string>
+  <string name="help_pin_enter">Anna PIN-koodi toiselta määritetyltä Jami tunnukselta. Käytä \"vie Jami tunnus\" ominaisuutta saadaksesi PIN-koodi.</string>
   <string name="wizard_next">Seuraava</string>
   <string name="wizard_back">Takaisin</string>
   <string name="wizard_skip">Ohita</string>
@@ -196,13 +198,13 @@
   <string name="registered_name">Rekisteröity nimi</string>
   <string name="no_registered_name">Nimeä ei ole rekisteröity</string>
   <string name="identity">Tunnistetiedot</string>
-  <string name="account">Tili</string>
+  <string name="account">Tunnus</string>
   <string name="link_new_device">Linkitä uusi laite</string>
   <string name="devices">Linkitetyt laitteet</string>
   <string name="total_devices">Laitteita yhteensä: </string>
   <!--Share fragment-->
   <string name="share_message">Skannaa tämä koodi Jamilla</string>
-  <string name="share_message_no_account">Valitse jaettava tili.</string>
+  <string name="share_message_no_account">Valitse jaettava tunnus.</string>
   <string name="share_your_account_information">Jaa yhteystietoni</string>
   <string name="share_label">Jako</string>
   <string name="generic_error_migration">Virhe</string>
@@ -287,14 +289,14 @@
   <string name="wizard_status_recommended">Suositus</string>
   <string name="wizard_status_optional">Valinnainen</string>
   <string name="wizard_status_required">Vaaditaan</string>
-  <string name="wizard_username_info">Valitse tilillesi käyttäjänimi</string>
+  <string name="wizard_username_info">Valitse tunukselle käyttäjänimi</string>
   <string name="wizard_username_button">Valitse käyttäjänimi</string>
   <string name="wizard_username_skip">Ohita käyttäjänimen valitseminen</string>
-  <string name="wizard_password_info">Tilin salasana</string>
+  <string name="wizard_password_info">Tunnuksen salasana</string>
   <string name="wizard_password_placeholder">Valitse salasana, jolla tiliavain salataan tässä laitteessa</string>
   <string name="wizard_password_button">Valitse salasana</string>
-  <string name="wizard_password_skip">Luo tili</string>
-  <string name="wizard_password_switch">Salaa tili salasanalla</string>
+  <string name="wizard_password_skip">Luo tunnus</string>
+  <string name="wizard_password_switch">Salaa tunnus salasanalla</string>
   <string name="wizard_password_warning">Huomaa, että salasanaa ei voi palauttaa</string>
   <string name="wizard_profile_info">Profiili jaetaan vain yhteystietojen kanssa</string>
   <string name="wizard_profile_button">Tallenna profiili</string>

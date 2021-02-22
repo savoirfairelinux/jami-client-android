@@ -23,6 +23,7 @@
   <string name="ringtones_by">Suoneria di</string>
   <!--RingActivity-->
   <string name="error_no_network">Assenza di connessione di rete</string>
+  <string name="error_account_offline">L\'account è offline</string>
   <string name="error_mobile_network_available_but_disabled">Per favore consenti l\'accesso alla rete mobile dalla schermata delle impostazioni</string>
   <!--AB menus-->
   <string name="ab_action_chat">Messaggiare</string>
@@ -114,6 +115,7 @@
   <string name="qr_code">QR Code</string>
   <string name="ab_action_flipcamera">Cambia videocamera</string>
   <string name="ab_action_hidepreview">Nascondi anteprima</string>
+  <string name="remote_recording">%s in registrazione…</string>
   <!--Text messages-->
   <string name="send_message">Invia messaggio</string>
   <string name="message_sending">Sto inviando il messaggio...</string>

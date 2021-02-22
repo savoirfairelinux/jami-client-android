@@ -154,7 +154,7 @@
   <string name="ring_account">Cont Jami</string>
   <string name="ring_account_identity">Identitate</string>
   <string name="account_migration_title_dialog">Transferul contului</string>
-  <string name="account_migration_message_dialog">Conturile tale trebuie actualizate. Vrei să te duci la \"Gestionează cont\" pentru a face acest lucru ?</string>
+  <string name="account_migration_message_dialog">Conturile tale trebuie actualizate. Vrei să te duci la \"Gestionează contul\" pentru a face acest lucru ?</string>
   <string name="account_update_needed">Actualizare necesară</string>
   <string name="account_cannot_be_found_title">Nu pot găsi contul</string>
   <string name="account_cannot_be_found_message">Contul nu poate fi găsit în rețeaua Jami.\nAsigură-te că a fost exportat pe Jami dintr-un aparat existent și datele de autentificare sînt corecte.</string>
