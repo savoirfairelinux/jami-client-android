@@ -201,7 +201,8 @@ public class AvatarDrawable extends Drawable {
         }
         public Builder withConversation(Conversation conversation) {
             return conversation.isSwarm()
-                    ? withContacts(conversation.getContacts()).setGroup()
+                    ? withContacts(conversation.getContacts())
+                        .setGroup()
                     : withContact(conversation.getContact());
         }
 
@@ -213,9 +214,10 @@ public class AvatarDrawable extends Drawable {
         public Builder withViewModel(SmartListViewModel vm) {
             boolean isSwarm = vm.getUri().isSwarm();
             return (isSwarm
-                    ? withContacts(vm.getContact()).setGroup()
-                    : withContact(vm.getContact().isEmpty() ? null : vm.getContact().get(vm.getContact().size() - 1)))
+                    ? withContacts(vm.getContacts()).setGroup()
+                    : withContact(vm.getContacts().isEmpty() ? null : vm.getContacts().get(vm.getContacts().size() - 1)))
                     .withPresence(vm.showPresence())
+                    .withOnlineState(vm.isOnline())
                     .withCheck(vm.isChecked());
         }
 

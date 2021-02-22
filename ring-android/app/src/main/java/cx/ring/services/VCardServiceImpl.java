@@ -65,7 +65,7 @@ public class VCardServiceImpl extends VCardService {
     @Override
     public Single<VCard> loadSmallVCard(String accountId, int maxSize) {
         return VCardUtils.loadLocalProfileFromDisk(mContext.getFilesDir(), accountId)
-                .filter( vcard -> !VCardUtils.isEmpty(vcard)).toSingle()
+                .filter(vcard -> !VCardUtils.isEmpty(vcard)).toSingle()
                 .map(vcard -> {
                     if (!vcard.getPhotos().isEmpty()) {
                         // Reduce photo to fit in maxSize, assuming JPEG compress with ratio of at least 8

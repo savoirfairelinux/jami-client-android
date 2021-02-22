@@ -123,7 +123,10 @@ public abstract class ContactService {
             }
 
             return withPresence
-                    ? Observable.combineLatest(contact.getUpdates(), contact.getPresenceUpdates(), (c, p) -> c)
+                    ? Observable.combineLatest(contact.getUpdates(), contact.getPresenceUpdates(), (c, p) -> {
+                Log.w(TAG, "observeContact UPDATE " + c + " " + p);
+                return c;
+            })
                     : contact.getUpdates();
         }
     }
