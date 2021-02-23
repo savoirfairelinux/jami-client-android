@@ -307,8 +307,8 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     }
 
     @Override
-    public void removeConversation(net.jami.model.Uri callContact) {
-        presenter.removeConversation(callContact);
+    public void removeConversation(net.jami.model.Uri conversationUri) {
+        presenter.removeConversation(conversationUri);
     }
 
     @Override

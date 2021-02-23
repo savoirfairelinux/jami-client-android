@@ -34,6 +34,9 @@ public class ConversationPath {
     public String getConversationId() {
         return conversationId;
     }
+    public net.jami.model.Uri getConversationUri() {
+        return net.jami.model.Uri.fromString(conversationId);
+    }
 
     @Deprecated
     public String getContactId() {
@@ -129,7 +132,4 @@ public class ConversationPath {
         return Objects.hash(accountId, conversationId);
     }
 
-    public net.jami.model.Uri getConversationUri() {
-        return net.jami.model.Uri.fromString(conversationId);
-    }
 }
