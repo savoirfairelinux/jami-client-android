@@ -49,6 +49,7 @@ import androidx.core.app.RemoteInput;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.drawable.IconCompat;
+import androidx.core.util.Pair;
 
 import com.bumptech.glide.Glide;
 
@@ -338,7 +339,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public void showLocationNotification(Account first, CallContact contact) {
-        android.net.Uri path = ConversationPath.toUri(first.getAccountID(), contact.getPrimaryUri());
+        android.net.Uri path = ConversationPath.toUri(first.getAccountID(), contact.getUri());
 
         Intent intentConversation = new Intent(Intent.ACTION_VIEW, path, mContext, ConversationActivity.class)
                 .putExtra(ConversationFragment.EXTRA_SHOW_MAP, true);
@@ -359,7 +360,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public void cancelLocationNotification(Account first, CallContact contact) {
-        notificationManager.cancel(Objects.hash( "Location", ConversationPath.toUri(first.getAccountID(), contact.getPrimaryUri())));
+        notificationManager.cancel(Objects.hash( "Location", ConversationPath.toUri(first.getAccountID(), contact.getUri())));
     }
 
     /**
@@ -451,17 +452,17 @@ public class NotificationServiceImpl implements NotificationService {
      * Handles the creation and destruction of services associated with transfers as well as displaying notifications.
      *
      * @param transfer the data transfer object
-     * @param contact  the contact to whom the data transfer is being sent
+     * @param conversation  the contact to whom the data transfer is being sent
      * @param remove   true if it should be removed from current calls
      */
     @Override
-    public void handleDataTransferNotification(DataTransfer transfer, CallContact contact, boolean remove) {
+    public void handleDataTransferNotification(DataTransfer transfer, Conversation conversation, boolean remove) {
         Log.d(TAG, "handleDataTransferNotification, a data transfer event is in progress");
         if (DeviceUtils.isTv(mContext)) {
             return;
         }
         if (!remove) {
-            showFileTransferNotification(transfer, contact);
+            showFileTransferNotification(conversation, transfer);
         } else {
             removeTransferNotification(transfer.getDaemonId());
         }
@@ -497,30 +498,26 @@ public class NotificationServiceImpl implements NotificationService {
     public void showTextNotification(String accountId, Conversation conversation) {
         TreeMap<Long, TextMessage> texts = conversation.getUnreadTextMessages();
 
-        CallContact contact = conversation.getContact();
+        Log.w(TAG, "showTextNotification start " + accountId + " " + conversation.getUri() + " " + texts.size());
+
+        //TODO handle groups
         if (texts.isEmpty() || conversation.isVisible()) {
-            cancelTextNotification(contact.getPrimaryUri());
+            cancelTextNotification(conversation.getUri());
             return;
         }
         if (texts.lastEntry().getValue().isNotified()) {
             return;
         }
 
-        Log.w(TAG, "showTextNotification " + accountId + " " + contact.getPrimaryNumber());
-        mContactService.getLoadedContact(accountId, contact)
-                .subscribe(c -> textNotification(accountId, texts, c),
+        Log.w(TAG, "showTextNotification " + accountId + " " + conversation.getUri());
+        mContactService.getLoadedContact(accountId, conversation.getContacts(), false)
+                .subscribe(c -> textNotification(accountId, texts, conversation),
                         e -> Log.w(TAG, "Can't load contact", e));
     }
 
-    private void textNotification(String accountId, TreeMap<Long, TextMessage> texts, CallContact contact) {
-        Uri contactUri = contact.getPrimaryUri();
-        String contactId = contactUri.getUri();
-        android.net.Uri path = ConversationPath.toUri(accountId, contactId);
-
-        String contactName = contact.getDisplayName();
-        if (TextUtils.isEmpty(contactName) || texts.isEmpty())
-            return;
-        Bitmap contactPicture = getContactPicture(contact);
+    private void textNotification(String accountId, TreeMap<Long, TextMessage> texts, Conversation conversation) {
+        android.net.Uri path = ConversationPath.toUri(conversation.getAccountId(), conversation.getUri());
+        Pair<Bitmap, String> conversationProfile = getProfile(conversation);
 
         TextMessage last = texts.lastEntry().getValue();
         Intent intentConversation = new Intent(DRingService.ACTION_CONV_ACCEPT, path, mContext, DRingService.class);
@@ -532,7 +529,7 @@ public class NotificationServiceImpl implements NotificationService {
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
                 .setSmallIcon(R.drawable.ic_ring_logo_white)
-                .setContentTitle(contactName)
+                .setContentTitle(conversationProfile.second)
                 .setContentText(last.getBody())
                 .setWhen(last.getTimestamp())
                 .setContentIntent(PendingIntent.getService(mContext, random.nextInt(), intentConversation, 0))
@@ -540,19 +537,19 @@ public class NotificationServiceImpl implements NotificationService {
                 .setAutoCancel(true)
                 .setColor(ResourcesCompat.getColor(mContext.getResources(), R.color.color_primary_dark, null));
 
-        if (contactPicture != null) {
-            messageNotificationBuilder.setLargeIcon(contactPicture);
+        if (conversationProfile.first != null) {
+            messageNotificationBuilder.setLargeIcon(conversationProfile.first);
             Intent intentBubble = new Intent(Intent.ACTION_VIEW, path, mContext, ConversationActivity.class);
             intentBubble.putExtra(EXTRA_BUBBLE, true);
             messageNotificationBuilder.setBubbleMetadata(new NotificationCompat.BubbleMetadata.Builder()
                     .setDesiredHeight(600)
-                    .setIcon(IconCompat.createWithAdaptiveBitmap(contactPicture))
+                    .setIcon(IconCompat.createWithAdaptiveBitmap(conversationProfile.first))
                     .setIntent(PendingIntent.getActivity(mContext, 0, intentBubble,
                             PendingIntent.FLAG_UPDATE_CURRENT))
                     .build());
         }
 
-        UnreadConversation.Builder unreadConvBuilder = new UnreadConversation.Builder(contactName)
+        UnreadConversation.Builder unreadConvBuilder = new UnreadConversation.Builder(conversationProfile.second)
                 .setLatestTimestamp(last.getTimestamp());
 
         if (texts.size() == 1) {
@@ -569,14 +566,15 @@ public class NotificationServiceImpl implements NotificationService {
                     .setIcon(myPic == null ? null : IconCompat.createWithBitmap(myPic))
                     .build();
 
-            Person contactPerson = new Person.Builder()
-                    .setKey(contactId)
-                    .setName(contactName)
-                    .setIcon(contactPicture == null ? null : IconCompat.createWithBitmap(contactPicture))
-                    .build();
-
             NotificationCompat.MessagingStyle history = new NotificationCompat.MessagingStyle(userPerson);
             for (TextMessage textMessage : texts.values()) {
+                CallContact contact = textMessage.getContact();
+                Bitmap contactPicture = getContactPicture(contact);
+                Person contactPerson = new Person.Builder()
+                        .setKey(textMessage.getAuthor())
+                        .setName(contact.getDisplayName())
+                        .setIcon(contactPicture == null ? null : IconCompat.createWithBitmap(contactPicture))
+                        .build();
                 history.addMessage(new NotificationCompat.MessagingStyle.Message(
                         textMessage.getBody(),
                         textMessage.getTimestamp(),
@@ -586,7 +584,7 @@ public class NotificationServiceImpl implements NotificationService {
             messageNotificationBuilder.setStyle(history);
         }
 
-        int notificationId = getTextNotificationId(contactUri);
+        int notificationId = getTextNotificationId(conversation.getUri());
         int replyId = notificationId + 1;
         int markAsReadId = notificationId + 2;
 
@@ -654,38 +652,31 @@ public class NotificationServiceImpl implements NotificationService {
             return;
         if (requests.size() == 1) {
             Conversation request = requests.iterator().next();
-            CallContact contact = request.getContact();
-            String contactKey = contact.getPrimaryUri().getRawRingId();
+            String contactKey = request.getUri().getRawUriString();
             if (notifiedRequests.contains(contactKey)) {
                 return;
             }
-            mContactService.getLoadedContact(account.getAccountID(), contact).subscribe(c -> {
+            mContactService.getLoadedContact(account.getAccountID(), request.getContacts(), false).subscribe(c -> {
                 NotificationCompat.Builder builder = getRequestNotificationBuilder(account.getAccountID());
                 mPreferencesService.saveRequestPreferences(account.getAccountID(), contactKey);
-                Bundle info = new Bundle();
-                info.putString(TRUST_REQUEST_NOTIFICATION_ACCOUNT_ID, account.getAccountID());
-                info.putString(TRUST_REQUEST_NOTIFICATION_FROM, c.getPrimaryNumber());
-                builder.setContentText(c.getRingUsername())
+                android.net.Uri info = ConversationPath.toUri(account.getAccountID(), request.getUri());
+                builder.setContentText(request.getUriTitle())
                         .addAction(R.drawable.baseline_person_add_24, mContext.getText(R.string.accept),
                                 PendingIntent.getService(mContext, random.nextInt(),
-                                        new Intent(DRingService.ACTION_TRUST_REQUEST_ACCEPT)
-                                                .setClass(mContext, DRingService.class)
-                                                .putExtras(info),
+                                        new Intent(DRingService.ACTION_TRUST_REQUEST_ACCEPT, info, mContext, DRingService.class),
                                         PendingIntent.FLAG_ONE_SHOT))
                         .addAction(R.drawable.baseline_delete_24, mContext.getText(R.string.refuse),
                                 PendingIntent.getService(mContext, random.nextInt(),
-                                        new Intent(DRingService.ACTION_TRUST_REQUEST_REFUSE)
-                                                .setClass(mContext, DRingService.class)
-                                                .putExtras(info),
+                                        new Intent(DRingService.ACTION_TRUST_REQUEST_REFUSE, info, mContext, DRingService.class),
                                         PendingIntent.FLAG_ONE_SHOT))
                         .addAction(R.drawable.baseline_block_24, mContext.getText(R.string.block),
                                 PendingIntent.getService(mContext, random.nextInt(),
-                                        new Intent(DRingService.ACTION_TRUST_REQUEST_BLOCK)
-                                                .setClass(mContext, DRingService.class)
-                                                .putExtras(info),
+                                        new Intent(DRingService.ACTION_TRUST_REQUEST_BLOCK, info, mContext, DRingService.class),
                                         PendingIntent.FLAG_ONE_SHOT));
 
-                setContactPicture(c, builder);
+                Bitmap pic = getContactPicture(request);
+                if (pic != null)
+                    builder.setLargeIcon(pic);
                 notificationManager.notify(notificationId, builder.build());
             }, e -> Log.w(TAG, "error showing notification", e));
         } else {
@@ -693,10 +684,12 @@ public class NotificationServiceImpl implements NotificationService {
             boolean newRequest = false;
             for (Conversation request : requests) {
                 CallContact contact = request.getContact();
-                String contactKey = contact.getPrimaryUri().getRawRingId();
-                if (!notifiedRequests.contains(contactKey)) {
-                    newRequest = true;
-                    mPreferencesService.saveRequestPreferences(account.getAccountID(), contactKey);
+                if (contact != null) {
+                    String contactKey = contact.getUri().getRawRingId();
+                    if (!notifiedRequests.contains(contactKey)) {
+                        newRequest = true;
+                        mPreferencesService.saveRequestPreferences(account.getAccountID(), contactKey);
+                    }
                 }
             }
             if (!newRequest)
@@ -708,7 +701,7 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public void showFileTransferNotification(DataTransfer info, CallContact contact) {
+    public void showFileTransferNotification(Conversation conversation, DataTransfer info) {
         if (info == null) {
             return;
         }
@@ -719,7 +712,7 @@ public class NotificationServiceImpl implements NotificationService {
         long dataTransferId = info.getDaemonId();
         int notificationId = getFileTransferNotificationId(dataTransferId);
 
-        android.net.Uri path = ConversationPath.toUri(info.getAccount(), new Uri(info.getConversation().getParticipant()));
+        android.net.Uri path = ConversationPath.toUri(info.getAccount(), conversation.getUri());
 
         Intent intentConversation = new Intent(DRingService.ACTION_CONV_ACCEPT, path, mContext, DRingService.class);
 
@@ -736,7 +729,7 @@ public class NotificationServiceImpl implements NotificationService {
                     .setAutoCancel(true);
 
             if (info.showPicture()) {
-                File filePath = mDeviceRuntimeService.getConversationPath(info.getPeerId(), info.getStoragePath());
+                File filePath = mDeviceRuntimeService.getConversationPath(conversation.getUri().getRawRingId(), info.getStoragePath());
                 Bitmap img;
                 try {
                     BitmapDrawable d = (BitmapDrawable) Glide.with(mContext)
@@ -744,7 +737,7 @@ public class NotificationServiceImpl implements NotificationService {
                             .submit()
                             .get();
                     img = d.getBitmap();
-                    notif.setContentTitle(mContext.getString(R.string.notif_incoming_picture, contact.getDisplayName()));
+                    notif.setContentTitle(mContext.getString(R.string.notif_incoming_picture, conversation.getTitle()));
                     notif.setStyle(new NotificationCompat.BigPictureStyle()
                             .bigPicture(img));
                 } catch (Exception e) {
@@ -752,11 +745,12 @@ public class NotificationServiceImpl implements NotificationService {
                     return;
                 }
             } else {
-                notif.setContentTitle(mContext.getString(R.string.notif_incoming_file_transfer_title, contact.getDisplayName()));
+                notif.setContentTitle(mContext.getString(R.string.notif_incoming_file_transfer_title, conversation.getTitle()));
                 notif.setStyle(null);
             }
-
-            setContactPicture(contact, notif);
+            Bitmap picture = getContactPicture(conversation);
+            if (picture != null)
+                notif.setLargeIcon(picture);
             notificationManager.notify(random.nextInt(), notif.build());
             return;
         }
@@ -766,7 +760,7 @@ public class NotificationServiceImpl implements NotificationService {
         }
 
         boolean ongoing = event == InteractionStatus.TRANSFER_ONGOING || event == InteractionStatus.TRANSFER_ACCEPTED;
-        String titleMessage = mContext.getString(info.isOutgoing() ? R.string.notif_outgoing_file_transfer_title : R.string.notif_incoming_file_transfer_title, contact.getDisplayName());
+        String titleMessage = mContext.getString(info.isOutgoing() ? R.string.notif_outgoing_file_transfer_title : R.string.notif_incoming_file_transfer_title, conversation.getTitle());
         messageNotificationBuilder.setContentTitle(titleMessage)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
@@ -780,7 +774,9 @@ public class NotificationServiceImpl implements NotificationService {
                         info.getDisplayName() + ": " + ResourceMapper.getReadableFileTransferStatus(mContext, event))
                 .setContentIntent(PendingIntent.getService(mContext, random.nextInt(), intentConversation, 0))
                 .setColor(ResourcesCompat.getColor(mContext.getResources(), R.color.color_primary_dark, null));
-        setContactPicture(contact, messageNotificationBuilder);
+        Bitmap picture = getContactPicture(conversation);
+        if (picture != null)
+            messageNotificationBuilder.setLargeIcon(picture);
         if (event.isOver()) {
             messageNotificationBuilder.setProgress(0, 0, false);
         } else if (ongoing) {
@@ -801,14 +797,12 @@ public class NotificationServiceImpl implements NotificationService {
             messageNotificationBuilder
                     .addAction(R.drawable.baseline_call_received_24, mContext.getText(R.string.accept),
                             PendingIntent.getService(mContext, random.nextInt(),
-                                    new Intent(DRingService.ACTION_FILE_ACCEPT)
-                                            .setClass(mContext, DRingService.class)
+                                    new Intent(DRingService.ACTION_FILE_ACCEPT, ConversationPath.toUri(conversation), mContext, DRingService.class)
                                             .putExtra(DRingService.KEY_TRANSFER_ID, dataTransferId),
                                     PendingIntent.FLAG_ONE_SHOT))
                     .addAction(R.drawable.baseline_cancel_24, mContext.getText(R.string.refuse),
                             PendingIntent.getService(mContext, random.nextInt(),
-                                    new Intent(DRingService.ACTION_FILE_CANCEL)
-                                            .setClass(mContext, DRingService.class)
+                                    new Intent(DRingService.ACTION_FILE_CANCEL, ConversationPath.toUri(conversation), mContext, DRingService.class)
                                             .putExtra(DRingService.KEY_TRANSFER_ID, dataTransferId),
                                     PendingIntent.FLAG_ONE_SHOT));
             mNotificationBuilders.put(notificationId, messageNotificationBuilder);
@@ -885,8 +879,8 @@ public class NotificationServiceImpl implements NotificationService {
         mNotificationBuilders.remove(notificationId);
     }
 
-    public void cancelTextNotification(String ringId) {
-        int notificationId = (NOTIF_MSG + ringId).hashCode();
+    public void cancelTextNotification(String accountId, Uri contact) {
+        int notificationId = getTextNotificationId(contact);
         notificationManager.cancel(notificationId);
         mNotificationBuilders.remove(notificationId);
     }
@@ -938,7 +932,14 @@ public class NotificationServiceImpl implements NotificationService {
 
     private Bitmap getContactPicture(CallContact contact) {
         try {
-            return AvatarFactory.getBitmapAvatar(mContext, contact, avatarSize).blockingGet();
+            return AvatarFactory.getBitmapAvatar(mContext, contact, avatarSize, false).blockingGet();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    private Bitmap getContactPicture(Conversation conversation) {
+        try {
+            return AvatarFactory.getBitmapAvatar(mContext, conversation, avatarSize, false).blockingGet();
         } catch (Exception e) {
             return null;
         }
@@ -946,6 +947,10 @@ public class NotificationServiceImpl implements NotificationService {
 
     private Bitmap getContactPicture(Account account) {
         return AvatarFactory.getBitmapAvatar(mContext, account, avatarSize).blockingGet();
+    }
+
+    private Pair<Bitmap, String> getProfile(Conversation conversation) {
+        return Pair.create(getContactPicture(conversation), conversation.getTitle());
     }
 
     private void setContactPicture(CallContact contact, NotificationCompat.Builder messageNotificationBuilder) {
