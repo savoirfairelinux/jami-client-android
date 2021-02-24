@@ -52,14 +52,11 @@ import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.fragments.ConversationFragment;
+import cx.ring.fragments.QRCodeFragment;
 import cx.ring.mvp.BaseSupportFragment;
 
 public class ScanFragment extends BaseSupportFragment {
-
     public static final String TAG = ScanFragment.class.getSimpleName();
-
-    private boolean mIsVisible;
-    private boolean mIsStarted;
 
     private DecoratedBarcodeView barcodeView;
     private TextView mErrorMessageTextView;
@@ -97,20 +94,6 @@ public class ScanFragment extends BaseSupportFragment {
         if (hasCameraPermission() && barcodeView != null) {
             barcodeView.pause();
         }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        mIsStarted = true;
-        if (mIsVisible)
-            checkPermission();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        mIsStarted = false;
     }
 
     private void showErrorPanel(final int textResId) {
@@ -157,9 +140,8 @@ public class ScanFragment extends BaseSupportFragment {
     }
     private void initializeBarcode() {
         if (barcodeView != null) {
-            Collection<BarcodeFormat> formats = Collections.singletonList(BarcodeFormat.QR_CODE);
-            barcodeView.getBarcodeView().setDecoderFactory(new DefaultDecoderFactory(formats));
-            barcodeView.initializeFromIntent(getActivity().getIntent());
+            barcodeView.getBarcodeView().setDecoderFactory(new DefaultDecoderFactory(Collections.singletonList(BarcodeFormat.QR_CODE)));
+            //barcodeView.initializeFromIntent(getActivity().getIntent());
             barcodeView.decodeContinuous(callback);
         }
     }
@@ -168,9 +150,13 @@ public class ScanFragment extends BaseSupportFragment {
         @Override
         public void barcodeResult(@NonNull BarcodeResult result) {
             if (result.getText() != null) {
-                String contact_uri = result.getText();
-                if (contact_uri != null ) {
-                    goToConversation(contact_uri);
+                String contactUri = result.getText();
+                if (contactUri != null) {
+                    QRCodeFragment parent = (QRCodeFragment) getParentFragment();
+                    if (parent != null) {
+                        parent.dismiss();
+                    }
+                    goToConversation(contactUri);
                 }
             }
         }
@@ -180,8 +166,8 @@ public class ScanFragment extends BaseSupportFragment {
         }
     };
 
-    private void goToConversation(String contactId) {
-        ((HomeActivity) requireActivity()).startConversation(contactId);
+    private void goToConversation(String conversationUri) {
+        ((HomeActivity) requireActivity()).startConversation(conversationUri);
     }
 
     private boolean checkPermission() {
