@@ -106,7 +106,7 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
     public void update(SmartListViewModel smartListViewModel) {
         for (int i = 0; i < mSmartListViewModels.size(); i++) {
             SmartListViewModel old = mSmartListViewModels.get(i);
-            if (old.getContact() == smartListViewModel.getContact()) {
+            if (old.getContacts() == smartListViewModel.getContacts()) {
                 mSmartListViewModels.set(i, smartListViewModel);
                 notifyItemChanged(i);
                 return;
