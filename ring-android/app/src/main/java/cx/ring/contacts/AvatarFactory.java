@@ -36,6 +36,8 @@ import java.util.List;
 
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
+import cx.ring.model.Conversation;
+import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.Single;
@@ -60,23 +62,26 @@ public class AvatarFactory {
                         .withPresence(presence)
                         .build(context));
     }
-    public static Single<Drawable> getAvatar(Context context, List<CallContact> contacts, boolean presence) {
+    public static Single<Drawable> getAvatar(Context context, Conversation conversation, boolean presence) {
         return Single.fromCallable(() ->
                 new AvatarDrawable.Builder()
-                        .withContacts(contacts)
+                        .withConversation(conversation)
                         .withCircleCrop(true)
                         .withPresence(presence)
+                        .build(context));
+    }
+    public static Single<Drawable> getAvatar(Context context, SmartListViewModel vm) {
+        return Single.fromCallable(() ->
+                new AvatarDrawable.Builder()
+                        .withViewModel(vm)
+                        .withCircleCrop(true)
                         .build(context));
     }
     public static Single<Drawable> getAvatar(Context context, CallContact contact) {
         return getAvatar(context, contact, true);
     }
-    public static Single<Drawable> getAvatar(Context context, List<CallContact> contacts) {
-        return getAvatar(context, contacts, true);
-    }
-
-    public static Single<Bitmap> getBitmapAvatar(Context context, List<CallContact> contacts, int size, boolean presence) {
-        return getAvatar(context, contacts, presence)
+    public static Single<Bitmap> getBitmapAvatar(Context context, Conversation conversation, int size, boolean presence) {
+        return getAvatar(context, conversation, presence)
                 .map(d -> BitmapUtils.drawableToBitmap(d, size));
     }
     public static Single<Bitmap> getBitmapAvatar(Context context, CallContact contact, int size, boolean presence) {

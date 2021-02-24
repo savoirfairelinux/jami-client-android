@@ -23,6 +23,7 @@ package cx.ring.utils;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 
 public final class StringUtils {
 
@@ -118,6 +119,37 @@ public final class StringUtils {
             }
         }
         return true;
+    }
+
+    public static String join(String separator, List<String> values) {
+        if (values.isEmpty()) return "";//need at least one element
+        if (values.size() == 1) return values.get(0);
+        //all string operations use a new array, so minimize all calls possible
+        char[] sep = separator.toCharArray();
+
+        // determine final size and normalize nulls
+        int totalSize = (values.size() - 1) * sep.length;// separator size
+        for (int i = 0; i < values.size(); i++) {
+            totalSize += values.get(i).length();
+        }
+
+        //exact size; no bounds checks or resizes
+        char[] joined = new char[totalSize];
+        int pos = 0;
+        //note, we are iterating all the elements except the last one
+        for (int i = 0, end = values.size()-1; i < end; i++) {
+            System.arraycopy(values.get(i).toCharArray(), 0,
+                    joined, pos, values.get(i).length());
+            pos += values.get(i).length();
+            System.arraycopy(sep, 0, joined, pos, sep.length);
+            pos += sep.length;
+        }
+        //now, add the last element;
+        //this is why we checked values.length == 0 off the hop
+        System.arraycopy(values.get(values.size()-1).toCharArray(), 0,
+                joined, pos, values.get(values.size()-1).length());
+
+        return new String(joined);
     }
 
 }

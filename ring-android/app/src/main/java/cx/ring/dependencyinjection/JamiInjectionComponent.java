@@ -28,6 +28,7 @@ import cx.ring.account.JamiLinkAccountPasswordFragment;
 import cx.ring.contactrequests.BlockListFragment;
 import cx.ring.fragments.GeneralAccountFragment;
 import cx.ring.fragments.LinkDeviceFragment;
+import cx.ring.fragments.ContactPickerFragment;
 import cx.ring.fragments.LocationSharingFragment;
 import cx.ring.account.AccountWizardActivity;
 import cx.ring.account.HomeAccountCreationFragment;
@@ -237,4 +238,6 @@ public interface JamiInjectionComponent {
     void inject(SyncService syncService);
 
     void inject(LinkDeviceFragment linkDeviceFragment);
+
+    void inject(ContactPickerFragment contactPickerFragment);
 }

@@ -24,6 +24,8 @@ import com.google.gson.JsonParser;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.List;
+
 @DatabaseTable(tableName = Interaction.TABLE_NAME)
 public class Interaction {
 
@@ -62,6 +64,11 @@ public class Interaction {
     int mIsRead = 0;
     @DatabaseField(columnName = COLUMN_EXTRA_FLAG)
     String mExtraFlag = new JsonObject().toString();
+
+    // Swarm
+    private String mConversationId;
+    private String mMessageId;
+    private List<String> mParentIds;
 
     /* Needed by ORMLite */
     public Interaction() {
@@ -168,6 +175,18 @@ public class Interaction {
         return mDaemonId == null ? null : Long.toString(mDaemonId);
     }
 
+    public String getMessageId() {
+        return mMessageId;
+    }
+
+    public String getConversationId() {
+        return mConversationId;
+    }
+
+    public List<String> getParentIds() {
+        return mParentIds;
+    }
+
     public boolean isIncoming() {
         return mIsIncoming;
     }
@@ -182,6 +201,17 @@ public class Interaction {
 
     public void setContact(CallContact contact) {
         mContact = contact;
+    }
+
+    public void setSwarmInfo(String conversationId) {
+        mConversationId = conversationId;
+        mMessageId = null;
+        mParentIds = null;
+    }
+    public void setSwarmInfo(String conversationId, String messageId, List<String> parents) {
+        mConversationId = conversationId;
+        mMessageId = messageId;
+        mParentIds = parents;
     }
 
     public enum InteractionStatus {
@@ -222,6 +252,7 @@ public class Interaction {
                 case 1:
                     return TRANSFER_CREATED;
                 case 2:
+                case 9:
                     return TRANSFER_ERROR;
                 case 3:
                     return TRANSFER_AWAITING_PEER;
@@ -232,11 +263,7 @@ public class Interaction {
                 case 6:
                     return TRANSFER_FINISHED;
                 case 7:
-                    return TRANSFER_UNJOINABLE_PEER;
                 case 8:
-                    return TRANSFER_UNJOINABLE_PEER;
-                case 9:
-                    return TRANSFER_ERROR;
                 case 10:
                     return TRANSFER_UNJOINABLE_PEER;
                 case 11:
