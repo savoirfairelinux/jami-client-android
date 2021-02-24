@@ -103,7 +103,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
     }
 
     public void conversationClicked(SmartListViewModel viewModel) {
-        startConversation(viewModel.getAccountId(), viewModel.getContact());
+        startConversation(viewModel.getAccountId(), viewModel.getUri());
     }
 
     public void conversationLongClicked(SmartListViewModel smartListViewModel) {
@@ -118,10 +118,11 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
         getView().displayMenuItem();
     }
 
-    private void startConversation(String accountId, CallContact c) {
+    private void startConversation(String accountId, Uri conversationUri) {
+        Log.w(TAG, "startConversation " + accountId + " " + conversationUri);
         SmartListView view = getView();
-        if (view != null && c != null) {
-            view.goToConversation(accountId, c.getPrimaryUri());
+        if (view != null && conversationUri != null) {
+            view.goToConversation(accountId, conversationUri);
         }
     }
 
@@ -130,26 +131,26 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
     }
 
     public void copyNumber(SmartListViewModel smartListViewModel) {
-        getView().copyNumber(smartListViewModel.getContact());
+        getView().copyNumber(smartListViewModel.getUri());
     }
 
     public void clearConversation(SmartListViewModel smartListViewModel) {
-        getView().displayClearDialog(smartListViewModel.getContact());
+        getView().displayClearDialog(smartListViewModel.getUri());
     }
 
-    public void clearConversation(final CallContact callContact) {
+    public void clearConversation(final Uri uri) {
         mConversationDisposable.add(mConversationFacade
-                .clearHistory(mAccount.getAccountID(), callContact.getPrimaryUri())
+                .clearHistory(mAccount.getAccountID(), uri)
                 .subscribeOn(Schedulers.computation()).subscribe());
     }
 
     public void removeConversation(SmartListViewModel smartListViewModel) {
-        getView().displayDeleteDialog(smartListViewModel.getContact());
+        getView().displayDeleteDialog(smartListViewModel.getUri());
     }
 
-    public void removeConversation(CallContact callContact) {
+    public void removeConversation(Uri uri) {
         mConversationDisposable.add(mConversationFacade
-                .removeConversation(mAccount.getAccountID(), callContact.getPrimaryUri())
+                .removeConversation(mAccount.getAccountID(), uri)
                 .subscribeOn(Schedulers.computation()).subscribe());
     }
 
@@ -169,7 +170,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
                                 vms.add((SmartListViewModel) ob);
                             return vms;
                         }))
-                //.throttleLatest(150, TimeUnit.MILLISECONDS, mUiScheduler)
+                .throttleLatest(150, TimeUnit.MILLISECONDS, mUiScheduler)
                 .observeOn(mUiScheduler)
                 .subscribe(viewModels -> {
                     final SmartListView view = getView();
@@ -189,7 +190,8 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
     }
 
     public void banContact(SmartListViewModel smartListViewModel) {
-        CallContact contact = smartListViewModel.getContact();
-        mAccountService.removeContact(mAccount.getAccountID(), contact.getPrimaryNumber(), true);
+        //CallContact contact = smartListViewModel.getContact();
+        if (smartListViewModel.getContact().size() == 1)
+            mAccountService.removeContact(mAccount.getAccountID(), smartListViewModel.getContact().get(0).getPrimaryNumber(), true);
     }
 }

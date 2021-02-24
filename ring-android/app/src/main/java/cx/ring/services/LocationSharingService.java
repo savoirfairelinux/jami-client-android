@@ -212,7 +212,7 @@ public class LocationSharingService extends Service implements LocationListener 
                             StringMap msgs = new StringMap();
                             msgs.setRaw(CallService.MIME_GEOLOCATION, Blob.fromString(location.toString()));
                             for (ConversationPath p : contactLocationShare.keySet())  {
-                                Ringservice.sendAccountTextMessage(p.getAccountId(), p.getContactId(), msgs);
+                                Ringservice.sendAccountTextMessage(p.getAccountId(), p.getConversationId(), msgs);
                             }
                         }));
             } else {
@@ -237,7 +237,7 @@ public class LocationSharingService extends Service implements LocationListener 
                 Log.w(TAG, "location send " + jsonObject + " to " + contactLocationShare.size());
                 StringMap msgs = new StringMap();
                 msgs.setRaw(CallService.MIME_GEOLOCATION, Blob.fromString(jsonObject.toString()));
-                Ringservice.sendAccountTextMessage(path.getAccountId(), path.getContactId(), msgs);
+                Ringservice.sendAccountTextMessage(path.getAccountId(), path.getConversationId(), msgs);
             }
 
             mContactSharingSubject.onNext(contactLocationShare.keySet());
@@ -310,7 +310,7 @@ public class LocationSharingService extends Service implements LocationListener 
         // Log.w(TAG, "getNotification " + firsPath.getContactId());
 
         return mConversationFacade.getAccountSubject(firsPath.getAccountId())
-                .map(account -> account.getContactFromCache(new Uri(firsPath.getContactId())))
+                .map(account -> account.getContactFromCache(firsPath.getConversationUri()))
                 .map(contact -> {
                     String title;
                     final Intent stopIntent = new Intent(ACTION_STOP).setClass(getApplicationContext(), LocationSharingService.class);
