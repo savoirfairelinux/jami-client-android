@@ -20,19 +20,13 @@
 package cx.ring.tv.cards.contacts;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+
 import androidx.leanback.widget.ImageCardView;
 import android.view.ContextThemeWrapper;
 
-import com.bumptech.glide.request.target.ViewTarget;
-import com.bumptech.glide.request.transition.Transition;
-
 import cx.ring.R;
-import cx.ring.contacts.AvatarFactory;
-import cx.ring.model.CallContact;
-import cx.ring.smartlist.SmartListViewModel;
+
+import net.jami.smartlist.SmartListViewModel;
 import cx.ring.tv.cards.AbstractCardPresenter;
 import cx.ring.tv.cards.Card;
 import cx.ring.views.AvatarDrawable;
