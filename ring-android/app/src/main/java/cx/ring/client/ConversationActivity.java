@@ -46,14 +46,11 @@ public class ConversationActivity extends AppCompatActivity implements Colorable
     private Intent mPendingIntent = null;
     private ActivityConversationBinding binding;
 
-    private boolean mIsBubble;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         String action = intent == null ? null : intent.getAction();
-
         if (intent != null) {
             conversationPath = ConversationPath.fromIntent(intent);
         } else if (savedInstanceState != null) {
@@ -63,7 +60,7 @@ public class ConversationActivity extends AppCompatActivity implements Colorable
             finish();
             return;
         }
-        mIsBubble = getIntent().getBooleanExtra(NotificationServiceImpl.EXTRA_BUBBLE, false);
+        boolean isBubble = getIntent().getBooleanExtra(NotificationServiceImpl.EXTRA_BUBBLE, false);
 
         JamiApplication.getInstance().startDaemon();
         binding = ActivityConversationBinding.inflate(getLayoutInflater());
@@ -74,9 +71,14 @@ public class ConversationActivity extends AppCompatActivity implements Colorable
         if (ab != null)
             ab.setDisplayHomeAsUpEnabled(true);
 
+        binding.contactImage.setOnClickListener(v -> {
+            if (mConversationFragment != null)
+                mConversationFragment.openContact();
+        });
+
         if (mConversationFragment == null) {
             Bundle bundle = conversationPath.toBundle();
-            bundle.putBoolean(NotificationServiceImpl.EXTRA_BUBBLE, mIsBubble);
+            bundle.putBoolean(NotificationServiceImpl.EXTRA_BUBBLE, isBubble);
 
             mConversationFragment = new ConversationFragment();
             mConversationFragment.setArguments(bundle);
