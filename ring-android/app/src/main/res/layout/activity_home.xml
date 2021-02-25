@@ -64,6 +64,7 @@ along with this program; if not, write to the Free Software
                 android:dropDownWidth="260dp"
                 android:paddingStart="-60dp" />
 
+            <!--
             <RelativeLayout
                 android:id="@+id/tablet_toolbar"
                 android:layout_width="match_parent"
@@ -102,7 +103,7 @@ along with this program; if not, write to the Free Software
                     android:textSize="14sp"
                     tools:text="tom" />
 
-            </RelativeLayout>
+            </RelativeLayout>-->
 
         </com.google.android.material.appbar.MaterialToolbar>
 
