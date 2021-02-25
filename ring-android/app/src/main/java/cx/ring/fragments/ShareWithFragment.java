@@ -49,7 +49,6 @@ import cx.ring.adapters.SmartListAdapter;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.ConversationActivity;
 import cx.ring.facades.ConversationFacade;
-import cx.ring.model.Account;
 import cx.ring.services.ContactService;
 import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.ConversationPath;
@@ -59,6 +58,7 @@ import io.reactivex.disposables.CompositeDisposable;
 
 public class ShareWithFragment extends Fragment {
     private final static String TAG = ShareWithFragment.class.getSimpleName();
+    private final static String SHORTCUT_ID = "android.intent.extra.shortcut.ID";
 
     private CompositeDisposable mDisposable = new CompositeDisposable();
 
@@ -194,6 +194,15 @@ public class ShareWithFragment extends Fragment {
         if (extra != null) {
             if (ConversationPath.fromBundle(extra) != null) {
                 intent.setClass(getActivity(), ConversationActivity.class);
+                startActivity(intent);
+                return;
+            } else if (intent.hasExtra(SHORTCUT_ID)) {
+                ConversationPath conversationPath = ConversationPath.fromKey(extra.getString(SHORTCUT_ID));
+                String accountId = conversationPath.getAccountId();
+                String contactId = conversationPath.getConversationId();
+                extra.putString(ConversationFragment.KEY_ACCOUNT_ID, accountId);
+                extra.putString(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
+                intent.setClass(getActivity(), ConversationActivity.class).putExtras(extra);
                 startActivity(intent);
                 return;
             }

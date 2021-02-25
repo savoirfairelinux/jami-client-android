@@ -3,12 +3,14 @@ package cx.ring.utils;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import org.jetbrains.annotations.Contract;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -74,6 +76,22 @@ public class ConversationPath {
     }
     public static Bundle toBundle(String accountId, cx.ring.model.Uri uri) {
         return toBundle(accountId, uri.getUri());
+    }
+
+    public static String toKey(String accountId, String uri) {
+        return TextUtils.join(",", Arrays.asList(accountId, uri));
+    }
+
+    public static ConversationPath fromKey(String key) {
+        if (key != null) {
+            String[] keys = TextUtils.split(key, ",");
+            String accountId = keys[0];
+            String contactId = keys[1];
+            if (accountId != null && contactId != null) {
+                return new ConversationPath(accountId, contactId);
+            }
+        }
+        return null;
     }
 
     public static ConversationPath fromUri(Uri uri) {
