@@ -540,6 +540,14 @@ public class NotificationServiceImpl implements NotificationService {
                 .setAutoCancel(true)
                 .setColor(ResourcesCompat.getColor(mContext.getResources(), R.color.color_primary_dark, null));
 
+        String key = ConversationPath.toKey(accountId, contactId);
+
+        Person contactPerson = new Person.Builder()
+                .setKey(key)
+                .setName(contactName)
+                .setIcon(contactPicture == null ? null : IconCompat.createWithBitmap(contactPicture))
+                .build();
+
         if (contactPicture != null) {
             messageNotificationBuilder.setLargeIcon(contactPicture);
             Intent intentBubble = new Intent(Intent.ACTION_VIEW, path, mContext, ConversationActivity.class);
@@ -549,7 +557,9 @@ public class NotificationServiceImpl implements NotificationService {
                     .setIcon(IconCompat.createWithAdaptiveBitmap(contactPicture))
                     .setIntent(PendingIntent.getActivity(mContext, 0, intentBubble,
                             PendingIntent.FLAG_UPDATE_CURRENT))
-                    .build());
+                    .build())
+                    .addPerson(contactPerson.getUri())
+                    .setShortcutId(key);
         }
 
         UnreadConversation.Builder unreadConvBuilder = new UnreadConversation.Builder(contactName)
@@ -567,12 +577,6 @@ public class NotificationServiceImpl implements NotificationService {
                     .setKey(accountId)
                     .setName(profile == null || TextUtils.isEmpty(profile.first) ? "You" : profile.first)
                     .setIcon(myPic == null ? null : IconCompat.createWithBitmap(myPic))
-                    .build();
-
-            Person contactPerson = new Person.Builder()
-                    .setKey(contactId)
-                    .setName(contactName)
-                    .setIcon(contactPicture == null ? null : IconCompat.createWithBitmap(contactPicture))
                     .build();
 
             NotificationCompat.MessagingStyle history = new NotificationCompat.MessagingStyle(userPerson);
