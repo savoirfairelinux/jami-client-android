@@ -20,6 +20,7 @@
 package cx.ring.client;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -37,7 +38,11 @@ import androidx.annotation.StringRes;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.Person;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.pm.ShortcutInfoCompat;
+import androidx.core.content.pm.ShortcutManagerCompat;
+import androidx.core.graphics.drawable.IconCompat;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -45,6 +50,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.Future;
 
 import javax.inject.Inject;
 
@@ -63,6 +74,8 @@ import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.interfaces.Colorable;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
+import cx.ring.model.CallContact;
+import cx.ring.model.Conversation;
 import cx.ring.service.DRingService;
 import cx.ring.services.AccountService;
 import cx.ring.services.NotificationService;
@@ -78,6 +91,7 @@ import cx.ring.utils.DeviceUtils;
 import cx.ring.views.SwitchButton;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class HomeActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,
         Spinner.OnItemSelectedListener, Colorable {
@@ -107,6 +121,8 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     public static final String PLUGINS_LIST_SETTINGS_TAG = "PluginsListSettings";
     public static final String PLUGIN_SETTINGS_TAG = "PluginSettings";
     public static final String PLUGIN_PATH_PREFERENCE_TAG = "PluginPathPreference";
+
+    private static final String CONVERSATIONS_CATEGORY = "conversations";
 
     protected Fragment fContent;
     protected ConversationFragment fConversation;
@@ -272,12 +288,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     public void setToolbarState(String title, String subtitle) {
         mBinding.mainToolbar.setLogo(null);
         mBinding.mainToolbar.setTitle(title);
-
-        if (subtitle != null) {
-            mBinding.mainToolbar.setSubtitle(subtitle);
-        } else {
-            mBinding.mainToolbar.setSubtitle(null);
-        }
+        mBinding.mainToolbar.setSubtitle(subtitle);
     }
 
     private void showProfileInfo() {
@@ -342,6 +353,13 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 .switchMap(Account::getUnreadConversations)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(count -> setBadge(R.id.navigation_home, count))));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            mDisposable.add((mAccountService
+                    .getCurrentAccountSubject()
+                    .observeOn(Schedulers.computation())
+                    .subscribe(this::setShareShortcuts)));
+        }
 
         int newOrientation = getResources().getConfiguration().orientation;
         if (mOrientation != newOrientation) {
@@ -746,6 +764,53 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
     public SwitchButton getSwitchButton() {
         return mBinding.accountSwitch;
+    }
+
+    private void setShareShortcuts(Account account) {
+        Collection<Conversation> conversations = account.getConversations();
+        List<Future<Bitmap>> futureIcons = new ArrayList<>(conversations.size());
+        int targetSize = (int) (AvatarFactory.SIZE_NOTIF * getResources().getDisplayMetrics().density);
+
+        for (Conversation conversation : conversations) {
+            CallContact contact = conversation.getContact();
+            futureIcons.add(AvatarFactory.getBitmapAvatar(this, contact, targetSize)
+                    .subscribeOn(Schedulers.computation())
+                    .toFuture());
+        }
+        int i = 0;
+        List<ShortcutInfoCompat> shortcutInfoList = new ArrayList<>(conversations.size());
+        for (Conversation conversation : conversations) {
+            CallContact contact = conversation.getContact();
+            IconCompat icon = null;
+            try {
+                icon = IconCompat.createWithBitmap(futureIcons.get(i).get());
+            } catch (Exception e) {
+                Log.w("RingChooserService", "Failed to load icon", e);
+            }
+
+            Bundle bundle = ConversationPath.toBundle(account.getAccountID(), contact.getPrimaryNumber());
+            String key = ConversationPath.toKey(account.getAccountID(), contact.getPrimaryNumber());
+
+            Person person = new Person.Builder()
+                    .setName(contact.getDisplayName())
+                    .setKey(key)
+                    .build();
+
+            ShortcutInfoCompat shortcutInfo = new ShortcutInfoCompat.Builder(this, key)
+                    .setShortLabel(contact.getDisplayName())
+                    .setPerson(person)
+                    .setLongLived(true)
+                    .setIcon(icon)
+                    .setCategories(Collections.singleton(CONVERSATIONS_CATEGORY))
+                    .setIntent(new Intent(Intent.ACTION_SEND, Uri.EMPTY, this, ShareActivity.class).putExtras(bundle))
+                    .build();
+
+            shortcutInfoList.add(shortcutInfo);
+            i++;
+        }
+
+        ShortcutManagerCompat.removeAllDynamicShortcuts(this);
+        ShortcutManagerCompat.addDynamicShortcuts(this, shortcutInfoList);
     }
 
 }
