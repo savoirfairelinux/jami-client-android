@@ -34,6 +34,12 @@ import android.util.Log;
 
 import androidx.core.content.ContextCompat;
 
+import net.jami.daemon.IntVect;
+import net.jami.daemon.StringVect;
+import net.jami.services.DeviceRuntimeService;
+import net.jami.utils.FileUtils;
+import net.jami.utils.StringUtils;
+
 import java.io.File;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -41,14 +47,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import cx.ring.application.JamiApplication;
-import net.jami.daemon.IntVect;
-import net.jami.daemon.StringVect;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.NetworkUtils;
-
-import net.jami.services.DeviceRuntimeService;
-import net.jami.utils.FileUtils;
-import net.jami.utils.StringUtils;
 
 public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
 

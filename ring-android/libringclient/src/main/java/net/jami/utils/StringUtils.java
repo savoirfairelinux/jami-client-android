@@ -24,10 +24,11 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 public final class StringUtils {
 
-    static private final HashSet<Character.UnicodeBlock> EMOJI_BLOCKS = new HashSet<>(Arrays.asList(
+    static private final Set<Character.UnicodeBlock> EMOJI_BLOCKS = new HashSet<>(Arrays.asList(
             Character.UnicodeBlock.EMOTICONS,
             Character.UnicodeBlock.DINGBATS,
             Character.UnicodeBlock.MISCELLANEOUS_SYMBOLS,
@@ -60,7 +61,7 @@ public final class StringUtils {
         }
     }
     public static String toPassword(String s){
-        if(s == null || s.isEmpty()){
+        if(isEmpty(s)){
             return "";
         }
         char[] chars = new char[s.length()];

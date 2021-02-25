@@ -61,7 +61,7 @@ along with this program; if not, write to the Free Software
 
     <dimen name="share_preview_height">120dp</dimen>
     <dimen name="app_bar_height">260dp</dimen>
-    <dimen name="fab_margin">32dp</dimen>
+    <dimen name="fab_margin">28dp</dimen>
     <dimen name="fab_margin_mini">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
 
