@@ -19,19 +19,6 @@
  */
 package cx.ring.viewholders;
 
-import cx.ring.R;
-import cx.ring.databinding.ItemSmartlistBinding;
-import cx.ring.databinding.ItemSmartlistHeaderBinding;
-import net.jami.model.ContactEvent;
-import net.jami.model.Interaction;
-import net.jami.model.Call;
-import net.jami.smartlist.SmartListViewModel;
-
-import cx.ring.utils.ResourceMapper;
-import cx.ring.views.AvatarDrawable;
-import io.reactivex.Observable;
-import io.reactivex.disposables.CompositeDisposable;
-
 import android.content.Context;
 import android.graphics.Typeface;
 import android.text.format.DateUtils;
@@ -40,12 +27,24 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import net.jami.model.Call;
+import net.jami.model.ContactEvent;
+import net.jami.model.Interaction;
+import net.jami.smartlist.SmartListViewModel;
+
 import java.util.concurrent.TimeUnit;
+
+import cx.ring.R;
+import cx.ring.databinding.ItemSmartlistBinding;
+import cx.ring.databinding.ItemSmartlistHeaderBinding;
+import cx.ring.utils.ResourceMapper;
+import cx.ring.views.AvatarDrawable;
+import io.reactivex.Observable;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class SmartListViewHolder extends RecyclerView.ViewHolder {
     public final ItemSmartlistBinding binding;
     public final ItemSmartlistHeaderBinding headerBinding;
-
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     public SmartListViewHolder(@NonNull ItemSmartlistBinding b) {
