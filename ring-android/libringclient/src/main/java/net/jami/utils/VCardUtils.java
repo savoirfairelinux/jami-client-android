@@ -166,7 +166,7 @@ public final class VCardUtils {
      */
     private static VCard loadFromDisk(File path) throws IOException {
         if (path == null || !path.exists()) {
-            Log.d(TAG, "vcardPath not exist " + path);
+            // Log.d(TAG, "vcardPath not exist " + path);
             return null;
         }
         if (path.length() > VCARD_MAX_SIZE) {

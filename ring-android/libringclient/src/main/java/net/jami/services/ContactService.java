@@ -119,11 +119,14 @@ public abstract class ContactService {
                         })
                         .filter(c -> c.isUsernameLoaded() && c.detailsLoaded)
                         .replay(1)
-                        .refCount(5, TimeUnit.SECONDS));
+                        .refCount());
             }
 
             return withPresence
-                    ? Observable.combineLatest(contact.getUpdates(), contact.getPresenceUpdates(), (c, p) -> c)
+                    ? Observable.combineLatest(contact.getUpdates(), contact.getPresenceUpdates(), (c, p) -> {
+                //Log.w(TAG, "observeContact UPDATE " + c + " " + p);
+                return c;
+            })
                     : contact.getUpdates();
         }
     }
