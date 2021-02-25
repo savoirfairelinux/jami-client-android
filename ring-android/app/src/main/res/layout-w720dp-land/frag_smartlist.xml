@@ -140,7 +140,7 @@
         android:layout_width="1dp"
         android:layout_height="match_parent"
         android:layout_toEndOf="@+id/list_coordinator"
-        android:background="@color/darker_gray" />
+        android:background="@color/transparent_grey" />
 
     <FrameLayout
         android:id="@+id/conversation_container"
