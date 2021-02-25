@@ -21,27 +21,28 @@ along with this program; if not, write to the Free Software
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="112dp"
+    android:layout_width="72dp"
     android:layout_height="wrap_content"
     android:background="?android:attr/selectableItemBackground"
     android:descendantFocusability="blocksDescendants"
-    android:padding="8dp">
+    android:padding="8dp"
+    tools:context=".client.ContactDetailsActivity">
 
     <ImageView
         android:id="@+id/photo"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_centerHorizontal="true"
-        android:layout_margin="8dp"
         android:contentDescription="@string/contact_picture_description"
         android:scaleType="fitCenter"
-        tools:src="@drawable/baseline_person_24" />
+        tools:src="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/display_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/photo"
+        android:layout_marginTop="8dp"
         android:ellipsize="end"
         android:gravity="center_horizontal"
         android:layout_centerHorizontal="true"
@@ -50,7 +51,7 @@ along with this program; if not, write to the Free Software
         android:textAlignment="center"
         android:textColor="@color/textColorPrimary"
         android:textIsSelectable="false"
-        android:textSize="16sp"
-        tools:text="Thomas" />
+        android:textSize="14sp"
+        tools:text="@tools:sample/full_names" />
 
 </RelativeLayout>
