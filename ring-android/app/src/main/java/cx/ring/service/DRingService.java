@@ -664,6 +664,7 @@ public class DRingService extends Service {
         long id = extras.getLong(KEY_TRANSFER_ID);
         ConversationPath path = ConversationPath.fromUri(uri);
         if (action.equals(ACTION_FILE_ACCEPT)) {
+            mNotificationService.removeTransferNotification(path.getAccountId(), path.getConversationUri(), id);
             mAccountService.acceptFileTransfer(path.getAccountId(), path.getConversationUri(), id);
         } else if (action.equals(ACTION_FILE_CANCEL)) {
             mConversationFacade.cancelFileTransfer(path.getAccountId(), path.getConversationUri(), id);

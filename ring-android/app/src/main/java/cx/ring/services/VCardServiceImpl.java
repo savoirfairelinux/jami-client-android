@@ -38,6 +38,7 @@ import ezvcard.VCard;
 import ezvcard.parameter.ImageType;
 import ezvcard.property.Photo;
 import ezvcard.property.RawProperty;
+import io.reactivex.Maybe;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
@@ -63,9 +64,9 @@ public class VCardServiceImpl extends VCardService {
     }
 
     @Override
-    public Single<VCard> loadSmallVCard(String accountId, int maxSize) {
+    public Maybe<VCard> loadSmallVCard(String accountId, int maxSize) {
         return VCardUtils.loadLocalProfileFromDisk(mContext.getFilesDir(), accountId)
-                .filter( vcard -> !VCardUtils.isEmpty(vcard)).toSingle()
+                .filter(vcard -> !VCardUtils.isEmpty(vcard))
                 .map(vcard -> {
                     if (!vcard.getPhotos().isEmpty()) {
                         // Reduce photo to fit in maxSize, assuming JPEG compress with ratio of at least 8
