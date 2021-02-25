@@ -422,7 +422,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:label="@string/conversation_details"
             android:icon="@mipmap/ic_launcher"
             android:resizeableActivity="true"
-            android:theme="@style/AppTheme.DarkToolbar"
+            android:theme="@style/AppTheme.Fullscreen"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".client.ConversationSelectionActivity"
