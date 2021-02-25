@@ -1,0 +1,13 @@
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <share-target android:targetClass="cx.ring.client.ShareActivity">
+        <data android:mimeType="*/*"/>
+        <category android:name="cx.ring.client.ShareActivity"/>
+    </share-target>
+    <shortcut
+        android:enabled="true">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="cx.ring.fragments.ConversationFragment"
+            android:targetPackage="cx.ring.fragments"/>
+    </shortcut>
+</shortcuts>
