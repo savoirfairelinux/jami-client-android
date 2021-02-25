@@ -28,7 +28,8 @@
         android:textSize="24dp"
         android:textColor="@color/black"
         app:tint="@color/colorPrimary"
-        tools:background="@drawable/baseline_call_24" />
+        tools:background="@drawable/baseline_call_24"
+        tools:text=" "/>
 
     <TextView
         android:id="@+id/action_title"
