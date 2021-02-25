@@ -24,6 +24,7 @@ import android.animation.LayoutTransition;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ComponentName;
@@ -860,6 +861,10 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         mVideoCallBtn = menu.findItem(R.id.conv_action_videocall);
     }
 
+    public void openContact() {
+        presenter.openContact();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
@@ -1021,8 +1026,11 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
 
     @Override
     public void goToContactActivity(String accountId, Uri uri) {
+        Toolbar toolbar = requireActivity().findViewById(R.id.main_toolbar);
+        ImageView logo = toolbar.findViewById(R.id.contact_image);
         startActivity(new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, uri))
-                .setClass(requireActivity().getApplicationContext(), ContactDetailsActivity.class));
+                        .setClass(requireActivity().getApplicationContext(), ContactDetailsActivity.class),
+                ActivityOptions.makeSceneTransitionAnimation(getActivity(), logo, "conversationIcon").toBundle());
     }
 
     @Override
@@ -1039,61 +1047,35 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         if (!isVisible()) {
             return;
         }
-
-        ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
-        if (actionBar == null) {
-            return;
-        }
-
-        Context context = actionBar.getThemedContext();
-
+        Activity activity = requireActivity();
         String displayName = conversation.getTitle();
         String identity = conversation.getUriTitle();
 
-        Activity activity = getActivity();
-        if (activity instanceof HomeActivity) {
-            Toolbar toolbar = getActivity().findViewById(R.id.main_toolbar);
-            TextView title = toolbar.findViewById(R.id.contact_title);
-            TextView subtitle = toolbar.findViewById(R.id.contact_subtitle);
-            ImageView logo = toolbar.findViewById(R.id.contact_image);
+        Toolbar toolbar = activity.findViewById(R.id.main_toolbar);
+        TextView title = toolbar.findViewById(R.id.contact_title);
+        TextView subtitle = toolbar.findViewById(R.id.contact_subtitle);
+        ImageView logo = toolbar.findViewById(R.id.contact_image);
 
-            /*if (!((HomeActivity) activity).isConversationSelected()) {
-                title.setText("");
-                subtitle.setText("");
-                logo.setImageDrawable(null);
-                return;
-            }*/
+        logo.setImageDrawable(mConversationAvatar);
+        logo.setVisibility(View.VISIBLE);
+        title.setText(displayName);
+        title.setTextSize(15);
+        title.setTypeface(null, Typeface.NORMAL);
 
-            logo.setVisibility(View.VISIBLE);
-            title.setText(displayName);
-            title.setTextSize(15);
-            title.setTypeface(null, Typeface.NORMAL);
-
-            if (identity != null && !identity.equals(displayName)) {
-                subtitle.setText(identity);
-
-                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) title.getLayoutParams();
-                params.addRule(RelativeLayout.ALIGN_TOP, R.id.contact_image);
-                title.setLayoutParams(params);
-            } else {
-                subtitle.setText("");
-
-                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) title.getLayoutParams();
-                params.removeRule(RelativeLayout.ALIGN_TOP);
-                params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-                title.setLayoutParams(params);
-            }
-
-            logo.setImageDrawable(mConversationAvatar);
+        if (identity != null && !identity.equals(displayName)) {
+            subtitle.setText(identity);
+            subtitle.setVisibility(View.VISIBLE);
+            /*RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) title.getLayoutParams();
+            params.addRule(RelativeLayout.ALIGN_TOP, R.id.contact_image);
+            title.setLayoutParams(params);*/
         } else {
-            if (identity != null && !identity.equals(displayName)) {
-                actionBar.setSubtitle(identity);
-            }
-            actionBar.setTitle(displayName);
-            int targetSize = (int) (AvatarFactory.SIZE_AB * context.getResources().getDisplayMetrics().density);
-            mConversationAvatar.setInSize(targetSize);
-            actionBar.setLogo(null);
-            actionBar.setLogo(mConversationAvatar);
+            subtitle.setText("");
+            subtitle.setVisibility(View.GONE);
+
+            /*RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) title.getLayoutParams();
+            params.removeRule(RelativeLayout.ALIGN_TOP);
+            params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+            title.setLayoutParams(params);*/
         }
     }
 
