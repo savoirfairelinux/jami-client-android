@@ -147,8 +147,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
     private final CompositeDisposable mDisposable = new CompositeDisposable();
 
-    private boolean conversationSelected = false;
-
     /* called before activity is killed, e.g. rotation */
     @Override
     protected void onSaveInstanceState(@NonNull Bundle bundle) {
@@ -190,6 +188,14 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
         mBinding.spinnerToolbar.setOnItemSelectedListener(this);
         mBinding.accountSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> enableAccount(isChecked));
+
+        if (mBinding.contactImage != null) {
+            mBinding.contactImage.setOnClickListener(v -> {
+                if (fConversation != null) {
+                    fConversation.openContact();
+                }
+            });
+        }
 
         // if app opened from notification display trust request fragment when mService will connected
         Intent intent = getIntent();
@@ -369,7 +375,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
             if (DeviceUtils.isTablet(this)) {
                 selectNavigationItem(R.id.navigation_home);
                 showTabletToolbar();
-                conversationSelected = true;
             }
         }
     }
@@ -399,13 +404,12 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         fConversation = new ConversationFragment();
         fConversation.setArguments(bundle);
 
+        //getSupportFragmentManager().get
         if (!(fContent instanceof ContactRequestsFragment)) {
             selectNavigationItem(R.id.navigation_home);
         }
 
         showTabletToolbar();
-
-        conversationSelected = true;
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -451,7 +455,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         for (int i = 0; i < entryCount; ++i) {
             fragmentManager.popBackStack();
         }
-        fContent = fragmentManager.findFragmentById(R.id.main_frame);
+        //fContent = fragmentManager.findFragmentById(R.id.main_frame);
         hideTabletToolbar();
         setToolbarElevation(false);
     }
@@ -517,7 +521,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                         .setReorderingAllowed(true)
                         .addToBackStack(CONTACT_REQUESTS_TAG)
                         .commit();
-                conversationSelected = false;
                 showProfileInfo();
                 showToolbarSpinner();
                 break;
@@ -532,7 +535,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                         .replace(R.id.main_frame, fContent, HOME_TAG)
                         .setReorderingAllowed(true)
                         .commit();
-                conversationSelected = false;
                 showProfileInfo();
                 showToolbarSpinner();
                 break;
@@ -560,7 +562,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                             .replace(getFragmentContainerId(), fContent, ACCOUNTS_TAG)
                             .addToBackStack(ACCOUNTS_TAG)
                             .commit();
-                    conversationSelected = false;
                     showProfileInfo();
                     showToolbarSpinner();
                     break;
@@ -608,7 +609,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     private void hideTabletToolbar() {
-        if (mBinding != null) {
+        if (mBinding != null && mBinding.tabletToolbar != null) {
             mBinding.contactTitle.setText(null);
             mBinding.contactSubtitle.setText(null);
             mBinding.contactImage.setImageDrawable(null);
@@ -617,17 +618,19 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     private void showTabletToolbar() {
-        if (mBinding != null && DeviceUtils.isTablet(this)) {
+        if (mBinding != null && mBinding.tabletToolbar != null && DeviceUtils.isTablet(this)) {
             mBinding.tabletToolbar.setVisibility(View.VISIBLE);
         }
     }
 
     public void setTabletTitle(@StringRes int titleRes) {
-        mBinding.tabletToolbar.setVisibility(View.VISIBLE);
-        mBinding.contactTitle.setText(titleRes);
-        mBinding.contactTitle.setTextSize(19);
-        mBinding.contactTitle.setTypeface(null, Typeface.BOLD);
-        mBinding.contactImage.setVisibility(View.GONE);
+        if (mBinding.tabletToolbar != null) {
+            mBinding.tabletToolbar.setVisibility(View.VISIBLE);
+            mBinding.contactTitle.setText(titleRes);
+            mBinding.contactTitle.setTextSize(19);
+            mBinding.contactTitle.setTypeface(null, Typeface.BOLD);
+            mBinding.contactImage.setVisibility(View.GONE);
+        }
         /*RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.contactTitle.getLayoutParams();
         params.removeRule(RelativeLayout.ALIGN_TOP);
         params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
@@ -654,10 +657,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         if (mBinding != null && !DeviceUtils.isTablet(this)) {
             mBinding.spinnerToolbar.setVisibility(View.GONE);
         }
-    }
-
-    public boolean isConversationSelected(){
-        return conversationSelected;
     }
 
     private int getFragmentContainerId() {
