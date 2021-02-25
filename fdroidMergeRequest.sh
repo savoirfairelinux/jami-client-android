@@ -74,7 +74,7 @@ echo "  - versionName: ${versionName}
       - lrc
       - packaging
       - scripts
-    prebuild: $ANDROID_HOME/tools/bin/sdkmanager 'platforms;android-30' 'build-tools;30.0.2'
+    prebuild: \$ANDROID_HOME/tools/bin/sdkmanager 'platforms;android-30' 'build-tools;30.0.2'
     build:
       - cd ../..
       - export ANDROID_NDK_ROOT=\"\$ANDROID_NDK\"
