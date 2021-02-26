@@ -31,6 +31,7 @@ import cx.ring.daemon.ConfigurationCallback;
 import cx.ring.daemon.DataTransferCallback;
 import cx.ring.daemon.IntVect;
 import cx.ring.daemon.IntegerMap;
+import cx.ring.daemon.PluginCallback;
 import cx.ring.daemon.PresenceCallback;
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
@@ -61,6 +62,9 @@ public class DaemonService {
     @Inject
     protected AccountService mAccountService;
 
+    @Inject
+    protected PluginService mPluginService;
+
     private final SystemInfoCallbacks mSystemInfoCallbacks;
 
     // references must be kept to avoid garbage collection while pointers are stored in the daemon.
@@ -69,6 +73,7 @@ public class DaemonService {
     private DaemonCallAndConferenceCallback mCallAndConferenceCallback;
     private DaemonConfigurationCallback mConfigurationCallback;
     private DaemonDataTransferCallback mDataCallback;
+    private DaemonPluginCallback mPluginCallback;
 
     private boolean mDaemonStarted = false;
 
@@ -97,7 +102,8 @@ public class DaemonService {
             mCallAndConferenceCallback = new DaemonCallAndConferenceCallback();
             mConfigurationCallback = new DaemonConfigurationCallback();
             mDataCallback = new DaemonDataTransferCallback();
-            Ringservice.init(mConfigurationCallback, mCallAndConferenceCallback, mPresenceCallback, mDataCallback, mHardwareCallback);
+            mPluginCallback = new DaemonPluginCallback();
+            Ringservice.init(mConfigurationCallback, mCallAndConferenceCallback, mPresenceCallback, mDataCallback, mHardwareCallback, mPluginCallback);
             Log.i(TAG, "DaemonService started");
         }
     }
@@ -380,6 +386,13 @@ public class DaemonService {
         public void dataTransferEvent(long transferId, int eventCode) {
             Log.d(TAG, "dataTransferEvent: transferId=" + transferId + ", eventCode=" + eventCode);
             mAccountService.dataTransferEvent(transferId, eventCode);
+        }
+    }
+
+    class DaemonPluginCallback extends PluginCallback {
+        @Override
+        public void askTrustPluginIssuer(String issuer, String companyDivision, String pluginName, String rootPath) {
+            mPluginService.askTrustPluginIssuer(issuer, companyDivision, pluginName, rootPath);
         }
     }
 }
