@@ -70,6 +70,7 @@ import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.HistoryService;
 import cx.ring.services.NotificationService;
+import cx.ring.services.PluginService;
 import cx.ring.services.PreferencesService;
 import cx.ring.tv.call.TVCallActivity;
 import cx.ring.utils.ConversationPath;
@@ -133,6 +134,9 @@ public class DRingService extends Service {
     @Inject
     @Singleton
     protected ConversationFacade mConversationFacade;
+    @Inject
+    @Singleton
+    protected PluginService mPluginService;
 
     private final Handler mHandler = new Handler();
     private final CompositeDisposable mDisposableBag = new CompositeDisposable();
