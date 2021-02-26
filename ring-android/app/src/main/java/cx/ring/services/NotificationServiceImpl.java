@@ -133,10 +133,11 @@ public class NotificationServiceImpl implements NotificationService {
     protected HistoryService mHistoryService;
     @Inject
     protected DeviceRuntimeService mDeviceRuntimeService;
+
     private NotificationManagerCompat notificationManager;
     private final Random random = new Random();
     private int avatarSize;
-    private final LinkedHashMap<Integer, Conference> currentCalls = new LinkedHashMap<>();
+    private final LinkedHashMap<String, Conference> currentCalls = new LinkedHashMap<>();
     private final ConcurrentHashMap<Integer, Notification> callNotifications = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<Integer, Notification> dataTransferNotifications = new ConcurrentHashMap<>();
 
@@ -406,7 +407,7 @@ public class NotificationServiceImpl implements NotificationService {
         Notification notification = null;
 
         // Build notification
-        int id = conference.getId().hashCode();
+        String id = conference.getId();
         currentCalls.remove(id);
         if (!remove) {
             currentCalls.put(id, conference);

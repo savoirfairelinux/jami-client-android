@@ -565,16 +565,17 @@ public class AvatarDrawable extends Drawable {
         }
         int iw = cropCircle ? d : bounds.width();
         int ih = cropCircle ? d : bounds.height();
+        if (iw <= 0 || ih <= 0) {
+            //for (Paint p : clipPaint)
+            //    p.setShader(null);
+            return;
+        }
         for (int i = 0, n = workspace.size(); i < n; i++) {
             if (workspace.get(i) != null) {
                 workspace.get(i).recycle();
                 workspace.set(i, null);
+                clipPaint.get(i).setShader(null);
             }
-        }
-        if (iw <= 0 || ih <= 0) {
-            for (Paint p : clipPaint)
-                p.setShader(null);
-            return;
         }
         if (cropCircle) {
             for (int i = 0, s = workspace.size(); i < s; i++) {
