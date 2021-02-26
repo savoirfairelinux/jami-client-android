@@ -44,6 +44,8 @@ import cx.ring.services.LogService;
 import cx.ring.services.LogServiceImpl;
 import cx.ring.services.NotificationService;
 import cx.ring.services.NotificationServiceImpl;
+import cx.ring.services.PluginService;
+import cx.ring.services.PluginServiceImpl;
 import cx.ring.services.PreferencesService;
 import cx.ring.services.SharedPreferencesServiceImpl;
 import cx.ring.services.VCardService;
@@ -176,5 +178,14 @@ public class ServiceInjectionModule {
     @Singleton
     Scheduler provideUiScheduler() {
         return AndroidSchedulers.mainThread();
+    }
+
+
+    @Provides
+    @Singleton
+    PluginService providePluginService() {
+        PluginService pluginService = new PluginServiceImpl(null);
+        mJamiApplication.getInjectionComponent().inject(pluginService);
+        return pluginService;
     }
 }

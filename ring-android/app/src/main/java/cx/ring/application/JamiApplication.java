@@ -69,6 +69,7 @@ import cx.ring.services.ContactService;
 import cx.ring.services.DaemonService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
+import cx.ring.services.PluginService;
 import cx.ring.services.PreferencesService;
 import cx.ring.utils.AndroidFileUtils;
 import io.reactivex.Completable;
@@ -103,6 +104,8 @@ public abstract class JamiApplication extends Application {
     ContactService mContactService;
     @Inject
     ConversationFacade mConversationFacade;
+    @Inject
+    PluginService mPluginService;
 
     private JamiInjectionComponent mJamiInjectionComponent;
     private final Map<String, Boolean> mPermissionsBeingAsked = new HashMap<>();;
@@ -341,6 +344,10 @@ public abstract class JamiApplication extends Application {
 
     public HardwareService getHardwareService() {
         return mHardwareService;
+    }
+
+    public PluginService getPluginService() {
+        return mPluginService;
     }
 
     private void setupActivityListener() {

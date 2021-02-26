@@ -66,6 +66,7 @@ import cx.ring.model.AccountConfig;
 import cx.ring.service.DRingService;
 import cx.ring.services.AccountService;
 import cx.ring.services.NotificationService;
+import cx.ring.services.PluginService;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.settings.VideoSettingsFragment;
 import cx.ring.settings.pluginssettings.PluginDetails;
@@ -122,6 +123,8 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     AccountService mAccountService;
     @Inject
     NotificationService mNotificationService;
+    @Inject
+    PluginService mPluginService;
 
     private ActivityHomeBinding mBinding;
 
@@ -662,7 +665,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
             return;
         }
 
-        fContent = new PluginsListSettingsFragment();
+        fContent = new PluginsListSettingsFragment(mPluginService);
         getSupportFragmentManager()
                 .beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)

@@ -2,9 +2,11 @@ package cx.ring.settings.pluginssettings;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CancellationSignal;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,25 +18,38 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import cx.ring.R;
 import cx.ring.account.JamiAccountSummaryFragment;
 import cx.ring.client.HomeActivity;
 import cx.ring.daemon.Ringservice;
 import cx.ring.databinding.FragPluginsListSettingsBinding;
+import cx.ring.facades.ConversationFacade;
 import cx.ring.plugins.PluginUtils;
+import cx.ring.services.AccountService;
+import cx.ring.services.CallService;
+import cx.ring.services.ContactService;
+import cx.ring.services.DeviceRuntimeService;
+import cx.ring.services.HardwareService;
+import cx.ring.services.PluginService;
+import cx.ring.services.PluginServiceImpl;
 import cx.ring.utils.AndroidFileUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class PluginsListSettingsFragment extends Fragment implements PluginsListAdapter.PluginListItemListener {
+public class PluginsListSettingsFragment extends Fragment implements PluginsListAdapter.PluginListItemListener, PluginServiceImpl.PluginServiceInterface {
 
     public static final String TAG = PluginsListSettingsFragment.class.getSimpleName();
+    private String mPluginName = "";
+    private String mRootPath = "";
 
     private final OnBackPressedCallback mOnBackPressedCallback = new OnBackPressedCallback(false) {
         @Override
@@ -51,7 +66,14 @@ public class PluginsListSettingsFragment extends Fragment implements PluginsList
 
     private FragPluginsListSettingsBinding binding;
     private PluginsListAdapter mAdapter;
+    private PluginServiceImpl mPluginService;
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
+
+    @Inject
+    public PluginsListSettingsFragment(PluginService pluginService) {
+        mPluginService = (PluginServiceImpl) pluginService;
+        mPluginService.listener = this;
+    }
 
     @Nullable
     @Override
@@ -157,19 +179,8 @@ public class PluginsListSettingsFragment extends Fragment implements PluginsList
         mCompositeDisposable.add(AndroidFileUtils.getCacheFile(requireContext(), uri)
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(file -> installPluginFile(file, force))
-                .subscribe(filename -> {
-                        String[] plugin = filename.split(".jpl");
-                        List<PluginDetails> availablePlugins = PluginUtils.getInstalledPlugins(requireContext());
-                        for (PluginDetails availablePlugin : availablePlugins) {
-                            if (availablePlugin.getName().equals(plugin[0])) {
-                                availablePlugin.setEnabled(true);
-                                onPluginEnabled(availablePlugin);
-                            }
-                        }
-                        mAdapter.updatePluginsList(PluginUtils.getInstalledPlugins(requireContext()));
-                        Toast.makeText(requireContext(), "Plugin: " + filename + " successfully installed", Toast.LENGTH_LONG).show();
-                        mCompositeDisposable.dispose();
-                    }, e -> {
+                .subscribe(filename ->
+                        mCompositeDisposable.dispose(), e -> {
                         if (binding != null) {
                             Snackbar sb = Snackbar.make(binding.listLayout, "" + e.getMessage(), Snackbar.LENGTH_LONG);
                             sb.setAction(R.string.plugin_force_install, v -> installPluginFromUri(uri, true));
@@ -189,5 +200,39 @@ public class PluginsListSettingsFragment extends Fragment implements PluginsList
         super.onDestroy();
         mCompositeDisposable.dispose();
     }
-}
 
+    @Override
+    public void onAskTrustPluginIssuer(String issuer, String companyDivision, String pluginName, String rootPath) {
+        cx.ring.utils.Log.d(TAG, "ASKTRUSTPLUGINISSUER => "+issuer + " "+ companyDivision+ " "+ pluginName+ " "+ rootPath);
+        cx.ring.utils.Log.d(TAG, "**************************************************************************************");
+        String authorship = issuer;
+        if (!companyDivision.isEmpty())
+            authorship += " - " + companyDivision;
+        mPluginName = pluginName;
+        mRootPath = rootPath;
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Trust Request")
+                .setMessage("Do you want to trust " + pluginName + "?\n\nAuthor: " + authorship)
+                .setPositiveButton("Trust", (dialog, id) -> {
+                    Ringservice.answerTrustPlugin(true, mRootPath);
+                    mAdapter.updatePluginsList(PluginUtils.getInstalledPlugins(requireContext()));
+                    Toast.makeText(requireContext(), "Plugin: " + mPluginName + ".jpl successfully installed", Toast.LENGTH_LONG).show();
+                    mPluginName = "";
+                    mRootPath = "";
+
+                })
+                .setNegativeButton("Not Trust", (dialog, whichButton) -> {
+                    Ringservice.answerTrustPlugin(false, mRootPath);
+                    Toast.makeText(requireContext(), "Plugin: " + mPluginName + ".jpl not installed", Toast.LENGTH_LONG).show();
+                    mPluginName = "";
+                    mRootPath = "";
+                })
+                .setOnCancelListener(dialog -> {
+                    Ringservice.answerTrustPlugin(false, mRootPath);
+                    Toast.makeText(requireContext(), "Plugin: " + mPluginName + ".jpl not installed", Toast.LENGTH_LONG).show();
+                    mPluginName = "";
+                    mRootPath = "";
+                })
+                .show();
+    }
+}

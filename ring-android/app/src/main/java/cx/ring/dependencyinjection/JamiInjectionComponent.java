@@ -69,6 +69,7 @@ import cx.ring.services.HistoryServiceImpl;
 import cx.ring.services.LocationSharingService;
 import cx.ring.services.NotificationServiceImpl;
 import cx.ring.services.JamiChooserTargetService;
+import cx.ring.services.PluginService;
 import cx.ring.services.SharedPreferencesServiceImpl;
 import cx.ring.services.SyncService;
 import cx.ring.settings.AccountFragment;
@@ -156,6 +157,8 @@ public interface JamiInjectionComponent {
     void inject(AccountService service);
 
     void inject(HardwareService service);
+
+    void inject(PluginService pluginService);
 
     void inject(SharedPreferencesServiceImpl service);
 
