@@ -21,18 +21,17 @@ package cx.ring.fragments;
 
 import android.util.Log;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import cx.ring.model.Account;
-import cx.ring.model.Codec;
-import cx.ring.model.ConfigKey;
-import cx.ring.mvp.RootPresenter;
-import cx.ring.services.AccountService;
-import cx.ring.services.DeviceRuntimeService;
+import net.jami.model.Account;
+import net.jami.model.Codec;
+import net.jami.model.ConfigKey;
+import net.jami.mvp.RootPresenter;
+import net.jami.services.AccountService;
+import net.jami.services.DeviceRuntimeService;
 import io.reactivex.Scheduler;
 
 public class MediaPreferencePresenter extends RootPresenter<MediaPreferenceView>
