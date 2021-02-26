@@ -99,37 +99,37 @@ import javax.inject.Inject;
 import cx.ring.R;
 import cx.ring.adapters.ConfParticipantAdapter;
 import cx.ring.application.JamiApplication;
-import cx.ring.call.CallPresenter;
-import cx.ring.call.CallView;
+import net.jami.call.CallPresenter;
+import net.jami.call.CallView;
 import cx.ring.client.CallActivity;
 import cx.ring.client.ContactDetailsActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.ConversationSelectionActivity;
 import cx.ring.client.HomeActivity;
-import cx.ring.daemon.Ringservice;
+import net.jami.daemon.Ringservice;
 import cx.ring.databinding.FragCallBinding;
 import cx.ring.databinding.ItemParticipantLabelBinding;
-import cx.ring.model.CallContact;
-import cx.ring.model.Conference;
-import cx.ring.model.SipCall;
+import net.jami.model.CallContact;
+import net.jami.model.Conference;
+import net.jami.model.SipCall;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.plugins.RecyclerPicker.RecyclerPicker;
 import cx.ring.plugins.RecyclerPicker.RecyclerPickerLayoutManager;
 import cx.ring.service.DRingService;
-import cx.ring.services.DeviceRuntimeService;
-import cx.ring.services.HardwareService;
-import cx.ring.services.NotificationService;
+import net.jami.services.DeviceRuntimeService;
+import net.jami.services.HardwareService;
+import net.jami.services.NotificationService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.KeyboardVisibilityManager;
 import cx.ring.utils.MediaButtonsHelper;
-import cx.ring.utils.StringUtils;
+import net.jami.utils.StringUtils;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.disposables.CompositeDisposable;
 
-import static cx.ring.daemon.Ringservice.getPluginsEnabled;
+import static net.jami.daemon.Ringservice.getPluginsEnabled;
 
 public class CallFragment extends BaseSupportFragment<CallPresenter> implements CallView, MediaButtonsHelper.MediaButtonsHelperCallback, RecyclerPickerLayoutManager.ItemSelectedListener {
 
