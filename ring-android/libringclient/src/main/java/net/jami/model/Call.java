@@ -22,6 +22,7 @@ package net.jami.model;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import net.jami.utils.Log;
 import net.jami.utils.ProfileChunk;
 import net.jami.utils.StringUtils;
 import net.jami.utils.VCardUtils;
@@ -35,6 +36,7 @@ import ezvcard.Ezvcard;
 import ezvcard.VCard;
 
 public class Call extends Interaction {
+    public final static String TAG = Call.class.getSimpleName();
 
     public final static String KEY_ACCOUNT_ID = "ACCOUNTID";
     public final static String KEY_AUDIO_ONLY = "AUDIO_ONLY";
@@ -49,6 +51,8 @@ public class Call extends Interaction {
     public final static String KEY_REGISTERED_NAME = "REGISTERED_NAME";
     public final static String KEY_DURATION = "duration";
     public final static String KEY_CONF_ID = "CONF_ID";
+
+    private final String mIdDaemon;
 
     private boolean isPeerHolding = false;
     private boolean isAudioMuted = false;
@@ -69,7 +73,12 @@ public class Call extends Interaction {
     private ProfileChunk mProfileChunk = null;
 
     public Call(String daemonId, String author, String account, ConversationHistory conversation, Contact contact, Direction direction) {
-        mDaemonId = daemonId == null ? null : Long.parseLong(daemonId);
+        mIdDaemon = daemonId;
+        try {
+            mDaemonId = daemonId == null ? null : Long.parseLong(daemonId, 16);
+        } catch (Exception e) {
+            Log.e(TAG, "Can't parse CallId " + mDaemonId);
+        }
         mAuthor = direction == Direction.INCOMING ? author : null;
         mAccount = account;
         mConversation = conversation;
@@ -89,6 +98,7 @@ public class Call extends Interaction {
         mType = InteractionType.CALL.toString();
         mStatus = interaction.getStatus().toString();
         mDaemonId = interaction.getDaemonId();
+        mIdDaemon = super.getDaemonIdString();
         mIsRead = interaction.isRead() ? 1 : 0;
         mAccount = interaction.getAccount();
         mExtraFlag = fromJson(interaction.getExtraFlag());
@@ -98,12 +108,17 @@ public class Call extends Interaction {
     }
 
     public Call(String daemonId, String account, String contactNumber, Direction direction, long timestamp) {
-        mDaemonId = daemonId == null ? null : Long.parseLong(daemonId);
+        mIdDaemon = daemonId;
+        try {
+            mDaemonId = daemonId == null ? null : Long.parseLong(daemonId, 16);
+        } catch (Exception e) {
+            Log.e(TAG, "Can't parse CallId " + mDaemonId);
+        }
         mIsIncoming = direction == Direction.INCOMING;
         mAccount = account;
         mAuthor = direction == Direction.INCOMING ? contactNumber : null;
         mContactNumber = contactNumber;
-        mTimestamp = System.currentTimeMillis();
+        mTimestamp = timestamp;
         mType = InteractionType.CALL.toString();
         mIsRead = 1;
     }
@@ -123,6 +138,11 @@ public class Call extends Interaction {
         mVideoCodec = details.get(KEY_VIDEO_CODEC);
         String confId = details.get(KEY_CONF_ID);
         mConfId = StringUtils.isEmpty(confId) ? null : confId;
+    }
+
+    @Override
+    public String getDaemonIdString() {
+        return mIdDaemon;
     }
 
     public boolean isConferenceParticipant() {
@@ -241,12 +261,12 @@ public class Call extends Interaction {
 
     public VCard appendToVCard(Map<String, String> messages) {
         for (Map.Entry<String, String> message : messages.entrySet()) {
-            HashMap<String, String> messageKeyValue = net.jami.utils.VCardUtils.parseMimeAttributes(message.getKey());
-            String mimeType = messageKeyValue.get(net.jami.utils.VCardUtils.VCARD_KEY_MIME_TYPE);
-            if (!net.jami.utils.VCardUtils.MIME_PROFILE_VCARD.equals(mimeType)) {
+            HashMap<String, String> messageKeyValue = VCardUtils.parseMimeAttributes(message.getKey());
+            String mimeType = messageKeyValue.get(VCardUtils.VCARD_KEY_MIME_TYPE);
+            if (!VCardUtils.MIME_PROFILE_VCARD.equals(mimeType)) {
                 continue;
             }
-            int part = Integer.parseInt(messageKeyValue.get(net.jami.utils.VCardUtils.VCARD_KEY_PART));
+            int part = Integer.parseInt(messageKeyValue.get(VCardUtils.VCARD_KEY_PART));
             int nbPart = Integer.parseInt(messageKeyValue.get(VCardUtils.VCARD_KEY_OF));
             if (null == mProfileChunk) {
                 mProfileChunk = new ProfileChunk(nbPart);

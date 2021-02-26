@@ -277,7 +277,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     }
 
     public void loadMore() {
-        mConversationFacade.loadMore(mConversation);
+        mAccountService.loadMore(mConversation).subscribe(c -> {}, e-> {});
     }
 
     public void openContact() {
