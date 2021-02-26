@@ -23,7 +23,7 @@ import android.graphics.Bitmap;
 
 import java.io.Serializable;
 
-import cx.ring.mvp.AccountCreationModel;
+import net.jami.mvp.AccountCreationModel;
 import cx.ring.utils.BitmapUtils;
 import ezvcard.VCard;
 import ezvcard.property.FormattedName;

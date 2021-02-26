@@ -45,11 +45,11 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import cx.ring.R;
 import cx.ring.account.AccountEditionFragment;
-import cx.ring.account.LinkDevicePresenter;
-import cx.ring.account.LinkDeviceView;
+import net.jami.account.LinkDevicePresenter;
+import net.jami.account.LinkDeviceView;
 import cx.ring.application.JamiApplication;
 import cx.ring.databinding.FragLinkDeviceBinding;
-import cx.ring.model.Account;
+import net.jami.model.Account;
 import cx.ring.mvp.BaseBottomSheetFragment;
 import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.KeyboardVisibilityManager;
