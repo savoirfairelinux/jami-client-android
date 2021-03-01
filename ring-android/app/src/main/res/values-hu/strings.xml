@@ -23,6 +23,7 @@
   <string name="ringtones_by">Csengőhangok:</string>
   <!--RingActivity-->
   <string name="error_no_network">Nincs hálózati csatlakozás</string>
+  <string name="error_account_offline">A fiók kapcsolat nélküli állapotban van</string>
   <string name="error_mobile_network_available_but_disabled">Engedélyezze a mobilhálózat-elérést a beállítások képernyőn.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Szöveges üzenetek</string>
@@ -114,6 +115,7 @@
   <string name="qr_code">QR-kód</string>
   <string name="ab_action_flipcamera">Kamera megfordítása</string>
   <string name="ab_action_hidepreview">Előnézet elrejtése</string>
+  <string name="remote_recording">%s felvétel folyamatban…</string>
   <!--Text messages-->
   <string name="send_message">Üzenet küldése</string>
   <string name="message_sending">Üzenet küldése…</string>

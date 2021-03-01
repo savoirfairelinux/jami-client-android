@@ -36,6 +36,8 @@
   <string name="pref_typing_summary">Invia e ricevi indicatori di digitazione che mostrano che un messaggio è stato digitato.</string>
   <string name="pref_read_title">Abilita conferme di lettura</string>
   <string name="pref_read_summary">Inviare e ricevere conferme indicanti che è stato visualizzato un messaggio.</string>
+  <string name="pref_block_record_title">Blocca screenshot e registrazione</string>
+  <string name="pref_block_record_summary">Blocca l\'acquisizione di screenshot o registrazione video.</string>
   <!--Plugin-->
   <string name="pref_plugins_title">Plugin</string>
   <string name="pref_plugins_summary">Abilita i plugin e imposta i loro parametri</string>

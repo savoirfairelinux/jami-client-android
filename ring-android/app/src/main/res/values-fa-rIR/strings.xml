@@ -23,6 +23,7 @@
   <string name="ringtones_by">صدا‌های زنگ توسط</string>
   <!--RingActivity-->
   <string name="error_no_network">بدون اتصال شبکه</string>
+  <string name="error_account_offline">حساب آنلاین نیست</string>
   <string name="error_mobile_network_available_but_disabled">لطفا در صفحه تنظیمات به شبکه سلولی دسترسی دهید.</string>
   <!--AB menus-->
   <string name="ab_action_chat">پیام متنی</string>
@@ -87,6 +88,8 @@
   <!--Call Fragment-->
   <string name="you_txt_prefix">شما:</string>
   <string name="action_call_hangup">قطع‌کردن</string>
+  <string name="action_call_maximize">به حداکثر رساندن</string>
+  <string name="action_call_minimize">کاهش دادن</string>
   <string name="ongoing_call">تماس جاری</string>
   <string name="hist_in_call">تماس ورودی به مدت  %1$s</string>
   <string name="hist_out_call">تماس خروجی به مدت %1$s</string>
@@ -109,9 +112,10 @@
   <string name="share_via">اشتراک از طریق</string>
   <string name="write_a_message">پیامی بنویسید</string>
   <string name="scan_qr">اسکن کد QR</string>
-  <string name="qr_code">کد کیوآر</string>
+  <string name="qr_code">کد QR</string>
   <string name="ab_action_flipcamera">چرخاندن دوربین</string>
   <string name="ab_action_hidepreview">مخفی‌کردن پیش‌نمایش</string>
+  <string name="remote_recording">%s در حال ضبط...</string>
   <!--Text messages-->
   <string name="send_message">ارسال پیام</string>
   <string name="message_sending">در حال ارسال پیام…</string>
@@ -191,11 +195,13 @@
   <string name="open_the_gallery">گالری را باز کنید</string>
   <string name="take_a_photo">عکسی بگیرید</string>
   <string name="profile_name_hint">نام خود را وارد کنید</string>
-  <string name="registered_name">نام ثبت شده</string>
+  <string name="registered_name">نام ثبت‌شده</string>
+  <string name="no_registered_name">هیچ نامی ثبت نشده است</string>
   <string name="identity">هویت</string>
   <string name="account">حساب</string>
   <string name="link_new_device">پیوند یک دستگاه جدید</string>
-  <string name="devices">دستگاه‌های پیوند‌ داده‌شده</string>
+  <string name="devices">دستگاه‌های پیوند‌‌داده‌شده</string>
+  <string name="total_devices">تمام دستگاه‌ها:</string>
   <!--Share fragment-->
   <string name="share_message">این رمز را با جمی اسکن کنید</string>
   <string name="share_message_no_account">لطفا برای هم‌رسانی، حسابی را انتخاب کنید.</string>

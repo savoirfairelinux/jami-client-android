@@ -100,7 +100,7 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="account_published_port_label">Port de publication</string>
   <string name="account_published_address_label">Adresse de publication</string>
   <string name="account_proxy_label">DHT mandataire</string>
-  <string name="account_proxy_enable_label"> Utiliser un serveur délégataire </string>
+  <string name="account_proxy_enable_label">Utiliser un serveur délégataire </string>
   <string name="account_proxy_server_label">Adresse du DHT mandataire</string>
   <string name="account_proxy_server_list_label">URL de la liste des DHT proxy</string>
   <string name="account_sip_proxy_label">Serveur mandataire</string>
@@ -138,7 +138,7 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="account_new_device_password">Entrez le mot de passe principal pour déverrouiller le compte</string>
   <string name="error_password_char_count">Au moins 6 caractères</string>
   <string name="error_passwords_not_equals">Les mots de passe ne sont pas identiques</string>
-  <string name="export_account_wait_title">Veuillez patienter</string>
+  <string name="export_account_wait_title">Veuillez patienter...</string>
   <string name="export_account_wait_message">Exporter les informations du compte</string>
   <string name="account_export_file">Sauvegarder votre compte</string>
   <string name="account_export_file_summary">Sauvegarder votre compte pour pouvoir le restaurer plus tard</string>

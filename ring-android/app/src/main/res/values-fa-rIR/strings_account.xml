@@ -46,6 +46,7 @@
   <string name="account_device_revocation_error_unknown">خطای ناشناخته.</string>
   <string name="account_password_change">تغییر گذرواژه</string>
   <string name="account_password_set">تعیین گذرواژه</string>
+  <string name="account_password_summary">گذرواژه حساب‌تان را مدیریت کنید.</string>
   <string name="account_password_change_wait_message">تغییر گذرواژه حساب</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">عمومی</string>
@@ -58,6 +59,8 @@
   <string name="account_optionnal_category">تنظیمات انتخابی</string>
   <string name="account_useragent_label">عامل کاربر</string>
   <string name="account_autoanswer_label">پاسخ خودکار</string>
+  <string name="account_rendezvous_label">حالت قرار ملاقات</string>
+  <string name="account_rendezvous_summary">در حالت قرار ملاقات، تماس‌های دریافتی به یک اتاق کنفرانس اضافه می‌شوند.</string>
   <string name="account_upnp_label">فعال‌کردن UPnP</string>
   <string name="account_proxy_field">پراکسی</string>
   <!--Audio Details-->
@@ -136,6 +139,7 @@
   <string name="export_account_wait_title">لطفا صبر کنید…</string>
   <string name="export_account_wait_message">برون‌برد اطلاعات حساب</string>
   <string name="account_export_file">پشتیبان‌گیری حساب</string>
+  <string name="account_export_file_summary">از حساب‌تان در دستگاه خود پشتیبان تهیه کنید تا بعدا آن را بازیابی کنید.</string>
   <string name="account_export_end_decryption_message">نمی‌توان قفل حسابتان را با گذرواژه  ارائه‌شده گشود.</string>
   <string name="account_export_end_network_title">خطای شبکه</string>
   <string name="account_export_end_network_message">برون‌برد حساب روی شبکه مقدور نبود. اتصال خود را بررسی کنید.</string>
@@ -171,6 +175,8 @@
   <string name="account_link_prompt_pin">پین را وارد کنید</string>
   <string name="account_new_button">ایجاد یک حساب جمی</string>
   <string name="account_link_export_button">پیوند یک دستگاه جدید</string>
+  <string name="account_link_show_button">نمایش %d دستگاه‌های پیوندیافته بیشتر</string>
+  <string name="account_link_hide_button">مخفی‌کردن دستگاه پیوند‌داده‌شده</string>
   <string name="account_link_export_info">برای استفاده از این حساب روی دستگاه‌های دیگر، باید ابتدا آن را روی جمی آشکار کنید. این کار یک کد پین تولید خواهد کرد که باید برای برپایی حساب، روی دستگاه جدید وارد کنید. این پین تا 10 دقیقه معتبر است.</string>
   <string name="account_start_export_button">تولید پین</string>
   <string name="account_end_export_button">بستن</string>
@@ -185,8 +191,9 @@
   <string name="account_connect_prompt_username">نام کاربری</string>
   <!--Name registration-->
   <string name="error_username_empty">یک نام کاربری وارد کنید</string>
+  <string name="no_registered_name_for_account">بدون نام ثبت‌شده</string>
   <string name="username_available">نام کاربری در‌دسترس است!</string>
-  <string name="register_name">ثبت نام</string>
+  <string name="register_name">ثبت‌نام</string>
   <string name="trying_to_register_name">در حال تلاش برای ثبت نام</string>
   <string name="registered_username">نام کاربری ثبت‌شده</string>
   <string name="register_username">ثبت نام کاربری عمومی</string>

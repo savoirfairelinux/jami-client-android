@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="pref_category_network">Red</string>
+  <string name="pref_category_contacts">Contactos</string>
+  <string name="pref_category_video">Video</string>
+  <string name="pref_category_system">Sistema</string>
+  <string name="pref_category_privacy">Privacidad</string>
+  <string name="pref_mobileData_title">Datos móviles</string>
+  <string name="pref_video_advanced_title">Configuración avanzada de video</string>
+  <string name="pref_hd_summary">Activar envío de video HD</string>
+  <string name="pref_hwEncode_summary">Funcionalidad experimental</string>
+  <string name="pref_videoResolution_title">Resolución de video</string>
+  <string name="pref_systemContacts_title">Usar contactos del sistema</string>
+  <string name="pref_systemContacts_summary">Usar contactos del sistema para mostrar detalles de quien llama.</string>
+  <string name="pref_clearHistory_title">Limpiar historial</string>
+  <string name="pref_delete_account_title">Borrar cuenta</string>
+  <!--Plugin-->
+  <string name="pref_plugins_title">Complementos</string>
+</resources>

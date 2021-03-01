@@ -23,6 +23,7 @@
   <string name="ringtones_by">Zile nga</string>
   <!--RingActivity-->
   <string name="error_no_network">Pa lidhje në rrjet</string>
+  <string name="error_account_offline">Llogaria s’është në linjë</string>
   <string name="error_mobile_network_available_but_disabled">Ju lutemi, akordojini hyrje rrjetit celular te skena e rregullimeve.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Shkëmbim mesazhesh tekst</string>
@@ -114,6 +115,7 @@
   <string name="qr_code">Kod QR</string>
   <string name="ab_action_flipcamera">Rrotulloni kamerën</string>
   <string name="ab_action_hidepreview">Fshihe paraparjen</string>
+  <string name="remote_recording">%s po regjistron…</string>
   <!--Text messages-->
   <string name="send_message">Dërgoje mesazhin</string>
   <string name="message_sending">Po dërgohet mesazhi…</string>

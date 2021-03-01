@@ -23,6 +23,7 @@
   <string name="ringtones_by">Tons de aviso por</string>
   <!--RingActivity-->
   <string name="error_no_network">Sen conexión a rede</string>
+  <string name="error_account_offline">A conta non está conectada</string>
   <string name="error_mobile_network_available_but_disabled">Por favor, dalle permiso de acceso a rede móbil na pantalla de axustes:</string>
   <!--AB menus-->
   <string name="ab_action_chat">Mensaxes de texto</string>
@@ -114,6 +115,7 @@
   <string name="qr_code">Código QR</string>
   <string name="ab_action_flipcamera">Cambiar de cámara</string>
   <string name="ab_action_hidepreview">Agochar vista previa</string>
+  <string name="remote_recording">%s gravando...</string>
   <!--Text messages-->
   <string name="send_message">Enviar mensaxe</string>
   <string name="message_sending">Enviando mensaxe...</string>
