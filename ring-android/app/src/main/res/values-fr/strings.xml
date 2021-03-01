@@ -23,6 +23,7 @@
   <string name="ringtones_by">Sonneries d\'appels réalisées par </string>
   <!--RingActivity-->
   <string name="error_no_network">Pas d\'accès au réseau</string>
+  <string name="error_account_offline">Le compte est déconnecté</string>
   <string name="error_mobile_network_available_but_disabled">Autorisez l\'accès au réseau cellulaire dans les options de configuration s\'il vous plaît</string>
   <!--AB menus-->
   <string name="ab_action_chat">Messagerie texte</string>
@@ -114,6 +115,7 @@
   <string name="qr_code">Code QR</string>
   <string name="ab_action_flipcamera">Changer de caméra</string>
   <string name="ab_action_hidepreview">Masquer l\'aperçu</string>
+  <string name="remote_recording">%s En cours d\'enregistrement...</string>
   <!--Text messages-->
   <string name="send_message">Envoyer le message</string>
   <string name="message_sending">Envoi du message</string>
@@ -291,7 +293,7 @@
   <string name="wizard_username_button">Choisissez un nom d\'utilisateur</string>
   <string name="wizard_username_skip">Passer cette étape</string>
   <string name="wizard_password_info">Mot  de passe du compte</string>
-  <string name="wizard_password_placeholder">Choisissez un mot de passe pour chiffrer la clé de votre compte sur cet appareil</string>
+  <string name="wizard_password_placeholder">Choisir un mot de passe pour chiffrer la clé de votre compte sur cet appareil</string>
   <string name="wizard_password_button">Choisir un mot de passe</string>
   <string name="wizard_password_skip">Créer le compte</string>
   <string name="wizard_password_switch">Chiffrer le compte avec un mot de passe</string>

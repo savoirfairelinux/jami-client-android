@@ -32,6 +32,7 @@
   <string name="pref_delete_account_summary">Exclua sua conta deste dispositivo</string>
   <string name="pref_persistNotification_title">Executar em segundo-plano</string>
   <string name="pref_persistNotification_summary">Permitir execução em segundo-plano para receber chamadas e mensagens.</string>
+  <string name="pref_typing_title">Habilitar indicadores de digitação</string>
   <!--Plugin-->
   <string name="pref_plugins_title">Complementos</string>
   <string name="pref_plugins_summary">Ativar os complementos e definir seus parâmetros</string>

@@ -26,9 +26,18 @@
   <string name="pref_startOnBoot_summary">اجرای جمی در پس‌زمینه هنگام آغاز به کار سیستم.</string>
   <string name="pref_clearHistory_title">پاک‌سازی تاریخچه</string>
   <string name="pref_clearHistory_summary">پاک‌سازی تمام سابقه گفت‌وگوها. این کار قابل بازگشت نیست.</string>
+  <string name="pref_blackList_title">لیست مسدودی</string>
+  <string name="pref_blackList_summary">لیست مسدودی خود را بررسی کنید.</string>
   <string name="pref_delete_account_title">حذف حساب</string>
+  <string name="pref_delete_account_summary">حساب خود را از روی این دستگاه حذف کنید.</string>
   <string name="pref_persistNotification_title">اجرا در پس‌زمینه</string>
   <string name="pref_persistNotification_summary">اجازه اجرا در پس‌زمینه برای دریافت تماس‌ها و پیام‌ها.</string>
+  <string name="pref_typing_title">فعال‌سازی نمایش در‌حال‌نوشتن</string>
+  <string name="pref_typing_summary">نشانگرهای تایپ را که نشان می دهد پیام در حال تایپ است، ارسال و دریافت کنید.</string>
+  <string name="pref_read_title">فعال‌سازی رسیدهای خواندن</string>
+  <string name="pref_read_summary">نشانگرهای تایپ را که نشان می دهد پیام در حال تایپ است، ارسال و دریافت کنید.</string>
+  <string name="pref_block_record_title">مسدود‌سازی عکس از صفحه و ضبط ویدیویی</string>
+  <string name="pref_block_record_summary">مسدود‌سازی عکس از صفحه و ضبط ویدیویی</string>
   <!--Plugin-->
   <string name="pref_plugins_title">افزونه‌ها</string>
   <string name="pref_plugins_summary">فعال‌سازی افزونه‌ها و تنظیم پارامترهای آنها</string>
@@ -42,4 +51,5 @@
   <string name="plugin_recent_version_exception">شما نسخه جدید‌تری دارید از: <b>%1$s</b></string>
   <string name="plugin_same_version_exception">شما همان نسخه از <b>%1$s</b> را نصب دارید</string>
   <string name="plugin_force_install">نصب به اجبار</string>
+  <string name="plugin_path_image_add">اضافه‌کردن یک تصویر جدید</string>
 </resources>

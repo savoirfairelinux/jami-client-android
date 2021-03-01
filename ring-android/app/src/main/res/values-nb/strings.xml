@@ -23,6 +23,7 @@
   <string name="ringtones_by">Ringetoner av</string>
   <!--RingActivity-->
   <string name="error_no_network">Mangler nettverksforbindelse</string>
+  <string name="error_account_offline">Kontoen er offline</string>
   <string name="error_mobile_network_available_but_disabled">Tildel tilgang til mobilnettverk på innstillingsskjermen.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Tekstmelding</string>
@@ -114,6 +115,7 @@
   <string name="qr_code">QR kode</string>
   <string name="ab_action_flipcamera">Snu kamera</string>
   <string name="ab_action_hidepreview">Skjul forhåndsvisning</string>
+  <string name="remote_recording">%srecording...</string>
   <!--Text messages-->
   <string name="send_message">Send melding</string>
   <string name="message_sending">Sender melding…</string>

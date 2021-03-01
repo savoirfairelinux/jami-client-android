@@ -295,7 +295,7 @@
   <string name="wizard_password_button">Choisir un mot de passe</string>
   <string name="wizard_password_skip">Créer un compte</string>
   <string name="wizard_password_switch">Chiffrer le compte avec un mot de passe</string>
-  <string name="wizard_password_warning">Noté que le mot de passe ne peut pas être récupéré</string>
+  <string name="wizard_password_warning">Notez que le mot de passe ne peut pas être récupéré</string>
   <string name="wizard_profile_info">Votre profil n\'est partagé qu\'avec vos contacts</string>
   <string name="wizard_profile_button">Sauvegarder votre profil</string>
   <string name="wizard_profile_skip">Passer et faire ça plus tard</string>

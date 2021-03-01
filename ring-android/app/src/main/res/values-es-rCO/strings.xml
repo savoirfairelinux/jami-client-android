@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <string name="description">Jami es software libre para comunicaciones universales y respeta las libertades y privacidad de quienes lo usan.</string>
+  <!--About dialog-->
+  <!--RingActivity-->
+  <!--AB menus-->
+  <!--Sections-->
+  <string name="menu_item_contact_request">Peticiones de contacto</string>
+  <string name="menu_item_settings">Configuración</string>
+  <!--Dialing Fragment-->
+  <!--History Fragment-->
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <!--ContactList Fragment-->
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <string name="notif_incoming_call">Llamada entrante</string>
+  <string name="notif_channel_file_transfer">Transferencia de archivos</string>
+  <!--Call Fragment-->
+  <string name="action_call_maximize">Maximizar</string>
+  <string name="action_call_decline">Rechazar</string>
+  <string name="qr_code">Código QR</string>
+  <!--Text messages-->
+  <!--MediaPreferenceFragment-->
+  <!--Ringtone activity-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
+  <!--Conversation-->
+  <string name="conversation_action_history_clear">Limpiar historial</string>
+  <string name="conversation_action_block_this">Bloquear contacto</string>
+  <!--Contacts-->
+  <string name="prompt_new_password">Contraseña nueva</string>
+  <string name="account_create_title">Crear una cuenta de Jami</string>
+  <string name="prompt_hint_username">Nombre de usuario</string>
+  <string name="wizard_next">Seguir</string>
+  <string name="wizard_back">Atrás</string>
+  <string name="wizard_skip">Omitir</string>
+  <!--Account Summary-->
+  <string name="profile">Perfil</string>
+  <string name="account">Cuenta</string>
+  <!--Share fragment-->
+  <!--Pending contact requests-->
+  <string name="accept">Aceptar</string>
+  <string name="refuse">Rechazar</string>
+  <string name="block">Bloquear</string>
+  <!--Send contact requests-->
+  <string name="send_request_button">Enviar</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
+  <string name="tv_contact_row_header">Contactos</string>
+  <!--File Transfer-->
+  <string name="menu_delete">Borrar</string>
+  <!--Bottom Navigation-->
+  <string name="navigation_item_conversation">Conversaciones</string>
+  <string name="navigation_item_contact_request">Peticiones de contacto</string>
+  <string name="navigation_item_account">Cuenta</string>
+  <!--TV-->
+  <string name="tv_dialog_send">Enviar</string>
+  <!--Wizard-->
+  <string name="wizard_password_switch">Cifrar cuenta con una contraseña</string>
+</resources>

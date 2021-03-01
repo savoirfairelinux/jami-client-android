@@ -10,10 +10,14 @@
   <string name="pref_pushNotifications_title">Bildirim gönder</string>
   <string name="pref_pushNotifications_summary">Arka planda arama / ileti almaya izin vermek için Google sunucularını kullanın.</string>
   <string name="pref_video_advanced_title">Gelişmiş görüntü ayarları</string>
-  <string name="pref_video_advanced_summary">Video bit hızını ve çözünürlüğü değiştirin, hem de deneysel özelliklere erişin</string>
+  <string name="pref_video_advanced_summary">Görüntü bit oranını ve çözünürlüğü değiştirin, hem de deneysel özelliklere erişin</string>
   <string name="pref_hd_summary">Yüksek çözünürlüklü görüntü göndermeyi etkinleştir</string>
   <string name="pref_hwEncode_title">Hızlandırılmış kodlamayı etkinleştir</string>
   <string name="pref_hwEncode_summary">Deneysel özellik</string>
+  <string name="pref_videoBitrate_title">Görüntü bit oranı</string>
+  <string name="pref_videoBitrate_summary">Öntanımlı giden görüntü bit oranını seçin (KB/s)</string>
+  <string name="pref_videoResolution_title">Görüntü çözünürlüğü</string>
+  <string name="pref_videoResolution_summary">Öntanımlı giden görüntü çözünürlüğünü seçin</string>
   <string name="pref_systemContacts_title">Sistem kişilerini kullan</string>
   <string name="pref_systemContacts_summary">Arayan ayrıntılarını göstermede sistem kişilerini kullan.</string>
   <string name="pref_systemDialer_title">Jami kullanarak sistem çağrıları yap</string>
@@ -22,8 +26,22 @@
   <string name="pref_startOnBoot_summary">Sistem başladığında Jami\'yi arka planda çalıştır.</string>
   <string name="pref_clearHistory_title">Geçmişi temizle</string>
   <string name="pref_clearHistory_summary">Tüm konuşma geçmişini temizle. Bu işlem geri alınamaz.</string>
+  <string name="pref_blackList_title">Engelleme listesi</string>
+  <string name="pref_blackList_summary">Engelleme listenizi kontrol edin.</string>
   <string name="pref_delete_account_title">Hesabı sil</string>
+  <string name="pref_delete_account_summary">Hesabınızı bu aygıttan silin</string>
   <string name="pref_persistNotification_title">Arkaplanda çalıştır</string>
   <string name="pref_persistNotification_summary">Arka planda çalışan çağrı  ve iletileri almak için izin ver</string>
   <!--Plugin-->
+  <string name="pref_plugins_title">Eklentiler</string>
+  <string name="pref_plugins_summary">Eklentileri etkinleştirin ve değişkenlerini ayarlayın</string>
+  <string name="fab_plugins_add">Yeni bir eklenti kur</string>
+  <string name="plugin_uninstall_title">Eklenti kaldırılsın mı?</string>
+  <string name="plugin_reset_preferences">Eklenti tercihlerini sıfırlayın</string>
+  <string name="plugin_reset_preferences_summary">Eklenti ayarlarınız öntanımlı olacaktır </string>
+  <string name="plugin_successfully_installed"><b>%1$s</b> eklentisi başarıyla yüklendi</string>
+  <string name="plugin_install_failure">Eklenti yüklenemedi: <b>%1$s</b></string>
+  <string name="plugin_recent_version_exception">Daha yeni bir sürümünüz var: <b>%1$s</b></string>
+  <string name="plugin_same_version_exception">Aynı <b>%1$s</b> sürümüne sahipsiniz</string>
+  <string name="plugin_path_image_add">Yeni bir görsel ekle</string>
 </resources>

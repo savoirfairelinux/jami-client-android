@@ -139,7 +139,7 @@ Podrá editar su cuenta más tarde.</string>
   <string name="export_account_wait_title">Por favor espere...</string>
   <string name="export_account_wait_message">Exportando la información de la cuenta</string>
   <string name="account_export_file">Respaldá tu cuenta</string>
-  <string name="account_export_file_summary">Creá una copia de respaldo en tu dispositivo para luego poder recuperar tu cuenta.</string>
+  <string name="account_export_file_summary">Crea una copia de respaldo en tu dispositivo para luego poder recuperar tu cuenta.</string>
   <string name="account_export_end_decryption_message">No se pudo desbloquear la cuenta con la contraseña ingresada.</string>
   <string name="account_export_end_network_title">Error de red</string>
   <string name="account_export_end_network_message">No se pudo exportar su cuenta. Compruebe su conexión a internet.</string>
@@ -171,7 +171,7 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_sip_register_anyway">Registrarse de todas maneras</string>
   <string name="account_link_device">Conectarse desde otro dispositivo</string>
   <string name="account_link_button">Conectarse desde la red</string>
-  <string name="account_link_archive_button">Conectarse desde una copia de seguridad</string>
+  <string name="account_link_archive_button">Conectarse desde un archivo de respaldo</string>
   <string name="account_link_prompt_pin">Introducir PIN</string>
   <string name="account_new_button">Crear una cuenta de Jami</string>
   <string name="account_link_export_button">Vincular un nuevo dispositivo</string>
