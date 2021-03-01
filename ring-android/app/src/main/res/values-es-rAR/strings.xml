@@ -23,6 +23,7 @@
   <string name="ringtones_by">Tonos de llamadas por</string>
   <!--RingActivity-->
   <string name="error_no_network">Sin conexión a la red</string>
+  <string name="error_account_offline">La cuenta no está en linea</string>
   <string name="error_mobile_network_available_but_disabled">Por favor permita el acceso a la red celular en el menú de opciones.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Mensajes de texto</string>
@@ -114,6 +115,7 @@
   <string name="qr_code">Código QR</string>
   <string name="ab_action_flipcamera">Girar cámara</string>
   <string name="ab_action_hidepreview">Ocultar previsualización</string>
+  <string name="remote_recording">%s grabando...</string>
   <!--Text messages-->
   <string name="send_message">Enviar mensaje</string>
   <string name="message_sending">Enviando mensaje...</string>

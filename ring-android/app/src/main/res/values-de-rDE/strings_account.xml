@@ -26,7 +26,7 @@
 Sie werden nur Gespräche mit direkten IP-Adressen führen können.
 Sie können Ihr Konto später ändern.</string>
   <string name="account_type_ip2ip">IP Konto</string>
-  <string name="help_ring">Ein Jami Benutzerkonto ermöglicht es ihnen, mit anderen Menschen sicher zu kommunizieren, ohne einen Zentralen Dienst im Hintergrund. Das wird durch ein sog. Peer-to-Peer Netzwerk ermöglicht. Hierbei kommunizieren die Partner direkt  und abhörsicher miteinander.</string>
+  <string name="help_ring">Ein Jami Benutzerkonto ermöglicht es ihnen, mit anderen Menschen sicher zu kommunizieren, ohne einen zentralen Dienst im Hintergrund. Das wird durch ein sog. Peer-to-Peer Netzwerk ermöglicht. Hierbei kommunizieren die Partner direkt und abhörsicher miteinander.</string>
   <string name="help_sip_title">Ihr SIP-Konto hinzufügen</string>
   <string name="help_sip">Richte ein bestehendes SIP-Konto ein.</string>
   <string name="create_sip_account">SIP-Konto hinzufügen</string>
@@ -71,7 +71,7 @@ Sie können Ihr Konto später ändern.</string>
   <string name="account_ringtone_path_label">Pfad zu den Klingeltönen</string>
   <string name="account_ringtone_custom_label">Eigenen Klingelton verwenden</string>
   <string name="account_ringtone_title">Wählen Sie einen Klingelton</string>
-  <string name="account_ringtone_summary">Wählen Sie einen bereitgestellten Klingelton oder einen Ihrer eigenen.</string>
+  <string name="account_ringtone_summary">Wählen Sie einen bereitgestellten Klingelton oder einen eigenen.</string>
   <!--Video Details-->
   <string name="account_video_label">Video</string>
   <string name="account_video_enable">Video aktivieren</string>
