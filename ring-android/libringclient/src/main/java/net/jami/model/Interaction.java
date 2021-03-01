@@ -73,6 +73,10 @@ public class Interaction {
     /* Needed by ORMLite */
     public Interaction() {
     }
+    public Interaction(String accountId) {
+        mAccount = accountId;
+        setType(InteractionType.INVALID);
+    }
 
     public Interaction(Conversation conversation, InteractionType type) {
         mConversation = conversation;
@@ -158,6 +162,8 @@ public class Interaction {
     }
 
     public void setStatus(InteractionStatus status) {
+        if (status == InteractionStatus.DISPLAYED)
+            mIsRead = 1;
         mStatus = status.toString();
     }
 
@@ -247,7 +253,7 @@ public class Interaction {
             return INVALID;
         }
 
-        static InteractionStatus fromIntTextMessage(int n) {
+        public static InteractionStatus fromIntTextMessage(int n) {
             try {
                 return values()[n];
             } catch (ArrayIndexOutOfBoundsException e) {

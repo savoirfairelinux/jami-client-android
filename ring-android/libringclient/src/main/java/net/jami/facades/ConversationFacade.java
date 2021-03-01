@@ -154,9 +154,9 @@ public class ConversationFacade {
 
         mDisposableBag.add(mAccountService
                 .getMessageStateChanges()
-                .concatMapSingle(txt -> getAccountSubject(txt.getAccount())
-                        .map(a -> txt.getConversation() == null ? a.getSwarm(txt.getConversationId()) : a.getByUri(txt.getConversation().getParticipant()))
-                        .doOnSuccess(conversation -> conversation.updateTextMessage(txt)))
+                .concatMapSingle(e -> getAccountSubject(e.getAccount())
+                        .map(a -> e.getConversation() == null ? a.getSwarm(e.getConversationId()) : a.getByUri(e.getConversation().getParticipant()))
+                        .doOnSuccess(conversation -> conversation.updateInteraction(e)))
                 .subscribe(c -> {
                 }, e -> Log.e(TAG, "Error updating text message", e)));
 

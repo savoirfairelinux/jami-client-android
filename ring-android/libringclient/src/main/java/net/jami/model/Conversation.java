@@ -398,39 +398,40 @@ public class Conversation extends ConversationHistory {
         updatedElementSubject.onNext(new Tuple<>(dataTransfer, ElementStatus.ADD));
     }
 
-    public void updateTextMessage(TextMessage text) {
+    public void updateInteraction(Interaction element) {
+        Log.e(TAG, "updateInteraction: " + element.getMessageId() + " " + element.getStatus());
         if (isSwarm()) {
-            TextMessage txt = (TextMessage) mMessages.get(text.getMessageId());
-            if (txt != null) {
-                txt.setStatus(text.getStatus());
-                updatedElementSubject.onNext(new Tuple<>(txt, ElementStatus.UPDATE));
-                if (text.getStatus() == Interaction.InteractionStatus.DISPLAYED) {
-                    if (lastDisplayed == null || lastDisplayed.getTimestamp() < text.getTimestamp()) {
-                        lastDisplayed = text;
-                        lastDisplayedSubject.onNext(text);
+            Interaction e = mMessages.get(element.getMessageId());
+            if (e != null) {
+                e.setStatus(element.getStatus());
+                updatedElementSubject.onNext(new Tuple<>(e, ElementStatus.UPDATE));
+                if (element.getStatus() == Interaction.InteractionStatus.DISPLAYED) {
+                    if (lastDisplayed == null || lastDisplayed.getTimestamp() < element.getTimestamp()) {
+                        lastDisplayed = element;
+                        lastDisplayedSubject.onNext(element);
                     }
                 }
             } else {
-                Log.e(TAG, "Can't find swarm message to update: " + text.getMessageId());
+                Log.e(TAG, "Can't find swarm message to update: " + element.getMessageId());
             }
         } else {
-            setInteractionProperties(text);
-            long time = text.getTimestamp();
+            setInteractionProperties(element);
+            long time = element.getTimestamp();
             NavigableMap<Long, Interaction> msgs = mHistory.subMap(time, true, time, true);
             for (Interaction txt : msgs.values()) {
-                if (txt.getId() == text.getId()) {
-                    txt.setStatus(text.getStatus());
+                if (txt.getId() == element.getId()) {
+                    txt.setStatus(element.getStatus());
                     updatedElementSubject.onNext(new Tuple<>(txt, ElementStatus.UPDATE));
-                    if (text.getStatus() == Interaction.InteractionStatus.DISPLAYED) {
-                        if (lastDisplayed == null || lastDisplayed.getTimestamp() < text.getTimestamp()) {
-                            lastDisplayed = text;
-                            lastDisplayedSubject.onNext(text);
+                    if (element.getStatus() == Interaction.InteractionStatus.DISPLAYED) {
+                        if (lastDisplayed == null || lastDisplayed.getTimestamp() < element.getTimestamp()) {
+                            lastDisplayed = element;
+                            lastDisplayedSubject.onNext(element);
                         }
                     }
                     return;
                 }
             }
-            Log.e(TAG, "Can't find message to update: " + text.getId());
+            Log.e(TAG, "Can't find message to update: " + element.getId());
         }
     }
 

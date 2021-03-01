@@ -59,7 +59,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.SocketException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -80,7 +79,6 @@ import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
-import io.reactivex.SingleEmitter;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.PublishSubject;
@@ -223,7 +221,7 @@ public class AccountService {
             })
             .share();
 
-    private final Subject<TextMessage> textMessageSubject = PublishSubject.create();
+    private final Subject<Interaction> messageSubject = PublishSubject.create();
     private final Subject<DataTransfer> dataTransferSubject = PublishSubject.create();
     private final Subject<TrustRequest> incomingRequestsSubject = PublishSubject.create();
 
@@ -311,8 +309,8 @@ public class AccountService {
         return incomingLocationSubject;
     }
 
-    public Observable<TextMessage> getMessageStateChanges() {
-        return textMessageSubject;
+    public Observable<Interaction> getMessageStateChanges() {
+        return messageSubject;
     }
 
     public Observable<TrustRequest> getIncomingRequests() {
@@ -1370,16 +1368,17 @@ public class AccountService {
     }
 
     void accountMessageStatusChanged(String accountId, String conversationId, String messageId, String peer, int status) {
-        Log.d(TAG, "accountMessageStatusChanged: " + accountId + ", " + conversationId + ", " + messageId + ", " + peer + ", " + status);
+        InteractionStatus newStatus = InteractionStatus.fromIntTextMessage(status);
+        Log.d(TAG, "accountMessageStatusChanged: " + accountId + ", " + conversationId + ", " + messageId + ", " + peer + ", " + newStatus);
         if (StringUtils.isEmpty(conversationId)) {
             mHistoryService
-                    .accountMessageStatusChanged(accountId, messageId, peer, status)
-                    .subscribe(textMessageSubject::onNext, e -> Log.e(TAG, "Error updating message: " + e.getLocalizedMessage()));
+                    .accountMessageStatusChanged(accountId, messageId, peer, newStatus)
+                    .subscribe(messageSubject::onNext, e -> Log.e(TAG, "Error updating message: " + e.getLocalizedMessage()));
         } else {
-            TextMessage msg = new TextMessage(peer, accountId, messageId, null, null);
-            msg.setStatus(status);
+            Interaction msg = new Interaction(accountId);
+            msg.setStatus(newStatus);
             msg.setSwarmInfo(conversationId, messageId, null);
-            textMessageSubject.onNext(msg);
+            messageSubject.onNext(msg);
         }
     }
 
