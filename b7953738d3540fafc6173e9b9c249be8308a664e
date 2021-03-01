@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06914ef2_12e72786",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-03-01T20:51:42Z",
+      "side": 1,
+      "message": "conversations",
+      "range": {
+        "startLine": 125,
+        "startChar": 50,
+        "endLine": 125,
+        "endChar": 78
+      },
+      "revId": "b7953738d3540fafc6173e9b9c249be8308a664e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aca171d5_d524d721",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-03-01T20:51:42Z",
+      "side": 1,
+      "message": "CONVERSATIONS_CATERGORY",
+      "range": {
+        "startLine": 125,
+        "startChar": 32,
+        "endLine": 125,
+        "endChar": 46
+      },
+      "revId": "b7953738d3540fafc6173e9b9c249be8308a664e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "284bd6e6_f5f12fb3",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-03-01T20:51:42Z",
+      "side": 1,
+      "message": "use ConversationPath.toBundle()",
+      "range": {
+        "startLine": 796,
+        "startChar": 12,
+        "endLine": 798,
+        "endChar": 99
+      },
+      "revId": "b7953738d3540fafc6173e9b9c249be8308a664e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea96e0b9_fb10a559",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-03-01T20:51:42Z",
+      "side": 1,
+      "message": "key should include account Id. Maybe add ConversationPath.toKey()/ConversationPath.fromKey().",
+      "range": {
+        "startLine": 802,
+        "startChar": 20,
+        "endLine": 802,
+        "endChar": 55
+      },
+      "revId": "b7953738d3540fafc6173e9b9c249be8308a664e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec2c0574_8be24cf1",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-03-01T20:51:42Z",
+      "side": 1,
+      "message": "CONVERSATIONS_CATERGORY",
+      "range": {
+        "startLine": 810,
+        "startChar": 57,
+        "endLine": 810,
+        "endChar": 71
+      },
+      "revId": "b7953738d3540fafc6173e9b9c249be8308a664e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba05c817_0d565baf",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-03-01T20:51:42Z",
+      "side": 1,
+      "message": "Maybe go through HomeActivity for simplicity ? HomeActivity already has some logic to redirect to ShareActivity or ConversationActivity",
+      "range": {
+        "startLine": 811,
+        "startChar": 79,
+        "endLine": 811,
+        "endChar": 92
+      },
+      "revId": "b7953738d3540fafc6173e9b9c249be8308a664e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5492890_65c75040",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ShareWithFragment.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-03-01T20:51:42Z",
+      "side": 1,
+      "message": "get account from intent, ideally using ConversationPath",
+      "range": {
+        "startLine": 205,
+        "startChar": 16,
+        "endLine": 205,
+        "endChar": 86
+      },
+      "revId": "b7953738d3540fafc6173e9b9c249be8308a664e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
