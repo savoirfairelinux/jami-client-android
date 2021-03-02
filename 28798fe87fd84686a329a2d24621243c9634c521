@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d8d7ece_5819f76b",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-03-02T18:47:22Z",
+      "side": 1,
+      "message": "Conversation",
+      "range": {
+        "startLine": 787,
+        "startChar": 13,
+        "endLine": 787,
+        "endChar": 39
+      },
+      "revId": "28798fe87fd84686a329a2d24621243c9634c521",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2355e6a2_fed289fa",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-03-02T18:47:22Z",
+      "side": 1,
+      "message": "what about using setIsConversation ?",
+      "range": {
+        "startLine": 807,
+        "startChar": 21,
+        "endLine": 807,
+        "endChar": 33
+      },
+      "revId": "28798fe87fd84686a329a2d24621243c9634c521",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c945094_6d594e29",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ShareWithFragment.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-03-02T18:47:22Z",
+      "side": 1,
+      "message": "use ConversationPath.toUri() or ConversationPath.toBundle()",
+      "range": {
+        "startLine": 201,
+        "startChar": 16,
+        "endLine": 204,
+        "endChar": 84
+      },
+      "revId": "28798fe87fd84686a329a2d24621243c9634c521",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "069eb166_f37264b5",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/ConversationPath.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2021-03-02T18:47:22Z",
+      "side": 1,
+      "message": "check length before accessing array",
+      "range": {
+        "startLine": 88,
+        "startChar": 12,
+        "endLine": 89,
+        "endChar": 39
+      },
+      "revId": "28798fe87fd84686a329a2d24621243c9634c521",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
