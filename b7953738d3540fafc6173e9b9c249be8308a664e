@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "5987b673_69b21e5a",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2021-03-02T17:13:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06914ef2_12e72786",
+      "range": {
+        "startLine": 125,
+        "startChar": 50,
+        "endLine": 125,
+        "endChar": 78
+      },
+      "revId": "b7953738d3540fafc6173e9b9c249be8308a664e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb4aacf8_e3cba515",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2021-03-02T17:13:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aca171d5_d524d721",
+      "range": {
+        "startLine": 125,
+        "startChar": 32,
+        "endLine": 125,
+        "endChar": 46
+      },
+      "revId": "b7953738d3540fafc6173e9b9c249be8308a664e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "284bd6e6_f5f12fb3",
         "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
         "patchSetId": 5
@@ -68,6 +116,30 @@
       "revId": "b7953738d3540fafc6173e9b9c249be8308a664e",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db3d21b0_dcc50c0f",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2021-03-02T17:13:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "284bd6e6_f5f12fb3",
+      "range": {
+        "startLine": 796,
+        "startChar": 12,
+        "endLine": 798,
+        "endChar": 99
+      },
+      "revId": "b7953738d3540fafc6173e9b9c249be8308a664e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "97b6df0d_a1411af7",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2021-03-02T17:13:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea96e0b9_fb10a559",
+      "range": {
+        "startLine": 802,
+        "startChar": 20,
+        "endLine": 802,
+        "endChar": 55
+      },
+      "revId": "b7953738d3540fafc6173e9b9c249be8308a664e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec2c0574_8be24cf1",
         "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
         "patchSetId": 5
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "02d7e447_86d17b93",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2021-03-02T17:13:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec2c0574_8be24cf1",
+      "range": {
+        "startLine": 810,
+        "startChar": 57,
+        "endLine": 810,
+        "endChar": 71
+      },
+      "revId": "b7953738d3540fafc6173e9b9c249be8308a664e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba05c817_0d565baf",
         "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
         "patchSetId": 5
@@ -128,6 +248,30 @@
       "writtenOn": "2021-03-01T20:51:42Z",
       "side": 1,
       "message": "Maybe go through HomeActivity for simplicity ? HomeActivity already has some logic to redirect to ShareActivity or ConversationActivity",
+      "range": {
+        "startLine": 811,
+        "startChar": 79,
+        "endLine": 811,
+        "endChar": 92
+      },
+      "revId": "b7953738d3540fafc6173e9b9c249be8308a664e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b566d0a_00503c91",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2021-03-02T17:13:49Z",
+      "side": 1,
+      "message": "It needs to add action on manifest and replace small part of ShareActivity code for shortcuts in HomeActivity which is redundent but if you think it would be simpler I can do that",
+      "parentUuid": "ba05c817_0d565baf",
       "range": {
         "startLine": 811,
         "startChar": 79,
@@ -160,6 +304,30 @@
       "revId": "b7953738d3540fafc6173e9b9c249be8308a664e",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48ec3b13_e16d3ebc",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ShareWithFragment.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2021-03-02T17:13:49Z",
+      "side": 1,
+      "message": "Now that we have ConversationPath.fromKey() it seems good idea to use it",
+      "parentUuid": "d5492890_65c75040",
+      "range": {
+        "startLine": 205,
+        "startChar": 16,
+        "endLine": 205,
+        "endChar": 86
+      },
+      "revId": "b7953738d3540fafc6173e9b9c249be8308a664e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
