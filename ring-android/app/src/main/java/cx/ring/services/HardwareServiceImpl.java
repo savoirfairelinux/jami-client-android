@@ -46,7 +46,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.jami.daemon.IntVect;
-import net.jami.daemon.Ringservice;
+import net.jami.daemon.JamiService;
 import net.jami.daemon.UintVect;
 import net.jami.model.Conference;
 import net.jami.model.Call;
@@ -340,7 +340,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
 
     @Override
     synchronized public void toggleSpeakerphone(boolean checked) {
-        Ringservice.setAudioPlugin(Ringservice.getCurrentAudioOutputPlugin());
+        JamiService.setAudioPlugin(JamiService.getCurrentAudioOutputPlugin());
         mShouldSpeakerphone = checked;
         Log.w(TAG, "toggleSpeakerphone setSpeakerphoneOn " + checked);
         if (mHasSpeakerPhone && checked) {
@@ -382,7 +382,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                 shm.window = startVideo(id, holder.getSurface(), width, height);
 
                 if (shm.window == 0) {
-                    Log.i(TAG, "DRingService.decodingStarted() no window !");
+                    Log.i(TAG, "DJamiService.decodingStarted() no window !");
 
                     VideoEvent event = new VideoEvent();
                     event.start = true;
@@ -493,7 +493,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
 
     private void toggleMediaHandler(String callId) {
         if (mMediaHandlerId != null)
-            Ringservice.toggleCallMediaHandler(mMediaHandlerId, callId, true);
+            JamiService.toggleCallMediaHandler(mMediaHandlerId, callId, true);
     }
 
     public void stopMediaHandler() {
@@ -533,7 +533,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         if (conf != null && useHardwareCodec) {
             Call call = conf.getCall();
             if (call != null) {
-                call.setDetails(Ringservice.getCallDetails(call.getDaemonIdString()).toNative());
+                call.setDetails(JamiService.getCallDetails(call.getDaemonIdString()).toNative());
                 videoParams.codec = call.getVideoCodec();
             } else {
                 videoParams.codec = null;
@@ -553,7 +553,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                         if (currentCall == null)
                             return;
                         if (mPluginCallId != null && !mPluginCallId.equals(currentCall)) {
-                            Ringservice.toggleCallMediaHandler(mMediaHandlerId, currentCall, false);
+                            JamiService.toggleCallMediaHandler(mMediaHandlerId, currentCall, false);
                             mIsChoosePlugin = false;
                             mMediaHandlerId = null;
                             mPluginCallId = null;
@@ -629,7 +629,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         }
 
         if (shm == null || shm.window == 0) {
-            Log.i(TAG, "DRingService.addVideoSurface() no window !");
+            Log.i(TAG, "DJamiService.addVideoSurface() no window !");
 
             VideoEvent event = new VideoEvent();
             event.start = true;

@@ -33,7 +33,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import net.jami.daemon.Blob;
-import net.jami.daemon.Ringservice;
+import net.jami.daemon.JamiService;
 import net.jami.daemon.StringMap;
 import net.jami.daemon.StringVect;
 import net.jami.model.Account;
@@ -120,7 +120,7 @@ public class CallService {
     }
 
     public void setIsComposing(String accountId, String uri, boolean isComposing) {
-        mExecutor.execute(() -> Ringservice.setIsComposing(accountId, uri, isComposing));
+        mExecutor.execute(() -> JamiService.setIsComposing(accountId, uri, isComposing));
     }
 
     public void onConferenceInfoUpdated(String confId, List<Map<String, String>> info) {
@@ -147,13 +147,13 @@ public class CallService {
 
     public void setConfMaximizedParticipant(String confId, String callId) {
         mExecutor.execute(() -> {
-            Ringservice.setActiveParticipant(confId, callId);
-            Ringservice.setConferenceLayout(confId, 1);
+            JamiService.setActiveParticipant(confId, callId);
+            JamiService.setConferenceLayout(confId, 1);
         });
     }
 
     public void setConfGridLayout(String confId) {
-        mExecutor.execute(() -> Ringservice.setConferenceLayout(confId, 0));
+        mExecutor.execute(() -> JamiService.setConferenceLayout(confId, 0));
     }
 
     public void remoteRecordingChanged(String callId, Uri peerNumber, boolean state) {
@@ -239,11 +239,11 @@ public class CallService {
             HashMap<String, String> volatileDetails = new HashMap<>();
             volatileDetails.put(Call.KEY_AUDIO_ONLY, String.valueOf(audioOnly));
 
-            String callId = Ringservice.placeCall(account, number.getUri(), StringMap.toSwig(volatileDetails));
+            String callId = JamiService.placeCall(account, number.getUri(), StringMap.toSwig(volatileDetails));
             if (callId == null || callId.isEmpty())
                 return null;
             if (audioOnly) {
-                Ringservice.muteLocalMedia(callId, "MEDIA_TYPE_VIDEO", true);
+                JamiService.muteLocalMedia(callId, "MEDIA_TYPE_VIDEO", true);
             }
             Call call = addCall(account, callId, number, Call.Direction.OUTGOING);
             if (conversationUri.isSwarm())
@@ -257,44 +257,44 @@ public class CallService {
     public void refuse(final String callId) {
         mExecutor.execute(() -> {
             Log.i(TAG, "refuse() running... " + callId);
-            Ringservice.refuse(callId);
-            Ringservice.hangUp(callId);
+            JamiService.refuse(callId);
+            JamiService.hangUp(callId);
         });
     }
 
     public void accept(final String callId) {
         mExecutor.execute(() -> {
             Log.i(TAG, "accept() running... " + callId);
-            Ringservice.muteCapture(false);
-            Ringservice.accept(callId);
+            JamiService.muteCapture(false);
+            JamiService.accept(callId);
         });
     }
 
     public void hangUp(final String callId) {
         mExecutor.execute(() -> {
             Log.i(TAG, "hangUp() running... " + callId);
-            Ringservice.hangUp(callId);
+            JamiService.hangUp(callId);
         });
     }
 
     public void muteParticipant(String confId, String peerId, boolean mute) {
         mExecutor.execute(() -> {
             Log.i(TAG, "mute() participant... " + peerId);
-            Ringservice.muteParticipant(confId, peerId, mute);
+            JamiService.muteParticipant(confId, peerId, mute);
         });
     }
 
     public void hold(final String callId) {
         mExecutor.execute(() -> {
             Log.i(TAG, "hold() running... " + callId);
-            Ringservice.hold(callId);
+            JamiService.hold(callId);
         });
     }
 
     public void unhold(final String callId) {
         mExecutor.execute(() -> {
             Log.i(TAG, "unhold() running... " + callId);
-            Ringservice.unhold(callId);
+            JamiService.unhold(callId);
         });
     }
 
@@ -302,7 +302,7 @@ public class CallService {
         try {
             return mExecutor.submit(() -> {
                 Log.i(TAG, "getCallDetails() running... " + callId);
-                return Ringservice.getCallDetails(callId).toNative();
+                return JamiService.getCallDetails(callId).toNative();
             }).get();
         } catch (Exception e) {
             Log.e(TAG, "Error running getCallDetails()", e);
@@ -312,20 +312,20 @@ public class CallService {
 
     public void muteRingTone(boolean mute) {
         Log.d(TAG, (mute ? "Muting." : "Unmuting.") + " ringtone.");
-        Ringservice.muteRingtone(mute);
+        JamiService.muteRingtone(mute);
     }
 
     public void restartAudioLayer() {
         mExecutor.execute(() -> {
             Log.i(TAG, "restartAudioLayer() running...");
-            Ringservice.setAudioPlugin(Ringservice.getCurrentAudioOutputPlugin());
+            JamiService.setAudioPlugin(JamiService.getCurrentAudioOutputPlugin());
         });
     }
 
     public void setAudioPlugin(final String audioPlugin) {
         mExecutor.execute(() -> {
             Log.i(TAG, "setAudioPlugin() running...");
-            Ringservice.setAudioPlugin(audioPlugin);
+            JamiService.setAudioPlugin(audioPlugin);
         });
     }
 
@@ -333,7 +333,7 @@ public class CallService {
         try {
             return mExecutor.submit(() -> {
                 Log.i(TAG, "getCurrentAudioOutputPlugin() running...");
-                return Ringservice.getCurrentAudioOutputPlugin();
+                return JamiService.getCurrentAudioOutputPlugin();
             }).get();
         } catch (Exception e) {
             Log.e(TAG, "Error running getCallDetails()", e);
@@ -344,32 +344,32 @@ public class CallService {
     public void playDtmf(final String key) {
         mExecutor.execute(() -> {
             Log.i(TAG, "playDTMF() running...");
-            Ringservice.playDTMF(key);
+            JamiService.playDTMF(key);
         });
     }
 
     public void setMuted(final boolean mute) {
         mExecutor.execute(() -> {
             Log.i(TAG, "muteCapture() running...");
-            Ringservice.muteCapture(mute);
+            JamiService.muteCapture(mute);
         });
     }
 
     public void setLocalMediaMuted(final String callId, String mediaType, final boolean mute) {
         mExecutor.execute(() -> {
             Log.i(TAG, "muteCapture() running...");
-            Ringservice.muteLocalMedia(callId, mediaType, mute);
+            JamiService.muteLocalMedia(callId, mediaType, mute);
         });
     }
 
     public boolean isCaptureMuted() {
-        return Ringservice.isCaptureMuted();
+        return JamiService.isCaptureMuted();
     }
 
     public void transfer(final String callId, final String to) {
         mExecutor.execute(() -> {
             Log.i(TAG, "transfer() thread running...");
-            if (Ringservice.transfer(callId, to)) {
+            if (JamiService.transfer(callId, to)) {
                 Log.i(TAG, "OK");
             } else {
                 Log.i(TAG, "NOT OK");
@@ -380,7 +380,7 @@ public class CallService {
     public void attendedTransfer(final String transferId, final String targetID) {
         mExecutor.execute(() -> {
             Log.i(TAG, "attendedTransfer() thread running...");
-            if (Ringservice.attendedTransfer(transferId, targetID)) {
+            if (JamiService.attendedTransfer(transferId, targetID)) {
                 Log.i(TAG, "OK");
             } else {
                 Log.i(TAG, "NOT OK");
@@ -390,7 +390,7 @@ public class CallService {
 
     public String getRecordPath() {
         try {
-            return mExecutor.submit(Ringservice::getRecordPath).get();
+            return mExecutor.submit(JamiService::getRecordPath).get();
         } catch (Exception e) {
             Log.e(TAG, "Error running isCaptureMuted()", e);
         }
@@ -398,21 +398,21 @@ public class CallService {
     }
 
     public boolean toggleRecordingCall(final String id) {
-        mExecutor.execute(() -> Ringservice.toggleRecording(id));
+        mExecutor.execute(() -> JamiService.toggleRecording(id));
         return false;
     }
 
     public boolean startRecordedFilePlayback(final String filepath) {
-        mExecutor.execute(() -> Ringservice.startRecordedFilePlayback(filepath));
+        mExecutor.execute(() -> JamiService.startRecordedFilePlayback(filepath));
         return false;
     }
 
     public void stopRecordedFilePlayback() {
-        mExecutor.execute(Ringservice::stopRecordedFilePlayback);
+        mExecutor.execute(JamiService::stopRecordedFilePlayback);
     }
 
     public void setRecordPath(final String path) {
-        mExecutor.execute(() -> Ringservice.setRecordPath(path));
+        mExecutor.execute(() -> JamiService.setRecordPath(path));
     }
 
     public void sendTextMessage(final String callId, final String msg) {
@@ -420,7 +420,7 @@ public class CallService {
             Log.i(TAG, "sendTextMessage() thread running...");
             StringMap messages = new StringMap();
             messages.setRaw("text/plain", Blob.fromString(msg));
-            Ringservice.sendTextMessage(callId, messages, "", false);
+            JamiService.sendTextMessage(callId, messages, "", false);
         });
     }
 
@@ -429,7 +429,7 @@ public class CallService {
             Log.i(TAG, "sendAccountTextMessage() running... " + accountId + " " + to + " " + msg);
             StringMap msgs = new StringMap();
             msgs.setRaw("text/plain", Blob.fromString(msg));
-            return Ringservice.sendAccountTextMessage(accountId, to, msgs);
+            return JamiService.sendAccountTextMessage(accountId, to, msgs);
         }).subscribeOn(Schedulers.from(mExecutor));
     }
 
@@ -437,7 +437,7 @@ public class CallService {
         return Completable
                 .fromAction(() -> {
                     Log.i(TAG, "CancelMessage() running...   Account ID:  " + accountId + " " + "Message ID " + " " + messageID);
-                    Ringservice.cancelMessage(accountId, messageID);
+                    JamiService.cancelMessage(accountId, messageID);
                 })
                 .subscribeOn(Schedulers.from(mExecutor));
     }
@@ -494,9 +494,9 @@ public class CallService {
         Call call = currentCalls.get(callId);
         if (call != null) {
             call.setCallState(callState);
-            call.setDetails(Ringservice.getCallDetails(callId).toNative());
+            call.setDetails(JamiService.getCallDetails(callId).toNative());
         } else if (callState !=  Call.CallStatus.OVER && callState !=  Call.CallStatus.FAILURE) {
-            Map<String, String> callDetails = Ringservice.getCallDetails(callId);
+            Map<String, String> callDetails = JamiService.getCallDetails(callId);
             call = new Call(callId, callDetails);
             if (StringUtils.isEmpty(call.getContactNumber())) {
                 Log.w(TAG, "No number");
@@ -586,47 +586,47 @@ public class CallService {
     }
 
     public void removeConference(final String confId) {
-        mExecutor.execute(() -> Ringservice.removeConference(confId));
+        mExecutor.execute(() -> JamiService.removeConference(confId));
     }
 
     public Single<Boolean> joinParticipant(final String selCallId, final String dragCallId) {
-        return Single.fromCallable(() -> Ringservice.joinParticipant(selCallId, dragCallId))
+        return Single.fromCallable(() -> JamiService.joinParticipant(selCallId, dragCallId))
                 .subscribeOn(Schedulers.from(mExecutor));
     }
 
     public void addParticipant(final String callId, final String confId) {
-        mExecutor.execute(() -> Ringservice.addParticipant(callId, confId));
+        mExecutor.execute(() -> JamiService.addParticipant(callId, confId));
     }
 
     public void addMainParticipant(final String confId) {
-        mExecutor.execute(() -> Ringservice.addMainParticipant(confId));
+        mExecutor.execute(() -> JamiService.addMainParticipant(confId));
     }
 
     public void detachParticipant(final String callId) {
-        mExecutor.execute(() -> Ringservice.detachParticipant(callId));
+        mExecutor.execute(() -> JamiService.detachParticipant(callId));
     }
 
     public void joinConference(final String selConfId, final String dragConfId) {
-        mExecutor.execute(() -> Ringservice.joinConference(selConfId, dragConfId));
+        mExecutor.execute(() -> JamiService.joinConference(selConfId, dragConfId));
     }
 
     public void hangUpConference(final String confId) {
-        mExecutor.execute(() -> Ringservice.hangUpConference(confId));
+        mExecutor.execute(() -> JamiService.hangUpConference(confId));
     }
 
     public void holdConference(final String confId) {
-        mExecutor.execute(() -> Ringservice.holdConference(confId));
+        mExecutor.execute(() -> JamiService.holdConference(confId));
     }
 
     public void unholdConference(final String confId) {
-        mExecutor.execute(() -> Ringservice.unholdConference(confId));
+        mExecutor.execute(() -> JamiService.unholdConference(confId));
     }
 
     public boolean isConferenceParticipant(final String callId) {
         try {
             return mExecutor.submit(() -> {
                 Log.i(TAG, "isConferenceParticipant() running...");
-                return Ringservice.isConferenceParticipant(callId);
+                return JamiService.isConferenceParticipant(callId);
             }).get();
         } catch (Exception e) {
             Log.e(TAG, "Error running isConferenceParticipant()", e);
@@ -638,12 +638,12 @@ public class CallService {
         try {
             return mExecutor.submit(() -> {
                 Log.i(TAG, "getConferenceList() running...");
-                StringVect callIds = Ringservice.getCallList();
+                StringVect callIds = JamiService.getCallList();
                 HashMap<String, ArrayList<String>> confs = new HashMap<>(callIds.size());
                 for (int i = 0; i < callIds.size(); i++) {
                     String callId = callIds.get(i);
-                    String confId = Ringservice.getConferenceId(callId);
-                    Map<String, String> callDetails = Ringservice.getCallDetails(callId).toNative();
+                    String confId = JamiService.getConferenceId(callId);
+                    Map<String, String> callDetails = JamiService.getCallDetails(callId).toNative();
 
                     //todo remove condition when callDetails does not contains sips ids anymore
                     if (!callDetails.get("PEER_NUMBER").contains("sips")) {
@@ -670,7 +670,7 @@ public class CallService {
         try {
             return mExecutor.submit(() -> {
                 Log.i(TAG, "getParticipantList() running...");
-                return new ArrayList<>(Ringservice.getParticipantList(confId));
+                return new ArrayList<>(JamiService.getParticipantList(confId));
             }).get();
         } catch (Exception e) {
             Log.e(TAG, "Error running getParticipantList()", e);
@@ -683,14 +683,14 @@ public class CallService {
     }
 
     public String getConferenceId(String callId) {
-        return Ringservice.getConferenceId(callId);
+        return JamiService.getConferenceId(callId);
     }
 
     public String getConferenceState(final String callId) {
         try {
             return mExecutor.submit(() -> {
                 Log.i(TAG, "getConferenceDetails() thread running...");
-                return Ringservice.getConferenceDetails(callId).get("CONF_STATE");
+                return JamiService.getConferenceDetails(callId).get("CONF_STATE");
             }).get();
         } catch (Exception e) {
             Log.e(TAG, "Error running getParticipantList()", e);
@@ -706,7 +706,7 @@ public class CallService {
         try {
             return mExecutor.submit(() -> {
                 Log.i(TAG, "getCredentials() thread running...");
-                return Ringservice.getConferenceDetails(id).toNative();
+                return JamiService.getConferenceDetails(id).toNative();
             }).get();
         } catch (Exception e) {
             Log.e(TAG, "Error running getParticipantList()", e);
@@ -722,7 +722,7 @@ public class CallService {
             conf = new Conference(confId);
             currentConferences.put(confId, conf);
         }
-        StringVect participants = Ringservice.getParticipantList(confId);
+        StringVect participants = JamiService.getParticipantList(confId);
         for (String callId : participants) {
             Call call = getCurrentCallForId(callId);
             if (call != null) {
@@ -758,7 +758,7 @@ public class CallService {
                 currentConferences.put(confId, conf);
             }
             conf.setState(state);
-            Set<String> participants = new HashSet<>(Ringservice.getParticipantList(confId));
+            Set<String> participants = new HashSet<>(JamiService.getParticipantList(confId));
             // Add new participants
             for (String callId : participants) {
                 if (!conf.contains(callId)) {
