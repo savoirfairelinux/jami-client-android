@@ -65,7 +65,6 @@ import javax.inject.Named;
 import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.contacts.AvatarFactory;
-import net.jami.daemon.Ringservice;
 import cx.ring.dependencyinjection.DaggerJamiInjectionComponent;
 import cx.ring.dependencyinjection.JamiInjectionComponent;
 import cx.ring.dependencyinjection.JamiInjectionModule;
@@ -179,10 +178,10 @@ public abstract class JamiApplication extends Application {
                 if (mPreferencesService.getSettings().isAllowPushNotifications()) {
                     String token = getPushToken();
                     if (token != null) {
-                        Ringservice.setPushNotificationToken(token);
+                        JamiService.setPushNotificationToken(token);
                     }
                 } else {
-                    Ringservice.setPushNotificationToken("");
+                    JamiService.setPushNotificationToken("");
                 }
 
                 Intent intent = new Intent(DRING_CONNECTION_CHANGED);

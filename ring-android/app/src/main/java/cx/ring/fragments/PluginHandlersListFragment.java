@@ -9,7 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import cx.ring.daemon.Ringservice;
+import net.jami.daemon.JamiService;
+
 import cx.ring.databinding.FragPluginHandlersListBinding;
 import cx.ring.plugins.PluginUtils;
 import cx.ring.settings.pluginssettings.PluginDetails;
@@ -74,11 +75,11 @@ public class PluginHandlersListFragment extends Fragment implements PluginsListA
 
     @Override
     public void onPluginItemClicked(PluginDetails pluginDetails) {
-        Ringservice.toggleChatHandler(pluginDetails.getmHandlerId(), mPath.getAccountId(), mPath.getConversationId(), pluginDetails.isEnabled());
+        JamiService.toggleChatHandler(pluginDetails.getmHandlerId(), mPath.getAccountId(), mPath.getConversationId(), pluginDetails.isEnabled());
     }
 
     @Override
     public void onPluginEnabled(PluginDetails pluginDetails) {
-        Ringservice.toggleChatHandler(pluginDetails.getmHandlerId(), mPath.getAccountId(), mPath.getConversationId(), pluginDetails.isEnabled());
+        JamiService.toggleChatHandler(pluginDetails.getmHandlerId(), mPath.getAccountId(), mPath.getConversationId(), pluginDetails.isEnabled());
     }
 }
