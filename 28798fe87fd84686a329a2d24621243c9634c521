@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1d4706ae_1743109b",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2021-03-03T01:09:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d8d7ece_5819f76b",
+      "range": {
+        "startLine": 787,
+        "startChar": 13,
+        "endLine": 787,
+        "endChar": 39
+      },
+      "revId": "28798fe87fd84686a329a2d24621243c9634c521",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2355e6a2_fed289fa",
         "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2021-03-02T18:47:22Z",
       "side": 1,
       "message": "what about using setIsConversation ?",
+      "range": {
+        "startLine": 807,
+        "startChar": 21,
+        "endLine": 807,
+        "endChar": 33
+      },
+      "revId": "28798fe87fd84686a329a2d24621243c9634c521",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9d6e5e8_31123598",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2021-03-03T01:09:29Z",
+      "side": 1,
+      "message": "what do you mean by setIsConversation?\n\nbased on the documentation setLongLived should be true to be sure system can cach the person especially for pinned contacts",
+      "parentUuid": "2355e6a2_fed289fa",
       "range": {
         "startLine": 807,
         "startChar": 21,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c3090db1_a7252d92",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ShareWithFragment.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2021-03-03T01:09:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c945094_6d594e29",
+      "range": {
+        "startLine": 201,
+        "startChar": 16,
+        "endLine": 204,
+        "endChar": 84
+      },
+      "revId": "28798fe87fd84686a329a2d24621243c9634c521",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "069eb166_f37264b5",
         "filename": "ring-android/app/src/main/java/cx/ring/utils/ConversationPath.java",
         "patchSetId": 11
@@ -91,6 +163,30 @@
       "revId": "28798fe87fd84686a329a2d24621243c9634c521",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "437436a6_cfaaaeb5",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/ConversationPath.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 662
+      },
+      "writtenOn": "2021-03-03T01:09:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "069eb166_f37264b5",
+      "range": {
+        "startLine": 88,
+        "startChar": 12,
+        "endLine": 89,
+        "endChar": 39
+      },
+      "revId": "28798fe87fd84686a329a2d24621243c9634c521",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
