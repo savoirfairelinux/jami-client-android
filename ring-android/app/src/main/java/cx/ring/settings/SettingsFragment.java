@@ -40,8 +40,9 @@ import android.widget.Toast;
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
-import cx.ring.daemon.Ringservice;
 import cx.ring.databinding.FragSettingsBinding;
+
+import net.jami.daemon.JamiService;
 import net.jami.model.Settings;
 import cx.ring.mvp.BaseSupportFragment;
 import net.jami.mvp.GenericView;
@@ -78,7 +79,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
         setHasOptionsMenu(true);
         super.onViewCreated(view, savedInstanceState);
         binding.settingsDarkTheme.setChecked(presenter.getDarkMode());
-        binding.settingsPluginsSwitch.setChecked(Ringservice.getPluginsEnabled());
+        binding.settingsPluginsSwitch.setChecked(JamiService.getPluginsEnabled());
         if (TextUtils.isEmpty(JamiApplication.getInstance().getPushToken())) {
             binding.settingsPushNotificationsLayout.setVisibility(View.GONE);
         }
@@ -88,7 +89,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
 
         binding.scrollview.getViewTreeObserver().addOnScrollChangedListener(this);
         binding.settingsDarkTheme.setOnCheckedChangeListener((buttonView, isChecked) -> presenter.setDarkMode(isChecked));
-        binding.settingsPluginsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> Ringservice.setPluginsEnabled(isChecked));
+        binding.settingsPluginsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> JamiService.setPluginsEnabled(isChecked));
 
         CompoundButton.OnCheckedChangeListener save = (buttonView, isChecked) -> {
             if (!mIsRefreshingViewFromPresenter)
@@ -123,7 +124,7 @@ public class SettingsFragment extends BaseSupportFragment<SettingsPresenter> imp
                 .show());
         binding.settingsPluginsLayout.setOnClickListener(v -> {
             HomeActivity activity = (HomeActivity) getActivity();
-            if (activity != null && Ringservice.getPluginsEnabled()){
+            if (activity != null && JamiService.getPluginsEnabled()){
                 activity.goToPluginsListSettings();
             }
         });
