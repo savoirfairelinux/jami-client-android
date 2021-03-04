@@ -39,7 +39,7 @@ import cx.ring.R;
 import cx.ring.client.HomeActivity;
 import cx.ring.databinding.FragAboutBinding;
 import cx.ring.mvp.BaseSupportFragment;
-import cx.ring.mvp.RootPresenter;
+import net.jami.mvp.RootPresenter;
 
 public class AboutFragment extends BaseSupportFragment<RootPresenter> {
 

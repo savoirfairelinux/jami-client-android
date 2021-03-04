@@ -1,26 +1,17 @@
 package cx.ring.plugins.ButtonPreference;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.arch.core.util.Function;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceViewHolder;
 
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-
-import org.w3c.dom.Text;
-
 import cx.ring.R;
-import cx.ring.daemon.Ringservice;
 
 public class ButtonPreference extends Preference {
     Context mContext;

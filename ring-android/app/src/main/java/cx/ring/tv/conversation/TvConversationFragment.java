@@ -64,22 +64,22 @@ import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.MediaViewerActivity;
 import cx.ring.contacts.AvatarFactory;
-import cx.ring.conversation.ConversationPresenter;
-import cx.ring.conversation.ConversationView;
-import cx.ring.model.Account;
+import net.jami.conversation.ConversationPresenter;
+import net.jami.conversation.ConversationView;
+import net.jami.model.Account;
 import cx.ring.databinding.FragConversationTvBinding;
-import cx.ring.model.CallContact;
-import cx.ring.model.Conversation;
-import cx.ring.model.DataTransfer;
-import cx.ring.model.Error;
-import cx.ring.model.Interaction;
+import net.jami.model.CallContact;
+import net.jami.model.Conversation;
+import net.jami.model.DataTransfer;
+import net.jami.model.Error;
+import net.jami.model.Interaction;
 import cx.ring.mvp.BaseSupportFragment;
 import cx.ring.service.DRingService;
 import cx.ring.tv.camera.CustomCameraActivity;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.ConversationPath;
-import cx.ring.utils.StringUtils;
+import net.jami.utils.StringUtils;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.Completable;
 import io.reactivex.Single;
@@ -737,7 +737,7 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     }
 
     @Override
-    public void displayNumberSpinner(Conversation conversation, cx.ring.model.Uri number) {
+    public void displayNumberSpinner(Conversation conversation, net.jami.model.Uri number) {
 
     }
 
@@ -767,12 +767,12 @@ public class TvConversationFragment extends BaseSupportFragment<ConversationPres
     }
 
     @Override
-    public void goToCallActivityWithResult(String accountId, cx.ring.model.Uri conversationUri, cx.ring.model.Uri contactRingId, boolean audioOnly) {
+    public void goToCallActivityWithResult(String accountId, net.jami.model.Uri conversationUri, net.jami.model.Uri contactRingId, boolean audioOnly) {
 
     }
 
     @Override
-    public void goToContactActivity(String accountId, cx.ring.model.Uri contactRingId) {
+    public void goToContactActivity(String accountId, net.jami.model.Uri contactRingId) {
 
     }
 

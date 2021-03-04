@@ -27,7 +27,7 @@ import android.preference.PreferenceManager;
 
 import cx.ring.R;
 import cx.ring.client.CallActivity;
-import cx.ring.model.Uri;
+import net.jami.model.Uri;
 
 public class OutgoingCallHandler extends BroadcastReceiver {
     public static final String KEY_CACHE_HAVE_RINGACCOUNT = "cache_haveRingAccount";
