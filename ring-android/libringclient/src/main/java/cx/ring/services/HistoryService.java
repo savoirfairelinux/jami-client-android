@@ -36,7 +36,6 @@ import cx.ring.model.Uri;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
 import io.reactivex.Completable;
-import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
@@ -55,6 +54,9 @@ public abstract class HistoryService {
     protected abstract Object getHelper(String dbName);
 
     protected abstract void migrateDatabase(List<String> accounts);
+
+    public abstract void setMessageRead(String accountId, Uri conversationUri, String lastId);
+    public abstract String getLastMessageRead(String accountId, Uri conversationUri);
 
     protected abstract void deleteAccountHistory(String accountId);
 
@@ -152,16 +154,11 @@ public abstract class HistoryService {
         return Completable.fromAction(() -> {
             Log.d(TAG, "Inserting interaction for account -> " + accountId);
             Dao<ConversationHistory, Integer> conversationDataDao = getConversationDataDao(accountId);
-
             ConversationHistory history = conversationDataDao.queryBuilder().where().eq(ConversationHistory.COLUMN_PARTICIPANT, conversation.getParticipant()).queryForFirst();
-
             if (history == null) {
                 history = conversationDataDao.createIfNotExists(new ConversationHistory(conversation.getParticipant()));
-                interaction.setConversation(history);
-            } else
-                interaction.setConversation(history);
-
-
+            }
+            //interaction.setConversation(conversation);
             conversation.setId(history.getId());
             getInteractionDataDao(accountId).create(interaction);
         })
@@ -185,7 +182,8 @@ public abstract class HistoryService {
                         "WHERE conversations.id = final.conversation\n" +
                         "GROUP BY final.conversation\n", (columnNames, resultColumns) -> new Interaction(resultColumns[0],
                         resultColumns[1], new ConversationHistory(Integer.parseInt(resultColumns[2]), resultColumns[12]), resultColumns[3], resultColumns[4], resultColumns[5], resultColumns[6], resultColumns[7], resultColumns[8], resultColumns[9])).getResults())
-                .subscribeOn(scheduler).doOnError(e -> Log.e(TAG, "Can't load smartlist from database", e))
+                .subscribeOn(scheduler)
+                .doOnError(e -> Log.e(TAG, "Can't load smartlist from database", e))
                 .onErrorReturn(e -> new ArrayList<>());
     }
 
@@ -212,19 +210,16 @@ public abstract class HistoryService {
 
     Single<TextMessage> incomingMessage(final String accountId, final String daemonId, final String from, final String message) {
         return Single.fromCallable(() -> {
-            String f = new Uri(from).getUri();
+            String fromUri = Uri.fromString(from).getUri();
             Dao<ConversationHistory, Integer> conversationDataDao = getConversationDataDao(accountId);
-
-            ConversationHistory conversation = conversationDataDao.queryBuilder().where().eq(ConversationHistory.COLUMN_PARTICIPANT, f).queryForFirst();
-
+            ConversationHistory conversation = conversationDataDao.queryBuilder().where().eq(ConversationHistory.COLUMN_PARTICIPANT, fromUri).queryForFirst();
             if (conversation == null) {
-                conversation = new ConversationHistory(f);
+                conversation = new ConversationHistory(fromUri);
                 conversation.setId(conversationDataDao.extractId(conversationDataDao.createIfNotExists(conversation)));
             }
 
-            TextMessage txt = new TextMessage(f, accountId, daemonId, conversation, message);
+            TextMessage txt = new TextMessage(fromUri, accountId, daemonId, conversation, message);
             txt.setStatus(Interaction.InteractionStatus.SUCCESS);
-
 
             Log.w(TAG, "New text messsage " + txt.getAuthor() + " " + txt.getDaemonId() + " " + txt.getBody());
             getInteractionDataDao(accountId).create(txt);
@@ -233,14 +228,14 @@ public abstract class HistoryService {
     }
 
 
-    Single<TextMessage> accountMessageStatusChanged(String accountId, long daemonId, String to, int status) {
+    Single<TextMessage> accountMessageStatusChanged(String accountId, String daemonId, String peer, int status) {
         return Single.fromCallable(() -> {
-            List<Interaction> textList = getInteractionDataDao(accountId).queryForEq(Interaction.COLUMN_DAEMON_ID, Long.toString(daemonId));
+            List<Interaction> textList = getInteractionDataDao(accountId).queryForEq(Interaction.COLUMN_DAEMON_ID, daemonId);
             if (textList == null || textList.isEmpty()) {
                 throw new RuntimeException("accountMessageStatusChanged: not able to find message with id " + daemonId + " in database");
             }
             Interaction text = textList.get(0);
-            String participant = (new Uri(to)).getUri();
+            String participant = Uri.fromString(peer).getUri();
             if (!text.getConversation().getParticipant().equals(participant)) {
                 throw new RuntimeException("accountMessageStatusChanged: received an invalid text message");
             }
@@ -251,4 +246,5 @@ public abstract class HistoryService {
             return msg;
         }).subscribeOn(scheduler);
     }
+
 }

@@ -389,13 +389,14 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         mDisposable.add(mAccountService.getCurrentAccountSubject()
                 .firstElement()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(account -> startConversation(account.getAccountID(), new cx.ring.model.Uri(conversationId))));
+                .subscribe(account -> startConversation(account.getAccountID(), cx.ring.model.Uri.fromString(conversationId))));
     }
     public void startConversation(String accountId, cx.ring.model.Uri conversationId) {
+        Log.w(TAG, "startConversation " + accountId + " " + conversationId);
         if (!DeviceUtils.isTablet(this)) {
-            startActivity(new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, conversationId.toString()), this, ConversationActivity.class));
+            startActivity(new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, conversationId), this, ConversationActivity.class));
         } else {
-            startConversationTablet(ConversationPath.toBundle(accountId, conversationId.toString()));
+            startConversationTablet(ConversationPath.toBundle(accountId, conversationId));
         }
     }
 
@@ -510,13 +511,11 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         switch (item.getItemId()) {
             case R.id.navigation_requests:
                 if (fContent instanceof ContactRequestsFragment) {
-                    ((ContactRequestsFragment) fContent).presentForAccount(account.getAccountID());
+                    ((ContactRequestsFragment) fContent).presentForAccount(null);
                     break;
                 }
                 popCustomBackStack();
                 fContent = new ContactRequestsFragment();
-                bundle.putString(ContactRequestsFragment.ACCOUNT_ID, account.getAccountID());
-                fContent.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction()
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         .replace(R.id.main_frame, fContent, CONTACT_REQUESTS_TAG)

@@ -73,16 +73,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     app:endIconDrawable="@drawable/baseline_edit_twoton_24dp"
                     app:endIconMode="custom"
                     app:endIconTint="@color/colorPrimary"
+                    app:hintEnabled="true"
                     app:hintTextColor="@color/text_hint">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/username"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/text_color"
-                        android:textStyle="bold"
+                        android:inputType="textPersonName"
+                        android:maxLines="1"
                         android:singleLine="true"
-                        android:maxLines="1"/>
+                        android:textColor="@color/text_color"
+                        android:textStyle="bold" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -139,12 +141,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <cx.ring.views.TwoButtonEditText
-                    android:id="@+id/registered_name"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:enabled="false"
-                    android:hint="@string/registered_username" />
+                    android:hint="@string/registered_username"
+                    android:textColorHint="@color/text_hint"
+                    app:hintEnabled="true"
+                    app:hintTextColor="@color/text_hint"
+                    android:enabled="false">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/registered_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textColor="@color/text_color"
+                        android:textStyle="bold"
+                        android:textIsSelectable="true"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/register_name"
@@ -182,13 +199,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
             </LinearLayout>
 
-            <cx.ring.views.TwoButtonEditText
-                android:id="@+id/identity"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:enabled="false"
-                android:hint="@string/ring_account_identity" />
+                android:hint="@string/ring_account_identity"
+                android:textColorHint="@color/text_hint"
+                app:hintEnabled="true"
+                app:hintTextColor="@color/text_hint"
+                android:layout_marginTop="12dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/identity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:editable="false"
+                    android:singleLine="true"
+                    android:textColor="@color/text_color"
+                    android:textStyle="bold"
+                    android:textIsSelectable="true"
+                    android:ellipsize="end"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <cx.ring.views.TwoButtonEditText
                 android:id="@+id/linked_devices"
