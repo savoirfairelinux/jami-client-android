@@ -533,18 +533,13 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         if (!presenter.getDeviceRuntimeService().hasAudioPermission()) {
             requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, REQUEST_CODE_CAPTURE_AUDIO);
         } else {
-            Context ctx = requireContext();
-            Intent intent = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
-
-            if (intent.resolveActivity(ctx.getPackageManager()) != null) {
-                try {
-                    mCurrentPhoto = AndroidFileUtils.createAudioFile(ctx);
-                } catch (IOException ex) {
-                    Log.e(TAG, "takePicture: error creating temporary file", ex);
-                    return;
-                }
+            try {
+                Context ctx = requireContext();
+                Intent intent = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
+                mCurrentPhoto = AndroidFileUtils.createAudioFile(ctx);
                 startActivityForResult(intent, REQUEST_CODE_CAPTURE_AUDIO);
-            } else {
+            } catch (Exception ex) {
+                Log.e(TAG, "sendAudioMessage: error", ex);
                 Toast.makeText(getActivity(), "Can't find audio recorder app", Toast.LENGTH_SHORT).show();
             }
         }
@@ -554,21 +549,17 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         if (!presenter.getDeviceRuntimeService().hasVideoPermission()) {
             requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_CAPTURE_VIDEO);
         } else {
-            Context context = requireContext();
-            Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-            intent.putExtra("android.intent.extras.CAMERA_FACING", android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT);
-            intent.putExtra("android.intent.extras.LENS_FACING_FRONT", 1);
-            intent.putExtra("android.intent.extra.USE_FRONT_CAMERA", true);
-            if (intent.resolveActivity(context.getPackageManager()) != null) {
-                try {
+            try {
+                Context context = requireContext();
+                Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+                intent.putExtra("android.intent.extras.CAMERA_FACING", android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT);
+                intent.putExtra("android.intent.extras.LENS_FACING_FRONT", 1);
+                intent.putExtra("android.intent.extra.USE_FRONT_CAMERA", true);
                     mCurrentPhoto = AndroidFileUtils.createVideoFile(context);
-                } catch (IOException ex) {
-                    Log.e(TAG, "takePicture: error creating temporary file", ex);
-                    return;
-                }
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, ContentUriHandler.getUriForFile(context, ContentUriHandler.AUTHORITY_FILES, mCurrentPhoto));
                 startActivityForResult(intent, REQUEST_CODE_CAPTURE_VIDEO);
-            } else {
+            } catch (Exception ex) {
+                Log.e(TAG, "sendVideoMessage: error", ex);
                 Toast.makeText(getActivity(), "Can't find video recorder app", Toast.LENGTH_SHORT).show();
             }
         }
