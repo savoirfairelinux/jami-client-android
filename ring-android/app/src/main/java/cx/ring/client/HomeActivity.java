@@ -354,7 +354,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(count -> setBadge(R.id.navigation_home, count))));
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             mDisposable.add((mAccountService
                     .getCurrentAccountSubject()
                     .observeOn(Schedulers.computation())
@@ -809,6 +809,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
             i++;
         }
 
+        Log.w(TAG, "ShortcutManagerCompat.addDynamicShortcuts " + shortcutInfoList.size());
         ShortcutManagerCompat.removeAllDynamicShortcuts(this);
         ShortcutManagerCompat.addDynamicShortcuts(this, shortcutInfoList);
     }

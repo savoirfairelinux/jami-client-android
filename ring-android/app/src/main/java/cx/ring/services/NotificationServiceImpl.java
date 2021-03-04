@@ -558,7 +558,6 @@ public class NotificationServiceImpl implements NotificationService {
                     .setIntent(PendingIntent.getActivity(mContext, 0, intentBubble,
                             PendingIntent.FLAG_UPDATE_CURRENT))
                     .build())
-                    .addPerson(contactPerson.getUri())
                     .setShortcutId(key);
         }
 

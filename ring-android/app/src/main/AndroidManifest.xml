@@ -159,7 +159,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
             <meta-data
                 android:name="android.service.chooser.chooser_target_service"
-                android:value=".services.JamiChooserTargetService" />
+                android:value="androidx.sharetarget.ChooserTargetServiceCompat" />
         </activity>
         <activity
             android:name=".account.AccountWizardActivity"
@@ -411,16 +411,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:label="@string/title_media_viewer"
             android:icon="@mipmap/ic_launcher"
             android:theme="@style/AppThemeBase.Dark" />
-
-        <service
-            android:name=".services.JamiChooserTargetService"
-            android:label="ChooserTargetService"
-            android:icon="@mipmap/ic_launcher"
-            android:permission="android.permission.BIND_CHOOSER_TARGET_SERVICE">
-            <intent-filter>
-                <action android:name="android.service.chooser.ChooserTargetService" />
-            </intent-filter>
-        </service>
 
         <service
             android:name=".service.JamiJobService"

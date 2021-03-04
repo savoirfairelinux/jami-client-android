@@ -9,6 +9,7 @@
 -keepattributes SourceFile,LineNumberTable
 
 -keep,includedescriptorclasses class androidx.core.content.FileProvider { *; }
+-keep,includedescriptorclasses class androidx.sharetarget.* { *; }
 
 -keepnames class * implements android.os.Parcelable {
     public static final ** CREATOR;
