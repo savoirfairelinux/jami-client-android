@@ -22,7 +22,6 @@ package cx.ring.client;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -43,13 +42,18 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.pm.ShortcutInfoCompat;
 import androidx.core.content.pm.ShortcutManagerCompat;
 import androidx.core.graphics.drawable.IconCompat;
-import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
+import net.jami.model.Account;
+import net.jami.model.AccountConfig;
+import net.jami.model.Conversation;
+import net.jami.services.AccountService;
+import net.jami.services.NotificationService;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -72,14 +76,7 @@ import cx.ring.fragments.ConversationFragment;
 import cx.ring.fragments.SmartListFragment;
 import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.interfaces.Colorable;
-import net.jami.model.Account;
-import net.jami.model.AccountConfig;
 import cx.ring.service.DRingService;
-
-import net.jami.model.Contact;
-import net.jami.model.Conversation;
-import net.jami.services.AccountService;
-import net.jami.services.NotificationService;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.settings.VideoSettingsFragment;
 import cx.ring.settings.pluginssettings.PluginDetails;
@@ -302,14 +299,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         mBinding.spinnerToolbar.setVisibility(View.VISIBLE);
         mBinding.mainToolbar.setTitle(null);
         mBinding.mainToolbar.setSubtitle(null);
-
-        int targetSize = (int) (AvatarFactory.SIZE_AB * getResources().getDisplayMetrics().density);
-        mDisposable.add(mAccountService.getCurrentAccountSubject()
-                .switchMapSingle(account -> AvatarFactory.getBitmapAvatar(HomeActivity.this, account, targetSize)
-                        .map(avatar -> new Pair<>(account, avatar)))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(d -> mBinding.mainToolbar.setLogo(new BitmapDrawable(getResources(), d.second)),
-                        e -> Log.e(TAG, "Error loading avatar", e)));
     }
 
     @Override
@@ -443,7 +432,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         fContent = getSupportFragmentManager().findFragmentById(R.id.main_frame);
         if (fContent instanceof SmartListFragment) {
             mBinding.navigationView.getMenu().getItem(NAVIGATION_CONVERSATIONS).setChecked(true);
-            showProfileInfo();
+            //showProfileInfo();
             showToolbarSpinner();
             hideTabletToolbar();
         }
@@ -507,69 +496,61 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
             return false;
 
         Bundle bundle = new Bundle();
-        switch (item.getItemId()) {
-            case R.id.navigation_requests:
-                if (fContent instanceof ContactRequestsFragment) {
-                    ((ContactRequestsFragment) fContent).presentForAccount(null);
-                    break;
+        int itemId = item.getItemId();
+        if (itemId == R.id.navigation_requests) {
+            if (fContent instanceof ContactRequestsFragment) {
+                ((ContactRequestsFragment) fContent).presentForAccount(null);
+                return true;
+            }
+            popCustomBackStack();
+            fContent = new ContactRequestsFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    .replace(R.id.main_frame, fContent, CONTACT_REQUESTS_TAG)
+                    .setReorderingAllowed(true)
+                    .addToBackStack(CONTACT_REQUESTS_TAG)
+                    .commit();
+            //showProfileInfo();
+            showToolbarSpinner();
+        } else if (itemId == R.id.navigation_home) {
+            if (fContent instanceof SmartListFragment) {
+                return true;
+            }
+            popCustomBackStack();
+            fContent = new SmartListFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    .replace(R.id.main_frame, fContent, HOME_TAG)
+                    .setReorderingAllowed(true)
+                    .commit();
+            //showProfileInfo();
+            showToolbarSpinner();
+        } else if (itemId == R.id.navigation_settings) {
+            if (account.needsMigration()) {
+                Log.d(TAG, "launchAccountMigrationActivity: Launch account migration activity");
+
+                Intent intent = new Intent()
+                        .setClass(this, AccountWizardActivity.class)
+                        .setData(Uri.withAppendedPath(ContentUriHandler.ACCOUNTS_CONTENT_URI, account.getAccountID()));
+                startActivityForResult(intent, 1);
+            } else {
+                Log.d(TAG, "launchAccountEditFragment: Launch account edit fragment");
+                bundle.putString(AccountEditionFragment.ACCOUNT_ID, account.getAccountID());
+
+                if (fContent instanceof AccountEditionFragment) {
+                    return true;
                 }
                 popCustomBackStack();
-                fContent = new ContactRequestsFragment();
+                fContent = new AccountEditionFragment();
+                fContent.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction()
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .replace(R.id.main_frame, fContent, CONTACT_REQUESTS_TAG)
-                        .setReorderingAllowed(true)
-                        .addToBackStack(CONTACT_REQUESTS_TAG)
+                        .replace(getFragmentContainerId(), fContent, ACCOUNTS_TAG)
+                        .addToBackStack(ACCOUNTS_TAG)
                         .commit();
-                showProfileInfo();
+                //showProfileInfo();
                 showToolbarSpinner();
-                break;
-            case R.id.navigation_home:
-                if (fContent instanceof SmartListFragment) {
-                    break;
-                }
-                popCustomBackStack();
-                fContent = new SmartListFragment();
-                getSupportFragmentManager().beginTransaction()
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .replace(R.id.main_frame, fContent, HOME_TAG)
-                        .setReorderingAllowed(true)
-                        .commit();
-                showProfileInfo();
-                showToolbarSpinner();
-                break;
-            case R.id.navigation_settings:
-
-                if (account.needsMigration()) {
-                    Log.d(TAG, "launchAccountMigrationActivity: Launch account migration activity");
-
-                    Intent intent = new Intent()
-                            .setClass(this, AccountWizardActivity.class)
-                            .setData(Uri.withAppendedPath(ContentUriHandler.ACCOUNTS_CONTENT_URI, account.getAccountID()));
-                    startActivityForResult(intent, 1);
-                } else {
-                    Log.d(TAG, "launchAccountEditFragment: Launch account edit fragment");
-                    bundle.putString(AccountEditionFragment.ACCOUNT_ID, account.getAccountID());
-
-                    if (fContent instanceof AccountEditionFragment) {
-                        break;
-                    }
-                    popCustomBackStack();
-                    fContent = new AccountEditionFragment();
-                    fContent.setArguments(bundle);
-                    getSupportFragmentManager().beginTransaction()
-                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                            .replace(getFragmentContainerId(), fContent, ACCOUNTS_TAG)
-                            .addToBackStack(ACCOUNTS_TAG)
-                            .commit();
-                    showProfileInfo();
-                    showToolbarSpinner();
-                    break;
-                }
-
-                break;
-            default:
-                break;
+            }
         }
 
         return true;
