@@ -24,6 +24,7 @@ import cx.ring.databinding.ItemSmartlistBinding;
 import cx.ring.databinding.ItemSmartlistHeaderBinding;
 import net.jami.smartlist.SmartListViewModel;
 import cx.ring.viewholders.SmartListViewHolder;
+import io.reactivex.disposables.CompositeDisposable;
 
 import android.os.Parcelable;
 import android.view.LayoutInflater;
@@ -40,10 +41,12 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
 
     private List<SmartListViewModel> mSmartListViewModels = new ArrayList<>();
     private final SmartListViewHolder.SmartListListeners listener;
+    private final CompositeDisposable mDisposable;
     private RecyclerView recyclerView;
 
-    public SmartListAdapter(List<SmartListViewModel> smartListViewModels, SmartListViewHolder.SmartListListeners listener) {
+    public SmartListAdapter(List<SmartListViewModel> smartListViewModels, SmartListViewHolder.SmartListListeners listener, CompositeDisposable disposable) {
         this.listener = listener;
+        mDisposable = disposable;
         if (smartListViewModels != null)
             mSmartListViewModels.addAll(smartListViewModels);
     }
@@ -54,10 +57,10 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         if (viewType == 0) {
             ItemSmartlistBinding itemBinding = ItemSmartlistBinding.inflate(layoutInflater, parent, false);
-            return new SmartListViewHolder(itemBinding);
+            return new SmartListViewHolder(itemBinding, mDisposable);
         } else {
             ItemSmartlistHeaderBinding itemBinding = ItemSmartlistHeaderBinding.inflate(layoutInflater, parent, false);
-            return new SmartListViewHolder(itemBinding);
+            return new SmartListViewHolder(itemBinding, mDisposable);
         }
     }
 

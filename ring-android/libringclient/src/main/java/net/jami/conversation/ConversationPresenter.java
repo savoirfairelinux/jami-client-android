@@ -131,8 +131,8 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         Log.w(TAG, "setConversation " + conversation.getAggregateHistory().size());
         if (mConversation == conversation)
             return;
-        if (mConversation != null)
-            mConversation.setVisible(false);
+        //if (mConversation != null)
+        //    mConversation.setVisible(false);
         mConversation = conversation;
         mConversationSubject.onNext(conversation);
         ConversationView view = getView();
