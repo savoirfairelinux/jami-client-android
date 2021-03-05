@@ -20,21 +20,16 @@
  */
 package net.jami.conversation;
 
-import java.io.File;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import net.jami.daemon.Blob;
 import net.jami.facades.ConversationFacade;
 import net.jami.model.Account;
-import net.jami.model.Contact;
+import net.jami.model.Call;
 import net.jami.model.Conference;
+import net.jami.model.Contact;
 import net.jami.model.Conversation;
 import net.jami.model.DataTransfer;
 import net.jami.model.Error;
 import net.jami.model.Interaction;
-import net.jami.model.Call;
 import net.jami.model.TrustRequest;
 import net.jami.model.Uri;
 import net.jami.mvp.RootPresenter;
@@ -48,6 +43,12 @@ import net.jami.utils.Log;
 import net.jami.utils.StringUtils;
 import net.jami.utils.Tuple;
 import net.jami.utils.VCardUtils;
+
+import java.io.File;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
@@ -277,7 +278,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     }
 
     public void loadMore() {
-        mConversationFacade.loadMore(mConversation);
+        mAccountService.loadMore(mConversation).subscribe(c -> {}, e-> {});
     }
 
     public void openContact() {
@@ -354,12 +355,11 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     }
 
     private void sendTrustRequest() {
-        //final Uri contactId = mConversationUri;
-        Contact contact = mConversation.getContact();//mAccountService.getAccount(accountId).getContactFromCache(contactId);
+        Contact contact = mConversation.getContact();
         if (contact != null) {
             contact.setStatus(Contact.Status.REQUEST_SENT);
         }
-        mVCardService.loadSmallVCard(mConversation.getAccountId(), VCardService.MAX_SIZE_REQUEST)
+        mVCardService.loadSmallVCardWithDefault(mConversation.getAccountId(), VCardService.MAX_SIZE_REQUEST)
                 .subscribeOn(Schedulers.computation())
                 .subscribe(vCard -> mAccountService.sendTrustRequest(mConversation, contact.getUri(), Blob.fromString(VCardUtils.vcardToString(vCard))),
                         e -> mAccountService.sendTrustRequest(mConversation, contact.getUri(), null));
@@ -462,7 +462,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     }
 
     public void showPluginListHandlers() {
-        getView().showPluginListHandlers(mAccountId, mContactUri.getUri());
+        getView().showPluginListHandlers(mConversation.getAccountId(), mConversationUri.getUri());
     }
 
     public Tuple<String, String> getPath() {

@@ -45,7 +45,6 @@ public class DataTransfer extends Interaction {
         mAuthor = isOutgoing ? null : peer;
         mAccount = account;
         mConversation = conversation;
-        mAuthor = peer;
         mTotalSize = totalSize;
         mBytesProgress = bytesProgress;
         mBody = displayName;
@@ -115,13 +114,18 @@ public class DataTransfer extends Interaction {
     }
 
     public String getStoragePath() {
-        if (net.jami.utils.StringUtils.isEmpty(mBody)) {
+        if (StringUtils.isEmpty(mBody)) {
             return getMessageId();
+        } else {
+            String ext = StringUtils.getFileExtension(mBody);
+            if (ext.length() > 8)
+                ext = ext.substring(0, 8);
+            if (mDaemonId == null || mDaemonId == 0) {
+                return Long.toString(mId) + '_' + HashUtils.sha1(mBody) + '.' + ext;
+            } else {
+                return Long.toString(mDaemonId) + '_' + HashUtils.sha1(mBody) + '.' + ext;
+            }
         }
-        String ext = StringUtils.getFileExtension(mBody);
-        if (ext.length() > 8)
-            ext = ext.substring(0, 8);
-        return Long.toString(mId) + '_' + HashUtils.sha1(mBody) + '.' + ext;
     }
 
     public void setSize(long size) {

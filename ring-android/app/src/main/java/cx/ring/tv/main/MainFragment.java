@@ -302,7 +302,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
                             .setChannelId(channelId)
                             .setType(TvContractCompat.PreviewPrograms.TYPE_CLIP)
                             .setTitle(vm.getContactName())
-                            .setAuthor(vm.getContact().get(0).getRingUsername())
+                            .setAuthor(vm.getContacts().get(0).getRingUsername())
                             .setPosterArtAspectRatio(TvContractCompat.PreviewPrograms.ASPECT_RATIO_1_1)
                             .setPosterArtUri(uri)
                             .setIntentUri(new Uri.Builder()
