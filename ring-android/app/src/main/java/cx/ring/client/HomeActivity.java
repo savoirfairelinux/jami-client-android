@@ -49,11 +49,13 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import net.jami.facades.ConversationFacade;
 import net.jami.model.Account;
 import net.jami.model.AccountConfig;
 import net.jami.model.Conversation;
 import net.jami.services.AccountService;
 import net.jami.services.NotificationService;
+import net.jami.smartlist.SmartListViewModel;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -87,6 +89,7 @@ import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.DeviceUtils;
 import cx.ring.views.SwitchButton;
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -195,7 +198,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         }
 
         // if app opened from notification display trust request fragment when mService will connected
-        Intent intent = getIntent();
+        /*Intent intent = getIntent();
         Bundle extra = intent.getExtras();
         String action = intent.getAction();
         if (ACTION_PRESENT_TRUST_REQUEST_FRAGMENT.equals(action)) {
@@ -213,13 +216,12 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
             fragmentManager.beginTransaction()
                     .replace(R.id.main_frame, fContent, HOME_TAG)
                     .commitNow();
-        } else if (fContent instanceof Refreshable) {
-            ((Refreshable) fContent).refresh();
         }
         if (mAccountWithPendingrequests != null) {
             presentTrustRequestFragment(mAccountWithPendingrequests);
             mAccountWithPendingrequests = null;
-        }
+        }*/
+        handleIntent(getIntent());
     }
 
     @Override
@@ -251,7 +253,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        Log.d(TAG, "onNewIntent: " + intent);
+        /*Log.d(TAG, "onNewIntent: " + intent);
         String action = intent.getAction();
         if (ACTION_PRESENT_TRUST_REQUEST_FRAGMENT.equals(action)) {
             Bundle extra = intent.getExtras();
@@ -265,11 +267,51 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
             if (fContent instanceof SmartListFragment) {
                 ((SmartListFragment)fContent).handleIntent(intent);
             }
-        } else if (DRingService.ACTION_CONV_ACCEPT.equals(action))  {
-            if (DeviceUtils.isTablet(this)) {
-                startConversationTablet(ConversationPath.fromIntent(intent).toBundle());
+        } else if (DRingService.ACTION_CONV_ACCEPT.equals(action) || Intent.ACTION_VIEW.equals(action))  {
+            startConversation(ConversationPath.fromIntent(intent));
+        }*/
+    }
+
+    private void handleIntent(Intent intent) {
+        Log.d(TAG, "handleIntent: " + intent);
+        Bundle extra = intent.getExtras();
+        String action = intent.getAction();
+        if (ACTION_PRESENT_TRUST_REQUEST_FRAGMENT.equals(action)) {
+            if (extra == null || extra.getString(ContactRequestsFragment.ACCOUNT_ID) == null) {
+                return;
             }
-        }
+            //mAccountWithPendingrequests = extra.getString(ContactRequestsFragment.ACCOUNT_ID);
+            presentTrustRequestFragment(extra.getString(ContactRequestsFragment.ACCOUNT_ID));
+        } else if (Intent.ACTION_SEND.equals(action) || Intent.ACTION_SEND_MULTIPLE.equals(action)) {
+            ConversationPath path = ConversationPath.fromBundle(extra);
+            if (path != null) {
+
+                intent.setClass(this, ConversationActivity.class);
+                startActivity(intent);
+            }
+        } else if (DRingService.ACTION_CONV_ACCEPT.equals(action) || Intent.ACTION_VIEW.equals(action))  {
+            startConversation(ConversationPath.fromIntent(intent));
+            /*if (DeviceUtils.isTablet(this)) {
+                startConversationTablet(ConversationPath.fromIntent(intent).toBundle());
+            }*/
+        } //else {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fContent = fragmentManager.findFragmentById(R.id.main_frame);
+            if (fContent == null || Intent.ACTION_SEARCH.equals(action)) {
+                if (fContent instanceof SmartListFragment) {
+                    ((SmartListFragment)fContent).handleIntent(intent);
+                } else {
+                    fContent = new SmartListFragment();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.main_frame, fContent, HOME_TAG)
+                            .commitNow();
+                }
+            }
+            /*if (mAccountWithPendingrequests != null) {
+                presentTrustRequestFragment(mAccountWithPendingrequests);
+                mAccountWithPendingrequests = null;
+            }*/
+        //}
     }
 
     private void showMigrationDialog() {
@@ -370,6 +412,39 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
             if (DeviceUtils.isTablet(this)) {
                 selectNavigationItem(R.id.navigation_home);
                 showTabletToolbar();
+            } else {
+                // Remove ConversationFragment that might have been restored after an orientation change
+                if (fConversation == null)
+                    fConversation = (ConversationFragment) getSupportFragmentManager().findFragmentByTag(ConversationFragment.class.getSimpleName());
+                if (fConversation != null) {
+                   // fConversation = null;
+                   // getSupportFragmentManager().findFragmentByTag(ConversationFragment.class.getSimpleName());
+                    getSupportFragmentManager().beginTransaction().remove(fConversation).commitNow();
+                    fConversation = null;
+                }
+            }
+        }
+
+        // Select first conversation in tablet mode
+        if (DeviceUtils.isTablet(this)) {
+            Intent intent = getIntent();
+            Uri uri = intent == null ? null : intent.getData();
+            if ((intent == null || uri == null) && fConversation == null) {
+                ConversationFacade facade = ((JamiApplication) getApplication()).getFacade();
+                Observable<List<Observable<SmartListViewModel>>> smartlist = null;
+                if (fContent instanceof SmartListFragment)
+                    smartlist = facade.getSmartList(false);
+                else if (fContent instanceof ContactRequestsFragment)
+                    smartlist = facade.getPendingList();
+
+                if (smartlist != null) {
+                    mDisposable.add(smartlist
+                            .filter(list -> !list.isEmpty())
+                            .map(list -> list.get(0).firstOrError())
+                            .firstElement()
+                            .flatMapSingle(e -> e)
+                            .subscribe(element -> startConversation(element.getAccountId(), element.getUri())));
+                }
             }
         }
     }
@@ -387,11 +462,14 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 .subscribe(account -> startConversation(account.getAccountID(), net.jami.model.Uri.fromString(conversationId))));
     }
     public void startConversation(String accountId, net.jami.model.Uri conversationId) {
-        Log.w(TAG, "startConversation " + accountId + " " + conversationId);
+        startConversation(new ConversationPath(accountId, conversationId));
+    }
+    public void startConversation(ConversationPath path) {
+        Log.w(TAG, "startConversation " + path);
         if (!DeviceUtils.isTablet(this)) {
-            startActivity(new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, conversationId), this, ConversationActivity.class));
+            startActivity(new Intent(Intent.ACTION_VIEW, path.toUri(), this, ConversationActivity.class));
         } else {
-            startConversationTablet(ConversationPath.toBundle(accountId, conversationId));
+            startConversationTablet(path.toBundle());
         }
     }
 
@@ -399,7 +477,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         fConversation = new ConversationFragment();
         fConversation.setArguments(bundle);
 
-        //getSupportFragmentManager().get
         if (!(fContent instanceof ContactRequestsFragment)) {
             selectNavigationItem(R.id.navigation_home);
         }
@@ -582,10 +659,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
-    }
-
-    public interface Refreshable {
-        void refresh();
     }
 
     public void setBadge(int menuId, int number) {
