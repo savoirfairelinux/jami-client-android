@@ -25,6 +25,7 @@ import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.pm.ShortcutManagerCompat;
 
 import net.jami.model.Conversation;
 import net.jami.model.Interaction;
@@ -158,6 +159,10 @@ public class ConversationPath {
             String contactId = bundle.getString(KEY_CONVERSATION_URI);
             if (accountId != null && contactId != null) {
                 return new ConversationPath(accountId, contactId);
+            } else {
+                String shortcutId = bundle.getString(ShortcutManagerCompat.EXTRA_SHORTCUT_ID);
+                if (shortcutId != null)
+                    return fromKey(shortcutId);
             }
         }
         return null;
