@@ -358,7 +358,13 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
             mDisposable.add((mAccountService
                     .getCurrentAccountSubject()
                     .observeOn(Schedulers.computation())
-                    .subscribe(this::setShareShortcuts)));
+                    .map(account -> {
+                        Collection<Conversation> conversations = account.getConversations();
+                        synchronized (conversations) {
+                            return new ArrayList<>(conversations);
+                        }
+                    })
+                    .subscribe(this::setShareShortcuts, e -> Log.e(TAG, "Error generating conversation shortcuts", e))));
         }
 
         int newOrientation = getResources().getConfiguration().orientation;
@@ -766,8 +772,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         return mBinding.accountSwitch;
     }
 
-    private void setShareShortcuts(Account account) {
-        Collection<Conversation> conversations = account.getConversations();
+    private void setShareShortcuts(Collection<Conversation> conversations) {
         List<Future<Bitmap>> futureIcons = new ArrayList<>(conversations.size());
         int targetSize = (int) (AvatarFactory.SIZE_NOTIF * getResources().getDisplayMetrics().density);
 
