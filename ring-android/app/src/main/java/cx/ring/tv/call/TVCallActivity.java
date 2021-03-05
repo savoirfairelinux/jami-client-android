@@ -36,6 +36,8 @@ import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import net.jami.call.CallView;
 import cx.ring.fragments.ConversationFragment;
+import cx.ring.utils.ConversationPath;
+
 import net.jami.services.NotificationService;
 import net.jami.utils.Log;
 
@@ -70,17 +72,16 @@ public class TVCallActivity extends FragmentActivity {
         JamiApplication.getInstance().startDaemon();
 
         boolean audioOnly = false;
-        String accountId = getIntent().getStringExtra(ConversationFragment.KEY_ACCOUNT_ID);
-        String ringId = getIntent().getStringExtra(ConversationFragment.KEY_CONTACT_RING_ID);
+        ConversationPath path = ConversationPath.fromIntent(intent);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        if (!TextUtils.isEmpty(ringId)) {
+        if (path != null) {
             Log.d(TAG, "onCreate: outgoing call");
-            callFragment = TVCallFragment.newInstance(TVCallFragment.ACTION_PLACE_CALL,
-                    accountId,
-                    ringId,
+            callFragment = TVCallFragment.newInstance(Intent.ACTION_CALL,
+                    path.getAccountId(),
+                    path.getConversationId(),
                     audioOnly);
             fragmentTransaction.replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit();
         } else {
@@ -89,7 +90,7 @@ public class TVCallActivity extends FragmentActivity {
             String confId = getIntent().getStringExtra(NotificationService.KEY_CALL_ID);
             Log.d(TAG, "onCreate: conf " + confId);
 
-            callFragment = TVCallFragment.newInstance(TVCallFragment.ACTION_GET_CALL, confId);
+            callFragment = TVCallFragment.newInstance(Intent.ACTION_VIEW, confId);
             fragmentTransaction.replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit();
         }
     }
