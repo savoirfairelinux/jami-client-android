@@ -65,12 +65,12 @@ import cx.ring.application.JamiApplication;
 import cx.ring.client.CallActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.databinding.FragSmartlistBinding;
-import cx.ring.model.Conversation;
+import net.jami.model.Conversation;
 import cx.ring.mvp.BaseSupportFragment;
-import cx.ring.services.AccountService;
-import cx.ring.smartlist.SmartListPresenter;
-import cx.ring.smartlist.SmartListView;
-import cx.ring.smartlist.SmartListViewModel;
+import net.jami.services.AccountService;
+import net.jami.smartlist.SmartListPresenter;
+import net.jami.smartlist.SmartListView;
+import net.jami.smartlist.SmartListViewModel;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ClipboardHelper;
 import cx.ring.utils.ConversationPath;
@@ -307,12 +307,12 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     }
 
     @Override
-    public void removeConversation(cx.ring.model.Uri callContact) {
+    public void removeConversation(net.jami.model.Uri callContact) {
         presenter.removeConversation(callContact);
     }
 
     @Override
-    public void clearConversation(cx.ring.model.Uri callContact) {
+    public void clearConversation(net.jami.model.Uri callContact) {
         presenter.clearConversation(callContact);
     }
 
@@ -380,17 +380,17 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     }
 
     @Override
-    public void displayClearDialog(cx.ring.model.Uri uri) {
+    public void displayClearDialog(net.jami.model.Uri uri) {
         ActionHelper.launchClearAction(getActivity(), uri, SmartListFragment.this);
     }
 
     @Override
-    public void displayDeleteDialog(cx.ring.model.Uri uri) {
+    public void displayDeleteDialog(net.jami.model.Uri uri) {
         ActionHelper.launchDeleteAction(getActivity(), uri, SmartListFragment.this);
     }
 
     @Override
-    public void copyNumber(cx.ring.model.Uri uri) {
+    public void copyNumber(net.jami.model.Uri uri) {
         ActionHelper.launchCopyNumberToClipboardFromContact(getActivity(), uri, this);
     }
 
@@ -443,13 +443,13 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
         if (requestCode == HomeActivity.REQUEST_CODE_QR_CONVERSATION && data != null && resultCode == Activity.RESULT_OK) {
             String contactId = data.getStringExtra(ConversationFragment.KEY_CONTACT_RING_ID);
             if (contactId != null) {
-                presenter.startConversation(cx.ring.model.Uri.fromString(contactId));
+                presenter.startConversation(net.jami.model.Uri.fromString(contactId));
             }
         }
     }
 
     @Override
-    public void goToConversation(String accountId, cx.ring.model.Uri conversationUri) {
+    public void goToConversation(String accountId, net.jami.model.Uri conversationUri) {
         Log.w(TAG, "goToConversation " + accountId + " " + conversationUri);
         if (mSearchMenuItem != null) {
             mSearchMenuItem.collapseActionView();
@@ -458,7 +458,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     }
 
     @Override
-    public void goToCallActivity(String accountId, cx.ring.model.Uri conversationUri, String contactId) {
+    public void goToCallActivity(String accountId, net.jami.model.Uri conversationUri, String contactId) {
         Intent intent = new Intent(CallActivity.ACTION_CALL)
                 .setClass(requireContext(), CallActivity.class)
                 .putExtras(ConversationPath.toBundle(accountId, conversationUri))

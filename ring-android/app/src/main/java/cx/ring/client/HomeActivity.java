@@ -72,13 +72,11 @@ import cx.ring.fragments.ConversationFragment;
 import cx.ring.fragments.SmartListFragment;
 import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.interfaces.Colorable;
-import cx.ring.model.Account;
-import cx.ring.model.AccountConfig;
-import cx.ring.model.CallContact;
-import cx.ring.model.Conversation;
+import net.jami.model.Account;
+import net.jami.model.AccountConfig;
 import cx.ring.service.DRingService;
-import cx.ring.services.AccountService;
-import cx.ring.services.NotificationService;
+import net.jami.services.AccountService;
+import net.jami.services.NotificationService;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.settings.VideoSettingsFragment;
 import cx.ring.settings.pluginssettings.PluginDetails;
@@ -389,9 +387,9 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         mDisposable.add(mAccountService.getCurrentAccountSubject()
                 .firstElement()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(account -> startConversation(account.getAccountID(), cx.ring.model.Uri.fromString(conversationId))));
+                .subscribe(account -> startConversation(account.getAccountID(), net.jami.model.Uri.fromString(conversationId))));
     }
-    public void startConversation(String accountId, cx.ring.model.Uri conversationId) {
+    public void startConversation(String accountId, net.jami.model.Uri conversationId) {
         Log.w(TAG, "startConversation " + accountId + " " + conversationId);
         if (!DeviceUtils.isTablet(this)) {
             startActivity(new Intent(Intent.ACTION_VIEW, ConversationPath.toUri(accountId, conversationId), this, ConversationActivity.class));
