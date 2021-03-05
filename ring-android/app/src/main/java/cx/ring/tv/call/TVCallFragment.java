@@ -98,13 +98,8 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
 
     public static final String TAG = TVCallFragment.class.getSimpleName();
 
-    public static final String ACTION_PLACE_CALL = "PLACE_CALL";
-    public static final String ACTION_GET_CALL = "GET_CALL";
-
     public static final String KEY_ACTION = "action";
-    public static final String KEY_ACCOUNT_ID = "accountId";
     public static final String KEY_CONF_ID = "confId";
-    public static final String KEY_CONTACT_RING_ID = "CONTACT_RING_ID";
     public static final String KEY_AUDIO_ONLY = "AUDIO_ONLY";
 
     private static final int REQUEST_CODE_ADD_PARTICIPANT = 6;
@@ -136,8 +131,8 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
     public static TVCallFragment newInstance(@NonNull String action, @Nullable String accountID, @Nullable String contactRingId, boolean audioOnly) {
         Bundle bundle = new Bundle();
         bundle.putString(KEY_ACTION, action);
-        bundle.putString(KEY_ACCOUNT_ID, accountID);
-        bundle.putSerializable(KEY_CONTACT_RING_ID, contactRingId);
+        bundle.putString(ConversationPath.KEY_ACCOUNT_ID, accountID);
+        bundle.putSerializable(ConversationPath.KEY_CONVERSATION_URI, contactRingId);
         bundle.putBoolean(KEY_AUDIO_ONLY, audioOnly);
         TVCallFragment countDownFragment = new TVCallFragment();
         countDownFragment.setArguments(bundle);
@@ -164,9 +159,9 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
         super.initPresenter(presenter);
         String action = getArguments().getString(KEY_ACTION);
         if (action != null) {
-            if (action.equals(ACTION_PLACE_CALL)) {
+            if (action.equals(Intent.ACTION_CALL)) {
                 prepareCall(false);
-            } else if (action.equals(ACTION_GET_CALL)) {
+            } else if (action.equals(Intent.ACTION_VIEW)) {
                 presenter.initIncomingCall(getArguments().getString(KEY_CONF_ID), true);
             }
         }
@@ -427,15 +422,13 @@ public class TVCallFragment extends BaseSupportFragment<CallPresenter> implement
                     PopupMenu popup = new PopupMenu(context, view);
                     popup.inflate(R.menu.conference_participant_actions);
                     popup.setOnMenuItemClickListener(item -> {
-                        switch (item.getItemId()) {
-                            case R.id.conv_contact_details:
-                                presenter.openParticipantContact(call);
-                                break;
-                            case R.id.conv_contact_hangup:
-                                presenter.hangupParticipant(call);
-                                break;
-                            default:
-                                return false;
+                        int itemId = item.getItemId();
+                        if (itemId == R.id.conv_contact_details) {
+                            presenter.openParticipantContact(call);
+                        } else if (itemId == R.id.conv_contact_hangup) {
+                            presenter.hangupParticipant(call);
+                        } else {
+                            return false;
                         }
                         return true;
                     });
