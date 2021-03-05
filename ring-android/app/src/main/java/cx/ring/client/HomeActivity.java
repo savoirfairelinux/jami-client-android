@@ -834,8 +834,7 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
         List<Future<Bitmap>> futureIcons = new ArrayList<>(Math.min(conversations.size(),maxCount));
         for (Conversation conversation : conversations) {
-            Contact contact = conversation.getContact();
-            futureIcons.add(AvatarFactory.getBitmapAvatar(this, contact, targetSize)
+            futureIcons.add(AvatarFactory.getBitmapAvatar(this, conversation, targetSize, false)
                     .subscribeOn(Schedulers.computation())
                     .toFuture());
             if (++i == maxCount)
@@ -845,7 +844,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
 
         i = 0;
         for (Conversation conversation : conversations) {
-            Contact contact = conversation.getContact();
             IconCompat icon = null;
             try {
                 icon = IconCompat.createWithBitmap(futureIcons.get(i).get());
@@ -853,21 +851,22 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                 Log.w(TAG, "Failed to load icon", e);
             }
 
-            Bundle bundle = ConversationPath.toBundle(conversation.getAccountId(), contact.getPrimaryNumber());
-            String key = ConversationPath.toKey(conversation.getAccountId(), contact.getPrimaryNumber());
+            ConversationPath path = new ConversationPath(conversation);
+            String key = path.toKey();
 
             Person person = new Person.Builder()
-                    .setName(contact.getDisplayName())
+                    .setName(conversation.getTitle())
                     .setKey(key)
                     .build();
 
             ShortcutInfoCompat shortcutInfo = new ShortcutInfoCompat.Builder(this, key)
-                    .setShortLabel(contact.getDisplayName())
+                    .setShortLabel(conversation.getTitle())
                     .setPerson(person)
                     .setLongLived(true)
                     .setIcon(icon)
                     .setCategories(Collections.singleton(CONVERSATIONS_CATEGORY))
-                    .setIntent(new Intent(Intent.ACTION_SEND, Uri.EMPTY, this, ShareActivity.class).putExtras(bundle))
+                    .setIntent(new Intent(Intent.ACTION_SEND, Uri.EMPTY, this, ShareActivity.class)
+                            .putExtras(path.toBundle()))
                     .build();
 
             shortcutInfoList.add(shortcutInfo);
