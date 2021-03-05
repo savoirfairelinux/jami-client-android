@@ -130,8 +130,6 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
 
     public static final int REQ_ADD_CONTACT = 42;
 
-    public static final String KEY_CONTACT_RING_ID = BuildConfig.APPLICATION_ID + ".CONTACT_RING_ID";
-    public static final String KEY_ACCOUNT_ID = BuildConfig.APPLICATION_ID + ".ACCOUNT_ID";
     public static final String KEY_PREFERENCE_PENDING_MESSAGE = "pendingMessage";
     public static final String KEY_PREFERENCE_CONVERSATION_COLOR = "color";
     public static final String KEY_PREFERENCE_CONVERSATION_LAST_READ = "lastRead";
