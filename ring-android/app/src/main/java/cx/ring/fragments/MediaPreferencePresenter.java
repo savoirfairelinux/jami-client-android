@@ -80,14 +80,13 @@ public class MediaPreferencePresenter extends RootPresenter<MediaPreferenceView>
                 .subscribe(l -> {}, e -> Log.e(TAG, "Error loading codec list")));
     }
 
-
     void codecChanged(ArrayList<Long> codecs) {
         mAccountService.setActiveCodecList(mAccount.getAccountID(), codecs);
     }
 
     void videoPreferenceChanged(ConfigKey key, Object newValue) {
-            mAccount.setDetail(key, newValue.toString());
-            updateAccount();
+        mAccount.setDetail(key, newValue.toString());
+        updateAccount();
     }
 
     private void updateAccount() {

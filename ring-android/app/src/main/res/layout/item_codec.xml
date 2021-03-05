@@ -55,6 +55,7 @@ along with this program; if not, write to the Free Software
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:clickable="false"
-        android:focusable="false" />
+        android:focusable="false"
+        android:layout_margin="8dp"/>
 
 </RelativeLayout>

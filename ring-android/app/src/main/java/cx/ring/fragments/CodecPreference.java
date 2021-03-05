@@ -109,7 +109,7 @@ class CodecPreference extends Preference {
 
     void setCodecs(ArrayList<Codec> codecs) {
         listAdapter.setDataset(codecs);
-        notifyChanged();
+        //notifyChanged();
         notifyHierarchyChanged();
     }
 

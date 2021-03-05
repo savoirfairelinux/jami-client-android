@@ -15,7 +15,6 @@
         android:dividerHeight="1px"
         android:focusable="false"
         android:nestedScrollingEnabled="false"
-        android:padding="5dp"
         tools:listitem="item_codec" />
 
 </LinearLayout>
