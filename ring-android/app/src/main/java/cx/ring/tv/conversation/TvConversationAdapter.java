@@ -593,7 +593,6 @@ public class TvConversationAdapter extends RecyclerView.Adapter<TvConversationVi
                             }));
                 } else {
                     viewHolder.btnAccept.setOnClickListener(null);
-                    viewHolder.updater = null;
                 }
             } catch (IllegalStateException | NullPointerException e) {
                 Log.e(TAG, "Error initializing player, it may have already been released: " + e.getMessage());
