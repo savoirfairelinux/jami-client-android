@@ -33,7 +33,6 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import cx.ring.R;
-import cx.ring.utils.UiUpdater;
 import io.reactivex.disposables.CompositeDisposable;
 
 public class TvConversationViewHolder extends RecyclerView.ViewHolder {
@@ -55,7 +54,6 @@ public class TvConversationViewHolder extends RecyclerView.ViewHolder {
     public TextureView video;
     public Surface surface = null;
     public String mCid;
-    public UiUpdater updater;
     public LinearLayout mCallInfoLayout, mFileInfoLayout, mAudioInfoLayout;
     public ValueAnimator animator;
 
