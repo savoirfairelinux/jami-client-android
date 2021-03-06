@@ -80,7 +80,6 @@ import cx.ring.viewholders.SmartListViewHolder;
 public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> implements SearchView.OnQueryTextListener,
         SmartListViewHolder.SmartListListeners,
         Conversation.ConversationActionCallback,
-        ClipboardHelper.ClipboardHelperCallback,
         SmartListView
 {
     private static final String TAG = SmartListFragment.class.getSimpleName();
@@ -318,13 +317,9 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
 
     @Override
     public void copyContactNumberToClipboard(String contactNumber) {
-        ClipboardHelper.copyNumberToClipboard(getActivity(), contactNumber, this);
-    }
-
-    @Override
-    public void clipBoardDidCopyNumber(String copiedNumber) {
+        ClipboardHelper.copyToClipboard(requireContext(), contactNumber);
         String snackbarText = getString(R.string.conversation_action_copied_peer_number_clipboard,
-                ActionHelper.getShortenedNumber(copiedNumber));
+                ActionHelper.getShortenedNumber(contactNumber));
         Snackbar.make(binding.listCoordinator, snackbarText, Snackbar.LENGTH_LONG).show();
     }
 
