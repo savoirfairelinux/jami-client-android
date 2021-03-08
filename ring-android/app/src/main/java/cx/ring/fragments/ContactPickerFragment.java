@@ -16,9 +16,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.chip.Chip;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -27,15 +25,12 @@ import cx.ring.R;
 import cx.ring.adapters.SmartListAdapter;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
-import cx.ring.contacts.AvatarFactory;
 import cx.ring.databinding.FragContactPickerBinding;
-import cx.ring.facades.ConversationFacade;
-import cx.ring.model.CallContact;
-import cx.ring.smartlist.SmartListViewModel;
+import net.jami.facades.ConversationFacade;
+import net.jami.model.CallContact;
+import net.jami.smartlist.SmartListViewModel;
 import cx.ring.viewholders.SmartListViewHolder;
 import cx.ring.views.AvatarDrawable;
-import io.reactivex.Observable;
-import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 

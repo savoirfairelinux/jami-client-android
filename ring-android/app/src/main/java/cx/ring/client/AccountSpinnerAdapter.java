@@ -33,7 +33,7 @@ import java.util.List;
 
 import cx.ring.R;
 import cx.ring.databinding.ItemToolbarSpinnerBinding;
-import cx.ring.model.Account;
+import net.jami.model.Account;
 import cx.ring.views.AvatarDrawable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;

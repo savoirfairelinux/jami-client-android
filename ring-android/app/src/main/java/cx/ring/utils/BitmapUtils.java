@@ -25,8 +25,10 @@ import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Base64;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
+
 import ezvcard.parameter.ImageType;
 import ezvcard.property.Photo;
 
@@ -109,7 +111,7 @@ public final class BitmapUtils
         width /= ratio;
         bmp = Bitmap.createScaledBitmap(bmp, width, height, true);
 
-        Log.d(TAG, "reduceBitmap: bitmap size after x" + ratio + " reduce " + bmp.getByteCount());
+        net.jami.utils.Log.d(TAG, "reduceBitmap: bitmap size after x" + ratio + " reduce " + bmp.getByteCount());
         return bmp;
     }
 
