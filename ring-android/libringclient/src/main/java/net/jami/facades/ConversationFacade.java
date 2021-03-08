@@ -38,7 +38,6 @@ import net.jami.services.HistoryService;
 import net.jami.services.NotificationService;
 import net.jami.services.PreferencesService;
 import net.jami.smartlist.SmartListViewModel;
-import net.jami.utils.FileUtils;
 import net.jami.utils.Log;
 import net.jami.utils.Tuple;
 
@@ -147,7 +146,7 @@ public class ConversationFacade {
                 })
                 .distinctUntilChanged()
                 .subscribe(t -> {
-                    net.jami.utils.Log.e(TAG, "Location reception started for " + t.second.contact);
+                    Log.e(TAG, "Location reception started for " + t.second.contact);
                     mNotificationService.showLocationNotification(t.first, t.second.contact);
                     mDisposableBag.add(t.second.location.doOnComplete(() ->
                             mNotificationService.cancelLocationNotification(t.first, t.second.contact)).subscribe());
@@ -155,11 +154,11 @@ public class ConversationFacade {
 
         mDisposableBag.add(mAccountService
                 .getMessageStateChanges()
-                .concatMapSingle(txt -> getAccountSubject(txt.getAccount())
-                        .map(a -> txt.getConversation() == null ? a.getSwarm(txt.getConversationId()) : a.getByUri(txt.getConversation().getParticipant()))
-                        .doOnSuccess(conversation -> conversation.updateTextMessage(txt)))
+                .concatMapSingle(e -> getAccountSubject(e.getAccount())
+                        .map(a -> e.getConversation() == null ? a.getSwarm(e.getConversationId()) : a.getByUri(e.getConversation().getParticipant()))
+                        .doOnSuccess(conversation -> conversation.updateInteraction(e)))
                 .subscribe(c -> {
-                }, e -> net.jami.utils.Log.e(TAG, "Error updating text message", e)));
+                }, e -> Log.e(TAG, "Error updating text message", e)));
 
         mDisposableBag.add(mAccountService
                 .getDataTransfers()
@@ -203,7 +202,7 @@ public class ConversationFacade {
             if (lastMessage != null) {
                 account.refreshed(conversation);
                 if (mPreferencesService.getSettings().isAllowReadIndicator()) {
-                    mAccountService.setMessageDisplayed(account.getAccountID(), conversation.getUri().getRawRingId(), lastMessage);
+                    mAccountService.setMessageDisplayed(account.getAccountID(), conversation.getUri(), lastMessage);
                 }
                 if (cancelNotification) {
                     mNotificationService.cancelTextNotification(account.getAccountID(), conversation.getUri());
@@ -264,13 +263,13 @@ public class ConversationFacade {
     }
 
     public void setIsComposing(String accountId, Uri conversationUri, boolean isComposing) {
-        mCallService.setIsComposing(accountId, conversationUri.getRawRingId(), isComposing);
+        mCallService.setIsComposing(accountId, conversationUri.getUri(), isComposing);
     }
 
     public Completable sendFile(Conversation conversation, Uri to, File file) {
         return Single.fromCallable(() -> {
             if (file == null || !file.exists() || !file.canRead()) {
-                net.jami.utils.Log.w(TAG, "sendFile: file not found or not readable: " + file);
+                Log.w(TAG, "sendFile: file not found or not readable: " + file);
                 return null;
             }
 
@@ -281,19 +280,18 @@ public class ConversationFacade {
                 mHistoryService.insertInteraction(conversation.getAccountId(), conversation, transfer).blockingAwait();
             }
 
-            File dest = mDeviceRuntimeService.getConversationPath(conversation.getUri().getRawRingId(), transfer.getStoragePath());
-            if (!FileUtils.moveFile(file, dest)) {
-                net.jami.utils.Log.e(TAG, "sendFile: can't move file to " + dest);
-                return null;
-            }
-
-            transfer.destination = dest;
+            transfer.destination = mDeviceRuntimeService.getConversationDir(conversation.getUri().getRawRingId());
             return transfer;
         })
-                .subscribeOn(Schedulers.io())
-                .flatMapCompletable(mAccountService::sendFile);
+                .flatMap(t -> mAccountService.sendFile(file, t))
+                .flatMapCompletable(transfer -> Completable.fromAction(() -> {
+                    File destination = new File(transfer.destination, transfer.getStoragePath());
+                    if (!mDeviceRuntimeService.hardLinkOrCopy(file, destination)) {
+                        Log.e(TAG, "sendFile: can't move file to " + destination);
+                    }
+                }))
+                .subscribeOn(Schedulers.io());
     }
-
 
     public void deleteConversationItem(Conversation conversation, Interaction element) {
         if (element.getType() == Interaction.InteractionType.DATA_TRANSFER) {
@@ -307,14 +305,13 @@ public class ConversationFacade {
                         Completable.fromAction(file::delete)
                                 .subscribeOn(Schedulers.io()))
                         .subscribe(() -> conversation.removeInteraction(transfer),
-                                e -> net.jami.utils.Log.e(TAG, "Can't delete file transfer", e)));
+                                e -> Log.e(TAG, "Can't delete file transfer", e)));
             }
         } else {
             // handling is the same for calls and texts
-            mDisposableBag.add(Completable.mergeArrayDelayError(mHistoryService.deleteInteraction(element.getId(), element.getAccount()).subscribeOn(Schedulers.io()))
-                    .andThen(startConversation(element.getAccount(), Uri.fromString(element.getConversation().getParticipant())))
-                    .subscribe(c -> c.removeInteraction(element),
-                            e -> net.jami.utils.Log.e(TAG, "Can't delete message", e)));
+            mDisposableBag.add(mHistoryService.deleteInteraction(element.getId(), element.getAccount()).subscribeOn(Schedulers.io())
+                    .subscribe(() -> conversation.removeInteraction(element),
+                            e -> Log.e(TAG, "Can't delete message", e)));
         }
     }
 
@@ -323,7 +320,7 @@ public class ConversationFacade {
                 mCallService.cancelMessage(message.getAccount(), message.getId()).subscribeOn(Schedulers.io()))
                 .andThen(startConversation(message.getAccount(), Uri.fromString(message.getConversation().getParticipant())))
                 .subscribe(c -> c.removeInteraction(message),
-                        e -> net.jami.utils.Log.e(TAG, "Can't cancel message sending", e)));
+                        e -> Log.e(TAG, "Can't cancel message sending", e)));
     }
 
     /**
@@ -335,7 +332,7 @@ public class ConversationFacade {
     private Single<Account> loadSmartlist(final Account account) {
         synchronized (account) {
             if (account.historyLoader == null) {
-                net.jami.utils.Log.d(TAG, "loadSmartlist(): start loading");
+                Log.d(TAG, "loadSmartlist(): start loading");
                 account.historyLoader = getSmartlist(account);
             }
             return account.historyLoader;
@@ -354,31 +351,25 @@ public class ConversationFacade {
         if (conversation == null)
             return Single.error(new RuntimeException("Can't get conversation"));
         synchronized (conversation) {
-            if (conversation.isSwarm()) {
-                loadMore(conversation);
-                Single<Conversation> ret = Single.just(conversation);
-                conversation.setLoaded(ret);
-                return ret;
-            }
-            if (conversation.getId() == null) {
+            if (!conversation.isSwarm() && conversation.getId() == null) {
                 return Single.just(conversation);
             }
             Single<Conversation> ret = conversation.getLoaded();
             if (ret == null) {
-                ret = getConversationHistory(conversation);
+                ret = conversation.isSwarm() ? mAccountService.loadMore(conversation) : getConversationHistory(conversation);
                 conversation.setLoaded(ret);
             }
             return ret;
         }
     }
 
-    private Observable<net.jami.smartlist.SmartListViewModel> observeConversation(Account account, Conversation conversation, boolean hasPresence) {
+    private Observable<SmartListViewModel> observeConversation(Account account, Conversation conversation, boolean hasPresence) {
         return Observable.merge(account.getConversationSubject()
                         .filter(c -> c == conversation)
                         .startWith(conversation),
                 mContactService
                         .observeContact(conversation.getAccountId(), conversation.getContacts(), hasPresence))
-                .map(e -> new net.jami.smartlist.SmartListViewModel(conversation, hasPresence));
+                .map(e -> new SmartListViewModel(conversation, hasPresence));
         /*return account.getConversationSubject()
                 .filter(c -> c == conversation)
                 .startWith(conversation)
@@ -387,49 +378,49 @@ public class ConversationFacade {
                         .map(contact -> new SmartListViewModel(c, hasPresence)));*/
     }
 
-    public Observable<List<Observable<net.jami.smartlist.SmartListViewModel>>> getSmartList(Observable<Account> currentAccount, boolean hasPresence) {
+    public Observable<List<Observable<SmartListViewModel>>> getSmartList(Observable<Account> currentAccount, boolean hasPresence) {
         return currentAccount.switchMap(account -> account.getConversationsSubject()
                 .switchMapSingle(conversations -> Observable.fromIterable(conversations)
                         .map(conversation -> observeConversation(account, conversation, hasPresence))
                         .toList()));
     }
 
-    public Observable<List<net.jami.smartlist.SmartListViewModel>> getContactList(Observable<Account> currentAccount) {
+    public Observable<List<SmartListViewModel>> getContactList(Observable<Account> currentAccount) {
         return currentAccount.switchMap(account -> account.getConversationsSubject()
                 .switchMapSingle(conversations -> Observable.fromIterable(conversations)
                         .filter(conversation -> !conversation.isSwarm())
-                        .map(conversation -> new net.jami.smartlist.SmartListViewModel(conversation, false))
+                        .map(conversation -> new SmartListViewModel(conversation, false))
                         .toList()));
     }
 
-    public Observable<List<Observable<net.jami.smartlist.SmartListViewModel>>> getPendingList(Observable<Account> currentAccount) {
+    public Observable<List<Observable<SmartListViewModel>>> getPendingList(Observable<Account> currentAccount) {
         return currentAccount.switchMap(account -> account.getPendingSubject()
                 .switchMapSingle(conversations -> Observable.fromIterable(conversations)
                         .map(conversation -> observeConversation(account, conversation, false))
                         .toList()));
     }
 
-    public Observable<List<Observable<net.jami.smartlist.SmartListViewModel>>> getSmartList(boolean hasPresence) {
+    public Observable<List<Observable<SmartListViewModel>>> getSmartList(boolean hasPresence) {
         return getSmartList(mAccountService.getCurrentAccountSubject(), hasPresence);
     }
 
-    public Observable<List<Observable<net.jami.smartlist.SmartListViewModel>>> getPendingList() {
+    public Observable<List<Observable<SmartListViewModel>>> getPendingList() {
         return getPendingList(mAccountService.getCurrentAccountSubject());
     }
 
-    public Observable<List<net.jami.smartlist.SmartListViewModel>> getContactList() {
+    public Observable<List<SmartListViewModel>> getContactList() {
         return getContactList(mAccountService.getCurrentAccountSubject());
     }
 
-    private Single<List<Observable<net.jami.smartlist.SmartListViewModel>>> getSearchResults(Account account, String query) {
+    private Single<List<Observable<SmartListViewModel>>> getSearchResults(Account account, String query) {
         Uri uri = Uri.fromString(query);
         if (account.isSip()) {
             Contact contact = account.getContactFromCache(uri);
             return mContactService.loadContactData(contact, account.getAccountID())
-                    .andThen(Single.just(Collections.singletonList(Observable.just(new net.jami.smartlist.SmartListViewModel(account.getAccountID(), contact, contact.getPrimaryNumber(), null)))));
+                    .andThen(Single.just(Collections.singletonList(Observable.just(new SmartListViewModel(account.getAccountID(), contact, contact.getPrimaryNumber(), null)))));
         } else if (uri.isHexId()) {
             return mContactService.getLoadedContact(account.getAccountID(), account.getContactFromCache(uri))
-                    .map(contact -> Collections.singletonList(Observable.just(new net.jami.smartlist.SmartListViewModel(account.getAccountID(), contact, contact.getPrimaryNumber(), null))));
+                    .map(contact -> Collections.singletonList(Observable.just(new SmartListViewModel(account.getAccountID(), contact, contact.getPrimaryNumber(), null))));
         } else if (account.canSearch() && !query.contains("@")) {
             return mAccountService.searchUser(account.getAccountID(), query)
                     .map(AccountService.UserSearchResult::getResultsViewModels);
@@ -439,22 +430,22 @@ public class ConversationFacade {
         }
     }
 
-    private Observable<List<Observable<net.jami.smartlist.SmartListViewModel>>> getSearchResults(Account account, Observable<String> query) {
+    private Observable<List<Observable<SmartListViewModel>>> getSearchResults(Account account, Observable<String> query) {
         return query.switchMapSingle(q -> q.isEmpty()
-                ? net.jami.smartlist.SmartListViewModel.EMPTY_LIST
+                ? SmartListViewModel.EMPTY_LIST
                 : getSearchResults(account, q))
                 .distinctUntilChanged();
     }
 
-    public Observable<List<Observable<net.jami.smartlist.SmartListViewModel>>> getFullList(Observable<Account> currentAccount, Observable<String> query, boolean hasPresence) {
+    public Observable<List<Observable<SmartListViewModel>>> getFullList(Observable<Account> currentAccount, Observable<String> query, boolean hasPresence) {
         return currentAccount.switchMap(account -> Observable.combineLatest(
                 account.getConversationsSubject(),
                 getSearchResults(account, query),
                 query,
                 (conversations, searchResults, q) -> {
-                    List<Observable<net.jami.smartlist.SmartListViewModel>> newList = new ArrayList<>(conversations.size() + searchResults.size() + 2);
+                    List<Observable<SmartListViewModel>> newList = new ArrayList<>(conversations.size() + searchResults.size() + 2);
                     if (!searchResults.isEmpty()) {
-                        newList.add(net.jami.smartlist.SmartListViewModel.TITLE_PUBLIC_DIR);
+                        newList.add(SmartListViewModel.TITLE_PUBLIC_DIR);
                         newList.addAll(searchResults);
                     }
                     if (!conversations.isEmpty()) {
@@ -485,8 +476,13 @@ public class ConversationFacade {
      * @param account the user account
      */
     private Single<Account> getSmartlist(final Account account) {
-        return mHistoryService.getSmartlist(account.getAccountID())
-                .map(conversationHistoryList -> {
+        List<Completable> actions = new ArrayList<>(account.getConversations().size() + 1);
+        for (Conversation c : account.getConversations())  {
+            if (c.isSwarm())
+                actions.add(c.getLastElementLoaded());
+        }
+        actions.add(mHistoryService.getSmartlist(account.getAccountID())
+                .flatMapCompletable(conversationHistoryList -> Completable.fromAction(() -> {
                     List<Conversation> conversations = new ArrayList<>();
                     for (Interaction e : conversationHistoryList) {
                         Conversation conversation = account.getByUri(e.getConversation().getParticipant());
@@ -497,8 +493,9 @@ public class ConversationFacade {
                         conversations.add(conversation);
                     }
                     account.setHistoryLoaded(conversations);
-                    return account;
-                })
+                })));
+        return Completable.merge(actions)
+                .andThen(Single.just(account))
                 .cache();
     }
 
@@ -547,7 +544,7 @@ public class ConversationFacade {
     }
 
     public void updateTextNotifications(String accountId, List<Conversation> conversations) {
-        net.jami.utils.Log.d(TAG, "updateTextNotifications() " + accountId + " " + conversations.size());
+        Log.d(TAG, "updateTextNotifications() " + accountId + " " + conversations.size());
 
         for (Conversation conversation : conversations) {
             mNotificationService.showTextNotification(accountId, conversation);
@@ -561,9 +558,9 @@ public class ConversationFacade {
             }
             if (mPreferencesService.getSettings().isAllowReadIndicator()) {
                 if (txt.getMessageId() != null) {
-                    mAccountService.setMessageDisplayed(txt.getAccount(), txt.getConversationId(), txt.getMessageId());
+                    mAccountService.setMessageDisplayed(txt.getAccount(), new Uri(Uri.SWARM_SCHEME, txt.getConversationId()), txt.getMessageId());
                 } else {
-                    mAccountService.setMessageDisplayed(txt.getAccount(), txt.getAuthor(), Long.toString(txt.getDaemonId(), 16));
+                    mAccountService.setMessageDisplayed(txt.getAccount(), new Uri(Uri.JAMI_URI_SCHEME, txt.getAuthor()), txt.getDaemonIdString());
                 }
             }
         }
@@ -592,6 +589,7 @@ public class ConversationFacade {
         if (transfer.getStatus() == Interaction.InteractionStatus.TRANSFER_CREATED && !transfer.isOutgoing()) {
             if (transfer.canAutoAccept(mPreferencesService.getMaxFileAutoAccept(transfer.getAccount()))) {
                 mAccountService.acceptFileTransfer(conversation, transfer);
+                return;
             }
         }
         mNotificationService.handleDataTransferNotification(transfer, conversation, conversation.isVisible());
@@ -614,13 +612,9 @@ public class ConversationFacade {
         String conversationId = call.getConversationId();
         Log.w(TAG, "CallStateChange " + call.getId() + " conversationId:" + conversationId);
 
-        Conversation conversation = account == null
-                ? null
-                : (conversationId == null
-                ? (contact == null
-                ? null
-                : account.getByUri(contact.getUri()))
-                : account.getSwarm(conversationId));
+        Conversation conversation = conversationId == null
+                ? (contact == null ? null : account.getByUri(contact.getUri()))
+                : account.getSwarm(conversationId);
         Conference conference = null;
         if (conversation != null) {
             conference = conversation.getConference(call.getDaemonIdString());
@@ -686,36 +680,48 @@ public class ConversationFacade {
 
     public void cancelFileTransfer(String accountId, Uri conversationId, long id) {
         mAccountService.cancelDataTransfer(accountId, conversationId.isSwarm() ? conversationId.getRawRingId() : "", id);
-        mNotificationService.removeTransferNotification(id);
+        mNotificationService.removeTransferNotification(accountId, conversationId, id);
         DataTransfer transfer = mAccountService.getAccount(accountId).getDataTransfer(id);
         if (transfer != null)
             deleteConversationItem((Conversation) transfer.getConversation(), transfer);
     }
 
-    public Completable removeConversation(String accountId, Uri contact) {
-        return mHistoryService
-                .clearHistory(contact.getUri(), accountId, true)
-                .doOnSubscribe(s -> {
-                    Account account = mAccountService.getAccount(accountId);
-                    account.clearHistory(contact, true);
-                    mAccountService.removeContact(accountId, contact.getRawRingId(), false);
-                });
+    public Completable removeConversation(String accountId, Uri conversationUri) {
+        if (conversationUri.isSwarm()) {
+            return mAccountService.removeConversation(accountId, conversationUri);
+        } else {
+            return mHistoryService
+                    .clearHistory(conversationUri.getUri(), accountId, true)
+                    .doOnSubscribe(s -> {
+                        Account account = mAccountService.getAccount(accountId);
+                        account.clearHistory(conversationUri, true);
+                        mAccountService.removeContact(accountId, conversationUri.getRawRingId(), false);
+                    });
+        }
     }
+
+    public void banConversation(String accountId, Uri conversationUri) {
+        if (conversationUri.isSwarm()) {
+            startConversation(accountId, conversationUri)
+                    .subscribe(conversation -> {
+                        try {
+                            Contact contact = conversation.getContact();
+                            mAccountService.removeContact(accountId, contact.getUri().getRawUriString(), true);
+                        } catch (Exception e) {
+                            mAccountService.removeConversation(accountId, conversationUri);
+                        }
+                    });
+            //return mAccountService.removeConversation(accountId, conversationUri);
+        } else {
+            mAccountService.removeContact(accountId, conversationUri.getRawUriString(), true);
+        }
+    }
+
 
     public Single<Conversation> createConversation(String accountId, Collection<Contact> currentSelection) {
         List<String> contactIds = new ArrayList<>(currentSelection.size());
         for (Contact contact : currentSelection)
             contactIds.add(contact.getPrimaryNumber());
         return mAccountService.startConversation(accountId, contactIds);
-    }
-
-    public void loadMore(Conversation conversation) {
-        Collection<String> roots = conversation.getSwarmRoot();
-        if (roots.isEmpty())
-            mAccountService.loadConversationHistory(conversation.getAccountId(), conversation.getUri(), "", 16);
-        else {
-            for (String root : roots)
-                mAccountService.loadConversationHistory(conversation.getAccountId(), conversation.getUri(), root, 16);
-        }
     }
 }

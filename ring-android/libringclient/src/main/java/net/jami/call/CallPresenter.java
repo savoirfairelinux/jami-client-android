@@ -24,6 +24,7 @@ import net.jami.facades.ConversationFacade;
 import net.jami.model.Call;
 import net.jami.model.Conference;
 import net.jami.model.Conversation;
+import net.jami.model.ConversationHistory;
 import net.jami.model.Uri;
 import net.jami.mvp.RootPresenter;
 import net.jami.services.AccountService;
@@ -259,13 +260,16 @@ public class CallPresenter extends RootPresenter<CallView> {
             return;
         }
         Call firstCall = mConference.getParticipants().get(0);
-        if (firstCall == null
-                || firstCall.getContact() == null
-                || firstCall.getContact().getIds() == null
-                || firstCall.getContact().getIds().isEmpty()) {
+        if (firstCall == null) {
             return;
         }
-        getView().goToConversation(firstCall.getAccount(), firstCall.getContact().getIds().get(0));
+        ConversationHistory c = firstCall.getConversation();
+        if (c instanceof Conversation) {
+            Conversation conversation = ((Conversation) c);
+            getView().goToConversation(conversation.getAccountId(), conversation.getUri());
+        } else if (firstCall.getContact() != null) {
+            getView().goToConversation(firstCall.getAccount(), firstCall.getContact().getConversationUri().blockingFirst());
+        }
     }
 
     public void speakerClick(boolean checked) {

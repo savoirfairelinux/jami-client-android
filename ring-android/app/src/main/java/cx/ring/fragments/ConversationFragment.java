@@ -106,6 +106,7 @@ import cx.ring.service.DRingService;
 import cx.ring.services.LocationSharingService;
 import net.jami.services.NotificationService;
 import cx.ring.services.NotificationServiceImpl;
+import cx.ring.services.SharedPreferencesServiceImpl;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ContentUriHandler;
@@ -803,7 +804,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         try {
             fileUri = ContentUriHandler.getUriForFile(c, ContentUriHandler.AUTHORITY_FILES, path);
         } catch (IllegalArgumentException e) {
-            Log.e("File Selector", "The selected file can't be shared: " + path.getName());
+            Log.e(TAG, "The selected file can't be shared: " + path.getName());
         }
         if (fileUri != null) {
             Intent sendIntent = new Intent();
@@ -894,7 +895,7 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
         mAdapter = new ConversationAdapter(this, presenter);
         presenter.init(uri, path.getAccountId());
         try {
-            mPreferences = requireActivity().getSharedPreferences(path.getAccountId() + "_" + uri.getUri(), Context.MODE_PRIVATE);
+            mPreferences = SharedPreferencesServiceImpl.getConversationPreferences(requireContext(), path.getAccountId(), uri);
             mPreferences.registerOnSharedPreferenceChangeListener(this);
             presenter.setConversationColor(mPreferences.getInt(KEY_PREFERENCE_CONVERSATION_COLOR, getResources().getColor(R.color.color_primary_light)));
             presenter.setConversationSymbol(mPreferences.getString(KEY_PREFERENCE_CONVERSATION_SYMBOL, getResources().getText(R.string.conversation_default_emoji).toString()));
@@ -959,7 +960,11 @@ public class ConversationFragment extends BaseSupportFragment<ConversationPresen
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(avatar -> {
                         mParticipantAvatars.put(contactKey, (AvatarDrawable) avatar);
-                        mSmallParticipantAvatars.put(contactKey, new AvatarDrawable((AvatarDrawable) avatar));
+                        mSmallParticipantAvatars.put(contactKey, new AvatarDrawable.Builder()
+                                .withContact(contact)
+                                .withCircleCrop(true)
+                                .withPresence(false)
+                                .build(requireContext()));
                         mAdapter.setPhoto();
                     }));
         }
