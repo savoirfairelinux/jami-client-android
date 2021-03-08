@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import cx.ring.contacts.AvatarFactory;
 import cx.ring.databinding.ItemContactBlacklistBinding;
-import cx.ring.model.CallContact;
+import net.jami.model.CallContact;
 
 public class BlackListViewHolder extends RecyclerView.ViewHolder {
     private final ItemContactBlacklistBinding binding;

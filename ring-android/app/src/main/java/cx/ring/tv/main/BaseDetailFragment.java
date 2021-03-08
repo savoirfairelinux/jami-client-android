@@ -27,9 +27,9 @@ import javax.inject.Inject;
 
 import androidx.leanback.app.DetailsSupportFragment;
 import cx.ring.R;
-import cx.ring.model.Error;
-import cx.ring.mvp.BaseView;
-import cx.ring.mvp.RootPresenter;
+import net.jami.model.Error;
+import net.jami.mvp.BaseView;
+import net.jami.mvp.RootPresenter;
 
 public class BaseDetailFragment<T extends RootPresenter> extends DetailsSupportFragment implements BaseView {
 

@@ -45,11 +45,14 @@ import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.fragments.AccountMigrationFragment;
 import cx.ring.fragments.SIPAccountCreationFragment;
-import cx.ring.model.Account;
-import cx.ring.model.AccountConfig;
+
+import net.jami.account.AccountWizardPresenter;
+import net.jami.account.AccountWizardView;
+import net.jami.model.Account;
+import net.jami.model.AccountConfig;
 import cx.ring.mvp.BaseActivity;
-import cx.ring.mvp.AccountCreationModel;
-import cx.ring.utils.VCardUtils;
+import net.jami.mvp.AccountCreationModel;
+import net.jami.utils.VCardUtils;
 import ezvcard.VCard;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
