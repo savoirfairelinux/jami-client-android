@@ -90,6 +90,8 @@
   <string name="action_call_hangup">Katkaise puhelu</string>
   <string name="action_call_maximize">Suurenna</string>
   <string name="action_call_minimize">Vähentää</string>
+  <string name="action_call_mute">Mykistä</string>
+  <string name="action_call_unmute">Poista mykistys</string>
   <string name="ongoing_call">Tämänhetkinen puhelu</string>
   <string name="hist_in_call">Saapuva puhelu %1$s</string>
   <string name="hist_out_call">Lähtevä puhelu %1$s</string>

@@ -91,6 +91,8 @@
   <string name="action_call_hangup">Zavěsit</string>
   <string name="action_call_maximize">Maximalizovat</string>
   <string name="action_call_minimize">Minimalizovat</string>
+  <string name="action_call_mute">Ztlumit</string>
+  <string name="action_call_unmute">Zrušit ztlumení</string>
   <string name="ongoing_call">Probíhající hovor</string>
   <string name="hist_in_call">Příchozí hovor %1$s</string>
   <string name="hist_out_call">Odchozí hovor %1$s</string>

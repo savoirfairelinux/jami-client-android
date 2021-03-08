@@ -90,6 +90,8 @@
   <string name="action_call_hangup">Mbylle thirrjen</string>
   <string name="action_call_maximize">Maksimizoje</string>
   <string name="action_call_minimize">Reduktoje</string>
+  <string name="action_call_mute">Heshtoje</string>
+  <string name="action_call_unmute">Çheshtoje</string>
   <string name="ongoing_call">Thirrje në kryerje e sipër</string>
   <string name="hist_in_call">Thirrje nga %1$s</string>
   <string name="hist_out_call">Thirrje për %1$s</string>

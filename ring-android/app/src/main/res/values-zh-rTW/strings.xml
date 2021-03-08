@@ -89,6 +89,8 @@
   <string name="action_call_hangup">掛斷</string>
   <string name="action_call_maximize">最大化</string>
   <string name="action_call_minimize">減少</string>
+  <string name="action_call_mute">靜音</string>
+  <string name="action_call_unmute">取消靜音</string>
   <string name="ongoing_call">尚在進行中的通話</string>
   <string name="hist_in_call">%1$s 的來電</string>
   <string name="hist_out_call">%1$s 的去電</string>

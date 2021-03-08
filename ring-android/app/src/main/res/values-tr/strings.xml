@@ -86,6 +86,8 @@
   <string name="you_txt_prefix">Siz:</string>
   <string name="action_call_hangup">Kapat</string>
   <string name="action_call_maximize">En büyük</string>
+  <string name="action_call_mute">Sessiz</string>
+  <string name="action_call_unmute">Sesi Aç</string>
   <string name="ongoing_call">Giden arama</string>
   <string name="hist_in_call">%1$s gelen arama</string>
   <string name="hist_out_call">%1$s giden arama</string>

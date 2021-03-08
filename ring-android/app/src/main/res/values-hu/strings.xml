@@ -90,6 +90,8 @@
   <string name="action_call_hangup">Hívás befejezése</string>
   <string name="action_call_maximize">Teljes méret</string>
   <string name="action_call_minimize">Csökkentés</string>
+  <string name="action_call_mute">Elnémítás</string>
+  <string name="action_call_unmute">Némítás feloldása</string>
   <string name="ongoing_call">Folyamatban lévő hívás</string>
   <string name="hist_in_call">Bejövő hívás (%1$s)</string>
   <string name="hist_out_call">Kimenő hívás (%1$s)</string>

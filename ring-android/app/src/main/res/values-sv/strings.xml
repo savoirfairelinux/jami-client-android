@@ -74,6 +74,7 @@
   <string name="you_txt_prefix">Du:</string>
   <string name="action_call_hangup">Lägg på</string>
   <string name="action_call_maximize">Maximera</string>
+  <string name="action_call_mute">Tysta</string>
   <string name="ongoing_call">Pågående samtal</string>
   <string name="hist_in_call">Inkommande samtal av %1$s</string>
   <string name="hist_out_call">Utgående samtal av %1$s</string>

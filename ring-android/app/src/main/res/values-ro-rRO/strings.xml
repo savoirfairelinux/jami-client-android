@@ -91,6 +91,8 @@
   <string name="action_call_hangup">Închide</string>
   <string name="action_call_maximize">Mărește</string>
   <string name="action_call_minimize">Micșorează</string>
+  <string name="action_call_mute">Mut</string>
+  <string name="action_call_unmute">Vorbește</string>
   <string name="ongoing_call">Apel în curs</string>
   <string name="hist_in_call">Apel primit de la %1$s</string>
   <string name="hist_out_call">Apel efectuat de %1$s</string>

@@ -90,6 +90,8 @@ Sie respektiert die Freiheiten und die Privatsphäre ihrer Nutzer.</string>
   <string name="action_call_hangup">Auflegen</string>
   <string name="action_call_maximize">Maximale Größe</string>
   <string name="action_call_minimize">Verkleinern</string>
+  <string name="action_call_mute">Stumm</string>
+  <string name="action_call_unmute">Wieder laut</string>
   <string name="ongoing_call">Aktiver Anruf</string>
   <string name="hist_in_call">Eingehender Anruf von %1$s</string>
   <string name="hist_out_call">Ausgehende Anruf von %1$s</string>

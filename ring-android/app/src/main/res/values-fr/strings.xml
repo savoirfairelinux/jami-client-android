@@ -90,6 +90,8 @@
   <string name="action_call_hangup">Raccrochez</string>
   <string name="action_call_maximize">Maximiser</string>
   <string name="action_call_minimize">Réduire</string>
+  <string name="action_call_mute">Couper le micro</string>
+  <string name="action_call_unmute">Ouvrir le micro</string>
   <string name="ongoing_call">Appel en cours</string>
   <string name="hist_in_call">Appel entrant de %1$s</string>
   <string name="hist_out_call">Appel sortant de %1$s</string>

@@ -24,6 +24,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="ringtones_by">Toques de chamada por</string>
   <!--RingActivity-->
   <string name="error_no_network">Sem conectividade</string>
+  <string name="error_account_offline">A conta está offline</string>
   <string name="error_mobile_network_available_but_disabled">Por favor, conceda acesso a rede móvel na tela de configurações.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Mensagens de texto</string>
@@ -90,6 +91,8 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="action_call_hangup">Desligar</string>
   <string name="action_call_maximize">Maximizar</string>
   <string name="action_call_minimize">Reduzir</string>
+  <string name="action_call_mute">Mudo</string>
+  <string name="action_call_unmute">Não silenciar</string>
   <string name="ongoing_call">Chamada em andamento</string>
   <string name="hist_in_call">Recebimento de chamada %1$s</string>
   <string name="hist_out_call">Chamada de saída %1$s</string>
@@ -115,6 +118,7 @@ Para maiores detalhes, consulte a <u>Licença GPL versão 3 ou mais recente</u><
   <string name="qr_code">Código QR</string>
   <string name="ab_action_flipcamera">Virar câmera</string>
   <string name="ab_action_hidepreview">Oculta visualização</string>
+  <string name="remote_recording">%sgravando...</string>
   <!--Text messages-->
   <string name="send_message">Enviar mensagem</string>
   <string name="message_sending">Enviando mensagem...</string>

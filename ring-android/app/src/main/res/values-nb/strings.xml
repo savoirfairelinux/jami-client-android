@@ -90,6 +90,8 @@
   <string name="action_call_hangup">Legg på</string>
   <string name="action_call_maximize">Maksimer</string>
   <string name="action_call_minimize">Reduser</string>
+  <string name="action_call_mute">Mikrofon av</string>
+  <string name="action_call_unmute">Mikrofon på</string>
   <string name="ongoing_call">Pågående samtale</string>
   <string name="hist_in_call">Innkommende samtale med %1$s</string>
   <string name="hist_out_call">Utgående samtale med %1$s</string>

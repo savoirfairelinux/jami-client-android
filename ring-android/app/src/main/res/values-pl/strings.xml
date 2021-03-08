@@ -77,6 +77,8 @@
   <string name="you_txt_prefix">Ty:</string>
   <string name="action_call_hangup">Rozłącz się</string>
   <string name="action_call_maximize">Maksymalizuj</string>
+  <string name="action_call_mute">Wycisz</string>
+  <string name="action_call_unmute">Wyłącz wyciszenie</string>
   <string name="ongoing_call">Trwa połączenie</string>
   <string name="hist_in_call">Czas przychodzączego połączenia: %1$s</string>
   <string name="hist_out_call">Czas wychodzączego połączenia: %1$s</string>

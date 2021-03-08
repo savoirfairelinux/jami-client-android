@@ -91,6 +91,8 @@
   <string name="action_call_hangup">Prekini</string>
   <string name="action_call_maximize">Povečaj</string>
   <string name="action_call_minimize">Zmanjšaj</string>
+  <string name="action_call_mute">Utišaj</string>
+  <string name="action_call_unmute">Vklopi zvok</string>
   <string name="ongoing_call">Aktivni klic</string>
   <string name="hist_in_call">Dohodni klic od %1$s</string>
   <string name="hist_out_call">Odhodni klic do %1$s</string>

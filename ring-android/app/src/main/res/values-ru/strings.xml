@@ -92,6 +92,8 @@
   <string name="action_call_hangup">Повесить трубку</string>
   <string name="action_call_maximize">Максимизировать</string>
   <string name="action_call_minimize">Уменьшить</string>
+  <string name="action_call_mute">Беззвучно </string>
+  <string name="action_call_unmute">Включить звук</string>
   <string name="ongoing_call">Исходящий вызов</string>
   <string name="hist_in_call">Входящий звонок %1$s</string>
   <string name="hist_out_call">Исходящий звонок %1$s</string>

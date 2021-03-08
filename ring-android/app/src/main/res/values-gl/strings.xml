@@ -291,7 +291,7 @@
   <string name="wizard_status_required">Requerido</string>
   <string name="wizard_username_info">Escolle un nome de usuaria para a conta</string>
   <string name="wizard_username_button">Escolle un Nome de Usuaria</string>
-  <string name="wizard_username_skip">Saltar establece nome de usuaria</string>
+  <string name="wizard_username_skip">Saltar Establecer nome de usuaria</string>
   <string name="wizard_password_info">Contrasinal da conta</string>
   <string name="wizard_password_placeholder">Escolle un contrasinal para cifrar a chave da conta neste dispositivo</string>
   <string name="wizard_password_button">Escolle un contrasinal</string>

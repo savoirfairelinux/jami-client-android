@@ -90,6 +90,8 @@
   <string name="action_call_hangup">Colgar</string>
   <string name="action_call_maximize">Maximizar</string>
   <string name="action_call_minimize">Reducir</string>
+  <string name="action_call_mute">Silenciar</string>
+  <string name="action_call_unmute">Reactivar sonido</string>
   <string name="ongoing_call">Llamada en curso</string>
   <string name="hist_in_call">Llamada entrante de %1$s</string>
   <string name="hist_out_call">Llamada saliente a %1$s</string>

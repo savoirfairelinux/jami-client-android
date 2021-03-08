@@ -70,7 +70,7 @@ Puedes editar tu cuenta luego</string>
   <string name="account_ringtone_enabled_label">Activar tonos de llamada</string>
   <string name="account_ringtone_path_label">Directorio de tonos de llamada</string>
   <string name="account_ringtone_custom_label">Utilizar un tono de llamada personalizado</string>
-  <string name="account_ringtone_title">Elige un tono de llamada</string>
+  <string name="account_ringtone_title">Elegir tono de llamada</string>
   <string name="account_ringtone_summary">Selecciona un tono de llamada o escoge uno personalizado</string>
   <!--Video Details-->
   <string name="account_video_label">Vídeo</string>
