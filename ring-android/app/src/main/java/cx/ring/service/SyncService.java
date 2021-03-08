@@ -17,7 +17,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.services;
+package cx.ring.service;
 
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -41,6 +41,7 @@ import javax.inject.Inject;
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.HomeActivity;
+import cx.ring.services.NotificationServiceImpl;
 
 public class SyncService extends Service {
     public static final int NOTIF_SYNC_SERVICE_ID = 1004;
