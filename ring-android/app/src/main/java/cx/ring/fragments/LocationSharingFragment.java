@@ -79,7 +79,7 @@ import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.views.AvatarFactory;
 import cx.ring.databinding.FragLocationSharingBinding;
-import cx.ring.services.LocationSharingService;
+import cx.ring.service.LocationSharingService;
 import cx.ring.utils.ConversationPath;
 import cx.ring.utils.TouchClickListener;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;

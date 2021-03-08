@@ -206,12 +206,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:exported="false"
             android:foregroundServiceType="dataSync" />
         <service
-            android:name=".services.SyncService"
+            android:name=".service.SyncService"
             android:description="@string/data_transfer_service_description"
             android:exported="false"
             android:foregroundServiceType="dataSync" />
         <service
-            android:name=".services.LocationSharingService"
+            android:name=".service.LocationSharingService"
             android:exported="false"
             android:foregroundServiceType="location" />
 
