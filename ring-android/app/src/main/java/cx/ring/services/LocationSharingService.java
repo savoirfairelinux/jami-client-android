@@ -61,12 +61,15 @@ import javax.inject.Inject;
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
 import cx.ring.client.ConversationActivity;
-import cx.ring.daemon.Blob;
-import cx.ring.daemon.Ringservice;
-import cx.ring.daemon.StringMap;
-import cx.ring.facades.ConversationFacade;
+import net.jami.daemon.Blob;
+import net.jami.daemon.Ringservice;
+import net.jami.daemon.StringMap;
+import net.jami.facades.ConversationFacade;
 import cx.ring.fragments.ConversationFragment;
-import cx.ring.model.Uri;
+
+import net.jami.services.AccountService;
+import net.jami.services.CallService;
+
 import cx.ring.utils.ConversationPath;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -210,7 +213,7 @@ public class LocationSharingService extends Service implements LocationListener 
                         .subscribe(location -> {
                             Log.w(TAG, "location send " + location + " to " + contactLocationShare.size());
                             StringMap msgs = new StringMap();
-                            msgs.setRaw(CallService.MIME_GEOLOCATION, Blob.fromString(location.toString()));
+                            msgs.setRaw(net.jami.services.CallService.MIME_GEOLOCATION, Blob.fromString(location.toString()));
                             for (ConversationPath p : contactLocationShare.keySet())  {
                                 Ringservice.sendAccountTextMessage(p.getAccountId(), p.getConversationId(), msgs);
                             }
@@ -228,7 +231,7 @@ public class LocationSharingService extends Service implements LocationListener 
 
                 JSONObject jsonObject = new JSONObject();
                 try {
-                    jsonObject.put("type", AccountService.Location.Type.stop.toString());
+                    jsonObject.put("type", net.jami.services.AccountService.Location.Type.stop.toString());
                     jsonObject.put("time", Long.MAX_VALUE);
                 } catch (JSONException e) {
                     e.printStackTrace();

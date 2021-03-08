@@ -21,8 +21,8 @@ package cx.ring.fragments;
 
 import androidx.annotation.NonNull;
 
-import cx.ring.model.Account;
-import cx.ring.utils.Tuple;
+import net.jami.model.Account;
+import net.jami.utils.Tuple;
 
 public interface GeneralAccountView {
 
