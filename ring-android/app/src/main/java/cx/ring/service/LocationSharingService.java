@@ -17,7 +17,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package cx.ring.services;
+package cx.ring.service;
 
 import android.Manifest;
 import android.app.Notification;
@@ -70,11 +70,10 @@ import cx.ring.fragments.ConversationFragment;
 import net.jami.services.AccountService;
 import net.jami.services.CallService;
 
+import cx.ring.services.NotificationServiceImpl;
 import cx.ring.utils.ConversationPath;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.ObservableSource;
-import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
