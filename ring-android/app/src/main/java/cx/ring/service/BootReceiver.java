@@ -29,7 +29,6 @@ import javax.inject.Inject;
 
 import cx.ring.application.JamiApplication;
 import net.jami.services.PreferencesService;
-import cx.ring.services.SyncService;
 
 public class BootReceiver extends BroadcastReceiver {
     private static final String TAG = BootReceiver.class.getSimpleName();

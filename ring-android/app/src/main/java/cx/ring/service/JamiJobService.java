@@ -30,7 +30,6 @@ import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 
 import cx.ring.application.JamiApplication;
-import cx.ring.services.SyncService;
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class JamiJobService extends JobService
