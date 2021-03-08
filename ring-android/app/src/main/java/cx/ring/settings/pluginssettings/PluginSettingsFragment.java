@@ -36,7 +36,7 @@ import java.util.Set;
 
 import cx.ring.R;
 import cx.ring.client.HomeActivity;
-import cx.ring.daemon.Ringservice;
+import net.jami.daemon.Ringservice;
 import cx.ring.plugins.PluginPreferences;
 import cx.ring.plugins.PluginUtils;
 

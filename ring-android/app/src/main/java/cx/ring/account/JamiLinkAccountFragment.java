@@ -19,16 +19,12 @@
  */
 package cx.ring.account;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -38,11 +34,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import cx.ring.R;
-import cx.ring.application.JamiApplication;
 import cx.ring.databinding.FragAccJamiLinkBinding;
 import cx.ring.mvp.BaseSupportFragment;
-import cx.ring.mvp.AccountCreationModel;
+import net.jami.mvp.AccountCreationModel;
 
 public class JamiLinkAccountFragment extends BaseSupportFragment {
 
