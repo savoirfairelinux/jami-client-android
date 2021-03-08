@@ -1,0 +1,7 @@
+Code-Review+2: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+Verified+1: Jenkins CI <jenkins@ring-packaging.cx>
+Submitted-by: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+Submitted-at: Mon, 08 Mar 2021 12:34:22 -0500
+Reviewed-on: https://review.jami.net/c/ring-client-android/+/16759
+Project: ring-client-android
+Branch: refs/heads/master
