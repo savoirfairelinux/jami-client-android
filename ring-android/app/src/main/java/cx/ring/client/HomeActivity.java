@@ -358,7 +358,13 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
             mDisposable.add((mAccountService
                     .getCurrentAccountSubject()
                     .observeOn(Schedulers.computation())
-                    .subscribe(this::setShareShortcuts)));
+                    .map(account -> {
+                        Collection<Conversation> conversations = account.getConversations();
+                        synchronized (conversations) {
+                            return new ArrayList<>(conversations);
+                        }
+                    })
+                    .subscribe(this::setShareShortcuts, e -> Log.e(TAG, "Error generating conversation shortcuts", e))));
         }
 
         int newOrientation = getResources().getConfiguration().orientation;
@@ -766,19 +772,25 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         return mBinding.accountSwitch;
     }
 
-    private void setShareShortcuts(Account account) {
-        Collection<Conversation> conversations = account.getConversations();
+    private void setShareShortcuts(Collection<Conversation> conversations) {
         List<Future<Bitmap>> futureIcons = new ArrayList<>(conversations.size());
         int targetSize = (int) (AvatarFactory.SIZE_NOTIF * getResources().getDisplayMetrics().density);
+        int i = 0;
+        int maxCount = ShortcutManagerCompat.getMaxShortcutCountPerActivity(this);
+        if (maxCount == 0)
+            maxCount = 4;
 
         for (Conversation conversation : conversations) {
             CallContact contact = conversation.getContact();
             futureIcons.add(AvatarFactory.getBitmapAvatar(this, contact, targetSize)
                     .subscribeOn(Schedulers.computation())
                     .toFuture());
+            if (i++ == maxCount)
+                break;
         }
-        int i = 0;
         List<ShortcutInfoCompat> shortcutInfoList = new ArrayList<>(conversations.size());
+
+        i = 0;
         for (Conversation conversation : conversations) {
             CallContact contact = conversation.getContact();
             IconCompat icon = null;
@@ -806,12 +818,17 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
                     .build();
 
             shortcutInfoList.add(shortcutInfo);
-            i++;
+            if (i++ == maxCount)
+                break;
         }
 
-        Log.w(TAG, "ShortcutManagerCompat.addDynamicShortcuts " + shortcutInfoList.size());
-        ShortcutManagerCompat.removeAllDynamicShortcuts(this);
-        ShortcutManagerCompat.addDynamicShortcuts(this, shortcutInfoList);
+        try {
+            Log.d(TAG, "Adding shortcuts: " + shortcutInfoList.size());
+            ShortcutManagerCompat.removeAllDynamicShortcuts(this);
+            ShortcutManagerCompat.addDynamicShortcuts(this, shortcutInfoList);
+        } catch (Exception e) {
+            Log.w(TAG, "Error adding shortcuts", e);
+        }
     }
 
 }
