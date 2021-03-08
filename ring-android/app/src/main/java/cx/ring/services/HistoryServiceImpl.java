@@ -46,7 +46,7 @@ import static cx.ring.fragments.ConversationFragment.KEY_PREFERENCE_CONVERSATION
 /**
  * Implements the necessary Android related methods for the {@link HistoryService}
  */
-public class HistoryServiceImpl extends net.jami.services.HistoryService {
+public class HistoryServiceImpl extends HistoryService {
     private static final String TAG = HistoryServiceImpl.class.getSimpleName();
     private final static String DATABASE_NAME = "history.db";
     private final static String LEGACY_DATABASE_KEY = "legacy";
