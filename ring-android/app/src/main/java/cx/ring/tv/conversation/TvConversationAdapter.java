@@ -365,7 +365,7 @@ public class TvConversationAdapter extends RecyclerView.Adapter<TvConversationVi
     private void configureForFileInfoTextMessage(@NonNull final TvConversationViewHolder viewHolder,
                                                  @NonNull final Interaction interaction, int position) {
         DataTransfer file = (DataTransfer) interaction;
-        File path = presenter.getDeviceRuntimeService().getConversationPath(file.getConversationId(), file.getStoragePath());
+        File path = presenter.getDeviceRuntimeService().getConversationPath(interaction.getConversationId() == null ? interaction.getConversation().getParticipant() : interaction.getConversationId(), file.getStoragePath());
         file.setSize(path.length());
 
         String timeString = timestampToDetailString(viewHolder.itemView.getContext(), file.getTimestamp());
