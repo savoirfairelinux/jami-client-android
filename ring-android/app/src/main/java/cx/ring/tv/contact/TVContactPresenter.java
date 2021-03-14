@@ -77,14 +77,19 @@ public class TVContactPresenter extends RootPresenter<TVContactView> {
     public void contactClicked() {
         Account account = mAccountService.getAccount(mAccountId);
         if (account != null) {
-            Conference conf = account.getByUri(mUri).getCurrentCall();
+            Conversation conversation = account.getByUri(mUri);
+            Conference conf = conversation.getCurrentCall();
             if (conf != null
                     && !conf.getParticipants().isEmpty()
                     && conf.getParticipants().get(0).getCallStatus() != Call.CallStatus.INACTIVE
                     && conf.getParticipants().get(0).getCallStatus() != Call.CallStatus.FAILURE) {
                 getView().goToCallActivity(conf.getId());
             } else {
-                getView().callContact(mAccountId, mUri);
+                if (conversation.isSwarm()) {
+                    getView().callContact(mAccountId, mUri, conversation.getContact().getUri());
+                } else {
+                    getView().callContact(mAccountId, mUri, mUri);
+                }
             }
         }
     }
