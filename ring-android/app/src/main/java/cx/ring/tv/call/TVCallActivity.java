@@ -22,7 +22,6 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.WindowManager;
@@ -34,8 +33,11 @@ import androidx.fragment.app.FragmentTransaction;
 
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
+
 import net.jami.call.CallView;
-import cx.ring.fragments.ConversationFragment;
+
+import cx.ring.utils.ConversationPath;
+
 import net.jami.services.NotificationService;
 import net.jami.utils.Log;
 
@@ -59,7 +61,7 @@ public class TVCallActivity extends FragmentActivity {
             setTurnScreenOn(true);
             setShowWhenLocked(true);
         } else {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED|
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
                     WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         }
         setContentView(R.layout.tv_activity_call);
@@ -69,19 +71,18 @@ public class TVCallActivity extends FragmentActivity {
         JamiApplication.getInstance().getInjectionComponent().inject(this);
         JamiApplication.getInstance().startDaemon();
 
-        boolean audioOnly = false;
-        String accountId = getIntent().getStringExtra(ConversationFragment.KEY_ACCOUNT_ID);
-        String ringId = getIntent().getStringExtra(ConversationFragment.KEY_CONTACT_RING_ID);
+        ConversationPath path = ConversationPath.fromIntent(intent);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        if (!TextUtils.isEmpty(ringId)) {
-            Log.d(TAG, "onCreate: outgoing call");
-            callFragment = TVCallFragment.newInstance(TVCallFragment.ACTION_PLACE_CALL,
-                    accountId,
-                    ringId,
-                    audioOnly);
+        if (path != null) {
+            Log.d(TAG, "onCreate: outgoing call " + path);
+            callFragment = TVCallFragment.newInstance(intent.getAction(),
+                    path.getAccountId(),
+                    path.getConversationId(),
+                    intent.getExtras().getString(Intent.EXTRA_PHONE_NUMBER, path.getConversationId()),
+                    false);
             fragmentTransaction.replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit();
         } else {
             Log.d(TAG, "onCreate: incoming call");
@@ -89,14 +90,13 @@ public class TVCallActivity extends FragmentActivity {
             String confId = getIntent().getStringExtra(NotificationService.KEY_CALL_ID);
             Log.d(TAG, "onCreate: conf " + confId);
 
-            callFragment = TVCallFragment.newInstance(TVCallFragment.ACTION_GET_CALL, confId);
+            callFragment = TVCallFragment.newInstance(Intent.ACTION_VIEW, confId);
             fragmentTransaction.replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit();
         }
     }
 
-
     @Override
-    public void onUserLeaveHint () {
+    public void onUserLeaveHint() {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(CALL_FRAGMENT_TAG);
         if (fragment instanceof CallView) {
             CallView callFragment = (CallView) fragment;
