@@ -426,7 +426,7 @@ public class SmartListFragment extends BaseSupportFragment<SmartListPresenter> i
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == HomeActivity.REQUEST_CODE_QR_CONVERSATION && data != null && resultCode == Activity.RESULT_OK) {
-            String contactId = data.getStringExtra(ConversationFragment.KEY_CONTACT_RING_ID);
+            String contactId = data.getStringExtra(ConversationPath.KEY_CONVERSATION_URI);
             if (contactId != null) {
                 presenter.startConversation(net.jami.model.Uri.fromString(contactId));
             }

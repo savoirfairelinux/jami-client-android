@@ -27,7 +27,7 @@ import net.jami.smartlist.SmartListViewModel;
 public interface TVContactView extends BaseView {
     void showContact(SmartListViewModel model);
 
-    void callContact(String accountID, Uri uri);
+    void callContact(String accountID, Uri conversationUri, Uri uri);
 
     void goToCallActivity(String id);
 
