@@ -15,8 +15,7 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package cx.ring.tv.contact;
 
@@ -46,6 +45,9 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import cx.ring.R;
 import cx.ring.application.JamiApplication;
+import cx.ring.client.CallActivity;
+import cx.ring.client.HomeActivity;
+import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.ConversationFragment;
 import net.jami.model.Uri;
 import net.jami.services.NotificationService;
@@ -195,20 +197,17 @@ public class TVContactFragment extends BaseDetailFragment<TVContactPresenter> im
     }
 
     @Override
-    public void callContact(String accountID, Uri uri) {
-        Context context = requireContext();
-        Intent intent = new Intent(context, TVCallActivity.class);
-        intent.putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountID);
-        intent.putExtra(ConversationFragment.KEY_CONTACT_RING_ID, uri.getRawUriString());
-        context.startActivity(intent, null);
+    public void callContact(String accountId, Uri conversationUri, Uri uri) {
+        startActivity(new Intent(Intent.ACTION_CALL)
+                .setClass(requireContext(), TVCallActivity.class)
+                .putExtras(ConversationPath.toBundle(accountId, conversationUri))
+                .putExtra(Intent.EXTRA_PHONE_NUMBER, uri.getUri()));
     }
 
     @Override
     public void goToCallActivity(String id) {
-        Context context = requireContext();
-        Intent intent = new Intent(context, TVCallActivity.class);
-        intent.putExtra(NotificationService.KEY_CALL_ID, id);
-        context.startActivity(intent, null);
+        startActivity(new Intent(requireContext(), TVCallActivity.class)
+                .putExtra(NotificationService.KEY_CALL_ID, id));
     }
 
     @Override
