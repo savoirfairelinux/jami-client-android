@@ -24,11 +24,8 @@ package cx.ring.tv.camera;
 
 import android.animation.Animator;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.hardware.Camera;
-import android.hardware.camera2.CameraAccessException;
-import android.hardware.camera2.CameraManager;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
 import android.os.Build;
@@ -53,6 +50,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
+@SuppressWarnings("deprecation")
 public class CustomCameraActivity extends Activity {
     private static final String TAG = "CustomCameraActivity";
     public static final String TYPE_IMAGE = "image/jpeg";
@@ -119,14 +117,14 @@ public class CustomCameraActivity extends Activity {
                     .putExtra(MediaStore.EXTRA_OUTPUT, ContentUriHandler.getUriForFile(this, ContentUriHandler.AUTHORITY_FILES, mVideoFile))
                     .setType(TYPE_VIDEO);
             setResult(RESULT_OK, intent);
-            finish();
             binding.buttonVideo.setImageResource(R.drawable.baseline_videocam_24);
-            return;
-        }
-        if (mCamera != null) {
-            initRecorder();
-            binding.buttonVideo.setImageResource(R.drawable.lb_ic_stop);
-            binding.buttonPicture.setVisibility(View.GONE);
+            finish();
+        } else {
+            if (mCamera != null) {
+                initRecorder();
+                binding.buttonVideo.setImageResource(R.drawable.lb_ic_stop);
+                binding.buttonPicture.setVisibility(View.GONE);
+            }
         }
         mRecording = !mRecording;
     }
@@ -257,17 +255,13 @@ public class CustomCameraActivity extends Activity {
         recorder.setCamera(mCamera);
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         recorder.setVideoSource(MediaRecorder.VideoSource.DEFAULT);
-
-        try {
-            mVideoFile = AndroidFileUtils.createVideoFile(this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        CameraManager manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
-        CamcorderProfile cpHigh = CamcorderProfile.get(Integer.valueOf(getFrontFacingCameraId(manager)), CamcorderProfile.QUALITY_HIGH);
-        recorder.setProfile(cpHigh);
+        recorder.setProfile(CamcorderProfile.get(currentCamera, CamcorderProfile.QUALITY_HIGH));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            try {
+                mVideoFile = AndroidFileUtils.createVideoFile(this);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             recorder.setOutputFile(mVideoFile);
         }
         recorder.setVideoSize(videoWidth, videoHeight);
@@ -277,23 +271,13 @@ public class CustomCameraActivity extends Activity {
 
     private void prepareRecorder() {
         recorder.setPreviewDisplay(mCameraPreview.getHolder().getSurface());
-
         try {
             recorder.prepare();
             recorder.start();
-        } catch (IllegalStateException | IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            Toast.makeText(this, "Error starting the recorder: " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
             finish();
         }
-    }
-
-    private String getFrontFacingCameraId(CameraManager cManager){
-        try {
-            return cManager.getCameraIdList()[0];
-        } catch (CameraAccessException ex) {
-            ex.printStackTrace();
-        }
-        return null;
     }
 
     private void releaseMediaRecorder() {
