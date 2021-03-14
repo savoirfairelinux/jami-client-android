@@ -14,8 +14,7 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package cx.ring.tv.main;
 
@@ -362,9 +361,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
 
     @Override
     public void callContact(String accountID, String number) {
-        Intent intent = new Intent(getActivity(), TVCallActivity.class);
-        intent.putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountID);
-        intent.putExtra(ConversationFragment.KEY_CONTACT_RING_ID, number);
+        Intent intent = new Intent(Intent.ACTION_CALL, ConversationPath.toUri(accountID, number), getActivity(), TVCallActivity.class);
         startActivity(intent, null);
     }
 
