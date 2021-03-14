@@ -1,3 +1,21 @@
+/*
+ *  Copyright (C) 2004-2021 Savoir-faire Linux Inc.
+ *
+ *  Authors: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 package cx.ring.utils;
 
 import android.content.Intent;
@@ -8,17 +26,21 @@ import android.text.TextUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-
-import cx.ring.fragments.ConversationFragment;
 import net.jami.model.Conversation;
 import net.jami.model.Interaction;
 import net.jami.utils.StringUtils;
 import net.jami.utils.Tuple;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+
+import cx.ring.BuildConfig;
+
 public class ConversationPath {
+    public static final String KEY_CONVERSATION_URI = BuildConfig.APPLICATION_ID + ".conversationUri";
+    public static final String KEY_ACCOUNT_ID = BuildConfig.APPLICATION_ID + ".accountId";
+
     private final String accountId;
     private final String conversationId;
     public ConversationPath(String account, String contact) {
@@ -84,14 +106,14 @@ public class ConversationPath {
         return toBundle(accountId, conversationId);
     }
     public void toBundle(Bundle bundle) {
-        bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, conversationId);
-        bundle.putString(ConversationFragment.KEY_ACCOUNT_ID, accountId);
+        bundle.putString(KEY_CONVERSATION_URI, conversationId);
+        bundle.putString(KEY_ACCOUNT_ID, accountId);
     }
 
     public static Bundle toBundle(String accountId, String uri) {
         Bundle bundle = new Bundle();
-        bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, uri);
-        bundle.putString(ConversationFragment.KEY_ACCOUNT_ID, accountId);
+        bundle.putString(KEY_CONVERSATION_URI, uri);
+        bundle.putString(KEY_ACCOUNT_ID, accountId);
         return bundle;
     }
     public static Bundle toBundle(String accountId, net.jami.model.Uri uri) {
@@ -135,8 +157,8 @@ public class ConversationPath {
 
     public static ConversationPath fromBundle(@Nullable Bundle bundle) {
         if (bundle != null) {
-            String accountId = bundle.getString(ConversationFragment.KEY_ACCOUNT_ID);
-            String contactId = bundle.getString(ConversationFragment.KEY_CONTACT_RING_ID);
+            String accountId = bundle.getString(KEY_ACCOUNT_ID);
+            String contactId = bundle.getString(KEY_CONVERSATION_URI);
             if (accountId != null && contactId != null) {
                 return new ConversationPath(accountId, contactId);
             }
